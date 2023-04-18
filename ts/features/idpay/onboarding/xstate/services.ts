@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
-import { InitiativeInfoDTO } from "../../../../../definitions/idpay/InitiativeInfoDTO";
+import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
 import { DetailsEnum as PrerequisitesErrorDetailsEnum } from "../../../../../definitions/idpay/PrerequisitesErrorDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
@@ -18,14 +18,15 @@ const onboardingStatusToFailure: Record<
   OnboardingStatusEnum,
   O.Option<OnboardingFailureEnum>
 > = {
-  [OnboardingStatusEnum.ELIGIBILE_KO]: O.some(OnboardingFailureEnum.NOT_ELIGIBLE),
+  [OnboardingStatusEnum.ELIGIBLE_KO]: O.some(OnboardingFailureEnum.NOT_ELIGIBLE),
   [OnboardingStatusEnum.ONBOARDING_KO]: O.some(OnboardingFailureEnum.NO_REQUIREMENTS),
   [OnboardingStatusEnum.ONBOARDING_OK]: O.some(OnboardingFailureEnum.ONBOARDED),
   [OnboardingStatusEnum.UNSUBSCRIBED]: O.some(OnboardingFailureEnum.UNSUBSCRIBED),
   [OnboardingStatusEnum.ELIGIBLE]: O.some(OnboardingFailureEnum.ON_EVALUATION),
-  [OnboardingStatusEnum.ON_EVALUATION]: O.some(OnboardingFailureEnum.ON_EVALUATION ),
+  [OnboardingStatusEnum.ON_EVALUATION]: O.some(OnboardingFailureEnum.ON_EVALUATION),
+  [OnboardingStatusEnum.SUSPENDED]: O.some(OnboardingFailureEnum.SUSPENDED),
   [OnboardingStatusEnum.ACCEPTED_TC]: O.none, // Onboarding started but not yet completed, no failure
-  [OnboardingStatusEnum.INVITED]: O.none // Whitelisted CF, no failure
+  [OnboardingStatusEnum.INVITED]: O.none, // Whitelisted CF, no failure
 };
 
 // prettier-ignore
@@ -60,7 +61,7 @@ const createServicesImplementation = (
       serviceId: context.serviceId
     });
 
-    const data: Promise<InitiativeInfoDTO> = pipe(
+    const data: Promise<InitiativeDataDTO> = pipe(
       dataResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
