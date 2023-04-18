@@ -329,7 +329,7 @@ export const IOThemeDark: IOTheme = {
   "divider-default": "grey-850",
   // Status
   errorIcon: "error-400",
-  errorText: "error-850"
+  errorText: "error-400"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
