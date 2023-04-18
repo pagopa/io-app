@@ -3197,7 +3197,7 @@ features:
         subTitle: You will receive a message with the signed documents as soon as they are ready.
       signed:
         title: You have already signed these documents
-        subTitle: You can view and download them from the message titled “Signed Documents”.
+        subTitle: You can find them in the message titled “Signed Documents”.
       unsupportedDevice:
         title: There is a problem
         subTitle: Your device does not support the "Firma con IO" feature.
@@ -3221,7 +3221,7 @@ features:
       confirm: "Keep signing"
     checkService:
       title: "Turn on messages"
-      content: "To receive signed documents you must activate the option that allows the service to send you messages. If you don't activate it, you can complete the signature but you won't receive the signed documents."
+      content: "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents."
       cancel: "Not now"
       confirm: "Turn on"
     signatureFields:
@@ -3231,6 +3231,9 @@ features:
         fieldDetailHint: "Go to the page that displays the signature field"
         selected: "Field selected"
         unselected: "Field not selected"
+      required: "REQUIRED SIGNATURES"
+      optional: "OPTIONAL SIGNATURES"
+      unfair: "UNFAIR TERMS SIGNATURES"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
@@ -3258,6 +3261,14 @@ features:
         cancel: "Cancel"
         continue: "Go to signature"
         confirm: "Sign and continue"
+        backToSignFieldsList: "Back to signatures"
+    requests:
+      header: "Signature status"
+      title: "The status of your signatures"
+      itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
+      signed: "Signed"
+      notAvailable: "Not available"
+      signingInProgress: "Signature in progress"   
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3297,7 +3308,7 @@ support:
     card: "Payment methods details"
     cardValue: "Number (encrypted), expiration, network"
     fci: "Signature request identifier"
-    fciValue: "To check the requests in progress"
+    fciValue: "To check the request in progress"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
@@ -3349,6 +3360,7 @@ idpay:
           NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
           NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
           UNSUBSCRIBED: Disiscritto
+          SUSPENDED: Sospesa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
@@ -3393,6 +3405,7 @@ idpay:
                 "Errore disattivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
+              SUSPENDED:  "Sospensione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
