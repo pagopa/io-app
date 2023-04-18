@@ -12,9 +12,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   idPayInitiativesFromInstrumentGet,
+  idPayWalletGet,
   idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll,
-  idPayWalletGet
+  idpayInitiativesInstrumentEnroll
 } from "../actions";
 
 export type IDPayWalletState = {
@@ -63,7 +63,8 @@ const reducer = (
       const initiativesToKeepInLoadingState = pipe(
         state.initiativesAwaitingStatusUpdate,
         Object.entries,
-        entries => entries.filter(([_, value]) => value), // remove all entries that have completed their request
+        // remove all entries that have completed their request
+        entries => entries.filter(([_, value]) => value),
         Object.fromEntries
       );
 
@@ -165,10 +166,9 @@ export const idPayInitiativeFromInstrumentPotSelector = (
     state,
     initiativeId
   );
-  const isItemActivePot = pot.some(isItemActive);
   switch (isAwaitingUpdate) {
     case undefined:
-      return isItemActivePot;
+      return pot.some(isItemActive);
     case true:
       return pot.someLoading(isItemActive);
     case false:

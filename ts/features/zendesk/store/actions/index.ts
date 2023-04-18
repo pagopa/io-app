@@ -20,6 +20,7 @@ export type ZendeskStartPayload = {
   startingRoute: string;
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 /**
  * The user chooses to start the workflow to open a support request

@@ -25,7 +25,8 @@ function* zendeskSupportWorkUnit(
         CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
           screen:
             zendeskStart.payload.assistanceForPayment ||
-            zendeskStart.payload.assistanceForCard
+            zendeskStart.payload.assistanceForCard ||
+            zendeskStart.payload.assistanceForFci
               ? ZENDESK_ROUTES.ASK_PERMISSIONS
               : ZENDESK_ROUTES.HELP_CENTER,
           params: zendeskStart.payload
