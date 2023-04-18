@@ -74,14 +74,14 @@ const mockInstrumentsEnrollmentService = jest.fn(
           mockDeleteInstrument()
             .then(() =>
               callback({
-                type: "DELETE_INSTRUMENT_SUCCESS",
-                instrument: event.instrument
+                ...event,
+                type: "DELETE_INSTRUMENT_SUCCESS"
               })
             )
             .catch(() =>
               callback({
-                type: "DELETE_INSTRUMENT_FAILURE",
-                instrument: event.instrument
+                ...event,
+                type: "DELETE_INSTRUMENT_FAILURE"
               })
             );
           break;
@@ -89,14 +89,14 @@ const mockInstrumentsEnrollmentService = jest.fn(
           mockEnrollInstrument()
             .then(() =>
               callback({
-                type: "ENROLL_INSTRUMENT_SUCCESS",
-                instrument: event.instrument
+                ...event,
+                type: "ENROLL_INSTRUMENT_SUCCESS"
               })
             )
             .catch(() =>
               callback({
-                type: "ENROLL_INSTRUMENT_FAILURE",
-                instrument: event.instrument
+                ...event,
+                type: "ENROLL_INSTRUMENT_FAILURE"
               })
             );
           break;
