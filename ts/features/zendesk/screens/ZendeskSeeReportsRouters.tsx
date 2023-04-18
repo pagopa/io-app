@@ -29,6 +29,7 @@ import { zendeskTicketNumberSelector } from "../store/reducers";
 export type ZendeskSeeReportsRoutersNavigationParams = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -46,7 +47,8 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useIODispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
-  const { assistanceForPayment, assistanceForCard } = props.route.params;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    props.route.params;
 
   useEffect(() => {
     const zendeskConfig = pipe(
@@ -108,6 +110,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
       <ZendeskEmptyTicketsComponent
         assistanceForPayment={assistanceForPayment}
         assistanceForCard={assistanceForCard}
+        assistanceForFci={assistanceForFci}
       />
     );
   }
