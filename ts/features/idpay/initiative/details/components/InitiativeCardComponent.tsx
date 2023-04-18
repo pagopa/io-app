@@ -9,6 +9,8 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -16,7 +18,6 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -30,6 +31,9 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     paddingTop: 0,
     flex: 1
+  },
+  initiativeName: {
+    textAlign: "center"
   },
   bonusLogoContainer: {
     backgroundColor: IOColors.white,
@@ -123,65 +127,69 @@ const InitiativeCardComponent = (props: Props) => {
     totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
   return (
     <View style={styles.cardContainer} testID={"card-component"}>
-      {/* top part */}
-      <View style={styles.topCardSection}>
-        <View style={styles.bonusLogoContainer}></View>
-        <VSpacer size={8} />
-        <H1>{initiativeName}</H1>
-        <LabelSmall color={"black"} weight="Regular">
-          {/* the ministry would go here */}
-        </LabelSmall>
-
-        <VSpacer size={8} />
-        <View style={styles.bonusStatusContainer}>
-          {/* as of now, this is misaligned, will be fixed once #4337 is merged */}
-          <IOBadge
-            small={true}
-            text={I18n.t(
-              `idpay.initiative.details.initiativeCard.statusLabels.${status}`
-            )}
-          />
-          <HSpacer size={8} />
-          <LabelSmall fontSize="small" weight="SemiBold" color="bluegreyDark">
-            {I18n.t(
-              `idpay.initiative.details.initiativeCard.${
-                isInitiativeConfigured ? "validUntil" : "expiresOn"
-              }`,
-              {
-                expiryDate: dateString
-              }
-            )}
-          </LabelSmall>
-        </View>
-      </View>
-
-      <VSpacer size={32} />
-      {/* bottom part */}
-
-      <View style={styles.bottomCardSection}>
-        <View style={styles.alignCenter}>
-          <LabelSmall color="bluegreyDark" weight="Regular">
-            {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
-          </LabelSmall>
-          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-            {formatNumberRightSign(amount)}
-          </H1>
+      <ContentWrapper>
+        {/* top part */}
+        <View style={styles.topCardSection}>
+          <View style={styles.bonusLogoContainer}></View>
           <VSpacer size={8} />
-          <BonusPercentageSlider
-            isGreyedOut={isInitiativeConfigured}
-            percentage={remainingBonusAmountPercentage}
-          />
-        </View>
-        <HSpacer size={48} />
-        <View style={styles.alignCenter}>
-          <LabelSmall color="bluegreyDark" weight="Regular">
-            {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+          <H1 style={styles.initiativeName}>{initiativeName}</H1>
+          <LabelSmall color={"black"} weight="Regular">
+            {/* the ministry would go here */}
           </LabelSmall>
-          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-            {formatNumberRightSign(toBeRepaidAmount)}
-          </H1>
+
+          <VSpacer size={8} />
+          <View style={styles.bonusStatusContainer}>
+            {/* as of now, this is misaligned, will be fixed once #4337 is merged */}
+            <IOBadge
+              small={true}
+              text={I18n.t(
+                `idpay.initiative.details.initiativeCard.statusLabels.${status}`
+              )}
+            />
+            <HSpacer size={8} />
+            <LabelSmall fontSize="small" weight="SemiBold" color="bluegreyDark">
+              {I18n.t(
+                `idpay.initiative.details.initiativeCard.${
+                  isInitiativeConfigured ? "validUntil" : "expiresOn"
+                }`,
+                {
+                  expiryDate: dateString
+                }
+              )}
+            </LabelSmall>
+          </View>
         </View>
-      </View>
+
+        <VSpacer size={32} />
+        {/* bottom part */}
+
+        <View style={styles.bottomCardSection}>
+          <View style={styles.alignCenter}>
+            <LabelSmall color="bluegreyDark" weight="Regular">
+              {I18n.t(
+                "idpay.initiative.details.initiativeCard.availableAmount"
+              )}
+            </LabelSmall>
+            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {formatNumberRightSign(amount)}
+            </H1>
+            <VSpacer size={8} />
+            <BonusPercentageSlider
+              isGreyedOut={isInitiativeConfigured}
+              percentage={remainingBonusAmountPercentage}
+            />
+          </View>
+          <HSpacer size={48} />
+          <View style={styles.alignCenter}>
+            <LabelSmall color="bluegreyDark" weight="Regular">
+              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+            </LabelSmall>
+            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {formatNumberRightSign(toBeRepaidAmount)}
+            </H1>
+          </View>
+        </View>
+      </ContentWrapper>
     </View>
   );
 };
