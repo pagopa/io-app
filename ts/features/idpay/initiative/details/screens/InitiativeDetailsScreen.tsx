@@ -207,7 +207,8 @@ export const InitiativeDetailsScreen = () => {
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY,
       params: {
-        initiativeId
+        initiativeId,
+        initiativeName: initiativeData?.initiativeName
       }
     });
   };

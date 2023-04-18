@@ -1,6 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import BeneficiaryDetailsScreen from "../screens/BeneficiaryDetailsScreen";
+import BeneficiaryDetailsScreen, {
+  BeneficiaryDetailsScreenParams
+} from "../screens/BeneficiaryDetailsScreen";
 import {
   InitiativeDetailsScreen,
   InitiativeDetailsScreenParams
@@ -20,7 +22,7 @@ export const IDPayDetailsRoutes = {
 export type IDPayDetailsParamsList = {
   [IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING]: InitiativeDetailsScreenParams;
   [IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE]: OperationsListScreenParams;
-  [IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY]: OperationsListScreenParams;
+  [IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY]: BeneficiaryDetailsScreenParams;
 };
 
 const Stack = createStackNavigator<IDPayDetailsParamsList>();

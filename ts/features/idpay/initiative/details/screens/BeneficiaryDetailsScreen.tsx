@@ -6,18 +6,28 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
+import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import ButtonSolid from "../../../../../components/ui/ButtonSolid";
+import Markdown from "../../../../../components/ui/Markdown";
+import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { format } from "../../../../../utils/dates";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { openWebUrl } from "../../../../../utils/url";
 import { Table, TableItem } from "../../../common/components/Table";
 import { IDPayDetailsParamsList } from "../navigation";
 import {
@@ -25,19 +35,10 @@ import {
   idpayInitiativeDetailsSelector
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
-import { openWebUrl } from "../../../../../utils/url";
-import I18n from "../../../../../i18n";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { Body } from "../../../../../components/core/typography/Body";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { Icon } from "../../../../../components/core/icons";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import ButtonSolid from "../../../../../components/ui/ButtonSolid";
-import Markdown from "../../../../../components/ui/Markdown";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
+  initiativeName?: string;
 };
 
 type BeneficiaryDetailsScreenRouteProps = RouteProp<
@@ -53,7 +54,7 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 const BeneficiaryDetailsScreen = () => {
   const route = useRoute<BeneficiaryDetailsScreenRouteProps>();
 
-  const { initiativeId } = route.params;
+  const { initiativeId, initiativeName } = route.params;
 
   const dispatch = useIODispatch();
 
@@ -64,14 +65,18 @@ const BeneficiaryDetailsScreen = () => {
   const beneficiaryDetailsPot = useIOSelector(idPayBeneficiaryDetailsSelector);
   const initiativeDetailsPot = useIOSelector(idpayInitiativeDetailsSelector);
 
-  const isLoading = pot.isLoading(beneficiaryDetailsPot);
+  const handlePrivacyLinkPress = () =>
+    pipe(
+      beneficiaryDetailsPot,
+      pot.toOption,
+      O.chain(({ privacyLink }) => O.fromNullable(privacyLink)),
+      O.map(openWebUrl),
+      O.toUndefined
+    );
 
-  const initiativeName = pipe(
-    initiativeDetailsPot,
-    pot.toOption,
-    O.map(initiative => initiative.initiativeName),
-    O.toUndefined
-  );
+  const handleUnsubscribePress = () => {
+    // TODO add unsubscription flow
+  };
 
   const content = pipe(
     sequenceS(O.option)({
@@ -79,16 +84,35 @@ const BeneficiaryDetailsScreen = () => {
       beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption)
     }),
     O.fold(
-      () => undefined,
+      () => <ScreenSkeleton />,
       props => <BeneficiaryDetailsComponent {...props} />
     )
   );
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={initiativeName}>
-      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {content}
-      </LoadingSpinnerOverlay>
+      <ScrollView>
+        <ContentWrapper>
+          {content}
+          <VSpacer size={16} />
+          <View style={styles.linkRow}>
+            <Link onPress={handlePrivacyLinkPress}>
+              {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
+            </Link>
+          </View>
+          <View style={styles.linkRow}>
+            <Link onPress={handleUnsubscribePress} color="red">
+              {I18n.t(
+                "idpay.initiative.beneficiaryDetails.buttons.unsubscribe",
+                {
+                  initiativeName
+                }
+              )}
+            </Link>
+          </View>
+          <VSpacer size={32} />
+        </ContentWrapper>
+      </ScrollView>
     </BaseScreenComponent>
   );
 };
@@ -102,18 +126,6 @@ const BeneficiaryDetailsComponent = (
   props: BeneficiaryDetailsComponentProps
 ) => {
   const { details, beneficiaryDetails } = props;
-
-  const handlePrivacyLinkPress = () =>
-    pipe(
-      beneficiaryDetails.privacyLink,
-      O.fromNullable,
-      O.map(openWebUrl),
-      O.toUndefined
-    );
-
-  const handleUnsubscribePress = () => {
-    // TODO add unsubscription flow
-  };
 
   const ruleInfoBox = pipe(
     beneficiaryDetails.ruleDescription,
@@ -261,29 +273,13 @@ const BeneficiaryDetailsComponent = (
   ];
 
   return (
-    <ScrollView>
-      <ContentWrapper>
-        {ruleInfoBox}
-        <Table items={tableItems} />
-        <LabelSmall weight="Regular" color="bluegrey">
-          {lastUpdateString}
-        </LabelSmall>
-        <VSpacer size={16} />
-        <View style={styles.linkRow}>
-          <Link onPress={handlePrivacyLinkPress}>
-            {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-          </Link>
-        </View>
-        <View style={styles.linkRow}>
-          <Link onPress={handleUnsubscribePress} color="red">
-            {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
-              initiativeName: details.initiativeName
-            })}
-          </Link>
-        </View>
-        <VSpacer size={32} />
-      </ContentWrapper>
-    </ScrollView>
+    <>
+      {ruleInfoBox}
+      <Table items={tableItems} />
+      <LabelSmall weight="Regular" color="bluegrey">
+        {lastUpdateString}
+      </LabelSmall>
+    </>
   );
 };
 
@@ -334,6 +330,52 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
     </>
   );
 };
+
+const ScreenSkeleton = () => (
+  <>
+    <View style={styles.infoBox}>
+      <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
+      <VSpacer size={16} />
+      {Array.from({ length: 4 }).map((_, i) => (
+        <View key={i}>
+          <Placeholder.Box
+            animate="fade"
+            height={16}
+            width={"100%"}
+            radius={4}
+          />
+          <VSpacer size={4} />
+        </View>
+      ))}
+    </View>
+    {Array.from({ length: 2 }).map((_, i) => (
+      <View key={i}>
+        <VSpacer size={32} />
+        <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
+        <VSpacer size={8} />
+        {Array.from({ length: 5 }).map((_, j) => (
+          <View key={j}>
+            <View style={IOStyles.rowSpaceBetween}>
+              <Placeholder.Box
+                animate="fade"
+                height={24}
+                width={100}
+                radius={4}
+              />
+              <Placeholder.Box
+                animate="fade"
+                height={24}
+                width={150}
+                radius={4}
+              />
+            </View>
+            <VSpacer size={8} />
+          </View>
+        ))}
+      </View>
+    ))}
+  </>
+);
 
 const styles = StyleSheet.create({
   linkRow: {
