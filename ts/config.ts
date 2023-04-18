@@ -116,7 +116,7 @@ export const pnEnabled = Config.PN_ENABLED === "YES";
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 4.4 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),

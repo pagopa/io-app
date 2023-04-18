@@ -5,7 +5,6 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -32,14 +31,18 @@ import {
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
+import {
+  Clause,
+  TypeEnum as ClausesTypeEnum
+} from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   clausesByType,
-  clauseTypeMaping,
+  getClauseLabel,
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -148,7 +151,9 @@ const FciSignatureFieldsScreen = (
         flexDirection: "row"
       }}
     >
-      <H3 color="bluegrey">{clauseTypeMaping.get(info.section.title)}</H3>
+      <H3 color="bluegrey">
+        {getClauseLabel(info.section.title as Clause["type"])}
+      </H3>
     </View>
   );
 
@@ -240,11 +245,10 @@ const FciSignatureFieldsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("features.fci.signatureFields.title")}</H1>
+        <ScreenContent title={I18n.t("features.fci.signatureFields.title")}>
           <VSpacer size={32} />
-        </View>
-        {renderSignatureFields()}
+          {renderSignatureFields()}
+        </ScreenContent>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps}

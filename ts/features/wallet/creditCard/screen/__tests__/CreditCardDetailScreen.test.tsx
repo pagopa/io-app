@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import * as React from "react";
-
 import { waitFor } from "@testing-library/react-native";
-import { createStore, Store } from "redux";
+import * as React from "react";
+import { Store, createStore } from "redux";
 import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { WalletTypeEnum } from "../../../../../../definitions/pagopa/WalletV2";
