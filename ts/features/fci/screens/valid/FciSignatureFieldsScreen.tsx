@@ -1,11 +1,10 @@
 import * as React from "react";
 import { View, SafeAreaView, SectionList } from "react-native";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -26,17 +25,27 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
+import {
+  fciEndRequest,
+  fciUpdateDocumentSignaturesRequest
+} from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
+import {
+  Clause,
+  TypeEnum as ClausesTypeEnum
+} from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   clausesByType,
-  clauseTypeMaping,
+  getClauseLabel,
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../components/core/icons/Icon";
+import ScreenContent from "../../../../components/screens/ScreenContent";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import DocumentWithSignature from "../../components/DocumentWithSignature";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -46,8 +55,8 @@ export type FciSignatureFieldsScreenNavigationParams = Readonly<{
 const FciSignatureFieldsScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE_FIELDS">
 ) => {
-  const docId = props.route.params.documentId;
   const currentDoc = props.route.params.currentDoc;
+  const docId = props.route.params.documentId;
   const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
   const signatureFieldsSelector = useSelector(
     fciDocumentSignatureFieldsSelector(docId)
@@ -58,6 +67,8 @@ const FciSignatureFieldsScreen = (
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const { showModal, hideModal } = React.useContext(LightModalContext);
 
   // get signatureFields for the current document
   const docSignatures = pipe(
@@ -101,14 +112,15 @@ const FciSignatureFieldsScreen = (
     useFciAbortSignatureFlow();
 
   const onPressDetail = (signatureField: SignatureField) => {
-    navigation.navigate(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOCUMENTS,
-      params: {
-        attrs: signatureField.attrs,
-        currentDoc
-      },
-      merge: true
-    });
+    showModal(
+      <DocumentWithSignature
+        attrs={signatureField.attrs}
+        currentDoc={currentDoc}
+        onClose={hideModal}
+        onError={() => setIsError(true)}
+        testID={"FciDocumentWithSignatureTestID"}
+      />
+    );
   };
 
   const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>
@@ -139,7 +151,9 @@ const FciSignatureFieldsScreen = (
         flexDirection: "row"
       }}
     >
-      <H3 color="bluegrey">{clauseTypeMaping.get(info.section.title)}</H3>
+      <H3 color="bluegrey">
+        {getClauseLabel(info.section.title as Clause["type"])}
+      </H3>
     </View>
   );
 
@@ -183,13 +197,12 @@ const FciSignatureFieldsScreen = (
     disabled: !isClausesChecked,
     onPress: () => {
       if (currentDoc < documentsSelector.length - 1) {
-        navigation.navigate(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.DOCUMENTS,
-          params: {
+        navigation.dispatch(
+          StackActions.push(FCI_ROUTES.DOCUMENTS, {
             attrs: undefined,
             currentDoc: increment(currentDoc)
-          }
-        });
+          })
+        );
       } else {
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.USER_DATA_SHARE
@@ -204,16 +217,7 @@ const FciSignatureFieldsScreen = (
 
   const customGoBack: React.ReactElement = (
     <TouchableDefaultOpacity
-      onPress={() =>
-        navigation.navigate(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.DOCUMENTS,
-          params: {
-            attrs: undefined,
-            currentDoc: undefined
-          },
-          merge: true
-        })
-      }
+      onPress={navigation.goBack}
       accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
@@ -221,6 +225,17 @@ const FciSignatureFieldsScreen = (
       <Icon name="legChevronLeft" color="bluegrey" />
     </TouchableDefaultOpacity>
   );
+
+  if (isError) {
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+        testID={"FciGenericErrorTestID"}
+      />
+    );
+  }
 
   return (
     <BaseScreenComponent
@@ -230,11 +245,10 @@ const FciSignatureFieldsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("features.fci.signatureFields.title")}</H1>
+        <ScreenContent title={I18n.t("features.fci.signatureFields.title")}>
           <VSpacer size={32} />
-        </View>
-        {renderSignatureFields()}
+          {renderSignatureFields()}
+        </ScreenContent>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps}
