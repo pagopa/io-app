@@ -90,7 +90,7 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
 
     service.send({
       type: "ENROLL_INSTRUMENT",
-      instrument: T_WALLET
+      walletId: T_WALLET.idWallet.toString()
     });
 
     await waitFor(() => expect(mockEnrollInstrument).toHaveBeenCalledTimes(1));
@@ -109,7 +109,8 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
 
     service.send({
       type: "DELETE_INSTRUMENT",
-      instrument: T_INSTRUMENT_DTO
+      walletId: T_WALLET.idWallet.toString(),
+      instrumentId: T_INSTRUMENT_DTO.instrumentId
     });
 
     await waitFor(() => expect(mockDeleteInstrument).toHaveBeenCalledTimes(1));
