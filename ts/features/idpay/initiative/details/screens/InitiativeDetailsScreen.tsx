@@ -221,7 +221,7 @@ export const InitiativeDetailsScreen = () => {
 };
 type StatusWithAlert = Exclude<
   StatusEnum,
-  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
+  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED | StatusEnum.SUSPENDED
 >;
 
 const MissingInitiativeDataAlert = ({
@@ -232,7 +232,11 @@ const MissingInitiativeDataAlert = ({
   const { status, initiativeId } = initiativeData;
   const navigation = useNavigation();
 
-  if (status === StatusEnum.UNSUBSCRIBED || status === StatusEnum.REFUNDABLE) {
+  if (
+    status === StatusEnum.UNSUBSCRIBED ||
+    status === StatusEnum.REFUNDABLE ||
+    status === StatusEnum.SUSPENDED
+  ) {
     return null;
   }
 
