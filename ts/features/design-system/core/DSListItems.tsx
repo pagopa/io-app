@@ -27,6 +27,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
+import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 
 export const DSListItems = () => (
   <IOThemeContext.Consumer>
@@ -77,6 +78,42 @@ export const DSListItems = () => (
               value={"Value"}
               description="Description"
               icon="gallery"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+          </View>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemNavAlert">
+          <View>
+            <ListItemNavAlert
+              value={"Value"}
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNavAlert
+              value={"Value"}
+              description="Description"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNavAlert
+              withoutIcon
+              value={"Value"}
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNavAlert
+              withoutIcon
+              value={"Value"}
+              description="Description"
               onPress={() => {
                 alert("Action triggered");
               }}

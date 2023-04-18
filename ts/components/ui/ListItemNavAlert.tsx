@@ -16,7 +16,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import { Icon, IOIcons } from "../core/icons";
+import { Icon } from "../core/icons";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
@@ -32,11 +32,11 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
 
-export type ListItemNav = WithTestID<{
+export type ListItemNavAlert = WithTestID<{
   value: string;
   description?: string;
+  withoutIcon?: boolean;
   onPress: (event: GestureResponderEvent) => void;
-  icon?: IOIcons;
   // Accessibility
   accessibilityLabel: string;
 }>;
@@ -49,14 +49,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ListItemNav = ({
+export const ListItemNavAlert = ({
   value,
   description,
+  withoutIcon = false,
   onPress,
-  icon,
   accessibilityLabel,
   testID
-}: ListItemNav) => {
+}: ListItemNavAlert) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -110,7 +110,7 @@ export const ListItemNav = ({
   }, [isPressed]);
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
-  const LegacyListItemNav = () => (
+  const LegacyListItemNavAlert = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -126,11 +126,11 @@ export const ListItemNav = ({
         <Animated.View
           style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
         >
-          {icon && (
+          {!withoutIcon && (
             <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
               <Icon
-                name={icon}
-                color="grey-450"
+                name="errorFilled"
+                color={theme.errorIcon}
                 size={IOListItemVisualParams.iconSize}
               />
             </View>
@@ -139,7 +139,11 @@ export const ListItemNav = ({
             <Text style={[styles.textValue, { color: IOColors.bluegreyDark }]}>
               {value}
             </Text>
-            {description && <Body weight="Regular">{description}</Body>}
+            {description && (
+              <Body weight="SemiBold" color={theme.errorText}>
+                {description}
+              </Body>
+            )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
@@ -154,7 +158,7 @@ export const ListItemNav = ({
   );
   /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemNav = () => (
+  const NewListItemNavAlert = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -170,11 +174,11 @@ export const ListItemNav = ({
         <Animated.View
           style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
         >
-          {icon && (
+          {!withoutIcon && (
             <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
               <Icon
-                name={icon}
-                color="grey-450"
+                name="errorFilled"
+                color={theme.errorIcon}
                 size={IOListItemVisualParams.iconSize}
               />
             </View>
@@ -182,7 +186,7 @@ export const ListItemNav = ({
           <View style={IOStyles.flex}>
             <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
             {description && (
-              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+              <LabelSmall weight="SemiBold" color={theme.errorText}>
                 {description}
               </LabelSmall>
             )}
@@ -201,7 +205,11 @@ export const ListItemNav = ({
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
   without the following condition */
-  return isDesignSystemEnabled ? <NewListItemNav /> : <LegacyListItemNav />;
+  return isDesignSystemEnabled ? (
+    <NewListItemNavAlert />
+  ) : (
+    <LegacyListItemNavAlert />
+  );
 };
 
-export default ListItemNav;
+export default ListItemNavAlert;

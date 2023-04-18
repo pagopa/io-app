@@ -220,3 +220,18 @@ export const IOListItemVisualParams: IOListItemVisualParams = {
   iconSize: 24,
   chevronSize: 24
 };
+
+export const IOListItemStyles = StyleSheet.create({
+  listItem: {
+    paddingVertical: IOListItemVisualParams.paddingVertical,
+    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
+    marginRight: -IOListItemVisualParams.paddingHorizontal,
+    marginLeft: -IOListItemVisualParams.paddingHorizontal
+  },
+  listItemInner: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  }
+});

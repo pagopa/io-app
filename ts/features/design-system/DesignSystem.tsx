@@ -1,4 +1,4 @@
-import { SectionList, View } from "react-native";
+import { ScrollView, SectionList, View } from "react-native";
 import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -62,7 +62,7 @@ export const DesignSystem = (props: Props) => {
       goBack={true}
       headerTitle={I18n.t("profile.main.designSystem")}
     >
-      <View
+      <ScrollView
         style={{
           flex: 1,
           backgroundColor: IOColors[theme["appBackground-primary"]]
@@ -98,7 +98,7 @@ export const DesignSystem = (props: Props) => {
           keyExtractor={(item, index) => `${item.route}-${index}`}
           sections={DESIGN_SYSTEM_SECTION_DATA}
         />
-      </View>
+      </ScrollView>
     </BaseScreenComponent>
   );
 };

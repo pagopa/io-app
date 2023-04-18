@@ -277,9 +277,12 @@ export type IOTheme = {
   "textBody-tertiary": IOColors;
   // Design System related
   "cardBorder-default": IOColors;
-  "iconColor-default": IOColors;
+  "icon-default": IOColors;
   // Layout
   "divider-default": IOColors;
+  // Status
+  errorIcon: IOColors;
+  errorText: IOColors;
 };
 
 export const IOThemeLight: IOTheme = {
@@ -297,9 +300,12 @@ export const IOThemeLight: IOTheme = {
   "textBody-tertiary": "grey-700",
   // Design System related
   "cardBorder-default": "grey-100",
-  "iconColor-default": "grey-650",
+  "icon-default": "grey-650",
   // Layout
-  "divider-default": "grey-100"
+  "divider-default": "grey-100",
+  // Status
+  errorIcon: "error-500",
+  errorText: "error-850"
 };
 
 export const IOThemeDark: IOTheme = {
@@ -318,9 +324,12 @@ export const IOThemeDark: IOTheme = {
   "textBody-tertiary": "grey-450",
   // Design System related
   "cardBorder-default": "grey-850",
-  "iconColor-default": "grey-450",
+  "icon-default": "grey-450",
   // Layout
-  "divider-default": "grey-850"
+  "divider-default": "grey-850",
+  // Status
+  errorIcon: "error-400",
+  errorText: "error-850"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
