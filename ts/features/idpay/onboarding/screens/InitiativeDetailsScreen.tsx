@@ -53,16 +53,19 @@ const InitiativeDetailsScreen = () => {
   const scrollViewRef = React.useRef<ScrollView>(null);
 
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
-  const [isFooterVisible, setFooterVisible] = React.useState(false);
+  const [isScrollButtonVisible, setScrollButtonVisible] = React.useState(false);
+  const [_, setFooterVisible] = React.useState(false);
 
-  const handleDescriptionLoadEnd = () => setDescriptionLoaded(true);
+  const handleDescriptionLoadEnd = () => {
+    setDescriptionLoaded(true);
+    setScrollButtonVisible(true);
+  };
 
   const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
 
   const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    // Checks if the Continue button is visibile after a scroll event
     const paddingToBottom = 100;
 
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
@@ -70,10 +73,22 @@ const InitiativeDetailsScreen = () => {
       layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
 
-    setFooterVisible(isCloseToBottom);
+    setFooterVisible(isVisible => {
+      if (isVisible && !isCloseToBottom) {
+        // Continue button transition from VISIBLE to HIDDEN
+        setScrollButtonVisible(true);
+      } else if (!isVisible && isCloseToBottom) {
+        // Continue button transition from HIDDEN to VISIBLE
+        setScrollButtonVisible(false);
+      }
+      return isCloseToBottom;
+    });
   };
 
-  const handleScrollDownPress = () => scrollViewRef.current?.scrollToEnd();
+  const handleScrollDownPress = () => {
+    setScrollButtonVisible(false);
+    scrollViewRef.current?.scrollToEnd();
+  };
 
   const onboardingPrivacyAdvice = pipe(
     initiative,
@@ -131,7 +146,7 @@ const InitiativeDetailsScreen = () => {
       </ScrollView>
       <ScrollDownButton
         onPress={handleScrollDownPress}
-        isVisible={isDescriptionLoaded && !isFooterVisible}
+        isVisible={isScrollButtonVisible}
       />
     </BaseScreenComponent>
   );
