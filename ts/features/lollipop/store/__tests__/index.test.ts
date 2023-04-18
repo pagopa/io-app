@@ -1,9 +1,26 @@
 import * as O from "fp-ts/lib/Option";
-import {
-  PersistedLollipopState,
-  migrationKeyTag,
-  migrationKeyTagFunctional
-} from "..";
+import { PersistedState } from "redux-persist";
+import { PersistedLollipopState, migrationKeyTagFunctional } from "..";
+
+const migrationKeyTag = (state: PersistedState): PersistedLollipopState => {
+  const persistedLS = state as PersistedLollipopState;
+  const keyTagOption = persistedLS.keyTag;
+  if (O.isSome(keyTagOption) && typeof keyTagOption.value !== "string") {
+    const innerOption = keyTagOption.value as O.Option<string>;
+    if (O.isSome(innerOption)) {
+      return {
+        ...state,
+        keyTag: O.some(innerOption.value)
+      } as PersistedLollipopState;
+    } else {
+      return {
+        ...state,
+        keyTag: O.none
+      } as PersistedLollipopState;
+    }
+  }
+  return state as PersistedLollipopState;
+};
 
 describe("Test migration KeyTag", () => {
   describe("Test migrationKeyTag()", () => {
