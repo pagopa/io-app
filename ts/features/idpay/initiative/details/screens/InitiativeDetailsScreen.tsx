@@ -46,8 +46,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  flexGrow: {
-    flexGrow: 1
+  scroll: {
+    backgroundColor: IOColors["blue-50"]
+  },
+  container: {
+    flex: 1,
+    flexGrow: 1,
+    backgroundColor: IOColors.white,
+    zIndex: -1,
+    top: -50,
+    paddingTop: 50,
+    paddingBottom: 500,
+    marginBottom: -500
   }
 });
 
@@ -135,15 +145,9 @@ export const InitiativeDetailsScreen = () => {
 
     return (
       <>
-        <ScrollView bounces={false}>
+        <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
           <InitiativeCardComponent initiative={initiativeData} />
-          <View
-            style={[
-              IOStyles.flex,
-              IOStyles.horizontalContentPadding,
-              styles.flexGrow
-            ]}
-          >
+          <View style={[IOStyles.horizontalContentPadding, styles.container]}>
             <VSpacer size={16} />
             <View style={IOStyles.flex}>
               {initiativeNeedsConfiguration && (
@@ -217,7 +221,7 @@ export const InitiativeDetailsScreen = () => {
 };
 type StatusWithAlert = Exclude<
   StatusEnum,
-  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
+  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED | StatusEnum.SUSPENDED
 >;
 
 const MissingInitiativeDataAlert = ({
@@ -228,7 +232,11 @@ const MissingInitiativeDataAlert = ({
   const { status, initiativeId } = initiativeData;
   const navigation = useNavigation();
 
-  if (status === StatusEnum.UNSUBSCRIBED || status === StatusEnum.REFUNDABLE) {
+  if (
+    status === StatusEnum.UNSUBSCRIBED ||
+    status === StatusEnum.REFUNDABLE ||
+    status === StatusEnum.SUSPENDED
+  ) {
     return null;
   }
 
