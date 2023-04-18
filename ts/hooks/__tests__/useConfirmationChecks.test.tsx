@@ -34,9 +34,18 @@ const TestComponent = () => {
     <View>
       {!checks.areFulfilled && <Text>{UNFULLFILLED_CHECK_TEST}</Text>}
       {checks.areFulfilled && <Text>{FULLFILLED_CHECK_TEST}</Text>}
-      <TouchableOpacity onPress={() => checks.toggle(0)} testID={`check0`} />
-      <TouchableOpacity onPress={() => checks.toggle(1)} testID={`check1`} />
-      <TouchableOpacity onPress={() => checks.toggle(2)} testID={`check2`} />
+      <TouchableOpacity
+        onPress={() => checks.setValue(0, true)}
+        testID={`check0`}
+      />
+      <TouchableOpacity
+        onPress={() => checks.setValue(1, true)}
+        testID={`check1`}
+      />
+      <TouchableOpacity
+        onPress={() => checks.setValue(2, true)}
+        testID={`check2`}
+      />
     </View>
   );
 };
