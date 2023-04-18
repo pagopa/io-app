@@ -12,6 +12,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import I18n from "../../../../../../i18n";
 import { openWebUrl } from "../../../../../../utils/url";
 import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { dpr28Dec2000Url } from "../../../../../../urls";
 import { DeclarationEntry } from "./DeclarationEntry";
 
 type OwnProps = {
@@ -87,9 +88,6 @@ function reducer(state: number, action: InnerAction) {
   }
 }
 
-const disclaimerLink =
-  "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
-
 /**
  * This screen allows the user to declare the required conditions.
  * When all the condition are accepted, the continue button will be enabled
@@ -126,7 +124,7 @@ export const DeclarationComponent: React.FunctionComponent<Props> = props => {
             <InfoBox>
               <Body>
                 {disclaimer.normal1}
-                <Link onPress={() => openWebUrl(disclaimerLink)}>
+                <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
                   {disclaimer.link}
                 </Link>
                 {disclaimer.normal2}

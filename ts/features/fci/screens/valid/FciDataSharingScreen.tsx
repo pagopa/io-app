@@ -29,9 +29,8 @@ import {
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
+import ScreenContent from "../../../../components/screens/ScreenContent";
 
 const styles = StyleSheet.create({
   padded: {
@@ -53,8 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  bottomPadding: { paddingBottom: 20 }
+  }
 });
 
 const iconSize = 24;
@@ -106,76 +104,71 @@ const FciDataSharingScreen = (): React.ReactElement => {
       goBack
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("features.fci.shareDataScreen.title")}</H1>
-          <VSpacer size={8} />
-          <H4 weight="Regular" color={"bluegreyDark"}>
-            {I18n.t("features.fci.shareDataScreen.content")}
-          </H4>
-          <VSpacer size={16} />
-        </View>
-        <View style={styles.padded}>
-          <List testID="FciDataSharingScreenListTestID">
-            {name && (
-              <ListItemComponent
-                testID="FciDataSharingScreenNameTestID"
-                title={I18n.t("features.fci.shareDataScreen.name")}
-                subTitle={name}
-                hideIcon
-              />
+        <ScreenContent
+          title={I18n.t("features.fci.shareDataScreen.title")}
+          subtitle={I18n.t("features.fci.shareDataScreen.content")}
+        >
+          <View style={styles.padded}>
+            <List testID="FciDataSharingScreenListTestID">
+              {name && (
+                <ListItemComponent
+                  testID="FciDataSharingScreenNameTestID"
+                  title={I18n.t("features.fci.shareDataScreen.name")}
+                  subTitle={name}
+                  hideIcon
+                />
+              )}
+              {familyName && (
+                <ListItemComponent
+                  testID="FciDataSharingScreenFamilyNameTestID"
+                  title={I18n.t("features.fci.shareDataScreen.familyName")}
+                  subTitle={familyName}
+                  hideIcon
+                />
+              )}
+              {birthDate && (
+                <ListItemComponent
+                  testID="FciDataSharingScreenBirthDateTestID"
+                  title={I18n.t("features.fci.shareDataScreen.birthDate")}
+                  subTitle={birthDate.toLocaleDateString()}
+                  hideIcon
+                />
+              )}
+              {fiscalCode && (
+                <ListItemComponent
+                  testID="FciDataSharingScreenFiscalCodeTestID"
+                  title={I18n.t("profile.fiscalCode.fiscalCode")}
+                  subTitle={fiscalCode}
+                  hideIcon
+                />
+              )}
+              {O.isSome(email) && (
+                <ListItemComponent
+                  testID="FciDataSharingScreenEmailTestID"
+                  title={I18n.t("profile.data.list.email")}
+                  subTitle={email.value}
+                  hideIcon
+                />
+              )}
+            </List>
+            <AlertTextComponent />
+          </View>
+        </ScreenContent>
+        <View testID="FciDataSharingScreenFooterTestID">
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps(
+              () => present(),
+              I18n.t("features.fci.shareDataScreen.cancel")
             )}
-            {familyName && (
-              <ListItemComponent
-                testID="FciDataSharingScreenFamilyNameTestID"
-                title={I18n.t("features.fci.shareDataScreen.familyName")}
-                subTitle={familyName}
-                hideIcon
-              />
+            rightButton={confirmButtonProps(
+              () => navigation.navigate("FCI_QTSP_TOS"),
+              `${I18n.t("features.fci.shareDataScreen.confirm")}`
             )}
-            {birthDate && (
-              <ListItemComponent
-                testID="FciDataSharingScreenBirthDateTestID"
-                title={I18n.t("features.fci.shareDataScreen.birthDate")}
-                subTitle={birthDate.toLocaleDateString()}
-                hideIcon
-              />
-            )}
-            {fiscalCode && (
-              <ListItemComponent
-                testID="FciDataSharingScreenFiscalCodeTestID"
-                title={I18n.t("profile.fiscalCode.fiscalCode")}
-                subTitle={fiscalCode}
-                hideIcon
-              />
-            )}
-            {O.isSome(email) && (
-              <ListItemComponent
-                testID="FciDataSharingScreenEmailTestID"
-                title={I18n.t("profile.data.list.email")}
-                subTitle={email.value}
-                hideIcon
-              />
-            )}
-          </List>
-          <AlertTextComponent />
+          />
         </View>
       </SafeAreaView>
-      <View
-        style={styles.bottomPadding}
-        testID="FciDataSharingScreenFooterTestID"
-      >
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(
-            () => present(),
-            I18n.t("features.fci.shareDataScreen.cancel")
-          )}
-          rightButton={confirmButtonProps(
-            () => navigation.navigate("FCI_QTSP_TOS"),
-            `${I18n.t("features.fci.shareDataScreen.confirm")}`
-          )}
-        />
-      </View>
+
       {fciAbortSignature}
     </BaseScreenComponent>
   );

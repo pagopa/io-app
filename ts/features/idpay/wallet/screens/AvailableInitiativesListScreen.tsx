@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -15,14 +16,11 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
-import { idPayInitiativesFromInstrumentGet } from "../store/actions";
-import {
-  idPayAreInitiativesFromInstrumentErrorSelector,
-  idPayInitiativesFromInstrumentSelector
-} from "../store/reducers";
+import { useIDPayInitiativesFromInstrument } from "../hooks/useIDPayInitiativesFromInstrument";
+import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   idWallet: string;
@@ -50,32 +48,17 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
 export const IdPayInitiativeListScreen = (props: Props) => {
   const { idWallet } = props.route.params;
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
-  const [idpayInitiatives, maskedPan, brand] = pipe(
+  const [maskedPan, brand] = pipe(
     initiatives,
     pot.toOption,
     O.fold(
       () => undefined,
-      res => [res.initiativeList, res.maskedPan, res.brand]
+      res => [res.maskedPan, res.brand]
     )
-  ) ?? [[], undefined, undefined];
-  const dispatch = useIODispatch();
-  const areInitiativesInError = useIOSelector(
-    idPayAreInitiativesFromInstrumentErrorSelector
-  );
+  ) ?? [undefined, undefined];
 
-  React.useEffect(() => {
-    const timer = setInterval(
-      () =>
-        dispatch(
-          idPayInitiativesFromInstrumentGet.request({
-            idWallet,
-            isRefreshCall: true
-          })
-        ),
-      areInitiativesInError ? 6000 : 3000
-    );
-    return () => clearInterval(timer);
-  }, [dispatch, idWallet, areInitiativesInError]);
+  const idpayInitiatives =
+    useIDPayInitiativesFromInstrument(idWallet).initiativesList;
 
   return (
     <BaseScreenComponent
