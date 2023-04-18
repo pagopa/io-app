@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
-import { InitiativeInfoDTO } from "../../../../../../definitions/idpay/InitiativeInfoDTO";
 import {
   OnboardingStatusDTO,
   StatusEnum
@@ -19,6 +18,7 @@ import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { OnboardingFailureEnum } from "../failure";
 import { Context } from "../machine";
 import { createServicesImplementation } from "../services";
+import { InitiativeDataDTO } from "../../../../../../definitions/idpay/InitiativeDataDTO";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";
@@ -33,8 +33,14 @@ const T_CONTEXT: Context = {
 
 const T_SERVICE_ID = "efg456";
 
-const T_INITIATIVE_INFO_DTO: InitiativeInfoDTO = {
-  initiativeId: "1234"
+const T_INITIATIVE_DATA_DTO: InitiativeDataDTO = {
+  initiativeId: "1234",
+  description: "",
+  initiativeName: "abc",
+  organizationId: "123",
+  organizationName: "abc",
+  privacyLink: "abc",
+  tcLink: "abc"
 };
 
 const T_REQUIRED_CRITERIA_DTO: RequiredCriteriaDTO = {
@@ -135,8 +141,8 @@ describe("IDPay Onboarding machine services", () => {
     it("should get initiative data", async () => {
       const response: E.Either<
         Error,
-        { status: number; value?: InitiativeInfoDTO }
-      > = E.right({ status: 200, value: T_INITIATIVE_INFO_DTO });
+        { status: number; value?: InitiativeDataDTO }
+      > = E.right({ status: 200, value: T_INITIATIVE_DATA_DTO });
 
       mockIDPayClient.getInitiativeData.mockImplementation(() => response);
 
@@ -145,7 +151,7 @@ describe("IDPay Onboarding machine services", () => {
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID
         })
-      ).resolves.toMatchObject(T_INITIATIVE_INFO_DTO);
+      ).resolves.toMatchObject(T_INITIATIVE_DATA_DTO);
 
       expect(mockIDPayClient.getInitiativeData).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -176,7 +182,7 @@ describe("IDPay Onboarding machine services", () => {
         services.loadInitiativeStatus({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
@@ -184,7 +190,7 @@ describe("IDPay Onboarding machine services", () => {
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
-          initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+          initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
         })
       );
     });
@@ -199,7 +205,7 @@ describe("IDPay Onboarding machine services", () => {
         services.loadInitiativeStatus({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).resolves.toMatchObject(O.none);
 
@@ -207,7 +213,7 @@ describe("IDPay Onboarding machine services", () => {
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
-          initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+          initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
         })
       );
     });
@@ -215,7 +221,7 @@ describe("IDPay Onboarding machine services", () => {
     const statusFailures: ReadonlyArray<
       [status: StatusEnum, failure: OnboardingFailureEnum]
     > = [
-      [StatusEnum.ELIGIBILE_KO, OnboardingFailureEnum.NOT_ELIGIBLE],
+      [StatusEnum.ELIGIBLE_KO, OnboardingFailureEnum.NOT_ELIGIBLE],
       [StatusEnum.ONBOARDING_KO, OnboardingFailureEnum.NO_REQUIREMENTS],
       [StatusEnum.ONBOARDING_OK, OnboardingFailureEnum.ONBOARDED],
       [StatusEnum.UNSUBSCRIBED, OnboardingFailureEnum.UNSUBSCRIBED],
@@ -237,7 +243,7 @@ describe("IDPay Onboarding machine services", () => {
           services.loadInitiativeStatus({
             ...T_CONTEXT,
             serviceId: T_SERVICE_ID,
-            initiative: T_INITIATIVE_INFO_DTO
+            initiative: T_INITIATIVE_DATA_DTO
           })
         ).rejects.toMatch(failure);
       }
@@ -262,7 +268,7 @@ describe("IDPay Onboarding machine services", () => {
           services.loadInitiativeStatus({
             ...T_CONTEXT,
             serviceId: T_SERVICE_ID,
-            initiative: T_INITIATIVE_INFO_DTO
+            initiative: T_INITIATIVE_DATA_DTO
           })
         ).resolves.toMatchObject(O.some(status));
       }
@@ -288,7 +294,7 @@ describe("IDPay Onboarding machine services", () => {
         services.acceptTos({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
@@ -297,7 +303,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
           }
         })
       );
@@ -313,7 +319,7 @@ describe("IDPay Onboarding machine services", () => {
         services.acceptTos({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).resolves.toBeUndefined();
 
@@ -322,7 +328,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
           }
         })
       );
@@ -348,7 +354,7 @@ describe("IDPay Onboarding machine services", () => {
         services.loadRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
@@ -357,7 +363,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
           }
         })
       );
@@ -373,7 +379,7 @@ describe("IDPay Onboarding machine services", () => {
         services.loadRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).resolves.toMatchObject(O.none);
 
@@ -382,7 +388,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
           }
         })
       );
@@ -403,7 +409,7 @@ describe("IDPay Onboarding machine services", () => {
         services.loadRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO
+          initiative: T_INITIATIVE_DATA_DTO
         })
       ).resolves.toMatchObject(O.some(T_REQUIRED_CRITERIA_DTO));
 
@@ -412,7 +418,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId
           }
         })
       );
@@ -449,7 +455,7 @@ describe("IDPay Onboarding machine services", () => {
         services.acceptRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO,
+          initiative: T_INITIATIVE_DATA_DTO,
           requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO),
           multiConsentsAnswers: T_MULTI_CONSENTS_ANSWERS
         })
@@ -460,7 +466,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId,
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId,
             pdndAccept: true,
             selfDeclarationList: T_ACCEPTED_SELF_DECLARATION_LIST
           }
@@ -478,7 +484,7 @@ describe("IDPay Onboarding machine services", () => {
         services.acceptRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_INFO_DTO,
+          initiative: T_INITIATIVE_DATA_DTO,
           requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO),
           multiConsentsAnswers: T_MULTI_CONSENTS_ANSWERS
         })
@@ -489,7 +495,7 @@ describe("IDPay Onboarding machine services", () => {
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId,
+            initiativeId: T_INITIATIVE_DATA_DTO.initiativeId,
             pdndAccept: true,
             selfDeclarationList: T_ACCEPTED_SELF_DECLARATION_LIST
           }

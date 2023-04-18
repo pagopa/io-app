@@ -3255,6 +3255,9 @@ features:
         fieldDetailHint: "Visualizza sul documento dove metterai la firma"
         selected: "Campo selezionato"
         unselected: "Campo non selezionato"
+      required: "FIRME OBBLIGATORIE"
+      optional: "FIRME FACOLTATIVE"
+      unfair: "FIRME CLAUSOLE VESSATORIE"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
@@ -3282,6 +3285,14 @@ features:
         cancel: "Annulla"
         continue: "Vai alla firma"
         confirm: "Firma e continua"
+        backToSignFieldsList: "Torna alle firme"
+    requests:
+      header: "Stato delle firme"
+      title: "Gli stati delle tue firme"
+      itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
+      signed: "Firmato"
+      notAvailable: "Non disponibile"
+      signingInProgress: "Firma in corso"        
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3323,7 +3334,7 @@ support:
     card: "Dati del metodo di pagamento"
     cardValue: "Numero (cifrato), scadenza, circuito"
     fci: "Identificativo della richiesta di Firma"
-    fciValue: "Per verificare le richiesta in corso"
+    fciValue: "Per verificare la richiesta in corso"
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
@@ -3373,6 +3384,7 @@ idpay:
           NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
           NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
           UNSUBSCRIBED: Disiscritto
+          SUSPENDED: Sospesa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
@@ -3416,6 +3428,7 @@ idpay:
               REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
+              SUSPENDED:  "Sospensione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
