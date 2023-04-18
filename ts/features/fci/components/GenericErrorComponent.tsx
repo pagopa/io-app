@@ -10,6 +10,7 @@ type Props = WithTestID<{
   subTitle: string;
   email?: EmailString;
   retry?: boolean;
+  assistance?: boolean;
 }>;
 
 const GenericErrorComponent = (props: Props) => (
@@ -21,6 +22,7 @@ const GenericErrorComponent = (props: Props) => (
     onPress={props.onPress}
     retry={props.retry}
     email={props.email}
+    assistance={props.assistance}
   />
 );
 
