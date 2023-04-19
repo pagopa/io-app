@@ -136,7 +136,7 @@ describe("test idpay timeline reducer and selectors", () => {
     );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.noneLoading
+      pot.noneUpdating
     );
     expect(idpayOperationListSelector(store.getState())).toStrictEqual([]);
   });
