@@ -1,8 +1,10 @@
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
-  TransactionDetailDTO,
-  OperationTypeEnum as TransactionDetailOperationTypeEnum
+  OperationTypeEnum as TransactionTypeEnum,
+  TransactionDetailDTO
 } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
@@ -12,32 +14,27 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import themeVariables from "../../../../../theme/variables";
 import { format } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { getCardLogoComponent } from "../../../common/components/CardLogo";
 import { getLabelForCircuitType } from "../../../common/labels";
 
-type TransactionDetailsProps = {
+type Props = {
   transaction: TransactionDetailDTO;
 };
 
-/**
- * Displays details for both `REVERSAL` and `TRANSACTION` type operation
- * @param props
- * @returns
- */
-const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
+const TimelineTransactionDetailsComponent = (props: Props) => {
   const { transaction } = props;
-
-  const isReversal =
-    transaction.operationType === TransactionDetailOperationTypeEnum.REVERSAL;
 
   const alertViewRef = React.createRef<View>();
 
-  return (
-    <View style={styles.container}>
-      {isReversal && (
+  const reversalAlertComponent = pipe(
+    transaction.operationType,
+    O.of,
+    O.filter(type => type === TransactionTypeEnum.REVERSAL),
+    O.fold(
+      () => null,
+      () => (
         <>
           <Alert
             viewRef={alertViewRef}
@@ -46,10 +43,17 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
           />
           <VSpacer size={16} />
         </>
-      )}
+      )
+    )
+  );
+
+  return (
+    <View style={IOStyles.flex}>
+      <VSpacer size={8} />
+      {reversalAlertComponent}
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.instrument")}</Body>
-        <View style={styles.centerRow}>
+        <View style={[IOStyles.row, IOStyles.alignCenter]}>
           {getCardLogoComponent(transaction.brand)}
           <HSpacer size={8} />
           <Body weight="SemiBold">
@@ -76,6 +80,7 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
       <ItemSeparatorComponent noPadded={true} />
       <VSpacer size={24} />
       <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
+      <VSpacer size={4} />
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.date")}</Body>
         <Body weight="SemiBold">
@@ -127,21 +132,11 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexGrow: 1,
-    paddingVertical: themeVariables.spacerHeight
-  },
   detailRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: themeVariables.spacerSmallHeight,
-    paddingBottom: themeVariables.spacerSmallHeight
-  },
-  centerRow: {
-    flexDirection: "row",
-    alignItems: "center"
+    paddingVertical: 8
   }
 });
 
-export { TransactionDetailsComponent };
+export { TimelineTransactionDetailsComponent };
