@@ -7,16 +7,20 @@ import * as React from "react";
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
-  ScrollView
+  ScrollView,
+  StyleSheet,
+  View
 } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { OnboardingDescriptionMarkdown } from "../components/OnboardingDescriptionMarkdown";
+import {
+  OnboardingDescriptionMarkdown,
+  OnboardingDescriptionMarkdownSkeleton
+} from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { ScrollDownButton } from "../components/ScrollDownButton";
@@ -47,7 +51,6 @@ const InitiativeDetailsScreen = () => {
   }, [machine, serviceId]);
 
   const initiative = useSelector(machine, selectInitiative);
-
   const isUpserting = useSelector(machine, isUpsertingSelector);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -103,6 +106,20 @@ const InitiativeDetailsScreen = () => {
     )
   );
 
+  const descriptionComponent = pipe(
+    initiative,
+    O.fromNullable,
+    O.fold(
+      () => <OnboardingDescriptionMarkdownSkeleton />,
+      ({ description }) => (
+        <OnboardingDescriptionMarkdown
+          onLoadEnd={handleDescriptionLoadEnd}
+          description={description}
+        />
+      )
+    )
+  );
+
   return (
     <BaseScreenComponent
       goBack={handleGoBackPress}
@@ -115,15 +132,13 @@ const InitiativeDetailsScreen = () => {
         scrollEnabled={isDescriptionLoaded}
         onScroll={handleOnScroll}
         scrollEventThrottle={400}
+        contentContainerStyle={styles.scrollContainer}
       >
-        <ContentWrapper>
+        <View style={styles.container}>
           <VSpacer size={24} />
           <OnboardingServiceHeader initiative={initiative} />
           <VSpacer size={24} />
-          <OnboardingDescriptionMarkdown
-            onLoadEnd={handleDescriptionLoadEnd}
-            description={initiative?.description}
-          />
+          {descriptionComponent}
           <VSpacer size={8} />
           <ItemSeparatorComponent noPadded={true} />
           <VSpacer size={16} />
@@ -142,7 +157,7 @@ const InitiativeDetailsScreen = () => {
             }}
           />
           <VSpacer size={48} />
-        </ContentWrapper>
+        </View>
       </ScrollView>
       <ScrollDownButton
         onPress={handleScrollDownPress}
@@ -151,6 +166,16 @@ const InitiativeDetailsScreen = () => {
     </BaseScreenComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1
+  },
+  container: {
+    flexGrow: 1,
+    paddingHorizontal: 24
+  }
+});
 
 export type { InitiativeDetailsScreenRouteParams };
 

@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
@@ -7,7 +5,7 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import Markdown from "../../../../components/ui/Markdown";
 
 type Props = {
-  description?: string;
+  description: string;
   onLoadEnd: () => void;
 };
 
@@ -26,22 +24,19 @@ const OnboardingDescriptionMarkdown = (props: Props) => {
     }, 300);
   };
 
-  return pipe(
-    description,
-    O.fromNullable,
-    O.fold(
-      () => <Skeleton />,
-      description => (
-        <View style={{ flexGrow: 1 }}>
-          {!isLoaded && <Skeleton />}
-          <Markdown onLoadEnd={handleOnLoadEnd}>{description}</Markdown>
-        </View>
-      )
-    )
-  );
+  if (description.length > 0) {
+    return (
+      <View style={{ flexGrow: 1 }}>
+        {!isLoaded && <OnboardingDescriptionMarkdownSkeleton />}
+        <Markdown onLoadEnd={handleOnLoadEnd}>{description}</Markdown>
+      </View>
+    );
+  }
+
+  return <View style={{ flexGrow: 1 }} />;
 };
 
-const Skeleton = () => (
+const OnboardingDescriptionMarkdownSkeleton = () => (
   <>
     {Array.from({ length: 30 }).map((_, i) => (
       <View key={i}>
@@ -71,4 +66,4 @@ const Skeleton = () => (
   </>
 );
 
-export { OnboardingDescriptionMarkdown };
+export { OnboardingDescriptionMarkdown, OnboardingDescriptionMarkdownSkeleton };
