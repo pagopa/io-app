@@ -46,7 +46,9 @@ const IDPayCardPreviewComponent = (props: Props) => {
     O.fromEither,
     O.fold(
       () => undefined,
-      logoUrl => <Image source={{ uri: logoUrl }} style={styles.previewLogo} />
+      logoUrl => (
+        <Image source={{ uri: logoUrl }} style={styles.initiativeLogo} />
+      )
     )
   );
 
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 24
   },
-  previewLogo: {
+  initiativeLogo: {
     resizeMode: "contain",
     backgroundColor: IOColors.white,
     height: 32,

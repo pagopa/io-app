@@ -1,5 +1,8 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -84,15 +87,26 @@ const InitiativeCardComponent = (props: Props) => {
   const remainingBonusAmountPercentage =
     totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
 
+  const logoComponent = pipe(
+    NonEmptyString.decode(""),
+    O.fromEither,
+    O.alt(() => O.some("https://it.idcert.io/assets/images/logos/18app.png")), // TODO remove temp logo url
+    O.fold(
+      () => undefined,
+      logoUrl => (
+        <Image source={{ uri: logoUrl }} style={styles.initiativeLogo} />
+      )
+    )
+  );
+
   return (
     <View style={styles.cardContainer} testID={"card-component"}>
       <ContentWrapper>
         <View style={styles.topCardSection}>
-          <View style={styles.bonusLogoContainer}></View>
-          <VSpacer size={8} />
+          {logoComponent}
           <H1 style={styles.initiativeName}>{initiativeName}</H1>
           <LabelSmall color={"black"} weight="Regular">
-            {/* TODO add organization name */}
+            Ministero della Cultura{/* TODO remove temp oreganization name */}
           </LabelSmall>
           <VSpacer size={8} />
           <View style={styles.bonusStatusContainer}>
@@ -243,11 +257,13 @@ const styles = StyleSheet.create({
   initiativeName: {
     textAlign: "center"
   },
-  bonusLogoContainer: {
+  initiativeLogo: {
+    resizeMode: "contain",
     backgroundColor: IOColors.white,
     height: 56,
     width: 56,
-    borderRadius: 8
+    borderRadius: 8,
+    marginBottom: 8
   },
   topCardSection: {
     flex: 2,
