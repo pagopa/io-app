@@ -23,8 +23,8 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
-  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.30.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
-  "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/add-first-LC-openapi/api_lollipop_first_consumer.yaml",  
+  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.46.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
+  "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/add-first-LC-openapi/api_lollipop_first_consumer.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -214,7 +214,7 @@
     "uuid": "^8.3.2",
     "validator": "^13.7.0",
     "vision-camera-code-scanner": "^0.2.0",
-    "xml2js": "^0.4.23",
+    "xml2js": "^0.5.0",
     "xss": "1.0.10",
     "xstate": "^4.33.6"
   },
