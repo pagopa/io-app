@@ -1,31 +1,11 @@
 import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
-import { Wallet } from "../../../../../types/pagopa";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
   type: "START_CONFIGURATION";
   initiativeId: string;
   mode: ConfigurationMode;
-};
-
-type E_STAGE_INSTRUMENT = {
-  type: "STAGE_INSTRUMENT";
-  instrument?: Wallet;
-};
-
-type E_ENROLL_INSTRUMENT = {
-  type: "ENROLL_INSTRUMENT";
-};
-
-type E_DELETE_INSTRUMENT = {
-  type: "DELETE_INSTRUMENT";
-  instrument: InstrumentDTO;
-};
-
-type E_ADD_PAYMENT_METHOD = {
-  type: "ADD_PAYMENT_METHOD";
 };
 
 type E_NEW_IBAN_ONBOARDING = {
@@ -40,6 +20,43 @@ type E_CONFIRM_IBAN = {
 type E_ENROLL_IBAN = {
   type: "ENROLL_IBAN";
   iban: IbanDTO;
+};
+
+type E_ENROLL_INSTRUMENT = {
+  type: "ENROLL_INSTRUMENT";
+  walletId: string;
+};
+
+type E_ENROLL_INSTRUMENT_FAILURE = {
+  type: "ENROLL_INSTRUMENT_FAILURE";
+  walletId: string;
+};
+
+type E_ENROLL_INSTRUMENT_SUCCESS = {
+  type: "ENROLL_INSTRUMENT_SUCCESS";
+  walletId: string;
+};
+
+type E_DELETE_INSTRUMENT = {
+  type: "DELETE_INSTRUMENT";
+  instrumentId: string;
+  walletId: string;
+};
+
+type E_DELETE_INSTRUMENT_SUCCESS = {
+  type: "DELETE_INSTRUMENT_SUCCESS";
+  instrumentId: string;
+  walletId: string;
+};
+
+type E_DELETE_INSTRUMENT_FAILURE = {
+  type: "DELETE_INSTRUMENT_FAILURE";
+  instrumentId: string;
+  walletId: string;
+};
+
+type E_ADD_PAYMENT_METHOD = {
+  type: "ADD_PAYMENT_METHOD";
 };
 
 type E_COMPLETE_CONFIGURATION = {
@@ -64,13 +81,16 @@ type E_QUIT = {
 
 export type Events =
   | E_START_CONFIGURATION
-  | E_STAGE_INSTRUMENT
-  | E_ENROLL_INSTRUMENT
-  | E_DELETE_INSTRUMENT
-  | E_ADD_PAYMENT_METHOD
   | E_NEW_IBAN_ONBOARDING
   | E_CONFIRM_IBAN
   | E_ENROLL_IBAN
+  | E_ENROLL_INSTRUMENT
+  | E_ENROLL_INSTRUMENT_SUCCESS
+  | E_ENROLL_INSTRUMENT_FAILURE
+  | E_DELETE_INSTRUMENT
+  | E_DELETE_INSTRUMENT_SUCCESS
+  | E_DELETE_INSTRUMENT_FAILURE
+  | E_ADD_PAYMENT_METHOD
   | E_COMPLETE_CONFIGURATION
   | E_SKIP
   | E_NEXT
