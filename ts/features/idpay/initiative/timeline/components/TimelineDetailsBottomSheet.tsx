@@ -5,11 +5,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import React from "react";
-import { View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
@@ -24,7 +24,7 @@ import {
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 import { RefundDetailsComponent } from "./RefundDetailsComponent";
-import { TransactionDetailsComponent } from "./TransactionDetailsComponent";
+import { TimelineTransactionDetailsComponent } from "./TimelineTransactionDetailsComponent";
 
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
@@ -45,13 +45,13 @@ const TimelineDetailsBottomSheet = () => {
   const isLoading = pot.isLoading(detailsPot);
 
   const content = pipe(
-    useIOSelector(idpayTimelineDetailsSelector),
+    detailsPot,
     pot.toOption,
     O.map(details => {
       switch (details.operationType) {
         case TransactionOperationTypeEnum.TRANSACTION:
         case TransactionOperationTypeEnum.REVERSAL:
-          return <TransactionDetailsComponent transaction={details} />;
+          return <TimelineTransactionDetailsComponent transaction={details} />;
         case RefundOperationTypeEnum.PAID_REFUND:
         case RefundOperationTypeEnum.REJECTED_REFUND:
           return <RefundDetailsComponent refund={details} />;
@@ -127,16 +127,18 @@ export const useTimelineDetailsBottomSheet = (
     <TimelineDetailsBottomSheet />,
     modalConfig.title,
     modalConfig.snapPoint,
-    <ContentWrapper>
-      <ButtonOutline
-        label={I18n.t("global.buttons.close")}
-        accessibilityLabel={I18n.t("global.buttons.close")}
-        color="primary"
-        onPress={() => modal.dismiss()}
-        fullWidth={true}
-      />
-      <VSpacer size={16} />
-    </ContentWrapper>
+    <SafeAreaView>
+      <ContentWrapper>
+        <ButtonOutline
+          label={I18n.t("global.buttons.close")}
+          accessibilityLabel={I18n.t("global.buttons.close")}
+          color="primary"
+          onPress={() => modal.dismiss()}
+          fullWidth={true}
+        />
+        <VSpacer size={32} />
+      </ContentWrapper>
+    </SafeAreaView>
   );
 
   const present = (operation: OperationListDTO) =>
