@@ -5,15 +5,16 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import React from "react";
-import { SafeAreaView, View } from "react-native";
+import { LayoutChangeEvent, SafeAreaView, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ButtonOutline from "../../../../../components/ui/ButtonOutline";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -38,13 +39,16 @@ const OperationWithDetailsType = enumType<
 /**
  * Component displayed in the bottom sheet to show the details of a timeline operation.
  * The content of this component is retrieved from the store via selector.
- * @returns {React.ReactElement}
  */
 const TimelineDetailsBottomSheet = () => {
   const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
   const isLoading = pot.isLoading(detailsPot);
 
-  const content = pipe(
+  if (isLoading) {
+    return <TimelineDetailsSkeleton />;
+  }
+
+  return pipe(
     detailsPot,
     pot.toOption,
     O.map(details => {
@@ -66,69 +70,40 @@ const TimelineDetailsBottomSheet = () => {
       </View>
     ))
   );
-
-  return (
-    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-      {content}
-    </LoadingSpinnerOverlay>
-  );
 };
 
-type ModalConfiguration = {
-  snapPoint: number;
-  title: string;
-};
-
-const modalConfigurationByOperationType: Record<
-  OperationWithDetailsType,
-  ModalConfiguration
-> = {
-  [RefundOperationTypeEnum.PAID_REFUND]: {
-    snapPoint: 420,
-    title: I18n.t("idpay.initiative.operationDetails.title.refund")
-  },
-  [RefundOperationTypeEnum.REJECTED_REFUND]: {
-    snapPoint: 540,
-    title: I18n.t("idpay.initiative.operationDetails.title.refund")
-  },
-  [TransactionOperationTypeEnum.TRANSACTION]: {
-    snapPoint: 530,
-    title: I18n.t("idpay.initiative.operationDetails.title.transaction")
-  },
-  [TransactionOperationTypeEnum.REVERSAL]: {
-    snapPoint: 650,
-    title: I18n.t("idpay.initiative.operationDetails.title.transaction")
-  }
-};
-
-export type TimelineDetailsBottomSheetModal = Omit<
-  IOBottomSheetModal,
-  "present"
-> & {
+type TimelineDetailsBottomSheetModal = Omit<IOBottomSheetModal, "present"> & {
   present: (operation: OperationListDTO) => void;
 };
 
 /**
  * This hook is used to show the bottom sheet with the details of a timeline operation
- * @param {InitiativeDTO["initiativeId"]} initiativeId
- * @returns {TimelineDetailsBottomSheetModal}
+ * @param initiativeId ID of the initiative associated to the operation details
  */
-export const useTimelineDetailsBottomSheet = (
+const useTimelineDetailsBottomSheet = (
   initiativeId: InitiativeDTO["initiativeId"]
 ): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
-  const [modalConfig, setModalConfig] = React.useState<ModalConfiguration>({
-    title: "",
-    snapPoint: 530
-  });
+  const handleContentOnLayout = (event: LayoutChangeEvent) => {
+    const bottomPadding = 190;
+    const { height } = event.nativeEvent.layout;
+    setSnapPoint(bottomPadding + height);
+  };
 
-  const modal = useIOBottomSheetModal(
-    <TimelineDetailsBottomSheet />,
-    modalConfig.title,
-    modalConfig.snapPoint,
+  const [title, setTitle] = React.useState<string>();
+  const [snapPoint, setSnapPoint] = React.useState<number>(530);
+
+  const modalContent = (
+    <View onLayout={handleContentOnLayout}>
+      <TimelineDetailsBottomSheet />
+    </View>
+  );
+
+  const modoalFooter = (
     <SafeAreaView>
       <ContentWrapper>
+        <VSpacer size={32} />
         <ButtonOutline
           label={I18n.t("global.buttons.close")}
           accessibilityLabel={I18n.t("global.buttons.close")}
@@ -141,12 +116,18 @@ export const useTimelineDetailsBottomSheet = (
     </SafeAreaView>
   );
 
+  const modal = useIOBottomSheetModal(
+    modalContent,
+    title,
+    snapPoint,
+    modoalFooter
+  );
+
   const present = (operation: OperationListDTO) =>
     pipe(
       OperationWithDetailsType.decode(operation.operationType),
-      E.map(type => modalConfigurationByOperationType[type]),
-      E.map(config => {
-        setModalConfig(config);
+      E.map(type => {
+        setTitle(I18n.t(`idpay.initiative.operationDetails.title.${type}`));
         dispatch(
           idpayTimelineDetailsGet.request({
             initiativeId,
@@ -159,3 +140,19 @@ export const useTimelineDetailsBottomSheet = (
 
   return { ...modal, present };
 };
+
+const TimelineDetailsSkeleton = () => (
+  <View style={{ paddingTop: 8, paddingBottom: 10 }}>
+    {Array.from({ length: 6 }).map((_, i) => (
+      <View key={i} style={{ paddingVertical: 8 }}>
+        <View style={IOStyles.rowSpaceBetween}>
+          <Placeholder.Box animate="fade" width={100} height={21} radius={4} />
+          <Placeholder.Box animate="fade" width={150} height={21} radius={4} />
+        </View>
+      </View>
+    ))}
+  </View>
+);
+
+export type { TimelineDetailsBottomSheet };
+export { useTimelineDetailsBottomSheet };

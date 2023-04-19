@@ -3431,8 +3431,10 @@ idpay:
               SUSPENDED:  "Sospensione"
     operationDetails:
       title: 
-        transaction: Dettaglio dell'operazione
-        refund: Dettaglio del rimborso
+        TRANSACTION: Dettaglio dell'operazione
+        REVERSAL: Dettaglio dell'operazione
+        PAID_REFUND: Dettaglio del rimborso
+        REJECTED_REFUND: Dettaglio del rimborso
       instrument: Metodo di pagamento
       maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione
