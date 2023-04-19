@@ -20,11 +20,13 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type IconButton = WithTestID<{
-  icon: IOIcons;
   color?: "primary" | "neutral" | "contrast";
+  icon: IOIcons;
   disabled?: boolean;
+  // Accessibility
   accessibilityLabel: string;
   accessibilityHint?: string;
+  // Events
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
@@ -108,8 +110,8 @@ const AnimatedIconClassComponent =
   Animated.createAnimatedComponent(IconClassComponent);
 
 export const IconButton = ({
-  icon,
   color = "primary",
+  icon,
   disabled = false,
   onPress,
   accessibilityLabel,
@@ -178,16 +180,19 @@ export const IconButton = ({
 
   return (
     <Pressable
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
-      testID={testID}
+      style={IOButtonStyles.dimensionsDefault}
+      disabled={disabled}
+      // Events
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      // Accessibility
       accessible={true}
-      disabled={disabled}
-      style={IOButtonStyles.dimensionsDefault}
+      accessibilityRole={"button"}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      // Test
+      testID={testID}
     >
       <Animated.View
         style={[
