@@ -1,6 +1,8 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import {
@@ -65,15 +67,11 @@ type RefundDetailsProps = {
   refund: RefundOperationDTO;
 };
 
-const RefundDetailsComponent = (props: RefundDetailsProps) => {
+const TimelineRefundDetailsComponent = (props: RefundDetailsProps) => {
   const { refund } = props;
-
-  const alertViewRef = React.createRef<View>();
 
   const { close: closeBottomSheet } = useBottomSheet();
   const initiativeId = useIOSelector(idpayInitiativeIdSelector);
-
-  const isRejected = refund.operationType === OperationTypeEnum.REJECTED_REFUND;
 
   const handleEditIbanPress = () => {
     closeBottomSheet();
@@ -94,11 +92,16 @@ const RefundDetailsComponent = (props: RefundDetailsProps) => {
     );
   };
 
-  return (
-    <>
-      {isRejected && (
+  const alertViewRef = React.createRef<View>();
+
+  const rejectedAlertComponent = pipe(
+    refund.operationType,
+    O.of,
+    O.filter(type => type === OperationTypeEnum.REJECTED_REFUND),
+    O.fold(
+      () => null,
+      () => (
         <>
-          <VSpacer size={16} />
           <Alert
             viewRef={alertViewRef}
             content={I18n.t(
@@ -112,7 +115,14 @@ const RefundDetailsComponent = (props: RefundDetailsProps) => {
           />
           <VSpacer size={16} />
         </>
-      )}
+      )
+    )
+  );
+
+  return (
+    <>
+      <VSpacer size={8} />
+      {rejectedAlertComponent}
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.iban")}</Body>
         <Body weight="SemiBold">{/* TODO add iban */}</Body>
@@ -171,4 +181,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { RefundDetailsComponent };
+export { TimelineRefundDetailsComponent };

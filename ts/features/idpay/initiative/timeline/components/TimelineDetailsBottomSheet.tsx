@@ -24,7 +24,7 @@ import {
 } from "../../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
-import { RefundDetailsComponent } from "./RefundDetailsComponent";
+import { TimelineRefundDetailsComponent } from "./TimelineRefundDetailsComponent";
 import { TimelineTransactionDetailsComponent } from "./TimelineTransactionDetailsComponent";
 
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
@@ -58,7 +58,7 @@ const TimelineDetailsBottomSheet = () => {
           return <TimelineTransactionDetailsComponent transaction={details} />;
         case RefundOperationTypeEnum.PAID_REFUND:
         case RefundOperationTypeEnum.REJECTED_REFUND:
-          return <RefundDetailsComponent refund={details} />;
+          return <TimelineRefundDetailsComponent refund={details} />;
         default:
           // We don't show additional info for other operation types
           return <></>;
