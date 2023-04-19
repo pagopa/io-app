@@ -3356,11 +3356,11 @@ idpay:
         toRefund: Da rimborsare
         statusLabels:
           REFUNDABLE: Attiva
-          NOT_REFUNDABLE: Disattivata
-          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
-          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
-          UNSUBSCRIBED: Disiscritto
-          SUSPENDED: Sospesa
+          NOT_REFUNDABLE: Attiva
+          NOT_REFUNDABLE_ONLY_IBAN: Attiva
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: Attiva
+          UNSUBSCRIBED: Rimossa
+          SUSPENDED: In pausa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
