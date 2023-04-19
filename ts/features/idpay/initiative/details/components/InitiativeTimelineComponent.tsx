@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { List as NBList } from "native-base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
@@ -21,7 +20,10 @@ import {
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
-import { TimelineOperationListItem } from "./TimelineOperationListItem";
+import {
+  TimelineOperationListItem,
+  TimelineOperationListItemSkeleton
+} from "./TimelineOperationListItem";
 
 const styles = StyleSheet.create({
   spaceBetween: {
@@ -65,14 +67,6 @@ const ConfiguredInitiativeData = (props: Props) => {
   const timeline = useIOSelector(idpayOperationListSelector);
   const isLoading = pot.isLoading(paginatedTimelinePot);
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (timeline.length === 0) {
-    return emptyTimelineContent;
-  }
-
   const navigateToOperationsList = () => {
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE,
@@ -84,6 +78,30 @@ const ConfiguredInitiativeData = (props: Props) => {
 
   const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
     detailsBottomSheet.present(operation);
+
+  const renderTimelineContent = () => {
+    if (isLoading) {
+      return Array.from({ length: 3 }).map((_, index) => (
+        <TimelineOperationListItemSkeleton key={index} />
+      ));
+    }
+
+    if (timeline.length === 0) {
+      return emptyTimelineContent;
+    }
+
+    return (
+      <>
+        {timeline.slice(0, 3).map(operation => (
+          <TimelineOperationListItem
+            key={operation.operationId}
+            operation={operation}
+            onPress={() => showOperationDetailsBottomSheet(operation)}
+          />
+        ))}
+      </>
+    );
+  };
 
   return (
     <>
@@ -100,15 +118,7 @@ const ConfiguredInitiativeData = (props: Props) => {
         </Body>
       </View>
       <VSpacer size={8} />
-      <NBList>
-        {timeline.slice(0, 3).map(operation => (
-          <TimelineOperationListItem
-            key={operation.operationId}
-            operation={operation}
-            onPress={() => showOperationDetailsBottomSheet(operation)}
-          />
-        ))}
-      </NBList>
+      {renderTimelineContent()}
       {detailsBottomSheet.bottomSheet}
     </>
   );

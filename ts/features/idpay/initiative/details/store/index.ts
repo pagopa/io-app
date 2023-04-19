@@ -4,9 +4,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import {
+  InitiativeDTO,
+  StatusEnum as InitiativeStatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -34,7 +37,7 @@ const reducer = (
     case getType(idpayInitiativeGet.request):
       return {
         ...state,
-        details: pot.toLoading(state.details)
+        details: pot.toLoading(pot.none)
       };
     case getType(idpayInitiativeGet.success):
       return {
@@ -114,9 +117,26 @@ export const idpayOperationListSelector = createSelector(
       []
     )
 );
+
 export const idpayOperationListLengthSelector = createSelector(
   idpayOperationListSelector,
   operationList => operationList.length
+);
+
+export const initiativeNeedsConfigurationSelector = createSelector(
+  idpayInitiativeDetailsSelector,
+  idpayOperationListLengthSelector,
+  (initiative, timelineLenght) =>
+    pipe(
+      initiative,
+      pot.toOption,
+      O.map(
+        initiative =>
+          initiative.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
+          timelineLenght <= 1
+      ),
+      O.getOrElse(() => false)
+    )
 );
 
 export const idpayTimelineCurrentPageSelector = createSelector(
