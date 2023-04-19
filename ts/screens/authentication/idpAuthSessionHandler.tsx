@@ -11,8 +11,11 @@ import {
   useFocusEffect,
   useNavigation
 } from "@react-navigation/native";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import URLParse from "url-parse";
+import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
+import { Text } from "native-base";
+import { H3 } from "../../components/core/typography/H3";
 import { store } from "../../boot/configureStoreAndPersistor";
 import BaseScreenComponent, {
   ContextualHelpProps
@@ -47,11 +50,33 @@ import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { SessionToken } from "../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { Pictogram } from "../../components/core/pictograms";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import themeVariables from "../../theme/variables";
 import {
   ErrorType,
   IdpAuthErrorScreen,
   IdpAuthErrorScreenType
 } from "./idpAuthErrorScreen";
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 56
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: themeVariables.contentPadding
+  },
+  title: {
+    textAlign: "center"
+  }
+});
 
 const getNativeCodeError = (error: string) => {
   const regex = /(?<=Code=)\d+/;
@@ -65,8 +90,8 @@ export type AuthSessionErrorPageType = {
   idpAuthErrorScreenProps: IdpAuthErrorScreenType;
 };
 
-type RequestInfoLoadingOrAuthorized = {
-  requestState: "LOADING" | "AUTHORIZED";
+type RequestInfoPositiveStates = {
+  requestState: "LOADING" | "AUTHORIZED" | "AUTHORIZING";
 };
 
 type RequestInfoError = {
@@ -75,7 +100,11 @@ type RequestInfoError = {
   errorCode?: string;
 };
 
-type RequestInfo = RequestInfoLoadingOrAuthorized | RequestInfoError;
+type RequestInfo = RequestInfoPositiveStates | RequestInfoError;
+
+const isBackButtonEnabled = (requestInfo: RequestInfo): boolean =>
+  requestInfo.requestState === "AUTHORIZING" ||
+  requestInfo.requestState === "ERROR";
 
 const onBack = () =>
   NavigationService.dispatchNavigationAction(CommonActions.goBack());
@@ -140,10 +169,25 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
   });
 
 export const AuthSessionPage = () => {
-  // Normally, request is loading, otherwise there is an error
   const [requestInfo, setRequestInfo] = useState<RequestInfo>({
     requestState: "LOADING"
   });
+    // This is a handler for the browser login. It applies to android only.
+    useEffect(() => {
+      const subscription = AppState.addEventListener('change', nextAppState => {
+        if(nextAppState === "background"){
+          setRequestInfo({
+            requestState: "AUTHORIZING",
+          });
+        };
+      });
+  
+      return () => {
+        subscription.remove();
+      };
+    }, []);
+  
+
 
   const dispatch = useIODispatch();
 
@@ -305,9 +349,8 @@ export const AuthSessionPage = () => {
     );
   }
 
-  // QUESTO VA TESTATO SU ANDROID, Su ios tutto ok
   useHardwareBackButton(() => {
-    if (requestInfo.requestState === "ERROR") {
+    if (isBackButtonEnabled(requestInfo)) {
       return true;
     }
     return false;
@@ -317,14 +360,13 @@ export const AuthSessionPage = () => {
   useFocusEffect(
     React.useCallback(() => {
       navigation.setOptions({
-        gestureEnabled: requestInfo.requestState === "ERROR"
+        gestureEnabled: isBackButtonEnabled(requestInfo)
       });
-    }, [navigation, requestInfo.requestState])
+    }, [navigation, requestInfo])
   );
 
   // It is enough to set the status to loading,
   // the reload will ensure that the functions necessary for correct functioning are performed.
-  // These functions, in error state, are not re-executed
   const onRetry = () => setRequestInfo({ requestState: "LOADING" });
 
   if (requestInfo.requestState === "AUTHORIZED") {
@@ -332,8 +374,8 @@ export const AuthSessionPage = () => {
   } else {
     return (
       <BaseScreenComponent
-        goBack={requestInfo.requestState === "ERROR"}
-        hideHelpButton={requestInfo.requestState !== "ERROR"}
+        goBack={isBackButtonEnabled(requestInfo)}
+        hideHelpButton={!isBackButtonEnabled(requestInfo)}
         contextualHelp={contextualHelp}
         faqCategories={["authentication_SPID"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
@@ -350,6 +392,26 @@ export const AuthSessionPage = () => {
               onCancel={onBack}
               onRetry={onRetry}
             />
+          )}
+          {requestInfo.requestState === "AUTHORIZING" && (
+            <SafeAreaView style={IOStyles.flex}>
+              <View style={styles.errorContainer}>
+                <Pictogram name={"processing"} size={120} />
+                <VSpacer size={16} />
+                <H3 style={styles.title}>
+                  {I18n.t("spid.pending_login.title")}
+                </H3>
+                <VSpacer size={16} />
+                <Text alignCenter={true}>
+                  {I18n.t("spid.pending_login.details")}
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <ButtonDefaultOpacity block={true} onPress={onBack}>
+                  <Text>{I18n.t("spid.pending_login.button")}</Text>
+                </ButtonDefaultOpacity>
+              </View>
+            </SafeAreaView>
           )}
         </LoadingSpinnerOverlay>
       </BaseScreenComponent>
