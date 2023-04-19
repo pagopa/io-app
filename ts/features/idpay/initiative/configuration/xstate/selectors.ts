@@ -1,4 +1,5 @@
 import * as P from "@pagopa/ts-commons/lib/pot";
+import _ from "lodash";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
@@ -39,10 +40,6 @@ const selectIsLoadingInstruments = (state: StateWithContext) =>
 const selectAreInstrumentsSkipped = (state: StateWithContext) =>
   state.context.areInstrumentsSkipped ?? false;
 
-const selectIsUpsertingInstrument = (state: StateWithContext) =>
-  state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
-  state.matches("CONFIGURING_INSTRUMENTS.DELETING_INSTRUMENT");
-
 const selectEnrolledIban = createSelector(
   selectInitiativeDetails,
   ibanListSelector,
@@ -50,7 +47,6 @@ const selectEnrolledIban = createSelector(
     if (initiative?.iban === undefined) {
       return undefined;
     }
-
     return ibanList.find(_ => _.iban === initiative.iban);
   }
 );
@@ -76,19 +72,15 @@ const initiativeInstrumentsByIdWalletSelector = createSelector(
 const selectInstrumentStatuses = (state: StateWithContext) =>
   state.context.instrumentStatuses;
 
+const isUpsertingInstrumentSelector = createSelector(
+  selectInstrumentStatuses,
+  statuses => Object.values(statuses).some(P.isLoading)
+);
+
 const instrumentStatusByIdWalletSelector = (idWallet: number) =>
   createSelector(
     selectInstrumentStatuses,
     statuses => statuses[idWallet] ?? P.some(undefined)
-  );
-
-const selectInstrumentToEnroll = (state: StateWithContext) =>
-  state.context.instrumentToEnroll;
-
-const isInstrumentEnrollingSelector = (idWallet: number) =>
-  createSelector(
-    selectInstrumentToEnroll,
-    instrument => instrument?.idWallet === idWallet
   );
 
 const failureSelector = (state: StateWithContext) => state.context.failure;
@@ -102,13 +94,11 @@ export {
   selectIsIbanOnlyMode,
   selectIsInstrumentsOnlyMode,
   selectIsLoadingInstruments,
-  selectIsUpsertingInstrument,
   selectAreInstrumentsSkipped,
   selectEnrolledIban,
   selectWalletInstruments,
   initiativeInstrumentsByIdWalletSelector,
+  isUpsertingInstrumentSelector,
   instrumentStatusByIdWalletSelector,
-  selectInstrumentToEnroll,
-  isInstrumentEnrollingSelector,
   failureSelector
 };
