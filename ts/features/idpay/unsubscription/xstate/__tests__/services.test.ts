@@ -5,7 +5,6 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { InitiativeInfoDTO } from "../../../../../../definitions/idpay/InitiativeInfoDTO";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context } from "../context";
 
@@ -61,7 +60,7 @@ describe("IDPay Unsubscription machine services", () => {
     it("should get initiative data", async () => {
       const response: E.Either<
         Error,
-        { status: number; value?: InitiativeInfoDTO }
+        { status: number; value?: InitiativeDTO }
       > = E.right({ status: 200, value: T_INITIATIVE_DTO });
 
       mockIDPayClient.getWalletDetail.mockImplementation(() => response);
