@@ -1,5 +1,6 @@
 export const mockIDPayClient = {
   getInitiativeData: jest.fn(),
+  getInitiativeBeneficiaryDetail: jest.fn(),
   checkPrerequisites: jest.fn(),
   consentOnboarding: jest.fn(),
   onboardingCitizen: jest.fn(),
