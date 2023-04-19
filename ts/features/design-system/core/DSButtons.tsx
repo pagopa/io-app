@@ -1091,8 +1091,6 @@ export const DSButtons = () => {
             }}
           />
 
-          <HSpacer size={16} />
-
           <IconButtonContained
             accessibilityLabel="Tap to trigger test alert"
             icon="help"
@@ -1114,8 +1112,6 @@ export const DSButtons = () => {
               alert("Action triggered");
             }}
           />
-
-          <HSpacer size={16} />
 
           <IconButtonContained
             color="neutral"
@@ -1148,8 +1144,6 @@ export const DSButtons = () => {
               icon="help"
               onPress={onButtonPress}
             />
-
-            <HSpacer size={16} />
 
             <IconButtonContained
               color="contrast"
