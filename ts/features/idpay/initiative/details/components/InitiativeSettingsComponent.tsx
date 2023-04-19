@@ -189,6 +189,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
         <SettingsButtonComponent
           title={"Rimuovi iniziativa"}
           onPress={() => navigateToUnsubscription(initiativeId, initiativeName)}
+          subtitle=""
         />
       )
     )
