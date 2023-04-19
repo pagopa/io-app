@@ -1,3 +1,4 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -8,10 +9,9 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import bonusLogoTmp from "../../../../../img/features/idpay/bonus_logo.png";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import {
@@ -22,9 +22,8 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 
 type Props = {
-  initiativeId: string;
   initiativeName?: string;
-  endDate: Date;
+  logoUrl?: string;
   availableAmount?: number;
   onPress?: () => void;
 };
@@ -33,13 +32,22 @@ const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 
 const IDPayCardPreviewComponent = (props: Props) => {
-  const { initiativeName } = props;
+  const { initiativeName, logoUrl, onPress } = props;
 
   const availableAmount = pipe(
     props.availableAmount,
     O.fromNullable,
     O.map(formatNumberRightSign),
     O.getOrElse(() => "-")
+  );
+
+  const logoComponent = pipe(
+    NonEmptyString.decode(logoUrl),
+    O.fromEither,
+    O.fold(
+      () => undefined,
+      logoUrl => <Image source={{ uri: logoUrl }} style={styles.previewLogo} />
+    )
   );
 
   return (
@@ -59,7 +67,7 @@ const IDPayCardPreviewComponent = (props: Props) => {
       >
         <TouchableDefaultOpacity
           style={styles.cardContent}
-          onPress={props.onPress}
+          onPress={onPress}
           accessible={true}
           accessibilityRole={"button"}
         >
@@ -69,9 +77,7 @@ const IDPayCardPreviewComponent = (props: Props) => {
               {availableAmount}
             </LabelSmall>
           </View>
-          <HSpacer size={8} />
-          <Image source={bonusLogoTmp} style={styles.previewLogo} />
-          <HSpacer size={8} />
+          {logoComponent}
         </TouchableDefaultOpacity>
         <VSpacer size={16} />
       </ImageBackground>
@@ -116,13 +122,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16
+    paddingLeft: 16,
+    paddingRight: 24
   },
   previewLogo: {
+    resizeMode: "contain",
     backgroundColor: IOColors.white,
     height: 32,
     width: 32,
-    borderRadius: 4
+    borderRadius: 4,
+    marginLeft: 8
   }
 });
 
