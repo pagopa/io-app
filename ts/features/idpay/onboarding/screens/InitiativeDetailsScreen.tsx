@@ -22,6 +22,7 @@ import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
+import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
@@ -95,6 +96,18 @@ const InitiativeDetailsScreen = () => {
 
   const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
 
+  const serviceHeaderComponent = pipe(
+    initiative,
+    O.fromNullable,
+    O.map(initiative => ({
+      organizationName: initiative.organizationName,
+      initiativeName: initiative.initiativeName,
+      logoURL: initiative.logoURL
+    })),
+    O.map(props => <OnboardingServiceHeader key={"header"} {...props} />),
+    O.toUndefined
+  );
+
   const descriptionComponent = pipe(
     initiative?.description,
     O.fromNullable,
@@ -133,7 +146,9 @@ const InitiativeDetailsScreen = () => {
             style={IOStyles.flex}
           >
             <View style={IOStyles.horizontalContentPadding}>
-              <VSpacer size={16} />
+              <VSpacer size={24} />
+              {serviceHeaderComponent}
+              <VSpacer size={24} />
               {descriptionComponent}
               <VSpacer size={16} />
               <ItemSeparatorComponent noPadded={true} />
