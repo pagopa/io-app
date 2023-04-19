@@ -8,7 +8,6 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -20,13 +19,11 @@ type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
-  timelineDetails: pot.Pot<OperationDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
-  timeline: pot.none,
-  timelineDetails: pot.none
+  timeline: pot.none
 };
 
 const reducer = (
