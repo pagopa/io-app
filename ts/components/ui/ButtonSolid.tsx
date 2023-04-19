@@ -25,6 +25,8 @@ import {
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { IOIcons, Icon } from "../core/icons";
+import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
@@ -32,8 +34,13 @@ export type ButtonSolid = WithTestID<{
   small?: boolean;
   fullWidth?: boolean;
   disabled?: boolean;
+  // Icons
+  icon?: IOIcons;
+  iconPosition?: "start" | "end";
+  // Accessibility
   accessibilityLabel: string;
   accessibilityHint?: string;
+  // Events
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
@@ -100,10 +107,12 @@ const legacyStyles = StyleSheet.create({
 
 // Disabled state
 const colorPrimaryButtonDisabled: IOColors = "grey-200";
+const DISABLED_OPACITY = 0.5;
 
 const styles = StyleSheet.create({
   backgroundDisabled: {
-    backgroundColor: IOColors[colorPrimaryButtonDisabled]
+    backgroundColor: IOColors[colorPrimaryButtonDisabled],
+    opacity: DISABLED_OPACITY
   }
 });
 
@@ -143,6 +152,8 @@ export const ButtonSolid = ({
   small = false,
   fullWidth = false,
   disabled = false,
+  icon,
+  iconPosition = "start",
   onPress,
   accessibilityLabel,
   accessibilityHint,
@@ -204,6 +215,18 @@ ButtonSolid) => {
     isPressed.value = 0;
   }, [isPressed]);
 
+  // Label & Icons colors
+  const foregroundLegacyColor: IOColors = disabled
+    ? mapLegacyColorStates[color]?.label?.disabled
+    : mapLegacyColorStates[color]?.label?.default;
+
+  const foregroundColor: IOColors = disabled
+    ? mapColorStates[color]?.label?.disabled
+    : mapColorStates[color]?.label?.default;
+
+  // Icon size
+  const iconSize = small ? 16 : 20;
+
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
@@ -221,6 +244,7 @@ ButtonSolid) => {
       <Animated.View
         style={[
           IOButtonLegacyStyles.button,
+          iconPosition === "end" && { flexDirection: "row-reverse" },
           small
             ? IOButtonLegacyStyles.buttonSizeSmall
             : IOButtonLegacyStyles.buttonSizeDefault,
@@ -232,13 +256,15 @@ ButtonSolid) => {
           !disabled && pressedAnimationStyle
         ]}
       >
+        {icon && (
+          <>
+            <Icon name={icon} size={iconSize} color={foregroundLegacyColor} />
+            <HSpacer size={8} />
+          </>
+        )}
         <BaseTypography
           weight={"Bold"}
-          color={
-            disabled
-              ? mapLegacyColorStates[color]?.label?.disabled
-              : mapLegacyColorStates[color]?.label?.default
-          }
+          color={foregroundLegacyColor}
           style={[
             IOButtonLegacyStyles.label,
             small
@@ -275,6 +301,7 @@ ButtonSolid) => {
       <Animated.View
         style={[
           IOButtonStyles.button,
+          iconPosition === "end" && { flexDirection: "row-reverse" },
           small
             ? IOButtonStyles.buttonSizeSmall
             : IOButtonStyles.buttonSizeDefault,
@@ -286,14 +313,20 @@ ButtonSolid) => {
           !disabled && pressedAnimationStyle
         ]}
       >
+        {icon && (
+          <>
+            {/* If 'iconPosition' is set to 'end', we use 
+            reverse flex property to invert the position */}
+            <Icon name={icon} size={iconSize} color={foregroundColor} />
+            {/* Once we have support for 'gap' property,
+            we can get rid of that spacer */}
+            <HSpacer size={8} />
+          </>
+        )}
         <BaseTypography
           font="ReadexPro"
           weight={"Regular"}
-          color={
-            disabled
-              ? mapColorStates[color]?.label?.disabled
-              : mapColorStates[color]?.label?.default
-          }
+          color={foregroundColor}
           style={[
             IOButtonStyles.label,
             small

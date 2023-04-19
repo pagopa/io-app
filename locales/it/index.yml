@@ -3384,6 +3384,7 @@ idpay:
           NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
           NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
           UNSUBSCRIBED: Disiscritto
+          SUSPENDED: Sospesa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
@@ -3427,6 +3428,7 @@ idpay:
               REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
+              SUSPENDED:  "Sospensione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
