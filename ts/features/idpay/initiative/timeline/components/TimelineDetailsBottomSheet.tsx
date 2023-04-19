@@ -14,6 +14,7 @@ import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../.
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ButtonOutline from "../../../../../components/ui/ButtonOutline";
 import I18n from "../../../../../i18n";
@@ -36,42 +37,6 @@ const OperationWithDetailsType = enumType<
   "OperationWithDetails"
 );
 
-/**
- * Component displayed in the bottom sheet to show the details of a timeline operation.
- * The content of this component is retrieved from the store via selector.
- */
-const TimelineDetailsBottomSheet = () => {
-  const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
-  const isLoading = pot.isLoading(detailsPot);
-
-  if (isLoading) {
-    return <TimelineDetailsSkeleton />;
-  }
-
-  return pipe(
-    detailsPot,
-    pot.toOption,
-    O.map(details => {
-      switch (details.operationType) {
-        case TransactionOperationTypeEnum.TRANSACTION:
-        case TransactionOperationTypeEnum.REVERSAL:
-          return <TimelineTransactionDetailsComponent transaction={details} />;
-        case RefundOperationTypeEnum.PAID_REFUND:
-        case RefundOperationTypeEnum.REJECTED_REFUND:
-          return <TimelineRefundDetailsComponent refund={details} />;
-        default:
-          // We don't show additional info for other operation types
-          return <></>;
-      }
-    }),
-    O.getOrElse(() => (
-      <View>
-        <Pictogram name="error" />
-      </View>
-    ))
-  );
-};
-
 type TimelineDetailsBottomSheetModal = Omit<IOBottomSheetModal, "present"> & {
   present: (operation: OperationListDTO) => void;
 };
@@ -85,6 +50,10 @@ const useTimelineDetailsBottomSheet = (
 ): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
+  const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
+  const isLoading = pot.isLoading(detailsPot);
+  const isError = pot.isError(detailsPot);
+
   const handleContentOnLayout = (event: LayoutChangeEvent) => {
     const bottomPadding = 190;
     const { height } = event.nativeEvent.layout;
@@ -94,13 +63,56 @@ const useTimelineDetailsBottomSheet = (
   const [title, setTitle] = React.useState<string>();
   const [snapPoint, setSnapPoint] = React.useState<number>(530);
 
-  const modalContent = (
-    <View onLayout={handleContentOnLayout}>
-      <TimelineDetailsBottomSheet />
-    </View>
+  const titleComponent = pipe(
+    title,
+    O.fromNullable,
+    O.fold(
+      () => null,
+      title => {
+        if (isLoading) {
+          return <TitleSkeleton />;
+        }
+        return <H3>{title}</H3>;
+      }
+    )
   );
 
-  const modoalFooter = (
+  const getModalContent = () => {
+    if (isLoading) {
+      return <ContentSkeleton />;
+    }
+
+    if (isError) {
+      return (
+        <View>
+          <Pictogram name="error" />
+        </View>
+      );
+    }
+
+    return pipe(
+      detailsPot,
+      pot.toOption,
+      O.map(details => {
+        switch (details.operationType) {
+          case TransactionOperationTypeEnum.TRANSACTION:
+          case TransactionOperationTypeEnum.REVERSAL:
+            return (
+              <TimelineTransactionDetailsComponent transaction={details} />
+            );
+          case RefundOperationTypeEnum.PAID_REFUND:
+          case RefundOperationTypeEnum.REJECTED_REFUND:
+            return <TimelineRefundDetailsComponent refund={details} />;
+          default:
+            // We don't show additional info for other operation types
+            return <></>;
+        }
+      }),
+      O.toUndefined
+    );
+  };
+
+  const modalFooter = (
     <SafeAreaView>
       <ContentWrapper>
         <VSpacer size={32} />
@@ -117,10 +129,10 @@ const useTimelineDetailsBottomSheet = (
   );
 
   const modal = useIOBottomSheetModal(
-    modalContent,
-    title,
+    <View onLayout={handleContentOnLayout}>{getModalContent()}</View>,
+    titleComponent,
     snapPoint,
-    modoalFooter
+    modalFooter
   );
 
   const present = (operation: OperationListDTO) =>
@@ -141,7 +153,11 @@ const useTimelineDetailsBottomSheet = (
   return { ...modal, present };
 };
 
-const TimelineDetailsSkeleton = () => (
+const TitleSkeleton = () => (
+  <Placeholder.Box animate="fade" width={100} height={21} radius={4} />
+);
+
+const ContentSkeleton = () => (
   <View style={{ paddingTop: 8, paddingBottom: 10 }}>
     {Array.from({ length: 6 }).map((_, i) => (
       <View key={i} style={{ paddingVertical: 8 }}>
@@ -154,5 +170,5 @@ const TimelineDetailsSkeleton = () => (
   </View>
 );
 
-export type { TimelineDetailsBottomSheet };
+export type { TimelineDetailsBottomSheetModal };
 export { useTimelineDetailsBottomSheet };
