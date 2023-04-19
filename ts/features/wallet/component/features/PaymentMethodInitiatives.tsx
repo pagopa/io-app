@@ -1,5 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -12,23 +13,16 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIOSelector } from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
-import {
-  idPayEnabledInitiativesFromInstrumentSelector,
-  idPayAreInitiativesFromInstrumentErrorSelector
-} from "../../../idpay/wallet/store/reducers";
-import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 import { IDPayInitiativesList } from "../../../idpay/wallet/components/IDPayInitiativesListComponents";
+import { useIDPayInitiativesFromInstrument } from "../../../idpay/wallet/hooks/useIDPayInitiativesFromInstrument";
+import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
 } & Pick<React.ComponentProps<typeof View>, "style">;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 const styles = StyleSheet.create({
   icon: { alignSelf: "center" },
@@ -41,27 +35,16 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
-  const { namedInitiativesList, loadIdpayInitiatives } = props;
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
-  const areInitiativesInError = useIOSelector(
-    idPayAreInitiativesFromInstrumentErrorSelector
-  );
 
-  React.useEffect(() => {
-    const timer = setInterval(
-      () => loadIdpayInitiatives(idWalletString, true),
-      areInitiativesInError ? 6000 : 3000
-      // TODO::add exponential backoff see #IODPAY-176
-    );
-    return () => clearInterval(timer);
-  }, [areInitiativesInError, idWalletString, loadIdpayInitiatives]);
+  const { initiativesList } = useIDPayInitiativesFromInstrument(idWalletString);
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       idWallet: idWalletString
     });
-  return namedInitiativesList.length > 0 ? (
+  return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>
         <View style={styles.row}>
@@ -84,7 +67,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
       </View>
       <IDPayInitiativesList
         idWallet={idWalletString}
-        initiatives={namedInitiativesList.slice(0, 3)}
+        initiatives={initiativesList.slice(0, 3)}
       />
     </View>
   ) : null;
@@ -99,11 +82,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     )
 });
-const mapStateToProps = (state: GlobalState) => ({
-  namedInitiativesList: idPayEnabledInitiativesFromInstrumentSelector(state)
-});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaymentMethodInitiatives);
+export default connect(mapDispatchToProps)(PaymentMethodInitiatives);
