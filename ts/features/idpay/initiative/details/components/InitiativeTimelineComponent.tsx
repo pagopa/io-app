@@ -31,27 +31,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const emptyTimelineContent = (
-  <>
-    <H3>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
-      )}
-    </H3>
-    <VSpacer size={8} />
-    <LabelSmall weight="Regular" color="bluegreyDark">
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
-      )}
-      <LabelSmall weight="SemiBold">
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
-        )}
-      </LabelSmall>
-    </LabelSmall>
-  </>
-);
-
 type Props = {
   initiativeId: string;
 };
@@ -87,7 +66,18 @@ const ConfiguredInitiativeData = (props: Props) => {
     }
 
     if (timeline.length === 0) {
-      return emptyTimelineContent;
+      return (
+        <LabelSmall weight="Regular" color="bluegreyDark">
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
+          )}
+          <LabelSmall weight="SemiBold">
+            {I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
+            )}
+          </LabelSmall>
+        </LabelSmall>
+      );
     }
 
     return (
