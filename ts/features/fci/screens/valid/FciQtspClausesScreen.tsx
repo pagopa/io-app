@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -29,7 +28,6 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { H4 } from "../../../../components/core/typography/H4";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
@@ -37,6 +35,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
+import ScreenContent from "../../../../components/screens/ScreenContent";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -92,6 +91,7 @@ const FciQtspClausesScreen = () => {
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        assistance={true}
         testID="PollingErrorComponentTestID"
       />
     );
@@ -166,15 +166,14 @@ const FciQtspClausesScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
-        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("features.fci.qtspTos.title")}</H1>
-          <VSpacer size={8} />
-          <H4 weight="Regular" color={"bluegreyDark"}>
-            {I18n.t("features.fci.qtspTos.subTitle")}
-          </H4>
-          <VSpacer size={24} />
-          {renderClausesFields()}
-        </View>
+        <ScreenContent
+          title={I18n.t("features.fci.qtspTos.title")}
+          subtitle={I18n.t("features.fci.qtspTos.subTitle")}
+        >
+          <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+            {renderClausesFields()}
+          </View>
+        </ScreenContent>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps}
