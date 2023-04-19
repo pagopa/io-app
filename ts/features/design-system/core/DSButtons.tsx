@@ -13,11 +13,12 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import IconButton from "../../../components/ui/IconButton";
+import IconButtonContained from "../../../components/ui/IconButtonContained";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import IconButton from "../../../components/ui/IconButton";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
@@ -904,14 +905,20 @@ export const DSButtons = () => {
       >
         IconButton
       </H2>
-      <DSComponentViewerBox name="IconButton · Primary Variant (using Pressable API)">
+      <DSComponentViewerBox name="IconButton · Primary variant">
         <View style={IOStyles.row}>
           <IconButton
             accessibilityLabel="Tap to trigger test alert"
+            icon="search"
+            onPress={onButtonPress}
+          />
+
+          <HSpacer size={16} />
+
+          <IconButton
+            accessibilityLabel="Tap to trigger test alert"
             icon="help"
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
 
           <HSpacer size={16} />
@@ -920,22 +927,27 @@ export const DSButtons = () => {
             accessibilityLabel="Tap to trigger test alert"
             icon="help"
             disabled
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
 
-      <DSComponentViewerBox name="IconButton · Neutral Variant, small">
+      <DSComponentViewerBox name="IconButton · Neutral variant">
         <View style={IOStyles.row}>
           <IconButton
             color="neutral"
             accessibilityLabel="Tap to trigger test alert"
+            icon="search"
+            onPress={onButtonPress}
+          />
+
+          <HSpacer size={16} />
+
+          <IconButton
+            color="neutral"
+            accessibilityLabel="Tap to trigger test alert"
             icon="help"
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
 
           <HSpacer size={16} />
@@ -945,9 +957,7 @@ export const DSButtons = () => {
             accessibilityLabel="Tap to trigger test alert"
             icon="help"
             disabled
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -960,11 +970,20 @@ export const DSButtons = () => {
         }
       >
         <DSComponentViewerBox
-          name="IconButton · Neutral Variant, small"
+          name="IconButton · Contrast variant"
           colorMode="dark"
           last
         >
           <View style={IOStyles.row}>
+            <IconButton
+              color="contrast"
+              accessibilityLabel="Tap to trigger test alert"
+              icon="search"
+              onPress={onButtonPress}
+            />
+
+            <HSpacer size={16} />
+
             <IconButton
               color="contrast"
               accessibilityLabel="Tap to trigger test alert"
@@ -1028,7 +1047,7 @@ export const DSButtons = () => {
         }
       >
         <DSComponentViewerBox
-          name="IconButton · Contrast variant, large"
+          name="IconButtonSolid · Contrast variant, large"
           colorMode="dark"
           last
         >
@@ -1055,6 +1074,103 @@ export const DSButtons = () => {
 
       <VSpacer size={40} />
 
+      <H2
+        color={"bluegrey"}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        IconButtonContained (Icebox)
+      </H2>
+      <DSComponentViewerBox name="IconButtonContained · Primary variant">
+        <View style={IOStyles.row}>
+          <IconButtonContained
+            accessibilityLabel="Tap to trigger test alert"
+            icon="help"
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+
+          <HSpacer size={16} />
+
+          <IconButtonContained
+            accessibilityLabel="Tap to trigger test alert"
+            icon="help"
+            disabled
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="IconButtonContained · Neutral variant">
+        <View style={IOStyles.row}>
+          <IconButtonContained
+            color="neutral"
+            accessibilityLabel="Tap to trigger test alert"
+            icon="help"
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+
+          <HSpacer size={16} />
+
+          <IconButtonContained
+            color="neutral"
+            accessibilityLabel="Tap to trigger test alert"
+            icon="help"
+            disabled
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+
+      <View
+        style={
+          isDesignSystemEnabled
+            ? styles.primaryBlock
+            : styles.primaryBlockLegacy
+        }
+      >
+        <DSComponentViewerBox
+          name="IconButtonContained · Contrast variant"
+          colorMode="dark"
+          last
+        >
+          <View style={IOStyles.row}>
+            <IconButtonContained
+              color="contrast"
+              accessibilityLabel="Tap to trigger test alert"
+              icon="help"
+              onPress={onButtonPress}
+            />
+
+            <HSpacer size={16} />
+
+            <IconButtonContained
+              color="contrast"
+              accessibilityLabel="Tap to trigger test alert"
+              icon="help"
+              disabled
+              onPress={onButtonPress}
+            />
+          </View>
+        </DSComponentViewerBox>
+      </View>
+
+      <VSpacer size={40} />
+
+      <H2
+        color={"bluegrey"}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        ButtonExtendedOutline
+      </H2>
       <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
         <View>
           <ButtonExtendedOutline
@@ -1077,7 +1193,7 @@ export const DSButtons = () => {
         </View>
       </DSComponentViewerBox>
 
-      <VSpacer size={24} />
+      <VSpacer size={40} />
 
       <H2
         color={"bluegrey"}
