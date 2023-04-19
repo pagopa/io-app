@@ -58,7 +58,7 @@ import {
   updateNotificationsInstallationToken
 } from "../actions/notifications";
 import { tosAccepted } from "../actions/onboarding";
-import { createPinSuccess, updatePin } from "../actions/pinset";
+import { createPinSuccess } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
@@ -331,7 +331,6 @@ const trackAction =
       case getType(identificationForceLogout):
       // onboarding
       case getType(createPinSuccess):
-      case getType(updatePin):
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):

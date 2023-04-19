@@ -32,16 +32,17 @@ const styles = StyleSheet.create({
 const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
   if (typeof body === "string") {
     return (
-      <Body testID="infoScreenBody" style={styles.textAlignCenter}>
-        {body}
+      <>
+        <Body testID="infoScreenBody" style={styles.textAlignCenter}>
+          {body}
+          {email && <> </>}
+        </Body>
         {email && (
           <Link onPress={() => Linking.openURL(`mailto:${email}`)}>
-            {" "}
             {email}
-            {"."}
           </Link>
         )}
-      </Body>
+      </>
     );
   }
 

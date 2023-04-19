@@ -1,6 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Icon } from "../../../../../components/core/icons";
@@ -8,11 +7,14 @@ import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import { Wallet } from "../../../../../types/pagopa";
+import customVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
@@ -24,13 +26,11 @@ import {
   failureSelector,
   initiativeInstrumentsByIdWalletSelector,
   isLoadingSelector,
+  isUpsertingInstrumentSelector,
   selectInitiativeDetails,
-  selectInstrumentToEnroll,
   selectIsInstrumentsOnlyMode,
-  selectIsUpsertingInstrument,
   selectWalletInstruments
 } from "../xstate/selectors";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -44,6 +44,8 @@ type InstrumentsEnrollmentScreenRouteProps = RouteProp<
 const InstrumentsEnrollmentScreen = () => {
   const route = useRoute<InstrumentsEnrollmentScreenRouteProps>();
   const { initiativeId } = route.params;
+
+  const [stagedWalletId, setStagedWalletId] = React.useState<number>();
 
   const configurationMachine = useConfigurationMachineService();
 
@@ -64,44 +66,18 @@ const InstrumentsEnrollmentScreen = () => {
     selectWalletInstruments
   );
 
+  const isUpserting = useSelector(
+    configurationMachine,
+    isUpsertingInstrumentSelector
+  );
+
   const initiativeInstrumentsByIdWallet = useSelector(
     configurationMachine,
     initiativeInstrumentsByIdWalletSelector
   );
 
-  const enrollingInstrument = useSelector(
-    configurationMachine,
-    selectInstrumentToEnroll
-  );
-
-  const isUpserting = useSelector(
-    configurationMachine,
-    selectIsUpsertingInstrument
-  );
-
   const hasSelectedInstruments =
     Object.keys(initiativeInstrumentsByIdWallet).length > 0;
-
-  const handleBackPress = () => {
-    configurationMachine.send({ type: "BACK" });
-  };
-
-  const handleSkipButton = () => {
-    configurationMachine.send({ type: "SKIP" });
-  };
-
-  const handleContinueButton = () => {
-    configurationMachine.send({ type: "NEXT" });
-  };
-
-  const handleAddPaymentMethodButton = () => {
-    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
-  };
-
-  const handleEnrollConfirm = () => {
-    configurationMachine.send({ type: "ENROLL_INSTRUMENT" });
-    enrollmentBottomSheetModal.dismiss();
-  };
 
   React.useEffect(() => {
     if (initiativeId) {
@@ -112,6 +88,35 @@ const InstrumentsEnrollmentScreen = () => {
       });
     }
   }, [configurationMachine, initiativeId]);
+
+  React.useEffect(() => {
+    if (
+      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
+      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+    ) {
+      setStagedWalletId(undefined);
+    }
+  }, [failure]);
+
+  const handleBackPress = () => configurationMachine.send({ type: "BACK" });
+
+  const handleSkipButton = () => configurationMachine.send({ type: "SKIP" });
+
+  const handleContinueButton = () =>
+    configurationMachine.send({ type: "NEXT" });
+
+  const handleAddPaymentMethodButton = () =>
+    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
+
+  const handleEnrollConfirm = () => {
+    if (stagedWalletId) {
+      configurationMachine.send({
+        type: "ENROLL_INSTRUMENT",
+        walletId: stagedWalletId.toString()
+      });
+      setStagedWalletId(undefined);
+    }
+  };
 
   const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
@@ -149,32 +154,17 @@ const InstrumentsEnrollmentScreen = () => {
       }}
     />,
     () => {
-      revertInstrumentSwitch();
+      setStagedWalletId(undefined);
     }
   );
 
   React.useEffect(() => {
-    if (enrollingInstrument) {
+    if (stagedWalletId) {
       enrollmentBottomSheetModal.present();
+    } else {
+      enrollmentBottomSheetModal.dismiss();
     }
-  }, [enrollmentBottomSheetModal, enrollingInstrument]);
-
-  /** Resets the switch linked to the given walletId to its previous state */
-  const revertInstrumentSwitch = React.useCallback(() => {
-    configurationMachine.send({
-      type: "STAGE_INSTRUMENT",
-      instrument: undefined
-    });
-  }, [configurationMachine]);
-
-  React.useEffect(() => {
-    if (
-      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
-      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
-    ) {
-      revertInstrumentSwitch();
-    }
-  }, [failure, revertInstrumentSwitch]);
+  }, [enrollmentBottomSheetModal, stagedWalletId]);
 
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
@@ -183,7 +173,8 @@ const InstrumentsEnrollmentScreen = () => {
           type="SingleButton"
           leftButton={{
             title: I18n.t("idpay.configuration.instruments.buttons.addMethod"),
-            onPress: handleAddPaymentMethodButton
+            onPress: handleAddPaymentMethodButton,
+            disabled: isUpserting
           }}
         />
       );
@@ -199,13 +190,29 @@ const InstrumentsEnrollmentScreen = () => {
           onPress: handleSkipButton
         }}
         rightButton={{
-          title: I18n.t("idpay.configuration.instruments.buttons.continue"),
+          title: !isUpserting
+            ? I18n.t("idpay.configuration.instruments.buttons.continue")
+            : "",
           disabled: isUpserting || !hasSelectedInstruments,
           labelColor: IOColors.white,
-          onPress: handleContinueButton
+          onPress: handleContinueButton,
+          isLoading: isUpserting
         }}
       />
     );
+  };
+
+  const handleInstrumentValueChange = (wallet: Wallet) => (value: boolean) => {
+    if (value) {
+      setStagedWalletId(wallet.idWallet);
+    } else {
+      const instrument = initiativeInstrumentsByIdWallet[wallet.idWallet];
+      configurationMachine.send({
+        type: "DELETE_INSTRUMENT",
+        instrumentId: instrument.instrumentId,
+        walletId: wallet.idWallet.toString()
+      });
+    }
   };
 
   return (
@@ -220,44 +227,38 @@ const InstrumentsEnrollmentScreen = () => {
         contextualHelp={emptyContextualHelp}
       >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <VSpacer />
-          <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+          <ScrollView style={styles.container}>
             <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
             <VSpacer size={8} />
-            <NBText>
+            <Body>
               {I18n.t("idpay.configuration.instruments.body", {
                 initiativeName: initiativeDetails?.initiativeName ?? ""
               })}
-            </NBText>
-            <VSpacer />
-            <ScrollView>
-              <NBList>
-                {walletInstruments.map(walletInstrument => (
-                  <InstrumentEnrollmentSwitch
-                    key={walletInstrument.idWallet}
-                    wallet={walletInstrument}
-                    instrument={
-                      initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
-                    }
-                  />
-                ))}
-              </NBList>
-              <VSpacer size={16} />
-              {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
-              <View style={styles.bottomSection}>
-                <Icon name="navWallet" color="bluegrey" />
-                <HSpacer size={8} />
-                <LabelSmall
-                  color="bluegrey"
-                  weight="Regular"
-                  style={IOStyles.flex} // required for correct wrapping
-                >
-                  {I18n.t("idpay.configuration.instruments.footer")}
-                </LabelSmall>
-              </View>
-              {/* TODO:: end AdviceComponent  */}
-            </ScrollView>
-          </View>
+            </Body>
+            <VSpacer size={24} />
+            {walletInstruments.map(walletInstrument => (
+              <InstrumentEnrollmentSwitch
+                key={walletInstrument.idWallet}
+                wallet={walletInstrument}
+                isStaged={stagedWalletId === walletInstrument.idWallet}
+                onValueChange={handleInstrumentValueChange(walletInstrument)}
+              />
+            ))}
+            <VSpacer size={16} />
+            {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
+            <View style={styles.bottomSection}>
+              <Icon name="navWallet" color="bluegrey" />
+              <HSpacer size={8} />
+              <LabelSmall
+                color="bluegrey"
+                weight="Regular"
+                style={IOStyles.flex} // required for correct wrapping
+              >
+                {I18n.t("idpay.configuration.instruments.footer")}
+              </LabelSmall>
+            </View>
+            {/* TODO:: end AdviceComponent  */}
+          </ScrollView>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
         </LoadingSpinnerOverlay>
       </BaseScreenComponent>
@@ -267,6 +268,10 @@ const InstrumentsEnrollmentScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: customVariables.contentPadding
+  },
   bottomSection: {
     flexDirection: "row",
     alignItems: "center"

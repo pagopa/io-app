@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { StatusEnum } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
@@ -9,12 +10,11 @@ import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendSta
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
-  idPayWalletGet,
   idPayInitiativesFromInstrumentGet,
+  idPayWalletGet,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../actions";
-import { StatusEnum } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 
 export type IDPayWalletState = {
   initiatives: pot.Pot<WalletDTO, NetworkError>;
@@ -62,7 +62,8 @@ const reducer = (
       const initiativesToKeepInLoadingState = pipe(
         state.initiativesAwaitingStatusUpdate,
         Object.entries,
-        entries => entries.filter(([_, value]) => value), // remove all entries that have completed their request
+        // remove all entries that have completed their request
+        entries => entries.filter(([_, value]) => value),
         Object.fromEntries
       );
 
@@ -122,9 +123,14 @@ export const idPayEnabledInitiativesFromInstrumentSelector = createSelector(
     isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
 );
 
-export const idPayAreInitiativesFromInstrumentLoadingSelector = (
-  state: GlobalState
-) => pot.isLoading(state.features.idPay.wallet.initiativesWithInstrument);
+const idPayInitiativesFromInstrumentPotSelector = (state: GlobalState) =>
+  state.features.idPay.wallet.initiativesWithInstrument;
+
+export const idPayAreInitiativesFromInstrumentLoadingSelector = createSelector(
+  [isIdPayEnabledSelector, idPayInitiativesFromInstrumentPotSelector],
+  (isIDPayEnabled, initiativesPot) =>
+    isIDPayEnabled && pot.isLoading(initiativesPot)
+);
 export const idPayAreInitiativesFromInstrumentErrorSelector = (
   state: GlobalState
 ) => pot.isError(state.features.idPay.wallet.initiativesWithInstrument);
@@ -146,10 +152,9 @@ export const idPayInitiativeFromInstrumentPotSelector = (
     state,
     initiativeId
   );
-  const isItemActivePot = pot.some(isItemActive);
   switch (isAwaitingUpdate) {
     case undefined:
-      return isItemActivePot;
+      return pot.some(isItemActive);
     case true:
       return pot.someLoading(isItemActive);
     case false:

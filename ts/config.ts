@@ -116,7 +116,7 @@ export const pnEnabled = Config.PN_ENABLED === "YES";
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 4.4 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
@@ -191,6 +191,12 @@ export const unsupportedDeviceMoreInfoUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
   NonEmptyString.decode,
   E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
+);
+
+export const unsupportedDeviceLearnMoreUrl: string = pipe(
+  Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
 );
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;

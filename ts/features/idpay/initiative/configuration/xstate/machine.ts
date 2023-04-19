@@ -1,12 +1,16 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-import { assign, createMachine } from "xstate";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import { assign, createMachine, forwardTo } from "xstate";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
-
+import {
+  InstrumentDTO,
+  StatusEnum as InstrumentStatusEnum
+} from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
@@ -20,7 +24,7 @@ import {
   InstrumentStatusByIdWallet
 } from "./context";
 import { Events } from "./events";
-import { InitiativeFailureType } from "./failure";
+import { InitiativeFailure, InitiativeFailureType } from "./failure";
 
 type Services = {
   loadInitiative: {
@@ -36,12 +40,6 @@ type Services = {
     data: ReadonlyArray<Wallet>;
   };
   loadInitiativeInstruments: {
-    data: ReadonlyArray<InstrumentDTO>;
-  };
-  enrollInstrument: {
-    data: ReadonlyArray<InstrumentDTO>;
-  };
-  deleteInstrument: {
     data: ReadonlyArray<InstrumentDTO>;
   };
 };
@@ -541,28 +539,63 @@ const createIDPayInitiativeConfigurationMachine = () =>
               tags: [WAITING_USER_INPUT_TAG],
               entry: "updateInstrumentStatuses",
               initial: "DISPLAYING",
+              invoke: {
+                id: "instrumentsEnrollmentService",
+                src: "instrumentsEnrollmentService"
+              },
               on: {
                 /**
-                 * The selected instrument is "staged", which means is being prepared to be enrolled with the confirmation modal.
-                 * If the passed parameter is undefined, the staged instrument is removed
-                 */
-                STAGE_INSTRUMENT: {
-                  actions: "selectInstrumentToEnroll"
-                },
-
-                /**
-                 * This event enrolls the previously staged instrument.
+                 * This event forwards the "ENROLL_INSTRUMENT" event to instrumentsEnrollmentService.
                  */
                 ENROLL_INSTRUMENT: {
-                  target: "ENROLLING_INSTRUMENT"
+                  actions: [
+                    "updateInstrumentEnrollStatus",
+                    "forwardToInstrumentsEnrollmentService"
+                  ]
                 },
 
                 /**
-                 * This event sets the instrument to be deleted in the context and then proceeds to its deletion in `DELETING_INSTRUMENT` state.
+                 * This event is called by instrumentsEnrollmentService when an instrument is enrolled successfully
+                 */
+                ENROLL_INSTRUMENT_SUCCESS: {
+                  actions: "updateInstrumentEnrollStatusSuccess"
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when there is a failure in the instrument enrollment
+                 */
+                ENROLL_INSTRUMENT_FAILURE: {
+                  actions: [
+                    "updateInstrumentEnrollStatusFailure",
+                    "showInstrumentFailureToast"
+                  ]
+                },
+
+                /**
+                 * This event forwards the "DELETE_INSTRUMEMT" event to instrumentsEnrollmentService.
                  */
                 DELETE_INSTRUMENT: {
-                  target: "DELETING_INSTRUMENT",
-                  actions: "selectInstrumentToDelete"
+                  actions: [
+                    "updateInstrumentDeleteStatus",
+                    "forwardToInstrumentsEnrollmentService"
+                  ]
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when an instrument is deactivated successfully
+                 */
+                DELETE_INSTRUMENT_SUCCESS: {
+                  actions: "updateInstrumentDeleteStatusSuccess"
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when there is a failure in the instrument deactivation
+                 */
+                DELETE_INSTRUMENT_FAILURE: {
+                  actions: [
+                    "updateInstrumentDeleteStatusFailure",
+                    "showInstrumentFailureToast"
+                  ]
                 },
 
                 /**
@@ -639,62 +672,6 @@ const createIDPayInitiativeConfigurationMachine = () =>
                       actions: ["setFailure", "showFailureToast"]
                     }
                   }
-                }
-              }
-            },
-
-            /**
-             * In this state, the instrument is being enrolled to the initiative.
-             * The process begins by triggering the `updateInstrumentToEnrollStatus` action, which sets the staged instrument
-             * status to `pot.loading`. Next, the `enrollInstrument` service is called to enroll the instrument in the initiative.
-             * If the response is successful, an updated list of instruments is retrieved and putted in the context.
-             * If error, the instrument status is reverted and a failure is displayed to the user
-             */
-            ENROLLING_INSTRUMENT: {
-              tags: [UPSERTING_TAG],
-              entry: "updateInstrumentToEnrollStatus",
-              invoke: {
-                src: "enrollInstrument",
-                id: "enrollInstrument",
-                onDone: {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  actions: "instrumentEnrollSuccess"
-                },
-                onError: {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  actions: [
-                    "instrumentEnrollFailure",
-                    "setFailure",
-                    "showFailureToast"
-                  ]
-                }
-              }
-            },
-
-            /**
-             * In this state the instrument is being deleted (unenrolled) from the initiative
-             * The process begins by triggering the `updateInstrumentToDeleteStatus` action, which sets the staged instrument
-             * status to `pot.loading`. Next, the `deleteInstrument` service is called to delete the instrument from the initiative.
-             * If the response is successful, an updated list of instruments is retrieved and putted in the context.
-             * If error, the instrument status is reverted and a failure is displayed to the user
-             */
-            DELETING_INSTRUMENT: {
-              tags: [UPSERTING_TAG],
-              entry: "updateInstrumentToDeleteStatus",
-              invoke: {
-                src: "deleteInstrument",
-                id: "deleteInstrument",
-                onDone: {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  actions: "instrumentDeleteSuccess"
-                },
-                onError: {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  actions: [
-                    "instrumentDeleteFailure",
-                    "setFailure",
-                    "showFailureToast"
-                  ]
                 }
               }
             },
@@ -811,6 +788,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
           selectedIban: undefined,
           failure: undefined
         })),
+        confirmIbanOnboarding: assign((_, event) => ({
+          ibanBody: event.ibanBody,
+          failure: undefined
+        })),
         loadWalletInstrumentsSuccess: assign((_, event) => ({
           walletInstruments: event.data,
           failure: undefined
@@ -819,101 +800,127 @@ const createIDPayInitiativeConfigurationMachine = () =>
           initiativeInstruments: event.data,
           failure: undefined
         })),
-        updateInstrumentStatuses: assign((context, _) => ({
-          instrumentStatuses:
+        updateInstrumentStatuses: assign((context, _) => {
+          const updatedStatuses =
             context.initiativeInstruments.reduce<InstrumentStatusByIdWallet>(
               (acc, instrument) => {
-                if (instrument.idWallet !== undefined) {
-                  return {
-                    ...acc,
-                    [instrument.idWallet]: p.some(instrument.status)
-                  };
+                if (instrument.idWallet === undefined) {
+                  return acc;
                 }
-                return acc;
-              },
-              {}
-            )
-        })),
-        selectInstrumentToEnroll: assign((_, event) => ({
-          instrumentToEnroll: event.instrument,
-          failure: undefined
-        })),
-        updateInstrumentToEnrollStatus: assign((context, _) => {
-          if (context.instrumentToEnroll === undefined) {
-            return {};
-          }
 
-          // We fallback to `pot.none` if it's the first time we are enrolling the instrument
-          const currentStatus =
-            context.instrumentStatuses[context.instrumentToEnroll.idWallet] ||
-            p.none;
+                const currentStatus = acc[instrument.idWallet];
+
+                if (currentStatus !== undefined && p.isLoading(currentStatus)) {
+                  // Instrument is updating, its status will be updated by 'updateInstrumentStatus' action
+                  return acc;
+                }
+
+                return {
+                  ...acc,
+                  [instrument.idWallet]: p.some(instrument.status)
+                };
+              },
+              context.instrumentStatuses
+            );
 
           return {
-            instrumentStatuses: {
-              ...context.instrumentStatuses,
-              [context.instrumentToEnroll.idWallet]: p.toLoading(currentStatus)
-            },
-            failure: undefined
+            instrumentStatuses: updatedStatuses
           };
         }),
-        instrumentEnrollSuccess: assign((_, event) => ({
-          initiativeInstruments: event.data,
-          instrumentToEnroll: undefined,
-          failure: undefined
-        })),
-        instrumentEnrollFailure: assign(context => {
-          if (context.instrumentToEnroll === undefined) {
-            return {};
+        forwardToInstrumentsEnrollmentService: forwardTo(
+          "instrumentsEnrollmentService"
+        ),
+        updateInstrumentEnrollStatus: assign((context, event) => ({
+          instrumentStatuses: {
+            ...context.instrumentStatuses,
+            [event.walletId]: p.noneLoading
           }
+        })),
+        updateInstrumentEnrollStatusSuccess: assign((context, event) => {
+          const currentEnrollStatus =
+            context.instrumentStatuses[event.walletId];
 
-          const prevStatus =
-            context.instrumentStatuses[context.instrumentToEnroll.idWallet];
-
-          if (prevStatus === undefined) {
+          if (p.isSome(currentEnrollStatus)) {
+            // No need to update instrument status
             return {};
           }
 
           return {
             instrumentStatuses: {
               ...context.instrumentStatuses,
-              [context.instrumentToEnroll.idWallet]: p.some(prevStatus)
-            },
-            instrumentToEnroll: undefined
+              [event.walletId]: p.some(
+                InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST
+              )
+            }
           };
         }),
-        selectInstrumentToDelete: assign((_, event) => ({
-          instrumentToDelete: event.instrument,
-          failure: undefined
-        })),
-        updateInstrumentToDeleteStatus: assign((context, _) => {
-          if (context.instrumentToDelete?.idWallet !== undefined) {
-            return {
-              instrumentStatuses: {
-                ...context.instrumentStatuses,
-                [context.instrumentToDelete?.idWallet]: p.none
-              },
-              failure: undefined
-            };
+        updateInstrumentEnrollStatusFailure: assign((context, event) => {
+          if (event.walletId === undefined) {
+            return {};
           }
-          return {};
+
+          const { [event.walletId]: _removedStatus, ...updatedStatuses } =
+            context.instrumentStatuses;
+
+          return {
+            instrumentStatuses: updatedStatuses
+          };
         }),
-        instrumentDeleteSuccess: assign((_, event) => ({
-          initiativeInstruments: event.data,
-          instrumentToDelete: undefined,
-          failure: undefined
-        })),
-        instrumentDeleteFailure: assign(_ => ({
-          instrumentToDelete: undefined
-        })),
+        updateInstrumentDeleteStatus: assign((context, event) => {
+          if (event.walletId === undefined) {
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.walletId]: p.noneLoading
+            }
+          };
+        }),
+        updateInstrumentDeleteStatusSuccess: assign((context, event) => {
+          if (event.walletId === undefined) {
+            return {};
+          }
+
+          const currentDeleteStatus =
+            context.instrumentStatuses[event.walletId];
+
+          if (p.isSome(currentDeleteStatus)) {
+            // No need to update instrument status
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.walletId]: p.some(
+                InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
+              )
+            }
+          };
+        }),
+        updateInstrumentDeleteStatusFailure: assign((context, event) => {
+          if (event.walletId === undefined) {
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.walletId]: p.some(InstrumentStatusEnum.ACTIVE)
+            }
+          };
+        }),
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
         })),
-        confirmIbanOnboarding: assign((_, event) => ({
-          ibanBody: event.ibanBody,
-          failure: undefined
-        })),
         setFailure: assign((_, event) => ({
-          failure: event.data as InitiativeFailureType
+          failure: pipe(
+            event.data,
+            InitiativeFailure.decode,
+            E.getOrElse(() => InitiativeFailureType.GENERIC)
+          )
         }))
       },
       guards: {
@@ -948,5 +955,5 @@ type IDPayInitiativeConfigurationMachineType = ReturnType<
   typeof createIDPayInitiativeConfigurationMachine
 >;
 
-export type { IDPayInitiativeConfigurationMachineType };
 export { createIDPayInitiativeConfigurationMachine };
+export type { IDPayInitiativeConfigurationMachineType };
