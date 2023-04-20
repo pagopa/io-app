@@ -50,15 +50,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: checkout
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - id: setup-node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - id: yarn-cache
-        uses: actions/cache@v3
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
         env:
           cache-name: cache-node-modules
         with:
@@ -83,15 +83,15 @@ jobs:
       cancel-in-progress: true
     steps:
       - id: checkout
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - id: setup-node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - id: yarn-cache
-        uses: actions/cache@v3
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
         env:
           cache-name: cache-node-modules
         with:
@@ -116,15 +116,15 @@ jobs:
       cancel-in-progress: true
     steps:
       - id: checkout
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - id: setup-node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - id: yarn-cache
-        uses: actions/cache@v3
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
         env:
           cache-name: cache-node-modules
         with:
