@@ -257,71 +257,71 @@ Below there are the permissions required by the main android hardware manufactur
     </tr>
     <tr>
         <td>NSAppleMusicUsageDescription</td>
-        <td>This key is required if your app uses APIs that access the user’s media library.</td>
+        <td>Allows the app to use APIs that access the user’s media library.</td>
     </tr>
     <tr>
         <td>NSBluetoothAlwaysUsageDescription</td>
-        <td>This key is required if your app uses the device’s Bluetooth interface.</td>
+        <td>Allows the app to use the device’s Bluetooth interface.</td>
     </tr>
     <tr>
         <td>NSBluetoothPeripheralUsageDescription</td>
-        <td>This key is required if your app uses APIs that access Bluetooth peripherals and has a deployment target earlier than iOS 13.</td>
+        <td>Allows the app to access Bluetooth peripherals and has a deployment target earlier than iOS 13.</td>
     </tr>
     <tr>
         <td>NSContactsUsageDescription</td>
-        <td>IO needs access to your contacts to let you add them in calendar events.</td>
+        <td>Allows the app to access contacts to let you add them in calendar events.</td>
     </tr>
     <tr>
         <td>NSLocationAlwaysUsageDescription</td>
-        <td>This key is required if your iOS app uses APIs that access the user’s location at all times and deploys to targets earlier than iOS 11.</td>
+        <td>Allows the app to access the user’s location at all times and deploys to targets earlier than iOS 11.</td>
     </tr>
     <tr>
         <td>NSLocationUsageDescription</td>
-        <td>This key is required if your app uses APIs that access the user’s location information.</td>
+        <td>Allows the app to use access the user’s location information.</td>
     </tr>
     <tr>
         <td>NSLocationWhenInUseUsageDescription</td>
-        <td>This key is required if your iOS app uses APIs that access the user’s location information while the app is in use.</td>
+        <td>Allows the app to access the user’s location information while the app is in use.</td>
     </tr>
     <tr>
         <td>NSMicrophoneUsageDescription</td>
-        <td>IO needs access to the microphone in case you want to leave a voice note. Used in the assistance flow.</td>
+        <td>Allows the app to use the microphone in case you want to leave a voice note. Used in the assistance flow.</td>
     </tr>
     <tr>
         <td>NSMotionUsageDescription</td>
-        <td>This key is required if your app uses APIs that access the device’s motion data.</td>
+        <td>Allows the app to access the device’s motion data.</td>
     </tr>
     <tr>
         <td>NSCalendarsUsageDescription</td>
-        <td>IO needs access to the calendar to add event reminders.</td>
+        <td>Allows the app to access the calendar to add event reminders.</td>
     </tr>
     <tr>
         <td>NSCameraUsageDescription</td>
-        <td>IO needs access to the camera to scan QR codes.</td>
+        <td>Allows the app to use the camera to scan QR codes.</td>
     </tr>
     <tr>
         <td>NSFaceIDUsageDescription</td>
-        <td>Enable Face ID for biometric identification.</td>
+        <td>Allows the app to use Face ID for biometric identification.</td>
     </tr>
     <tr>
         <td>NSPhotoLibraryAddUsageDescription</td>
-        <td>This key is required if your app uses APIs that have write access to the user’s photo library.</td>
+        <td>Allows the app to access the user’s photo library.</td>
     </tr>
     <tr>
         <td>NSPhotoLibraryUsageDescription</td>
-        <td>IO needs access to the Photos to scan QR codes.</td>
+        <td>Allows the app to access the photo library to scan QR codes.</td>
     </tr>
     <tr>
         <td>NSSpeechRecognitionUsageDescription</td>
-        <td>This key is required if your app uses APIs that send user data to Apple’s speech recognition servers. Used in the assistance flow.</td>
+        <td>Allows the app to send user data to Apple’s speech recognition servers. Used in the assistance flow.</td>
     </tr>
     <tr>
         <td>Remote  Notification</td>
-        <td>Request permission to receive remote push notification.</td>
+        <td>Allows the app to receive remote push notification.</td>
     </tr>
     <tr>
         <td>NFC (Near Field Communication Tag Reading)</td>
-        <td>Request NFC capability.</td>
+        <td>Allows the app to use the NFC.</td>
     </tr>
   </table>
 </details>
