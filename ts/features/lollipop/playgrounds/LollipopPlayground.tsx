@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -40,48 +40,30 @@ const LollipopPlayground = () => {
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
 
-  const lollipopClient = useMemo(
-    () =>
+  const lollipopClient = useCallback(
+    (signBody: boolean) =>
       pipe(
         keyTag,
-        O.fold(
-          () => {
-            setState({
-              ...state,
-              isVerificationSuccess: false,
-              verificationResult: "No key tag"
-            });
-            return undefined;
-          },
-          keyTag =>
-            pipe(
-              maybePublicKey,
-              O.fold(
-                () => {
-                  setState({
-                    ...state,
-                    isVerificationSuccess: false,
-                    verificationResult: "No public key"
-                  });
-                  return undefined;
+        O.chain(keyTag =>
+          pipe(
+            maybePublicKey,
+            O.chainNullableK(publicKey =>
+              createLollipopClient(
+                apiUrlPrefix,
+                {
+                  keyTag,
+                  publicKey,
+                  publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
+                    maybePublicKey
+                  )}`
                 },
-                publicKey =>
-                  createLollipopClient(
-                    apiUrlPrefix,
-                    {
-                      keyTag,
-                      publicKey,
-                      publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
-                        maybePublicKey
-                      )}`
-                    },
-                    { nonce: "aNonce", signBody: state.doSignBody }
-                  )
+                { nonce: "aNonce", signBody }
               )
             )
+          )
         )
       ),
-    [keyTag, maybePublicKey, state]
+    [keyTag, maybePublicKey]
   );
 
   const onSignButtonPress = useCallback(
@@ -91,70 +73,54 @@ const LollipopPlayground = () => {
       };
       pipe(
         maybeSessionToken,
-        O.fold(
-          () =>
-            setState({
-              ...state,
-              isVerificationSuccess: false,
-              verificationResult: "No session token"
-            }),
-          sessionToken =>
-            pipe(
-              lollipopClient,
-              O.fromNullable,
-              O.fold(
-                () =>
-                  setState({
-                    ...state,
-                    isVerificationSuccess: false,
-                    verificationResult: "Lollipop client non available"
-                  }),
-                lollipopClient =>
+        O.chain(sessionToken =>
+          pipe(
+            lollipopClient(state.doSignBody),
+            O.chainNullableK(lollipopClient =>
+              pipe(
+                TE.tryCatch(
+                  () => signMessage(lollipopClient, bodyMessage, sessionToken),
+                  e =>
+                    setState({
+                      ...state,
+                      isVerificationSuccess: false,
+                      verificationResult: `${e}`
+                    })
+                ),
+                TE.map(_ =>
                   pipe(
-                    TE.tryCatch(
-                      () =>
-                        signMessage(lollipopClient, bodyMessage, sessionToken),
-                      e =>
+                    _,
+                    E.mapLeft(error =>
+                      setState({
+                        ...state,
+                        isVerificationSuccess: false,
+                        verificationResult: JSON.stringify(error)
+                      })
+                    ),
+                    E.map(signResponse => {
+                      const status = signResponse.status;
+                      if (status !== 200) {
+                        const response = signResponse.value as ProblemJson;
                         setState({
                           ...state,
                           isVerificationSuccess: false,
-                          verificationResult: `${e}`
-                        })
-                    ),
-                    TE.map(_ =>
-                      pipe(
-                        _,
-                        E.mapLeft(error =>
-                          setState({
-                            ...state,
-                            isVerificationSuccess: false,
-                            verificationResult: JSON.stringify(error)
-                          })
-                        ),
-                        E.map(signResponse => {
-                          const status = signResponse.status;
-                          if (status !== 200) {
-                            const response = signResponse.value as ProblemJson;
-                            setState({
-                              ...state,
-                              isVerificationSuccess: false,
-                              verificationResult: `${status} - ${response.title}\n${response.detail}`
-                            });
-                          } else {
-                            const response =
-                              signResponse.value as SignMessageResponse;
-                            setState({
-                              ...state,
-                              isVerificationSuccess: true,
-                              verificationResult: response.response
-                            });
-                          }
-                        })
-                      )
-                    )
-                  )()
-              )
+                          verificationResult: `${status} - ${response.title}\n${response.detail}`
+                        });
+                      } else {
+                        const response =
+                          signResponse.value as SignMessageResponse;
+                        setState({
+                          ...state,
+                          isVerificationSuccess: true,
+                          verificationResult: response.response
+                        });
+                      }
+                    })
+                  )
+                )
+              )()
             )
+          )
         )
       );
     },
