@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -40,44 +40,48 @@ const LollipopPlayground = () => {
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
 
-  const lollipopClient = pipe(
-    keyTag,
-    O.fold(
-      () => {
-        setState({
-          ...state,
-          isVerificationSuccess: false,
-          verificationResult: "No key tag"
-        });
-        return undefined;
-      },
-      keyTag =>
-        pipe(
-          maybePublicKey,
-          O.fold(
-            () => {
-              setState({
-                ...state,
-                isVerificationSuccess: false,
-                verificationResult: "No public key"
-              });
-              return undefined;
-            },
-            publicKey =>
-              createLollipopClient(
-                apiUrlPrefix,
-                {
-                  keyTag,
-                  publicKey,
-                  publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
-                    maybePublicKey
-                  )}`
+  const lollipopClient = useMemo(
+    () =>
+      pipe(
+        keyTag,
+        O.fold(
+          () => {
+            setState({
+              ...state,
+              isVerificationSuccess: false,
+              verificationResult: "No key tag"
+            });
+            return undefined;
+          },
+          keyTag =>
+            pipe(
+              maybePublicKey,
+              O.fold(
+                () => {
+                  setState({
+                    ...state,
+                    isVerificationSuccess: false,
+                    verificationResult: "No public key"
+                  });
+                  return undefined;
                 },
-                { nonce: "aNonce", signBody: state.doSignBody }
+                publicKey =>
+                  createLollipopClient(
+                    apiUrlPrefix,
+                    {
+                      keyTag,
+                      publicKey,
+                      publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
+                        maybePublicKey
+                      )}`
+                    },
+                    { nonce: "aNonce", signBody: state.doSignBody }
+                  )
               )
-          )
+            )
         )
-    )
+      ),
+    [keyTag, maybePublicKey, state]
   );
 
   const onSignButtonPress = useCallback(
