@@ -3,12 +3,15 @@ description: 'This action collects the steps to setup any job'
 runs:
   using: "composite"
   steps:
+    - id: checkout
+      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
     - id: setup-node
       uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
       with:
         node-version-file: '.node-version'
     - id: yarn-cache-dir-path
       run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      shell: bash
     - id: yarn-cache
       uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
       env:
@@ -23,5 +26,7 @@ runs:
           ${{ runner.os }}-
     - id: install-packages
       run: yarn install --frozen-lockfile
+      shell: bash
     - id: generate-api-client
       run: yarn generate
+      shell: bash
