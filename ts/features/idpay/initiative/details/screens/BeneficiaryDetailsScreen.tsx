@@ -140,7 +140,9 @@ const BeneficiaryDetailsComponent = (
   const statusString = pipe(
     details.status,
     O.fromNullable,
-    O.map(status => status.toLocaleLowerCase()),
+    O.map(status =>
+      I18n.t(`idpay.initiative.details.initiativeCard.statusLabels.${status}`)
+    ),
     O.getOrElse(() => "-")
   );
 
@@ -233,7 +235,7 @@ const BeneficiaryDetailsComponent = (
       ]
     },
     {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
+      label: I18n.t("idpay.initiative.beneficiaryDetails.spendingRules"),
       value: [
         {
           label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
