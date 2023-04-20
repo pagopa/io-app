@@ -30,7 +30,7 @@ const mockTransactionDetail: TransactionDetailDTO = {
 describe("Test timeline operation details reducer", () => {
   it("should be pot.none before the first loading action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.idPay.timeline).toStrictEqual(pot.none);
+    expect(globalState.features.idPay.timeline.details).toStrictEqual(pot.none);
     expect(idpayTimelineDetailsSelector(globalState)).toStrictEqual(pot.none);
   });
 
