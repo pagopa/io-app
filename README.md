@@ -436,21 +436,13 @@ To test the io-app on a real iOS device you must:
 ## Troubleshooting
 This section lists possible solutions to problems you might encounter while building the app.
   <details>
-  <summary>Bundler</summary>
-
-  - ***Can't find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException):***
-
-    Can be solved by launching ```gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)```
-
-  </details>
-  
-
-  <details>
   <summary>iOS build</summary>
 
-  - ***error: redefinition of module 'YogaKit' build Failed***
-  
-    Can be solved by restarting your machine.
+  - ```bash
+    $ yarn run-ios
+    $ error: redefinition of module 'YogaKit' build Failed
+    # Restart your machine to fix the issue
+    ```
 
   </details>
 
