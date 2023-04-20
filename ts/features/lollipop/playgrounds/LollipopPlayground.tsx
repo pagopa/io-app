@@ -110,14 +110,12 @@ const LollipopPlayground = () => {
                     TE.tryCatch(
                       () =>
                         signMessage(lollipopClient, bodyMessage, sessionToken),
-                      _ => _ as Error
-                    ),
-                    TE.mapLeft(e =>
-                      setState({
-                        ...state,
-                        isVerificationSuccess: false,
-                        verificationResult: JSON.stringify(e)
-                      })
+                      e =>
+                        setState({
+                          ...state,
+                          isVerificationSuccess: false,
+                          verificationResult: `${e}`
+                        })
                     ),
                     TE.map(_ =>
                       pipe(
