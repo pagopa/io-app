@@ -4,11 +4,12 @@ on:
 jobs:
   run-danger:
     runs-on: ubuntu-latest
+    environment: dev
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
+      - run: '[ -z "${{ secrets.DANGER_GITHUB_API_TOKEN }}" ] || yarn danger ci'
   compile:
     runs-on: ubuntu-latest
     concurrency:
