@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import EmptyListImage from "../../../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
@@ -89,7 +89,7 @@ export const RenderItem = React.memo(
  */
 const FooterLoading = () => (
   <>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <ActivityIndicator
       color={"black"}
       accessible={false}
@@ -218,7 +218,7 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
           <H1 style={IOStyles.horizontalContentPadding}>
             {I18n.t("bonus.sv.voucherList.title")}
           </H1>
-          <View spacer />
+          <VSpacer size={16} />
 
           {isReady(props.requiredDataLoaded) && vouchers.length === 0 ? (
             <EmptyVoucherList />

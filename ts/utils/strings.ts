@@ -90,6 +90,19 @@ ${cap}${city}${province}`.trim();
 };
 
 /**
+ * Fetch only an organization's name as readable string from an EnteBeneficiario object
+ * @param recipient organization data
+ */
+export const getRecepientName = (recipient: EnteBeneficiario) => {
+  const denomUnitOper = pipe(
+    recipient.denomUnitOperBeneficiario,
+    O.fromNullable,
+    O.map(d => ` - ${d}`),
+    O.getOrElse(() => "")
+  );
+  return `${recipient.denominazioneBeneficiario}${denomUnitOper}`.trim();
+};
+/**
  * determine if the text is undefined or empty (or composed only by blanks)
  * @param text
  */

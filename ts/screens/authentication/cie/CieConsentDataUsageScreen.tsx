@@ -2,7 +2,6 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import { View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, NativeEventSubscription } from "react-native";
 import WebView from "react-native-webview";
@@ -11,6 +10,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -25,7 +25,6 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
-import { IdpCIE } from "../LandingScreen";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -50,7 +49,7 @@ type Props = OwnProps & NavigationProps & ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
-    <View spacer={true} />
+    <VSpacer size={16} />
   </LoadingSpinnerOverlay>
 );
 
@@ -193,9 +192,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetNavigation: () => resetToAuthenticationRoute(),
   loginSuccess: (token: SessionToken) =>
-    dispatch(loginSuccess({ token, idp: IdpCIE.id })),
-  loginFailure: (error: Error) =>
-    dispatch(loginFailure({ error, idp: IdpCIE.id }))
+    dispatch(loginSuccess({ token, idp: "cie" })),
+  loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
 });
 
 export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);

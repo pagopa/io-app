@@ -1,12 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { Document } from "../../../../../definitions/fci/Document";
+import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciSignatureRequestFromId, fciAbortRequest } from "../actions";
+import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+import { QtspDocumentToSign } from "../../utils/signature";
+import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -26,7 +29,7 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciSignatureRequestFromId.failure):
       return pot.toError(state, action.payload);
-    case getType(fciAbortRequest):
+    case getType(fciClearStateRequest):
       return emptyState;
   }
 
@@ -44,8 +47,8 @@ export const fciSignatureDetailDocumentsSelector = createSelector(
     pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
 );
 
-export const fciDocumentSignatureFieldsFieldsSelector = (
-  documentId: Document["id"]
+export const fciDocumentSignatureFieldsSelector = (
+  documentId: DocumentDetailView["id"]
 ) =>
   createSelector(fciSignatureRequestSelector, signatureDetailView =>
     pot.getOrElse(
@@ -58,5 +61,37 @@ export const fciDocumentSignatureFieldsFieldsSelector = (
       []
     )
   );
+
+export const fciDocumentsWithUrlSelector = (
+  documents: ReadonlyArray<DocumentToSign>
+) =>
+  createSelector(fciSignatureRequestSelector, signatureDetailView =>
+    pot.getOrElse(
+      pot.map(signatureDetailView, signatureRequest =>
+        signatureRequest.documents.map(
+          d =>
+            ({
+              ...documents.find(dd => dd.document_id === d.id),
+              url: d.url
+            } as QtspDocumentToSign)
+        )
+      ),
+      []
+    )
+  );
+
+export const fciIssuerEnvironmentSelector = createSelector(
+  fciSignatureRequestSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView)
+      ? signatureDetailView.value.issuer.environment
+      : IssuerEnvironmentEnum.TEST
+);
+
+export const fciSignatureRequestIdSelector = createSelector(
+  fciSignatureRequestSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
+);
 
 export default reducer;

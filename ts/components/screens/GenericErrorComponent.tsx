@@ -1,13 +1,16 @@
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
+import { H2 } from "../core/typography/H2";
+import { IOStyles } from "../core/variables/IOStyles";
 import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
@@ -25,14 +28,7 @@ type Props = WithTestID<
 >;
 
 const styles = StyleSheet.create({
-  center: {
-    alignItems: "center"
-  },
-  contentContainerStyle: { flexGrow: 1, justifyContent: "center" },
-  errorText: {
-    fontSize: customVariables.fontSize2,
-    paddingTop: customVariables.contentPadding
-  }
+  contentContainerStyle: { flexGrow: 1, justifyContent: "center" }
 });
 
 export default class GenericErrorComponent extends React.PureComponent<Props> {
@@ -92,32 +88,28 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
           testID={this.props.testID}
           contentContainerStyle={styles.contentContainerStyle}
         >
-          <View style={styles.center}>
-            <View spacer={true} extralarge={true} />
+          <View style={IOStyles.alignCenter}>
+            <VSpacer size={40} />
             <Image
               source={
                 this.props.image ||
                 require("../../../img/wallet/errors/generic-error-icon.png")
               }
             />
-            <View spacer={true} />
-            <NBText
-              bold={true}
-              alignCenter={true}
-              style={styles.errorText}
-              ref={this.elementRef}
-            >
-              {this.props.text
-                ? this.props.text
-                : I18n.t("wallet.errors.GENERIC_ERROR")}
-            </NBText>
-
-            <NBText alignCenter={true} accessible={subTextAccessible}>
-              {this.props.subText !== undefined
-                ? this.props.subText
-                : I18n.t("wallet.errorTransaction.submitBugText")}
-            </NBText>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
+            <View style={IOStyles.alignCenter}>
+              <H2 weight="Bold" ref={this.elementRef}>
+                {this.props.text
+                  ? this.props.text
+                  : I18n.t("wallet.errors.GENERIC_ERROR")}
+              </H2>
+              <Body accessible={subTextAccessible}>
+                {this.props.subText !== undefined
+                  ? this.props.subText
+                  : I18n.t("wallet.errorTransaction.submitBugText")}
+              </Body>
+            </View>
+            <VSpacer size={40} />
           </View>
         </Content>
         {this.renderFooterButtons()}

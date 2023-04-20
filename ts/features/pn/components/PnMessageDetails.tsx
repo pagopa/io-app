@@ -24,7 +24,10 @@ import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTran
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { PnConfigSelector } from "../../../store/reducers/backendStatus";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import {
+  UIAttachment,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
@@ -33,8 +36,7 @@ import {
   getRptIdFromNoticeNumber,
   isDuplicatedPayment
 } from "../../../utils/payment";
-import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
-import { MvlAttachmentId } from "../../mvl/types/mvlData";
+import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -114,10 +116,10 @@ export const PnMessageDetails = (props: Props) => {
 
   const messageId = props.messageId;
   const openAttachment = useCallback(
-    (attachmentId: MvlAttachmentId) => {
+    (attachment: UIAttachment) => {
       navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId
+        attachmentId: attachment.id
       });
     },
     [messageId, navigation]
@@ -174,7 +176,7 @@ export const PnMessageDetails = (props: Props) => {
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
-            <MvlAttachments
+            <MessageAttachments
               attachments={props.message.attachments}
               openPreview={openAttachment}
             />

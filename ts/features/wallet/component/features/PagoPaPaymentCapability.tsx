@@ -1,8 +1,7 @@
-import { Badge, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { H5 } from "../../../../components/core/typography/H5";
+import { IOBadge } from "../../../../components/core/IOBadge";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { PreferencesListItem } from "../../../../components/PreferencesListItem";
@@ -18,26 +17,10 @@ import { openWebUrl } from "../../../../utils/url";
 import PaymentStatusSwitch from "./PaymentStatusSwitch";
 
 const styles = StyleSheet.create({
-  badgeInfo: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    height: 25,
-    flexDirection: "row"
-  },
-  badgeArriving: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.blue,
-    width: 65
-  },
   bottomSheetCTA: {
     backgroundColor: IOColors.white,
     paddingRight: 0,
     paddingLeft: 0
-  },
-  badgeNotAvailable: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.blue,
-    width: 130
   }
 });
 
@@ -61,17 +44,9 @@ const availabilityBadge = (
     case "available":
       return <PaymentStatusSwitch paymentMethod={paymentMethod} />;
     case "arriving":
-      return (
-        <Badge style={[styles.badgeInfo, styles.badgeArriving]}>
-          <H5 color="blue">{arriving}</H5>
-        </Badge>
-      );
+      return <IOBadge text={arriving} labelColor={"blue"} />;
     case "notAvailable":
-      return (
-        <Badge style={[styles.badgeNotAvailable, styles.badgeInfo]}>
-          <H5 color="blue">{incompatible}</H5>
-        </Badge>
-      );
+      return <IOBadge text={incompatible} labelColor={"blue"} />;
     case "onboardableNotImplemented":
       return <Switch testID={"switchOnboardCard"} disabled={true} />;
   }

@@ -23,7 +23,7 @@ import { isProfileEmailValidatedSelector } from "../../../store/reducers/profile
 import { GlobalState } from "../../../store/reducers/types";
 import * as PaymentsUtils from "../../../utils/payment";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
-import PaymentButton from "../PaymentButton";
+import PaymentButton from "../MessageDetail/common/PaymentButton";
 
 describe("PaymentButton", () => {
   jest.useFakeTimers();

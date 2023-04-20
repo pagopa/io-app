@@ -10,7 +10,7 @@ import {
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText, View } from "native-base";
+import { Content, Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -41,6 +41,8 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -64,7 +66,8 @@ type State = Readonly<{
   organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  inputValue: string;
+  noticeNumberInputValue: string;
+  orgFiscalCodeInputValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -97,7 +100,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.state = {
       paymentNoticeNumber: O.none,
       organizationFiscalCode: O.none,
-      inputValue: ""
+      noticeNumberInputValue: "",
+      orgFiscalCodeInputValue: ""
     };
   }
 
@@ -154,6 +158,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     );
   };
 
+  /**
+   * Converts the validator state into a color string.
+   * @param isFieldValid - the validator state.
+   * @returns green string if isFieldValid is true, red string if false, undefined if undefined.
+   */
+  private getColorFromInputValidatorState(isFieldValid: boolean | undefined) {
+    return pipe(
+      isFieldValid,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        isValid => (isValid ? IOColors.green : IOColors.red)
+      )
+    );
+  }
+
   public render(): React.ReactNode {
     const primaryButtonProps = {
       disabled: !this.isFormValid(),
@@ -177,11 +197,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           >
             <Content scrollEnabled={false}>
               <H1>{I18n.t("wallet.insertManually.title")}</H1>
-              <NBText>{I18n.t("wallet.insertManually.info")}</NBText>
+              <Body>{I18n.t("wallet.insertManually.info")}</Body>
               <Link onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
               </Link>
-              <View spacer />
+              <VSpacer size={16} />
               <Form>
                 <LabelledItem
                   isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
@@ -190,17 +210,20 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.noticeCode"
                   )}
                   testID={"NoticeCode"}
+                  overrideBorderColor={this.getColorFromInputValidatorState(
+                    unwrapOptionalEither(this.state.paymentNoticeNumber)
+                  )}
                   inputMaskProps={{
                     type: "custom",
                     options: { mask: "9999 9999 9999 9999 99" },
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    value: this.state.inputValue,
+                    value: this.state.noticeNumberInputValue,
                     // notice code structure:
                     // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
-                        inputValue: value,
+                        noticeNumberInputValue: value,
                         paymentNoticeNumber: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
@@ -211,7 +234,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     }
                   }}
                 />
-                <View spacer />
+                <VSpacer size={16} />
                 <LabelledItem
                   isValid={unwrapOptionalEither(
                     this.state.organizationFiscalCode
@@ -221,15 +244,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.entityCode"
                   )}
                   testID={"EntityCode"}
-                  inputProps={{
+                  overrideBorderColor={this.getColorFromInputValidatorState(
+                    unwrapOptionalEither(this.state.organizationFiscalCode)
+                  )}
+                  inputMaskProps={{
+                    type: "custom",
+                    options: { mask: "99999999999" }, // 11 digits for an oragnization fiscal code
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    maxLength: 11,
+                    value: this.state.orgFiscalCodeInputValue,
                     onChangeText: value => {
                       this.setState({
+                        orgFiscalCodeInputValue: value,
                         organizationFiscalCode: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
+                          O.map(_ => _.replace(/\s/g, "")),
                           O.map(_ => OrganizationFiscalCode.decode(_))
                         )
                       });

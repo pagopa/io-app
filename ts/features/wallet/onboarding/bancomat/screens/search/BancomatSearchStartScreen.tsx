@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { useContext } from "react";
 import { LightModalContext } from "../../../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../../bonus/common/components/TosBonusComponent";
 import {
   navigateToOnboardingBancomatChooseBank,
   navigateToOnboardingBancomatSearchAvailableUserBancomat

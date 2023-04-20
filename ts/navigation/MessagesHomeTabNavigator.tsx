@@ -4,8 +4,8 @@ import * as React from "react";
 import { Platform } from "react-native";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { IOColors } from "../components/core/variables/IOColors";
-import MessagesArchiveScreen from "../screens/messages/paginated/MessagesArchiveScreen";
-import MessagesInboxScreen from "../screens/messages/paginated/MessagesInboxScreen";
+import MessagesArchiveScreen from "../screens/messages/MessagesArchiveScreen";
+import MessagesInboxScreen from "../screens/messages/MessagesInboxScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,6 +14,9 @@ const MessagesHomeTabNavigator = () => (
     initialRouteName="MESSAGES_INBOX"
     tabBarPosition="top"
     tabBarOptions={{
+      style: {
+        elevation: 0
+      },
       activeTintColor: IOColors.blue,
       inactiveTintColor: IOColors.bluegrey,
       tabStyle: {

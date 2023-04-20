@@ -9,7 +9,6 @@ import { IOBadge } from "../../components/core/IOBadge";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H5 } from "../../components/core/typography/H5";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
@@ -192,16 +191,15 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
             {isFirstOnboarding && <View style={styles.separator} />}
             <PreferencesListItem
               title={I18n.t("profile.preferences.notifications.preview.title")}
-              description={
-                <>
-                  {`${I18n.t(
-                    "profile.preferences.notifications.preview.description"
-                  )} `}
-                  <LabelSmall accessibilityRole="link" onPress={present}>
-                    {I18n.t("profile.preferences.notifications.preview.link")}
-                  </LabelSmall>
-                </>
-              }
+              description={`${I18n.t(
+                "profile.preferences.notifications.preview.description"
+              )} `}
+              moreInfo={{
+                moreInfoText: I18n.t(
+                  "profile.preferences.notifications.preview.link"
+                ),
+                moreInfoTap: present
+              }}
               rightElement={
                 <Switch
                   value={previewEnabled}

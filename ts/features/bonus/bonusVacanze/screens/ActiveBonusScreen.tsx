@@ -3,10 +3,11 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, Toast, View } from "native-base";
+import { Toast as NBToast } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
 import {
+  View,
   Animated,
   Easing,
   SafeAreaView,
@@ -54,7 +55,7 @@ import BonusCardComponent from "../components/BonusCardComponent";
 import { BonusCompositionDetails } from "../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../components/keyValueTable/FamilyComposition";
 import QrModalBox from "../components/QrModalBox";
-import TosBonusComponent from "../components/TosBonusComponent";
+import TosBonusComponent from "../../common/components/TosBonusComponent";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
@@ -73,6 +74,11 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { Body } from "../../../../components/core/typography/Body";
+import { IOBadge } from "../../../../components/core/IOBadge";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -101,9 +107,6 @@ type Props = OwnProps &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
   imagePrintable: {
     position: "relative",
     top: 28
@@ -126,18 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: 327
   },
-  validUntil: {
-    color: variables.textColorDark,
-    lineHeight: 18,
-    paddingVertical: 8
-  },
-  rowBlock: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  itemsCenter: {
-    alignItems: "center"
-  },
   icon: {
     paddingLeft: 12
   },
@@ -147,41 +138,9 @@ const styles = StyleSheet.create({
   paddedContentRight: {
     paddingRight: variables.contentPadding
   },
-  statusBadgeActive: {
-    height: 18,
-    marginTop: 2,
-    backgroundColor: variables.contentPrimaryBackground
-  },
-  statusBadgeRevoked: {
-    height: 18,
-    marginTop: 2,
-    backgroundColor: variables.colorHighlight
-  },
-  screenshotTime: {
-    textAlign: "center",
-    color: variables.brandPrimary,
-    fontSize: variables.fontSizeBase + 2
-  },
-  statusText: {
-    fontSize: 12,
-    lineHeight: 18
-  },
-  textColorDark: {
-    color: variables.textColorDark
-  },
-  colorGrey: {
-    color: variables.textColor
-  },
-  sectionLabel: {
-    fontSize: variables.fontSizeBase,
-    lineHeight: 21
-  },
   viewShot: {
     flex: 1,
     backgroundColor: IOColors.white
-  },
-  commonLabel: {
-    lineHeight: 18
   },
   footerButton: { flex: 1, alignItems: "center" },
   footerButtonIcon: { color: IOColors.blue, marginBottom: 6, fontSize: 24 },
@@ -280,7 +239,7 @@ const FooterButton: React.FunctionComponent<FooterButtonProp> = (
 const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
   props: FooterProps
 ) => (
-  <View style={styles.rowBlock}>
+  <View style={IOStyles.rowSpaceBetween}>
     {props.firstButton && <FooterButton {...props.firstButton} />}
     {props.secondButton && <FooterButton {...props.secondButton} />}
     {props.thirdButton && <FooterButton {...props.thirdButton} />}
@@ -369,7 +328,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           E.foldW(
             () => showToastGenericError,
             () => {
-              Toast.show({
+              NBToast.show({
                 text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
               });
             }
@@ -478,19 +437,21 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <>
         {/* show the time when the screenshot is captured */}
         {screenShotState.isPrintable && (
-          <NBText style={styles.screenshotTime} bold={true}>
-            {`${I18n.t("bonus.bonusVacanze.savedOn")}${formatDateAsLocal(
-              now,
-              true,
-              true
-            )} - ${now.toLocaleTimeString()}`}
-          </NBText>
+          <View style={IOStyles.alignCenter}>
+            <H3 weight="Bold" color="blue">
+              {`${I18n.t("bonus.bonusVacanze.savedOn")}${formatDateAsLocal(
+                now,
+                true,
+                true
+              )} - ${now.toLocaleTimeString()}`}
+            </H3>
+          </View>
         )}
         <View
           style={[
-            styles.rowBlock,
-            styles.itemsCenter,
-            { justifyContent: "center" }
+            IOStyles.rowSpaceBetween,
+            IOStyles.alignCenter,
+            IOStyles.centerJustified
           ]}
         >
           <IconFont
@@ -503,10 +464,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             size={variables.iconSize3}
             style={styles.icon}
           />
-          <View hspacer={true} />
-          <NBText style={[styles.flex, styles.validUntil]} bold={true}>
-            {text}
-          </NBText>
+          <HSpacer size={16} />
+          <View style={IOStyles.flex}>
+            <VSpacer size={8} />
+            <Body color="bluegreyDark" weight="SemiBold">
+              {text}
+            </Body>
+            <VSpacer size={8} />
+          </View>
         </View>
       </>
     );
@@ -618,9 +583,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     share={handleShare}
                   />
                 </View>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 {switchInformationText()}
-                <View spacer={true} />
+                <VSpacer size={16} />
               </View>
               {props.hasMoreOwnedActiveBonus && (
                 <ActivateBonusDiscrepancies
@@ -634,72 +599,53 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 style={[styles.paddedContentLeft, styles.paddedContentRight]}
               >
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <BonusCompositionDetails
                   bonusAmount={bonus.dsu_request.max_amount}
                   taxBenefit={bonus.dsu_request.max_tax_benefit}
                 />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <FamilyComposition
                   familyMembers={bonus.dsu_request.family_members}
                 />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 {O.isSome(maybeStatusDescription) && (
-                  <View style={styles.rowBlock}>
-                    <NBText
-                      semibold={true}
-                      style={[styles.sectionLabel, styles.textColorDark]}
-                    >
+                  <View style={IOStyles.rowSpaceBetween}>
+                    <Body weight="SemiBold" color="bluegreyDark">
                       {I18n.t("bonus.bonusVacanze.status")}
-                    </NBText>
-                    <Badge
-                      style={
-                        isBonusActive(bonus)
-                          ? styles.statusBadgeActive
-                          : styles.statusBadgeRevoked
+                    </Body>
+                    <IOBadge
+                      text={maybeStatusDescription.value}
+                      small={true}
+                      labelColor={
+                        isBonusActive(bonus) ? "white" : "bluegreyDark"
                       }
-                    >
-                      <NBText
-                        style={styles.statusText}
-                        semibold={true}
-                        dark={!isBonusActive(bonus)}
-                      >
-                        {maybeStatusDescription.value}
-                      </NBText>
-                    </Badge>
+                    />
                   </View>
                 )}
-                <View spacer={true} />
+                <VSpacer size={16} />
                 {!isBonusActive(bonus) && bonus.redeemed_at && (
                   <>
-                    <View style={styles.rowBlock}>
-                      <NBText style={[styles.colorGrey, styles.commonLabel]}>
-                        {I18n.t("bonus.bonusVacanze.consumedAt")}
-                      </NBText>
-                      <NBText style={[styles.colorGrey, styles.commonLabel]}>
-                        {formatDateAsLocal(bonus.redeemed_at, true)}
-                      </NBText>
+                    <View style={IOStyles.rowSpaceBetween}>
+                      <Body>{I18n.t("bonus.bonusVacanze.consumedAt")}</Body>
+                      <Body>{formatDateAsLocal(bonus.redeemed_at, true)}</Body>
                     </View>
-                    <View spacer={true} small={true} />
+                    <VSpacer size={8} />
                   </>
                 )}
-                <View style={styles.rowBlock}>
-                  <NBText style={[styles.colorGrey, styles.commonLabel]}>
-                    {I18n.t("bonus.bonusVacanze.requestedAt")}
-                  </NBText>
-                  <NBText style={[styles.colorGrey, styles.commonLabel]}>
-                    {formatDateAsLocal(bonus.created_at, true)}
-                  </NBText>
+                <View style={IOStyles.rowSpaceBetween}>
+                  <Body>{I18n.t("bonus.bonusVacanze.requestedAt")}</Body>
+                  <Body>{formatDateAsLocal(bonus.created_at, true)}</Body>
                 </View>
                 {!screenShotState.isPrintable && O.isSome(maybeBonusTos) && (
                   <>
-                    <View spacer={true} />
+                    <VSpacer size={16} />
                     <ItemSeparatorComponent noPadded={true} />
-                    <View spacer={true} large={true} />
+                    <VSpacer size={24} />
                     <Link
                       onPress={() => handleModalPress(maybeBonusTos.value)}
                       numberOfLines={1}
@@ -709,12 +655,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   </>
                 )}
                 {/* add extra bottom space when capturing screenshot */}
-                {screenShotState.isPrintable && (
-                  <>
-                    <View spacer={true} />
-                    <View spacer={true} />
-                  </>
-                )}
+                {screenShotState.isPrintable && <VSpacer size={32} />}
                 {!screenShotState.isPrintable && <EdgeBorderComponent />}
               </View>
             </View>

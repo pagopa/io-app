@@ -2,8 +2,8 @@ import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Body, Container, Left, ListItem, Right, View } from "native-base";
-import { Keyboard, SafeAreaView, ScrollView } from "react-native";
+import { Body, Container, Left, ListItem, Right } from "native-base";
+import { View, Keyboard, SafeAreaView, ScrollView } from "react-native";
 import AppHeader from "../../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -27,6 +27,7 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { svSetFilter } from "../store/actions/voucherList";
 import { FilterState } from "../store/reducers/voucherList/filters";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
@@ -160,25 +161,25 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
               }}
               icon="io-search"
             />
-            <View spacer large />
+            <VSpacer size={24} />
             {isReady(props.possibleVoucherState) && (
               <>
                 <H2>
                   {I18n.t("bonus.sv.voucherList.filter.stateSection.title")}
                 </H2>
-                <View spacer small />
+                <VSpacer size={8} />
                 {props.possibleVoucherState.value.map((pVS, i) => (
                   <View key={i}>
                     {renderVoucherStateItem(pVS)}
                     <ItemSeparatorComponent noPadded={true} />
                   </View>
                 ))}
-                <View spacer large />
+                <VSpacer size={24} />
               </>
             )}
             <>
               <H2>{I18n.t("bonus.sv.voucherList.filter.dateSection.title")}</H2>
-              <View spacer small />
+              <VSpacer size={8} />
               <DateTimePicker
                 label={I18n.t(
                   "bonus.sv.voucherList.filter.dateSection.departure"
@@ -186,7 +187,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
                 date={departureDate}
                 onConfirm={setDepartureDate}
               />
-              <View spacer />
+              <VSpacer size={16} />
               <DateTimePicker
                 label={I18n.t("bonus.sv.voucherList.filter.dateSection.return")}
                 date={returnDate}

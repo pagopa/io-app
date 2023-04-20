@@ -8,7 +8,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
@@ -16,7 +16,6 @@ import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
-  fciEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
@@ -43,15 +42,20 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
-import { InitiativeDetailsScreen } from "../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
+import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
 } from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
+  IDpayDetailsNavigator,
+  IDPayDetailsRoutes
+} from "../features/idpay/initiative/details/navigation";
+import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
+import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -65,6 +69,7 @@ import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
+  isIdPayEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
@@ -87,9 +92,10 @@ export const AppStackNavigator = () => {
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
-  const isFciEnabled = fciEnabled && fciEnabledSelector;
+  const isFciEnabled = fciEnabledSelector;
   return (
     <Stack.Navigator
       initialRouteName={"INGRESS"}
@@ -97,6 +103,10 @@ export const AppStackNavigator = () => {
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
+      <Stack.Screen
+        name={ROUTES.UNSUPPORTED_DEVICE}
+        component={UnsupportedDeviceScreen}
+      />
       <Stack.Screen
         name={ROUTES.AUTHENTICATION}
         component={authenticationNavigator}
@@ -171,19 +181,22 @@ export const AppStackNavigator = () => {
         <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
       )}
 
-      <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-        component={IDPayOnboardingNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.IDPAY_INITIATIVE_DETAILS}
-        component={InitiativeDetailsScreen}
-      />
-
-      <Stack.Screen
-        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-        component={IDPayConfigurationNavigator}
-      />
+      {isIdPayEnabled && (
+        <>
+          <Stack.Screen
+            name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+            component={IDPayOnboardingNavigator}
+          />
+          <Stack.Screen
+            name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
+            component={IDpayDetailsNavigator}
+          />
+          <Stack.Screen
+            name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
+            component={IDPayConfigurationNavigator}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
@@ -202,7 +215,8 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
-  const isFciEnabled = useIOSelector(isFciEnabledSelector) && fciEnabled;
+  const isFciEnabled = useIOSelector(isFciEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -265,6 +279,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
+        ...(isIdPayEnabled ? idPayLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }

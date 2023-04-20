@@ -113,8 +113,16 @@ export const NotificationsPreferencesPreview = ({
           styles.notification,
           isFirstOnboarding && styles.notificationWhiteBg
         ]}
+        accessible={true}
+        accessibilityLabel={`${I18n.t(
+          "onboarding.notifications.preview.accessibilityLabelPrefix"
+        )} ${I18n.t(titleKey)} ${I18n.t(messageKey)}`}
       >
-        <View style={styles.box}>
+        <View
+          style={styles.box}
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden={true}
+        >
           <Image
             source={require("../../../../img/onboarding/notification_icon.png")}
           />

@@ -1,6 +1,6 @@
-import { Content, Text as NBText, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -17,6 +17,8 @@ import customVariables from "../../../theme/variables";
 import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { IOColors } from "../../core/variables/IOColors";
+import { VSpacer } from "../../core/spacer/Spacer";
+import { Body } from "../../core/typography/Body";
 
 type Props = Readonly<{
   title: string;
@@ -111,7 +113,7 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
                   {attemptData.header}
                 </Label>
               </View>
-              <View small={true} />
+              <VSpacer size={8} />
               <Label color={labelColor} weight={"Regular"}>
                 {attemptData.panAndExpiringDate}
               </Label>
@@ -136,7 +138,7 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
     <Content style={styles.whiteContent}>
       <View>
         <View style={styles.subHeaderContent}>
-          <NBText>{props.title}</NBText>
+          <Body>{props.title}</Body>
         </View>
       </View>
 

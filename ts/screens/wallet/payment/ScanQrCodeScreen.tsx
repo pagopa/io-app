@@ -6,9 +6,10 @@ import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   Dimensions,
   SafeAreaView,
@@ -25,6 +26,8 @@ import {
   ScannedBarcode
 } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -78,11 +81,6 @@ const screenWidth = Dimensions.get("screen").width;
 const cameraTextOverlapping = 20;
 
 const styles = StyleSheet.create({
-  padded: {
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding
-  },
-
   bottomText: {
     paddingTop: cameraTextOverlapping
   },
@@ -352,14 +350,16 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 style={styles.button}
                 bordered={true}
               >
-                <NBText>{I18n.t("wallet.QRtoPay.chooser")}</NBText>
+                <NBButtonText>{I18n.t("wallet.QRtoPay.chooser")}</NBButtonText>
               </ButtonDefaultOpacity>
               <View style={styles.content}>
-                <View spacer={true} />
-                <NBText style={[styles.padded, styles.bottomText]}>
-                  {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                </NBText>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={16} />
+                <View
+                  style={[IOStyles.horizontalContentPadding, styles.bottomText]}
+                >
+                  <Body>{I18n.t("wallet.QRtoPay.cameraUsageInfo")}</Body>
+                </View>
+                <VSpacer size={40} />
               </View>
             </View>
           </ScrollView>

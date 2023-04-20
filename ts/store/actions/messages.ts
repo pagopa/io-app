@@ -12,11 +12,16 @@ import {
 import {
   UIMessage,
   UIMessageDetails,
-  UIMessageId
+  UIMessageId,
+  UIAttachment
 } from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
+import {
+  Download,
+  DownloadError
+} from "../reducers/entities/messages/downloads";
 
 /**
  * Load a single message given its ID
@@ -141,14 +146,39 @@ export const resetMigrationStatus = createAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_DONE"
 );
 
-export type MessagesActions =
-  | ActionType<typeof reloadAllMessages>
-  | ActionType<typeof loadNextPageMessages>
-  | ActionType<typeof loadPreviousPageMessages>
-  | ActionType<typeof loadMessageDetails>
-  | ActionType<typeof migrateToPaginatedMessages>
-  | ActionType<typeof resetMigrationStatus>
-  | ActionType<typeof removeMessages>
-  | ActionType<typeof upsertMessageStatusAttributes>
-  | ActionType<typeof loadMessageById>
-  | ActionType<typeof loadThirdPartyMessage>;
+/**
+ * The user requests an attachment download.
+ */
+export const downloadAttachment = createAsyncAction(
+  "DOWNLOAD_ATTACHMENT_REQUEST",
+  "DOWNLOAD_ATTACHMENT_SUCCESS",
+  "DOWNLOAD_ATTACHMENT_FAILURE",
+  "DOWNLOAD_ATTACHMENT_CANCEL"
+)<UIAttachment, Download, DownloadError<Error>, UIAttachment>();
+
+export const cancelPreviousAttachmentDownload = createAction(
+  "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
+);
+
+/**
+ * This action removes any cached data in order to perform another download.
+ */
+export const removeCachedAttachment = createStandardAction(
+  "REMOVE_CACHED_ATTACHMENT"
+)<Download>();
+
+export type MessagesActions = ActionType<
+  | typeof reloadAllMessages
+  | typeof loadNextPageMessages
+  | typeof loadPreviousPageMessages
+  | typeof loadMessageDetails
+  | typeof migrateToPaginatedMessages
+  | typeof resetMigrationStatus
+  | typeof removeMessages
+  | typeof upsertMessageStatusAttributes
+  | typeof loadMessageById
+  | typeof loadThirdPartyMessage
+  | typeof downloadAttachment
+  | typeof cancelPreviousAttachmentDownload
+  | typeof removeCachedAttachment
+>;

@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -21,6 +21,7 @@ import { buildExpirationDate } from "../../../../utils/stringBuilder";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
 import { BrandImage } from "../../component/card/BrandImage";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type OwnProps = {
   creditCard: CreditCardPaymentMethod;
@@ -74,7 +75,7 @@ const topLeft = (
     <View style={IOStyles.rowSpaceBetween}>
       <View style={IOStyles.flex}>
         <BlurredPan>{creditCard.caption}</BlurredPan>
-        <View spacer={true} small={true} />
+        <VSpacer size={8} />
         <H5 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
           {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
         </H5>

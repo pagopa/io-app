@@ -1,12 +1,11 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React, { useEffect } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
+import CardIcon from "../../../../img/assistance/card.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
-import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
 import GalleryIcon from "../../../../img/assistance/gallery.svg";
 import StockIcon from "../../../../img/assistance/giacenza.svg";
 import HistoryIcon from "../../../../img/assistance/history.svg";
@@ -15,6 +14,7 @@ import LoginIcon from "../../../../img/assistance/login.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import WebSiteIcon from "../../../../img/assistance/website.svg";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -100,7 +100,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   },
   {
     id: "profileFiscalCode",
-    icon: <FiscalCodeIcon {...iconProps} />,
+    icon: <CardIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
@@ -127,6 +127,20 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
     testId: "paymentIssues"
   },
   {
+    id: "addCardIssues",
+    icon: <CardIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.card"),
+    value: I18n.t("support.askPermissions.cardValue"),
+    testId: "addCardIssues"
+  },
+  {
+    id: "addFciIssues",
+    icon: <StockIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.fci"),
+    value: I18n.t("support.askPermissions.fciValue"),
+    testId: "addFciIssues"
+  },
+  {
     icon: <DeviceIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
     value: props.deviceDescription,
@@ -142,6 +156,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     icon: <WebSiteIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.ipAddress"),
+    value: I18n.t("support.askPermissions.ipAddressValue"),
     testId: "ipAddress"
   },
   {
@@ -167,6 +182,8 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
 
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 /**
@@ -177,7 +194,8 @@ const ZendeskAskPermissions = () => {
   const route =
     useRoute<RouteProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">>();
 
-  const assistanceForPayment = route.params.assistanceForPayment;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    route.params;
 
   const dispatch = useIODispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -257,6 +275,10 @@ const ZendeskAskPermissions = () => {
   const itemsToRemove: ReadonlyArray<string> = [
     // if user is not asking assistance for a payment, remove the related items from those ones shown
     ...(!assistanceForPayment ? ["paymentIssues"] : []),
+    // if user is not asking assistance for a payment, remove the related items from those ones shown
+    ...(!assistanceForCard ? ["addCardIssues"] : []),
+    // if user is not asking assistance for a signing flow, remove the related items from those ones shown
+    ...(!assistanceForFci ? ["addFciIssues"] : []),
     // if user is not logged in, remove the items related to his/her profile
     ...(!isUserLoggedIn
       ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
@@ -266,6 +288,8 @@ const ZendeskAskPermissions = () => {
   ];
   const items = getItems(itemsProps)
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
+    .filter(it => (!assistanceForCard ? it.id !== "addCardIssues" : true))
+    .filter(it => (!assistanceForFci ? it.id !== "addFciIssues" : true))
     .filter(it => !itemsToRemove.includes(it.id ?? ""))
     // remove these item whose have no value associated
     .filter(it => it.value !== notAvailable);
@@ -348,9 +372,9 @@ const ZendeskAskPermissions = () => {
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <View spacer />
+            <VSpacer size={16} />
             <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
-            <View spacer xsmall={true} />
+            <VSpacer size={4} />
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
@@ -360,7 +384,7 @@ const ZendeskAskPermissions = () => {
             >
               {I18n.t("support.askPermissions.privacyLink")}
             </Link>
-            <View spacer small={true} />
+            <VSpacer size={8} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
             {items.map((item, idx) => (

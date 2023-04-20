@@ -4,6 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../features/lollipop/saga";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
   logoutFailure,
@@ -17,7 +18,7 @@ import { resetAssistanceData } from "../../utils/supportAssistance";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
-  action: ActionType<typeof logoutRequest>
+  _: ActionType<typeof logoutRequest>
 ) {
   // Issue a logout request to the backend, asking to delete the session
   // FIXME: if there's no connectivity to the backend, this request will
@@ -26,7 +27,7 @@ export function* logoutSaga(
     const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});
     if (E.isRight(response)) {
       if (response.right.status === 200) {
-        yield* put(logoutSuccess(action.payload));
+        yield* put(logoutSuccess());
       } else {
         // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
         const error = Error(
@@ -34,26 +35,26 @@ export function* logoutSaga(
             ? response.right.value.title
             : "Unknown error"
         );
-        yield* put(logoutFailure({ error, options: action.payload }));
+        yield* put(logoutFailure({ error }));
       }
     } else {
       const logoutError = {
-        error: Error(readableReport(response.left)),
-        options: action.payload
+        error: Error(readableReport(response.left))
       };
       yield* put(logoutFailure(logoutError));
     }
   } catch (e) {
     const logoutError = {
-      error: convertUnknownToError(e),
-      options: action.payload
+      error: convertUnknownToError(e)
     };
     yield* put(logoutFailure(logoutError));
   } finally {
+    // clean up crypto keys
+    yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
     // clean up any assistance data
     resetAssistanceData();
-    // If keepUserData is false, startApplicationInitialization is
-    // dispatched within the componentDidMount of IngressScreen
+    // startApplicationInitialization is dispatched
+    // within the componentDidMount of IngressScreen
     resetToAuthenticationRoute();
     yield* put(startApplicationInitialization());
   }

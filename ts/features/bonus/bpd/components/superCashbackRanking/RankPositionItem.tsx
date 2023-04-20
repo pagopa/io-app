@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Badge, View, Text as NBText } from "native-base";
-import { Platform, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -10,6 +9,8 @@ import {
   formatNumberWithNoDigits
 } from "../../../../../utils/stringBuilder";
 import I18n from "../../../../../i18n";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   transactionsNumber: number;
@@ -25,17 +26,6 @@ const style = StyleSheet.create({
     paddingVertical: 8,
     width: 48,
     textAlign: "center"
-  },
-  badgeBlue: {
-    backgroundColor: IOColors.blue,
-    height: 18,
-    marginTop: 4
-  },
-  badgeText: {
-    fontSize: 12,
-    lineHeight: 18,
-    color: IOColors.white,
-    marginBottom: Platform.select({ android: 2, default: 0 })
   }
 });
 
@@ -61,16 +51,19 @@ const RankPositionItem = (props: Props): React.ReactElement => (
           {props.boxedLabel}
         </H4>
       </View>
-      <View hspacer={true} />
+      <HSpacer size={16} />
       <View style={IOStyles.flex}>
         <View style={[IOStyles.row, { justifyContent: "space-between" }]}>
           <H4 testID={"RankingLabel"}>{props.rankingLabel}</H4>
           {!props.hideBadge && (
-            <Badge style={style.badgeBlue} testID={"SuperCashbackAmountBadge"}>
-              <NBText style={style.badgeText} semibold={true}>
-                {formatNumberWithNoDigits(props.superCashbackAmount, true)}
-              </NBText>
-            </Badge>
+            <View>
+              <IOBadge
+                text={formatNumberWithNoDigits(props.superCashbackAmount, true)}
+                small={true}
+                labelColor={"white"}
+                testID={"SuperCashbackAmountBadge"}
+              />
+            </View>
           )}
         </View>
         <H5 testID={"RankingTransactions"}>
@@ -84,7 +77,7 @@ const RankPositionItem = (props: Props): React.ReactElement => (
         </H5>
       </View>
     </View>
-    <View spacer={true} />
+    <VSpacer size={16} />
   </>
 );
 

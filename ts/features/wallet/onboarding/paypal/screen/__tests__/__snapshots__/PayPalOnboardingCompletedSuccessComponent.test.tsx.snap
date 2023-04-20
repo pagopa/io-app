@@ -464,15 +464,12 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                     >
                                       <View
                                         style={
-                                          Array [
-                                            Object {},
-                                            Object {
-                                              "alignItems": "center",
-                                              "flex": 1,
-                                              "justifyContent": "center",
-                                              "padding": 24,
-                                            },
-                                          ]
+                                          Object {
+                                            "alignItems": "center",
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                            "padding": 24,
+                                          }
                                         }
                                         testID="InfoScreenComponent"
                                       >
@@ -492,9 +489,11 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           testID="rasterImage"
                                         />
                                         <View
-                                          large={true}
-                                          spacer={true}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "height": 24,
+                                            }
+                                          }
                                         />
                                         <Text
                                           accessible={true}
@@ -531,12 +530,15 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           Fatto!
                                         </Text>
                                         <View
-                                          spacer={true}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "height": 16,
+                                            }
+                                          }
                                         />
                                         <Text
-                                          color="bluegreyDark"
-                                          defaultColor="bluegreyDark"
+                                          color="bluegrey"
+                                          defaultColor="bluegrey"
                                           defaultWeight="Regular"
                                           font="TitilliumWeb"
                                           fontStyle={
@@ -555,7 +557,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                                 "lineHeight": 24,
                                               },
                                               Object {
-                                                "color": "#17324D",
+                                                "color": "#475A6D",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
@@ -571,47 +573,38 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                       <View
                                         pointerEvents="box-none"
                                         style={
-                                          Array [
-                                            Object {},
-                                            Object {
-                                              "marginTop": -50,
-                                              "overflow": "hidden",
-                                              "paddingTop": 50,
-                                            },
-                                          ]
+                                          Object {
+                                            "marginTop": -50,
+                                            "overflow": "hidden",
+                                            "paddingTop": 50,
+                                          }
                                         }
                                         testID="FooterWithButtons"
                                       >
                                         <View
                                           style={
-                                            Array [
-                                              Object {},
-                                              Object {
-                                                "backgroundColor": "#FFFFFF",
-                                                "elevation": 20,
-                                                "paddingBottom": 16,
-                                                "paddingLeft": 24,
-                                                "paddingRight": 24,
-                                                "paddingTop": 16,
-                                                "shadowColor": "#000000",
-                                                "shadowOffset": Object {
-                                                  "height": 50,
-                                                  "width": 0,
-                                                },
-                                                "shadowOpacity": 0.5,
-                                                "shadowRadius": 37,
+                                            Object {
+                                              "backgroundColor": "#FFFFFF",
+                                              "elevation": 20,
+                                              "paddingBottom": 16,
+                                              "paddingLeft": 24,
+                                              "paddingRight": 24,
+                                              "paddingTop": 16,
+                                              "shadowColor": "#0E0F13",
+                                              "shadowOffset": Object {
+                                                "height": 50,
+                                                "width": 0,
                                               },
-                                            ]
+                                              "shadowOpacity": 0.5,
+                                              "shadowRadius": 37,
+                                            }
                                           }
                                         >
                                           <View
                                             style={
-                                              Array [
-                                                Object {},
-                                                Object {
-                                                  "flexDirection": "row",
-                                                },
-                                              ]
+                                              Object {
+                                                "flexDirection": "row",
+                                              }
                                             }
                                           >
                                             <View
@@ -681,7 +674,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                                       "paddingRight": 16,
                                                     },
                                                     undefined,
-                                                    undefined,
+                                                    Object {
+                                                      "color": "#FFFFFF",
+                                                    },
                                                   ]
                                                 }
                                                 uppercase={false}

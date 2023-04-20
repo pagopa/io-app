@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -9,6 +8,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -140,7 +140,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
             )}
           </H1>
 
-          <View spacer={true} />
+          <VSpacer size={16} />
           <RadioButtonList<BeneficiaryCategory>
             key="delete_reason"
             items={getCategoryBeneficiaryItems()}

@@ -1,11 +1,12 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Button, Text as NBText, View } from "native-base";
+import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { HSpacer } from "../core/spacer/Spacer";
 import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
@@ -103,7 +104,7 @@ export default class BlockButtons extends React.Component<Props, never> {
 
     return (
       <React.Fragment>
-        <View hspacer={true} />
+        <HSpacer size={16} />
         {this.renderButton(this.props.rightButton, rightButtonStyle)}
       </React.Fragment>
     );
@@ -116,7 +117,7 @@ export default class BlockButtons extends React.Component<Props, never> {
 
     return (
       <React.Fragment>
-        <View hspacer={true} />
+        <HSpacer size={16} />
         {this.renderButton(this.props.midButton, styles.button)}
       </React.Fragment>
     );
@@ -166,7 +167,7 @@ export default class BlockButtons extends React.Component<Props, never> {
           )}
         />
       )}
-      <NBText
+      <NBButtonText
         style={[
           pipe(
             props.buttonFontSize,
@@ -191,7 +192,7 @@ export default class BlockButtons extends React.Component<Props, never> {
         ]}
       >
         {props.title}
-      </NBText>
+      </NBButtonText>
     </ButtonDefaultOpacity>
   );
 

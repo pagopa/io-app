@@ -28,11 +28,13 @@ import { zendeskTicketNumberSelector } from "../store/reducers";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
   ZendeskParamsList,
-  "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
+  "ZENDESK_SEE_REPORTS_ROUTERS"
 >;
 /**
  * this screen checks if a user has at least a ticket, it shows:
@@ -45,7 +47,8 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useIODispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
-  const assistanceForPayment = props.route.params.assistanceForPayment;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    props.route.params;
 
   useEffect(() => {
     const zendeskConfig = pipe(
@@ -88,7 +91,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     }
   }, [ticketNumber, dispatch]);
 
-  if (!isStrictSome(ticketNumber) && !pot.isNone(ticketNumber)) {
+  if (pot.isLoading(ticketNumber) || pot.isError(ticketNumber)) {
     return (
       <LoadingErrorComponent
         isLoading={pot.isLoading(ticketNumber)}
@@ -96,6 +99,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
         onRetry={() => {
           dispatch(zendeskRequestTicketNumber.request());
         }}
+        onAbort={() => props.navigation.goBack()}
       />
     );
   }
@@ -105,6 +109,8 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     return (
       <ZendeskEmptyTicketsComponent
         assistanceForPayment={assistanceForPayment}
+        assistanceForCard={assistanceForCard}
+        assistanceForFci={assistanceForFci}
       />
     );
   }

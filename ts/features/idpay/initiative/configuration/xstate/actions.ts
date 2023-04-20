@@ -1,16 +1,21 @@
+import * as O from "fp-ts/lib/Option";
+import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
+import { showToast } from "../../../../../utils/showToast";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
-import { Context } from "./machine";
+import { Context } from "./context";
+import { Events } from "./events";
+import { InitiativeFailureType } from "./failure";
 
-// TODO add actions implementatio
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToConfigurationEntry = (context: Context) => {
+  const navigateToConfigurationIntro = (context: Context) => {
     if (context.initiativeId === undefined) {
       throw new Error("initiativeId is undefined");
     }
@@ -23,10 +28,37 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToIbanLandingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
+    });
+  };
+
+  const navigateToIbanOnboardingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
+    });
+  };
+
+  const navigateToIbanEnrollmentScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+      params: {}
+    });
+  };
+
+  const navigateToAddPaymentMethodScreen = () => {
+    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params: { inPayment: O.none }
+    });
+  };
+
   const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      params: {}
     });
   };
 
@@ -41,16 +73,64 @@ const createActionsImplementation = (
       return;
     }
 
-    navigation.navigate(ROUTES.IDPAY_INITIATIVE_DETAILS, {
-      initiativeId: context.initiativeId
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId: context.initiativeId }
     });
   };
 
+  const showFailureToast = (context: Context) => {
+    if (context.failure === undefined) {
+      return;
+    }
+    showToast(
+      I18n.t(`idpay.configuration.failureStates.${context.failure}`),
+      "danger"
+    );
+  };
+
+  const showUpdateIbanToast = () => {
+    showToast(I18n.t(`idpay.configuration.iban.updateToast`), "success");
+  };
+
+  const showInstrumentFailureToast = (_: Context, event: Events) => {
+    switch (event.type) {
+      case "ENROLL_INSTRUMENT_FAILURE":
+        showToast(
+          I18n.t(
+            `idpay.configuration.failureStates.${InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE}`
+          ),
+          "danger"
+        );
+        break;
+      case "DELETE_INSTRUMENT_FAILURE":
+        showToast(
+          I18n.t(
+            `idpay.configuration.failureStates.${InitiativeFailureType.INSTRUMENT_DELETE_FAILURE}`
+          ),
+          "danger"
+        );
+        break;
+    }
+  };
+
+  const exitConfiguration = () => {
+    navigation.pop();
+  };
+
   return {
-    navigateToConfigurationEntry,
+    navigateToConfigurationIntro,
+    navigateToIbanLandingScreen,
+    navigateToIbanOnboardingScreen,
+    navigateToIbanEnrollmentScreen,
     navigateToInstrumentsEnrollmentScreen,
+    navigateToAddPaymentMethodScreen,
+    navigateToInitiativeDetailScreen,
     navigateToConfigurationSuccessScreen,
-    navigateToInitiativeDetailScreen
+    showFailureToast,
+    showUpdateIbanToast,
+    showInstrumentFailureToast,
+    exitConfiguration
   };
 };
 

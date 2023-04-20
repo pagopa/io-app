@@ -6,17 +6,19 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import ContextualInfo from "../../components/ContextualInfo";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
@@ -32,7 +34,6 @@ import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { IdentityProvider } from "../../models/IdentityProvider";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -56,6 +57,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -76,25 +78,42 @@ const getCards = (
     id: 5,
     image: require("../../../img/landing/05.png"),
     title: I18n.t("authentication.landing.card5-title"),
-    content: I18n.t("authentication.landing.card5-content")
+    content: I18n.t("authentication.landing.card5-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.accessibility.carousel.label"
+    )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
+      "authentication.landing.card5-content-accessibility"
+    )}`,
+    accessibilityHint: I18n.t(
+      "authentication.landing.accessibility.carousel.hint"
+    )
   },
   {
     id: 1,
     image: require("../../../img/landing/01.png"),
     title: I18n.t("authentication.landing.card1-title"),
-    content: I18n.t("authentication.landing.card1-content")
+    content: I18n.t("authentication.landing.card1-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card1-title"
+    )}. ${I18n.t("authentication.landing.card1-content")}`
   },
   {
     id: 2,
     image: require("../../../img/landing/02.png"),
     title: I18n.t("authentication.landing.card2-title"),
-    content: I18n.t("authentication.landing.card2-content")
+    content: I18n.t("authentication.landing.card2-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card2-title"
+    )}. ${I18n.t("authentication.landing.card2-content")}`
   },
   {
     id: 3,
     image: require("../../../img/landing/03.png"),
     title: I18n.t("authentication.landing.card3-title"),
-    content: I18n.t("authentication.landing.card3-content")
+    content: I18n.t("authentication.landing.card3-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card3-title"
+    )}. ${I18n.t("authentication.landing.card3-content")}`
   },
   {
     id: 4,
@@ -106,7 +125,10 @@ const getCards = (
       : I18n.t("authentication.landing.card4-title"),
     content: isCIEAvailable
       ? I18n.t("authentication.landing.loginSpidCieContent")
-      : I18n.t("authentication.landing.card4-content")
+      : I18n.t("authentication.landing.card4-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card4-title"
+    )}. ${I18n.t("authentication.landing.card4-content")}`
   }
 ];
 
@@ -122,7 +144,7 @@ const styles = StyleSheet.create({
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
     // TODO: Remove this half-disabled state.
-    // See also discusssion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
+    // See also discussion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
     backgroundColor: IOColors.noCieButton
   },
   fullOpacity: {
@@ -136,11 +158,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export const IdpCIE: IdentityProvider = {
+const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
   logo: "",
-  entityID: "cieid",
   profileUrl: ""
 };
 
@@ -257,7 +278,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
-        <View footer={true}>
+        <View style={IOStyles.footer}>
           <ButtonDefaultOpacity
             block={true}
             primary={true}
@@ -266,6 +287,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
               isCieSupported
                 ? this.navigateToCiePinScreen
                 : this.navigateToIdpSelection
+            }
+            accessibilityRole="button"
+            accessible={true}
+            accessibilityLabel={
+              isCieSupported
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")
             }
             testID={
               isCieSupported
@@ -277,14 +305,21 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={isCieSupported ? "io-cie" : "io-profilo"}
               color={IOColors.white}
             />
-            <NBText>
+            <NBButtonText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <ButtonDefaultOpacity
+            accessibilityLabel={
+              this.isCieSupported()
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")
+            }
+            accessibilityRole="button"
+            accessible={true}
             style={secondButtonStyle}
             block={true}
             primary={true}
@@ -304,13 +339,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={IOColors.white}
             />
-            <NBText>
+            <NBButtonText>
               {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Link
             style={styles.link}
             onPress={this.navigateToSpidCieInformationRequest}

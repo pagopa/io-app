@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, View } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
 import {
+  View,
   Image,
   ImageSourcePropType,
   ImageStyle,
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
@@ -140,7 +142,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           {props.expiringDate && (
             <>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <H5
                 weight={props.isExpired ? "SemiBold" : "Regular"}
                 color={props.isExpired ? "red" : "bluegreyDark"}
@@ -164,7 +166,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               <View style={{ flexDirection: "row" }}>
                 <BlurredPan testID="caption">{props.caption}</BlurredPan>
               </View>
-              <View spacer small />
+              <VSpacer size={8} />
             </>
           )}
         </>

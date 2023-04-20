@@ -1,7 +1,8 @@
-import { Container, Content, Text as NBText, View } from "native-base";
+import { Container, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOColors } from "../../components/core/variables/IOColors";
 
 import Markdown from "../../components/ui/Markdown";
@@ -78,28 +79,28 @@ class MarkdownScreen extends React.Component<Props, State> {
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_HEADING)}
             >
-              <NBText>Heading</NBText>
+              <NBButtonText>Heading</NBButtonText>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_PARAGRAPH)}
             >
-              <NBText>Paragraph</NBText>
+              <NBButtonText>Paragraph</NBButtonText>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_LIST)}
             >
-              <NBText>List</NBText>
+              <NBButtonText>List</NBButtonText>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_REFERENCE)}
             >
-              <NBText>Reference</NBText>
+              <NBButtonText>Reference</NBButtonText>
             </ButtonDefaultOpacity>
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <TextInput
             style={{
               borderColor: IOColors.grey,
@@ -111,7 +112,7 @@ class MarkdownScreen extends React.Component<Props, State> {
             multiline={true}
             numberOfLines={10}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Markdown>{this.state.markdown}</Markdown>
         </Content>
       </Container>

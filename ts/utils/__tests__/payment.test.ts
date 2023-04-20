@@ -325,6 +325,10 @@ describe("getV2ErrorMacro", () => {
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_SCADUTO", "EXPIRED"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_DUPLICATO", "DUPLICATED"),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_PAGAMENTO_DUPLICATO", "DUPLICATED"),
+      Tuple2<DetailV2Keys, ErrorTypes>(
+        "PAA_PAGAMENTO_SCONOSCIUTO",
+        "NOT_FOUND"
+      ),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_RT_SCONOSCIUTA", "UNCOVERED")
     ].forEach(t => {
       expect(getV2ErrorMainType(t.e1)).toBe(t.e2);
@@ -374,6 +378,10 @@ describe("getErrorDescriptionV2", () => {
       Tuple2<DetailV2Keys | undefined, string>(
         "PPT_PAGAMENTO_DUPLICATO",
         I18n.t("wallet.errors.DUPLICATED")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PAA_PAGAMENTO_SCONOSCIUTO",
+        I18n.t("wallet.errors.NOT_FOUND")
       ),
       Tuple2<DetailV2Keys | undefined, string>(
         "PPT_RT_SCONOSCIUTA",

@@ -1,30 +1,41 @@
-import { View } from "native-base";
 import * as React from "react";
-import { createRef, useEffect, useReducer } from "react";
-import { Platform } from "react-native";
+import { createRef, useEffect } from "react";
+import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewNavigation,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
+import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { closeInjectedScript } from "../../utils/webview";
+import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    backgroundColor: IOColors.white
+  }
+});
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
 const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
-const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
+const defaultUserAgent = Platform.select({
+  ios: iOSUserAgent,
+  default: undefined
+});
 
 // INFA PROD -> xx_servizicie
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
+const loginUri = getIdpLoginUri(CIE_IDP_ID);
 
 /**
  * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
@@ -44,86 +55,111 @@ type Props = {
   onSuccess: (authorizationUri: string) => void;
 };
 
-type InnerAction =
-  | { kind: "foundAuthUrl"; authUrl: string }
-  | { kind: "setError" }
-  | { kind: "retry" }
-  | { kind: "reset" };
-
-type State = {
+type InternalState = {
   authUrl: string | undefined;
   error: boolean;
   key: number;
 };
 
-const initState: State = {
+const generateResetState: () => InternalState = () => ({
   authUrl: undefined,
   error: false,
   key: 1
-};
+});
 
-const reducer = (state: State, action: InnerAction): State => {
-  switch (action.kind) {
-    case "reset":
-      return initState;
-    case "foundAuthUrl":
-      return { ...state, authUrl: action.authUrl };
-    case "setError":
-      return { ...state, error: true };
-    case "retry":
-      return { ...state, error: false, key: state.key + 1 };
-  }
-};
+const generateFoundAuthUrlState: (
+  authUr: string,
+  state: InternalState
+) => InternalState = (authUrl: string, state: InternalState) => ({
+  ...state,
+  authUrl
+});
+
+const generateErrorState: (state: InternalState) => InternalState = (
+  state: InternalState
+) => ({
+  ...state,
+  error: true
+});
+
+const generateRetryState: (state: InternalState) => InternalState = (
+  state: InternalState
+) => ({
+  ...state,
+  error: false,
+  key: state.key + 1
+});
 
 const CieWebView = (props: Props) => {
-  const [{ authUrl, key, error }, dispatch] = useReducer(reducer, initState);
+  const [internalState, setInternalState] = React.useState<InternalState>(
+    generateResetState()
+  );
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
+  const handleOnError = React.useCallback(() => {
+    setInternalState(state => generateErrorState(state));
+  }, []);
+
+  // Android CIE login flow is different from iOS.
+  // On Android to be sure to regenerate a new crypto key,
+  // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
+  const {
+    retryLollipopLogin,
+    shouldBlockUrlNavigationWhileCheckingLollipop,
+    webviewSource
+  } = useLollipopLoginSource(handleOnError, loginUri);
+
   useEffect(() => {
-    if (authUrl !== undefined) {
-      onSuccess(authUrl);
+    if (internalState.authUrl !== undefined) {
+      onSuccess(internalState.authUrl);
       // reset the state when authUrl has been found
-      dispatch({ kind: "reset" });
+      setInternalState(generateResetState());
     }
-  }, [authUrl, onSuccess]);
+  }, [internalState.authUrl, onSuccess]);
 
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
   ): boolean => {
-    if (authUrl !== undefined) {
+    if (internalState.authUrl !== undefined) {
       return false;
     }
+
+    const url = event.url;
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
+      return false;
+    }
+
     // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
     if (
-      event.url !== undefined &&
+      url !== undefined &&
       Platform.OS === "ios" &&
-      event.url.indexOf("authnRequestString") !== -1
+      url.indexOf("authnRequestString") !== -1
     ) {
       // avoid redirect and follow the 'happy path'
       if (webView.current !== null) {
-        dispatch({
-          kind: "foundAuthUrl",
-          authUrl: event.url.replace("nextUrl=", "OpenApp?nextUrl=")
-        });
+        const authUrl = url.replace("nextUrl=", "OpenApp?nextUrl=");
+        setInternalState(state => generateFoundAuthUrlState(authUrl, state));
       }
       return false;
     }
 
     // Once the returned url contains the "OpenApp" string, then the authorization has been given
-    if (event.url && event.url.indexOf("OpenApp") !== -1) {
-      dispatch({ kind: "foundAuthUrl", authUrl: event.url });
+    if (url && url.indexOf("OpenApp") !== -1) {
+      setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }
     return true;
   };
 
-  const handleOnError = () => {
-    dispatch({ kind: "setError" });
-  };
-
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
-    if (e.nativeEvent.title === "Pagina web non disponibile") {
+    const eventTitle = e.nativeEvent.title.toLowerCase();
+    if (
+      eventTitle === "pagina web non disponibile" ||
+      // On Android, if we attempt to access the idp URL twice,
+      // we are presented with an error page titled "ERROR".
+      eventTitle === "errore"
+    ) {
       handleOnError();
     }
     // inject JS on every page load end
@@ -132,10 +168,13 @@ const CieWebView = (props: Props) => {
     }
   };
 
-  if (error) {
+  if (internalState.error) {
     return (
       <ErrorComponent
-        onRetry={() => dispatch({ kind: "retry" })}
+        onRetry={() => {
+          setInternalState(state => generateRetryState(state));
+          retryLollipopLogin();
+        }}
         onClose={props.onClose}
       />
     );
@@ -143,21 +182,20 @@ const CieWebView = (props: Props) => {
 
   const WithLoading = withLoadingSpinner(() => (
     <View style={IOStyles.flex}>
-      {authUrl === undefined && (
+      {internalState.authUrl === undefined && (
         <WebView
+          cacheEnabled={false}
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           ref={webView}
-          userAgent={userAgent}
+          userAgent={defaultUserAgent}
           javaScriptEnabled={true}
           injectedJavaScript={injectJs}
           onLoadEnd={handleOnLoadEnd}
           onError={handleOnError}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          source={{
-            uri: getIdpLoginUri(CIE_IDP_ID)
-          }}
-          key={key}
+          source={webviewSource}
+          key={internalState.key}
         />
       )}
     </View>
@@ -176,13 +214,15 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
 ) => (
-  <GenericErrorComponent
-    avoidNavigationEvents={true}
-    onRetry={props.onRetry}
-    onCancel={props.onClose}
-    image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
-    text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
-  />
+  <SafeAreaView style={[IOStyles.flex, styles.errorContainer]}>
+    <GenericErrorComponent
+      avoidNavigationEvents={true}
+      onRetry={props.onRetry}
+      onCancel={props.onClose}
+      image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
+      text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+    />
+  </SafeAreaView>
 );
 
 /**

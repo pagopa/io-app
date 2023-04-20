@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
@@ -54,6 +53,7 @@ import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { canEycaCardBeShown } from "../utils/eyca";
 import { IOColorGradients } from "../../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -140,12 +140,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                     { paddingTop: customVariables.contentPadding }
                   ]}
                 >
-                  <View spacer extralarge />
-                  <View spacer xsmall />
+                  <VSpacer size={48} />
+
                   {/* Ownership block rendering owner's fiscal code */}
                   <CgnOwnershipInformation />
                   <ItemSeparatorComponent noPadded />
-                  <View spacer />
+                  <VSpacer size={16} />
                   {props.cgnDetails && (
                     // Renders status information including activation and expiring date and a badge that represents the CGN status
                     // ACTIVATED - EXPIRED - REVOKED
@@ -154,11 +154,11 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                   {canDisplayEycaDetails && (
                     <>
                       <ItemSeparatorComponent noPadded />
-                      <View spacer />
+                      <VSpacer size={16} />
                       <EycaDetailComponent />
                     </>
                   )}
-                  <View spacer large />
+                  <VSpacer size={24} />
                   <ItemSeparatorComponent noPadded />
                   <CgnUnsubscribe />
                 </View>

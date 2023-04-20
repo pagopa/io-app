@@ -2,13 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import { remindersOptInEnabled } from "../config";
-import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
-import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
-import TosScreen from "../screens/onboarding/TosScreen";
+import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
+import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
+import EmailReadScreen from "../screens/profile/EmailReadScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
@@ -23,9 +23,10 @@ import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen"
 import SecurityScreen from "../screens/profile/SecurityScreen";
 import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
+import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
-import { Showroom } from "../screens/showroom/Showroom";
 import { isGestureEnabled } from "../utils/navigation";
+import PinScreen from "../screens/profile/PinScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -81,6 +82,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.INSERT_EMAIL_SCREEN}
       component={EmailInsertScreen}
     />
+    <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}
@@ -89,7 +91,10 @@ const ProfileStackNavigator = () => (
       name={ROUTES.MARKDOWN_PLAYGROUND}
       component={MarkdownPlayground}
     />
-    <Stack.Screen name={ROUTES.SHOWROOM} component={Showroom} />
+    <Stack.Screen
+      name={ROUTES.DESIGN_SYSTEM}
+      component={DesignSystemNavigator}
+    />
     <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
     <Stack.Screen
       name={ROUTES.CGN_LANDING_PLAYGROUND}

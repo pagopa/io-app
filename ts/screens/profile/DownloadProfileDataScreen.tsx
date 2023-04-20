@@ -1,44 +1,27 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
-import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
-import { ReduxProps } from "../../store/actions/types";
 import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
-import { GlobalState } from "../../store/reducers/types";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import themeVariables from "../../theme/variables";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 import { showToast } from "../../utils/showToast";
 
-type OwnProps = {
-  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_DOWNLOAD_DATA">;
-};
-
-type Props = ReduxProps &
-  OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
-
-type State = {
-  isMarkdownLoaded: boolean;
-};
-
 const styles = StyleSheet.create({
-  markdownContainer: {
+  container: {
     paddingLeft: themeVariables.contentPadding,
     paddingRight: themeVariables.contentPadding
   }
@@ -48,30 +31,32 @@ const styles = StyleSheet.create({
  * A screen to explain how profile data export works.
  * Here user can ask to download his data
  */
-class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { isMarkdownLoaded: false };
-  }
+const DownloadProfileDataScreen = () => {
+  const dispatch = useIODispatch();
+  const navigation = useNavigation();
+  const userDataProcessing = useIOSelector(userDataProcessingSelector);
+  const prevUserDataProcessing = usePrevious(userDataProcessing);
+  const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
+  const isLoading =
+    pot.isLoading(userDataProcessing.DOWNLOAD) ||
+    pot.isUpdating(userDataProcessing.DOWNLOAD);
 
-  public componentDidUpdate(prevProps: Props) {
-    const prev =
-      prevProps.userDataProcessing[UserDataProcessingChoiceEnum.DOWNLOAD];
-    const curr =
-      this.props.userDataProcessing[UserDataProcessingChoiceEnum.DOWNLOAD];
+  useEffect(() => {
     // the request to download has been done
-    if (pot.isUpdating(prev) && pot.isSome(curr)) {
-      // we got an error
-      if (pot.isError(curr)) {
+    if (
+      prevUserDataProcessing &&
+      pot.isUpdating(prevUserDataProcessing.DOWNLOAD) &&
+      pot.isSome(userDataProcessing.DOWNLOAD)
+    ) {
+      if (pot.isError(userDataProcessing.DOWNLOAD)) {
         showToast(I18n.t("profile.main.privacy.exportData.error"));
         return;
       }
-      // success, go back!
-      this.props.navigation.goBack();
+      navigation.goBack();
     }
-  }
+  }, [prevUserDataProcessing, userDataProcessing, navigation]);
 
-  private handleDownloadPress = (): void => {
+  const handleDownloadPress = () => {
     Alert.alert(
       I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
       undefined,
@@ -79,79 +64,59 @@ class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
         {
           text: I18n.t("global.buttons.cancel"),
           style: "cancel",
-          onPress: () => this.props.resetRequest()
+          onPress: () =>
+            dispatch(
+              resetUserDataProcessingRequest(
+                UserDataProcessingChoiceEnum.DOWNLOAD
+              )
+            )
         },
         {
           text: I18n.t("global.buttons.continue"),
           style: "default",
-          onPress: () => {
-            this.props.upsertUserDataProcessing();
-          }
+          onPress: () =>
+            dispatch(
+              upsertUserDataProcessing.request(
+                UserDataProcessingChoiceEnum.DOWNLOAD
+              )
+            )
         }
       ]
     );
   };
 
-  public render() {
-    const ContainerComponent = withLoadingSpinner(() => (
+  return (
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={0.9}>
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("profile.main.privacy.exportData.title")}
       >
-        <ScreenContent
-          title={I18n.t("profile.main.privacy.exportData.title")}
-          subtitle={I18n.t("profile.main.privacy.exportData.info.title")}
-          bounces={false}
-        >
-          <View style={styles.markdownContainer}>
-            <Markdown
-              onLoadEnd={() => this.setState({ isMarkdownLoaded: true })}
-            >
-              {I18n.t("profile.main.privacy.exportData.info.body")}
-            </Markdown>
-            {this.state.isMarkdownLoaded && <EdgeBorderComponent />}
-          </View>
-        </ScreenContent>
-        {this.state.isMarkdownLoaded && (
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              block: true,
-              primary: true,
-              onPress: this.handleDownloadPress,
-              title: I18n.t("profile.main.privacy.exportData.cta")
-            }}
-          />
-        )}
+        <SafeAreaView style={IOStyles.flex}>
+          <ScreenContent
+            title={I18n.t("profile.main.privacy.exportData.title")}
+            subtitle={I18n.t("profile.main.privacy.exportData.info.title")}
+          >
+            <View style={styles.container}>
+              <Markdown onLoadEnd={() => setIsMarkdownLoaded(true)}>
+                {I18n.t("profile.main.privacy.exportData.info.body")}
+              </Markdown>
+            </View>
+          </ScreenContent>
+          {isMarkdownLoaded && (
+            <FooterWithButtons
+              type={"SingleButton"}
+              leftButton={{
+                block: true,
+                primary: true,
+                onPress: handleDownloadPress,
+                title: I18n.t("profile.main.privacy.exportData.cta")
+              }}
+            />
+          )}
+        </SafeAreaView>
       </BaseScreenComponent>
-    ));
-    return <ContainerComponent isLoading={this.props.isLoading} />;
-  }
-}
+    </LoadingSpinnerOverlay>
+  );
+};
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  upsertUserDataProcessing: () =>
-    dispatch(
-      upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
-    ),
-  resetRequest: () =>
-    dispatch(
-      resetUserDataProcessingRequest(UserDataProcessingChoiceEnum.DOWNLOAD)
-    )
-});
-
-function mapStateToProps(state: GlobalState) {
-  const userDataProcessing = userDataProcessingSelector(state);
-  const isLoading =
-    pot.isLoading(userDataProcessing.DOWNLOAD) ||
-    pot.isUpdating(userDataProcessing.DOWNLOAD);
-  return {
-    userDataProcessing,
-    isLoading
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DownloadProfileDataScreen);
+export default DownloadProfileDataScreen;

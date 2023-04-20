@@ -1,7 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useContext } from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
@@ -19,7 +18,7 @@ import {
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
-import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../../../bonus/common/components/TosBonusComponent";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

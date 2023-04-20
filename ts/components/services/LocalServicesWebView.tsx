@@ -3,13 +3,14 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { localServicesWebUrl } from "../../config";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import { loadServiceDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -48,6 +49,10 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0
+  },
+  webView: {
+    flex: 1,
+    opacity: Platform.OS === "android" ? 0.99 : 1 // Android workaround to avoid crashing when navigating out of a WebView
   }
 });
 const renderLoading = () => (
@@ -69,6 +74,13 @@ const LocalServicesWebView = (props: Props) => {
   >(undefined);
   const [webViewError, setWebViewError] = React.useState<boolean>(false);
   const webViewRef = React.createRef<WebView>();
+
+  const scrollWebview = (x: number, y: number) => {
+    const script = `window.scrollTo(${x}, ${y})`;
+    webViewRef.current?.injectJavaScript(script);
+  };
+
+  useTabItemPressWhenScreenActive(() => scrollWebview(0, 0), true);
 
   const { servicesById, onServiceSelect } = props;
 
@@ -130,7 +142,7 @@ const LocalServicesWebView = (props: Props) => {
         androidMicrophoneAccessDisabled={true}
         ref={webViewRef}
         injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-        style={{ flex: 1 }}
+        style={styles.webView}
         textZoom={100}
         source={{
           uri: localServicesWebUrl

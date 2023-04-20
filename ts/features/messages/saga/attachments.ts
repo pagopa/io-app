@@ -5,14 +5,12 @@ import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
 import {
-  mvlAttachmentDownload,
-  mvlRemoveCachedAttachment
-} from "../../mvl/store/actions/downloads";
-import { downloadMvlAttachment } from "../../mvl/saga/networking/downloadMvlAttachment";
-import {
-  clearAllMvlAttachments,
-  clearMvlAttachment
-} from "../../mvl/saga/mvlAttachments";
+  cancelPreviousAttachmentDownload,
+  downloadAttachment,
+  removeCachedAttachment
+} from "../../../store/actions/messages";
+import { downloadAttachmentSaga } from "./networking/downloadAttachment";
+import { clearAllAttachments, clearAttachment } from "./clearAttachments";
 
 /**
  * Handle the message attachment requests
@@ -21,34 +19,42 @@ import {
 export function* watchMessageAttachmentsSaga(
   bearerToken: SessionToken
 ): SagaIterator {
-  // handle the request for a new mvlAttachmentDownload
+  // Handle the request for a new downloadAttachment.
+  // The first action (downloadAttachment.request) is the one
+  // that effectively handle a download while the second one
+  // (cancelPreviousAttachmentDownload) is required in order to
+  // cancel any previous download that was going on (since the
+  // cancelling can either be triggered by requesting a different
+  // download - where we do not know if there was a previous download
+  // and/or which one it is, on PN attachments - or manually by the
+  // user on generic attachments). The downloadAttachmentSaga
+  // has a finally block that triggers the reducer function updating
+  // the download pot's status and it also stops itself if the
+  // input action is not downloadAttachment.request
   yield* takeLatest(
-    mvlAttachmentDownload.request,
-    function* (action: ActionType<typeof mvlAttachmentDownload.request>) {
-      yield* call(downloadMvlAttachment, bearerToken, action);
-    }
+    [downloadAttachment.request, cancelPreviousAttachmentDownload],
+    downloadAttachmentSaga,
+    bearerToken
   );
 
   // handle the request for removing a downloaded attachment
   yield* takeEvery(
-    mvlRemoveCachedAttachment,
-    function* (action: ActionType<typeof mvlRemoveCachedAttachment>) {
-      yield* call(clearMvlAttachment, action);
+    removeCachedAttachment,
+    function* (action: ActionType<typeof removeCachedAttachment>) {
+      yield* call(clearAttachment, action);
     }
   );
 
   // handle the request for clearing user profile cache
   yield* takeEvery(clearCache, function* () {
-    yield* call(clearAllMvlAttachments);
+    yield* call(clearAllAttachments);
   });
 
   // clear cache when user explicitly logs out
   yield* takeEvery(
     logoutSuccess,
-    function* (action: ActionType<typeof logoutSuccess>) {
-      if (!action.payload.keepUserData) {
-        yield* call(clearAllMvlAttachments);
-      }
+    function* (_: ActionType<typeof logoutSuccess>) {
+      yield* call(clearAllAttachments);
     }
   );
 }

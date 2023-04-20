@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeType } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import CgnStaticCodeComponent from "./CgnStaticCodeComponent";
 import CgnOTPCodeComponent from "./CgnOTPCodeComponent";
 import CgnBucketCodeComponent from "./CgnBucketCodeComponent";
@@ -45,9 +45,9 @@ const CgnDiscountCodeComponent = ({
 
   return shouldNotRender ? null : (
     <>
-      <View spacer small />
+      <VSpacer size={8} />
       {renderProperCodeVisualization(discount)}
-      <View spacer />
+      <VSpacer size={16} />
     </>
   );
 };

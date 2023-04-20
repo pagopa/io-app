@@ -32,6 +32,7 @@ type Props = {
   icon: string | ImageSourcePropType;
   iconColor: string;
   iconStyle?: StyleType;
+  accessible?: boolean;
   accessibilityLabelIcon?: string;
   onPress?: () => void;
 };
@@ -40,6 +41,7 @@ export const Icon: React.FC<Props> = ({
   icon,
   iconColor,
   iconStyle,
+  accessible,
   onPress,
   accessibilityLabelIcon
 }): React.ReactElement => (
@@ -47,6 +49,7 @@ export const Icon: React.FC<Props> = ({
     testID="ButtonDefaultOpacity"
     onPress={onPress}
     transparent
+    accessible={accessible === undefined ? true : accessible}
     style={styles.button}
   >
     {isString(icon) ? (

@@ -1,12 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import CardIcon from "../../../../img/assistance/card.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
-import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -36,6 +36,8 @@ import { ZendeskParamsList } from "../navigation/params";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 type ItemProps = {
@@ -56,7 +58,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   },
   {
     id: "profileFiscalCode",
-    icon: <FiscalCodeIcon {...iconProps} />,
+    icon: <CardIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
@@ -81,7 +83,8 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const assistanceForPayment = props.route.params.assistanceForPayment;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    props.route.params;
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   const email = pipe(
@@ -108,7 +111,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     onPress: () => {
       navigation.navigate("ZENDESK_MAIN", {
         screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-        params: { assistanceForPayment }
+        params: { assistanceForPayment, assistanceForCard, assistanceForFci }
       });
     },
     title: I18n.t("support.askPermissions.cta.allow")
@@ -129,11 +132,11 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <View spacer />
+            <VSpacer size={16} />
             <H4 weight={"Regular"}>
               {I18n.t("support.askPermissions.listBody")}
             </H4>
-            <View spacer xsmall={true} />
+            <VSpacer size={4} />
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
@@ -143,7 +146,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             >
               {I18n.t("support.askPermissions.privacyLink")}
             </Link>
-            <View spacer small={true} />
+            <VSpacer size={8} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
             {items.map((item, idx) => (

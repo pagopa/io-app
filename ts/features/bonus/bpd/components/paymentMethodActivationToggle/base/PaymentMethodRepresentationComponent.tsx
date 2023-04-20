@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 
@@ -30,7 +30,7 @@ export const PaymentMethodRepresentationComponent: React.FunctionComponent<Payme
   props => (
     <View style={styles.row}>
       <Image source={props.icon} style={styles.cardIcon} />
-      <View hspacer={true} />
+      <HSpacer size={16} />
       <Body
         testID={"paymentMethodCaptionId"}
         numberOfLines={1}

@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
+  View,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -27,7 +28,7 @@ import {
   confirmButtonProps,
   disablePrimaryButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../bonus/common/components/TosBonusComponent";
 import { navigateToOnboardingPrivativeSearchAvailable } from "../navigation/action";
 import {
   walletAddPrivativeCancel,
@@ -120,9 +121,9 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
         >
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{title}</H1>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <Body>{body}</Body>
-            <View spacer={true} />
+            <VSpacer size={16} />
 
             <PanInputField
               value={cardNumber}
@@ -131,7 +132,7 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
               }}
             />
 
-            <View spacer={true} />
+            <VSpacer size={16} />
             <Body onPress={openTosModal}>
               {disclaimer1}
               <Link>{disclaimer2}</Link>

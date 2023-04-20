@@ -1,25 +1,21 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { View as NBView } from "native-base";
 import { TranslationKeys } from "../../../../locales/locales";
 import { capitalize } from "../../../utils/strings";
 import I18n from "../../../i18n";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
+import { HSpacer } from "../../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: "column"
-  },
   touchable: {
     flexDirection: "row",
-    marginVertical: 24
+    marginVertical: 16
   },
-  label: {
-    flex: 1
-  },
-  alignToRight: {
+  value: {
+    flexGrow: 1,
+    flexShrink: 1,
     textAlign: "right"
   }
 });
@@ -28,6 +24,7 @@ type Props = {
   value: string;
   label: TranslationKeys;
   onPress: () => void;
+  isLast?: boolean;
   accessibilityLabel?: string;
 };
 
@@ -35,36 +32,31 @@ const InformationRow = ({
   value,
   label,
   onPress,
+  isLast,
   accessibilityLabel
 }: Props) => (
-  <View style={styles.row}>
+  <View>
     <TouchableDefaultOpacity
       onPress={onPress}
       style={styles.touchable}
       accessibilityRole={"button"}
       accessibilityLabel={accessibilityLabel}
     >
-      <H4
-        style={styles.label}
-        ellipsizeMode={"tail"}
-        numberOfLines={1}
-        color={"bluegrey"}
-        weight={"Regular"}
-      >
+      <H4 numberOfLines={1} color={"bluegrey"} weight={"Regular"}>
         {capitalize(I18n.t(label))}
       </H4>
-      <NBView hspacer={true} />
+      <HSpacer size={16} />
       <H4
-        style={[styles.label, styles.alignToRight]}
-        ellipsizeMode={"tail"}
+        style={styles.value}
         numberOfLines={1}
+        ellipsizeMode="tail"
         color={"blue"}
         weight={"SemiBold"}
       >
         {value}
       </H4>
     </TouchableDefaultOpacity>
-    <ItemSeparatorComponent noPadded />
+    {!isLast && <ItemSeparatorComponent noPadded />}
   </View>
 );
 

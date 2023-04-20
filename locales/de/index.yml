@@ -1,29 +1,101 @@
 ---
+accessibility:
+  doubleTapToActivateHint: "Doppeltippen zum Aktivieren"
+date:
+  formats:
+    default: "%d.%m.%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Sonntag"
+    - "Montag"
+    - "Dienstag"
+    - "Mittwoch"
+    - "Donnerstag"
+    - "Freitag"
+    - "Samstag"
+  abbr_day_names:
+    - "So."
+    - "Mo."
+    - "Di."
+    - "Mi."
+    - "Do."
+    - "Fr."
+    - "Sa."
+  month_names:
+    - ""
+    - "Januar"
+    - "Februar"
+    - "März"
+    - "April"
+    - "Mai"
+    - "Juni"
+    - "Juli"
+    - "August"
+    - "September"
+    - "Oktober"
+    - "November"
+    - "Dezember"
+  abbr_month_names:
+    - ""
+    - "Jan."
+    - "Feb."
+    - "März"
+    - "Apr."
+    - "Mai"
+    - "Jun."
+    - "Jul."
+    - "Aug."
+    - "Sept."
+    - "Okt."
+    - "Nov."
+    - "Dez."
+  meridian:
+    - "am"
+    - "pm"
 global:
-  password: Passwort
-  username: Benutzername
-  disclaimer_beta: Wenn Sie Probleme bei der Anmeldung haben, lassen Sie es uns bitte wissen!
+  you: "DU"
+  id: "ID"
+  badges:
+    blocked: "Blockiert"
+    onGoing: "In Bearbeitung"
+  password: "Passwort"
+  username: "Benutzername"
+  disclaimer_beta: "Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!"
+  unknown: "Unbekannt"
+  sectionStatus:
+    moreInfo: "mehr Informationen"
   accessibility:
-    dateFormat: MMMM Do YYYY
-    expanded: Erweiterter Absatz
-    collapsed: Eingeklappter Absatz
-    active: State active
-    inactive: Aktiver Zustand
+    reload: "Neu laden"
+    switchLabel: "Zum Aktivieren auswählen"
+    inputLabel: "{{header}}, Überschrift"
+    textField: "{{inputLabel}}, Textfeld"
+    description: "Beschreibung"
+    dateField: "Zwei Ziffern für den Monat, zwei für das Jahr"
+    threeDigits: "3 Ziffern"
+    fourDigits: "4 Ziffern"
+    dateFormat: DD MMMM YYYY
+    expanded: "Erweiterter Absatz"
+    collapsed: "Eingeklappter Absatz"
+    active: "Aktiver Zustand"
+    inactive: "Inktiver Zustand"
+    linkHint: "Wenn du dieses Element aktivierst, wirst du zum Browser des Geräts weitergeleitet"
+    alert: "Hinweis"
     activityIndicator:
-      label: Laden
-      hint: Warten auf das Laden des Inhalts
+      label: "Wird geladen"
+      hint: "Warte, bis der Inhalt geladen ist"
     header:
-      label: Kopfzeile der Anwendung
+      label: "Kopfzeile der Anwendung"
     contextualHelp:
-      close: Schließen Sie die kontextbezogene Hilfe
+      close: "Schließe die kontextbezogene Hilfe"
       open:
-        label: Kontextbezogene Hilfe
-        hint: Zugriff auf Informationen über den Inhalt des aktuellen Bildschirms
+        label: "Kontextbezogene Hilfe"
+        hint: "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
     chat:
-      description: "IO assistance messages"
-      unread_singular: "{{message}} new message"
-      unread_plural: "{{message}} new messages"
-  ioWebSite: https://io.italia.it
+      description: "IO Servicemitteilungen"
+      unread_singular: "{{message}} neue Mitteilung"
+      unread_plural: "{{message}} neue Mitteilungen"
+  ioWebSite: "https://io.italia.it"
   symbols:
     question: "?"
     asterisk: "*"
@@ -31,1037 +103,1793 @@ global:
     delimiterSeparator: "."
     decimalSeparator: ","
   date:
+    invalid: "Ungültiges Datum"
     today: "heute"
     tomorrow: "morgen"
   dateFormats:
-    timeFormat: "%H.%M"
+    shortFormat: "%d.%m.%Y"
+    shortFormatWithTime: "%d.%m.%Y, %H:%M"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
+    dayFullMonth: "%d %B"
+    numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
-    dayMonth: "MM/DD"
+    dayMonth: "DD.MM."
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
-  genericAlert: Warnung!
-  genericWaiting: Warten Sie ein paar Sekunden..
-  genericThanks: Danke
-  genericShare: Teilen
-  genericSave: Speichern
+    dateTimePicker: "gg.mm.yyyy"
+  genericError: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut."
+  genericAlert: "Achtung!"
+  genericWaiting: "Warte ein paar Sekunden..."
+  genericThanks: "Danke"
+  genericShare: "Teilen"
+  genericSave: "Speichern"
+  genericRetry: "Erneut versuchen"
   jserror:
-    title: Unerwarteter Fehler aufgetreten
-    message: Wir haben dies an unser Team gemeldet! Bitte schließen Sie die App und starten Sie diese erneut!
+    title: "Es ist ein unerwarteter Fehler aufgetreten"
+    message: "Wir haben dies unserem Team gemeldet! Bitte schließe die App und starte diese erneut!"
   markdown:
-    decodeError: Nachricht kann nicht entschlüsselt werden
+    decodeError: "Die Nachricht kann nicht entschlüsselt werden"
   buttons:
-    share: Teilen
-    delete: Löschen
-    cancel: Abbrechen
-    ok: OK
-    ok2: Ok
-    continue: Weiter
-    retry: Wiederholen
-    back: Zurück
-    confirm: Bestätigen
-    close: Schließen
-    exit: Beenden
-    saveSelection: Speichern Sie die Auswahl
-    search: Suche
+    share: "Teilen"
+    delete: "Löschen"
+    cancel: "Abbrechen"
+    settings: "Einstellungen"
+    ok: "OK"
+    ok2: "Ok"
+    continue: "Weiter"
+    retry: "Wiederholen"
+    back: "Zurück"
+    confirm: "Bestätigen"
+    close: "Schließen"
+    exit: "Beenden"
+    saveSelection: "Speichern Sie die Auswahl"
+    search: "Suche"
     skip: "Überspringen"
-    add: Hinzufügen
-    details: Details
+    add: "Hinzufügen"
+    edit: "Ändern"
+    info: "Info"
+    activate: "Aktivieren"
+    deactivate: "Deaktivieren"
+    show: "Anzeigen"
+    update: "Aktualisieren"
+    findOutMore: "Mehr erfahren"
+    details: "Details"
+    choose: "Auswählen"
   navigator:
-    messages: Mitteilungen
-    wallet: Konto
-    documents: Dokumente
-    profile: Profil
-    services: Dienste
+    messages: "Mitteilungen"
+    wallet: "Konto"
+    documents: "Dokumente"
+    profile: "Profil"
+    services: "Dienste"
   actions:
-    retry: Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneu
-    search: Suchtext
+    retry: "Es ist ein Fehler aufgetreten, bitte versuche es erneut."
+    search: "Suchtext"
   remoteStates:
-    loading: Laden...
-    wait: Warten Sie ein paar Sekunden..
-    notAvailable: Nicht verfügbar
-  notImplemented: NICHT IMPLEMENTIERT
+    loading: "Wird geladen..."
+    wait: "Warten ein paar Sekunden..."
+    notAvailable: "Nicht verfügbar"
+  notImplemented: "NICHT IMPLEMENTIERT"
   search:
-    invalidSearchBarText: Mindestens {{minCharacter}} Zeichen eingeben
-    noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuchen Sie etwas anderes."
-    noResultsTitle: Keine Ergebnisse.
+    invalidSearchBarText: "Mindestens {{minCharacter}} Zeichen eingeben"
+    noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuche etwas anderes."
+    noResultsTitle: "Keine Ergebnisse"
   media:
     email: "E-Mail"
-    pec: PEC
-    phone: Telefon
+    pec: "PEC"
+    phone: "Telefon"
 tablet:
-  message: Die Oberfläche der IO-App ist für Smartphones optimiert, aber alle Funktionen, die mit Ihrem Gerät kompatibel sind, sind weiterhin verfügbar.
+  message: "Die Benutzeroberfläche von IO ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar."
 rooted:
-  title: Es sieht so aus, als ob die Sicherheit Ihres Geräts kompromittiert worden ist!
+  title: "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!"
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
   continueAlert:
-    title: Weiter
-    body: Sind Sie sicher, dass Sie die Risiken kennen und weitermachen wollen?
-    confirmText: Ja
-    cancelText: Abbrechen
+    title: "Weiter"
+    body: "Hast du die Risiken verstanden und möchtest fortfahren?"
+    confirmText: "Ja"
+    cancelText: "Abbrechen"
   cancelAlert:
-    title: Beenden
-    body: Sie können die App schließen
-    confirmText: Beenden
+    title: "Beenden"
+    body: "Du kannst die App schließen"
+    confirmText: "Beenden"
 locales:
-  it: Italienisch
-  en: Englisch
-  de: Deutsch
+  it: "Italienisch"
+  en: "Englisch"
+  de: "Deutsch"
 clipboard:
-  copyFeedback: In die Zwischenablage kopiert
-  copyText: kopieren
-  copyFeedbackButton: kopiert
+  copyFeedback: "In die Zwischenablage kopiert"
+  copyText: "kopieren"
+  copyFeedbackButton: "kopiert"
 betaBanner:
-  title: 'IO-App'
-  description: Ihre Berichte helfen uns, Tag für Tag besser zu werden.
+  title: "IO-App"
+  description: "Deine Rückmeldungen helfen uns, Tag für Tag besser zu werden."
 connection:
   status:
-    offline: Offline! Einige Funktionen werden nicht funktionieren.
+    offline: "Offline! Einige Funktionen werden nicht funktionieren."
 errors:
-  loginError: Es gab einen Fehler bei der Anmeldung, wiederholen Sie den Vorgang.
-  profileUpdateError: Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten.
+  loginError: "Es gab einen Fehler beim Anmelden, wiederhole den Vorgang."
+  profileUpdateError: "Beim Aktualisieren deines Profils ist ein Fehler aufgetreten."
+permissionRationale:
+  storage:
+    title: "Zugriff auf die Galerie gewähren"
+    message: "Du kannst Gutscheine und Zertifikate speichern und Screenshots und Zahlungsmitteilungen hochladen."
+  camera:
+    title: "Zugriff auf die Kamera gewähren"
+    message: "Du kannst QR-Codes lesen und pagoPA-Mitteilungen bezahlen."
+  calendar:
+    title: "Zugriff auf den Kalender gewähren"
+    message: "Du kannst Fälligkeiten in deinem Kalender eintragen und eine Benachrichtigung einstellen."
 startup:
-  title: Initialisierung
-  authentication: Benutzer authentifiziert
-  sessionInfo: SPID-Attribute geladen
-  profileInfo: Benutzerprofil geladen
-  profileEnabled: Benutzerprofil aktiviert
+  title: "Initialisierung"
+  authentication: "Benutzer authentifiziert"
+  sessionInfo: "SPID-Attribute geladen"
+  profileInfo: "Benutzerprofil geladen"
+  profileEnabled: "Benutzerprofil aktiviert"
+  userDeletePendingAlert:
+    title: "Profil wird gelöscht"
+    message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
+    cta_1: "Gehe zum Datenschutz"
+    cta_2: "Ignorieren"
+  contextualHelp:
+    title: "Initialisierungsprobleme?"
+    body: "Wenn du Probleme beim Zugriff auf die App hast, melde dies bitte unserem Team und wir werden das Problem so schnell wie möglich lösen."
 login:
   welcome:
-    line1: willkommen in Ihrem
-    line2: Digitale Staatsbürgerschaft
+    line1: "Willkommen in deiner"
+    line2: "Digitalen Staatsbürgerschaft"
+  expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
 inbox:
-  enableButton: Posteingang freigeben
-  disableButton: Posteingang deaktivieren
-  enableCallToActionDescription: Aktivieren Sie den Posteingang, um Nachrichten einzusehen
+  enableButton: "Posteingang aktivieren"
+  disableButton: "Posteingang deaktivieren"
+  enableCallToActionDescription: "Aktiviere den Posteingang, um Mitteilungen anzusehen"
 profile:
   fiscalCode:
     accessibility:
-      unavailable: Nicht verfügbar
+      unavailable: "Nicht verfügbar"
       preview:
-        label: Vorschau auf Ihre Steuernummerkarte
-        hint: Aktivieren Sie diese Option, um ein Faksimile Ihre Steuernummerkarte anzuzeigen
+        label: "Vorschau auf deine Steuernummer"
+        hint: "Aktiviere diese Option, um ein Faksimile deiner Steuernummer anzuzeigen"
       front:
-        label: Vorderseite der Steuernummerkarte mit dem Code {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}}, {{Provinz}} am {{Geburtsdatum}}
-        hint: Aktivieren, um die Querformatansicht anzuzeigen
+        label: "Vorderseite der Karte mit Steuernummer {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}} ({{Provinz}}) am {{Geburtsdatum}}"
+        hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
       rear:
-        label: Barcode Ihrer Steuernummerkarte
-        hint: Aktivieren, um die Querformatansicht anzuzeigen
-    title: Ihre persönlichen Dokumente
-    fiscalCode: Steuernummer
-    content: Das Faksimile der Steuernummerkarte ersetzt nicht das physische Dokument, aber es ermöglicht das Lesen von Daten und Barcodes
-    facSimile: FAC-SIMILE
+        label: "Barcode deiner Steuernummer"
+        hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
+    title: "Deine persönlichen Dokumente"
+    fiscalCode: "Steuernummer"
+    content: "Das Faksimile der Steuernummer ersetzt nicht das physische Dokument, sondern ermöglicht es, die Daten oder den Barcode auf der Rückseite zu lesen"
+    facSimile: "Faksimile"
   sections:
-    spid: SPID PROFIL
-  unknown: Unbekannt
+    spid: "SPID PROFIL"
+  unknown: "Unbekannt"
   logout:
-    menulabel: IO beenden
-    alertTitle: "Möchten Sie wirklich beenden?"
-    alertMessage: "Sind Sie sicher, dass Sie sich abmelden wollen? Wenn Sie sich das nächste Mal anmelden, benötigen Sie eine neue Anmeldung mit CIE oder SPID."
-    exit: Beenden
+    menulabel: "IO beenden"
+    alertTitle: "Möchtest du wirklich beenden?"
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
+    loading: "Abmeldung läuft..."
+    exit: "Beenden"
     cta:
-      header: Wie wollen Sie die App verlassen?
+      header: "Wie möchtest du die App verlassen?"
       keepData:
-        title: Beenden und alle Daten behalten
-        description: Um die IO-App zu nutzen, müssen Sie sich erneut mit Ihrer digitalen Identität anmelden. Alle Einstellungsdaten bleiben erhalten und sind beim nächsten Start sofort verfügbar. Diese Wahl hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun.
+        title: "Beenden und alle Daten behalten"
+        description: "Um die IO-App wieder zu benützen, musst du dich erneut mit deiner digitalen Identität anmelden, wobei alle Einstellungsdaten erhalten bleiben und beim nächsten Start sofort verfügbar sind. Diese Wahl bedeutet nicht, dass deine persönlichen Daten durch die App gelöscht werden."
       resetData:
-        title: Beenden und Zurücksetzen dieser App
-        description: "IO-App wird in den Ausgangszustand zurückversetzt, so als ob sie gerade installiert worden wäre. Diese Option hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun."
+        title: "Beenden und Zurücksetzen der App"
+        description: "Die Einstellungen und Daten, die auf deinem Gerät gespeichert sind, werden zurückgesetzt. Diese Wahl bedeutet nicht, dass deine persönlichen Daten von der App gelöscht werden."
   errors:
-    load: Fehler beim Laden des Profils
-    upsert: Fehler beim Erstellen oder Aktualisieren des Profils
+    load: "Fehler beim Laden des Profils"
+    upsert: "Fehler beim Erstellen oder Aktualisieren des Profils"
   alerts:
     emailNotValidated:
-      title: Ungültige E-Mail
-      subtitle: Sie müssen Ihre E-Mail validieren, bevor Sie mit dem Vorgang fortfahren können. Gehen Sie dazu in den Profilbereich und wählen Sie Einstellungen.
+      title: "Nicht bestätigte E-Mail-Adresse"
+      subtitle: "Du musst deine E-Mail-Adresse bestätigen, bevor du mit dem Vorgang fortfahren kannst. Gehe dazu in den Profilbereich und wähle “Dein Profil”."
   main:
-    title: Profil
-    logout: Logout/Beenden
-    forgetCurrentSession: Aktuelle Sitzung löschen
-    contextualHelpTitle: Was Sie in Ihrem Profil machen können
-    developerModeOn: Entwicklermodus aktiviert
+    title: "Profil"
+    logout: "Abmelden/Beenden"
+    forgetCurrentSession: "Aktuelle Sitzung löschen"
+    clearAsyncStorage: "Inhalt von AsyncStorage löschen"
+    dumpAsyncStorage: "AsyncStorage-Inhalt herunterladen"
+    contextualHelpTitle: "Was du in deinem Profil machen kannst"
+    developerModeOn: "Entwicklermodus aktiviert"
     cache:
-      alert: Sind Sie sicher, dass Sie den Cache löschen wollen?
-      clear: Cache löschen
-      cleared: Der Cache wurde geleert.
+      alert: "Bist du sicher den Cache löschen zu wollen?"
+      clear: "Cache löschen"
+      cleared: "Der Cache wurde geleert."
     data:
-      title: Ihre Daten
-      description: Ihre Informationen aktualisieren
+      title: "Deine Daten"
+      description: "Deine Informationen überprüfen"
     preferences:
-      title: Voreinstellungen
-      description: App-interne Einstellungen verwalten
+      title: "Einstellungen"
+      description: "Einstellungen der App verwalten"
     security:
-      title: Sicherheit
-      description: "Biometrischen Zugang und PIN ändern"
+      title: "Sicherheit"
+      description: "Biometrischen Zugang und PIN verwalten"
     privacy:
-      title: Privacy und Nutzungsbestimmungen
-      description: Ihre Rechte und Pflichten bei der Nutzung der IO-App
-      loading: Warten Sie ein paar Sekunden, wir überprüfen Ihr Profil.
-      exportData:
-          cta: Kopie Ihrer Daten anfordern
-          title: Zugriff auf Ihre Daten
-          description: Sie erhalten eine Kopie der mit Ihrem IO-Profil verbundenen Daten
-          info:
-            title: Sie können Ihre IO-Profilinformationen jederzeit herunterladen.
+      title: "Datenschutz und Nutzungsbedingungen"
+      description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
+      subtitle: "Hier findest du Informationen zu deinen Rechten und Pflichten sowie über die Verarbeitung deiner persönlichen Daten."
+      loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
+      removeAccount:
+          title: "Dein Konto löschen"
+          description: "Dein Konto und deine persönlichen Daten endgültig löschen"
+          error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
           alert:
-            requestTitle: Sind Sie sicher, dass Sie alle Ihre Daten exportieren möchten?
-            oldRequest: Wir sind bereits dabei, alle Ihre Daten zu exportieren
-            confirmSubtitle: Nach der Bearbeitung erhalten Sie eine E-Mail mit allen Ihren Daten.
-          error: Beim Absenden Ihrer Exportanfrage ist ein Fehler aufgetreten, bitte versuchen Sie es erneut!
+            activeBonusTitle: "Aktive Boni"
+            activeBonusDescription: "Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Löschung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle “Weiter”"
+            oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
+            oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
+            cta:
+              manageBonus: "Boni verwalten"
+              continue: "Weiter"
+              return: "Zurück"
+              cancel: "Löschung abbrechen"
+          info:
+            body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach Anfrage erfolgt.\n\nWenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr wiederherstellen.\nBitte beachte auch, dass die über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
+            cta: "Weiter"
+          details:
+            body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
+            question: "Was ist der Grund für die Löschung?"
+            answer_1: "Ich halte IO nicht mehr für nützlich"
+            answer_2: "Ich fühle mich in IO nicht sicher"
+            answer_3: "Ich habe die App nie benutzt"
+            answer_4: "Keiner der oben genannten Punkte"
+            labelOpenAnswer: "Erzähle uns mehr"
+            cta: "Konto löschen"
+          success:
+            title: "Wir bearbeiten deine Anfrage."
+            body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
+            cta: "Beenden"
+      exportData:
+          cta: "Kopie deiner Daten anfordern"
+          title: "Zugriff auf deine Daten"
+          description: "Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten"
+          info:
+            title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
+          alert:
+            requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
+            oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
+            confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
+          error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
-        title: Datenschutzbestimmungen
-        header: Siehe die Datenschutzbestimmungen und die Nutzungsbedingungen von IO
-        updated: Wir haben unsere Allgemeinen Geschäftsbedingungen aktualisiert
-        infobox: Es ist notwendig, die Allgemeinen Geschäftsbedingungen zu lesen und zu akzeptieren
-        contextualHelpTitlePolicy: Was sind die Informationen über die Verarbeitung von personenbezogenen Daten
-        contextualHelpTitle: Ihre Datenschutzeinstellungen
+        title: "Datenschutz und Nutzungsbedingungen"
+        description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
+        header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
+        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
+        infobox: "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren"
+        contextualHelpTitlePolicy: "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
+        contextualHelpTitle: "Deine Datenschutzeinstellungen"
+      shareData:
+        title: "Datenschutz"
+        listItem:
+          title: "Freigabe von Nutzungsdaten"
+          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App"
+        screen:
+          title: "Deine Nutzungsdaten"
+          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
+          why:
+            description:
+              one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste "
+              two: "notwendigen "
+              three: "Daten."
+            cta: "Warum?"
+          security:
+            description:
+              one: "Wir ergreifen Sicherheitsmaßnahmen zum Schutz deiner Daten."
+            cta: "Erfahre mehr"
+          gdpr:
+            description:
+              one: "Das IO-Team arbeitet mit Dienstleistern in "
+              two: "Übereinstimmung mit dem GDPR zusammen."
+            cta: "Siehe Liste der Dienstleister"
+          additionalInformation:
+            description: "Für weitere Informationen lies bitte die "
+            cta: "Datenschutzbestimmungen und Nutzungsbedingungen"
+          profileSettings: "Du kannst diese Einstellung jederzeit unter Profil > Einstellungen ändern."
+          cta:
+            shareData: "Daten freigeben"
+            dontShareData: "Daten nicht freigeben"
+            dontShare: "Nicht freigeben"
+          confirmToast: "Einstellungen aktualisiert!"
+        alert:
+          title: "Du gibst IO nicht die Erlaubnis, deine Nutzungsdaten zu sammeln."
+          body: "Wenn du diese Option bestätigen, kann es sein, dass dem IO-Support-Team bei technischen Problemen nicht alle Daten zur Verfügung stehen, um diese zu lösen."
+        whyBottomSheet:
+          title: "Für welche Zwecke sammeln wir Informationen?"
+          body: "**IO sammelt keine Daten für Marketingzwecke.** \nWir verwenden Tools, die es uns ermöglichen, Daten über deine Nutzung der App aufzuzeichnen, um dir einen besseren Service zu bieten und dich bei Problemen zu unterstützen."
+        securityBottomSheet:
+          title: "Was ist eine Pseudonymisierung?"
+          body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
     appInfo:
-      title: Über IO
-      description: Erfahren Sie mehr über die IO-App
-    developersSectionHeader: Entwickler
+      title: "Über IO"
+      description: "Erfahren mehr über die IO-App"
+    developersSectionHeader: "Entwickler"
     experimentalFeatures:
-      confirmTitle: Experimentelle Merkmale
-      confirmMessage: Experimentelle Funktionen können die Anwendung instabil machen. Sind Sie sicher, dass Sie sie aktivieren möchten?
-      bannerMessage: Sie verwenden experimentelle Funktionen, die möglicherweise unvollständig oder instabil sind.
+      confirmTitle: "Experimentelle Funktionen"
+      confirmMessage: "Experimentelle Funktionen könnten die Anwendung instabil machen. Möchtest du sie wirklich aktivieren?"
+      bannerMessage: "Du verwendst experimentelle Funktionen, die unvollständig oder instabil sein können."
     pagoPaEnvironment:
-      pagoPaEnv: pagoPA Testumgebung
-      pagoPAEnvAlert: Diese Änderung erfordert einen Neustart der App
-      alertConfirmTitle: Möchten Sie die pagoPA Testumgebung nutzen?
-      alertConfirmMessage: Wenn Sie die pagoPA-Testumgebung aktivieren, sehen Sie die Historie Ihrer Transaktionen und Ihre gespeicherten Zahlungsmethoden nicht mehr und können nur noch ausdrücklich dafür angelegte Zahlungsmethoden verwenden. Wenn Sie nicht verstehen, was das bedeutet, aktivieren Sie diese Funktion nicht.
-      alertMessage: Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden.
-    appVersion: App-Version
-    backendVersion: Backend-Version
-    debugMode: Debug-Modus
-    showroom: UI Showroom
+      pagoPaEnv: "pagoPA Testumgebung"
+      pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
+      alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
+      alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und deine gespeicherten Zahlungsmethoden nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmethoden nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
+      alertMessage: "Die App muss neu gestartet werden, damit die Änderungen wirksam werden."
+    pnEnvironment:
+      pnEnv: "PN-Testumgebung"
+    appVersion: "App-Version"
+    backendVersion: "Backend-Version"
+    debugMode: "Debug-Modus"
+    designSystem: "Design System"
   data:
-    title: Ihre Daten
-    subtitle: "Die von IO benutzten anagrafischen und Kontaktdaten einsehen"
+    title: "Deine Daten"
+    subtitle: "Hier findest du deine anagrafischen Daten und Kontaktdaten, die von IO verwendet werden"
     list:
       email: "E-Mail-Adresse"
-      nameSurname: Name und Nachname
+      need_validate: "Noch zu bestätigen"
+      nameSurname: "Vor- und Nachname"
       spid:
-        headerTitle: SPID Daten
-        email: "SPID – E-Mail"
+        headerTitle: "SPID Daten"
+        email: "SPID – E-Mail-Adresse"
+    email:
+      contextualHelpTitle: "Wie verwalte ich meine E-Mail-Adresse?"
+    spid_email:
+      contextualHelpTitle: "Diese Daten sind in deinem SPID-Profil festgelegt"
   security:
-    title: Sicherheit
-    subtitle: Authentifizierungsmethode der App einstellen.
+    title: "Sicherheit"
+    subtitle: "Verwalte die Authentifizierungsmethoden in der App"
     list:
       biometric_recognition:
-        title: Biometrische Erkennung
-        subtitle: Fingerabdruck- oder Gesichts-erkennung benutzen
+        title: "Biometrische Erkennung"
+        subtitle: "Fingerabdruck- oder Gesichtserkennung benutzen"
+        needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
-    title: Einstellungen
+    title: "Einstellungen"
     subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
-    contextualHelpTitle: Ihre Vorlieben
+    contextualHelpTitle: "Deine Einstellungen"
     list:
-      wip: In Bearbeitung
-      language: Sprache
-      digitalDomicile: Digitales Domizil
-      service_contact: Dienst-management
+      wip: "In Bearbeitung"
+      language: "Sprache"
+      digitalDomicile: "Digitales Domizil"
+      service_contact: "Dienste verwalten"
       preferred_calendar:
-        title: Standard-Kalender
-        not_selected: Nicht ausgewählt
+        title: "Bevorzugter Kalender"
+        not_selected: "Nicht ausgewählt"
       preferred_language:
-        title: Bevorzugte Sprache
-        subtitle: In welcher Sprache möchten Sie die Anwendung nutzen?
+        title: "Bevorzugte Sprache"
+        subtitle: "In welcher Sprache möchtest du die App nutzen?"
         alert:
-          title: Möchten Sie die Sprache ändern zu
-          subtitle: Sie müssen die Anwendung neu starten, damit dies geschieht
-        not_selected: Nicht ausgewählt
+          title: "Möchtest du die Sprache ändern in"
+          subtitle: "Du musst die App neu starten, um die Änderung zu übernehmen"
+        not_selected: "Nicht ausgewählt"
+      notifications:
+        title: "Push-Benachrichtigungen"
+        subtitle: "Vorschau und Erinnerung zulassen"
     empty:
-      default: Keine Präferenzen eingestellt
+      default: "Keine Präferenzen festgelegt"
     unavailable:
-      title: Diese Einstellung wird in Ihrem SPID-Profil eingerichtet
+      title: "Diese Einstellung wird von deinem SPID-Profil festgelegt"
     language:
-      contextualHelpTitle: Wie Sie Ihre Spracheinstellung verwalten
+      contextualHelpTitle: "Wie verwalte ich die Spracheinstellung?"
     email:
       forward:
-        contextualHelpTitle: Wie Sie die Nachrichtenweiterleitung handhaben
+        contextualHelpTitle: "Wie verwalte ich die Nachrichtenweiterleitung?"
     calendar:
-      contextualHelpTitle: Was ist Ihr bevorzugter Kalender
-      local_calendar: Lokaler Kalender
-      birthday_calendar: Geburtstage
+      contextualHelpTitle: "Was ist dein bevorzugter Kalender?"
+      local_calendar: "Lokaler Kalender"
+      birthday_calendar: "Geburtstage"
+    notifications:
+      contextualHelpTitle: "Push-Benachrichtigungen"
+      header: "Push-Benachrichtigungen"
+      title: "Push-Benachrichtigungen anpassen"
+      subtitle: "Wähle, ob du eine Vorschau anzeigen und Erinnerungen erhalten möchtest."
+      titleExistingUser: "Benachrichtigungen anpassen"
+      subtitleExistingUser: "Jetzt kannst du sofort sehen, wer dir geschrieben hat oder dich an wichtige Nachrichten erinnern lassen."
+      reminders:
+        title: "Erinnerungen zulassen"
+        description: "Auf Antrag der Körperschaft erhälst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
+      preview:
+        title: "Vorschau anzeigen"
+        description: "Absender und Betreff in die Push-Benachrichtigung einfügen · "
+        link: "Weitere Informationen"
+        bottomSheet:
+          title: "Vorschau anzeigen"
+          content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Apps der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
+          cta: "OK, habe verstanden!"
+      error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
 userMetadata:
   errors:
-    upsertVersion: Benutzer-Metadaten können mit dieser Version nicht hochgeladen werden
+    upsertVersion: "Mit dieser Version können keine Benutzer-Metadaten erstellt oder aktualisiert werden"
 navigation:
-  messages: Mitteilungen
-  profile: Profil
+  messages: "Mitteilungen"
+  profile: "Profil"
   accessibility: "Abschnitt {{section}}, Panel, {{order}} von 4"
+  accessibilityWithBadge: "Abschnitt {{section}}, {{unread}} neue Elemente, Panel, {{order}} von 4"
+  selected: "Ausgewählt ist"
 cie:
-  title: Berühren Sie die Karte
-  layCardMessageHeader: Legen Sie für einige Sekunden Ihre elektronische ID-Karte auf der Rückseite Ihres Telefons.
-  layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie Ihre Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie einen Ton hören.
-  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
+  title: "Karte berühren"
+  layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden auf die Rückseite deines Telefons."
+  layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte deine Karte an verschiedene Stellen und warte ein paar Sekunden, bis du einen Ton hörst."
+  booking_url: "https://www.prenotazionicie.interno.gov.it/?locale=de"
 spid:
-  login: LOGIN
-  loginButton: LOGIN MIT
-  selectIdp: Um mit der Anmeldung fortzufahren, wählen Sie Ihren SPID-Anbieter.
-  selectDemoIdp: Wenn Sie noch keine eigene SPID-Identität haben, durchsuchen Sie die App in demo mode
+  login: "LOGIN"
+  loginButton: "LOGIN MIT"
+  selectIdp: "Um mit der Anmeldung fortzufahren, wähle deinen SPID-Anbieter."
+  selectDemoIdp: "Wenn du noch keine eigene SPID-Identität hast, verwende die App im Demo-Modus"
   loginErrorAlert:
-    title: Fehler bei der Anmeldung
-    message: Entschuldigung, es gab einen Fehler bei der Anmeldung. Bitte versuchen Sie es noch einmal.
+    title: "Fehler bei der Anmeldung"
+    message: "Entschuldigung, es ist einen Fehler bei der Anmeldung aufgetreten. Bitte versuche es erneut."
   subscription:
-    line1: SPID ist die digitale Identität für den Zugriff auf Online-Dienste der öffentlichen Verwaltung.
-    line2: Geben Sie Ihre E-Mail-Adresse ein, um sie zu aktivieren.
+    line1: "SPID ist die digitale Identität für den Zugang zu den Online-Diensten der italienischen öffentlichen Verwaltung."
+    line2: "Gib deine E-Mail-Adresse ein, um sie zu aktivieren."
 authentication:
   landing:
     accessibility:
       carousel:
-        label: IO Präsentation
-        hint: Karussell, das eine Einführungsanleitung zu den IO-Funktionalitäten enthält. Wählen Sie, um den Inhalt kennenzulernen.
+        label: "Vorstellung von IO"
+        hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
-      title: Ihre Sitzung ist abgelaufen
+      title: "Deine Sitzung ist abgelaufen"
+      body: "Aus Sicherheitsgründen bitten wir dich 30 Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
     cie_unsupported:
-      title: Anmeldung mit CIE nicht möglich
-      os_version_unsupported: eine mit der CIE-Authentifizierung kompatible Betriebssystemversion (Android 6.0 oder höher)
-      nfc_incompatible: eine NFC-Antenne, die mit der Authentifizierung über CIE kompatibel ist
-    contentTitleCie: Sie haben keinen SPID oder CIE?
-    spid_or_cie: Um die IO-App nutzen zu können, müssen Sie über eines dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
-    request_cie: CIE anfordern
-    request_spid: SPID anfordern
-    contextualHelpTitle: So registrieren Sie sich in der IO-App
-    loginSpid: Anmeldung mit SPID
-    loginCie: Anmeldung mit CIE
-    loginSpidCie: Anmeldung mittels SPID oder CIE
-    infoSpidCie: Einführung in SPID und CIE
-    loginSpidCieContent: Ab heute können Sie sich zusätzlich zu SPID mit Ihrer elektronischen Identitätskarte (CIE) anmelden
-    nospid: Sie haben keinen SPID? Finden Sie mehr heraus
-    nospid-nocie: Sie haben keinen SPID oder CIE?  Finden Sie mehr heraus
-    card1-title: Alle Mitteilungen an einem Ort
-    card1-content: Anzeige aller eingehenden Mitteilungen von öffentlichen Körperschaften
-    card2-title: Verwenden Sie Ihre bevorzugte Zahlungsmethode
-    card2-content: Sie können eine Steuer oder auch eine Strafe über Ihr Bankkonto oder mit Ihrer Bankkarte bezahlen
-    card3-title: Schnelles Bezahlen einer physischen Mitteilung
-    card3-content: Sie können eine Zahlungsmitteilung auch durch Scannen des QR-Codes bezahlen
-    card4-title: Sie können die App nur mittels SPID verwenden
-    card4-content: Der Zugriff ist nur über SPID (Public Service of Digital Identity) erlaubt,
-      um Ihre Online-Sicherheit zu gewährleisten
-    card5-title: Willkommen bei der öffentlichen Version von IO!
-    expiredCardHeaderTitle: Anmeldung mit CIE
-    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn Sie sich anmelden und auf die IO-App zugreifen möchten, müssen Sie SPID verwenden."
-    expiredCardHelp: Wie erneuert man seine elektronische Identitätskarte?
+      title: "Anmeldung mit CIE nicht möglich"
+      os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
+      nfc_incompatible: "ein kompatibler NFC-Sensor"
+    contentTitleCie: "Du hast keinen SPID oder CIE?"
+    spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
+    request_cie: "CIE anfordern"
+    request_spid: "SPID anfordern"
+    contextualHelpTitle: "Zugang zur IO-App"
+    loginSpid: "Anmeldung mit SPID"
+    loginCie: "Anmeldung mit CIE"
+    loginSpidCie: "Anmeldung mit SPID oder CIE"
+    infoSpidCie: "Einführung in SPID und CIE"
+    loginSpidCieContent: "Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden"
+    nospid: "Du hast keinen SPID? Erfahre mehr"
+    nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
+    card1-title: "Alle Mitteilungen an einem Ort"
+    card1-content: "Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an"
+    card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
+    card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
+    card3-title: "Bezahle schnell eine Aufforderung in Papierform"
+    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"
+    card4-title: "Du kannst dich nur mit SPID anmelden"
+    card4-content: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht"
+    card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"
+    card5-content: "In der rechten oberen Ecke findest du das Symbol '?', mit dem du einen Chat mit dem IO-Team beginnen kannst, wenn etwas nicht so funktioniert, wie es sollte."
+    expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
+    expiredCardHeaderTitle: "Anmeldung mit CIE"
+    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn du dich anmelden und auf die IO zugreifen möchtest, musst du SPID verwenden."
+    expiredCardHelp: "Wie erneuert man seine elektronische Identitätskarte?"
   cie:
-    genericTitle: Anmeldung mit CIE
-    cie: CIE
-    noDataTitle: Um die IO-App zu verwenden, müssen Sie das Senden von Daten zulassen
+    genericTitle: "Anmeldung mit CIE"
+    cie: "CIE"
+    noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
     nfc:
-      retry: Wiederholen
-      noNfcConnectionTitle: Sind Sie sicher, dass Sie die Karte abgelegt haben?
-      enableNfcTitle: NFC einschalten
-      enableNfcHeader: NFC prüfen
-      enableNfcContent: Damit die App Ihre elektronische Identitätskarte verifizieren kann, müssen Sie zunächst die NFC-Funktion Ihres Geräts aktivieren. Kommen Sie zu diesem Menüpunkt zurück, sobald Sie die Funktion aktiviert haben!
+      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wende dich bitte an den Hersteller deines Geräts."
+      retry: "Erneut versuchen"
+      noNfcConnectionTitle: "Hast du die Karte berührt?"
+      enableNfcTitle: "NFC aktivieren"
+      enableNfcHeader: "NFC überprüfen"
+      enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
-        placeholderLabel: PIN der elektronischen Identitätskarte
-        label: Eingabefeld für die PIN der elektronischen Identitätskarte
-        hint: Geben Sie in diesem Feld den 8-stelligen Pin Ihrer elektronischen Identitätskarte ein.
-      pinCardTitle: Geben Sie die PIN Ihrer ID-Karte ein
-      pinCardHeader: Anmeldung mit CIE
-      pinCardContent: Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden Ihnen beim Meldeamt ausgehändigt und weitere vier Ziffern wurden Ihnen mit der Karte nach Hause geschickt. Setzen Sie diese in dieser Reihenfolge zusammen und tragen Sie sie bitte hier ein.
-      incorrectCiePinTitle: Falsche PIN, Sie haben noch {{remainingCount}} Versuche
-      incorrectCiePinHeaderTitle: Falsche PIN
-      incorrectCiePinContent1: Zu Ihrer Sicherheit können Sie die Karten-PIN maximal dreimal eingeben. Danach müssen Sie die Karte durch Eingabe des PUK-Codes entsperren.
-      incorrectCiePinContent2: Denken Sie daran, dass der PIN-Code Ihrer elektronischen Identitätskarte (CIE) aus 8 Ziffern besteht. Vier Ziffern, die Ihnen im Meldeamt ausgehändigt wurden und weitere vier Ziffern, die Ihnen zusammen mit der Karte nach Hause geschickt wurden.
-      alert: Sind Sie sicher, dass Sie zurückgehen wollen?
-      contextualHelpTitle: Wo kann ich meine PIN und meinen PUK finden?
+        placeholderLabel: "PIN der elektronischen Identitätskarte"
+        label: "Eingabefeld für die PIN der elektronischen Identitätskarte"
+        hint: "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein."
+      pinCardTitle: "Gib die PIN deiner Identitätskarte ein"
+      pinCardHeader: "Anmeldung mit CIE"
+      pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."
+      incorrectCiePinTitle: "Falsche PIN, du hast noch {{remainingCount}} Versuche"
+      incorrectCiePinHeaderTitle: "Falsche PIN"
+      incorrectCiePinContent1: "Zu deiner Sicherheit kannst du die PIN der Identitätskarte maximal dreimal eingeben. Danach musst du die Karte durch Eingabe des PUK-Codes entsperren."
+      incorrectCiePinContent2: "Beachte, dass der PIN-Code deiner elektronischen Identitätskarte (CIE) aus 8 Ziffern besteht. Vier Ziffern, die dir im Meldeamt ausgehändigt wurden und weitere vier Ziffern, die dir zusammen mit der Karte nach Hause geschickt wurden."
+      alert: "Möchtest du wirklich zurückgehen?"
+      subtitleHelp: "Die PIN ist ein 8-stelliger Code."
+      subtitleCTA: "Wo finde ich ihn?"
+      bottomSheetCTA: "Hast du deine PIN vergessen?"
+      contextualHelpTitle: "Wo kann ich meine PIN und meinen PUK finden?"
+      contextualHelpCTA: "Hast du deine PIN / deinen PUK vergessen?"
     pinTempLocked:
-      header: Anmeldung mit CIE
-      title: Karte vorübergehend gesperrt
-      button: "Load/open CieID"
+      header: "Anmeldung mit CIE"
+      title: "Karte vorübergehend gesperrt"
+      button: "Lade / Öffne CieID"
     card:
-      headerTitle: Anmeldung mit CIE
-      titleiOS: Bitte versuchen Sie es erneut
-      title: Halten Sie die Karte erneut
-      layCardMessageHeader: Halten Sie Ihre elektronische ID-Karte für einige Sekunden an die Rückseite Ihres Telefons.
-      layCardMessageHeaderiOS: Halten Sie Ihre elektronische Identitätskarte auf die obere Rückseite Ihres iPhones.
-      layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie die Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie eine Vibration spüren.
-      cieCardValid: Ok, Ihre Karte ist gültig! Sie können sie nun entfernen.
-      readerCardTitle: Halten Sie die Karte für ein paar Sekunden
-      readerCardHeader: Wir lesen die Daten Ihrer CIE ein und überprüfen deren Gültigkeit.
-      readerCardFooter: Halten Sie die Karte noch ein paar Sekunden in dieser Position
+      title: "Berühre die Karte"
+      titleiOS: "Halte die Karte still"
+      headerTitle: "Anmeldung mit CIE"
+      layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden an die Rückseite deines Telefons."
+      layCardMessageHeaderiOS: "Der Sensor befindet sich im oberen Teil des Geräts."
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."
+      readerCardTitle: "Halte die Karte für ein paar Sekunden still"
+      readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
+      readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
+      iosAlert:
+        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon." 
+        moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
+        readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
+        invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        tagLost: "Du hast die Karte zu früh entfernt."
+        cardLocked: "Identitätskarte gesperrt"
+        wrongPin1AttemptLeft: "Falsche PIN, du hast noch einen Versuch"
+        wrongPin2AttemptLeft: "Falsche PIN, du hast noch zwei Versuche"
       error:
-        readerCardLostTitle: Halten Sie die Karte erneut für einige Sekunden
-        readerCardLostTitleiOS: Sie haben die Karte zu früh entfernt.
-        readerCardLostHeader: Das Auslesen der Kartendaten ist noch nicht abgeschlossen.
-        readerCardLostHeaderiOS: Wir haben das Einlesen der Kartendaten noch nicht abgeschlossen. Bitte versuchen Sie es erneut.
-        onTagLost: Sie haben die Karte zu früh entfernt. Halten Sie die Karte so nah wie möglich an die Rückseite des Geräts, bis eine Bestätigung auf dem Bildschirm erscheint. Dies dauert ein paar Sekunden.
-        tryAgain: Etwas hat nicht wie erwartet funktioniert, während wir Ihre CIE gelesen haben. Es handelt sich wahrscheinlich um ein temporäres Problem, bitte versuchen Sie es erneut!
-        unknownCardTitle: Unbekannte Karte
-        unknownCardContent: Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein.
-        unknownCardHelpLink: Was ist eine elektronische Identitätskarte?
-  spid: SPID
+        readerCardLostTitle: "Karte neu lesen"
+        readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
+        readerCardLostHeader: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen."
+        readerCardLostHeaderiOS: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen. Versuche es erneut."
+        onTagLost: "Du hast die Karte zu früh entfernt. Halte die Karte an die Rückseite des Smartphones bis eine Bestätigung auf dem Bildschirm erscheint. Es dauert nur ein paar Sekunden."
+        tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
+        generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
+        unknownCardTitle: "Unbekannte Karte"
+        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
+    dataUsageConsent:
+      retryCTA: "Weiter"
+  spid: "SPID"
   spid_information_request:
-    headerTitle: E-Mail Adresse einfügen
-    contentTitle: Sie haben keinen SPID?
-    paragraph1: SPID, das öffentliche System der digitalen Identität, ermöglicht Ihnen den Zugriff auf
-      alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität
-      (Benutzername und Passwort).
-    paragraph2: Wenn Sie möchten, können Sie uns Ihre E-Mail-Adresse hinterlassen, um Erinnerungen und
-      Updates zu dieser App zu erhalten
-    paragraph3: Wenn Sie weiterhin erklären, dass Sie die
-    tosLinkText: Regeln für die Verarbeitung von personenbezogenen Daten
-    continue: Weiter
+    headerTitle: "Du hast keinen SPID?"
+    contentTitle: "Was ist SPID?"
+    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
+    paragraph2: "Wenn du möchtest, kannst du uns deine E-Mail-Adresse hinterlassen, um Erinnerungen und Updates dieser App zu erhalten"
+    paragraph3: "Wenn du fortfährst, akzeptierst du die"
+    tosLinkText: "Regeln für die Verarbeitung von personenbezogenen Daten"
+    continue: "Weiter"
   spid_information:
-    headerTitle: Was ist SPID?
-    contentTitle: Sie haben keinen SPID?
-    moreLinkText: Mehr erfahren
-    subtitle: SPID ist sicher
-    paragraph1: SPID, das öffentliche System der digitalen Identität, ermöglicht Ihnen den Zugriff auf
-      alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität
-      (Benutzername und Passwort).
-    paragraph2-part1: 'Mit SPID können Sie online tun, was bisher nur persönlich möglich war:
-      um sich bei SPID zu registrieren, müssen Sie also '
-    paragraph2-bold: Bescheinigen Sie Ihre Identität
-    paragraph2-part2: 'vervollständigen Sie Ihre Erkennung durch einen Identity Provider. Hier
-      what you shall do:'
-    point1-value: '1'
-    point1-content: "Wählen Sie Ihren Identity Provider"
-    point2-value: '2'
-    point2-content: "Geben Sie Ihre persönlichen Daten und Ihre Mobiltelefon ein"
-    point3-value: '3'
-    point3-content: "Laden Sie eine Kopie Ihrer Ausweispapiere hoch"
-    point4-value: '4'
-    point4-content: "Vervollständigen Sie Ihre Anmeldung"
-    knowMore: Erfahren Sie mehr auf spid.gov.it
+    headerTitle: "Du hast keinen SPID?"
+    contentTitle: "Was ist SPID?"
+    moreLinkText: "Mehr erfahren"
+    subtitle: "SPID ist sicher"
+    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
+    paragraph2-part1: "Mit SPID kannst du Dinge online erledigen, die bisher nur persönlich erledigt werden konnten: Um dich für SPID zu registrieren, musst du "
+    paragraph2-bold: "deine Identität von einem anerkannten Anbieter bescheinigen "
+    paragraph2-part2: "lassen. Folge dieser Anleitung:"
+    point1-value: "1"
+    point1-content: "Wähle deinen Identitätsanbieter"
+    point2-value: "2"
+    point2-content: "Gib deine persönlichen Daten und deine Mobiltelefon ein"
+    point3-value: "3"
+    point3-content: "Lade eine Kopie deiner Identitätsdokumente hoch"
+    point4-value: "4"
+    point4-content: "Vervollständige deine Anmeldung"
+    knowMore: "Erfahre mehr auf spid.gov.it"
   idp_selection:
-    headerTitle: Home
-    contentTitle: Wählen Sie Ihren Identity Provider
-    contextualHelpTitle: Wer ist Ihr Identity Provider
+    headerTitle: "Home"
+    contentTitle: "Wähle deinen Identitätsanbieter"
+    contextualHelpTitle: "Wer ist dein Identitätsanbieter?"
   idp_login:
-    headerTitle: SPID Login
-    contextualHelpTitle: Wie lautet Ihr Passwort
-    contextualHelpTitle2: Benötigen Sie Unterstützung bei der Anmeldung mit SPID?
-    openTicket: Ticket erstellen
-    recoverUsername: Benutzernamens wiederherstellen
-    recoverDescription: Wenn Sie Ihr Passwort vergessen haben, können Sie es wiederherstellen, indem Sie auf die folgende Schaltfläche tippen.
-    dualRecoverDescription: Wenn Sie Ihre Anmeldeinformationen nicht haben, können Sie diese wiederherstellen, indem Sie auf folgenden Schaltflächen tippen.
-    recoverPassword: Wiederherstellung des Passworts
+    headerTitle: "Anmelden"
+    contextualHelpTitle: "Wie lautet dein Passwort"
+    contextualHelpTitle2: "Benötigst du Hilfe bei der Anmeldung mit SPID?"
+    openTicket: "Ticket erstellen"
+    recoverDescription: "Wenn du dein Passwort vergessen hast, klicke bitte auf die Schaltfläche unten."
+    dualRecoverDescription: "Wenn du deine Anmeldedaten vergessen hast, klicke bitte auf die unten stehenden Schaltflächen."
+    recoverUsername: "Benutzername wiederherstellen"
+    recoverPassword: "Passwort wiederherstellen"
   errors:
-    notoken: Die Sitzung ist nicht verfügbar oder ist ungültig
-    logout: Fehler beim Abmelden
+    notoken: "Die Sitzung ist nicht verfügbar oder ist ungültig"
+    logout: "Fehler beim Abmelden"
     network:
-      title: Zugriffsproblem
+      title: "Zugriffsproblem"
+      body: "Der von dir gewählte Identitätsanbieter ist im Moment nicht verfügbar. Du kannst es später noch einmal versuchen.\nWenn du eine andere SPID-Identität hast, wähle bitte einen anderen Anbieter.\nDu kannst das Problem über das Symbol '?' in der oberen rechten Ecke melden."
     login:
-      title: Login Fehler
-      body: Es gab einen Fehler bei der Anmeldung, bitte versuchen Sie es erneut!
+      title: "Fehler beim Anmelden"
+      body: "Es gab einen Fehler bei der Anmeldung, bitte versuche es erneut!"
     spid:
-      unknown: Unbekannter Fehler
-      error_19: "Sie haben zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuchen Sie es in ein paar Minuten erneut oder wenden Sie sich an Ihren SPID-Identitätsanbieter, um Ihre Anmeldedaten zu ändern."
-      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wenden Sie sich an Ihren SPID-Identitätsanbieter, um zu erfahren, wie Sie diesen verwenden können."
-      error_21: "Es ist zu viel Zeit vergangen, seit Sie mit dem Einloggen begonnen haben: Bitte beginnen Sie noch einmal von vorne."
-      error_22: "Um IO benutzen zu können, müssen Sie den Zugriff auf einige Ihrer Daten erlauben: Melden Sie sich erneut an und geben Sie Ihr Einverständnis zur Datenübermittlung."
-      error_23: "Ihre SPID-Identität ist gesperrt oder widerrufen. Um Ihr Konto zu reaktivieren, wenden Sie sich an Ihren SPID-Identitätsanbieter."
-      error_25: "Sie haben den Anmeldevorgang abgebrochen: Sie können es jederzeit erneut versuchen."
+      unknown: "Unbekannter Fehler"
+      error_19: "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuche es in ein paar Minuten erneut oder wende dich an deinen SPID-Identitätsanbieter um deine Anmeldedaten zu ändern."
+      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wende dich an deinen SPID-Identitätsanbieter um zu erfahren, wie du diesen verwenden kannst."
+      error_21: "Seit dem Beginn des Anmeldevorgangs ist zu viel Zeit vergangen: Bitte beginne noch einmal von vorne."
+      error_22: "Um IO benutzen zu können, musst du die Übermittlung einiger deiner Daten erlauben: Melde dich erneut an und gib dein Einverständnis zur Datenübermittlung."
+      error_23: "Deine SPID-Identität ist gesperrt oder widerrufen. Um dein Konto zu reaktivieren, wende dich an deinen SPID-Identitätsanbieter."
+      error_25: "Du hast den Anmeldevorgang abgebrochen: Du kannst es jederzeit erneut versuchen."
+      error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
-    title: Sicherheitshinweis
-    message: Um Ihre privaten Informationen zu schützen, melden Sie sich bitte erneut mit Ihren SPID-Anmeldedaten an, danke!
+    title: "Sicherheitshinweis"
+    message: "Um deine privaten Informationen zu schützen, melden dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
 email:
   read:
-    title: Ihre E-Mail-Adresse
-    info: Dies ist die E-Mail-Adresse, die mit Ihrem SPID-Konto verknüpft ist. Sie können
-      Sie können in der IO-App eine andere E-Mail-Adresse verwenden, wenn Sie dies wünschen. Um die neue E-Mail-Adresse in Betrieb zu nehmen,
-      müssen Sie sie validieren, indem Sie auf den Link klicken,
-      den Sie per E-Mail erhalten.
-    details: Sie können diese Adresse ändern, dann sollten Sie sie validieren, indem Sie auf den Link klicken,
-      den wir an Ihre E-Mail-Adresse senden. In der Zwischenzeit werden
-      die Funktionalitäten von IO, die von der E-Mail abhängen (Zahlungen, Weiterleitung von Nachrichten
-      usw.), deaktiviert.
-    alert: "Achtung: Ihr pagoPA Konto ist mit Ihrer E-Mail-Adresse verknüpft.
-      Wenn Sie diese ändern, wird IO Ihre registrierten Zahlungsmethoden und Transaktionen nicht
-      mehr auflisten."
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
-      dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie direkt in Ihrem
-      SPID-Dienstanbieterkonto bearbeiten.
+    title: "Deine E-Mail-Adresse"
+    info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
+    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhälst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
+    alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
+    help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
   insert:
-    header: Aktivierung
-    title: E-Mail eingeben
-    subtitle: Einige Funktionen der IO-App benötigen Ihre E-Mail-Adresse.
-    label: Persönliche E-Mail-Adresse
-    alert: Sie verwenden bereits diese E-Mail
+    header: "Aktivierung"
+    title: "E-Mail-Adresse eingeben"
+    subtitle: "Einige Funktionen der IO-App benötigen deine E-Mail-Adresse."
+    label: "Persönliche E-Mail-Adresse"
+    alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
-      title: E-Mail
+      title: "E-Mail"
   edit:
-    title: E-Mail bearbeiten
-    subtitle: Die von Ihnen eingefügte E-Mail-Adresse lautet
-    validated: Die von Ihnen eingefügte und bestätigte E-Mail lautet
-    label: Neue persönliche E-Mail-Adresse
-    cta: E-Mail bearbeiten
-    upsert_ok: Die E-Mail-Update-Anforderung wurde erfolgreich versendet
-    upsert_ko: Fehler in der E-Mail-Update-Anforderung, versuchen Sie es erneut
+    title: "E-Mail-Adresse bearbeiten"
+    subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
+    validated: "Die zuvor angegebene und bestätigte E-Mail-Adresse lautet"
+    label: "Neue persönliche E-Mail-Adresse"
+    cta: "E-Mail bearbeiten"
+    upsert_ok: "Die Anfrage zur Änderung der E-Mail-Adresse wurde erfolgreich übermittelt"
+    upsert_ko: "Fehler bei der Anfrage zur Änderung der E-Mail-Adresse, versuche es erneut"
   validate:
-    title: Erinnern Sie sich daran, Ihre E-Mail-Adresse zu bestätigen
-    header: E-Mail-Validierung
-    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Validierung gesendet: klicken Sie einfach auf diesen Link.<br/>
-      Solange Sie Ihre E-Mail-Adresse nicht validieren, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.)
-      nicht nutzbar sein, aber Sie können einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
-    content2: "Für einige Funktionen der IO-App müssen Sie Ihre E-Mail-Adresse validieren. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet:
-    Öffnen Sie Ihr E-Mail-Programm und klicken Sie auf den Link."
-    cta: Senden einer neuen Validierungs-E-Mail
-    sent: E-Mail gesendet
-    send_validation_ok: E-Mail-Validierung gesendet
-    send_validation_ko: Beim Senden der E-Mail-Validierung ist ein Fehler aufgetreten. Versuchen Sie es erneut.
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
-      dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie
-      direkt in Ihrem SPID-Dienstanbieterkonto bearbeiten.
-    validation_ok: Ihre E-Mail-Adresse wurde validiert. Sie können nun alle Funktionalitäten der IO-App nutzen.
-    validated: E-Mail validiert!
-    validated_ok: Danke, jetzt können Sie alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen.
+    title: "Erinnere dich, deine E-Mail-Adresse zu bestätigen!"
+    header: "E-Mail-Bestätigung"
+    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Bestätigung gesendet: klicke einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht bestätigt ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
+    content2: "Für einige Funktionen von IO musst du deine E-Mail-Adresse bestätigen. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und klicke auf den Link."
+    cta: "Sende eine neue E-Mail zur Bestätigung"
+    sent: "E-Mail gesendet"
+    send_validation_ok: "E-Mail zur Bestätigung gesendet"
+    send_validation_ko: "Beim Senden der E-Mail ist ein Fehler aufgetreten. Versuche es erneut."
+    help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an IO. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
+    validation_ok: "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen."
+    validated: "E-Mail bestätigt!"
+    validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
 onboarding:
-  contextualHelpTitle: Wie funktioniert die biometrische Erkennung
+  contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
-    headerTitle: Aktivierung
-    accept: Akzeptieren
-    error: Ladefehler
+    headerTitle: "IO einrichten"
+    accept: "Akzeptieren"
+    error: "Ladefehler"
     alert:
-      title: Achtung
-      message: Bitte lesen Sie den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzrichtlinie, um fortzufahren
+      title: "Achtung"
+      message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
   unlockCode:
-    reset: Ändern Sie den Code
-    contextualHelpTitle: Wie lautet Ihr Freischaltcode?
+    reset: "Ändere den Code"
+    contextualHelpTitle: "Wie lautet dein Entsperrcode?"
+  pin:
+    headerTitle: "IO einrichten"
+    title: "Entsperrcode"
+    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige Operationen zu bestätigen."
+    pinLabel: "Lege einen Entsperrcode fest"
+    pinConfirmationLabel: "Wiederhole den Entsperrcode"
+    tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
+    errors:
+      length: "Dein Code ist nicht 6 Ziffern lang"
+      match: "Der Code stimmt nicht überein"
   alert:
-    title: Wollen Sie sich wirklich abmelden?
-    description: Sie müssen sich erneut anmelden, um die App zu verwenden
+    title: "Möchtest du dich wirklich abmelden?"
+    description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
   fingerprint:
-    headerTitle: Aktivierung
-    title: Biometrische Authentifizierung
+    headerTitle: "Aktivierung"
+    title: "Biometrische Authentifizierung"
     body:
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
-        fingerprint: Ihr Fingerabdruck
-        faceId: Face ID
-        touchId: Touch ID
+        fingerprint: "deinen Fingerabdruck"
+        faceId: "Face ID"
+        touchId: "Touch ID"
+  shareData:
+    title: "IO einrichten"
+  thankYouPage:
+    title: "Einrichtung abgeschlossen!"
+    body: "Jetzt kannst du IO benutzen"
+  notifications:
+    badge: "Neuigkeiten"
+    headerTitle: "IO einrichten"
+    continue: "Weiter"
+    preview:
+      accessibilityLabelPrefix: "Hier ein Beispiel:"
+      reminderOnPreviewOnTitle: "Du hast eine fällige Zahlungsaufforderung"
+      reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsaufforderung von ACI"
+      reminderOffPreviewOnTitle: "Gemeinde Ipazia"
+      reminderOffPreviewOnMessage: "Die Einschreibungen für die Sommerbetreuung sind offen"
+      reminderOnPreviewOffTitle: "Du hast eine fällige Zahlungsaufforderung"
+      reminderOnPreviewOffMessage: "Öffne die App um sie zu bezahlen"
+      reminderOffPreviewOffTitle: "Du hast eine neue Mitteilung"
+      reminderOffPreviewOffMessage: "Öffne die App um sie zu lesen"
+    contextualHelpTitle: "Push-Benachrichtigungen"
+  infoConsent:
+    headerTitle: "IO einrichten"
+    title: "Möchtest du Push-Benachrichtigungen aktivieren?"
+    subTitle: "Um Push-Benachrichtigungen von IO zu erhalten, musst du sie in den Einstellungen von iOS aktiveren. So geht's:"
+    instruction1: "1. Wähle “Benachrichtigungen”"
+    instruction2: "2. Aktiviere “Benachrichtigungen zulassen”"
+    openSettings: "Öffne die Einstellungen von iOS"
+    continue: "Jetzt nicht"
+    contextualHelpTitle: "Push-Benachrichtigungen"
 forms:
   validators:
-    required: Erforderlicher Wert
-    email: Ungültige E-Mail-Adresse
+    required: "Erforderlicher Wert"
+    email: "Unbestätigte E-Mail-Adresse"
   spidInformation:
     fields:
       email:
-        placeholder: E-Mail-Adresse
+        placeholder: "E-Mail-Adresse"
 lipsum:
-  medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
-    id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
-    Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
-    totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
-    Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis,
-    obscuris et malesuada fames.
+  medium: "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
 datetimes:
-  yesterday: gestern
-  todayAt: heute, bei
+  yesterday: "gestern"
+  todayAt: "heute um"
+  notValid: "Ungültiges Datum"
 payment:
   alertNoPaymentMethods:
-    title: Bitte hinzufügen Sie einen Zahlungsdienstleister, um aus der IO-App zu bezahlen
-    message: Die Zahlungsmethode wird in Ihrem Konto gespeichert, damit Sie nächster Mal schneller bezahlen können.
+    title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
+    message: "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
     buttons:
-      ok: Weiter
-      ko: Abbrechen
-  errorDetails: Details
-  noPsp: Sie müssen noch einen Zahlungsdienstleister auswählen
-  IUV: IUV
-  IUV_extended: Einheitlicher Zahlungscode (IUV)
-  notice: Hinweis
-  noticeCode: Hinweis-Code
-  recipientFiscalCode: Steuernummer des Empfängers
+      ok: "Weiter"
+      ko: "Abbrechen"
+  alertNoActivePaymentMethods:
+    title: "Um diese Funktion zu nutzen, aktiviere In-App-Zahlungen"
+    message: "Aktiviere mindestens eine Zahlungsmethode aus deinem Konto oder füge eine neue Zahlungsmethode hinzu."
+    buttons:
+      ok: "Gehe zum Konto"
+      ko: "Abbrechen"
+  abortWebView:
+    title: "Möchtest du die aktuelle Zahlung abbrechen?"
+    confirm: "Zahlung abbrechen"
+    cancel: "Mit der Zahlung fortfahren"
+    success: "Die Zahlung wurde ordnungsgemäß abgebrochen"
+  errorDetails: "Details"
+  currentPsp: "Die Zahlung wird durgeführt von"
+  noPsp: "Du hast noch keinen Zahlungsdienstleister ausgewählt"
+  changePsp: "Wähle den Anbieter"
+  IUV: "IUV"
+  IUV_extended: "Einheitlicher Zahlungskodex (IUV)"
+  notice: "Zahlungsmitteilung"
+  noticeCode: "Zahlungskodex"
+  recipientFiscalCode: "Steuernummer des Empfängers"
+  paidConfirm: "Du hast {{amount}} gezahlt"
   details:
     state:
-      successful: Erfolgreich
-      incomplete: Nicht beendet
-      failed: Gescheitert
+      successful: "Erfolgreich"
+      incomplete: "Nicht abgeschlossen"
+      failed: "Fehlgeschlagen"
     info:
       buttons:
-        copy: Kopieren
-        help: Support kontaktieren
-      title: Zahlungsdetail
-      enteCreditore: Gläubiger
-      causaleVersamento: Beschreibung
-      dateAndTime: Datum und Uhrzeit
-      paymentAmount: Zahlungsbetrag
-      transactionCosts: Transaktionskosten
-      transactionCode: Transaktions-Identifikationscode
-      help: Sollten Sie ein Problem mit dieser Zahlung haben, schreiben Sie uns für weitere Informationen und Details
+        copy: "Kopieren"
+        help: "Support kontaktieren"
+      title: "Details der Zahlung"
+      enteCreditore: "Gläubiger"
+      causaleVersamento: "Zahlungsgrund"
+      dateAndTime: "Datum und Uhrzeit"
+      outcomeCode: "Ergebniscode"
+      onlyDate: "Datum"
+      paymentAmount: "Zahlungsbetrag"
+      transactionCosts: "Transaktionsgebühr"
+      transactionCode: "Identifikationscode der Transaktion"
+      help: "Solltest du ein Problem mit dieser Zahlung haben, schreib uns für weitere Informationen und Details"
     list:
       empty:
-          title: Keine Zahlungsversuche
-          description: IO-App hat keine Zahlungsversuche gespeichert. Hier finden Sie Ihre letzten Zahlungsversuche
-      title: Zahlungsversuche
-      iuv: IUV Zahlungen {{iuv}}
+          title: "Keine Zahlungsversuche"
+          description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
+      title: "Zahlungsversuche"
+      iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
 wallet:
-  wallet: Konto
+  wallet: "Konto"
+  refreshWallet: "Konto aktualisieren"
+  favourite:
+    setFavoriteTitle: "Als Favorit festlegen"
+    setFavoriteSubtitle: "Wenn du in der App bezahlst, wird dir IO automatisch diese Zahlungsmethode anzeigen"
+  incoming:
+    title: "Demnächst verfügbar"
+    message: "In einer zukünftigen Version von IO wird diese Zahlungsmethode ebenfalls zur Verfügung stehen"
+  featured: "Highlights"
+  creditCard:
+    onboardingAttempts:
+      title: "Versuche vom Hinzufügen von Zahlungsmethoden"
+      emptyTitle: "Kein Versuch vom Hinzufügen von Zahlungsmethoden"
+      emptyBody: "IO hat keine Versuche Zahlungsmethoden hinzuzufügen gespeichert. Hier findest du deine letzten Versuche"
+      lastAttemptsTitle: "Letzten Versuche"
+      success: "Hinzugefügt"
+      failure: "Fehlgeschlagen"
+      dateTime: "Datum und Uhrzeit"
+      detailTitle: "Details"
+      help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
+    details:
+      header: "Details Zahlungsmethode"
   searchAbi:
-    bankName: Name der Bank
-    noName: Name nicht verfügbar
-    loading: Laden der Bankliste...
+    header: "{{methodName}} hinzufügen"
+    bancomat:
+      title: "Suche deine PagoBANCOMAT-Karten"
+      description:
+        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die "
+        text2: "Datenschutzbestimmungen."
+        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. "
+        text4: "Liste der verfügbaren Banken"
+    bpay:
+      title: "Zahle auf IO mit BANCOMAT Pay"
+      description:
+        text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
+        text2: "Datenschutzbestimmungen."
+        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
+        text4: "Liste der verfügbaren Banken"
+    cobadge:
+      title: "Suche deine Karten im internationalen Zahlungsnetzwerk"
+      description:
+        text1: "Wenn du alle Maestro-, Mastercard-, V-Pay- und Visa-Karten, die mit dir verbunden sind, zu deinem Konto hinzufügst, können sie an den auf IO verfügbaren Initiativen teilnehmen."
+        text3: "Für weitere Informationen sieh dir die "
+        text4: "Datenschutzbestimmungen an."
+    bankName: "Name der Bank"
+    noName: "Name nicht verfügbar"
+    loading: "Bankenliste wird geladen..."
+  accessibility:
+    sectionCardLabel: "Zahlungsmethoden aktualisieren"
+    sectionCardHint: "Aktualisiere die Liste der Zahlungmethoden"
+    folded:
+      creditCard: "{{brand}}-Karte, die Kartennummer endet mit {{blurredNumber}}"
+      bancomat: "BANCOMAT {{bankName}}"
+      coBadge: "{{brand}}-Karte, {{bankName}}"
+      bancomatPay: "BANCOMATPay {{bankName}}"
+      privative: "Treuekarte, die Kartennummer endet mit {{blurredNumber}}"
+      cta: "Details zur Zahlungsmethode anzeigen"
+      bankNotAvailable: "Bankenname nicht verfügbar"
+    addElement: "Element zum Konto hinzufügen"
+    cardsPreview: "Vorschau der Zahlungsmethoden. Aktiviere, um die Liste deiner Zahlungsmethoden aufzurufen"
+    cardHolder: "Karteninhaber"
+    transactionListItem:
+      payment:
+        read: "Transaktion"
+        unread: "Ungelesene Tranksaktionen"
+      label: "{{payment}} an {{merchant}} von {{amount}} Euro durchgeführt am {{datetime}} um {{hours}} Uhr mit Grund {{reason}}. Aktiviere für alle Details."
   onboarding:
     bancomat:
+      headerTitle: "PagoBANCOMAT-Karte hinzufügen"
+      koTimeout:
+        title: "Wir konnten deine PagoBANCOMAT Karten nicht finden"
+        body: "Versuche es erneut"
       koNotFound:
-        title: "Tut uns leid, wir konnten keine Karten finden"
+        title: "Wir konnten keine Karten finden"
+        body: "Es gibt keine PagoBANCOMAT-Karten auf deinen Namen: Wende dich bitte für weitere Informationen an deine Bank."
+      koNotFoundSingleBank:
+        title: "Wir konnten keine Karten bei dieser Bank finden"
+        body: "Es gibt keine PagoBANCOMAT-Karten auf deinen Namen.\nWenn du magst, kann IO alle Banken durchsuchen."
+        continue: "Weiter"
+      koServicesError:
+        title: "Wir konnten keine Karten finden: bitte wähle deine Bank aus"
+        body: "Teile uns die Bank mit, die deine Karte ausgestellt hat, um die Liste der auf deinen Namen ausgestellten PagoBANCOMAT-Karten anzusehen."
+        chooseTheBank: "Bank auswählen"
+      loadingSearch:
+        title: "Wir sind dabei, die Liste deiner Karten zu erstellen.\n\nWarte ein paar Sekunden..."
       add:
-        screenTitle: "Möchten Sie diese Karte hinzufügen?"
-        bodySingular: "Wir haben eine Karte gefunden, welche auf Ihren Namen ausgestellt ist. Fahren Sie mit dem Hinzufügen dieser Karte fort, indem Sie auf Hinzufügen klicken, oder klicken Sie auf Überspringen, um den Vorgang abzubrechen."
-        bodyPlural: "Wir haben {{number}} Karten gefunden, welche auf Ihren Namen ausgestellt sind. Fahren Sie mit dem Hinzufügen dieser Karte/en fort, indem Sie auf Hinzufügen klicken, oder klicken Sie auf Überspringen, um den Vorgang abzubrechen."
+        title: "PagoBancomat hinzufügen"
+        label: "PagoBancomat-Karte {{current}} von {{length}}"
+        screenTitle: "Möchtest du diese Karte hinzufügen?"
+        bodySingular: "Wir haben eine Karte gefunden, die auf deinen Namen ausgestellt ist. Klicke auf “Hinzufügen”, um diese Karte hinzuzufügen oder klicke auf “Überspringen”, um den Vorgang abzubrechen."
+        bodyPlural: "Wir haben {{number}} Karten gefunden, die auf deinen Namen ausgestellt sind. Klicke auf “Hinzufügen”, um diese Karte hinzuzufügen oder klicke auf “Überspringen”, um zur nächsten Karte zu gelangen."
+        loading: "Wir fügen gerade deine PagoBANCOMAT-Karte hinzu\n\nWarte ein paar Sekunden..."
+        warning: "Wenn du nicht all deine Karten findest, versuche später nocheinmal die fehlende Karte hinzuzufügen, indem du die Bank, wo du dein Kontokorrent hast, auswählst."
+        blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deine Bank."
+    bPay:
+      headerTitle: "BANCOMAT Pay hinzufügen"
+      loadingSearch: "Wir rufen deine BANCOMAT Pay Konten ab.\n\nWarte ein paar Sekunden"
+      add:
+        label: "BANCOMAT Pay Konto {{current}} von {{length}}"
+        screenTitle: "Möchtest du dieses Konto hinzufügen?"
+      loadingAdd: "Wir fügen gerade dein BANCOMAT Pay Konto hinzu.\n\nWarte ein paar Sekunden"
+      koTimeout:
+        title: "Deine Daten können nicht abgerufen werden"
+        body: "Versuche es bitte erneut"
+      koNotFound:
+        title: "Wir haben kein aktives BANCOMAT Pay Konto gefunden"
+        body: "Wende dich an deine Bank um BANCOMAT Pay zu aktivieren!"
+    satispay:
+      name: "Satispay"
+      headerTitle: "Satispay hinzufügen"
+      start:
+        title: "Möchtest du in IO dein Satispay-Konto hinzufügen?"
+        body: "Wir prüfen, ob ein Satispay-Konto mit deiner Steuernummer verbunden ist."
+        cta: "Datenschutzbestimmungen"
+      loadingSearch:
+        title: "Wir überprüfen dein Satispay-Konto\n\nWarte ein paar Sekunden"
+      loadingAdd:
+        title: "Wir fügen dein Satispay-Konto hinzu\n\nWarte ein paar Sekunden"
+      add:
+        title: "Möchtest du dieses Satispay-Konto hinzufügen?"
+      koTimeout:
+        title: "Wir konnten Satispay nicht erreichen"
+        body: "Bitte versuche es erneut"
+      koNotFound:
+        title: "Es scheint, als ob du kein aktives Satispay-Konto hast"
+        body: "Kontaktiere Satispay für die Aktivierung"
+    paypal:
+      name: "PayPal"
+      headerTitle: "PayPal hinzufügen"
+      emailNotAvailable: "nicht verfügbar"
+      start:
+        title: "Zahle in IO mit PayPal"
+        body: "Verknüpfe dein PayPal-Konto und bezahle die pagoPA-Zahlungsmitteilungen noch einfacher: du kannst auch dein Kontokorrent verwenden!"
+      updatePsp:
+        headerTitle: "Dienstleister auswählen"
+        title: "Mit welchem Dienstleister möchtest du bezahlen?"
+        body: "Jeder Dienstleister schlägt eine Transaktionsgebühr vor.\nIn dieser Liste findest du alle Dienstleister, die mit deiner Zahlungsmethode kompatibel sind, auch wenn du nicht deren Kunde bist."
+        leftColumnTitle: "Dienstleister"
+        rightColumnTitle: "Transaktionsgebühr (€)"
+      selectPsp:
+        title: "Mit welchem Dienstleister möchtest du dein PayPal-Konto benutzen?"
+        body: "Wenn du pagoPA benutzt, wählst du den Dienstleister aus, der dir am passendsten ist.\nDu kannst diese Wahl bei jeder Zahlung entsprechend der vorgeschlagenen Transaktionsgebühr ändern."
+        link: "Was ist der Zahlungsdienstleister der Transaktion?"
+        leftColumnTitle: "Dienstleister"
+        rightColumnTitle: "Info und Kosten"
+        infoBottomSheet:
+          title: "Wer ist {{pspName}}?"
+          ctaTitle: "Verstanden"
+          row1Description: "{{pspName}} ist ein Zahlungsdienstleister (PSP), der deine Transaktionen über PayPal abwickeln kann."
+          row2Description1: "Bei Bezahlung einer Zahlungsmitteilung beträgt die Transaktionsgebühr maximal "
+          row2Description2: ". Der genaue Betrag wird dir vor der Bestätigung angezeigt."
+          row3Description1: "Es gelten die Nutzungsbedingungen und die Datenschutzbestimmungen von {{psp}}."
+        whatIsPspBottomSheet:
+          title: "Was ist der Zahlungsdienstleister der Transaktion?"
+          body: "Es ist das Unternehmen – auch als PSP (Payment Service Provider) bezeichnet – das den Betrag im Namen des Zahlungsempfängers einnimmt und dafür eine Gebühr für die angebotene Dienstleistung erheben kann.\nBei jeder Zahlung kannst du den Zahlungsdienstleister wählen, der dir am besten passt – egal ob du Kunde dessen bist oder nicht."
+      paypalAlreadyAdded:
+        alert:
+          title: "Du hast bereits ein PayPal-Konto in deinem Konto"
+          message: "Wenn du fortfährst, wird das neue Konto dein altes ersetzen."
+      onBoardingCompleted:
+        title: "Fertig!"
+        body: "Jetzt kannst du die Einstellungen deiner neuen Zahlungsmethode anzeigen."
+        primaryButton: "Weiter"
+      onBoardingCompletedWhilePayment:
+        title: "Fertig!"
+        body: "Jetzt kannst du mit der Zahlung fortfahren."
+        primaryButton: "Weiter"
+      paymentCheckout:
+        transactionCost: "Transaktionsgebühr"
+        pspHandler: "Durchgeführt von {{pspName}}"
+        privacyDisclaimer: "Wenn du fortfährst, verstehst und akzeptierst du die"
+        privacyTerms: "Nutzungsbedingungen und Datenschutzbestimmungen"
+    coBadge:
+      headerTitle: "Internationales Zahlungsnetz hinzufügen"
+      start:
+        loading: "Wir laden die Einstellungen\n\nWarte ein paar Sekunden"
+        koDisabled:
+          title: "Deine Bank bietet diese Funktion noch nicht an"
+          body: "Wir arbeiten daran, dir bald die Möglichkeit zu geben, deine Karte mit internationalem Zahlungsnetz hinzuzufügen."
+        koUnavailable:
+          title: "Wir konnten deine Bank nicht kontaktieren"
+          body: "Wir arbeiten an der Lösung des Problems."
+      search:
+        loading: "Wir laden die Liste deiner Karten\n\nWarte bitte ein paar Sekunden"
+        koTimeout:
+          title: "Wir können deine Karten nicht abrufen"
+          body: "Bitte versuche es erneut"
+        koNotFound:
+          title: "Wir haben keine Karten bei Banken, die am Dienst teilnehmen, gefunden"
+          body: "Es gibt keine Karten mit internationalem Zahlungsnetz auf deinen Namen: Wende dich an deine Bank, um weitere Informationen zu erhalten."
+        koSingleBankNotFound:
+          title: "Wir konnten keine Karten bei dieser Bank finden"
+          body: "Es gibt keine Karten mit internationalem Zahlungsnetz auf deinen Namen.\nWenn du magst, kann IO alle teilnehmenden Banken durchsuchen."
+        koServiceError:
+          title: "Wir konnten keine Karten finden"
+          body: "Bitte versuche es später erneut"
+      add:
+        screenTitle: "Möchtest du diese Karte hinzufügen?"
+        label: "Karte mit internationalem Zahlungsnetz {{current}} von {{length}}"
+        blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deine Bank."
+        warning1: "In einigen Fällen können die angezeigten Daten von denen auf der physischen Karte abweichen: "
+        warning2: "Bei Zweifeln wende dich an deine Bank."
+        loading: "Wir fügen die Karte mit internationalem Zahlungsnetz hinzu\n\nWarte ein paar Sekunden..."
+      chooseType:
+        title: "Kannst du mit deiner Karte auch online einkaufen?"
+        description: "Anhand dieser Frage können wir besser verstehen, wie deine Karte funktioniert und dir helfen, sie zu deinem Konto hinzuzufügen."
+        path:
+          enabled:
+            title: "Ja, sie ist für Online-Käufe aktiviert."
+            description: "Wir überprüfen die Kartendaten mit deiner Bank, normalerweise per SMS oder Push-Benachrichtigung"
+          disabled:
+            title: "Nein, ich benutze sie nur in Geschäften"
+            description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
+          unknown:
+            title: "Ich weiß es nicht"
+            description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
+    privative:
+      headerTitle: "Supermarktkarte hinzufügen"
+      choosePrivativeIssuer:
+        loading: "Wir laden die Einstellungen\n\nWarte ein paar Sekunden"
+        title: "Wähle die Kette deiner Karte"
+        body: "Wenn du die Karte zu deinem Konto hinzufügst, kannst du dich den auf IO verfügbaren Initiativen anschließen."
+        koDisabled:
+          title: "Dieser Supermarkt bietet diese Funktion noch nicht an."
+          body: "Wir arbeiten daran, dass du deine Karte bald hinzufügen kannst."
+        koUnavailable:
+          title: "Wir können den Server nicht kontaktieren"
+          body: "Wir arbeiten an der Lösung des Problems."
+      addPrivativeCardNumber:
+        title: "Gib die Kartennummer ein"
+        body: "Gib die Ziffern auf der Vorderseite ein. IO prüft, ob die Karte mit deiner Steuernummer verbunden ist."
+        disclaimer:
+          text1: "Wenn du fortfährst, akzeptierst du die "
+          text2: "Datenschutzbestimmungen"
+      search:
+        loading: "Wir überprüfen deine Karte\n\nWarte ein paar Sekunden"
+        koTimeout:
+          title: "Es ist derzeit nicht möglich, deine Karte zu überprüfen"
+          body: "Bitte versuche es erneut"
+        koNotFound:
+          title: "Es gibt ein Problem mit dieser Karte"
+          body: "Versuche die Nummer erneut einzugeben oder wende dich an den Kundendienst deines Supermarktes."
+          cta:
+            modifyCardNumber: "Kartennummer ändern"
+        koServiceError:
+          title: "Es ist derzeit nicht möglich deine Karte abzurufen"
+          body: "Bitte versuche es später erneut"
+      add:
+        screenTitle: "Möchtest du diese Karte hinzufügen?"
+        loading: "Wir fügen deine Karte hinzu\n\nBitte warte ein paar Sekunden..."
+        blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deinen Supermarkt."
   alert:
+    supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-    titlePagoPaUpdateApp: Update erforderlich
-    messagePagoPaUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um Ihre Zahlungen weiterhin nutzen zu können, müssen Sie die App auf die neueste Version aktualisieren."
-    btnUpdateApp: Aktualisieren Sie die IO-App
-  contextualHelpTitle: Über diesen Abschnitt
-  creditcards: Kreditkarten
-  paymentMethods: Zahlungsmethoden
-  paymentMethod: Zahlungsmethode
-  walletLoadMessage: Zahlungsmethoden laden...
-  walletLoadFailure: Das Laden der Zahlungsmethoden ist fehlgeschlagen, bitte versuchen Sie es erneut.
-  transactionsLoadMessage: Laden der Transaktionen...
-  transactionsLoadFailure: Das Laden Ihrer Transaktionen ist fehlgeschlagen, bitte versuchen Sie es erneut.
-  transactionsLoadMore: Vorherige laden
-  transacionsLoadingMore: Vorheriges Laden...
-  transactionsShow: Zeige Transaktionen
+    titlePagoPaUpdateApp: "Update erforderlich"
+    messagePagoPaUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um dein Konto weiterhin nutzen zu können, musst du die App auf die neueste Version aktualisieren."
+    btnUpdateApp: "Aktualisiere die IO-App"
+    favorite: "Um diese Option zu ändern, wähle eine andere Zahlungsmethode aus deinem Konto und lege diese als bevorzugt fest."
+    amex: "Zahlungen mit American Express-Karten für Beträge über 1000 € sind derzeit nicht möglich."
+  contextualHelpTitle: "Was du in deinem Konto machen kannst"
+  creditcards: "Kreditkarten"
+  paymentMethods: "Zahlungsmethoden"
+  paymentMethod: "Zahlungsmethode"
+  paymentMethodDesc: "Kredit-, Debit-, Prepaid-Karten, Paypal, und mehr"
+  walletLoadMessage: "Zahlungsmethoden laden..."
+  walletLoadFailure: "Das Laden der Zahlungsmethoden ist fehlgeschlagen, bitte versuche es erneut."
+  transactionsLoadMessage: "Laden der Transaktionenhistorie..."
+  transactionsLoadFailure: "Das Laden deiner Transaktionen ist fehlgeschlagen, bitte versuche es erneut."
+  transactionHelpMessage:
+    text1: "Probleme mit einer Zahlung oder dem Hinzufügen einer neuen Methode?"
+    text2: "Konsultiere die Hilfe rechts oben auf dieser Seite."
+  transactionsLoadMore: "Weitere Transaktionen laden"
+  transacionsLoadingMore: "Lade weitere Transaktionen..."
+  transactionsShow: "Zeige deine Transaktionen"
   pickPaymentMethod:
     unavailable:
-      title: Diese Zahlungsmethode ist zur Zeit nicht verfügbar
-      message: Diese Zahlungsmethode wird in einer zukünftigen Version verfügbar sein
-  add: hinzufügen
+      title: "Diese Zahlungsmethode ist noch nicht verfügbar"
+      message: "Diese Zahlungsmethode wird in einer zukünftigen Version verfügbar sein"
+  add: "hinzufügen"
   delete:
-    successful: Karte erfolgreich entfernt
-    failed: Die Karte konnte nicht entfernt werden
+    successful: "Zahlungsmethode von deinem Konto entfernt"
+    failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
   newPaymentMethod:
-    add: hinzufügen
-    refresh: Aktualisieren
-    addButton: Eine neue Zahlungsmethode hinzufügen
-    addDescription: Fügen Sie eine Zahlungsmethode hinzu, um in Sekundenschnelle aus der IO-App zu bezahlen, oder fordern Sie die Aktivierung einer Bonus- oder Rabattkarte an.
-    walletAlert: "Sie verfügen über verschiedene Zahlungsmethoden, aber es wird noch keine von der IO-App unterstützt"
-    successful: Die Karte wurde erfolgreich hinzugefügt!
-    failed: Die Karte konnte nicht hinzugefügt werden
-    failedCardAlreadyExists: Die Karte, die Sie hinzufügen haben, existiert bereits
-    contextualHelpTitle: Wie man eine Zahlungsmethode hinzufügt
+    add: "Hinzufügen"
+    show: "Anzeigen"
+    refresh: "Aktualisieren"
+    addButton: "Neue Zahlungsmethode"
+    addDescription: "Füge eine Zahlungsmethode hinzu, um in Sekundenschnelle in IO zu bezahlen oder fordere die Aktivierung einer Bonus- oder Rabattkarte an."
+    walletAlert: "In deinem Konto sind Zahlungsmethoden registriert, aber keine davon ist mit IO kompatibel."
+    successful: "Die Karte wurde erfolgreich hinzugefügt!"
+    failed: "Die Karte konnte nicht hinzugefügt werden"
+    failedCardAlreadyExists: "Die Karte ist bereits in deinem Konto"
+    contextualHelpTitle: "Hinzufügen einer Zahlungsmethode"
     abort:
-      title: Möchten Sie das Hinzufügen einer neuen Zahlungsmethode abbrechen?
-      confirm: Vorgang abbrechen
-      cancel: Setzen Sie den Vorgang fort
-      success: Die Eingabe der Zahlungsmethode wurde erfolgreich abgebrochen
+      title: "Möchtest du das Hinzufügen einer neuen Zahlungsmethode abbrechen?"
+      confirm: "Vorgang abbrechen"
+      cancel: "Vorgang fortsetzen"
+      success: "Die Eingabe der Zahlungsmethode wurde erfolgreich abgebrochen"
   textMsg:
-    title: Text-Bestätigungscode
-    header: Bestätigungscode
-    newCode: Neuen Code anfordern
-    info: Geben Sie den Code ein, welcher per SMS an Ihr Mobiltelefon gesendet wurde
+    title: "Bestätigungscode"
+    header: "SMS-Bestätigungscode"
+    newCode: "Neuen Code anfordern"
+    info: "Gib den Code ein, den wir per SMS an deine Telefonnummer gesendet haben"
+  transactionDetails: "Transaktionsdetails"
+  transactionFullReason: "Vollständiger Grund"
   saveCard:
-    contextualHelpTitle: Eine Karte in IO speichern
-    header: Karte speichern
-    title: Möchten Sie diese Karte speichern?
-    infoTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
-    info: Diese Zahlungsmethode wird automatisch für die nächste Zahlung vorgeschlagen
-    notice: Zur Verifizierung der Karte wird eine Transaktion von wenigen Cent auf Ihrer Karte abgebucht.
-    loadingAlert: Ihre Kartendaten werden überprüft...
+    contextualHelpTitle: "Eine Karte in IO speichern"
+    header: "Karte speichern"
+    title: "Ist alles richtig?"
+    subtitle: "Wenn du die Karte zu deinem Konto hinzufügst, kannst du In-App-Zahlungen vornehmen und an Initiativen teilnehmen, die auf IO verfügbar sind."
+    infoTitle: "Als bevorzugte Zahlungsmethode festlegen"
+    info: "Diese Zahlungsmethode wird automatisch für die nächste Zahlung in IO vorgeschlagen"
+    notice: "Um deine Karte zu überprüfen, behalten wir vorübergehend 0,02 € ein. Keine Sorge: Wir werden den Betrag so schnell wie möglich zurückzahlen."
+    temporaryError: "Beim Speichern dieser Karte ist ein Fehler aufgetreten"
+    temporarySubError: "Wir haben keine Antwort von den Sicherheitssystemen erhalten. Wir entschuldigen uns für die Unannehmlichkeiten."
+    loadWalletsErrorTitle: "Die Systeme benötigen länger als erwartet"
+    loadWalletsErrorBody: "Wir haben keine Antwort von den Sicherheitssystemen erhalten, aber deine Karte könnte hinzugefügt worden sein. Bitte aktualisiere dein Konto, bevor du es erneut versuchst."
+    loadingAlert: "Deine Kartendaten werden überprüft..."
+  challenge3ds:
+    header: "Zahlung autorisieren"
+    description: "Der Kartenaussteller benötigt deine Bestätigung. Wenn du Probleme hast, wende dich bitte an deine Bank."
   saveCardInPayment:
-    header: Mit dieser Karte bezahlen
-    title: Möchten Sie mit dieser Karte bezahlen?
-    save: Bezahlen mit dieser Karte
+    header: "Mit dieser Karte bezahlen"
+    title: "Möchtest du mit dieser Karte bezahlen?"
+    save: "Mit dieser Karte bezahlen"
   thanks: "✓ Danke!"
-  endPayment: Ihre Zahlung wurde erfolgreich abgeschlossen
+  endPayment: "Deine Zahlung wurde erfolgreich abgeschlossen"
   pickPsp:
-    onUpdateWalletPspFailure: Vorgang ist fehlgeschlagen, bitte erneut versuchen
-    contextualHelpTitle: Wählen Sie einen Provider
+    headerTitle: "Dienstleister auswählen"
+    title: "Mit welchem Dienstleister möchtest du bezahlen?"
+    info: "Jeder Dienstleister schlägt eine Transaktionsgebühr vor."
+    info2: "In dieser Liste findest du alle Dienstleister,"
+    info2Bold: "die mit deiner Zahlungsmethode kompatibel sind, auch wenn du nicht deren Kunde bist."
+    provider: "Dienstleister"
+    maxFee: "Transaktionsgebühr"
+    loadingPsps: "Dienstleister werden geladen..."
+    onUpdateWalletPspFailure: "Vorgang ist fehlgeschlagen, bitte versuche es erneut"
+    contextualHelpTitle: "Dienstleister auswählen"
   ConfirmPayment:
-    cancelPayment: Transaktion abbrechen
-    fee: Gebühr
-    identificationMessage: Bestätigen Sie die Transaktion mit Ihrem Freischaltcode
-    transactionSuccess: die Zahlung wurde abgeschlossen!
-    transactionFailure: Es gab einen Fehler mit der Zahlung, bitte versuchen Sie es erneut!
-    transactionTimeout: Die Bestätigung der Zahlung konnte ich nicht abrufen werden!
-    confirmCancelTitle: Möchten Sie diese Zahlung stornieren?
-    confirmCancelPayment: Diese Zahlung abbrechen
-    confirmContinuePayment: Mit der Zahlung fortfahren
-    cancelPaymentSuccess: Die Zahlung für diese Benachrichtigung wurde storniert, Sie können in wenigen Minuten erneut versuchen, sie zu bezahlen
+    header: "Zahlungsübersicht"
+    total: "Gesamt"
+    paymentInformations: "Zahlungsdaten"
+    payWith: "Zahle mit"
+    transactionCosts: "Transaktionsgebühr"
+    edit: "Bearbeiten"
+    providedBy: "Durchgeführt von"
+    pay: "Bezahle"
+    cancelPayment: "Transaktion abbrechen"
+    fee: "Transaktionsgebühr"
+    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Entsperrcodes"
+    transactionSuccess: "Die Zahlung wurde abgeschlossen!"
+    transactionFailure: "Bei der Zahlung ist ein Fehler aufgetreten, bitte versuche es erneut!"
+    transactionTimeout: "Die Bestätigung der Zahlung konnte nicht abrufen werden!"
+    confirmCancelTitle: "Möchtest du diese Zahlung abbrechen?"
+    confirmCancelPayment: "Diese Zahlung abbrechen"
+    confirmContinuePayment: "Mit der Zahlung fortfahren"
+    cancelPaymentSuccess: "Die Zahlung dieser Aufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen"
+    accessibility:
+      edit: "zum Bearbeiten antippen"
+      transactionCosts: "{{cost}}, Transaktion {{psp}}"
   payWith:
     noWallets:
-      title: Keine Zahlungsmethoden gefunden
-      text: Fügen Sie eine neue Zahlungsmethode hinzu, um mit der Zahlung fortzufahren zu können
-    header: Zahlungsmethode wählen
-    title: Bezahlen mit
-    fetchPspFailure: Vorübergehender Fehler, bitte erneut versuchen
-    noPspsAvailable: Diese Zahlungsmethode kann nicht verwendet werden
-    contextualHelpTitle: Auswahl der Zahlungsmethode
+      title: "Keine Zahlungsmethoden gespeichert"
+      text: "Füge eine Zahlungsmethode hinzu, um mit der Zahlung fortzufahren"
+    header: "Zahlungsmethode auswählen"
+    title: "Bezahle mit"
+    text: "Wähle eine Zahlungsmethode von deinem Konto aus oder füge eine neue hinzu."
+    fetchPspFailure: "Temporärer Fehler, bitte versuche es erneut"
+    noPspsAvailable: "Diese Zahlungsmethode kann nicht verwendet werden"
+    contextualHelpTitle: "Auswahl der Zahlungsmethode"
+    pickPaymentMethod:
+      title: "Mit welcher Zahlungsmethode möchtest du bezahlen?"
+      description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Deaktivierte Zahlungsmethoden"
+      notAvailable:
+        title: "Inkompatible Zahlungsmethoden"
+        arriving:
+          bottomSheetTitle: "Wir arbeiten an der Unterstützung dieser Zahlungsmethode"
+          bottomSheetDescription: "Versuche in der Zwischenzeit, mit einer anderen Methode zu bezahlen. Du kannst pagoPA auch in deiner bevorzugten Zahlungs-App oder auf der Website deines Zahlungsempfängers nutzen."
+        unaccepted:
+          bottomSheetTitle: "Warum kann ich nicht mit dieser Karte bezahlen?"
+          bottomSheetDescription: "Das Zahlungsnetzwerk dieser Karte erlaubt es dir an physischen Verkaufsstellen zu bezahlen, aber nicht online. Wenn deine Karte für Online-Zahlungen aktiviert ist, füge sie als “Debit- oder Kreditkarte” zu deinem Konto hinzu."
+        payment_disabled:
+          bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
+          bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
   firstTransactionSummary:
-    title: Transaktionshinweis
-    amount: Transaktionsbetrag
-    total: Insgesamt bezahlt
-    expireDate: Gültigkeitsdauer
-    tranche: Tranch
-    info: 'Mehr Infos unter:'
-    tel: 'Tel:'
-    email: 'E-Mail:'
-    PEC: 'PEC:'
-    recipient: Empfänger
-    object: Grund
-    date: Datum und Uhrzeit
-    iuv: IUV Code
-    entityCode: Mehrwertsteuernummer Gläubigerkörperschaft
-    fee: Gebühr
-    idTransaction: Transaktions-Identifikationscode
-    updatedAmount: Aktualisierter Betrag
+    title: "Zahlungsdetails"
+    amount: "Betrag"
+    total: "Insgesamt bezahlt"
+    expireDate: "Zahlungsfrist"
+    tranche: "Rate"
+    info: "Mehr Infos unter:"
+    tel: "Tel:"
+    email: "E-Mail:"
+    PEC: "PEC:"
+    recipient: "Zahlungsempfänger"
+    object: "Zahlungsgrund"
+    date: "Datum und Uhrzeit"
+    iuv: "IUV-Kode"
+    entityCode: "Steuernummer Körperschaft"
+    updatedAmount: "Aktualisierter Betrag"
+    fee: "Transaktionsgebühr"
+    idTransaction: "Identifikationscode der Transaktion"
     amountInfo:
-      message: pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden
+      title: "Siehst du einen anderen Betrag?"
+      message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
+      cta: "OK, habe verstanden"
     loadingMessage:
-      activation: Benachrichtige die Körperschaft, warten Sie ein paar Sekunden...
-      verification: Prüfe den Status und die Höhe Ihrer Zahlungsmitteilung...
-      generic: Schließe die Verifizierungsvorgang Ihrer Zahlungsmitteilung ab, warten Sie ein paar Sekunden...
-      wallet: Prüfe die Zahlungsmethode...
-    contextualHelpTitle: Zusammenfassung der Transaktion
-  insertManually:
-    header: Zahlungsmitteilungsdaten einfügen
-    noticeCode: Zahlungsmitteilungscode
-    entityCode: Steuernummer der Körperschaft
-    amount: Betrag (€)
-    proceed: Mit der Transaktion fortfahren
-    contextualHelpTitle: Mitteilungsdaten manuell einfügen
+      activation: "Wir benachrichtigen die Körperschaft, bitte warte ein paar Sekunden..."
+      verification: "Wir überprüfen deine Zahlungsangaben..."
+      generic: "Deine Zahlungsmitteilung wird überprüft, bitte warten ein paar Sekunden..."
+      wallet: "Deine gespeicherten Zahlungsmethoden werden überprüft..."
+    contextualHelpTitle: "Zusammenfassung der Transaktion"
+    errorDetails:
+      title: "Details zum Fehler"
+      errorCode: "Fehlercode"
+      messageId: "ID der Nachricht"
+      copyToClipboard: "Daten für die Assistenz kopieren"
   errorTransaction:
-    submitBugText: Wenn Sie das Problem nicht lösen können, informieren Sie uns bitte über das Käfer-Symbol oben rechts. Danke!
-  transactionDetails: Transaktionsdetails
-  transactionFullReason: Vollständiger Grund
-  total: Gesamtbetrag
-  amount: Betrag €
-  payAmount: Zu zahlender Betrag
-  transactionFee: Transaktionsgebühr
-  why: Warum?
-  paymentReason: Begründung
-  date: Datum
-  time: Uhrzeit
-  psp: Zahlungsdienstleister
-  receipt: Transaktionsquittung
-  seeReceipt: Siehe Quittung
-  transactions: Transaktionen
-  transaction: Transaktion
-  noTransactions: Es liegen keine Transaktionen vor.
-  noNewTransactions: Es gibt keine neuen Transaktionen.
-  noneTransactions: Es gibt keine Transaktionen
-  noTransactionsInWalletHome: Sie haben noch keine Operation durchgeführt.
-  noTransactionsInTransactionsScreen: Mit dieser Zahlungsmethode haben Sie nie über der IO-App oder pagoPA bezahlt. In dieser Liste sehen Sie nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden.
-  payNotice: Zahlungsmitteilung bezahlen
-  latestTransactions: Ihre letzten Transaktionen
-  creditDebitCards: Kredit-/Debitkarten
-  addPaymentMethodTitle: Zahlungsmethode hinzufügen
-  continue: Diese Zahlungsmitteilung bezahlen
-  backToPayments: Zurück zu den Zahlungen
+    submitBugText: "Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol “?” in der oberen rechten Ecke mit. Danke!"
+  insertManually:
+    header: "Zahlungsmitteilungsdaten einfügen"
+    title: "Was möchtest du bezahlen?"
+    info: "Gib die Daten ein, die auf der Zahlungsmitteilung angegeben sind."
+    link: "Wo finde ich die Daten?"
+    noticeCode: "Zahlungskodex"
+    entityCode: "Steuernummer der Körperschaft"
+    amount: "Betrag (€)"
+    proceed: "Mit der Transaktion fortfahren"
+    contextualHelpTitle: "Manuelle Zahlungsdateneingabe"
+  total: "Insgesamt"
+  amount: "Betrag €"
+  payAmount: "Geschuldeter Betrag"
+  transactionFee: "Transaktionsgebühr"
+  why: "Warum?"
+  paymentReason: "Zahlungsgrund"
+  recipient: "Körperschaft"
+  date: "Datum"
+  time: "Uhrzeit"
+  psp: "Zahlungsdienstleister"
+  receipt: "Transaktionsquittung"
+  seeReceipt: "Siehe Quittung"
+  transactions: "Transaktionen"
+  transaction: "Transaktion"
+  noTransactions: "Es liegen keine Transaktionen vor."
+  noNewTransactions: "Es gibt keine neuen Transaktionen."
+  noneTransactions: "Es gibt keine Transaktionen"
+  noTransactionsInWalletHome: "Du hast noch keine Transaktion durchgeführt."
+  noTransactionsInTransactionsScreen: "Du hast mit dieser Zahlungsmethode noch nie über IO oder pagoPA bezahlt. In dieser Liste siehst du nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden."
+  payNotice: "Zahlungsmitteilung bezahlen"
+  latestTransactions: "Deine Transaktionen"
+  creditDebitCards: "Kredit-/Debitkarten"
+  addPaymentMethodTitle: "Zahlungsmethode hinzufügen"
+  continue: "Weiter zur Zahlung"
+  backToPayments: "Zurück zu den Zahlungen"
   methods:
-    comingSoon: eingehend
-    newCome: Neu
+    comingSoon: "demnächst verfügbar"
+    newCome: "Neu"
+    card:
+      name: "Kredit-, Debit- oder Prepaid-Karten"
+      shortName: "Karte"
+      description: "Die Karte, die du online und in Geschäften benutzt"
+      pagoPaCapability:
+        title: "In-App-Zahlungen"
+        description: "Zahle die Mitteilungen mit pagoPA-Logo"
+        active: "Aktiv"
+        arriving: "demnächst verfügbar"
+        incompatible: "Nicht kompatibel"
+        bottomSheetTitle: "Warum kann ich nicht in der App bezahlen?"
+        bottomSheetBody: "Diese Zahlungsmethode ist nicht für Online-Zahlungen geeignet."
+        bottomSheetCTA: "Entdecke die unterstützten Zahlungsmethoden"
+    bonus:
+      name: "Rabatte, Boni und andere Initiativen"
+      description: "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
+    digital:
+      name: "Apps und digitale Zahlungsmittel"
+      description: "Deine bevorzugten digitalen Tools auf IO"
+    loyalty:
+      name: "Supermarkt-Zahlungskarte"
+      description: "Das Zahlungsnetzwerk, mit dem du deine Einkäufe bezahlst"
+    pagobancomat:
+      name: "PagoBANCOMAT-Karte"
+      description: "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
     bank:
-      name: BANCOMAT pay
-      maxFee: Maximale Gebühr von 0,50€
+      name: "BANCOMAT Pay"
+      maxFee: "Maximale Gebühr von 0,50€"
+    satispay:
+      name: "Satispay"
+      description: "Die intelligente Zahlungs-App"
+    bancomatPay:
+      name: "BANCOMAT Pay"
+      description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
     postepayApp:
-      name: Postepay
+      name: "Postepay"
+      description: "Deine Postepay-App"
+    postepay:
+      name: "BancoPosta oder Postepay-Karte"
+      description: "Die Karten von Poste Italiane"
     paypal:
-      name: PayPal
+      name: "PayPal"
+      description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
     bancomat:
-      name: PagoBANCOMAT
-    notImplemented: Demnächst verfügbar
-  addCardTitle: Kartendetails
+      name: "PagoBANCOMAT"
+    cobadge:
+      name: "Internationales Zahlungsnetzwerk"
+    notImplemented: "Demnächst verfügbar"
+  addCardTitle: "Kartendetails"
   dummyCard:
     labels:
       holder:
-        label: Besitzer der Karte
+        label: "Karteninhaber"
         description:
-          base: "Bitte den Besitzer der Karte eingeben"
-          error: "Bitte den Besitzer der Karte richtig eingeben"
-      pan: Kartenummer
-      expirationDate: Fälligkeitsdatum
-      securityCode: Karten-Sicherheitscode
+          base: "Beachte die Reihenfolge auf der Karte"
+          error: "Keine Akzentbuchstaben oder Symbole verwenden"
+      pan: "Kartenummer"
+      expirationDate: "Verfallsdatum"
+      securityCode: "Sicherheitscode"
+      securityCode4D: "CID (4 Ziffern)"
     values:
-      holder: Max Mustermann
-      pan: 0000 0000 0000 0000
-      expirationDate: mm/yy
+      holder: "Max Mustermann"
+      pan: "0000 0000 0000 0000"
+      expirationDate: "mm/yy"
       securityCode: "•••"
-  acceptedCards: Akzeptierte Karten
-  missingDataCTA: Fehlen einige Daten?
-  chooseMethod: Wählen Sie die gewünschte Zahlungsmethode
+      securityCode4D: "••••"
+    accessibility:
+      holder:
+        base: "Karteninhaber, beachte die Reihenfolge auf der Karte"
+        error: "Karteninhaber, keine Akzentbuchstaben oder Symbole verwenden"
+      pan:
+        base: "Kartenummer"
+        error: "Kartenummer. Bitte gib mindestens {{minLength}} Ziffern ein"
+      expirationDate:
+        base: "Verfallsdatum, zwei Ziffern für den Monat, zwei für das Jahr"
+        error: "Verfallsdatum, zwei Ziffern für den Monat, zwei für das Jahr. Bitte gib ein gültiges Datum ein"
+      securityCode:
+        3D:
+          base: "Sicherheitscode, 3 Ziffern"
+          error: "Sicherheitscode. Bitte gib 3 Ziffern ein"
+        4D:
+          base: "CID, 4 Ziffern"
+          error: "CID. Bitte gib 4 Ziffern ein"
+      button:
+        fieldError: "Um fortzufahren, korrigiere bitte das Feld {{field}}"
+        missingFields: "Um fortzufahren, fülle bitte alle Felder aus"
+  acceptedCards: "Akzeptierte Karten"
+  missingDataCTA: "Fehlen einige Daten?"
+  openAcceptedCardsPageCTA: "Entdecke die akzeptierten Karten"
+  missingDataText:
+    body: "Wenn du den Sicherheitscode nicht findest, ist deine Karte möglicherweise nicht für Online-Zahlungen freigeschaltet."
+    cta: "Deine Karten suchen"
+  chooseMethod: "Wähle die bevorzugte Zahlungsmethode"
   QRtoPay:
-    chooser: Bild aus der Galerie wählen
-    wrongQrCode: QR-Code nicht gültig. Geben Sie die Daten manuell ein.
-    byCameraTitle: Hinweis QR-Code
-    setManually: Manuell eingeben
+    chooser: "Bild aus der Galerie wählen"
+    wrongQrCode: "QR-Code nicht gültig. Gib die Daten manuell ein."
+    byCameraTitle: "QR-Code scannen"
+    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungskodex und Steuernummer Körperschaft) manuell ein"
+    setManually: "Manuell eingeben"
+    enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü “Einstellungen” deines Geräts tun."
+    readStorageDisclosure:
+      title: "Zugriff auf die Galerie zulassen"
+      message: "Du kannst Screenshots und Zahlungsmitteilungen hochladen"
     settingsAlert:
-      title: Es scheint, dass der Zugriff auf die Fotogalerie verweigert wurde
+      title: "Offenbar wurde der Zugang zu der Galerie verweigert"
+      message: "IO benötigt Zugang zu deiner Galerie, um Boni und Zertifikate zu speichern oder Screenshots und Zahlungsmitteilungen hochzuladen"
       buttonText:
-          settings: Berechtigungen aktivieren
-          cancel: Abbrechen
-    contextualHelpTitle: Wie man eine Zahlungsmitteilung bezahlt
+          settings: "Berechtigungen aktivieren"
+          cancel: "Abbrechen"
+    contextualHelpTitle: "Wie man eine Zahlungsmitteilung bezahlen kann"
+  whyAFee:
+    title: "Warum Transaktionsgebühren?"
   errors:
-    DUPLICATED: Dieser Hinweis wurde bereits bezahlt!
-    INVALID_AMOUNT: Der eingegebene Betrag ist nicht korrekt. Wenn Sie den Betrag manuell eingegeben haben, überprüfen Sie bitte, ob er korrekt ist und versuchen Sie es erneut.
-    ONGOING: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung ist im Gange, eine neuer Zahlungsversuch kann zu diesem Zeitpunkt nicht gestartet werden.
-    PAYMENT_EXPIRED: Diese Zahlungsmitteilung ist bereits ungültig und kann nicht mehr bezahlt werden.
-    PAYMENT_UNAVAILABLE: Ihr Zahlungsversuch für diese Zahlungsmitteilung kann derzeit nicht gestartet werden, bitte versuchen Sie es später erneut.
-    PAYMENT_UNKNOWN: Diese Zahlungsmitteilung wird von der Körperschaft, die sie erstellt hat, nicht anerkannt, die Zahlung kann nicht ausgeführt werden.
-    DOMAIN_UNKNOWN: Diese Zahlungsmitteilung wurde von einer Körperschaft erstellt, die nicht an das pagoPA-Netzwerks angeschlossen ist, die Zahlung kann nicht durchgeführt werden.
-    GENERIC_ERROR: "Uuups, etwas hat nicht wie erwartet funktioniert! Es handelt sich wahrscheinlich um ein temporäres Problem, bitte versuchen Sie es später erneut!"
-    MISSING_PAYMENT_ID: Die Körperschaft, die diese Zahlungsmitteilung erstellt hat, bearbeitet ihn im Moment, bitte versuchen Sie es später erneut!
-    PAYMENT_ONGOING_NOCANCEL: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung läuft im Moment, bitte versuchen Sie es nach 30 Minuten erneut.
-    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Wenn Sie bereits 30 Minuten gewartet haben und die Zahlung immer noch gesperrt ist, verwenden Sie die Schaltfläche unten, um uns eine Nachricht zu senden.
-    PAYMENT_ONGOING_CANCELLED: Der vorherige Versuch, diese Zahlugsmitteilung zu bezahlen, wurde abgebrochen. Sie können sie nach {{verbleibendeMinuten}} Minuten erneut versuchen zu bezahlen.
-    PAYMENT_ONGOING_CANCELLED_TIMEOUT: Der Abbruch dieses Zahlungsversuchs wurde vor mehr als 15 Minuten gemacht, aber sie ist immer noch blockiert. Verwenden Sie die Schaltfläche unten, um uns eine Nachricht zu senden.
-    sendReport: Schreiben Sie uns
+    TECHNICAL: "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung"
+    DATA: "Die Angaben in der Zahlungsmitteilung sind falsch"
+    EC: "Die Körperschaft hat Probleme bei der Beantwortung"
+    ONGOING: "Die Zahlung ist bereits im Gange, bitte versuche es in ein paar Minuten erneut."
+    ONGOING_SUBTITLE: "Wenn es zu lange her ist, lasse es uns wissen!"
+    REVOKED: "Die Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
+    EXPIRED: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden"
+    GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
+    GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
+    DUPLICATED: "Dieser Hinweis wurde bereits bezahlt!"
+    NOT_FOUND: "Wir können die Zahlungsmitteilung nicht finden"
+    NOT_FOUND_SUBTITLE: "Möglicherweise wurde die Zahlungsmitteilung bereits bezahlt. Wende dich bitte an die Körperschaft, die sie ausgestellt hat."
+    INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut."
+    PAYMENT_EXPIRED: "Die Zahlung für diese Zahlungsmitteilung ist nicht mehr möglich, da sie abgelaufen ist."
+    PAYMENT_UNAVAILABLE: "Die Zahlung für diese Zahlungsmitteilung ist zur Zeit nicht möglich. Bitte versuche es später noch einmal."
+    PAYMENT_UNKNOWN: "Diese Zahlungsmitteilung wird von der ausstellenden Körperschaft nicht anerkannt, die Zahlung kann nicht durchgeführt werden."
+    DOMAIN_UNKNOWN: "Dieser Zahlungsmitteilung wurde von einer nicht bei pagoPA akkreditierten Körperschaft ausgestellt, die Zahlung kann nicht durchgeführt werden."
+    MISSING_PAYMENT_ID: "Die Körperschaft, die diese Zahlungsmitteilung ausgestellt hat, hat zur Zeit Probleme mit der Zahlungsabwicklung. Versuche es erneut!"
+    PAYMENT_ONGOING_NOCANCEL: "Eine Zahlung für diese Zahlungsmitteilung ist bereits im Gange, bitte versuche es in 30 Minuten erneut."
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: "Wenn du bereits 30 Minuten gewartet hast und die Zahlung immer noch blockiert ist, verwende bitte die Schaltfläche unten, um uns eine Nachricht zu senden."
+    PAYMENT_ONGOING_CANCELLED: "Dein vorheriger Zahlungsversuch wird abgebrochen, du kannst es in {{remainingMinutes}} Minuten erneut versuchen."
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: "Der Abbruch dieser Zahlung wurde vor mehr als 15 Minuten beantragt, ist aber immer noch blockiert. Bitte benutze die Schaltfläche unten, um uns eine Nachricht zu senden."
+    contactECsubtitle: "Wende dich für weitere Informationen an die Körperschaft."
+    assistanceLabel: "Verwende für die Unterstützung den Code:"
+    sendReport: "Schreib uns"
+    loadingData: "Fehler beim Laden, bitte versuche es erneut."
   walletCardTransaction:
-    contextualHelpTitle: Alle Transaktionen für diese Zahlungsmethode
+    contextualHelpTitle: "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
+  bancomat:
+    details:
+      infobox:
+        one: "Mit PagoBANCOMAT-Karten "
+        two: "kann man nicht auf IO zahlen"
+        three: ", sondern nur in physischen Verkaufsstellen (POS)."
+      debit:
+        title: "Deine Karte hat mehr als ein Logo?"
+        body: "Wenn deine PagoBANCOMAT Karte andere internationale Zahlungsnetzwerke aufweist, kannst du diese hinzufügen, indem du nach allen Debit- oder Kreditkarten auf deinen Namen suchst."
+        addCta: "Zweites Zahlungsnetzwerk hinzufügen"
+  satispay:
+    details:
+      infobox:
+        one: "Satispay"
+        two: " erlaubt es noch nicht auf IO zu zahlen"
+        three: ": diese Funktion wird mit den nächsten Versionen der App aktiviert."
+  cobadge:
+    details:
+      card:
+        validUntil: "Gültig bis {{expiryDate}}"
+  newRemove:
+    title: "Möchtest du diese Zahlungsmethode entfernen?"
+    body: "Wir werden die Zahlungsmethode von deinem Konto entfernen. Alle Initiativen, mit denen sie verknüpft ist, werden innerhalb von 24 Stunden deaktiviert."
+    warningCapability: "Die Funktionen werden auch deaktiviert: "
+  capability:
+    title: "Verfügbare Initiativen"
+  outcomeMessage:
+    cta:
+      close: "Schließen"
+      learnMore: "Mehr erfahren"
+      visualizeCard: "Karte anzeigen"
+    fallback:
+      title: "Es ist ein unerwarteter Fehler aufgetreten"
+      description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
+    code1:
+      title: "Es ist ein unerwarteter Fehler aufgetreten"
+      description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
+    code2:
+      title: "Autorisierung verweigert"
+      description: "Deine Bank hat die Transaktion nicht genehmigt. Überprüfe, ob du die verschiedenen von deiner Bank geforderten Codes korrekt eingegeben hast."
+    code3:
+      title: "Die Daten der Karte sind fehlerhaft"
+      description: "Lösche die Karte aus deinem Konto und versuche, sie erneut hinzuzufügen. Vergewissere dich, dass die eingegebenen Daten genau mit denen auf der Karte übereinstimmen."
+    code4:
+      title: "Prüfe deine E-Mails"
+      description: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhälst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
+    code7:
+      title: "Es liegt ein Problem mit deiner Karte vor"
+      description: "Es wurde kein Betrag abgebucht. Für weitere Informationen wende dich bitte an deine Bank."
+    code8:
+      title: "Die Transaktion wurde abgebrochen"
+    code10:
+      title: "Autorisierung verweigert"
+      description: "Du hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten. Erkundige dich bei deiner Bank, bevor du es erneut versuchst."
+    code15:
+      title: "Zahlungsmethode für In-App-Zahlungen aktivieren"
+      description: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “In-App-Zahlungen”."
+    code18:
+      title: "Es ist ein unerwarteter Fehler aufgetreten"
+      description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
+    code19:
+      title: "Autorisierung verweigert"
+      description: "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche erneut, die Zahlung vorzunehmen."
+    addCreditCard:
+      success:
+        title: "Deine Karte wurde erfolgreich hinzugefügt!"
+    payment:
+      success:
+        title: "Danke, die Transaktion war erfolgreich!"
+        description1: "Wir senden eine Quittung an"
+        description2: "Du kannst sie auch in deinem Konto finden."
+  abortWebView:
+    title: "Möchtest du die aktuelle Operation abbrechen?"
+    confirm: "Ja, beenden"
+    cancel: "Nein, fortfahren"
+    success: "Probleme beim Hinzufügen? Wende dich an deine Bank."
 saveCard:
-  saveCard: Speichern Sie die Karte
-  header: Möchten Sie diese Karte speichern?
-  favoriteTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
-  favoriteText: Diese Zahlungsmethode wird automatisch bei der nächsten Zahlung vorgeschlagen
+  saveCard: "Karte speichern"
+  header: "Möchtest du diese Karte speichern?"
+  favoriteTitle: "Die Karte als bevorzugte Zahlungsmethode festlegen"
+  favoriteText: "Diese Zahlungsmethode wird dir automatisch bei der nächsten Zahlung vorgeschlagen"
 cardComponent:
-  validUntil: Gültig bis
-  actions: Aktionen
-  setFavorite: Als Favorit festlegen
-  unsetFavorite: Aus Favoriten entfernen
-  deleteTitle: Möchten Sie fortfahren?
-  deleteMsg: Diese Zahlungsmethode wird entfernt
-  neverUsed: Nie verwendet
-  lastUsage: Letzte Verwendung
-  detailsAndTransactions: Details und Transaktionen
-  pick: Diese Zahlungsmethode verwenden
+  validUntil: "Gültig bis"
+  expiresOn: "Läuft ab am"
+  expiredCard: "Karte abgelaufen am"
+  actions: "Aktionen"
+  setFavorite: "Als Favorit festlegen"
+  unsetFavorite: "Aus Favoriten entfernen"
+  deleteTitle: "Möchtest du diese Zahlungsmethode entfernen?"
+  deleteMsg: "Diese Zahlungsmethode wird entfernt"
+  deleteLoading: "Zahlungsmethode wird gerade gelöscht"
+  neverUsed: "Nie verwendet"
+  lastUsage: "Letzte Verwendung"
+  detailsAndTransactions: "Details und Transaktionen"
+  pick: "Diese Zahlungsmethode verwenden"
+  removeCta: "Diese Zahlungsmethode entfernen"
 messages:
   accessibility:
     message:
       read: "Mitteilung"
       unread: "Ungelesene Mitteilung"
+      archived: "Archiviert"
       description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{state}}"
       received_on: "erhalten am"
       received_at: "erhalten um"
-  contextualHelpTitle: Über diesen Abschnitt
+  contextualHelpTitle: "Mitteilungen verwenden"
   counting:
-    zero: Keine Mitteilung
-    one: Sie haben eine Mitteilung
-    other: Sie haben {{count}} Mitteilungen
+    zero: "Keine Mitteilung"
+    one: "Du hast eine Mitteilung"
+    other: "Du hast {{count}} Mitteilungen"
   tab:
-    inbox: Posteingang
-    deadlines: Fällig
-    archive: Archiviert
-  contentTitle: Mitteilungen
-  refresh: Nach unten ziehen zum Aktualisieren
-  loading: Mitteilungen laden...
-  yesterday: gestern
+    inbox: "Erhalten"
+    deadlines: "Fällig"
+    archive: "Archiviert"
+  contentTitle: "Mitteilungen"
+  refresh: "Nach unten ziehen zum Aktualisieren"
+  loading: "Mitteilungen werden geladen..."
+  yesterday: "gestern"
   errorLoading:
-    details: Fehler beim Laden der Mitteilungsdetails
-    senderInfo:  Absenderdienst unbekannt
-    serviceInfo: Service-Info unbekannt
-    departmentInfo: Abteilungsinfo unbekannt
-    noTitle: Kein Titel
-  loadingErrorTitle: Das Laden der Mitteilungen ist fehlgeschlagen
+    details: "Fehler beim Laden der Mitteilungsdetails"
+    senderInfo:  "Absender unbekannt"
+    serviceInfo: "Fehlende Informationen zum Dienst"
+    departmentInfo: "Fehlende Informationen zur Abteilung"
+    noTitle: "Ohne Titel"
+  loadingErrorTitle: "Mitteilungen konnten nicht geladen werden"
   cta:
-    archive: Archiviert
-    unarchive: Zurücksetzen
-    selectAll: Alle
-    deselectAll: Keine
+    archive: "Archivieren"
+    unarchive: "Wiederherstellen"
+    selectAll: "Alle"
+    deselectAll: "Keine"
     payment:
-      expired: Die Zahlungsmitteilung ist abgelaufen
+      expired: "Überfällige Zahlung"
+      paid: "Diese Zahlungsmitteilung ist bereits bezahlt. Überprüfe die Quittung in deinem"
       addMemo:
-          block1: Fügen Sie eine Erinnerung für die
-          block2: auf
-    pay: Bezahlen Sie € {{amount}}
-    onlyPay: Bezahlen
-    paid: Bezahlt
-    reminder: Erinnerung
-    reminderShort: Memo
-    reminderCalendarSelect: In welchem Kalender möchten Sie die Erinnerung hinzufügen?
+        block1: "Erstelle eine Erinnerung am "
+        block2: "um "
+      expiringOrValidAlert:
+        block1: "Verfällt am "
+        block2: "um " 
+      expiredAlert:
+        block1: "Abgelaufen am "
+        block2: "um " 
+    prescription:
+      expiringOrValidAlert: 
+        block1: "Verfällt am "
+        block2: "um " 
+      expiredAlert:
+        block1: "Abgelaufen am "
+        block2: "um "
+    pay: "Bezahle {{amount}} €"
+    onlyPay: "Bezahlen"
+    paid: "Bezahlt"
+    seeNotice: "Ansehen"
+    reminder: "Erinnerung"
+    reminderShort: "Memo"
+    reminderCalendarSelect: "In welchem Kalender möchtest du die Erinnerung hinzufügen?"
     reminderTitle: "Erinnerung für: {{title}}"
     reminderAlertTitle: "Ein Ereignis ist bereits vorhanden"
-    reminderAlertDescription: "Im Kalender gibt es bereits ein vorgemerktes Ereignis, das der ausgewählten Nachricht entspricht. Möchten Sie das vorherige beibehalten oder ein neues hinzufügen?"
-    reminderAlertKeep: "Behalten Sie das vorherige Ereignis"
-    reminderAlertAdd: "Ein neues Ereignis hinzufügen"
+    reminderAlertDescription: "Im Kalender gibt es bereits ein vorgemerktes Ereignis, das der ausgewählten Nachricht entspricht. Möchtest du das vorherige beibehalten oder ein neues hinzufügen?"
+    reminderAlertKeep: "Behalte die vorherige Erinnerung"
+    reminderAlertAdd: "Eine neue Erinnerung hinzufügen"
     reminderAddSuccess: "Erinnerung hinzugefügt"
-    reminderAddFailure: "Fehler beim Hinzufügen der Erinnerung, bitte erneut versuchen"
+    reminderAddFailure: "Fehler beim Hinzufügen der Erinnerung, bitte versuche es erneut"
     reminderRemoveRequest:
-      title: Sind Sie sicher, dass Sie diese Erinnerung entfernen möchten?
-      ok: Erinnerung entfernen
-      cancel: Abbrechen des Vorgangs
+      title: "Möchtest du wirklich die Erinnerung entfernen?"
+      ok: "Erinnerung entfernen"
+      cancel: "Vorgang abbrechen"
     reminderRemoveSuccess: "Erinnerung entfernt"
-    reminderRemoveFailure: "Fehler beim Entfernen der Erinnerung, bitte erneut versuchen"
-    preferenceCalendarSelect: "Wählen Sie einen Standardkalender"
+    reminderRemoveFailure: "Fehler beim Entfernen der Erinnerung, bitte versuche es erneut"
+    preferenceCalendarSelect: "Wähle deinen Standardkalender"
     calendarPermDenied:
-      title: "Es scheint, dass die Kalenderberechtigung verweigert wurde"
+      title: "Die Berechtigung zum Zugriff auf den Kalender wurde offenbar verweigert"
       ok: "Berechtigungen freigeben"
       cancel: "Abbrechen"
     errors:
-      fetchCalendars: Fehler beim Einsehen des Kalenders
-    helper: "Die IO-App merkt sich diese Auswahl, Sie können sie über das Einstellungsfenster ändern."
-  unknownSender: Unbekannter Absender
-  noContent: Inhalt nicht verfügbar
+      fetchCalendars: "Fehler beim Laden der Kalender"
+    helper: "IO merkt sich diese Auswahl, du kannst sie über die App-Einstellungen ändern."
+  badge:
+    expired: "Abgelaufen"
+    paid: "Bezahlt"
+  unknownSender: "Unbekannter Absender"
+  noContent: "Inhalt nicht verfügbar"
   archive:
     emptyMessage:
-      title: Ihr Archiv ist leer.
-      subtitle: Halten Sie auf eine Mitteilung gedrückt, um sie in das Archiv verschieben zu können. Sie können auch mehrere Mitteilungen gleichzeitig archivieren. Archivierte Mitteilungen werden nicht gelöscht und stehen in den Suchergebnissen zur Verfügung.
+      title: "Dein Archiv ist leer."
+      subtitle: "Halte eine Mitteilung gedrückt, um sie in das Archiv zu verschieben. Du kannst auch mehrere Mitteilungen gleichzeitig archivieren. Archivierte Mitteilungen werden nicht gelöscht und stehen in den Suchergebnissen zur Verfügung."
   inbox:
     emptyMessage:
-      title: Ihre Mitteilungsliste ist leer.
-      subtitle: Aktualisieren Sie, um zu prüfen, ob neue Mitteilungen vorhanden sind.
+      title: "Deine Mitteilungsliste ist leer."
+      subtitle: "Aktualisiere, um zu prüfen, ob neue Mitteilungen vorhanden sind."
   deadlines:
     emptyMessage:
-      title: Sie haben keine Fälligkeiten.
-      subtitle: Verwenden Sie die obere Funktion, um frühere Fälligkeiten einzusehen.
+      title: "Du hast keine Fälligkeiten."
+      subtitle: "Über die Schaltfläche oben kannst du die bereits abgelaufenen Fristen einsehen."
   medical:
-    not_available: "n/v"
-    prescription: Elektronische Verschreibung
-    memo: Erinnerung an den Empfänger
-    nre: Elektronische Verschreibungsnummer
-    iup: Eindeutige Buchungsnummer
-    patient_fiscal_code: Steuernummer des Patienten
-    prescriber_fiscal_code: Steuernummer des Arztes
-    barcodes: Barcodes
-    nationalService: Nationaler Gesundheitsdienst
-    note: "ausgestellt im Sinne des Art. 11 Absatz 16 des Gesetzesdekretes 31. Mai 2010 Nr. 78 und des Art. 1 Absatz 4 des Ministerialdekretes 2 November 2011"
+    not_available: "N/A"
+    prescription: "Elektronische Verschreibung"
+    memo: "Erinnerung für die betreute Person"
+    nre: "Elektronische Verschreibungsnummer"
+    iup: "Eindeutige Buchungsnummer"
+    patient_fiscal_code: "Steuernummer der betreuten Person"
+    prescriber_fiscal_code: "Steuernummer des Arztes"
+    barcodes: "Barcodes"
+    nationalService: "Nationaler Gesundheitsdienst"
+    note: "ausgestellt im Sinne des Art. 11, Abs. 16 des Gesetzesdekretes vom 31. Mai 2010, Nr. 78 und des Art. 1, Abs. 4 des Ministerialdekretes vom 2 November 2011"
+  pagination:
+    migration:
+      started: "Bitte warte, wir aktualisieren den Mitteilungsbereich"
+      succeeded: "Fertig!"
+      failed: "Wir waren nicht in der Lage, den Mitteilungsbereich zu aktualisieren."
+  operations:
+    archive:
+      success: "Erfolgreich archiviert!"
+      failure: "Die Archivierung ist fehlgeschlagen"
+    restore:
+      success: "Wiederherstellung durchgeführt."
+      failure: "Die Wiederherstellung ist fehlgeschlagen"
 messageDetails:
-  contextualHelpTitle: Details zur Nachricht
-  headerTitle: Mitteilung
-  emptyMessage: Kein Inhalt
-  loadingText: Laden von Mitteilungsdetails in Bearbeitung...
-  errorText: Wir konnten die Details Ihrer Mitteilung nicht laden
-  retryText: Es handelt sich wahrscheinlich um einen temporären Fehler... bitte versuchen Sie es erneut!
+  contextualHelpTitle: "Mitteilungsdetails"
+  headerTitle: "Mitteilung"
+  emptyMessage: "Kein Inhalt"
+  loadingText: "Laden der Mitteilungsdetails läuft..."
+  errorText: "Wir konnten die Details deiner Mitteilung nicht laden"
+  retryText: "Es handelt sich wahrscheinlich um einen temporären Fehler... bitte versuche es erneut!"
+  submitBugText: "Wenn das Problem nicht gelöst ist, lasse es uns bitte über dem “?”-Symbol in der oberen rechten Ecke wissen, danke!"
   rawInfoLink:
-    showLabel: Details der Mitteilung
-    hideLabel: Details schließen
+    showLabel: "Mitteilungsdetails"
+    hideLabel: "Details schließen"
   rawInfoLabels:
-    createdAt: Datum
-    organizationName: Gesendet von
-    departmentName: Abteilung
-    serviceName: Dienstleistung
-  dateSending: "Datum und Uhrzeit der Sendung:"
+    createdAt: "Datum"
+    organizationName: "Gesendet von"
+    departmentName: "Abteilung"
+    serviceName: "Dienst"
+  dateSending: "Datum und Uhrzeit:"
   sender: "Absender:"
-  service: "Dienstleistung:"
+  service: "Dienst:"
   question: "Ist etwas unklar?"
-  answer: Wenn Ihnen etwas am Inhalt der Mitteilung unklar ist, Sie einen Fehler melden möchten oder mehr darüber wissen wollen, können Sie unseren Service direkt kontaktieren, indem Sie die folgende Mitteilungs-ID angeben.
-  call: Anrufen
-  write: Schreiben Sie uns
+  answer: "Wenn du dich über den Inhalt der Mitteilung im Unklaren bist, einen Fehler melden musst oder weitere Einzelheiten benötigst, kannst du dich direkt an die Ansprechpartner des Dienstes wenden und dabei die folgende Nachrichten-ID angeben."
+  call: "Anrufen"
+  sendEmail: "Sende eine E-Mail"
+  write: "Schreibe uns"
   id: "ID:"
 notifications:
   installation:
-    errorTitle: Push-Benachrichtigungen
-    errorMessage: Bei der Registrierung mit dem Push-Benachrichtigungsdienst wurde ein Fehler festgestellt
+    errorTitle: "Push-Benachrichtigungen"
+    errorMessage: "Bei der Registrierung des Push-Benachrichtigungsdienstes ist ein Fehler unterlaufen"
+biometric_recognition:
+  contextualHelpTitle: "So funktioniert die biometrische Erkennung"
+  switchLabel: "Biometrische Erkennung aktiveren"
+  enroll_cta: "Die biometrische Erkennung ist auf diesem Gerät vorhanden, aber nicht konfiguriert. Wechsle zu den Einstellungen deines Geräts und aktiviere dort den Dienst, um diese Funktion zu nutzen."
+  enroll_btnLabel: "Zu den Einstellungen"
+  needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
 send_email_messages:
-  title: Mitteilungen per E-Mail weiterleiten
-  subtitle: Möchten Sie, dass die IO-App den Inhalt von Mitteilungen per E-Mail weiterleitet an
+  title: "Mitteilungen mittels E-Mail weiterleiten"
+  subtitle: "Möchtest du, dass IO den Inhalt von Mitteilungen per E-Mail weiterleitet an"
   options:
     disable_all:
-      label: Für alle Dienste deaktivieren
-      info: Sie erhalten keine E-Mail mehr
+      label: "Für alle Dienste deaktivieren"
+      info: "Du erhälst keine Mitteilung mittels E-Mail mehr"
     enable_all:
-      label: Für alle aktiven Dienste freigeben
-      info: Jede Mitteilung wird an Ihre E-Mail weitergeleitet, wenn der Dienst dies zulässt
+      label: "Für alle aktiven Dienste aktivieren"
+      info: "Jede Mitteilung wird an deine E-Mail-Adresse weitergeleitet, wenn der Dienst dies zulässt"
     by_service:
-      label: Dienst nach Dienst auswählen
-      info: Sie können im Einstellungsfenster jedes Dienstes auswählen, ob Sie dessen Mitteilungen auch per E-Mail erhalten möchten
+      label: "Dienst für Dienst auswählen"
+      info: "Du kannst auf der Registerkarte jedes Dienstes wählen, ob du dessen Mitteilungen auch per E-Mail erhalten möchtest"
 services:
-  title: Dienste
-  subTitle: Aktivieren oder deaktivieren Sie die Dienste, die Ihnen Mitteilungen senden dürfen
-  contextualHelpTitle: Über diesen Bereich
-  serviceIsEnabled: In der App kontaktieren
-  serviceNotEnabled: Der Dienst ist nicht aktiv
-  pushNotifications: Push-Mitteilungen schicken
-  emailForwarding: E-Mail zuschicken
-  tosAndPrivacy: Nutzungsbedingungen und Datenschutzbestimmungen
-  tosLink: Bedingungen und Konditionen
-  privacyLink: Informationen zum Datenschutz
-  otherAppsInfo: Sie finden diesen Dienst auch
-  otherAppWeb: Online auf
-  otherAppIos: Mit der IO-App
-  otherAppAndroid: Mit der Android-App
-  contactsAndInfo: Kontakte und Informationen
-  visitWebsite: Website
-  askForAssistance: Hilfe anfragen
-  contactAddress: Adresse
-  contactPhone: Telefon
-  contactSupport: Support
+  accessibility:
+    edit: "Ändere die Einstellung der Dienste"
+  optIn:
+    preferences:
+      completed:
+        title: "Einstellungen gespeichert!"
+        body: "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen."
+        cta: "Verfügbare Dienste anzeigen"
+      oldUsersBadge: "Aktuelle Einstellungen"
+      choiceLabel: "Deine Wahl:"
+      unavailable: "Nicht ausgewählt"
+      title: "Wie möchtest du die Dienste auf IO konfigurieren?"
+      body: "IO ist einfach, weil du nichts tun musst: wenn ein Dienst dir etwas Wichtiges mitzuteilen hat, kann er dir eine Mitteilung senden."
+      quickConfig:
+        value: "Schnelleinrichtung"
+        label: "Alle Dienste, die du nicht deaktiviert hast, können dich kontaktieren."
+        title: "Schnelleinrichtung benutzen"
+        body:
+          text1: "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren."
+          text2: "Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren."
+      manualConfig:
+        value: "Manuelle Konfiguration"
+        label: "Nur die Dienste, die du aktiviert hast, können dich kontaktieren."
+        title: "Manuell konfigurieren"
+        body:
+          text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
+        bottomSheet:
+          title: "Wenn du bestätigst, erhälst du keine Mitteilungen"
+          body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
+  title: "Dienste"
+  subTitle: "Aktiviere oder deaktiviere die Dienste, die dir Mitteilungen senden dürfen"
+  contextualHelpTitle: "Was du in deinen Diensten machen kannst"
+  serviceIsEnabled: "In der App kontaktieren"
+  serviceNotEnabled: "Der Dienst ist nicht aktiv"
+  pushNotifications: "Push-Benachrichtigungen senden"
+  messageReadStatus: "Lesebestätigungen erhalten"
+  emailForwarding: "E-Mails senden"
+  tosAndPrivacy: "Nutzungsbedingungen und Datenschutzbestimmungen"
+  tosLink: "Nutzungsbedingungen"
+  privacyLink: "Informationen zum Datenschutz"
+  otherAppsInfo: "Du findest diesen Dienst auch"
+  otherAppWeb: "online auf"
+  otherAppIos: "iOS-App"
+  otherAppAndroid: "Android-App"
+  contactsAndInfo: "Kontakte und Informationen"
+  visitWebsite: "Website"
+  askForAssistance: "Hilfe anfordern"
+  contactAddress: "Adresse"
+  contactPhone: "Telefon"
+  contactSupport: "Support"
   areasOfInterest:
-    selectMessage: Wählen Sie den geographischen Bereich (Gemeinden, Regionen usw.), in dem Sie wohnen oder den Sie normalerweise besuchen, um die entsprechenden Dienste hier zu sehen. Sie können sie jederzeit ändern.
-    selectMessageEmptyOrgs: Im Moment ist es nicht möglich, einen Standort zu hinterlegen. Bitte ziehen Sie den Bildschirm nach unten, um die Daten zu aktualisieren und versuchen Sie es erneut.
-    addButton: Fügen Sie Ihre gewünschten Themenbereiche hinzu
-    editButton: Ändern Sie Ihre Themenbereiche.
-    searchEmpty: Wenn Sie Ihr Themenfeld nicht finden, bedeutet dies, dass die Körperschaft dieses Gebiets noch keine Dienste über die IO-App bereitstellen.
+    selectMessage: "Wähle den geographischen Bereich (Gemeinden, Regionen usw.), in dem du wohnst oder in denen du dich gewöhnlich aufhälst, um die entsprechenden Dienste hier zu sehen. Du kannst sie jederzeit ändern."
+    selectMessageEmptyOrgs: "Es ist derzeit nicht möglich, einen Standort hinzuzufügen. Bitte ziehe den Bildschirm nach unten, um die Daten zu aktualisieren und versuche erneut, einen Bereich auszuwählen."
+    addButton: "Füge deine gewünschten Interessengebiete hinzu"
+    editButton: "Ändere deine Interessengebiete"
+    searchEmpty: "Wenn du dein Interessengebiet nicht findest, bedeutet dies, dass die Körperschaften dieses Gebiets noch keine Dienste auf IO bereitstellen."
   tab:
-    locals: Lokal
-    national: National
-    all: Alles
+    locals: "Lokal"
+    national: "National"
+    all: "Alle"
   loading:
-    title: Laden der Dienstleistungsliste
-    subtitle: nur einige Sekunden...
-  enableAll: Schnell Konfiguration verwenden
-  disableAll: Manuelle Konfiguration verwenden
-  updatingServiceMode: Bitte warten...
-  disableAllTitle: "Wollen Sie wirklich alle Dienste deaktivieren?"
-  disableAllMsg: "Beachten Sie, dass Sie auf der IO-App nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
-  close: Schließen
-  emptyListMessage: Zurzeit sind keine Dienste verfügbar, zum Aktualisieren wischen Sie auf dem Bildschirm nach unten
+    title: "Lade die Liste der Dienste"
+    subtitle: "Warte ein paar Sekunden..."
+  enableAll: "Schnelleinrichtung verwenden"
+  disableAll: "Manuelle Konfiguration verwenden"
+  updatingServiceMode: "Bitte warten..."
+  disableAllTitle: "Möchtest du wirklich alle Dienste deaktivieren?"
+  disableAllMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du alle Dienste deaktivierst, können diese dich nicht mehr über IO kontaktieren (bis du sie wieder aktivierst). Du kannst die Dienste weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
+  close: "Schließen"
+  emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
 serviceDetail:
-  fiscalCode: "Steuernr. Körperschaft"
+  fiscalCode: "Steuernummer Körperschaft"
+  fiscalCodeAccessibility: "Steuernummer Körperschaft"
   contacts:
     title: "Dieser Dienst kann:"
-  headerTitle: "Service Details"
-  onUpdateEnabledChannelsFailure: "Es gab ein kurzzeitiges Problem beim Speichern der Einstellungen, bitte versuchen Sie es erneut."
-  disableTitle: "Wollen Sie den Dienst wirklich deaktivieren?"
-  disableMsg: "Beachten Sie, dass Sie auf der IO-App nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
-  lockedMailAlert: "Die E-Mail-Weiterleitung von Mitteilungen ist allgemein {{enabled}}:"
-  updatePreferences: Aktualisieren Sie Ihre Einstellungen
-  goTo: Gehen Sie zu den Einstellungen
-  enabled: aktiviert
-  disabled: deaktiviert
-  notValidated: Um die E-Mail-Weiterleitung zu aktivieren, müssen Sie Ihre E-Mail-Adresse validieren.
+  headerTitle: "Details zum Dienst"
+  onUpdateEnabledChannelsFailure: "Beim Speichern der Einstellungen ist ein temporärer Fehler aufgetreten. Bitte versuche es erneut."
+  disableTitle: "Möchtest du den Dienst wirklich deaktivieren?"
+  disableMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du diesen Dienst deaktivierst, kann dieser dich nicht mehr über IO kontaktieren (bis du ihn wieder aktivierst). Du kannst diesen Dienst weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
+  lockedMailAlert: "Die E-Mail-Weiterleitung von Mitteilungen ist global {{enabled}}:"
+  updatePreferences: "Einstellungen ändern"
+  goTo: "Geh zu den Einstellungen"
+  enabled: "aktiviert"
+  disabled: "deaktiviert"
+  notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
-  title: Hallo!
-  titleProfileName: Hallo {{profileName}}!
-  titleValidation: Bestätigen Sie den Vorgang
-  subtitleCode: Geben Sie den Freischaltcode ein
-  subtitleCodeFingerprint: den Fingerabdruck oder den Entsperrcode verwenden
-  subtitleCodeFaceId: Verwenden Sie die FaceID oder geben Sie den Entsperrcode ein
+  title: "Hallo!"
+  titleProfileName: "Hallo {{profileName}}!"
+  titleValidation: "Bestätige den Vorgang"
+  logout: "Abmelden"
+  logoutProfileName: "Du bist nicht {{profileName}}?"
+  logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
+  subtitleCode: "Gib deinen Entsperrcode ein"
+  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder gib den Entsperrcode ein"
+  subtitleCodeFaceId: "Verwende FaceID oder gib den Entsperrcode ein"
   biometric:
-    fingerprintType: Fingerabdruck
-    title: Biometrische Identifikation
+    fingerprintType: "Fingerabdruck"
+    title: "Biometrische Identifikation"
     popup:
-      reason: Identifikation durch TouchID fehlgeschlagen
-      title: Identifikation erforderlich
-      sensorDescription: Berührungssensor
+      reason: "Identifikation durch TouchID fehlgeschlagen"
+      title: "Identifikation erforderlich"
+      sensorDescription: "Berührungssensor"
   fail:
-    remainingAttempts: Sie haben noch {{attempts}} Versuche übrig.
-    remainingAttemptSingle: Sie haben noch {{attempts}} Versuche übrig.
-    tooManyAttempts: Zu viele Versuche.
-    waitMessage: "Versuchen Sie es erneut in:"
+    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig."
+    remainingAttemptSingle: "Du hast noch einen Versuch übrig."
+    tooManyAttempts: "Zu viele falsche Versuche."
+    waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
-      unlockHint: Sie haben {{number}} Zeichen von {{length}} eingegeben
-      fingerprint: Anmeldung mit Ihrem Fingerabdruck
-      faceId: Anmeldung mit FaceID
-      delete: Letzte eingefügte Ziffer entfernen
+      unlockHint: "Du hast {{number}} von {{length}} Ziffern eingegeben"
+      fingerprint: "Anmeldung mit dem Fingerabdruck"
+      faceId: "Anmeldung mit FaceID"
+      delete: "Letzte eingefügte Ziffer löschen"
     reset:
-      button: Haben Sie vergessen, den
-      code: Freischaltcode
-      button_short: Ändern des Freischaltcodes
-      subtitle: Einen neuen 6-stelligen Code einrichten
-    confirmValid: Korrekter Freischaltcode
+      button: "Hast du deinen"
+      code: "Entsperrcode vergessen"
+      button_short: "Entsperrcode ändern"
+      subtitle: "Einen neuen 6-stelligen Code festlegen"
+    confirmValid: "Entsperrcode korrekt"
   unlock_screen:
     help:
-      title: Zugriff mit Freischaltcode
+      title: "Zugriff mit Entsperrcode"
   forgetCode:
-    confirmTitle: Haben Sie den Freischaltcode vergessen?
-    confirmMsg: Um einen neuen Freischaltcode einstellen zu können, müssen Sie sich erneut anmelden.
-    confirmMsgWithTask: Um einen neuen Freischaltcode einstellen zu können, müssen Sie den aktuellen Vorgang abbrechen und sich neu anmelden.
+    confirmTitle: "Hast du den Entsperrcode vergessen?"
+    confirmMsg: "Um einen neuen Entsperrcode festlegen zu können, musst du dich erneut anmelden."
+    confirmMsgWithTask: "Um einen neuen Entsperrcode festlegen zu können, musst du den aktuellen Vorgang abbrechen und dich neu anmelden."
 calendarEvents:
-  calendarSelect: In welchen Kalender wollen Sie den Termin eintragen?
+  calendarSelect: "In welchen Kalender möchtest du den Termin eintragen?"
   removeRequest:
-    title: Sind Sie sicher, dass Sie diesen Termin entfernen möchten?
-    ok: Termin entfernen
-    cancel: Vorgang abbrechen
+    title: "Möchtest du wirklich den Termin entfernen?"
+    ok: "Termin entfernen"
+    cancel: "Vorgang abbrechen"
 reminders:
-  emptyMonth: Keine Fälligkeiten für diesen Monat
-  loadMoreData: Bisherige Termine
-  noOtherDeadlines: Es gibt keine weiteren Fristen
+  emptyMonth: "Keine Fälligkeiten für diesen Monat"
+  loadMoreData: "Bisherige Fälligkeiten"
+  noOtherDeadlines: "Es gibt keine weiteren Fälligkeiten"
 openMaps:
-  genericError: Beim Öffnen der Karte ist ein Fehler aufgetreten
-genericError: Ein Fehler ist aufgetreten
-titleUpdateApp: Aktualisieren Sie die IO-App!
+  genericError: "Beim Öffnen der Karte ist ein Fehler aufgetreten"
+  openAddressOnMap: "Adresse auf der Karte öffnen"
+genericError: "Ein Fehler ist aufgetreten"
+titleUpdateApp: "Aktualisiere IO!"
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-messageUpdateApp: "Die IO-App führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können,
-  müssen Sie sie auf die neueste Version aktualisieren."
-btnUpdateApp: Aktualisieren Sie die IO-App
+messageUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, musst du sie auf die neueste Version aktualisieren."
+titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
+messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
+openStore: "Öffne {{storeName}}"
+btnUpdateApp: "Aktualisiere IO"
 systemsOff:
-  title: IO-App kann nicht gestartet werden
-  closeApp: Schließen Sie die Anwendung und versuchen Sie es erneut
+  title: "IO kann nicht verwendet werden"
+  closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: Die IO-App hilft Ihnen
+bottomSheets:
+  ciePin:
+    title: "Wo finde ich meine PIN?"
+    content: !include bottomsheets/ciePin.md
+bonus:
+  requestLabel: "Boni und Rabatte"
 features:
   euCovidCertificate:
     save:
@@ -1113,3 +1941,59 @@ features:
         title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktieren Sie den Support"
         subtitle: "Nützliche Informationen um Support zu erhalten:"
         cta: "Support kontaktieren"
+support:
+  ticketList:
+    noTicket:
+      title: "Du hast keine offenen Tickets"
+      body: "Wenn du Hilfe benötigst, erstelle bitte ein neues Ticket."
+  helpCenter:
+    header: "Hilfe"
+    cta:
+      contactSupport: "Erstelle ein Ticket"
+      seeReports: "Offene Tickets"
+    supportComponent:
+      title: "Benötigst du Hilfe?"
+      subtitle: "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte “Offene Tickets”."
+      adviceMessage: "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontakte in der Nachricht oder in den Details des Dienstes."
+  panicMode:
+    title: "Leider können wir dir zur Zeit nicht helfen"
+    body: "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
+  askPermissions:
+    nameSurname: "Vor- und Nachname"
+    fiscalCode: "Steuernummer"
+    emailAddress: "E-Mail-Adresse"
+    deviceAndOS: "Gerät und Betriebssystem"
+    ipAddress: "IP-Adresse"
+    ipAddressValue: "Einschließlich der geschätzten geografischen Position"
+    appVersionsHistory: "Versionsverlauf der App"
+    appVersionsHistoryValue: "Um herauszufinden, ob das Problem von der letzten Aktualisierung abhängt"
+    identityProvider: "Identitätsanbieter"
+    navigationData: "IO-App Navigationsdaten"
+    navigationDataValue: "z.B. der letzte Bildschirm oder die letzte in der IO-App angezeigte Nachricht"
+    devicePerformance: "Leistung des Geräts"
+    devicePerformanceData: "Speicher und Akkustand"
+    stock: "Daten zur Zahlungsaufforderung"
+    stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
+    card: "Angaben zur Zahlungsmethode"
+    cardValue: "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk"
+    prominentDisclosure: "Zugriff auf die Galerie des Geräts"
+    prominentDisclosureData: "Zum Hochladen von Fotos und Screenshots"
+    header: "Erstelle ein Ticket"
+    listTitle: "Offene Tickets"
+    title: "Gibst du uns deine Zustimmung?"
+    listBody: "Um deine offenen Tickets laden zu können, benötigen wir Zugriff auf einige deiner Daten."
+    privacyLink: "Lies die Datenschutzbestimmungen"
+    body: "Um dein Ticket beantworten zu können, benötigen wir Zugriff auf einige deiner Daten. Wenn du deine Zustimmung verweigerst, musst du uns eine allgemeine Anfrage per E-Mail senden."
+    listHeader: "Wenn du deine Zustimmung gibst, erhalten wir diese Daten:"
+    cta:
+      allow: "Zustimmen"
+      denies: "Ablehnen"
+    toast:
+      emailClientNotFound: "Wenn du Hilfe benötigst, schreib uns an: {{emailAddress}}"
+  chooseCategory:
+    header: "Erstelle ein Ticket"
+    title:
+      category: "Wähle einen Bereich aus"
+      subCategory: "Kannst du uns mehr Details nennen?"
+    subTitle:
+      category: "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."

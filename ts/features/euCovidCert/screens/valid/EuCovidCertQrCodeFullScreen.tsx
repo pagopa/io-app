@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
@@ -7,6 +6,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -44,8 +44,8 @@ export const EuCovidCertQrCodeFullScreen = (
         testID={"EuCovidCertQrCodeFullScreen"}
       >
         <ScrollView>
-          <View spacer={true} extralarge={true} />
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
+          <VSpacer size={40} />
           <Image
             testID="fullScreenQRCode"
             accessible={true}

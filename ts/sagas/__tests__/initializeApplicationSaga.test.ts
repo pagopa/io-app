@@ -29,6 +29,14 @@ import {
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
+import {
+  generateKeyInfo,
+  generateLollipopKeySaga
+} from "../../features/lollipop/saga";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../../features/lollipop/store/reducers/lollipop";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -71,8 +79,13 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // checkSession
@@ -104,8 +117,13 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
@@ -134,8 +152,13 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
@@ -146,6 +169,7 @@ describe("initializeApplicationSaga", () => {
           walletToken: "wallet_token"
         })
       )
+      .next()
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()
       .fork(watchProfile, undefined)

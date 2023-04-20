@@ -97,7 +97,9 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
                 contextualHelp,
                 contextualHelpMarkdown,
                 startingRoute: currentScreenName,
-                assistanceForPayment: false
+                assistanceForPayment: false,
+                assistanceForCard: false,
+                assistanceForFci: false
               })
             );
           };

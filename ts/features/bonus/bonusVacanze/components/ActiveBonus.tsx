@@ -1,8 +1,11 @@
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
+import { H3 } from "../../../../components/core/typography/H3";
+import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -34,15 +37,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  text3: {
-    fontSize: 18,
-    color: IOColors.white
-  },
   text12: {
-    lineHeight: 18,
     marginBottom: -4,
-    justifyContent: "flex-end",
-    color: IOColors.white
+    justifyContent: "flex-end"
   },
   icon: {
     width: 64,
@@ -57,9 +54,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 24
-  },
-  textWhite: {
-    color: IOColors.white
   },
   containerColor: {
     padding: customVariables.appHeaderPaddingHorizontal,
@@ -85,30 +79,32 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.spaced}>
         {O.isSome(bonusValidityInterval) && (
-          <NBText>{`${I18n.t("bonus.bonusVacanze.validity")} ${
+          <Body>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
-          } - ${bonusValidityInterval.value.e2}`}</NBText>
+          } - ${bonusValidityInterval.value.e2}`}</Body>
         )}
-        <NBText bold={true} style={styles.text12}>
-          {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
-        </NBText>
+        <View style={styles.text12}>
+          <Label weight="Bold" color="white">
+            {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
+          </Label>
+        </View>
       </View>
-      <View small={true} />
+      <VSpacer size={8} />
       <View style={styles.spaced}>
-        <NBText style={styles.textWhite}>
-          {I18n.t("bonus.bonusVacanze.taxBenefit")}
-        </NBText>
-        <NBText bold={true} style={styles.text12}>
-          {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
-        </NBText>
+        <Body color="white">{I18n.t("bonus.bonusVacanze.taxBenefit")}</Body>
+        <View style={styles.text12}>
+          <Label weight="Bold" color="white">
+            {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
+          </Label>
+        </View>
       </View>
       <View style={styles.smallSpacer} />
       <View style={styles.text3Line}>
         <View style={styles.text3Container}>
-          <NBText numberOfLines={2} style={styles.text3}>
+          <H3 color="white" numberOfLines={2}>
             {/* TODO replace this hardcoded string */}
             {"Bonus Vacanze"}
-          </NBText>
+          </H3>
         </View>
         <View style={styles.icon}>
           <IconFont name="io-right" size={ICON_WIDTH} color={IOColors.white} />

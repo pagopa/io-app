@@ -29,7 +29,10 @@ import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
 } from "../../features/idpay/initiative/configuration/navigation/navigator";
-import { InitiativeDetailsScreenParams } from "../../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
+import {
+  IDPayDetailsParamsList,
+  IDPayDetailsRoutes
+} from "../../features/idpay/initiative/details/navigation";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -40,6 +43,7 @@ import { WalletParamsList } from "./WalletParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
+  [ROUTES.UNSUPPORTED_DEVICE]: undefined;
   [ROUTES.BACKGROUND]: undefined;
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
@@ -64,7 +68,7 @@ export type AppParamsList = {
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
-  [ROUTES.IDPAY_INITIATIVE_DETAILS]: InitiativeDetailsScreenParams;
+  [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
 };
 
 /**

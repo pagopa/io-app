@@ -1,6 +1,6 @@
-import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
+  View,
   ActivityIndicator,
   Platform,
   StyleSheet,
@@ -11,6 +11,11 @@ import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { hexToRgba, IOColors } from "../../core/variables/IOColors";
+import { IOBadge } from "../../core/IOBadge";
+import { Label } from "../../core/typography/Label";
+import { Icon } from "../../core/icons";
+import { IOStyles } from "../../core/variables/IOStyles";
+import { HSpacer } from "../../core/spacer/Spacer";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -27,39 +32,6 @@ type Props = {
 const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
-  flexRow: {
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  row: {
-    flexDirection: "row"
-  },
-  topSpacing: {
-    marginTop: 2
-  },
-  flexRow2: {
-    flexDirection: "row",
-    flex: 1,
-    alignItems: "center"
-  },
-  greyUltraLight: {
-    color: IOColors.greyUltraLight
-  },
-  badgeColor: {
-    height: 18,
-    marginTop: 4,
-    backgroundColor: customVariables.colorHighlight
-  },
-  headerText: {
-    fontSize: 17,
-    marginRight: 9
-  },
-  badgeText: {
-    marginTop: 3,
-    fontSize: 14,
-    lineHeight: 16,
-    color: IOColors.bluegrey
-  },
   cardInner: {
     paddingBottom: 13,
     paddingLeft: 16,
@@ -100,10 +72,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end"
   },
-  labelButton: {
-    marginLeft: customVariables.fontSizeBase / 4,
-    color: IOColors.white
-  },
   shadowBox: {
     marginBottom: -15,
     borderRadius: 8,
@@ -126,15 +94,10 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               color={IOColors.white}
               size={customVariables.fontSize2}
             />
-            <NBText
-              bold={true}
-              style={[
-                styles.labelButton,
-                { fontSize: customVariables.fontSizeBase }
-              ]}
-            >
+            <HSpacer size={4} />
+            <Label color="white" weight="Bold">
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-            </NBText>
+            </Label>
           </>
         );
       case "loading":
@@ -149,36 +112,21 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         );
       case "refresh":
         return (
-          <View style={styles.row}>
-            <NBText bold={true} style={[styles.labelButton, { fontSize: 16 }]}>
+          <View style={[IOStyles.row, IOStyles.alignCenter]}>
+            <Label weight="Bold" color="white">
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
-            </NBText>
-            {/* TODO: Replace this Unicode character with a proper Icon component
-            with size and color props */}
-            <NBText
-              style={{
-                fontSize: 32,
-                height: 22,
-                paddingTop: 8,
-                color: IOColors.white
-              }}
-            >
-              {" ⟳"}
-            </NBText>
+            </Label>
+            <HSpacer size={8} />
+            <Icon color="white" name="reload" size={20} />
           </View>
         );
       case "show":
         return (
-          <View style={styles.row}>
-            <NBText
-              bold={true}
-              style={[
-                styles.labelButton,
-                { fontSize: customVariables.fontSizeBase }
-              ]}
-            >
+          <View style={IOStyles.row}>
+            <Label color="white" weight="Bold">
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
-            </NBText>
+            </Label>
+            <HSpacer size={4} />
             <IconFont
               style={{ marginTop: 1, marginLeft: 2 }}
               name={"io-right"}
@@ -219,24 +167,26 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             accessibilityHint={props.accessibilityHint}
             accessibilityRole="button"
           >
-            <View style={[styles.flexRow, styles.topSpacing]}>
-              <View style={styles.flexRow2}>
-                <NBText
-                  style={[styles.greyUltraLight, styles.headerText]}
+            <View style={[IOStyles.row, IOStyles.alignCenter]}>
+              <View style={[IOStyles.row, IOStyles.flex, IOStyles.alignCenter]}>
+                <Label
+                  weight="Regular"
+                  color="white"
                   ellipsizeMode="tail"
+                  numberOfLines={1}
                 >
                   {label}
-                </NBText>
+                </Label>
                 {isNew && (
-                  <Badge style={styles.badgeColor}>
-                    <NBText
-                      semibold={true}
-                      style={styles.badgeText}
-                      dark={true}
-                    >
-                      {I18n.t("wallet.methods.newCome")}
-                    </NBText>
-                  </Badge>
+                  <View style={[IOStyles.row, IOStyles.alignCenter]}>
+                    <HSpacer size={8} />
+                    <IOBadge
+                      text={I18n.t("wallet.methods.newCome")}
+                      small={true}
+                      labelColor={"bluegreyDark"}
+                    />
+                    <HSpacer size={8} />
+                  </View>
                 )}
               </View>
               {!isError && <View style={styles.button}>{rightLabel()}</View>}

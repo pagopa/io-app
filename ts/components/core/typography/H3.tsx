@@ -1,20 +1,38 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorType } from "../variables/IOColors";
+import type { IOColors, IOTheme } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
-  IOColorType,
-  "bluegreyDark" | "bluegreyLight" | "white" | "red" | "blue" | "bluegrey"
+  IOColors,
+  | "bluegreyDark"
+  | "bluegreyLight"
+  | "white"
+  | "red"
+  | "blue"
+  | "bluegrey"
+  | "grey"
 >;
 
 // when the weight is bold, only the white color is allowed
-type AllowedBoldColors = Extract<IOColorType, "white" | "black">;
+type AllowedBoldColors = Extract<
+  IOColors,
+  | "white"
+  | "bluegreyLight"
+  | "black"
+  | "bluegreyDark"
+  | "blue"
+  | "bluegrey"
+  | "grey-200"
+>;
 
 // all the possible colors
-type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
+type AllowedColors =
+  | AllowedBoldColors
+  | AllowedSemiBoldColors
+  | IOTheme["textHeading-default"];
 
 // all the possible weight
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
@@ -22,13 +40,13 @@ type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
 // these are the properties allowed only if weight is undefined or SemiBold
 type SemiBoldProps = {
   weight?: Extract<IOFontWeight, "SemiBold">;
-  color?: AllowedSemiBoldColors;
+  color?: AllowedSemiBoldColors | IOTheme["textHeading-default"];
 };
 
 // these are the properties allowed only if weight is Bold
 type BoldProps = {
   weight: Extract<IOFontWeight, "Bold">;
-  color?: AllowedBoldColors;
+  color?: AllowedBoldColors | IOTheme["textHeading-default"];
 };
 
 type BoldKindProps = SemiBoldProps | BoldProps;
@@ -37,6 +55,7 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h3FontSize = 18;
+export const h3LineHeight = 22;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -73,5 +92,5 @@ export const H3: React.FunctionComponent<OwnProps> = props =>
     ...props,
     weightColorFactory: calculateH3WeightColor,
     font: fontName,
-    fontStyle: { fontSize: h3FontSize }
+    fontStyle: { fontSize: h3FontSize, lineHeight: h3LineHeight }
   });

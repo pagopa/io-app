@@ -66,6 +66,7 @@ Object {
       },
     },
     "detailsById": Object {},
+    "downloads": Object {},
     "paginatedById": Object {},
     "thirdPartyById": Object {},
   },
@@ -90,16 +91,6 @@ Object {
     },
   },
   "transactionsRead": Object {},
-}
-`;
-
-exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'features.mvl' state 1`] = `
-Object {
-  "byId": Object {},
-  "downloads": Object {},
-  "preferences": Object {
-    "showAlertForAttachments": true,
-  },
 }
 `;
 
@@ -155,8 +146,10 @@ Object {
   "isCustomEmailChannelEnabled": Object {
     "kind": "PotNone",
   },
+  "isDesignSystemEnabled": false,
   "isExperimentalFeaturesEnabled": false,
   "isFingerprintEnabled": undefined,
+  "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,

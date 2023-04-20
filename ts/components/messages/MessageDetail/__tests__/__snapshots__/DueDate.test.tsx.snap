@@ -1,0 +1,8142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 1`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Jan"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/01/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 2`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Feb"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="28"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 3`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Feb"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="28"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2023 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 4`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Feb"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="29"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           29/02/2024 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 5`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Mar"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/03/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 6`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Apr"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="30"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/04/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 7`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="May"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/05/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 8`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Jun"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="30"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/06/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 9`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Jul"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/07/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 10`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Aug"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/08/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 11`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Sep"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="30"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/09/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 12`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Oct"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/10/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 13`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dec"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="01"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2022 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date EN locale 14`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dec"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/12/2022 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 1`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Gen"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/01/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 2`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Feb"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="28"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 3`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Feb"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="28"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2023 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 4`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Feb"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="29"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           29/02/2024 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 5`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Mar"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/03/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 6`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Apr"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="30"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/04/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 7`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Mag"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/05/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 8`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Giu"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="30"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/06/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 9`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Lug"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/07/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 10`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Ago"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/08/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 11`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Set"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="30"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/09/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 12`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Ott"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/10/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 13`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dic"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="01"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2022 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`Render the DueDateBar accordingly with the due date IT locale 14`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dic"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="31"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/12/2022 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expirationInfo\` is EXPIRED  should match the snapshot 1`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#475A6D",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4294967295}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dec"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4282866285}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="01"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2021 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           13:29
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expirationInfo\` is EXPIRING  should match the snapshot 1`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dec"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="01"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2021 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           13:29
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`the \`DueDateBar\` component when \`isPaid\` is false  and \`expirationInfo\` is VALID  should match the snapshot 1`] = `
+Array [
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "minHeight": 64,
+          "paddingHorizontal": 24,
+          "paddingVertical": 12,
+        },
+        Object {
+          "backgroundColor": "#F5F6F7",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={40}
+      bbWidth={40}
+      focusable={false}
+      height={40}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "flex": 0,
+            "height": 40,
+            "width": 40,
+          },
+        ]
+      }
+      vbHeight={40}
+      vbWidth={40}
+      width={40}
+    >
+      <RNSVGGroup>
+        <RNSVGGroup
+          name="calendar"
+        >
+          <RNSVGPath
+            d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
+            fill={4282866285}
+            name="icon"
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 10,
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "30%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="Dec"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+          <RNSVGText
+            alignmentBaseline="central"
+            content={null}
+            dx={Array []}
+            dy={Array []}
+            fill={4294967295}
+            font={
+              Object {
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "textAnchor": "middle",
+              }
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+            rotate={Array []}
+            x={
+              Array [
+                "50%",
+              ]
+            }
+            y={
+              Array [
+                "65%",
+              ]
+            }
+          >
+            <RNSVGTSpan
+              content="01"
+              dx={Array []}
+              dy={Array []}
+              font={Object {}}
+              rotate={Array []}
+              x={Array []}
+              y={Array []}
+            />
+          </RNSVGText>
+        </RNSVGGroup>
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 8,
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "paddingHorizontal": 4,
+          },
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        testID="DueDateBar_TextContent"
+        weight="Regular"
+      >
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2021 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           13:29
+        </Text>
+      </Text>
+    </View>
+  </View>,
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />,
+]
+`;
+
+exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#00C5CA",
+      "flexDirection": "row",
+      "padding": 24,
+    }
+  }
+>
+  <Text
+    accessibilityElementsHidden={true}
+    accessibilityLabel=""
+    accessible={false}
+    allowFontScaling={false}
+    importantForAccessibility="no-hide-descendants"
+    style={
+      Array [
+        Object {
+          "color": "#17324D",
+          "fontSize": 12,
+        },
+        Array [
+          Object {},
+          Object {
+            "color": "#17324D",
+          },
+          Object {},
+        ],
+        Object {
+          "fontFamily": "io-icon-font",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        Object {},
+      ]
+    }
+  >
+    
+  </Text>
+  <View
+    style={
+      Object {
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      This notice has been already paid!
+    </Text>
+  </View>
+</View>
+`;

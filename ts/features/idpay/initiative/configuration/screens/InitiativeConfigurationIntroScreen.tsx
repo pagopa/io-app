@@ -1,7 +1,7 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useActor } from "@xstate/react";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -21,6 +21,8 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { LOADING_TAG } from "../../../../../utils/xstate";
 import I18n from "../../../../../i18n";
+import { ConfigurationMode } from "../xstate/context";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -63,7 +65,7 @@ const InitiativeConfigurationIntroScreen = () => {
   const isLoading = state.tags.has(LOADING_TAG);
 
   const handleContinuePress = () => {
-    send({ type: "START_CONFIGURATION" });
+    send({ type: "NEXT" });
   };
 
   const customGoBack = (
@@ -89,8 +91,9 @@ const InitiativeConfigurationIntroScreen = () => {
 
   React.useEffect(() => {
     send({
-      type: "SELECT_INITIATIVE",
-      initiativeId
+      type: "START_CONFIGURATION",
+      initiativeId,
+      mode: ConfigurationMode.COMPLETE
     });
   }, [send, initiativeId]);
 
@@ -105,15 +108,15 @@ const InitiativeConfigurationIntroScreen = () => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <H1>{I18n.t("idpay.configuration.intro.title")}</H1>
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               <Body>{I18n.t("idpay.configuration.intro.body")}</Body>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <H3 color="bluegrey">
                 {I18n.t("idpay.configuration.intro.requiredData.title")}
               </H3>
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               {requiredDataItems.map((item, index) => (
                 <RequiredDataItem key={index} {...item} />
               ))}

@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
-import { MvlAttachmentId } from "../../mvl/types/mvlData";
+import {
+  UIMessageId,
+  UIAttachmentId
+} from "../../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
 import { mixpanelTrack } from "../../../mixpanel";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { useIOSelector } from "../../../store/hooks";
+import { pnMessageAttachmentSelector } from "../store/reducers";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: MvlAttachmentId;
+  attachmentId: UIAttachmentId;
 }>;
 
 export const PnAttachmentPreview = (
@@ -17,14 +22,34 @@ export const PnAttachmentPreview = (
     "PN_ROUTES_MESSAGE_ATTACHMENT"
   >
 ): React.ReactElement => {
+  const navigation = props.navigation;
   const messageId = props.route.params.messageId;
   const attachmentId = props.route.params.attachmentId;
+  // This ref is needed otherwise the auto back on the useEffect will fire multiple
+  // times, since its dependencies change during the back navigation
+  const autoBackOnErrorHandled = useRef(false);
+  const pnMessageAttachmentOption = useIOSelector(state =>
+    pnMessageAttachmentSelector(state)(messageId)(attachmentId)
+  );
 
-  return (
+  useEffect(() => {
+    // This condition happens only if this screen is shown without having
+    // first retrieved the third party message (so it should never happen)
+    if (
+      !autoBackOnErrorHandled.current &&
+      O.isNone(pnMessageAttachmentOption)
+    ) {
+      // eslint-disable-next-line functional/immutable-data
+      autoBackOnErrorHandled.current = true;
+      navigation.goBack();
+    }
+  }, [pnMessageAttachmentOption, navigation]);
+
+  return O.isSome(pnMessageAttachmentOption) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachmentId={attachmentId}
-      onError={() => {
+      attachment={pnMessageAttachmentOption.value}
+      onPDFError={() => {
         void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
           previewStatus: "error"
         });
@@ -44,5 +69,7 @@ export const PnAttachmentPreview = (
         void mixpanelTrack("PN_ATTACHMENT_SAVE");
       }}
     />
+  ) : (
+    <></>
   );
 };

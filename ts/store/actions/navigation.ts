@@ -3,8 +3,8 @@ import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/cr
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageDetailScreen";
-import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageRouterScreen";
+import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/MessageDetailScreen";
+import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/MessageRouterScreen";
 import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";

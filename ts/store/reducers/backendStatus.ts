@@ -2,6 +2,7 @@
  * Implements the reducers for BackendServicesState.
  */
 
+import { Platform } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
@@ -27,9 +28,11 @@ import {
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
+import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -211,6 +214,29 @@ export const bancomatPayConfigSelector = createSelector(
 );
 
 /**
+ * return the remote config about LolliPOP enabled/disabled
+ * based on a minumum version of the app.
+ * if there is no data, false is the default value -> (LolliPOP disabled)
+ */
+export const isLollipopEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(cfg => cfg.lollipop),
+      O.chainNullableK(lp => lp.min_app_version),
+      O.map(mav =>
+        isVersionSupported(
+          Platform.OS === "ios" ? mav.ios : mav.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
  * return the remote config about CGN enabled/disabled
  * if there is no data, false is the default value -> (CGN disabled)
  */
@@ -370,7 +396,33 @@ export const isFciEnabledSelector = createSelector(
     fciEnabled &&
     pipe(
       backendStatus,
-      O.map(bs => bs.config.fci.enabled),
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.fci.min_app_version.ios
+            : bs.config.fci.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayEnabledSelector = createSelector(
+  backendStatusSelector,
+  isIdPayTestEnabledSelector,
+  (backendStatus, isIdPayTestEnabled): boolean =>
+    isIdPayTestEnabled &&
+    pipe(
+      backendStatus,
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.idPay.min_app_version.ios
+            : bs.config.idPay.min_app_version.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { ReactNode } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
-import { View } from "native-base";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import I18n from "../../../../../i18n";
 import MoneyDownIcon from "../../../../../../img/wallet/payment-methods/paypal/money_down.svg";

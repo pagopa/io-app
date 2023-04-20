@@ -1,7 +1,8 @@
-import { Button, View } from "native-base";
+import { Button } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { Label } from "../../../../../../../components/core/typography/Label";
@@ -34,7 +35,7 @@ const NoIbanComponent = (props: { onPress: () => void }) => (
     <InfoBox>
       <Body>{I18n.t("bonus.bpd.details.components.iban.noIbanBody")}</Body>
     </InfoBox>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <Button style={styles.insertIbanButton} onPress={props.onPress}>
       <Label color={"white"}>
         {I18n.t("bonus.bpd.details.components.iban.button")}
@@ -70,7 +71,7 @@ export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps
           </Link>
         )}
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       {/* Also if it is a technical IBAN the field IBAN is filled (with a fake IBAN). */}
       {props.iban ? (
         isReady(props.technicalAccount) &&
@@ -84,6 +85,6 @@ export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps
       ) : (
         <NoIbanComponent onPress={props.onInsertIban} />
       )}
-      <View spacer={true} />
+      <VSpacer size={16} />
     </View>
   );

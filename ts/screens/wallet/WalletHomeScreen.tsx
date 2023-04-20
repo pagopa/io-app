@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
+  View,
   BackHandler,
   Image,
   NativeEventSubscription,
@@ -12,14 +13,20 @@ import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -29,7 +36,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled, idPayEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -78,7 +85,8 @@ import {
 } from "../../store/actions/wallet/wallets";
 import {
   bpdRemoteConfigSelector,
-  isCGNEnabledSelector
+  isCGNEnabledSelector,
+  isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
@@ -112,7 +120,8 @@ type State = {
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
-  LightModalContextInterface;
+  LightModalContextInterface &
+  TabBarItemPressType;
 
 const styles = StyleSheet.create({
   white: {
@@ -156,7 +165,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { hasFocus: false };
+    this.state = {
+      hasFocus: false
+    };
   }
 
   private handleBackPress = () => {
@@ -354,7 +365,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const bonusLoadingStatus = this.getBonusLoadingStatus();
     return (
       <View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.cardHeader(false)}
 
         {/* new payment methods rendering */}
@@ -380,7 +391,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
         {bpdEnabled && <BpdCardsInWalletContainer />}
         <CgnCardInWalletContainer />
-        {idPayEnabled && <IDPayCardsInWalletContainer />}
+        {this.props.isIdPayEnabled && <IDPayCardsInWalletContainer />}
       </View>
     );
   }
@@ -389,7 +400,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     alignCenter: boolean = false
   ): React.ReactNode => (
     <React.Fragment>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <Body style={alignCenter ? styles.centered : undefined}>
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
         <Body
@@ -409,11 +420,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
         {renderHelp && this.renderHelpMessage()}
-        <View spacer={true} large={true} />
+        <VSpacer size={24} />
         <H3 weight="SemiBold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
         </H3>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <ButtonDefaultOpacity
           block={true}
           light={true}
@@ -423,10 +434,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
         >
+          {/* ButtonText */}
           <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
-        <View spacer={true} />
+        <VSpacer size={16} />
       </Content>
     );
   }
@@ -485,7 +497,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
-        <NBText>{I18n.t("wallet.payNotice")}</NBText>
+        {/* ButtonText */}
+        <NBButtonText>{I18n.t("wallet.payNotice")}</NBButtonText>
       </ButtonDefaultOpacity>
     );
   }
@@ -521,6 +534,14 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <WalletLayout
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          this.props.setTabPressCallback(
+            // eslint-disable-next-line no-underscore-dangle
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
+          return c;
+        }}
         accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
@@ -581,7 +602,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: false // TODO add remote config to enable/disable idPay
+  isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -621,6 +642,10 @@ export default withValidatedPagoPaVersion(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(withLightModalContext(WalletHomeScreen))
+    )(
+      withUseTabItemPressWhenScreenActive(
+        withLightModalContext(WalletHomeScreen)
+      )
+    )
   )
 );

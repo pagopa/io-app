@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import { debounce } from "lodash";
 import { useContext, useEffect, useRef, useState } from "react";
 import { FlatList } from "react-native";
@@ -16,6 +16,7 @@ import {
 } from "../store/actions/voucherGeneration";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import WrappedFlatList from "./WrappedMunicipalityFlatList";
 
 type OwnProps = {
@@ -89,7 +90,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         wrappedFlatlist={StateFlatList}
         selectedValue={props.selectedState?.name}
       />
-      <View spacer />
+      <VSpacer size={16} />
       <TextboxWithSuggestion
         onChangeText={v => {
           setSearchText(v.length === 0 ? undefined : v);

@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { InfoBox } from "../../components/box/InfoBox";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H5 } from "../../components/core/typography/H5";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -114,7 +114,7 @@ const OnboardingServicesPreferenceScreen = (
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </H5>
           </InfoBox>
-          <View spacer={true} />
+          <VSpacer size={16} />
         </ScrollView>
         <FooterWithButtons
           type={"SingleButton"}

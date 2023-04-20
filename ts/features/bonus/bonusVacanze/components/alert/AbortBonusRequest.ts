@@ -1,5 +1,5 @@
 import I18n from "../../../../../i18n";
-import { actionWithAlert } from "./ActionWithAlert";
+import { actionWithAlert } from "../../../common/components/alert/ActionWithAlert";
 
 export const abortBonusRequest = (onAbort: () => void) =>
   actionWithAlert({

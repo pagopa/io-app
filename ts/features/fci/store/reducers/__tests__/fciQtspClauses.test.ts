@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getTimeoutError } from "../../../../../utils/errors";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { fciLoadQtspClauses, fciAbortRequest } from "../../actions";
+import { fciLoadQtspClauses, fciClearStateRequest } from "../../actions";
 import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMetadata.mock";
 
 const genericError = getTimeoutError();
@@ -40,7 +40,7 @@ describe("FciQtspClausesReducer", () => {
   it("The qtsp should be pot.none if the fciAbortingRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(fciAbortRequest());
+    store.dispatch(fciClearStateRequest());
     expect(store.getState().features.fci.qtspClauses).toStrictEqual(pot.none);
   });
 });

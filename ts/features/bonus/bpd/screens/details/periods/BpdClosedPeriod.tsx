@@ -1,7 +1,8 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
@@ -26,13 +27,13 @@ const shouldRenderIbanComponent = (period: BpdPeriodWithInfo) =>
  */
 const BpdClosedPeriod = (props: Props): React.ReactElement => (
   <View style={IOStyles.horizontalContentPadding}>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <BpdSummaryComponent />
-    <View spacer={true} extralarge={true} />
+    <VSpacer size={40} />
     {props.currentPeriod && shouldRenderIbanComponent(props.currentPeriod) && (
       <>
         <IbanInformationComponent />
-        <View spacer={true} extralarge={true} />
+        <VSpacer size={40} />
       </>
     )}
   </View>

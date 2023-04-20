@@ -2,6 +2,8 @@ import { getType } from "typesafe-actions";
 import { mixpanel } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 
+import { zendeskEnabled } from "../../../config";
+import { getNetworkErrorMessage } from "../../../utils/errors";
 import {
   getZendeskConfig,
   zendeskSelectedCategory,
@@ -10,8 +12,6 @@ import {
   zendeskSupportFailure,
   zendeskSupportStart
 } from "../store/actions";
-import { getNetworkErrorMessage } from "../../../utils/errors";
-import { zendeskEnabled } from "../../../config";
 
 const trackZendesk =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -24,7 +24,9 @@ const trackZendesk =
         return mp.track(action.type);
       case getType(zendeskSupportStart):
         return mp.track(action.type, {
-          isAssistanceForPayment: action.payload.assistanceForPayment
+          isAssistanceForPayment: action.payload.assistanceForPayment,
+          isAssistanceForCard: action.payload.assistanceForCard,
+          isAssistanceForFci: action.payload.assistanceForFci
         });
       case getType(zendeskSupportFailure):
         return mp.track(action.type, {

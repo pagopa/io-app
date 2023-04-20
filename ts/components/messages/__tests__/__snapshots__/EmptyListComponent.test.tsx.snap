@@ -4,17 +4,21 @@ exports[`EmptyListComponent matches the snapshot 1`] = `
 <View
   style={
     Array [
-      Object {},
+      Object {
+        "padding": 24,
+      },
       Object {
         "alignItems": "center",
-        "padding": 24,
       },
     ]
   }
 >
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Image
     source={
@@ -23,40 +27,85 @@ exports[`EmptyListComponent matches the snapshot 1`] = `
       }
     }
   />
+  <View
+    style={
+      Object {
+        "height": 24,
+      }
+    }
+  />
   <Text
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
     style={
       Array [
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         },
         Object {
-          "paddingTop": 24,
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
         },
       ]
     }
-    uppercase={false}
+    weight="Regular"
   >
     Your message list is empty.
   </Text>
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "paddingTop": 24,
-          "textAlign": "center",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+      }
     }
-    uppercase={false}
   >
-    Refresh to check for any new messages.
-  </Text>
+    <View
+      style={
+        Object {
+          "height": 24,
+        }
+      }
+    />
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Refresh to check for any new messages.
+    </Text>
+  </View>
 </View>
 `;

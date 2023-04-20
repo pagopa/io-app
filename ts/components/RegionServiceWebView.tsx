@@ -1,9 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Container, Content, Right, View } from "native-base";
+import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
-import { Alert, Image, StyleSheet } from "react-native";
+import { View, Alert, Image, StyleSheet } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -22,6 +22,7 @@ import {
   closeInjectedScript
 } from "../utils/webview";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { VSpacer } from "./core/spacer/Spacer";
 import { Body as BodyText } from "./core/typography/Body";
 import { Label } from "./core/typography/Label";
 import { withLightModalContext } from "./helpers/withLightModalContext";
@@ -87,7 +88,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           color={customVariables.colorHighlight}
           style={styles.selfCenter}
         />
-        <View spacer={true} large={true} />
+        <VSpacer size={24} />
 
         <View style={styles.itemsCenter}>
           <Label>{`${I18n.t("global.genericThanks")},`}</Label>
@@ -114,7 +115,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           color={customVariables.brandDanger}
           style={styles.selfCenter}
         />
-        <View spacer={true} />
+        <VSpacer size={16} />
 
         <View style={styles.itemsCenter}>
           <Label weight={"Bold"}>{text}</Label>
@@ -135,8 +136,8 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderErrorComponent = () => (
     <View style={styles.errorContainer}>
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} extralarge={true} />
+      <VSpacer size={40} />
+      <VSpacer size={40} />
       <Image source={brokenLinkImage} resizeMode="contain" />
       <Label style={styles.errorTitle} weight={"Bold"}>
         {I18n.t("authentication.errors.network.title")}

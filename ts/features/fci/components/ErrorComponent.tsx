@@ -1,23 +1,115 @@
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
+import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { WithTestID } from "../../../types/WithTestID";
+import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import {
+  addTicketCustomField,
+  appendLog,
+  assistanceToolRemoteConfig,
+  resetCustomFields,
+  zendeskCategoryId,
+  zendeskFCICategory
+} from "../../../utils/supportAssistance";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../zendesk/store/actions";
+import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { InfoScreenComponent } from "./InfoScreenComponent";
 
 type Props = WithTestID<{
   title: string;
   subTitle: string;
   image: number;
+  email?: EmailString;
+  retry?: boolean;
+  assistance?: boolean;
+  onPress: () => void;
 }>;
 
 const ErrorComponent = (props: Props) => {
-  const navigation = useNavigation();
+  const dispatch = useIODispatch();
+  const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  const zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
+    addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+    // Append the signatureRequestID in the log
+    appendLog(JSON.stringify(signatureRequestId));
+    dispatch(
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: false,
+        assistanceForCard: false,
+        assistanceForFci: true
+      })
+    );
+    dispatch(zendeskSelectedCategory(zendeskFCICategory));
+  };
+
+  const handleAskAssistance = () => {
+    switch (choosenTool) {
+      case ToolEnum.zendesk:
+        zendeskAssistanceLogAndStart();
+        break;
+    }
+  };
+
+  const retryButtonProps = {
+    testID: "FciRetryButtonTestID",
+    block: true,
+    primary: true,
+    onPress: props.onPress,
+    title: I18n.t("features.fci.errors.buttons.retry")
+  };
+
+  const closeButtonProps = {
+    testID: "FciCloseButtonTestID",
+    bordered: true,
+    block: true,
+    onPress: props.onPress,
+    title: I18n.t("features.fci.errors.buttons.close")
+  };
+
+  const assistanceButtonProps = {
+    testID: "FciAssistanceButtonTestID",
+    bordered: true,
+    primary: false,
+    block: true,
+    onPress: handleAskAssistance,
+    title: I18n.t("features.fci.errors.buttons.assistance")
+  };
+
+  const footerButtons = () => {
+    if (props.retry && props.assistance) {
+      return [retryButtonProps, assistanceButtonProps];
+    }
+    if (props.retry) {
+      return [retryButtonProps, closeButtonProps];
+    }
+    if (props.assistance) {
+      return [
+        {
+          ...closeButtonProps,
+          bordered: false,
+          title: I18n.t("features.fci.errors.buttons.back")
+        },
+        assistanceButtonProps
+      ];
+    }
+    return [closeButtonProps];
+  };
+
   return (
     <BaseScreenComponent goBack={false}>
       <SafeAreaView style={IOStyles.flex} testID={props.testID}>
@@ -25,17 +117,10 @@ const ErrorComponent = (props: Props) => {
           image={renderInfoRasterImage(props.image)}
           title={props.title}
           body={props.subTitle}
+          email={props.email}
         />
 
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(
-            navigation.goBack,
-            I18n.t("global.buttons.close"),
-            undefined,
-            "closeButton"
-          )}
-        />
+        <FooterStackButton buttons={footerButtons()} />
       </SafeAreaView>
     </BaseScreenComponent>
   );

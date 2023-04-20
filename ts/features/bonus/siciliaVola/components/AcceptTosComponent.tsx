@@ -1,13 +1,12 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import TosWebviewComponent from "../../../../components/TosWebviewComponent";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { LoadingErrorComponent } from "../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 
 type Props = {
   onCancel: () => void;
@@ -28,7 +27,7 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
   const [tosLoadingState, setTosLoadingState] = React.useState<
     "loading" | "error" | "loaded"
   >("loading");
-  const [url, setUrl] = React.useState(tosUrl);
+  const [_, setUrl] = React.useState(tosUrl);
   const undoButtonProps = {
     primary: false,
     bordered: true,
@@ -46,14 +45,8 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
     switch (tosLoadingState) {
       case "loaded":
       case "loading":
-        return (
-          <TosWebviewComponent
-            handleError={() => setTosLoadingState("error")}
-            handleLoadEnd={() => setTosLoadingState("loaded")}
-            url={url}
-            shouldFooterRender={false}
-          />
-        );
+        // TODO Replace with a proper component (see https://pagopa.atlassian.net/browse/IASV-10)
+        return <></>;
       case "error":
         return (
           <LoadingErrorComponent

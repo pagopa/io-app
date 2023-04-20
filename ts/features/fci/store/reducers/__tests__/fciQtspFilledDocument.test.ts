@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getTimeoutError } from "../../../../../utils/errors";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { fciLoadQtspFilledDocument, fciAbortRequest } from "../../actions";
+import { fciLoadQtspFilledDocument, fciClearStateRequest } from "../../actions";
 import {
   createFilledDocumentBody,
   qtspFilledDocument
@@ -43,7 +43,7 @@ describe("FciQtspFilledDocumentReducer", () => {
   it("The filled_document should be pot.none if the fciAbortingRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(fciAbortRequest());
+    store.dispatch(fciClearStateRequest());
     expect(store.getState().features.fci.qstpFilledDocument).toStrictEqual(
       pot.none
     );

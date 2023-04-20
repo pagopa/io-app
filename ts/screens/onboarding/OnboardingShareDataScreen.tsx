@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
@@ -19,6 +18,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -60,7 +60,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
         <StatusBar backgroundColor={IOColors.white} barStyle={"dark-content"} />
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <ShareDataComponent />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}

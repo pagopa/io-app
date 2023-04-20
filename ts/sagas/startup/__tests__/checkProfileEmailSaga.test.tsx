@@ -15,7 +15,7 @@ import { appReducer } from "../../../store/reducers";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
-describe("checkAcceptedTosSaga", () => {
+describe("checkAcknowledgedEmailSaga", () => {
   beforeEach(() => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
@@ -41,7 +41,7 @@ describe("checkAcceptedTosSaga", () => {
         profileEmailValidatedFirstOnboarding
       )
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.READ_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
         })
         .run();
     });
@@ -57,7 +57,7 @@ describe("checkAcceptedTosSaga", () => {
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.READ_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
         })
         .dispatch(emailAcknowledged())
         .run());
@@ -78,7 +78,7 @@ describe("checkAcceptedTosSaga", () => {
       renderScreenFakeNavRedux(View, "DUMMY", {}, store);
       await expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.INSERT_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
         }) // go to email insert screen
         .dispatch(emailInsert()) // dispatch email insert
         .dispatch(emailAcknowledged()) // press continue

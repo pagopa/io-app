@@ -1,10 +1,10 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 import I18n from "../../i18n";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
 import { IOColors } from "../core/variables/IOColors";
+import { VSpacer } from "../core/spacer/Spacer";
 
 type Props = {
   pinLength: number;
@@ -64,7 +64,7 @@ const CiePinpad = (props: Props) => {
         )}
         accessibilityHint={I18n.t("authentication.cie.pin.accessibility.hint")}
       />
-      <View spacer={true} />
+      <VSpacer size={16} />
     </View>
   );
 };

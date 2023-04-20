@@ -1,5 +1,7 @@
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
+import { HSpacer } from "../../../components/core/spacer/Spacer";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 
@@ -26,7 +28,7 @@ const ZendeskItemPermissionComponent = (props: ItemPermissionProps) => (
       }}
     >
       <View>{props.icon}</View>
-      <View hspacer />
+      <HSpacer size={16} />
       <View style={{ flex: 1, flexDirection: "column" }}>
         <H4>{props.title}</H4>
         {props.value && <H5 weight={"Regular"}>{props.value}</H5>}

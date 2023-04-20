@@ -16,7 +16,7 @@ import { getFullLocale } from "../../utils/locale";
 import { maybeNotNullyString } from "../../utils/strings";
 import { openWebUrl } from "../../utils/url";
 import { Link } from "../core/typography/Link";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { IOColors } from "../core/variables/IOColors";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -26,13 +26,13 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-export const statusColorMap: Record<LevelEnum, IOColorType> = {
+export const statusColorMap: Record<LevelEnum, IOColors> = {
   [LevelEnum.normal]: "aqua",
   [LevelEnum.critical]: "red",
   [LevelEnum.warning]: "orange"
 };
 
-const statusIconMap: Record<LevelEnum, string> = {
+export const statusIconMap: Record<LevelEnum, string> = {
   [LevelEnum.normal]: "io-complete",
   [LevelEnum.critical]: "io-warning",
   [LevelEnum.warning]: "io-info"
@@ -45,7 +45,7 @@ export const getStatusTextColor = (
 ): "bluegreyDark" | "white" =>
   level === LevelEnum.normal ? "bluegreyDark" : textDefaultColor;
 
-const InnerSectionStatus = (
+export const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
     sectionStatus: NonNullable<Props["sectionStatus"]>;
   }

@@ -7,7 +7,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -57,6 +57,7 @@ import {
 } from "../../utils/input";
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 export type AddCardScreenNavigationParams = Readonly<{
   inPayment: O.Option<{
@@ -231,12 +232,20 @@ const AddCardScreen: React.FC<Props> = props => {
     INITIAL_CARD_FORM_STATE
   );
 
+  const isCardHolderValid = O.isNone(creditCard.holder)
+    ? undefined
+    : isValidCardHolder(creditCard.holder);
+
+  const isCardExpirationDateValid = O.toUndefined(
+    maybeCreditCardValidOrExpired(creditCard)
+  );
+
   const inPayment = props.route.params.inPayment;
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <>
       <Body>{I18n.t("wallet.missingDataText.body")}</Body>
-      <View spacer={true} large />
+      <VSpacer size={24} />
       <ButtonDefaultOpacity
         style={styles.button}
         bordered={true}
@@ -267,6 +276,16 @@ const AddCardScreen: React.FC<Props> = props => {
       O.getOrElse(() => "")
     )
   );
+  const isCardCvvValid = pipe(
+    creditCard.securityCode,
+    O.getOrElse(() => "")
+  )
+    ? isCvvValid
+    : undefined;
+
+  const isCreditCardValid = O.isNone(creditCard.pan)
+    ? undefined
+    : isCardNumberValid;
 
   const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
@@ -321,11 +340,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   : I18n.t("wallet.dummyCard.labels.holder.description.error")
               }
               icon="io-titolare"
-              isValid={
-                O.isNone(creditCard.holder)
-                  ? undefined
-                  : isValidCardHolder(creditCard.holder)
-              }
+              isValid={isCardHolderValid}
               accessibilityLabel={accessibilityLabels.cardHolder}
               inputProps={{
                 value: pipe(
@@ -338,16 +353,19 @@ const AddCardScreen: React.FC<Props> = props => {
                 returnKeyType: "done",
                 onChangeText: (value: string) => updateState("holder", value)
               }}
+              overrideBorderColor={getColorFromInputValidatorState(
+                isCardHolderValid
+              )}
               testID={"cardHolder"}
             />
 
-            <View spacer={true} />
+            <VSpacer size={16} />
 
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon={detectedBrand.iconForm}
               iconStyle={styles.creditCardForm}
-              isValid={O.isNone(creditCard.pan) ? undefined : isCardNumberValid}
+              isValid={isCreditCardValid}
               inputMaskProps={{
                 value: pipe(
                   creditCard.pan,
@@ -369,20 +387,21 @@ const AddCardScreen: React.FC<Props> = props => {
                   }
                 }
               }}
+              overrideBorderColor={getColorFromInputValidatorState(
+                isCreditCardValid
+              )}
               accessibilityLabel={accessibilityLabels.pan}
               testID={"pan"}
             />
 
-            <View spacer={true} />
+            <VSpacer size={16} />
             <Grid>
               <Col>
                 <LabelledItem
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
                   accessibilityLabel={accessibilityLabels.expirationDate}
-                  isValid={O.toUndefined(
-                    maybeCreditCardValidOrExpired(creditCard)
-                  )}
+                  isValid={isCardExpirationDateValid}
                   inputMaskProps={{
                     value: pipe(
                       creditCard.expirationDate,
@@ -396,6 +415,9 @@ const AddCardScreen: React.FC<Props> = props => {
                     includeRawValueInChangeText: true,
                     onChangeText: value => updateState("expirationDate", value)
                   }}
+                  overrideBorderColor={getColorFromInputValidatorState(
+                    isCardExpirationDateValid
+                  )}
                   testID={"expirationDate"}
                 />
               </Col>
@@ -408,14 +430,7 @@ const AddCardScreen: React.FC<Props> = props => {
                       : "wallet.dummyCard.labels.securityCode"
                   )}
                   icon="io-lucchetto"
-                  isValid={
-                    pipe(
-                      creditCard.securityCode,
-                      O.getOrElse(() => "")
-                    )
-                      ? isCvvValid
-                      : undefined
-                  }
+                  isValid={isCardCvvValid}
                   accessibilityLabel={
                     detectedBrand.cvvLength === 4
                       ? accessibilityLabels.securityCode4D
@@ -436,6 +451,9 @@ const AddCardScreen: React.FC<Props> = props => {
                     includeRawValueInChangeText: true,
                     onChangeText: value => updateState("securityCode", value)
                   }}
+                  overrideBorderColor={getColorFromInputValidatorState(
+                    isCardCvvValid
+                  )}
                   testID={"securityCode"}
                 />
               </Col>
@@ -443,7 +461,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
             {!O.isSome(inPayment) && (
               <>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <Link
                   accessibilityRole="link"
                   accessibilityLabel={I18n.t("wallet.missingDataCTA")}
@@ -453,7 +471,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 </Link>
               </>
             )}
-            <View spacer />
+            <VSpacer size={16} />
 
             <Link
               accessibilityRole="link"
@@ -499,3 +517,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
 export const testableAddCardScreen = isTestEnv
   ? { isCreditCardDateExpiredOrInvalid }
   : undefined;
+
+function getColorFromInputValidatorState(
+  isCreditCardValid: boolean | undefined
+): string | undefined {
+  return isCreditCardValid === undefined
+    ? undefined
+    : isCreditCardValid
+    ? IOColors.green
+    : IOColors.red;
+}

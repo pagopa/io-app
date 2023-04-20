@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -70,13 +70,13 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
   props: Props
 ) => (
   <>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <RankingItems {...props} />
-    <View spacer={true} small />
+    <VSpacer size={8} />
     <ItemSeparatorComponent noPadded={true} />
-    <View spacer={true} />
+    <VSpacer size={16} />
     <H3>{I18n.t("bonus.bpd.details.superCashback.howItWorks.title")}</H3>
-    <View spacer={true} />
+    <VSpacer size={16} />
     {props.selectedPeriod && (
       <>
         <Markdown cssStyle={CSS_STYLE} avoidTextSelection>
@@ -87,7 +87,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
             )
           })}
         </Markdown>
-        <View spacer />
+        <VSpacer size={16} />
         {props.selectedPeriod.status === "Active" ||
         isInGracePeriod(
           props.selectedPeriod.endDate,

@@ -8,7 +8,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "borderBottomWidth": 0,
         "elevation": 8,
         "position": "relative",
-        "shadowColor": "#000000",
+        "shadowColor": "#0E0F13",
         "shadowOffset": Object {
           "height": 2,
           "width": 0,
@@ -18,10 +18,10 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "zIndex": 999,
       },
       Object {
+        "alignItems": "center",
         "backgroundColor": "#FFFFFF",
         "borderColor": "#CCD4DC",
         "flexDirection": "row",
-        "justifyContent": "space-between",
         "paddingBottom": 12,
         "paddingTop": 12,
       },
@@ -69,8 +69,10 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "height": 45,
         "justifyContent": "space-between",
         "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
+        "paddingBottom": 0,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 0,
         "shadowColor": null,
         "shadowOffset": null,
         "shadowOpacity": null,
@@ -79,76 +81,70 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     }
     testID="DocumentsNavigationBarLeftButtonTestID"
   >
-    <View
+    <Text
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      allowFontScaling={false}
+      importantForAccessibility="no-hide-descendants"
       style={
-        Object {
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        accessibilityElementsHidden={true}
-        accessibilityLabel=""
-        accessible={false}
-        allowFontScaling={false}
-        importantForAccessibility="no-hide-descendants"
-        style={
+        Array [
+          Object {
+            "color": "#0073E6",
+            "fontSize": 12,
+          },
           Array [
-            Object {
-              "color": "#0073E6",
-              "fontSize": 12,
-            },
             Array [
               Object {},
               Object {
-                "color": "#0073E6",
+                "paddingRight": 0,
               },
-              Object {},
             ],
             Object {
-              "fontFamily": "io-icon-font",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
+              "color": "#0073E6",
             },
             Object {},
-          ]
-        }
-      >
-        v
-      </Text>
-      <Text
-        color="bluegreyDark"
-        font="TitilliumWeb"
-        fontStyle={
+          ],
           Object {
-            "fontSize": 16,
-            "lineHeight": 22,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "textAlign": "center",
-            },
-            Object {
-              "fontSize": 16,
-              "lineHeight": 22,
-            },
-            Object {
-              "color": "#17324D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "700",
-            },
-          ]
-        }
-        weight="Bold"
-        weightColorFactory={[Function]}
-      >
-        Documento 1 di 2
-      </Text>
-    </View>
+            "fontFamily": "io-icon-font",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      v
+    </Text>
   </View>
+  <Text
+    color="bluegreyDark"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 22,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 22,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+    weightColorFactory={[Function]}
+  >
+    Documento 1 di 2
+  </Text>
   <View
     accessibilityRole="button"
     accessibilityState={
@@ -190,8 +186,10 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "height": 45,
         "justifyContent": "space-between",
         "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
+        "paddingBottom": 0,
+        "paddingLeft": 8,
+        "paddingRight": 8,
+        "paddingTop": 0,
         "shadowColor": null,
         "shadowOffset": null,
         "shadowOpacity": null,
@@ -200,75 +198,79 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     }
     testID="DocumentsNavigationBarRightButtonTestID"
   >
-    <View
+    <Text
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      allowFontScaling={false}
+      importantForAccessibility="no-hide-descendants"
       style={
-        Object {
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        color="bluegreyDark"
-        font="TitilliumWeb"
-        fontStyle={
+        Array [
           Object {
-            "fontSize": 16,
-            "lineHeight": 22,
-          }
-        }
-        style={
+            "color": "#0073E6",
+            "fontSize": 12,
+          },
           Array [
-            Object {
-              "textAlign": "center",
-            },
-            Object {
-              "fontSize": 16,
-              "lineHeight": 22,
-            },
-            Object {
-              "color": "#17324D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "700",
-            },
-          ]
-        }
-        weight="Bold"
-        weightColorFactory={[Function]}
-      >
-        Pagina 1 di 2
-      </Text>
-      <Text
-        accessibilityElementsHidden={true}
-        accessibilityLabel=""
-        accessible={false}
-        allowFontScaling={false}
-        importantForAccessibility="no-hide-descendants"
-        style={
-          Array [
-            Object {
-              "color": "#0073E6",
-              "fontSize": 12,
-            },
             Array [
               Object {},
               Object {
-                "color": "#0073E6",
+                "paddingRight": 0,
               },
-              Object {},
             ],
             Object {
-              "fontFamily": "io-icon-font",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
+              "color": "#0073E6",
             },
             Object {},
-          ]
-        }
-      >
-        t
-      </Text>
-    </View>
+          ],
+          Object {
+            "fontFamily": "io-icon-font",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      t
+    </Text>
   </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  />
+  <Text
+    color="bluegreyDark"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 22,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "paddingHorizontal": 24,
+        },
+        Object {
+          "fontSize": 16,
+          "lineHeight": 22,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "700",
+        },
+      ]
+    }
+    weight="Bold"
+    weightColorFactory={[Function]}
+  >
+    Pagina 1 di 2
+  </Text>
 </View>
 `;

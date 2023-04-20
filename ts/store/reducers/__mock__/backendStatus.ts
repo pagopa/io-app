@@ -269,7 +269,24 @@ export const baseRawBackendStatus: BackendStatus = {
       dataMatrixPosteEnabled: false
     },
     fci: {
-      enabled: false
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
+    },
+    idPay: {
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
+    },
+    lollipop: {
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
     },
     pn: {
       enabled: false,
@@ -335,7 +352,24 @@ export const baseBackendConfig: Config = {
     dataMatrixPosteEnabled: false
   },
   fci: {
-    enabled: false
+    enabled: false,
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
+  },
+  idPay: {
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
+  },
+  lollipop: {
+    enabled: false,
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
   },
   pn: {
     enabled: false,

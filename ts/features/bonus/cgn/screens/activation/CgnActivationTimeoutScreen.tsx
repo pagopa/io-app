@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
-import { BaseTimeoutScreen } from "../../../bonusVacanze/components/BaseTimeoutScreen";
+import { BaseTimeoutScreen } from "../../../common/BaseTimeoutScreen";
 import { cgnActivationCancel } from "../../store/actions/activation";
 import I18n from "../../../../../i18n";
 

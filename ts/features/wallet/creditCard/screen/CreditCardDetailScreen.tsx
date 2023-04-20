@@ -1,12 +1,14 @@
 import * as React from "react";
+
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CreditCardComponent from "../component/CreditCardComponent";
@@ -16,8 +18,7 @@ export type CreditCardDetailScreenNavigationParams = Readonly<{
   creditCard: CreditCardPaymentMethod;
 }>;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   IOStackNavigationRouteProps<WalletParamsList, "WALLET_CREDIT_CARD_DETAIL">;
 
 /**
@@ -28,6 +29,7 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   const [walletExisted, setWalletExisted] = React.useState(false);
   const paramCreditCard: CreditCardPaymentMethod =
     props.route.params.creditCard;
+  const { areIdpayInitiativesLoading } = props;
   // We need to read the card from the store to receive the updates
   // TODO: to avoid this we need a store refactoring for the wallet section (all the component should receive the id and not the wallet, in order to update when needed)
   const storeCreditCard = props.creditCardById(paramCreditCard.idWallet);
@@ -42,28 +44,33 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
     }
   }, [storeCreditCard, setWalletExisted]);
 
-  return storeCreditCard ? (
-    <BasePaymentMethodScreen
-      paymentMethod={storeCreditCard}
-      card={
-        <CreditCardComponent
-          testID={"CreditCardComponent"}
-          creditCard={storeCreditCard}
+  if (storeCreditCard !== undefined) {
+    return (
+      <LoadingSpinnerOverlay
+        isLoading={areIdpayInitiativesLoading}
+        loadingOpacity={100}
+      >
+        <BasePaymentMethodScreen
+          paymentMethod={storeCreditCard}
+          card={
+            <CreditCardComponent
+              testID={"CreditCardComponent"}
+              creditCard={storeCreditCard}
+            />
+          }
+          content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
         />
-      }
-      content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
-    />
-  ) : !walletExisted ? (
-    <WorkunitGenericFailure />
-  ) : null;
+      </LoadingSpinnerOverlay>
+    );
+  } else if (!walletExisted) {
+    return <WorkunitGenericFailure />;
+  }
+  return null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
+  areIdpayInitiativesLoading:
+    idPayAreInitiativesFromInstrumentLoadingSelector(state),
   creditCardById: (id: number) => creditCardByIdSelector(state, id)
 });
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreditCardDetailScreen);
+export default connect(mapStateToProps)(CreditCardDetailScreen);

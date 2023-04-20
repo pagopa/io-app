@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
@@ -8,6 +7,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -49,7 +49,7 @@ const generateOptionBody = (
         <IOBadge
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
-        <View spacer xsmall />
+        <VSpacer size={4} />
       </>
     )}
     <H4>{title}</H4>
@@ -183,11 +183,11 @@ const OptInPaymentMethodsChoiceScreen = () => {
         >
           <ScrollView style={IOStyles.horizontalContentPadding}>
             <H1>{I18n.t("bonus.bpd.optInPaymentMethods.choice.title")}</H1>
-            <View spacer small />
+            <VSpacer size={8} />
             <Body color="bluegreyDark">
               {I18n.t("bonus.bpd.optInPaymentMethods.choice.subtitle")}
             </Body>
-            <View spacer />
+            <VSpacer size={16} />
 
             <RadioButtonList<PaymentMethodsChoiceOptions>
               items={radioButtonListItems()}

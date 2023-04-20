@@ -24,8 +24,8 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { formatTextRecipient } from "../../../../utils/strings";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
+import { getRecepientName } from "../../../../utils/strings";
 
 const styles = StyleSheet.create({
   row: {
@@ -169,7 +169,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
   const recipient = pipe(
     pot.toOption(props.paymentVerification),
     O.chainNullableK(_ => _.enteBeneficiario),
-    O.map(formatTextRecipient),
+    O.map(getRecepientName),
     O.toUndefined
   );
 

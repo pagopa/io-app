@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { ActivityIndicator, FlatList } from "react-native";
+import { View, ActivityIndicator, FlatList } from "react-native";
 import * as React from "react";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import { useContext } from "react";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
@@ -14,6 +14,7 @@ import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
 import { Link } from "../../../../components/core/typography/Link";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   onPress: (municipality: Municipality) => void;
@@ -24,7 +25,7 @@ type Props = {
 
 const FooterLoading = () => (
   <>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <ActivityIndicator
       color={"black"}
       accessible={false}

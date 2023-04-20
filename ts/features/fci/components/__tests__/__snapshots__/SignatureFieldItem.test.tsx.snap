@@ -3,161 +3,167 @@
 exports[`Test SignatureFieldItem component should render a SignatureFieldItem component with props correctly 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "paddingBottom": 16,
-        "paddingTop": 16,
-      },
-    ]
+    Object {
+      "borderBottomColor": "#E6E9F2",
+      "borderBottomWidth": 1,
+      "flexDirection": "column",
+      "marginBottom": 16,
+      "paddingBottom": 8,
+      "paddingTop": 16,
+    }
   }
 >
   <View
-    accessibilityRole="radio"
-    accessibilityState={
-      Object {
-        "checked": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "borderBottomColor": "#E6E9F2",
-        "borderBottomWidth": 1,
         "flexDirection": "row",
-        "opacity": 1,
-        "paddingBottom": 14,
       }
     }
-    testID="SignatureFieldItemButtonTestID"
   >
-    <View
+    <Text
+      color="bluegreyDark"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 22,
+        }
+      }
       style={
         Array [
-          Object {},
           Object {
-            "flexDirection": "column",
+            "flex": 1,
+            "marginRight": 22,
           },
-        ]
-      }
-    >
-      <Text
-        color="bluegreyDark"
-        font="TitilliumWeb"
-        fontStyle={
           Object {
             "fontSize": 16,
             "lineHeight": 22,
-          }
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      testID="SignatureFieldItemTitleTestID"
+      weight="Bold"
+      weightColorFactory={[Function]}
+    >
+      Clause title 1
+    </Text>
+    <View
+      accessibilityRole="checkbox"
+      accessibilityState={
+        Object {
+          "selected": false,
         }
+      }
+      accessibilityValue={
+        Object {
+          "text": "Field not selected",
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "center",
+          "opacity": 1,
+        }
+      }
+      testID="SignatureFieldItemButtonTestID"
+    >
+      <Text
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        allowFontScaling={false}
+        importantForAccessibility="no-hide-descendants"
         style={
           Array [
             Object {
-              "fontSize": 16,
-              "lineHeight": 22,
-            },
-            Object {
               "color": "#17324D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "700",
+              "fontSize": 22,
             },
+            Array [
+              Object {},
+              Object {
+                "color": "#17324D",
+              },
+              Object {
+                "fontSize": 22,
+              },
+            ],
+            Object {
+              "fontFamily": "io-icon-font",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
           ]
         }
-        testID="SignatureFieldItemTitleTestID"
-        weight="Bold"
-        weightColorFactory={[Function]}
+        testID="SignatureFieldItemCheckboxTestID"
       >
-        Clause title 1
+        R
       </Text>
-      <Text
-        accessibilityRole="link"
-        color="blue"
-        defaultColor="blue"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+        },
+        Object {
+          "paddingBottom": 8,
+          "paddingTop": 16,
+        },
+      ]
+    }
+  >
+    <Text
+      accessibilityHint="Go to the page that displays the signature field"
+      accessibilityLabel="See on document"
+      accessibilityRole="link"
+      color="blue"
+      defaultColor="blue"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "textDecorationLine": "underline",
+        }
+      }
+      onPress={[MockFunction]}
+      style={
+        Array [
           Object {
             "fontSize": 16,
             "textDecorationLine": "underline",
-          }
-        }
-        onPress={[MockFunction]}
-        style={
-          Array [
-            Object {
-              "paddingBottom": 16,
-              "paddingTop": 16,
-            },
-            Object {
-              "fontSize": 16,
-              "textDecorationLine": "underline",
-            },
-            Object {
-              "color": "#0073E6",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        testID="SignatureFieldItemDetailTestID"
-        weight="SemiBold"
-      >
-        See on document
-      </Text>
-    </View>
-    <View
-      style={
-        Array [
-          Object {},
-          Object {
-            "flex": 1,
           },
-        ]
-      }
-    />
-    <Text
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={false}
-      allowFontScaling={false}
-      importantForAccessibility="no-hide-descendants"
-      style={
-        Array [
           Object {
-            "color": "#17324D",
-            "fontSize": 22,
-          },
-          Array [
-            Object {},
-            Object {
-              "color": "#17324D",
-            },
-            Object {
-              "fontSize": 22,
-            },
-          ],
-          Object {
-            "fontFamily": "io-icon-font",
+            "color": "#0073E6",
+            "fontFamily": "Titillium Web",
             "fontStyle": "normal",
-            "fontWeight": "normal",
+            "fontWeight": "600",
           },
-          Object {},
         ]
       }
-      testID="SignatureFieldItemCheckboxTestID"
+      testID="SignatureFieldItemDetailTestID"
+      weight="SemiBold"
     >
-      R
+      See on document
     </Text>
   </View>
 </View>

@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
@@ -31,8 +31,8 @@ export const MvlGenericErrorScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={"MvlGenericErrorScreen"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
-          <View spacer={true} extralarge={true} />
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
+          <VSpacer size={40} />
           <InfoScreenComponent
             image={renderInfoRasterImage(image)}
             title={I18n.t("features.mvl.ko.genericError.title")}

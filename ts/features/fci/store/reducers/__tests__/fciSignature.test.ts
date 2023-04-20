@@ -3,8 +3,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getTimeoutError } from "../../../../../utils/errors";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { fciSigningRequest, fciAbortRequest } from "../../actions";
+import { fciSigningRequest, fciClearStateRequest } from "../../actions";
 import { mockCreateSignatureBody } from "../../../types/__mocks__/CreateSignatureBody.mock";
+import { mockSignatureDetailView } from "../../../types/__mocks__/SignatureDetailView.mock";
 
 const genericError = getTimeoutError();
 
@@ -21,11 +22,13 @@ describe("FciSignatureReducer", () => {
       pot.noneLoading
     );
   });
-  it("The signature should be pot.none if fciSigningRequest.success is dispatched", () => {
+  it("The signature should be pot.some if fciSigningRequest.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(fciSigningRequest.success());
-    expect(store.getState().features.fci.signature).toStrictEqual(pot.none);
+    store.dispatch(fciSigningRequest.success(mockSignatureDetailView));
+    expect(store.getState().features.fci.signature).toStrictEqual(
+      pot.some(mockSignatureDetailView)
+    );
   });
   it("The signature should be pot.noneError if the fciSigningRequest.failure is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -38,7 +41,7 @@ describe("FciSignatureReducer", () => {
   it("The signature should be pot.none if the fciAbortingRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(fciAbortRequest());
+    store.dispatch(fciClearStateRequest());
     expect(store.getState().features.fci.signature).toStrictEqual(pot.none);
   });
 });

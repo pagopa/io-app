@@ -65,6 +65,7 @@ const ButtonDefaultOpacity = (props: Props) => {
   // if the screenReader is active render common button or the button would not be pressable
   const tapGestureRequired =
     props.onPressWithGestureHandler && !isIos && !isScreenReaderEnabled;
+  const buttonIsAccessible = props.accessible;
 
   const button = (
     <Button
@@ -73,10 +74,11 @@ const ButtonDefaultOpacity = (props: Props) => {
         activeOpacity: props.activeOpacity || defaultActiveOpacity
       }}
       onPress={tapGestureRequired ? undefined : props.onPress}
-      accessible={true} // allows with TalkBack the feedback request to touch for button activation
+      accessible={buttonIsAccessible === undefined ? true : buttonIsAccessible} // allows with TalkBack the feedback request to touch for button activation
       accessibilityRole={"button"}
       accessibilityState={{ disabled: props.disabled }}
       hitSlop={hitSlop}
+      testID={props.testID}
     >
       {props.children}
     </Button>

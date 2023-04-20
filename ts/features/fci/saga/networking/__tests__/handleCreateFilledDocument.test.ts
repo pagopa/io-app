@@ -1,15 +1,20 @@
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getNetworkError } from "../../../../../utils/errors";
 import { qtspFilledDocument } from "../../../types/__mocks__/CreateFilledDocumentBody.mock";
 import { fciLoadQtspFilledDocument } from "../../../store/actions";
-import { CreateFilledDocumentBody } from "../../../../../../definitions/fci/CreateFilledDocumentBody";
-import { handleCreateFilledDocument } from "../handleCreateFilledDocument";
+import { CreateFilledDocument } from "../../../../../../definitions/fci/CreateFilledDocument";
+import {
+  filledDocumentPollWatcher,
+  handleCreateFilledDocument
+} from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
+import { SessionToken } from "../../../../../types/SessionToken";
 
-const mockedPayload: CreateFilledDocumentBody = {
-  document_url: "https://mockedUrl"
+const mockedPayload: CreateFilledDocument = {
+  document_url: "https://mockedUrl" as NonEmptyString
 };
 
 const successResponse = {
@@ -28,20 +33,36 @@ describe("handleCreateFilledDocument", () => {
     payload: mockedPayload
   };
   it("Should dispatch fciLoadQtspFilledDocument.success with the response payload if the response is right and the status code is 200", () => {
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
       .call(mockBackendFciClient, {
-        body: loadAction.payload
+        body: loadAction.payload,
+        Bearer: "Bearer mockedToken"
       })
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
       .next()
+      .call(filledDocumentPollWatcher, qtspFilledDocument.filled_document_url)
+      .next()
       .isDone();
   });
   it("Should dispatch fciLoadQtspFilledDocument.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
-      .call(mockBackendFciClient, { body: loadAction.payload })
+      .call(mockBackendFciClient, {
+        body: loadAction.payload,
+        Bearer: "Bearer mockedToken"
+      })
       .next(right(failureResponse))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -52,9 +73,17 @@ describe("handleCreateFilledDocument", () => {
       .isDone();
   });
   it("Should dispatch fciLoadQtspFilledDocument.failure with a fixed message as payload if the response left", () => {
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
-      .call(mockBackendFciClient, { body: loadAction.payload })
+      .call(mockBackendFciClient, {
+        body: loadAction.payload,
+        Bearer: "Bearer mockedToken"
+      })
       .next(left(new Error()))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -68,9 +97,17 @@ describe("handleCreateFilledDocument", () => {
   });
   it("Should dispatch fciLoadQtspFilledDocument.failure with the error message as payload if an exception is raised", () => {
     const mockedError = new Error("mockedErrorMessage");
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
-      .call(mockBackendFciClient, { body: loadAction.payload })
+      .call(mockBackendFciClient, {
+        body: loadAction.payload,
+        Bearer: "Bearer mockedToken"
+      })
       .throw(mockedError)
       .next(fciLoadQtspFilledDocument.failure(getNetworkError(mockedError)))
       .next()

@@ -3,9 +3,9 @@
  * TODO: The contextualHelp will be added in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
  */
 
-import { Container, Text as NBText, View } from "native-base";
+import { Container } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -15,6 +15,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../navigation/params/AppParamsList";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 
 type OwnProps = {
   navigation: IOStackNavigationProp<AppParamsList>;
@@ -23,9 +25,6 @@ type OwnProps = {
 type Props = OwnProps;
 
 const styles = StyleSheet.create({
-  textStyle: {
-    marginTop: 24
-  },
   container: {
     margin: 24
   }
@@ -65,9 +64,10 @@ class InvalidNfcConnectionScreen extends React.Component<Props, never> {
           <Container>
             <View style={styles.container}>
               <H1>{I18n.t("authentication.cie.nfc.noNfcConnectionTitle")}</H1>
-              <NBText style={styles.textStyle}>
+              <VSpacer size={24} />
+              <Body>
                 {I18n.t("authentication.cie.nfc.noNfcConnectionContent")}
-              </NBText>
+              </Body>
             </View>
           </Container>
         </BaseScreenComponent>

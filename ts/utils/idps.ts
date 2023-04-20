@@ -6,15 +6,6 @@ import { SpidIdp } from "../../definitions/content/SpidIdp";
 
 export type LocalIdpsFallback = SpidIdp & { localLogo?: ImageSourcePropType };
 
-export const testIdp: LocalIdpsFallback = {
-  id: "test",
-  name: "Test",
-  localLogo: require("../../img/spid.png"),
-  logo: "",
-  profileUrl: "",
-  isTestIdp: true
-};
-
 export const idps: ReadonlyArray<LocalIdpsFallback> = [
   {
     id: "arubaid",
@@ -24,18 +15,25 @@ export const idps: ReadonlyArray<LocalIdpsFallback> = [
     profileUrl: "https://selfcarespid.aruba.it"
   },
   {
+    id: "ehtid",
+    name: "EtnaHiTech",
+    logo: "",
+    localLogo: require("../../img/spid-idp-etnaid.png"),
+    profileUrl: "https://etnaid.eht.eu/"
+  },
+  {
+    id: "infocamereid",
+    name: "Infocamere",
+    logo: "",
+    localLogo: require("../../img/spid-idp-infocamereid.png"),
+    profileUrl: "https://selfcarespid.infocamere.it/spid-selfCare/#/login"
+  },
+  {
     id: "infocertid",
     name: "Infocert",
     logo: "",
     localLogo: require("../../img/spid-idp-infocertid.png"),
     profileUrl: "https://my.infocert.it/selfcare"
-  },
-  {
-    id: "intesaid",
-    name: "Intesa",
-    localLogo: require("../../img/spid-idp-intesaid.png"),
-    logo: "",
-    profileUrl: "https://spid.intesa.it"
   },
   {
     id: "lepidaid",
@@ -78,5 +76,12 @@ export const idps: ReadonlyArray<LocalIdpsFallback> = [
     logo: "",
     localLogo: require("../../img/spid-idp-timid.png"),
     profileUrl: "https://id.tim.it/identity/private/"
+  },
+  {
+    id: "teamsystemid",
+    name: "TeamSystem",
+    logo: "",
+    localLogo: require("../../img/spid-idp-teamsystemid.png"),
+    profileUrl: "https://identity.teamsystem.com/"
   }
 ];

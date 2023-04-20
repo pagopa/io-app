@@ -135,6 +135,8 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.1100)
+  - pagopa-io-react-native-crypto (0.2.1):
+    - React-Core
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
   - RCT-Folly (2021.06.28.00-v2):
@@ -494,9 +496,11 @@ PODS:
     - React
   - RNKeychain (4.0.5):
     - React
-  - RNQrGenerator (1.2.1):
+  - RNQrGenerator (1.3.0):
     - React
     - ZXingObjC
+  - RNReactNativeHapticFeedback (2.0.2):
+    - React-Core
   - RNReanimated (2.10.0):
     - DoubleConversion
     - FBLazyVector
@@ -544,7 +548,7 @@ PODS:
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
     - React-Core
-  - VisionCamera (2.15.1):
+  - VisionCamera (2.15.4):
     - React
     - React-callinvoker
     - React-Core
@@ -609,6 +613,7 @@ DEPENDENCIES:
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
+  - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -669,6 +674,7 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
+  - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
@@ -741,6 +747,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  pagopa-io-react-native-crypto:
+    :path: "../node_modules/@pagopa/io-react-native-crypto"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -859,6 +867,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNQrGenerator:
     :path: "../node_modules/rn-qr-generator"
+  RNReactNativeHapticFeedback:
+    :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -884,7 +894,7 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 0045cf98ca4a48af3bf7108d85b1c243740fa289
   FBReactNativeSpec: 82e74141263f8c962e288f5cd6b5d149cdc8afe1
   Flipper: 53851f5b89559bb6e251572589dc166d1f8d6e2e
@@ -897,7 +907,7 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: 51cf8b6f5b0931e251c57d4d60a15a1c2ba546aa
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMLKit: 0d7f5aa2f8a2f2ea9d849a05abdbe80974b0ec83
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
@@ -914,6 +924,7 @@ SPEC CHECKSUMS:
   MLKitVision: e87dc3f2e456a6ab32361ebd985e078dd2746143
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
@@ -974,7 +985,8 @@ SPEC CHECKSUMS:
   RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
-  RNQrGenerator: 0aa6c40e3f2e15a9cbaec9480b7028c339f89b66
+  RNQrGenerator: 0957859af25635e39d522a38af03b23b16e6d969
+  RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
@@ -984,7 +996,7 @@ SPEC CHECKSUMS:
   RNZendeskChat: ca87fe979b80836046e5632a88e5e5ed0ea75b87
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
-  VisionCamera: 51e731cb8cb61740f6cbd06dd9e818e2042a3d0e
+  VisionCamera: 5fc30ecebdfd0335d11123ec9511dcbc27ee4046
   Yoga: c2b1f2494060865ac1f27e49639e72371b1205fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5
@@ -1002,4 +1014,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

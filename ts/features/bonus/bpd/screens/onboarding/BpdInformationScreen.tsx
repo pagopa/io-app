@@ -5,7 +5,7 @@ import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { actionWithAlert } from "../../../bonusVacanze/components/alert/ActionWithAlert";
+import { actionWithAlert } from "../../../common/components/alert/ActionWithAlert";
 import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_BPD_TYPE } from "../../../bonusVacanze/utils/bonus";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";

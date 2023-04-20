@@ -4,14 +4,14 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, ListItem, Text as NBText, View } from "native-base";
+import { ListItem } from "native-base";
 import * as React from "react";
 import { FC } from "react";
 import {
+  View,
   Alert,
   FlatList,
   ListRenderItemInfo,
-  Platform,
   StyleSheet
 } from "react-native";
 import { SvgProps } from "react-native-svg";
@@ -25,11 +25,13 @@ import {
 } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
+import { IOBadge, IOBadgeCommonProps } from "../core/IOBadge";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
-import { statusColorMap } from "../SectionStatus";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 
@@ -67,14 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  descriptionPadding: { paddingRight: 24 },
-
-  badgeContainer: { height: 18, backgroundColor: IOColors.blue },
-  badgeText: {
-    fontSize: 12,
-    lineHeight: 18,
-    marginBottom: Platform.select({ android: 2, default: 0 })
-  }
+  descriptionPadding: { paddingRight: 24 }
 });
 
 export const showPaymentMethodIncomingAlert = () =>
@@ -98,6 +93,16 @@ const getBadgeStatus = (
   backendStatus: O.Option<BackendStatus>
 ): null | { badge: React.ReactNode; alert?: () => void } => {
   const itemSection = paymentMethod.section;
+
+  const badgeColorMap: Record<LevelEnum, IOBadgeCommonProps["labelColor"]> = {
+    [LevelEnum.normal]: "bluegreyDark",
+    [LevelEnum.critical]: "red",
+    // We use a `blue outline` variant for warning
+    // status because we don't have a specific
+    // warning badge yet
+    [LevelEnum.warning]: "blue"
+  };
+
   // no section
   if (itemSection === undefined) {
     return null;
@@ -121,16 +126,11 @@ const getBadgeStatus = (
         const badgeLabel = section.badge[locale];
         return {
           badge: (
-            <Badge
-              style={[
-                styles.badgeContainer,
-                { backgroundColor: statusColorMap[section.level] }
-              ]}
-            >
-              <NBText style={styles.badgeText} semibold={true}>
-                {badgeLabel}
-              </NBText>
-            </Badge>
+            <IOBadge
+              text={badgeLabel}
+              small={true}
+              labelColor={badgeColorMap[section.level]}
+            />
           ),
           alert:
             section.level === LevelEnum.critical
@@ -158,7 +158,7 @@ const renderListItem = (
           last={itemInfo.index === paymentMethodsLength}
         >
           {itemInfo.item.icon({ width: 20, height: 20 })}
-          <View hspacer />
+          <HSpacer size={16} />
           <View style={styles.flexColumn}>
             <View style={styles.row}>
               <View>
@@ -190,11 +190,11 @@ const renderListItem = (
         >
           <View style={styles.flexColumn}>
             <View>
-              <Badge style={styles.badgeContainer}>
-                <NBText style={styles.badgeText} semibold={true}>
-                  {I18n.t("wallet.methods.comingSoon")}
-                </NBText>
-              </Badge>
+              <IOBadge
+                text={I18n.t("wallet.methods.comingSoon")}
+                small={true}
+                labelColor={"white"}
+              />
               <H3 color={"bluegrey"} weight={"SemiBold"}>
                 {itemInfo.item.name}
               </H3>
@@ -215,13 +215,14 @@ const renderListItem = (
 };
 
 const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
-  <>
-    <View spacer={true} large={true} />
+  <View style={IOStyles.horizontalContentPadding}>
+    <VSpacer size={24} />
+
     <FlatList
       removeClippedSubviews={false}
       data={props.paymentMethods}
       keyExtractor={item => item.name}
-      ListFooterComponent={<View spacer />}
+      ListFooterComponent={<VSpacer size={16} />}
       renderItem={i =>
         renderListItem(
           i,
@@ -231,7 +232,7 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
         )
       }
     />
-  </>
+  </View>
 );
 const mapStateToProps = (state: GlobalState) => ({
   sectionStatus: backendStatusSelector(state)

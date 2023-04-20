@@ -4,7 +4,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciDownloadPreview } from "../actions";
+import { fciClearStateRequest, fciDownloadPreview } from "../actions";
 
 export type FciDownload = {
   path: string;
@@ -29,6 +29,7 @@ const fciDownloadPreviewReducer = (
     case getType(fciDownloadPreview.failure):
       return pot.toError(state, action.payload);
     case getType(fciDownloadPreview.cancel):
+    case getType(fciClearStateRequest):
       return initialState;
   }
   return state;

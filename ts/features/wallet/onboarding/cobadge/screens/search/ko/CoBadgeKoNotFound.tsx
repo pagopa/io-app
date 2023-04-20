@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -9,7 +9,6 @@ import { renderInfoRasterImage } from "../../../../../../../components/infoScree
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import { LightModalContext } from "../../../../../../../components/ui/LightModal";
-import View from "../../../../../../../components/ui/TextWithIcon";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
@@ -19,7 +18,7 @@ import {
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
-import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../../../bonus/common/components/TosBonusComponent";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

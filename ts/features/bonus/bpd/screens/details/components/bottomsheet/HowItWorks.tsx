@@ -1,5 +1,6 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import Markdown from "../../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../../utils/locale";
@@ -15,7 +16,7 @@ type Props = {
  */
 export const HowItWorks: React.FunctionComponent<Props> = props => (
   <View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <View style={{ flex: 1 }}>
       <Markdown>
         {I18n.t("bonus.bpd.details.howItWorks.body", {

@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { Link } from "../../../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
@@ -26,7 +26,7 @@ const findOutMore = "https://io.italia.it/cashback/faq/#n3_11";
  */
 export const WhyOtherCards = () => (
   <View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <View style={{ flex: 1 }}>
       <Body>
         {I18n.t(

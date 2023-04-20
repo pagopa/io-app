@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -58,13 +58,13 @@ const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <View style={styles.row}>
               <H1 style={styles.title}>{title}</H1>
             </View>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Body>{body}</Body>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Link onPress={() => openWebUrl(disclaimerLink)}>{cta}</Link>
           </View>
         </ScrollView>

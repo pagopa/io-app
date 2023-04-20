@@ -1,12 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -35,6 +35,7 @@ import {
   destinationsInfoFromVoucherRequest,
   isVoucherRequest
 } from "../../utils";
+import { dpr28Dec2000Url } from "../../../../../urls";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -65,8 +66,6 @@ const styles = StyleSheet.create({
 });
 
 // TODO: update with the correct disclaimer: https://pagopa.atlassian.net/browse/IASV-40
-const disclaimerLink =
-  "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
 
 const SummaryScreen = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation();
@@ -154,15 +153,15 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
       <SafeAreaView style={IOStyles.flex} testID={"SummaryScreen"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.summary.title")}</H1>
-          <View spacer />
+          <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.normal1")}
-            <Link onPress={() => openWebUrl(disclaimerLink)}>
+            <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
               {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.link")}
             </Link>
             {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.normal2")}
           </H4>
-          <View spacer />
+          <VSpacer size={16} />
           <View style={styles.borderedContainer}>
             <View>
               <View style={styles.row}>
@@ -171,7 +170,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                     "bonus.sv.voucherGeneration.summary.fields.residence.label"
                   )}
                 </H4>
-                <View hspacer small />
+                <HSpacer size={8} />
                 <H4 style={{ flexShrink: 1 }}>
                   {I18n.t(
                     "bonus.sv.voucherGeneration.summary.fields.residence.value"
@@ -184,20 +183,20 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                     "bonus.sv.voucherGeneration.summary.fields.category.label"
                   )}
                 </H4>
-                <View hspacer small />
+                <HSpacer size={8} />
                 <H4 style={{ flexShrink: 1 }}>
                   {mapCategory[voucherRequest.category]}
                 </H4>
               </View>
             </View>
           </View>
-          <View spacer />
+          <VSpacer size={16} />
 
           <H4 weight={"Regular"}>
             {I18n.t("bonus.sv.voucherGeneration.summary.subtitle2")}
           </H4>
 
-          <View spacer />
+          <VSpacer size={16} />
           <View style={styles.borderedContainer}>
             <View>
               <View style={styles.row}>
@@ -206,7 +205,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                     "bonus.sv.voucherGeneration.summary.fields.flightDate.label"
                   )}
                 </H4>
-                <View hspacer small />
+                <HSpacer size={8} />
                 <H4>
                   {formatDateAsLocal(voucherRequest.departureDate, true, true)}
                 </H4>

@@ -1,14 +1,16 @@
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { Image, SafeAreaView, StyleSheet } from "react-native";
+import { View, Image, SafeAreaView, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Link } from "../../../../components/core/typography/Link";
@@ -27,7 +29,7 @@ import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
   onBack?: () => void;
@@ -99,12 +101,12 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} extralarge={true} />
-                <NBText dark={true}>
+                <VSpacer size={40} />
+                <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
-                </NBText>
+                </Body>
                 <Link
                   weight={"SemiBold"}
                   numberOfLines={1}
@@ -118,9 +120,9 @@ const getTosFooter = (
             // return a markdown footer including both links reference (BPD)
             rU => (
               <>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <Markdown
                   cssStyle={CSS_STYLE}
                   extraBodyHeight={extraMarkdownBodyHeight}
@@ -191,9 +193,9 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           bordered={true}
           onPress={() => handleModalPress(url.url)}
         >
-          <NBText style={styles.urlButton}>{url.name}</NBText>
+          <NBButtonText style={styles.urlButton}>{url.name}</NBButtonText>
         </ButtonDefaultOpacity>
-        {idx !== urls.length - 1 && <View spacer={true} small={true} />}
+        {idx !== urls.length - 1 && <VSpacer size={8} />}
       </View>
     ));
     return <>{buttons}</>;
@@ -241,10 +243,10 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
               )}
             </View>
           </View>
-          <View spacer={true} large={true} />
-          <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
+          <VSpacer size={24} />
+          <Body color="bluegreyDark">{bonusTypeLocalizedContent.subtitle}</Body>
 
-          <View spacer={true} />
+          <VSpacer size={16} />
           <ItemSeparatorComponent noPadded={true} />
           <Markdown
             cssStyle={CSS_STYLE}
@@ -253,7 +255,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           >
             {bonusTypeLocalizedContent.content}
           </Markdown>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           {isMarkdownLoaded && renderUrls()}
           {getTosFooter(
             maybeBonusTos,

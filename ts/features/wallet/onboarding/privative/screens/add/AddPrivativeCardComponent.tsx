@@ -1,6 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import I18n from "../../../../../../i18n";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
@@ -22,6 +21,10 @@ import {
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import BasePrivativeCard from "../../../../privative/component/card/BasePrivativeCard";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   paymentInstrument: PaymentInstrument;
@@ -60,13 +63,13 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
 
   return (
     <BaseScreenComponent
-      customGoBack={<View hspacer={true} spacer={true} />}
+      customGoBack={<HSpacer size={16} />}
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"AddPrivativeComponent"}>
         <ScrollView style={IOStyles.flex}>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View
             style={[
               styles.container,
@@ -75,7 +78,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
             ]}
           >
             {!isBlocked ? <H1 style={styles.title}>{screenTitle}</H1> : null}
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <BasePrivativeCard
               loyaltyLogo={loyaltyLogo}
               gdoLogo={gdoLogo}
@@ -83,14 +86,14 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
               blocked={isCoBadgeOrPrivativeBlocked(props.paymentInstrument)}
               blurredNumber={props.paymentInstrument.panPartialNumber}
             />
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             {isBlocked && (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{blockedCard}</Body>
               </InfoBox>
             )}
           </View>
-          <View spacer />
+          <VSpacer size={16} />
         </ScrollView>
         {isBlocked ? (
           <FooterWithButtons

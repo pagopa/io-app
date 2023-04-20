@@ -1,13 +1,16 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fciLoadQtspClauses, fciAbortRequest } from "../actions";
+import { fciLoadQtspClauses, fciClearStateRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
-import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
+import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { GlobalState } from "../../../../store/reducers/types";
 
-export type FciQtspClausesState = pot.Pot<QtspClausesMetadata, NetworkError>;
+export type FciQtspClausesState = pot.Pot<
+  QtspClausesMetadataDetailView,
+  NetworkError
+>;
 
 const emptyState: FciQtspClausesState = pot.none;
 
@@ -22,7 +25,7 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciLoadQtspClauses.failure):
       return pot.toError(state, action.payload);
-    case getType(fciAbortRequest):
+    case getType(fciClearStateRequest):
       return emptyState;
   }
 
@@ -45,7 +48,7 @@ export const fciQtspPrivacyTextSelector = createSelector(
   qtspClausesMetadata =>
     pot.isSome(qtspClausesMetadata)
       ? qtspClausesMetadata.value.privacy_text
-      : []
+      : ""
 );
 
 export const fciQtspPrivacyUrlSelector = createSelector(
@@ -68,6 +71,12 @@ export const fciQtspTosUrlSelector = createSelector(
     pot.isSome(qtspClausesMetadata)
       ? qtspClausesMetadata.value.terms_and_conditions_url
       : ""
+);
+
+export const fciQtspNonceSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata) ? qtspClausesMetadata.value.nonce : ""
 );
 
 export default reducer;

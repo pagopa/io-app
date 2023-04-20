@@ -1,9 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -55,9 +55,9 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
           testID={"noticeIconFont"}
         />
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <InternationalCircuitIconsBar />
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         style={styles.button}
         bordered={true}

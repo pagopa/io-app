@@ -1,11 +1,11 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useContext } from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import doubtImage from "../../../../../img/features/euCovidCert/certificate_not_found.png";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../components/core/typography/H4";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
@@ -46,7 +46,7 @@ const CopyWithTitleItem: React.FC<{
       <H4 weight={"Bold"} testID={`${testId}ToCopy`} style={styles.shrink}>
         {toCopy}
       </H4>
-      <View hspacer={true} />
+      <HSpacer size={16} />
       <CopyButtonComponent textToCopy={toCopy} />
     </View>
   </>
@@ -72,13 +72,13 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
     <H4 weight={"Regular"}>
       {I18n.t("features.euCovidCertificate.ko.notFound.subtitle")}
     </H4>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.authorizationCode")}
       toCopy={currentAuthCode}
       testId={"authorizationCode"}
     />
-    <View spacer={true} />
+    <VSpacer size={16} />
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.messageIdentifier")}
       toCopy={messageId}

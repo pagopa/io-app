@@ -1,12 +1,13 @@
 import * as React from "react";
-import { ListItem, View } from "native-base";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { ListItem } from "native-base";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { H4 } from "../../core/typography/H4";
 import { H5 } from "../../core/typography/H5";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { WithTestID } from "../../../types/WithTestID";
+import { VSpacer } from "../../core/spacer/Spacer";
 
 type Props = WithTestID<{
   isFirst: boolean;
@@ -53,7 +54,7 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
     <View style={styles.contentContainer}>
       <View style={[styles.row, IOStyles.flex]}>
         <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View style={styles.paymentMethodInfo}>
           <H4 weight={"SemiBold"} color={"bluegreyDark"} numberOfLines={1}>
             {title}

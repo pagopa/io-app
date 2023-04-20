@@ -7,23 +7,22 @@ import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 import { LegalMessageWithContent } from "../../../../../definitions/backend/LegalMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import {
+  UIAttachment,
+  UIAttachmentId,
+  UIMessageId
+} from "../../../../store/reducers/entities/messages/types";
 import { Byte } from "../../../../types/digitalInformationUnit";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendMvlClient } from "../../api/backendMvl";
 import { mvlDetailsLoad } from "../../store/actions";
-import {
-  Mvl,
-  MvlAttachment,
-  MvlAttachmentId,
-  MvlId
-} from "../../types/mvlData";
+import { Mvl, MvlId } from "../../types/mvlData";
 
 const generateAttachmentUrl = (
   messageId: string,
-  attachmentId: MvlAttachmentId
+  attachmentId: UIAttachmentId
 ) =>
   `${apiUrlPrefix}/api/v1/legal-messages/${messageId}/attachments/${attachmentId}`;
 
@@ -35,17 +34,18 @@ const generateAttachmentUrl = (
 const convertMvlAttachment = (
   attachment: Attachment,
   messageId: UIMessageId
-): MvlAttachment =>
+): UIAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
     messageId,
-    id: attachment.id as MvlAttachmentId,
+    id: attachment.id as UIAttachmentId,
     displayName: attachment.name,
     contentType: attachment.content_type.toLowerCase(),
     resourceUrl: {
-      href: generateAttachmentUrl(messageId, attachment.id as MvlAttachmentId)
+      href: generateAttachmentUrl(messageId, attachment.id as UIAttachmentId)
     },
-    size: (attachment as unknown as { size: Byte }).size
+    size: (attachment as unknown as { size: Byte }).size,
+    category: "MVL"
   });
 
 /**

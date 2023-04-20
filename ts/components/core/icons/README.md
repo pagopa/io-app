@@ -29,6 +29,19 @@ export const IOIcons = {
   …
 }
 ```
+Add the key to the relative icon set:
+```ts
+export const IONavIcons = {
+  navMessages,
+  navWallet,
+  navDocuments,
+  navServices,
+  navProfile,
+  // New icon
+  navNewIcon
+} as const;
+```
+
 You can add the recently added icon with the following declaration:
 ```jsx
 // Default size: 24×24px
@@ -38,5 +51,5 @@ You can add the recently added icon with the following declaration:
 
 ## View all the available icons
 There are two ways:
-- In the app, go to the `Profile → UI Showroom` (you must enable `Debug Mode`)
+- In the app, go to the `Profile → Design System → Icons` (you must enable `Debug Mode`)
 - In the repository, go to the `svg/originals` subfolder

@@ -1,10 +1,10 @@
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import IconFont from "../../../../../../components/ui/IconFont";
 import themeVariables from "../../../../../../theme/variables";
-import { bonusVacanzeStyle } from "../../../components/Styles";
-import { activateBonusStyle } from "./Style";
 
 type Props = {
   text: string;
@@ -33,17 +33,19 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
       style={[
         styles.verticalPadding,
         styles.discrepanciesBox,
-        bonusVacanzeStyle.row,
-        bonusVacanzeStyle.horizontalPadding
+        IOStyles.row,
+        IOStyles.horizontalContentPadding
       ]}
     >
       <IconFont name={"io-notice"} size={iconSize} />
-      <View hspacer={true} />
-      <NBText style={activateBonusStyle.boxText} dark={true}>
-        <NBText bold={true} style={activateBonusStyle.boxText} dark={true}>
-          {`${props.attention} `}
-        </NBText>
-        {props.text}
-      </NBText>
+      <HSpacer size={16} />
+      <View style={IOStyles.flex}>
+        <Body>
+          <Body weight="SemiBold" color="bluegreyDark">
+            {`${props.attention} `}
+          </Body>
+          {props.text}
+        </Body>
+      </View>
     </View>
   );

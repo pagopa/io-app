@@ -36,10 +36,8 @@ describe("persistedPreferences reducer/selectors", () => {
     let noChangesState: GlobalState = notEnabledState;
     // for these actions isMixpanelEnabled must not change
     [
-      logoutRequest({ keepUserData: true }),
-      logoutRequest({ keepUserData: false }),
-      logoutSuccess({ keepUserData: true }),
-      logoutSuccess({ keepUserData: false }),
+      logoutRequest(),
+      logoutSuccess(),
       sessionExpired(),
       sessionInvalid(),
       clearCache()

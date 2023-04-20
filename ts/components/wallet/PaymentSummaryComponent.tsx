@@ -1,11 +1,13 @@
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
-import { IOColors } from "../core/variables/IOColors";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
+import { IOStyles } from "../core/variables/IOStyles";
+import { H3 } from "../core/typography/H3";
 
 type Props = Readonly<{
   title: string;
@@ -25,20 +27,6 @@ export type paymentStatusType = {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 18,
-    lineHeight: 24
-  },
-  grey: {
-    color: IOColors.grey
-  },
-  bluegreyLight: {
-    color: IOColors.bluegreyLight
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
   column: {
     flexDirection: "column",
     flex: 1,
@@ -60,16 +48,17 @@ export const PaymentSummaryComponent = (props: Props) => {
     }
     return (
       <React.Fragment>
-        <NBText style={props.dark && styles.bluegreyLight}>{label}</NBText>
-        <NBText
-          bold={true}
-          dark={!props.dark}
-          white={props.dark}
+        <Body color={props.dark ? "bluegreyLight" : "bluegreyDark"}>
+          {label}
+        </Body>
+        <Body
+          weight="SemiBold"
+          color={props.dark ? "white" : "bluegreyDark"}
           selectable={true}
         >
           {value}
-        </NBText>
-        <View spacer={true} />
+        </Body>
+        <VSpacer size={16} />
       </React.Fragment>
     );
   };
@@ -78,30 +67,27 @@ export const PaymentSummaryComponent = (props: Props) => {
     <React.Fragment>
       <View style={styles.paymentOutcome}>
         <BadgeComponent color={props.paymentStatus.color} />
-        <View hspacer={true} small={true} />
-        <NBText>{props.paymentStatus.description}</NBText>
+        <HSpacer size={8} />
+        <Body>{props.paymentStatus.description}</Body>
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
     </React.Fragment>
   );
 
   return (
     <React.Fragment>
-      <NBText
-        bold={true}
-        style={[styles.title, props.dark ? styles.bluegreyLight : styles.grey]}
-      >
+      <H3 weight="Bold" color={props.dark ? "bluegreyLight" : "bluegrey"}>
         {props.title}
-      </NBText>
+      </H3>
 
       {/** screen title */}
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
 
       {paymentStatus}
 
-      <View style={styles.row}>
+      <View style={IOStyles.rowSpaceBetween}>
         <View style={styles.column}>
           {renderItem(I18n.t("wallet.recipient"), props.recipient)}
 

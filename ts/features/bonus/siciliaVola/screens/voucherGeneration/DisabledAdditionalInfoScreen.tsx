@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -21,13 +21,12 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel
 } from "../../store/actions/voucherGeneration";
+import { dpr28Dec2000Url } from "../../../../../urls";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 // TODO: update with the correct disclaimer: https://pagopa.atlassian.net/browse/IASV-40
-const disclaimerLink =
-  "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.sv.headerTitle"),
@@ -73,12 +72,12 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
       >
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{title}</H1>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <DeclarationEntry
             text={
               <Body>
                 {disclaimer.normal}
-                <Link onPress={() => openWebUrl(disclaimerLink)}>
+                <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
                   {disclaimer.link}
                 </Link>
               </Body>

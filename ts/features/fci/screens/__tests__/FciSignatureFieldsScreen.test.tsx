@@ -5,13 +5,13 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { Document } from "../../../../../definitions/fci/Document";
+import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import FciSignatureFieldsScreen from "../valid/FciSignatureFieldsScreen";
 import { fciSignatureRequestFromId } from "../../store/actions";
 import { getSectionListData } from "../../utils/signatureFields";
 
 type Props = {
-  documentId: Document["id"];
+  documentId: DocumentDetailView["id"];
   currentDoc: number;
 };
 

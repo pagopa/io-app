@@ -3,16 +3,11 @@ import { EmailAddress } from "../../../../../definitions/backend/EmailAddress";
 import { message_1 } from "../../../../__mocks__/message";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
-import { Byte } from "../../../../types/digitalInformationUnit";
+import { Mvl, MvlBody, MvlData, MvlId, MvlMetadata } from "../mvlData";
 import {
-  Mvl,
-  MvlAttachment,
-  MvlAttachmentId,
-  MvlBody,
-  MvlData,
-  MvlId,
-  MvlMetadata
-} from "../mvlData";
+  mockOtherAttachment,
+  mockPdfAttachment
+} from "../../../../__mocks__/attachment";
 
 export const mvlMockId = "mockId" as UIMessageId;
 
@@ -34,24 +29,6 @@ export const mvlMockBody: MvlBody = {
     "Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
 };
 
-export const mvlMockPdfAttachment: MvlAttachment = {
-  messageId: message_1.id as UIMessageId,
-  id: "1" as MvlAttachmentId,
-  displayName: "invoice.pdf",
-  contentType: "application/pdf",
-  size: 1959520 as Byte,
-  resourceUrl: { href: "https://www.invoicepdf.com/invoice.pdf" }
-};
-
-export const mvlMockOtherAttachment: MvlAttachment = {
-  messageId: message_1.id as UIMessageId,
-  id: "2" as MvlAttachmentId,
-  displayName: "image.png",
-  contentType: "other",
-  size: 125952 as Byte,
-  resourceUrl: { href: "htts://www.randomImage.com/image.png" }
-};
-
 export const mvlMockMetadata: MvlMetadata = {
   id: "opec2951.20210927163605.31146.306.1.66@pec.poc.it" as MvlId,
   timestamp: new Date("2021-11-09T01:30:00.000Z"),
@@ -65,7 +42,7 @@ export const mvlMockMetadata: MvlMetadata = {
 
 export const mvlMockData: MvlData = {
   body: mvlMockBody,
-  attachments: [mvlMockPdfAttachment, mvlMockOtherAttachment],
+  attachments: [mockPdfAttachment, mockOtherAttachment],
   metadata: mvlMockMetadata
 };
 

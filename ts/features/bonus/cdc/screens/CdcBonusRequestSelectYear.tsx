@@ -1,9 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { View } from "native-base";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -27,6 +26,7 @@ import {
   confirmButtonProps
 } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const CdcBonusRequestSelectYear = () => {
   const navigation =
@@ -73,11 +73,11 @@ const CdcBonusRequestSelectYear = () => {
       <SafeAreaView style={IOStyles.flex} testID={"CdcBonusRequestSelectYear"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectYear.header")}</H1>
-          <View spacer small />
+          <VSpacer size={8} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.cdc.bonusRequest.selectYear.body")}
           </H4>
-          <View spacer large />
+          <VSpacer size={24} />
           {[...activableBonus].sort(compareSelectedBonusByYear).map(b => (
             <View key={b.year}>
               <View style={{ flexDirection: "row" }}>
@@ -89,10 +89,10 @@ const CdcBonusRequestSelectYear = () => {
                     setYears(updatedYears);
                   }}
                 />
-                <View hspacer />
+                <HSpacer size={16} />
                 <H4 weight={"Regular"}>{b.year}</H4>
               </View>
-              <View spacer large />
+              <VSpacer size={24} />
             </View>
           ))}
         </ScrollView>

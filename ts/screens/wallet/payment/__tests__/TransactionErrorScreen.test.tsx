@@ -121,6 +121,20 @@ describe("TransactionErrorScreen", () => {
     expect(component.queryByTestId("closeButtonCancel")).toBeDefined();
   });
 
+  it("Should render NOT_FOUND screen", () => {
+    const { component } = renderComponent(
+      some(Detail_v2Enum.PAA_PAGAMENTO_SCONOSCIUTO)
+    );
+    expect(component.queryByTestId("error-code-copy-component")).toBeNull();
+    expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(
+      I18n.t("wallet.errors.NOT_FOUND")
+    );
+    expect(component.queryByTestId("not-found-subtitle")).toHaveTextContent(
+      I18n.t("wallet.errors.NOT_FOUND_SUBTITLE").replace("\n", " ")
+    );
+    expect(component.queryByTestId("closeButtonConfirm")).toBeDefined();
+  });
+
   it("Should render EXPIRED screen", () => {
     const { component } = renderComponent(
       some(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO)

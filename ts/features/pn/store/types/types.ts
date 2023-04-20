@@ -1,7 +1,7 @@
 import * as t from "io-ts";
+import { IsoDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { MvlAttachment } from "../../../mvl/types/mvlData";
-import { UTCISODateFromString } from "../../utils/dates";
+import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 
 export type NotificationStatus = t.TypeOf<typeof NotificationStatus>;
 export const NotificationStatus = t.string;
@@ -10,7 +10,7 @@ export type TimelineElementId = t.TypeOf<typeof TimelineElementId>;
 export const TimelineElementId = t.string;
 
 const NotificationStatusHistoryElementR = t.interface({
-  activeFrom: UTCISODateFromString,
+  activeFrom: IsoDateFromString,
 
   relatedTimelineElements: t.readonlyArray(
     TimelineElementId,
@@ -86,5 +86,5 @@ export type FullReceivedNotification = t.TypeOf<
 export type PNMessage = FullReceivedNotification &
   Readonly<{
     serviceId: ServiceId;
-    attachments?: ReadonlyArray<MvlAttachment>;
+    attachments?: ReadonlyArray<UIAttachment>;
   }>;

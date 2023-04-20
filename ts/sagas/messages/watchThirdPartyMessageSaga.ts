@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -15,6 +16,7 @@ import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
 import { mixpanelTrack } from "../../mixpanel";
 import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { trackThirdPartyMessageAttachmentCount } from "../../utils/analytics";
 import { getError } from "../../utils/errors";
 
 function* getThirdPartyMessage(
@@ -57,13 +59,10 @@ function* trackSuccess(
   const message = pot.toUndefined(yield* select(getMessageById, messageId));
 
   if (message?.category.tag === "PN") {
-    const pnMessage = toPNMessage(messageFromApi);
+    const pnMessageOption = toPNMessage(messageFromApi);
 
-    if (pnMessage === undefined) {
-      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
-        jsonDecodeFailed: true
-      });
-    } else {
+    if (O.isSome(pnMessageOption)) {
+      const pnMessage = pnMessageOption.value;
       void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
         notificationLastStatus:
           pnMessage.notificationStatusHistory[
@@ -71,7 +70,15 @@ function* trackSuccess(
           ].status,
         hasAttachments: (pnMessage.attachments?.length ?? 0) > 0
       });
+    } else {
+      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
+        jsonDecodeFailed: true
+      });
     }
+  } else {
+    const attachments = messageFromApi.third_party_message.attachments;
+    const attachmentCount = attachments?.length ?? 0;
+    trackThirdPartyMessageAttachmentCount(attachmentCount);
   }
 }
 

@@ -231,6 +231,7 @@ export type ErrorTypes =
   | "EXPIRED"
   | "ONGOING"
   | "DUPLICATED"
+  | "NOT_FOUND"
   | "UNCOVERED";
 
 export type DetailV2Keys = keyof typeof Detail_v2Enum;
@@ -257,8 +258,7 @@ const dataSet = new Set<DetailV2Keys>([
   "PPT_SINTASSI_EXTRAXSD",
   "PPT_SINTASSI_XSD",
   "PPT_DOMINIO_SCONOSCIUTO",
-  "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
-  "PAA_PAGAMENTO_SCONOSCIUTO"
+  "PPT_STAZIONE_INT_PA_SCONOSCIUTA"
 ]);
 
 const ecSet = new Set<DetailV2Keys>([
@@ -320,6 +320,8 @@ export const getV2ErrorMainType = (
     case "PAA_PAGAMENTO_DUPLICATO":
     case "PPT_PAGAMENTO_DUPLICATO":
       return "DUPLICATED";
+    case "PAA_PAGAMENTO_SCONOSCIUTO":
+      return "NOT_FOUND";
     default:
       return "UNCOVERED";
   }

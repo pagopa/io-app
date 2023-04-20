@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Monospace } from "../../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -31,7 +31,7 @@ const CgnOwnershipInformation = (props: Props): React.ReactElement => (
     {pot.isSome(props.currentProfile) && (
       <>
         <H4>{I18n.t("bonus.cgn.detail.ownership")}</H4>
-        <View spacer />
+        <VSpacer size={16} />
         <View style={styles.rowBlock}>
           <H4
             weight={"Regular"}
@@ -40,7 +40,7 @@ const CgnOwnershipInformation = (props: Props): React.ReactElement => (
           >{`${props.currentProfile.value.name} ${props.currentProfile.value.family_name}`}</H4>
           <Monospace>{props.currentProfile.value.fiscal_code}</Monospace>
         </View>
-        <View spacer />
+        <VSpacer size={16} />
       </>
     )}
   </>

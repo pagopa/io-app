@@ -17,6 +17,22 @@ const matchMarkdownLink = /!?\[([^\]]*)\]\(([^\\)]+)\)/g;
 const getMatchedLinks = (text: string) => text.match(matchMarkdownLink) ?? [];
 
 /**
+ * This function returns the replacement url
+ * for the tag DOCUMENT_URL and PRIVACY_URL
+ * otherwise returns the tag because
+ * it's a custom link
+ */
+const getOrReplaceTagWithLink = (tagLink: string, replacementUrl: string) => {
+  switch (tagLink) {
+    case "@DOCUMENT_URL":
+    case "@PRIVACY_URL":
+      return replacementUrl;
+    default:
+      return tagLink;
+  }
+};
+
+/**
  * This component renders a text with markdown links
  */
 const LinkedText = (props: Props) => {
@@ -48,12 +64,11 @@ const LinkedText = (props: Props) => {
       const splitted = matched.split(matchMarkdownLink);
       const textToBeLinked = splitted[1];
       const url = splitted[2];
-      // TODO: add support for other TAG links https://pagopa.atlassian.net/browse/SFEQS-1230
       return (
         <Link
           key={index}
           onPress={() =>
-            onPress(url !== "(@DOCUMENT_URL)" ? props.replacementUrl : url)
+            onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
           }
         >
           {textToBeLinked}

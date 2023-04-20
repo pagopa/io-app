@@ -1,5 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
+import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
 import { ShadowBox } from "./ShadowBox";
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 export const BpdBaseShadowBoxLayout: React.FunctionComponent<Props> = props => (
   <ShadowBox>
     {props.row1}
-    <View spacer={true} xsmall={true} />
+    <VSpacer size={4} />
     {props.row2}
     {props.row3}
   </ShadowBox>

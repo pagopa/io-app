@@ -5,8 +5,11 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { IDPayWalletClient } from "../../../wallet/api/client";
-import { idpayInitiativeGet, IdPayInitiativeGetPayloadType } from "../store";
+import { IDPayClient } from "../../../common/api/client";
+import {
+  idpayInitiativeGet,
+  IdPayInitiativeGetPayloadType
+} from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative details
@@ -16,7 +19,7 @@ import { idpayInitiativeGet, IdPayInitiativeGetPayloadType } from "../store";
  */
 
 export function* handleGetInitiativeDetails(
-  getInitiativeDetails: IDPayWalletClient["getWalletDetail"],
+  getInitiativeDetails: IDPayClient["getWalletDetail"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdPayInitiativeGetPayloadType

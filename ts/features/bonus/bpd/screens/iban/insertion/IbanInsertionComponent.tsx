@@ -1,12 +1,12 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { Platform, SafeAreaView, ScrollView } from "react-native";
+import { View, Platform, SafeAreaView, ScrollView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { makeFontStyleObject } from "../../../../../../components/core/fonts";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
@@ -61,14 +61,14 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <H1>{title}</H1>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Body>
               {body1}
               <H4>{body1Bold}</H4>
             </Body>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <H5>{ibanDescription}</H5>
             <LabelledItem
               isValid={pipe(
@@ -96,8 +96,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
                 style: IBANInputStyle
               }}
             />
-            <View spacer={true} large={true} />
-            <View spacer={true} small={true} />
+            <VSpacer size={32} />
             <Body>{body2}</Body>
           </View>
         </ScrollView>

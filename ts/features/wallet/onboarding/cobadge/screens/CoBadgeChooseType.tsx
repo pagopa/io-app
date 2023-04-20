@@ -1,8 +1,9 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import * as O from "fp-ts/lib/Option";
-import { Content, ListItem, View } from "native-base";
+import { Content, ListItem } from "native-base";
 import * as React from "react";
 import {
+  View,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
@@ -10,6 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -139,16 +141,16 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex} testID="coBadgeChooseType">
         <Content style={IOStyles.flex}>
           <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <H4 weight={"Regular"} color={"bluegreyDark"}>
             {I18n.t("wallet.onboarding.coBadge.chooseType.description")}
           </H4>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <FlatList
             removeClippedSubviews={false}
             data={addCardPath}
             keyExtractor={item => item.path}
-            ListFooterComponent={<View spacer />}
+            ListFooterComponent={<VSpacer size={16} />}
             renderItem={i => renderListItem(i)}
           />
         </Content>

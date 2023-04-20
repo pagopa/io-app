@@ -1,16 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import {
   DiscountCodeType,
   DiscountCodeTypeEnum
 } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -95,7 +95,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                     width: CATEGORY_ICON_SIZE,
                     fill: IOColors.bluegrey
                   })}
-                  <View hspacer small />
+                  <HSpacer size={8} />
                   <H5
                     weight={"SemiBold"}
                     color={"bluegrey"}
@@ -109,7 +109,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           )
         )}
       </View>
-      <View spacer />
+      <VSpacer size={16} />
       {discount.description && (
         <>
           <H3 accessible={true} accessibilityRole={"header"}>
@@ -118,7 +118,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           <H4 weight={"Regular"} testID={"discount-description"}>
             {discount.description}
           </H4>
-          <View spacer />
+          <VSpacer size={16} />
         </>
       )}
       <CgnDiscountCodeComponent
@@ -136,7 +136,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         discount.endDate,
         I18n.t("global.dateFormats.shortFormat")
       )}`}</H4>
-      <View spacer />
+      <VSpacer size={16} />
       {discount.condition && (
         <>
           <H3 accessible={true} accessibilityRole={"header"}>
@@ -145,7 +145,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           <H4 weight={"Regular"} testID={"discount-condition"}>
             {discount.condition}
           </H4>
-          <View spacer />
+          <VSpacer size={16} />
         </>
       )}
       {discount.landingPageUrl && discount.landingPageReferrer && (
@@ -194,7 +194,7 @@ export const CgnDiscountDetailHeader = ({
     {discount.discount && (
       <>
         <CgnDiscountValueBox value={discount.discount} small />
-        <View hspacer />
+        <HSpacer size={16} />
       </>
     )}
     <H3 style={IOStyles.flex} testID={"discount-name"}>

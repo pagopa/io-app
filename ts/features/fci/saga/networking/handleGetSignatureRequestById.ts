@@ -3,24 +3,27 @@ import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BackendFciClient } from "../../api/backendFci";
+import { FciClient } from "../../api/backendFci";
 import { fciSignatureRequestFromId } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
+import { SessionToken } from "../../../../types/SessionToken";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 /*
  * A saga to load a FCI signature request.
  */
 export function* handleGetSignatureRequestById(
-  getSignatureDetailViewById: ReturnType<
-    typeof BackendFciClient
-  >["getSignatureDetailViewById"],
+  getSignatureRequestById: FciClient["getSignatureRequestById"],
+  bearerToken: SessionToken,
   action: ActionType<typeof fciSignatureRequestFromId["request"]>
 ): SagaIterator {
   try {
-    const getSignatureDetailViewByIdResponse = yield* call(
-      getSignatureDetailViewById,
-      { id: action.payload }
-    );
+    const getSignatureDetailViewByIdResponse: SagaCallReturnType<
+      typeof getSignatureRequestById
+    > = yield* call(getSignatureRequestById, {
+      id: action.payload,
+      Bearer: `Bearer ${bearerToken}`
+    });
 
     if (E.isLeft(getSignatureDetailViewByIdResponse)) {
       throw Error(
@@ -41,6 +44,6 @@ export function* handleGetSignatureRequestById(
       `response status ${getSignatureDetailViewByIdResponse.right.status}`
     );
   } catch (e) {
-    return fciSignatureRequestFromId.failure(getNetworkError(e));
+    yield* put(fciSignatureRequestFromId.failure(getNetworkError(e)));
   }
 }

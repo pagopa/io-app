@@ -9,8 +9,9 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import {
   fetchPaymentManagerLongTimeout,
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL,
+  idPayApiBaseUrl,
+  idPayApiUatBaseUrl,
+  idPayTestToken,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../../config";
@@ -28,7 +29,7 @@ import {
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
 import { SessionManager } from "../../../../../utils/SessionManager";
-import { createIDPayWalletClient } from "../../../wallet/api/client";
+import { createIDPayClient } from "../../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import {
   createIDPayInitiativeConfigurationMachine,
@@ -68,8 +69,7 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const { bpdToken, walletToken } = sessionInfo.value;
 
-  const idPayToken =
-    IDPAY_API_TEST_TOKEN !== undefined ? IDPAY_API_TEST_TOKEN : bpdToken;
+  const idPayToken = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
 
   const paymentManagerClient = PaymentManagerClient(
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix,
@@ -93,10 +93,12 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
-  const walletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
+  const idPayClient = createIDPayClient(
+    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
+  );
 
   const services = createServicesImplementation(
-    walletClient,
+    idPayClient,
     paymentManagerClient,
     pmSessionManager,
     idPayToken,
@@ -120,4 +122,8 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 const useConfigurationMachineService = () =>
   React.useContext(ConfigurationMachineContext);
 
-export { IDPayConfigurationMachineProvider, useConfigurationMachineService };
+export {
+  IDPayConfigurationMachineProvider,
+  useConfigurationMachineService,
+  ConfigurationMachineContext
+};

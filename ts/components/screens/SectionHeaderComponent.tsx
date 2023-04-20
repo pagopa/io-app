@@ -6,15 +6,16 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import {
+  View,
   AccessibilityRole,
   StyleProp,
   StyleSheet,
   ViewStyle
 } from "react-native";
 import customVariables from "../../theme/variables";
+import { VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
 import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
@@ -79,7 +80,7 @@ export default class SectionHeaderComponent extends React.Component<Props> {
         </H2>
         <>
           {rightItem}
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
         </>
       </View>
     );

@@ -5,9 +5,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   BackHandler,
   NativeEventSubscription,
@@ -18,10 +19,7 @@ import { IOColors } from "../components/core/variables/IOColors";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
-import {
-  navigateBack,
-  navigateToEmailInsertScreen
-} from "../store/actions/navigation";
+import { navigateBack } from "../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -40,7 +38,10 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { isOnboardingCompleted } from "../utils/navigation";
+import { VSpacer } from "./core/spacer/Spacer";
+import { Body } from "./core/typography/Body";
+import { withLightModalContext } from "./helpers/withLightModalContext";
+import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -50,15 +51,17 @@ import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
+import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
 
 type OwnProp = {
-  onClose: () => void;
+  isOnboarding?: boolean;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  OwnProp;
+  LightModalContextInterface &
+  React.PropsWithChildren<OwnProp>;
 
 type State = {
   ctaSendEmailValidationText: string;
@@ -70,19 +73,12 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  center: {
-    alignSelf: "center"
-  },
   error: {
     backgroundColor: customVariables.brandDanger,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  validated: {
-    paddingTop: 8,
-    paddingHorizontal: 30
   }
 });
 
@@ -112,7 +108,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   private handleHardwareBack = () => {
-    if (isOnboardingCompleted()) {
+    if (!this.props.isOnboarding) {
       this.props.navigateBack();
     }
     return true;
@@ -162,12 +158,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     this.props.dispatchAcknowledgeOnEmailValidation(O.none);
     this.props.reloadProfile();
-    if (!isOnboardingCompleted()) {
+    if (this.props.isOnboarding) {
       this.props.acknowledgeEmailInsert();
     } else {
       this.props.navigateBack();
     }
-    this.props.onClose();
+    this.props.hideModal();
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -220,7 +216,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private renderErrorBanner = (
     <View style={styles.error}>
-      <NBText white={true}>{I18n.t("global.actions.retry")}</NBText>
+      <Body color="white">{I18n.t("global.actions.retry")}</Body>
       <View>
         <IconFont
           name={"io-close"}
@@ -285,7 +281,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   };
 
   private renderFooter = () => {
-    const onboardingCompleted = isOnboardingCompleted();
     // if the email has been validated
     // show only a button to continuer
     if (this.state.emailHasBeenValidate) {
@@ -307,7 +302,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     return (
       <>
         <SectionStatusComponent sectionKey={"email_validation"} />
-        <View footer={true}>
+        <View style={IOStyles.footer}>
           <BlockButtons
             type={"SingleButton"}
             leftButton={{
@@ -320,7 +315,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 this.state.isCtaSentEmailValidationDisabled
             }}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <BlockButtons
             type={"TwoButtonsInlineThirdInverted"}
             leftButton={{
@@ -328,21 +323,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               bordered: true,
               disabled: this.state.isLoading,
               onPress: () => {
-                /**
-                 * TODO: this is a temp workaround to complete porting a react-navigation v5
-                 * without a full rework of all the related email / isOnboardingCompleted screens
-                 * Will be removed in https://pagopa.atlassian.net/browse/IAI-139 . We want:
-                 * - Have a common component with the shared logic
-                 * - Compose the common logic with the navigation stack dependent logic and isolate the dependent navigation logic
-                 */
-                if (
-                  NavigationService.getCurrentRouteName() === ROUTES.WALLET_HOME
-                ) {
+                if (this.props.isOnboarding) {
+                  NavigationService.navigate(ROUTES.ONBOARDING, {
+                    screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+                  });
+                } else {
                   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
                     screen: ROUTES.INSERT_EMAIL_SCREEN
                   });
-                } else {
-                  navigateToEmailInsertScreen();
                 }
               },
               title: I18n.t("email.edit.title")
@@ -352,7 +340,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               primary: true,
               onPress: this.handleOnClose,
               disabled: this.state.isLoading,
-              title: onboardingCompleted
+              title: !this.props.isOnboarding
                 ? I18n.t("global.buttons.ok")
                 : I18n.t("global.buttons.continue")
             }}
@@ -368,8 +356,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       O.getOrElse(() => EMPTY_EMAIL)
     );
 
-    const onboardingCompleted = isOnboardingCompleted();
-
     const icon = this.state.emailHasBeenValidate
       ? "io-email-validated"
       : "io-email-to-validate";
@@ -380,39 +366,42 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
-        {...(onboardingCompleted ? this.onMainProps : this.onBoardingProps)}
+        {...(!this.props.isOnboarding
+          ? this.onMainProps
+          : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
         <Content bounces={false}>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <IconFont
             name={icon}
             size={VALIDATION_ICON_WIDTH}
             color={customVariables.colorHighlight}
-            style={styles.center}
+            style={IOStyles.selfCenter}
           />
-          <View spacer={true} extralarge={true} />
-          <NBText alignCenter={true} bold={true}>
-            {title}
-          </NBText>
+          <VSpacer size={40} />
+          <View style={IOStyles.alignCenter}>
+            <Body weight="SemiBold">{title}</Body>
+          </View>
           {!this.state.emailHasBeenValidate ? (
             <Markdown
               onLoadEnd={this.handleOnContentLoadEnd}
               cssStyle={MARKDOWN_BODY_STYLE}
             >
-              {onboardingCompleted
+              {!this.props.isOnboarding
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
           ) : (
-            <View style={styles.validated}>
-              <NBText alignCenter={true}>
-                {I18n.t("email.validate.validated_ok")}
-              </NBText>
+            <View
+              style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}
+            >
+              <VSpacer size={8} />
+              <Body>{I18n.t("email.validate.validated_ok")}</Body>
             </View>
           )}
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
         </Content>
 
         {this.state.displayError && this.renderErrorBanner}
@@ -454,4 +443,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RemindEmailValidationOverlay);
+)(withLightModalContext(RemindEmailValidationOverlay));

@@ -1,10 +1,14 @@
-import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
+import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import I18n from "../../../../i18n";
 import {
   clausesByType,
   getAllTypes,
+  getClauseLabel,
   getSectionListData
 } from "../signatureFields";
+
+const emptyAttrs = {} as SignatureField["attrs"];
 
 const signatureFields: ReadonlyArray<SignatureField> = [
   {
@@ -12,28 +16,28 @@ const signatureFields: ReadonlyArray<SignatureField> = [
       title: "clause title 1",
       type: ClausesTypeEnum.REQUIRED
     },
-    attrs: {}
+    attrs: emptyAttrs
   },
   {
     clause: {
       title: "clause title 2",
       type: ClausesTypeEnum.UNFAIR
     },
-    attrs: {}
+    attrs: emptyAttrs
   },
   {
     clause: {
       title: "clause title 3",
       type: ClausesTypeEnum.OPTIONAL
     },
-    attrs: {}
+    attrs: emptyAttrs
   },
   {
     clause: {
       title: "clause title 4",
       type: ClausesTypeEnum.OPTIONAL
     },
-    attrs: {}
+    attrs: emptyAttrs
   }
 ];
 
@@ -105,6 +109,24 @@ describe("Test signatureFields utils", () => {
     it("it should returns an array with three items and two signature field OPTIONAL", () => {
       expect(getSectionListData(signatureFields).length).toBe(3);
       expect(getSectionListData(signatureFields)[2].data.length).toBe(2);
+    });
+  });
+
+  describe("Test getClauseLabel", () => {
+    it("it should returns the right text for REQUIRED type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.REQUIRED)).toStrictEqual(
+        I18n.t("features.fci.signatureFields.required")
+      );
+    });
+    it("it should returns the right text for OPTIONAL type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.OPTIONAL)).toStrictEqual(
+        I18n.t("features.fci.signatureFields.optional")
+      );
+    });
+    it("it should returns the right text for UNFAIR type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.UNFAIR)).toStrictEqual(
+        I18n.t("features.fci.signatureFields.unfair")
+      );
     });
   });
 });

@@ -1,12 +1,10 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
-import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
 import {
   UIMessageDetails,
-  UIMessageId,
-  WithUIMessageId
+  WithUIMessageId,
+  UIAttachment
 } from "../../../store/reducers/entities/messages/types";
-import { Byte } from "../../../types/digitalInformationUnit";
 
 /**
  * The content of the MVL with two possible representation
@@ -16,27 +14,7 @@ export type MvlBody = {
   plain: string;
 };
 
-export type MvlAttachmentId = string & IUnitTag<"MvlAttachmentId">;
-
 export type MvlId = string & IUnitTag<"MvlId">;
-
-/**
- * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
- */
-export type MvlAttachment = {
-  // the message ID that contains the attachment
-  messageId: UIMessageId;
-  // the ID of the attachment (only guaranteed to be unique per message)
-  id: MvlAttachmentId;
-  // a display name for the file
-  displayName: string;
-  // a generic content type for a file
-  contentType: string;
-  // size (in Byte) of the attachment, for display purpose
-  size?: Byte;
-  // The url that can be used to retrieve the resource
-  resourceUrl: ValidUrl;
-};
 
 /**
  * Additional metadata
@@ -62,7 +40,7 @@ export type MvlData = {
   // The body (content) that could be html (mandatory) or plain (optional)
   body: MvlBody;
   // The MVL could have some attachments with metadata and the url to download the resource
-  attachments: ReadonlyArray<MvlAttachment>;
+  attachments: ReadonlyArray<UIAttachment>;
   // Some additional metadata that should be represented
   metadata: MvlMetadata;
 };

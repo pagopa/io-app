@@ -4,7 +4,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
 <View
   style={
     Array [
-      Object {},
       Object {
         "paddingTop": 16,
       },
@@ -18,7 +17,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -32,16 +30,20 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <View
-    small={true}
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 8,
+      }
+    }
   />
   <View
-    style={Object {}}
     testID="otp-code-component"
   >
     <Text
@@ -52,12 +54,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       fontStyle={
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         }
       }
       style={
         Array [
           Object {
             "fontSize": 18,
+            "lineHeight": 22,
           },
           Object {
             "color": "#17324D",
@@ -86,7 +90,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Array [
-          Object {},
           Object {
             "flexDirection": "row",
           },
@@ -126,8 +129,11 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     </View>
   </View>
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     accessibilityRole="header"
@@ -137,12 +143,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -186,8 +194,11 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     07/02/2022 - 20/02/2022
   </Text>
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
 </View>
 `;
@@ -196,7 +207,6 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
 <View
   style={
     Array [
-      Object {},
       Object {
         "paddingTop": 16,
       },
@@ -210,7 +220,6 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -224,8 +233,11 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     accessibilityRole="header"
@@ -235,12 +247,14 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -284,8 +298,11 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     07/02/2022 - 20/02/2022
   </Text>
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
 </View>
 `;
@@ -294,7 +311,6 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
 <View
   style={
     Array [
-      Object {},
       Object {
         "paddingTop": 16,
       },
@@ -308,7 +324,6 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -322,8 +337,11 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     accessibilityRole="header"
@@ -333,12 +351,14 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -382,8 +402,11 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     07/02/2022 - 20/02/2022
   </Text>
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
 </View>
 `;
@@ -392,7 +415,6 @@ exports[`when rendering on match snapshot for static code 1`] = `
 <View
   style={
     Array [
-      Object {},
       Object {
         "paddingTop": 16,
       },
@@ -406,7 +428,6 @@ exports[`when rendering on match snapshot for static code 1`] = `
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -420,13 +441,18 @@ exports[`when rendering on match snapshot for static code 1`] = `
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <View
-    small={true}
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 8,
+      }
+    }
   />
   <Text
     accessibilityRole="header"
@@ -436,12 +462,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -470,7 +498,6 @@ exports[`when rendering on match snapshot for static code 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -510,8 +537,11 @@ exports[`when rendering on match snapshot for static code 1`] = `
     />
   </View>
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     accessibilityRole="header"
@@ -521,12 +551,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -570,8 +602,11 @@ exports[`when rendering on match snapshot for static code 1`] = `
     07/02/2022 - 20/02/2022
   </Text>
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
 </View>
 `;

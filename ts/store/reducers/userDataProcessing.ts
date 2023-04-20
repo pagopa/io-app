@@ -35,7 +35,7 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.request): {
       return {
         ...state,
-        ...computedProp(action.payload, pot.toLoading(pot.none))
+        ...computedProp(action.payload, pot.toLoading(state[action.payload]))
       };
     }
     case getType(loadUserDataProcessing.success): {

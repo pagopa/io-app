@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageDetailData component when service's contact detail are not defined should match the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F5F6F7",
+      "padding": 24,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Date and time sending:
+    </Text>
+    <Text
+      color="bluegrey"
+      defaultColor="blue"
+      defaultWeight="Bold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      weight="Bold"
+    >
+       18/10/2021, 16:00
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Sender:
+    </Text>
+    <Text
+      color="bluegrey"
+      defaultColor="blue"
+      defaultWeight="Bold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      weight="Bold"
+    >
+       Ċentru tas-Saħħa
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexDirection": "row",
+        },
+      ]
+    }
+  >
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Service: 
+    </Text>
+    <Text
+      accessibilityRole="link"
+      color="blue"
+      defaultColor="blue"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "textDecorationLine": "underline",
+        }
+      }
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "fontSize": 16,
+            "textDecorationLine": "underline",
+          },
+          Object {
+            "color": "#0073E6",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      weight="Bold"
+    >
+      health
+    </Text>
+  </View>
+</View>
+`;

@@ -1,12 +1,12 @@
-import { View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../components/core/typography/Body";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { GlobalState } from "../../../store/reducers/types";
 import I18n from "../../../i18n";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -27,9 +27,9 @@ const EuCovidCertLoadingScreen = (_: Props): React.ReactElement => (
     testID={"EuCovidCertLoadingScreen"}
     content={
       <View>
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
+        <VSpacer size={40} />
+        <VSpacer size={40} />
+        <VSpacer size={40} />
         <InfoScreenComponent
           image={euActivityIndicator}
           title={I18n.t("features.euCovidCertificate.loading.title")}
