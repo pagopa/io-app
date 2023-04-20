@@ -15,6 +15,7 @@ import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO"
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../actions";
 
@@ -112,13 +113,55 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        page: 0,
+        pageSize: 10
+      })
     );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.noneLoading
     );
     expect(idpayOperationListSelector(store.getState())).toStrictEqual([]);
+  });
+  it("should be pot.isUpdating when requesting new pages", () => {
+    const timeline = {
+      lastUpdate: new Date(),
+      operationList: [],
+      pageNo: 1,
+      pageSize: 10,
+      totalElements: 100,
+      totalPages: 10
+    };
+    const paginatedTimeline: { [page: number]: TimelineDTO } = {
+      0: timeline
+    };
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const state: GlobalState = {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        idPay: {
+          ...globalState.features.idPay,
+          initiative: {
+            ...globalState.features.idPay.initiative,
+            timeline: pot.some(paginatedTimeline)
+          }
+        }
+      }
+    };
+    const store = createStore(appReducer, state as any);
+    store.dispatch(
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        page: 1,
+        pageSize: 10
+      })
+    );
+    expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
+      pot.someUpdating(paginatedTimeline, paginatedTimeline)
+    );
   });
   it("should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));

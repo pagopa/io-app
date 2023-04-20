@@ -56,7 +56,10 @@ const reducer = (
       }
       return {
         ...state,
-        timeline: pot.toLoading(state.timeline)
+        timeline: pot.toUpdating(
+          state.timeline,
+          pot.getOrElse(state.timeline, {})
+        )
       };
     case getType(idpayTimelinePageGet.success):
       const currentTimeline = pot.getOrElse(state.timeline, []);
