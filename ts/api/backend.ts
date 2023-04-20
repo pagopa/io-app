@@ -57,7 +57,9 @@ import {
   UpsertMessageStatusAttributesT,
   getUserProfileDefaultDecoder,
   GetThirdPartyMessageT,
-  getThirdPartyMessageDefaultDecoder
+  getThirdPartyMessageDefaultDecoder,
+  GetRemoteContentPrevMessageT,
+  getRemoteContentPrevMessageDefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -273,6 +275,14 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     response_decoder: getThirdPartyMessageDefaultDecoder()
+  };
+
+  const getRemoteContentPrevMessage: GetRemoteContentPrevMessageT = {
+    method: "get",
+    url: params => `/api/v1/messages/${params.id}/remote-content-prev-message`,
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: getRemoteContentPrevMessageDefaultDecoder()
   };
 
   const upsertMessageStatusAttributesT: UpsertMessageStatusAttributesT = {
@@ -494,6 +504,9 @@ export function BackendClient(
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
     getThirdPartyMessage: withBearerToken(
       createFetchRequestForApi(getThirdPartyMessage, options)
+    ),
+    getRemoteContentPrevMessage: withBearerToken(
+      createFetchRequestForApi(getRemoteContentPrevMessage, options)
     ),
     upsertMessageStatusAttributes: withBearerToken(
       createFetchRequestForApi(upsertMessageStatusAttributesT, options)
