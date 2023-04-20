@@ -38,6 +38,7 @@ import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 
 const styles = StyleSheet.create({
   textInput: {
+    textAlignVertical: "top",
     padding: 10,
     borderWidth: 1,
     height: 120,
@@ -171,7 +172,7 @@ const LollipopPlayground = () => {
               <View style={styles.row}>
                 <ButtonSolid
                   accessibilityLabel="Sign body message"
-                  label={"Sign body message"}
+                  label={`Sign message${doSignBody ? " with body" : ""}`}
                   disabled={!isMessageBodySet}
                   onPress={() => onSignButtonPress(httpRequestBodyText)}
                 />
