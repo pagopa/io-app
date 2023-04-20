@@ -2,11 +2,11 @@ import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
+  idpayOperationListSelector,
   idpayPaginatedTimelineSelector,
   idpayTimelineCurrentPageSelector,
   idpayTimelineIsLastPageSelector,
-  idpayTimelineLastUpdateSelector,
-  idpayOperationListSelector
+  idpayTimelineLastUpdateSelector
 } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
 
@@ -25,6 +25,7 @@ export const useInitiativeTimelineFetcher = (
   const timeline = useIOSelector(idpayOperationListSelector);
 
   const isLoading = pot.isLoading(paginatedTimelinePot);
+  const isUpdating = pot.isUpdating(paginatedTimelinePot);
   const isError = pot.isError(paginatedTimelinePot);
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
@@ -36,14 +37,22 @@ export const useInitiativeTimelineFetcher = (
   }, [currentPage, isRefreshing]);
 
   const refresh = () => {
-    if (!isRefreshing) {
+    if (!isLoading) {
       setIsRefreshing(true);
       fetchPage(0);
     }
   };
 
   const fetchPage = (page: number) =>
-    dispatch(idpayTimelinePageGet.request({ initiativeId, page, pageSize }));
+    !isUpdating &&
+    !isLoading &&
+    dispatch(
+      idpayTimelinePageGet.request({
+        initiativeId,
+        page,
+        pageSize
+      })
+    );
 
   const fetchNextPage = () => {
     if (isLastPage || isLoading) {
@@ -62,6 +71,7 @@ export const useInitiativeTimelineFetcher = (
 
   return {
     isLoading,
+    isUpdating,
     isRefreshing,
     timeline,
     fetchPage,
