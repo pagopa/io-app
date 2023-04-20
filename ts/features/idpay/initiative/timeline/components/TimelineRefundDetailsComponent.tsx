@@ -1,6 +1,7 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -20,7 +21,6 @@ import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { idpayInitiativeIdSelector } from "../../details/store";
-import { sequenceS } from "fp-ts/lib/Apply";
 
 type Props = {
   refund: RefundDetailDTO;

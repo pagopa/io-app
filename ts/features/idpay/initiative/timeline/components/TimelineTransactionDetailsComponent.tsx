@@ -32,21 +32,19 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
     transaction.operationType,
     O.of,
     O.filter(type => type === TransactionTypeEnum.REVERSAL),
-    O.fold(
-      () => null,
-      () => (
-        <>
-          <Alert
-            viewRef={alertViewRef}
-            variant="info"
-            content={I18n.t(
-              "idpay.initiative.operationDetails.transaction.reversalAdvice"
-            )}
-          />
-          <VSpacer size={16} />
-        </>
-      )
-    )
+    O.map(() => (
+      <>
+        <Alert
+          viewRef={alertViewRef}
+          variant="info"
+          content={I18n.t(
+            "idpay.initiative.operationDetails.transaction.reversalAdvice"
+          )}
+        />
+        <VSpacer size={16} />
+      </>
+    )),
+    O.toNullable
   );
 
   return (
