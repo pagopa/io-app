@@ -3454,6 +3454,7 @@ idpay:
       rejectedAdvice: 
         text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
         editIban: Modifica IBAN 
+      errorBody: Impossibile caricare il dettaglio
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...

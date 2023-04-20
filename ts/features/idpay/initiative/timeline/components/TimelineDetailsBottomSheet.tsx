@@ -168,7 +168,7 @@ const ErrorComponent = () => (
   >
     <Pictogram name="error" />
     <VSpacer size={16} />
-    <H3>Impossibile caricare il dettaglio</H3>
+    <H3>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H3>
   </View>
 );
 
