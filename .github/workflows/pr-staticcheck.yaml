@@ -16,8 +16,10 @@ jobs:
       group: ${{ github.workflow }}-pr-staticcheck-compile-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - id: setup
-        uses: pagopa/io-app/.github/actions/setup.yml@migrate-ci-to-githubactions
+        uses: ./.github/actions/setup.yml
       - id: run-ci-checks
         run: yarn tsc:noemit
   lint:
