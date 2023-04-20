@@ -39,7 +39,9 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
           <Alert
             viewRef={alertViewRef}
             variant="info"
-            content={I18n.t("idpay.initiative.operationDetails.reversalAdvice")}
+            content={I18n.t(
+              "idpay.initiative.operationDetails.transaction.reversalAdvice"
+            )}
           />
           <VSpacer size={16} />
         </>
@@ -52,26 +54,32 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
       <VSpacer size={8} />
       {reversalAlertComponent}
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.instrument")}</Body>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.transaction.instrument")}
+        </Body>
         <View style={[IOStyles.row, IOStyles.alignCenter]}>
           {getCardLogoComponent(transaction.brand)}
           <HSpacer size={8} />
           <Body weight="SemiBold">
-            {I18n.t("idpay.initiative.operationDetails.maskedPan", {
+            {I18n.t("idpay.initiative.operationDetails.transaction.maskedPan", {
               lastDigits: transaction.maskedPan
             })}
           </Body>
         </View>
       </View>
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.amountLabel")}</Body>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.transaction.amountLabel")}
+        </Body>
         <Body weight="SemiBold">
           {formatNumberAmount(transaction.amount, true)}
         </Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
-          {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
+          {I18n.t(
+            "idpay.initiative.operationDetails.transaction.accruedAmountLabel"
+          )}
         </Body>
         <Body weight="SemiBold">
           {formatNumberAmount(transaction.accrued, true)}
@@ -79,22 +87,30 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
       </View>
       <ItemSeparatorComponent noPadded={true} />
       <VSpacer size={24} />
-      <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
+      <H4>
+        {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
+      </H4>
       <VSpacer size={4} />
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.date")}</Body>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.transaction.date")}
+        </Body>
         <Body weight="SemiBold">
           {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
         </Body>
       </View>
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.circuit")}</Body>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.transaction.circuit")}
+        </Body>
         <Body weight="SemiBold">
           {getLabelForCircuitType(transaction.circuitType)}
         </Body>
       </View>
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.acquirerId")}</Body>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.transaction.acquirerId")}
+        </Body>
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Body
@@ -111,7 +127,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body style={{ flex: 1 }}>
-          {I18n.t("idpay.initiative.operationDetails.issuerId")}
+          {I18n.t("idpay.initiative.operationDetails.transaction.issuerId")}
         </Body>
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>

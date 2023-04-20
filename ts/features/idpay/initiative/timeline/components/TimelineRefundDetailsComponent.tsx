@@ -5,10 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import {
-  OperationTypeEnum,
-  RefundOperationDTO
-} from "../../../../../../definitions/idpay/RefundOperationDTO";
+import { RefundDetailDTO } from "../../../../../../definitions/idpay/RefundDetailDTO";
+import { OperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -24,50 +22,11 @@ import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { idpayInitiativeIdSelector } from "../../details/store";
 
-type ResultLabelProps = {
-  type: OperationTypeEnum;
+type Props = {
+  refund: RefundDetailDTO;
 };
 
-const ResultLabel = (props: ResultLabelProps) => {
-  const { type } = props;
-
-  const styleMap: Record<OperationTypeEnum, StyleProp<ViewStyle>> = {
-    [OperationTypeEnum.PAID_REFUND]: {
-      backgroundColor: IOColors.aqua
-    },
-    [OperationTypeEnum.REJECTED_REFUND]: {
-      borderColor: IOColors.red,
-      borderWidth: 1
-    }
-  };
-
-  const textColor =
-    type === OperationTypeEnum.REJECTED_REFUND ? "red" : "bluegreyDark";
-
-  return (
-    <View
-      style={[
-        {
-          justifyContent: "center",
-          paddingVertical: 3,
-          paddingHorizontal: 8,
-          borderRadius: 56
-        },
-        styleMap[type]
-      ]}
-    >
-      <LabelSmall weight="SemiBold" fontSize="small" color={textColor}>
-        {I18n.t(`idpay.initiative.operationDetails.result.${type}`)}
-      </LabelSmall>
-    </View>
-  );
-};
-
-type RefundDetailsProps = {
-  refund: RefundOperationDTO;
-};
-
-const TimelineRefundDetailsComponent = (props: RefundDetailsProps) => {
+const TimelineRefundDetailsComponent = (props: Props) => {
   const { refund } = props;
 
   const { close: closeBottomSheet } = useBottomSheet();
@@ -105,10 +64,10 @@ const TimelineRefundDetailsComponent = (props: RefundDetailsProps) => {
           <Alert
             viewRef={alertViewRef}
             content={I18n.t(
-              "idpay.initiative.operationDetails.rejectedAdvice.text"
+              "idpay.initiative.operationDetails.refund.rejectedAdvice.text"
             )}
             action={I18n.t(
-              "idpay.initiative.operationDetails.rejectedAdvice.editIban"
+              "idpay.initiative.operationDetails.refund.rejectedAdvice.editIban"
             )}
             onPress={handleEditIbanPress}
             variant="error"
@@ -124,21 +83,23 @@ const TimelineRefundDetailsComponent = (props: RefundDetailsProps) => {
       <VSpacer size={8} />
       {rejectedAlertComponent}
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.iban")}</Body>
-        <Body weight="SemiBold">{/* TODO add iban */}</Body>
+        <Body>{I18n.t("idpay.initiative.operationDetails.refund.iban")}</Body>
+        <Body weight="SemiBold">{refund.iban}</Body>
       </View>
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.refundAmount")}</Body>
+        <Body>{I18n.t("idpay.initiative.operationDetails.refund.amount")}</Body>
         <Body weight="SemiBold">
           {formatNumberAmount(refund.amount || 0, true)}
         </Body>
       </View>
       <View style={styles.detailRow}>
-        <Body>{I18n.t("idpay.initiative.operationDetails.resultLabel")}</Body>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
+        </Body>
         <ResultLabel type={refund.operationType} />
       </View>
       <View style={styles.detailRow}>
-        <Body>Periodo di riferimento</Body>
+        <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
         <Body weight="SemiBold">
           {`${format(refund.operationDate, "DD/MM/YY")} - ${format(
             refund.operationDate,
@@ -153,7 +114,7 @@ const TimelineRefundDetailsComponent = (props: RefundDetailsProps) => {
         </Body>
       </View>
       <View style={styles.detailRow}>
-        <Body>TRN</Body>
+        <Body>CRO</Body>
         <HSpacer size={16} />
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Body
@@ -162,13 +123,52 @@ const TimelineRefundDetailsComponent = (props: RefundDetailsProps) => {
             ellipsizeMode="tail"
             style={IOStyles.flex}
           >
-            {/* TODO add TRN */}
+            {refund.cro}
           </Body>
           <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={/* TODO add TRN */ ""} />
+          <CopyButtonComponent textToCopy={refund.cro || ""} />
         </View>
       </View>
     </>
+  );
+};
+
+type ResultLabelProps = {
+  type: OperationTypeEnum;
+};
+
+const ResultLabel = (props: ResultLabelProps) => {
+  const { type } = props;
+
+  const styleMap: Record<OperationTypeEnum, StyleProp<ViewStyle>> = {
+    [OperationTypeEnum.PAID_REFUND]: {
+      backgroundColor: IOColors.aqua
+    },
+    [OperationTypeEnum.REJECTED_REFUND]: {
+      borderColor: IOColors.red,
+      borderWidth: 1
+    }
+  };
+
+  const textColor =
+    type === OperationTypeEnum.REJECTED_REFUND ? "red" : "bluegreyDark";
+
+  return (
+    <View
+      style={[
+        {
+          justifyContent: "center",
+          paddingVertical: 3,
+          paddingHorizontal: 8,
+          borderRadius: 56
+        },
+        styleMap[type]
+      ]}
+    >
+      <LabelSmall weight="SemiBold" fontSize="small" color={textColor}>
+        {I18n.t(`idpay.initiative.operationDetails.refund.result.${type}`)}
+      </LabelSmall>
+    </View>
   );
 };
 
