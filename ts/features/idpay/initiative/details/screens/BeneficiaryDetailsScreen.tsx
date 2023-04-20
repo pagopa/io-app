@@ -79,7 +79,7 @@ const BeneficiaryDetailsScreen = () => {
   };
 
   const content = pipe(
-    sequenceS(O.option)({
+    sequenceS(O.Monad)({
       details: pipe(initiativeDetailsPot, pot.toOption),
       beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption)
     }),
@@ -158,7 +158,7 @@ const BeneficiaryDetailsComponent = (
   );
 
   const toBeRefundedString = pipe(
-    sequenceS(O.option)({
+    sequenceS(O.Monad)({
       accrued: pipe(details.accrued, O.fromNullable),
       refunded: pipe(details.refunded, O.fromNullable)
     }),
