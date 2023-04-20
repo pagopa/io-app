@@ -66,14 +66,10 @@ const useTimelineDetailsBottomSheet = (
   const titleComponent = pipe(
     title,
     O.fromNullable,
+    O.filter(_ => !isError),
     O.fold(
       () => null,
-      title => {
-        if (isLoading) {
-          return <TitleSkeleton />;
-        }
-        return <H3>{title}</H3>;
-      }
+      title => (isLoading ? <TitleSkeleton /> : <H3>{title}</H3>)
     )
   );
 
@@ -83,11 +79,7 @@ const useTimelineDetailsBottomSheet = (
     }
 
     if (isError) {
-      return (
-        <View>
-          <Pictogram name="error" />
-        </View>
-      );
+      return <ErrorComponent />;
     }
 
     return pipe(
@@ -158,7 +150,7 @@ const TitleSkeleton = () => (
 );
 
 const ContentSkeleton = () => (
-  <View style={{ paddingTop: 8, paddingBottom: 10 }}>
+  <View style={{ paddingTop: 10, paddingBottom: 16 }}>
     {Array.from({ length: 6 }).map((_, i) => (
       <View key={i} style={{ paddingVertical: 8 }}>
         <View style={IOStyles.rowSpaceBetween}>
@@ -167,6 +159,16 @@ const ContentSkeleton = () => (
         </View>
       </View>
     ))}
+  </View>
+);
+
+const ErrorComponent = () => (
+  <View
+    style={{ paddingTop: 16, justifyContent: "center", alignItems: "center" }}
+  >
+    <Pictogram name="error" />
+    <VSpacer size={16} />
+    <H3>Impossibile caricare il dettaglio</H3>
   </View>
 );
 
