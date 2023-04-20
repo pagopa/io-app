@@ -30,9 +30,7 @@ const mockTransactionDetail: TransactionDetailDTO = {
 describe("Test timeline operation details reducer", () => {
   it("should be pot.none before the first loading action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.idPay.initiative.timelineDetails).toStrictEqual(
-      pot.none
-    );
+    expect(globalState.features.idPay.timeline).toStrictEqual(pot.none);
     expect(idpayTimelineDetailsSelector(globalState)).toStrictEqual(pot.none);
   });
 
@@ -46,9 +44,9 @@ describe("Test timeline operation details reducer", () => {
       })
     );
 
-    expect(
-      store.getState().features.idPay.initiative.timelineDetails
-    ).toStrictEqual(pot.noneLoading);
+    expect(store.getState().features.idPay.timeline.details).toStrictEqual(
+      pot.noneLoading
+    );
     expect(idpayTimelineDetailsSelector(store.getState())).toStrictEqual(
       pot.noneLoading
     );
@@ -65,9 +63,9 @@ describe("Test timeline operation details reducer", () => {
     );
     store.dispatch(idpayTimelineDetailsGet.success(mockTransactionDetail));
 
-    expect(
-      store.getState().features.idPay.initiative.timelineDetails
-    ).toStrictEqual(pot.some(mockTransactionDetail));
+    expect(store.getState().features.idPay.timeline.details).toStrictEqual(
+      pot.some(mockTransactionDetail)
+    );
     expect(idpayTimelineDetailsSelector(store.getState())).toStrictEqual(
       pot.some(mockTransactionDetail)
     );
@@ -84,9 +82,9 @@ describe("Test timeline operation details reducer", () => {
     );
     store.dispatch(idpayTimelineDetailsGet.failure(mockFailure));
 
-    expect(
-      store.getState().features.idPay.initiative.timelineDetails
-    ).toStrictEqual(pot.noneError(mockFailure));
+    expect(store.getState().features.idPay.timeline.details).toStrictEqual(
+      pot.noneError(mockFailure)
+    );
     expect(idpayTimelineDetailsSelector(store.getState())).toStrictEqual(
       pot.noneError(mockFailure)
     );
