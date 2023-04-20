@@ -56,7 +56,7 @@ jobs:
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       - id: yarn-cache
         uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
         env:
@@ -89,7 +89,7 @@ jobs:
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       - id: yarn-cache
         uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
         env:
@@ -122,7 +122,7 @@ jobs:
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       - id: yarn-cache
         uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
         env:
