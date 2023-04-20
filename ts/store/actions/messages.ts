@@ -22,6 +22,7 @@ import {
   Download,
   DownloadError
 } from "../reducers/entities/messages/downloads";
+import { RemoteContentPrev } from "../../../definitions/backend/RemoteContentPrev";
 
 /**
  * Load a single message given its ID
@@ -139,6 +140,16 @@ export const migrateToPaginatedMessages = createAsyncAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
 )<MessagesStatus, number, MigrationResult>();
 
+export const remoteContentPrevMessage = createAsyncAction(
+  "REMOTE_CONTENT_PREV_MESSAGE_REQUEST",
+  "REMOTE_CONTENT_PREV_MESSAGE_SUCCESS",
+  "REMOTE_CONTENT_PREV_MESSAGE_FAILURE"
+)<UIMessage, RemoteContentPrev, Error>();
+
+export const clearRemoteContentPrevMessage = createAction(
+  "CLEAR_REMOTE_CONTENT_PREV_MESSAGE"
+);
+
 /**
  * Used to mark the end of a migration and reset it to a pristine state.
  */
@@ -181,4 +192,6 @@ export type MessagesActions = ActionType<
   | typeof downloadAttachment
   | typeof cancelPreviousAttachmentDownload
   | typeof removeCachedAttachment
+  | typeof remoteContentPrevMessage
+  | typeof clearRemoteContentPrevMessage
 >;
