@@ -9,20 +9,20 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
-import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { PDNDCriteriaItem } from "../components/PDNDCriteriaItem";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -116,13 +116,12 @@ export const PDNDPrerequisitesScreen = () => {
           <View
             style={[IOStyles.horizontalContentPadding, styles.listContainer]}
           >
-            {pdndCriteria.map((requisite, index) => (
+            {pdndCriteria.map((criteria, index) => (
               <React.Fragment key={index}>
-                <ButtonExtendedOutline
-                  label={requisite.description}
-                  description={requisite.value}
+                <PDNDCriteriaItem
+                  criteria={criteria}
                   onPress={() => {
-                    setAuthority(requisite.authority);
+                    setAuthority(criteria.authority);
                     present();
                   }}
                 />
