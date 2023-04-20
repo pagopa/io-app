@@ -6,7 +6,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
-import { LollipopClient, createLollipopClient } from "../api/backend";
+import { createLollipopClient, signMessage } from "../api/backend";
 import { useIOSelector } from "../../../store/hooks";
 import {
   lollipopKeyTagSelector,
@@ -16,31 +16,8 @@ import { toThumbprint } from "../utils/crypto";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 import { apiUrlPrefix } from "../../../config";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
-import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
-import { LollipopContentDigest } from "../../../../definitions/lollipop/LollipopContentDigest";
-import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
-import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
-import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMethod";
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 import LollipopPlaygroundContent from "./LollipopPlaygroundContent";
-
-type LollipopSignRequestBody = {
-  message: string;
-};
-const signMessage = async (
-  lollipopClient: LollipopClient,
-  body: LollipopSignRequestBody,
-  sessionToken: string
-) =>
-  await lollipopClient.signMessage({
-    body,
-    Bearer: `Bearer ${sessionToken}`,
-    "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
-    "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
-    "content-digest": "" as LollipopContentDigest,
-    "signature-input": "" as LollipopSignatureInput,
-    signature: "" as LollipopSignature
-  });
 
 export type LollipopPlaygroundState = {
   doSignBody: boolean;
