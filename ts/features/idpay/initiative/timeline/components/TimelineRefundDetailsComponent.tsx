@@ -4,15 +4,14 @@ import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { RefundDetailDTO } from "../../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import NavigationService from "../../../../../navigation/NavigationService";
@@ -21,6 +20,7 @@ import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { idpayInitiativeIdSelector } from "../../details/store";
+import { sequenceS } from "fp-ts/lib/Apply";
 
 type Props = {
   refund: RefundDetailDTO;
@@ -57,25 +57,48 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     refund.operationType,
     O.of,
     O.filter(type => type === OperationTypeEnum.REJECTED_REFUND),
-    O.fold(
-      () => null,
-      () => (
-        <>
-          <Alert
-            viewRef={alertViewRef}
-            content={I18n.t(
-              "idpay.initiative.operationDetails.refund.rejectedAdvice.text"
-            )}
-            action={I18n.t(
-              "idpay.initiative.operationDetails.refund.rejectedAdvice.editIban"
-            )}
-            onPress={handleEditIbanPress}
-            variant="error"
-          />
-          <VSpacer size={16} />
-        </>
+    O.map(() => (
+      <>
+        <Alert
+          viewRef={alertViewRef}
+          content={I18n.t(
+            "idpay.initiative.operationDetails.refund.rejectedAdvice.text"
+          )}
+          action={I18n.t(
+            "idpay.initiative.operationDetails.refund.rejectedAdvice.editIban"
+          )}
+          onPress={handleEditIbanPress}
+          variant="error"
+        />
+        <VSpacer size={16} />
+      </>
+    )),
+    O.toNullable
+  );
+
+  const refundAmount = pipe(
+    refund.amount,
+    O.fromNullable,
+    O.alt(() => O.some(0)),
+    O.map(amount => formatNumberAmount(amount, true)),
+    O.toNullable
+  );
+
+  const periodDateString = pipe(
+    sequenceS(O.Monad)({
+      startDate: pipe(
+        refund.startDate,
+        O.fromNullable,
+        O.map(date => format(date, "DD/MM/YY"))
+      ),
+      endDate: pipe(
+        refund.endDate,
+        O.fromNullable,
+        O.map(date => format(date, "DD/MM/YY"))
       )
-    )
+    }),
+    O.map(({ startDate, endDate }) => `${startDate} - ${endDate}`),
+    O.getOrElse(() => "-")
   );
 
   return (
@@ -88,24 +111,27 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.amount")}</Body>
-        <Body weight="SemiBold">
-          {formatNumberAmount(refund.amount || 0, true)}
-        </Body>
+        <Body weight="SemiBold">{refundAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
           {I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
         </Body>
-        <ResultLabel type={refund.operationType} />
+        <IOBadge
+          small={true}
+          labelColor={
+            refund.operationType === OperationTypeEnum.REJECTED_REFUND
+              ? "red"
+              : "bluegreyDark"
+          }
+          text={I18n.t(
+            `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
+          )}
+        />
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
-        <Body weight="SemiBold">
-          {`${format(refund.operationDate, "DD/MM/YY")} - ${format(
-            refund.operationDate,
-            "DD/MM/YY"
-          )}`}
-        </Body>
+        <Body weight="SemiBold">{periodDateString}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>Data rimborso</Body>
@@ -130,45 +156,6 @@ const TimelineRefundDetailsComponent = (props: Props) => {
         </View>
       </View>
     </>
-  );
-};
-
-type ResultLabelProps = {
-  type: OperationTypeEnum;
-};
-
-const ResultLabel = (props: ResultLabelProps) => {
-  const { type } = props;
-
-  const styleMap: Record<OperationTypeEnum, StyleProp<ViewStyle>> = {
-    [OperationTypeEnum.PAID_REFUND]: {
-      backgroundColor: IOColors.aqua
-    },
-    [OperationTypeEnum.REJECTED_REFUND]: {
-      borderColor: IOColors.red,
-      borderWidth: 1
-    }
-  };
-
-  const textColor =
-    type === OperationTypeEnum.REJECTED_REFUND ? "red" : "bluegreyDark";
-
-  return (
-    <View
-      style={[
-        {
-          justifyContent: "center",
-          paddingVertical: 3,
-          paddingHorizontal: 8,
-          borderRadius: 56
-        },
-        styleMap[type]
-      ]}
-    >
-      <LabelSmall weight="SemiBold" fontSize="small" color={textColor}>
-        {I18n.t(`idpay.initiative.operationDetails.refund.result.${type}`)}
-      </LabelSmall>
-    </View>
   );
 };
 
