@@ -400,8 +400,8 @@ $ yarn generate
 ```
 
 ## Run the app
-### Android
-The device simulator must be [created and launched manually](https://developer.android.com/studio/run/managing-avds).
+### Android Emulator
+An Android Emulator must be [created and launched manually](https://developer.android.com/studio/run/managing-avds).
 Then, from your command line, run these commands:
 ```
 # Perform the port forwarding
@@ -410,28 +410,17 @@ $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:90
 $ react-native run-android
 ```
 
-### iOS
+### iOS Simulator
 ```
 $ yarn run-ios
 ```
 
-### iOS physical devices
-For this step you’ll need to have a proper iOS development certificate on your dev machine that is also 
-installed on your physical device.
+### Pyshical devices
+The React Native documentation provides an [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on pyshical devices.
+> **Warning**
+> On iOS you also have to change the `Bundle Identifier` to something unique before running io-app on your pyshical device. This can be done In the `Signing (Debug)` section of Xcode.
 
-To test the io-app on a real iOS device you must:
-1. Open the project with Xcode and modify the bundle identifier (eg: add ‘.test’ to the existing one)  
-2. Go to the 'Build Settings' tab and in the PROVISIONING_PROFILE section delete the existing ID. 
-   Then select 'ios developer' in the debug field of the 'Code Signing Identity'  
-3. In General tab select the 'Automatically Menage Signing' checkbox  
-4. You must have an Apple id developer and select it from the 'Team' drop-down menu  
-5. (Without Xcode) navigate in the io-app project and open the package.json file, in the scripts section 
-   add: _"build: ios": "react-native bundle --entry-file = 'index.js' - bundle-output = '. / ios / main.jsbundle' --dev = false --platform = 'ios' "_ 
-6. Open the Terminal and from the root directory project run _npm run build: ios_  
-7. In Xcode navigate in the project, select _'main.jsbundle'_ and enable the checkbox on the right labeled 'ItaliaApp'
-8. Always in Xcode select 'Product' -> 'Clean Build Folder'
-9. On the real device connected, accept to trust the device
-10. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
+
 
 ## Troubleshooting
 This section lists possible solutions to problems you might encounter while building the app.
