@@ -96,7 +96,7 @@ const LollipopPlaygroundContent = (props: Props) => {
           variant={
             props.playgroundState.isVerificationSuccess ? "success" : "error"
           }
-          content={props.playgroundState.signResponse ?? ""}
+          content={props.playgroundState.verificationResult ?? ""}
         />
       )}
     </View>

@@ -1,5 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
+import { pipe } from "fp-ts/lib/function";
 import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -22,12 +24,12 @@ import LollipopPlaygroundContent from "./LollipopPlaygroundContent";
 export type LollipopPlaygroundState = {
   doSignBody: boolean;
   isVerificationSuccess: boolean | undefined;
-  signResponse: string | undefined;
+  verificationResult: string | undefined;
 };
 const INITIAL_STATE = {
   doSignBody: true,
   isVerificationSuccess: undefined,
-  signResponse: undefined
+  verificationResult: undefined
 };
 
 const LollipopPlayground = () => {
@@ -38,65 +40,121 @@ const LollipopPlayground = () => {
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
 
-  const lollipopClient =
-    O.isSome(keyTag) && O.isSome(maybePublicKey)
-      ? createLollipopClient(
-          apiUrlPrefix,
-          {
-            keyTag: keyTag.value,
-            publicKey: maybePublicKey.value,
-            publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
-              maybePublicKey
-            )}`
-          },
-          { nonce: "aNonce", signBody: state.doSignBody }
-        )
-      : undefined;
-
-  const onSignButtonPress = useCallback(
-    async (body: string) => {
-      if (O.isSome(maybeSessionToken) && lollipopClient) {
-        const bodyMessage = {
-          message: body
-        };
-        try {
-          const signResponse = await signMessage(
-            lollipopClient,
-            bodyMessage,
-            maybeSessionToken.value
-          );
-          if (E.isRight(signResponse)) {
-            const status = signResponse.right.status;
-            if (status !== 200) {
-              const response = signResponse.right.value as ProblemJson;
+  const lollipopClient = pipe(
+    keyTag,
+    O.fold(
+      () => {
+        setState({
+          ...state,
+          isVerificationSuccess: false,
+          verificationResult: "No key tag"
+        });
+        return undefined;
+      },
+      keyTag =>
+        pipe(
+          maybePublicKey,
+          O.fold(
+            () => {
               setState({
                 ...state,
                 isVerificationSuccess: false,
-                signResponse: `${status} - ${response.title}\n${response.detail}`
+                verificationResult: "No public key"
               });
-            } else {
-              const response = signResponse.right.value as SignMessageResponse;
-              setState({
-                ...state,
-                isVerificationSuccess: true,
-                signResponse: response.response
-              });
-            }
-          } else {
+              return undefined;
+            },
+            publicKey =>
+              createLollipopClient(
+                apiUrlPrefix,
+                {
+                  keyTag,
+                  publicKey,
+                  publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
+                    maybePublicKey
+                  )}`
+                },
+                { nonce: "aNonce", signBody: state.doSignBody }
+              )
+          )
+        )
+    )
+  );
+
+  const onSignButtonPress = useCallback(
+    async (body: string) => {
+      const bodyMessage = {
+        message: body
+      };
+      pipe(
+        maybeSessionToken,
+        O.fold(
+          () =>
             setState({
               ...state,
               isVerificationSuccess: false,
-              signResponse: JSON.stringify(signResponse.left)
-            });
-          }
-        } catch (e) {
-          setState({
-            ...state,
-            isVerificationSuccess: false,
-            signResponse: JSON.stringify(e)
-          });
-        }
-      }
+              verificationResult: "No session token"
+            }),
+          sessionToken =>
+            pipe(
+              lollipopClient,
+              O.fromNullable,
+              O.fold(
+                () =>
+                  setState({
+                    ...state,
+                    isVerificationSuccess: false,
+                    verificationResult: "Lollipop client non available"
+                  }),
+                lollipopClient =>
+                  pipe(
+                    TE.tryCatch(
+                      () =>
+                        signMessage(lollipopClient, bodyMessage, sessionToken),
+                      _ => _ as Error
+                    ),
+                    TE.mapLeft(e =>
+                      setState({
+                        ...state,
+                        isVerificationSuccess: false,
+                        verificationResult: JSON.stringify(e)
+                      })
+                    ),
+                    TE.map(_ =>
+                      pipe(
+                        _,
+                        E.mapLeft(error =>
+                          setState({
+                            ...state,
+                            isVerificationSuccess: false,
+                            verificationResult: JSON.stringify(error)
+                          })
+                        ),
+                        E.map(signResponse => {
+                          const status = signResponse.status;
+                          if (status !== 200) {
+                            const response = signResponse.value as ProblemJson;
+                            setState({
+                              ...state,
+                              isVerificationSuccess: false,
+                              verificationResult: `${status} - ${response.title}\n${response.detail}`
+                            });
+                          } else {
+                            const response =
+                              signResponse.value as SignMessageResponse;
+                            setState({
+                              ...state,
+                              isVerificationSuccess: true,
+                              verificationResult: response.response
+                            });
+                          }
+                        })
+                      )
+                    )
+                  )()
+              )
+            )
+        )
+      );
     },
     [lollipopClient, maybeSessionToken, state]
   );
