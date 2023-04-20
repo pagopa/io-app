@@ -3411,7 +3411,7 @@ idpay:
         title: Cosa ti permette di fare?
         rulesButton: Leggi le regole
       infoModal:
-        title: "Regole dell'iniziative"
+        title: "Regole dell'iniziativa"
         button: "Ok, ho capito"
       summary: Riepilogo
       status: Stato iniziativa

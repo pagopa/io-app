@@ -35,6 +35,7 @@ import {
   idpayInitiativeDetailsSelector
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
+import { H3 } from "../../../../../components/core/typography/H3";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -292,7 +293,7 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal(
     <Markdown>{info}</Markdown>,
-    I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
+    <H3>{I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title")}</H3>,
     700,
     <ContentWrapper>
       <VSpacer size={16} />
@@ -304,7 +305,7 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
         )}
         fullWidth={true}
       />
-      <VSpacer size={16} />
+      <VSpacer size={32} />
     </ContentWrapper>
   );
 
