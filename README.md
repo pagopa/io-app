@@ -43,8 +43,6 @@
   - [Main technologies used](#main-technologies-used)
   - [SPID Authentication](#spid-authentication)
   - [Deep linking](#deep-linking)
-  - [Fonts](#fonts)
-  - [Vector graphics](#vector-graphics)
 - Appendix
   - [Internationalization](locales/README.md)
   - [End to end test](e2e/README.md)
