@@ -72,9 +72,7 @@ const LollipopPlayground = () => {
               setState({
                 ...state,
                 isVerificationSuccess: false,
-                signResponse: `${status} - ${response.title}${
-                  response.detail ? "\n" + response.detail : ""
-                }`
+                signResponse: `${status} - ${response.title}\n${response.detail}`
               });
             } else {
               const response = signResponse.right.value as SignMessageResponse;
