@@ -9,7 +9,7 @@ jobs:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - run: '[ -z "${{ secrets.DANGER_GITHUB_API_TOKEN }}" ] || yarn danger ci'
+      - run: '[ -z "$${{ secrets.DANGER_GITHUB_API_TOKEN }}" ] || yarn danger ci'
   compile:
     runs-on: ubuntu-latest
     concurrency:
