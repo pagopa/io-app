@@ -19,7 +19,7 @@ jobs:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - id: setup-node
-        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
         with:
           node-version-file: '.node-version'
       - id: yarn-cache-dir-path
