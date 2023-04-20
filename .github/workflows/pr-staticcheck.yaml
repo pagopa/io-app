@@ -5,12 +5,15 @@ jobs:
   run-danger:
     runs-on: ubuntu-latest
     environment: dev
+    concurrency:
+      group: ${{ github.workflow }}-pr-staticcheck-danger-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - run: '[ -z "$${{ secrets.DANGER_GITHUB_API_TOKEN }}" ] || yarn danger ci'
   compile:
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      group: ${{ github.workflow }}-pr-staticcheck-compile-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
       - id: checkout
@@ -42,7 +45,7 @@ jobs:
   lint:
     needs: compile
     concurrency:
-      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      group: ${{ github.workflow }}-pr-staticcheck-lint-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
@@ -76,7 +79,7 @@ jobs:
     needs: compile
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      group: ${{ github.workflow }}-pr-staticcheck-prettier-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
       - id: checkout
@@ -109,7 +112,7 @@ jobs:
     needs: compile
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      group: ${{ github.workflow }}-pr-staticcheck-test-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
       - id: checkout
