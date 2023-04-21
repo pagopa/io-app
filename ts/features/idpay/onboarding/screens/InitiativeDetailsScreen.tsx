@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { ForceScrollDownView } from "../../../../components/ScrollDownView";
+import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../../components/ui/BlockButtons";
