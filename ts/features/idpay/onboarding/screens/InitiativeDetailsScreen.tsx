@@ -85,7 +85,10 @@ const InitiativeDetailsScreen = () => {
       headerTitle={I18n.t("idpay.onboarding.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <ScrollDownView scrollEnabled={isDescriptionLoaded}>
+      <ScrollDownView
+        scrollEnabled={isDescriptionLoaded}
+        contentContainerStyle={styles.scrollContainer}
+      >
         <View style={styles.container}>
           <VSpacer size={24} />
           <OnboardingServiceHeader initiative={initiative} />
@@ -116,6 +119,9 @@ const InitiativeDetailsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1
+  },
   container: {
     flexGrow: 1,
     paddingHorizontal: 24

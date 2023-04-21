@@ -1,5 +1,9 @@
+import { sequenceS } from "fp-ts/lib/Apply";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
+  LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
@@ -19,8 +23,14 @@ const ScrollDownView = (props: Props) => {
 
   const scrollThreshold = props.threshold || 100;
 
+  const [scrollViewHeight, setScrollViewHeight] = React.useState<number>();
+  const [contentHeight, setContentHeight] = React.useState<number>();
   const [isThresholdCrossed, setThresholdCrossed] = React.useState(false);
   const [isButtonVisible, setButtonVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    setButtonVisible(!isThresholdCrossed);
+  }, [isThresholdCrossed]);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
@@ -32,23 +42,41 @@ const ScrollDownView = (props: Props) => {
     setThresholdCrossed(thresholdCrossed);
   };
 
-  React.useEffect(() => {
-    setButtonVisible(!isThresholdCrossed);
-  }, [isThresholdCrossed]);
+  const handleContentSizeChange = (
+    _contentWidth: number,
+    contentHeight: number
+  ) => {
+    setContentHeight(contentHeight);
+  };
+
+  const handleLayot = (event: LayoutChangeEvent) => {
+    setScrollViewHeight(event.nativeEvent.layout.height);
+  };
 
   const handleScrollDownPress = () => {
     setButtonVisible(false);
     scrollViewRef.current?.scrollToEnd();
   };
 
+  const needsScroll = pipe(
+    sequenceS(O.Monad)({
+      scrollViewHeight: O.fromNullable(scrollViewHeight),
+      contentHeight: O.fromNullable(contentHeight)
+    }),
+    O.map(
+      ({ scrollViewHeight, contentHeight }) => scrollViewHeight < contentHeight
+    ),
+    O.getOrElse(() => false)
+  );
+
   const scrollDownButton = (
     <Animated.View
-      key={"scrollDown"}
       style={styles.scrollDownButton}
       entering={ZoomIn.duration(200)}
       exiting={ZoomOut.duration(200)}
     >
       <IconButtonSolid
+        testID={"ScrollDownButton"}
         accessibilityLabel="Scroll to bottom"
         icon="arrowBottom"
         onPress={handleScrollDownPress}
@@ -56,34 +84,31 @@ const ScrollDownView = (props: Props) => {
     </Animated.View>
   );
 
+  const shouldRenderScrollButton =
+    props.scrollEnabled && isButtonVisible && needsScroll;
+
   return (
     <>
       <ScrollView
+        testID={"ScrollDown"}
         ref={scrollViewRef}
         scrollIndicatorInsets={{ right: 1 }}
         scrollEnabled={props.scrollEnabled}
         onScroll={handleScroll}
         scrollEventThrottle={400}
-        style={[styles.container, props.style]}
-        contentContainerStyle={[
-          styles.scrollContainer,
-          props.contentContainerStyle
-        ]}
+        style={props.style}
+        onLayout={handleLayot}
+        onContentSizeChange={handleContentSizeChange}
+        contentContainerStyle={props.contentContainerStyle}
       >
         {props.children}
       </ScrollView>
-      {isButtonVisible && props.scrollEnabled && scrollDownButton}
+      {shouldRenderScrollButton && scrollDownButton}
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1
-  },
-  container: {
-    flexGrow: 1
-  },
   scrollDownButton: {
     position: "absolute",
     right: 20,
