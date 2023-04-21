@@ -27,8 +27,6 @@ export type Context = {
   walletInstruments: ReadonlyArray<Wallet>;
   initiativeInstruments: ReadonlyArray<InstrumentDTO>;
   instrumentStatuses: InstrumentStatusByIdWallet;
-  instrumentToEnroll?: Wallet;
-  instrumentToDelete?: InstrumentDTO;
   areInstrumentsSkipped?: boolean;
   selectedIban?: IbanDTO;
   ibanBody?: IbanPutDTO;
