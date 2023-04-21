@@ -84,14 +84,13 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
         cieAuthPageResponse.raise_for_status()
     except requests.exceptions.RequestException:
         print("[Fatal Error] Page containing CIE button unrechable", file=sys.stderr)
-
-
+        postSlack(os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None))
         sys.exit(os.EX_UNAVAILABLE)
 
     if (not re.search(pattern, cieAuthPageResponse.text)):
         print("[Fatal Error] Can't find CIE button JS script", file=sys.stderr)
-
-
+        postSlack(os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN",
+                                 None), "Can't find CIE button JS script")
         sys.exit(os.EX_UNAVAILABLE)
 
 
