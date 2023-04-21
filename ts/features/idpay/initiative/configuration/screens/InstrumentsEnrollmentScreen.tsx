@@ -2,6 +2,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -9,9 +10,9 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
 import customVariables from "../../../../../theme/variables";
@@ -201,6 +202,10 @@ const InstrumentsEnrollmentScreen = () => {
       />
     );
   };
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
 
   const handleInstrumentValueChange = (wallet: Wallet) => (value: boolean) => {
     if (value) {
