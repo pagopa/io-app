@@ -36,8 +36,8 @@ import {
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
-import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import NavigationService, { navigationRef } from "./NavigationService";
 import ROUTES from "./routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
