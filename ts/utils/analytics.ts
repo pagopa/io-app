@@ -159,7 +159,9 @@ export function trackLollipopIdpLoginFailure(reason: string) {
 // workaround to send keychainError for Pixel devices
 // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
 export function trackKeychainGetFailure(reason: string | undefined) {
-  void mixpanelTrack("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", {
-    reason: reason ?? ""
-  });
+  if (reason) {
+    void mixpanelTrack("KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE", {
+      reason
+    });
+  }
 }
