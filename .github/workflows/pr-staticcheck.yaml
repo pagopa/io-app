@@ -9,6 +9,10 @@ jobs:
       group: ${{ github.workflow }}-pr-staticcheck-danger-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
+      - id: setup-node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+        with:
+          node-version-file: '.node-version'
       - run: '[ -z "$${{ secrets.DANGER_GITHUB_API_TOKEN }}" ] || yarn danger ci'
   compile:
     runs-on: ubuntu-latest
@@ -20,7 +24,7 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - id: setup
         uses: ./.github/actions/setup-composite
-      - id: run-ci-checks
+      - id: run-tsc
         run: yarn tsc:noemit
   lint:
     needs: compile
@@ -31,29 +35,9 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
-      - id: setup-node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
-        with:
-          node-version-file: '.node-version'
-      - id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - id: yarn-cache
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - id: install-packages
-        run: yarn install --frozen-lockfile
-      - id: generate-api-client
-        run: yarn generate
-      - id: run-ci-checks
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: run-lint
         run: yarn lint
   prettier:
     needs: compile
@@ -64,29 +48,9 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
-      - id: setup-node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
-        with:
-          node-version-file: '.node-version'
-      - id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - id: yarn-cache
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - id: install-packages
-        run: yarn install --frozen-lockfile
-      - id: generate-api-client
-        run: yarn generate
-      - id: run-ci-checks
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: run-prettier
         run: yarn prettier:check
   test:
     needs: compile
@@ -97,29 +61,9 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
-      - id: setup-node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
-        with:
-          node-version-file: '.node-version'
-      - id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      - id: yarn-cache
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - id: install-packages
-        run: yarn install --frozen-lockfile
-      - id: generate-api-client
-        run: yarn generate
-      - id: run-ci-checks
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: run-test
         run: yarn test:ci
       - id: codecov-script
         run: ./scripts/codecov.sh
