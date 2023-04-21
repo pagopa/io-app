@@ -38,10 +38,11 @@ def requestCieAuthPage(
 
     # Do the required attempts
     while not (nAttempts >= maxAttempts or statusFlag):
-        # do the requests
-        response = requests.get(
+        # do the requests with a session to keep session data between requests
+        s = requests.Session()
+        response = s.get(
             uri, headers=headers, allow_redirects=True, timeout=timeout)
-        response = requests.post(
+        response = s.post(
             response.url, headers=headers, data=payload, allow_redirects=True, timeout=timeout)
         # set conditions for next step
         nAttempts += 1
@@ -83,13 +84,14 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
         cieAuthPageResponse.raise_for_status()
     except requests.exceptions.RequestException:
         print("[Fatal Error] Page containing CIE button unrechable", file=sys.stderr)
-        postSlack(os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None))
+
+
         sys.exit(os.EX_UNAVAILABLE)
 
     if (not re.search(pattern, cieAuthPageResponse.text)):
         print("[Fatal Error] Can't find CIE button JS script", file=sys.stderr)
-        postSlack(os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN",
-                                 None), "Can't find CIE button JS script")
+
+
         sys.exit(os.EX_UNAVAILABLE)
 
 
