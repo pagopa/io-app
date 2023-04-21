@@ -4,14 +4,9 @@ import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  ScrollView,
-  StyleSheet,
-  View
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { ScrollDownView } from "../../../../components/ScrollDownView";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../../components/ui/BlockButtons";
@@ -23,7 +18,6 @@ import {
 } from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
-import { ScrollDownButton } from "../components/ScrollDownButton";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { isUpsertingSelector, selectInitiative } from "../xstate/selectors";
@@ -52,46 +46,11 @@ const InitiativeDetailsScreen = () => {
 
   const initiative = useSelector(machine, selectInitiative);
   const isUpserting = useSelector(machine, isUpsertingSelector);
-
-  const scrollViewRef = React.useRef<ScrollView>(null);
-
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
-  const [isScrollButtonVisible, setScrollButtonVisible] = React.useState(false);
-  const [_, setFooterVisible] = React.useState(false);
-
-  const handleDescriptionLoadEnd = () => {
-    setDescriptionLoaded(true);
-    setScrollButtonVisible(true);
-  };
 
   const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
 
   const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
-
-  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const paddingToBottom = 100;
-
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isCloseToBottom =
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom;
-
-    setFooterVisible(isVisible => {
-      if (isVisible && !isCloseToBottom) {
-        // Continue button transition from VISIBLE to HIDDEN
-        setScrollButtonVisible(true);
-      } else if (!isVisible && isCloseToBottom) {
-        // Continue button transition from HIDDEN to VISIBLE
-        setScrollButtonVisible(false);
-      }
-      return isCloseToBottom;
-    });
-  };
-
-  const handleScrollDownPress = () => {
-    setScrollButtonVisible(false);
-    scrollViewRef.current?.scrollToEnd();
-  };
 
   const onboardingPrivacyAdvice = pipe(
     initiative,
@@ -113,7 +72,7 @@ const InitiativeDetailsScreen = () => {
       () => <OnboardingDescriptionMarkdownSkeleton />,
       ({ description }) => (
         <OnboardingDescriptionMarkdown
-          onLoadEnd={handleDescriptionLoadEnd}
+          onLoadEnd={() => setDescriptionLoaded(true)}
           description={description}
         />
       )
@@ -126,14 +85,7 @@ const InitiativeDetailsScreen = () => {
       headerTitle={I18n.t("idpay.onboarding.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <ScrollView
-        ref={scrollViewRef}
-        scrollIndicatorInsets={{ right: 1 }}
-        scrollEnabled={isDescriptionLoaded}
-        onScroll={handleOnScroll}
-        scrollEventThrottle={400}
-        contentContainerStyle={styles.scrollContainer}
-      >
+      <ScrollDownView scrollEnabled={isDescriptionLoaded}>
         <View style={styles.container}>
           <VSpacer size={24} />
           <OnboardingServiceHeader initiative={initiative} />
@@ -158,19 +110,12 @@ const InitiativeDetailsScreen = () => {
           />
           <VSpacer size={48} />
         </View>
-      </ScrollView>
-      <ScrollDownButton
-        onPress={handleScrollDownPress}
-        isVisible={isScrollButtonVisible}
-      />
+      </ScrollDownView>
     </BaseScreenComponent>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1
-  },
   container: {
     flexGrow: 1,
     paddingHorizontal: 24
