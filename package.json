@@ -24,7 +24,7 @@
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
   "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.46.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
-  "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/f3e3ab6109b95a6c0bba6720aed832d4c77f5d87/api_lollipop_first_consumer.yaml",
+  "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.12.0-RELEASE/api_lollipop_first_consumer.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
