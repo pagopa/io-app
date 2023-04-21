@@ -1,6 +1,3 @@
-import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
   LayoutChangeEvent,
@@ -13,60 +10,75 @@ import {
 import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 import IconButtonSolid from "./ui/IconButtonSolid";
 
-type Props = {
+type ForceScrollDownViewProps = {
   children: React.ReactNode;
   threshold?: number;
+  onThresholdCrossed?: (crossed: boolean) => void;
 } & Pick<ScrollViewProps, "style" | "contentContainerStyle" | "scrollEnabled">;
 
-const ScrollDownView = (props: Props) => {
+const ForceScrollDownView = ({
+  children,
+  threshold = 100,
+  style,
+  contentContainerStyle,
+  scrollEnabled = true,
+  onThresholdCrossed
+}: ForceScrollDownViewProps) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
-
-  const scrollThreshold = props.threshold || 100;
 
   const [scrollViewHeight, setScrollViewHeight] = React.useState<number>();
   const [contentHeight, setContentHeight] = React.useState<number>();
   const [isThresholdCrossed, setThresholdCrossed] = React.useState(false);
   const [isButtonVisible, setButtonVisible] = React.useState(true);
 
+  const handleScroll = React.useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { layoutMeasurement, contentOffset, contentSize } =
+        event.nativeEvent;
+
+      const thresholdCrossed =
+        layoutMeasurement.height + contentOffset.y >=
+        contentSize.height - threshold;
+
+      setThresholdCrossed(previousState => {
+        if (!previousState && thresholdCrossed) {
+          setButtonVisible(false);
+        }
+        if (previousState && !thresholdCrossed) {
+          setButtonVisible(true);
+        }
+        return thresholdCrossed;
+      });
+    },
+    [threshold]
+  );
+
   React.useEffect(() => {
-    setButtonVisible(!isThresholdCrossed);
-  }, [isThresholdCrossed]);
+    onThresholdCrossed?.(isThresholdCrossed);
+  }, [onThresholdCrossed, isThresholdCrossed]);
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+  const handleContentSizeChange = React.useCallback(
+    (_contentWidth: number, contentHeight: number) => {
+      setContentHeight(contentHeight);
+    },
+    []
+  );
 
-    const thresholdCrossed =
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - scrollThreshold;
-
-    setThresholdCrossed(thresholdCrossed);
-  };
-
-  const handleContentSizeChange = (
-    _contentWidth: number,
-    contentHeight: number
-  ) => {
-    setContentHeight(contentHeight);
-  };
-
-  const handleLayot = (event: LayoutChangeEvent) => {
+  const handleLayot = React.useCallback((event: LayoutChangeEvent) => {
     setScrollViewHeight(event.nativeEvent.layout.height);
-  };
+  }, []);
 
-  const handleScrollDownPress = () => {
+  const handleScrollDownPress = React.useCallback(() => {
     setButtonVisible(false);
     scrollViewRef.current?.scrollToEnd();
-  };
+  }, [scrollViewRef]);
 
-  const needsScroll = pipe(
-    sequenceS(O.Monad)({
-      scrollViewHeight: O.fromNullable(scrollViewHeight),
-      contentHeight: O.fromNullable(contentHeight)
-    }),
-    O.map(
-      ({ scrollViewHeight, contentHeight }) => scrollViewHeight < contentHeight
-    ),
-    O.getOrElse(() => false)
+  const needsScroll = React.useMemo(
+    () =>
+      scrollViewHeight != null &&
+      contentHeight != null &&
+      scrollViewHeight < contentHeight,
+    [scrollViewHeight, contentHeight]
   );
 
   const scrollDownButton = (
@@ -85,7 +97,7 @@ const ScrollDownView = (props: Props) => {
   );
 
   const shouldRenderScrollButton =
-    props.scrollEnabled && isButtonVisible && needsScroll;
+    scrollEnabled && needsScroll && isButtonVisible;
 
   return (
     <>
@@ -93,15 +105,15 @@ const ScrollDownView = (props: Props) => {
         testID={"ScrollDown"}
         ref={scrollViewRef}
         scrollIndicatorInsets={{ right: 1 }}
-        scrollEnabled={props.scrollEnabled}
+        scrollEnabled={scrollEnabled}
         onScroll={handleScroll}
         scrollEventThrottle={400}
-        style={props.style}
+        style={style}
         onLayout={handleLayot}
         onContentSizeChange={handleContentSizeChange}
-        contentContainerStyle={props.contentContainerStyle}
+        contentContainerStyle={contentContainerStyle}
       >
-        {props.children}
+        {children}
       </ScrollView>
       {shouldRenderScrollButton && scrollDownButton}
     </>
@@ -116,4 +128,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { ScrollDownView };
+export { ForceScrollDownView };
