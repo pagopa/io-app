@@ -1,21 +1,17 @@
-import { useLinkTo } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
 import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
-import { IORenderHtml } from "../../../components/core/IORenderHtml";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import i18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { localeDateFormat } from "../../../utils/locale";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -29,20 +25,6 @@ type BottomSheetProps = Readonly<{
    */
   onConfirm: (message: UIMessage, dontAskAgain: boolean) => void;
 }>;
-
-type HTMLParams = Readonly<{
-  sender: string;
-  subject: string;
-  date: string;
-  iun: string;
-}>;
-
-const emptyHTMLParams: HTMLParams = {
-  sender: "-",
-  subject: "-",
-  date: "-",
-  iun: "-"
-};
 
 const Header = () => (
   <View
@@ -58,9 +40,7 @@ const Header = () => (
       fill={IOColors.blue}
       style={{ marginRight: customVariables.spacerWidth }}
     />
-    <H4 weight="SemiBold" color="bluegreyDark">
-      {i18n.t("features.pn.open.warning.title")}
-    </H4>
+    <H4 weight="SemiBold" color="bluegreyDark"></H4>
   </View>
 );
 
@@ -69,71 +49,13 @@ export const usePnOpenConfirmationBottomSheet = ({
 }: BottomSheetProps) => {
   const [message, setMessage] = useState<UIMessage | undefined>(undefined);
   const [dontAskAgain, setDontAskAgain] = useState<boolean>(false);
-  const [params, setParams] = useState<HTMLParams | undefined>(undefined);
-
-  const linkTo = useLinkTo();
-  const handleLink = (href: string) => {
-    handleInternalLink(linkTo, href);
-  };
-
-  useEffect(() => {
-    const params = pipe(
-      MessageCategoryPN.decode(message?.category),
-      O.fromEither,
-      O.map(
-        category =>
-          ({
-            sender: category.original_sender ?? emptyHTMLParams.sender,
-            subject: category.summary ?? emptyHTMLParams.subject,
-            date: pipe(
-              category.original_receipt_date,
-              O.fromNullable,
-              O.map(timestamp => new Date(timestamp)),
-              O.map(
-                date =>
-                  `${localeDateFormat(
-                    date,
-                    i18n.t("global.dateFormats.shortFormatWithTime")
-                  )}`
-              ),
-              O.getOrElse(() => emptyHTMLParams.date)
-            ),
-            iun: category.id
-          } as HTMLParams)
-      ),
-      O.getOrElse(() => emptyHTMLParams)
-    );
-    setParams(params);
-  }, [message, setParams]);
 
   const {
     present: bsPresent,
     dismiss: bsDismiss,
     bottomSheet
   } = useIOBottomSheetModal(
-    <>
-      <IORenderHtml
-        source={{
-          html: i18n.t("features.pn.open.warning.body", params)
-        }}
-        tagsStyles={{
-          p: {
-            marginTop: 10
-          }
-        }}
-        classesStyles={{
-          container: { marginVertical: 20 }
-        }}
-        renderersProps={{
-          a: {
-            onPress: (_, href) => {
-              bsDismiss();
-              handleLink(href);
-            }
-          }
-        }}
-      />
-    </>,
+    <></>,
     <Header />,
     BOTTOM_SHEET_HEIGHT,
     <FooterWithButtons
