@@ -3213,7 +3213,10 @@ features:
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
         signing:
           title: The signature failed
-          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.   
+          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.
+        wrongUser:
+          title: You cannot sign these documents
+          subTitle: The signature request is not associated with your Tax Code.
     abort:
       title: "Quit signing"
       content: "Do you want to quit signing the documents?"
