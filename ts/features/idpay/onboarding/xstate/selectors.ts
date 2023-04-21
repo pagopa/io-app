@@ -32,7 +32,8 @@ const selectCurrentPage = (state: StateWithContext) =>
 
 const selectTags = (state: StateWithContext) => state.tags;
 
-const selectInitiative = (state: StateWithContext) => state.context.initiative;
+export const selectInitiative = (state: StateWithContext) =>
+  state.context.initiative;
 
 const selectServiceId = (state: StateWithContext) => state.context.serviceId;
 
@@ -105,10 +106,6 @@ const isUpsertingSelector = createSelector(selectTags, tags =>
   tags.has(UPSERTING_TAG)
 );
 
-const initiativeDescriptionSelector = createSelector(
-  selectInitiative,
-  initiative => initiative?.description ?? undefined
-);
 const initiativeIDSelector = createSelector(
   selectInitiative,
   initiative => initiative?.initiativeId ?? undefined
@@ -147,7 +144,6 @@ export {
   pdndCriteriaSelector,
   prerequisiteAnswerIndexSelector,
   isLoadingSelector,
-  initiativeDescriptionSelector,
   initiativeIDSelector,
   selectSelfDeclarationBoolAnswers,
   areAllSelfDeclarationsToggledSelector

@@ -5,9 +5,9 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import {
-  idPayTestToken,
+  idPayApiBaseUrl,
   idPayApiUatBaseUrl,
-  idPayApiBaseUrl
+  idPayTestToken
 } from "../../../../config";
 import { useXStateMachine } from "../../../../hooks/useXStateMachine";
 import {
