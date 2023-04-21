@@ -12,6 +12,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -42,7 +43,7 @@ const InitiativeSelfDeclarationsScreen = () => {
   const continueOnPress = () =>
     machine.send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
 
-  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
+  const goBackOnPress = () => machine.send({ type: "BACK" });
 
   const toggleCriteria =
     (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
@@ -53,6 +54,10 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
+
+  useNavigationSwipeBackListener(() => {
+    machine.send({ type: "BACK", skipNavigation: true });
+  });
 
   return (
     <BaseScreenComponent
