@@ -27,6 +27,7 @@ import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import PinScreen from "../screens/profile/PinScreen";
+import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -96,6 +97,10 @@ const ProfileStackNavigator = () => (
       component={DesignSystemNavigator}
     />
     <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
+    <Stack.Screen
+      name={ROUTES.LOLLIPOP_PLAYGROUND}
+      component={LollipopPlayground}
+    />
     <Stack.Screen
       name={ROUTES.CGN_LANDING_PLAYGROUND}
       component={CgnLandingPlayground}
