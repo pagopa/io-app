@@ -19,6 +19,10 @@ import { OnboardingFailureEnum } from "../failure";
 import { Context } from "../machine";
 import { createServicesImplementation } from "../services";
 import { InitiativeDataDTO } from "../../../../../../definitions/idpay/InitiativeDataDTO";
+import {
+  AuthorityEnum,
+  CodeEnum
+} from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";
@@ -46,8 +50,8 @@ const T_INITIATIVE_DATA_DTO: InitiativeDataDTO = {
 const T_REQUIRED_CRITERIA_DTO: RequiredCriteriaDTO = {
   pdndCriteria: [
     {
-      authority: "a",
-      code: "b",
+      authority: AuthorityEnum.INPS,
+      code: CodeEnum.BIRTHDATE,
       description: "c",
       value: "d"
     }
