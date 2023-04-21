@@ -23,6 +23,7 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -73,7 +74,7 @@ export const PDNDPrerequisitesScreen = () => {
 
   const continueOnPress = () =>
     machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
-  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
+  const goBackOnPress = () => machine.send({ type: "BACK" });
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Markdown>
@@ -99,6 +100,11 @@ export const PDNDPrerequisitesScreen = () => {
   );
 
   const pdndCriteria = useSelector(machine, pdndCriteriaSelector);
+
+  useNavigationSwipeBackListener(() => {
+    machine.send({ type: "BACK", skipNavigation: true });
+  });
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BaseScreenComponent
