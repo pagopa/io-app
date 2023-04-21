@@ -67,7 +67,7 @@ const LollipopPlayground = () => {
   );
 
   const onSignButtonPress = useCallback(
-    async (body: string) => {
+    async (body: string, signBody: boolean) => {
       const bodyMessage = {
         message: body
       };
@@ -75,45 +75,45 @@ const LollipopPlayground = () => {
         maybeSessionToken,
         O.chain(sessionToken =>
           pipe(
-            lollipopClient(state.doSignBody),
+            lollipopClient(signBody),
             O.chainNullableK(lollipopClient =>
               pipe(
                 TE.tryCatch(
                   () => signMessage(lollipopClient, bodyMessage, sessionToken),
                   e =>
-                    setState({
-                      ...state,
+                    setState(s => ({
+                      ...s,
                       isVerificationSuccess: false,
                       verificationResult: `${e}`
-                    })
+                    }))
                 ),
                 TE.map(_ =>
                   pipe(
                     _,
                     E.mapLeft(error =>
-                      setState({
-                        ...state,
+                      setState(s => ({
+                        ...s,
                         isVerificationSuccess: false,
                         verificationResult: JSON.stringify(error)
-                      })
+                      }))
                     ),
                     E.map(signResponse => {
                       const status = signResponse.status;
                       if (status !== 200) {
                         const response = signResponse.value as ProblemJson;
-                        setState({
-                          ...state,
+                        setState(s => ({
+                          ...s,
                           isVerificationSuccess: false,
                           verificationResult: `${status} - ${response.title}\n${response.detail}`
-                        });
+                        }));
                       } else {
                         const response =
                           signResponse.value as SignMessageResponse;
-                        setState({
-                          ...state,
+                        setState(s => ({
+                          ...s,
                           isVerificationSuccess: true,
                           verificationResult: response.response
-                        });
+                        }));
                       }
                     })
                   )
@@ -124,7 +124,7 @@ const LollipopPlayground = () => {
         )
       );
     },
-    [lollipopClient, maybeSessionToken, state]
+    [lollipopClient, maybeSessionToken]
   );
 
   return (
@@ -133,7 +133,9 @@ const LollipopPlayground = () => {
         <ScrollView>
           <ContentWrapper>
             <LollipopPlaygroundContent
-              onSignButtonPress={onSignButtonPress}
+              onSignButtonPress={body =>
+                onSignButtonPress(body, state.doSignBody)
+              }
               onCheckBoxPress={v => {
                 setState({
                   ...state,
