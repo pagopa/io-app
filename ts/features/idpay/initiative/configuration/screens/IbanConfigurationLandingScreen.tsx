@@ -11,6 +11,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
@@ -38,6 +39,10 @@ const IbanConfigurationLanding = () => {
   const customGoBack = () => configurationMachine.send({ type: "BACK" });
 
   const [modalSnapPoint, setModalSnapPoint] = React.useState<number>(100);
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
 
   const handleOnLayout = (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
