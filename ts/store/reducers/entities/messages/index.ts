@@ -14,9 +14,9 @@ import paginatedByIdReducer, { PaginatedById } from "./paginatedById";
 import { thirdPartyByIdReducer, ThirdPartyById } from "./thirdPartyById";
 import { Downloads, downloadsReducer } from "./downloads";
 import {
-  RemoteContentPrevMessage,
-  remoteContentPrevMessageReducer
-} from "./remoteContentPrevMessage";
+  ThirdPartyMessagePreconditionById,
+  thirdPartyMessagePreconditionByIdReducer
+} from "./thirdPartyMessagePreconditionById";
 
 export type MessagesState = Readonly<{
   allPaginated: AllPaginated;
@@ -24,7 +24,7 @@ export type MessagesState = Readonly<{
   detailsById: DetailsById;
   thirdPartyById: ThirdPartyById;
   downloads: Downloads;
-  remoteContentPrevMessage: RemoteContentPrevMessage;
+  thirdPartyMessagePreconditionById: ThirdPartyMessagePreconditionById;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
@@ -33,7 +33,7 @@ const reducer = combineReducers<MessagesState, Action>({
   detailsById: detailsByIdReducer,
   thirdPartyById: thirdPartyByIdReducer,
   downloads: downloadsReducer,
-  remoteContentPrevMessage: remoteContentPrevMessageReducer
+  thirdPartyMessagePreconditionById: thirdPartyMessagePreconditionByIdReducer
 });
 
 // this type is need to combine message data to message status. Note

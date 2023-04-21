@@ -1,10 +1,10 @@
 import { createStore } from "redux";
 import {
-  remoteContentPrevMessage,
-  clearRemoteContentPrevMessage
+  loadThirdPartyMessagePrecondition,
+  clearThirdPartyMessagePrecondition
 } from "../../../../actions/messages";
 import { appReducer } from "../../..";
-import { RemoteContentPrev } from "../../../../../../definitions/backend/RemoteContentPrev";
+import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { applicationChangeState } from "../../../../actions/application";
 import {
   remoteError,
@@ -16,34 +16,39 @@ import { message_1 } from "../../../../../__mocks__/message";
 import { toUIMessage } from "../transformers";
 import { GlobalState } from "../../../types";
 
-const mockRemoteContentPrevMessage: RemoteContentPrev = {};
+const mockThirdPartyMessagePrecondition: ThirdPartyMessagePrecondition = {
+  title: "placeholder_title",
+  markdown: "placeholder_markdown"
+};
 
-describe("remoteContentPrevMessage", () => {
-  it("The initial state should have the message undefined and the content as remoteUndefined", () => {
+const message = toUIMessage(message_1);
+
+describe("thirdPartyMessagePreconditionById", () => {
+  it("The initial state should have the messageId undefined and the content as remoteUndefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(
-      globalState.entities.messages.remoteContentPrevMessage
+      globalState.entities.messages.thirdPartyMessagePreconditionById
     ).toStrictEqual({
-      message: undefined,
+      messageId: undefined,
       content: remoteUndefined
     });
   });
 
-  it("The message should be present and the content should be remoteLoading if the remoteContentPrevMessage.request is dispatched", () => {
+  it("The messageId should be defined and the content should be remoteLoading if the loadThirdPartyMessagePrecondition.request is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     const action = store.dispatch(
-      remoteContentPrevMessage.request(toUIMessage(message_1))
+      loadThirdPartyMessagePrecondition.request(message.id)
     );
     expect(
-      store.getState().entities.messages.remoteContentPrevMessage
+      store.getState().entities.messages.thirdPartyMessagePreconditionById
     ).toStrictEqual({
-      message: action.payload,
+      messageId: action.payload,
       content: remoteLoading
     });
   });
 
-  it("The message should be present and the content should be remoteReady with action payload as value if the remoteContentPrevMessage.success is dispatched", () => {
+  it("The messageId should be defined and the content should be remoteReady with action payload as value if the loadThirdPartyMessagePrecondition.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...globalState,
@@ -51,8 +56,8 @@ describe("remoteContentPrevMessage", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          remoteContentPrevMessage: {
-            message: toUIMessage(message_1),
+          thirdPartyMessagePreconditionById: {
+            messageId: message.id,
             content: remoteLoading
           }
         }
@@ -61,17 +66,19 @@ describe("remoteContentPrevMessage", () => {
 
     const store = createStore(appReducer, finalState as any);
     const action = store.dispatch(
-      remoteContentPrevMessage.success(mockRemoteContentPrevMessage)
+      loadThirdPartyMessagePrecondition.success(
+        mockThirdPartyMessagePrecondition
+      )
     );
     expect(
-      store.getState().entities.messages.remoteContentPrevMessage
+      store.getState().entities.messages.thirdPartyMessagePreconditionById
     ).toStrictEqual({
-      message: toUIMessage(message_1),
+      messageId: message.id,
       content: remoteReady(action.payload)
     });
   });
 
-  it("The message should be present and the content should be remoteError with action payload as value if the remoteContentPrevMessage.failure is dispatched", () => {
+  it("The messageId should be defined and the content should be remoteError with action payload as value if the loadThirdPartyMessagePrecondition.failure is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...globalState,
@@ -79,8 +86,8 @@ describe("remoteContentPrevMessage", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          remoteContentPrevMessage: {
-            message: toUIMessage(message_1),
+          thirdPartyMessagePreconditionById: {
+            messageId: message.id,
             content: remoteLoading
           }
         }
@@ -89,17 +96,19 @@ describe("remoteContentPrevMessage", () => {
 
     const store = createStore(appReducer, finalState as any);
     const action = store.dispatch(
-      remoteContentPrevMessage.failure(new Error("Error load remote content"))
+      loadThirdPartyMessagePrecondition.failure(
+        new Error("Error load remote content")
+      )
     );
     expect(
-      store.getState().entities.messages.remoteContentPrevMessage
+      store.getState().entities.messages.thirdPartyMessagePreconditionById
     ).toStrictEqual({
-      message: toUIMessage(message_1),
+      messageId: message.id,
       content: remoteError(action.payload)
     });
   });
 
-  it("The message should be undefined and the content should be remoteUndefined if the clearRemoteContentPrevMessage is dispatched", () => {
+  it("The messageId should be undefined and the content should be remoteUndefined if the clearThirdPartyMessagePrecondition is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...globalState,
@@ -107,20 +116,20 @@ describe("remoteContentPrevMessage", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          remoteContentPrevMessage: {
-            message: toUIMessage(message_1),
-            content: remoteReady(mockRemoteContentPrevMessage)
+          thirdPartyMessagePreconditionById: {
+            messageId: message.id,
+            content: remoteReady(mockThirdPartyMessagePrecondition)
           }
         }
       }
     };
 
     const store = createStore(appReducer, finalState as any);
-    store.dispatch(clearRemoteContentPrevMessage());
+    store.dispatch(clearThirdPartyMessagePrecondition());
     expect(
-      store.getState().entities.messages.remoteContentPrevMessage
+      store.getState().entities.messages.thirdPartyMessagePreconditionById
     ).toStrictEqual({
-      message: undefined,
+      messageId: undefined,
       content: remoteUndefined
     });
   });
