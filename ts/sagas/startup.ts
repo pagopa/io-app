@@ -153,7 +153,7 @@ import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
-import { watchRemoteContentPrevMessage } from "./messages/watchRemoteContentPrevMessage";
+import { watchThirdPartyMessagePrecondition } from "./messages/watchThirdPartyMessagePrecondition";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -586,8 +586,8 @@ export function* initializeApplicationSaga(): Generator<
   yield* fork(watchLoadMessageById, backendClient.getMessage);
   yield* fork(watchLoadMessageDetails, backendClient.getMessage);
   yield* fork(
-    watchRemoteContentPrevMessage,
-    backendClient.getRemoteContentPrevMessage
+    watchThirdPartyMessagePrecondition,
+    backendClient.getThirdPartyMessagePrecondition
   );
   yield* fork(
     watchUpsertMessageStatusAttribues,
