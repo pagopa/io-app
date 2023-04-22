@@ -8,7 +8,7 @@ import { UIMessage } from "../../store/reducers/entities/messages/types";
 
 const MessagesArchiveScreen = () => {
   const archive = useIOSelector(allArchiveMessagesSelector);
-  const { openMessage, bottomSheet } = useMessageOpening();
+  const { present, bottomSheet } = useMessageOpening();
 
   const dispatch = useIODispatch();
 
@@ -29,7 +29,7 @@ const MessagesArchiveScreen = () => {
     <>
       <MessagesArchive
         messages={archive}
-        navigateToMessageDetail={openMessage}
+        navigateToMessageDetail={present}
         unarchiveMessages={messages => setArchived(false, messages)}
       />
       {bottomSheet}
