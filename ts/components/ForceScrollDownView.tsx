@@ -7,8 +7,8 @@ import {
   ScrollViewProps,
   StyleSheet
 } from "react-native";
-import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 import IconButtonSolid from "./ui/IconButtonSolid";
+import { ScaleInOutAnimation } from "./animations/ScaleInOutAnimation";
 
 type ForceScrollDownViewProps = {
   /**
@@ -145,14 +145,20 @@ const ForceScrollDownView = ({
   );
 
   /**
+   * Whether or not to render the "scroll to bottom" button. It is only rendered when the scroll view
+   * is enabled, needs to be scrolled, and the button is visible (`isButtonVisible` is `true`).
+   */
+  const shouldRenderScrollButton =
+    scrollEnabled && needsScroll && isButtonVisible;
+
+  /**
    * The "scroll to bottom" button component. It is wrapped in a reanimated view and has enter and exit
    * animations applied to it.
    */
   const scrollDownButton = (
-    <Animated.View
+    <ScaleInOutAnimation
       style={styles.scrollDownButton}
-      entering={ZoomIn.duration(200)}
-      exiting={ZoomOut.duration(200)}
+      visible={shouldRenderScrollButton}
     >
       <IconButtonSolid
         testID={"ScrollDownButton"}
@@ -160,15 +166,8 @@ const ForceScrollDownView = ({
         icon="arrowBottom"
         onPress={handleScrollDownPress}
       />
-    </Animated.View>
+    </ScaleInOutAnimation>
   );
-
-  /**
-   * Whether or not to render the "scroll to bottom" button. It is only rendered when the scroll view
-   * is enabled, needs to be scrolled, and the button is visible (`isButtonVisible` is `true`).
-   */
-  const shouldRenderScrollButton =
-    scrollEnabled && needsScroll && isButtonVisible;
 
   return (
     <>
@@ -186,7 +185,7 @@ const ForceScrollDownView = ({
       >
         {children}
       </ScrollView>
-      {shouldRenderScrollButton && scrollDownButton}
+      {scrollDownButton}
     </>
   );
 };
