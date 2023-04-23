@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { isGestureEnabled } from "../../../../../utils/navigation";
 import {
   InitiativeDetailsScreen,
   InitiativeDetailsScreenParams
@@ -25,7 +26,8 @@ const Stack = createStackNavigator<IDPayDetailsParamsList>();
 export const IDpayDetailsNavigator = () => (
   <Stack.Navigator
     initialRouteName={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
-    screenOptions={{ headerShown: false }}
+    headerMode={"none"}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
       name={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}

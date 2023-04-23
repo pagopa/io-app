@@ -98,13 +98,12 @@ const renderComponent = (context?: Partial<Context>) => {
     .withConfig({
       services: {
         confirmIban: jest.fn(),
-        deleteInstrument: jest.fn(),
         enrollIban: jest.fn(),
-        enrollInstrument: jest.fn(),
         loadIbanList: jest.fn(),
         loadInitiative: jest.fn(),
         loadWalletInstruments: jest.fn(),
-        loadInitiativeInstruments: jest.fn()
+        loadInitiativeInstruments: jest.fn(),
+        instrumentsEnrollmentService: jest.fn()
       },
       actions: {
         exitConfiguration: jest.fn(),
@@ -117,7 +116,8 @@ const renderComponent = (context?: Partial<Context>) => {
         navigateToInitiativeDetailScreen: jest.fn(),
         navigateToInstrumentsEnrollmentScreen: jest.fn(),
         showUpdateIbanToast: jest.fn(),
-        showFailureToast: jest.fn()
+        showFailureToast: jest.fn(),
+        showInstrumentFailureToast: jest.fn()
       }
     })
     .withContext({

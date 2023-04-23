@@ -4,6 +4,7 @@ import {
   StackNavigationProp
 } from "@react-navigation/stack";
 import React from "react";
+import { isGestureEnabled } from "../../../../utils/navigation";
 import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
 import FailureScreen from "../screens/FailureScreen";
@@ -42,7 +43,8 @@ export const IDPayOnboardingNavigator = () => (
       initialRouteName={
         IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      screenOptions={{ headerShown: false }}
+      headerMode={"none"}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
