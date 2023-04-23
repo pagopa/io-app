@@ -25,7 +25,10 @@ type ForceScrollDownViewProps = {
    * is passed a boolean indicating whether the threshold has been crossed (`true`) or not (`false`).
    */
   onThresholdCrossed?: (crossed: boolean) => void;
-} & Pick<ScrollViewProps, "style" | "contentContainerStyle" | "scrollEnabled">;
+} & Pick<
+  ScrollViewProps,
+  "style" | "contentContainerStyle" | "scrollEnabled" | "testID"
+>;
 
 /**
  * A React Native component that displays a scroll view with a button that scrolls to the bottom of the content
