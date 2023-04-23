@@ -11,6 +11,7 @@ import { mvlReducer, MvlState } from "../../../mvl/store/reducers";
 import { PersistedPnState, pnPersistor } from "../../../pn";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
+import { testLoginReducer } from "../../../../store/reducers/testLogin";
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
@@ -18,6 +19,7 @@ export type FeaturesState = {
   pn: PersistedPnState;
   fci: FciState;
   idPay: IDPayState;
+  testLogin: TestLoginState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -27,7 +29,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   mvl: mvlReducer,
   pn: pnPersistor,
   fci: fciReducer,
-  idPay: idPayReducer
+  idPay: idPayReducer,
+  testLogin: testLoginReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
