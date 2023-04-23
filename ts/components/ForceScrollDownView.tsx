@@ -172,7 +172,7 @@ const ForceScrollDownView = ({
   return (
     <>
       <ScrollView
-        testID={"ScrollDown"}
+        testID={"ScrollView"}
         ref={scrollViewRef}
         scrollIndicatorInsets={{ right: 1 }}
         scrollEnabled={scrollEnabled}
