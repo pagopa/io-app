@@ -277,7 +277,7 @@ export function BackendClient(
     response_decoder: getThirdPartyMessageDefaultDecoder()
   };
 
-  const getThirdPartyMessagePrecondition: GetThirdPartyMessagePreconditionT = {
+  const getThirdPartyMessagePreconditionT: GetThirdPartyMessagePreconditionT = {
     method: "get",
     url: ({ id }) => `/api/v1/third-party-messages/${id}/precondition`,
     query: _ => ({}),
@@ -506,7 +506,7 @@ export function BackendClient(
       createFetchRequestForApi(getThirdPartyMessage, options)
     ),
     getThirdPartyMessagePrecondition: withBearerToken(
-      createFetchRequestForApi(getThirdPartyMessagePrecondition, options)
+      createFetchRequestForApi(getThirdPartyMessagePreconditionT, options)
     ),
     upsertMessageStatusAttributes: withBearerToken(
       createFetchRequestForApi(upsertMessageStatusAttributesT, options)
