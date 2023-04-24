@@ -43,7 +43,7 @@ const OnboardingDescriptionMarkdownSkeleton = () => (
         <Placeholder.Box
           width={"100%"}
           animate={"fade"}
-          height={16}
+          height={21}
           radius={4}
         />
         <VSpacer size={8} />
