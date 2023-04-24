@@ -145,26 +145,28 @@ export const useMessageOpening = () => {
     pipe(
       message,
       pot.toOption,
-      O.map(message => {
-        const notificationTimestamp = pipe(
+      O.map(message =>
+        pipe(
           message.category,
           MessageCategoryPN.decode,
           O.fromEither,
           O.chainNullableK(category => category.original_receipt_date),
           O.fold(
             () => undefined,
-            originalReceiptDate => originalReceiptDate.toISOString()
+            originalReceiptDate => {
+              const notificationTimestamp = originalReceiptDate.toISOString();
+
+              void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
+                eventTimestamp: new Date().toISOString(),
+                messageTimestamp: message.createdAt.toISOString(),
+                notificationTimestamp
+              });
+
+              navigate(message);
+            }
           )
-        );
-
-        void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
-          eventTimestamp: new Date().toISOString(),
-          messageTimestamp: message.createdAt.toISOString(),
-          notificationTimestamp
-        });
-
-        navigate(message);
-      })
+        )
+      )
     );
   };
 
