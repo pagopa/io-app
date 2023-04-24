@@ -5,9 +5,9 @@ import Animated, {
   LayoutAnimation,
   WithSpringConfig,
   withDelay,
-  withSpring,
-  withTiming
+  withSpring
 } from "react-native-reanimated";
+import { IOSpringValues } from "../core/variables/IOAnimations";
 
 type Props = {
   visible?: boolean;
@@ -20,7 +20,7 @@ type Props = {
 
 const ScaleInOutAnimation = ({
   visible = true,
-  springConfig = { damping: 500, mass: 3, stiffness: 1000 },
+  springConfig = IOSpringValues.button,
   delayOut = 0,
   delayIn = 0,
   children,
@@ -45,7 +45,7 @@ const ScaleInOutAnimation = ({
         transform: [{ scale: 1 }]
       },
       animations: {
-        transform: [{ scale: withDelay(delayOut, withTiming(0)) }]
+        transform: [{ scale: withDelay(delayOut, withSpring(0, springConfig)) }]
       }
     };
   };
