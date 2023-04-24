@@ -53,18 +53,18 @@ const ErrorComponent = () => (
   </View>
 );
 
-type PreconditionMessageProps = {
+type MessagePreconditionProps = {
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>;
 };
 
-type PreconditionMessageContentProps = PreconditionMessageProps & {
+type MessagePreconditionContentProps = MessagePreconditionProps & {
   handleOnLoadEnd: () => void;
 };
 
-const PreconditionMessageContent = ({
+const MessagePreconditionContent = ({
   content,
   handleOnLoadEnd
-}: PreconditionMessageContentProps) => {
+}: MessagePreconditionContentProps) => {
   const renderContent = () => {
     if (isError(content)) {
       return <ErrorComponent />;
@@ -88,7 +88,7 @@ const PreconditionMessageContent = ({
   );
 };
 
-const PreconditionMessageHeader = ({ content }: PreconditionMessageProps) => {
+const MessagePreconditionHeader = ({ content }: MessagePreconditionProps) => {
   const data = getValueOrElse(content, undefined);
 
   return (
@@ -199,11 +199,11 @@ export const useMessageOpening = () => {
   };
 
   const modal = useIOBottomSheetModal(
-    <PreconditionMessageContent
+    <MessagePreconditionContent
       content={content}
       handleOnLoadEnd={() => setIsContentLoadCompleted(true)}
     />,
-    <PreconditionMessageHeader content={content} />,
+    <MessagePreconditionHeader content={content} />,
     BOTTOM_SHEET_HEIGHT,
     renderBottomSheetFooter(),
     () => {
