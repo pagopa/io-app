@@ -13,7 +13,8 @@ import Animated, {
   useDerivedValue,
   interpolate,
   Extrapolate,
-  interpolateColor
+  interpolateColor,
+  useAnimatedProps
 } from "react-native-reanimated";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
@@ -25,6 +26,8 @@ import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { AnimatedIcon, IOIcons, IconClassComponent } from "../core/icons/Icon";
+import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonOutline = WithTestID<{
   color?: "primary" | "neutral" | "contrast" | "danger";
@@ -32,6 +35,10 @@ export type ButtonOutline = WithTestID<{
   small?: boolean;
   fullWidth?: boolean;
   disabled?: boolean;
+  // Icons
+  icon?: IOIcons;
+  iconPosition?: "start" | "end";
+  // Accessibility
   accessibilityLabel: string;
   accessibilityHint?: string;
   onPress: (event: GestureResponderEvent) => void;
@@ -231,6 +238,8 @@ const mapColorStates: Record<
   }
 };
 
+const DISABLED_OPACITY = 0.5;
+
 const IOButtonStylesLocal = StyleSheet.create({
   label: {
     ...makeFontStyleObject("Regular", false, "ReadexPro")
@@ -246,6 +255,8 @@ export const ButtonOutline = ({
   small = false,
   fullWidth = false,
   disabled = false,
+  icon,
+  iconPosition = "start",
   onPress,
   accessibilityLabel,
   accessibilityHint,
@@ -348,6 +359,32 @@ ButtonOutline) => {
     };
   });
 
+  // Animate the <Icon> color prop
+  const pressedColorIconAnimationStyle = useAnimatedProps(() => {
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const iconColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapColorStates[color].label.default,
+            mapColorStates[color].label.pressed
+          ]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].label.default,
+            mapLegacyColorStates[color].label.pressed
+          ]
+        );
+    return { color: iconColor };
+  });
+
+  const AnimatedIconClassComponent =
+    Animated.createAnimatedComponent(IconClassComponent);
+
   const onPressIn = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
     isPressed.value = 1;
@@ -356,6 +393,9 @@ ButtonOutline) => {
     // eslint-disable-next-line functional/immutable-data
     isPressed.value = 0;
   }, [isPressed]);
+
+  // Icon size
+  const iconSize = small ? 16 : 20;
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
@@ -379,6 +419,7 @@ ButtonOutline) => {
         style={[
           IOButtonLegacyStyles.button,
           IOButtonLegacyStylesLocal.buttonWithBorder,
+          iconPosition === "end" && { flexDirection: "row-reverse" },
           small
             ? IOButtonLegacyStyles.buttonSizeSmall
             : IOButtonLegacyStyles.buttonSizeDefault,
@@ -386,7 +427,8 @@ ButtonOutline) => {
             ? {
                 backgroundColor:
                   mapLegacyColorStates[color]?.background?.disabled,
-                borderColor: mapLegacyColorStates[color]?.border?.disabled
+                borderColor: mapLegacyColorStates[color]?.border?.disabled,
+                opacity: DISABLED_OPACITY
               }
             : {
                 backgroundColor:
@@ -398,6 +440,25 @@ ButtonOutline) => {
           !disabled && pressedAnimationStyle
         ]}
       >
+        {icon && (
+          <>
+            {!disabled ? (
+              <AnimatedIconClassComponent
+                name={icon}
+                animatedProps={pressedColorIconAnimationStyle}
+                color={mapLegacyColorStates[color]?.label?.default}
+                size={iconSize}
+              />
+            ) : (
+              <AnimatedIcon
+                name={icon}
+                size={iconSize}
+                color={mapLegacyColorStates[color]?.label?.disabled}
+              />
+            )}
+            <HSpacer size={8} />
+          </>
+        )}
         <Animated.Text
           style={[
             IOButtonLegacyStylesLocal.label,
@@ -441,13 +502,15 @@ ButtonOutline) => {
         style={[
           IOButtonStyles.button,
           IOButtonStylesLocal.buttonWithBorder,
+          iconPosition === "end" && { flexDirection: "row-reverse" },
           small
             ? IOButtonStyles.buttonSizeSmall
             : IOButtonStyles.buttonSizeDefault,
           disabled
             ? {
                 backgroundColor: mapColorStates[color]?.background?.disabled,
-                borderColor: mapColorStates[color]?.border?.disabled
+                borderColor: mapColorStates[color]?.border?.disabled,
+                opacity: DISABLED_OPACITY
               }
             : {
                 backgroundColor: mapColorStates[color]?.background?.default,
@@ -458,6 +521,23 @@ ButtonOutline) => {
           !disabled && pressedAnimationStyle
         ]}
       >
+        {icon && (
+          <>
+            {!disabled ? (
+              <AnimatedIconClassComponent
+                name={icon}
+                animatedProps={pressedColorIconAnimationStyle}
+                color={mapColorStates[color]?.label?.default}
+              />
+            ) : (
+              <AnimatedIcon
+                name={icon}
+                color={mapColorStates[color]?.label?.disabled}
+              />
+            )}
+            <HSpacer size={8} />
+          </>
+        )}
         <Animated.Text
           style={[
             IOButtonStylesLocal.label,
