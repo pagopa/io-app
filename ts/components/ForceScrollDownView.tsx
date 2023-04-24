@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import IconButtonSolid from "./ui/IconButtonSolid";
 import { ScaleInOutAnimation } from "./animations/ScaleInOutAnimation";
+import { IOSpringValues } from "./core/variables/IOAnimations";
 
 type ForceScrollDownViewProps = {
   /**
@@ -157,6 +158,7 @@ const ForceScrollDownView = ({
    */
   const scrollDownButton = (
     <ScaleInOutAnimation
+      springConfig={IOSpringValues.button}
       style={styles.scrollDownButton}
       visible={shouldRenderScrollButton}
     >
