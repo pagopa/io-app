@@ -193,6 +193,7 @@ const ForceScrollDownView = ({
 const styles = StyleSheet.create({
   scrollDownButton: {
     position: "absolute",
+    zIndex: 10,
     right: 20,
     bottom: 50
   }

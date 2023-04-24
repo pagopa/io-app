@@ -2,9 +2,8 @@
 import React from "react";
 import { ViewStyle } from "react-native";
 import Animated, {
+  LayoutAnimation,
   WithSpringConfig,
-  useAnimatedStyle,
-  useSharedValue,
   withDelay,
   withSpring,
   withTiming
@@ -27,19 +26,42 @@ const ScaleInOutAnimation = ({
   children,
   style
 }: Props) => {
-  const scale = useSharedValue(0);
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }]
-  }));
+  const enteringAnimation = (): LayoutAnimation => {
+    "worklet";
+    return {
+      initialValues: {
+        transform: [{ scale: 0 }]
+      },
+      animations: {
+        transform: [{ scale: withDelay(delayIn, withSpring(1, springConfig)) }]
+      }
+    };
+  };
 
-  React.useEffect(() => {
-    scale.value = visible
-      ? withDelay(delayIn, withSpring(1, springConfig))
-      : withDelay(delayOut, withTiming(0));
-  }, [springConfig, visible, scale, delayIn, delayOut]);
+  const exitingAnimation = (): LayoutAnimation => {
+    "worklet";
+    return {
+      initialValues: {
+        transform: [{ scale: 1 }]
+      },
+      animations: {
+        transform: [{ scale: withDelay(delayOut, withTiming(0)) }]
+      }
+    };
+  };
+
+  if (!visible) {
+    return null;
+  }
 
   return (
-    <Animated.View style={[style, animatedStyle]}>{children}</Animated.View>
+    <Animated.View
+      style={style}
+      entering={enteringAnimation}
+      exiting={exitingAnimation}
+    >
+      {children}
+    </Animated.View>
   );
 };
 

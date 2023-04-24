@@ -86,6 +86,7 @@ const InitiativeDetailsScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <ForceScrollDownView
+        threshold={150}
         scrollEnabled={isDescriptionLoaded}
         contentContainerStyle={styles.scrollContainer}
       >
