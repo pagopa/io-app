@@ -315,6 +315,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         {isPlaygroundsEnabled && (
           <>
             <ListItemComponent
+              title={"Lollipop Playground"}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.LOLLIPOP_PLAYGROUND
+                })
+              }
+            />
+            <ListItemComponent
               title={"MyPortal Web Playground"}
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
