@@ -4,32 +4,23 @@ import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import {
-  LayoutChangeEvent,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  SafeAreaView,
-  ScrollView,
-  View
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { ForceScrollDownView } from "../../../../components/ForceScrollDownView";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import Markdown from "../../../../components/ui/Markdown";
+import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import {
+  OnboardingDescriptionMarkdown,
+  OnboardingDescriptionMarkdownSkeleton
+} from "../components/OnboardingDescriptionMarkdown";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
-import {
-  isLoadingSelector,
-  isUpsertingSelector,
-  selectInitiative
-} from "../xstate/selectors";
+import { isUpsertingSelector, selectInitiative } from "../xstate/selectors";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -43,6 +34,7 @@ type InitiativeDetailsRouteProps = RouteProp<
 const InitiativeDetailsScreen = () => {
   const route = useRoute<InitiativeDetailsRouteProps>();
   const machine = useOnboardingMachineService();
+
   const { serviceId } = route.params;
 
   React.useEffect(() => {
@@ -53,71 +45,12 @@ const InitiativeDetailsScreen = () => {
   }, [machine, serviceId]);
 
   const initiative = useSelector(machine, selectInitiative);
-  const isAcceptingTos = useSelector(machine, isUpsertingSelector);
-  const isLoading = useSelector(machine, isLoadingSelector);
+  const isUpserting = useSelector(machine, isUpsertingSelector);
+  const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
 
-  const [needsScrolling, setNeedsScrolling] = React.useState(true);
-  const [hasScrolled, setHasScrolled] = React.useState(false);
-
-  const scrollViewHeightRef = React.useRef(0);
-  const isContinueButtonDisabled =
-    isLoading || (needsScrolling && !hasScrolled);
-
-  const handleScrollViewLayout = (e: LayoutChangeEvent) => {
-    scrollViewHeightRef.current = e.nativeEvent.layout.height;
-  };
-  const isMarkdownLoadedRef = React.useRef(false);
-
-  const handleScrollViewContentSizeChange = (_: number, height: number) => {
-    // this method is called multiple times during the loading of the markdown
-    if (isMarkdownLoadedRef.current) {
-      setNeedsScrolling(height >= scrollViewHeightRef.current);
-    }
-  };
-
-  const handleScrollViewOnScroll = ({
-    nativeEvent
-  }: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-    const paddingToBottom = 20;
-    if (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    ) {
-      setHasScrolled(true);
-    }
-  };
-
-  const handleGoBackPress = () => {
-    machine.send({ type: "QUIT_ONBOARDING" });
-  };
+  const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
 
   const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
-
-  const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
-
-  const serviceHeaderComponent = pipe(
-    initiative,
-    O.fromNullable,
-    O.map(initiative => ({
-      organizationName: initiative.organizationName,
-      initiativeName: initiative.initiativeName,
-      logoURL: initiative.logoURL
-    })),
-    O.map(props => <OnboardingServiceHeader key={"header"} {...props} />),
-    O.toUndefined
-  );
-
-  const descriptionComponent = pipe(
-    initiative?.description,
-    O.fromNullable,
-    O.map(description => (
-      <Markdown key={"desc"} onLoadEnd={setMarkdownIsLoaded}>
-        {description}
-      </Markdown>
-    )),
-    O.toUndefined
-  );
 
   const onboardingPrivacyAdvice = pipe(
     initiative,
@@ -126,8 +59,24 @@ const InitiativeDetailsScreen = () => {
       privacyUrl: initiative.privacyLink,
       tosUrl: initiative.tcLink
     })),
-    O.map(props => <OnboardingPrivacyAdvice key={"tos"} {...props} />),
-    O.toUndefined
+    O.fold(
+      () => null,
+      props => <OnboardingPrivacyAdvice {...props} />
+    )
+  );
+
+  const descriptionComponent = pipe(
+    initiative,
+    O.fromNullable,
+    O.fold(
+      () => <OnboardingDescriptionMarkdownSkeleton />,
+      ({ description }) => (
+        <OnboardingDescriptionMarkdown
+          onLoadEnd={() => setDescriptionLoaded(true)}
+          description={description}
+        />
+      )
+    )
   );
 
   return (
@@ -136,49 +85,49 @@ const InitiativeDetailsScreen = () => {
       headerTitle={I18n.t("idpay.onboarding.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        <SafeAreaView style={IOStyles.flex}>
-          <ScrollView
-            onLayout={handleScrollViewLayout}
-            onContentSizeChange={handleScrollViewContentSizeChange}
-            onScroll={handleScrollViewOnScroll}
-            scrollEventThrottle={400}
-            style={IOStyles.flex}
-          >
-            <View style={IOStyles.horizontalContentPadding}>
-              <VSpacer size={24} />
-              {serviceHeaderComponent}
-              <VSpacer size={24} />
-              {descriptionComponent}
-              <VSpacer size={16} />
-              <ItemSeparatorComponent noPadded={true} />
-              <VSpacer size={16} />
-              {onboardingPrivacyAdvice}
-              <VSpacer size={16} />
-            </View>
-            <VSpacer size={16} />
-          </ScrollView>
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
+      <ForceScrollDownView
+        threshold={150}
+        scrollEnabled={isDescriptionLoaded}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        <View style={styles.container}>
+          <VSpacer size={24} />
+          <OnboardingServiceHeader initiative={initiative} />
+          <VSpacer size={24} />
+          {descriptionComponent}
+          <VSpacer size={8} />
+          <ItemSeparatorComponent noPadded={true} />
+          <VSpacer size={16} />
+          {onboardingPrivacyAdvice}
+          <VSpacer size={32} />
+          <BlockButtons
+            key={"continue"}
+            type="SingleButton"
             leftButton={{
-              bordered: true,
-              title: I18n.t("global.buttons.cancel"),
-              onPress: handleGoBackPress,
-              testID: "IDPayOnboardingCancel"
-            }}
-            rightButton={{
               title: I18n.t("global.buttons.continue"),
+              accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: handleContinuePress,
               testID: "IDPayOnboardingContinue",
-              isLoading: isAcceptingTos,
-              disabled: isContinueButtonDisabled || isAcceptingTos
+              isLoading: isUpserting,
+              disabled: isUpserting
             }}
           />
-        </SafeAreaView>
-      </LoadingSpinnerOverlay>
+          <VSpacer size={48} />
+        </View>
+      </ForceScrollDownView>
     </BaseScreenComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1
+  },
+  container: {
+    flexGrow: 1,
+    paddingHorizontal: 24
+  }
+});
 
 export type { InitiativeDetailsScreenRouteParams };
 
