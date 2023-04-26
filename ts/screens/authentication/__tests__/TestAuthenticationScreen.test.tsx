@@ -172,7 +172,10 @@ const render = (state: TestLoginState) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const testLoginState = {
     ...globalState,
-    testLogin: state
+    features: {
+      ...globalState.features,
+      testLogin: state
+    }
   };
   const store = createStore(appReducer, testLoginState as any);
   return {
