@@ -11,6 +11,7 @@ import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
@@ -86,7 +87,12 @@ const MultiValuePrerequisitesScreen = () => {
 
     return null;
   };
-  const goBack = () => machine.send("GO_BACK");
+  const goBack = () => machine.send("BACK");
+
+  useNavigationSwipeBackListener(() => {
+    machine.send({ type: "BACK", skipNavigation: true });
+  });
+
   return (
     <SafeAreaView style={IOStyles.flex}>
       <BaseScreenComponent

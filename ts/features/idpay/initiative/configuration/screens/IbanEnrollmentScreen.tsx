@@ -1,18 +1,21 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../../i18n";
+import customVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
@@ -24,8 +27,6 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import customVariables from "../../../../../theme/variables";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -84,6 +85,10 @@ const IbanEnrollmentScreen = () => {
   const handleAddNewIbanPress = () => {
     configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
   };
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
 
   const renderFooter = () => {
     if (isIbanOnly) {
