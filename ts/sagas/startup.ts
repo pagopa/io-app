@@ -301,6 +301,9 @@ export function* initializeApplicationSaga(): Generator<
     backendClient.upsertMessageStatusAttributes
   );
 
+  // watch FCI saga
+  yield* fork(watchFciSaga, sessionToken, keyInfo);
+
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -516,10 +519,6 @@ export function* initializeApplicationSaga(): Generator<
   if (idPayTestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
-  }
-
-  if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken, keyInfo);
   }
 
   // Load the user metadata

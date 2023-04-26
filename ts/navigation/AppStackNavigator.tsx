@@ -30,7 +30,6 @@ import { trackScreen } from "../store/middlewares/navigation";
 import {
   bpdRemoteConfigSelector,
   isCGNEnabledSelector,
-  isFciEnabledSelector,
   isIdPayEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
@@ -77,7 +76,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
-  const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
@@ -139,9 +137,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             ...(svEnabled && svLinkingOptions)
           }
         },
+        ...fciLinkingOptions,
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
-        ...(isFciEnabled ? fciLinkingOptions : {}),
         ...(isIdPayEnabled ? idPayLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
