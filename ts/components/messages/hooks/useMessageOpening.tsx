@@ -208,7 +208,7 @@ export const useMessageOpening = () => {
   );
 
   const present = (message: UIMessage) => {
-    if (message.hasPreconditions) {
+    if (message.hasPrecondition) {
       void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
       dispatch(getMessagePrecondition.request(message.id));
       modal.present();

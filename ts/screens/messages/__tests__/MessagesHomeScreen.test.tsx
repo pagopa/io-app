@@ -89,7 +89,7 @@ describe("MessagesHomeScreen", () => {
     const pnMessage = {
       ...successReloadMessagesPayload.messages[0],
       category: { tag: TagEnumPN.PN },
-      hasPreconditions: true
+      hasPrecondition: true
     } as UIMessage;
 
     describe("and PN is enabled", () => {
