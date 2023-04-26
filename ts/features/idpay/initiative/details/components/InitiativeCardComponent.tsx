@@ -14,14 +14,13 @@ import {
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
-import { formatDateAsLocal } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { InitiativeStatusLabel } from "./InitiativeStatusLabel";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -83,7 +82,6 @@ const InitiativeCardComponent = (props: Props) => {
   const toBeRepaidAmount = accrued - refunded;
   const totalAmount = amount + accrued;
 
-  const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
     totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
 
@@ -109,25 +107,7 @@ const InitiativeCardComponent = (props: Props) => {
             Ministero della Cultura{/* TODO remove temp oreganization name */}
           </LabelSmall>
           <VSpacer size={8} />
-          <View style={styles.bonusStatusContainer}>
-            <IOBadge
-              small={true}
-              text={I18n.t(
-                `idpay.initiative.details.initiativeCard.statusLabels.${status}`
-              )}
-            />
-            <HSpacer size={8} />
-            <LabelSmall fontSize="small" weight="SemiBold" color="bluegreyDark">
-              {I18n.t(
-                `idpay.initiative.details.initiativeCard.${
-                  isInitiativeConfigured ? "validUntil" : "expiresOn"
-                }`,
-                {
-                  expiryDate: dateString
-                }
-              )}
-            </LabelSmall>
-          </View>
+          <InitiativeStatusLabel status={initiative.status} endDate={endDate} />
         </View>
         <VSpacer size={32} />
         <View style={styles.bottomCardSection}>
@@ -273,11 +253,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center"
-  },
-  bonusStatusContainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center"
   },
   consumedOpacity: {
     opacity: 0.5
