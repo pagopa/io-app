@@ -67,14 +67,14 @@ Object {
     },
     "detailsById": Object {},
     "downloads": Object {},
-    "paginatedById": Object {},
-    "thirdPartyById": Object {},
-    "thirdPartyMessagePreconditionById": Object {
+    "messagePrecondition": Object {
       "content": Object {
         "kind": "undefined",
       },
       "messageId": undefined,
     },
+    "paginatedById": Object {},
+    "thirdPartyById": Object {},
   },
   "messagesStatus": Object {},
   "organizations": Object {
