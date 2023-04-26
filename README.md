@@ -403,7 +403,7 @@ $ yarn generate
 ### Android Emulator
 An Android Emulator must be [created and launched manually](https://developer.android.com/studio/run/managing-avds).
 Then, from your command line, run these commands:
-```
+```bash
 # Perform the port forwarding
 $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
 $ cd io-app
@@ -411,7 +411,7 @@ $ yarn run-android
 ```
 
 ### iOS Simulator
-```
+```bash
 $ cd io-app
 $ yarn run-ios
 ```
