@@ -3369,6 +3369,7 @@ idpay:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          lastUpdated: "Saldo aggiornato al "
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
               content: Inserisci un metodo di pagamento valido per effettuare transazioni 
