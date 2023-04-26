@@ -71,7 +71,9 @@ Object {
       "content": Object {
         "kind": "undefined",
       },
-      "messageId": undefined,
+      "messageId": Object {
+        "_tag": "None",
+      },
     },
     "paginatedById": Object {},
     "thirdPartyById": Object {},

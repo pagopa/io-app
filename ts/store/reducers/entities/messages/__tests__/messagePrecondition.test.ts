@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import {
   getMessagePrecondition,
@@ -27,7 +28,7 @@ describe("messagePrecondition", () => {
   it("The initial state should have the messageId undefined and the content as remoteUndefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.entities.messages.messagePrecondition).toStrictEqual({
-      messageId: undefined,
+      messageId: O.none,
       content: remoteUndefined
     });
   });
@@ -39,7 +40,7 @@ describe("messagePrecondition", () => {
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
-      messageId: action.payload,
+      messageId: O.some(action.payload),
       content: remoteLoading
     });
   });
@@ -53,7 +54,7 @@ describe("messagePrecondition", () => {
         messages: {
           ...globalState.entities.messages,
           messagePrecondition: {
-            messageId: message.id,
+            messageId: O.some(message.id),
             content: remoteLoading
           }
         }
@@ -67,7 +68,7 @@ describe("messagePrecondition", () => {
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
-      messageId: message.id,
+      messageId: O.some(message.id),
       content: remoteReady(action.payload)
     });
   });
@@ -81,7 +82,7 @@ describe("messagePrecondition", () => {
         messages: {
           ...globalState.entities.messages,
           messagePrecondition: {
-            messageId: message.id,
+            messageId: O.some(message.id),
             content: remoteLoading
           }
         }
@@ -95,7 +96,7 @@ describe("messagePrecondition", () => {
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
-      messageId: message.id,
+      messageId: O.some(message.id),
       content: remoteError(action.payload)
     });
   });
@@ -109,7 +110,7 @@ describe("messagePrecondition", () => {
         messages: {
           ...globalState.entities.messages,
           messagePrecondition: {
-            messageId: message.id,
+            messageId: O.some(message.id),
             content: remoteReady(mockThirdPartyMessagePrecondition)
           }
         }
@@ -121,7 +122,7 @@ describe("messagePrecondition", () => {
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
-      messageId: undefined,
+      messageId: O.none,
       content: remoteUndefined
     });
   });

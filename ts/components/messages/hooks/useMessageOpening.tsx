@@ -57,6 +57,77 @@ type MessagePreconditionContentProps = MessagePreconditionProps & {
   handleOnLoadEnd: () => void;
 };
 
+type MessagePreconditionFooterProps = {
+  isContentLoadCompleted: boolean;
+  messageId: string;
+  onDismiss: () => void;
+  navigationAction: (message: UIMessage) => void;
+};
+
+const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
+  const message = useIOSelector(state =>
+    getMessageById(state, props.messageId)
+  );
+
+  const handleCancelPress = () => {
+    void mixpanelTrack("PN_DISCLAIMER_REJECTED");
+    props.onDismiss();
+  };
+
+  const handleContinuePress = () => {
+    props.onDismiss();
+
+    pipe(
+      message,
+      pot.toOption,
+      O.map(message => {
+        pipe(
+          message.category,
+          MessageCategoryPN.decode,
+          O.fromEither,
+          O.chainNullableK(category => category.original_receipt_date),
+          O.map(originalReceiptDate => {
+            const notificationTimestamp = originalReceiptDate.toISOString();
+
+            void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
+              eventTimestamp: new Date().toISOString(),
+              messageTimestamp: message.createdAt.toISOString(),
+              notificationTimestamp
+            });
+          })
+        );
+        props.navigationAction(message);
+      })
+    );
+  };
+
+  // if the markdown is not loaded yet
+  // we don't render the footer
+  if (!props.isContentLoadCompleted) {
+    return <></>;
+  }
+
+  return (
+    <FooterWithButtons
+      type={"TwoButtonsInlineHalf"}
+      leftButton={{
+        bordered: true,
+        labelColor: IOColors.blue,
+        title: I18n.t("global.buttons.cancel"),
+        onPressWithGestureHandler: true,
+        onPress: handleCancelPress
+      }}
+      rightButton={{
+        primary: true,
+        labelColor: IOColors.white,
+        title: I18n.t("global.buttons.continue"),
+        onPressWithGestureHandler: true,
+        onPress: handleContinuePress
+      }}
+    />
+  );
+};
+
 const MessagePreconditionContent = ({
   content,
   handleOnLoadEnd
@@ -109,10 +180,9 @@ const MessagePreconditionHeader = ({ content }: MessagePreconditionProps) => {
 export const useMessageOpening = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const { messageId = "", content } = useIOSelector(
+  const { messageId: maybeMessageId, content } = useIOSelector(
     messagePreconditionSelector
   );
-  const message = useIOSelector(state => getMessageById(state, messageId));
   const [isContentLoadCompleted, setIsContentLoadCompleted] =
     useState<boolean>(false);
 
@@ -129,70 +199,6 @@ export const useMessageOpening = () => {
     [navigation]
   );
 
-  const handleCancelPress = () => {
-    void mixpanelTrack("PN_DISCLAIMER_REJECTED");
-    modal.dismiss();
-  };
-
-  const handleContinuePress = () => {
-    modal.dismiss();
-
-    pipe(
-      message,
-      pot.toOption,
-      O.map(message =>
-        pipe(
-          message.category,
-          MessageCategoryPN.decode,
-          O.fromEither,
-          O.chainNullableK(category => category.original_receipt_date),
-          O.fold(
-            () => undefined,
-            originalReceiptDate => {
-              const notificationTimestamp = originalReceiptDate.toISOString();
-
-              void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
-                eventTimestamp: new Date().toISOString(),
-                messageTimestamp: message.createdAt.toISOString(),
-                notificationTimestamp
-              });
-
-              navigate(message);
-            }
-          )
-        )
-      )
-    );
-  };
-
-  const renderBottomSheetFooter = () => {
-    // if the markdown is not loaded yet
-    // we don't render the footer
-    if (!isContentLoadCompleted) {
-      return <></>;
-    }
-
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={{
-          bordered: true,
-          labelColor: IOColors.blue,
-          title: I18n.t("global.buttons.cancel"),
-          onPressWithGestureHandler: true,
-          onPress: handleCancelPress
-        }}
-        rightButton={{
-          primary: true,
-          labelColor: IOColors.white,
-          title: I18n.t("global.buttons.continue"),
-          onPressWithGestureHandler: true,
-          onPress: handleContinuePress
-        }}
-      />
-    );
-  };
-
   const modal = useIOBottomSheetModal(
     <MessagePreconditionContent
       content={content}
@@ -200,7 +206,20 @@ export const useMessageOpening = () => {
     />,
     <MessagePreconditionHeader content={content} />,
     BOTTOM_SHEET_HEIGHT,
-    renderBottomSheetFooter(),
+    pipe(
+      maybeMessageId,
+      O.fold(
+        () => <></>,
+        messageId => (
+          <MessagePreconditionFooter
+            isContentLoadCompleted={isContentLoadCompleted}
+            messageId={messageId}
+            onDismiss={() => modal.dismiss()}
+            navigationAction={navigate}
+          />
+        )
+      )
+    ),
     () => {
       setIsContentLoadCompleted(false);
       dispatch(clearMessagePrecondition());

@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -16,12 +17,12 @@ import {
 import { UIMessageId } from "./types";
 
 export type MessagePrecondition = {
-  messageId: UIMessageId | undefined;
+  messageId: O.Option<UIMessageId>;
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>;
 };
 
 const INITIAL_STATE: MessagePrecondition = {
-  messageId: undefined,
+  messageId: O.none,
   content: remoteUndefined
 };
 
@@ -32,7 +33,7 @@ export const messagePreconditionReducer = (
   switch (action.type) {
     case getType(getMessagePrecondition.request):
       return {
-        messageId: action.payload,
+        messageId: O.some(action.payload),
         content: remoteLoading
       };
     case getType(getMessagePrecondition.success):
