@@ -12,8 +12,8 @@ import customVariables from "../../../theme/variables";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
-  loadThirdPartyMessagePrecondition,
-  clearThirdPartyMessagePrecondition
+  getMessagePrecondition,
+  clearMessagePrecondition
 } from "../../../store/actions/messages";
 import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
 import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
@@ -203,14 +203,14 @@ export const useMessageOpening = () => {
     renderBottomSheetFooter(),
     () => {
       setIsContentLoadCompleted(false);
-      dispatch(clearThirdPartyMessagePrecondition());
+      dispatch(clearMessagePrecondition());
     }
   );
 
   const present = (message: UIMessage) => {
     if (message.hasPreconditions) {
       void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
-      dispatch(loadThirdPartyMessagePrecondition.request(message.id));
+      dispatch(getMessagePrecondition.request(message.id));
       modal.present();
       return;
     }

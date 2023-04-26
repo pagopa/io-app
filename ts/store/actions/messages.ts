@@ -140,14 +140,14 @@ export const migrateToPaginatedMessages = createAsyncAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
 )<MessagesStatus, number, MigrationResult>();
 
-export const loadThirdPartyMessagePrecondition = createAsyncAction(
-  "LOAD_THIRD_PARTY_MESSAGE_PRECONDITION_REQUEST",
-  "LOAD_THIRD_PARTY_MESSAGE_PRECONDITION_SUCCESS",
-  "LOAD_THIRD_PARTY_MESSAGE_PRECONDITION_FAILURE"
+export const getMessagePrecondition = createAsyncAction(
+  "GET_MESSAGE_PRECONDITION_REQUEST",
+  "GET_MESSAGE_PRECONDITION_SUCCESS",
+  "GET_MESSAGE_PRECONDITION_FAILURE"
 )<UIMessageId, ThirdPartyMessagePrecondition, Error>();
 
-export const clearThirdPartyMessagePrecondition = createAction(
-  "CLEAR_THIRD_PARTY_MESSAGE_PRECONDITION"
+export const clearMessagePrecondition = createAction(
+  "CLEAR_MESSAGE_PRECONDITION"
 );
 
 /**
@@ -192,6 +192,6 @@ export type MessagesActions = ActionType<
   | typeof downloadAttachment
   | typeof cancelPreviousAttachmentDownload
   | typeof removeCachedAttachment
-  | typeof loadThirdPartyMessagePrecondition
-  | typeof clearThirdPartyMessagePrecondition
+  | typeof getMessagePrecondition
+  | typeof clearMessagePrecondition
 >;

@@ -153,7 +153,7 @@ import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
-import { watchThirdPartyMessagePrecondition } from "./messages/watchThirdPartyMessagePrecondition";
+import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -586,7 +586,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* fork(watchLoadMessageById, backendClient.getMessage);
   yield* fork(watchLoadMessageDetails, backendClient.getMessage);
   yield* fork(
-    watchThirdPartyMessagePrecondition,
+    watchMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
   yield* fork(

@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 import {
-  loadThirdPartyMessagePrecondition,
-  clearThirdPartyMessagePrecondition
+  getMessagePrecondition,
+  clearMessagePrecondition
 } from "../../../../actions/messages";
 import { appReducer } from "../../..";
 import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
@@ -32,12 +32,10 @@ describe("messagePrecondition", () => {
     });
   });
 
-  it("The messageId should be defined and the content should be remoteLoading if the loadThirdPartyMessagePrecondition.request is dispatched", () => {
+  it("The messageId should be defined and the content should be remoteLoading if the getMessagePrecondition.request is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    const action = store.dispatch(
-      loadThirdPartyMessagePrecondition.request(message.id)
-    );
+    const action = store.dispatch(getMessagePrecondition.request(message.id));
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
@@ -46,7 +44,7 @@ describe("messagePrecondition", () => {
     });
   });
 
-  it("The messageId should be defined and the content should be remoteReady with action payload as value if the loadThirdPartyMessagePrecondition.success is dispatched", () => {
+  it("The messageId should be defined and the content should be remoteReady with action payload as value if the getMessagePrecondition.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...globalState,
@@ -64,9 +62,7 @@ describe("messagePrecondition", () => {
 
     const store = createStore(appReducer, finalState as any);
     const action = store.dispatch(
-      loadThirdPartyMessagePrecondition.success(
-        mockThirdPartyMessagePrecondition
-      )
+      getMessagePrecondition.success(mockThirdPartyMessagePrecondition)
     );
     expect(
       store.getState().entities.messages.messagePrecondition
@@ -76,7 +72,7 @@ describe("messagePrecondition", () => {
     });
   });
 
-  it("The messageId should be defined and the content should be remoteError with action payload as value if the loadThirdPartyMessagePrecondition.failure is dispatched", () => {
+  it("The messageId should be defined and the content should be remoteError with action payload as value if the getMessagePrecondition.failure is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...globalState,
@@ -94,9 +90,7 @@ describe("messagePrecondition", () => {
 
     const store = createStore(appReducer, finalState as any);
     const action = store.dispatch(
-      loadThirdPartyMessagePrecondition.failure(
-        new Error("Error load remote content")
-      )
+      getMessagePrecondition.failure(new Error("Error load remote content"))
     );
     expect(
       store.getState().entities.messages.messagePrecondition
@@ -106,7 +100,7 @@ describe("messagePrecondition", () => {
     });
   });
 
-  it("The messageId should be undefined and the content should be remoteUndefined if the clearThirdPartyMessagePrecondition is dispatched", () => {
+  it("The messageId should be undefined and the content should be remoteUndefined if the clearMessagePrecondition is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const finalState: GlobalState = {
       ...globalState,
@@ -123,7 +117,7 @@ describe("messagePrecondition", () => {
     };
 
     const store = createStore(appReducer, finalState as any);
-    store.dispatch(clearThirdPartyMessagePrecondition());
+    store.dispatch(clearMessagePrecondition());
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({

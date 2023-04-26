@@ -3,8 +3,8 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import {
-  loadThirdPartyMessagePrecondition,
-  clearThirdPartyMessagePrecondition
+  getMessagePrecondition,
+  clearMessagePrecondition
 } from "../../../actions/messages";
 import {
   RemoteValue,
@@ -30,22 +30,22 @@ export const messagePreconditionReducer = (
   action: Action
 ): MessagePrecondition => {
   switch (action.type) {
-    case getType(loadThirdPartyMessagePrecondition.request):
+    case getType(getMessagePrecondition.request):
       return {
         messageId: action.payload,
         content: remoteLoading
       };
-    case getType(loadThirdPartyMessagePrecondition.success):
+    case getType(getMessagePrecondition.success):
       return {
         ...state,
         content: remoteReady(action.payload)
       };
-    case getType(loadThirdPartyMessagePrecondition.failure):
+    case getType(getMessagePrecondition.failure):
       return {
         ...state,
         content: remoteError(action.payload)
       };
-    case getType(clearThirdPartyMessagePrecondition):
+    case getType(clearMessagePrecondition):
       return INITIAL_STATE;
   }
   return state;

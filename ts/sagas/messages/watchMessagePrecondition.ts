@@ -6,15 +6,15 @@ import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { convertUnknownToError } from "../../utils/errors";
 import {
-  loadThirdPartyMessagePrecondition,
-  clearThirdPartyMessagePrecondition
+  getMessagePrecondition,
+  clearMessagePrecondition
 } from "../../store/actions/messages";
 
-function* workerThirdPartyMessagePrecondition(
+function* workerMessagePrecondition(
   getThirdPartyMessagePrecondition: ReturnType<
     typeof BackendClient
   >["getThirdPartyMessagePrecondition"],
-  action: ActionType<typeof loadThirdPartyMessagePrecondition.request>
+  action: ActionType<typeof getMessagePrecondition.request>
 ) {
   const messageId = action.payload;
 
@@ -25,9 +25,7 @@ function* workerThirdPartyMessagePrecondition(
 
     if (E.isRight(result)) {
       if (result.right.status === 200) {
-        yield* put(
-          loadThirdPartyMessagePrecondition.success(result.right.value)
-        );
+        yield* put(getMessagePrecondition.success(result.right.value));
         return;
       }
       throw Error(`response status ${result.right.status}`);
@@ -35,29 +33,25 @@ function* workerThirdPartyMessagePrecondition(
       throw Error(readableReport(result.left));
     }
   } catch (e) {
-    yield* put(
-      loadThirdPartyMessagePrecondition.failure(convertUnknownToError(e))
-    );
+    yield* put(getMessagePrecondition.failure(convertUnknownToError(e)));
   }
 }
 
-export function* watchThirdPartyMessagePrecondition(
+export function* watchMessagePrecondition(
   getThirdPartyMessagePrecondition: ReturnType<
     typeof BackendClient
   >["getThirdPartyMessagePrecondition"]
 ): SagaIterator {
   yield* takeLatest(
-    getType(loadThirdPartyMessagePrecondition.request),
-    function* (
-      action: ActionType<typeof loadThirdPartyMessagePrecondition.request>
-    ) {
+    getType(getMessagePrecondition.request),
+    function* (action: ActionType<typeof getMessagePrecondition.request>) {
       yield* race({
         response: call(
-          workerThirdPartyMessagePrecondition,
+          workerMessagePrecondition,
           getThirdPartyMessagePrecondition,
           action
         ),
-        cancel: take(clearThirdPartyMessagePrecondition)
+        cancel: take(clearMessagePrecondition)
       });
     }
   );
