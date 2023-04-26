@@ -13,6 +13,7 @@ import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
 import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 import { isFciEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isTestEnv } from "../../../utils/environment";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -24,7 +25,8 @@ const FciSignatureScreen = (
   const signatureRequestId = props.route.params.signatureRequestId;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
-  const fciEnabled = useIOSelector(isFciEnabledSelector);
+  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
+  const fciEnabled = isTestEnv || fciEnabledSelector;
 
   React.useEffect(() => {
     if (fciEnabled) {
