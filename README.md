@@ -63,15 +63,15 @@ The project comprises two main components:
 
 The Digital Citizenship mobile app is a native mobile application for iOS and Android with a dual purpose:
 
-* To be an interface for citizens to manage their data and their digital citizen profile;
-* To act as _reference implementation_ of the integrations with the Digital Citizenship platform.
+* to be an interface for citizens to manage their data and their digital citizen profile;
+* to act as _reference implementation_ of the integrations with the Digital Citizenship platform.
 
 ## Who develops the app?
 
 The development of the app is carried out by several contributors:
 
 * [PagoPA S.p.A.](https://www.pagopa.gov.it/);
-* Volunteers who support the project.
+* volunteers who support the project.
 
 ## Can I use the app?
 
@@ -166,7 +166,7 @@ Below there are the permissions required by the main android hardware manufactur
     </tr>
     <tr>
         <td>com.google.android.c2dm.permission.RECEIVE</td>
-        <td>Allows the app to is receive a broadcast from GCM server that contains a GCM message. Used for push notification.</td>
+        <td>Allows the app to receive a broadcast from a GCM server that contains a GCM message. Used for push notification.</td>
     </tr>
     <tr>
         <td>com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE</td>
@@ -190,11 +190,11 @@ Below there are the permissions required by the main android hardware manufactur
     </tr>
     <tr>
         <td>com.huawei.android.launcher.permission.READ_SETTINGS</td>
-        <td>used for the notification badges.</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.huawei.android.launcher.permission.WRITE_SETTINGS</td>
-        <td>used for the notification badges.</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.majeur.launcher.permission.UPDATE_BADGE</td>
@@ -256,7 +256,7 @@ Below there are the permissions required by the main android hardware manufactur
     </tr>
     <tr>
         <td>NSAppleMusicUsageDescription</td>
-        <td>Allows the app to use APIs that access the user’s media library.</td>
+        <td>Allows the app to access the user’s media library.</td>
     </tr>
     <tr>
         <td>NSBluetoothAlwaysUsageDescription</td>
@@ -276,7 +276,7 @@ Below there are the permissions required by the main android hardware manufactur
     </tr>
     <tr>
         <td>NSLocationUsageDescription</td>
-        <td>Allows the app to use access the user’s location information.</td>
+        <td>Allows the app to access the user’s location information.</td>
     </tr>
     <tr>
         <td>NSLocationWhenInUseUsageDescription</td>
@@ -382,20 +382,20 @@ $ rbenv install && rbenv version
 # Install yarn and rehash to install shims
 $ npm install -g yarn && nodenv rehash
 
-# Install all of the required gems from the Gemfile
-# Run this only while setting up and when gems dependencies change
+# Install the required Gems from the Gemfile
+# Run this only during the first setup and when Gems dependencies change
 $ bundle install
 
 # Install dependencies 
-# Run this only while setting up and when js dependencies change
+# Run this only during the first setup and when JS dependencies change
 $ yarn install
 
 # Install podfiles when targeting iOS (ignore this step for Android)
-# Run this only while setting up and when pods dependencies change
+# Run this only during the first setup and when Pods dependencies change
 $ cd iOS && bundle exec pod install && cd ..
 
 # Generate the definitions from the OpenAPI specs and from the YAML translations
-# Run this only while setting up and when specs/translations change
+# Run this only during the first setup and when specs/translations change
 $ yarn generate
 ```
 
@@ -406,17 +406,18 @@ Then, from your command line, run these commands:
 ```
 # Perform the port forwarding
 $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
-
-$ react-native run-android
+$ cd io-app
+$ yarn run-android
 ```
 
 ### iOS Simulator
 ```
+$ cd io-app
 $ yarn run-ios
 ```
 
 ### Pyshical devices
-The React Native documentation provides an [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on pyshical devices.
+The React Native documentation provides a [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on pyshical devices.
 > **Warning**
 > On iOS you also have to change the `Bundle Identifier` to something unique before running io-app on your pyshical device. This can be done In the `Signing (Debug)` section of Xcode.
 
