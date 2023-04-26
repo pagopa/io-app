@@ -208,7 +208,6 @@ export const useMessageOpening = () => {
   );
 
   const present = (message: UIMessage) => {
-    // we must generalize this logic
     if (message.hasPreconditions) {
       void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
       dispatch(loadThirdPartyMessagePrecondition.request(message.id));
