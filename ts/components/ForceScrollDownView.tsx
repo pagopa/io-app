@@ -119,7 +119,7 @@ const ForceScrollDownView = ({
    * A callback that is called whenever the size of the scroll view changes. It updates the state
    * with the new scroll view height.
    */
-  const handleLayot = React.useCallback((event: LayoutChangeEvent) => {
+  const handleLayout = React.useCallback((event: LayoutChangeEvent) => {
     setScrollViewHeight(event.nativeEvent.layout.height);
   }, []);
 
@@ -181,7 +181,7 @@ const ForceScrollDownView = ({
         onScroll={handleScroll}
         scrollEventThrottle={400}
         style={style}
-        onLayout={handleLayot}
+        onLayout={handleLayout}
         onContentSizeChange={handleContentSizeChange}
         contentContainerStyle={contentContainerStyle}
       >
