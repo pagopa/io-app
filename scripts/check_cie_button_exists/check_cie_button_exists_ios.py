@@ -55,7 +55,7 @@ def postSlack(
         token,
         message="Page containig CIE button unreachable",
         uri="https://slack.com/api/chat.postMessage",
-        channel='#io_status'):
+        channel='#io_dev_app_status'):
 
     slackHeaders = {
         "Content-type": "application/json",

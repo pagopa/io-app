@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.30.0-rc.2",
+  "version": "2.31.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.5.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.5.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/definitions.yml",
@@ -24,6 +24,7 @@
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
   "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.46.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
+  "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.12.0-RELEASE/api_lollipop_first_consumer.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -88,6 +89,7 @@
     "generate:fci": "npm-run-all generate:fci-api",
     "generate:idpay-api": "rimraf definitions/idpay && mkdir -p definitions/idpay && gen-api-models --api-spec $npm_package_idpay_api --out-dir ./definitions/idpay --no-strict --response-decoders --request-types --client",
     "generate:idpay": "npm-run-all generate:idpay-api",
+    "generate:lollipop-api": "rimraf definitions/lollipop && mkdir -p definitions/lollipop && gen-api-models --api-spec $npm_package_lollipop_api --out-dir ./definitions/lollipop --no-strict --response-decoders --request-types --client",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
