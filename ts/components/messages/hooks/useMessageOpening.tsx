@@ -27,10 +27,7 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { Pictogram } from "../../../components/core/pictograms";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import {
-  MessageCategoryPN,
-  TagEnum
-} from "../../../../definitions/backend/MessageCategoryPN";
+import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
 import I18n from "../../../i18n";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -39,7 +36,6 @@ import { H4 } from "../../../components/core/typography/H4";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import ROUTES from "../../../navigation/routes";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -113,7 +109,6 @@ const MessagePreconditionHeader = ({ content }: MessagePreconditionProps) => {
 export const useMessageOpening = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const isPnEnabled = useIOSelector(isPnEnabledSelector);
   const { messageId = "", content } = useIOSelector(
     messagePreconditionSelector
   );
@@ -214,7 +209,7 @@ export const useMessageOpening = () => {
 
   const present = (message: UIMessage) => {
     // we must generalize this logic
-    if (message.category.tag === TagEnum.PN && isPnEnabled) {
+    if (message.hasPreconditions) {
       void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
       dispatch(loadThirdPartyMessagePrecondition.request(message.id));
       modal.present();
