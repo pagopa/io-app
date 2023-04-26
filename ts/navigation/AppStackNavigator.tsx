@@ -84,7 +84,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const linking: LinkingOptions = {
     enabled: !isTestEnv, // disable linking in test env
-    prefixes: [IO_INTERNAL_LINK_PREFIX],
+    prefixes: [IO_INTERNAL_LINK_PREFIX, "https://continua.io.pagopa.it/"],
     config: {
       initialRouteName: ROUTES.MAIN,
       screens: {
