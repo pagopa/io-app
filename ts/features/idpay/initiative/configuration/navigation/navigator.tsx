@@ -13,6 +13,7 @@ import InstrumentsEnrollmentScreen, {
   InstrumentsEnrollmentScreenRouteParams
 } from "../screens/InstrumentsEnrollmentScreen";
 import { IDPayConfigurationMachineProvider } from "../xstate/provider";
+import { isGestureEnabled } from "../../../../../utils/navigation";
 
 export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_MAIN: "IDPAY_CONFIGURATION_MAIN",
@@ -40,7 +41,8 @@ export const IDPayConfigurationNavigator = () => (
   <IDPayConfigurationMachineProvider>
     <Stack.Navigator
       initialRouteName={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
-      screenOptions={{ headerShown: false }}
+      headerMode={"none"}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
