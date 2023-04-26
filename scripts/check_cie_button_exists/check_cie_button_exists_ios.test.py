@@ -11,7 +11,7 @@ class CieButtonCheckTest(unittest.TestCase):
             token=os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None),
             message="Unit Test of check_cie_button_exists_ios.py",
             uri="https://slack.com/api/chat.postMessage",
-            channel='#io_status')
+            channel='#io_dev_app_status')
 
         self.assertEqual(response.status_code, 200)
 
@@ -24,7 +24,7 @@ class CieButtonCheckTest(unittest.TestCase):
             token=os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None),
             message="Unit Test of check_cie_button_exists_ios.py",
             uri="https://slack.com/apxxxi/chat.postMessage",
-            channel='#io_status')
+            channel='#io_dev_app_status')
 
         self.assertNotEqual(response.status_code, 200)
 
