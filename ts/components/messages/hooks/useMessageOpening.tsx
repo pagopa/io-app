@@ -15,7 +15,7 @@ import {
   loadThirdPartyMessagePrecondition,
   clearThirdPartyMessagePrecondition
 } from "../../../store/actions/messages";
-import { thirdPartyMessagePreconditionByIdSelector } from "../../../store/reducers/entities/messages/thirdPartyMessagePreconditionById";
+import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
 import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import MessageMarkdown from "../../../components/messages/MessageDetail/MessageMarkdown";
 import {
@@ -115,7 +115,7 @@ export const useMessageOpening = () => {
   const dispatch = useIODispatch();
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
   const { messageId = "", content } = useIOSelector(
-    thirdPartyMessagePreconditionByIdSelector
+    messagePreconditionSelector
   );
   const message = useIOSelector(state => getMessageById(state, messageId));
   const [isContentLoadCompleted, setIsContentLoadCompleted] =

@@ -1,4 +1,3 @@
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -16,20 +15,20 @@ import {
 } from "../../../../features/bonus/bpd/model/RemoteValue";
 import { UIMessageId } from "./types";
 
-export type ThirdPartyMessagePreconditionById = {
+export type MessagePrecondition = {
   messageId: UIMessageId | undefined;
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>;
 };
 
-const INITIAL_STATE: ThirdPartyMessagePreconditionById = {
+const INITIAL_STATE: MessagePrecondition = {
   messageId: undefined,
   content: remoteUndefined
 };
 
-export const thirdPartyMessagePreconditionByIdReducer = (
-  state: ThirdPartyMessagePreconditionById = INITIAL_STATE,
+export const messagePreconditionReducer = (
+  state: MessagePrecondition = INITIAL_STATE,
   action: Action
-): ThirdPartyMessagePreconditionById => {
+): MessagePrecondition => {
   switch (action.type) {
     case getType(loadThirdPartyMessagePrecondition.request):
       return {
@@ -52,10 +51,5 @@ export const thirdPartyMessagePreconditionByIdReducer = (
   return state;
 };
 
-export const thirdPartyMessagePreconditionByIdSelector = createSelector(
-  [
-    (state: GlobalState) =>
-      state.entities.messages.thirdPartyMessagePreconditionById
-  ],
-  (_: ThirdPartyMessagePreconditionById): ThirdPartyMessagePreconditionById => _
-);
+export const messagePreconditionSelector = (state: GlobalState) =>
+  state.entities.messages.messagePrecondition;

@@ -23,12 +23,10 @@ const mockThirdPartyMessagePrecondition: ThirdPartyMessagePrecondition = {
 
 const message = toUIMessage(message_1);
 
-describe("thirdPartyMessagePreconditionById", () => {
+describe("messagePrecondition", () => {
   it("The initial state should have the messageId undefined and the content as remoteUndefined", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(
-      globalState.entities.messages.thirdPartyMessagePreconditionById
-    ).toStrictEqual({
+    expect(globalState.entities.messages.messagePrecondition).toStrictEqual({
       messageId: undefined,
       content: remoteUndefined
     });
@@ -41,7 +39,7 @@ describe("thirdPartyMessagePreconditionById", () => {
       loadThirdPartyMessagePrecondition.request(message.id)
     );
     expect(
-      store.getState().entities.messages.thirdPartyMessagePreconditionById
+      store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
       messageId: action.payload,
       content: remoteLoading
@@ -56,7 +54,7 @@ describe("thirdPartyMessagePreconditionById", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          thirdPartyMessagePreconditionById: {
+          messagePrecondition: {
             messageId: message.id,
             content: remoteLoading
           }
@@ -71,7 +69,7 @@ describe("thirdPartyMessagePreconditionById", () => {
       )
     );
     expect(
-      store.getState().entities.messages.thirdPartyMessagePreconditionById
+      store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
       messageId: message.id,
       content: remoteReady(action.payload)
@@ -86,7 +84,7 @@ describe("thirdPartyMessagePreconditionById", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          thirdPartyMessagePreconditionById: {
+          messagePrecondition: {
             messageId: message.id,
             content: remoteLoading
           }
@@ -101,7 +99,7 @@ describe("thirdPartyMessagePreconditionById", () => {
       )
     );
     expect(
-      store.getState().entities.messages.thirdPartyMessagePreconditionById
+      store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
       messageId: message.id,
       content: remoteError(action.payload)
@@ -116,7 +114,7 @@ describe("thirdPartyMessagePreconditionById", () => {
         ...globalState.entities,
         messages: {
           ...globalState.entities.messages,
-          thirdPartyMessagePreconditionById: {
+          messagePrecondition: {
             messageId: message.id,
             content: remoteReady(mockThirdPartyMessagePrecondition)
           }
@@ -127,7 +125,7 @@ describe("thirdPartyMessagePreconditionById", () => {
     const store = createStore(appReducer, finalState as any);
     store.dispatch(clearThirdPartyMessagePrecondition());
     expect(
-      store.getState().entities.messages.thirdPartyMessagePreconditionById
+      store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
       messageId: undefined,
       content: remoteUndefined

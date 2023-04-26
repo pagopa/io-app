@@ -12,9 +12,9 @@ import paginatedByIdReducer, { PaginatedById } from "./paginatedById";
 import { thirdPartyByIdReducer, ThirdPartyById } from "./thirdPartyById";
 import { Downloads, downloadsReducer } from "./downloads";
 import {
-  ThirdPartyMessagePreconditionById,
-  thirdPartyMessagePreconditionByIdReducer
-} from "./thirdPartyMessagePreconditionById";
+  MessagePrecondition,
+  messagePreconditionReducer
+} from "./messagePrecondition";
 
 export type MessagesState = Readonly<{
   allPaginated: AllPaginated;
@@ -22,7 +22,7 @@ export type MessagesState = Readonly<{
   detailsById: DetailsById;
   thirdPartyById: ThirdPartyById;
   downloads: Downloads;
-  thirdPartyMessagePreconditionById: ThirdPartyMessagePreconditionById;
+  messagePrecondition: MessagePrecondition;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
@@ -31,7 +31,7 @@ const reducer = combineReducers<MessagesState, Action>({
   detailsById: detailsByIdReducer,
   thirdPartyById: thirdPartyByIdReducer,
   downloads: downloadsReducer,
-  thirdPartyMessagePreconditionById: thirdPartyMessagePreconditionByIdReducer
+  messagePrecondition: messagePreconditionReducer
 });
 
 export default reducer;
