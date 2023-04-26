@@ -60,7 +60,7 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
         <Body>{`${I18n.t("messageDetails.service")} `}</Body>
         <Link
           weight={"Bold"}
-          style={{ ...styles.textWrap, ...IOStyles.flex }}
+          style={styles.textWrap}
           onPress={goToServiceDetail}
         >
           {message.serviceName}
