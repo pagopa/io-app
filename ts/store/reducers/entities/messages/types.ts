@@ -37,6 +37,7 @@ export type UIMessage = WithUIMessageId<{
   organizationName: string;
   title: string;
   timeToLive?: TimeToLiveSeconds;
+  hasPreconditions: boolean;
 
   // @deprecated please use it only for backward compatibility
   raw: PublicMessage;

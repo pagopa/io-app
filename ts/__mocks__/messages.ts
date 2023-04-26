@@ -102,6 +102,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
     title: "Għandek flus?",
+    hasPreconditions: false,
     raw: apiPayload.items[0] as any
   },
   {
@@ -116,6 +117,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     serviceName: service_1.service_name,
     organizationName: service_1.organization_name,
     title: "Analiżi tad-demm",
+    hasPreconditions: false,
     raw: apiPayload.items[1] as any
   },
   {
@@ -130,6 +132,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     serviceName: service_2.service_name,
     organizationName: service_2.organization_name,
     title: "позвоните нам!",
+    hasPreconditions: false,
     raw: apiPayload.items[2] as any
   }
 ];

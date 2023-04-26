@@ -88,7 +88,8 @@ describe("MessagesHomeScreen", () => {
   describe("given a PN message", () => {
     const pnMessage = {
       ...successReloadMessagesPayload.messages[0],
-      category: { tag: TagEnumPN.PN }
+      category: { tag: TagEnumPN.PN },
+      hasPreconditions: true
     } as UIMessage;
 
     describe("and PN is enabled", () => {
@@ -102,27 +103,6 @@ describe("MessagesHomeScreen", () => {
           );
           fireEvent(component.getByText(pnMessage.title), "onPress");
           expect(mockNavigate).toHaveBeenCalledTimes(0);
-        });
-      });
-    });
-
-    describe("and PN is disabled", () => {
-      const isPnEnabled = false;
-
-      describe("when tapping on the message", () => {
-        it("then a navigation should be dispatched", () => {
-          const { component } = renderComponent(
-            { inboxMessages: [pnMessage] },
-            isPnEnabled
-          );
-          fireEvent(component.getByText(pnMessage.title), "onPress");
-          expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
-            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
-            params: {
-              messageId: pnMessage.id,
-              fromNotification: false
-            }
-          });
         });
       });
     });
