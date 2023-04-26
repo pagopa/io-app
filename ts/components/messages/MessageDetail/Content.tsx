@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: IOColors.greyUltraLight,
     padding: customVariables.contentPadding
+  },
+  textWrap: {
+    flex: 1,
+    flexWrap: "wrap"
   }
 });
 
@@ -38,20 +42,27 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
   return (
     <View style={styles.container}>
       <View style={[IOStyles.flex, IOStyles.row]}>
-        <Body>{I18n.t("messageDetails.dateSending")}</Body>
-        <Label color="bluegrey">{` ${convertDateTimeToWordDistance(
-          message.createdAt
-        )}`}</Label>
+        <Body>{`${I18n.t("messageDetails.dateSending")} `}</Body>
+        <Label
+          style={styles.textWrap}
+          color="bluegrey"
+        >{`${convertDateTimeToWordDistance(message.createdAt)}`}</Label>
       </View>
 
       <View style={[IOStyles.flex, IOStyles.row]}>
-        <Body>{I18n.t("messageDetails.sender")}</Body>
-        <Label color="bluegrey">{` ${message.organizationName}`}</Label>
+        <Body>{`${I18n.t("messageDetails.sender")} `}</Body>
+        <Label style={styles.textWrap} color="bluegrey">
+          {message.organizationName}
+        </Label>
       </View>
 
       <View style={[IOStyles.flex, IOStyles.row]}>
         <Body>{`${I18n.t("messageDetails.service")} `}</Body>
-        <Link weight={"Bold"} style={IOStyles.flex} onPress={goToServiceDetail}>
+        <Link
+          weight={"Bold"}
+          style={styles.textWrap}
+          onPress={goToServiceDetail}
+        >
           {message.serviceName}
         </Link>
       </View>
