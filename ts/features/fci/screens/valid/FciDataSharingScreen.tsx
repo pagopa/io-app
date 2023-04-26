@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
@@ -63,6 +63,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const navigation = useNavigation();
+  const route = useRoute();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
     undefined
@@ -87,7 +88,10 @@ const FciDataSharingScreen = (): React.ReactElement => {
         <View style={styles.paddingText} />
         <Link
           onPress={() => {
-            void mixpanelTrack("FCI_USER_EXIT");
+            void mixpanelTrack("FCI_USER_EXIT", {
+              screen_name: route.name,
+              cta_id: "modifica_email"
+            });
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.INSERT_EMAIL_SCREEN
             });

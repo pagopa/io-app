@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H3 } from "../../../components/core/typography/H3";
@@ -10,6 +11,7 @@ import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/Bu
 import { fciEndRequest } from "../store/actions";
 import { useIODispatch } from "../../../store/hooks";
 import { H4 } from "../../../components/core/typography/H4";
+import { mixpanelTrack } from "../../../mixpanel";
 
 const styles = StyleSheet.create({
   verticalPad: {
@@ -22,6 +24,7 @@ const styles = StyleSheet.create({
  */
 export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
+  const route = useRoute();
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <View style={styles.verticalPad}>
       <H4 weight={"Regular"}>{I18n.t("features.fci.abort.content")}</H4>
@@ -44,6 +47,9 @@ export const useFciAbortSignatureFlow = () => {
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
+          void mixpanelTrack("FCI_USER_EXIT", {
+            screen_name: route.name
+          });
           dispatch(fciEndRequest());
         }, I18n.t("features.fci.abort.cancel")),
         onPressWithGestureHandler: true

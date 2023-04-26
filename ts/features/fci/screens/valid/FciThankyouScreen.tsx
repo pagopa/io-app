@@ -70,7 +70,11 @@ const FciThankyouScreen = () => {
     () => <LoadingComponent />,
     _ => <ErrorComponent />,
     _ => {
-      void mixpanelTrack("FCI_UX_SUCCESS");
+      void mixpanelTrack("FCI_UX_SUCCESS", {
+        doc_signed_count: 0,
+        sign_count: 0,
+        optional_sign_count: 0
+      });
       return <SuccessComponent />;
     },
     () => <LoadingComponent />,
