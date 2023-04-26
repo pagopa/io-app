@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { List, ListItem } from "native-base";
+import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
@@ -33,42 +33,42 @@ type SettingsButtonProps = {
   subtitle?: string;
   onPress?: () => void;
   hasWarnings?: boolean;
+  isLoading?: boolean;
 };
 
 const SettingsButtonComponent = (props: SettingsButtonProps) => {
-  const { title, subtitle, onPress, hasWarnings } = props;
+  const { title, subtitle, onPress, hasWarnings, isLoading } = props;
 
-  const subtitleComponent = pipe(
-    subtitle,
-    O.fromNullable,
-    O.fold(
-      () => (
+  const getSubtitleComponent = () => {
+    if (isLoading) {
+      return (
         <>
           <VSpacer size={4} />
           <Placeholder.Box animate="fade" height={16} width={120} radius={4} />
         </>
-      ),
-      subtitle => {
-        if (hasWarnings) {
-          <LabelSmall weight="SemiBold" color="red">
-            {I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}
-          </LabelSmall>;
-        }
+      );
+    }
 
-        return (
-          <LabelSmall weight="Regular" color="bluegrey">
-            {subtitle}
-          </LabelSmall>
-        );
-      }
-    )
-  );
+    if (hasWarnings) {
+      return (
+        <LabelSmall weight="SemiBold" color="red">
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+          )}
+        </LabelSmall>
+      );
+    }
+
+    return (
+      <LabelSmall weight="Regular" color="bluegrey">
+        {subtitle}
+      </LabelSmall>
+    );
+  };
 
   return (
-    <ListItem onPress={onPress} style={{ paddingEnd: 0 }}>
-      {props.hasWarnings && (
+    <NBListItem onPress={onPress} style={{ paddingEnd: 0 }}>
+      {hasWarnings && (
         <>
           <IconFont name={"io-warning"} color={IOColors.red} />
           <HSpacer size={16} />
@@ -76,17 +76,17 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => {
       )}
       <View style={IOStyles.flex}>
         <H4>{title}</H4>
-        {subtitleComponent}
+        {getSubtitleComponent()}
       </View>
       <IconFont
         name={"io-right"}
         color={customVariables.contentPrimaryBackground}
       />
-    </ListItem>
+    </NBListItem>
   );
 };
 
-export const InitiativeSettingsComponent = (props: Props) => {
+const InitiativeSettingsComponent = (props: Props) => {
   const { initiative } = props;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -119,6 +119,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
           title={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
+          isLoading={true}
         />
       ),
       ({ initiativeId, nInstr, status }) => (
@@ -152,6 +153,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
           title={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
+          isLoading={true}
         />
       ),
       ({ initiativeId, iban, status }) => (
@@ -177,10 +179,10 @@ export const InitiativeSettingsComponent = (props: Props) => {
         )}
       </H3>
       <VSpacer size={8} />
-      <List>
-        {instrumentsSettingsButton}
-        {ibanSettingsButton}
-      </List>
+      {instrumentsSettingsButton}
+      {ibanSettingsButton}
     </>
   );
 };
+
+export { InitiativeSettingsComponent };
