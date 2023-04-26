@@ -14,6 +14,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { fciEndRequest, fciStartRequest } from "../../store/actions";
+import { mixpanelTrack } from "../../../../mixpanel";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
@@ -68,7 +69,10 @@ const FciThankyouScreen = () => {
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     _ => <ErrorComponent />,
-    _ => <SuccessComponent />,
+    _ => {
+      void mixpanelTrack("FCI_UX_SUCCESS");
+      return <SuccessComponent />;
+    },
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     _ => <ErrorComponent />

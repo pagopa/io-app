@@ -46,6 +46,7 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
+import { mixpanelTrack } from "../../../../mixpanel";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -112,6 +113,7 @@ const FciSignatureFieldsScreen = (
     useFciAbortSignatureFlow();
 
   const onPressDetail = (signatureField: SignatureField) => {
+    void mixpanelTrack("FCI_SHOW_SIGNATURE_FIELDS");
     showModal(
       <DocumentWithSignature
         attrs={signatureField.attrs}
@@ -204,6 +206,7 @@ const FciSignatureFieldsScreen = (
           })
         );
       } else {
+        void mixpanelTrack("FCI_START_SIGNATURE");
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.USER_DATA_SHARE
         });
