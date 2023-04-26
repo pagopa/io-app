@@ -98,7 +98,7 @@ describe("handleGetSignatureRequestById", () => {
         id: loadAction.payload,
         Bearer: "Bearer mockedToken"
       })
-      .throw(mockedError)
+      .throw(new Error(JSON.stringify(mockedError)))
       .next(fciSignatureRequestFromId.failure(getNetworkError(mockedError)))
       .next()
       .isDone();

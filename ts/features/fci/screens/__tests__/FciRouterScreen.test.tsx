@@ -52,7 +52,9 @@ describe("Test FciRouterScreen", () => {
 
     render.store.dispatch(
       fciSignatureRequestFromId.failure(
-        getNetworkError({ ...mockedError, status: 500 })
+        getNetworkError(
+          new Error(JSON.stringify({ ...mockedError, status: 500 }))
+        )
       )
     );
 
@@ -74,7 +76,9 @@ describe("Test FciRouterScreen", () => {
     ).not.toBeNull();
 
     render.store.dispatch(
-      fciSignatureRequestFromId.failure(getNetworkError(mockedError))
+      fciSignatureRequestFromId.failure(
+        getNetworkError(new Error(JSON.stringify(mockedError)))
+      )
     );
 
     expect(
