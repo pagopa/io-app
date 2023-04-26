@@ -33,8 +33,8 @@ import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
 
 export type ListItemNav = WithTestID<{
-  value: string;
-  description?: string;
+  value: string | React.ReactNode;
+  description?: string | React.ReactNode;
   onPress: (event: GestureResponderEvent) => void;
   icon?: IOIcons;
   // Accessibility
@@ -136,10 +136,22 @@ export const ListItemNav = ({
             </View>
           )}
           <View style={IOStyles.flex}>
-            <Text style={[styles.textValue, { color: IOColors.bluegreyDark }]}>
-              {value}
-            </Text>
-            {description && <Body weight="Regular">{description}</Body>}
+            {/* Let developer using a custom component (e.g: skeleton) */}
+            {typeof value === "string" ? (
+              <Text
+                style={[styles.textValue, { color: IOColors.bluegreyDark }]}
+              >
+                {value}
+              </Text>
+            ) : (
+              { value }
+            )}
+            {description &&
+              (typeof description === "string" ? (
+                <Body weight="Regular">{description}</Body>
+              ) : (
+                { description }
+              ))}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
