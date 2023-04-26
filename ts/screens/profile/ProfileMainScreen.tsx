@@ -318,6 +318,18 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         {isPlaygroundsEnabled && (
           <>
             <ListItemNav
+              value={"Lollipop Playground"}
+              accessibilityLabel={"Lollipop Playground"}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.LOLLIPOP_PLAYGROUND
+                })
+              }
+            />
+            {/* We should use FlatList or FlashList to manage
+            automatically the <Divider /> component */}
+            <Divider />
+            <ListItemNav
               value={"MyPortal Web Playground"}
               accessibilityLabel={"MyPortal Web Playground"}
               onPress={() =>
@@ -326,8 +338,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 })
               }
             />
-            {/* We should use FlatList or FlashList to manage
-            automatically the <Divider /> component */}
             <Divider />
             <ListItemNav
               value={"Markdown Playground"}
