@@ -11,7 +11,10 @@ import { mvlReducer, MvlState } from "../../../mvl/store/reducers";
 import { PersistedPnState, pnPersistor } from "../../../pn";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
-import { testLoginReducer } from "../../../../store/reducers/testLogin";
+import {
+  testLoginReducer,
+  TestLoginState
+} from "../../../../store/reducers/testLogin";
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
