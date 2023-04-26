@@ -208,9 +208,9 @@ const checkErrorView = (component: RenderAPI, errorMessage: string) => {
 const checkSuccessView = (component: RenderAPI) => {
   const successView = component.queryByTestId("successView");
   expect(successView).not.toBeNull();
-  const texts2 = successView?.findAllByType(Text);
-  expect(texts2).toHaveLength(1);
-  expect(texts2?.[0]).toHaveTextContent("Success");
+  const texts = successView?.findAllByType(Text);
+  expect(texts).toHaveLength(1);
+  expect(texts?.[0]).toHaveTextContent("Success");
 };
 
 const checkInput = (
