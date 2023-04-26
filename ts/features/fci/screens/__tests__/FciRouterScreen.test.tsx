@@ -4,7 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getTimeoutError } from "../../../../utils/errors";
+import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
@@ -12,11 +12,13 @@ import {
   fciStartRequest
 } from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import {
+  mockedError,
+  mockSignatureRequestDetailView
+} from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
-const genericError = getTimeoutError();
 const now = new Date();
 
 describe("Test FciRouterScreen", () => {
@@ -35,7 +37,7 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
   });
-  it("With a failure, the loading screen should be rendered GenericErrorComponent", () => {
+  it("With a generic failure, the loading screen should be rendered GenericErrorComponentTestID", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
@@ -48,10 +50,35 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
 
-    render.store.dispatch(fciSignatureRequestFromId.failure(genericError));
+    render.store.dispatch(
+      fciSignatureRequestFromId.failure(
+        getNetworkError({ ...mockedError, status: 500 })
+      )
+    );
 
     expect(
       render.component.queryByTestId("GenericErrorComponentTestID")
+    ).not.toBeNull();
+  });
+  it("With a generic failure and a response status equal to 404, the loading screen should be rendered WrongUserErrorComponentTestID", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
+
+    const render = renderComponent(store);
+
+    expect(
+      render.component.queryByTestId("FciRouterLoadingScreenTestID")
+    ).not.toBeNull();
+
+    render.store.dispatch(
+      fciSignatureRequestFromId.failure(getNetworkError(mockedError))
+    );
+
+    expect(
+      render.component.queryByTestId("WrongUserErrorComponentTestID")
     ).not.toBeNull();
   });
   it("With a right and expired signature request, the success component should be rendered an error", () => {

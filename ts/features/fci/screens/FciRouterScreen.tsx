@@ -15,7 +15,11 @@ import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadi
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
 import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
-import { GenericError, NetworkError } from "../../../utils/errors";
+import {
+  NetworkError,
+  getErrorFromNetworkError,
+  getGenericError
+} from "../../../utils/errors";
 import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
 import ErrorComponent from "../components/ErrorComponent";
 
@@ -70,8 +74,9 @@ const FciSignatureScreen = (
     pipe(
       error,
       O.fromNullable,
-      O.filter(e => e.kind === "generic"),
-      O.map(e => JSON.parse((e as GenericError).value.message)),
+      O.map(e => getErrorFromNetworkError(e)),
+      O.map(error => getGenericError(error)),
+      O.map(error => JSON.parse(error.value.message)),
       O.map(ProblemJson.decode),
       O.map(
         E.fold(
