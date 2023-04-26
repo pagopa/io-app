@@ -3,6 +3,7 @@ import React from "react";
 import BeneficiaryDetailsScreen, {
   BeneficiaryDetailsScreenParams
 } from "../screens/BeneficiaryDetailsScreen";
+import { isGestureEnabled } from "../../../../../utils/navigation";
 import {
   InitiativeDetailsScreen,
   InitiativeDetailsScreenParams
@@ -30,7 +31,8 @@ const Stack = createStackNavigator<IDPayDetailsParamsList>();
 export const IDpayDetailsNavigator = () => (
   <Stack.Navigator
     initialRouteName={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
-    screenOptions={{ headerShown: false }}
+    headerMode={"none"}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
       name={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
