@@ -37,6 +37,7 @@ import { ZendeskParamsList } from "../navigation/params";
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 type ItemProps = {
@@ -82,7 +83,8 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const { assistanceForPayment, assistanceForCard } = props.route.params;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    props.route.params;
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   const email = pipe(
@@ -109,7 +111,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     onPress: () => {
       navigation.navigate("ZENDESK_MAIN", {
         screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-        params: { assistanceForPayment, assistanceForCard }
+        params: { assistanceForPayment, assistanceForCard, assistanceForFci }
       });
     },
     title: I18n.t("support.askPermissions.cta.allow")

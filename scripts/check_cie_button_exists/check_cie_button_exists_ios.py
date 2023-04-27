@@ -38,10 +38,11 @@ def requestCieAuthPage(
 
     # Do the required attempts
     while not (nAttempts >= maxAttempts or statusFlag):
-        # do the requests
-        response = requests.get(
+        # do the requests with a session to keep session data between requests
+        s = requests.Session()
+        response = s.get(
             uri, headers=headers, allow_redirects=True, timeout=timeout)
-        response = requests.post(
+        response = s.post(
             response.url, headers=headers, data=payload, allow_redirects=True, timeout=timeout)
         # set conditions for next step
         nAttempts += 1
@@ -54,7 +55,7 @@ def postSlack(
         token,
         message="Page containig CIE button unreachable",
         uri="https://slack.com/api/chat.postMessage",
-        channel='#io_status'):
+        channel='#io_dev_app_status'):
 
     slackHeaders = {
         "Content-type": "application/json",

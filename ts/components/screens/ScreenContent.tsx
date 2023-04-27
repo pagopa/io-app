@@ -10,7 +10,18 @@ interface OwnProps {
   contentStyle?: StyleProp<ViewStyle>;
   bounces?: boolean;
   contentRefreshControl?: ComponentProps<Content>["refreshControl"];
+  referenceToContentScreen?: (
+    c: ScreenContentRoot
+  ) => ScreenContentRoot | React.LegacyRef<Content>;
 }
+
+export type ScreenContentRoot = {
+  _root: ScreenContentFunctions;
+};
+
+type ScreenContentFunctions = {
+  scrollToPosition: (x: number, y: number) => void;
+};
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
 
@@ -27,11 +38,13 @@ class ScreenContent extends React.PureComponent<Props> {
       dark,
       hideHeader,
       contentStyle,
-      bounces
+      bounces,
+      referenceToContentScreen
     } = this.props;
 
     return (
       <Content
+        ref={referenceToContentScreen as unknown as React.LegacyRef<Content>}
         noPadded={true}
         style={contentStyle}
         bounces={bounces}

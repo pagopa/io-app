@@ -1,5 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
+import { IOColors } from "./IOColors";
 
 /**
  * A collection of default styles used within IO App.
@@ -10,6 +11,12 @@ import themeVariables from "../../../theme/variables";
 export const IOStyles = StyleSheet.create({
   flex: {
     flex: 1
+  },
+  selfCenter: {
+    alignSelf: "center"
+  },
+  alignCenter: {
+    alignItems: "center"
   },
   horizontalContentPadding: {
     paddingHorizontal: themeVariables.contentPadding
@@ -24,7 +31,33 @@ export const IOStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  // https://github.com/pagopa/io-app/pull/4387
+  centerJustified: {
+    justifyContent: "center"
+  },
+  // The following styles come from the original
+  // NativeBase's `View`. They are moved here to
+  // prevent UI regressions.
+  footer: {
+    backgroundColor: themeVariables.footerBackground,
+    paddingBottom: themeVariables.footerPaddingBottom,
+    paddingLeft: themeVariables.footerPaddingLeft,
+    paddingRight: themeVariables.footerPaddingRight,
+    paddingTop: themeVariables.footerPaddingTop,
+    // iOS shadow
+    shadowColor: themeVariables.footerShadowColor,
+    shadowOffset: {
+      width: themeVariables.footerShadowOffsetWidth,
+      height: themeVariables.footerShadowOffsetHeight
+    },
+    shadowOpacity: themeVariables.footerShadowOpacity,
+    shadowRadius: themeVariables.footerShadowRadius,
+    // Android shadow
+    elevation: themeVariables.footerElevation
+  },
+  bgWhite: {
+    backgroundColor: IOColors.white
+    // https://github.com/pagopa/io-app/pull/4387
+  },
   topListBorderBelowTabsStyle: {
     borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
     elevation: 0.1
@@ -39,15 +72,19 @@ export const IOStyles = StyleSheet.create({
 - Height for classic buttons
 - Width and height for icon buttons
 */
-const btnSizeDefault = 40;
-const btnSizeSmall = 39;
+const btnLegacySizeDefault = 40;
+const btnLegacySizeSmall = 39;
 const btnSizeLarge = 56;
+// NEW Design System
+const btnBorderRadius = 8;
+const btnSizeDefault = 48;
 
-export const IOButtonStyles = StyleSheet.create({
+export const IOButtonLegacyStyles = StyleSheet.create({
   /* BaseButton, used in the:
   ButtonSolid, ButtonOutline
   */
   button: {
+    flexDirection: "row",
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
@@ -76,10 +113,59 @@ export const IOButtonStyles = StyleSheet.create({
   Must be replaced with dynamic values, depending on the
   fontScale parameter */
   buttonSizeDefault: {
+    height: btnLegacySizeDefault
+  },
+  buttonSizeSmall: {
+    height: btnLegacySizeSmall
+  },
+  /* Widths */
+  dimensionsDefault: {
+    alignSelf: "flex-start"
+  },
+  dimensionsFullWidth: {
+    flex: 1,
+    alignSelf: "auto"
+  }
+});
+
+export const IOButtonStyles = StyleSheet.create({
+  /* BaseButton, used in the:
+  ButtonSolid, ButtonOutline
+  */
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    textAlignVertical: "center", // Android
+    justifyContent: "center",
+    /* Legacy visual properties. They will be replaced with
+    dynamic ones once NativeBase is gone */
+    borderRadius: btnBorderRadius,
+    paddingHorizontal: 24,
+    // Reset default visual parameters
+    elevation: 0
+    // Visual parameters based on the FontScale
+    // paddingVertical: PixelRatio.getFontScale() * 10,
+    // paddingHorizontal: PixelRatio.getFontScale() * 16,
+    // borderRadius: PixelRatio.getFontScale() * 8
+  },
+  /* Labels */
+  label: {
+    alignSelf: "center"
+  },
+  labelSizeDefault: {
+    fontSize: 16
+  },
+  labelSizeSmall: {
+    fontSize: 16
+  },
+  /* Heights
+  Must be replaced with dynamic values, depending on the
+  fontScale parameter */
+  buttonSizeDefault: {
     height: btnSizeDefault
   },
   buttonSizeSmall: {
-    height: btnSizeSmall
+    height: btnSizeDefault
   },
   /* Widths */
   dimensionsDefault: {

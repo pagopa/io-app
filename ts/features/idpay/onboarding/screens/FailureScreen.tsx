@@ -1,9 +1,9 @@
+import { Text as NBButtonText } from "native-base";
+import React from "react";
 import { useSelector } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
-import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import {
   IOPictogramType,
@@ -17,6 +17,7 @@ import themeVariables from "../../../../theme/variables";
 import { OnboardingFailureEnum } from "../xstate/failure";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { selectOnboardingFailure } from "../xstate/selectors";
+import { Body } from "../../../../components/core/typography/Body";
 
 const failurePictures: Record<OnboardingFailureEnum, IOPictogramType> = {
   [OnboardingFailureEnum.GENERIC]: "umbrella",
@@ -57,9 +58,9 @@ const FailureScreen = () => {
           block={true}
           onPress={handleNavigateToInitiativePress}
         >
-          <Text>
+          <NBButtonText>
             {I18n.t("idpay.onboarding.failure.button.goToInitiative")}
-          </Text>
+          </NBButtonText>
         </ButtonDefaultOpacity>
       );
     }
@@ -70,7 +71,7 @@ const FailureScreen = () => {
         bordered={true}
         onPress={handleClosePress}
       >
-        <Text>{I18n.t("global.buttons.close")}</Text>
+        <NBButtonText>{I18n.t("global.buttons.close")}</NBButtonText>
       </ButtonDefaultOpacity>
     );
   };
@@ -84,9 +85,9 @@ const FailureScreen = () => {
           {I18n.t(`idpay.onboarding.failure.message.${failure}.title`)}
         </H3>
         <VSpacer size={16} />
-        <Text alignCenter={true}>
+        <Body style={{ textAlign: "center" }}>
           {I18n.t(`idpay.onboarding.failure.message.${failure}.subtitle`)}
-        </Text>
+        </Body>
       </View>
       <View style={styles.buttonContainer}>{renderCloseButton()}</View>
     </SafeAreaView>

@@ -1,7 +1,4 @@
-import {
-  PaymentNoticeNumberFromString,
-  RptIdFromString
-} from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -58,6 +55,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   DetailV2Keys,
+  getCodiceAvviso,
   getV2ErrorMainType,
   isDuplicatedPayment
 } from "../../../utils/payment";
@@ -67,9 +65,12 @@ import {
   addTicketCustomField,
   appendLog,
   resetCustomFields,
-  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategory
+  zendeskPaymentCategory,
+  zendeskPaymentFailure,
+  zendeskPaymentNav,
+  zendeskPaymentOrgFiscalCode,
+  zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
 import { dispatchPickPspOrConfirm } from "./common";
 import { TransactionSummary } from "./components/TransactionSummary";
@@ -474,10 +475,19 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   ) => {
     resetCustomFields();
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
+    // Add organization fiscal code custom field
     addTicketCustomField(
-      zendeskBlockedPaymentRptIdId,
-      RptIdFromString.encode(rptId)
+      zendeskPaymentOrgFiscalCode,
+      rptId.organizationFiscalCode
     );
+    if (O.isSome(error) && error.value) {
+      // Add failure custom field
+      addTicketCustomField(zendeskPaymentFailure, error.value);
+    }
+    // Add start origin custom field
+    addTicketCustomField(zendeskPaymentStartOrigin, paymentStartOrigin);
+    // Add rptId custom field
+    addTicketCustomField(zendeskPaymentNav, getCodiceAvviso(rptId));
     appendLog(
       JSON.stringify({
         error,
@@ -488,7 +498,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceForPayment: true,
-        assistanceForCard: false
+        assistanceForCard: false,
+        assistanceForFci: false
       })
     );
     dispatch(zendeskSelectedCategory(zendeskPaymentCategory));

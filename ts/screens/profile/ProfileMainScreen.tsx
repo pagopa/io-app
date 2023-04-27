@@ -1,20 +1,26 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Text as NBText, Toast } from "native-base";
+import { List, ListItem, Text as NBButtonText, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet } from "react-native";
+import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { Body } from "../../components/core/typography/Body";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -22,6 +28,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -54,20 +61,19 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { toThumbprint } from "../../features/lollipop/utils/crypto";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  TabBarItemPressType;
 
 type State = {
   tapsOnAppVersion: number;
 };
 
 const styles = StyleSheet.create({
-  itemLeftText: {
-    alignSelf: "flex-start"
-  },
   developerSectionItem: {
     width: "100%",
     flexDirection: "row",
@@ -80,10 +86,6 @@ const styles = StyleSheet.create({
   developerSectionItemRight: {
     flex: 0
   },
-  whiteBg: {
-    backgroundColor: IOColors.white
-  },
-
   noRightPadding: {
     paddingRight: 0
   }
@@ -149,9 +151,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       <ListItem style={styles.noRightPadding}>
         <View style={styles.developerSectionItem}>
           <View style={styles.developerSectionItemLeft}>
-            <NBText style={styles.itemLeftText}>{title}</NBText>
-
-            <NBText style={styles.itemLeftText}>{description}</NBText>
+            <Body>{title}</Body>
+            <Body>{description}</Body>
           </View>
           <View style={styles.developerSectionItemRight}>
             <Switch value={switchValue} onValueChange={onSwitchValueChange} />
@@ -170,7 +171,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           small={true}
           onPress={onPress}
         >
-          <NBText numberOfLines={1}>{title}</NBText>
+          <NBButtonText numberOfLines={1}>{title}</NBButtonText>
         </ButtonDefaultOpacity>
       </ListItem>
     );
@@ -179,9 +180,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private versionListItem(title: string, onPress: () => void) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <NBText numberOfLines={1} semibold={true} onPress={onPress}>
-          {title}
-        </NBText>
+        <Pressable onPress={onPress}>
+          <Body numberOfLines={1} weight="SemiBold">
+            {title}
+          </Body>
+        </Pressable>
       </ListItem>
     );
   }
@@ -298,9 +301,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       sessionToken,
       walletToken,
       setDebugModeEnabled,
-      isIdPayTestEnabled
+      isIdPayTestEnabled,
+      publicKey
     } = this.props;
     const deviceUniqueId = getDeviceId();
+    const thumbprint = toThumbprint(publicKey);
 
     return (
       <React.Fragment>
@@ -309,6 +314,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         />
         {isPlaygroundsEnabled && (
           <>
+            <ListItemComponent
+              title={"Lollipop Playground"}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.LOLLIPOP_PLAYGROUND
+                })
+              }
+            />
             <ListItemComponent
               title={"MyPortal Web Playground"}
               onPress={() =>
@@ -421,6 +434,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               false
             )}
 
+            {thumbprint &&
+              this.debugListItem(
+                `Thumbprint ${thumbprint}`,
+                () => clipboardSetStringWithFeedback(thumbprint),
+                false
+              )}
+
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
               this.handleClearCachePress,
@@ -469,6 +489,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </React.Fragment>
     );
   }
+
   public render() {
     const { navigation } = this.props;
 
@@ -486,7 +507,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
 
     const screenContent = () => (
-      <ScrollView style={styles.whiteBg}>
+      <ScrollView style={IOStyles.bgWhite}>
         <VSpacer size={16} />
         <List withContentLateralPadding={true}>
           {/* Data */}
@@ -572,6 +593,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          this.props.setTabPressCallback(
+            // eslint-disable-next-line no-underscore-dangle
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
+          return c;
+        }}
         accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
@@ -611,7 +640,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
   isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
+  publicKey: lollipopPublicKeySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -635,4 +665,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(ProfileMainScreen));
+)(
+  withLightModalContext(withUseTabItemPressWhenScreenActive(ProfileMainScreen))
+);

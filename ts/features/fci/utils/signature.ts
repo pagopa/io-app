@@ -9,6 +9,7 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { constants } from "../../lollipop/httpSignature/constants";
+import { savePath } from "../saga/networking/handleDownloadDocument";
 
 export const QtspDocumentToSign = t.type({
   url: t.string
@@ -22,8 +23,21 @@ const getFileDigest = (url: string) =>
     // TODO: instead of use fetch to download again the file, we should refactor FcidocumentScreen
     // to store the file locally and use it later to calculate the digest.
     // https://pagopa.atlassian.net/browse/SFEQS-1470
-    TE.tryCatch(() => ReactNativeBlobUtil.fetch("GET", url), E.toError),
-    TE.map(response => response.base64()),
+    TE.tryCatch(
+      () =>
+        ReactNativeBlobUtil.config({
+          path: savePath(url),
+          fileCache: true
+        }).fetch("GET", url),
+      E.toError
+    ),
+    TE.chain(response =>
+      TE.tryCatch(
+        () => ReactNativeBlobUtil.fs.readFile(response.path(), "base64"),
+        E.toError
+      )
+    ),
+    TE.map(base64 => Buffer.from(base64, "base64")),
     TE.map(buffer => sha(constants.SHA_256).update(buffer).digest("hex"))
   );
 

@@ -1,8 +1,10 @@
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import themeVariables from "../theme/variables";
+import { HSpacer } from "./core/spacer/Spacer";
+import { IOStyles } from "./core/variables/IOStyles";
 import IconFont from "./ui/IconFont";
+import { Body } from "./core/typography/Body";
 
 type Props = {
   text: string;
@@ -11,15 +13,8 @@ type Props = {
   iconColor?: string;
 };
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row"
-  },
   icon: {
     marginTop: 4
-  },
-  text: {
-    marginLeft: 8,
-    fontSize: themeVariables.fontSizeBase
   }
 });
 
@@ -29,14 +24,15 @@ const defaultIconSize = 18;
  * @constructor
  */
 const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
-  <View style={styles.container}>
+  <View style={IOStyles.row}>
     <IconFont
       style={styles.icon}
       name={props.iconName || "io-notice"}
       size={props.iconSize ?? defaultIconSize}
       color={props.iconColor || themeVariables.brandPrimary}
     />
-    <NBText style={styles.text}>{props.text}</NBText>
+    <HSpacer size={8} />
+    <Body>{props.text}</Body>
   </View>
 );
 

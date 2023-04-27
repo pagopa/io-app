@@ -1,6 +1,7 @@
-import type { ColorValue } from "react-native";
-import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
+import * as React from "react";
 import { ComponentProps } from "react";
+import { Appearance, ColorValue } from "react-native";
+import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
 
 /*
 TYPESCRIPT FUNCTIONS
@@ -42,6 +43,7 @@ export const IOColors = asIOColors({
   "blueIO-200": "#9DB2F4",
   "blueIO-150": "#B6C5F7",
   "blueIO-100": "#CED8F9",
+  "blueIO-50": "#E7ECFC",
   "turquoise-850": "#003B3D",
   "turquoise-500": "#00C5CA",
   "turquoise-450": "#19CBCF" /* Dark mode */,
@@ -51,22 +53,22 @@ export const IOColors = asIOColors({
   "error-850": "#761F1F",
   "error-600": "#D75252",
   "error-500": "#FE6666",
-  "error-450": "#FE7575" /* Dark mode */,
-  "error-100": "#FFD1D1",
+  "error-400": "#FE8585" /* Dark mode */,
+  "error-100": "#FFE0E0",
   "warning-850": "#614C15",
   "warning-700": "#A5822A",
-  "warning-500": "#FFC824",
-  "warning-450": "#FFD059" /* Dark mode */,
+  "warning-500": "#FFCB46",
+  "warning-400": "#FFD56B" /* Dark mode */,
   "warning-100": "#FFF5DA",
   "success-850": "#224021",
   "success-700": "#427940",
   "success-500": "#6CC66A",
-  "success-450": "#7BCC79" /* Dark mode */,
-  "success-100": "#D3EED2",
+  "success-400": "#89D188" /* Dark mode */,
+  "success-100": "#E1F4E1",
   "info-850": "#215C76",
   "info-700": "#418DAF",
   "info-500": "#6BCFFB",
-  "info-450": "#7AD4FB" /* Dark mode */,
+  "info-400": "#89D9FC" /* Dark mode */,
   "info-100": "#E1F5FE",
   cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
   "blueItalia-850": "#001F3D",
@@ -201,6 +203,7 @@ export const IOColorsTints = asIOColors({
   "blueIO-200": IOColors["blueIO-200"],
   "blueIO-150": IOColors["blueIO-150"],
   "blueIO-100": IOColors["blueIO-100"],
+  "blueIO-50": IOColors["blueIO-50"],
   "turquoise-850": IOColors["turquoise-850"],
   "turquoise-500": IOColors["turquoise-500"],
   "turquoise-450": IOColors["turquoise-450"],
@@ -214,22 +217,22 @@ export const IOColorsStatus = asIOColors({
   "error-850": IOColors["error-850"],
   "error-600": IOColors["error-600"],
   "error-500": IOColors["error-500"],
-  "error-450": IOColors["error-450"],
+  "error-400": IOColors["error-400"],
   "error-100": IOColors["error-100"],
   "warning-850": IOColors["warning-850"],
   "warning-700": IOColors["warning-700"],
   "warning-500": IOColors["warning-500"],
-  "warning-450": IOColors["warning-450"],
+  "warning-400": IOColors["warning-400"],
   "warning-100": IOColors["warning-100"],
   "success-850": IOColors["success-850"],
   "success-700": IOColors["success-700"],
   "success-500": IOColors["success-500"],
-  "success-450": IOColors["success-450"],
+  "success-400": IOColors["success-400"],
   "success-100": IOColors["success-100"],
   "info-850": IOColors["info-850"],
   "info-700": IOColors["info-700"],
   "info-500": IOColors["info-500"],
-  "info-450": IOColors["info-450"],
+  "info-400": IOColors["info-400"],
   "info-100": IOColors["info-100"]
 });
 
@@ -259,31 +262,62 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
-export const themeColorsLightMode = asIOThemeColors({
+export type IOTheme = {
+  // General
+  "appBackground-primary": IOColors;
+  "appBackground-secondary": IOColors;
+  "appBackground-tertiary": IOColors;
+  "interactiveElem-default": IOColors;
+  "interactiveElem-pressed": IOColors;
+  // Typography
+  "textHeading-default": IOColors;
+  "textBody-default": IOColors;
+  "textBody-secondary": IOColors;
+  "textBody-tertiary": IOColors;
+  // Design System related
+  "cardBorder-default": IOColors;
+  "iconColor-default": IOColors;
+  // Layout
+  "divider-default": IOColors;
+};
+
+export const IOThemeLight: IOTheme = {
   // General
   "appBackground-primary": "white",
   "appBackground-secondary": "grey-50",
+  "appBackground-tertiary": "grey-100",
   "interactiveElem-default": "blueIO-500",
   "interactiveElem-pressed": "blueIO-600",
   // Typography
   "textHeading-default": "black",
-  "textBody-default": "black"
-});
+  "textBody-default": "black",
+  "textBody-secondary": "grey-850",
+  "textBody-tertiary": "grey-700",
+  // Design System related
+  "cardBorder-default": "grey-100",
+  "iconColor-default": "grey-650",
+  // Layout
+  "divider-default": "grey-100"
+};
 
-export type themeColorsLightMode = keyof typeof themeColorsLightMode;
-
-export const themeColorsDarkMode: Record<
-  NonNullable<themeColorsLightMode>,
-  IOColors
-> = {
+export const IOThemeDark: IOTheme = {
+  ...IOThemeLight,
   // General
-  "appBackground-primary": "white",
-  "appBackground-secondary": "grey-50",
+  "appBackground-primary": "black",
+  "appBackground-secondary": "grey-850",
+  "appBackground-tertiary": "grey-700",
   "interactiveElem-default": "blueIO-450",
   "interactiveElem-pressed": "blueIO-600",
   // Typography
-  "textHeading-default": "black",
-  "textBody-default": "black"
+  "textHeading-default": "grey-200",
+  "textBody-default": "white",
+  "textBody-secondary": "grey-100",
+  "textBody-tertiary": "grey-450",
+  // Design System related
+  "cardBorder-default": "grey-850",
+  "iconColor-default": "grey-450",
+  // Layout
+  "divider-default": "grey-850"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
@@ -312,25 +346,33 @@ export const themeStatusColorsDarkMode: Record<
   NonNullable<themeStatusColorsLightMode>,
   IOColorsStatus
 > = {
-  errorMain: "error-450",
+  errorMain: "error-400",
   errorBackground: "error-100",
   errorGraphics: "error-600",
   errorTypography: "error-850",
-  warningMain: "warning-450",
+  warningMain: "warning-400",
   warningBackground: "warning-100",
   warningGraphics: "warning-700",
   warningTypography: "warning-850",
-  successMain: "success-450",
+  successMain: "success-400",
   successBackground: "success-100",
   successGraphics: "success-700",
   successTypography: "success-850",
-  infoMain: "info-450",
+  infoMain: "info-400",
   infoBackground: "info-100",
   infoGraphics: "info-700",
   infoTypography: "info-850"
 };
 
 export type themeStatusColorsDarkMode = keyof typeof themeStatusColorsDarkMode;
+
+/*
+THEME CONTEXT
+*/
+export const IOThemes = { light: IOThemeLight, dark: IOThemeDark };
+export const IOThemeContext: React.Context<IOTheme> = React.createContext(
+  Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light
+);
 
 /*
 UTILS

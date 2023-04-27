@@ -1,15 +1,11 @@
-import { View } from "native-base";
 import React from "react";
-import { StyleProp, StyleSheet, TextStyle } from "react-native";
+import { View, StyleProp, StyleSheet, TextStyle } from "react-native";
 import I18n from "../../../../../i18n";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";
-import {
-  KeyValueRow,
-  KeyValueTable,
-  keyValueTableStyle
-} from "./KeyValueTable";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { KeyValueRow, KeyValueTable } from "./KeyValueTable";
 
 type Props = {
   bonusAmount: number;
@@ -28,7 +24,7 @@ const styles = StyleSheet.create({
  * @param value
  */
 const header = (key: string, value: string) => (
-  <View style={keyValueTableStyle.baseRow} accessible={true}>
+  <View style={IOStyles.rowSpaceBetween} accessible={true}>
     <Body weight={"SemiBold"}>{key}</Body>
     <H2 weight={"SemiBold"}>{value}</H2>
   </View>

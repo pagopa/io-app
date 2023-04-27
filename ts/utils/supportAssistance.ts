@@ -81,10 +81,15 @@ export const addTicketTag = ZendDesk.addTicketTag;
 export const dismissSupport = ZendDesk.dismiss;
 export const zendeskCategoryId = "1900004702053";
 export const zendeskBlockedPaymentRptIdId = "4414297346833";
+export const zendeskPaymentOrgFiscalCode = "13442126418705";
+export const zendeskPaymentStartOrigin = "13442129971473";
+export const zendeskPaymentFailure = "13442145527057";
+export const zendeskPaymentNav = "13442200871953";
 export const zendeskDeviceAndOSId = "4414316795921";
 export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
+export const zendeskFciId = "14874226407825";
 export const zendeskPaymentCategory: ZendeskCategory = {
   value: "pagamenti_pagopa",
   description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
@@ -94,6 +99,13 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
   description: {
     "it-IT": "Metodo di pagamento",
     "en-EN": "Payment method"
+  }
+};
+export const zendeskFCICategory: ZendeskCategory = {
+  value: "firma_con_io",
+  description: {
+    "it-IT": "Firma con IO",
+    "en-EN": "Firma con IO"
   }
 };
 

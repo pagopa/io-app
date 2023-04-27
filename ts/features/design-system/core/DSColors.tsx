@@ -17,8 +17,8 @@ import {
   IOColorsExtra,
   themeStatusColorsLightMode,
   themeStatusColorsDarkMode,
-  themeColorsLightMode,
-  themeColorsDarkMode
+  IOThemeLight,
+  IOThemeDark
 } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
@@ -70,16 +70,26 @@ const styles = StyleSheet.create({
   smallCapsDarkMode: {
     color: IOColors["grey-450"]
   },
-  darkModeWrapper: {
+  colorModeWrapper: {
     position: "absolute",
     height: "100%",
-    width: Dimensions.get("window").width / 2,
+    width: Dimensions.get("window").width / 2
+  },
+  darkModeWrapper: {
     right: 0,
     marginRight: themeVariables.contentPadding * -1,
     marginLeft: themeVariables.contentPadding * -1,
     backgroundColor: IOColors.black,
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12
+  },
+  lightModeWrapper: {
+    left: 0,
+    marginRight: themeVariables.contentPadding * -1,
+    marginLeft: themeVariables.contentPadding * -1,
+    backgroundColor: IOColors.white,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12
   },
   gradientWrapper: {
     width: "50%",
@@ -141,7 +151,8 @@ const renderColorThemeGroup = (
       {/* Show the two different columns
       with both light and dark modes */}
       <View style={IOStyles.row}>
-        <View style={styles.darkModeWrapper} />
+        <View style={[styles.colorModeWrapper, styles.darkModeWrapper]} />
+        <View style={[styles.colorModeWrapper, styles.lightModeWrapper]} />
         <View style={styles.colorItemsWrapper}>
           <View style={styles.colorWrapperBothModes}>
             <SmallCapsTitle title="Light mode" />
@@ -254,7 +265,7 @@ export const DSColors = () => (
       Theme
     </H2>
 
-    {renderColorThemeGroup("Main", themeColorsLightMode, themeColorsDarkMode)}
+    {renderColorThemeGroup("Main", IOThemeLight, IOThemeDark)}
 
     {renderColorThemeGroup(
       "Status",

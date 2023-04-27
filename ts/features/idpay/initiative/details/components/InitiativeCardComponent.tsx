@@ -1,155 +1,255 @@
-import { Text } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, StyleSheet, View } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
+import { StyleSheet, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
+import Placeholder from "rn-placeholder";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import cardBg from "../../../../../../img/features/idpay/card_full.png";
-import { makeFontStyleObject } from "../../../../../components/core/fonts";
+import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../components/core/typography/H5";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import { formatDateAsLocal } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { InitiativeStatusLabel } from "./InitiativeStatusLabel";
 
 type Props = {
   initiative: InitiativeDTO;
 };
 
-const styles = StyleSheet.create({
-  fullHeight: {
-    height: "100%"
-  },
-  cardContainer: {
-    height: 230,
-    width: widthPercentageToDP(100)
-  },
-  card: {
-    position: "absolute",
-    alignSelf: "center",
-    width: widthPercentageToDP(100),
-    height: 230
-  },
-  imageFull: {
-    zIndex: -1
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    textAlign: "center"
-  },
-  spaced: {
-    justifyContent: "space-between"
-  },
-  bottomInitiativeIcon: {
-    flex: 1,
-    justifyContent: "flex-end"
-  },
-  paddedMainContent: {
-    zIndex: 1,
-    padding: 32,
-    width: "100%",
-    height: "100%",
-    position: "absolute"
-  },
-  amount: {
-    lineHeight: 32,
-    fontSize: 24,
-    color: IOColors.white,
-    ...makeFontStyleObject("Bold", undefined, "TitilliumWeb")
-  },
-  logo: {
-    resizeMode: "contain",
-    height: 65,
-    width: 65
-  },
-  consumedOpacity: {
-    opacity: 0.5
-  }
-});
+type PercentageSliderProps = {
+  percentage: number;
+  isGreyedOut: boolean;
+};
 
-const InitiativeCardComponent = (props: Props) => {
-  const { initiativeName, endDate, status, amount, accrued, refunded } =
-    props.initiative;
-
-  const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
-  const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
-
-  const renderFullCard = () => (
-    <View style={[styles.row, styles.spaced, IOStyles.flex]}>
-      <View style={[styles.fullHeight, styles.spaced]}>
-        <View>
-          <VSpacer size={8} />
-          <H2 color="white">{initiativeName}</H2>
-          <Text style={{ color: IOColors.white }}>
-            {I18n.t("idpay.initiative.details.initiativeCard.validUntil", {
-              expiryDate: formatDateAsLocal(endDate, true)
-            })}
-          </Text>
-        </View>
-        <View style={styles.row}>
-          <View>
-            <Text
-              bold={true}
-              style={[
-                !isInitiativeConfigured ? styles.consumedOpacity : {},
-                styles.amount
-              ]}
-            >
-              {formatNumberAmount(amount || 0, true)}
-            </Text>
-            <H5 color="white">
-              {I18n.t(
-                "idpay.initiative.details.initiativeCard.availableAmount"
-              )}
-            </H5>
-          </View>
-          <HSpacer size={8} />
-          <View>
-            <Text
-              bold={true}
-              style={[
-                !isInitiativeConfigured ? styles.consumedOpacity : {},
-                styles.amount
-              ]}
-            >
-              {formatNumberAmount(toBeRepaidAmount, true)}
-            </Text>
-            <H5 color="white">
-              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
-            </H5>
-          </View>
-        </View>
-      </View>
-      <View>
-        <View
-          style={styles.bottomInitiativeIcon}
-          accessible={true}
-          importantForAccessibility={"no-hide-descendants"}
-          accessibilityElementsHidden={true}
-        >
-          <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
-        </View>
-      </View>
-    </View>
-  );
-
+const BonusPercentageSlider = ({
+  percentage,
+  isGreyedOut
+}: PercentageSliderProps) => {
+  const width = useSharedValue(100);
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    width.value = percentage;
+  });
+  const scalingWidth = useAnimatedStyle(() => ({
+    width: withTiming(width.value, { duration: 1000 })
+  }));
   return (
-    <View style={styles.card} testID={"card-component"}>
-      <ImageBackground
-        source={cardBg}
-        imageStyle={[styles.imageFull]}
-        style={styles.cardContainer}
+    <View style={styles.remainingPercentageSliderContainer}>
+      <Animated.View
+        style={[
+          {
+            width: `${width.value}%`,
+            backgroundColor: isGreyedOut ? IOColors.blue : IOColors["grey-450"],
+            flex: 1,
+            borderRadius: 4
+          },
+          scalingWidth
+        ]}
       />
-      <View style={styles.paddedMainContent}>{renderFullCard()}</View>
     </View>
   );
 };
 
-export default InitiativeCardComponent;
+const formatNumberRightSign = (amount: number) =>
+  `${formatNumberAmount(amount, false)} €`;
+
+const InitiativeCardComponent = (props: Props) => {
+  const { initiative } = props;
+
+  const { initiativeName, endDate, status } = initiative;
+  /*
+  From BE we have:
+  - amount: the amount still available in the initiative
+  - accrued: total amount accrued with transactions
+  - refunded: amount refunded by wire transfer
+  */
+
+  const amount: number = props.initiative.amount || 0;
+  const accrued: number = props.initiative.accrued || 0;
+  const refunded: number = props.initiative.refunded || 0;
+
+  const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
+  const toBeRepaidAmount = accrued - refunded;
+  const totalAmount = amount + accrued;
+
+  const remainingBonusAmountPercentage =
+    totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
+
+  return (
+    <View style={styles.cardContainer} testID={"card-component"}>
+      <ContentWrapper>
+        <View style={styles.topCardSection}>
+          <View style={styles.bonusLogoContainer}></View>
+          <VSpacer size={8} />
+          <H1 style={styles.initiativeName}>{initiativeName}</H1>
+          <LabelSmall color={"black"} weight="Regular">
+            {/* TODO add organization name */}
+          </LabelSmall>
+          <VSpacer size={8} />
+          <InitiativeStatusLabel status={initiative.status} endDate={endDate} />
+        </View>
+        <VSpacer size={32} />
+        <View style={styles.bottomCardSection}>
+          <View style={styles.alignCenter}>
+            <LabelSmall color="bluegreyDark" weight="Regular">
+              {I18n.t(
+                "idpay.initiative.details.initiativeCard.availableAmount"
+              )}
+            </LabelSmall>
+            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {formatNumberRightSign(amount)}
+            </H1>
+            <VSpacer size={8} />
+            <BonusPercentageSlider
+              isGreyedOut={isInitiativeConfigured}
+              percentage={remainingBonusAmountPercentage}
+            />
+          </View>
+          <HSpacer size={48} />
+          <View style={styles.alignCenter}>
+            <LabelSmall color="bluegreyDark" weight="Regular">
+              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+            </LabelSmall>
+            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {formatNumberRightSign(toBeRepaidAmount)}
+            </H1>
+          </View>
+        </View>
+      </ContentWrapper>
+    </View>
+  );
+};
+
+const InitiativeCardComponentSkeleton = () => (
+  <View style={styles.cardContainer} testID={"card-component"}>
+    <View style={styles.topCardSection}>
+      <Placeholder.Box
+        animate="fade"
+        height={56}
+        width={56}
+        radius={4}
+        color="#CED8F9"
+      />
+      <VSpacer size={16} />
+      <Placeholder.Box
+        animate="fade"
+        height={24}
+        width={180}
+        radius={4}
+        color="#CED8F9"
+      />
+      <VSpacer size={8} />
+      <Placeholder.Box
+        animate="fade"
+        height={16}
+        width={100}
+        radius={4}
+        color="#CED8F9"
+      />
+      <VSpacer size={8} />
+      <Placeholder.Box
+        animate="fade"
+        height={16}
+        width={100}
+        radius={4}
+        color="#CED8F9"
+      />
+    </View>
+    <VSpacer size={32} />
+    <View style={styles.bottomCardSection}>
+      <View style={styles.alignCenter}>
+        <Placeholder.Box
+          animate="fade"
+          height={16}
+          width={64}
+          radius={4}
+          color="#CED8F9"
+        />
+        <VSpacer size={8} />
+        <Placeholder.Box
+          animate="fade"
+          height={24}
+          width={140}
+          radius={4}
+          color="#CED8F9"
+        />
+        <VSpacer size={16} />
+        <Placeholder.Box
+          animate="fade"
+          height={8}
+          width={120}
+          radius={4}
+          color="#CED8F9"
+        />
+      </View>
+      <HSpacer size={48} />
+      <View style={styles.alignCenter}>
+        <Placeholder.Box
+          animate="fade"
+          height={16}
+          width={64}
+          radius={4}
+          color="#CED8F9"
+        />
+        <VSpacer size={8} />
+        <Placeholder.Box
+          animate="fade"
+          height={24}
+          width={140}
+          radius={4}
+          color="#CED8F9"
+        />
+      </View>
+    </View>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    backgroundColor: IOColors["blue-50"],
+    borderBottomEndRadius: 24,
+    borderBottomStartRadius: 24,
+    paddingVertical: 32,
+    paddingTop: 0,
+    flex: 1
+  },
+  initiativeName: {
+    textAlign: "center"
+  },
+  bonusLogoContainer: {
+    backgroundColor: IOColors.white,
+    height: 56,
+    width: 56,
+    borderRadius: 8
+  },
+  topCardSection: {
+    flex: 2,
+    alignItems: "center"
+  },
+  bottomCardSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  consumedOpacity: {
+    opacity: 0.5
+  },
+  remainingPercentageSliderContainer: {
+    height: 4,
+    backgroundColor: IOColors.white,
+    width: 100,
+    borderRadius: 4
+  },
+  alignCenter: {
+    alignItems: "center"
+  }
+});
+
+export { InitiativeCardComponent, InitiativeCardComponentSkeleton };

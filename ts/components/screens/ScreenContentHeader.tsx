@@ -3,9 +3,8 @@
  * - an image, displayed on the right of the title
  * - a subtitle, displayed below the title
  */
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import {
   HEADER_ANIMATION_DURATION,
@@ -17,6 +16,7 @@ import { H1 } from "../../components/core/typography/H1";
 import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
 
 type Props = Readonly<{
   title?: string;
@@ -123,9 +123,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
           />
           {subtitle && (
             <View style={styles.subheaderContainer}>
-              <NBText testID={"screen-content-header-subtitle"}>
-                {subtitle}
-              </NBText>
+              <Body testID={"screen-content-header-subtitle"}>{subtitle}</Body>
               {subtitleLink}
               <VSpacer size={24} />
             </View>

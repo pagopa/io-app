@@ -9,8 +9,8 @@ import I18n from "../../../../../i18n";
 import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -37,7 +37,7 @@ const BonusActivationPending: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}

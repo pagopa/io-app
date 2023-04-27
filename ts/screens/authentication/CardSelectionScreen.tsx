@@ -1,9 +1,11 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text as NBText, View } from "native-base";
+import { Button, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import AnimatedRing from "../../components/animations/AnimatedRing";
+import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -23,16 +25,10 @@ const ringDimensionMin = imgDimension;
 
 const styles = StyleSheet.create({
   messageHeader: {
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
-    paddingTop: customVariables.contentPadding,
-    fontSize: customVariables.fontSizeBase
+    paddingTop: customVariables.contentPadding
   },
   messageFooter: {
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
-    paddingBottom: customVariables.contentPadding,
-    fontSize: customVariables.fontSizeBase
+    paddingBottom: customVariables.contentPadding
   },
   img: {
     width: imgDimension,
@@ -68,9 +64,9 @@ const CardSelectionScreen: React.SFC<Props> = props => (
           </H1>
         }
       />
-      <NBText style={styles.messageHeader}>
-        {I18n.t("authentication.cie.card.layCardMessageHeader")}
-      </NBText>
+      <View style={[IOStyles.horizontalContentPadding, styles.messageHeader]}>
+        <Body>{I18n.t("authentication.cie.card.layCardMessageHeader")}</Body>
+      </View>
       <View style={{ alignItems: "center", height: boxDimension }}>
         <AnimatedRing
           dimension={ringSettings.dimension}
@@ -96,13 +92,13 @@ const CardSelectionScreen: React.SFC<Props> = props => (
           style={styles.img}
         />
       </View>
-      <NBText style={styles.messageFooter}>
-        {I18n.t("authentication.cie.card.layCardMessageFooter")}
-      </NBText>
+      <View style={[IOStyles.horizontalContentPadding, styles.messageFooter]}>
+        <Body>{I18n.t("authentication.cie.card.layCardMessageFooter")}</Body>
+      </View>
     </Content>
-    <View footer={true}>
+    <View style={IOStyles.footer}>
       <Button onPress={props.navigation.goBack} cancel={true} block={true}>
-        <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+        <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
       </Button>
     </View>
   </BaseScreenComponent>

@@ -1,11 +1,14 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
+import { VSpacer } from "../../core/spacer/Spacer";
+import { Body } from "../../core/typography/Body";
 import { H1 } from "../../core/typography/H1";
+import { IOStyles } from "../../core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   errorStateWrapper: {
@@ -22,7 +25,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     textAlign: "center"
   },
-
   errorStateMessageData: {
     flexDirection: "row",
     alignItems: "center",
@@ -38,16 +40,6 @@ const styles = StyleSheet.create({
     flex: 0,
     paddingLeft: 10
   },
-
-  errorStateMessageRetry: {
-    marginTop: 16,
-    color: customVariables.textColorDark
-  },
-
-  errorStateMessageSubmitBug: {
-    marginTop: 16
-  },
-
   errorStateFooterWrapper: {
     flex: 0,
     flexDirection: "row",
@@ -84,7 +76,7 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
       </H1>
       <View style={styles.errorStateMessageData}>
         <View style={styles.erroStateMessageDataLeft}>
-          <NBText numberOfLines={1}>{`ID: ${messageId}`}</NBText>
+          <Body numberOfLines={1}>{`ID: ${messageId}`}</Body>
         </View>
         <View style={styles.erroStateMessageDataRight}>
           <ButtonDefaultOpacity
@@ -92,16 +84,18 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
             bordered={true}
             onPress={() => clipboardSetStringWithFeedback(messageId)}
           >
-            <NBText>{I18n.t("clipboard.copyText")}</NBText>
+            <NBButtonText>{I18n.t("clipboard.copyText")}</NBButtonText>
           </ButtonDefaultOpacity>
         </View>
       </View>
-      <NBText alignCenter={true} style={styles.errorStateMessageRetry}>
-        {I18n.t("messageDetails.retryText")}
-      </NBText>
-      <NBText alignCenter={true} style={styles.errorStateMessageSubmitBug}>
-        {I18n.t("messageDetails.submitBugText")}
-      </NBText>
+      <VSpacer size={16} />
+      <View style={IOStyles.alignCenter}>
+        <Body color="bluegreyDark">{I18n.t("messageDetails.retryText")}</Body>
+        <VSpacer size={16} />
+        <Body color="bluegreyDark">
+          {I18n.t("messageDetails.submitBugText")}
+        </Body>
+      </View>
     </View>
     <View style={styles.errorStateFooterWrapper}>
       <ButtonDefaultOpacity
@@ -110,7 +104,7 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
         onPress={goBack}
         style={styles.errorStateCancelButton}
       >
-        <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+        <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
       </ButtonDefaultOpacity>
       <ButtonDefaultOpacity
         block={true}
@@ -118,7 +112,7 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
         onPress={onRetry}
         style={styles.errorStateRetryButton}
       >
-        <NBText>{I18n.t("global.buttons.retry")}</NBText>
+        <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
       </ButtonDefaultOpacity>
     </View>
   </View>

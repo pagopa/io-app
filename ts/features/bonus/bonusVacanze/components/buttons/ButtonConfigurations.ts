@@ -16,6 +16,7 @@ export const cancelButtonProps = (
   testID?: string
 ): BlockButtonProps => ({
   bordered: true,
+  labelColor: IOColors.blue,
   title: title ? title : I18n.t("global.buttons.cancel"),
   iconName,
   onPress,
@@ -33,10 +34,13 @@ export const confirmButtonProps = (
   title?: string,
   iconName?: string,
   testID?: string,
-  disabled?: boolean
+  disabled?: boolean,
+  buttonFontSize?: number
 ): BlockButtonProps => ({
   primary: true,
+  labelColor: IOColors.white,
   title: title ? title : I18n.t("global.buttons.confirm"),
+  buttonFontSize,
   iconName,
   onPress,
   testID,
@@ -54,6 +58,7 @@ export const errorButtonProps = (
   iconName?: string
 ): BlockButtonProps => ({
   alert: true,
+  labelColor: IOColors.white,
   title: title ?? I18n.t("global.buttons.confirm"),
   iconName,
   onPress

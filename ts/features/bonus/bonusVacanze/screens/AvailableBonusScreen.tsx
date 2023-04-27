@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   FlatList,
   Linking,
@@ -45,7 +46,6 @@ import {
   AvailableBonusItem,
   AvailableBonusItemState
 } from "../components/AvailableBonusItem";
-import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import {
@@ -70,6 +70,7 @@ import {
   loadServiceDetail,
   showServiceDetails
 } from "../../../../store/actions/services";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -257,7 +258,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["bonus_available_list"]}
       >
-        <SafeAreaView style={bonusVacanzeStyle.flex}>
+        <SafeAreaView style={IOStyles.flex}>
           <Content
             noPadded={true}
             scrollEnabled={false}

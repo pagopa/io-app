@@ -1,5 +1,6 @@
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -12,7 +13,8 @@ import {
 } from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { StatusEnum as SignatureRequestDetailViewStatusEnum } from "../../../../../definitions/fci/SignatureRequestDetailView";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
 const genericError = getTimeoutError();
 const now = new Date();
@@ -23,7 +25,10 @@ describe("Test FciRouterScreen", () => {
   });
   it("With the default store state, the loading screen should be rendered", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
     const render = renderComponent(store);
 
     expect(
@@ -32,7 +37,10 @@ describe("Test FciRouterScreen", () => {
   });
   it("With a failure, the loading screen should be rendered GenericErrorComponent", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
 
     const render = renderComponent(store);
 
@@ -48,7 +56,10 @@ describe("Test FciRouterScreen", () => {
   });
   it("With a right and expired signature request, the success component should be rendered an error", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
 
     const render = renderComponent(store);
 
@@ -71,7 +82,10 @@ describe("Test FciRouterScreen", () => {
   });
   it("With a right signature request with status WAIT_FOR_QTSP, the success component should be rendered an error", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
 
     const render = renderComponent(store);
 
@@ -81,7 +95,7 @@ describe("Test FciRouterScreen", () => {
 
     const qtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_QTSP
+      status: SignatureRequestStatusEnum.WAIT_FOR_QTSP
     };
     render.store.dispatch(
       fciSignatureRequestFromId.success(qtspSignatureRequest)
@@ -94,7 +108,10 @@ describe("Test FciRouterScreen", () => {
   it("With a right signature request with status WAIT_FOR_SIGNATURE, the fciStartingRequest should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+    const store: ReturnType<typeof mockStore> = mockStore({
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    });
 
     const render = renderComponent(store);
 
@@ -104,7 +121,7 @@ describe("Test FciRouterScreen", () => {
 
     const qtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_SIGNATURE
+      status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
     };
     render.store.dispatch(
       fciSignatureRequestFromId.success(qtspSignatureRequest)

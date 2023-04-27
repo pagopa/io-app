@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
@@ -8,7 +8,6 @@ import { InfoScreenComponent } from "../../../../../../../components/infoScreen/
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
 import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
-import View from "../../../../../../../components/ui/TextWithIcon";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";

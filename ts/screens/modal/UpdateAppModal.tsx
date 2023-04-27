@@ -4,7 +4,7 @@
  */
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Container, Text as NBText, View as NBView } from "native-base";
+import { Button, Container, Text as NBButtonText } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   View,
@@ -17,7 +17,10 @@ import {
 } from "react-native";
 import updateIcon from "../../../img/icons/update-icon.png";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
+import { Label } from "../../components/core/typography/Label";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -32,16 +35,6 @@ import { openWebUrl } from "../../utils/url";
 const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
 
 const styles = StyleSheet.create({
-  text: {
-    marginTop: customVariables.contentPadding,
-    fontSize: 18
-  },
-  textDanger: {
-    marginTop: customVariables.contentPadding,
-    fontSize: 18,
-    textAlign: "center",
-    color: customVariables.brandDanger
-  },
   container: {
     margin: customVariables.contentPadding,
     flex: 1,
@@ -56,7 +49,7 @@ const styles = StyleSheet.create({
 type FooterProps = { onOpenAppStore: () => void };
 
 const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
-  <NBView footer>
+  <View style={IOStyles.footer}>
     <>
       <Button
         block={true}
@@ -64,11 +57,11 @@ const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
         onPress={onOpenAppStore}
         accessibilityRole={"button"}
       >
-        <NBText>{I18n.t("btnUpdateApp")}</NBText>
+        <NBButtonText>{I18n.t("btnUpdateApp")}</NBButtonText>
       </Button>
       <VSpacer size={16} />
     </>
-  </NBView>
+  </View>
 );
 
 const AndroidFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => {
@@ -135,12 +128,16 @@ const UpdateAppModal: React.FC = () => {
         <Container>
           <View style={styles.container}>
             <H1>{I18n.t("titleUpdateApp")}</H1>
-            <NBText style={styles.text}>{I18n.t("messageUpdateApp")}</NBText>
+            <VSpacer size={24} />
+            <Body>{I18n.t("messageUpdateApp")}</Body>
             <Image style={styles.img} source={updateIcon} />
             {error && (
-              <NBText style={styles.textDanger}>
-                {I18n.t("msgErrorUpdateApp")}
-              </NBText>
+              <View style={IOStyles.alignCenter}>
+                <VSpacer size={24} />
+                <Label color="red" weight="SemiBold">
+                  {I18n.t("msgErrorUpdateApp")}
+                </Label>
+              </View>
             )}
           </View>
         </Container>

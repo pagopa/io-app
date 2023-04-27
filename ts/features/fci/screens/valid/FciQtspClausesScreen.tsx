@@ -2,8 +2,8 @@ import * as React from "react";
 import { SafeAreaView, FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
-import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -28,11 +28,20 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { H4 } from "../../../../components/core/typography/H4";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
+import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { useFciCheckService } from "../../hooks/useFciCheckService";
+import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
+import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
+import ScreenContent from "../../../../components/screens/ScreenContent";
 
 const FciQtspClausesScreen = () => {
+  const dispatch = useIODispatch();
+  const navigation = useNavigation();
   const [clausesChecked, setClausesChecked] = React.useState(0);
+  const servicePreference = useSelector(servicePreferenceSelector);
   const qtspClausesSelector = useSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useSelector(fciQtspPrivacyUrlSelector);
@@ -42,11 +51,25 @@ const FciQtspClausesScreen = () => {
   const fciPollFilledDocumentError = useSelector(
     fciPollFilledDocumentErrorSelector
   );
+  const fciServiceId = useSelector(fciMetadataServiceIdSelector);
 
-  const navigation = useNavigation();
-  const dispatch = useIODispatch();
+  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
 
-  const { present, bottomSheet: fciAbortSignature } =
+  const isServiceActive =
+    servicePreferenceValue &&
+    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
+    servicePreferenceValue.value.inbox;
+
+  React.useEffect(() => {
+    if (fciServiceId) {
+      dispatch(loadServicePreference.request(fciServiceId as ServiceId));
+    }
+  }, [dispatch, fciServiceId]);
+
+  const { present: showCheckService, bottomSheet: fciCheckService } =
+    useFciCheckService();
+
+  const { present: showAbort, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
   const openUrl = (url: string) => {
@@ -63,7 +86,15 @@ const FciQtspClausesScreen = () => {
   );
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-    return <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />;
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+        assistance={true}
+        testID="PollingErrorComponentTestID"
+      />
+    );
   } else if (!isPollFilledDocumentReady) {
     return <LoadingComponent />;
   }
@@ -115,7 +146,7 @@ const FciQtspClausesScreen = () => {
     block: true,
     light: false,
     bordered: true,
-    onPress: present,
+    onPress: showAbort,
     title: I18n.t("global.buttons.cancel")
   };
 
@@ -123,7 +154,8 @@ const FciQtspClausesScreen = () => {
     block: true,
     primary: true,
     disabled: clausesChecked !== qtspClausesSelector.length,
-    onPress: () => dispatch(fciStartSigningRequest()),
+    onPress: () =>
+      isServiceActive ? dispatch(fciStartSigningRequest()) : showCheckService(),
     title: I18n.t("global.buttons.continue")
   };
 
@@ -134,15 +166,14 @@ const FciQtspClausesScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
-        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("features.fci.qtspTos.title")}</H1>
-          <VSpacer size={8} />
-          <H4 weight="Regular" color={"bluegreyDark"}>
-            {I18n.t("features.fci.qtspTos.subTitle")}
-          </H4>
-          <VSpacer size={24} />
-          {renderClausesFields()}
-        </View>
+        <ScreenContent
+          title={I18n.t("features.fci.qtspTos.title")}
+          subtitle={I18n.t("features.fci.qtspTos.subTitle")}
+        >
+          <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+            {renderClausesFields()}
+          </View>
+        </ScreenContent>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={cancelButtonProps}
@@ -150,6 +181,7 @@ const FciQtspClausesScreen = () => {
         />
       </SafeAreaView>
       {fciAbortSignature}
+      {fciCheckService}
     </BaseScreenComponent>
   );
 };

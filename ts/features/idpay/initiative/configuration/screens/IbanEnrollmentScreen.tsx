@@ -1,18 +1,21 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../../i18n";
+import customVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
@@ -24,7 +27,6 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -83,6 +85,10 @@ const IbanEnrollmentScreen = () => {
   const handleAddNewIbanPress = () => {
     configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
   };
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
 
   const renderFooter = () => {
     if (isIbanOnly) {
@@ -164,32 +170,27 @@ const IbanEnrollmentScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-        <View style={IOStyles.flex}>
+        <ScrollView style={styles.container}>
+          <H1>{I18n.t("idpay.configuration.iban.enrollment.header")}</H1>
+          <VSpacer size={8} />
+          <Body>{I18n.t("idpay.configuration.iban.enrollment.subTitle")}</Body>
           <VSpacer size={24} />
-          <View style={IOStyles.horizontalContentPadding}>
-            <H1>{I18n.t("idpay.configuration.iban.enrollment.header")}</H1>
-            <VSpacer size={8} />
-            <Body>
-              {I18n.t("idpay.configuration.iban.enrollment.subTitle")}
-            </Body>
+          {renderIbanList()}
+          <VSpacer size={16} />
+          {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
+          <View style={styles.bottomSection}>
+            <Icon name="profileAlt" color="bluegrey" />
+            <HSpacer size={8} />
+            <LabelSmall
+              color="bluegrey"
+              weight="Regular"
+              style={IOStyles.flex} // required for correct wrapping
+            >
+              {I18n.t("idpay.configuration.iban.enrollment.footer")}
+            </LabelSmall>
           </View>
-          <VSpacer size={24} />
-          <ScrollView style={IOStyles.horizontalContentPadding}>
-            {renderIbanList()}
-            <VSpacer size={16} />
-            <View style={styles.infoRow}>
-              <Icon name="profileAlt" color="grey" />
-              <HSpacer size={16} />
-              <LabelSmall
-                weight="Regular"
-                color="grey-700"
-                style={IOStyles.flex}
-              >
-                {I18n.t("idpay.configuration.iban.enrollment.footer")}
-              </LabelSmall>
-            </View>
-          </ScrollView>
-        </View>
+          {/* TODO:: end AdviceComponent  */}
+        </ScrollView>
         <SafeAreaView>{renderFooter()}</SafeAreaView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
@@ -197,7 +198,11 @@ const IbanEnrollmentScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  infoRow: {
+  container: {
+    flex: 1,
+    padding: customVariables.contentPadding
+  },
+  bottomSection: {
     flexDirection: "row",
     alignItems: "center"
   }

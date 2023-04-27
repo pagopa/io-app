@@ -44,7 +44,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     }
   />
   <View
-    style={Object {}}
     testID="otp-code-component"
   >
     <Text
@@ -55,12 +54,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       fontStyle={
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         }
       }
       style={
         Array [
           Object {
             "fontSize": 18,
+            "lineHeight": 22,
           },
           Object {
             "color": "#17324D",
@@ -89,7 +90,6 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Array [
-          Object {},
           Object {
             "flexDirection": "row",
           },
@@ -143,12 +143,14 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -245,12 +247,14 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -347,12 +351,14 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -456,12 +462,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -490,7 +498,6 @@ exports[`when rendering on match snapshot for static code 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -544,12 +551,14 @@ exports[`when rendering on match snapshot for static code 1`] = `
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",

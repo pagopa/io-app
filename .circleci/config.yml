@@ -40,7 +40,7 @@ defaults_android: &defaults_android
 defaults_macos: &defaults_macos
   <<: *defaults
   macos:
-    xcode: "13.4.1"
+    xcode: "14.2.0"
   resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
@@ -287,12 +287,12 @@ jobs:
             cd ruby-install-0.8.5/
             sudo make install
 
-      - run: ruby-install ruby 2.7.6
+      - run: ruby-install ruby 2.7.7
       - run:
           name: Set chruby
           command: |
             echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
-            echo 'chruby ruby-2.7.6' >> $BASH_ENV 
+            echo 'chruby ruby-2.7.7' >> $BASH_ENV 
 
       - run:
           name: Configure Bundler
@@ -354,6 +354,7 @@ jobs:
       - run:
           name: Configure Bundler
           command: |
+            sudo gem update --system
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
@@ -442,6 +443,7 @@ jobs:
       - run:
           name: Configure Bundler
           command: |
+            sudo gem update --system
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
@@ -617,8 +619,7 @@ workflows:
     jobs:
       - pagopa_specs_diff
       - io_check_uris
-      # see https://www.pivotaltracker.com/n/projects/2048617/stories/177755852
-      # - io_check_cie_button_exists_ios
+      - io_check_cie_button_exists_ios
 
   # Run a weekly report At 16:00 on Friday
   weekly-report:

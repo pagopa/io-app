@@ -61,7 +61,6 @@ const customVariables = Object.assign(materialVariables, {
   btnLightBorderColor: IOColors.grey,
 
   cardShadow: IOColors.black,
-  cardTextColor: IOColors.bluegreyDark,
 
   calendarExpirableColor: IOColors.red,
 
@@ -122,6 +121,7 @@ const customVariables = Object.assign(materialVariables, {
   appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
+  titleHeaderPaddingLeft: 16,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
   headerBodyFontWeight: "600" as FontWeight,

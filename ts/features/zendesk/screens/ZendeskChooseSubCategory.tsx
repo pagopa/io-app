@@ -1,6 +1,7 @@
 import { ListItem } from "native-base";
 import React from "react";
 import {
+  View,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
@@ -14,7 +15,6 @@ import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
-import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
@@ -34,6 +34,7 @@ import { zendeskSelectedCategorySelector } from "../store/reducers";
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -48,7 +49,8 @@ type Props = IOStackNavigationRouteProps<
 const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
   const dispatch = useDispatch();
-  const { assistanceForPayment, assistanceForCard } = props.route.params;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    props.route.params;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -84,7 +86,8 @@ const ZendeskChooseSubCategory = (props: Props) => {
           addTicketCustomField(subCategoriesId, subCategory.value);
           props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
             assistanceForPayment,
-            assistanceForCard
+            assistanceForCard,
+            assistanceForFci
           });
         }}
         first={listItem.index === 0}

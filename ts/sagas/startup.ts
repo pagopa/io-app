@@ -40,7 +40,7 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { watchMvlSaga } from "../features/mvl/saga";
+import { removePersistMvl, watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
@@ -67,7 +67,11 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../features/lollipop/store/reducers/lollipop";
-import { generateLollipopKeySaga } from "../features/lollipop/saga";
+import {
+  checkLollipopSessionAssertionAndInvalidateIfNeeded,
+  generateKeyInfo,
+  generateLollipopKeySaga
+} from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
@@ -89,6 +93,8 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { trackKeychainGetFailure } from "../utils/analytics";
+import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -144,9 +150,9 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import {
-  generateKeyInfo,
-  trackMixpanelCryptoKeyPairEvents
-} from "./startup/generateCryptoKeyPair";
+  clearKeychainError,
+  keychainError
+} from "./../store/storages/keychain";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -208,15 +214,20 @@ export function* initializeApplicationSaga(): Generator<
   // user profile.
   yield* put(resetProfileState());
 
-  // Generate key for lollipop
-  // TODO Once the lollipop feature is spread to the all the user base,
-  // consider refactoring even more by removing this, when
-  // https://pagopa.atlassian.net/browse/LLK-38 has been fixed.
-  // For now we need to generate a key in the application startup flow
+  // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
+
   yield* call(generateLollipopKeySaga);
+
+  // This saga must retrieve the publicKey by its own,
+  // since it must make sure to have the latest in-memory value
+  // (as an example, during the authentication saga the key may have been regenerated multiple times)
+  const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
+  if (unsupportedDevice) {
+    return;
+  }
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
@@ -228,13 +239,15 @@ export function* initializeApplicationSaga(): Generator<
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
-  // Handles the expiration of the session token
-  yield* fork(watchSessionExpiredSaga);
-
+  // BE CAREFUL where you get lollipop keyInfo.
+  // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
   const keyTag = yield* select(lollipopKeyTagSelector);
   const publicKey = yield* select(lollipopPublicKeySelector);
   const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
+  // Handles the expiration of the session token
+  yield* fork(watchSessionExpiredSaga);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -268,17 +281,26 @@ export function* initializeApplicationSaga(): Generator<
     yield* select(sessionInfoSelector);
   if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
+
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
       backendClient.getSession
     );
+
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield* put(startApplicationInitialization());
+
       return;
     }
   }
+
+  yield* call(
+    checkLollipopSessionAssertionAndInvalidateIfNeeded,
+    publicKey,
+    maybeSessionInformation
+  );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
@@ -364,10 +386,10 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  // Track crypto key generation info
-  if (O.isSome(keyTag)) {
-    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
-  }
+  // workaround to send keychainError for Pixel devices
+  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
+  yield* call(trackKeychainGetFailure, keychainError);
+  yield* call(clearKeychainError);
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
@@ -433,6 +455,9 @@ export function* initializeApplicationSaga(): Generator<
     // Start watching for EU Covid Certificate actions
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
+
+  // Remove persisted features.MVL
+  yield* call(removePersistMvl);
 
   if (mvlEnabled) {
     // Start watching for MVL actions

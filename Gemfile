@@ -2,7 +2,7 @@
 source "https://rubygems.org"
 
 # You may use http://rbenv.org/ or https://rvm.io/ to install and use this version
-ruby '2.7.6'
+ruby '>=2.6.10'
 
-gem "cocoapods", "1.11.3"
-gem "fastlane", "~> 2.210.0"
+gem "cocoapods", ">=1.11.2"
+gem "fastlane", "~> 2.212.1"

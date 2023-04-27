@@ -1,8 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View, Text as NBText } from "native-base";
+import { Text as NBCardText } from "native-base";
 import React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -70,21 +76,21 @@ const IDPayCardPreviewComponent = (props: Props) => {
           >
             {props.initiativeName}
           </H4>
-          <NBText
+          <NBCardText
             bold={true}
             white={true}
             style={[styles.amountTextBase, { textAlign: "right" }]}
           >
             {"€ "}
-            <NBText white={true} style={styles.amountTextUpper}>
+            <NBCardText white={true} style={styles.amountTextUpper}>
               {`${availableAmount[0]}${I18n.t(
                 "global.localization.decimalSeparator"
               )}`}
-            </NBText>
-            <NBText white={true} style={styles.amountTextLower}>
+            </NBCardText>
+            <NBCardText white={true} style={styles.amountTextLower}>
               {availableAmount[1]}
-            </NBText>
-          </NBText>
+            </NBCardText>
+          </NBCardText>
         </View>
       </View>
       {/* TODO: add correct initiative logo, this is only temporary */}

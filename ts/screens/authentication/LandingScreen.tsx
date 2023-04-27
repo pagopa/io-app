@@ -6,7 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text as NBText, View as NBView } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -18,6 +18,7 @@ import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
@@ -33,7 +34,6 @@ import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { IdentityProvider } from "../../models/IdentityProvider";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -57,6 +57,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
     // TODO: Remove this half-disabled state.
-    // See also discusssion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
+    // See also discussion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
     backgroundColor: IOColors.noCieButton
   },
   fullOpacity: {
@@ -157,11 +158,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export const IdpCIE: IdentityProvider = {
+const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
   logo: "",
-  entityID: "cieid",
   profileUrl: ""
 };
 
@@ -278,7 +278,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
-        <NBView footer={true}>
+        <View style={IOStyles.footer}>
           <ButtonDefaultOpacity
             block={true}
             primary={true}
@@ -305,11 +305,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={isCieSupported ? "io-cie" : "io-profilo"}
               color={IOColors.white}
             />
-            <NBText>
+            <NBButtonText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
           <ButtonDefaultOpacity
@@ -339,11 +339,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={IOColors.white}
             />
-            <NBText>
+            <NBButtonText>
               {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
           <Link
@@ -354,7 +354,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}
           </Link>
-        </NBView>
+        </View>
       </BaseScreenComponent>
     );
   };

@@ -8,7 +8,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
@@ -55,6 +55,7 @@ import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
+import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -72,7 +73,7 @@ import {
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
-import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import { IO_INTERNAL_LINK_PREFIX, isGestureEnabled } from "../utils/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -102,6 +103,10 @@ export const AppStackNavigator = () => {
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
+      <Stack.Screen
+        name={ROUTES.UNSUPPORTED_DEVICE}
+        component={UnsupportedDeviceScreen}
+      />
       <Stack.Screen
         name={ROUTES.AUTHENTICATION}
         component={authenticationNavigator}
@@ -181,14 +186,17 @@ export const AppStackNavigator = () => {
           <Stack.Screen
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
             component={IDPayOnboardingNavigator}
+            options={{ gestureEnabled: isGestureEnabled }}
           />
           <Stack.Screen
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
+            options={{ gestureEnabled: isGestureEnabled }}
           />
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
             component={IDPayConfigurationNavigator}
+            options={{ gestureEnabled: isGestureEnabled }}
           />
         </>
       )}

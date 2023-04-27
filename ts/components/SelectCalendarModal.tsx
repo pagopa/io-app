@@ -1,12 +1,18 @@
-import { Container, Content, Text as NBText, View } from "native-base";
+import { Container, Content } from "native-base";
 import React from "react";
-import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
+import {
+  View,
+  BackHandler,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import { Calendar } from "react-native-calendar-events";
 
 import { connect } from "react-redux";
 import I18n from "../i18n";
 import { GlobalState } from "../store/reducers/types";
 import CalendarsListContainer from "./CalendarsListContainer";
+import { Body } from "./core/typography/Body";
 import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { ScreenContentHeader } from "./screens/ScreenContentHeader";
@@ -64,7 +70,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                 this.props.defaultCalendar === undefined && (
                   <View>
                     <ItemSeparatorComponent />
-                    <NBText>{I18n.t("messages.cta.helper")}</NBText>
+                    <Body>{I18n.t("messages.cta.helper")}</Body>
                   </View>
                 )
               }

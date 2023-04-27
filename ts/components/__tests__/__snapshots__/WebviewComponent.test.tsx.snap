@@ -45,26 +45,51 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
     >
       <ActivityIndicator
         size="large"
+        testID="refreshIndicator"
       />
-      <Text
-        accessible={true}
-        alignCenter={true}
+      <View
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
+              "padding": 24,
             },
             Object {
-              "padding": 24,
+              "alignItems": "center",
             },
           ]
         }
-        uppercase={false}
       >
-        Wait a few seconds..
-      </Text>
+        <Text
+          accessible={true}
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "400",
+              },
+            ]
+          }
+          weight="Regular"
+        >
+          Wait a few seconds..
+        </Text>
+      </View>
     </View>
   </View>
   <View

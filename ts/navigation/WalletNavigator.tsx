@@ -62,6 +62,7 @@ import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import { useIOSelector } from "../store/hooks";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
+import { IdPayInitiativeListScreen } from "../features/idpay/wallet/screens/AvailableInitiativesListScreen";
 import ROUTES from "./routes";
 
 const Stack = createStackNavigator();
@@ -139,6 +140,10 @@ const WalletNavigator = () => {
       headerMode={"none"}
       screenOptions={{ gestureEnabled: true }}
     >
+      <Stack.Screen
+        name={ROUTES.WALLET_IDPAY_INITIATIVE_LIST}
+        component={IdPayInitiativeListScreen}
+      />
       <Stack.Screen
         name={ROUTES.WALLET_ADD_PAYMENT_METHOD}
         component={AddPaymentMethodScreen}

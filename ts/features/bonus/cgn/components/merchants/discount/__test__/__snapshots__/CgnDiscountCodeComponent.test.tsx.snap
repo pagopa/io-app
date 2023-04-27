@@ -17,12 +17,14 @@ Array [
     fontStyle={
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 18,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -51,7 +53,6 @@ Array [
     onStartShouldSetResponder={[Function]}
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },

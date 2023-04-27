@@ -156,6 +156,10 @@ export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_CANCEL"
 )<UIAttachment, Download, DownloadError<Error>, UIAttachment>();
 
+export const cancelPreviousAttachmentDownload = createAction(
+  "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
+);
+
 /**
  * This action removes any cached data in order to perform another download.
  */
@@ -175,5 +179,6 @@ export type MessagesActions = ActionType<
   | typeof loadMessageById
   | typeof loadThirdPartyMessage
   | typeof downloadAttachment
+  | typeof cancelPreviousAttachmentDownload
   | typeof removeCachedAttachment
 >;

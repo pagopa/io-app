@@ -1,9 +1,10 @@
 /**
  * A component to display a bluegrey background color on the screen using it
  */
-import { View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
+  View,
   ImageSourcePropType,
   StyleProp,
   StyleSheet,
@@ -16,12 +17,13 @@ import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { VSpacer } from "../core/spacer/Spacer";
 import { IOColors, getGradientColorValues } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
-import ScreenContent from "./ScreenContent";
+import ScreenContent, { ScreenContentRoot } from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
@@ -47,6 +49,9 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
+  referenceToContentScreen?: (
+    c: ScreenContentRoot
+  ) => ScreenContentRoot | React.LegacyRef<Content>;
 }>;
 
 const styles = StyleSheet.create({
@@ -140,13 +145,14 @@ export default class DarkLayout extends React.Component<Props> {
             dark={true}
             contentStyle={this.props.contentStyle}
             bounces={this.props.bounces}
+            referenceToContentScreen={this.props.referenceToContentScreen}
           >
             {this.screenContent()}
           </ScreenContent>
         )}
         {this.props.footerFullWidth}
         {this.props.footerContent && (
-          <View footer={true}>{this.props.footerContent}</View>
+          <View style={IOStyles.footer}>{this.props.footerContent}</View>
         )}
       </TopScreenComponent>
     );

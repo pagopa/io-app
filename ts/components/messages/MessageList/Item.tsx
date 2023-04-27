@@ -1,8 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
@@ -18,9 +17,14 @@ import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../../utils/convertDateToWordDistance";
+import { IOBadge } from "../../core/IOBadge";
+import { HSpacer } from "../../core/spacer/Spacer";
+import { Body } from "../../core/typography/Body";
 import { H3 } from "../../core/typography/H3";
 import { H5 } from "../../core/typography/H5";
+import { Label } from "../../core/typography/Label";
 import { IOColors } from "../../core/variables/IOColors";
+import { IOStyles } from "../../core/variables/IOStyles";
 import { BadgeComponent } from "../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import IconFont from "../../ui/IconFont";
@@ -63,13 +67,6 @@ const styles = StyleSheet.create({
     flexBasis: "auto",
     flexDirection: "row"
   },
-  dateTime: {
-    lineHeight: 20,
-    fontWeight: "bold",
-    overflow: "hidden",
-    textAlign: "right",
-    marginLeft: 7
-  },
   checkBoxContainer: {
     flexGrow: 0,
     flexShrink: 0,
@@ -91,18 +88,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: "100%"
-  },
-  badgeInfo: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    width: 74,
-    height: 25,
-    flexDirection: "row",
-    backgroundColor: IOColors.aqua
-  },
-  badgeInfoPaid: {
-    borderColor: IOColors.aqua,
-    backgroundColor: IOColors.aqua
   },
   qrContainer: {
     alignItems: "center",
@@ -161,9 +146,10 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
   switch (itemBadge) {
     case "paid":
       return (
-        <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
-          <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-        </Badge>
+        <IOBadge
+          text={I18n.t("messages.badge.paid")}
+          labelColor={"bluegreyDark"}
+        />
       );
 
     case "qrcode":
@@ -285,16 +271,22 @@ const MessageListItem = ({
         <View style={styles.organizationNameWrapper}>
           <H5 numberOfLines={1}>{organizationName}</H5>
         </View>
-        <View style={styles.titleIconAndDate}>
+        <View style={[styles.titleIconAndDate, IOStyles.alignCenter]}>
           {getTopIcon(category)}
-          <NBText numberOfLines={1} style={styles.dateTime}>
+          <HSpacer size={8} />
+          <Label
+            weight="Bold"
+            color="bluegrey"
+            numberOfLines={1}
+            style={{ overflow: "hidden" }}
+          >
             {uiDate}
-          </NBText>
+          </Label>
         </View>
       </View>
 
       <View style={[styles.serviceName, showQrCode && styles.qrMargin]}>
-        <NBText>{serviceName}</NBText>
+        <Body>{serviceName}</Body>
       </View>
 
       <View style={styles.smallSpacer} />

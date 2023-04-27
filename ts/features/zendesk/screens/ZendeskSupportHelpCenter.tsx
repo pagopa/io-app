@@ -3,7 +3,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
@@ -19,7 +19,6 @@ import {
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
-import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -124,7 +123,7 @@ const FaqManager = (props: FaqManagerProps) => {
   return (
     <>
       {isContentLoading && (
-        <View centerJustified={true}>
+        <View style={[IOStyles.flex, IOStyles.centerJustified]}>
           <ActivityIndicator color={IOColors.blueUltraLight} />
         </View>
       )}
@@ -177,7 +176,8 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelpMarkdown,
     startingRoute,
     assistanceForPayment,
-    assistanceForCard
+    assistanceForCard,
+    assistanceForFci
   } = route.params;
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
@@ -230,6 +230,7 @@ const ZendeskSupportHelpCenter = () => {
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
             assistanceForCard={assistanceForCard}
+            assistanceForFci={assistanceForFci}
           />
           <VSpacer size={16} />
         </ScrollView>

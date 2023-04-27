@@ -2,6 +2,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { guardedNavigationAction } from "../../common/xstate/utils";
 import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import {
   IDPayOnboardingParamsList,
@@ -17,36 +18,40 @@ const createActionsImplementation = (
     keyof IDPayOnboardingParamsList
   >
 ) => {
-  const navigateToInitiativeDetailsScreen = (context: Context) => {
-    if (context.serviceId === undefined) {
-      throw new Error("serviceId is undefined");
-    }
-
-    onboardingNavigation.navigate(
-      IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      {
-        serviceId: context.serviceId
+  const navigateToInitiativeDetailsScreen = guardedNavigationAction(
+    (context: Context) => {
+      if (context.serviceId === undefined) {
+        throw new Error("serviceId is undefined");
       }
-    );
-  };
 
-  const navigateToPDNDCriteriaScreen = () => {
+      onboardingNavigation.navigate(
+        IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+        {
+          serviceId: context.serviceId
+        }
+      );
+    }
+  );
+
+  const navigateToPDNDCriteriaScreen = guardedNavigationAction(() =>
     onboardingNavigation.navigate(
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-    );
-  };
+    )
+  );
 
-  const navigateToBoolSelfDeclarationsScreen = () => {
+  const navigateToBoolSelfDeclarationsScreen = guardedNavigationAction(() =>
     onboardingNavigation.navigate(
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
-    );
-  };
-  const navigateToMultiSelfDeclarationsScreen = (context: Context) => {
-    onboardingNavigation.navigate({
-      name: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
-      key: String(context.multiConsentsPage)
-    });
-  };
+    )
+  );
+
+  const navigateToMultiSelfDeclarationsScreen = guardedNavigationAction(
+    (context: Context) =>
+      onboardingNavigation.navigate({
+        name: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+        key: String(context.multiConsentsPage)
+      })
+  );
 
   const navigateToCompletionScreen = () => {
     onboardingNavigation.navigate(

@@ -1,14 +1,16 @@
-import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
-import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 import { H5 } from "./core/typography/H5";
 import { H3 } from "./core/typography/H3";
+import { Body } from "./core/typography/Body";
+import { IOBadge } from "./core/IOBadge";
+import { IOStyles } from "./core/variables/IOStyles";
+import { Label } from "./core/typography/Label";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -33,11 +35,6 @@ const styles = StyleSheet.create({
   verticalPad: {
     paddingVertical: customVariables.spacerHeight
   },
-  header: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center"
-  },
   headerMain: {
     flexGrow: 1,
     flexShrink: 1,
@@ -59,10 +56,6 @@ const styles = StyleSheet.create({
   },
   viewStyle: {
     flexDirection: "row"
-  },
-  text12: {
-    lineHeight: 18,
-    marginBottom: -4
   },
   icon: {
     alignItems: "flex-start",
@@ -88,17 +81,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: "100%"
-  },
-  badgeInfo: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    width: 65,
-    height: 25,
-    flexDirection: "row"
-  },
-  badgeInfoPaid: {
-    borderColor: IOColors.aqua,
-    backgroundColor: IOColors.aqua
   }
 });
 
@@ -139,20 +121,20 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
         style={styles.verticalPad}
         {...this.props}
       >
-        <View style={styles.header}>
+        <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
           <View style={styles.headerMain}>
             <H5>{this.props.text11}</H5>
           </View>
 
           <View style={styles.headerSub}>
-            <NBText bold={true} style={styles.text12}>
+            <Label weight="Bold" color="bluegrey">
               {this.props.text12}
-            </NBText>
+            </Label>
           </View>
         </View>
 
         <View style={styles.viewStyle}>
-          <NBText>{this.props.text2}</NBText>
+          <Body>{this.props.text2}</Body>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>
@@ -169,9 +151,10 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
 
           <View style={styles.icon}>
             {this.props.isPaid && (
-              <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
-                <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
-              </Badge>
+              <IOBadge
+                text={I18n.t("messages.badge.paid")}
+                labelColor={"bluegreyDark"}
+              />
             )}
 
             <IconFont

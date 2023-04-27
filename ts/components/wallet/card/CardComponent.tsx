@@ -7,9 +7,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Alert, Image } from "react-native";
+import { View, StyleSheet, Alert, Image, Platform } from "react-native";
 import {
   Menu,
   MenuOption,
@@ -26,12 +26,12 @@ import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import { VSpacer } from "../../core/spacer/Spacer";
+import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
+import { Label } from "../../core/typography/Label";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
-import styles from "./CardComponent.style";
 import Logo, { cardIcons } from "./Logo";
-import { CreditCardStyles } from "./style";
 
 interface BaseProps {
   wallet: Wallet;
@@ -65,6 +65,80 @@ interface PickingProps extends BaseProps {
 }
 
 type Props = FullProps | HeaderProps | PreviewProps | PickingProps;
+
+const styles = StyleSheet.create({
+  cardHeader: {
+    marginTop: -20,
+    marginLeft: 12,
+    marginRight: 12,
+    paddingBottom: 10,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8
+  },
+  cardShadow: {
+    shadowColor: IOColors.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.5,
+    elevation: Platform.OS === "android" ? 5 : 25,
+    zIndex: Platform.OS === "android" ? 5 : 25
+  },
+  card: {
+    // iOS and Android card shadow
+    backgroundColor: IOColors.greyUltraLight,
+    borderRadius: 8,
+    marginLeft: 0,
+    marginRight: 0
+  },
+  cardInner: {
+    paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 18
+  },
+  row: {
+    flexDirection: "row"
+  },
+  spaced: {
+    justifyContent: "space-between"
+  },
+  columns: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  cardLogo: {
+    height: 30,
+    width: 48
+  },
+  footerButton: {
+    borderRadius: 6,
+    paddingRight: variables.fontSizeBase,
+    justifyContent: "space-between",
+    margin: 2
+  },
+  transactions: {
+    backgroundColor: IOColors.white
+  },
+  transactionsText: {
+    color: variables.brandPrimary
+  },
+  pickPayment: {
+    backgroundColor: variables.brandPrimary
+  },
+  pickPaymentText: {
+    color: IOColors.white
+  },
+  flatBottom: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
+  },
+  paddedIcon: {
+    paddingLeft: 10
+  },
+  paddedTop: {
+    paddingTop: 10
+  }
+});
 
 /**
  * Credit card component
@@ -163,21 +237,29 @@ export default class CardComponent extends React.Component<Props> {
               <MenuOptions>
                 {onSetFavorite && isFavorite !== undefined && (
                   <MenuOption onSelect={this.handleFavoritePress}>
-                    <NBText bold={true} style={styles.blueText}>
+                    <Label
+                      weight="Bold"
+                      color="blue"
+                      style={{ textAlign: "center" }}
+                    >
                       {I18n.t(
                         pot.getOrElseWithUpdating(isFavorite, false)
                           ? "cardComponent.unsetFavorite"
                           : "cardComponent.setFavorite"
                       )}
-                    </NBText>
+                    </Label>
                   </MenuOption>
                 )}
 
                 {onDelete && (
                   <MenuOption onSelect={this.handleDeleteSelect}>
-                    <NBText bold={true} style={styles.blueText}>
+                    <Label
+                      weight="Bold"
+                      color="blue"
+                      style={{ textAlign: "center" }}
+                    >
                       {I18n.t("global.buttons.delete")}
-                    </NBText>
+                    </Label>
                   </MenuOption>
                 )}
               </MenuOptions>
@@ -253,9 +335,8 @@ export default class CardComponent extends React.Component<Props> {
           <H5 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </H5>
-          <NBText style={[CreditCardStyles.textStyle, styles.marginTop]}>
-            {creditCard.holder.toUpperCase()}
-          </NBText>
+          <VSpacer size={16} />
+          <Body color="bluegreyDark">{creditCard.holder.toUpperCase()}</Body>
         </View>
         {getBodyIcon()}
       </View>
@@ -288,7 +369,7 @@ export default class CardComponent extends React.Component<Props> {
         iconRight={true}
         onPress={this.handleOnCardPress}
       >
-        <NBText style={footerTextStyle}>{text}</NBText>
+        <NBButtonText style={footerTextStyle}>{text}</NBButtonText>
         <IconFont
           name={"io-right"}
           size={variables.iconSize2}

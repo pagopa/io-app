@@ -135,8 +135,8 @@ const MessagesHomeScreen = ({
           "en-EN": unsupportedDeviceMoreInfoUrl
         },
         message: {
-          "it-IT": I18n.t("unsupportedDevice.text"),
-          "en-EN": I18n.t("unsupportedDevice.text")
+          "it-IT": I18n.t("unsupportedDevice.warning"),
+          "en-EN": I18n.t("unsupportedDevice.warning")
         }
       }}
     />
