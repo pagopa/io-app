@@ -29,6 +29,8 @@ export const idpSelected = createStandardAction("IDP_SELECTED")<SpidIdp>();
 export const testLoginRequest =
   createStandardAction("TEST_LOGIN_REQUEST")<PasswordLogin>();
 
+export const testLoginCleanUp = createStandardAction("TEST_LOGIN_CLEAN_UP")();
+
 //
 // Action about IDP Login phase
 //
@@ -89,6 +91,7 @@ export type AuthenticationActions =
   | ActionType<typeof idpSelected>
   | ActionType<typeof idpLoginUrlChanged>
   | ActionType<typeof testLoginRequest>
+  | ActionType<typeof testLoginCleanUp>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>
