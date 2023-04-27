@@ -48,7 +48,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       }
       weight="Regular"
     >
-      Date and time sending:
+      Date and time sending: 
     </Text>
     <Text
       color="bluegrey"
@@ -63,6 +63,10 @@ exports[`MessageDetailData component when service's contact detail are not defin
       style={
         Array [
           Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+          },
+          Object {
             "fontSize": 16,
           },
           Object {
@@ -75,7 +79,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       }
       weight="Bold"
     >
-       18/10/2021, 16:00
+      18/10/2021, 16:00
     </Text>
   </View>
   <View
@@ -117,7 +121,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       }
       weight="Regular"
     >
-      Sender:
+      Sender: 
     </Text>
     <Text
       color="bluegrey"
@@ -132,6 +136,10 @@ exports[`MessageDetailData component when service's contact detail are not defin
       style={
         Array [
           Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+          },
+          Object {
             "fontSize": 16,
           },
           Object {
@@ -144,7 +152,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
       }
       weight="Bold"
     >
-       Ċentru tas-Saħħa
+      Ċentru tas-Saħħa
     </Text>
   </View>
   <View
@@ -205,6 +213,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
         Array [
           Object {
             "flex": 1,
+            "flexWrap": "wrap",
           },
           Object {
             "fontSize": 16,
