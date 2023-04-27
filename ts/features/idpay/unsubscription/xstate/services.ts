@@ -39,19 +39,18 @@ const createServicesImplementation = (
       E.fold(
         () => Promise.reject(undefined),
         flow(
-          E.fold(
-            () => Promise.reject(undefined),
-            response =>
-              response.status !== 200
-                ? Promise.reject(undefined)
-                : Promise.resolve(response.value)
-          )
+          E.map(({ status, value }) =>
+            status !== 200 ? Promise.reject(undefined) : Promise.resolve(value)
+          ),
+          E.getOrElse(() => Promise.reject(undefined))
         )
       )
     );
   };
 
-  const unsubscribeFromInitiative = async (context: Context) => {
+  const unsubscribeFromInitiative = async (
+    context: Context
+  ): Promise<undefined> => {
     const dataResponse = await TE.tryCatch(
       async () =>
         await client.unsubscribe({
@@ -67,13 +66,12 @@ const createServicesImplementation = (
       E.fold(
         () => Promise.reject(undefined),
         flow(
-          E.fold(
-            () => Promise.reject(undefined),
-            response =>
-              response.status !== 200
-                ? Promise.reject(undefined)
-                : Promise.resolve(undefined)
-          )
+          E.map(({ status }) =>
+            status !== 200
+              ? Promise.reject(undefined)
+              : Promise.resolve(undefined)
+          ),
+          E.getOrElse(() => Promise.reject(undefined))
         )
       )
     );
