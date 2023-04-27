@@ -14,12 +14,12 @@ type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 /**
  * Wallet tab icon with badge indicator
  */
-class WalletTabIcon extends React.PureComponent<Props> {
+class ScanTabIcon extends React.PureComponent<Props> {
   public render() {
     const { color, unreadTransactions } = this.props;
     return (
       <TabIconComponent
-        iconName={"navWallet"}
+        iconName={"navScan"}
         badgeValue={unreadTransactions}
         color={color}
       />
@@ -31,4 +31,4 @@ const mapStateToProps = (state: GlobalState) => ({
   unreadTransactions: getSafeUnreadTransactionsNumSelector(state)
 });
 
-export default connect(mapStateToProps)(WalletTabIcon);
+export default connect(mapStateToProps)(ScanTabIcon);

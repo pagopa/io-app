@@ -8,12 +8,14 @@ import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import WalletTabIcon from "../components/WalletTabIcon";
+import ScanTabIcon from "../components/ScanTabIcon";
 import I18n from "../i18n";
 import PaginatedMessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import variables from "../theme/variables";
+import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
@@ -50,13 +52,13 @@ export const MainTabNavigator = () => {
     <Tab.Navigator
       tabBarOptions={{
         labelStyle: {
-          fontSize: 14,
+          fontSize: 12,
           ...makeFontStyleObject("Regular")
         },
         keyboardHidesTabBar: true,
         allowFontScaling: false,
         activeTintColor: IOColors.blue,
-        inactiveTintColor: IOColors.bluegrey,
+        inactiveTintColor: IOColors["grey-850"],
         style: [
           styles.tabBarStyle,
           { height: tabBarHeight + bottomInset },
@@ -78,6 +80,14 @@ export const MainTabNavigator = () => {
         options={{
           title: I18n.t("global.navigator.wallet"),
           tabBarIcon: ({ color }) => <WalletTabIcon color={color} />
+        }}
+      />
+      <Tab.Screen
+        name={ROUTES.PAYMENT_SCAN_QR_CODE}
+        component={ScanQrCodeScreen}
+        options={{
+          title: I18n.t("global.navigator.scan"),
+          tabBarIcon: ({ color }) => <ScanTabIcon color={color} />
         }}
       />
       <Tab.Screen
