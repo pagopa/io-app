@@ -468,5 +468,126 @@ The authentication flow is as follows:
 
 ## Deep linking
 
-The application is able to manage _deep links_. The URL scheme is: `ioit://`. The link format is `ioit://<route-name>`.
+The application is able to manage _deep links_. [Deep linking](https://reactnavigation.org/docs/5.x/deep-linking) allows opening the app or a specific screen once a user clicks on specific URL. The URL scheme for io-app is: `ioit://`.
+<details>
+    <summary>Supported URLs</summary>
+    <h2>main</h2>
+    <table>
+         <tr>
+            <td>ioit://main/messages</td>
+        </tr>
+        <tr>
+            <td>ioit://main/wallet</td>
+        </tr>
+        <tr>
+            <td>ioit://main/services</td>
+        </tr>
+        <tr>
+            <td>ioit://main/profile</td>
+        </tr>
+    </table>
+    <h2>messages</h2>
+    <table>
+        <tr>
+            <td>ioit://messages</td>
+        </tr>
+    </table>
+    <h2>wallet</h2>
+    <table>
+        <tr>
+            <td>ioit://wallet</td>
+        </tr>
+        <tr>
+            <td>ioit://wallet/payments-history</td>
+        <tr>
+        <tr>
+            <td>ioit://wallet/card-onboarding-attempts</td>
+        <tr>
+        <tr>
+            <td>ioit://wallet/bpd-iban-update</td>
+        <tr>
+        <tr>
+            <td>ioit://wallet/bpd-opt-in</td>
+        <tr>
+        <tr>
+            <td>ioit://wallet/bpd-opt-in/choice</td>
+        <tr>
+    </table>
+    <h2>services</h2>
+    <table>
+        <tr>
+            <td>ioit://services</td>
+        </tr>
+        <tr>
+            <td>ioit://services/service-detail</td>
+        </tr>
+        <tr>
+            <td>ioit://services/webview</td>
+        </tr>
+        <tr>
+            <td>ioit://services/sv-generation/check-status</td>
+        </tr>
+    </table>
+    <h2>profile</h2>
+    <table>
+        <tr>
+            <td>ioit://profile </td>
+        </tr>
+        <tr>
+            <td>ioit://profile/preferences </td>
+        </tr>
+        <tr>
+            <td>ioit://profile/privacy</td>
+        </tr>
+        <tr>
+            <td>ioit://profile/privacy-main</td>
+        </tr>
+    </table>
+    <h2>cgn</h2>
+    <table>
+        <tr>
+            <td>ioit://cgn-details/detail</td>
+        </tr>
+        <tr>
+            <td>ioit://cgn-details/categories</td>
+        </tr>
+        <tr>
+            <td>ioit://cgn-details/categories-merchant/:category</td>
+        </tr>
+    </table>
+    fci
+    <table>
+        <tr>
+            <td>ioit://fci/main</td>
+        </tr>
+        <tr>
+            <td>ioit://fci/signature-requests</td>
+        </tr>
+        <tr>
+            <td>ioit://cgn-details/categories-merchant/:category</td>
+        </tr>
+    </table>
+    <h2>idpay</h2>
+    <table>
+        <tr>
+            <td>ioit://idpay/onboarding/:serviceId</td>
+        </tr>
+        <tr>
+            <td>ioit://idpay/initiative/:initiativeId</td>
+        </tr>
+    </table>
+    <h2>miscs</h2>
+    <table>
+        <tr>
+            <td>ioit://uadonations-webview </td>
+        </tr>
+        <tr>
+            <td>ioit://fims/webview</td>
+        </tr>
+        <tr>
+            <td>ioit://cgn-activation</td>
+        </tr>
+    </table>
+</details>
+
 
