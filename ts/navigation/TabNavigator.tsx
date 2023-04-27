@@ -91,14 +91,14 @@ export const MainTabNavigator = () => {
           tabBarIcon: ({ color }) => <WalletTabIcon color={color} />
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={ROUTES.PAYMENT_SCAN_QR_CODE}
         component={ScanQrCodeScreen}
         options={{
           title: I18n.t("global.navigator.scan"),
           tabBarIcon: ({ color }) => <ScanTabIcon color={color} />
         }}
-      />
+      /> */}
       <Tab.Screen
         name={ROUTES.SERVICES_HOME}
         component={ServicesHomeScreen}
