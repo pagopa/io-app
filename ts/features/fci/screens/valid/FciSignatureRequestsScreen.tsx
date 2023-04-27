@@ -12,11 +12,11 @@ import I18n from "../../../../i18n";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus";
 import {
   addTicketCustomField,
-  appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
   zendeskCategoryId,
-  zendeskFCICategory
+  zendeskFCICategory,
+  zendeskFciId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -36,8 +36,7 @@ const FciSignatureRequestsScreen = () => {
   ) => {
     resetCustomFields();
     addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
-    // Append the signatureRequestID in the log
-    appendLog(JSON.stringify(signatureRequestId));
+    addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
