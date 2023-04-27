@@ -92,7 +92,7 @@ const BeneficiaryDetailsScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={initiativeName}>
-      <ScrollView>
+      <ScrollView scrollIndicatorInsets={{ right: 1 }}>
         <ContentWrapper>
           {content}
           <VSpacer size={16} />
