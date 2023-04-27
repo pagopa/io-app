@@ -159,6 +159,7 @@ ButtonLink) => {
       onPressOut={onPressOut}
       accessible={true}
       disabled={disabled}
+      hitSlop={{ top: 14, right: 24, bottom: 14, left: 24 }}
       style={IOButtonStyles.dimensionsDefault}
     >
       <Animated.View
