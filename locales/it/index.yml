@@ -3205,14 +3205,19 @@ features:
         cta: Accedi alla versione web   
   fci:
     errors:
+      buttons:
+        back: "Torna indietro"
+        retry: "Riprova"
+        close: "Chiudi"
+        assistance: "Invia una segnalazione"
       expiredAfterSigned:
         title: I documenti non sono più disponibili
-        subTitle: Se hai bisogno di una copia conttatta l'ente
+        subTitle: Se hai bisogno di una copia, contatta l'ente
       expired:
         title: La richiesta di firma è scaduta
-        subTitle: Per assistenza, scrivi a
+        subTitle: Se hai bisogno di assistenza, contatta l'ente
       waitForQtsp:
-        title: Il firma è in elaborazione
+        title: La firma è in elaborazione
         subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.
       signed:
         title: Hai già firmato questi documenti
@@ -3226,13 +3231,13 @@ features:
           subTitle: Riprova tra qualche minuto. Se si ripete, contatta l’assistenza.
         update:
           title: Aggiorna l’app
-          subTitle: Verifica di avere installato l’ultima versione di IO oppure rifai il login. 
+          subTitle: Verifica di avere installato l’ultima versione di IO e accedi di nuovo con SPID o CIE.
         rejected:
           title: La firma non è andata a buon fine
-          subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a
+          subTitle: L’ente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se non dovesse succedere, scrivi a
         signing:
           title: La firma non è andata a buon fine
-          subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete contatta l’assistenza.
+          subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete, contatta l’assistenza.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3247,9 +3252,12 @@ features:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
       accessibility:
-        fieldDetailHint: "Vai alla pagina per visualizzare il campo firma"
+        fieldDetailHint: "Visualizza sul documento dove metterai la firma"
         selected: "Campo selezionato"
         unselected: "Campo non selezionato"
+      required: "FIRME OBBLIGATORIE"
+      optional: "FIRME FACOLTATIVE"
+      unfair: "FIRME CLAUSOLE VESSATORIE"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
@@ -3259,7 +3267,7 @@ features:
       content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
-      alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
+      alertText: "Vuoi modificare o aggiornare il tuo indirizzo e-mail?"
       alertLink: "Vai qui"
       name: "Nome"
       familyName: "Cognome"
@@ -3277,6 +3285,14 @@ features:
         cancel: "Annulla"
         continue: "Vai alla firma"
         confirm: "Firma e continua"
+        backToSignFieldsList: "Torna alle firme"
+    requests:
+      header: "Stato delle firme"
+      title: "Gli stati delle tue firme"
+      itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
+      signed: "Firmato"
+      notAvailable: "Non disponibile"
+      signingInProgress: "Firma in corso"        
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3317,6 +3333,8 @@ support:
     stockValue: "Incluso l’errore che hai appena ricevuto"
     card: "Dati del metodo di pagamento"
     cardValue: "Numero (cifrato), scadenza, circuito"
+    fci: "Identificativo della richiesta di Firma"
+    fciValue: "Per verificare la richiesta in corso"
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
@@ -3362,15 +3380,17 @@ idpay:
         toRefund: Da rimborsare
         statusLabels:
           REFUNDABLE: Attiva
-          NOT_REFUNDABLE: Disattivata
-          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
-          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
-          UNSUBSCRIBED: Disiscritto
+          NOT_REFUNDABLE: Attiva
+          NOT_REFUNDABLE_ONLY_IBAN: Attiva
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: Attiva
+          UNSUBSCRIBED: Rimossa
+          SUSPENDED: In pausa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          lastUpdated: "Saldo aggiornato al " 
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
               content: Inserisci un metodo di pagamento valido per effettuare transazioni 
@@ -3409,6 +3429,7 @@ idpay:
               REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
+              SUSPENDED:  "Sospensione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
@@ -3544,6 +3565,10 @@ idpay:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
         bodyLink: Scopri di più
+        modal:
+          title: Cosa significa?
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del

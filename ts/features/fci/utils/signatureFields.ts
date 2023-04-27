@@ -3,21 +3,18 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
+import I18n from "../../../i18n";
+import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
+import { TranslationKeys } from "../../../../locales/locales";
 
-export enum ClauseTypeMappingEnum {
-  "REQUIRED" = "FIRME OBBLIGATORIE",
-  "UNFAIR" = "FIRME CLAUSOLE VESSATORIE",
-  "OPTIONAL" = "FIRME FACOLTATIVE"
-}
+const clausesEnumValues = {
+  [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
+  [ClauseTypeEnum.UNFAIR]: "features.fci.signatureFields.unfair",
+  [ClauseTypeEnum.OPTIONAL]: "features.fci.signatureFields.optional"
+};
 
-export const clauseTypeMaping: Map<string, ClauseTypeMappingEnum> = new Map<
-  string,
-  ClauseTypeMappingEnum
->([
-  ["REQUIRED", ClauseTypeMappingEnum.REQUIRED],
-  ["UNFAIR", ClauseTypeMappingEnum.UNFAIR],
-  ["OPTIONAL", ClauseTypeMappingEnum.OPTIONAL]
-]);
+export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
+  I18n.t(`${clausesEnumValues[clauseType] as TranslationKeys}`);
 
 export type LIST_DATA_TYPE = {
   title: string;

@@ -498,7 +498,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceForPayment: true,
-        assistanceForCard: false
+        assistanceForCard: false,
+        assistanceForFci: false
       })
     );
     dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
