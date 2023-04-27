@@ -1,7 +1,6 @@
 import * as t from "io-ts";
 
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
-import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -59,7 +58,11 @@ import {
   GetThirdPartyMessageT,
   getThirdPartyMessageDefaultDecoder,
   GetThirdPartyMessagePreconditionT,
-  getThirdPartyMessagePreconditionDefaultDecoder
+  getThirdPartyMessagePreconditionDefaultDecoder,
+  GetUserMessagesT,
+  GetUserMessageT,
+  startEmailValidationProcessDefaultDecoder,
+  abortUserDataProcessingDefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
@@ -67,8 +70,6 @@ import {
   tokenHeaderProducer,
   withBearerToken as withToken
 } from "../utils/api";
-import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 
 /**
@@ -186,29 +187,7 @@ export function BackendClient(
     response_decoder: getVisibleServicesDefaultDecoder()
   };
 
-  // TODO: this is a temporary fix due to a bug in openapi-codegen-ts
-  // https://github.com/pagopa/openapi-codegen-ts/pull/265
-  // Please remove it once we upgrade
-  type GetUserMessagesTCustom = r.IGetApiRequestType<
-    {
-      readonly enrich_result_data?: boolean;
-      readonly page_size?: number;
-      readonly maximum_id?: string;
-      readonly minimum_id?: string;
-      readonly archived?: boolean;
-      readonly Bearer: string;
-    },
-    "Authorization",
-    never,
-    | r.IResponseType<200, PaginatedPublicMessagesCollection>
-    | r.IResponseType<400, ProblemJson>
-    | r.IResponseType<401, undefined>
-    | r.IResponseType<404, ProblemJson>
-    | r.IResponseType<429, ProblemJson>
-    | r.IResponseType<500, ProblemJson>
-  >;
-
-  const getMessagesT: GetUserMessagesTCustom = {
+  const getMessagesT: GetUserMessagesT = {
     method: "get",
     url: _ => "/api/v1/messages",
     query: params => {
@@ -234,26 +213,7 @@ export function BackendClient(
     response_decoder: getUserMessagesDefaultDecoder()
   };
 
-  // TODO: this is a temporary fix due to a bug in openapi-codegen-ts
-  // https://github.com/pagopa/openapi-codegen-ts/pull/265
-  // Please remove it once we upgrade
-  type GetUserMessageTCustom = r.IGetApiRequestType<
-    {
-      readonly id: string;
-      readonly public_message?: boolean;
-      readonly Bearer: string;
-    },
-    "Authorization",
-    never,
-    | r.IResponseType<200, CreatedMessageWithContentAndAttachments>
-    | r.IResponseType<400, ProblemJson>
-    | r.IResponseType<401, undefined>
-    | r.IResponseType<404, ProblemJson>
-    | r.IResponseType<429, ProblemJson>
-    | r.IResponseType<500, ProblemJson>
-  >;
-
-  const getMessageT: GetUserMessageTCustom = {
+  const getMessageT: GetUserMessageT = {
     method: "get",
     url: params => `/api/v1/messages/${params.id}`,
     query: params => {
@@ -319,49 +279,13 @@ export function BackendClient(
     response_decoder: getUserMetadataDefaultDecoder()
   };
 
-  // Custom decoder until we fix the problem in the io-utils generator
-  // https://www.pivotaltracker.com/story/show/169915207
-  const startEmailValidationCustomDecoder = () =>
-    r.composeResponseDecoders(
-      r.composeResponseDecoders(
-        r.composeResponseDecoders(
-          r.composeResponseDecoders(
-            r.composeResponseDecoders(
-              r.constantResponseDecoder<undefined, 202>(202, undefined),
-              r.ioResponseDecoder<
-                400,
-                typeof ProblemJson["_A"],
-                typeof ProblemJson["_O"]
-              >(400, ProblemJson)
-            ),
-            r.constantResponseDecoder<undefined, 401>(401, undefined)
-          ),
-          r.ioResponseDecoder<
-            404,
-            typeof ProblemJson["_A"],
-            typeof ProblemJson["_O"]
-          >(404, ProblemJson)
-        ),
-        r.ioResponseDecoder<
-          429,
-          typeof ProblemJson["_A"],
-          typeof ProblemJson["_O"]
-        >(429, ProblemJson)
-      ),
-      r.ioResponseDecoder<
-        500,
-        typeof ProblemJson["_A"],
-        typeof ProblemJson["_O"]
-      >(500, ProblemJson)
-    );
-
   const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
     method: "post",
     url: () => "/api/v1/email-validation-process",
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     body: _ => JSON.stringify({}),
-    response_decoder: startEmailValidationCustomDecoder()
+    response_decoder: startEmailValidationProcessDefaultDecoder()
   };
 
   const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
@@ -390,48 +314,12 @@ export function BackendClient(
     response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
-  // Custom decoder until we fix the problem in the io-utils generator
-  // https://www.pivotaltracker.com/story/show/169915207
-  function abortUserDataProcessingDecoderTest() {
-    return r.composeResponseDecoders(
-      r.composeResponseDecoders(
-        r.composeResponseDecoders(
-          r.composeResponseDecoders(
-            r.composeResponseDecoders(
-              r.composeResponseDecoders(
-                r.constantResponseDecoder<undefined, 202>(202, undefined),
-                r.ioResponseDecoder<
-                  400,
-                  typeof ProblemJson["_A"],
-                  typeof ProblemJson["_O"]
-                >(400, ProblemJson)
-              ),
-              r.constantResponseDecoder<undefined, 401>(401, undefined)
-            ),
-            r.constantResponseDecoder<undefined, 404>(404, undefined)
-          ),
-          r.ioResponseDecoder<
-            409,
-            typeof ProblemJson["_A"],
-            typeof ProblemJson["_O"]
-          >(409, ProblemJson)
-        ),
-        r.constantResponseDecoder<undefined, 429>(429, undefined)
-      ),
-      r.ioResponseDecoder<
-        500,
-        typeof ProblemJson["_A"],
-        typeof ProblemJson["_O"]
-      >(500, ProblemJson)
-    );
-  }
-
   const deleteUserDataProcessingT: AbortUserDataProcessingT = {
     method: "delete",
     url: ({ choice }) => `/api/v1/user-data-processing/${choice}`,
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    response_decoder: abortUserDataProcessingDecoderTest()
+    response_decoder: abortUserDataProcessingDefaultDecoder()
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
