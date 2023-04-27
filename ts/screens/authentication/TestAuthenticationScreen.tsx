@@ -29,11 +29,7 @@ import {
 } from "../../store/actions/authentication";
 
 const styles = StyleSheet.create({
-  appVersion: {
-    ...IOStyles.flex,
-    flexDirection: "row",
-    justifyContent: "space-between"
-  }
+  appVersion: { ...IOStyles.flex, ...IOStyles.rowSpaceBetween }
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
