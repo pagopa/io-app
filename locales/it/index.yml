@@ -3380,16 +3380,17 @@ idpay:
         toRefund: Da rimborsare
         statusLabels:
           REFUNDABLE: Attiva
-          NOT_REFUNDABLE: Disattivata
-          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
-          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
-          UNSUBSCRIBED: Disiscritto
-          SUSPENDED: Sospesa
+          NOT_REFUNDABLE: Attiva
+          NOT_REFUNDABLE_ONLY_IBAN: Attiva
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: Attiva
+          UNSUBSCRIBED: Rimossa
+          SUSPENDED: In pausa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          lastUpdated: "Saldo aggiornato al " 
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
               content: Inserisci un metodo di pagamento valido per effettuare transazioni 
@@ -3564,6 +3565,10 @@ idpay:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
         bodyLink: Scopri di più
+        modal:
+          title: Cosa significa?
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
