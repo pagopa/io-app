@@ -105,6 +105,7 @@ import IconBackiOS from "./svg/IconBackiOS";
 import IconBackAndroid from "./svg/IconBackAndroid";
 import IconNavMessages from "./svg/IconNavMessages";
 import IconNavWallet from "./svg/IconNavWallet";
+import IconNavScan from "./svg/IconNavScan";
 import IconNavDocuments from "./svg/IconNavDocuments";
 import IconNavServices from "./svg/IconNavServices";
 import IconNavProfile from "./svg/IconNavProfile";
@@ -193,6 +194,10 @@ import LegIconCloseSmall from "./svg/LegIconCloseSmall";
 import LegIconGiacenza from "./svg/LegIconGiacenza";
 import LegIconPSP from "./svg/LegIconPSP";
 import LegIconError from "./svg/LegIconError";
+import LegIconNavMessages from "./svg/LegIconNavMessages";
+import LegIconNavWallet from "./svg/LegIconNavWallet";
+import LegIconNavServices from "./svg/LegIconNavServices";
+import LegIconNavProfile from "./svg/LegIconNavProfile";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -366,9 +371,14 @@ export const IOIcons = {
   backAndroid: IconBackAndroid,
   navMessages: IconNavMessages /* io-messaggi */,
   navWallet: IconNavWallet /* io-portafoglio */,
-  navDocuments: IconNavDocuments,
+  navScan: IconNavScan,
   navServices: IconNavServices,
   navProfile: IconNavProfile /* io-profilo */,
+  legNavMessages: LegIconNavMessages,
+  legNavWallet: LegIconNavWallet,
+  legNavDocuments: IconNavDocuments,
+  legNavServices: LegIconNavServices,
+  legNavProfile: LegIconNavProfile,
   biomFingerprint: IconBiomFingerprint /* io-fingerprint */,
   biomFaceID: IconBiomFaceID /* io-face-id */,
   categCulture: IconCategCulture,
@@ -649,15 +659,30 @@ export const IOIconsNew = {
 };
 
 /* Navigation */
-const { navMessages, navWallet, navDocuments, navServices, navProfile } =
-  IOIcons;
+const {
+  navMessages,
+  navWallet,
+  navScan,
+  navServices,
+  navProfile,
+  legNavMessages,
+  legNavWallet,
+  legNavDocuments,
+  legNavServices,
+  legNavProfile
+} = IOIcons;
 
 export const IONavIcons = {
   navMessages,
   navWallet,
-  navDocuments,
+  navScan,
   navServices,
-  navProfile
+  navProfile,
+  legNavMessages,
+  legNavWallet,
+  legNavDocuments,
+  legNavServices,
+  legNavProfile
 } as const;
 
 export type IONavIcons = keyof typeof IONavIcons;
