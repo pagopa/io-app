@@ -71,7 +71,7 @@ const IDPayUnsubscriptionMachineProvider = (props: Props) => {
 
   const { bpdToken } = sessionInfo.value;
 
-  const idPayToken = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
+  const idPayToken = idPayTestToken ?? bpdToken;
 
   const idPayClient = createIDPayClient(
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
