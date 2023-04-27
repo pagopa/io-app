@@ -9,11 +9,11 @@ import { WithTestID } from "../../../types/WithTestID";
 import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import {
   addTicketCustomField,
-  appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
   zendeskCategoryId,
-  zendeskFCICategory
+  zendeskFCICategory,
+  zendeskFciId
 } from "../../../utils/supportAssistance";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
@@ -44,8 +44,7 @@ const ErrorComponent = (props: Props) => {
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
     addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
-    // Append the signatureRequestID in the log
-    appendLog(JSON.stringify(signatureRequestId));
+    addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
