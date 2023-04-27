@@ -18,7 +18,7 @@ class WalletTabIcon extends React.PureComponent<Props> {
     const { color, unreadTransactions } = this.props;
     return (
       <TabIconComponent
-        iconName={"io-portafoglio"}
+        iconName={"navWallet"}
         badgeValue={unreadTransactions}
         color={color}
       />
