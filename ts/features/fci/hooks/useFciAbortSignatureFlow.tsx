@@ -11,7 +11,7 @@ import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/Bu
 import { fciEndRequest } from "../store/actions";
 import { useIODispatch } from "../../../store/hooks";
 import { H4 } from "../../../components/core/typography/H4";
-import { mixpanelTrack } from "../../../mixpanel";
+import { trackFciUserExit } from "../analytics";
 
 const styles = StyleSheet.create({
   verticalPad: {
@@ -47,9 +47,7 @@ export const useFciAbortSignatureFlow = () => {
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
-          void mixpanelTrack("FCI_USER_EXIT", {
-            screen_name: route.name
-          });
+          trackFciUserExit(route.name);
           dispatch(fciEndRequest());
         }, I18n.t("features.fci.abort.cancel")),
         onPressWithGestureHandler: true

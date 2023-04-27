@@ -37,7 +37,7 @@ import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentS
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { mixpanelTrack } from "../../../../mixpanel";
+import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -79,11 +79,7 @@ const FciDocumentsScreen = () => {
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
       );
-      void mixpanelTrack("FCI_DOC_OPENING_SUCCESS", {
-        doc_count: documents.length,
-        sign_count: 0,
-        optional_sign_count: 0
-      });
+      trackFciDocOpeningSuccess(documents.length, 0, 0);
     }
   }, [dispatch, documentSignaturesSelector, documents]);
 
@@ -97,7 +93,7 @@ const FciDocumentsScreen = () => {
     useFciAbortSignatureFlow();
 
   const onContinuePress = () => {
-    void mixpanelTrack("FCI_SIGNING_DOC");
+    trackFciSigningDoc();
     navigation.dispatch(
       StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
         documentId: documents[currentDoc].id,

@@ -11,7 +11,7 @@ import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus
 import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
-import { mixpanelTrack } from "../../../mixpanel";
+import { trackFciDocOpening } from "../analytics";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -71,9 +71,7 @@ const SuccessComponent = (props: {
   switch (status) {
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
       dispatch(fciStartRequest());
-      void mixpanelTrack("FCI_DOC_OPENING", {
-        expire_date: expires_at
-      });
+      trackFciDocOpening(expires_at);
       return null;
     case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
       return (

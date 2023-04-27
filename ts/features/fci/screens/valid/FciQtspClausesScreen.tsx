@@ -36,7 +36,7 @@ import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import ScreenContent from "../../../../components/screens/ScreenContent";
-import { mixpanelTrack } from "../../../../mixpanel";
+import { trackFciUxConversion } from "../../analytics";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -157,7 +157,7 @@ const FciQtspClausesScreen = () => {
     disabled: clausesChecked !== qtspClausesSelector.length,
     onPress: () => {
       if (isServiceActive) {
-        void mixpanelTrack("FCI_UX_CONVERSION");
+        trackFciUxConversion();
         dispatch(fciStartSigningRequest());
       } else {
         showCheckService();

@@ -31,7 +31,7 @@ import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../../../components/screens/ScreenContent";
-import { mixpanelTrack } from "../../../../mixpanel";
+import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 
 const styles = StyleSheet.create({
   padded: {
@@ -88,10 +88,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
         <View style={styles.paddingText} />
         <Link
           onPress={() => {
-            void mixpanelTrack("FCI_USER_EXIT", {
-              screen_name: route.name,
-              cta_id: "modifica_email"
-            });
+            trackFciUserExit(route.name, "modifica_email");
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.INSERT_EMAIL_SCREEN
             });
@@ -168,7 +165,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
               I18n.t("features.fci.shareDataScreen.cancel")
             )}
             rightButton={confirmButtonProps(() => {
-              void mixpanelTrack("FCI_USER_DATA_CONFIRMED");
+              trackFciUserDataConfirmed();
               navigation.navigate("FCI_QTSP_TOS");
             }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
           />

@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { mixpanel } from "../../../mixpanel";
+import { mixpanel, mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import {
   fciLoadQtspClauses,
@@ -14,6 +14,56 @@ import {
   fciPollFilledDocument
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+
+export const trackFciDocOpening = (
+  expire_date: SignatureRequestDetailView["expires_at"]
+) =>
+  void mixpanelTrack("FCI_DOC_OPENING", {
+    expire_date
+  });
+
+export const trackFciUserExit = (screen_name: string, cta_id?: string) =>
+  void mixpanelTrack("FCI_USER_EXIT", {
+    screen_name,
+    cta_id
+  });
+
+export const trackFciUxConversion = () =>
+  void mixpanelTrack("FCI_UX_CONVERSION");
+
+export const trackFciUserDataConfirmed = () =>
+  void mixpanelTrack("FCI_USER_DATA_CONFIRMED");
+
+export const trackFciDocOpeningSuccess = (
+  doc_count: number,
+  sign_count: number,
+  optional_sign_count: number
+) =>
+  void mixpanelTrack("FCI_DOC_OPENING_SUCCESS", {
+    doc_count,
+    sign_count,
+    optional_sign_count
+  });
+
+export const trackFciSigningDoc = () => void mixpanelTrack("FCI_SIGNING_DOC");
+
+export const trackFciShowSignatureFields = () =>
+  void mixpanelTrack("FCI_SHOW_SIGNATURE_FIELDS");
+
+export const trackFciUxSuccess = (
+  doc_signed_count: number,
+  sign_count: number,
+  optional_sign_count: number
+) =>
+  void mixpanelTrack("FCI_UX_SUCCESS", {
+    doc_signed_count,
+    sign_count,
+    optional_sign_count
+  });
+
+export const trackFciStartSignature = () =>
+  void mixpanelTrack("FCI_START_SIGNATURE");
 
 const trackFciAction =
   (mp: NonNullable<typeof mixpanel>) =>
