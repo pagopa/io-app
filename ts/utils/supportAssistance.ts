@@ -89,6 +89,7 @@ export const zendeskDeviceAndOSId = "4414316795921";
 export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
+export const zendeskFciId = "14874226407825";
 export const zendeskPaymentCategory: ZendeskCategory = {
   value: "pagamenti_pagopa",
   description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
@@ -98,6 +99,13 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
   description: {
     "it-IT": "Metodo di pagamento",
     "en-EN": "Payment method"
+  }
+};
+export const zendeskFCICategory: ZendeskCategory = {
+  value: "firma_con_io",
+  description: {
+    "it-IT": "Firma con IO",
+    "en-EN": "Firma con IO"
   }
 };
 

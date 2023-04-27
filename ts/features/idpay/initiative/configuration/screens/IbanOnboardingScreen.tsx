@@ -1,4 +1,4 @@
-import { useActor } from "@xstate/react";
+import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -15,18 +15,18 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { LOADING_TAG } from "../../../../../utils/xstate";
 import { useConfigurationMachineService } from "../xstate/provider";
+import { isLoadingSelector } from "../xstate/selectors";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
-  const [state, send] = useActor(configurationMachine);
-  const customGoBack = () => send({ type: "BACK" });
+  const customGoBack = () => configurationMachine.send({ type: "BACK" });
   const [iban, setIban] = React.useState<string | undefined>(undefined);
   const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
-  const isLoading = state.tags.has(LOADING_TAG);
+  const isLoading = useSelector(configurationMachine, isLoadingSelector);
   const isIbanValid = () =>
     pipe(
       iban,
@@ -46,6 +46,11 @@ const IbanOnboardingScreen = () => {
         ibanName => ibanName.length > 0
       )
     );
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
+
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -113,7 +118,7 @@ const IbanOnboardingScreen = () => {
                 ibanName !== undefined &&
                 ibanName.length > 0;
               if (isDataSendable) {
-                send({
+                configurationMachine.send({
                   type: "CONFIRM_IBAN",
                   ibanBody: { iban, description: ibanName }
                 });

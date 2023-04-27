@@ -12,6 +12,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -21,6 +22,8 @@ import {
   isLoadingSelector,
   selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
+import { openWebUrl } from "../../../../utils/url";
+import { dpr28Dec2000Url } from "../../../../urls";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -40,7 +43,7 @@ const InitiativeSelfDeclarationsScreen = () => {
   const continueOnPress = () =>
     machine.send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
 
-  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
+  const goBackOnPress = () => machine.send({ type: "BACK" });
 
   const toggleCriteria =
     (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
@@ -51,6 +54,10 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
+
+  useNavigationSwipeBackListener(() => {
+    machine.send({ type: "BACK", skipNavigation: true });
+  });
 
   return (
     <BaseScreenComponent
@@ -65,7 +72,9 @@ const InitiativeSelfDeclarationsScreen = () => {
               <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
               <VSpacer size={16} />
               <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-              <Link>{I18n.t("idpay.onboarding.boolPrerequisites.link")}</Link>
+              <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
+                {I18n.t("idpay.onboarding.boolPrerequisites.link")}
+              </Link>
               <VSpacer size={24} />
               {selfCriteriaBool.map((criteria, index) => (
                 <View key={criteria.code}>
