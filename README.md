@@ -471,7 +471,7 @@ The authentication flow is as follows:
 The application is able to manage _deep links_. [Deep linking](https://reactnavigation.org/docs/5.x/deep-linking) allows opening the app or a specific screen once a user clicks on specific URL. The URL scheme for io-app is: `ioit://`.
 <details>
     <summary>Supported URLs</summary>
-    <h2>main</h2>
+    <h3>main</h3>
     <table>
          <tr>
             <td>ioit://main/messages</td>
@@ -486,13 +486,13 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://main/profile</td>
         </tr>
     </table>
-    <h2>messages</h2>
+    <h3>messages</h3>
     <table>
         <tr>
             <td>ioit://messages</td>
         </tr>
     </table>
-    <h2>wallet</h2>
+    <h3>wallet</h3>
     <table>
         <tr>
             <td>ioit://wallet</td>
@@ -513,7 +513,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://wallet/bpd-opt-in/choice</td>
         <tr>
     </table>
-    <h2>services</h2>
+    <h3>services</h3>
     <table>
         <tr>
             <td>ioit://services</td>
@@ -528,7 +528,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://services/sv-generation/check-status</td>
         </tr>
     </table>
-    <h2>profile</h2>
+    <h3>profile</h3>
     <table>
         <tr>
             <td>ioit://profile </td>
@@ -543,7 +543,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://profile/privacy-main</td>
         </tr>
     </table>
-    <h2>cgn</h2>
+    <h3>cgn</h3>
     <table>
         <tr>
             <td>ioit://cgn-details/detail</td>
@@ -555,7 +555,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://cgn-details/categories-merchant/:category</td>
         </tr>
     </table>
-    fci
+    <h3>fci</h3>
     <table>
         <tr>
             <td>ioit://fci/main</td>
@@ -567,7 +567,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://cgn-details/categories-merchant/:category</td>
         </tr>
     </table>
-    <h2>idpay</h2>
+    <h3>idpay</h3>
     <table>
         <tr>
             <td>ioit://idpay/onboarding/:serviceId</td>
@@ -576,7 +576,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://idpay/initiative/:initiativeId</td>
         </tr>
     </table>
-    <h2>miscs</h2>
+    <h3>miscs</h3>
     <table>
         <tr>
             <td>ioit://uadonations-webview </td>
