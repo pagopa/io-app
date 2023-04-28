@@ -4,14 +4,14 @@ import * as React from "react";
 import {
   openAuthenticationSession,
   getRedirects
-} from "react-native-io-login-utils";
+} from "@pagopa/io-react-native-login-utils";
 import * as O from "fp-ts/lib/Option";
 import {
   CommonActions,
   useFocusEffect,
   useNavigation
 } from "@react-navigation/native";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import URLParse from "url-parse";
 import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
 import { Text } from "native-base";
