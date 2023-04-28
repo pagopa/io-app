@@ -52,9 +52,24 @@ function* handleTestLogin({
         );
         return;
       }
-      throw Error(`response status ${testLoginResponse.right.status}`);
+      yield* put(
+        loginFailure({
+          error: new Error(`response status ${testLoginResponse.right.status}`),
+          idp: "test" as keyof IdpData
+        })
+      );
+      return;
     }
-    throw new Error(readableReport(testLoginResponse.left));
+    yield* put(
+      loginFailure({
+        error: new Error(
+          (readableReport(testLoginResponse.left).match(/"status":\d{3}/) ?? [
+            "unknown error"
+          ])[0]
+        ),
+        idp: "test" as keyof IdpData
+      })
+    );
   } catch (e) {
     yield* put(
       loginFailure({
