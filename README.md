@@ -35,8 +35,8 @@
   - [What permissions are used by the IO app?](#what-permissions-are-used-by-the-io-app)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Environment variables](#environment-variables)
   - [Build the app](#build-the-app)
+  - [Environment variables](#environment-variables)
   - [Run the app](#run-the-app)
   - [Troubleshooting](#troubleshooting)
 - [Architecture](#architecture)
@@ -343,33 +343,13 @@ Follow the [official tutorial](https://reactnative.dev/docs/environment-setup) f
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
-## Environment variables
-
-### Production
-If you want to run the app in production mode, run these commands:
-
-```bash
-  $ cd io-app
-  $ cp .env.production .env
-```
-
-> **Note**
-> The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or fully working. Check the comments in the file for more informations about environment variables.
-
-### io-dev-api-server
-You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes.
-`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. 
-To use it, run these commands:
-
-```bash
-  $ cd io-app
-  $ cp .env.local .env
-```
-
 ## Build the app
 In order to build the app, we use [yarn](https://yarnpkg.com/) for managing javascript dependencies. 
 As stated [previously](#nodejs-and-ruby), we also use `nodenv` and `rbenv` for managing the environment:
 ```bash
+# Clone the repository
+$ git clone https://github.com/pagopa/io-app
+
 # CD into the repository
 $ cd io-app
 
@@ -399,6 +379,25 @@ $ cd iOS && bundle exec pod install && cd ..
 $ yarn generate
 ```
 
+## Environment variables
+
+### Production
+You can target the production server by copying the included `.env.production` file to `.env`:
+
+```bash
+$ cp .env.production .env
+```
+
+> **Note**
+> The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or fully working. Check the comments in the file for more informations about environment variables.
+
+### io-dev-api-server
+You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes by coyping the included `.env.local` file to `.env`:
+
+```bash
+$ cp .env.local .env
+```
+
 ## Run the app
 ### Android Emulator
 An Android Emulator must be [created and launched manually](https://developer.android.com/studio/run/managing-avds).
@@ -406,13 +405,14 @@ Then, from your command line, run these commands:
 ```bash
 # Perform the port forwarding
 $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
-$ cd io-app
+
+# Run Android build
 $ yarn run-android
 ```
 
 ### iOS Simulator
 ```bash
-$ cd io-app
+# Run iOS build
 $ yarn run-ios
 ```
 
