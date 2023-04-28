@@ -50,6 +50,7 @@ export const toUIMessage = (
     organizationName: enriched.organization_name,
     title: enriched.message_title,
     timeToLive: messageFromApi.time_to_live,
+    hasPrecondition: enriched.has_precondition ?? false,
     raw: messageFromApi
   };
 };

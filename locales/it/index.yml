@@ -3166,10 +3166,6 @@ features:
         data:
           buttonTitle: Torna indietro
   pn:
-    open:
-      warning:
-        title: Questo messaggio contiene una comunicazione a valore legale
-        body: !include pn/message_open_warning.html
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
