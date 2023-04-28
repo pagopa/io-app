@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
 
 export const DSAdvice = () => (
   <DesignSystemScreen title={"Advice & Banners"}>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      FeatureInfo
+    </H2>
     <FeatureInfo
       body={
         "Dopo questo passaggio non sarà più possibile annullare il pagamento"
@@ -48,13 +51,29 @@ export const DSAdvice = () => (
     />
     <VSpacer size={24} />
     <FeatureInfo
-      pictogramName="hourglass"
+      pictogramName="followMessage"
+      body={
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
+      }
+    />
+    <VSpacer size={24} />
+    <FeatureInfo
+      pictogramName="manual"
       body={
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
       }
     />
+    <VSpacer size={24} />
+    <FeatureInfo
+      pictogramName="followMessage"
+      body={
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
+      }
+      actionLabel="Scopri di più"
+      actionOnPress={() => Alert.alert("Alert", "Action triggered")}
+    />
 
-    <VSpacer size={16} />
+    <VSpacer size={40} />
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Legacy components
     </H2>
