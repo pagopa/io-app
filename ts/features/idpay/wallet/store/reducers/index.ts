@@ -2,7 +2,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { StatusEnum } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
+import { StatusEnum as InitiativeStatus } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { StatusEnum as InstrumentInitiativeStatus } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
@@ -107,8 +108,21 @@ const reducer = (
 
 export const idPayWalletSelector = (state: GlobalState) =>
   state.features.idPay.wallet.initiatives;
-export const idPayWalletInitiativeListSelector = (state: GlobalState) =>
-  pot.map(state.features.idPay.wallet.initiatives, w => w.initiativeList);
+
+export const idPayWalletInitiativeListSelector = createSelector(
+  idPayWalletSelector,
+  walletPot => pot.map(walletPot, wallet => wallet.initiativeList)
+);
+
+export const idPayWalletSubscribedInitiativeListSelector = createSelector(
+  idPayWalletInitiativeListSelector,
+  initiativeListPot =>
+    pot.map(initiativeListPot, initiativeList =>
+      initiativeList.filter(
+        initiative => initiative.status !== InitiativeStatus.UNSUBSCRIBED
+      )
+    )
+);
 
 export const idPayInitiativesFromInstrumentSelector = (state: GlobalState) =>
   pot.map(state.features.idPay.wallet.initiativesWithInstrument, w => w);
@@ -147,7 +161,7 @@ export const idPayInitiativeFromInstrumentPotSelector = (
   const initiative = idPayEnabledInitiativesFromInstrumentSelector(state).find(
     i => i.initiativeId === initiativeId
   );
-  const isItemActive = initiative?.status === StatusEnum.ACTIVE;
+  const isItemActive = initiative?.status === InstrumentInitiativeStatus.ACTIVE;
   const isAwaitingUpdate = idPayInitiativeAwaitingUpdateSelector(
     state,
     initiativeId
