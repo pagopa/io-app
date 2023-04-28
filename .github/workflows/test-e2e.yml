@@ -2,7 +2,7 @@ name: Run e2e tests
 on:
   push:
     branches:
-      - migrate-e2e-to-gA
+      - migrate-e2e-to-ga
 jobs:
   run-static-checks:
     uses: ./.github/workflows/pr-staticcheck.yaml
