@@ -4,10 +4,10 @@ on:
     branches:
       - migrate-e2e-to-ga
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/pr-staticcheck.yaml
+  # run-static-checks:
+  #   uses: ./.github/workflows/staticcheck.yaml
   run-e2e-test-ios:
-    needs: run-static-checks
+    # needs: run-static-checks
     runs-on: macos-latest
     steps:
       - id: checkout
