@@ -1,5 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
+import { IOColors } from "./IOColors";
 
 /**
  * A collection of default styles used within IO App.
@@ -10,6 +11,12 @@ import themeVariables from "../../../theme/variables";
 export const IOStyles = StyleSheet.create({
   flex: {
     flex: 1
+  },
+  selfCenter: {
+    alignSelf: "center"
+  },
+  alignCenter: {
+    alignItems: "center"
   },
   horizontalContentPadding: {
     paddingHorizontal: themeVariables.contentPadding
@@ -47,7 +54,10 @@ export const IOStyles = StyleSheet.create({
     // Android shadow
     elevation: themeVariables.footerElevation
   },
-  // https://github.com/pagopa/io-app/pull/4387
+  bgWhite: {
+    backgroundColor: IOColors.white
+    // https://github.com/pagopa/io-app/pull/4387
+  },
   topListBorderBelowTabsStyle: {
     borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
     elevation: 0.1
@@ -74,6 +84,7 @@ export const IOButtonLegacyStyles = StyleSheet.create({
   ButtonSolid, ButtonOutline
   */
   button: {
+    flexDirection: "row",
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
@@ -122,6 +133,7 @@ export const IOButtonStyles = StyleSheet.create({
   ButtonSolid, ButtonOutline
   */
   button: {
+    flexDirection: "row",
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",

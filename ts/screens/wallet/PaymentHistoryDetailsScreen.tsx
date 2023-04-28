@@ -1,8 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Text as NBButtonText } from "native-base";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -11,6 +11,9 @@ import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
+import { Label } from "../../components/core/typography/Label";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
@@ -34,7 +37,6 @@ import { PaymentHistory } from "../../store/reducers/payments/history";
 import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 import { GlobalState } from "../../store/reducers/types";
 import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
-import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
@@ -59,6 +61,7 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../utils/supportAssistance";
+import { H2 } from "../../components/core/typography/H2";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -71,25 +74,6 @@ type Props = IOStackNavigationRouteProps<
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  bigText: {
-    fontSize: 20,
-    lineHeight: 22
-  },
-  padded: { paddingHorizontal: customVariables.contentPadding },
-  button: {
-    marginBottom: 15
-  }
-});
-
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
 const renderItem = (label: string, value?: string) => {
   if (isStringNullyOrEmpty(value)) {
@@ -97,10 +81,10 @@ const renderItem = (label: string, value?: string) => {
   }
   return (
     <React.Fragment>
-      <NBText>{label}</NBText>
-      <NBText bold={true} white={false}>
+      <Body>{label}</Body>
+      <Label weight="Bold" color="bluegrey">
         {value}
-      </NBText>
+      </Label>
       <VSpacer size={16} />
     </React.Fragment>
   );
@@ -267,11 +251,13 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private standardRow = (label: string, value: string) => (
-    <View style={styles.row}>
-      <NBText style={styles.flex}>{label}</NBText>
-      <NBText bold={true} dark={true}>
+    <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+      <View style={IOStyles.flex}>
+        <Body>{label}</Body>
+      </View>
+      <Label weight="Bold" color="bluegreyDark">
         {value}
-      </NBText>
+      </Label>
     </View>
   );
 
@@ -288,19 +274,21 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
    */
   private renderHelper = () => (
     <View>
-      <NBText alignCenter={true} style={styles.padded}>
-        {I18n.t("payment.details.info.help")}
-      </NBText>
+      <View style={[IOStyles.horizontalContentPadding, IOStyles.alignCenter]}>
+        <Body>{I18n.t("payment.details.info.help")}</Body>
+      </View>
       <VSpacer size={16} />
       <ButtonDefaultOpacity
         onPress={this.handleAskAssistance}
         bordered={true}
         block={true}
-        style={styles.button}
       >
         <IconFont name={"io-messaggi"} />
-        <NBText>{I18n.t("payment.details.info.buttons.help")}</NBText>
+        <NBButtonText>
+          {I18n.t("payment.details.info.buttons.help")}
+        </NBButtonText>
       </ButtonDefaultOpacity>
+      <VSpacer size={16} />
     </View>
   );
 
@@ -336,10 +324,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 )}
               {O.isSome(data.errorDetail) && (
                 <View key={"error"}>
-                  <NBText>{I18n.t("payment.errorDetails")}</NBText>
-                  <NBText bold={true} dark={true}>
+                  <Body>{I18n.t("payment.errorDetails")}</Body>
+                  <Body weight="SemiBold" color="bluegreyDark">
                     {data.errorDetail.value}
-                  </NBText>
+                  </Body>
                 </View>
               )}
             </React.Fragment>
@@ -376,30 +364,28 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 <VSpacer size={16} />
 
                 {/** total amount */}
-                <View style={styles.row}>
-                  <NBText
-                    style={[styles.bigText, styles.flex]}
-                    bold={true}
-                    dark={true}
-                  >
-                    {I18n.t("wallet.firstTransactionSummary.total")}
-                  </NBText>
-                  <NBText style={styles.bigText} bold={true} dark={true}>
+                <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+                  <View style={IOStyles.flex}>
+                    <H2>{I18n.t("wallet.firstTransactionSummary.total")}</H2>
+                  </View>
+                  <H2>
                     {formatNumberCentsToAmount(data.grandTotal.value, true)}
-                  </NBText>
+                  </H2>
                 </View>
 
                 {this.renderSeparator()}
 
                 {/** Transaction id */}
                 <View>
-                  <NBText>
+                  <Body>
                     {I18n.t("wallet.firstTransactionSummary.idTransaction")}
-                  </NBText>
-                  <View style={styles.row}>
-                    <NBText bold={true} dark={true}>
+                  </Body>
+                  <View
+                    style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}
+                  >
+                    <Body weight="SemiBold" color="bluegreyDark">
                       {data.idTransaction}
-                    </NBText>
+                    </Body>
                     <CopyButtonComponent
                       textToCopy={data.idTransaction.toString()}
                     />
@@ -428,7 +414,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceForPayment: true,
-        assistanceForCard: false
+        assistanceForCard: false,
+        assistanceForFci: false
       })
     ),
   zendeskSelectedCategory: (category: ZendeskCategory) =>

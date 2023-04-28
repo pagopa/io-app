@@ -13,11 +13,20 @@ type AllowedSemiBoldColors = Extract<
   | "red"
   | "blue"
   | "bluegrey"
-  | "grey-200"
+  | "grey"
 >;
 
 // when the weight is bold, only the white color is allowed
-type AllowedBoldColors = Extract<IOColors, "white" | "black" | "grey-200">;
+type AllowedBoldColors = Extract<
+  IOColors,
+  | "white"
+  | "bluegreyLight"
+  | "black"
+  | "bluegreyDark"
+  | "blue"
+  | "bluegrey"
+  | "grey-200"
+>;
 
 // all the possible colors
 type AllowedColors =
@@ -46,6 +55,7 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h3FontSize = 18;
+export const h3LineHeight = 22;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -82,5 +92,5 @@ export const H3: React.FunctionComponent<OwnProps> = props =>
     ...props,
     weightColorFactory: calculateH3WeightColor,
     font: fontName,
-    fontStyle: { fontSize: h3FontSize }
+    fontStyle: { fontSize: h3FontSize, lineHeight: h3LineHeight }
   });

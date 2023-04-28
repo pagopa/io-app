@@ -16,6 +16,7 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
+import { IdpData } from "../../definitions/content/IdpData";
 
 // Started by redux action
 function* handleTestLogin({
@@ -46,17 +47,35 @@ function* handleTestLogin({
           loginSuccess({
             token: testLoginResponse.right.value
               .token as string as SessionToken,
-            idp: "idp"
+            idp: "test" as keyof IdpData
           })
         );
         return;
       }
-      throw Error(`response status ${testLoginResponse.right.status}`);
+      yield* put(
+        loginFailure({
+          error: new Error(`response status ${testLoginResponse.right.status}`),
+          idp: "test" as keyof IdpData
+        })
+      );
+      return;
     }
-    throw new Error(readableReport(testLoginResponse.left));
+    yield* put(
+      loginFailure({
+        error: new Error(
+          (readableReport(testLoginResponse.left).match(/"status":\d{3}/) ?? [
+            "unknown error"
+          ])[0]
+        ),
+        idp: "test" as keyof IdpData
+      })
+    );
   } catch (e) {
     yield* put(
-      loginFailure({ error: convertUnknownToError(e), idp: "testIdp" })
+      loginFailure({
+        error: convertUnknownToError(e),
+        idp: "test" as keyof IdpData
+      })
     );
   }
 }

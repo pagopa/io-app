@@ -1,9 +1,10 @@
-import { Text as NBText } from "native-base";
 import * as React from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
+import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
@@ -17,10 +18,6 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  smallSpacer: {
-    width: "100%",
-    height: 4
-  },
   verticalPad: {
     paddingVertical: customVariables.spacerHeight
   },
@@ -28,20 +25,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
     alignItems: "center"
-  },
-  viewStyle: {
-    flexDirection: "row"
-  },
-  text11: {
-    paddingLeft: 8,
-    color: customVariables.textColorDark
-  },
-  text3FontWeight: {
-    ...makeFontStyleObject(Platform.select, "600")
-  },
-  text3: {
-    fontSize: 16,
-    color: customVariables.textColorDark
   },
   icon: {
     width: 64,
@@ -53,8 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   text3Container: {
-    flex: 1,
-    flexDirection: "row",
     minHeight: 24
   }
 });
@@ -70,21 +51,19 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
       >
         <View style={styles.spaced}>
           <BadgeComponent color={this.props.color} />
-          <NBText style={styles.text11}>{this.props.text11}</NBText>
+          <HSpacer size={8} />
+          <Body color="bluegreyDark">{this.props.text11}</Body>
         </View>
 
-        <View style={styles.viewStyle}>
-          <NBText>{this.props.text2}</NBText>
+        <View style={IOStyles.row}>
+          <Body>{this.props.text2}</Body>
         </View>
-        <View style={styles.smallSpacer} />
+        <VSpacer size={4} />
         <View style={styles.text3Line}>
-          <View style={styles.text3Container}>
-            <NBText
-              numberOfLines={2}
-              style={[styles.text3, styles.text3FontWeight]}
-            >
+          <View style={[styles.text3Container, IOStyles.flex, IOStyles.row]}>
+            <Body color="bluegreyDark" weight="SemiBold" numberOfLines={2}>
               {`${I18n.t("payment.IUV")} ${this.props.text3}`}
-            </NBText>
+            </Body>
           </View>
           <View style={styles.icon}>
             <IconFont

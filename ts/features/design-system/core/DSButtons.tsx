@@ -1,19 +1,15 @@
-import { Text as NBText } from "native-base";
 import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
 import { ButtonSolid } from "../../../components/ui/ButtonSolid";
 import { ButtonOutline } from "../../../components/ui/ButtonOutline";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
-import { ViewEUCovidButton } from "../../euCovidCert/components/ViewEUCovidButton";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import IconFont from "../../../components/ui/IconFont";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
@@ -63,6 +59,25 @@ export const DSButtons = () => {
 
         <VSpacer size={16} />
 
+        <ButtonSolid
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="qrCode"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonSolid
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="qrCode"
+          iconPosition="end"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
         <View style={{ alignSelf: "center" }}>
           <ButtonSolid
             accessibilityLabel="Tap to trigger test alert"
@@ -78,6 +93,16 @@ export const DSButtons = () => {
               <ButtonSolid
                 small
                 label={"Primary button (small)"}
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonSolid
+                small
+                label={"Primary button (small)"}
+                icon="qrCode"
                 accessibilityLabel="Tap to trigger test alert"
                 onPress={onButtonPress}
               />
@@ -118,6 +143,16 @@ export const DSButtons = () => {
             label={"Primary button (disabled)"}
             onPress={onButtonPress}
           />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            icon="qrCode"
+            onPress={onButtonPress}
+          />
         </View>
         {!isDesignSystemEnabled && (
           <>
@@ -144,6 +179,27 @@ export const DSButtons = () => {
             onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            color="danger"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            icon="trashcan"
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            color="danger"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            icon="trashcan"
+            iconPosition="end"
+            onPress={onButtonPress}
+          />
         </View>
         {!isDesignSystemEnabled && (
           <>
@@ -154,6 +210,17 @@ export const DSButtons = () => {
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
                 label={"Danger button (small)"}
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonSolid
+                small
+                color="danger"
+                label={"Danger button (small)"}
+                icon="trashcan"
+                accessibilityLabel="Tap to trigger test alert"
                 onPress={onButtonPress}
               />
             </View>
@@ -196,6 +263,17 @@ export const DSButtons = () => {
             label={"Danger button (disabled)"}
             onPress={onButtonPress}
           />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            color="danger"
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Danger button (disabled)"}
+            icon="trashcan"
+            onPress={onButtonPress}
+          />
         </View>
         {!isDesignSystemEnabled && (
           <>
@@ -233,6 +311,27 @@ export const DSButtons = () => {
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
+
+            <VSpacer size={16} />
+
+            <ButtonSolid
+              color="contrast"
+              label={"Contrast button"}
+              icon="add"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonSolid
+              color="contrast"
+              label={"Contrast button"}
+              icon="add"
+              iconPosition="end"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
           </View>
           {!isDesignSystemEnabled && (
             <>
@@ -243,6 +342,17 @@ export const DSButtons = () => {
                   color="contrast"
                   accessibilityLabel="Tap to trigger test alert"
                   label={"Contrast button (small)"}
+                  onPress={onButtonPress}
+                />
+
+                <VSpacer size={16} />
+
+                <ButtonSolid
+                  small
+                  color="contrast"
+                  label={"Contrast button (small)"}
+                  icon="add"
+                  accessibilityLabel="Tap to trigger test alert"
                   onPress={onButtonPress}
                 />
               </View>
@@ -293,6 +403,17 @@ export const DSButtons = () => {
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
+
+            <VSpacer size={16} />
+
+            <ButtonSolid
+              disabled
+              color="contrast"
+              label={"Contrast button (disabled)"}
+              icon="add"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
           </View>
           {!isDesignSystemEnabled && (
             <>
@@ -326,9 +447,26 @@ export const DSButtons = () => {
         <ButtonOutline
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonOutline
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="arrowLeft"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonOutline
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="arrowRight"
+          iconPosition="end"
+          onPress={onButtonPress}
         />
 
         <VSpacer size={16} />
@@ -337,9 +475,7 @@ export const DSButtons = () => {
           <ButtonOutline
             accessibilityLabel="Tap to trigger test alert"
             label={"Primary button (centered)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
 
@@ -351,9 +487,17 @@ export const DSButtons = () => {
                 small
                 label={"Primary button (small)"}
                 accessibilityLabel="Tap to trigger test alert"
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                small
+                label={"Primary button (small)"}
+                icon="arrowLeft"
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
               />
             </View>
           </>
@@ -365,9 +509,7 @@ export const DSButtons = () => {
             fullWidth
             accessibilityLabel="Tap to trigger test alert"
             label={"Primary button (full width)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
         {!isDesignSystemEnabled && (
@@ -379,9 +521,7 @@ export const DSButtons = () => {
                 fullWidth
                 accessibilityLabel="Tap to trigger test alert"
                 label={"Primary button (small, full width)"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
               />
             </View>
           </>
@@ -393,9 +533,18 @@ export const DSButtons = () => {
             disabled
             accessibilityLabel="Tap to trigger test alert"
             label={"Primary button (disabled)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonOutline
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            icon="arrowRight"
+            iconPosition="end"
+            onPress={onButtonPress}
           />
         </View>
         {!isDesignSystemEnabled && (
@@ -424,9 +573,28 @@ export const DSButtons = () => {
               <ButtonOutline
                 color="neutral"
                 label={"Neutral button"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
+                accessibilityLabel="Tap to trigger test alert"
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="neutral"
+                label={"Neutral button"}
+                icon="arrowLeft"
+                onPress={onButtonPress}
+                accessibilityLabel="Tap to trigger test alert"
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="neutral"
+                label={"Neutral button"}
+                icon="arrowRight"
+                iconPosition="end"
+                onPress={onButtonPress}
                 accessibilityLabel="Tap to trigger test alert"
               />
             </View>
@@ -503,10 +671,29 @@ export const DSButtons = () => {
               <ButtonOutline
                 color="danger"
                 label={"Danger button"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
                 accessibilityLabel="Tap to trigger test alert"
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="danger"
+                label={"Danger button"}
+                icon="trashcan"
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="danger"
+                label={"Danger button"}
+                icon="trashcan"
+                iconPosition="end"
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
               />
             </View>
             <VSpacer size={16} />
@@ -514,11 +701,9 @@ export const DSButtons = () => {
               <ButtonOutline
                 small
                 color="danger"
+                label={"Danger button (small)"}
                 accessibilityLabel="Tap to trigger test alert"
-                label={"Danger Button (Small)"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
               />
             </View>
           </DSComponentViewerBox>
@@ -528,7 +713,7 @@ export const DSButtons = () => {
                 fullWidth
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
-                label={"Danger button (Full Width)"}
+                label={"Danger button (full width)"}
                 onPress={() => {
                   alert("Action triggered");
                 }}
@@ -541,7 +726,7 @@ export const DSButtons = () => {
                 fullWidth
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
-                label={"Danger Button (Small, Full Width)"}
+                label={"Danger button (small, full width)"}
                 onPress={() => {
                   alert("Action triggered");
                 }}
@@ -594,6 +779,27 @@ export const DSButtons = () => {
             <ButtonOutline
               color="contrast"
               label={"Contrast button"}
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonOutline
+              color="contrast"
+              label={"Contrast button"}
+              icon="arrowLeft"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonOutline
+              color="contrast"
+              label={"Contrast button"}
+              icon="arrowRight"
+              iconPosition="end"
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
@@ -653,7 +859,19 @@ export const DSButtons = () => {
             <ButtonOutline
               disabled
               color="contrast"
-              label={"Contrast button, disabled"}
+              label={"Contrast button (disabled)"}
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonOutline
+              disabled
+              color="contrast"
+              label={"Contrast button (disabled)"}
+              icon="arrowRight"
+              iconPosition="end"
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
@@ -933,13 +1151,6 @@ export const DSButtons = () => {
       >
         Specific buttons
       </H2>
-      <DSComponentViewerBox name="ViewEUCovidButton">
-        <ViewEUCovidButton
-          onPress={() => {
-            alert("Covid Certificate shown");
-          }}
-        />
-      </DSComponentViewerBox>
 
       <DSComponentViewerBox name="PaymentButton">
         <PaymentButton
@@ -949,40 +1160,46 @@ export const DSButtons = () => {
         />
       </DSComponentViewerBox>
 
-      <DSComponentViewerBox name="CalendarEventButton">
-        <ButtonDefaultOpacity small={true} bordered={true}>
-          <IconFont name={"io-plus"} />
-          <NBText>Aggiungi promemoria</NBText>
-        </ButtonDefaultOpacity>
+      <DSComponentViewerBox name="CalendarEventButton (using new ButtonOutline)">
+        <ButtonOutline
+          small
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Aggiungi promemoria"}
+          icon="add"
+          onPress={onButtonPress}
+        />
+
         <VSpacer size={16} />
-        <ButtonDefaultOpacity small={true} bordered={true}>
-          <IconFont name={"io-tick-big"} />
-          <NBText>Aggiunto</NBText>
-        </ButtonDefaultOpacity>
+
+        <ButtonOutline
+          small
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Aggiunto"}
+          icon="completed"
+          onPress={onButtonPress}
+        />
       </DSComponentViewerBox>
 
       <DSComponentViewerBox name="CopyButtonComponent">
         <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
       </DSComponentViewerBox>
 
-      {/* 
-      The following components are using the legacy `IconFont`
-      component because replacing assets isn't the aim of
-      the buttons' inventory.
-      Future Button components, preferrably not based
-      on NativeBase, must use the new <Icon> component.
-    */}
-
       <DSComponentViewerBox name="Login buttons">
-        <ButtonDefaultOpacity block={true} primary={true}>
-          <IconFont name={"io-profilo"} color={IOColors.white} />
-          <NBText>Entra con SPID</NBText>
-        </ButtonDefaultOpacity>
-        <VSpacer size={16} />
-        <ButtonDefaultOpacity block={true} primary={true}>
-          <IconFont name={"io-cie"} color={IOColors.white} />
-          <NBText>Entra con CIE</NBText>
-        </ButtonDefaultOpacity>
+        <ButtonSolid
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Entra con SPID"}
+          icon="profile"
+          onPress={onButtonPress}
+        />
+        <VSpacer size={8} />
+        <ButtonSolid
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Entra con CIE"}
+          icon="cie"
+          onPress={onButtonPress}
+        />
       </DSComponentViewerBox>
     </DesignSystemScreen>
   );

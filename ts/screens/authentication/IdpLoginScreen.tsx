@@ -48,6 +48,7 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
+import { IdpData } from "../../../definitions/content/IdpData";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
@@ -108,7 +109,7 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const idp = useMemo(
-    () => props.loggedOutWithIdpAuth?.idp.id ?? "n/a",
+    () => props.loggedOutWithIdpAuth?.idp.id as keyof IdpData,
     [props.loggedOutWithIdpAuth]
   );
 
@@ -323,9 +324,9 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>
     dispatch(idpLoginUrlChanged({ url })),
-  dispatchLoginSuccess: (token: SessionToken, idp: string) =>
-    dispatch(loginSuccess({ token, idp })),
-  dispatchLoginFailure: (error: Error, idp: string) =>
+  dispatchLoginSuccess: (token: SessionToken, idp?: keyof IdpData) =>
+    idp ? dispatch(loginSuccess({ token, idp })) : undefined,
+  dispatchLoginFailure: (error: Error, idp?: keyof IdpData) =>
     dispatch(loginFailure({ error, idp }))
 });
 

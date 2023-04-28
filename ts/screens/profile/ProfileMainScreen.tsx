@@ -1,14 +1,15 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Text as NBText, Toast } from "native-base";
+import { List, ListItem, Text as NBButtonText, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet } from "react-native";
+import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { Body } from "../../components/core/typography/Body";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
@@ -73,9 +74,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  itemLeftText: {
-    alignSelf: "flex-start"
-  },
   developerSectionItem: {
     width: "100%",
     flexDirection: "row",
@@ -88,10 +86,6 @@ const styles = StyleSheet.create({
   developerSectionItemRight: {
     flex: 0
   },
-  whiteBg: {
-    backgroundColor: IOColors.white
-  },
-
   noRightPadding: {
     paddingRight: 0
   }
@@ -157,9 +151,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       <ListItem style={styles.noRightPadding}>
         <View style={styles.developerSectionItem}>
           <View style={styles.developerSectionItemLeft}>
-            <NBText style={styles.itemLeftText}>{title}</NBText>
-
-            <NBText style={styles.itemLeftText}>{description}</NBText>
+            <Body>{title}</Body>
+            <Body>{description}</Body>
           </View>
           <View style={styles.developerSectionItemRight}>
             <Switch value={switchValue} onValueChange={onSwitchValueChange} />
@@ -178,7 +171,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           small={true}
           onPress={onPress}
         >
-          <NBText numberOfLines={1}>{title}</NBText>
+          <NBButtonText numberOfLines={1}>{title}</NBButtonText>
         </ButtonDefaultOpacity>
       </ListItem>
     );
@@ -187,9 +180,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private versionListItem(title: string, onPress: () => void) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <NBText numberOfLines={1} semibold={true} onPress={onPress}>
-          {title}
-        </NBText>
+        <Pressable onPress={onPress}>
+          <Body numberOfLines={1} weight="SemiBold">
+            {title}
+          </Body>
+        </Pressable>
       </ListItem>
     );
   }
@@ -319,6 +314,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         />
         {isPlaygroundsEnabled && (
           <>
+            <ListItemComponent
+              title={"Lollipop Playground"}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.LOLLIPOP_PLAYGROUND
+                })
+              }
+            />
             <ListItemComponent
               title={"MyPortal Web Playground"}
               onPress={() =>
@@ -504,7 +507,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
 
     const screenContent = () => (
-      <ScrollView style={styles.whiteBg}>
+      <ScrollView style={IOStyles.bgWhite}>
         <VSpacer size={16} />
         <List withContentLateralPadding={true}>
           {/* Data */}

@@ -11,99 +11,188 @@ exports[`MessageDetailData component when service's contact detail are not defin
 >
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
-    >
-      Date and time sending:
-    </Text>
-    <Text
-      bold={true}
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           },
           Object {
-            "flex": 1,
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
           },
         ]
       }
-      uppercase={false}
+      weight="Regular"
     >
-       18/10/2021, 16:00
+      Date and time sending: 
+    </Text>
+    <Text
+      color="bluegrey"
+      defaultColor="blue"
+      defaultWeight="Bold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      weight="Bold"
+    >
+      18/10/2021, 16:00
     </Text>
   </View>
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
-    >
-      Sender:
-    </Text>
-    <Text
-      bold={true}
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           },
           Object {
-            "flex": 1,
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
           },
         ]
       }
-      uppercase={false}
+      weight="Regular"
     >
-       Ċentru tas-Saħħa
+      Sender: 
+    </Text>
+    <Text
+      color="bluegrey"
+      defaultColor="blue"
+      defaultWeight="Bold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "700",
+          },
+        ]
+      }
+      weight="Bold"
+    >
+      Ċentru tas-Saħħa
     </Text>
   </View>
   <View
     style={
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-      }
+      Array [
+        Object {
+          "flex": 1,
+        },
+        Object {
+          "flexDirection": "row",
+        },
+      ]
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       Service: 
     </Text>
@@ -124,6 +213,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
         Array [
           Object {
             "flex": 1,
+            "flexWrap": "wrap",
           },
           Object {
             "fontSize": 16,
