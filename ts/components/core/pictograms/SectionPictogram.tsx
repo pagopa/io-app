@@ -21,10 +21,10 @@ export const IOSectionPictograms = {
   smile: SectionPictogramSmile
 };
 
-export type IOSectionPictogramType = keyof typeof IOSectionPictograms;
+export type IOSectionPictograms = keyof typeof IOSectionPictograms;
 
 type IOSectionPictogramsProps = {
-  name: IOSectionPictogramType;
+  name: IOSectionPictograms;
   color?: IOColors;
   size?: number | "100%";
 };
