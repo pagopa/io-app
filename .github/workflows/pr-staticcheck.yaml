@@ -1,6 +1,7 @@
 name: Pull request review
 on:
-  pull_request
+  - pull_request
+  - workflow_call
 jobs:
   run-danger:
     runs-on: ubuntu-latest

@@ -1,0 +1,46 @@
+name: Run e2e tests
+on:
+  push:
+    branches:
+      - migrate-e2e-to-gA
+jobs:
+  run-static-checks:
+    uses: ./.github/workflows/pr-staticcheck.yaml
+  run-e2e-test-ios:
+    needs: run-static-checks
+    runs-on: macos-latest
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: setup-ruby
+        uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c
+        with:
+          bundler-cache: true
+      - id: setup-bundler
+        run: |
+          gem update --system
+          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+          source $BASH_ENV
+          gem install bundler:$BUNDLER_VERSION
+          bundle check || bundle install
+        shell: bash
+      - id: prepare-dependencies
+        run: |
+          cp .env.local .env
+          yarn run postinstall
+          cd ios && bundle exec pod install --verbose
+          rm -rf /tmp/metro-bundler-cache-*
+          rm -rf /tmp/haste-map-react-native-packager-*
+        shell: bash
+      - id: install-detox
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+        shell: bash
+      - id: prepare-detox-build
+        run: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
+        shell: bash
+      - id: run-e2e-tests
+        run: bash ./.github/scripts/run-e2e-tests.sh
