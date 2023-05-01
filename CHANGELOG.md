@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.31.0-rc.1](https://github.com/pagopa/io-app/compare/2.31.0-rc.0...2.31.0-rc.1) (2023-04-27)
+
+
+### Features
+
+* [[IOCOM-164](https://pagopa.atlassian.net/browse/IOCOM-164)] Replaces custom types and decoders on io-backend client ([#4546](https://github.com/pagopa/io-app/issues/4546)) ([49d0f9b](https://github.com/pagopa/io-app/commit/49d0f9b833986b64c9e23f19ef4f1a3f76f67c1b))
+* **IDPay:** [[IODPAY-116](https://pagopa.atlassian.net/browse/IODPAY-116)] Add info modal in IBAN landing screen ([#4556](https://github.com/pagopa/io-app/issues/4556)) ([4719766](https://github.com/pagopa/io-app/commit/4719766b6aa5dbde640e875cf37c8c93e7efb204))
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-192](https://pagopa.atlassian.net/browse/IODPAY-192)] Wrong copy in initiativeDetails' "lastUpdated" ([#4569](https://github.com/pagopa/io-app/issues/4569)) ([3ce719b](https://github.com/pagopa/io-app/commit/3ce719b4cd0296537860309c21a07eae698ea414))
+* [[IOAPPFD0-91](https://pagopa.atlassian.net/browse/IOAPPFD0-91)] Message sender details not wrapping ([#4567](https://github.com/pagopa/io-app/issues/4567)) ([fe664f6](https://github.com/pagopa/io-app/commit/fe664f6f2abcbce558353b9f6640dd9df0436037))
+* **IDPay:** [[IODPAY-212](https://pagopa.atlassian.net/browse/IODPAY-212)] "Tap to scroll" floating button in IDPay onboarding screen ([#4541](https://github.com/pagopa/io-app/issues/4541)) ([da01632](https://github.com/pagopa/io-app/commit/da0163209d8fca1b98fd19c3ca34f763bc2f1441))
+* **IDPay:** [[IODPAY-217](https://pagopa.atlassian.net/browse/IODPAY-217)] Fix IDPay initiative settings component skeleton ([#4564](https://github.com/pagopa/io-app/issues/4564)) ([13fbb19](https://github.com/pagopa/io-app/commit/13fbb19b5817de680d873ed206a784fbbb54e7e2))
+* [[IOAPPFD0-89](https://pagopa.atlassian.net/browse/IOAPPFD0-89)] Update slack channel of CIE iOS button check ([#4562](https://github.com/pagopa/io-app/issues/4562)) ([3a2ea1d](https://github.com/pagopa/io-app/commit/3a2ea1dad45b980ba35187e807178e3f9e3b008d))
+
+
+### Chores
+
+* [[IOAPPFD0-80](https://pagopa.atlassian.net/browse/IOAPPFD0-80)] Upgrades react-native to 0.69.9 ([#4514](https://github.com/pagopa/io-app/issues/4514)) ([75c44c4](https://github.com/pagopa/io-app/commit/75c44c44ed7b38c4fa320fa6d21c22e64d9e4f6a))
+* [[IOPID-167](https://pagopa.atlassian.net/browse/IOPID-167)] TestAuthenticationScreen UI Refinement ([#4571](https://github.com/pagopa/io-app/issues/4571)) ([db35afe](https://github.com/pagopa/io-app/commit/db35afe7f31dd9ed098d5c75ec0d119e84dfd7c8)), closes [/github.com/pagopa/io-app/pull/4571/files#diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982](https://github.com/pagopa//github.com/pagopa/io-app/pull/4571/files/issues/diff-b215994f68a368f1dc322f668b2937aeede527cbaa9242f10a9896526d1982) [/github.com/pagopa/io-app/pull/4571/files#diff-7d599e5ee6dea19a2231e4a0e43ca1cc92d8d9680a2c6d7390e44999da2baf10](https://github.com/pagopa//github.com/pagopa/io-app/pull/4571/files/issues/diff-7d599e5ee6dea19a2231e4a0e43ca1cc92d8d9680a2c6d7390e44999da2baf10) [/github.com/pagopa/io-app/pull/4571/files#diff-54190256bc3cfec139b2b7e5e70c221f05d09fa8c9650ec95a3b38f6c9c36d91](https://github.com/pagopa//github.com/pagopa/io-app/pull/4571/files/issues/diff-54190256bc3cfec139b2b7e5e70c221f05d09fa8c9650ec95a3b38f6c9c36d91) [/github.com/pagopa/io-app/pull/4571/files#diff-8f675a5e21b9a99d7ec5d3e2bb2cf950abb463a4e0e9525b5286035567ca87a8](https://github.com/pagopa//github.com/pagopa/io-app/pull/4571/files/issues/diff-8f675a5e21b9a99d7ec5d3e2bb2cf950abb463a4e0e9525b5286035567ca87a8) [/github.com/pagopa/io-app/pull/4571/files#diff-6286d90afa4e0d1ffb5531596558295d753f7b1d0831d4d1e8448eef9d90fd32](https://github.com/pagopa//github.com/pagopa/io-app/pull/4571/files/issues/diff-6286d90afa4e0d1ffb5531596558295d753f7b1d0831d4d1e8448eef9d90fd32) [/github.com/pagopa/io-app/pull/4571/files#diff-67816cf28cc48675238d98a2f9eb645014f1c8c4dd5cea88c7cb6478056a274](https://github.com/pagopa//github.com/pagopa/io-app/pull/4571/files/issues/diff-67816cf28cc48675238d98a2f9eb645014f1c8c4dd5cea88c7cb6478056a274)
+* **Firma con IO:** [[SFEQS-1629](https://pagopa.atlassian.net/browse/SFEQS-1629)] Add zendesk fci custom field id ([#4572](https://github.com/pagopa/io-app/issues/4572)) ([6994fb2](https://github.com/pagopa/io-app/commit/6994fb27828850a5a3236ca3b3cf30806002180b))
+* **IDPay:** [[IODPAY-214](https://pagopa.atlassian.net/browse/IODPAY-214)] IDPay Initiative status labels in details screen ([#4557](https://github.com/pagopa/io-app/issues/4557)) ([ab0b594](https://github.com/pagopa/io-app/commit/ab0b594bb46e2ecac039fc9695726cd7ed4b7872))
+
 ## [2.31.0-rc.0](https://github.com/pagopa/io-app/compare/2.30.0-rc.2...2.31.0-rc.0) (2023-04-21)
 
 
