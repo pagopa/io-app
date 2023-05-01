@@ -17,10 +17,12 @@ import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 
 export const trackFciDocOpening = (
-  expire_date: SignatureRequestDetailView["expires_at"]
+  expire_date: SignatureRequestDetailView["expires_at"],
+  total_doc_count: number
 ) =>
   void mixpanelTrack("FCI_DOC_OPENING", {
-    expire_date
+    expire_date,
+    total_doc_count
   });
 
 export const trackFciUserExit = (screen_name: string, cta_id?: string) =>

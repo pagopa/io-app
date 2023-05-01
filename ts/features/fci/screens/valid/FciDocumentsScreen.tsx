@@ -38,6 +38,10 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import {
+  getOptionalSignatureFields,
+  getRequiredSignatureFields
+} from "../../utils/signatureFields";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -64,6 +68,9 @@ const FciDocumentsScreen = () => {
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
+    if (documents.length !== 0 && isFocused) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
     // if the user hasn't checked any signauture field,
     // we need to initialize the documentSignatures state
     if (RA.isEmpty(documentSignaturesSelector)) {
@@ -79,15 +86,23 @@ const FciDocumentsScreen = () => {
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
       );
-      trackFciDocOpeningSuccess(documents.length, 0, 0);
     }
-  }, [dispatch, documentSignaturesSelector, documents]);
+  }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
 
   React.useEffect(() => {
-    if (documents.length !== 0 && isFocused) {
-      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    // with a document opened, we can track the opening success event
+    if (documents[currentDoc] && isFocused) {
+      trackFciDocOpeningSuccess(
+        currentDoc + 1,
+        getRequiredSignatureFields(
+          documents[currentDoc]?.metadata.signature_fields
+        ).length,
+        getOptionalSignatureFields(
+          documents[currentDoc]?.metadata.signature_fields
+        ).length
+      );
     }
-  }, [currentDoc, documents, dispatch, isFocused]);
+  }, [currentDoc, documents, isFocused]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
