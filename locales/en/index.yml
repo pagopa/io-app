@@ -3403,6 +3403,7 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
