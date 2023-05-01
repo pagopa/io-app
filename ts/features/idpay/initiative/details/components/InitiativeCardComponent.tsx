@@ -86,9 +86,8 @@ const InitiativeCardComponent = (props: Props) => {
     totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
 
   const logoComponent = pipe(
-    NonEmptyString.decode(""),
+    NonEmptyString.decode(initiative.logoURL),
     O.fromEither,
-    O.alt(() => O.some("https://it.idcert.io/assets/images/logos/18app.png")), // TODO remove temp logo url
     O.fold(
       () => undefined,
       logoUrl => (
@@ -104,7 +103,7 @@ const InitiativeCardComponent = (props: Props) => {
           {logoComponent}
           <H1 style={styles.initiativeName}>{initiativeName}</H1>
           <LabelSmall color={"black"} weight="Regular">
-            Ministero della Cultura{/* TODO remove temp oreganization name */}
+            {initiative.organizationName}
           </LabelSmall>
           <VSpacer size={8} />
           <InitiativeStatusLabel status={initiative.status} endDate={endDate} />
