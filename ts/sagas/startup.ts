@@ -155,6 +155,7 @@ import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
+import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -598,6 +599,26 @@ export function* initializeApplicationSaga(): Generator<
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
+  // Load visible services and service details from backend when requested
+  yield* fork(watchLoadServicesSaga, backendClient);
+
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchMessagePrecondition,
+    backendClient.getThirdPartyMessagePrecondition
+  );
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);

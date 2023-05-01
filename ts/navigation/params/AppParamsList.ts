@@ -33,6 +33,11 @@ import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
 } from "../../features/idpay/initiative/details/navigation";
+import {
+  IDPayUnsubscriptionNavigatorParams,
+  IDPayUnsubscriptionParamsList,
+  IDPayUnsubscriptionRoutes
+} from "../../features/idpay/unsubscription/navigation/navigator";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -69,6 +74,9 @@ export type AppParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
+  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
+    | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
+    | IDPayUnsubscriptionNavigatorParams;
 };
 
 /**
