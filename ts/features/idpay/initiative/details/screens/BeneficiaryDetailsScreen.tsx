@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -36,6 +36,11 @@ import {
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
 import { H3 } from "../../../../../components/core/typography/H3";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
+import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -54,6 +59,7 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsScreen = () => {
   const route = useRoute<BeneficiaryDetailsScreenRouteProps>();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const { initiativeId, initiativeName } = route.params;
 
@@ -75,9 +81,11 @@ const BeneficiaryDetailsScreen = () => {
       O.toUndefined
     );
 
-  const handleUnsubscribePress = () => {
-    // TODO add unsubscription flow
-  };
+  const handleUnsubscribePress = () =>
+    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
+      initiativeId,
+      initiativeName
+    });
 
   const content = pipe(
     sequenceS(O.Monad)({
