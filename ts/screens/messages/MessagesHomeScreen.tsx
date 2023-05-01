@@ -117,7 +117,7 @@ const MessagesHomeScreen = ({
     );
   }, [latestMessageOperation]);
 
-  const { openMessage, bottomSheet } = useMessageOpening();
+  const { present, bottomSheet } = useMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -200,7 +200,7 @@ const MessagesHomeScreen = ({
                   <MessageList
                     filter={{}}
                     filteredMessages={results}
-                    onPressItem={openMessage}
+                    onPressItem={present}
                   />
                 )}
               />

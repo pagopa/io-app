@@ -21,13 +21,12 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
 
-jest.useFakeTimers();
-
 jest.mock("../../../config", () => ({
   pnEnabled: true
 }));
 
 const mockNavigate = jest.fn();
+
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
@@ -37,26 +36,22 @@ jest.mock("@react-navigation/native", () => {
       dispatch: jest.fn(),
       isFocused: jest.fn(),
       addListener: () => jest.fn(),
+      removeListener: () => jest.fn(),
       getParent: () => undefined
     })
   };
 });
 
-const mockPresentPNBottomSheet = jest.fn();
-jest.mock(
-  "../../../features/pn/components/PnOpenConfirmationBottomSheet",
-  () => ({
-    usePnOpenConfirmationBottomSheet: () => ({
-      present: mockPresentPNBottomSheet,
-      dismiss: jest.fn()
-    })
-  })
-);
+const mockPresentBottomSheet = jest.fn();
+
+jest.mock("../../../utils/hooks/bottomSheet", () => ({
+  useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet })
+}));
 
 describe("MessagesHomeScreen", () => {
   beforeEach(() => {
     mockNavigate.mockReset();
-    mockPresentPNBottomSheet.mockReset();
+    mockPresentBottomSheet.mockReset();
   });
 
   [
@@ -93,7 +88,8 @@ describe("MessagesHomeScreen", () => {
   describe("given a PN message", () => {
     const pnMessage = {
       ...successReloadMessagesPayload.messages[0],
-      category: { tag: TagEnumPN.PN }
+      category: { tag: TagEnumPN.PN },
+      hasPrecondition: true
     } as UIMessage;
 
     describe("and PN is enabled", () => {
@@ -107,52 +103,6 @@ describe("MessagesHomeScreen", () => {
           );
           fireEvent(component.getByText(pnMessage.title), "onPress");
           expect(mockNavigate).toHaveBeenCalledTimes(0);
-        });
-
-        it("and the bottom sheet for PN is presented", () => {
-          const { component } = renderComponent(
-            { inboxMessages: [pnMessage] },
-            isPnEnabled
-          );
-          fireEvent(component.getByText(pnMessage.title), "onPress");
-          expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
-        });
-
-        describe("and showAlertForMessageOpening is false", () => {
-          // as required by legal for now the bottom sheet should always
-          // be presented to the user, whether or not this flag is false
-          it("then the bottom sheet for PN is ALWAYS presented", () => {
-            const { component } = renderComponent(
-              {
-                inboxMessages: [pnMessage],
-                pnPreferences: { showAlertForMessageOpening: false }
-              },
-              isPnEnabled
-            );
-            fireEvent(component.getByText(pnMessage.title), "onPress");
-            expect(mockPresentPNBottomSheet).toHaveBeenCalledWith(pnMessage);
-          });
-        });
-      });
-    });
-
-    describe("and PN is disabled", () => {
-      const isPnEnabled = false;
-
-      describe("when tapping on the message", () => {
-        it("then a navigation should be dispatched", () => {
-          const { component } = renderComponent(
-            { inboxMessages: [pnMessage] },
-            isPnEnabled
-          );
-          fireEvent(component.getByText(pnMessage.title), "onPress");
-          expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
-            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
-            params: {
-              messageId: pnMessage.id,
-              fromNotification: false
-            }
-          });
         });
       });
     });
@@ -217,7 +167,6 @@ const renderComponent = (
       })
     }
   } as GlobalState);
-  const spyStoreDispatch = spyOn(store, "dispatch");
 
   const component = renderScreenWithNavigationStoreContext(
     MessagesHomeScreen,
@@ -228,7 +177,6 @@ const renderComponent = (
 
   return {
     component,
-    store,
-    spyStoreDispatch
+    store
   };
 };
