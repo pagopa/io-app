@@ -50,7 +50,7 @@ const T_INITIATIVE_DATA_DTO: InitiativeDataDTO = {
 const T_REQUIRED_CRITERIA_DTO: RequiredCriteriaDTO = {
   pdndCriteria: [
     {
-      authority: AuthorityEnum.INPS,
+      authority: AuthorityEnum.AGID,
       code: CodeEnum.BIRTHDATE,
       description: "c",
       value: "d"
