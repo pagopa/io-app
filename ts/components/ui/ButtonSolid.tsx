@@ -239,7 +239,7 @@ ButtonSolid) => {
       onPressOut={onPressOut}
       accessible={true}
       disabled={disabled}
-      style={fullWidth ? {} : IOButtonLegacyStyles.dimensionsDefault}
+      style={!fullWidth ? IOButtonStyles.dimensionsDefault : {}}
     >
       <Animated.View
         style={[
