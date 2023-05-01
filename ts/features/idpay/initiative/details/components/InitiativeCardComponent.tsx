@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   initiativeLogo: {
-    resizeMode: "contain",
+    resizeMode: "cover",
     backgroundColor: IOColors.white,
     height: 56,
     width: 56,

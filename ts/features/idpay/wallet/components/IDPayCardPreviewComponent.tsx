@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     paddingRight: 24
   },
   initiativeLogo: {
-    resizeMode: "contain",
+    resizeMode: "cover",
     backgroundColor: IOColors.white,
     height: 32,
     width: 32,

@@ -33,7 +33,7 @@ const IDPayCardsList = (props: Props) => {
           key={initiative.initiativeId}
           initiativeName={initiative.initiativeName}
           availableAmount={initiative.amount}
-          logoUrl="https://it.idcert.io/assets/images/logos/18app.png" // TODO remove temporary logo
+          logoUrl={initiative.logoURL}
           onPress={() => handleCardPress(initiative.initiativeId)}
         />
       ))}
