@@ -8,8 +8,17 @@ import {
 } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
+import { ProblemJson } from "../../../../../definitions/fci/ProblemJson";
 
 const now = new Date();
+
+export const mockedError: ProblemJson = {
+  type: "https://example.com/problem/constraint-violation",
+  title: "string",
+  status: 404 as ProblemJson["status"],
+  detail: "There was an error processing the request",
+  instance: "string"
+};
 
 export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
   {
