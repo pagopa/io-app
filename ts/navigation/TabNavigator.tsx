@@ -94,7 +94,9 @@ export const MainTabNavigator = () => {
       {/* This item refers to the new "Scan" feature that allows
       citizens to quickly manage a payment or signature request
       from a printed paper and/or a third-party website.
-      It will be activated soon with a specific screen layout. */}
+      It will be activated with a specific screen layout.
+      It differs from the existing "Scan QR Code" because
+      it's not limited to pagoPA payments. */}
       {/* <Tab.Screen
         name={ROUTES.PAYMENT_SCAN_QR_CODE}
         component={ScanQrCodeScreen}
