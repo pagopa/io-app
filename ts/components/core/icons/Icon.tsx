@@ -127,7 +127,6 @@ import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconQrCode from "./svg/LegIconQrCode";
 import LegIconWebsite from "./svg/LegIconWebsite";
 import LegIconHome from "./svg/LegIconHome";
 import LegIconCopy from "./svg/LegIconCopy";
@@ -195,7 +194,6 @@ export const IOIcons = {
   spid: IconSpid,
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode,
-  legQrCode: LegIconQrCode,
   bell: IconBell,
   website: IconWebsite,
   legWebsite: LegIconWebsite,

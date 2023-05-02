@@ -398,7 +398,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     <ActiveBonusFooterButtons
       firstButton={{
         label: I18n.t("bonus.bonusVacanze.cta.qrCode"),
-        iconName: "legQrCode",
+        iconName: "qrCode",
         onPress: openModalBox
       }}
       secondButton={
