@@ -43,7 +43,7 @@ const GracePeriod = (props: { period: BpdPeriod }) => (
  * @constructor
  */
 const KO = (props: Props) => (
-  <InfoBox iconName="legEmojiSad">
+  <InfoBox iconName="emojiSad">
     <Body testID={"closedPeriodKO"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodKOBody",
@@ -109,7 +109,7 @@ const enhanceOkText = (props: Props): O.Option<string> => {
  * @constructor
  */
 const OK = (props: Props) => (
-  <InfoBox iconName="legEmojiHappy">
+  <InfoBox iconName="emojiHappy">
     <Body testID={"closedPeriodOK"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodOKBody",

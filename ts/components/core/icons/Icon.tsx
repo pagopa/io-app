@@ -127,9 +127,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconEmojiSad from "./svg/LegIconEmojiSad";
-import LegIconEmojiHappy from "./svg/LegIconEmojiHappy";
-import LegIconPhone from "./svg/LegIconPhone";
 import LegIconEmail from "./svg/LegIconEmail";
 import IconEmailFill from "./svg/IconEmailFill";
 import LegIconPEC from "./svg/LegIconPEC";
@@ -202,10 +199,7 @@ export const IOIcons = {
   pinOn: IconPinOn,
   emojiSad: IconEmojiSad,
   emojiHappy: IconEmojiHappy,
-  legEmojiSad: LegIconEmojiSad,
-  legEmojiHappy: LegIconEmojiHappy,
-  phone: IconPhone,
-  legPhone: LegIconPhone /* io-phone */,
+  phone: IconPhone /* io-phone */,
   email: IconEmail,
   emailFill: IconEmailFill,
   legEmail: LegIconEmail /* io-envelope */,
