@@ -32,5 +32,10 @@ jobs:
       - id: prepare-detox-build
         run: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
         shell: bash
+      - id: checkout-dev-server
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          repository: pagopa/io-dev-api-server
+          path: './_io-dev-api-server_'
       - id: run-e2e-tests
         run: bash ./.github/scripts/run-e2e-tests.sh

@@ -1,4 +1,3 @@
-git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
 cd _io-dev-api-server_
 cp ../scripts/api-config.json config/config.json
 yarn
