@@ -155,7 +155,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
         icon={
           <View style={styles.flexEnd}>
             <Icon
-              name={isTap ? "ok" : "legCopy"}
+              name={isTap ? "ok" : "copy"}
               size={COPY_ICON_SIZE}
               color="blue"
             />

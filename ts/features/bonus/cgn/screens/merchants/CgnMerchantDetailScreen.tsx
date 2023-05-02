@@ -90,7 +90,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
         {item.full_address}
       </H4>
       <View style={styles.flexEnd}>
-        <Icon name="legCopy" size={COPY_ICON_SIZE} color="blue" />
+        <Icon name="copy" size={COPY_ICON_SIZE} color="blue" />
       </View>
     </TouchableDefaultOpacity>
   );
