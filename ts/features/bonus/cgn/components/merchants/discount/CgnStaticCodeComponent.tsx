@@ -89,7 +89,7 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
               />
             </View>
           ) : (
-            <Icon name="legEyeShow" size={COPY_ICON_SIZE} color="blue" />
+            <Icon name="eyeShow" size={COPY_ICON_SIZE} color="blue" />
           )}
         </View>
       </TouchableWithoutFeedback>

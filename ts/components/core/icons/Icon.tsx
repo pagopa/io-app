@@ -135,8 +135,6 @@ import LegIconLockOff from "./svg/LegIconLockOff";
 import LegIconInitiatives from "./svg/LegIconInitiatives";
 import LegIconAnalytics from "./svg/LegIconAnalytics";
 import LegIconFornitori from "./svg/LegIconFornitori";
-import LegIconEyeShow from "./svg/LegIconEyeShow";
-import LegIconEyeHide from "./svg/LegIconEyeHide";
 import LegIconPinOff from "./svg/LegIconPinOff";
 import LegIconPinOn from "./svg/LegIconPinOn";
 import LegIconEmojiSad from "./svg/LegIconEmojiSad";
@@ -218,8 +216,6 @@ export const IOIcons = {
   legFornitori: LegIconFornitori,
   eyeShow: IconEyeShow,
   eyeHide: IconEyeHide,
-  legEyeShow: LegIconEyeShow,
-  legEyeHide: LegIconEyeHide,
   pinOff: IconPinOff,
   pinOn: IconPinOn,
   legPinOff: LegIconPinOff,

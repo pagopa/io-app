@@ -169,7 +169,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
     <BucketCodeHandler
       onPress={props.onRequestBucket}
       content={EMPTY_CODE_CONTENT}
-      icon={<Icon size={COPY_ICON_SIZE} name="legEyeShow" color="blue" />}
+      icon={<Icon size={COPY_ICON_SIZE} name="eyeShow" color="blue" />}
     />
   );
 };

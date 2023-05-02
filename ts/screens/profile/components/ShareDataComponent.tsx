@@ -57,7 +57,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         </Body>
       </InfoBox>
       <VSpacer size={16} />
-      <InfoBox iconName="legEyeHide">
+      <InfoBox iconName="eyeHide">
         <Body>
           {`${I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
