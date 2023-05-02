@@ -22,13 +22,32 @@ jobs:
         run: |
           cp .env.local .env
           yarn run postinstall
-          cd ios && pod install --verbose
+        shell: bash
+      - id: cache-cocoapods
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - id: setup-pods
+        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
+        run: cd ios ; pod install --verbose ; cd -
         shell: bash
       - id: install-detox
         run: |
           brew tap wix/brew
           brew install applesimutils
         shell: bash
+      - id: detox-rebuild-framework-cache
+        run: yarn detox rebuild-framework-cache
+      - id: cache-detox-build
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
+        with:
+          path: ios/build
+          key: ${{ runner.os }}-detox-build
+          restore-keys: |
+            ${{ runner.os }}-detox-build
       - id: prepare-detox-build
         run: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
         shell: bash
@@ -40,7 +59,6 @@ jobs:
       - id: run-e2e-tests
         run: bash ./.github/scripts/run-e2e-tests.sh
       - id: upload-artifacts
-        if: failure()
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce
         with:
           name: detox-artifacts
