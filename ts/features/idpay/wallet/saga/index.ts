@@ -1,34 +1,37 @@
-import { SagaIterator } from "redux-saga";
-import {
-  call,
-  race,
-  take,
-  takeEvery,
-  takeLatest
-} from "typed-redux-saga/macro";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { waitBackoffError } from "../../../../utils/backoffError";
-import { IDPayClient } from "../../common/api/client";
 import {
   IdPayInitiativesFromInstrumentPayloadType,
   IdpayInitiativesInstrumentDeletePayloadType,
   IdpayInitiativesInstrumentEnrollPayloadType,
   idPayInitiativesFromInstrumentGet,
   idPayWalletGet,
-  idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll,
   idpayInitiativesFromInstrumentRefreshEnd,
-  idpayInitiativesFromInstrumentRefreshStart
+  idpayInitiativesFromInstrumentRefreshStart,
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll
 } from "../store/actions";
+import {
+  call,
+  race,
+  take,
+  takeEvery,
+  takeLatest,
+  takeLeading,
+  takeMaybe
+} from "typed-redux-saga/macro";
 import {
   handleGetIDPayInitiativesFromInstrument,
   initiativesFromInstrumentRefresh
 } from "./handleGetIDPayInitiativesFromInstrument";
-import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import {
   handleInitiativeInstrumentDelete,
   handleInitiativeInstrumentEnrollment
 } from "./handleInitiativeInstrumentEnrollment";
+
+import { IDPayClient } from "../../common/api/client";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { SagaIterator } from "redux-saga";
+import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
+import { waitBackoffError } from "../../../../utils/backoffError";
 
 /**
  * Handle the IDPay Wallet requests

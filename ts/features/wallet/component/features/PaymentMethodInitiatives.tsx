@@ -1,22 +1,29 @@
 import * as React from "react";
 
-import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import Initiative from "../../../../../img/wallet/initiatives.svg";
-import { HSpacer } from "../../../../components/core/spacer/Spacer";
+import {
+  idPayInitiativesFromInstrumentGet,
+  idpayInitiativesFromInstrumentRefreshEnd,
+  idpayInitiativesFromInstrumentRefreshStart
+} from "../../../idpay/wallet/store/actions";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+
 import { Body } from "../../../../components/core/typography/Body";
+import { Dispatch } from "redux";
 import { H3 } from "../../../../components/core/typography/H3";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import { HSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import ROUTES from "../../../../navigation/routes";
-import { PaymentMethod } from "../../../../types/pagopa";
 import { IDPayInitiativesList } from "../../../idpay/wallet/components/IDPayInitiativesListComponents";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import Initiative from "../../../../../img/wallet/initiatives.svg";
+import { PaymentMethod } from "../../../../types/pagopa";
+import ROUTES from "../../../../navigation/routes";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import { connect } from "react-redux";
+import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
 import { useIDPayInitiativesFromInstrument } from "../../../idpay/wallet/hooks/useIDPayInitiativesFromInstrument";
-import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -38,7 +45,25 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
 
-  const { initiativesList } = useIDPayInitiativesFromInstrument(idWalletString);
+const dispatch = useIODispatch();
+useFocusEffect(
+  React.useCallback(() => {
+    console.log("CALLBACK HOOOOK!!!!!");
+    dispatch(
+      idpayInitiativesFromInstrumentRefreshStart({
+        idWallet: idWalletString,
+        isRefreshCall: false
+      })
+    );
+    return () => {
+      dispatch(idpayInitiativesFromInstrumentRefreshEnd);
+    };
+  }, [idWalletString, dispatch])
+);
+
+const initiativesList = useIOSelector(
+  idPayEnabledInitiativesFromInstrumentSelector
+);
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
