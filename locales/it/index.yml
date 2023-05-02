@@ -3166,10 +3166,6 @@ features:
         data:
           buttonTitle: Torna indietro
   pn:
-    open:
-      warning:
-        title: Questo messaggio contiene una comunicazione a valore legale
-        body: !include pn/message_open_warning.html
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
@@ -3430,6 +3426,7 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
@@ -3582,6 +3579,36 @@ idpay:
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
+  unsubscription:
+    headerTitle: Rimuovi l'iniziativa
+    title: Vuoi rimuovere {{initiativeName}}?
+    subtitle: Per proseguire, seleziona tutte le informazioni riportate di seguito.
+    checks:
+      1:
+        title: Non puoi iscriverti un’altra volta
+        content: Proseguendo, perdi il diritto di poter aderire nuovamente all’iniziativa da app IO e tutti gli altri canali abilitati.
+      2:
+        title: Non perdi alcun rimborso
+        content: Se hai crediti da rimborsare, li riceverai all’IBAN da te indicato.
+      3:
+        title: I dati dell’iniziativa non verranno rimossi
+        content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
+      4:
+        title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+    button:
+      continue: Rimuovi
+    modal:
+      title: Rimuovere {{initiativeName}}?
+      content: L’operazione è irreversibile e ha effetto su tutti i canali. Non potrai più utilizzare i fondi a disposizione.
+    success:
+      title: Operazione completata!
+      content: L’iniziativa verrà rimossa entro le prossime 48 ore.
+      button: Torna a Portafoglio
+    failure:
+      title: C’è un problema sui nostri sistemi
+      content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
+      button: Chiudi
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"

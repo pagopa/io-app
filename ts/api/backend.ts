@@ -57,6 +57,8 @@ import {
   getUserProfileDefaultDecoder,
   GetThirdPartyMessageT,
   getThirdPartyMessageDefaultDecoder,
+  GetThirdPartyMessagePreconditionT,
+  getThirdPartyMessagePreconditionDefaultDecoder,
   GetUserMessagesT,
   GetUserMessageT,
   startEmailValidationProcessDefaultDecoder,
@@ -235,6 +237,14 @@ export function BackendClient(
     response_decoder: getThirdPartyMessageDefaultDecoder()
   };
 
+  const getThirdPartyMessagePreconditionT: GetThirdPartyMessagePreconditionT = {
+    method: "get",
+    url: ({ id }) => `/api/v1/third-party-messages/${id}/precondition`,
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    response_decoder: getThirdPartyMessagePreconditionDefaultDecoder()
+  };
+
   const upsertMessageStatusAttributesT: UpsertMessageStatusAttributesT = {
     method: "put",
     url: params => `/api/v1/messages/${params.id}/message-status`,
@@ -382,6 +392,9 @@ export function BackendClient(
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
     getThirdPartyMessage: withBearerToken(
       createFetchRequestForApi(getThirdPartyMessage, options)
+    ),
+    getThirdPartyMessagePrecondition: withBearerToken(
+      createFetchRequestForApi(getThirdPartyMessagePreconditionT, options)
     ),
     upsertMessageStatusAttributes: withBearerToken(
       createFetchRequestForApi(upsertMessageStatusAttributesT, options)
