@@ -127,10 +127,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconAnalytics from "./svg/LegIconAnalytics";
-import LegIconFornitori from "./svg/LegIconFornitori";
-import LegIconPinOff from "./svg/LegIconPinOff";
-import LegIconPinOn from "./svg/LegIconPinOn";
 import LegIconEmojiSad from "./svg/LegIconEmojiSad";
 import LegIconEmojiHappy from "./svg/LegIconEmojiHappy";
 import LegIconPhone from "./svg/LegIconPhone";
@@ -200,13 +196,10 @@ export const IOIcons = {
   initiatives: IconInitiatives,
   analytics: IconAnalytics,
   fornitori: IconFornitori,
-  legFornitori: LegIconFornitori,
   eyeShow: IconEyeShow,
   eyeHide: IconEyeHide,
   pinOff: IconPinOff,
   pinOn: IconPinOn,
-  legPinOff: LegIconPinOff,
-  legPinOn: LegIconPinOn,
   emojiSad: IconEmojiSad,
   emojiHappy: IconEmojiHappy,
   legEmojiSad: LegIconEmojiSad,
