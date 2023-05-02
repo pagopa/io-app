@@ -126,8 +126,6 @@ import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconHome from "./svg/LegIconHome";
-import LegIconInstitution from "./svg/LegIconInstitution";
 import LegIconHourglass from "./svg/LegIconHourglass";
 import LegIconShare from "./svg/LegIconShare";
 import LegIconLockOn from "./svg/LegIconLockOn";
@@ -194,11 +192,9 @@ export const IOIcons = {
   abacus: IconAbacus,
   home: IconHome,
   homeFill: IconHomeFill,
-  legHome: LegIconHome,
   copy: IconCopy,
   selfCert: IconSelfCertification,
   institution: IconInstitution,
-  legInstitution: LegIconInstitution,
   hourglass: IconHourglass,
   legHourglass: LegIconHourglass,
   shareiOs: IconShareiOs,
