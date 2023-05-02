@@ -67,6 +67,14 @@ Object {
     },
     "detailsById": Object {},
     "downloads": Object {},
+    "messagePrecondition": Object {
+      "content": Object {
+        "kind": "undefined",
+      },
+      "messageId": Object {
+        "_tag": "None",
+      },
+    },
     "paginatedById": Object {},
     "thirdPartyById": Object {},
   },
