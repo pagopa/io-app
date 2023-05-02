@@ -18,20 +18,11 @@ jobs:
         uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c
         with:
           bundler-cache: true
-      - id: setup-bundler
-        run: |
-          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-          source $BASH_ENV
-          gem install bundler:$BUNDLER_VERSION
-          bundle check || bundle install
-        shell: bash
       - id: prepare-dependencies
         run: |
           cp .env.local .env
           yarn run postinstall
-          cd ios && bundle exec pod install --verbose
-          rm -rf /tmp/metro-bundler-cache-*
-          rm -rf /tmp/haste-map-react-native-packager-*
+          cd ios && pod install --verbose
         shell: bash
       - id: install-detox
         run: |
