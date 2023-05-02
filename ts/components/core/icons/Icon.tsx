@@ -127,7 +127,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconInitiatives from "./svg/LegIconInitiatives";
 import LegIconAnalytics from "./svg/LegIconAnalytics";
 import LegIconFornitori from "./svg/LegIconFornitori";
 import LegIconPinOff from "./svg/LegIconPinOff";
@@ -199,9 +198,7 @@ export const IOIcons = {
   locked: IconLockOn /* io-lucchetto */,
   unlocked: IconLockOff,
   initiatives: IconInitiatives,
-  legInitiatives: LegIconInitiatives,
   analytics: IconAnalytics,
-  legAnalytics: LegIconAnalytics,
   fornitori: IconFornitori,
   legFornitori: LegIconFornitori,
   eyeShow: IconEyeShow,

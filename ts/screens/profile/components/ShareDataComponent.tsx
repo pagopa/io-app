@@ -40,7 +40,7 @@ export const ShareDataComponent = (): React.ReactElement => {
       <VSpacer size={16} />
       <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
       <VSpacer size={16} />
-      <InfoBox iconName="legAnalytics">
+      <InfoBox iconName="analytics">
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
           <Label color={"bluegrey"}>
