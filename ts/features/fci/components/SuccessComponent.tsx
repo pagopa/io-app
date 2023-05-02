@@ -11,6 +11,8 @@ import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus
 import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
+import { trackFciDocOpening } from "../analytics";
+import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -24,6 +26,7 @@ const SuccessComponent = (props: {
   const expires_at = new Date(props.signatureRequest.expires_at);
   const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
+  const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
   const dispatch = useIODispatch();
 
   const publicKeyOption = useIOSelector(
@@ -69,6 +72,7 @@ const SuccessComponent = (props: {
   // the signature request could have various status
   switch (status) {
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
+      trackFciDocOpening(expires_at, fciDocuments.length);
       dispatch(fciStartRequest());
       return null;
     case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
