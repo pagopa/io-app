@@ -30,6 +30,7 @@ import IconEmojiSad from "./svg/IconEmojiSad";
 import IconEmojiHappy from "./svg/IconEmojiHappy";
 import IconPhone from "./svg/IconPhone";
 import IconEmail from "./svg/IconEmail";
+import IconEmailFill from "./svg/IconEmailFill";
 import IconMessage from "./svg/IconMessage";
 import IconDocument from "./svg/IconDocument";
 import IconDocumentSign from "./svg/IconDocumentSign";
@@ -127,11 +128,7 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconEmail from "./svg/LegIconEmail";
-import IconEmailFill from "./svg/IconEmailFill";
 import LegIconPEC from "./svg/LegIconPEC";
-import LegIconMessageLegal from "./svg/LegIconMessageLegal";
-import LegIconMessage from "./svg/LegIconMessage";
 import LegIconChat from "./svg/LegIconChat";
 import LegIconDocumentAttachmentPDF from "./svg/LegIconDocumentAttachmentPDF";
 import LegIconAttachment from "./svg/LegIconAttachment";
@@ -200,15 +197,12 @@ export const IOIcons = {
   emojiSad: IconEmojiSad,
   emojiHappy: IconEmojiHappy,
   phone: IconPhone /* io-phone */,
-  email: IconEmail,
+  email: IconEmail /* io-envelope */,
   emailFill: IconEmailFill,
-  legEmail: LegIconEmail /* io-envelope */,
   pec: IconPEC,
   legPec: LegIconPEC,
   messageLegal: IconMessageLegal,
-  legMessageLegal: LegIconMessageLegal,
   message: IconMessage,
-  legMessage: LegIconMessage,
   chat: IconChat,
   legChat: LegIconChat,
   doc: IconDocument,
