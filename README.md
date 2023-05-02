@@ -425,16 +425,27 @@ The React Native documentation provides a [useful guide](https://reactnative.dev
 
 ## Troubleshooting
 This section lists possible solutions to problems you might encounter while building the app.
-  <details>
-  <summary>iOS build</summary>
+<details>
+<summary>iOS build</summary>
 
-  - ```bash
-    $ yarn run-ios
-    $ error: redefinition of module 'YogaKit' build Failed
-    # Restart your machine to fix the issue
+- While running `yarn run-ios` you might encounter the following error:
     ```
+    error: redefinition of module 'YogaKit' build Failed
+    ```
+    Restart your machine to fix the issue.
 
-  </details>
+- While using a virtual node enviroment and building with Xcode you might encounter the following error: 
+    ```
+    error: Can't find 'node' binary to build React Native bundle If you have non-standard nodejs installation, select your project in Xcode, find 'Build Phases' - 'Bundle React Native code and images' and change NODE_BINARY to absolute path to your node executable (you can find it by invoking 'which node' in the terminal)
+    ```
+    Create a local Xcode enviroment file by running: 
+    ```bash
+    $ cd ios
+    $ cp .xcode.env .xcode.env.local
+    ```
+    Edit `.xcode.env.local` to your needs by adding your node binary path which can be found by running `which node`.
+
+</details>
 
 # Architecture
 
