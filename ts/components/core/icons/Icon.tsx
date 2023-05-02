@@ -128,8 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconPEC from "./svg/LegIconPEC";
-import LegIconChat from "./svg/LegIconChat";
 import LegIconDocumentAttachmentPDF from "./svg/LegIconDocumentAttachmentPDF";
 import LegIconAttachment from "./svg/LegIconAttachment";
 import LegIconAdd from "./svg/LegIconAdd";
@@ -200,11 +198,9 @@ export const IOIcons = {
   email: IconEmail /* io-envelope */,
   emailFill: IconEmailFill,
   pec: IconPEC,
-  legPec: LegIconPEC,
   messageLegal: IconMessageLegal,
   message: IconMessage,
   chat: IconChat,
-  legChat: LegIconChat,
   doc: IconDocument,
   docSign: IconDocumentSign,
   docAgree: IconAgreement,
