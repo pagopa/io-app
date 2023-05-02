@@ -67,7 +67,6 @@ import IconProfileAlt from "./svg/IconProfileAlt";
 import IconStarFilled from "./svg/IconStarFilled";
 import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
-import LegIconAbacus from "./svg/LegIconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
 import IconDevice from "./svg/IconDevice";
 import IconDotMenu from "./svg/IconDotMenu";
@@ -127,7 +126,6 @@ import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconWebsite from "./svg/LegIconWebsite";
 import LegIconHome from "./svg/LegIconHome";
 import LegIconCopy from "./svg/LegIconCopy";
 import LegIconInstitution from "./svg/LegIconInstitution";
@@ -196,9 +194,7 @@ export const IOIcons = {
   qrCode: IconQrCode,
   bell: IconBell,
   website: IconWebsite,
-  legWebsite: LegIconWebsite,
   abacus: IconAbacus,
-  legAbacus: LegIconAbacus,
   home: IconHome,
   homeFill: IconHomeFill,
   legHome: LegIconHome,

@@ -71,7 +71,7 @@ const MaxAmount = (props: { name: string | undefined }) => (
  * Display a message informing the user that at the moment he may be eligible for supercashback
  */
 const SuperCashback = (props: { superCashbackAmount: number }) => (
-  <InfoBox iconName="legAbacus">
+  <InfoBox iconName="abacus">
     <Body testID={"currentPeriodSuperCashback"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodSuperCashback",
