@@ -37,8 +37,8 @@ import {
 } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
-  clausesByType,
   getClauseLabel,
+  getRequiredSignatureFields,
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -46,6 +46,10 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
+import {
+  trackFciShowSignatureFields,
+  trackFciStartSignature
+} from "../../analytics";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -79,10 +83,7 @@ const FciSignatureFieldsScreen = (
   React.useEffect(() => {
     // get required signatureFields for the current document
     // that user should check to sign the document
-    const requiredFields = clausesByType(signatureFieldsSelector, [
-      ClausesTypeEnum.REQUIRED,
-      ClausesTypeEnum.UNFAIR
-    ]);
+    const requiredFields = getRequiredSignatureFields(signatureFieldsSelector);
 
     // get the required signature fields for the current document,
     // which the user has previously checked to sign it
@@ -112,6 +113,7 @@ const FciSignatureFieldsScreen = (
     useFciAbortSignatureFlow();
 
   const onPressDetail = (signatureField: SignatureField) => {
+    trackFciShowSignatureFields();
     showModal(
       <DocumentWithSignature
         attrs={signatureField.attrs}
@@ -204,6 +206,7 @@ const FciSignatureFieldsScreen = (
           })
         );
       } else {
+        trackFciStartSignature();
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.USER_DATA_SHARE
         });

@@ -540,10 +540,10 @@ PODS:
     - React
   - RNZendeskChat (0.3.23):
     - React
-    - ZendeskAnswerBotSDK (~> 2.1.3)
-    - ZendeskChatSDK (~> 2.11.1)
-    - ZendeskMessagingAPISDK (~> 3.8.2)
-    - ZendeskSupportSDK (~> 5.3.0)
+    - ZendeskAnswerBotSDK (~> 3.0.0)
+    - ZendeskChatSDK (~> 3.0.0)
+    - ZendeskMessagingAPISDK (~> 4.0.0)
+    - ZendeskSupportSDK (~> 6.0.0)
   - SocketRocket (0.6.0)
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
@@ -555,28 +555,28 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - ZendeskAnswerBotProvidersSDK (2.1.3):
-    - ZendeskSupportProvidersSDK (~> 5.3.0)
-  - ZendeskAnswerBotSDK (2.1.3):
-    - ZendeskAnswerBotProvidersSDK (~> 2.1.3)
-    - ZendeskMessagingSDK (~> 3.8.2)
-  - ZendeskChatProvidersSDK (2.11.1)
-  - ZendeskChatSDK (2.11.1):
-    - ZendeskChatProvidersSDK (~> 2.11.1)
-    - ZendeskMessagingSDK (~> 3.8.2)
-  - ZendeskCommonUISDK (6.1.1)
-  - ZendeskCoreSDK (2.5.1)
-  - ZendeskMessagingAPISDK (3.8.2):
-    - ZendeskSDKConfigurationsSDK (~> 1.1.8)
-  - ZendeskMessagingSDK (3.8.2):
-    - ZendeskCommonUISDK (~> 6.1.1)
-    - ZendeskMessagingAPISDK (~> 3.8.2)
-  - ZendeskSDKConfigurationsSDK (1.1.8)
-  - ZendeskSupportProvidersSDK (5.3.0):
-    - ZendeskCoreSDK (~> 2.5.1)
-  - ZendeskSupportSDK (5.3.0):
-    - ZendeskMessagingSDK (~> 3.8.2)
-    - ZendeskSupportProvidersSDK (~> 5.3.0)
+  - ZendeskAnswerBotProvidersSDK (3.0.0):
+    - ZendeskSupportProvidersSDK (= 6.0.0)
+  - ZendeskAnswerBotSDK (3.0.0):
+    - ZendeskAnswerBotProvidersSDK (= 3.0.0)
+    - ZendeskMessagingSDK (= 4.0.0)
+  - ZendeskChatProvidersSDK (3.0.0)
+  - ZendeskChatSDK (3.0.0):
+    - ZendeskChatProvidersSDK (= 3.0.0)
+    - ZendeskMessagingSDK (= 4.0.0)
+  - ZendeskCommonUISDK (7.0.0)
+  - ZendeskCoreSDK (3.0.0)
+  - ZendeskMessagingAPISDK (4.0.0):
+    - ZendeskSDKConfigurationsSDK (= 2.0.0)
+  - ZendeskMessagingSDK (4.0.0):
+    - ZendeskCommonUISDK (= 7.0.0)
+    - ZendeskMessagingAPISDK (= 4.0.0)
+  - ZendeskSDKConfigurationsSDK (2.0.0)
+  - ZendeskSupportProvidersSDK (6.0.0):
+    - ZendeskCoreSDK (= 3.0.0)
+  - ZendeskSupportSDK (6.0.0):
+    - ZendeskMessagingSDK (= 4.0.0)
+    - ZendeskSupportProvidersSDK (= 6.0.0)
   - ZXingObjC (3.6.5):
     - ZXingObjC/All (= 3.6.5)
   - ZXingObjC/All (3.6.5)
@@ -993,23 +993,23 @@ SPEC CHECKSUMS:
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  RNZendeskChat: ca87fe979b80836046e5632a88e5e5ed0ea75b87
+  RNZendeskChat: 338c369def4e1552a533d9d34155b4b491aaf3d7
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: 5fc30ecebdfd0335d11123ec9511dcbc27ee4046
   Yoga: 7a4d48cfb35dfa542151e615fa73c1a0d88caf21
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  ZendeskAnswerBotProvidersSDK: 8ef75d4484f09c324cd93ce2725364d73dbabcf5
-  ZendeskAnswerBotSDK: 5427374afc76811d17ef47db8c20967cee84ee2b
-  ZendeskChatProvidersSDK: 37901c1c7529722d71ffade971bb984edd74a5e1
-  ZendeskChatSDK: e312c1899c52eff0ef2b7219385c5aaac3d9e76e
-  ZendeskCommonUISDK: 5808802951ad2bb424f0bed4259dc3c0ce9b52ec
-  ZendeskCoreSDK: 19a18e5ef2edcb18f4dbc0ea0d12bd31f515712a
-  ZendeskMessagingAPISDK: 144e0fb0e633a3c4e73149b781ab65338938d5a8
-  ZendeskMessagingSDK: 500e83d9413481e95180c37ddca0d4ef9d515600
-  ZendeskSDKConfigurationsSDK: 8371b468db0d09e9198f6c5a97818826943ee1ee
-  ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
-  ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
+  ZendeskAnswerBotProvidersSDK: 7eca94f07f10a567c631321601a645b2ba35c2da
+  ZendeskAnswerBotSDK: 31bd28c7c9732243d4bf3b850c441a3cdd6eba50
+  ZendeskChatProvidersSDK: af93e02e2058875f92e6ad86e74ee51203b4079e
+  ZendeskChatSDK: fe03650a5ebe3d35fd1f4da90792021f809bcf11
+  ZendeskCommonUISDK: f06dbac6c9e74c3afff75ecdc6bec3832b23258c
+  ZendeskCoreSDK: ce6dbb5eb4d61d2d061547a92bd0b0fe98602e9d
+  ZendeskMessagingAPISDK: 95a99f1eab9482b4106ec88466b93a89f9f7c5fa
+  ZendeskMessagingSDK: 4f5f3d43766bb3b2ea6411d1331cfe609ff33618
+  ZendeskSDKConfigurationsSDK: a5c21010e17b71d02bc2cfe73dcc9da1efa0a7b2
+  ZendeskSupportProvidersSDK: 685b5d185af47ced0ec40564ec46355c838bbd06
+  ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
 PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
