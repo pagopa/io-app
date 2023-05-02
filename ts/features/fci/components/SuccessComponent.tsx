@@ -72,8 +72,8 @@ const SuccessComponent = (props: {
   // the signature request could have various status
   switch (status) {
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
-      dispatch(fciStartRequest());
       trackFciDocOpening(expires_at, fciDocuments.length);
+      dispatch(fciStartRequest());
       return null;
     case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
       return (

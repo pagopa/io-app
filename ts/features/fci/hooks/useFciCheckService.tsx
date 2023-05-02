@@ -61,6 +61,7 @@ export const useFciCheckService = () => {
             isServicePreferenceResponseSuccess(servicePreferenceValue)
           ) {
             const sp = { ...servicePreferenceValue.value, inbox: true };
+            trackFciUxConversion();
             dispatch(
               upsertServicePreference.request({
                 id: fciServiceId as ServiceId,
@@ -68,7 +69,6 @@ export const useFciCheckService = () => {
               })
             );
           }
-          trackFciUxConversion();
           dispatch(fciStartSigningRequest());
           dismiss();
         }, I18n.t("features.fci.checkService.confirm")),

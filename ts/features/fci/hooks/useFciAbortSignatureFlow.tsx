@@ -47,8 +47,8 @@ export const useFciAbortSignatureFlow = () => {
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
-          trackFciUserExit(route.name);
           dispatch(fciEndRequest());
+          trackFciUserExit(route.name);
         }, I18n.t("features.fci.abort.cancel")),
         onPressWithGestureHandler: true
       }}
