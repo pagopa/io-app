@@ -22,7 +22,7 @@ type Props = React.ComponentProps<typeof TextualSummary>;
  * @constructor
  */
 const GracePeriod = (props: { period: BpdPeriod }) => (
-  <InfoBox iconName="legHourglass">
+  <InfoBox iconName="hourglass">
     <Body testID={"gracePeriod"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.gracePeriodBody",

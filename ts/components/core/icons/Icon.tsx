@@ -126,10 +126,7 @@ import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconHourglass from "./svg/LegIconHourglass";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconLockOn from "./svg/LegIconLockOn";
-import LegIconLockOff from "./svg/LegIconLockOff";
 import LegIconInitiatives from "./svg/LegIconInitiatives";
 import LegIconAnalytics from "./svg/LegIconAnalytics";
 import LegIconFornitori from "./svg/LegIconFornitori";
@@ -196,14 +193,11 @@ export const IOIcons = {
   selfCert: IconSelfCertification,
   institution: IconInstitution,
   hourglass: IconHourglass,
-  legHourglass: LegIconHourglass,
   shareiOs: IconShareiOs,
   shareAndroid: IconShareAndroid,
   legShare: LegIconShare,
-  locked: IconLockOn,
+  locked: IconLockOn /* io-lucchetto */,
   unlocked: IconLockOff,
-  legLocked: LegIconLockOn /* io-lucchetto */,
-  legUnlocked: LegIconLockOff,
   initiatives: IconInitiatives,
   legInitiatives: LegIconInitiatives,
   analytics: IconAnalytics,

@@ -162,7 +162,7 @@ type BadgeDefinition = {
   label: string;
 };
 
-type IconType = "legLocked" | "legUnlocked" | "ok";
+type IconType = "locked" | "unlocked" | "ok";
 
 type GraphicalState = {
   amount: ReadonlyArray<string>;
@@ -174,7 +174,7 @@ type GraphicalState = {
 const initialGraphicalState: GraphicalState = {
   amount: ["0", "00"],
   isInGracePeriod: false,
-  iconName: "legLocked",
+  iconName: "locked",
   statusBadge: {
     label: "-"
   }
@@ -198,10 +198,10 @@ const iconHandler = (period: BpdPeriod, totalAmount: BpdAmount): IconType => {
       return reachMinTransaction && reachMaxAmount
         ? "ok"
         : reachMinTransaction
-        ? "legUnlocked"
-        : "legLocked";
+        ? "unlocked"
+        : "locked";
     default:
-      return "legLocked";
+      return "locked";
   }
 };
 
