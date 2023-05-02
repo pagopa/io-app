@@ -32,7 +32,7 @@ const iconSize = 24;
 // icon and description
 const getItem = (props: Props) => [
   {
-    icon: <Icon name="legPsp" size={iconSize} color="blue" />,
+    icon: <Icon name="psp" size={iconSize} color="blue" />,
     description: (
       <Body>
         {I18n.t(
@@ -42,7 +42,7 @@ const getItem = (props: Props) => [
     )
   },
   {
-    icon: <Icon name="legTag" size={iconSize} color="blue" />,
+    icon: <Icon name="tag" size={iconSize} color="blue" />,
     description: (
       <Body>
         {I18n.t(

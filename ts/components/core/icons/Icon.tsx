@@ -177,7 +177,6 @@ import LegIconSwitchOff from "./svg/LegIconSwitchOff";
 import LegIconBarcode from "./svg/LegIconBarcode";
 import LegIconSave from "./svg/LegIconSave";
 import LegIconLadybug from "./svg/LegIconLadybug";
-import LegIconTag from "./svg/LegIconTag";
 import LegIconExternalLink from "./svg/LegIconExternalLink";
 import LegIconUnknownGdo from "./svg/LegIconUnknownGdo";
 import LegIconQuestion from "./svg/LegIconQuestion";
@@ -186,7 +185,6 @@ import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
 import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconGiacenza from "./svg/LegIconGiacenza";
-import LegIconPSP from "./svg/LegIconPSP";
 import LegIconError from "./svg/LegIconError";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
@@ -278,7 +276,6 @@ export const IOIcons = {
   amount: IconAmount,
   legAmount: LegIconAmount,
   psp: IconPSP,
-  legPsp: LegIconPSP,
   locationiOS: IconLocationiOS,
   locationiOSFilled: IconLocationiOSFilled,
   locationAndroid: IconLocationAndroid,
@@ -331,7 +328,6 @@ export const IOIcons = {
   ladybug: IconLadybug,
   legLadybug: LegIconLadybug,
   tag: IconTag,
-  legTag: LegIconTag,
   gallery: IconGallery,
   externalLink: IconExternalLink,
   legExternalLink: LegIconExternalLink,
