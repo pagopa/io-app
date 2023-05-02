@@ -91,6 +91,10 @@ export const MainTabNavigator = () => {
           tabBarIcon: ({ color }) => <WalletTabIcon color={color} />
         }}
       />
+      {/* This item refers to the new "Scan" feature that allows
+      citizens to quickly manage a payment or signature request
+      from a printed paper and/or a third-party website.
+      It will be activated soon with a specific screen layout. */}
       {/* <Tab.Screen
         name={ROUTES.PAYMENT_SCAN_QR_CODE}
         component={ScanQrCodeScreen}
