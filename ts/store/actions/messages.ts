@@ -22,6 +22,7 @@ import {
   Download,
   DownloadError
 } from "../reducers/entities/messages/downloads";
+import { ThirdPartyMessagePrecondition } from "../../../definitions/backend/ThirdPartyMessagePrecondition";
 
 /**
  * Load a single message given its ID
@@ -139,6 +140,16 @@ export const migrateToPaginatedMessages = createAsyncAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_FAILURE"
 )<MessagesStatus, number, MigrationResult>();
 
+export const getMessagePrecondition = createAsyncAction(
+  "GET_MESSAGE_PRECONDITION_REQUEST",
+  "GET_MESSAGE_PRECONDITION_SUCCESS",
+  "GET_MESSAGE_PRECONDITION_FAILURE"
+)<UIMessageId, ThirdPartyMessagePrecondition, Error>();
+
+export const clearMessagePrecondition = createAction(
+  "CLEAR_MESSAGE_PRECONDITION"
+);
+
 /**
  * Used to mark the end of a migration and reset it to a pristine state.
  */
@@ -181,4 +192,6 @@ export type MessagesActions = ActionType<
   | typeof downloadAttachment
   | typeof cancelPreviousAttachmentDownload
   | typeof removeCachedAttachment
+  | typeof getMessagePrecondition
+  | typeof clearMessagePrecondition
 >;

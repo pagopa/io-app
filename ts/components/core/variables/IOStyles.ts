@@ -117,10 +117,6 @@ export const IOButtonLegacyStyles = StyleSheet.create({
   },
   buttonSizeSmall: {
     height: btnLegacySizeSmall
-  },
-  /* Widths */
-  dimensionsDefault: {
-    alignSelf: "flex-start"
   }
 });
 
