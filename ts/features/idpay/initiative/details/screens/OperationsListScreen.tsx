@@ -6,7 +6,6 @@ import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -17,7 +16,7 @@ import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../../utils/showToast";
-import { useTimelineDetailsBottomSheet } from "../components/TimelineDetailsBottomSheet";
+import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import {
   TimelineOperationListItem,
   TimelineOperationListItemSkeleton
@@ -80,15 +79,7 @@ export const OperationsListScreen = () => {
   const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
 
   const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
-    pipe(
-      operation,
-      O.of,
-      O.filter(
-        ({ operationType }) =>
-          operationType === TransactionOperationTypeEnum.TRANSACTION
-      ),
-      O.map(({ operationId }) => detailsBottomSheet.present(operationId))
-    );
+    detailsBottomSheet.present(operation);
 
   const lastUpdateComponent = pipe(
     lastUpdate,

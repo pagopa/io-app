@@ -3408,16 +3408,36 @@ idpay:
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
     operationDetails:
-      title: Dettaglio dell'operazione
-      instrument: Metodo di pagamento
-      maskedPan: •••• {{lastDigits}}
-      amountLabel: Importo transazione
-      accruedAmountLabel: Importo rimborsabile
-      infoTitle: Informazioni sull transazione
-      date: Data
-      circuit: Circuito di pagamento
-      acquirerId: ID transazione Acquirer
-      issuerId: ID transazione Issuer
+      title: 
+        TRANSACTION: Dettaglio dell'operazione
+        REVERSAL: Dettaglio dell'operazione
+        PAID_REFUND: Dettaglio del rimborso
+        REJECTED_REFUND: Dettaglio del rimborso
+      transaction:
+        instrument: Metodo di pagamento
+        maskedPan: •••• {{lastDigits}}
+        amountLabel: Importo transazione
+        accruedAmountLabel: Importo rimborsabile
+        infoTitle: Informazioni sulla transazione
+        date: Data
+        circuit: Circuito di pagamento
+        acquirerId: ID transazione Acquirer
+        issuerId: ID transazione Issuer
+        reversalAdvice: Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza.
+      refund:
+        iban: IBAN
+        amount: Importo rimborso
+        resultLabel: Esito
+        result: 
+          PAID_REFUND: Eseguito
+          REJECTED_REFUND: Fallito
+        rejectedAdvice: 
+          text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
+          editIban: Modifica IBAN 
+        period: Periodo di riferimento
+        date: Data rimborso
+        cro: CRO
+      errorBody: Impossibile caricare il dettaglio
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
