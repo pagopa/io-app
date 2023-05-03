@@ -146,6 +146,7 @@ const InitiativeDetailsScreen = () => {
         <InitiativeTimelineComponent initiativeId={initiativeId} />
         <VSpacer size={24} />
         <InitiativeSettingsComponent initiative={initiativeData} />
+        <VSpacer size={32} />
       </ContentWrapper>
     );
   };
@@ -185,10 +186,12 @@ const InitiativeDetailsScreen = () => {
         backgroundColor={IOColors["blue-50"]}
         barStyle={"dark-content"}
       />
-      <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        scrollIndicatorInsets={{ right: 1 }}
+      >
         {cardComponent}
-        <View style={styles.container}>{renderScreenContent()}</View>
-        <VSpacer size={32} />
+        {renderScreenContent()}
       </ScrollView>
       {configurationButton}
     </BaseScreenComponent>
@@ -196,25 +199,15 @@ const InitiativeDetailsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1
+  },
   newInitiativeMessageContainer: {
     alignItems: "center",
     justifyContent: "center",
+    padding: 32,
     flex: 1,
-    flexGrow: 1,
-    padding: 32
-  },
-  scroll: {
-    backgroundColor: IOColors["blue-50"]
-  },
-  container: {
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: IOColors.white,
-    zIndex: -1,
-    top: -50,
-    paddingTop: 50,
-    paddingBottom: 500,
-    marginBottom: -500
+    flexGrow: 1
   },
   lastUpdate: {
     alignSelf: "center",

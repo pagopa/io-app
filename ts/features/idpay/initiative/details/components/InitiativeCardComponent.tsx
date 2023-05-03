@@ -230,8 +230,8 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
     paddingVertical: 32,
-    paddingTop: 0,
-    flex: 1
+    paddingTop: 500,
+    marginTop: -500
   },
   initiativeName: {
     textAlign: "center"
