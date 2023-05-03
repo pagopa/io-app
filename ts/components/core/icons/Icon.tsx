@@ -128,9 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconAttachment from "./svg/LegIconAttachment";
-import LegIconAdd from "./svg/LegIconAdd";
-import LegIconCompleted from "./svg/LegIconCompleted";
 import LegIconCreditCard from "./svg/LegIconCreditCard";
 import LegIconBonus from "./svg/LegIconBonus";
 import LegIconAmount from "./svg/LegIconAmount";
@@ -206,11 +203,8 @@ export const IOIcons = {
   docAttach: IconDocumentAttachment,
   docAttachPDF: IconDocumentAttachmentPDF,
   attachment: IconAttachment,
-  legAttachment: LegIconAttachment,
   add: IconAdd,
-  legAdd: LegIconAdd,
   completed: IconCompleted,
-  legCompleted: LegIconCompleted,
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,

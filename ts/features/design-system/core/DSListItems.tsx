@@ -95,7 +95,7 @@ export const DSListItems = () => (
       <ListItemComponent
         title={"Title"}
         iconSize={12}
-        iconName={"legCompleted"}
+        iconName={"completed"}
         onPress={() => alert("Action triggered")}
       />
     </DSComponentViewerBox>

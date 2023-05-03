@@ -17,11 +17,12 @@ type OwnProps = Props &
 
 const SIZE: number = 24;
 const BORDER_WIDTH: number = 2;
+const INTERNAL_PADDING: number = 3;
 
 const offColor: IOColors = "bluegrey";
 const onColor: IOColors = "blue";
 const slop = calculateSlop(SIZE);
-const tickSize = SIZE;
+const tickSize = SIZE - INTERNAL_PADDING * 2;
 
 const styles = StyleSheet.create({
   checkBox: {
@@ -61,8 +62,14 @@ export const RawCheckBox: React.FunctionComponent<OwnProps> = props => {
       ]}
     >
       {checked && (
-        <View style={{ top: -BORDER_WIDTH, left: -BORDER_WIDTH }}>
-          <Icon name="legCompleted" size={tickSize} color={onColor} />
+        <View
+          style={{
+            top: -BORDER_WIDTH,
+            left: -BORDER_WIDTH,
+            padding: INTERNAL_PADDING
+          }}
+        >
+          <Icon name="completed" size={tickSize} color={onColor} />
         </View>
       )}
     </TouchableDefaultOpacity>

@@ -389,9 +389,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             )}`}
           </H5>
           <HSpacer size={8} />
-          {isPeriodClosed && (
-            <Icon name="legCompleted" size={20} color="white" />
-          )}
+          {isPeriodClosed && <Icon name="completed" size={20} color="white" />}
         </View>
         <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H2 weight={"Bold"} color={"white"}>
