@@ -368,9 +368,9 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 */
 
 /* New icons */
-const {} = IOIcons;
+// const {} = IOIcons;
 
-export const IOIconsNew = {};
+// export const IOIconsNew = {};
 
 /* Navigation */
 const { navMessages, navWallet, navDocuments, navServices, navProfile } =

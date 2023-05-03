@@ -8,7 +8,7 @@ import {
   IOBiometricIcons,
   IOCategoryIcons,
   IOProductIcons,
-  IOIconsNew,
+  // IOIconsNew,
   SVGIconProps
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
@@ -82,7 +82,7 @@ export const DSIcons = () => (
                   size="100%"
                 />
               }
-              withDot={Object.keys(IOIconsNew).includes(iconItemName)}
+              // withDot={Object.keys(IOIconsNew).includes(iconItemName)}
             />
           ))}
         </View>
