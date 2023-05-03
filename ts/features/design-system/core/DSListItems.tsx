@@ -28,6 +28,7 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
+import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 
 export const DSListItems = () => (
   <IOThemeContext.Consumer>
@@ -118,6 +119,43 @@ export const DSListItems = () => (
                 alert("Action triggered");
               }}
               accessibilityLabel="Empty just for testing purposes"
+            />
+          </View>
+        </DSComponentViewerBox>
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemInfoCopy
+        </H2>
+        <DSComponentViewerBox name="ListItemInfoCopy">
+          <View>
+            <ListItemInfoCopy
+              label={"Label"}
+              value="Value"
+              onPress={() => {
+                alert("Value copied");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemInfoCopy
+              label={"Codice fiscale"}
+              value="01199250158"
+              onPress={() => {
+                alert("Value copied");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+              icon="institution"
+            />
+            <ListItemInfoCopy
+              label={"Carta di credito"}
+              value="4975 3013 5042 7899"
+              onPress={() => {
+                alert("Value copied");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+              icon="creditCard"
             />
           </View>
         </DSComponentViewerBox>
