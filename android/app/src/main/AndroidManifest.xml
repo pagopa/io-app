@@ -43,15 +43,7 @@
   <!-- Required for local notifications -->
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-  <application
-    android:name=".MainApplication"
-    android:label="@string/app_name"
-    android:icon="@mipmap/ic_launcher"
-    android:usesCleartextTraffic="true"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:allowBackup="false"
-    android:requestLegacyExternalStorage="true"
-    android:theme="@style/AppTheme">
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:requestLegacyExternalStorage="true" android:theme="@style/AppTheme">
 
     <!-- START Required by react-native-push-notification -->
 
@@ -111,7 +103,7 @@
     <!-- END Zendesk -->
 
     <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:windowSoftInputMode="adjustResize" android:exported="true">
-      <intent-filter>
+      <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
@@ -121,6 +113,14 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="ioit" android:host="ioit" />
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" />
+        <data android:host="continua.io.pagopa.it" />
       </intent-filter>
     </activity>
   </application>
