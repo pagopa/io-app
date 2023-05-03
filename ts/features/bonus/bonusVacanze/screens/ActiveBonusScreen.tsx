@@ -415,7 +415,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       }
       thirdButton={{
         label: I18n.t("global.genericSave").toLowerCase(),
-        iconName: "legSave",
+        iconName: "save",
         onPress: saveScreenShot
       }}
     />

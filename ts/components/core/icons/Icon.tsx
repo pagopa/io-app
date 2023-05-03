@@ -128,9 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconSave from "./svg/LegIconSave";
-import LegIconLadybug from "./svg/LegIconLadybug";
-import LegIconExternalLink from "./svg/LegIconExternalLink";
 import LegIconUnknownGdo from "./svg/LegIconUnknownGdo";
 import LegIconQuestion from "./svg/LegIconQuestion";
 import LegIconSearch from "./svg/LegIconSearch";
@@ -224,15 +221,12 @@ export const IOIcons = {
   dotMenu: IconDotMenu,
   barcode: IconBarcode,
   save: IconSave,
-  legSave: LegIconSave,
   login: IconLogin,
   logout: IconLogout,
   ladybug: IconLadybug,
-  legLadybug: LegIconLadybug,
   tag: IconTag,
   gallery: IconGallery,
   externalLink: IconExternalLink,
-  legExternalLink: LegIconExternalLink,
   unknownGdo: IconUnknownGdo,
   legUnknownGdo: LegIconUnknownGdo,
   cancel: IconCancel,

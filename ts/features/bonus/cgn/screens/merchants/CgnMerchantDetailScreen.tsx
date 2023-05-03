@@ -155,7 +155,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                           {url}
                         </H4>
                         <Icon
-                          name="legExternalLink"
+                          name="externalLink"
                           size={EXTERNAL_LINK_ICON_SIZE}
                           color="blue"
                         />
