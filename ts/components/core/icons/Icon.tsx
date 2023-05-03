@@ -128,10 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconStarFilled from "./svg/LegIconStarFilled";
-import LegIconStarEmpty from "./svg/LegIconStarEmpty";
-import LegIconSwitchOff from "./svg/LegIconSwitchOff";
-import LegIconBarcode from "./svg/LegIconBarcode";
 import LegIconSave from "./svg/LegIconSave";
 import LegIconLadybug from "./svg/LegIconLadybug";
 import LegIconExternalLink from "./svg/LegIconExternalLink";
@@ -223,14 +219,10 @@ export const IOIcons = {
   magicWand: IconMagicWand,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
-  legStarFilled: LegIconStarFilled,
-  legStarEmpty: LegIconStarEmpty,
   switchOff: IconSwitchOff,
-  legSwitchOff: LegIconSwitchOff,
   device: IconDevice,
   dotMenu: IconDotMenu,
   barcode: IconBarcode,
-  legBarcode: LegIconBarcode,
   save: IconSave,
   legSave: LegIconSave,
   login: IconLogin,

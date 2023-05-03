@@ -211,8 +211,8 @@ export default class CardComponent extends React.Component<Props> {
               <Icon
                 name={
                   pot.getOrElseWithUpdating(isFavorite, false)
-                    ? "legStarFilled"
-                    : "legStarEmpty"
+                    ? "starFilled"
+                    : "starEmpty"
                 }
                 color={pot.isUpdating(isFavorite) ? "bluegrey" : "blue"}
               />
