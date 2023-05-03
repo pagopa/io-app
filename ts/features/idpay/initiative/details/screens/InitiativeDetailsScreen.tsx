@@ -6,7 +6,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
