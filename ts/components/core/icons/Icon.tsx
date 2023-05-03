@@ -128,10 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconCalendar from "./svg/LegIconCalendar";
-import LegIconProfile from "./svg/LegIconProfile";
-import LegIconProfileExperiment from "./svg/LegIconProfileExperiment";
-import LegIconMagicWand from "./svg/LegIconMagicWand";
 import LegIconStarFilled from "./svg/LegIconStarFilled";
 import LegIconStarEmpty from "./svg/LegIconStarEmpty";
 import LegIconSwitchOff from "./svg/LegIconSwitchOff";
@@ -219,16 +215,12 @@ export const IOIcons = {
   edit: IconEdit,
   battery: IconBattery,
   trashcan: IconTrashcan,
-  calendar: IconCalendar,
-  legCalendar: LegIconCalendar /* io-calendar */ /* io-calendario */,
+  calendar: IconCalendar /* io-calendar */ /* io-calendario */,
   profile: IconProfile,
   profileFilled: IconProfileFilled,
   profileAlt: IconProfileAlt /* io-titolare */,
-  legProfile: LegIconProfile,
   profileExperiment: IconProfileExperiment,
-  legProfileExperiment: LegIconProfileExperiment,
   magicWand: IconMagicWand,
-  legMagicWand: LegIconMagicWand,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
   legStarFilled: LegIconStarFilled,

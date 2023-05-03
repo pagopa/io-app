@@ -16,7 +16,7 @@ const BpdEmptyTransactionsList: React.FunctionComponent = () => (
 
     <VSpacer size={16} />
     <View testID={"BpdEmptyTransactionsList"} />
-    <InfoBox iconName="legCalendar" iconSize={32}>
+    <InfoBox iconName="calendar" iconSize={32}>
       <H4 weight={"Regular"}>
         {I18n.t(
           "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"

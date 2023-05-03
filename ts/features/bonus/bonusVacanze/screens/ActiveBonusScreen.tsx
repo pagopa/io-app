@@ -469,7 +469,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     switch (bonus.status) {
       case BonusActivationStatusEnum.ACTIVE:
         return renderInformationBlock(
-          "legCalendar",
+          "calendar",
           I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
             from: pipe(
               bonusValidityInterval,

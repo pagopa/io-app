@@ -26,7 +26,7 @@ class ProfileTabIcon extends React.PureComponent<Props> {
         size={size}
         color={color}
         name={
-          isExperimentalFeaturesEnabled ? "legProfileExperiment" : "navProfile"
+          isExperimentalFeaturesEnabled ? "profileExperiment" : "navProfile"
         }
       />
     );
