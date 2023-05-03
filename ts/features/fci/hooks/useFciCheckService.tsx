@@ -16,6 +16,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
 import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
+import { trackFciUxConversion } from "../analytics";
 
 const styles = StyleSheet.create({
   verticalPad: {
@@ -67,6 +68,7 @@ export const useFciCheckService = () => {
               })
             );
           }
+          trackFciUxConversion();
           dispatch(fciStartSigningRequest());
           dismiss();
         }, I18n.t("features.fci.checkService.confirm")),

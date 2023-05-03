@@ -5,7 +5,11 @@ import { interpret } from "xstate";
 import { waitFor } from "@testing-library/react-native";
 import { createIDPayOnboardingMachine } from "../machine";
 import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/RequiredCriteriaDTO";
-import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
+import {
+  AuthorityEnum,
+  CodeEnum,
+  PDNDCriteriaDTO
+} from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
 import {
   SelfDeclarationBoolDTO,
   _typeEnum as SelfDeclarationBoolDTOType
@@ -23,9 +27,9 @@ const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
 
 const T_REQUIRED_PDND_CRITERIA: PDNDCriteriaDTO = {
-  code: "T_CODE_PDBD",
+  code: CodeEnum.BIRTHDATE,
   description: "T_DESCRIPTION",
-  authority: "T_AUTHORITY",
+  authority: AuthorityEnum.AGID,
   value: "T_VALUE"
 };
 

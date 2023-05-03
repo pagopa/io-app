@@ -17,17 +17,22 @@ import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
-  IDPayConfigurationRoutes,
-  IDPayConfigurationNavigator
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
 } from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
-  IDPayDetailsRoutes,
-  IDpayDetailsNavigator
+  IDpayDetailsNavigator,
+  IDPayDetailsRoutes
 } from "../features/idpay/initiative/details/navigation";
 import {
-  IDPayOnboardingRoutes,
-  IDPayOnboardingNavigator
+  IDPayOnboardingNavigator,
+  IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
+import {
+  IDPayUnsubscriptionNavigator,
+  IDPayUnsubscriptionRoutes
+} from "../features/idpay/unsubscription/navigation/navigator";
+import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -67,7 +72,13 @@ const AuthenticatedStackNavigator = () => {
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+
       <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
+
+      <Stack.Screen
+        name={ROUTES.UNSUPPORTED_DEVICE}
+        component={UnsupportedDeviceScreen}
+      />
 
       <Stack.Screen
         name={ROUTES.MESSAGES_NAVIGATOR}
@@ -151,6 +162,12 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
             component={IDPayConfigurationNavigator}
+            options={{ gestureEnabled: isGestureEnabled }}
+          />
+
+          <Stack.Screen
+            name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
+            component={IDPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
           />
         </>

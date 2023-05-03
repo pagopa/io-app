@@ -3142,10 +3142,6 @@ features:
         data:
           buttonTitle: Go back
   pn:
-    open:
-      warning:
-        title: Questo messaggio contiene una comunicazione a valore legale
-        body: !include pn/message_open_warning.html
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
@@ -3213,7 +3209,10 @@ features:
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
         signing:
           title: The signature failed
-          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.   
+          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.
+        wrongUser:
+          title: You cannot sign these documents
+          subTitle: The signature request is not associated with your Tax Code.
     abort:
       title: "Quit signing"
       content: "Do you want to quit signing the documents?"
@@ -3366,6 +3365,7 @@ idpay:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          lastUpdated: "Saldo aggiornato al "
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
               content: Inserisci un metodo di pagamento valido per effettuare transazioni 
@@ -3406,6 +3406,7 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
@@ -3558,6 +3559,36 @@ idpay:
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
+  unsubscription:
+    headerTitle: Rimuovi l'iniziativa
+    title: Vuoi rimuovere {{initiativeName}}?
+    subtitle: Per proseguire, seleziona tutte le informazioni riportate di seguito.
+    checks:
+      1:
+        title: Non puoi iscriverti un’altra volta
+        content: Proseguendo, perdi il diritto di poter aderire nuovamente all’iniziativa da app IO e tutti gli altri canali abilitati.
+      2:
+        title: Non perdi alcun rimborso
+        content: Se hai crediti da rimborsare, li riceverai all’IBAN da te indicato.
+      3:
+        title: I dati dell’iniziativa non verranno rimossi
+        content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
+      4:
+        title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+    button:
+      continue: Rimuovi
+    modal:
+      title: Rimuovere {{initiativeName}}?
+      content: L’operazione è irreversibile e ha effetto su tutti i canali. Non potrai più utilizzare i fondi a disposizione.
+    success:
+      title: Operazione completata!
+      content: L’iniziativa verrà rimossa entro le prossime 48 ore.
+      button: Torna a Portafoglio
+    failure:
+      title: C’è un problema sui nostri sistemi
+      content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
+      button: Chiudi
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

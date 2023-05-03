@@ -94,7 +94,7 @@ const InitiativeDetailsScreen = () => {
       lastUpdated => (
         <LabelSmall style={styles.lastUpdate} color="bluegrey" weight="Regular">
           {I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+            "idpay.initiative.details.initiativeDetailsScreen.configured.lastUpdated"
           )}
           {lastUpdated}
         </LabelSmall>
