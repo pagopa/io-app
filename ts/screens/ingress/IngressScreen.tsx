@@ -5,17 +5,13 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Container, List, ListItem, Spinner } from "native-base";
 import * as React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { HSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
-import { startApplicationInitialization } from "../../store/actions/application";
 import { ReduxProps } from "../../store/actions/types";
 import {
   sessionInfoSelector,
@@ -36,17 +32,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "startup.contextualHelp.title",
-  body: "startup.contextualHelp.body"
-};
-
 class IngressScreen extends React.PureComponent<Props> {
-  public componentDidMount() {
-    // Dispatch START_APPLICATION_INITIALIZATION to initialize the app
-    this.props.dispatch(startApplicationInitialization());
-  }
-
   public render() {
     const items = [
       {
@@ -64,12 +50,8 @@ class IngressScreen extends React.PureComponent<Props> {
       }
     ];
     return (
-      <BaseScreenComponent
-        goBack={false}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        primary={true}
-        headerBackgroundColor={variables.brandPrimary}
-        appLogo={false}
+      <SafeAreaView
+        style={[IOStyles.flex, { backgroundColor: variables.brandPrimary }]}
       >
         <StatusBar
           barStyle="light-content"
@@ -99,7 +81,7 @@ class IngressScreen extends React.PureComponent<Props> {
             <SectionStatusComponent sectionKey={"ingress"} />
           </View>
         </Container>
-      </BaseScreenComponent>
+      </SafeAreaView>
     );
   }
 }

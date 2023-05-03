@@ -37,6 +37,11 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { Icon } from "../../../../components/core/icons/Icon";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import {
+  getOptionalSignatureFields,
+  getRequiredSignatureFields
+} from "../../utils/signatureFields";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -63,6 +68,9 @@ const FciDocumentsScreen = () => {
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
+    if (documents.length !== 0 && isFocused) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
     // if the user hasn't checked any signauture field,
     // we need to initialize the documentSignatures state
     if (RA.isEmpty(documentSignaturesSelector)) {
@@ -79,24 +87,35 @@ const FciDocumentsScreen = () => {
         })
       );
     }
-  }, [dispatch, documentSignaturesSelector, documents]);
+  }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
 
   React.useEffect(() => {
-    if (documents.length !== 0 && isFocused) {
-      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    // with a document opened, we can track the opening success event
+    if (documents[currentDoc] && isFocused) {
+      trackFciDocOpeningSuccess(
+        currentDoc + 1,
+        getRequiredSignatureFields(
+          documents[currentDoc]?.metadata.signature_fields
+        ).length,
+        getOptionalSignatureFields(
+          documents[currentDoc]?.metadata.signature_fields
+        ).length
+      );
     }
-  }, [currentDoc, documents, dispatch, isFocused]);
+  }, [currentDoc, documents, isFocused]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
-  const onContinuePress = () =>
+  const onContinuePress = () => {
+    trackFciSigningDoc();
     navigation.dispatch(
       StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
         documentId: documents[currentDoc].id,
         currentDoc
       })
     );
+  };
 
   const onCancelPress = () => present();
 
