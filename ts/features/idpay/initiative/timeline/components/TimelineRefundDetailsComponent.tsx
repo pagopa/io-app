@@ -1,7 +1,6 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -21,6 +20,7 @@ import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { idpayInitiativeIdSelector } from "../../details/store";
+import { getRefundPeriodDateString } from "../utils/strings";
 
 type Props = {
   refund: RefundDetailDTO;
@@ -76,31 +76,6 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     O.toNullable
   );
 
-  const refundAmount = pipe(
-    refund.amount,
-    O.fromNullable,
-    O.alt(() => O.some(0)),
-    O.map(amount => formatNumberAmount(amount, true)),
-    O.toNullable
-  );
-
-  const periodDateString = pipe(
-    sequenceS(O.Monad)({
-      startDate: pipe(
-        refund.startDate,
-        O.fromNullable,
-        O.map(date => format(date, "DD/MM/YY"))
-      ),
-      endDate: pipe(
-        refund.endDate,
-        O.fromNullable,
-        O.map(date => format(date, "DD/MM/YY"))
-      )
-    }),
-    O.map(({ startDate, endDate }) => `${startDate} - ${endDate}`),
-    O.getOrElse(() => "-")
-  );
-
   return (
     <>
       <VSpacer size={8} />
@@ -111,7 +86,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.amount")}</Body>
-        <Body weight="SemiBold">{refundAmount}</Body>
+        <Body weight="SemiBold">{formatNumberAmount(refund.amount, true)}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
@@ -131,7 +106,9 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
-        <Body weight="SemiBold">{periodDateString}</Body>
+        <Body weight="SemiBold">
+          {getRefundPeriodDateString(refund.startDate, refund.endDate)}
+        </Body>
       </View>
       <View style={styles.detailRow}>
         <Body>Data rimborso</Body>
