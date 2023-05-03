@@ -31,6 +31,7 @@ import PictogramSms from "./svg/PictogramSms";
 import PictogramInbox from "./svg/PictogramInbox";
 import PictogramBeerMug from "./svg/PictogramBeerMug";
 import PictogramIBANCard from "./svg/IBANCard";
+import PictogramSetup from "./svg/PictogramSetup";
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
@@ -61,7 +62,8 @@ export const IOPictograms = {
   sms: PictogramSms,
   heart: PictogramHeart /* io-heart */,
   completed: PictogramCompleted,
-  ibanCard: PictogramIBANCard
+  ibanCard: PictogramIBANCard,
+  setup: PictogramSetup
 };
 
 export type IOPictogramType = keyof typeof IOPictograms;
