@@ -3447,15 +3447,10 @@ idpay:
       spendFrom: A partire dal giorno
       spendTo: Entro il giorno
       spendPercentage: Percentuale riconosciuta
-      refundRules: Regole di rimborso
-      refundType: Erogazione      
-      refundRuleType: 
-        BUDGET_EXHAUSTED: A saldo esaurito
-        THRESHOLD_REACHED: A soglia raggiunta
       enrollmentDetails: Dettagli dell'adesione
       enrollmentDate: Data
       protocolNumber: Numero di protocollo
-      lastUpdate: "Ultimo aggiornamento: {{dateString}}"
+      lastUpdate: "Saldo aggiornato al {{dateString}}"
       buttons:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}

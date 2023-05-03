@@ -4,10 +4,12 @@ import { Divider } from "../../../../components/core/Divider";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 
 export type TableItem = {
   label: string;
   value: string | ReadonlyArray<TableItem>;
+  footer?: string | React.ReactNode;
 };
 
 type TableProps = {
@@ -23,7 +25,15 @@ const renderTable = (data: ReadonlyArray<TableItem>): React.ReactNode =>
             <H3>{item.label}</H3>
           </View>
           {renderTable(item.value)}
-          <VSpacer size={16} />
+          <VSpacer size={8} />
+          {item.footer && typeof item.footer === "string" ? (
+            <LabelSmall weight="Regular" color="bluegrey">
+              {item.footer}
+            </LabelSmall>
+          ) : (
+            item.footer
+          )}
+          <VSpacer size={8} />
         </Fragment>
       );
     }

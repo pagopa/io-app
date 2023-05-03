@@ -13,8 +13,8 @@ import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
+import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -22,6 +22,10 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { format } from "../../../../../utils/dates";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -29,18 +33,13 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { openWebUrl } from "../../../../../utils/url";
 import { Table, TableItem } from "../../../common/components/Table";
+import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 import { IDPayDetailsParamsList } from "../navigation";
 import {
   idPayBeneficiaryDetailsSelector,
   idpayInitiativeDetailsSelector
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
-import { H3 } from "../../../../../components/core/typography/H3";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../../navigation/params/AppParamsList";
-import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -206,15 +205,6 @@ const BeneficiaryDetailsComponent = (
     O.getOrElse(() => "-")
   );
 
-  const refundRuleString = pipe(
-    beneficiaryDetails.refundRule?.accumulatedAmount?.accumulatedType,
-    O.fromNullable,
-    O.map(type =>
-      I18n.t(`idpay.initiative.beneficiaryDetails.refundRuleType.${type}`)
-    ),
-    O.getOrElse(() => "-")
-  );
-
   const lastUpdateString = pipe(
     beneficiaryDetails.updateDate,
     O.fromNullable,
@@ -246,10 +236,11 @@ const BeneficiaryDetailsComponent = (
           value: toBeRefundedString
         },
         {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.refundRules"),
+          label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
           value: refundedString
         }
-      ]
+      ],
+      footer: lastUpdateString
     },
     {
       label: I18n.t("idpay.initiative.beneficiaryDetails.spendingRules"),
@@ -265,15 +256,6 @@ const BeneficiaryDetailsComponent = (
         {
           label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
           value: rewardPercentageString
-        }
-      ]
-    },
-    {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.refundRules"),
-      value: [
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.refundType"),
-          value: refundRuleString
         }
       ]
     },
@@ -296,9 +278,6 @@ const BeneficiaryDetailsComponent = (
     <>
       {ruleInfoBox}
       <Table items={tableItems} />
-      <LabelSmall weight="Regular" color="bluegrey">
-        {lastUpdateString}
-      </LabelSmall>
     </>
   );
 };
@@ -341,7 +320,7 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
           <Icon name="categLearning" color="blue" />
           <HSpacer size={8} />
           <Link onPress={() => present()}>
-            {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}{" "}
+            {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}
           </Link>
         </View>
       </View>
