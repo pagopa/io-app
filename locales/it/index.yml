@@ -3234,6 +3234,9 @@ features:
         signing:
           title: La firma non è andata a buon fine
           subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete, contatta l’assistenza.
+        wrongUser:
+          title: Non puoi firmare questi documenti
+          subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3426,6 +3429,7 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
