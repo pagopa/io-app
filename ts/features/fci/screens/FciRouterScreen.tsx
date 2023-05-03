@@ -3,6 +3,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "../../../i18n";
 import doubt from "../../../../img/pictograms/doubt.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
@@ -93,7 +94,12 @@ const FciSignatureScreen = (
       O.fromNullable,
       O.map(e => getErrorFromNetworkError(e)),
       O.map(error => getGenericError(error)),
-      O.map(error => JSON.parse(error.value.message)),
+      O.map(error =>
+        TE.tryCatch(
+          () => JSON.parse(error.value.message),
+          () => GenericError()
+        )
+      ),
       O.map(ProblemJson.decode),
       O.map(
         E.fold(
