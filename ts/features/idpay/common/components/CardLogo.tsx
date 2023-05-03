@@ -34,14 +34,8 @@ export const getCardLogoComponent = (brand: string, size: number = 24) =>
   pipe(
     brand,
     O.of,
-    O.chain(brand => {
-      // Normal check for correct brand type
-      if (isIOLogoPaymentType(brand)) {
-        return O.some(brand);
-      }
-      // If fails, we check if the brand was sent UPPERCASE
-      return O.fromNullable(IOPaymentLogosCaseMapping[brand]);
-    }),
+    O.filter(isIOLogoPaymentType),
+    O.alt(() => O.fromNullable(IOPaymentLogosCaseMapping[brand])),
     O.fold(
       () => <Icon name="creditCard" size={size} />,
       brand => <LogoPayment name={brand} size={size} />
