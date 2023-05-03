@@ -16,6 +16,7 @@ import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { watchIDPayInitiativeDetailsSaga } from "../../initiative/details/saga";
 import { watchIDPayWalletSaga } from "../../wallet/saga";
 import { createIDPayClient } from "../api/client";
+import { watchIDPayTimelineSaga } from "../../initiative/timeline/saga";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -40,4 +41,5 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
     token,
     preferredLanguage
   );
+  yield* fork(watchIDPayTimelineSaga, client, token, preferredLanguage);
 }
