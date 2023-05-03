@@ -129,8 +129,6 @@ import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
 import LegIconSearch from "./svg/LegIconSearch";
-import LegIconClose from "./svg/LegIconClose";
-import LegIconCloseSmall from "./svg/LegIconCloseSmall";
 import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
@@ -236,10 +234,8 @@ export const IOIcons = {
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
   legChevronLeft: LegIconChevronLeft,
-  close: IconClose,
-  legClose: LegIconClose /* io-close */,
+  close: IconClose /* io-close */,
   closeSmall: IconCloseSmall,
-  legCloseSmall: LegIconCloseSmall,
   arrowBottom: IconArrowBottom,
   arrowLeft: IconArrowLeft,
   arrowTop: IconArrowTop,
