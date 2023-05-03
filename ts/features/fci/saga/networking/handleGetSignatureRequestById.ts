@@ -41,7 +41,7 @@ export function* handleGetSignatureRequestById(
     }
 
     throw Error(
-      `response status ${getSignatureDetailViewByIdResponse.right.status}`
+      `${JSON.stringify(getSignatureDetailViewByIdResponse.right.value)}`
     );
   } catch (e) {
     yield* put(fciSignatureRequestFromId.failure(getNetworkError(e)));
