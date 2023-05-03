@@ -6,7 +6,6 @@
  * - it is displayed after the onboarding (navigation from the profile section)
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { StackActions } from "@react-navigation/native";
 import * as React from "react";
 import { Alert } from "react-native";
 import EmailReadComponent from "../../components/EmailReadComponent";
@@ -64,7 +63,6 @@ const OnboardingEmailReadScreen = (props: Props) => {
       bordered: true,
       title: I18n.t("email.edit.cta"),
       onPress: () => {
-        props.navigation.dispatch(StackActions.popToTop());
         props.navigation.navigate(ROUTES.ONBOARDING, {
           screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
         });

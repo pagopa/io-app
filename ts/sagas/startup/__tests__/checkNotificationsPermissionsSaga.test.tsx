@@ -1,4 +1,4 @@
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
@@ -75,6 +75,8 @@ describe("checkNotificationsPermissionsSaga", () => {
       )
       .next()
       .take(notificationsInfoScreenConsent)
+      .next()
+      .call(NavigationService.dispatchNavigationAction, StackActions.popToTop())
       .next()
       .isDone();
   });
