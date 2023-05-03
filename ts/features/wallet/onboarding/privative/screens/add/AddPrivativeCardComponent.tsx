@@ -87,7 +87,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
             />
             <VSpacer size={24} />
             {isBlocked && (
-              <InfoBox iconColor="red" iconName="legError">
+              <InfoBox iconColor="red" iconName="errorFilled">
                 <Body>{blockedCard}</Body>
               </InfoBox>
             )}

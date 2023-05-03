@@ -14,7 +14,7 @@ type Props = {
 const ErrorContent = ({ text, close }: Props) => (
   <CommonContent close={close}>
     <View style={IOStyles.selfCenter}>
-      <Icon name="legError" size={120} color="red" />
+      <Icon name="errorFilled" size={120} color="red" />
     </View>
     <VSpacer size={16} />
 

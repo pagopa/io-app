@@ -110,7 +110,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       </AppHeader>
       <Content style={IOStyles.flex}>
         <View style={IOStyles.selfCenter}>
-          <Icon name="legError" size={120} color="red" />
+          <Icon name="errorFilled" size={120} color="red" />
         </View>
         <VSpacer size={16} />
         <View style={styles.itemsCenter}>

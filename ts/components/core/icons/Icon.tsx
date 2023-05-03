@@ -128,9 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconHistory from "./svg/LegIconHistory";
-import LegIconEdit from "./svg/LegIconEdit";
-import LegIconTrashcan from "./svg/LegIconTrashcan";
 import LegIconCalendar from "./svg/LegIconCalendar";
 import LegIconProfile from "./svg/LegIconProfile";
 import LegIconProfileExperiment from "./svg/LegIconProfileExperiment";
@@ -148,7 +145,6 @@ import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
 import LegIconChevronLeft from "./svg/LegIconChevronLeft";
-import LegIconError from "./svg/LegIconError";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
@@ -216,17 +212,13 @@ export const IOIcons = {
   info: IconInfo,
   infoFilled: IconInfoFilled,
   canceled: IconCanceled,
-  legError: LegIconError,
   errorFilled: IconErrorFilled,
   refund: IconRefund,
   reload: IconReload,
   history: IconHistory,
-  legHistory: LegIconHistory,
   edit: IconEdit,
-  legEdit: LegIconEdit,
   battery: IconBattery,
   trashcan: IconTrashcan,
-  legTrashcan: LegIconTrashcan,
   calendar: IconCalendar,
   legCalendar: LegIconCalendar /* io-calendar */ /* io-calendario */,
   profile: IconProfile,
