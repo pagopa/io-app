@@ -12,7 +12,8 @@ import {
   Easing,
   SafeAreaView,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  Platform
 } from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
@@ -408,7 +409,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         isShareEnabled()
           ? {
               label: I18n.t("global.genericShare").toLowerCase(),
-              iconName: "legShare",
+              iconName: Platform.OS === "android" ? "shareAndroid" : "shareiOs",
               onPress: handleShare
             }
           : undefined

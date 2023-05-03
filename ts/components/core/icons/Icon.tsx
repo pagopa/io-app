@@ -127,7 +127,6 @@ import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconShare from "./svg/LegIconShare";
 import LegIconSearch from "./svg/LegIconSearch";
 import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
@@ -150,7 +149,6 @@ export const IOIcons = {
   hourglass: IconHourglass,
   shareiOs: IconShareiOs,
   shareAndroid: IconShareAndroid,
-  legShare: LegIconShare,
   locked: IconLockOn /* io-lucchetto */,
   unlocked: IconLockOff,
   initiatives: IconInitiatives,
