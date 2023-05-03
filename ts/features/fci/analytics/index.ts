@@ -86,7 +86,7 @@ const trackFciAction =
       case getType(fciShowSignedDocumentsStartRequest):
       case getType(fciShowSignedDocumentsEndRequest):
       case getType(fciPollFilledDocument.request):
-      case getType(fciPollFilledDocument.cancel):
+      case getType(fciPollFilledDocument.success):
         return mp.track(action.type);
       case getType(fciSignatureRequestFromId.failure):
       case getType(fciLoadQtspClauses.failure):
