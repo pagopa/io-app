@@ -47,8 +47,8 @@ const FciSignatureScreen = (
   if (!fciEnabled) {
     return (
       <GenericErrorComponent
-        title={I18n.t("features.fci.errors.generic.default.title")}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        title={I18n.t("features.fci.errors.generic.update.title")}
+        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
         testID="GenericErrorComponentTestID"
       />
