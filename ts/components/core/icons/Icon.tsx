@@ -128,8 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconUnknownGdo from "./svg/LegIconUnknownGdo";
-import LegIconQuestion from "./svg/LegIconQuestion";
 import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
@@ -228,12 +226,10 @@ export const IOIcons = {
   gallery: IconGallery,
   externalLink: IconExternalLink,
   unknownGdo: IconUnknownGdo,
-  legUnknownGdo: LegIconUnknownGdo,
   cancel: IconCancel,
-  help: IconQuestion,
-  legHelp: LegIconQuestion /* io-question */,
-  search: IconSearch,
-  legSearch: LegIconSearch /* io-search */,
+  help: IconQuestion /* io-question */,
+  search: IconSearch /* io-search */,
+  legSearch: LegIconSearch,
   chevronRight: IconChevronRight,
   chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
