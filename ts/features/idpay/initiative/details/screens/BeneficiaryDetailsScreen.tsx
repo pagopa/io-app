@@ -206,6 +206,15 @@ const BeneficiaryDetailsComponent = (
     O.getOrElse(() => "-")
   );
 
+  const refundRuleString = pipe(
+    beneficiaryDetails.refundRule?.accumulatedAmount?.accumulatedType,
+    O.fromNullable,
+    O.map(type =>
+      I18n.t(`idpay.initiative.beneficiaryDetails.refundRuleType.${type}`)
+    ),
+    O.getOrElse(() => "-")
+  );
+
   const lastUpdateString = pipe(
     beneficiaryDetails.updateDate,
     O.fromNullable,
@@ -264,7 +273,7 @@ const BeneficiaryDetailsComponent = (
       value: [
         {
           label: I18n.t("idpay.initiative.beneficiaryDetails.refundType"),
-          value: "-"
+          value: refundRuleString
         }
       ]
     },
