@@ -36,7 +36,10 @@ import {
 import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import {
+  IO_INTERNAL_LINK_PREFIX,
+  IO_UNIVERSAL_LINK_PREFIX
+} from "../utils/navigation";
 import NavigationService, { navigationRef } from "./NavigationService";
 import ROUTES from "./routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
@@ -84,7 +87,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const linking: LinkingOptions = {
     enabled: !isTestEnv, // disable linking in test env
-    prefixes: [IO_INTERNAL_LINK_PREFIX, "https://continua.io.pagopa.it"],
+    prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
     config: {
       initialRouteName: ROUTES.MAIN,
       screens: {
