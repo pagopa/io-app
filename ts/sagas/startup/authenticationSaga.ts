@@ -4,9 +4,10 @@ import {
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
 import { loginSuccess } from "../../store/actions/authentication";
-import { resetToAuthenticationRoute } from "../../store/actions/navigation";
+import { startupLoadSuccess } from "../../store/actions/startup";
 import { SessionToken } from "../../types/SessionToken";
 import { ReduxSagaEffect } from "../../types/utils";
+import { StartupStatusEnum } from "../../store/reducers/startup";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
@@ -19,6 +20,7 @@ export function* authenticationSaga(): Generator<
   SessionToken,
   any
 > {
+  yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
   yield* put(analyticsAuthenticationStarted());
 
   // Watch for the test login
@@ -27,7 +29,7 @@ export function* authenticationSaga(): Generator<
   const watchCieAuthentication = yield* fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
-  yield* call(resetToAuthenticationRoute);
+  // yield* call(resetToAuthenticationRoute);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
