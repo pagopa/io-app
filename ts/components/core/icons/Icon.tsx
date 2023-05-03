@@ -128,13 +128,11 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconDocumentAttachmentPDF from "./svg/LegIconDocumentAttachmentPDF";
 import LegIconAttachment from "./svg/LegIconAttachment";
 import LegIconAdd from "./svg/LegIconAdd";
 import LegIconCompleted from "./svg/LegIconCompleted";
 import LegIconCreditCard from "./svg/LegIconCreditCard";
 import LegIconBonus from "./svg/LegIconBonus";
-import LegIconDocumentAttachment from "./svg/LegIconDocumentAttachment";
 import LegIconAmount from "./svg/LegIconAmount";
 import LegIconCoggle from "./svg/LegIconCoggle";
 import LegIconLocation from "./svg/LegIconLocation";
@@ -160,7 +158,6 @@ import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
 import LegIconChevronLeft from "./svg/LegIconChevronLeft";
-import LegIconGiacenza from "./svg/LegIconGiacenza";
 import LegIconError from "./svg/LegIconError";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
@@ -206,11 +203,8 @@ export const IOIcons = {
   docAgree: IconAgreement,
   security: IconSecurity,
   docGiacenza: IconGiacenza,
-  legDocGiacenza: LegIconGiacenza,
   docAttach: IconDocumentAttachment,
   docAttachPDF: IconDocumentAttachmentPDF,
-  legDocAttach: LegIconDocumentAttachment,
-  legDocAttachPDF: LegIconDocumentAttachmentPDF,
   attachment: IconAttachment,
   legAttachment: LegIconAttachment,
   add: IconAdd,
