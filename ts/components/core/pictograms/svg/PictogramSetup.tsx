@@ -2,7 +2,7 @@ import React from "react";
 import Svg, { ClipPath, Defs, G, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const EmptyInitiative = ({ size, color, ...props }: SVGPictogramProps) => (
+const PictogramSetup = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg width={size} height={size} viewBox="0 0 72 72" {...props}>
     <G clip-path="url(#a)">
       <Path
@@ -34,4 +34,4 @@ const EmptyInitiative = ({ size, color, ...props }: SVGPictogramProps) => (
   </Svg>
 );
 
-export default EmptyInitiative;
+export default PictogramSetup;

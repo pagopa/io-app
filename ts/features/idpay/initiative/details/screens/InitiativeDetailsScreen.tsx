@@ -122,7 +122,7 @@ const InitiativeDetailsScreen = () => {
     if (initiativeNeedsConfiguration) {
       return (
         <View style={styles.newInitiativeMessageContainer}>
-          <Pictogram name="emptyInitiative" size={72} />
+          <Pictogram name="setup" size={72} />
           <VSpacer size={16} />
           <H3>
             {I18n.t(
