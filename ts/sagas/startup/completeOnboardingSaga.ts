@@ -1,5 +1,5 @@
 import { call, take } from "typed-redux-saga/macro";
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { completeOnboarding } from "../../store/actions/onboarding";
@@ -13,4 +13,8 @@ export function* completeOnboardingSaga() {
   );
 
   yield* take(completeOnboarding);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 }

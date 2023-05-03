@@ -25,8 +25,13 @@ export const lollipopRemovePublicKey = createStandardAction(
   "LOLLIPOP_REMOVE_PUBLIC_KEY"
 )();
 
+export const lollipopSetSupportedDevice = createStandardAction(
+  "LOLLIPOP_SET_SUPPORTED_DEVICE"
+)<boolean>();
+
 export type LollipopActions = ActionType<
   | typeof lollipopKeyTagSave
   | typeof lollipopSetPublicKey
   | typeof lollipopRemovePublicKey
+  | typeof lollipopSetSupportedDevice
 >;
