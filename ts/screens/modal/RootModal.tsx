@@ -4,6 +4,8 @@ import {
   isAppSupportedSelector,
   versionInfoDataSelector
 } from "../../common/versionInfo/store/reducers/versionInfo";
+import UnsupportedDeviceScreen from "../../features/lollipop/screens/UnsupportedDeviceScreen";
+import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
@@ -20,6 +22,9 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - IdentificationModal -> the default case. It renders itself only if an identification action is required
  */
 const RootModal: React.FunctionComponent<Props> = (props: Props) => {
+  if (!props.isDeviceSupported) {
+    return <UnsupportedDeviceScreen />;
+  }
   // avoid app usage if backend systems are OFF
   if (props.isBackendServicesStatusOff) {
     return <SystemOffModal />;
@@ -38,7 +43,8 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
   isAppSupported: isAppSupportedSelector(state),
-  versionInfo: versionInfoDataSelector(state)
+  versionInfo: versionInfoDataSelector(state),
+  isDeviceSupported: isDeviceSupportedSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);
