@@ -106,9 +106,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
-        <Body weight="SemiBold">
-          {getRefundPeriodDateString(refund.startDate, refund.endDate)}
-        </Body>
+        <Body weight="SemiBold">{getRefundPeriodDateString(refund)}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>Data rimborso</Body>
