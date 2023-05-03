@@ -164,6 +164,7 @@ const AuthenticatedStackNavigator = () => {
             component={IDPayConfigurationNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
           />
+
           <Stack.Screen
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
