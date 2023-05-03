@@ -27,7 +27,6 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
-  fciEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
@@ -302,6 +301,9 @@ export function* initializeApplicationSaga(): Generator<
     backendClient.upsertMessageStatusAttributes
   );
 
+  // watch FCI saga
+  yield* fork(watchFciSaga, sessionToken, keyInfo);
+
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -519,10 +521,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
-  if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken, keyInfo);
-  }
-
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
 
@@ -599,6 +597,7 @@ export function* initializeApplicationSaga(): Generator<
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
+
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
