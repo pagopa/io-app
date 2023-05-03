@@ -28,7 +28,7 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
   <View style={IOStyles.row}>
     <View style={styles.icon}>
       <Icon
-        name={props.iconName || "legNotice"}
+        name={props.iconName || "notice"}
         size={props.iconSize ?? defaultIconSize}
         color={props.iconColor || "blue"}
       />

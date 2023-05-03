@@ -69,7 +69,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => {
     <NBListItem onPress={onPress} style={{ paddingEnd: 0 }}>
       {hasWarnings && (
         <>
-          <Icon name="legWarning" color="red" />
+          <Icon name="notice" color="red" />
           <HSpacer size={16} />
         </>
       )}

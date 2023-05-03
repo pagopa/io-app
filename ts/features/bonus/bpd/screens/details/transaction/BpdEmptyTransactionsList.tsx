@@ -9,7 +9,7 @@ import { BottomSheetBpdTransactionsBody } from "../../../components/BpdTransacti
 
 const BpdEmptyTransactionsList: React.FunctionComponent = () => (
   <>
-    <InfoBox iconName="legWarning" iconSize={32} alignedCentral={true}>
+    <InfoBox iconName="notice" iconSize={32} alignedCentral={true}>
       <H4>{I18n.t("bonus.bpd.details.transaction.detail.empty.text1")}</H4>
       <Body>{I18n.t("bonus.bpd.details.transaction.detail.empty.text2")}</Body>
     </InfoBox>

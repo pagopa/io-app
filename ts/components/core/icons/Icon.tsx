@@ -128,8 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconWarning from "./svg/LegIconWarning";
-import LegIconNotice from "./svg/LegIconNotice";
 import LegIconHistory from "./svg/LegIconHistory";
 import LegIconEdit from "./svg/LegIconEdit";
 import LegIconTrashcan from "./svg/LegIconTrashcan";
@@ -213,10 +211,8 @@ export const IOIcons = {
   locationAndroid: IconLocationAndroid,
   coggle: IconCoggle,
   warningFilled: IconWarningFilled,
-  legWarning: LegIconWarning /* io-warning */,
-  notice: IconNotice,
+  notice: IconNotice /* io-warning */,
   noticeFilled: IconNoticeFilled,
-  legNotice: LegIconNotice,
   info: IconInfo,
   infoFilled: IconInfoFilled,
   canceled: IconCanceled,
