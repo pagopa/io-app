@@ -5,6 +5,8 @@ import { Platform } from "react-native";
 export const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
 export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 
+export const IO_UNIVERSAL_LINK_PREFIX = "https://continua.io.pagopa.it";
+
 export const convertUrlToNavigationLink = (path: string) =>
   path.replace(IO_INTERNAL_LINK_PREFIX, "/");
 

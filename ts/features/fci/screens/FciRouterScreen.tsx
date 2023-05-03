@@ -15,6 +15,8 @@ import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadi
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
 import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
+import { isFciEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isTestEnv } from "../../../utils/environment";
 import {
   NetworkError,
   getErrorFromNetworkError,
@@ -33,10 +35,25 @@ const FciSignatureScreen = (
   const signatureRequestId = props.route.params.signatureRequestId;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
+  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
+  const fciEnabled = isTestEnv || fciEnabledSelector;
 
   React.useEffect(() => {
-    dispatch(fciSignatureRequestFromId.request(signatureRequestId));
-  }, [dispatch, signatureRequestId]);
+    if (fciEnabled) {
+      dispatch(fciSignatureRequestFromId.request(signatureRequestId));
+    }
+  }, [dispatch, signatureRequestId, fciEnabled]);
+
+  if (!fciEnabled) {
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.update.title")}
+        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+        testID="GenericErrorComponentTestID"
+      />
+    );
+  }
 
   const LoadingComponent = () => (
     <LoadingErrorComponent
