@@ -1,4 +1,5 @@
 import { call, put, select, take } from "typed-redux-saga/macro";
+import { StackActions } from "@react-navigation/native";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
@@ -9,6 +10,7 @@ import {
   getBiometricsType,
   isBiometricsValidType
 } from "../../utils/biometrics";
+import NavigationService from "../../navigation/NavigationService";
 
 /**
  * Query TouchID library to retrieve availability information. The ONLY cases
@@ -49,6 +51,11 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: true
       })
+    );
+
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
     );
   } else {
     // Set Fingerprint usage system preference to false otherwise

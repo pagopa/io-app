@@ -5,6 +5,8 @@ import {
   clausesByType,
   getAllTypes,
   getClauseLabel,
+  getOptionalSignatureFields,
+  getRequiredSignatureFields,
   getSectionListData
 } from "../signatureFields";
 
@@ -25,6 +27,40 @@ const signatureFields: ReadonlyArray<SignatureField> = [
     },
     attrs: emptyAttrs
   },
+  {
+    clause: {
+      title: "clause title 3",
+      type: ClausesTypeEnum.OPTIONAL
+    },
+    attrs: emptyAttrs
+  },
+  {
+    clause: {
+      title: "clause title 4",
+      type: ClausesTypeEnum.OPTIONAL
+    },
+    attrs: emptyAttrs
+  }
+];
+
+const requiredSignatureFields = [
+  {
+    clause: {
+      title: "clause title 1",
+      type: ClausesTypeEnum.REQUIRED
+    },
+    attrs: emptyAttrs
+  },
+  {
+    clause: {
+      title: "clause title 2",
+      type: ClausesTypeEnum.UNFAIR
+    },
+    attrs: emptyAttrs
+  }
+];
+
+const optionalSignatureFields = [
   {
     clause: {
       title: "clause title 3",
@@ -126,6 +162,22 @@ describe("Test signatureFields utils", () => {
     it("it should returns the right text for UNFAIR type", () => {
       expect(getClauseLabel(ClausesTypeEnum.UNFAIR)).toStrictEqual(
         I18n.t("features.fci.signatureFields.unfair")
+      );
+    });
+  });
+
+  describe("Test getRequiredSignatureFields", () => {
+    it("it should returns an array of UNFAIR and REQUIRED signature fields", () => {
+      expect(getRequiredSignatureFields(signatureFields)).toStrictEqual(
+        requiredSignatureFields
+      );
+    });
+  });
+
+  describe("Test getOptionalSignatureFields", () => {
+    it("it should returns an array of OPTIONAL signature fields", () => {
+      expect(getOptionalSignatureFields(signatureFields)).toStrictEqual(
+        optionalSignatureFields
       );
     });
   });

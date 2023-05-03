@@ -1,7 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { completeOnboardingSaga } from "../../../sagas/startup/completeOnboardingSaga";
 import OnboardingCompletedScreen from "../OnboardingCompletedScreen";
 import I18n from "../../../i18n";
@@ -42,6 +42,11 @@ describe("Given the completeOnboardingSaga", () => {
         )
         .next()
         .take(completeOnboarding)
+        .next()
+        .call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.popToTop()
+        )
         .next()
         .isDone();
     });
