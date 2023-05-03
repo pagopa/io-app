@@ -128,11 +128,6 @@ import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
 import LegIconShare from "./svg/LegIconShare";
-import LegIconCreditCard from "./svg/LegIconCreditCard";
-import LegIconBonus from "./svg/LegIconBonus";
-import LegIconAmount from "./svg/LegIconAmount";
-import LegIconCoggle from "./svg/LegIconCoggle";
-import LegIconLocation from "./svg/LegIconLocation";
 import LegIconWarning from "./svg/LegIconWarning";
 import LegIconNotice from "./svg/LegIconNotice";
 import LegIconHistory from "./svg/LegIconHistory";
@@ -208,20 +203,15 @@ export const IOIcons = {
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,
-  creditCard: IconCreditCard,
-  legCreditCard: LegIconCreditCard /* io-carta */,
+  creditCard: IconCreditCard /* io-carta */,
   bonus: IconBonus,
-  legBonus: LegIconBonus,
   transactions: IconTransactions,
   amount: IconAmount,
-  legAmount: LegIconAmount,
   psp: IconPSP,
   locationiOS: IconLocationiOS,
   locationiOSFilled: IconLocationiOSFilled,
   locationAndroid: IconLocationAndroid,
-  legLocation: LegIconLocation,
   coggle: IconCoggle,
-  legCoggle: LegIconCoggle,
   warningFilled: IconWarningFilled,
   legWarning: LegIconWarning /* io-warning */,
   notice: IconNotice,
