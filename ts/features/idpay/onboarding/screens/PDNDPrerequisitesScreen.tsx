@@ -11,27 +11,19 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { PDNDCriteriaItem } from "../components/PDNDCriteriaItem";
+import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.contextualHelpTitle",
-  body: "profile.main.contextualHelpContent"
-};
-
-const title = I18n.t("idpay.onboarding.PDNDPrerequisites.title");
-const headerString = I18n.t("idpay.onboarding.navigation.header");
 
 const secondaryButtonProps = {
   block: true,
@@ -43,11 +35,6 @@ const primaryButtonProps = {
   bordered: false,
   title: I18n.t("global.buttons.continue")
 };
-
-const subtitle = (service: string) =>
-  I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
-    service
-  });
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -63,9 +50,8 @@ export const PDNDPrerequisitesScreen = () => {
   const serviceId = useSelector(machine, selectServiceId);
 
   const serviceName = pipe(
-    pot.toOption(
-      useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none
-    ),
+    useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none,
+    pot.toOption,
     O.fold(
       () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),
       service => service.service_name
@@ -84,7 +70,6 @@ export const PDNDPrerequisitesScreen = () => {
     </Markdown>,
     I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
     BOTTOM_SHEET_HEIGHT,
-
     <FooterWithButtons
       type="SingleButton"
       leftButton={{
@@ -109,23 +94,30 @@ export const PDNDPrerequisitesScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <BaseScreenComponent
         goBack={goBackOnPress}
-        headerTitle={headerString}
-        contextualHelpMarkdown={contextualHelpMarkdown}
+        headerTitle={I18n.t("idpay.onboarding.navigation.header")}
+        contextualHelp={emptyContextualHelp}
       >
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <VSpacer size={16} />
-            <H1>{title}</H1>
+            <H1>{I18n.t("idpay.onboarding.PDNDPrerequisites.title")}</H1>
             <VSpacer size={16} />
-            <Body>{subtitle(serviceName)}</Body>
+            <Body>
+              {I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
+                service: serviceName
+              })}
+            </Body>
           </View>
           <View
             style={[IOStyles.horizontalContentPadding, styles.listContainer]}
           >
             {pdndCriteria.map((criteria, index) => (
               <React.Fragment key={index}>
-                <PDNDCriteriaItem
-                  criteria={criteria}
+                <ButtonExtendedOutline
+                  label={I18n.t(
+                    `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
+                  )}
+                  description={getPDNDCriteriaDescription(criteria)}
                   onPress={() => {
                     setAuthority(criteria.authority);
                     present();
