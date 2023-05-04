@@ -46,7 +46,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { loginFailure, loginSuccess } from "../../store/actions/authentication";
+import { disableNativeAuthentication, loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { SessionToken } from "../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
@@ -92,12 +92,14 @@ export type AuthSessionErrorPageType = {
 
 type RequestInfoPositiveStates = {
   requestState: "LOADING" | "AUTHORIZED" | "AUTHORIZING";
+  nativeAttempts: number;
 };
 
 type RequestInfoError = {
   requestState: "ERROR";
   errorType: ErrorType;
   errorCode?: string;
+  nativeAttempts: number;
 };
 
 type RequestInfo = RequestInfoPositiveStates | RequestInfoError;
@@ -170,23 +172,27 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
 
 export const AuthSessionPage = () => {
   const [requestInfo, setRequestInfo] = useState<RequestInfo>({
-    requestState: "LOADING"
+    requestState: "LOADING",
+    nativeAttempts: 0
   });
-    // This is a handler for the browser login. It applies to android only.
-    useEffect(() => {
-      const subscription = AppState.addEventListener('change', nextAppState => {
-        if(nextAppState === "background"){
-          setRequestInfo({
-            requestState: "AUTHORIZING",
-          });
-        };
-      });
-  
-      return () => {
-        subscription.remove();
+
+
+  // This is a handler for the browser login. It applies to android only.
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if(nextAppState === "background"){
+        setRequestInfo({
+          requestState: "AUTHORIZING",
+          nativeAttempts: requestInfo.nativeAttempts
+        });
       };
-    }, []);
-  
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [requestInfo.nativeAttempts]);
+
 
 
   const dispatch = useIODispatch();
@@ -255,10 +261,11 @@ export const AuthSessionPage = () => {
       setRequestInfo({
         requestState: "ERROR",
         errorType: ErrorType.LOGIN_ERROR,
-        errorCode: code
+        errorCode: code,
+        nativeAttempts: requestInfo.nativeAttempts
       });
     },
-    [choosenTool, dispatch, idp]
+    [choosenTool, dispatch, idp, requestInfo.nativeAttempts]
   );
 
   const handleLoginSuccess = useCallback(
@@ -268,7 +275,6 @@ export const AuthSessionPage = () => {
     },
     [choosenTool, dispatch, idp]
   );
-
   // This function is executed when the native component resolve with an error or when loginUri is undefined.
   // This error is a string.
   // About the first case, unless there is a problem with the phone crashing for other reasons, this is very unlikely to happen.
@@ -279,13 +285,21 @@ export const AuthSessionPage = () => {
         description: error,
         errorType: ErrorType.LOADING_ERROR
       });
+      
+      // If native login component fails 3 times, it returns to idp selection screen and tries to login with WebView.
+      if(requestInfo.nativeAttempts > 1){
+        dispatch(disableNativeAuthentication());
+        onBack();
+        return;
+      }
 
       setRequestInfo({
         requestState: "ERROR",
-        errorType: ErrorType.LOADING_ERROR
+        errorType: ErrorType.LOADING_ERROR,
+        nativeAttempts: requestInfo.nativeAttempts
       });
     },
-    [loggedOutWithIdpAuth?.idp.id]
+    [dispatch, loggedOutWithIdpAuth?.idp.id, requestInfo.nativeAttempts]
   );
 
   const contextualHelp = useMemo(() => {
@@ -320,7 +334,8 @@ export const AuthSessionPage = () => {
             const result = extractLoginResult(response);
             if (result?.success) {
               setRequestInfo({
-                requestState: "AUTHORIZED"
+                requestState: "AUTHORIZED",
+                nativeAttempts: requestInfo.nativeAttempts
               });
               handleLoginSuccess(result.token);
             } else {
@@ -334,7 +349,8 @@ export const AuthSessionPage = () => {
       .catch(_ =>
         setRequestInfo({
           requestState: "ERROR",
-          errorType: ErrorType.LOGIN_ERROR
+          errorType: ErrorType.LOGIN_ERROR,
+          nativeAttempts: requestInfo.nativeAttempts
         })
       );
   } else if (!loginUri) {
@@ -342,7 +358,8 @@ export const AuthSessionPage = () => {
   } else if (O.isNone(maybeKeyTag)) {
     setRequestInfo({
       requestState: "ERROR",
-      errorType: ErrorType.LOGIN_ERROR // VA AGGIUNTO UN CODICE DI ERRORE (anche dev server)??
+      errorType: ErrorType.LOGIN_ERROR, // VA AGGIUNTO UN CODICE DI ERRORE (anche dev server)??
+      nativeAttempts: requestInfo.nativeAttempts
     });
     trackLollipopIdpLoginFailure(
       "Missing keyTag while trying to login with lollipop"
@@ -367,7 +384,7 @@ export const AuthSessionPage = () => {
 
   // It is enough to set the status to loading,
   // the reload will ensure that the functions necessary for correct functioning are performed.
-  const onRetry = () => setRequestInfo({ requestState: "LOADING" });
+  const onRetry = () => setRequestInfo({ requestState: "LOADING",nativeAttempts: requestInfo.nativeAttempts + 1 });
 
   if (requestInfo.requestState === "AUTHORIZED") {
     return <IdpSuccessfulAuthentication />;
@@ -402,7 +419,7 @@ export const AuthSessionPage = () => {
                   {I18n.t("spid.pending_login.title")}
                 </H3>
                 <VSpacer size={16} />
-                <Text alignCenter={true}>
+                <Text>
                   {I18n.t("spid.pending_login.details")}
                 </Text>
               </View>

@@ -34,6 +34,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
+import { nativeLoginSelector } from "../../store/reducers/nativeLogin";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -80,15 +81,19 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       >
     >();
 
+  const isNativeLogiEnabled = () =>
+    (Platform.OS !== "ios" ||
+      (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
+    props.nativeLoginFeature.enabled;
+
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    if(Platform.OS !== 'ios' || (Platform.OS === 'ios' && parseInt(Platform.Version,10) > 13) ){
+    if (isNativeLogiEnabled()) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_AUTH_SESSION
       });
-    }
-    else {
+    } else {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_IDP_LOGIN
       });
@@ -189,7 +194,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => ({
   idps: idpsSelector(state),
   isIdpsLoading: isLoading(idpsStateSelector(state)),
-  assistanceToolConfig: assistanceToolConfigSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  nativeLoginFeature: nativeLoginSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
