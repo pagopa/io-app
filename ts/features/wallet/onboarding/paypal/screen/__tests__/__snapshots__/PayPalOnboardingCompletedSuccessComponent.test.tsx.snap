@@ -585,7 +585,6 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           style={
                                             Object {
                                               "backgroundColor": "#FFFFFF",
-                                              "elevation": 20,
                                               "paddingBottom": 16,
                                               "paddingLeft": 24,
                                               "paddingRight": 24,
