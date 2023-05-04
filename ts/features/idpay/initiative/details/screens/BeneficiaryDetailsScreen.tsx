@@ -93,7 +93,7 @@ const BeneficiaryDetailsScreen = () => {
     }),
     O.fold(
       () => <ScreenSkeleton />,
-      props => <BeneficiaryDetailsComponent {...props} />
+      props => <BeneficiaryDetailsContent {...props} />
     )
   );
 
@@ -125,14 +125,12 @@ const BeneficiaryDetailsScreen = () => {
   );
 };
 
-type BeneficiaryDetailsComponentProps = {
+type BeneficiaryDetailsContentProps = {
   details: InitiativeDTO;
   beneficiaryDetails: InitiativeDetailDTO;
 };
 
-const BeneficiaryDetailsComponent = (
-  props: BeneficiaryDetailsComponentProps
-) => {
+const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
   const { details, beneficiaryDetails } = props;
 
   const ruleInfoBox = pipe(
