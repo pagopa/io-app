@@ -52,7 +52,11 @@ export const IOStyles = StyleSheet.create({
     shadowOpacity: themeVariables.footerShadowOpacity,
     shadowRadius: themeVariables.footerShadowRadius,
     // Android shadow
-    elevation: themeVariables.footerElevation
+    ...Platform.select({
+      android: {
+        elevation: themeVariables.footerElevation
+      }
+    })
   },
   bgWhite: {
     backgroundColor: IOColors.white
@@ -86,8 +90,12 @@ export const IOButtonLegacyStyles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    textAlignVertical: "center", // Android
     justifyContent: "center",
+    ...Platform.select({
+      android: {
+        textAlignVertical: "center"
+      }
+    }),
     /* Legacy visual properties. They will be replaced with
     dynamic ones once NativeBase is gone */
     borderRadius: themeVariables.btnBorderRadius,
@@ -127,8 +135,12 @@ export const IOButtonStyles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    textAlignVertical: "center", // Android
     justifyContent: "center",
+    ...Platform.select({
+      android: {
+        textAlignVertical: "center"
+      }
+    }),
     /* Legacy visual properties. They will be replaced with
     dynamic ones once NativeBase is gone */
     borderRadius: btnBorderRadius,
@@ -143,8 +155,12 @@ export const IOButtonStyles = StyleSheet.create({
   buttonLink: {
     flexDirection: "row",
     alignItems: "center",
-    textAlignVertical: "center", // Android
     justifyContent: "center",
+    ...Platform.select({
+      android: {
+        textAlignVertical: "center"
+      }
+    }),
     // Reset default visual parameters
     elevation: 0
   },
