@@ -23,7 +23,7 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
-  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/fix_swagger_io/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
+  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.55.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_lollipop_first_consumer.yaml",
   "private": true,
   "scripts": {
