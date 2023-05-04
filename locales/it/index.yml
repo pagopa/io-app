@@ -3522,6 +3522,19 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      code:
+        ISEE: ISEE
+        BIRTHDATE: Data di nascita
+        RESIDENCE: Residenza
+      operator:
+        EQ: "{{value}}"
+        NOT_EQ: "Non è {{value}}"
+        LT: "Minore di {{value}}"
+        LE: "Minore o uguale a {{value}}"
+        GT: "Maggiore di {{value}}"
+        GE: "Maggiore o uguale a {{value}}"
+        BTW_CLOSED: "Compreso tra {{value}} e {{value2}}"
+        BTW_OPEN: "Compreso tra {{value}} e {{value2}}"
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
