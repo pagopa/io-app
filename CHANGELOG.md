@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.31.0-rc.2](https://github.com/pagopa/io-app/compare/2.31.0-rc.1...2.31.0-rc.2) (2023-05-03)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1378](https://pagopa.atlassian.net/browse/SFEQS-1378)] Update main app navigator stack to enable FCI deeplink ([#4568](https://github.com/pagopa/io-app/issues/4568)) ([0326230](https://github.com/pagopa/io-app/commit/03262307c64b04320d665ae3eaf0aaa194b1a688))
+* **Firma con IO:** [[SFEQS-1576](https://pagopa.atlassian.net/browse/SFEQS-1576)] Update router screen to render error based on the response status code ([#4566](https://github.com/pagopa/io-app/issues/4566)) ([da3cf0b](https://github.com/pagopa/io-app/commit/da3cf0ba74610669615c235f504c329aa4d5fc7a)), closes [/github.com/pagopa/io-dev-api-server/blob/e5363f1a9afb60ccb0488b5bb708437d23eb8682/src/routers/features/fci/index.ts#L29](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/e5363f1a9afb60ccb0488b5bb708437d23eb8682/src/routers/features/fci/index.ts/issues/L29)
+* **Firma con IO:** [[SFEQS-800](https://pagopa.atlassian.net/browse/SFEQS-800)] Add mixpanel FCI events ([#4570](https://github.com/pagopa/io-app/issues/4570)) ([8e1a539](https://github.com/pagopa/io-app/commit/8e1a5395bebc4a78df0369fc21a6ceea205bab1a))
+* [[IOCOM-172](https://pagopa.atlassian.net/browse/IOCOM-172),[IOCOM-173](https://pagopa.atlassian.net/browse/IOCOM-173),[IOCOM-179](https://pagopa.atlassian.net/browse/IOCOM-179)] Display remote precondition before opening the message details ([#4565](https://github.com/pagopa/io-app/issues/4565)) ([86b9d20](https://github.com/pagopa/io-app/commit/86b9d2057c3ce6be625b5348d9e2d24712a1e991)), closes [/github.com/pagopa/io-dev-api-server/blob/IOCOM-171-remote-bottom-sheet-message/src/config.ts#L131](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/IOCOM-171-remote-bottom-sheet-message/src/config.ts/issues/L131) [/github.com/pagopa/io-dev-api-server/blob/IOCOM-171-remote-bottom-sheet-message/src/config.ts#L78](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/IOCOM-171-remote-bottom-sheet-message/src/config.ts/issues/L78)
+* **IDPay:** [[IODPAY-171](https://pagopa.atlassian.net/browse/IODPAY-171)] IDPay initiative unsubscription ([#4462](https://github.com/pagopa/io-app/issues/4462)) ([c3c2f67](https://github.com/pagopa/io-app/commit/c3c2f675ebeb0efca9a3c9a9ddfb0ab1e1f555ef))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1635](https://pagopa.atlassian.net/browse/SFEQS-1635)] Fix mixpanel events action ([#4580](https://github.com/pagopa/io-app/issues/4580)) ([e1e534c](https://github.com/pagopa/io-app/commit/e1e534c665c11df9dbac2d26f6e88d69f9ccc577))
+* **IDPay:** [[IODPAY-149](https://pagopa.atlassian.net/browse/IODPAY-149),[IODPAY-138](https://pagopa.atlassian.net/browse/IODPAY-138),[IODPAY-139](https://pagopa.atlassian.net/browse/IODPAY-139),[IODPAY-142](https://pagopa.atlassian.net/browse/IODPAY-142),[IODPAY-184](https://pagopa.atlassian.net/browse/IODPAY-184)] Show operation details bottom sheet from timeline ([#4370](https://github.com/pagopa/io-app/issues/4370)) ([d6dc1de](https://github.com/pagopa/io-app/commit/d6dc1def8b84a101772ff76b511c5d0169dfc4ff))
+* [[IABT-1471](https://pagopa.atlassian.net/browse/IABT-1471)] Update ZenDesk SDKs to support iOS 16 ([#4577](https://github.com/pagopa/io-app/issues/4577)) ([d67f147](https://github.com/pagopa/io-app/commit/d67f1471717cdbde05482c38970bd8008fba94c5))
+
+
+### Chores
+
+* **IDPay:** [[IODPAY-196](https://pagopa.atlassian.net/browse/IODPAY-196)] Update new initiative placeholder screen ([#4578](https://github.com/pagopa/io-app/issues/4578)) ([b3f1259](https://github.com/pagopa/io-app/commit/b3f1259027906717c1e74ef4354fa9710d324f53))
+* [[IOAPPFD0-81](https://pagopa.atlassian.net/browse/IOAPPFD0-81)] Update README.md ([#4528](https://github.com/pagopa/io-app/issues/4528)) ([4262807](https://github.com/pagopa/io-app/commit/426280728f887928246a90a8c13739ec390946fe))
+* **IDPay:** [[IODPAY-195](https://pagopa.atlassian.net/browse/IODPAY-195)] New IDPay bonus card in wallet ([#4554](https://github.com/pagopa/io-app/issues/4554)) ([080aecc](https://github.com/pagopa/io-app/commit/080aecce3cc564e7db1e20328823e04621daed2f))
+* **IDPay:** [[IODPAY-223](https://pagopa.atlassian.net/browse/IODPAY-223)] Initiative details screen refactoring ([#4581](https://github.com/pagopa/io-app/issues/4581)) ([46eb50a](https://github.com/pagopa/io-app/commit/46eb50a289aa9ddfa86d6a060da3f0043c19062f))
+* [[IOAPPFD0-64](https://pagopa.atlassian.net/browse/IOAPPFD0-64)] Enable deep-link handling in react-navigation ([#4152](https://github.com/pagopa/io-app/issues/4152)) ([563bafe](https://github.com/pagopa/io-app/commit/563bafec9141cb87607e950c5c242949701df1ce))
+* **IDPay:** [[IODPAY-221](https://pagopa.atlassian.net/browse/IODPAY-221)] Update IDPay API definition to v2.52.1 ([#4575](https://github.com/pagopa/io-app/issues/4575)) ([0a4cc8d](https://github.com/pagopa/io-app/commit/0a4cc8d7b05165cd5091a9340ffa00d368956245))
+
 ## [2.31.0-rc.1](https://github.com/pagopa/io-app/compare/2.31.0-rc.0...2.31.0-rc.1) (2023-04-27)
 
 
