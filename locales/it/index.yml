@@ -3166,10 +3166,6 @@ features:
         data:
           buttonTitle: Torna indietro
   pn:
-    open:
-      warning:
-        title: Questo messaggio contiene una comunicazione a valore legale
-        body: !include pn/message_open_warning.html
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
@@ -3238,6 +3234,9 @@ features:
         signing:
           title: La firma non è andata a buon fine
           subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete, contatta l’assistenza.
+        wrongUser:
+          title: Non puoi firmare questi documenti
+          subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3430,17 +3429,38 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
     operationDetails:
-      title: Dettaglio dell'operazione
-      instrument: Metodo di pagamento
-      maskedPan: •••• {{lastDigits}}
-      amountLabel: Importo transazione
-      accruedAmountLabel: Importo rimborsabile
-      infoTitle: Informazioni sull transazione
-      date: Data
-      circuit: Circuito di pagamento
-      acquirerId: ID transazione Acquirer
-      issuerId: ID transazione Issuer
+      title: 
+        TRANSACTION: Dettaglio dell'operazione
+        REVERSAL: Dettaglio dell'operazione
+        PAID_REFUND: Dettaglio del rimborso
+        REJECTED_REFUND: Dettaglio del rimborso
+      transaction:
+        instrument: Metodo di pagamento
+        maskedPan: •••• {{lastDigits}}
+        amountLabel: Importo transazione
+        accruedAmountLabel: Importo rimborsabile
+        infoTitle: Informazioni sulla transazione
+        date: Data
+        circuit: Circuito di pagamento
+        acquirerId: ID transazione Acquirer
+        issuerId: ID transazione Issuer
+        reversalAdvice: Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza.
+      refund:
+        iban: IBAN
+        amount: Importo rimborso
+        resultLabel: Esito
+        result: 
+          PAID_REFUND: Eseguito
+          REJECTED_REFUND: Fallito
+        rejectedAdvice: 
+          text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
+          editIban: Modifica IBAN 
+        period: Periodo di riferimento
+        date: Data rimborso
+        cro: CRO
+      errorBody: Impossibile caricare il dettaglio
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...

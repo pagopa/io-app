@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
@@ -31,6 +31,7 @@ import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../../../components/screens/ScreenContent";
+import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 
 const styles = StyleSheet.create({
   padded: {
@@ -62,6 +63,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const navigation = useNavigation();
+  const route = useRoute();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
     undefined
@@ -85,11 +87,12 @@ const FciDataSharingScreen = (): React.ReactElement => {
         {I18n.t("features.fci.shareDataScreen.alertText")}
         <View style={styles.paddingText} />
         <Link
-          onPress={() =>
+          onPress={() => {
+            trackFciUserExit(route.name, "modifica_email");
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.INSERT_EMAIL_SCREEN
-            })
-          }
+            });
+          }}
         >
           {I18n.t("features.fci.shareDataScreen.alertLink")}
         </Link>
@@ -161,10 +164,10 @@ const FciDataSharingScreen = (): React.ReactElement => {
               () => present(),
               I18n.t("features.fci.shareDataScreen.cancel")
             )}
-            rightButton={confirmButtonProps(
-              () => navigation.navigate("FCI_QTSP_TOS"),
-              `${I18n.t("features.fci.shareDataScreen.confirm")}`
-            )}
+            rightButton={confirmButtonProps(() => {
+              trackFciUserDataConfirmed();
+              navigation.navigate("FCI_QTSP_TOS");
+            }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
           />
         </View>
       </SafeAreaView>

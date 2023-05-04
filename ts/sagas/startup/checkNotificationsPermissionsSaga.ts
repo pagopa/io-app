@@ -1,4 +1,4 @@
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../navigation/NavigationService";
@@ -36,6 +36,10 @@ export function* checkNotificationsPermissionsSaga() {
 
     yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
       notificationsInfoScreenConsent
+    );
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
     );
   }
 }

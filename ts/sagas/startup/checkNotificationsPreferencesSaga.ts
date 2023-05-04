@@ -1,4 +1,4 @@
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
@@ -68,6 +68,11 @@ export function* checkNotificationsPreferencesSaga(
       break;
     }
   }
+
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 
   // check if the user has given system notification permissions
   yield* call(checkNotificationsPermissionsSaga);
