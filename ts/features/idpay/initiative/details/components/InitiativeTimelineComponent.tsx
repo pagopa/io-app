@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -15,12 +14,12 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
+import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
-import { useTimelineDetailsBottomSheet } from "./TimelineDetailsBottomSheet";
 import {
   TimelineOperationListItem,
   TimelineOperationListItemSkeleton
@@ -31,27 +30,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
-
-const emptyTimelineContent = (
-  <>
-    <H3>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
-      )}
-    </H3>
-    <VSpacer size={8} />
-    <LabelSmall weight="Regular" color="bluegreyDark">
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
-      )}
-      <LabelSmall weight="SemiBold">
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
-        )}
-      </LabelSmall>
-    </LabelSmall>
-  </>
-);
 
 type Props = {
   initiativeId: string;
@@ -77,12 +55,8 @@ const ConfiguredInitiativeData = (props: Props) => {
     });
   };
 
-  const showOperationDetailsBottomSheet = (operation: OperationListDTO) => {
-    if (operation.operationType === TransactionOperationTypeEnum.TRANSACTION) {
-      // Currently we only show details for transaction operations
-      detailsBottomSheet.present(operation.operationId);
-    }
-  };
+  const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
+    detailsBottomSheet.present(operation);
 
   const renderTimelineContent = () => {
     if (isLoading) {
@@ -92,7 +66,18 @@ const ConfiguredInitiativeData = (props: Props) => {
     }
 
     if (timeline.length === 0) {
-      return emptyTimelineContent;
+      return (
+        <LabelSmall weight="Regular" color="bluegreyDark">
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
+          )}
+          <LabelSmall weight="SemiBold">
+            {I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
+            )}
+          </LabelSmall>
+        </LabelSmall>
+      );
     }
 
     return (
