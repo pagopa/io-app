@@ -102,6 +102,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
@@ -177,6 +178,7 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
+      .next()
       .next()
       .next()
       .next()
