@@ -4,15 +4,12 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { waitBackoffError } from "../../../../../utils/backoffError";
 import { IDPayClient } from "../../../common/api/client";
 import {
-  idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
-  idpayTimelineDetailsGet,
-  IdPayTimelineDetailsGetPayloadType,
-  idpayTimelinePageGet,
-  IdpayTimelinePageGetPayloadType
+  IdpayTimelinePageGetPayloadType,
+  idpayInitiativeGet,
+  idpayTimelinePageGet
 } from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
-import { handleGetTimelineDetails } from "./handleGetTimelineDetails";
 import { handleGetTimelinePage } from "./handleGetTimelinePage";
 
 /**
@@ -47,20 +44,6 @@ export function* watchIDPayInitiativeDetailsSaga(
       yield* call(
         handleGetTimelinePage,
         idPayClient.getTimeline,
-        token,
-        preferredLanguage,
-        action.payload
-      );
-    }
-  );
-  yield* takeLatest(
-    idpayTimelineDetailsGet.request,
-    function* (action: { payload: IdPayTimelineDetailsGetPayloadType }) {
-      // wait backoff time if there were previous errors
-      yield* call(waitBackoffError, idpayTimelineDetailsGet.failure);
-      yield* call(
-        handleGetTimelineDetails,
-        idPayClient.getTimelineDetail,
         token,
         preferredLanguage,
         action.payload

@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { call, take } from "typed-redux-saga/macro";
+import { StackActions } from "@react-navigation/native";
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
 
@@ -7,6 +8,7 @@ import { PinString } from "../../types/PinString";
 import { ReduxSagaEffect } from "../../types/utils";
 
 import { getPin } from "../../utils/keychain";
+import NavigationService from "../../navigation/NavigationService";
 
 export function* checkConfiguredPinSaga(): Generator<
   ReduxSagaEffect,
@@ -26,6 +28,10 @@ export function* checkConfiguredPinSaga(): Generator<
 
   // and block until a unlock code is set
   const resultAction = yield* take(createPinSuccess);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 
   return resultAction.payload;
 }

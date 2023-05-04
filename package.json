@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.31.0-rc.1",
+  "version": "2.31.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/definitions.yml",
@@ -23,7 +23,7 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
-  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.46.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
+  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.52.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_lollipop_first_consumer.yaml",
   "private": true,
   "scripts": {
@@ -130,7 +130,7 @@
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
-    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.23",
+    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.24",
     "io-ts": "^2.2.16",
     "jail-monkey": "^2.3.2",
     "jwk-thumbprint": "^0.1.4",
