@@ -9,7 +9,6 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -17,7 +16,6 @@ import { NetworkError } from "../../../../../utils/errors";
 import {
   idPayBeneficiaryDetailsGet,
   idpayInitiativeGet,
-  idpayTimelineDetailsGet,
   idpayTimelinePageGet
 } from "./actions";
 
@@ -27,14 +25,12 @@ export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
-  timelineDetails: pot.Pot<OperationDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
   beneficiaryDetails: pot.none,
-  timeline: pot.none,
-  timelineDetails: pot.none
+  timeline: pot.none
 };
 
 const reducer = (
@@ -87,21 +83,6 @@ const reducer = (
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
       };
-    case getType(idpayTimelineDetailsGet.request):
-      return {
-        ...state,
-        timelineDetails: pot.toLoading(pot.none)
-      };
-    case getType(idpayTimelineDetailsGet.success):
-      return {
-        ...state,
-        timelineDetails: pot.some(action.payload)
-      };
-    case getType(idpayTimelineDetailsGet.failure):
-      return {
-        ...state,
-        timelineDetails: pot.toError(state.timelineDetails, action.payload)
-      };
     case getType(idPayBeneficiaryDetailsGet.request):
       return {
         ...state,
@@ -130,6 +111,17 @@ const idpayInitativeSelector = (state: GlobalState) =>
 export const idpayInitiativeDetailsSelector = createSelector(
   idpayInitativeSelector,
   initiative => initiative.details
+);
+
+export const idpayInitiativeIdSelector = createSelector(
+  idpayInitiativeDetailsSelector,
+  details =>
+    pipe(
+      details,
+      pot.toOption,
+      O.map(details => details.initiativeId),
+      O.toUndefined
+    )
 );
 
 export const idpayPaginatedTimelineSelector = createSelector(
@@ -209,11 +201,6 @@ export const idpayTimelineIsLastPageSelector = createSelector(
       }),
       false
     )
-);
-
-export const idpayTimelineDetailsSelector = createSelector(
-  idpayInitativeSelector,
-  initiative => initiative.timelineDetails
 );
 
 export const idPayBeneficiaryDetailsSelector = createSelector(
