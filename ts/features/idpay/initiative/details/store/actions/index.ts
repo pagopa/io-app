@@ -39,7 +39,7 @@ export type IdPayTimelineDetailsGetPayloadType = {
   operationId: OperationListDTO["operationId"];
 };
 
-export type IdPayBeneficieryDetailsGetPayloadType = {
+export type IdPayBeneficiaryDetailsGetPayloadType = {
   initiativeId: InitiativeDTO["initiativeId"];
 };
 
@@ -47,7 +47,7 @@ export const idPayBeneficiaryDetailsGet = createAsyncAction(
   "IDPAY_BENEFICIARY_DETAILS_REQUEST",
   "IDPAY_BENEFICIARY_DETAILS_SUCCESS",
   "IDPAY_BENEFICIARY_DETAILS_FAILURE"
-)<IdPayBeneficieryDetailsGetPayloadType, InitiativeDetailDTO, NetworkError>();
+)<IdPayBeneficiaryDetailsGetPayloadType, InitiativeDetailDTO, NetworkError>();
 
 export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>
