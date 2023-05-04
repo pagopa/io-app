@@ -165,14 +165,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private debugCopyListItem(
-    key: string,
-    label: string,
-    value: string,
-    onPress: () => void
-  ) {
+  private debugCopyListItem(label: string, value: string, onPress: () => void) {
     return (
-      <React.Fragment key={key}>
+      <>
         <ListItemInfoCopy
           label={label}
           value={value}
@@ -180,7 +175,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           accessibilityLabel={value}
         />
         <Divider />
-      </React.Fragment>
+      </>
     );
   }
 
@@ -444,52 +439,36 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             {isDevEnv &&
               sessionToken &&
-              this.debugCopyListItem(
-                `SessionToken`,
-                "Session token",
-                sessionToken,
-                () => clipboardSetStringWithFeedback(sessionToken)
+              this.debugCopyListItem("Session token", sessionToken, () =>
+                clipboardSetStringWithFeedback(sessionToken)
               )}
 
             {isDevEnv &&
               walletToken &&
-              this.debugCopyListItem(
-                `WalletToken`,
-                "Wallet token",
-                walletToken,
-                () => clipboardSetStringWithFeedback(walletToken)
+              this.debugCopyListItem("Wallet token", walletToken, () =>
+                clipboardSetStringWithFeedback(walletToken)
               )}
 
             {isDevEnv &&
-              this.debugCopyListItem(
-                `NotificationID`,
-                "Notification ID",
-                notificationId,
-                () => clipboardSetStringWithFeedback(notificationId)
+              this.debugCopyListItem("Notification ID", notificationId, () =>
+                clipboardSetStringWithFeedback(notificationId)
               )}
 
             {isDevEnv &&
               notificationToken &&
               this.debugCopyListItem(
-                `NotificationToken`,
                 "Notification token",
                 notificationToken,
                 () => clipboardSetStringWithFeedback(notificationToken)
               )}
 
-            {this.debugCopyListItem(
-              `DeviceUniqueID`,
-              "Device unique ID",
-              deviceUniqueId,
-              () => clipboardSetStringWithFeedback(deviceUniqueId)
+            {this.debugCopyListItem("Device unique ID", deviceUniqueId, () =>
+              clipboardSetStringWithFeedback(deviceUniqueId)
             )}
 
             {thumbprint &&
-              this.debugCopyListItem(
-                `Thumbprint`,
-                "Thumbprint",
-                thumbprint,
-                () => clipboardSetStringWithFeedback(thumbprint)
+              this.debugCopyListItem("Thumbprint", thumbprint, () =>
+                clipboardSetStringWithFeedback(thumbprint)
               )}
 
             {this.debugListItem(
