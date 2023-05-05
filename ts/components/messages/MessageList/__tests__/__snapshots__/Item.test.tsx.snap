@@ -2399,7 +2399,6 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
             "justifyContent": "center",
             "paddingHorizontal": 20,
             "paddingVertical": 2.5,
-            "textAlignVertical": "center",
           },
           false,
           Object {
@@ -2729,7 +2728,6 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
             "justifyContent": "center",
             "paddingHorizontal": 20,
             "paddingVertical": 2.5,
-            "textAlignVertical": "center",
           },
           false,
           Object {
