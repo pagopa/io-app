@@ -22,12 +22,12 @@ type IOBadgeCommonProps = {
 
 type IOBadgeConditionalProps =
   | {
-      variant?: "solid";
-      color?: IOBadgeSolidColors;
+      variant: "solid" | "outline";
+      color: IOBadgeSolidColors;
     }
   | {
-      variant?: "outline";
-      color?: IOBadgeOutlineColors;
+      variant: "outline";
+      color: IOBadgeOutlineColors;
     };
 
 export type IOBadge = IOBadgeCommonProps & IOBadgeConditionalProps;
