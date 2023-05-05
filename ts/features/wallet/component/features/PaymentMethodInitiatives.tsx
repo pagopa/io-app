@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -43,26 +43,35 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const idWalletString = String(props.paymentMethod.idWallet);
 
   const dispatch = useIODispatch();
-  React.useEffect(() => {
-    dispatch(
-      idPayInitiativesFromInstrumentRefreshStart({
-        idWallet: idWalletString,
-        refreshEvery: 3000
-      })
-    );
-    return () => {
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(
+        idPayInitiativesFromInstrumentRefreshStart({
+          idWallet: idWalletString,
+          refreshEvery: 3000
+        })
+      );
+    }, [idWalletString, dispatch])
+  );
+
+  React.useEffect(
+    () => () => {
       dispatch(idPayInitiativesFromInstrumentRefreshStop());
-    };
-  }, [idWalletString, dispatch]);
+    },
+    [dispatch]
+  );
 
   const initiativesList = useIOSelector(
     idPayEnabledInitiativesFromInstrumentSelector
   );
 
-  const navigateToPairableInitiativesList = () =>
+  const navigateToPairableInitiativesList = () => {
+    dispatch(idPayInitiativesFromInstrumentRefreshStop());
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       idWallet: idWalletString
     });
+  };
   return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>

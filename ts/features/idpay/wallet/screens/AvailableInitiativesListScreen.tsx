@@ -51,13 +51,14 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
 
 export const IdPayInitiativeListScreen = (props: Props) => {
   const { idWallet } = props.route.params;
-  // const idpayInitiatives =useIOSelector(idPayInitiativesFromInstrumentSelector)
   const dispatch = useIODispatch();
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(
         idPayInitiativesFromInstrumentRefreshStart({
-          idWallet
+          idWallet,
+          refreshEvery: 3000
         })
       );
       return () => {
@@ -65,6 +66,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
       };
     }, [idWallet, dispatch])
   );
+
   // useIDPayInitiativesFromInstrument(idWallet).initiativesList;
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
   const [maskedPan, brand, idpayInitiatives] = pipe(
