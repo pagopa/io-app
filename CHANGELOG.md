@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.31.0-rc.3](https://github.com/pagopa/io-app/compare/2.31.0-rc.2...2.31.0-rc.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* [[IABT-1473](https://pagopa.atlassian.net/browse/IABT-1473)] Fix contextual help when user is not authenticated ([#4585](https://github.com/pagopa/io-app/issues/4585)) ([c094044](https://github.com/pagopa/io-app/commit/c0940441a1605f26574ef6507c2c158b4370cf43))
+
+
+### Chores
+
+* [[IODPAY-216](https://pagopa.atlassian.net/browse/IODPAY-216)] Add onboarding PDND criteria values ([#4558](https://github.com/pagopa/io-app/issues/4558)) ([0758907](https://github.com/pagopa/io-app/commit/0758907efc58f5d9c3d0eaa0289d18ec25f08e87))
+
 ## [2.31.0-rc.2](https://github.com/pagopa/io-app/compare/2.31.0-rc.1...2.31.0-rc.2) (2023-05-03)
 
 
