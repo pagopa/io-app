@@ -55,8 +55,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   React.useEffect(() => {
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
-        idWallet,
-        refreshEvery: 3000
+        idWallet
       })
     );
     return () => {

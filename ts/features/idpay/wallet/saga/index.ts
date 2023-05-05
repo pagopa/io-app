@@ -1,7 +1,6 @@
 import { SagaIterator, channel } from "redux-saga";
 import {
   call,
-  delay,
   put,
   race,
   take,
@@ -110,8 +109,7 @@ export function* watchIDPayWalletSaga(
       yield* race({
         task: call(
           handleInitiativesFromInstrumentRefresh,
-          action.payload.idWallet,
-          action.payload.refreshEvery
+          action.payload.idWallet
         ),
         cancel: take(instrumentRefreshChannel)
       });

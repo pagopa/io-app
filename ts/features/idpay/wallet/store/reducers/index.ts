@@ -12,8 +12,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   idPayInitiativesFromInstrumentGet,
-  idPayInitiativesFromInstrumentRefreshStart,
-  idPayInitiativesFromInstrumentRefreshStop,
   idPayWalletGet,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
@@ -53,6 +51,14 @@ const reducer = (
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
+      if (!action.payload.isRefreshing) {
+        return {
+          ...state,
+          initiativesWithInstrument: pot.noneLoading,
+          initiativesAwaitingStatusUpdate: {}
+        };
+      }
+
       if (pot.isSome(state.initiativesWithInstrument)) {
         return {
           ...state,
@@ -62,6 +68,7 @@ const reducer = (
           )
         };
       }
+
       return {
         ...state,
         initiativesWithInstrument: pot.toLoading(
@@ -89,13 +96,6 @@ const reducer = (
           state.initiativesWithInstrument,
           action.payload
         )
-      };
-    case getType(idPayInitiativesFromInstrumentRefreshStart):
-    case getType(idPayInitiativesFromInstrumentRefreshStop):
-      return {
-        ...state,
-        initiativesWithInstrument: pot.none,
-        initiativesAwaitingStatusUpdate: {}
       };
     // initiative pairing
     case getType(idpayInitiativesInstrumentDelete.request):

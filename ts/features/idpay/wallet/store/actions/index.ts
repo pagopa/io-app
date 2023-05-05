@@ -9,7 +9,7 @@ import { NetworkError } from "../../../../../utils/errors";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;
-  refreshEvery?: number;
+  isRefreshing?: boolean;
 };
 
 export type IdpayInitiativesInstrumentEnrollPayloadType = {

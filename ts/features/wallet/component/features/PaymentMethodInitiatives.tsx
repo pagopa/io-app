@@ -48,8 +48,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     React.useCallback(() => {
       dispatch(
         idPayInitiativesFromInstrumentRefreshStart({
-          idWallet: idWalletString,
-          refreshEvery: 3000
+          idWallet: idWalletString
         })
       );
       return () => {
