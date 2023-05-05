@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, PixelRatio } from "react-native";
+import { View, Text, StyleSheet, PixelRatio, Platform } from "react-native";
 import { makeFontStyleObject } from "./fonts";
 import { IOColors } from "./variables/IOColors";
 
@@ -9,7 +9,7 @@ export type IOBadgeOutlineColors = Extract<
 >;
 export type IOBadgeSolidColors = Extract<
   IOColors,
-  "blue" | "white" | "grey" | "aqua"
+  "blue" | "white" | "grey" | "aqua" | "red"
 >;
 
 type IOBadgeCommonProps = {
@@ -30,7 +30,7 @@ type IOBadgeConditionalProps =
       color?: IOBadgeOutlineColors;
     };
 
-export type IOBadgeProps = IOBadgeCommonProps & IOBadgeConditionalProps;
+export type IOBadge = IOBadgeCommonProps & IOBadgeConditionalProps;
 
 type SolidVariantProps = {
   background: IOColors;
@@ -63,17 +63,25 @@ const mapSolidColor: Record<
   grey: {
     background: "grey",
     text: "white"
+  },
+  red: {
+    background: "red",
+    text: "white"
   }
 };
 
-const defaultVariant: IOBadgeProps["variant"] = "solid";
-const defaultColor: IOBadgeProps["color"] = "blue";
+const defaultVariant: IOBadge["variant"] = "solid";
+const defaultColor: IOBadge["color"] = "blue";
 
 const styles = StyleSheet.create({
   badge: {
     alignItems: "center",
-    textAlignVertical: "center", // Android
     justifyContent: "center",
+    ...Platform.select({
+      android: {
+        textAlignVertical: "center"
+      }
+    }),
     // Visual parameters based on the FontScale
     // ~20 = Small size height
     // ~24 = Default size height
@@ -105,7 +113,7 @@ export const IOBadge = ({
   small,
   testID,
   labelTestID
-}: IOBadgeProps) => (
+}: IOBadge) => (
   <View
     testID={testID}
     style={[
@@ -121,7 +129,7 @@ export const IOBadge = ({
     ]}
   >
     {/* TODO: Enable bolder text using `isBoldTextEnabled` RN API
-    (not yet released at the time I am writing this comment. */}
+    (not yet released at the time I am writing this comment). */}
     <Text
       // Disable temporarily the following props
       // to avoid layout breaking changes
