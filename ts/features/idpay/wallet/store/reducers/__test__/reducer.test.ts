@@ -111,7 +111,7 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     store.dispatch(
       idPayInitiativesFromInstrumentGet.request({
         idWallet: "MOCK",
-        isRefreshCall: false
+        isRefreshing: false
       })
     );
     const isIdpayEnabled = isIdPayEnabledSelector(store.getState());
@@ -135,7 +135,7 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     store.dispatch(
       idPayInitiativesFromInstrumentGet.request({
         idWallet: "MOCK",
-        isRefreshCall: false
+        isRefreshing: false
       })
     );
     store.dispatch(
@@ -152,7 +152,7 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     store.dispatch(
       idPayInitiativesFromInstrumentGet.request({
         idWallet: "MOCK",
-        isRefreshCall: true
+        isRefreshing: true
       })
     );
     expect(
@@ -160,13 +160,23 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     ).toStrictEqual({ MOCK: true });
     expect(
       store.getState().features.idPay.wallet.initiativesWithInstrument
-    ).toStrictEqual(pot.some(mockInitiativesWithInstrumentSuccess));
+    ).toStrictEqual(
+      pot.someUpdating(
+        mockInitiativesWithInstrumentSuccess,
+        mockInitiativesWithInstrumentSuccess
+      )
+    );
     expect(
       idPayEnabledInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(mockInitiativesWithInstrumentSuccess.initiativeList);
     expect(
       idPayInitiativesFromInstrumentSelector(store.getState())
-    ).toStrictEqual(pot.some(mockInitiativesWithInstrumentSuccess));
+    ).toStrictEqual(
+      pot.someUpdating(
+        mockInitiativesWithInstrumentSuccess,
+        mockInitiativesWithInstrumentSuccess
+      )
+    );
   });
 });
 

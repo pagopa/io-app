@@ -63,7 +63,6 @@ export const IdPayInitiativeListScreen = (props: Props) => {
     };
   }, [idWallet, dispatch]);
 
-  // useIDPayInitiativesFromInstrument(idWallet).initiativesList;
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
   const [maskedPan, brand, idpayInitiatives] = pipe(
     initiatives,

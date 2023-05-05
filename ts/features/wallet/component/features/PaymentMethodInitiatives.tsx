@@ -44,18 +44,17 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 
   const dispatch = useIODispatch();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(
-        idPayInitiativesFromInstrumentRefreshStart({
-          idWallet: idWalletString
-        })
-      );
-      return () => {
-        dispatch(idPayInitiativesFromInstrumentRefreshStop());
-      };
-    }, [idWalletString, dispatch])
-  );
+  const refresh = React.useCallback(() => {
+    dispatch(
+      idPayInitiativesFromInstrumentRefreshStart({
+        idWallet: idWalletString
+      })
+    );
+    return () => {
+      dispatch(idPayInitiativesFromInstrumentRefreshStop());
+    };
+  }, [idWalletString, dispatch]);
+  useFocusEffect(refresh);
 
   const initiativesList = useIOSelector(
     idPayEnabledInitiativesFromInstrumentSelector
