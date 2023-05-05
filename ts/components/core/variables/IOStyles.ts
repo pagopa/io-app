@@ -51,12 +51,7 @@ export const IOStyles = StyleSheet.create({
     },
     shadowOpacity: themeVariables.footerShadowOpacity,
     shadowRadius: themeVariables.footerShadowRadius,
-    // Android shadow
-    ...Platform.select({
-      android: {
-        elevation: themeVariables.footerElevation
-      }
-    })
+    elevation: themeVariables.footerElevation // Prop supported on Android only
   },
   bgWhite: {
     backgroundColor: IOColors.white
@@ -91,11 +86,7 @@ export const IOButtonLegacyStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    ...Platform.select({
-      android: {
-        textAlignVertical: "center"
-      }
-    }),
+    textAlignVertical: "center", // Prop supported on Android only
     /* Legacy visual properties. They will be replaced with
     dynamic ones once NativeBase is gone */
     borderRadius: themeVariables.btnBorderRadius,
@@ -136,11 +127,7 @@ export const IOButtonStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    ...Platform.select({
-      android: {
-        textAlignVertical: "center"
-      }
-    }),
+    textAlignVertical: "center", // Prop supported on Android only
     /* Legacy visual properties. They will be replaced with
     dynamic ones once NativeBase is gone */
     borderRadius: btnBorderRadius,
@@ -156,11 +143,7 @@ export const IOButtonStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    ...Platform.select({
-      android: {
-        textAlignVertical: "center"
-      }
-    }),
+    textAlignVertical: "center", // Prop supported on Android only
     // Reset default visual parameters
     elevation: 0
   },
