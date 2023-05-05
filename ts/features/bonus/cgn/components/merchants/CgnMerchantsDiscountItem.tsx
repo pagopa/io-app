@@ -60,7 +60,12 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
           {discount.isNew && (
             <>
               <HSpacer size={4} />
-              <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
+              <IOBadge
+                variant="solid"
+                color="blue"
+                text={I18n.t("bonus.cgn.merchantsList.news")}
+                small
+              />
             </>
           )}
         </View>
