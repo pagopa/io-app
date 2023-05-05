@@ -31,10 +31,9 @@ const IDPayCardsList = (props: Props) => {
       {props.initiativeList.map(initiative => (
         <IDPayCardPreviewComponent
           key={initiative.initiativeId}
-          initiativeId={initiative.initiativeId}
           initiativeName={initiative.initiativeName}
-          endDate={initiative.endDate}
           availableAmount={initiative.amount}
+          logoUrl={initiative.logoURL}
           onPress={() => handleCardPress(initiative.initiativeId)}
         />
       ))}

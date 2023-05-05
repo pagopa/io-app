@@ -6,11 +6,12 @@ import {
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { SessionToken } from "../../../types/SessionToken";
 import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
 import { watchTestLoginRequestSaga } from "../../testLoginSaga";
 import { authenticationSaga } from "../authenticationSaga";
+import { startupLoadSuccess } from "../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../store/reducers/startup";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -25,14 +26,14 @@ describe("authenticationSaga", () => {
 
     testSaga(authenticationSaga)
       .next()
+      .put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED))
+      .next()
       .put(analyticsAuthenticationStarted())
       .next()
       .fork(watchTestLoginRequestSaga)
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
-      .call(resetToAuthenticationRoute)
-      .next()
       .take(loginSuccess)
       .next(loginSuccess({ token: aSessionToken, idp: "test" }))
       .cancel(watchCieAuthentication)

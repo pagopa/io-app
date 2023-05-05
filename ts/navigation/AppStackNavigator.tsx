@@ -4,15 +4,10 @@ import {
   LinkingOptions,
   NavigationContainer
 } from "@react-navigation/native";
-import {
-  createStackNavigator,
-  TransitionPresets
-} from "@react-navigation/stack";
 import { View } from "react-native";
 import * as React from "react";
 import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
-import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
@@ -22,195 +17,52 @@ import {
   svEnabled
 } from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
-import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
-import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
-import {
-  CgnActivationNavigator,
-  CgnDetailsNavigator,
-  CgnEYCAActivationNavigator,
-  cgnLinkingOptions
-} from "../features/bonus/cgn/navigation/navigator";
-import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
-import {
-  fciLinkingOptions,
-  FciStackNavigator
-} from "../features/fci/navigation/FciStackNavigator";
-import { FCI_ROUTES } from "../features/fci/navigation/routes";
-import {
-  fimsLinkingOptions,
-  FimsNavigator
-} from "../features/fims/navigation/navigator";
-import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
+import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import {
-  IDPayConfigurationNavigator,
-  IDPayConfigurationRoutes
-} from "../features/idpay/initiative/configuration/navigation/navigator";
-import {
-  IDpayDetailsNavigator,
-  IDPayDetailsRoutes
-} from "../features/idpay/initiative/details/navigation";
-import {
-  IDPayOnboardingNavigator,
-  IDPayOnboardingRoutes
-} from "../features/idpay/onboarding/navigation/navigator";
-import {
-  IDPayUnsubscriptionNavigator,
-  IDPayUnsubscriptionRoutes
-} from "../features/idpay/unsubscription/navigation/navigator";
-import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
-import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
-import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
   bpdRemoteConfigSelector,
-  isCdcEnabledSelector,
   isCGNEnabledSelector,
-  isFciEnabledSelector,
   isIdPayEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
-import { IO_INTERNAL_LINK_PREFIX, isGestureEnabled } from "../utils/navigation";
-import authenticationNavigator from "./AuthenticationNavigator";
-import { MessagesStackNavigator } from "./MessagesNavigator";
+import { startApplicationInitialization } from "../store/actions/application";
+import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import {
+  IO_INTERNAL_LINK_PREFIX,
+  IO_UNIVERSAL_LINK_PREFIX
+} from "../utils/navigation";
 import NavigationService, { navigationRef } from "./NavigationService";
-import OnboardingNavigator from "./OnboardingNavigator";
-import { AppParamsList } from "./params/AppParamsList";
-import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
-import ServicesNavigator from "./ServicesNavigator";
-import { MainTabNavigator } from "./TabNavigator";
-import WalletNavigator from "./WalletNavigator";
+import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 
-const Stack = createStackNavigator<AppParamsList>();
+export const AppStackNavigator = (): React.ReactElement => {
+  const dispatch = useIODispatch();
 
-export const AppStackNavigator = () => {
-  const cdcEnabled = useIOSelector(isCdcEnabledSelector);
-  const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
-  const cgnEnabled = useIOSelector(isCGNEnabledSelector);
-  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const startupStatus = useIOSelector(isStartupLoaded);
 
-  const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
-  const isFciEnabled = fciEnabledSelector;
-  return (
-    <Stack.Navigator
-      initialRouteName={"INGRESS"}
-      headerMode={"none"}
-      screenOptions={{ gestureEnabled: false }}
-    >
-      <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
-      <Stack.Screen
-        name={ROUTES.UNSUPPORTED_DEVICE}
-        component={UnsupportedDeviceScreen}
-      />
-      <Stack.Screen
-        name={ROUTES.AUTHENTICATION}
-        component={authenticationNavigator}
-      />
-      <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
-      <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+  React.useEffect(() => {
+    dispatch(startApplicationInitialization());
+  }, [dispatch]);
 
-      <Stack.Screen
-        name={ROUTES.MESSAGES_NAVIGATOR}
-        component={MessagesStackNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.WALLET_NAVIGATOR}
-        component={WalletNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.SERVICES_NAVIGATOR}
-        component={ServicesNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.PROFILE_NAVIGATOR}
-        component={ProfileStackNavigator}
-      />
+  if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
+    return <NotAuthenticatedStackNavigator />;
+  }
 
-      {cgnEnabled && (
-        <Stack.Screen
-          name={CGN_ROUTES.ACTIVATION.MAIN}
-          component={CgnActivationNavigator}
-        />
-      )}
+  if (startupStatus === StartupStatusEnum.INITIAL) {
+    return <IngressScreen />;
+  }
 
-      {cgnEnabled && (
-        <Stack.Screen
-          name={CGN_ROUTES.DETAILS.MAIN}
-          component={CgnDetailsNavigator}
-        />
-      )}
-
-      {cgnEnabled && (
-        <Stack.Screen
-          name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
-          component={CgnEYCAActivationNavigator}
-        />
-      )}
-
-      <Stack.Screen
-        name={ROUTES.WORKUNIT_GENERIC_FAILURE}
-        component={workunitGenericFailure}
-      />
-      <Stack.Screen
-        name={ZENDESK_ROUTES.MAIN}
-        component={ZendeskStackNavigator}
-        options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
-      />
-      <Stack.Screen
-        name={UADONATION_ROUTES.WEBVIEW}
-        component={UAWebViewScreen}
-      />
-
-      {isFimsEnabled && (
-        <Stack.Screen name={FIMS_ROUTES.MAIN} component={FimsNavigator} />
-      )}
-
-      {cdcEnabled && (
-        <Stack.Screen
-          name={CDC_ROUTES.BONUS_REQUEST_MAIN}
-          component={CdcStackNavigator}
-        />
-      )}
-
-      {isFciEnabled && (
-        <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
-      )}
-
-      {isIdPayEnabled && (
-        <>
-          <Stack.Screen
-            name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-            component={IDPayOnboardingNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
-          />
-          <Stack.Screen
-            name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
-            component={IDpayDetailsNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
-          />
-          <Stack.Screen
-            name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-            component={IDPayConfigurationNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
-          />
-          <Stack.Screen
-            name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
-            component={IDPayUnsubscriptionNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
-          />
-        </>
-      )}
-    </Stack.Navigator>
-  );
+  return <AuthenticatedStackNavigator />;
 };
 
 const IOTheme = {
@@ -227,7 +79,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
-  const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
@@ -235,9 +86,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
     bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
   const linking: LinkingOptions = {
-    enabled: false,
-    prefixes: [IO_INTERNAL_LINK_PREFIX],
+    enabled: !isTestEnv, // disable linking in test env
+    prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
     config: {
+      initialRouteName: ROUTES.MAIN,
       screens: {
         [ROUTES.MAIN]: {
           path: "main",
@@ -288,9 +140,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             ...(svEnabled && svLinkingOptions)
           }
         },
+        ...fciLinkingOptions,
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
-        ...(isFciEnabled ? fciLinkingOptions : {}),
         ...(isIdPayEnabled ? idPayLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
@@ -311,7 +163,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       onStateChange={async () => {
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
-
         if (currentRouteName !== undefined) {
           dispatch(setDebugCurrentRouteName(currentRouteName));
           trackScreen(previousRouteName, currentRouteName);
