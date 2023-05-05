@@ -48,15 +48,12 @@ export type IdpAuthErrorScreenType = {
   onRetry: (() => void) | undefined;
 };
 
-
-
 export const IdpAuthErrorScreen = ({
   requestStateError,
   errorCode,
   onCancel,
   onRetry
 }: IdpAuthErrorScreenType) => {
-
   const errorType = requestStateError;
   const errorTranslationKey = `authentication.errors.spid.error_${errorCode}`;
 

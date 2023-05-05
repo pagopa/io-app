@@ -29,7 +29,6 @@ import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { handleRegenerateKey, taskRegenerateKey } from "..";
 
-
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
   loginUri?: string
@@ -40,11 +39,9 @@ export const useLollipopLoginSource = (
     undefined
   );
 
-
   const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
-
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -108,26 +105,24 @@ export const useLollipopLoginSource = (
      * https://pagopa.atlassian.net/browse/LLK-37
      */
 
-    void handleRegenerateKey(maybeKeyTag.value).then(
-      response => {
-        if(response) {
-          setWebviewSource({
-            uri: loginUri,
-            headers: {
-              "x-pagopa-lollipop-pub-key": Buffer.from(
-                JSON.stringify(response)
-              ).toString("base64"),
-              "x-pagopa-lollipop-pub-key-hash-algo":
-                DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-            }
-          });
-        } else {
-          setWebviewSource({
-            uri: loginUri
-          });
-        }
+    void handleRegenerateKey(maybeKeyTag.value).then(response => {
+      if (response) {
+        setWebviewSource({
+          uri: loginUri,
+          headers: {
+            "x-pagopa-lollipop-pub-key": Buffer.from(
+              JSON.stringify(response)
+            ).toString("base64"),
+            "x-pagopa-lollipop-pub-key-hash-algo":
+              DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+          }
+        });
+      } else {
+        setWebviewSource({
+          uri: loginUri
+        });
       }
-    );
+    });
   }, [loginUri, maybeKeyTag, maybePublicKey, useLollipopLogin]);
 
   const retryLollipopLogin = useCallback(() => {

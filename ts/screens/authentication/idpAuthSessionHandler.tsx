@@ -46,7 +46,11 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
-import { disableNativeAuthentication, loginFailure, loginSuccess } from "../../store/actions/authentication";
+import {
+  disableNativeAuthentication,
+  loginFailure,
+  loginSuccess
+} from "../../store/actions/authentication";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { SessionToken } from "../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
@@ -176,24 +180,21 @@ export const AuthSessionPage = () => {
     nativeAttempts: 0
   });
 
-
   // This is a handler for the browser login. It applies to android only.
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if(nextAppState === "background"){
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      if (nextAppState === "background") {
         setRequestInfo({
           requestState: "AUTHORIZING",
           nativeAttempts: requestInfo.nativeAttempts
         });
-      };
+      }
     });
 
     return () => {
       subscription.remove();
     };
   }, [requestInfo.nativeAttempts]);
-
-
 
   const dispatch = useIODispatch();
 
@@ -285,9 +286,9 @@ export const AuthSessionPage = () => {
         description: error,
         errorType: ErrorType.LOADING_ERROR
       });
-      
+
       // If native login component fails 3 times, it returns to idp selection screen and tries to login with WebView.
-      if(requestInfo.nativeAttempts > 1){
+      if (requestInfo.nativeAttempts > 1) {
         dispatch(disableNativeAuthentication());
         onBack();
         return;
@@ -384,7 +385,11 @@ export const AuthSessionPage = () => {
 
   // It is enough to set the status to loading,
   // the reload will ensure that the functions necessary for correct functioning are performed.
-  const onRetry = () => setRequestInfo({ requestState: "LOADING",nativeAttempts: requestInfo.nativeAttempts + 1 });
+  const onRetry = () =>
+    setRequestInfo({
+      requestState: "LOADING",
+      nativeAttempts: requestInfo.nativeAttempts + 1
+    });
 
   if (requestInfo.requestState === "AUTHORIZED") {
     return <IdpSuccessfulAuthentication />;
@@ -419,9 +424,7 @@ export const AuthSessionPage = () => {
                   {I18n.t("spid.pending_login.title")}
                 </H3>
                 <VSpacer size={16} />
-                <Text>
-                  {I18n.t("spid.pending_login.details")}
-                </Text>
+                <Text>{I18n.t("spid.pending_login.details")}</Text>
               </View>
               <View style={styles.buttonContainer}>
                 <ButtonDefaultOpacity block={true} onPress={onBack}>

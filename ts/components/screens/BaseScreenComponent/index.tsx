@@ -113,11 +113,9 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     };
 
     const canShowHelpButton = () => {
-
-      if(hideHelpButton) {
+      if (hideHelpButton) {
         return false;
-      }else {
-        
+      } else {
         return canShowHelp && (contextualHelp || contextualHelpMarkdown);
       }
     };

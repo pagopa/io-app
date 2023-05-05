@@ -15,7 +15,10 @@ import {
   testLoginReducer,
   TestLoginState
 } from "../../../../store/reducers/testLogin";
-import { nativeLoginReducer, NativeLoginState } from "../../../../store/reducers/nativeLogin";
+import {
+  nativeLoginReducer,
+  NativeLoginState
+} from "../../../../store/reducers/nativeLogin";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -39,7 +42,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   pn: pnPersistor,
   fci: fciReducer,
   idPay: idPayReducer,
-  loginFeatures: combineReducers<LoginFeaturesState,Action>({
+  loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer
   })
