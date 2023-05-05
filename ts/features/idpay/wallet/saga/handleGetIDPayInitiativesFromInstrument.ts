@@ -1,19 +1,16 @@
 import * as E from "fp-ts/lib/Either";
 
-import {
-  IdPayInitiativesFromInstrumentPayloadType,
-  idPayInitiativesFromInstrumentGet,
-  idpayInitiativesFromInstrumentRefreshEnd,
-  idpayInitiativesFromInstrumentRefreshStart
-} from "../store/actions";
-import { SagaGenerator, call, delay, put } from "typed-redux-saga/macro";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
-
-import { IDPayClient } from "../../common/api/client";
+import { pipe } from "fp-ts/lib/function";
+import { call, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { pipe } from "fp-ts/lib/function";
+import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { IDPayClient } from "../../common/api/client";
+import {
+  IdPayInitiativesFromInstrumentPayloadType,
+  idPayInitiativesFromInstrumentGet
+} from "../store/actions";
 
 export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],
@@ -56,19 +53,4 @@ export function* handleGetIDPayInitiativesFromInstrument(
       })
     );
   }
-}
-
-export function* initiativesFromInstrumentRefresh(
-  idWallet: string,
-  isRefreshCall: boolean = false,
-  delayMs: number = 3000
-): SagaGenerator<void> {
-  yield* put(
-    idPayInitiativesFromInstrumentGet.request({
-      idWallet,
-      isRefreshCall
-    })
-  );
-  yield* delay(delayMs);
-  yield* initiativesFromInstrumentRefresh(idWallet, true, delayMs); // initiativesFromInstrumentRefresh(idWallet, true);
 }

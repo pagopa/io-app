@@ -1,6 +1,5 @@
 import {
   ActionType,
-  action,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
@@ -10,7 +9,7 @@ import { NetworkError } from "../../../../../utils/errors";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;
-  isRefreshCall?: boolean;
+  refreshEvery?: number;
 };
 
 export type IdpayInitiativesInstrumentEnrollPayloadType = {
@@ -65,18 +64,18 @@ export const idpayInitiativesInstrumentDelete = createAsyncAction(
   NetworkErrorWithInitiativeId
 >();
 
-export const idpayInitiativesFromInstrumentRefreshStart = createStandardAction(
+export const idPayInitiativesFromInstrumentRefreshStart = createStandardAction(
   "IDPAY_INITIATIVES_FROM_INSTRUMENT_REFRESH_START"
 )<IdPayInitiativesFromInstrumentPayloadType>();
 
-export const idpayInitiativesFromInstrumentRefreshEnd = action(
+export const idPayInitiativesFromInstrumentRefreshStop = createStandardAction(
   "IDPAY_INITIATIVES_FROM_INSTRUMENT_REFRESH_STOP"
-);
+)();
 
 export type IDPayWalletActions =
   | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayInitiativesFromInstrumentGet>
   | ActionType<typeof idpayInitiativesInstrumentEnroll>
   | ActionType<typeof idpayInitiativesInstrumentDelete>
-  | ActionType<typeof idpayInitiativesFromInstrumentRefreshStart>
-  | ActionType<typeof idpayInitiativesFromInstrumentRefreshEnd>;
+  | ActionType<typeof idPayInitiativesFromInstrumentRefreshStart>
+  | ActionType<typeof idPayInitiativesFromInstrumentRefreshStop>;

@@ -51,7 +51,7 @@ const reducer = (
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
-      if (!action.payload.isRefreshCall) {
+      if (action.payload.refreshEvery === undefined) {
         return {
           ...state,
           initiativesWithInstrument: pot.noneLoading,

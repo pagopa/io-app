@@ -1,18 +1,12 @@
-import * as React from "react";
-
-import {
-  idPayAreInitiativesFromInstrumentErrorSelector,
-  idPayEnabledInitiativesFromInstrumentSelector
-} from "../store/reducers";
-import {
-  idPayInitiativesFromInstrumentGet,
-  idpayInitiativesFromInstrumentRefreshEnd,
-  idpayInitiativesFromInstrumentRefreshStart
-} from "../store/actions";
-
 import { useFocusEffect } from "@react-navigation/native";
-import { useIODispatch } from "../../../../store/hooks";
+import * as React from "react";
 import { useSelector } from "react-redux";
+import { useIODispatch } from "../../../../store/hooks";
+import {
+  idPayInitiativesFromInstrumentRefreshStop,
+  idPayInitiativesFromInstrumentRefreshStart
+} from "../store/actions";
+import { idPayEnabledInitiativesFromInstrumentSelector } from "../store/reducers";
 
 export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
   const dispatch = useIODispatch();
@@ -24,15 +18,13 @@ export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
   // );
   useFocusEffect(
     React.useCallback(() => {
-      console.log("CALLBACK HOOOOK!!!!!");
       dispatch(
-        idpayInitiativesFromInstrumentRefreshStart({
-          idWallet,
-          isRefreshCall: false
+        idPayInitiativesFromInstrumentRefreshStart({
+          idWallet
         })
       );
       return () => {
-        dispatch(idpayInitiativesFromInstrumentRefreshEnd);
+        dispatch(idPayInitiativesFromInstrumentRefreshStop());
       };
     }, [idWallet, dispatch])
   );

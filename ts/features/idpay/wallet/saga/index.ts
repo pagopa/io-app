@@ -1,37 +1,35 @@
+import { SagaIterator } from "redux-saga";
+import {
+  FixedTask,
+  call,
+  cancel,
+  delay,
+  fork,
+  put,
+  take,
+  takeEvery,
+  takeLatest
+} from "typed-redux-saga/macro";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { waitBackoffError } from "../../../../utils/backoffError";
+import { IDPayClient } from "../../common/api/client";
 import {
   IdPayInitiativesFromInstrumentPayloadType,
   IdpayInitiativesInstrumentDeletePayloadType,
   IdpayInitiativesInstrumentEnrollPayloadType,
   idPayInitiativesFromInstrumentGet,
+  idPayInitiativesFromInstrumentRefreshStart,
+  idPayInitiativesFromInstrumentRefreshStop,
   idPayWalletGet,
-  idpayInitiativesFromInstrumentRefreshEnd,
-  idpayInitiativesFromInstrumentRefreshStart,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../store/actions";
-import {
-  call,
-  race,
-  take,
-  takeEvery,
-  takeLatest,
-  takeLeading,
-  takeMaybe
-} from "typed-redux-saga/macro";
-import {
-  handleGetIDPayInitiativesFromInstrument,
-  initiativesFromInstrumentRefresh
-} from "./handleGetIDPayInitiativesFromInstrument";
+import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
+import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import {
   handleInitiativeInstrumentDelete,
   handleInitiativeInstrumentEnrollment
 } from "./handleInitiativeInstrumentEnrollment";
-
-import { IDPayClient } from "../../common/api/client";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { SagaIterator } from "redux-saga";
-import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
-import { waitBackoffError } from "../../../../utils/backoffError";
 
 /**
  * Handle the IDPay Wallet requests
@@ -68,6 +66,20 @@ export function* watchIDPayWalletSaga(
       );
     }
   );
+
+  yield* takeEvery(
+    idPayInitiativesFromInstrumentRefreshStart,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
+      const bgRefreshTask: FixedTask<void> = yield* fork(
+        initiativesFromInstrumentRefresh,
+        action.payload.idWallet,
+        action.payload.refreshEvery
+      );
+      yield* take(idPayInitiativesFromInstrumentRefreshStop);
+      yield* cancel(bgRefreshTask);
+    }
+  );
+
   yield* takeEvery(
     idpayInitiativesInstrumentEnroll.request,
     function* (action: {
@@ -84,33 +96,31 @@ export function* watchIDPayWalletSaga(
       );
     }
   );
-  yield* takeEvery(
-    idpayInitiativesInstrumentDelete.request,
-    function* (action: {
-      payload: IdpayInitiativesInstrumentDeletePayloadType;
-    }) {
-      // wait backoff time if there were previous errors
-      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
-      yield* call(
-        handleInitiativeInstrumentDelete,
-        idPayClient.deleteInstrument,
-        token,
-        preferredLanguage,
-        action.payload
-      );
-    }
-  );
-  yield* takeEvery(
-    idpayInitiativesFromInstrumentRefreshStart,
-    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
-      yield* race({
-        task: call(
-          initiativesFromInstrumentRefresh,
-          action.payload.idWallet,
-          action.payload.isRefreshCall
-        ),
-        cancel: take(idpayInitiativesFromInstrumentRefreshEnd.type)
-      });
-    }
-  );
+  yield *
+    takeEvery(
+      idpayInitiativesInstrumentDelete.request,
+      function* (action: {
+        payload: IdpayInitiativesInstrumentDeletePayloadType;
+      }) {
+        // wait backoff time if there were previous errors
+        yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+        yield* call(
+          handleInitiativeInstrumentDelete,
+          idPayClient.deleteInstrument,
+          token,
+          preferredLanguage,
+          action.payload
+        );
+      }
+    );
+}
+
+function* initiativesFromInstrumentRefresh(
+  idWallet: string,
+  delayMs: number = 3000
+) {
+  while (true) {
+    yield* put(idPayInitiativesFromInstrumentGet.request({ idWallet }));
+    yield* delay(delayMs);
+  }
 }
