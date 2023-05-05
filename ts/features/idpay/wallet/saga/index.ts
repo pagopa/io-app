@@ -1,11 +1,9 @@
-import { SagaIterator } from "redux-saga";
+import { SagaIterator, channel } from "redux-saga";
 import {
-  FixedTask,
   call,
-  cancel,
   delay,
-  fork,
   put,
+  race,
   take,
   takeEvery,
   takeLatest
@@ -24,7 +22,10 @@ import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../store/actions";
-import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
+import {
+  handleGetIDPayInitiativesFromInstrument,
+  handleInitiativesFromInstrumentRefresh
+} from "./handleGetIDPayInitiativesFromInstrument";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import {
   handleInitiativeInstrumentDelete,
@@ -68,19 +69,6 @@ export function* watchIDPayWalletSaga(
   );
 
   yield* takeEvery(
-    idPayInitiativesFromInstrumentRefreshStart,
-    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
-      const bgRefreshTask: FixedTask<void> = yield* fork(
-        initiativesFromInstrumentRefresh,
-        action.payload.idWallet,
-        action.payload.refreshEvery
-      );
-      yield* take(idPayInitiativesFromInstrumentRefreshStop);
-      yield* cancel(bgRefreshTask);
-    }
-  );
-
-  yield* takeEvery(
     idpayInitiativesInstrumentEnroll.request,
     function* (action: {
       payload: IdpayInitiativesInstrumentEnrollPayloadType;
@@ -96,31 +84,41 @@ export function* watchIDPayWalletSaga(
       );
     }
   );
-  yield *
-    takeEvery(
-      idpayInitiativesInstrumentDelete.request,
-      function* (action: {
-        payload: IdpayInitiativesInstrumentDeletePayloadType;
-      }) {
-        // wait backoff time if there were previous errors
-        yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
-        yield* call(
-          handleInitiativeInstrumentDelete,
-          idPayClient.deleteInstrument,
-          token,
-          preferredLanguage,
-          action.payload
-        );
-      }
-    );
-}
 
-function* initiativesFromInstrumentRefresh(
-  idWallet: string,
-  delayMs: number = 3000
-) {
-  while (true) {
-    yield* put(idPayInitiativesFromInstrumentGet.request({ idWallet }));
-    yield* delay(delayMs);
-  }
+  yield* takeEvery(
+    idpayInitiativesInstrumentDelete.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentDeletePayloadType;
+    }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+      yield* call(
+        handleInitiativeInstrumentDelete,
+        idPayClient.deleteInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+
+  const instrumentRefreshChannel = yield* call(channel);
+
+  yield* takeEvery(
+    idPayInitiativesFromInstrumentRefreshStart,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
+      yield* race({
+        task: call(
+          handleInitiativesFromInstrumentRefresh,
+          action.payload.idWallet,
+          action.payload.refreshEvery
+        ),
+        cancel: take(instrumentRefreshChannel)
+      });
+    }
+  );
+
+  yield* takeEvery(idPayInitiativesFromInstrumentRefreshStop, function* () {
+    yield* put(instrumentRefreshChannel, "kill");
+  });
 }

@@ -52,29 +52,21 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
           refreshEvery: 3000
         })
       );
+      return () => {
+        dispatch(idPayInitiativesFromInstrumentRefreshStop());
+      };
     }, [idWalletString, dispatch])
-  );
-
-  React.useEffect(
-    () => () => {
-      // We stop thre fresh loop only when unmounting the component.
-      // Stopping the loop when losing focus will lead to unexpected behaviours
-      dispatch(idPayInitiativesFromInstrumentRefreshStop());
-    },
-    [dispatch]
   );
 
   const initiativesList = useIOSelector(
     idPayEnabledInitiativesFromInstrumentSelector
   );
 
-  const navigateToPairableInitiativesList = () => {
-    // Before navigate to the full list screen we need to stop the refresh logic
-    dispatch(idPayInitiativesFromInstrumentRefreshStop());
+  const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       idWallet: idWalletString
     });
-  };
+
   return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>

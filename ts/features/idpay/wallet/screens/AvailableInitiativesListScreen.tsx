@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
-import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -21,8 +20,8 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
 import {
-  idPayInitiativesFromInstrumentRefreshStop,
-  idPayInitiativesFromInstrumentRefreshStart
+  idPayInitiativesFromInstrumentRefreshStart,
+  idPayInitiativesFromInstrumentRefreshStop
 } from "../store/actions";
 import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
 
@@ -53,19 +52,17 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   const { idWallet } = props.route.params;
   const dispatch = useIODispatch();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(
-        idPayInitiativesFromInstrumentRefreshStart({
-          idWallet,
-          refreshEvery: 3000
-        })
-      );
-      return () => {
-        dispatch(idPayInitiativesFromInstrumentRefreshStop());
-      };
-    }, [idWallet, dispatch])
-  );
+  React.useEffect(() => {
+    dispatch(
+      idPayInitiativesFromInstrumentRefreshStart({
+        idWallet,
+        refreshEvery: 3000
+      })
+    );
+    return () => {
+      dispatch(idPayInitiativesFromInstrumentRefreshStop());
+    };
+  }, [idWallet, dispatch]);
 
   // useIDPayInitiativesFromInstrument(idWallet).initiativesList;
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);

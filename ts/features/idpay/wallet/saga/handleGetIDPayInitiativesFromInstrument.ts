@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { call, delay, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
@@ -52,5 +52,15 @@ export function* handleGetIDPayInitiativesFromInstrument(
         ...getNetworkError(e)
       })
     );
+  }
+}
+
+export function* handleInitiativesFromInstrumentRefresh(
+  idWallet: string,
+  delayMs: number = 3000
+) {
+  while (true) {
+    yield* put(idPayInitiativesFromInstrumentGet.request({ idWallet }));
+    yield* delay(delayMs);
   }
 }
