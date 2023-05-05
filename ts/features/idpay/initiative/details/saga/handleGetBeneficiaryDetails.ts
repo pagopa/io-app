@@ -8,14 +8,14 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayClient } from "../../../common/api/client";
 import {
   idPayBeneficiaryDetailsGet,
-  IdPayBeneficieryDetailsGetPayloadType
+  IdPayBeneficiaryDetailsGetPayloadType
 } from "../store/actions";
 
 export function* handleGetBeneficiaryDetails(
   getInitiativeBeneficiaryDetail: IDPayClient["getInitiativeBeneficiaryDetail"],
   token: string,
   language: PreferredLanguageEnum,
-  payload: IdPayBeneficieryDetailsGetPayloadType
+  payload: IdPayBeneficiaryDetailsGetPayloadType
 ) {
   try {
     const getInitiativeBeneficiaryResult: SagaCallReturnType<

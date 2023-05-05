@@ -5,7 +5,7 @@ import { waitBackoffError } from "../../../../../utils/backoffError";
 import { IDPayClient } from "../../../common/api/client";
 import {
   idPayBeneficiaryDetailsGet,
-  IdPayBeneficieryDetailsGetPayloadType,
+  IdPayBeneficiaryDetailsGetPayloadType,
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
   IdpayTimelinePageGetPayloadType,
@@ -55,7 +55,7 @@ export function* watchIDPayInitiativeDetailsSaga(
   );
   yield* takeLatest(
     idPayBeneficiaryDetailsGet.request,
-    function* (action: { payload: IdPayBeneficieryDetailsGetPayloadType }) {
+    function* (action: { payload: IdPayBeneficiaryDetailsGetPayloadType }) {
       // wait backoff time if there were previous errors
       yield* call(waitBackoffError, idPayBeneficiaryDetailsGet.failure);
       yield* call(
