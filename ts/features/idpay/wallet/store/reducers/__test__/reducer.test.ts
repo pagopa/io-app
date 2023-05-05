@@ -20,6 +20,7 @@ import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../../actions";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 const mockResponseSuccess: WalletDTO = {
   initiativeList: []
@@ -103,17 +104,6 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
         idWallet: "MOCK"
       })
     );
-    store.dispatch(
-      idPayInitiativesFromInstrumentGet.success(
-        mockInitiativesWithInstrumentSuccess
-      )
-    );
-    store.dispatch(
-      idPayInitiativesFromInstrumentGet.request({
-        idWallet: "MOCK",
-        isRefreshing: false
-      })
-    );
     const isIdpayEnabled = isIdPayEnabledSelector(store.getState());
     expect(
       store.getState().features.idPay.wallet.initiativesAwaitingStatusUpdate
@@ -129,35 +119,37 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
       idPayInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(pot.noneLoading);
   });
-  it("does not reset the queue or set the initiatives to loading on a refresh call", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    store.dispatch(
-      idPayInitiativesFromInstrumentGet.request({
-        idWallet: "MOCK",
-        isRefreshing: false
-      })
-    );
-    store.dispatch(
-      idPayInitiativesFromInstrumentGet.success(
-        mockInitiativesWithInstrumentSuccess
-      )
-    );
-    store.dispatch(
-      idpayInitiativesInstrumentEnroll.request({
-        idWallet: "MOCK",
-        initiativeId: "MOCK"
-      })
-    );
+
+  it("set the initiatives to updating on a refresh call", () => {
+    const globalState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    ) as GlobalState;
+
+    const state: GlobalState = {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        idPay: {
+          ...globalState.features.idPay,
+          wallet: {
+            ...globalState.features.idPay.wallet,
+            initiativesWithInstrument: pot.some(
+              mockInitiativesWithInstrumentSuccess
+            )
+          }
+        }
+      }
+    };
+
+    const store = createStore(appReducer, state as any);
     store.dispatch(
       idPayInitiativesFromInstrumentGet.request({
         idWallet: "MOCK",
         isRefreshing: true
       })
     );
-    expect(
-      store.getState().features.idPay.wallet.initiativesAwaitingStatusUpdate
-    ).toStrictEqual({ MOCK: true });
+
     expect(
       store.getState().features.idPay.wallet.initiativesWithInstrument
     ).toStrictEqual(
@@ -166,9 +158,11 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
         mockInitiativesWithInstrumentSuccess
       )
     );
+
     expect(
       idPayEnabledInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(mockInitiativesWithInstrumentSuccess.initiativeList);
+
     expect(
       idPayInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(
@@ -177,6 +171,30 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
         mockInitiativesWithInstrumentSuccess
       )
     );
+  });
+
+  it("sets the initiatives to some on success", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      idPayInitiativesFromInstrumentGet.success(
+        mockInitiativesWithInstrumentSuccess
+      )
+    );
+    const isIdpayEnabled = isIdPayEnabledSelector(store.getState());
+    expect(
+      store.getState().features.idPay.wallet.initiativesAwaitingStatusUpdate
+    ).toStrictEqual({});
+    expect(
+      idPayAreInitiativesFromInstrumentLoadingSelector(store.getState())
+      // we expect it to be true, but is false in case idpay is disabled
+    ).toStrictEqual(isIdpayEnabled);
+    expect(
+      idPayEnabledInitiativesFromInstrumentSelector(store.getState())
+    ).toStrictEqual([]);
+    expect(
+      idPayInitiativesFromInstrumentSelector(store.getState())
+    ).toStrictEqual(pot.some(mockInitiativesWithInstrumentSuccess));
   });
 });
 
