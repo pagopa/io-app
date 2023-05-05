@@ -1,32 +1,30 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import { useFocusEffect } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   IOLogoPaymentType,
   LogoPayment
 } from "../../../../components/core/logos";
-import { ScrollView, StyleSheet, View } from "react-native";
-import {
-  idpayInitiativesFromInstrumentRefreshEnd,
-  idpayInitiativesFromInstrumentRefreshStart
-} from "../store/actions";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
-import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import React from "react";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import TypedI18n from "../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
+import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
+import {
+  idPayInitiativesFromInstrumentRefreshStop,
+  idPayInitiativesFromInstrumentRefreshStart
+} from "../store/actions";
 import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
-import { pipe } from "fp-ts/lib/function";
-import { useFocusEffect } from "@react-navigation/native";
-import { useIDPayInitiativesFromInstrument } from "../hooks/useIDPayInitiativesFromInstrument";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   idWallet: string;
@@ -57,15 +55,13 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   const dispatch = useIODispatch();
   useFocusEffect(
     React.useCallback(() => {
-      console.log("CALLBACK HOOOOK!!!!!");
       dispatch(
-        idpayInitiativesFromInstrumentRefreshStart({
-          idWallet,
-          isRefreshCall: false
+        idPayInitiativesFromInstrumentRefreshStart({
+          idWallet
         })
       );
       return () => {
-        dispatch(idpayInitiativesFromInstrumentRefreshEnd);
+        dispatch(idPayInitiativesFromInstrumentRefreshStop());
       };
     }, [idWallet, dispatch])
   );

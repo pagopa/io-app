@@ -5,7 +5,6 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";

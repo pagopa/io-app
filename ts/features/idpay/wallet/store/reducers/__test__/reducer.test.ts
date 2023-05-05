@@ -1,16 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import {
-  idPayWalletInitiativeListSelector,
-  idPayInitiativesFromInstrumentSelector,
-  idPayWalletSelector,
+  idPayAreInitiativesFromInstrumentLoadingSelector,
   idPayEnabledInitiativesFromInstrumentSelector,
   idPayInitiativeAwaitingUpdateSelector,
-  idPayAreInitiativesFromInstrumentLoadingSelector
+  idPayInitiativesFromInstrumentSelector,
+  idPayWalletInitiativeListSelector,
+  idPayWalletSelector
 } from "..";
+import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../../definitions/idpay/WalletDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { isIdPayEnabledSelector } from "../../../../../../store/reducers/backendStatus";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   idPayInitiativesFromInstrumentGet,
@@ -18,8 +20,6 @@ import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../../actions";
-import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
-import { isIdPayEnabledSelector } from "../../../../../../store/reducers/backendStatus";
 
 const mockResponseSuccess: WalletDTO = {
   initiativeList: []
@@ -100,8 +100,7 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
       idPayInitiativesFromInstrumentGet.request({
-        idWallet: "MOCK",
-        isRefreshCall: false
+        idWallet: "MOCK"
       })
     );
     store.dispatch(
