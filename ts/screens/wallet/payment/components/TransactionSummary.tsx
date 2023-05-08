@@ -236,9 +236,10 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       >
         {props.isPaid && !isLoading && (
           <IOBadge
-            text={I18n.t("messages.badge.paid")}
             small
-            labelColor={"bluegreyDark"}
+            text={I18n.t("messages.badge.paid")}
+            variant="solid"
+            color="aqua"
           />
         )}
         {!props.isPaid && !isLoading && (
