@@ -58,7 +58,7 @@ const getItem = (props: Props) => [
     )
   },
   {
-    icon: <Icon name="docAgree" size={iconSize} color="blue" />,
+    icon: <Icon name="security" size={iconSize} color="blue" />,
     description: (
       <View>
         <TouchableWithoutFeedback
