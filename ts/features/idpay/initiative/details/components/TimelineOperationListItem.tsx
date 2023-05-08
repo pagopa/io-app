@@ -8,6 +8,7 @@ import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../..
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as RejectedInstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -42,6 +43,8 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
       return <Icon name={"legWarning"} color="red" />;
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
+    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+    case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
       return getCardLogoComponent(operation.brand);
     default:
       return null;
