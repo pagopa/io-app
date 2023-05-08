@@ -14,21 +14,24 @@ type ValueBoxProps = {
   small?: true;
 };
 
+const BADGE_SIZE_SMALL = 40;
+const BADGE_SIZE_DEFAULT = 48;
+
 const styles = StyleSheet.create({
   percentage: { textAlign: "center", lineHeight: 30 },
   smallValueBox: {
-    borderRadius: 6.5,
-    paddingVertical: 5,
-    width: 40,
+    alignSelf: "center",
+    borderRadius: BADGE_SIZE_SMALL / 4,
+    paddingVertical: 4,
+    width: BADGE_SIZE_SMALL,
     textAlign: "center",
     backgroundColor: IOColors.antiqueFuchsia
   },
   discountValueBox: {
-    borderRadius: 6.5,
+    alignSelf: "center",
+    borderRadius: BADGE_SIZE_DEFAULT / 4,
     paddingVertical: 8,
-    width: 48,
-    marginLeft: "auto",
-    height: 48,
+    width: BADGE_SIZE_DEFAULT,
     backgroundColor: IOColors.antiqueFuchsia
   }
 });
