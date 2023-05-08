@@ -66,15 +66,18 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           colors={getGradientColorValues("cgnAll")}
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
           child={
-            <View style={[{ alignItems: "flex-end" }, IOStyles.flex]}>
+            <View style={[{ justifyContent: "flex-end" }, IOStyles.flex]}>
               <VSpacer size={16} />
-              <IOBadge
-                small
-                text={`${info.item.newDiscounts} ${I18n.t(
-                  "bonus.cgn.merchantsList.news"
-                )}`}
-                labelColor={"blue"}
-              />
+              <View style={{ alignSelf: "flex-start" }}>
+                <IOBadge
+                  small
+                  text={`${info.item.newDiscounts} ${I18n.t(
+                    "bonus.cgn.merchantsList.news"
+                  )}`}
+                  variant="solid"
+                  color="white"
+                />
+              </View>
             </View>
           }
         />
@@ -96,13 +99,16 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             >
               {countAvailable && (
                 <View style={IOStyles.flex}>
-                  <IOBadge
-                    small
-                    text={`${info.item.newDiscounts} ${I18n.t(
-                      "bonus.cgn.merchantsList.news"
-                    )}`}
-                    labelColor={"blue"}
-                  />
+                  <View style={{ alignSelf: "flex-start" }}>
+                    <IOBadge
+                      small
+                      text={`${info.item.newDiscounts} ${I18n.t(
+                        "bonus.cgn.merchantsList.news"
+                      )}`}
+                      variant="solid"
+                      color="white"
+                    />
+                  </View>
                 </View>
               )}
               {s.icon({

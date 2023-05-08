@@ -58,9 +58,10 @@ const RankPositionItem = (props: Props): React.ReactElement => (
           {!props.hideBadge && (
             <View>
               <IOBadge
+                small
                 text={formatNumberWithNoDigits(props.superCashbackAmount, true)}
-                small={true}
-                labelColor={"white"}
+                variant="solid"
+                color="blue"
                 testID={"SuperCashbackAmountBadge"}
               />
             </View>

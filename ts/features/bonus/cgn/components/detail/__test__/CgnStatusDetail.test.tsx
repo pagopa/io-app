@@ -78,7 +78,7 @@ describe("CgnStatusDetail", () => {
       I18n.t("bonus.cgn.detail.status.badge.revoked")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.bluegrey
+      backgroundColor: IOColors.grey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.date.activated")
@@ -109,7 +109,7 @@ describe("CgnStatusDetail", () => {
       I18n.t("bonus.cgn.detail.status.badge.expired")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.bluegrey
+      backgroundColor: IOColors.grey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.date.activated")
