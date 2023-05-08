@@ -3431,16 +3431,36 @@ idpay:
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
     operationDetails:
-      title: Dettaglio dell'operazione
-      instrument: Metodo di pagamento
-      maskedPan: •••• {{lastDigits}}
-      amountLabel: Importo transazione
-      accruedAmountLabel: Importo rimborsabile
-      infoTitle: Informazioni sull transazione
-      date: Data
-      circuit: Circuito di pagamento
-      acquirerId: ID transazione Acquirer
-      issuerId: ID transazione Issuer
+      title: 
+        TRANSACTION: Dettaglio dell'operazione
+        REVERSAL: Dettaglio dell'operazione
+        PAID_REFUND: Dettaglio del rimborso
+        REJECTED_REFUND: Dettaglio del rimborso
+      transaction:
+        instrument: Metodo di pagamento
+        maskedPan: •••• {{lastDigits}}
+        amountLabel: Importo transazione
+        accruedAmountLabel: Importo rimborsabile
+        infoTitle: Informazioni sulla transazione
+        date: Data
+        circuit: Circuito di pagamento
+        acquirerId: ID transazione Acquirer
+        issuerId: ID transazione Issuer
+        reversalAdvice: Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza.
+      refund:
+        iban: IBAN
+        amount: Importo rimborso
+        resultLabel: Esito
+        result: 
+          PAID_REFUND: Eseguito
+          REJECTED_REFUND: Fallito
+        rejectedAdvice: 
+          text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
+          editIban: Modifica IBAN 
+        period: Periodo di riferimento
+        date: Data rimborso
+        cro: CRO
+      errorBody: Impossibile caricare il dettaglio
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3501,6 +3521,19 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      code:
+        ISEE: ISEE
+        BIRTHDATE: Data di nascita
+        RESIDENCE: Residenza
+      operator:
+        EQ: "{{value}}"
+        NOT_EQ: "Non è {{value}}"
+        LT: "Minore di {{value}}"
+        LE: "Minore o uguale a {{value}}"
+        GT: "Maggiore di {{value}}"
+        GE: "Maggiore o uguale a {{value}}"
+        BTW_CLOSED: "Compreso tra {{value}} e {{value2}}"
+        BTW_OPEN: "Compreso tra {{value}} e {{value2}}"
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
