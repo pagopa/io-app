@@ -51,8 +51,7 @@ export const IOStyles = StyleSheet.create({
     },
     shadowOpacity: themeVariables.footerShadowOpacity,
     shadowRadius: themeVariables.footerShadowRadius,
-    // Android shadow
-    elevation: themeVariables.footerElevation
+    elevation: themeVariables.footerElevation // Prop supported on Android only
   },
   bgWhite: {
     backgroundColor: IOColors.white
@@ -88,8 +87,8 @@ export const IOButtonLegacyStyles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    textAlignVertical: "center", // Android
     justifyContent: "center",
+    textAlignVertical: "center", // Prop supported on Android only
     /* Legacy visual properties. They will be replaced with
     dynamic ones once NativeBase is gone */
     borderRadius: themeVariables.btnBorderRadius,
@@ -119,14 +118,6 @@ export const IOButtonLegacyStyles = StyleSheet.create({
   },
   buttonSizeSmall: {
     height: btnLegacySizeSmall
-  },
-  /* Widths */
-  dimensionsDefault: {
-    alignSelf: "flex-start"
-  },
-  dimensionsFullWidth: {
-    flex: 1,
-    alignSelf: "auto"
   }
 });
 
@@ -137,8 +128,8 @@ export const IOButtonStyles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    textAlignVertical: "center", // Android
     justifyContent: "center",
+    textAlignVertical: "center", // Prop supported on Android only
     /* Legacy visual properties. They will be replaced with
     dynamic ones once NativeBase is gone */
     borderRadius: btnBorderRadius,
@@ -149,6 +140,14 @@ export const IOButtonStyles = StyleSheet.create({
     // paddingVertical: PixelRatio.getFontScale() * 10,
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
     // borderRadius: PixelRatio.getFontScale() * 8
+  },
+  buttonLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlignVertical: "center", // Prop supported on Android only
+    // Reset default visual parameters
+    elevation: 0
   },
   /* Labels */
   label: {
