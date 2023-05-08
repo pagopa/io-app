@@ -5,7 +5,7 @@ import { IOPictograms, Pictogram } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { Link } from "../core/typography/Link";
+import { NewLink } from "../core/typography/NewLink";
 
 export type SpacerOrientation = "vertical" | "horizontal";
 
@@ -50,11 +50,15 @@ export const FeatureInfo = ({
     <HSpacer size={24} />
     <View style={{ flexShrink: 1 }}>
       {renderNode(body)}
-
       {actionLabel && actionOnPress && (
         <>
-          <VSpacer size={8} />
-          <Link onPress={actionOnPress}>{actionLabel}</Link>
+          {/* Add "marginTop" equivalent if body text is present.
+          This verbose code could be deleted once we got "gap"
+          property support */}
+          {body && <VSpacer size={8} />}
+          <NewLink fontSize="small" onPress={actionOnPress}>
+            {actionLabel}
+          </NewLink>
         </>
       )}
     </View>

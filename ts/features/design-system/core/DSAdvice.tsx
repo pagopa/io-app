@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
   }
 });
 
+const onLinkPress = () => {
+  Alert.alert("Alert", "Action triggered");
+};
+
 export const DSAdvice = () => (
   <DesignSystemScreen title={"Advice & Banners"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
@@ -48,6 +52,12 @@ export const DSAdvice = () => (
       body={
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
       }
+    />
+    <VSpacer size={24} />
+    <FeatureInfo
+      iconName="security"
+      actionLabel="Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper"
+      actionOnPress={onLinkPress}
     />
     <VSpacer size={24} />
     <FeatureInfo
@@ -70,7 +80,7 @@ export const DSAdvice = () => (
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
       }
       actionLabel="Scopri di più"
-      actionOnPress={() => Alert.alert("Alert", "Action triggered")}
+      actionOnPress={onLinkPress}
     />
 
     <VSpacer size={40} />
