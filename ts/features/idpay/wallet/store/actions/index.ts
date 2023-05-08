@@ -1,11 +1,15 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
+import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { NetworkError } from "../../../../../utils/errors";
-import { InitiativesWithInstrumentDTO as InitiativesFromInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;
-  isRefreshCall?: boolean;
+  isRefreshing?: boolean;
 };
 
 export type IdpayInitiativesInstrumentEnrollPayloadType = {
@@ -36,7 +40,7 @@ export const idPayInitiativesFromInstrumentGet = createAsyncAction(
   "IDPAY_INITIATIVES_FROM_INSTRUMENT_FAILURE"
 )<
   IdPayInitiativesFromInstrumentPayloadType,
-  InitiativesFromInstrumentDTO,
+  InitiativesWithInstrumentDTO,
   NetworkError
 >();
 
@@ -60,8 +64,18 @@ export const idpayInitiativesInstrumentDelete = createAsyncAction(
   NetworkErrorWithInitiativeId
 >();
 
+export const idPayInitiativesFromInstrumentRefreshStart = createStandardAction(
+  "IDPAY_INITIATIVES_FROM_INSTRUMENT_REFRESH_START"
+)<IdPayInitiativesFromInstrumentPayloadType>();
+
+export const idPayInitiativesFromInstrumentRefreshStop = createStandardAction(
+  "IDPAY_INITIATIVES_FROM_INSTRUMENT_REFRESH_STOP"
+)();
+
 export type IDPayWalletActions =
   | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayInitiativesFromInstrumentGet>
   | ActionType<typeof idpayInitiativesInstrumentEnroll>
-  | ActionType<typeof idpayInitiativesInstrumentDelete>;
+  | ActionType<typeof idpayInitiativesInstrumentDelete>
+  | ActionType<typeof idPayInitiativesFromInstrumentRefreshStart>
+  | ActionType<typeof idPayInitiativesFromInstrumentRefreshStop>;

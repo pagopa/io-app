@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -13,6 +12,7 @@ import {
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -74,16 +74,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "baseline"
-  },
-  badgeInfo: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    height: 25,
-    flexDirection: "row"
-  },
-  badgeInfoExpired: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.red
   }
 });
 
@@ -178,9 +168,11 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           >
             {renderBankLogo(props.abi, imgDimensions)}
             {props.blocked && (
-              <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
-                <H5 color="red">{I18n.t("global.badges.blocked")}</H5>
-              </Badge>
+              <IOBadge
+                variant="outline"
+                color="red"
+                text={I18n.t("global.badges.blocked")}
+              />
             )}
           </View>
           <VSpacer size={16} />

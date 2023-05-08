@@ -31,7 +31,8 @@ const SignatureRequestItem = (props: Props) => {
         return (
           <IOBadge
             small
-            labelColor={"white"}
+            variant="solid"
+            color="blue"
             text={I18n.t("features.fci.requests.signingInProgress")}
             testID={"FciSignatureRequestItemBadgeInProgress"}
           />
@@ -40,7 +41,8 @@ const SignatureRequestItem = (props: Props) => {
         return (
           <IOBadge
             small
-            labelColor={"bluegreyDark"}
+            variant="solid"
+            color="aqua"
             text={I18n.t("features.fci.requests.signed")}
             testID={"FciSignatureRequestItemBadgeSigned"}
           />
@@ -50,7 +52,8 @@ const SignatureRequestItem = (props: Props) => {
         return (
           <IOBadge
             small
-            labelColor={"red"}
+            variant="outline"
+            color="red"
             text={I18n.t("features.fci.requests.notAvailable")}
             testID={"FciSignatureRequestItemBadgeNotAvailable"}
           />

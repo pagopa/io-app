@@ -44,9 +44,9 @@ const availabilityBadge = (
     case "available":
       return <PaymentStatusSwitch paymentMethod={paymentMethod} />;
     case "arriving":
-      return <IOBadge text={arriving} labelColor={"blue"} />;
+      return <IOBadge text={arriving} variant="outline" color="blue" />;
     case "notAvailable":
-      return <IOBadge text={incompatible} labelColor={"blue"} />;
+      return <IOBadge text={incompatible} variant="outline" color="blue" />;
     case "onboardableNotImplemented":
       return <Switch testID={"switchOnboardCard"} disabled={true} />;
   }
