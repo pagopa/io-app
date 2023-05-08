@@ -1,101 +1,55 @@
-import { pipe } from "fp-ts/lib/function";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBCardText } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
-  View,
   Image,
   ImageBackground,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
-import { H4 } from "../../../../components/core/typography/H4";
-import { H5 } from "../../../../components/core/typography/H5";
+import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { localeDateFormat } from "../../../../utils/locale";
-import cardBgPreview from "../../../../../img/features/idpay/initiative_preview_bg.png";
-import bonusLogoTmp from "../../../../../img/features/idpay/bonus_logo.png";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { H4 } from "../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import {
-  hexToRgba,
-  IOColors
+  IOColors,
+  hexToRgba
 } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import I18n from "../../../../i18n";
 
 type Props = {
-  initiativeId: string;
   initiativeName?: string;
-  endDate: Date;
+  logoUrl?: string;
   availableAmount?: number;
   onPress?: () => void;
 };
 
+const formatNumberRightSign = (amount: number) =>
+  `${formatNumberAmount(amount, false)} €`;
+
 const IDPayCardPreviewComponent = (props: Props) => {
+  const { initiativeName, logoUrl, onPress } = props;
+
   const availableAmount = pipe(
     props.availableAmount,
     O.fromNullable,
-    O.map(amount =>
-      formatNumberAmount(amount).split(
-        I18n.t("global.localization.decimalSeparator")
-      )
-    ),
-    O.getOrElse(() => ["-", "-"])
+    O.map(formatNumberRightSign),
+    O.getOrElse(() => "-")
   );
 
-  const CardContent = () => (
-    <TouchableDefaultOpacity
-      style={[styles.row, styles.spaced, styles.paddedContentPreview]}
-      onPress={props.onPress}
-      accessible={true}
-      accessibilityRole={"button"}
-    >
-      <View
-        style={[styles.column, { width: widthPercentageToDP("60%") }]}
-        accessible={false}
-        accessibilityElementsHidden={true}
-        importantForAccessibility={"no-hide-descendants"}
-      >
-        <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
-          <H5 color={"white"} weight={"Regular"}>
-            {I18n.t("idpay.wallet.preview.validThrough", {
-              endDate: localeDateFormat(
-                props.endDate,
-                I18n.t("global.dateFormats.shortFormat")
-              )
-            })}
-          </H5>
-        </View>
-        <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
-          <H4
-            weight={"Bold"}
-            color={"white"}
-            ellipsizeMode="tail"
-            numberOfLines={1}
-            style={styles.name}
-          >
-            {props.initiativeName}
-          </H4>
-          <NBCardText
-            bold={true}
-            white={true}
-            style={[styles.amountTextBase, { textAlign: "right" }]}
-          >
-            {"€ "}
-            <NBCardText white={true} style={styles.amountTextUpper}>
-              {`${availableAmount[0]}${I18n.t(
-                "global.localization.decimalSeparator"
-              )}`}
-            </NBCardText>
-            <NBCardText white={true} style={styles.amountTextLower}>
-              {availableAmount[1]}
-            </NBCardText>
-          </NBCardText>
-        </View>
-      </View>
-      {/* TODO: add correct initiative logo, this is only temporary */}
-      <Image source={bonusLogoTmp} style={styles.previewLogo} />
-    </TouchableDefaultOpacity>
+  const logoComponent = pipe(
+    NonEmptyString.decode(logoUrl),
+    O.fromEither,
+    O.fold(
+      () => undefined,
+      logoUrl => (
+        <Image source={{ uri: logoUrl }} style={styles.initiativeLogo} />
+      )
+    )
   );
 
   return (
@@ -109,11 +63,25 @@ const IDPayCardPreviewComponent = (props: Props) => {
         />
       )}
       <ImageBackground
-        source={cardBgPreview}
+        source={walletCardBg}
         style={[styles.card, Platform.OS === "ios" ? styles.cardShadow : {}]}
         imageStyle={styles.cardImage}
       >
-        <CardContent />
+        <TouchableDefaultOpacity
+          style={styles.cardContent}
+          onPress={onPress}
+          accessible={true}
+          accessibilityRole={"button"}
+        >
+          <View style={[IOStyles.flex, IOStyles.rowSpaceBetween]}>
+            <H4>{initiativeName}</H4>
+            <LabelSmall weight="SemiBold" fontSize="regular" color="black">
+              {availableAmount}
+            </LabelSmall>
+          </View>
+          {logoComponent}
+        </TouchableDefaultOpacity>
+        <VSpacer size={16} />
       </ImageBackground>
     </>
   );
@@ -122,23 +90,6 @@ const IDPayCardPreviewComponent = (props: Props) => {
 const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
-  paddedContentPreview: {
-    paddingLeft: 18,
-    paddingTop: 8,
-    paddingRight: 22
-  },
-  row: {
-    flexDirection: "row"
-  },
-  spaced: {
-    justifyContent: "space-between"
-  },
-  column: {
-    flexDirection: "column"
-  },
-  alignItemsCenter: {
-    alignItems: "center"
-  },
   upperShadowBox: {
     marginBottom: -13,
     borderRadius: 8,
@@ -169,21 +120,20 @@ const styles = StyleSheet.create({
     height: 88,
     width: "100%"
   },
-  name: {
+  cardContent: {
     flex: 1,
-    marginRight: 8
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 16,
+    paddingRight: 24
   },
-  amountTextBase: {
-    fontSize: 20,
-    lineHeight: 32
-  },
-  amountTextUpper: { fontSize: 24 },
-  amountTextLower: { fontSize: 16 },
-  previewLogo: {
-    resizeMode: "contain",
-    height: 40,
-    width: 40,
-    alignSelf: "center"
+  initiativeLogo: {
+    resizeMode: "cover",
+    backgroundColor: IOColors.white,
+    height: 32,
+    width: 32,
+    borderRadius: 4,
+    marginLeft: 8
   }
 });
 

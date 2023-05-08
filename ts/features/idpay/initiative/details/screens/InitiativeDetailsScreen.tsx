@@ -5,19 +5,19 @@ import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
-import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
+import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import {
   AppParamsList,
@@ -94,7 +94,7 @@ const InitiativeDetailsScreen = () => {
       lastUpdated => (
         <LabelSmall style={styles.lastUpdate} color="bluegrey" weight="Regular">
           {I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+            "idpay.initiative.details.initiativeDetailsScreen.configured.lastUpdated"
           )}
           {lastUpdated}
         </LabelSmall>
@@ -121,7 +121,7 @@ const InitiativeDetailsScreen = () => {
     if (initiativeNeedsConfiguration) {
       return (
         <View style={styles.newInitiativeMessageContainer}>
-          <EmptyInitiativeSvg width={130} height={130} />
+          <Pictogram name="setup" size={72} />
           <VSpacer size={16} />
           <H3>
             {I18n.t(
@@ -135,6 +135,18 @@ const InitiativeDetailsScreen = () => {
               { initiative: initiativeData?.initiativeName }
             )}
           </Body>
+          <VSpacer size={16} />
+          <ButtonSolid
+            accessibilityLabel={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
+            )}
+            fullWidth={true}
+            color="primary"
+            onPress={navigateToConfiguration}
+            label={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
+            )}
+          />
         </View>
       );
     }
@@ -146,25 +158,10 @@ const InitiativeDetailsScreen = () => {
         <InitiativeTimelineComponent initiativeId={initiativeId} />
         <VSpacer size={24} />
         <InitiativeSettingsComponent initiative={initiativeData} />
+        <VSpacer size={32} />
       </ContentWrapper>
     );
   };
-
-  const configurationButton = initiativeNeedsConfiguration && (
-    <SafeAreaView>
-      <FooterWithButtons
-        type="SingleButton"
-        leftButton={{
-          block: true,
-          primary: true,
-          onPress: navigateToConfiguration,
-          title: I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
-          )
-        }}
-      />
-    </SafeAreaView>
-  );
 
   const cardComponent = pipe(
     initiativeData,
@@ -185,36 +182,27 @@ const InitiativeDetailsScreen = () => {
         backgroundColor={IOColors["blue-50"]}
         barStyle={"dark-content"}
       />
-      <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        scrollIndicatorInsets={{ right: 1 }}
+      >
         {cardComponent}
-        <View style={styles.container}>{renderScreenContent()}</View>
-        <VSpacer size={32} />
+        {renderScreenContent()}
       </ScrollView>
-      {configurationButton}
     </BaseScreenComponent>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1
+  },
   newInitiativeMessageContainer: {
     alignItems: "center",
     justifyContent: "center",
+    padding: 32,
     flex: 1,
-    flexGrow: 1,
-    padding: 32
-  },
-  scroll: {
-    backgroundColor: IOColors["blue-50"]
-  },
-  container: {
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: IOColors.white,
-    zIndex: -1,
-    top: -50,
-    paddingTop: 50,
-    paddingBottom: 500,
-    marginBottom: -500
+    flexGrow: 1
   },
   lastUpdate: {
     alignSelf: "center",

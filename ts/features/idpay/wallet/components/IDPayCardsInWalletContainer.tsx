@@ -8,7 +8,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { idPayWalletInitiativeListSelector } from "../store/reducers";
+import { idPayWalletSubscribedInitiativeListSelector } from "../store/reducers";
 import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
@@ -31,10 +31,9 @@ const IDPayCardsList = (props: Props) => {
       {props.initiativeList.map(initiative => (
         <IDPayCardPreviewComponent
           key={initiative.initiativeId}
-          initiativeId={initiative.initiativeId}
           initiativeName={initiative.initiativeName}
-          endDate={initiative.endDate}
           availableAmount={initiative.amount}
+          logoUrl={initiative.logoURL}
           onPress={() => handleCardPress(initiative.initiativeId)}
         />
       ))}
@@ -46,7 +45,9 @@ const IDPayCardsList = (props: Props) => {
 const IDPayCardsListMemo = React.memo(IDPayCardsList);
 
 const IDPayCardsInWalletContainer = () => {
-  const initiativeList = useIOSelector(idPayWalletInitiativeListSelector);
+  const initiativeList = useIOSelector(
+    idPayWalletSubscribedInitiativeListSelector
+  );
   return (
     <IDPayCardsListMemo initiativeList={pot.getOrElse(initiativeList, [])} />
   );

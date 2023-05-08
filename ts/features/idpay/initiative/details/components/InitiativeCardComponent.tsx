@@ -1,5 +1,8 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -11,14 +14,13 @@ import {
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
-import { formatDateAsLocal } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { InitiativeStatusLabel } from "./InitiativeStatusLabel";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -80,40 +82,31 @@ const InitiativeCardComponent = (props: Props) => {
   const toBeRepaidAmount = accrued - refunded;
   const totalAmount = amount + accrued;
 
-  const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
     totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
+
+  const logoComponent = pipe(
+    NonEmptyString.decode(initiative.logoURL),
+    O.fromEither,
+    O.fold(
+      () => undefined,
+      logoUrl => (
+        <Image source={{ uri: logoUrl }} style={styles.initiativeLogo} />
+      )
+    )
+  );
 
   return (
     <View style={styles.cardContainer} testID={"card-component"}>
       <ContentWrapper>
         <View style={styles.topCardSection}>
-          <View style={styles.bonusLogoContainer}></View>
-          <VSpacer size={8} />
+          {logoComponent}
           <H1 style={styles.initiativeName}>{initiativeName}</H1>
           <LabelSmall color={"black"} weight="Regular">
-            {/* TODO add organization name */}
+            {initiative.organizationName}
           </LabelSmall>
           <VSpacer size={8} />
-          <View style={styles.bonusStatusContainer}>
-            <IOBadge
-              small={true}
-              text={I18n.t(
-                `idpay.initiative.details.initiativeCard.statusLabels.${status}`
-              )}
-            />
-            <HSpacer size={8} />
-            <LabelSmall fontSize="small" weight="SemiBold" color="bluegreyDark">
-              {I18n.t(
-                `idpay.initiative.details.initiativeCard.${
-                  isInitiativeConfigured ? "validUntil" : "expiresOn"
-                }`,
-                {
-                  expiryDate: dateString
-                }
-              )}
-            </LabelSmall>
-          </View>
+          <InitiativeStatusLabel status={initiative.status} endDate={endDate} />
         </View>
         <VSpacer size={32} />
         <View style={styles.bottomCardSection}>
@@ -237,17 +230,19 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
     paddingVertical: 32,
-    paddingTop: 0,
-    flex: 1
+    paddingTop: 500,
+    marginTop: -500
   },
   initiativeName: {
     textAlign: "center"
   },
-  bonusLogoContainer: {
+  initiativeLogo: {
+    resizeMode: "cover",
     backgroundColor: IOColors.white,
     height: 56,
     width: 56,
-    borderRadius: 8
+    borderRadius: 8,
+    marginBottom: 8
   },
   topCardSection: {
     flex: 2,
@@ -257,11 +252,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center"
-  },
-  bonusStatusContainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center"
   },
   consumedOpacity: {
     opacity: 0.5

@@ -3166,10 +3166,6 @@ features:
         data:
           buttonTitle: Torna indietro
   pn:
-    open:
-      warning:
-        title: Questo messaggio contiene una comunicazione a valore legale
-        body: !include pn/message_open_warning.html
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
@@ -3238,6 +3234,9 @@ features:
         signing:
           title: La firma non è andata a buon fine
           subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete, contatta l’assistenza.
+        wrongUser:
+          title: Non puoi firmare questi documenti
+          subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3380,16 +3379,17 @@ idpay:
         toRefund: Da rimborsare
         statusLabels:
           REFUNDABLE: Attiva
-          NOT_REFUNDABLE: Disattivata
-          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
-          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
-          UNSUBSCRIBED: Disiscritto
-          SUSPENDED: Sospesa
+          NOT_REFUNDABLE: Attiva
+          NOT_REFUNDABLE_ONLY_IBAN: Attiva
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: Attiva
+          UNSUBSCRIBED: Rimossa
+          SUSPENDED: In pausa
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          lastUpdated: "Saldo aggiornato al " 
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
               content: Inserisci un metodo di pagamento valido per effettuare transazioni 
@@ -3429,17 +3429,38 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
     operationDetails:
-      title: Dettaglio dell'operazione
-      instrument: Metodo di pagamento
-      maskedPan: •••• {{lastDigits}}
-      amountLabel: Importo transazione
-      accruedAmountLabel: Importo rimborsabile
-      infoTitle: Informazioni sull transazione
-      date: Data
-      circuit: Circuito di pagamento
-      acquirerId: ID transazione Acquirer
-      issuerId: ID transazione Issuer
+      title: 
+        TRANSACTION: Dettaglio dell'operazione
+        REVERSAL: Dettaglio dell'operazione
+        PAID_REFUND: Dettaglio del rimborso
+        REJECTED_REFUND: Dettaglio del rimborso
+      transaction:
+        instrument: Metodo di pagamento
+        maskedPan: •••• {{lastDigits}}
+        amountLabel: Importo transazione
+        accruedAmountLabel: Importo rimborsabile
+        infoTitle: Informazioni sulla transazione
+        date: Data
+        circuit: Circuito di pagamento
+        acquirerId: ID transazione Acquirer
+        issuerId: ID transazione Issuer
+        reversalAdvice: Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza.
+      refund:
+        iban: IBAN
+        amount: Importo rimborso
+        resultLabel: Esito
+        result: 
+          PAID_REFUND: Eseguito
+          REJECTED_REFUND: Fallito
+        rejectedAdvice: 
+          text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
+          editIban: Modifica IBAN 
+        period: Periodo di riferimento
+        date: Data rimborso
+        cro: CRO
+      errorBody: Impossibile caricare il dettaglio
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3500,6 +3521,19 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      code:
+        ISEE: ISEE
+        BIRTHDATE: Data di nascita
+        RESIDENCE: Residenza
+      operator:
+        EQ: "{{value}}"
+        NOT_EQ: "Non è {{value}}"
+        LT: "Minore di {{value}}"
+        LE: "Minore o uguale a {{value}}"
+        GT: "Maggiore di {{value}}"
+        GE: "Maggiore o uguale a {{value}}"
+        BTW_CLOSED: "Compreso tra {{value}} e {{value2}}"
+        BTW_OPEN: "Compreso tra {{value}} e {{value2}}"
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3564,6 +3598,10 @@ idpay:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
         bodyLink: Scopri di più
+        modal:
+          title: Cosa significa?
+          content: "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPer farlo, visita la sezione Profilo."
+          button: Ok, ho capito
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
@@ -3577,6 +3615,36 @@ idpay:
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
+  unsubscription:
+    headerTitle: Rimuovi l'iniziativa
+    title: Vuoi rimuovere {{initiativeName}}?
+    subtitle: Per proseguire, seleziona tutte le informazioni riportate di seguito.
+    checks:
+      1:
+        title: Non puoi iscriverti un’altra volta
+        content: Proseguendo, perdi il diritto di poter aderire nuovamente all’iniziativa da app IO e tutti gli altri canali abilitati.
+      2:
+        title: Non perdi alcun rimborso
+        content: Se hai crediti da rimborsare, li riceverai all’IBAN da te indicato.
+      3:
+        title: I dati dell’iniziativa non verranno rimossi
+        content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
+      4:
+        title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+    button:
+      continue: Rimuovi
+    modal:
+      title: Rimuovere {{initiativeName}}?
+      content: L’operazione è irreversibile e ha effetto su tutti i canali. Non potrai più utilizzare i fondi a disposizione.
+    success:
+      title: Operazione completata!
+      content: L’iniziativa verrà rimossa entro le prossime 48 ore.
+      button: Torna a Portafoglio
+    failure:
+      title: C’è un problema sui nostri sistemi
+      content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
+      button: Chiudi
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
