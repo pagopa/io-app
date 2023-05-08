@@ -29,8 +29,6 @@ const styles = StyleSheet.create({
     borderColor: IOColors.white,
     borderWidth: 2,
     position: "absolute",
-    elevation: 0.1,
-    shadowColor: IOColors.white,
     left: 12,
     bottom: 10,
     paddingLeft: 0,

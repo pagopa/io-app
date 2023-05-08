@@ -7,6 +7,7 @@ import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CustomBadge from "../../../components/ui/CustomBadge";
+import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
@@ -21,26 +22,75 @@ export const DSBadges = () => (
   <DesignSystemScreen title={"Badge"}>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
-      <IOBadge text={"Badge"} small={true} labelColor={"white"} />
+      <IOBadge small text={"Badge"} variant="solid" color="blue" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
+      <IOBadge small text={"Badge"} variant="solid" color="red" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
+      <IOBadge small text={"Badge"} variant="solid" color="aqua" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"red"} />
-      <HSpacer size={16} />
+      <IOBadge small text={"Badge"} variant="solid" color="grey" />
     </View>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
-      <IOBadge text={"Badge"} labelColor={"white"} />
+      <IOBadge small text={"Badge"} variant="outline" color="blue" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"bluegreyDark"} />
+      <IOBadge small text={"Badge"} variant="outline" color="red" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"blue"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"red"} />
-      <HSpacer size={16} />
+      <IOBadge small text={"Badge"} variant="outline" color="orange" />
     </View>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
+      <IOBadge text={"Badge"} variant="solid" color="blue" />
+      <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="solid" color="red" />
+      <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="solid" color="aqua" />
+      <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="solid" color="grey" />
+    </View>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
+      <IOBadge text={"Badge"} variant="outline" color="blue" />
+      <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="outline" color="red" />
+      <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="outline" color="orange" />
+    </View>
+    <VSpacer size={16} />
+    <View
+      style={{
+        backgroundColor: IOColors.bluegrey,
+        padding: 16,
+        borderRadius: 8
+      }}
+    >
+      <View style={IOStyles.row}>
+        <IOBadge small text={"Badge"} variant="solid" color="aqua" />
+        <HSpacer size={16} />
+        <IOBadge small text={"Badge"} variant="solid" color="white" />
+        <HSpacer size={16} />
+        <IOBadge small text={"Badge"} variant="outline" color="white" />
+      </View>
+      <VSpacer size={16} />
+      <View style={IOStyles.row}>
+        <IOBadge text={"Badge"} variant="solid" color="aqua" />
+        <HSpacer size={16} />
+        <IOBadge text={"Badge"} variant="solid" color="white" />
+        <HSpacer size={16} />
+        <IOBadge text={"Badge"} variant="outline" color="white" />
+      </View>
+    </View>
+    <VSpacer size={24} />
+    <H4 weight="SemiBold" color="bluegreyDark">
+      DiscountValueBox (CGN)
+    </H4>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
+      <CgnDiscountValueBox value={25} small />
+      <HSpacer size={16} />
+      <CgnDiscountValueBox value={25} />
+    </View>
+
     <VSpacer size={40} />
 
     <H2>Notifications</H2>
