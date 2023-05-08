@@ -44,7 +44,7 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
     case TransactionOperationTypeEnum.TRANSACTION:
       return getCardLogoComponent(operation.brand);
     default:
-      return null;
+      return <Icon name="creditCard" size={24} />;
   }
 };
 
