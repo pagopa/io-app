@@ -130,9 +130,10 @@ export default class ListItemComponent extends React.Component<Props> {
                   to the text. TODO: Replace it with a
                   more robust approach. */}
                   <IOBadge
+                    small
                     text={this.props.titleBadge}
-                    small={true}
-                    labelColor={"white"}
+                    variant="solid"
+                    color="blue"
                   />
                   <HSpacer size={4} />
                 </View>

@@ -609,9 +609,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     <IOBadge
                       text={maybeStatusDescription.value}
                       small={true}
-                      labelColor={
-                        isBonusActive(bonus) ? "white" : "bluegreyDark"
-                      }
+                      variant="solid"
+                      color={isBonusActive(bonus) ? "blue" : "aqua"}
                     />
                   </View>
                 )}
