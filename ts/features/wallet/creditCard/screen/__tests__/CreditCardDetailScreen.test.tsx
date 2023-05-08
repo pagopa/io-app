@@ -20,10 +20,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
 
-jest.mock("../../../../../store/hooks", () => ({
-  ...(jest.requireActual("../../../../../store/hooks") as object),
-  useIOSelector: jest.fn().mockReturnValue(false)
-}));
 const creditCard: CreditCardPaymentMethod = {
   walletType: WalletTypeEnum.Card,
   createDate: "2021-07-08",

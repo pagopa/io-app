@@ -16,10 +16,13 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
-import { useIDPayInitiativesFromInstrument } from "../hooks/useIDPayInitiativesFromInstrument";
+import {
+  idPayInitiativesFromInstrumentRefreshStart,
+  idPayInitiativesFromInstrumentRefreshStop
+} from "../store/actions";
 import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
 
 export type AvailableInitiativesListScreenNavigationParams = {
@@ -47,18 +50,28 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
 
 export const IdPayInitiativeListScreen = (props: Props) => {
   const { idWallet } = props.route.params;
+  const dispatch = useIODispatch();
+
+  React.useEffect(() => {
+    dispatch(
+      idPayInitiativesFromInstrumentRefreshStart({
+        idWallet
+      })
+    );
+    return () => {
+      dispatch(idPayInitiativesFromInstrumentRefreshStop());
+    };
+  }, [idWallet, dispatch]);
+
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
-  const [maskedPan, brand] = pipe(
+  const [maskedPan, brand, idpayInitiatives] = pipe(
     initiatives,
     pot.toOption,
     O.fold(
       () => undefined,
-      res => [res.maskedPan, res.brand]
+      res => [res.maskedPan, res.brand, res.initiativeList]
     )
-  ) ?? [undefined, undefined];
-
-  const idpayInitiatives =
-    useIDPayInitiativesFromInstrument(idWallet).initiativesList;
+  ) ?? [undefined, undefined, []];
 
   return (
     <BaseScreenComponent
