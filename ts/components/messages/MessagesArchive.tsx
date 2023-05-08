@@ -65,7 +65,7 @@ const MessagesArchive = ({
 
   const ListEmptyComponent = () => (
     <EmptyListComponent
-      image={require("../../../img/messages/empty-message-list-icon.png")}
+      pictogram={"airBaloon"}
       title={I18n.t("messages.archive.emptyMessage.title")}
       subtitle={I18n.t("messages.archive.emptyMessage.subtitle")}
     />
