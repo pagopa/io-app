@@ -9,7 +9,7 @@ describe("EmptyListComponent", () => {
     expect(
       render(
         <EmptyListComponent
-          image={require("../../../../img/messages/empty-message-list-icon.png")}
+          pictogram="airBaloon"
           title={I18n.t("messages.inbox.emptyMessage.title")}
           subtitle={I18n.t("messages.inbox.emptyMessage.subtitle")}
         />
