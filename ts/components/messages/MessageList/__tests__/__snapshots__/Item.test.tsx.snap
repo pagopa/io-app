@@ -2394,54 +2394,38 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
       style={
         Array [
           Object {
-            "alignSelf": "flex-start",
-            "backgroundColor": "#ED1727",
-            "borderRadius": 13.5,
-            "height": 27,
+            "alignItems": "center",
+            "borderRadius": 50,
             "justifyContent": "center",
-            "paddingBottom": 3,
-            "paddingLeft": 6,
-            "paddingRight": 6,
-            "paddingTop": 3,
+            "paddingHorizontal": 20,
+            "paddingVertical": 2.5,
           },
-          Object {
-            "elevation": 0.1,
-            "paddingLeft": 8,
-            "paddingRight": 8,
-          },
+          false,
           Object {
             "backgroundColor": "#00C5CA",
           },
-          null,
-          Object {},
         ]
       }
     >
       <Text
-        color="bluegreyDark"
-        defaultColor="blue"
-        defaultWeight="Bold"
-        font="TitilliumWeb"
-        fontSize="regular"
-        fontStyle={
-          Object {
-            "fontSize": 14,
-          }
-        }
         style={
           Array [
             Object {
-              "fontSize": 14,
-            },
-            Object {
-              "color": "#17324D",
+              "alignSelf": "center",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
+            Object {
+              "fontSize": 14,
+              "lineHeight": 20,
+            },
+            false,
+            Object {
+              "color": "#17324D",
+            },
           ]
         }
-        weight="SemiBold"
       >
         Paid
       </Text>
@@ -2739,54 +2723,38 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
       style={
         Array [
           Object {
-            "alignSelf": "flex-start",
-            "backgroundColor": "#ED1727",
-            "borderRadius": 13.5,
-            "height": 27,
+            "alignItems": "center",
+            "borderRadius": 50,
             "justifyContent": "center",
-            "paddingBottom": 3,
-            "paddingLeft": 6,
-            "paddingRight": 6,
-            "paddingTop": 3,
+            "paddingHorizontal": 20,
+            "paddingVertical": 2.5,
           },
-          Object {
-            "elevation": 0.1,
-            "paddingLeft": 8,
-            "paddingRight": 8,
-          },
+          false,
           Object {
             "backgroundColor": "#00C5CA",
           },
-          null,
-          Object {},
         ]
       }
     >
       <Text
-        color="bluegreyDark"
-        defaultColor="blue"
-        defaultWeight="Bold"
-        font="TitilliumWeb"
-        fontSize="regular"
-        fontStyle={
-          Object {
-            "fontSize": 14,
-          }
-        }
         style={
           Array [
             Object {
-              "fontSize": 14,
-            },
-            Object {
-              "color": "#17324D",
+              "alignSelf": "center",
               "fontFamily": "Titillium Web",
               "fontStyle": "normal",
               "fontWeight": "600",
             },
+            Object {
+              "fontSize": 14,
+              "lineHeight": 20,
+            },
+            false,
+            Object {
+              "color": "#17324D",
+            },
           ]
         }
-        weight="SemiBold"
       >
         Paid
       </Text>

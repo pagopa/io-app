@@ -13,7 +13,7 @@ import { LollipopPlaygroundState } from "./LollipopPlayground";
 
 const styles = StyleSheet.create({
   textInput: {
-    textAlignVertical: "top",
+    textAlignVertical: "top", // Prop supported on Android only
     padding: 10,
     borderWidth: 1,
     height: 120,

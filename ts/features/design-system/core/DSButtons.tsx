@@ -18,6 +18,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import ButtonLink from "../../../components/ui/ButtonLink";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
@@ -894,6 +895,73 @@ export const DSButtons = () => {
           )}
         </DSComponentViewerBox>
       </View>
+
+      <VSpacer size={40} />
+
+      <H2
+        color={"bluegrey"}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        ButtonLink
+      </H2>
+      <DSComponentViewerBox name="ButtonLink · Primary variant (using Pressable API)">
+        <ButtonLink
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonLink
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="starEmpty"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonLink
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="starEmpty"
+          iconPosition="end"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <View style={{ alignSelf: "center" }}>
+          <ButtonLink
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (centered)"}
+            onPress={onButtonPress}
+          />
+        </View>
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="ButtonLink · Primary, disabled">
+        <View>
+          <ButtonLink
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonLink
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            icon="starEmpty"
+            iconPosition="end"
+            onPress={onButtonPress}
+          />
+        </View>
+      </DSComponentViewerBox>
 
       <VSpacer size={40} />
 
