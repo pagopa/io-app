@@ -4,14 +4,14 @@ runs:
   using: "composite"
   steps:
     - id: setup-node
-      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c
+      uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
       with:
         node-version-file: '.node-version'
     - id: yarn-cache-dir-path
       run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       shell: bash
     - id: yarn-cache
-      uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8
+      uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
       env:
         cache-name: cache-node-modules
       with:
