@@ -1,5 +1,12 @@
-import { SagaIterator } from "redux-saga";
-import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
+import { SagaIterator, channel } from "redux-saga";
+import {
+  call,
+  put,
+  race,
+  take,
+  takeEvery,
+  takeLatest
+} from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import { IDPayClient } from "../../common/api/client";
@@ -8,11 +15,16 @@ import {
   IdpayInitiativesInstrumentDeletePayloadType,
   IdpayInitiativesInstrumentEnrollPayloadType,
   idPayInitiativesFromInstrumentGet,
+  idPayInitiativesFromInstrumentRefreshStart,
+  idPayInitiativesFromInstrumentRefreshStop,
   idPayWalletGet,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../store/actions";
-import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
+import {
+  handleGetIDPayInitiativesFromInstrument,
+  handleInitiativesFromInstrumentRefresh
+} from "./handleGetIDPayInitiativesFromInstrument";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import {
   handleInitiativeInstrumentDelete,
@@ -54,6 +66,7 @@ export function* watchIDPayWalletSaga(
       );
     }
   );
+
   yield* takeEvery(
     idpayInitiativesInstrumentEnroll.request,
     function* (action: {
@@ -70,6 +83,7 @@ export function* watchIDPayWalletSaga(
       );
     }
   );
+
   yield* takeEvery(
     idpayInitiativesInstrumentDelete.request,
     function* (action: {
@@ -86,4 +100,23 @@ export function* watchIDPayWalletSaga(
       );
     }
   );
+
+  const instrumentRefreshChannel = yield* call(channel);
+
+  yield* takeEvery(
+    idPayInitiativesFromInstrumentRefreshStart,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
+      yield* race({
+        task: call(
+          handleInitiativesFromInstrumentRefresh,
+          action.payload.idWallet
+        ),
+        cancel: take(instrumentRefreshChannel)
+      });
+    }
+  );
+
+  yield* takeEvery(idPayInitiativesFromInstrumentRefreshStop, function* () {
+    yield* put(instrumentRefreshChannel, "kill");
+  });
 }
