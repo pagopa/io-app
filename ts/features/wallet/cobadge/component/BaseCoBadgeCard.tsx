@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -12,9 +11,9 @@ import {
 } from "react-native";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
+import { IOBadge } from "../../../../components/core/IOBadge";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
@@ -42,16 +41,6 @@ const styles = StyleSheet.create({
     width: 48,
     height: 31,
     resizeMode: "contain"
-  },
-  badgeInfo: {
-    borderWidth: 1,
-    borderStyle: "solid",
-    height: 25,
-    flexDirection: "row"
-  },
-  badgeInfoExpired: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.red
   }
 });
 
@@ -132,12 +121,12 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               />
             )}
             {props.blocked && (
-              <Badge
-                style={[styles.badgeInfo, styles.badgeInfoExpired]}
+              <IOBadge
+                variant="outline"
+                color="red"
+                text={I18n.t("global.badges.blocked")}
                 testID={"blockedBadge"}
-              >
-                <H5 color="red">{I18n.t("global.badges.blocked")}</H5>
-              </Badge>
+              />
             )}
           </View>
           {props.expiringDate && (
