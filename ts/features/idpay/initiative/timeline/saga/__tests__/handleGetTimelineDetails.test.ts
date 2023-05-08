@@ -4,8 +4,8 @@ import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/
 import { OperationDTO } from "../../../../../../../definitions/idpay/OperationDTO";
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
-import { idpayTimelineDetailsGet } from "../../store/actions";
 import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
+import { idpayTimelineDetailsGet } from "../../store/actions";
 
 const mockResponseSuccess: OperationDTO = {
   operationType: TransactionOperationType.TRANSACTION,
