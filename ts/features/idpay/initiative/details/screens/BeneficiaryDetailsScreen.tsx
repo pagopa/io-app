@@ -32,7 +32,7 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { openWebUrl } from "../../../../../utils/url";
-import { Table, TableItem } from "../../../common/components/Table";
+import { Table } from "../../../common/components/Table";
 import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 import { IDPayDetailsParamsList } from "../navigation";
 import {
@@ -40,6 +40,7 @@ import {
   idpayInitiativeDetailsSelector
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -102,7 +103,7 @@ const BeneficiaryDetailsScreen = () => {
       <ScrollView scrollIndicatorInsets={{ right: 1 }}>
         <ContentWrapper>
           {content}
-          <VSpacer size={16} />
+          <VSpacer size={24} />
           <View style={styles.linkRow}>
             <Link onPress={handlePrivacyLinkPress}>
               {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
@@ -118,7 +119,7 @@ const BeneficiaryDetailsScreen = () => {
               )}
             </Link>
           </View>
-          <VSpacer size={32} />
+          <VSpacer size={48} />
         </ContentWrapper>
       </ScrollView>
     </BaseScreenComponent>
@@ -213,69 +214,72 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
     O.toUndefined
   );
 
-  const tableItems: ReadonlyArray<TableItem> = [
-    {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.summary"),
-      value: [
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
-          value: statusString
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
-          value: endDateString
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-          value: amountString
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-          value: toBeRefundedString
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-          value: refundedString
-        }
-      ],
-      footer: lastUpdateString
-    },
-    {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.spendingRules"),
-      value: [
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
-          value: rankingStartDateString
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
-          value: rankingEndDateString
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
-          value: rewardPercentageString
-        }
-      ]
-    },
-    {
-      label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails"),
-      value: [
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
-          value: "-"
-        },
-        {
-          label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
-          value: "-"
-        }
-      ]
-    }
-  ];
-
   return (
     <>
       {ruleInfoBox}
-      <Table items={tableItems} />
+      <Table
+        title={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
+        rows={[
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
+            value: statusString
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
+            value: endDateString
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
+            value: amountString
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
+            value: toBeRefundedString
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
+            value: refundedString
+          }
+        ]}
+      />
+      <VSpacer size={8} />
+      <LabelSmall weight="Regular" color="bluegrey">
+        {lastUpdateString}
+      </LabelSmall>
+      <VSpacer size={8} />
+      <Table
+        title={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
+        rows={[
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
+            value: rankingStartDateString
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
+            value: rankingEndDateString
+          },
+          {
+            label: I18n.t(
+              "idpay.initiative.beneficiaryDetails.spendPercentage"
+            ),
+            value: rewardPercentageString
+          }
+        ]}
+      />
+      <VSpacer size={8} />
+      <Table
+        title={I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails")}
+        rows={[
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
+            value: "-"
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
+            value: "-"
+          }
+        ]}
+      />
     </>
   );
 };
@@ -345,7 +349,7 @@ const ScreenSkeleton = () => (
         </View>
       ))}
     </View>
-    {Array.from({ length: 2 }).map((_, i) => (
+    {Array.from({ length: 3 }).map((_, i) => (
       <View key={i}>
         <VSpacer size={32} />
         <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
@@ -382,7 +386,8 @@ const styles = StyleSheet.create({
     borderColor: IOColors.bluegreyLight,
     borderWidth: 1,
     borderRadius: 8,
-    padding: 16
+    paddingHorizontal: 16,
+    paddingVertical: 20
   }
 });
 

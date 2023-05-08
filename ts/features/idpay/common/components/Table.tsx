@@ -1,43 +1,21 @@
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 import { Divider } from "../../../../components/core/Divider";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 
-export type TableItem = {
+export type TableRow = {
   label: string;
-  value: string | ReadonlyArray<TableItem>;
-  footer?: string | React.ReactNode;
+  value: string | React.ReactNode;
 };
 
 type TableProps = {
-  items: ReadonlyArray<TableItem>;
+  title: string;
+  rows: ReadonlyArray<TableRow>;
 };
 
-const renderTable = (data: ReadonlyArray<TableItem>): React.ReactNode =>
+const renderTable = (data: ReadonlyArray<TableRow>): React.ReactNode =>
   data.map((item, index) => {
-    if (Array.isArray(item.value)) {
-      return (
-        <Fragment key={item.label}>
-          <View style={styles.sectionHeader}>
-            <H3>{item.label}</H3>
-          </View>
-          {renderTable(item.value)}
-          <VSpacer size={8} />
-          {item.footer && typeof item.footer === "string" ? (
-            <LabelSmall weight="Regular" color="bluegrey">
-              {item.footer}
-            </LabelSmall>
-          ) : (
-            item.footer
-          )}
-          <VSpacer size={8} />
-        </Fragment>
-      );
-    }
-
     const isLast = data.length === index + 1;
 
     return (
@@ -51,7 +29,14 @@ const renderTable = (data: ReadonlyArray<TableItem>): React.ReactNode =>
     );
   });
 
-export const Table = (props: TableProps) => <>{renderTable(props.items)}</>;
+export const Table = (props: TableProps) => (
+  <>
+    <View style={styles.sectionHeader}>
+      <H3>{props.title}</H3>
+    </View>
+    {renderTable(props.rows)}
+  </>
+);
 
 const styles = StyleSheet.create({
   sectionHeader: {
