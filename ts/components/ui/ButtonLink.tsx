@@ -25,15 +25,16 @@ import { AnimatedIcon, IOIcons, IconClassComponent } from "../core/icons/Icon";
 import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonLink = WithTestID<{
-  color?: "primary";
+  color?: "primary" | "error" | "warning" | "success" | "info";
   label: string;
   disabled?: boolean;
   // Icons
   icon?: IOIcons;
   iconPosition?: "start" | "end";
   // Accessibility
-  accessibilityLabel: string;
+  accessibilityLabel?: string;
   accessibilityHint?: string;
+  // Events
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
@@ -55,6 +56,34 @@ const mapColorStates: Record<NonNullable<ButtonLink["color"]>, ColorStates> = {
     label: {
       default: IOColors["blueIO-500"],
       pressed: IOColors["blueIO-600"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  error: {
+    label: {
+      default: IOColors["error-850"],
+      pressed: IOColors["error-850"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  warning: {
+    label: {
+      default: IOColors["warning-850"],
+      pressed: IOColors["warning-850"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  success: {
+    label: {
+      default: IOColors["success-850"],
+      pressed: IOColors["success-850"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  info: {
+    label: {
+      default: IOColors["info-850"],
+      pressed: IOColors["info-850"],
       disabled: IOColors["grey-700"]
     }
   }

@@ -7,7 +7,6 @@ import {
 import React from "react";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
-import { Link } from "../core/typography/Link";
 import {
   IOColors,
   IOColorsStatusBackground,
@@ -15,12 +14,13 @@ import {
 } from "../core/variables/IOColors";
 import { IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
+import { NewH4 } from "../core/typography/NewH4";
+import ButtonLink from "../ui/ButtonLink";
 
-const iconSize = 24;
+const iconSize: number = 24;
 const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
 
 const styles = StyleSheet.create({
@@ -38,12 +38,11 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = WithTestID<{
+type AlertProps = WithTestID<{
   variant: "error" | "warning" | "info" | "success";
   title?: string;
   content: string;
-  action?: string;
-  onPress?: (event: GestureResponderEvent) => void;
+
   fullWidth?: boolean;
   viewRef: React.RefObject<View>;
   accessible?: boolean;
@@ -51,6 +50,18 @@ type Props = WithTestID<{
   accessibilityHint?: string;
   accessibilityRole?: AccessibilityRole;
 }>;
+
+type ActionRelatedProps =
+  | {
+      action?: string;
+      onPress: (event: GestureResponderEvent) => void;
+    }
+  | {
+      action?: never;
+      onPress?: never;
+    };
+
+export type Alert = AlertProps & ActionRelatedProps;
 
 type VariantStates = {
   icon: IOIcons;
@@ -60,7 +71,7 @@ type VariantStates = {
 
 // COMPONENT CONFIGURATION
 
-const mapVariantStates: Record<NonNullable<Props["variant"]>, VariantStates> = {
+const mapVariantStates: Record<NonNullable<Alert["variant"]>, VariantStates> = {
   error: {
     icon: "errorFilled",
     background: "error-100",
@@ -96,7 +107,7 @@ export const Alert = ({
   accessibilityLabel,
   accessibilityRole,
   testID
-}: Props) => (
+}: Alert) => (
   <View
     ref={viewRef}
     style={[
@@ -119,9 +130,7 @@ export const Alert = ({
     <View style={IOStyles.flex}>
       {title && (
         <>
-          <H2 weight="SemiBold" color={mapVariantStates[variant].foreground}>
-            {title}
-          </H2>
+          <NewH4 color={mapVariantStates[variant].foreground}>{title}</NewH4>
           <VSpacer size={4} />
         </>
       )}
@@ -131,13 +140,7 @@ export const Alert = ({
       {action && (
         <>
           <VSpacer size={4} />
-          <Link
-            color={mapVariantStates[variant].foreground}
-            onPress={onPress}
-            style={{ alignSelf: "flex-start" }}
-          >
-            {action}
-          </Link>
+          <ButtonLink color={variant} onPress={onPress} label={action} />
         </>
       )}
     </View>
