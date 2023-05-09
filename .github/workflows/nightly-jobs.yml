@@ -1,10 +1,10 @@
-name: nightly-jobs
+name: Nightly Jobs
 on:
   [push, pull_request]
   #schedule:
   #  - cron:  '0 03 * * *'
 jobs:
-  pagopa_specs_diff:
+  nightly-jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
@@ -13,20 +13,9 @@ jobs:
         uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
         with:
           python-version: '3.8'
-          cache: 'pipenv'
       - name: check api specs alignment
         run: ./scripts/pagopa_api_check.sh
         shell: bash
-  io_check_uris:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout repo content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - name: setup python
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
-        with:
-          python-version: '3.8'
-          cache: 'pipenv'
       - name: install pipenv
         run: pip install pipenv
       - name: check uris validity on static texts
@@ -34,18 +23,6 @@ jobs:
           cd scripts/check_urls
           pipenv install
           pipenv run python3 check_urls.py
-  io_check_cie_button_exists_ios:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout repo content
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - name: setup python
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
-        with:
-          python-version: '3.8'
-          cache: 'pipenv'
-      - name: install pipenv
-        run: pip install pipenv
       - name: check uris validity on static texts
         run: |
           cd scripts/check_cie_button_exists
