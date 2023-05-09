@@ -1,7 +1,8 @@
 name: nightly-jobs
 on:
-  schedule:
-    - cron:  '0 03 * * *'
+  on: [push, pull_request]
+  #schedule:
+  #  - cron:  '0 03 * * *'
 jobs:
   pagopa_specs_diff:
     runs-on: ubuntu-latest
