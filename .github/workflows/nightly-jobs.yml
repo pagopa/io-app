@@ -18,7 +18,7 @@ jobs:
         shell: bash
       - name: install requirements
         run: |
-          python -m pip install certifi requests slack slackclient
+          python -m pip install certifi requests slack slackclient urlextract
       - name: check uris validity on static texts
         run: |
           cd scripts/check_urls
