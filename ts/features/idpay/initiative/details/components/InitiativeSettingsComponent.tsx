@@ -22,7 +22,6 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import customVariables from "../../../../../theme/variables";
-import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 
 type Props = {
@@ -111,16 +110,6 @@ const InitiativeSettingsComponent = (props: Props) => {
     });
   };
 
-  const navigateToUnsubscription = (
-    initiativeId: string,
-    initiativeName?: string
-  ) => {
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      initiativeId,
-      initiativeName
-    });
-  };
-
   const instrumentsSettingsButton = pipe(
     initiative,
     O.fromNullable,
@@ -182,21 +171,6 @@ const InitiativeSettingsComponent = (props: Props) => {
     )
   );
 
-  const unsubscriptionButton = pipe(
-    initiative,
-    O.fromNullable,
-    O.fold(
-      () => null,
-      ({ initiativeId, initiativeName }) => (
-        <SettingsButtonComponent
-          title={"Rimuovi iniziativa"}
-          onPress={() => navigateToUnsubscription(initiativeId, initiativeName)}
-          subtitle=""
-        />
-      )
-    )
-  );
-
   return (
     <>
       <H3>
@@ -207,8 +181,6 @@ const InitiativeSettingsComponent = (props: Props) => {
       <VSpacer size={8} />
       {instrumentsSettingsButton}
       {ibanSettingsButton}
-      {/* TODO: temporary button, removed in IODPAY-175  */}
-      {unsubscriptionButton}
     </>
   );
 };

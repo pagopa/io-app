@@ -77,6 +77,8 @@ const btnSizeLarge = 56;
 // NEW Design System
 const btnBorderRadius = 8;
 const btnSizeDefault = 48;
+// TODO: Replace the number type with the new IOIconSizeScale
+const iconBtnSizeSmall: number = 24;
 
 export const IOButtonLegacyStyles = StyleSheet.create({
   /* BaseButton, used in the:
@@ -179,6 +181,10 @@ export const IOIconButtonStyles = StyleSheet.create({
     justifyContent: "center",
     // Reset default visual parameters
     elevation: 0
+  },
+  buttonSizeSmall: {
+    width: iconBtnSizeSmall,
+    height: iconBtnSizeSmall
   },
   buttonSizeDefault: {
     width: btnSizeDefault,
