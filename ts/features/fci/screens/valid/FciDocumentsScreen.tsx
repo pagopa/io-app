@@ -42,6 +42,8 @@ import {
   getOptionalSignatureFields,
   getRequiredSignatureFields
 } from "../../utils/signatureFields";
+import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -53,6 +55,24 @@ const styles = StyleSheet.create({
 export type FciDocumentsScreenNavigationParams = Readonly<{
   currentDoc: number;
 }>;
+
+const getSignatureFieldsLength = (doc: DocumentDetailView) =>
+  pipe(
+    doc,
+    O.fromNullable,
+    O.map(_ => _.metadata.signature_fields),
+    O.map(_ => _.length),
+    O.getOrElse(() => 0)
+  );
+
+const getSignatureFields = (doc: DocumentDetailView) =>
+  pipe(
+    doc,
+    O.fromNullable,
+    O.map(_ => _.metadata.signature_fields),
+    RA.fromOption,
+    RA.toArray
+  );
 
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
@@ -107,14 +127,23 @@ const FciDocumentsScreen = () => {
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
+  const {
+    present: showNoSignatureFieldsBs,
+    bottomSheet: fciNoSignatureFields
+  } = useFciNoSignatureFields();
+
   const onContinuePress = () => {
-    trackFciSigningDoc();
-    navigation.dispatch(
-      StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
-        documentId: documents[currentDoc].id,
-        currentDoc
-      })
-    );
+    if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
+      trackFciSigningDoc();
+      navigation.dispatch(
+        StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
+          documentId: documents[currentDoc].id,
+          currentDoc
+        })
+      );
+    } else {
+      showNoSignatureFieldsBs();
+    }
   };
 
   const onCancelPress = () => present();
@@ -250,6 +279,7 @@ const FciDocumentsScreen = () => {
           )}
         </SafeAreaView>
         {fciAbortSignature}
+        {fciNoSignatureFields}
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
