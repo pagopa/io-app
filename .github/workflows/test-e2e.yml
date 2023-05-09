@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-pods-
       - id: setup-pods
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
-        run: cd ios ; pod install --verbose ; cd -
+        run: cd ios ; bundle exec pod install --verbose ; cd -
         shell: bash
       - id: install-detox
         run: |
