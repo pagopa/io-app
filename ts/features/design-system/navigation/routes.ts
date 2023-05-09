@@ -19,7 +19,7 @@ const DESIGN_SYSTEM_ROUTES = {
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
-    ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice" }
+    ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice & Banners" }
   },
   LEGACY: {
     PICTOGRAMS: {
