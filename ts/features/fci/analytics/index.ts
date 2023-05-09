@@ -9,8 +9,6 @@ import {
   fciSigningRequest,
   fciUpdateDocumentSignaturesRequest,
   fciClearStateRequest,
-  fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest,
   fciPollFilledDocument
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
@@ -83,8 +81,6 @@ const trackFciAction =
       case getType(fciSigningRequest.success):
       case getType(fciUpdateDocumentSignaturesRequest):
       case getType(fciClearStateRequest):
-      case getType(fciShowSignedDocumentsStartRequest):
-      case getType(fciShowSignedDocumentsEndRequest):
       case getType(fciPollFilledDocument.request):
       case getType(fciPollFilledDocument.success):
         return mp.track(action.type);
