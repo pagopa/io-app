@@ -4,7 +4,7 @@ on:
   #schedule:
   #  - cron:  '0 03 * * *'
 jobs:
-  nightly-jobs:
+  pagopa_specs_diff:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
@@ -16,6 +16,16 @@ jobs:
       - name: check api specs alignment
         run: ./scripts/pagopa_api_check.sh
         shell: bash
+  io_check_uris:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+      - name: setup python
+        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
+        with:
+          python-version: '3.8'
+          cache: 'pip'
       - name: install requirements
         run: |
           python -m pip install certifi requests slack slackclient urlextract
@@ -23,7 +33,19 @@ jobs:
         run: |
           cd scripts/check_urls
           python3 check_urls.py
-      - name: check cie button exists
+  io_check_cie_button_exists_ios:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+      - name: setup python
+        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
+        with:
+          python-version: '3.8'
+          cache: 'pipenv'
+      - name: install requirements
+        run: python -m pip install requests
+      - name: check cie button exists on ios
         run: |
           cd scripts/check_cie_button_exists
           python3 check_cie_button_exists_ios.py
