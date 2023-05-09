@@ -6,7 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import {
-  IOPictogramType,
+  IOPictograms,
   Pictogram
 } from "../../../../components/core/pictograms";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -19,7 +19,7 @@ import { useOnboardingMachineService } from "../xstate/provider";
 import { selectOnboardingFailure } from "../xstate/selectors";
 import { Body } from "../../../../components/core/typography/Body";
 
-const failurePictures: Record<OnboardingFailureEnum, IOPictogramType> = {
+const failurePictures: Record<OnboardingFailureEnum, IOPictograms> = {
   [OnboardingFailureEnum.GENERIC]: "umbrella",
   [OnboardingFailureEnum.NOT_STARTED]: "hourglass",
   [OnboardingFailureEnum.ENDED]: "timeout",
