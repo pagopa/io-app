@@ -16,15 +16,14 @@ jobs:
       - name: check api specs alignment
         run: ./scripts/pagopa_api_check.sh
         shell: bash
-      - name: install pipenv
-        run: pip install pipenv
+      - name: install requirements
+        run: |
+          python -m pip install certifi requests
       - name: check uris validity on static texts
         run: |
           cd scripts/check_urls
-          pipenv install
-          pipenv run python3 check_urls.py
-      - name: check uris validity on static texts
+          python3 check_urls.py
+      - name: check cie button exists
         run: |
           cd scripts/check_cie_button_exists
-          pipenv install
-          pipenv run python3 check_cie_button_exists_ios.py
+          python3 check_cie_button_exists_ios.py
