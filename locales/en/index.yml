@@ -3239,7 +3239,7 @@ features:
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
       title: "Share these data?"
-      content: "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
+      content: "They will enable the digital signature provider to provide the service and certify your signature."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Do you want to change or update your e-mail address?"
