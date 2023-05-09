@@ -8,7 +8,6 @@ import { H2 } from "../../../components/core/typography/H2";
 import {
   Pictogram,
   IOPictograms,
-  IOPictogramType,
   PictogramSection,
   IOSectionPictograms,
   IOSectionPictogramType
@@ -37,10 +36,7 @@ export const DSPictograms = () => (
           key={pictogramItemName}
           name={pictogramItemName}
           image={
-            <Pictogram
-              name={pictogramItemName as IOPictogramType}
-              size="100%"
-            />
+            <Pictogram name={pictogramItemName as IOPictograms} size="100%" />
           }
         />
       ))}
