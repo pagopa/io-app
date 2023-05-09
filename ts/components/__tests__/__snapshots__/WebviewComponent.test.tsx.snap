@@ -49,14 +49,9 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       />
       <View
         style={
-          Array [
-            Object {
-              "padding": 24,
-            },
-            Object {
-              "alignItems": "center",
-            },
-          ]
+          Object {
+            "padding": 24,
+          }
         }
       >
         <Text
@@ -73,6 +68,9 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           }
           style={
             Array [
+              Object {
+                "textAlign": "center",
+              },
               Object {
                 "fontSize": 16,
                 "lineHeight": 24,

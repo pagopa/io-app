@@ -181,9 +181,10 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   <View style={[IOStyles.row, IOStyles.alignCenter]}>
                     <HSpacer size={8} />
                     <IOBadge
+                      small
                       text={I18n.t("wallet.methods.newCome")}
-                      small={true}
-                      labelColor={"bluegreyDark"}
+                      variant="solid"
+                      color="aqua"
                     />
                     <HSpacer size={8} />
                   </View>

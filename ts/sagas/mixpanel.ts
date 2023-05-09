@@ -1,5 +1,5 @@
 import { call, select, take } from "typed-redux-saga/macro";
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { ActionType } from "typesafe-actions";
 import { initializeMixPanel, terminateMixpanel } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -51,4 +51,8 @@ export function* askMixpanelOptIn() {
     })
   );
   yield* take(setMixpanelEnabled);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 }

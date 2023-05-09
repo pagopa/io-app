@@ -51,14 +51,30 @@ const reducer = (
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
-      if (!action.payload.isRefreshCall) {
+      if (!action.payload.isRefreshing) {
         return {
           ...state,
           initiativesWithInstrument: pot.noneLoading,
           initiativesAwaitingStatusUpdate: {}
         };
       }
-      break;
+
+      if (pot.isSome(state.initiativesWithInstrument)) {
+        return {
+          ...state,
+          initiativesWithInstrument: pot.toUpdating(
+            state.initiativesWithInstrument,
+            state.initiativesWithInstrument.value
+          )
+        };
+      }
+
+      return {
+        ...state,
+        initiativesWithInstrument: pot.toLoading(
+          state.initiativesWithInstrument
+        )
+      };
     case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(
         state.initiativesAwaitingStatusUpdate,

@@ -70,11 +70,14 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
         )
       )}
       {props.isNew && (
-        <IOBadge
-          text={I18n.t("wallet.methods.newCome")}
-          small={true}
-          labelColor={"white"}
-        />
+        <View style={{ alignSelf: "flex-start" }}>
+          <IOBadge
+            small
+            text={I18n.t("wallet.methods.newCome")}
+            variant="solid"
+            color="blue"
+          />
+        </View>
       )}
     </View>
     <VSpacer size={8} />
