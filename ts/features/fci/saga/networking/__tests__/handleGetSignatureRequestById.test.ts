@@ -3,7 +3,10 @@ import { ActionType } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
 import { getNetworkError } from "../../../../../utils/errors";
 import { handleGetSignatureRequestById } from "../handleGetSignatureRequestById";
-import { mockSignatureRequestDetailView } from "../../../types/__mocks__/SignatureRequestDetailView.mock";
+import {
+  mockSignatureRequestDetailView,
+  mockedError
+} from "../../../types/__mocks__/SignatureRequestDetailView.mock";
 import { fciSignatureRequestFromId } from "../../../store/actions";
 import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
@@ -55,11 +58,7 @@ describe("handleGetSignatureRequestById", () => {
         Bearer: "Bearer mockedToken"
       })
       .next(right(failureResponse))
-      .next(
-        fciSignatureRequestFromId.failure(
-          getNetworkError(new Error(failureResponse.status.toString()))
-        )
-      )
+      .next(fciSignatureRequestFromId.failure(getNetworkError(failureResponse)))
       .next()
       .isDone();
   });
@@ -87,7 +86,7 @@ describe("handleGetSignatureRequestById", () => {
       .isDone();
   });
   it("Should dispatch fciSignatureRequestFromId.failure with the error message as payload if an exception is raised", () => {
-    const mockedError = new Error("mockedErrorMessage");
+    // const mockedError = new Error("mockedErrorMessage");
     testSaga(
       handleGetSignatureRequestById,
       mockBackendFciClient,
@@ -99,7 +98,7 @@ describe("handleGetSignatureRequestById", () => {
         id: loadAction.payload,
         Bearer: "Bearer mockedToken"
       })
-      .throw(mockedError)
+      .throw(new Error(JSON.stringify(mockedError)))
       .next(fciSignatureRequestFromId.failure(getNetworkError(mockedError)))
       .next()
       .isDone();

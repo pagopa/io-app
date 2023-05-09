@@ -1,4 +1,5 @@
 import { call, take } from "typed-redux-saga/macro";
+import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -51,4 +52,8 @@ export function* checkAcknowledgedEmailSaga(
   // Wait for the user to press "Continue" button after having checked out
   // his own email
   yield* take(emailAcknowledged);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 }

@@ -56,6 +56,7 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
+import { StartupActions } from "./startup";
 
 export type Action =
   | AnalyticsActions
@@ -102,6 +103,7 @@ export type Action =
   | ZendeskSupportActions
   | CdcActions
   | PnActions
+  | StartupActions
   | FciActions
   | IDPayActions
   | LollipopActions;

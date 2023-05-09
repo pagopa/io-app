@@ -21,6 +21,24 @@ export type LIST_DATA_TYPE = {
   data: ReadonlyArray<SignatureField>;
 };
 
+/*
+ * Get the list of required signature fields
+ */
+export const getRequiredSignatureFields = (
+  signatureFields: ReadonlyArray<SignatureField>
+) =>
+  clausesByType(signatureFields, [
+    ClauseTypeEnum.REQUIRED,
+    ClauseTypeEnum.UNFAIR
+  ]);
+
+/**
+ * Get the list of optional signature fields
+ */
+export const getOptionalSignatureFields = (
+  signatureFields: ReadonlyArray<SignatureField>
+) => clausesByType(signatureFields, [ClauseTypeEnum.OPTIONAL]);
+
 /**
  * Get the list of clauses by type
  */

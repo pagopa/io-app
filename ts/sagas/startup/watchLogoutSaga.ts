@@ -11,10 +11,11 @@ import {
   logoutRequest,
   logoutSuccess
 } from "../../store/actions/authentication";
-import { resetToAuthenticationRoute } from "../../store/actions/navigation";
+import { startupLoadSuccess } from "../../store/actions/startup";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
 import { resetAssistanceData } from "../../utils/supportAssistance";
+import { StartupStatusEnum } from "../../store/reducers/startup";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
@@ -55,7 +56,7 @@ export function* logoutSaga(
     resetAssistanceData();
     // startApplicationInitialization is dispatched
     // within the componentDidMount of IngressScreen
-    resetToAuthenticationRoute();
+    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     yield* put(startApplicationInitialization());
   }
 }
