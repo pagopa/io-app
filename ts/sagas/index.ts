@@ -7,6 +7,7 @@ import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
+import { removePersistStatesSaga } from "./removePersistStates";
 
 import {
   watchBackToEntrypointPaymentSaga,
@@ -19,6 +20,7 @@ export default function* root() {
     call(backendStatusSaga),
     call(versionInfoSaga),
     call(loadSystemPreferencesSaga),
+    call(removePersistStatesSaga),
     call(watchContentSaga),
     call(watchPaymentInitializeSaga),
     call(watchBackToEntrypointPaymentSaga)
