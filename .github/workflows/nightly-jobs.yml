@@ -28,8 +28,7 @@ jobs:
       - name: check uris validity on static texts
         run: |
           cd scripts/check_urls
-          pipenv install
-          pipenv run python3 check_urls.py
+          python3 check_urls.py
   io_check_cie_button_exists_ios:
     runs-on: ubuntu-latest
     steps:
@@ -42,5 +41,4 @@ jobs:
       - name: check uris validity on static texts
         run: |
           cd scripts/check_cie_button_exists
-          pipenv install
-          pipenv run python3 check_cie_button_exists_ios.py
+          python3 check_cie_button_exists_ios.py
