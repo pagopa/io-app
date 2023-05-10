@@ -8,7 +8,7 @@ jobs:
   #   uses: ./.github/workflows/staticcheck.yaml
   run-e2e-test-ios:
     # needs: run-static-checks
-    runs-on: macos-latest-xl
+    runs-on: macos-latest
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
