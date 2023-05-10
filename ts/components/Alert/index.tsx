@@ -1,9 +1,4 @@
-import {
-  AccessibilityRole,
-  GestureResponderEvent,
-  StyleSheet,
-  View
-} from "react-native";
+import { GestureResponderEvent, StyleSheet, View } from "react-native";
 import React from "react";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
@@ -42,13 +37,10 @@ type AlertProps = WithTestID<{
   variant: "error" | "warning" | "info" | "success";
   title?: string;
   content: string;
-
   fullWidth?: boolean;
   viewRef: React.RefObject<View>;
-  accessible?: boolean;
   accessibilityLabel?: string;
   accessibilityHint?: string;
-  accessibilityRole?: AccessibilityRole;
 }>;
 
 type AlertActionProps =
@@ -102,10 +94,7 @@ export const Alert = ({
   action,
   onPress,
   fullWidth = false,
-  accessible,
   accessibilityHint,
-  accessibilityLabel,
-  accessibilityRole,
   testID
 }: Alert) => (
   <View
@@ -116,10 +105,9 @@ export const Alert = ({
       { backgroundColor: IOColors[mapVariantStates[variant].background] }
     ]}
     testID={testID}
+    accessible={false}
+    accessibilityRole="alert"
     accessibilityHint={accessibilityHint}
-    accessibilityLabel={accessibilityLabel}
-    accessibilityRole={accessibilityRole}
-    accessible={accessible ?? true}
   >
     <Icon
       name={mapVariantStates[variant].icon}
@@ -134,7 +122,11 @@ export const Alert = ({
           <VSpacer size={8} />
         </>
       )}
-      <Label color={mapVariantStates[variant].foreground} weight={"Regular"}>
+      <Label
+        color={mapVariantStates[variant].foreground}
+        weight={"Regular"}
+        accessibilityRole="text"
+      >
         {content}
       </Label>
       {action && (
