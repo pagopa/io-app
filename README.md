@@ -362,6 +362,9 @@ $ rbenv install && rbenv version
 # Install yarn and rehash to install shims
 $ npm install -g yarn && nodenv rehash
 
+# Install bundle
+$ gem install bundle
+
 # Install the required Gems from the Gemfile
 # Run this only during the first setup and when Gems dependencies change
 $ bundle install
