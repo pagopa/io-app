@@ -8,7 +8,7 @@ jobs:
   #   uses: ./.github/workflows/staticcheck.yaml
   run-e2e-test-ios:
     # needs: run-static-checks
-    runs-on: macos-latest
+    runs-on: macos-latest-xl
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
@@ -30,10 +30,6 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
-      - id: setup-pods
-        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
-        run: cd ios ; bundle exec pod install --verbose ; cd -
-        shell: bash
       - id: install-detox
         run: |
           brew tap wix/brew
@@ -48,6 +44,9 @@ jobs:
           key: ${{ runner.os }}-detox-build
           restore-keys: |
             ${{ runner.os }}-detox-build
+      - id: setup-pods
+        run: cd ios ; bundle exec pod install --verbose ; cd ..
+        shell: bash
       - id: prepare-detox-build
         run: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
         shell: bash
