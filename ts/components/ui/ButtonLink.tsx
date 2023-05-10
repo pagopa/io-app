@@ -23,6 +23,8 @@ import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { AnimatedIcon, IOIcons, IconClassComponent } from "../core/icons/Icon";
 import { HSpacer } from "../core/spacer/Spacer";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type ButtonLink = WithTestID<{
   color?: "primary" | "error" | "warning" | "success" | "info";
@@ -49,6 +51,62 @@ type ColorStates = {
 /*
 ░░░ COMPONENT CONFIGURATION ░░░
 */
+
+/* Delete the following block if you want to
+get rid of legacy variant */
+
+/* ◀ REMOVE_LEGACY_COMPONENT: Start */
+
+const mapLegacyColorStates: Record<
+  NonNullable<ButtonLink["color"]>,
+  ColorStates
+> = {
+  // Primary button
+  primary: {
+    label: {
+      default: IOColors.blue,
+      pressed: IOColors["blue-600"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  error: {
+    label: {
+      default: IOColors["error-850"],
+      pressed: IOColors["error-850"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  warning: {
+    label: {
+      default: IOColors["warning-850"],
+      pressed: IOColors["warning-850"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  success: {
+    label: {
+      default: IOColors["success-850"],
+      pressed: IOColors["success-850"],
+      disabled: IOColors["grey-700"]
+    }
+  },
+  info: {
+    label: {
+      default: IOColors["info-850"],
+      pressed: IOColors["info-850"],
+      disabled: IOColors["grey-700"]
+    }
+  }
+};
+
+const IOButtonLegacyStylesLocal = StyleSheet.create({
+  label: {
+    fontSize: 16,
+    ...makeFontStyleObject("Bold", false, "TitilliumWeb")
+  }
+});
+
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
 
 const mapColorStates: Record<NonNullable<ButtonLink["color"]>, ColorStates> = {
   // Primary button
@@ -110,6 +168,7 @@ export const ButtonLink = ({
   testID
 }: // eslint-disable-next-line sonarjs/cognitive-complexity
 ButtonLink) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
@@ -140,11 +199,25 @@ ButtonLink) => {
   const pressedColorLabelAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
 
-    const labelColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [mapColorStates[color].label.default, mapColorStates[color].label.pressed]
-    );
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const labelColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapColorStates[color].label.default,
+            mapColorStates[color].label.pressed
+          ]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].label.default,
+            mapLegacyColorStates[color].label.pressed
+          ]
+        );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     return {
       color: labelColor
@@ -153,11 +226,25 @@ ButtonLink) => {
 
   // Animate the <Icon> color prop
   const pressedColorIconAnimationStyle = useAnimatedProps(() => {
-    const iconColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [mapColorStates[color].label.default, mapColorStates[color].label.pressed]
-    );
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const iconColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapColorStates[color].label.default,
+            mapColorStates[color].label.pressed
+          ]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].label.default,
+            mapLegacyColorStates[color].label.pressed
+          ]
+        );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     return { color: iconColor };
   });
@@ -207,7 +294,11 @@ ButtonLink) => {
               <AnimatedIconClassComponent
                 name={icon}
                 animatedProps={pressedColorIconAnimationStyle}
-                color={mapColorStates[color]?.label?.default}
+                color={
+                  isDesignSystemEnabled
+                    ? mapColorStates[color]?.label?.default
+                    : mapLegacyColorStates[color]?.label?.default
+                }
                 size={iconSize}
               />
             ) : (
@@ -222,7 +313,9 @@ ButtonLink) => {
         )}
         <Animated.Text
           style={[
-            IOButtonStylesLocal.label,
+            isDesignSystemEnabled
+              ? IOButtonStylesLocal.label
+              : IOButtonLegacyStylesLocal.label,
             disabled
               ? { color: mapColorStates[color]?.label?.disabled }
               : { color: mapColorStates[color]?.label?.default },

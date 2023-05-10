@@ -51,7 +51,7 @@ type AlertProps = WithTestID<{
   accessibilityRole?: AccessibilityRole;
 }>;
 
-type ActionRelatedProps =
+type AlertActionProps =
   | {
       action?: string;
       onPress: (event: GestureResponderEvent) => void;
@@ -61,7 +61,7 @@ type ActionRelatedProps =
       onPress?: never;
     };
 
-export type Alert = AlertProps & ActionRelatedProps;
+export type Alert = AlertProps & AlertActionProps;
 
 type VariantStates = {
   icon: IOIcons;
@@ -131,7 +131,7 @@ export const Alert = ({
       {title && (
         <>
           <NewH4 color={mapVariantStates[variant].foreground}>{title}</NewH4>
-          <VSpacer size={4} />
+          <VSpacer size={8} />
         </>
       )}
       <Label color={mapVariantStates[variant].foreground} weight={"Regular"}>
@@ -139,7 +139,7 @@ export const Alert = ({
       </Label>
       {action && (
         <>
-          <VSpacer size={4} />
+          <VSpacer size={8} />
           <ButtonLink color={variant} onPress={onPress} label={action} />
         </>
       )}
