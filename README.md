@@ -339,7 +339,7 @@ The node version used in this project is stored in [.node-version](.node-version
 while the version of Ruby is stored in [.ruby-version](.ruby-version).
 
 ### React Native
-Follow the [official tutorial](https://reactnative.dev/docs/environment-setup) for installing the `React Native CLI` for your operating system.
+Follow the [official tutorial](https://reactnative.dev/docs/environment-setup?guide=native) for installing the `React Native CLI` for your operating system.
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
