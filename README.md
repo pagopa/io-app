@@ -431,16 +431,15 @@ This section lists possible solutions to problems you might encounter while buil
 <details>
 <summary>iOS build</summary>
 
-- While running `yarn run-ios` you might encounter the following error:
-    ```
+-   ```
     error: redefinition of module 'YogaKit' build Failed
     ```
     Restart your machine to fix the issue.
 
-- While using a virtual node enviroment and building with Xcode you might encounter the following error: 
-    ```
+-   ```
     error: Can't find 'node' binary to build React Native bundle If you have non-standard nodejs installation, select your project in Xcode, find 'Build Phases' - 'Bundle React Native code and images' and change NODE_BINARY to absolute path to your node executable (you can find it by invoking 'which node' in the terminal)
     ```
+    While using a virtual node enviroment and building with Xcode you might encounter the aformentioned error.
     Create a local Xcode enviroment file by running: 
     ```bash
     $ cd ios
@@ -448,6 +447,16 @@ This section lists possible solutions to problems you might encounter while buil
     ```
     Edit `.xcode.env.local` to your needs by adding your node binary path which can be found by running `which node`.
 
+-   ```
+    error No simulator available with name "iPhone 13".
+    ```
+    This happens because new versions of Xcode do not automatically create a simulator for the iPhone 13. 
+    To fix the issue you can either create a new simulator and name it `iPhone 13` or run the command `yarn run-ios --simulator='a valid simulator name'`.
+
+-   ```
+    Application launch for 'it.pagopa.app.io' did not return a valid pid nor a launch error. Domain: NSPOSIXErrorDomain Code: 3 Failure Reason: No such process User Info: { DVTErrorCreationDateKey = "2022-01-25 12:02:41 +0000"; IDERunOperationFailingWorker = IDELaunchiPhoneSimulatorLauncher; }
+    ```
+    This happens on Apple Silicon CPUs because some `Pods` do not implement the `XCFramework` yet. Install `Rosetta` by running `softwareupdate --install-rosetta` to fix the issue.
 </details>
 
 # Architecture
