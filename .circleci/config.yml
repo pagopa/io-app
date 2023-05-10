@@ -572,19 +572,6 @@ workflows:
             branches:
               ignore: /.*/
 
-  # nightly workflow to check pagopa specs (runs only on master branch)
-  # if prod and dev specs are different
-  # a slack notification will be sent on channel #io-status
-  nightly-pagopa-specs-check:
-    triggers:
-      - schedule:
-          cron: "0 03 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-
   # Run a weekly report At 16:00 on Friday
   weekly-report:
     triggers:
