@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.32.0-rc.0](https://github.com/pagopa/io-app/compare/2.31.0-rc.3...2.32.0-rc.0) (2023-05-09)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1326](https://pagopa.atlassian.net/browse/SFEQS-1326)] Update copy data sharing screen ([#4590](https://github.com/pagopa/io-app/issues/4590)) ([be145e9](https://github.com/pagopa/io-app/commit/be145e929beacc001cc1f97853a8d9334fc9331b))
+* [[IODPAY-175](https://pagopa.atlassian.net/browse/IODPAY-175)] Add IDPay initiative details screen ([#4574](https://github.com/pagopa/io-app/issues/4574)) ([65cae8a](https://github.com/pagopa/io-app/commit/65cae8a2e564d1f9783f866de1267d5f9c7ea6b4))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1649](https://pagopa.atlassian.net/browse/SFEQS-1649)] Update FCI events adding type and category properties ([#4592](https://github.com/pagopa/io-app/issues/4592)) ([1170973](https://github.com/pagopa/io-app/commit/117097371bb737f94987a4b7ba0468318f4c2f41))
+* [[IAI-277](https://pagopa.atlassian.net/browse/IAI-277)] Fix text alignment of the Messages' empty state component ([#4586](https://github.com/pagopa/io-app/issues/4586)) ([6250580](https://github.com/pagopa/io-app/commit/62505801cc8b4519d0e87812972e3bd83ff0ddc0))
+* [[IOAPPFD0-63](https://pagopa.atlassian.net/browse/IOAPPFD0-63)] Add husky git-hook manager with pre-commit and pre-push hooks ([#4488](https://github.com/pagopa/io-app/issues/4488)) ([a992327](https://github.com/pagopa/io-app/commit/a992327258634e00dd53e75dff30d56bcd7dae4b))
+
+
+### Chores
+
+* [[IAI-265](https://pagopa.atlassian.net/browse/IAI-265)] Refactor `IOBadge` with new variants · Remove the NativeBase `Badge` ([#4337](https://github.com/pagopa/io-app/issues/4337)) ([675091c](https://github.com/pagopa/io-app/commit/675091c161c2c0a1037209ad5c8a6a6ba73193b8))
+* [[IOAPPFD0-85](https://pagopa.atlassian.net/browse/IOAPPFD0-85)] Add the new `ButtonLink` component ([#4553](https://github.com/pagopa/io-app/issues/4553)) ([54d38c0](https://github.com/pagopa/io-app/commit/54d38c028ea0b81774a2ba207d13bbb11c24ad44))
+* [[IOAPPFD0-86](https://pagopa.atlassian.net/browse/IOAPPFD0-86)] Add the new `IconButton`, rename the old one to `IconButtonContained` ([#4555](https://github.com/pagopa/io-app/issues/4555)) ([0c8159e](https://github.com/pagopa/io-app/commit/0c8159ed159aaa47c697f5bd7fdb744cca84801e))
+* [[IOAPPFD0-93](https://pagopa.atlassian.net/browse/IOAPPFD0-93)] Add the new `FeatureInfo` component ([#4576](https://github.com/pagopa/io-app/issues/4576)) ([8071b3c](https://github.com/pagopa/io-app/commit/8071b3ca9f1fcc5e1fee360c90f763cb8b176874))
+* [[IODPAY-207](https://pagopa.atlassian.net/browse/IODPAY-207)] Move initiatives from instrument refresh logic in saga ([#4587](https://github.com/pagopa/io-app/issues/4587)) ([351bf33](https://github.com/pagopa/io-app/commit/351bf33171d9df29c710d44b693ed956073c1692))
+* [[IOPID-188](https://pagopa.atlassian.net/browse/IOPID-188)] Added level parameter to getIdpLoginUri ([#4589](https://github.com/pagopa/io-app/issues/4589)) ([7cffffd](https://github.com/pagopa/io-app/commit/7cffffde6dca21c0c0e3de1c54ceed81cfa849a3))
+* Autodetect node binary when using node versions manager ([#4374](https://github.com/pagopa/io-app/issues/4374)) ([4ce809d](https://github.com/pagopa/io-app/commit/4ce809d16482d7b1fa88e4df62beb98db73db359))
+
 ## [2.31.0-rc.3](https://github.com/pagopa/io-app/compare/2.31.0-rc.2...2.31.0-rc.3) (2023-05-04)
 
 
