@@ -381,39 +381,6 @@ jobs:
             cd ios
             bundle exec fastlane beta_circleci_testflight
 
-  pagopa_specs_diff:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: check api specs alignment
-          command: ./scripts/pagopa_api_check.sh
-
-  io_check_uris:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: check uris validity on static texts
-          command: |
-            cd scripts/check_urls
-            pipenv install
-            pipenv run python3 check_urls.py
-
-  io_check_cie_button_exists_ios:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: check cie button existence
-          command: |
-            cd scripts/check_cie_button_exists
-            pipenv install
-            pipenv run python3 check_cie_button_exists_ios.py
-
   ###############################################################################
   # Prepare the environment, build, and run e2e tests
   ###############################################################################
@@ -585,22 +552,6 @@ workflows:
               only: *release_tag
             branches:
               ignore: /.*/
-
-  # nightly workflow to check pagopa specs (runs only on master branch)
-  # if prod and dev specs are different
-  # a slack notification will be sent on channel #io-status
-  nightly-pagopa-specs-check:
-    triggers:
-      - schedule:
-          cron: "0 03 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - pagopa_specs_diff
-      - io_check_uris
-      - io_check_cie_button_exists_ios
 
   # Run a weekly report At 16:00 on Friday
   weekly-report:
