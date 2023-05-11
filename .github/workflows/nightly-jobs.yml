@@ -32,12 +32,15 @@ jobs:
         uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
         with:
           python-version: '3.8'
-      - name: install requirements
-        run: python -m pip install certifi requests slack slackclient urlextract
+      #- name: install requirements
+      #  run: python -m pip install certifi requests slack slackclient urlextract
+      - name: Install pipenv
+        run: pip install pipenv
       - name: check uris validity on static texts
         run: |
           cd scripts/check_urls
-          python3 check_urls.py
+          pipenv install
+          pipenv run python3 check_urls.py
         shell: bash
   io_check_cie_button_exists_ios:
     runs-on: ubuntu-latest
