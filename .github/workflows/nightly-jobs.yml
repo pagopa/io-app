@@ -1,10 +1,14 @@
 name: Nightly Jobs
+env:
+  IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
 on:
-  schedule:
-    - cron:  '0 03 * * *'
+  [push]
+  #schedule:
+  #  - cron:  '0 03 * * *'
 jobs:
   pagopa_specs_diff:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: checkout repo content
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -17,6 +21,7 @@ jobs:
         shell: bash
   io_check_uris:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: checkout repo content
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -32,6 +37,7 @@ jobs:
           python3 check_urls.py
   io_check_cie_button_exists_ios:
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - name: checkout repo content
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
