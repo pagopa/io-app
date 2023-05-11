@@ -2,9 +2,8 @@ name: Weekly Jobs
 env:
   IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
 on:
- [push]
-  #schedule:
-    #- cron:  '0 14 * * 5'
+  schedule:
+    - cron:  '0 14 * * 5'
 jobs:
   check-outdated-dependencies:
     runs-on: ubuntu-latest
