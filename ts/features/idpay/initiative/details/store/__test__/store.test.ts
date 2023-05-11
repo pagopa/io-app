@@ -1,6 +1,7 @@
 import { pot } from "@pagopa/ts-commons";
 import { createStore } from "redux";
 import {
+  idPayBeneficiaryDetailsSelector,
   idpayInitiativeDetailsSelector,
   idpayOperationListSelector,
   idpayTimelineCurrentPageSelector,
@@ -341,6 +342,18 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     );
     expect(idpayTimelineLastUpdateSelector(store.getState())).toStrictEqual(
       mockTimelineResponseSuccess.lastUpdate
+    );
+  });
+});
+
+describe("IDPay beneficiary redcuers and selectors", () => {
+  it("should be pot.none before first loading request", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    expect(
+      globalState.features.idPay.initiative.beneficiaryDetails
+    ).toStrictEqual(pot.none);
+    expect(idPayBeneficiaryDetailsSelector(globalState)).toStrictEqual(
+      pot.none
     );
   });
 });

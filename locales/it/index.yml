@@ -3267,7 +3267,7 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
+      content: "Consentiranno al fornitore della firma digitale di offrirti il servizio e di certificare la tua firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo e-mail?"
@@ -3434,6 +3434,30 @@ idpay:
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
+    beneficiaryDetails:
+      infobox:
+        title: Cosa ti permette di fare?
+        rulesButton: Leggi le regole
+      infoModal:
+        title: "Regole dell'iniziativa"
+        button: "Ok, ho capito"
+      summary: Riepilogo
+      status: Stato iniziativa
+      endDate: Scadenza
+      amount: Saldo disponibile
+      toBeRefunded: In attesa di rimborso
+      refunded: Totale rimborsato
+      spendingRules: Regole di spesa
+      spendFrom: A partire dal giorno
+      spendTo: Entro il giorno
+      spendPercentage: Percentuale riconosciuta
+      enrollmentDetails: Dettagli dell'adesione
+      enrollmentDate: Data
+      protocolNumber: Numero di protocollo
+      lastUpdate: "Saldo aggiornato al {{dateString}}"
+      buttons:
+        privacy: Preferenze & Privacy
+        unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
       title: 
         TRANSACTION: Dettaglio dell'operazione

@@ -33,10 +33,20 @@ const InitiativeStatusLabel = (props: Props) => {
         case InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
         case InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
         case InitiativeStatusEnum.REFUNDABLE:
-          return <IOBadge small={true} text={text} />;
+          return (
+            <IOBadge variant="solid" color="blue" small={true} text={text} />
+          );
         case InitiativeStatusEnum.SUSPENDED:
         case InitiativeStatusEnum.UNSUBSCRIBED:
-          return <IOBadge small={true} text={text} labelColor="red" />;
+          return (
+            <IOBadge
+              variant="solid"
+              color="blue"
+              small={true}
+              text={text}
+              labelColor="red"
+            />
+          );
       }
     }),
     O.toUndefined

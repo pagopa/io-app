@@ -42,8 +42,8 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
           isLoading && (
             <BoxedRefreshIndicator
               caption={
-                <View style={[styles.textCaption, IOStyles.alignCenter]}>
-                  <Body accessible={true}>
+                <View style={styles.textCaption}>
+                  <Body accessible={true} style={{ textAlign: "center" }}>
                     {loadingCaption || I18n.t("global.remoteStates.wait")}
                   </Body>
                 </View>
