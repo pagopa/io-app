@@ -32,5 +32,5 @@ jobs:
       - id: install-packages
         run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
         shell: bash
-      - id: check outdated dependencies
+      - id: check-outdated-dependencies
         run: '[ -z "${IO_APP_SLACK_HELPER_BOT_TOKEN}" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
