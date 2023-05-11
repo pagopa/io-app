@@ -1,8 +1,0 @@
-name: Pull request review
-on:
-  pull_request
-jobs:
-  run-danger:
-    uses: ./.github/workflows/danger.yml
-  checks:
-    uses: ./.github/workflows/staticcheck.yaml

@@ -1,5 +1,6 @@
 on:
-  workflow_call
+  - pull_request
+  - workflow_call
 jobs:
   checks:
     runs-on: ubuntu-latest
