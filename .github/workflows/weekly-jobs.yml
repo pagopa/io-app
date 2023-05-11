@@ -8,6 +8,8 @@ on:
 jobs:
   check-outdated-dependencies:
     runs-on: ubuntu-latest
+    env:
+      IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
@@ -30,4 +32,5 @@ jobs:
       - id: install-packages
         run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
         shell: bash
-      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
+      - id: check outdated dependencies
+        run: '[ -z "${IO_APP_SLACK_HELPER_BOT_TOKEN}" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
