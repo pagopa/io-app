@@ -1,6 +1,5 @@
-name: Run Danger CI
 on:
-  pull_request
+  workflow_call
 jobs:
   run-danger:
     runs-on: ubuntu-latest
@@ -36,3 +35,5 @@ jobs:
       - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
+          JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
+          JIRA_PASSWORD: ${{ secrets.JIRA_PASSWORD }}

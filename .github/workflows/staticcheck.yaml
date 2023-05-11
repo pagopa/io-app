@@ -1,9 +1,7 @@
-name: Static Code Checks
 on:
-  - pull_request
-  - workflow_call
+  workflow_call
 jobs:
-  compile:
+  checks:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
