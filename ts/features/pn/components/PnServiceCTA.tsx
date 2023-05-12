@@ -10,7 +10,7 @@ import { servicePreferenceSelector } from "../../../store/reducers/entities/serv
 import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { AppDispatch } from "../../../App";
-import { pnActivationUpsert } from "../store/actions/service";
+import { pnActivationUpsert } from "../store/actions";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
