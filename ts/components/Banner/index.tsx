@@ -79,6 +79,13 @@ export type Banner = BaseBannerProps & RequiredBannerProps & BannerActionProps;
 
 // COMPONENT CONFIGURATION
 
+/* Used to generate automatically the colour variants
+in the Design System screen */
+export const bannerBackgroundColours: Array<BaseBannerProps["color"]> = [
+  "neutral",
+  "turquoise"
+];
+
 const mapBackgroundColor: Record<
   NonNullable<BaseBannerProps["color"]>,
   IOColors

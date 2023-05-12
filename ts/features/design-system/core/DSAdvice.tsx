@@ -21,7 +21,7 @@ import { Icon } from "../../../components/core/icons";
 import { H5 } from "../../../components/core/typography/H5";
 import { FeatureInfo } from "../../../components/FeatureInfo";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { Banner } from "../../../components/Banner";
+import { Banner, bannerBackgroundColours } from "../../../components/Banner";
 
 const styles = StyleSheet.create({
   content: {
@@ -176,77 +176,81 @@ const renderBanner = () => {
       <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
         Banner
       </H2>
-      <DSComponentViewerBox name={"Banner · Big size, neutral variant"}>
-        <Banner
-          viewRef={viewRef}
-          color="neutral"
-          variant="big"
-          title="Banner title"
-          pictogramName="setup"
-          action="Action text"
-          onPress={onLinkPress}
-        />
-        <VSpacer size={24} />
-        <Banner
-          viewRef={viewRef}
-          color="neutral"
-          variant="big"
-          content={
-            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-          }
-          pictogramName="setup"
-        />
-        <VSpacer size={24} />
-        <Banner
-          viewRef={viewRef}
-          color="neutral"
-          variant="big"
-          content={
-            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-          }
-          pictogramName="setup"
-          action="Dona anche tu"
-          onPress={onLinkPress}
-        />
-        <VSpacer size={24} />
-        <Banner
-          viewRef={viewRef}
-          color="neutral"
-          variant="big"
-          title="Banner title"
-          content={
-            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-          }
-          pictogramName="setup"
-        />
-        <VSpacer size={24} />
-        <Banner
-          viewRef={viewRef}
-          color="neutral"
-          variant="big"
-          title="Banner title"
-          content={
-            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-          }
-          pictogramName="setup"
-          action="Dona anche tu"
-          onPress={onLinkPress}
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="Banner · Small size, neutral variant">
-        <Banner
-          viewRef={viewRef}
-          color="neutral"
-          variant="small"
-          title="Banner title"
-          content={
-            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-          }
-          pictogramName="setup"
-          action="Dona anche tu"
-          onPress={onLinkPress}
-        />
-      </DSComponentViewerBox>
+      {bannerBackgroundColours.map(color => (
+        <>
+          <DSComponentViewerBox name={`Banner · Big size, ${color} variant`}>
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              title="Banner title"
+              pictogramName="setup"
+              action="Action text"
+              onPress={onLinkPress}
+            />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="setup"
+            />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="setup"
+              action="Dona anche tu"
+              onPress={onLinkPress}
+            />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              title="Banner title"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="setup"
+            />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              title="Banner title"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="setup"
+              action="Dona anche tu"
+              onPress={onLinkPress}
+            />
+          </DSComponentViewerBox>
+          <DSComponentViewerBox name={`Banner · Small size, ${color} variant`}>
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="small"
+              title="Banner title"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="setup"
+              action="Dona anche tu"
+              onPress={onLinkPress}
+            />
+          </DSComponentViewerBox>
+        </>
+      ))}
     </>
   );
 };
