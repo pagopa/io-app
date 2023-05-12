@@ -30,7 +30,7 @@ import PictogramTeaBreak from "./svg/PictogramTeaBreak";
 import PictogramSms from "./svg/PictogramSms";
 import PictogramInbox from "./svg/PictogramInbox";
 import PictogramBeerMug from "./svg/PictogramBeerMug";
-import PictogramIBANCard from "./svg/IBANCard";
+import PictogramIBANCard from "./svg/PictogramIBANCard";
 import PictogramFollowMessage from "./svg/PictogramFollowMessage";
 import PictogramManual from "./svg/PictogramManual";
 import PictogramSetup from "./svg/PictogramSetup";

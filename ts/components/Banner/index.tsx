@@ -10,7 +10,6 @@ import { WithTestID } from "../../types/WithTestID";
 // Design System components
 import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
-import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOBannerRadius } from "../core/variables/IOShapes";
 import { IOBannerSpacing } from "../core/variables/IOSpacing";
