@@ -25,6 +25,7 @@ jobs:
       - id: add-ssh-deploy-key
         run: |
           echo -e "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 400 ~/.ssh/id_ed25519
           ssh-add ~/.ssh/id_ed25519
         env:
           SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY}}
