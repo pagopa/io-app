@@ -110,21 +110,17 @@ export const fciShowSignedDocumentsEndRequest = createStandardAction(
  */
 export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
 
-export const fciPollFilledDocumentRequest = createStandardAction(
-  "FCI_POLL_FILLED_DOCUMENT_REQUEST"
-)<void>();
-
-export const fciPollFilledDocumentSuccess = createStandardAction(
-  "FCI_POLL_FILLED_DOCUMENT_SUCCESS"
-)<{ isReady: boolean }>();
-
-export const fciPollFilledDocumentFailure = createStandardAction(
-  "FCI_POLL_FILLED_DOCUMENT_FAILURE"
-)<NetworkError>();
-
-export const fciPollFilledDocumentCancel = createStandardAction(
+/**
+ * poll the filled document
+ * to check if it is ready
+ * to be downloaded
+ */
+export const fciPollFilledDocument = createAsyncAction(
+  "FCI_POLL_FILLED_DOCUMENT_REQUEST",
+  "FCI_POLL_FILLED_DOCUMENT_SUCCESS",
+  "FCI_POLL_FILLED_DOCUMENT_FAILURE",
   "FCI_POLL_FILLED_DOCUMENT_CANCEL"
-)<void>();
+)<void, { isReady: boolean }, NetworkError, void>();
 
 export const fciClearAllFiles =
   createStandardAction("CLEAR_ALL_FILES")<{ path: string }>();
@@ -155,10 +151,7 @@ export type FciActions =
   | ActionType<typeof fciDownloadPreviewClear>
   | ActionType<typeof fciShowSignedDocumentsStartRequest>
   | ActionType<typeof fciShowSignedDocumentsEndRequest>
-  | ActionType<typeof fciPollFilledDocumentRequest>
-  | ActionType<typeof fciPollFilledDocumentSuccess>
-  | ActionType<typeof fciPollFilledDocumentFailure>
-  | ActionType<typeof fciPollFilledDocumentCancel>
+  | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciClearAllFiles>
   | ActionType<typeof fciMetadataRequest>
   | ActionType<typeof fciSignaturesListRequest>;

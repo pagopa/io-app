@@ -2,11 +2,7 @@ import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
-import {
-  fciClearStateRequest,
-  fciPollFilledDocumentSuccess,
-  fciPollFilledDocumentFailure
-} from "../actions";
+import { fciClearStateRequest, fciPollFilledDocument } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 
@@ -24,9 +20,9 @@ const reducer = (
   action: Action
 ): FciPollFilledDocumentState => {
   switch (action.type) {
-    case getType(fciPollFilledDocumentSuccess):
+    case getType(fciPollFilledDocument.success):
       return pot.some(action.payload);
-    case getType(fciPollFilledDocumentFailure):
+    case getType(fciPollFilledDocument.failure):
       return pot.toError(state, action.payload);
     case getType(fciClearStateRequest):
       return initialState;

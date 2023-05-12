@@ -11,9 +11,7 @@ import {
   fciClearStateRequest,
   fciShowSignedDocumentsStartRequest,
   fciShowSignedDocumentsEndRequest,
-  fciPollFilledDocumentFailure,
-  fciPollFilledDocumentRequest,
-  fciPollFilledDocumentSuccess
+  fciPollFilledDocument
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
@@ -129,14 +127,15 @@ const trackFciAction =
       case getType(fciClearStateRequest):
       case getType(fciShowSignedDocumentsStartRequest):
       case getType(fciShowSignedDocumentsEndRequest):
-      case getType(fciPollFilledDocumentRequest):
-      case getType(fciPollFilledDocumentSuccess):
+      case getType(fciPollFilledDocument.request):
+      case getType(fciPollFilledDocument.success):
+      case getType(fciPollFilledDocument.cancel):
         return mp.track(action.type, { event_type: FciUxEvent.TECH });
       case getType(fciSignatureRequestFromId.failure):
       case getType(fciLoadQtspClauses.failure):
       case getType(fciLoadQtspFilledDocument.failure):
       case getType(fciSigningRequest.failure):
-      case getType(fciPollFilledDocumentFailure):
+      case getType(fciPollFilledDocument.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload),
           event_type: FciUxEvent.KO

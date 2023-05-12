@@ -13,11 +13,8 @@ import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import {
-  fciPollFilledDocumentCancel,
   fciLoadQtspFilledDocument,
-  fciPollFilledDocumentSuccess,
-  fciPollFilledDocumentFailure,
-  fciPollFilledDocumentRequest
+  fciPollFilledDocument
 } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
@@ -85,21 +82,21 @@ export function* watchFciPollSaga(
 ) {
   while (true) {
     try {
-      yield* put(fciPollFilledDocumentRequest());
+      yield* put(fciPollFilledDocument.request());
       const response = yield* call(fetch, qtspFilledDocumentUrl);
       const responseStatus = response.status;
       if (responseStatus === 200) {
         yield* put(
-          fciPollFilledDocumentSuccess({
+          fciPollFilledDocument.success({
             isReady: true
           })
         );
-        yield* put(fciPollFilledDocumentCancel());
+        yield* put(fciPollFilledDocument.cancel());
       }
       yield* delay(POLLING_FREQ_TIMEOUT);
     } catch (e) {
-      yield* put(fciPollFilledDocumentFailure(getNetworkError(e)));
-      yield* put(fciPollFilledDocumentCancel());
+      yield* put(fciPollFilledDocument.failure(getNetworkError(e)));
+      yield* put(fciPollFilledDocument.cancel());
     } finally {
       if (yield* cancelled()) {
         const isFilledDocumentReady: ReturnType<
@@ -107,7 +104,7 @@ export function* watchFciPollSaga(
         > = yield* select(fciPollFilledDocumentReadySelector);
         if (!isFilledDocumentReady) {
           yield* put(
-            fciPollFilledDocumentFailure(
+            fciPollFilledDocument.failure(
               getNetworkError(new Error("Polling cancelled"))
             )
           );
@@ -122,7 +119,7 @@ export function* filledDocumentPollWatcher(
 ) {
   yield* race({
     task: call(watchFciPollSaga, filledDocumentUrl),
-    cancel: take(fciPollFilledDocumentCancel),
+    cancel: take(fciPollFilledDocument.cancel),
     delay: delay(POLLING_TIME_THRESHOLD)
   });
 }
