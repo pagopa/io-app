@@ -9,7 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // If an error occurs while deleting, because the key is
 // invalid or not present, it is not necessary
 // to handle the exception
-export function* removePersistStatesSaga() {
+export function* removePersistedStatesSaga() {
   const keys = ["persist:mvl", "persist:pn"];
 
   try {
