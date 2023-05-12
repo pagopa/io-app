@@ -1,14 +1,9 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
-import { pnActivationUpsert } from "./service";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 
-/**
- * Set whether to show a warning message when opening a PN message.
- * The preference will be persisted.
- */
-export const pnPreferencesSetWarningForMessageOpening = createStandardAction(
-  "PN_PREFERENCES_SET_WARNING_FOR_MESSAGE_OPENING"
-)<boolean>();
+export const pnActivationUpsert = createAsyncAction(
+  "PN_ACTIVATION_UPSERT_REQUEST",
+  "PN_ACTIVATION_UPSERT_SUCCESS",
+  "PN_ACTIVATION_UPSERT_FAILURE"
+)<boolean, boolean, Error>();
 
-export type PnActions =
-  | ActionType<typeof pnPreferencesSetWarningForMessageOpening>
-  | ActionType<typeof pnActivationUpsert>;
+export type PnActions = ActionType<typeof pnActivationUpsert>;

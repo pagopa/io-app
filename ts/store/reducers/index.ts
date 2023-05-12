@@ -189,10 +189,6 @@ export function createRootReducer(
               _persist: state.entities._persist
             },
             features: {
-              pn: {
-                // eslint-disable-next-line no-underscore-dangle
-                _persist: state.features.pn._persist
-              },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist
             },
