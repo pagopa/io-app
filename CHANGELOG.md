@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.32.0-rc.1](https://github.com/pagopa/io-app/compare/2.32.0-rc.0...2.32.0-rc.1) (2023-05-11)
+
+
+### Features
+
+* [[IOPLT-8](https://pagopa.atlassian.net/browse/IOPLT-8)] Migrate nightly jobs from Circle CI to GitHub Actions ([#4595](https://github.com/pagopa/io-app/issues/4595)) ([f26f197](https://github.com/pagopa/io-app/commit/f26f1970e29d11bf09bf13ff06d1bcc3ff18dfea))
+
+
+### Bug Fixes
+
+* [[IABT-1476](https://pagopa.atlassian.net/browse/IABT-1476)] Remove duplicated fork in startup saga ([#4600](https://github.com/pagopa/io-app/issues/4600)) ([b6df7e4](https://github.com/pagopa/io-app/commit/b6df7e40f26e2e3e7fca6eaa3f67aacac4f768bd))
+
+
+### Chores
+
+* [[IOAPPFD0-2](https://pagopa.atlassian.net/browse/IOAPPFD0-2)] Migrate PR static check to GitHub Actions ([#4110](https://github.com/pagopa/io-app/issues/4110)) ([6f30705](https://github.com/pagopa/io-app/commit/6f307055cd1eea3693396cb777ef6de770df14b4))
+
 ## [2.32.0-rc.0](https://github.com/pagopa/io-app/compare/2.31.0-rc.3...2.32.0-rc.0) (2023-05-09)
 
 
