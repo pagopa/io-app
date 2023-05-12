@@ -5,11 +5,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import {
-  fciLoadQtspClauses,
-  fciPollFilledDocumentFailure,
-  fciPollFilledDocumentSuccess
-} from "../../store/actions";
+import { fciLoadQtspClauses, fciPollFilledDocument } from "../../store/actions";
 import FciQtspClausesScreen from "../valid/FciQtspClausesScreen";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { getNetworkError } from "../../../../utils/errors";
@@ -37,7 +33,7 @@ describe("Test FciQtspClauses screen", () => {
       globalState as any
     );
     store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
-    store.dispatch(fciPollFilledDocumentSuccess({ isReady: true }));
+    store.dispatch(fciPollFilledDocument.success({ isReady: true }));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciQtspClausesTestID")).toBeTruthy();
@@ -49,7 +45,7 @@ describe("Test FciQtspClauses screen", () => {
       globalState as any
     );
     store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
-    store.dispatch(fciPollFilledDocumentSuccess({ isReady: true }));
+    store.dispatch(fciPollFilledDocument.success({ isReady: true }));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciQtspClausesListTestID")).toBeTruthy();
@@ -61,7 +57,7 @@ describe("Test FciQtspClauses screen", () => {
       globalState as any
     );
     store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
-    store.dispatch(fciPollFilledDocumentSuccess({ isReady: true }));
+    store.dispatch(fciPollFilledDocument.success({ isReady: true }));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(
@@ -75,7 +71,7 @@ describe("Test FciQtspClauses screen", () => {
       globalState as any
     );
     store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
-    store.dispatch(fciPollFilledDocumentSuccess({ isReady: false }));
+    store.dispatch(fciPollFilledDocument.success({ isReady: false }));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeTruthy();
@@ -87,7 +83,7 @@ describe("Test FciQtspClauses screen", () => {
       globalState as any
     );
     store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
-    store.dispatch(fciPollFilledDocumentFailure(networkError));
+    store.dispatch(fciPollFilledDocument.failure(networkError));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
