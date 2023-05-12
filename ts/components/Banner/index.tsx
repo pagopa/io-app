@@ -6,7 +6,6 @@ import {
 } from "react-native";
 import React from "react";
 import { WithTestID } from "../../types/WithTestID";
-
 // Design System components
 import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
@@ -146,10 +145,11 @@ export const Banner = ({
       { backgroundColor: IOColors[mapBackgroundColor[color]] }
     ]}
     testID={testID}
+    // A11y related props
+    accessible={accessible ?? true}
     accessibilityHint={accessibilityHint}
     accessibilityLabel={accessibilityLabel}
     accessibilityRole={accessibilityRole}
-    accessible={accessible ?? true}
   >
     <View style={[IOStyles.flex, IOStyles.selfCenter]}>
       {title && (
