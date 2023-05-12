@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
+import _ from "lodash";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
@@ -79,4 +80,24 @@ export const getSectionListData = (
       title: type,
       data: clausesByType(signatureFields, [type])
     }))
+  );
+
+/**
+ * Orders the signatureFields array with the given order: UNFAIR -> REQURED -> EVERYTHING ELSE (OPTIONAL)
+ * @param signatureFields an array of signature fields
+ * @returns the new ordered array
+ */
+export const orderSignatureFields = (
+  signatureFields: ReadonlyArray<SignatureField>
+): ReadonlyArray<SignatureField> =>
+  pipe(
+    _.orderBy(signatureFields, [
+      field =>
+        field.clause.type === ClauseTypeEnum.UNFAIR
+          ? 0
+          : field.clause.type === ClauseTypeEnum.REQUIRED
+          ? 1
+          : 2
+    ]),
+    RA.fromArray
   );
