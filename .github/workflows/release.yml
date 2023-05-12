@@ -24,7 +24,8 @@ jobs:
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
       - id: add-ssh-deploy-key
         run: |
-          ssh-add - <<< "$SSH_DEPLOY_KEY"
+          echo -e "$SSH_DEPLOY_KEY" > /tmp/id_ed25519
+          ssh-add /tmp/id_ed25519
         env:
           SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY}}
       - id: build-upload-app-store
