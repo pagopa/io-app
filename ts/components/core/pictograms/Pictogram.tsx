@@ -71,11 +71,12 @@ export const IOPictograms = {
 };
 
 export type IOPictograms = keyof typeof IOPictograms;
+export type IOPictogramSizeScale = 48 | 64 | 72 | 80 | 120 | 240;
 
 type IOPictogramsProps = {
   name: IOPictograms;
   color?: IOColors;
-  size?: number | "100%";
+  size?: IOPictogramSizeScale | "100%";
 };
 
 export type SVGPictogramProps = {

@@ -1,7 +1,11 @@
 import React from "react";
 import { GestureResponderEvent, View } from "react-native";
 import { IOIcons, Icon } from "../core/icons";
-import { IOPictograms, Pictogram } from "../core/pictograms";
+import {
+  IOPictogramSizeScale,
+  IOPictograms,
+  Pictogram
+} from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
@@ -19,7 +23,7 @@ type FeatureInfo = {
 };
 
 const DEFAULT_ICON_SIZE: number = 24;
-const DEFAULT_PICTOGRAM_SIZE: number = 48;
+const DEFAULT_PICTOGRAM_SIZE: IOPictogramSizeScale = 48;
 
 const renderNode = (body: FeatureInfo["body"]) => {
   if (typeof body === "string") {

@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { ClipPath, Defs, G, Path } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
 const PictogramSetup = ({ size, color, ...props }: SVGPictogramProps) => (
