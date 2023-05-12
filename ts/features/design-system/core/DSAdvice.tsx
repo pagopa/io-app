@@ -42,6 +42,7 @@ export const DSAdvice = () => (
       FeatureInfo
     </H2>
     <FeatureInfo
+      iconName="info"
       body={
         "Dopo questo passaggio non sarà più possibile annullare il pagamento"
       }

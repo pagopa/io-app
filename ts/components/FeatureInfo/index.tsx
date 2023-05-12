@@ -13,14 +13,28 @@ import { NewLink } from "../core/typography/NewLink";
 
 export type SpacerOrientation = "vertical" | "horizontal";
 
-type FeatureInfo = {
-  iconName?: IOIcons;
-  pictogramName?: IOPictograms;
+type PartialFeatureInfo = {
   // Necessary to render main body with different formatting
   body?: string | React.ReactNode;
-  actionLabel?: string;
-  actionOnPress?: (event: GestureResponderEvent) => void;
 };
+
+type FeatureInfoActionProps =
+  | {
+      actionLabel?: string;
+      actionOnPress: (event: GestureResponderEvent) => void;
+    }
+  | {
+      actionLabel?: never;
+      actionOnPress?: never;
+    };
+
+type FeatureInfoGraphicProps =
+  | { iconName?: never; pictogramName: IOPictograms }
+  | { iconName: IOIcons; pictogramName?: never };
+
+type FeatureInfo = FeatureInfoGraphicProps &
+  PartialFeatureInfo &
+  FeatureInfoActionProps;
 
 const DEFAULT_ICON_SIZE: number = 24;
 const DEFAULT_PICTOGRAM_SIZE: IOPictogramSizeScale = 48;
@@ -38,14 +52,14 @@ const renderNode = (body: FeatureInfo["body"]) => {
 };
 
 export const FeatureInfo = ({
-  iconName = "info",
+  iconName,
   pictogramName,
   body,
   actionLabel,
   actionOnPress
 }: FeatureInfo) => (
   <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-    {iconName && !pictogramName && (
+    {iconName && (
       <Icon name={iconName} size={DEFAULT_ICON_SIZE} color="grey-300" />
     )}
     {pictogramName && (
