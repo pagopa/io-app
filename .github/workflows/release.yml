@@ -13,8 +13,6 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
-      - id: setup
-        uses: ./.github/actions/setup-composite
       - id: setup-ruby
         uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c
         with:
@@ -24,6 +22,11 @@ jobs:
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+      - id: add-ssh-deploy-key
+        run: |
+          ssh-add - <<< "$SSH_DEPLOY_KEY"
+        env:
+          SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY}}
       - id: build-upload-app-store
         name: Build & submit to App store
         run: |
