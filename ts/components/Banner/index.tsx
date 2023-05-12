@@ -21,6 +21,7 @@ import {
   Pictogram
 } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
+import { NewH6 } from "../core/typography/NewH6";
 
 /* Styles */
 
@@ -37,6 +38,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
     borderRadius: IOBannerRadius,
     padding: IOBannerPadding
+  },
+  bleedPictogram: {
+    marginRight: -IOBannerPadding
   }
 });
 
@@ -124,16 +128,21 @@ export const Banner = ({
     <View style={[IOStyles.flex, IOStyles.selfCenter]}>
       {title && (
         <>
-          <H2 weight="SemiBold" color={colorTitle}>
+          {/* Once we get 'gap' property, we can get rid of
+          these <VSpacer> components */}
+          <NewH6 weight="SemiBold" color={colorTitle}>
             {title}
-          </H2>
+          </NewH6>
           <VSpacer size={4} />
         </>
       )}
       {content && (
-        <LabelSmall color={colorContent} weight={"Regular"}>
-          {content}
-        </LabelSmall>
+        <>
+          <LabelSmall color={colorContent} weight={"Regular"}>
+            {content}
+          </LabelSmall>
+          {action && <VSpacer size={8} />}
+        </>
       )}
       {action && (
         <>
@@ -142,7 +151,7 @@ export const Banner = ({
         </>
       )}
     </View>
-    <View style={IOStyles.selfCenter}>
+    <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
       <Pictogram
         name={pictogramName}
         size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
