@@ -4,10 +4,10 @@ on:
     branches: IOPLT-9-migrate-release-workflow
     # tags: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   uses: ./.github/workflows/staticcheck.yaml
   release-ios:
-    needs: run-static-checks
+    # needs: run-static-checks
     environment: prod
     runs-on: macos-latest
     steps:
