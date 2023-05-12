@@ -65,15 +65,6 @@ const getSignatureFieldsLength = (doc: DocumentDetailView) =>
     O.getOrElse(() => 0)
   );
 
-const getSignatureFields = (doc: DocumentDetailView) =>
-  pipe(
-    doc,
-    O.fromNullable,
-    O.map(_ => _.metadata.signature_fields),
-    RA.fromOption,
-    RA.toArray
-  );
-
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -130,7 +121,7 @@ const FciDocumentsScreen = () => {
   const {
     present: showNoSignatureFieldsBs,
     bottomSheet: fciNoSignatureFields
-  } = useFciNoSignatureFields();
+  } = useFciNoSignatureFields({ currentDoc });
 
   const onContinuePress = () => {
     if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
