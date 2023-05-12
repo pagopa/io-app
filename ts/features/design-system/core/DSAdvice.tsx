@@ -20,6 +20,8 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import { Icon } from "../../../components/core/icons";
 import { H5 } from "../../../components/core/typography/H5";
 import { FeatureInfo } from "../../../components/FeatureInfo";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { Banner } from "../../../components/Banner";
 
 const styles = StyleSheet.create({
   content: {
@@ -38,51 +40,11 @@ const onLinkPress = () => {
 
 export const DSAdvice = () => (
   <DesignSystemScreen title={"Advice & Banners"}>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-      FeatureInfo
-    </H2>
-    <FeatureInfo
-      iconName="info"
-      body={
-        "Dopo questo passaggio non sarà più possibile annullare il pagamento"
-      }
-    />
+    {renderFeatureInfo()}
+
     <VSpacer size={24} />
-    <FeatureInfo
-      iconName="gallery"
-      body={
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
-      }
-    />
-    <VSpacer size={24} />
-    <FeatureInfo
-      iconName="security"
-      actionLabel="Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper"
-      actionOnPress={onLinkPress}
-    />
-    <VSpacer size={24} />
-    <FeatureInfo
-      pictogramName="followMessage"
-      body={
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
-      }
-    />
-    <VSpacer size={24} />
-    <FeatureInfo
-      pictogramName="manual"
-      body={
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
-      }
-    />
-    <VSpacer size={24} />
-    <FeatureInfo
-      pictogramName="followMessage"
-      body={
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
-      }
-      actionLabel="Scopri di più"
-      actionOnPress={onLinkPress}
-    />
+
+    {renderBanner()}
 
     <VSpacer size={40} />
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
@@ -151,3 +113,140 @@ export const DSAdvice = () => (
     <VSpacer size={40} />
   </DesignSystemScreen>
 );
+
+const renderFeatureInfo = () => (
+  <>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      FeatureInfo
+    </H2>
+    <DSComponentViewerBox name="FeatureInfo · with Icon">
+      <FeatureInfo
+        iconName="info"
+        body={
+          "Dopo questo passaggio non sarà più possibile annullare il pagamento"
+        }
+      />
+      <VSpacer size={24} />
+      <FeatureInfo
+        iconName="gallery"
+        body={
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
+        }
+      />
+      <VSpacer size={24} />
+      <FeatureInfo
+        iconName="security"
+        actionLabel="Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper"
+        actionOnPress={onLinkPress}
+      />
+    </DSComponentViewerBox>
+    <VSpacer size={16} />
+    <DSComponentViewerBox name="FeatureInfo · with Pictogram">
+      <FeatureInfo
+        pictogramName="followMessage"
+        body={
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
+        }
+      />
+      <VSpacer size={24} />
+      <FeatureInfo
+        pictogramName="manual"
+        body={
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
+        }
+      />
+      <VSpacer size={24} />
+      <FeatureInfo
+        pictogramName="followMessage"
+        body={
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
+        }
+        actionLabel="Scopri di più"
+        actionOnPress={onLinkPress}
+      />
+    </DSComponentViewerBox>
+  </>
+);
+
+const renderBanner = () => {
+  const viewRef = React.createRef<View>();
+
+  return (
+    <>
+      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+        Banner
+      </H2>
+      <DSComponentViewerBox name={"Banner · Big size, neutral variant"}>
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          variant="big"
+          title="Banner title"
+          pictogramName="setup"
+          action="Action text"
+          onPress={onLinkPress}
+        />
+        <VSpacer size={24} />
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          variant="big"
+          content={
+            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+          }
+          pictogramName="setup"
+        />
+        <VSpacer size={24} />
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          variant="big"
+          content={
+            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+          }
+          pictogramName="setup"
+          action="Dona anche tu"
+          onPress={onLinkPress}
+        />
+        <VSpacer size={24} />
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          variant="big"
+          title="Banner title"
+          content={
+            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+          }
+          pictogramName="setup"
+        />
+        <VSpacer size={24} />
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          variant="big"
+          title="Banner title"
+          content={
+            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+          }
+          pictogramName="setup"
+          action="Dona anche tu"
+          onPress={onLinkPress}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Banner · Small size, neutral variant">
+        <Banner
+          viewRef={viewRef}
+          color="neutral"
+          variant="small"
+          title="Banner title"
+          content={
+            "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+          }
+          pictogramName="setup"
+          action="Dona anche tu"
+          onPress={onLinkPress}
+        />
+      </DSComponentViewerBox>
+    </>
+  );
+};

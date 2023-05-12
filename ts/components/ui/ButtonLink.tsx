@@ -32,7 +32,7 @@ export type ButtonLink = WithTestID<{
   icon?: IOIcons;
   iconPosition?: "start" | "end";
   // Accessibility
-  accessibilityLabel: string;
+  accessibilityLabel?: string;
   accessibilityHint?: string;
   onPress: (event: GestureResponderEvent) => void;
 }>;
