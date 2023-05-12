@@ -5,9 +5,12 @@ import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewNavigation,
-  WebViewNavigationEvent
+  WebViewNavigationEvent,
+  WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
-import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
+import * as O from "fp-ts/lib/Option";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import URLParse from "url-parse";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -16,6 +19,16 @@ import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { handleRegenerateKey } from "../../features/lollipop";
+import {
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+  lollipopSamlVerify
+} from "../../features/lollipop/utils/login";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { AppDispatch } from "../../App";
+import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -43,12 +56,15 @@ const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
  * This script also tries also to call apriIosUL.
  * If it is defined it starts the authentication process (iOS only).
  */
-const injectJs = `
+const injectJs =
+  Platform.OS === "ios"
+    ? `
   seconds = 0;
   if(typeof apriIosUL !== 'undefined' && apriIosUL !== null){
     apriIosUL();
   }
-`;
+`
+    : undefined;
 
 type Props = {
   onClose: () => void;
@@ -90,10 +106,93 @@ const generateRetryState: (state: InternalState) => InternalState = (
   key: state.key + 1
 });
 
+const regenerateKeyGetRedirectsAndVerifySaml = (
+  loginUri: string,
+  keyTag: string,
+  isMixpanelEnabled: boolean | null,
+  dispatch: AppDispatch
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    void handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch)
+      .then(publicKey => {
+        if (!publicKey) {
+          reject("Missing publicKey");
+          return;
+        }
+        const headers = {
+          "x-pagopa-lollipop-pub-key": Buffer.from(
+            JSON.stringify(publicKey)
+          ).toString("base64"),
+          "x-pagopa-lollipop-pub-key-hash-algo":
+            DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+        };
+        void getRedirects(loginUri, headers, "SAMLRequest")
+          .then(value => {
+            for (const url of value) {
+              const parsedUrl = new URLParse(url, true);
+              const urlQuery = parsedUrl.query;
+              if (urlQuery.SAMLRequest) {
+                const urlEncodedSamlRequest = urlQuery.SAMLRequest;
+                lollipopSamlVerify(
+                  urlEncodedSamlRequest,
+                  publicKey,
+                  () => {
+                    resolve(url);
+                  },
+                  (reason: string) => {
+                    trackLollipopIdpLoginFailure(reason);
+                    reject(reason);
+                  }
+                );
+                break;
+              }
+              reject("Missing SAMLRequest");
+            }
+          })
+          .catch(error => reject(error));
+      })
+      .catch(error => reject(error));
+  });
+
+type RequestInfoAuthorizingStates = {
+  requestState: "AUTHORIZING";
+  nativeAttempts: number;
+  url: string;
+};
+
+type RequestInfoLoadingStates = {
+  requestState: "LOADING";
+  nativeAttempts: number;
+};
+
+type RequestInfo = RequestInfoLoadingStates | RequestInfoAuthorizingStates;
+
+function retryRequest(
+  setInternalState: React.Dispatch<React.SetStateAction<InternalState>>,
+  setRequestInfo: React.Dispatch<React.SetStateAction<RequestInfo>>
+) {
+  setInternalState(generateRetryState);
+  setRequestInfo(requestInfo => ({
+    requestState: "LOADING",
+    nativeAttempts: requestInfo.nativeAttempts + 1
+  }));
+}
+
 const CieWebView = (props: Props) => {
   const [internalState, setInternalState] = React.useState<InternalState>(
     generateResetState()
   );
+
+  const [requestInfo, setRequestInfo] = React.useState<RequestInfo>({
+    requestState: "LOADING",
+    nativeAttempts: 0
+  });
+
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+  const dispatch = useIODispatch();
+
+  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
@@ -104,11 +203,6 @@ const CieWebView = (props: Props) => {
   // Android CIE login flow is different from iOS.
   // On Android to be sure to regenerate a new crypto key,
   // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
-  const {
-    retryLollipopLogin,
-    shouldBlockUrlNavigationWhileCheckingLollipop,
-    webviewSource
-  } = useLollipopLoginSource(handleOnError, loginUri);
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
@@ -126,9 +220,6 @@ const CieWebView = (props: Props) => {
     }
 
     const url = event.url;
-    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
-      return false;
-    }
 
     // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
     if (
@@ -163,7 +254,7 @@ const CieWebView = (props: Props) => {
       handleOnError();
     }
     // inject JS on every page load end
-    if (webView.current) {
+    if (injectJs && webView.current) {
       webView.current.injectJavaScript(closeInjectedScript(injectJs));
     }
   };
@@ -172,32 +263,54 @@ const CieWebView = (props: Props) => {
     return (
       <ErrorComponent
         onRetry={() => {
-          setInternalState(state => generateRetryState(state));
-          retryLollipopLogin();
+          retryRequest(setInternalState, setRequestInfo);
         }}
         onClose={props.onClose}
       />
     );
   }
 
+  if (
+    loginUri &&
+    O.isSome(maybeKeyTag) &&
+    requestInfo.requestState === "LOADING"
+  ) {
+    void regenerateKeyGetRedirectsAndVerifySaml(
+      loginUri,
+      maybeKeyTag.value,
+      mixpanelEnabled,
+      dispatch
+    )
+      .then((url: string) => {
+        setRequestInfo({
+          requestState: "AUTHORIZING",
+          nativeAttempts: requestInfo.nativeAttempts,
+          url
+        });
+      })
+      .catch(_ => {
+        handleOnError();
+      });
+  }
+
   const WithLoading = withLoadingSpinner(() => (
     <View style={IOStyles.flex}>
-      {internalState.authUrl === undefined && (
-        <WebView
-          cacheEnabled={false}
-          androidCameraAccessDisabled={true}
-          androidMicrophoneAccessDisabled={true}
-          ref={webView}
-          userAgent={defaultUserAgent}
-          javaScriptEnabled={true}
-          injectedJavaScript={injectJs}
-          onLoadEnd={handleOnLoadEnd}
-          onError={handleOnError}
-          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          source={webviewSource}
-          key={internalState.key}
-        />
-      )}
+      {requestInfo.requestState === "AUTHORIZING" &&
+        internalState.authUrl === undefined && (
+          <WebView
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
+            ref={webView}
+            userAgent={defaultUserAgent}
+            javaScriptEnabled={true}
+            injectedJavaScript={injectJs}
+            onLoadEnd={handleOnLoadEnd}
+            onError={handleOnError}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            source={{ uri: requestInfo.url } as WebViewSource}
+            key={internalState.key}
+          />
+        )}
     </View>
   ));
 

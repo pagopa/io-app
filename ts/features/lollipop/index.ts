@@ -4,13 +4,12 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { deleteKey, generate, PublicKey } from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
-import { store } from "../../boot/configureStoreAndPersistor";
 import {
   trackLollipopIdpLoginFailure,
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../utils/analytics";
-import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { AppDispatch } from "../../App";
 import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
 import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 import { toCryptoError } from "./utils/crypto";
@@ -75,22 +74,26 @@ export const chainSignPromises = (
  * Regenerate publicKey, it returns a Promise
  * with publicKey, if it was succesfully generated
  */
-export const handleRegenerateKey = (keyTag: string) =>
+export const handleRegenerateKey = (
+  keyTag: string,
+  isMixpanelEnabled: boolean | null,
+  dispatch: AppDispatch
+) =>
   pipe(
     keyTag,
     taskRegenerateKey,
     TE.fold(
       error => {
         trackLollipopIdpLoginFailure(error.message);
-        if (isMixpanelEnabled(store.getState())) {
+        if (isMixpanelEnabled) {
           trackLollipopKeyGenerationFailure(error.message);
         }
-        store.dispatch(lollipopRemovePublicKey());
+        dispatch(lollipopRemovePublicKey());
         return T.of(undefined);
       },
       key => {
-        store.dispatch(lollipopSetPublicKey({ publicKey: key }));
-        if (isMixpanelEnabled(store.getState())) {
+        dispatch(lollipopSetPublicKey({ publicKey: key }));
+        if (isMixpanelEnabled) {
           trackLollipopKeyGenerationSuccess(key.kty);
         }
         return T.of(key);
@@ -98,7 +101,7 @@ export const handleRegenerateKey = (keyTag: string) =>
     )
   )();
 
-export const taskRegenerateKey = (keyTag: string) =>
+const taskRegenerateKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))

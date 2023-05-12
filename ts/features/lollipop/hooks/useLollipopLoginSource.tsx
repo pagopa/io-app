@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useState } from "react";
 import URLParse from "url-parse";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -17,6 +17,7 @@ import {
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { handleRegenerateKey } from "..";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -31,6 +32,9 @@ export const useLollipopLoginSource = (
   const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
+
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+  const dispatch = useIODispatch();
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -94,25 +98,34 @@ export const useLollipopLoginSource = (
      * https://pagopa.atlassian.net/browse/LLK-37
      */
 
-    void handleRegenerateKey(maybeKeyTag.value).then(response => {
-      if (response) {
-        setWebviewSource({
-          uri: loginUri,
-          headers: {
-            "x-pagopa-lollipop-pub-key": Buffer.from(
-              JSON.stringify(response)
-            ).toString("base64"),
-            "x-pagopa-lollipop-pub-key-hash-algo":
-              DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-          }
-        });
-      } else {
-        setWebviewSource({
-          uri: loginUri
-        });
+    void handleRegenerateKey(maybeKeyTag.value, mixpanelEnabled, dispatch).then(
+      response => {
+        if (response) {
+          setWebviewSource({
+            uri: loginUri,
+            headers: {
+              "x-pagopa-lollipop-pub-key": Buffer.from(
+                JSON.stringify(response)
+              ).toString("base64"),
+              "x-pagopa-lollipop-pub-key-hash-algo":
+                DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+            }
+          });
+        } else {
+          setWebviewSource({
+            uri: loginUri
+          });
+        }
       }
-    });
-  }, [loginUri, maybeKeyTag, maybePublicKey, useLollipopLogin]);
+    );
+  }, [
+    dispatch,
+    loginUri,
+    maybeKeyTag,
+    maybePublicKey,
+    mixpanelEnabled,
+    useLollipopLogin
+  ]);
 
   const retryLollipopLogin = useCallback(() => {
     setLollipopCheckStatus({ status: "none", url: O.none });

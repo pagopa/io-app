@@ -59,6 +59,8 @@ import { Pictogram } from "../../components/core/pictograms";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import themeVariables from "../../theme/variables";
+import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { AppDispatch } from "../../App";
 import {
   ErrorType,
   IdpAuthErrorScreen,
@@ -131,10 +133,12 @@ const idpAuthSession = (loginUri: string): Promise<string> =>
 
 const regenerateKeyGetRedirectsAndVerifySaml = (
   loginUri: string,
-  keyTag: string
+  keyTag: string,
+  isMixpanelEnabled: boolean | null,
+  dispatch: AppDispatch
 ): Promise<string> =>
   new Promise((resolve, reject) => {
-    void handleRegenerateKey(keyTag)
+    void handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch)
       .then(publicKey => {
         if (!publicKey) {
           reject("Missing publicKey");
@@ -147,7 +151,7 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
           "x-pagopa-lollipop-pub-key-hash-algo":
             DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
         };
-        void getRedirects(loginUri, headers, "SAMLResponse")
+        void getRedirects(loginUri, headers, "SAMLRequest")
           .then(value => {
             for (const url of value) {
               const parsedUrl = new URLParse(url, true);
@@ -179,6 +183,8 @@ export const AuthSessionPage = () => {
     requestState: "LOADING",
     nativeAttempts: 0
   });
+
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
   // This is a handler for the browser login. It applies to android only.
   useEffect(() => {
@@ -328,7 +334,12 @@ export const AuthSessionPage = () => {
     O.isSome(maybeKeyTag) &&
     requestInfo.requestState === "LOADING"
   ) {
-    regenerateKeyGetRedirectsAndVerifySaml(loginUri, maybeKeyTag.value)
+    regenerateKeyGetRedirectsAndVerifySaml(
+      loginUri,
+      maybeKeyTag.value,
+      mixpanelEnabled,
+      dispatch
+    )
       .then((url: string) => {
         idpAuthSession(url)
           .then((response: string) => {
