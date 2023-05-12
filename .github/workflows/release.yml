@@ -24,6 +24,9 @@ jobs:
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
       - id: add-ssh-deploy-key
         run: |
+          echo -e "Host github.com
+            AddKeysToAgent yes
+            IdentityFile ~/.ssh/id_ed25519" > ~/.ssh/config
           echo -e "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
           chmod 400 ~/.ssh/id_ed25519
           ssh-add ~/.ssh/id_ed25519
