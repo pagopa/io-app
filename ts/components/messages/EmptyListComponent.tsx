@@ -4,7 +4,7 @@ import customVariables from "../../theme/variables";
 import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
-import { IOPictogramType, Pictogram } from "../core/pictograms";
+import { IOPictograms, Pictogram } from "../core/pictograms";
 
 const styles = StyleSheet.create({
   view: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  pictogram: IOPictogramType;
+  pictogram: IOPictograms;
   title: string;
   subtitle?: string;
 }>;

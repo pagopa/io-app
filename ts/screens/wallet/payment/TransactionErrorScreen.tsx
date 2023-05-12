@@ -66,7 +66,7 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
-import { IOPictogramType } from "../../../components/core/pictograms/Pictogram";
+import type { IOPictograms } from "../../../components/core/pictograms/Pictogram";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
 
 export type TransactionErrorScreenNavigationParams = {
@@ -90,9 +90,9 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const imageTimeout: IOPictogramType = "inProgress";
-const imageDefaultFallback: IOPictogramType = "error";
-const imageMapping: Record<ErrorTypes, IOPictogramType> = {
+const imageTimeout: IOPictograms = "inProgress";
+const imageDefaultFallback: IOPictograms = "error";
+const imageMapping: Record<ErrorTypes, IOPictograms> = {
   DATA: "question",
   DUPLICATED: "fireworks",
   EC: "notAvailable",
@@ -131,7 +131,7 @@ const requestZendeskAssistanceForPaymentFailure = (
   }
 };
 type ScreenUIContents = {
-  image: IOPictogramType;
+  image: IOPictograms;
   title: string;
   subtitle?: React.ReactNode;
   footerButtons?: ComponentProps<typeof FooterStackButton>["buttons"];

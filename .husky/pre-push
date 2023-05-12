@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Get current unstaged files
+unstagedFiles=`git diff --name-only --diff-filter=ACM | grep -E '\.(ts|tsx)$' | sed 's| |\\ |g'`
+unstagedCount=`echo "$unstagedFiles" | wc -l | sed 's/ //g'`
+echo "Current modified files ($unstagedCount):"
+echo "$unstagedFiles"
+
+# Run lintier
+echo "🧹 runnning linter..."  
+yarn lint-autofix
+# Run prettifier
+echo "🧼 runnning prettier..."
+yarn prettify
+
+# If we have any modified files don't push
+if [ -n "$(git status --porcelain)" ]; then
+  # Collect all modified files
+  updatedUnstagedFiles=`git diff --name-only --diff-filter=ACM | grep -E '\.(ts|tsx)$' | sed 's| |\\ |g'`
+  updatedStagedCount=`echo "$updatedUnstagedFiles" | wc -l | sed 's/ //g'`
+  echo "Modified files after linting and prettifying ($updatedStagedCount):"
+  echo "$updatedUnstagedFiles"
+
+  # Did linter and prettier found some issues?
+  newStageFilesCount=$((updatedStagedCount-unstagedCount))  
+  if [ "$newStageFilesCount" -gt 0 ]; then
+    echo "❌ Some files were not well formed: $newStageFilesCount"
+    exit 1
+  else
+    echo "✅ All files are clean!"
+  fi
+fi
+
+# Compile the project
+echo "🔨 compiling..."
+yarn tsc:noemit
+
+# Run tests
+echo "🧪 testing..."
+yarn test:dev
+
+echo "🚀 pushing..."
+echo "✨ Done."

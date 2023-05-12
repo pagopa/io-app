@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import AdviceComponent from "../../../components/AdviceComponent";
+import { View } from "react-native";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
 import SectionStatusComponent, {
   getStatusTextColor,
@@ -8,31 +7,14 @@ import SectionStatusComponent, {
   statusIconMap
 } from "../../../components/SectionStatus";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
-import { InfoBox } from "../../../components/box/InfoBox";
-import { Body } from "../../../components/core/typography/Body";
 
 /* Types */
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { Icon } from "../../../components/core/icons";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { H5 } from "../../../components/core/typography/H5";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { Alert } from "../../../components/Alert";
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    width: "100%",
-    justifySelf: "flex-start",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around"
-  }
-});
 
 export const DSAlert = () => {
   const viewRef = React.createRef<View>();
@@ -239,49 +221,12 @@ export const DSAlert = () => {
         />
       </DSFullWidthComponent>
 
-      <VSpacer size={24} />
+      <VSpacer size={40} />
 
       <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
         Legacy components
       </H2>
-      <AdviceComponent
-        text={
-          "Dopo questo passaggio non sarà più possibile annullare il pagamento."
-        }
-      />
-      <VSpacer size={16} />
-      <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-        <InfoBox>
-          <Body>
-            Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do
-            eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi
-            ut aliquid ex ea commodi consequatur.
-          </Body>
-        </InfoBox>
-      </View>
-      <InfoBox
-        alignedCentral={true}
-        iconSize={24}
-        iconColor={IOColors.bluegreyDark}
-      >
-        <H5 weight={"Regular"}>
-          {
-            "Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti restituiremo l'importo al più presto."
-          }
-        </H5>
-      </InfoBox>
-      <InfoScreenComponent
-        image={<Icon name="info" />}
-        title={"Title"}
-        body={
-          <Body style={{ textAlign: "center" }}>
-            Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do
-            eiusmod tempor incidunt ut labore et dolore magna aliqua.
-          </Body>
-        }
-      />
-      <VSpacer size={16} />
+
       <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
