@@ -38,6 +38,10 @@ const onLinkPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
+const onClose = () => {
+  Alert.alert("Alert", "Component dismissed");
+};
+
 export const DSAdvice = () => (
   <DesignSystemScreen title={"Advice & Banners"}>
     {renderFeatureInfo()}
@@ -233,6 +237,22 @@ const renderBanner = () => {
               pictogramName="donation"
               action="Dona anche tu"
               onPress={onLinkPress}
+            />
+          </DSComponentViewerBox>
+          <DSComponentViewerBox
+            name={`Banner · Big size, ${color} variant, close action`}
+          >
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              title="Banner title"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="donation"
+              onClose={onClose}
+              labelClose="Nascondi questo banner"
             />
           </DSComponentViewerBox>
           <DSComponentViewerBox name={`Banner · Small size, ${color} variant`}>

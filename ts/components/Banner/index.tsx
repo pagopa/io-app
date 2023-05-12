@@ -21,13 +21,17 @@ import {
 } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
+import IconButton from "../ui/IconButton";
 
 /* Styles */
 
 const colorTitle: IOColors = "blueIO-850";
 const colorContent: IOColors = "grey-700";
+const colorCloseButton: IconButton["color"] = "neutral";
 const sizePictogramBig: IOPictogramSizeScale = 80;
 const sizePictogramSmall: IOPictogramSizeScale = 64;
+const closeButtonDistanceFromEdge: number = 4;
+const closeButtonOpacity = 0.6;
 const IOBannerPadding = IOBannerSpacing;
 
 const styles = StyleSheet.create({
@@ -40,6 +44,12 @@ const styles = StyleSheet.create({
   },
   bleedPictogram: {
     marginRight: -IOBannerPadding
+  },
+  closeIconButton: {
+    position: "absolute",
+    right: closeButtonDistanceFromEdge,
+    top: closeButtonDistanceFromEdge,
+    opacity: closeButtonOpacity
   }
 });
 
@@ -50,6 +60,7 @@ type BaseBannerProps = WithTestID<{
   color: "neutral" | "turquoise";
   pictogramName: IOPictogramsBleed;
   viewRef: React.RefObject<View>;
+  // A11y related props
   accessible?: boolean;
   accessibilityLabel?: string;
   accessibilityHint?: string;
@@ -78,7 +89,21 @@ type BannerActionProps =
       onPress?: never;
     };
 
-export type Banner = BaseBannerProps & RequiredBannerProps & BannerActionProps;
+// Banner will display a close button if this event is provided
+type BannerCloseProps =
+  | {
+      onClose?: (event: GestureResponderEvent) => void;
+      labelClose?: string;
+    }
+  | {
+      onClose?: never;
+      labelClose?: never;
+    };
+
+export type Banner = BaseBannerProps &
+  RequiredBannerProps &
+  BannerActionProps &
+  BannerCloseProps;
 
 // COMPONENT CONFIGURATION
 
@@ -105,7 +130,9 @@ export const Banner = ({
   title,
   content,
   action,
+  labelClose,
   onPress,
+  onClose,
   accessible,
   accessibilityHint,
   accessibilityLabel,
@@ -156,5 +183,15 @@ export const Banner = ({
         size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
       />
     </View>
+    {onClose && labelClose && (
+      <View style={styles.closeIconButton}>
+        <IconButton
+          icon="closeSmall"
+          color={colorCloseButton}
+          onPress={onClose}
+          accessibilityLabel={labelClose}
+        />
+      </View>
+    )}
   </View>
 );
