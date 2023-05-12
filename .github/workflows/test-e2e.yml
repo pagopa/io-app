@@ -2,13 +2,13 @@ name: Run e2e tests
 on:
   push:
     branches:
-      - master
+      - migrate-e2e-to-ga
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+  # run-static-checks:
+  #   uses: ./.github/workflows/staticcheck.yaml
   run-e2e-test-ios:
-    needs: run-static-checks
-    runs-on: macos-latest
+    # needs: run-static-checks
+    runs-on: self-hosted
     concurrency:
       group: ${{ github.workflow }}-e2e-tests-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
