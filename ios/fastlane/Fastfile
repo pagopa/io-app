@@ -221,7 +221,7 @@ platform :ios do
       duration: 1200,
     )
 
-    sync_code_signing(type: "appstore", api_key: api_key)
+    sync_code_signing(type: "appstore", api_key: api_key, git_bearer_authorization: ENV['DANGER_GITHUB_API_TOKEN'])
 
     # Install pods
     cocoapods
