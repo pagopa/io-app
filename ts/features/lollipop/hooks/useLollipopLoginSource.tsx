@@ -1,22 +1,12 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useState } from "react";
 import URLParse from "url-parse";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import {
-  trackLollipopIdpLoginFailure,
-  trackLollipopKeyGenerationFailure,
-  trackLollipopKeyGenerationSuccess
-} from "../../../utils/analytics";
+import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  lollipopRemovePublicKey,
-  lollipopSetPublicKey
-} from "../store/actions/lollipop";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
@@ -26,8 +16,7 @@ import {
   lollipopSamlVerify
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { handleRegenerateKey, taskRegenerateKey } from "..";
+import { handleRegenerateKey } from "..";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,

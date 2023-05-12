@@ -147,7 +147,7 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
           "x-pagopa-lollipop-pub-key-hash-algo":
             DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
         };
-        void getRedirects(loginUri, headers)
+        void getRedirects(loginUri, headers, "SAMLResponse")
           .then(value => {
             for (const url of value) {
               const parsedUrl = new URLParse(url, true);
@@ -319,7 +319,7 @@ export const AuthSessionPage = () => {
   }, [selectedIdpTextData]);
 
   const idpId = loggedOutWithIdpAuth?.idp.id;
-  const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
+  const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
 
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
 
