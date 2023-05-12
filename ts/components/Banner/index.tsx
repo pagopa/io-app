@@ -15,8 +15,8 @@ import { IOBannerRadius } from "../core/variables/IOShapes";
 import { IOBannerSpacing } from "../core/variables/IOSpacing";
 import ButtonLink from "../ui/ButtonLink";
 import {
+  IOPictogramsBleed,
   IOPictogramSizeScale,
-  IOPictograms,
   Pictogram
 } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 type BaseBannerProps = WithTestID<{
   variant: "big" | "small";
   color: "neutral" | "turquoise";
-  pictogramName: IOPictograms;
+  pictogramName: IOPictogramsBleed;
   viewRef: React.RefObject<View>;
   accessible?: boolean;
   accessibilityLabel?: string;

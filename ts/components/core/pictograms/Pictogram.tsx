@@ -86,7 +86,7 @@ export type SVGPictogramProps = {
   color: ColorValue;
 };
 
-const Pictogram = ({
+export const Pictogram = ({
   name,
   color = "aqua",
   size = 120,
@@ -96,4 +96,17 @@ const Pictogram = ({
   return <PictogramElement {...props} size={size} color={IOColors[color]} />;
 };
 
-export default Pictogram;
+/*
+░░░ VARIOUS SETS ░░░
+*/
+
+/* Bleed pictograms
+    Used in the <Banner /> component
+*/
+const { donation } = IOPictograms;
+
+const IOPictogramsBleed = {
+  donation
+} as const;
+
+export type IOPictogramsBleed = keyof typeof IOPictogramsBleed;

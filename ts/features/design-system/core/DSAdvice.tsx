@@ -177,14 +177,14 @@ const renderBanner = () => {
         Banner
       </H2>
       {bannerBackgroundColours.map(color => (
-        <>
+        <React.Fragment key={`${color}-block`}>
           <DSComponentViewerBox name={`Banner · Big size, ${color} variant`}>
             <Banner
               viewRef={viewRef}
               color={color}
               variant="big"
               title="Banner title"
-              pictogramName="setup"
+              pictogramName="donation"
               action="Action text"
               onPress={onLinkPress}
             />
@@ -196,7 +196,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="setup"
+              pictogramName="donation"
             />
             <VSpacer size={24} />
             <Banner
@@ -206,7 +206,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="setup"
+              pictogramName="donation"
               action="Dona anche tu"
               onPress={onLinkPress}
             />
@@ -219,7 +219,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="setup"
+              pictogramName="donation"
             />
             <VSpacer size={24} />
             <Banner
@@ -230,7 +230,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="setup"
+              pictogramName="donation"
               action="Dona anche tu"
               onPress={onLinkPress}
             />
@@ -244,12 +244,12 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="setup"
+              pictogramName="donation"
               action="Dona anche tu"
               onPress={onLinkPress}
             />
           </DSComponentViewerBox>
-        </>
+        </React.Fragment>
       ))}
     </>
   );
