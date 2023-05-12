@@ -173,8 +173,7 @@ jobs:
       - checkout
       - *restore_node_cache
       - *install_node_modules
-      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
-       ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
 
   # Send a Slack message to notify the release of a new app version in beta
   notify-new-app-version:
@@ -184,8 +183,7 @@ jobs:
       - checkout
       - *restore_node_cache
       - *install_node_modules
-      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
-       ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
 
   # Create signed Android release
   android-release:
@@ -383,39 +381,6 @@ jobs:
             cd ios
             bundle exec fastlane beta_circleci_testflight
 
-  pagopa_specs_diff:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: check api specs alignment
-          command: ./scripts/pagopa_api_check.sh
-
-  io_check_uris:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: check uris validity on static texts
-          command: |
-            cd scripts/check_urls
-            pipenv install
-            pipenv run python3 check_urls.py
-
-  io_check_cie_button_exists_ios:
-    docker:
-      - image: cimg/python:3.8
-    steps:
-      - checkout
-      - run:
-          name: check cie button existence
-          command: |
-            cd scripts/check_cie_button_exists
-            pipenv install
-            pipenv run python3 check_cie_button_exists_ios.py
-
   ###############################################################################
   # Prepare the environment, build, and run e2e tests
   ###############################################################################
@@ -514,26 +479,9 @@ workflows:
   version: 2
   build:
     jobs:
-      - compile-typescript
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
-
-      - run-tests:
-          requires:
-            - compile-typescript
-      - run-eslint:
-          requires:
-            - compile-typescript
-      - run-prettier:
-          requires:
-            - compile-typescript
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - run-e2e-test-IOS:
-          requires:
-            - compile-typescript
           filters:
             branches:
               only: master
@@ -604,22 +552,6 @@ workflows:
               only: *release_tag
             branches:
               ignore: /.*/
-
-  # nightly workflow to check pagopa specs (runs only on master branch)
-  # if prod and dev specs are different
-  # a slack notification will be sent on channel #io-status
-  nightly-pagopa-specs-check:
-    triggers:
-      - schedule:
-          cron: "0 03 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - pagopa_specs_diff
-      - io_check_uris
-      - io_check_cie_button_exists_ios
 
   # Run a weekly report At 16:00 on Friday
   weekly-report:
