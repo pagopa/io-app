@@ -29,16 +29,9 @@ export const FciDocumentPreviewScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_DOC_PREVIEW">
 ): React.ReactElement => {
   const [isError, setIsError] = React.useState(false);
-  const docParamUrl = props.route.params.documentUrl ?? "";
-  const [documentUrl, setDocumentUrl] = React.useState("");
+  const documentUrl = props.route.params.documentUrl ?? "";
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
   const dispatch = useIODispatch();
-
-  React.useEffect(() => {
-    if (S.isEmpty(docParamUrl) === false) {
-      setDocumentUrl(docParamUrl);
-    }
-  }, [documentUrl, docParamUrl]);
 
   if (isError) {
     return (
