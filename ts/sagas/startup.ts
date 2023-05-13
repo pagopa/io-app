@@ -39,7 +39,7 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { removePersistMvl, watchMvlSaga } from "../features/mvl/saga";
+import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
@@ -499,9 +499,6 @@ export function* initializeApplicationSaga(): Generator<
     // Start watching for EU Covid Certificate actions
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
-
-  // Remove persisted features.MVL
-  yield* call(removePersistMvl);
 
   if (mvlEnabled) {
     // Start watching for MVL actions
