@@ -2,7 +2,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import _ from "lodash";
+import * as N from "fp-ts/number";
+import { contramap } from "fp-ts/lib/Ord";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
@@ -83,21 +84,34 @@ export const getSectionListData = (
   );
 
 /**
+ * Defines a total ordering for the signature field type: UNFAIR -> REQURED -> EVERYTHING ELSE (OPTIONAL)
+ */
+const byClausesType = pipe(
+  N.Ord,
+  contramap((signatureField: SignatureField) => {
+    switch (signatureField.clause.type) {
+      case ClauseTypeEnum.UNFAIR:
+        return 0;
+      case ClauseTypeEnum.REQUIRED:
+        return 1;
+      case ClauseTypeEnum.OPTIONAL:
+        return 2;
+      default:
+        return 3;
+    }
+  })
+);
+
+/**
+ * Defines a read only array sorting by using the total ordering byClausesType
+ */
+const sortByType = RA.sortBy([byClausesType]);
+
+/**
  * Orders the signatureFields array with the given order: UNFAIR -> REQURED -> EVERYTHING ELSE (OPTIONAL)
  * @param signatureFields an array of signature fields
  * @returns the new ordered array
  */
 export const orderSignatureFields = (
   signatureFields: ReadonlyArray<SignatureField>
-): ReadonlyArray<SignatureField> =>
-  pipe(
-    _.orderBy(signatureFields, [
-      field =>
-        field.clause.type === ClauseTypeEnum.UNFAIR
-          ? 0
-          : field.clause.type === ClauseTypeEnum.REQUIRED
-          ? 1
-          : 2
-    ]),
-    RA.fromArray
-  );
+): ReadonlyArray<SignatureField> => pipe(signatureFields, sortByType);
