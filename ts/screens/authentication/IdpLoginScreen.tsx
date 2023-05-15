@@ -120,7 +120,7 @@ const IdpLoginScreen = (props: Props) => {
   }, []);
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
-  const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
+  const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
   const {
     retryLollipopLogin,
     shouldBlockUrlNavigationWhileCheckingLollipop,

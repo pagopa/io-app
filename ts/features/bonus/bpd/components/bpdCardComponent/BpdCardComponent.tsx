@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
 import {
   Text,
@@ -30,6 +29,7 @@ import { BpdAmount } from "../../saga/networking/amount";
 import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
 import { Icon } from "../../../../../components/core/icons";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   period: BpdPeriod;
@@ -83,13 +83,6 @@ const styles = StyleSheet.create({
     width: 40,
     alignSelf: "center"
   },
-  badgeBase: {
-    alignSelf: "flex-end",
-    backgroundColor: IOColors.white,
-    height: 18,
-    marginTop: 9
-  },
-  badgeTextBase: { fontSize: 12, lineHeight: 16 },
   preview: {
     marginBottom: -20,
     height: 88
@@ -133,10 +126,6 @@ const styles = StyleSheet.create({
   },
   alignItemsCenter: {
     alignItems: "center"
-  },
-  badgePreview: {
-    backgroundColor: IOColors.white,
-    height: 18
   },
   justifyContentCenter: {
     justifyContent: "center"
@@ -339,12 +328,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        {/* IOBadge - White version not available yet */}
-        <Badge style={styles.badgeBase}>
-          <NBBadgeText semibold={true} style={styles.badgeTextBase} dark={true}>
-            {statusBadge.label}
-          </NBBadgeText>
-        </Badge>
+        <IOBadge small variant="solid" color="white" text={statusBadge.label} />
         <Image source={bpdBonusLogo} style={styles.fullLogo} />
       </View>
     </View>
@@ -405,15 +389,12 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <Icon name={iconName} size={16} color="white" />
             <HSpacer size={8} />
             {isInGracePeriod || isPeriodInactive ? (
-              <Badge style={styles.badgePreview}>
-                <NBBadgeText
-                  semibold={true}
-                  style={styles.badgeTextBase}
-                  dark={true}
-                >
-                  {statusBadge.label}
-                </NBBadgeText>
-              </Badge>
+              <IOBadge
+                small
+                variant="solid"
+                color="white"
+                text={statusBadge.label}
+              />
             ) : (
               <Text
                 style={[styles.amountTextBasePreview, { textAlign: "right" }]}

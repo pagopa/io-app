@@ -5,7 +5,6 @@ import configureMockStore from "redux-mock-store";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
-import { PnPreferences } from "../../../features/pn/store/reducers/preferences";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
@@ -111,7 +110,6 @@ describe("MessagesHomeScreen", () => {
 
 type InputState = {
   inboxMessages: ReadonlyArray<UIMessage>;
-  pnPreferences?: PnPreferences;
 };
 
 const renderComponent = (
@@ -144,16 +142,6 @@ const renderComponent = (
       messages: {
         ...globalState.entities.messages,
         allPaginated
-      }
-    },
-    features: {
-      ...globalState.features,
-      pn: {
-        ...globalState.features.pn,
-        preferences: {
-          ...globalState.features.pn.preferences,
-          ...state.pnPreferences
-        }
       }
     },
     backendStatus: {

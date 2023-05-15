@@ -52,7 +52,7 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
 import { Icon } from "./core/icons/Icon";
-import Pictogram, { IOPictogramType } from "./core/pictograms/Pictogram";
+import Pictogram, { IOPictograms } from "./core/pictograms/Pictogram";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -356,7 +356,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       O.getOrElse(() => EMPTY_EMAIL)
     );
 
-    const illustration: IOPictogramType = this.state.emailHasBeenValidate
+    const illustration: IOPictograms = this.state.emailHasBeenValidate
       ? "emailValidation"
       : "emailToValidate";
 

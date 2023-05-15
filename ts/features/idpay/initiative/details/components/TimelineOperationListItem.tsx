@@ -7,10 +7,10 @@ import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../de
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as RejectedInstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
-import { LogoPayment } from "../../../../../components/core/logos";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -18,7 +18,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { InstrumentBrandEnum, instrumentBrandMap } from "../utils/utils";
+import { getCardLogoComponent } from "../../../common/components/CardLogo";
 
 const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
 
@@ -33,28 +33,20 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
       return <Icon name={"ok"} />;
-
     case IbanOperationTypeEnum.ADD_IBAN:
       return <Icon name={"institution"} color="bluegreyLight" />;
-
     case RefundOperationTypeEnum.PAID_REFUND:
       return <Icon name="refund" color="bluegrey" />;
-
-    case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
-    case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+    case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+    case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case RefundOperationTypeEnum.REJECTED_REFUND:
       return <Icon name={"notice"} color="red" />;
-
+    case TransactionOperationTypeEnum.REVERSAL:
+    case TransactionOperationTypeEnum.TRANSACTION:
+    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+    case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
+      return getCardLogoComponent(operation.brand);
     default:
-      if ("brand" in operation) {
-        const cardIcon =
-          instrumentBrandMap[operation.brand as InstrumentBrandEnum];
-        return cardIcon !== undefined ? (
-          <LogoPayment name={cardIcon} />
-        ) : (
-          <Icon name="creditCard" size={24} />
-        );
-      }
       return null;
   }
 };

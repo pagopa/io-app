@@ -1,10 +1,8 @@
 import * as React from "react";
-import { Badge } from "native-base";
-import { View, ViewStyle, StyleProp, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
 import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
@@ -20,6 +18,7 @@ import {
 } from "../../../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
+import { IOBadge } from "../../../../../../components/core/IOBadge";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -27,45 +26,12 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  rowBlock: {
-    flexDirection: "row"
-  },
   spaced: {
     justifyContent: "space-between"
-  },
-  statusBadgeActive: {
-    height: 20,
-    marginTop: 2,
-    backgroundColor: IOColors.aqua
-  },
-  statusBadgeExpired: {
-    height: 20,
-    marginTop: 2,
-    backgroundColor: IOColors.bluegrey
-  },
-  statusBadgeText: { paddingHorizontal: 8 }
+  }
 });
 
 const ICON_SIZE = 24;
-
-type BadgeProps = {
-  text: string;
-  badgeStyle: StyleProp<ViewStyle>;
-  textColor: "bluegreyDark" | "white";
-};
-
-const EycaStatusBadge = ({ text, badgeStyle, textColor }: BadgeProps) => (
-  <Badge style={badgeStyle} testID={"eyca-status-badge"}>
-    <H5
-      weight={"SemiBold"}
-      color={textColor}
-      style={styles.statusBadgeText}
-      testID={"eyca-status-label"}
-    >
-      {text}
-    </H5>
-  </Badge>
-);
 
 // this component shows EYCA card details related to user's CGN
 const EycaStatusDetailsComponent = (props: Props) => {
@@ -73,26 +39,32 @@ const EycaStatusDetailsComponent = (props: Props) => {
     switch (props.eycaCard.status) {
       case "ACTIVATED":
         return (
-          <EycaStatusBadge
+          <IOBadge
+            testID={"eyca-status-badge"}
+            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.active")}
-            badgeStyle={styles.statusBadgeActive}
-            textColor={"bluegreyDark"}
+            variant="solid"
+            color="aqua"
           />
         );
       case "REVOKED":
         return (
-          <EycaStatusBadge
+          <IOBadge
+            testID={"eyca-status-badge"}
+            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
-            badgeStyle={styles.statusBadgeExpired}
-            textColor={"white"}
+            variant="solid"
+            color="grey"
           />
         );
       case "EXPIRED":
         return (
-          <EycaStatusBadge
+          <IOBadge
+            testID={"eyca-status-badge"}
+            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.expired")}
-            badgeStyle={styles.statusBadgeExpired}
-            textColor={"white"}
+            variant="solid"
+            color="grey"
           />
         );
       default:
@@ -101,8 +73,8 @@ const EycaStatusDetailsComponent = (props: Props) => {
   };
   return (
     <>
-      <View style={[styles.rowBlock, styles.spaced]}>
-        <View style={styles.rowBlock}>
+      <View style={[IOStyles.row, styles.spaced]}>
+        <View style={IOStyles.row}>
           <H4>{I18n.t("bonus.cgn.detail.status.eyca")}</H4>
           <HSpacer size={8} />
           <TouchableDefaultOpacity onPress={props.openBottomSheet}>
@@ -112,7 +84,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         {badgeByStatus()}
       </View>
       <VSpacer size={16} />
-      <View style={[styles.rowBlock, styles.spaced]}>
+      <View style={[IOStyles.row, styles.spaced]}>
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.eycaNumber")}
         </H5>
@@ -121,7 +93,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         </Monospace>
       </View>
       <VSpacer size={8} />
-      <View style={[styles.rowBlock, styles.spaced]}>
+      <View style={[IOStyles.row, styles.spaced]}>
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.expiration.eyca")}
         </H5>

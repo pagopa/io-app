@@ -39,7 +39,7 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { removePersistMvl, watchMvlSaga } from "../features/mvl/saga";
+import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
@@ -293,6 +293,10 @@ export function* initializeApplicationSaga(): Generator<
   yield* fork(watchLoadMessageById, backendClient.getMessage);
   yield* fork(watchLoadMessageDetails, backendClient.getMessage);
   yield* fork(
+    watchMessagePrecondition,
+    backendClient.getThirdPartyMessagePrecondition
+  );
+  yield* fork(
     watchUpsertMessageStatusAttribues,
     backendClient.upsertMessageStatusAttributes
   );
@@ -496,9 +500,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
 
-  // Remove persisted features.MVL
-  yield* call(removePersistMvl);
-
   if (mvlEnabled) {
     // Start watching for MVL actions
     yield* fork(watchMvlSaga, sessionToken);
@@ -597,27 +598,6 @@ export function* initializeApplicationSaga(): Generator<
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
-
-  // Load visible services and service details from backend when requested
-  yield* fork(watchLoadServicesSaga, backendClient);
-
-  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-  yield* fork(watchReloadAllMessages, backendClient.getMessages);
-  yield* fork(watchLoadMessageById, backendClient.getMessage);
-  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-  yield* fork(
-    watchMessagePrecondition,
-    backendClient.getThirdPartyMessagePrecondition
-  );
-  yield* fork(
-    watchUpsertMessageStatusAttribues,
-    backendClient.upsertMessageStatusAttributes
-  );
-  yield* fork(
-    watchMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
-  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);

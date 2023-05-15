@@ -47,6 +47,8 @@ const generateOptionBody = (
     {showBadge && (
       <>
         <IOBadge
+          variant="solid"
+          color="blue"
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
         <VSpacer size={4} />

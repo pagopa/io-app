@@ -4,6 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
@@ -12,17 +13,23 @@ import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
+import {
+  idPayBeneficiaryDetailsGet,
+  idpayInitiativeGet,
+  idpayTimelinePageGet
+} from "./actions";
 
 type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
+  beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
+  beneficiaryDetails: pot.none,
   timeline: pot.none
 };
 
@@ -75,6 +82,24 @@ const reducer = (
       return {
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
+      };
+    case getType(idPayBeneficiaryDetailsGet.request):
+      return {
+        ...state,
+        beneficiaryDetails: pot.toLoading(pot.none)
+      };
+    case getType(idPayBeneficiaryDetailsGet.success):
+      return {
+        ...state,
+        beneficiaryDetails: pot.some(action.payload)
+      };
+    case getType(idPayBeneficiaryDetailsGet.failure):
+      return {
+        ...state,
+        beneficiaryDetails: pot.toError(
+          state.beneficiaryDetails,
+          action.payload
+        )
       };
   }
   return state;
@@ -176,6 +201,11 @@ export const idpayTimelineIsLastPageSelector = createSelector(
       }),
       false
     )
+);
+
+export const idPayBeneficiaryDetailsSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.beneficiaryDetails
 );
 
 export default reducer;

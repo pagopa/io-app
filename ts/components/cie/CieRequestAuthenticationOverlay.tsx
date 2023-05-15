@@ -35,7 +35,7 @@ const defaultUserAgent = Platform.select({
 // INFA PROD -> xx_servizicie
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
-const loginUri = getIdpLoginUri(CIE_IDP_ID);
+const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
 
 /**
  * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
