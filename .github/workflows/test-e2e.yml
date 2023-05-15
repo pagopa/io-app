@@ -1,0 +1,68 @@
+name: Run e2e tests
+on:
+  push:
+    branches:
+      - master
+jobs:
+  run-static-checks:
+    uses: ./.github/workflows/staticcheck.yaml
+  run-e2e-test-ios:
+    needs: run-static-checks
+    runs-on: macos-latest
+    concurrency:
+      group: ${{ github.workflow }}-e2e-tests-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - id: setup
+        uses: ./.github/actions/setup-composite
+      - id: setup-ruby
+        uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
+        with:
+          bundler-cache: true
+      - id: prepare-dependencies
+        run: |
+          cp .env.local .env
+          yarn run postinstall
+        shell: bash
+      - id: cache-cocoapods
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - id: install-detox
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+        shell: bash
+      - id: detox-rebuild-framework-cache
+        run: yarn detox rebuild-framework-cache
+      - id: cache-detox-build
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        with:
+          path: ios/build
+          key: ${{ runner.os }}-detox-build
+          restore-keys: |
+            ${{ runner.os }}-detox-build
+      - id: setup-pods
+        run: cd ios ; bundle exec pod install --verbose ; cd ..
+        shell: bash
+      - id: prepare-detox-build
+        run: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
+        shell: bash
+      - id: checkout-dev-server
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          repository: pagopa/io-dev-api-server
+          path: './_io-dev-api-server_'
+      - id: run-e2e-tests
+        run: bash ./.github/scripts/run-e2e-tests.sh
+      - id: upload-artifacts
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2
+        if: always()
+        with:
+          name: detox-artifacts
+          path: /tmp/e2e_artifacts/detox/
