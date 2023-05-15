@@ -1,4 +1,9 @@
 name: Release new app version
+env:
+  IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
+  IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
+  IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
+  IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
 on:
   push
     # branches: IOPLT-9-migrate-release-workflow
@@ -31,15 +36,18 @@ jobs:
       # Recreate google-services.json from ENV variable
       - id: recreate-google-services-json
         run: ./scripts/google-services-json-file-setup.sh ./android/app
+        shell: bash
         env:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
       - id:  recreate-json-key-file
         run: ./scripts/json-key-file-setup.sh
+        shell: bash
         env:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
       # Recreate keystore from ENV variable
       - id: recreate-keystore
         run: ./scripts/keystore-setup.sh
+        shell: bash
         env:
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
       # Build the js bundle in release mode
