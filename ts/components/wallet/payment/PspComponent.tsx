@@ -10,7 +10,7 @@ import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { Body } from "../../core/typography/Body";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
+import { Icon } from "../../core/icons";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -73,11 +73,7 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
         )}
         <View style={styles.feeContainer}>
           <H4 color="blue">{cost}</H4>
-          <IconFont
-            name="io-right"
-            size={ICON_SIZE}
-            color={customVariables.contentPrimaryBackground}
-          />
+          <Icon name="chevronRightListItem" size={ICON_SIZE} color="blue" />
         </View>
       </View>
     </TouchableDefaultOpacity>

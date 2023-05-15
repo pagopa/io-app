@@ -6,7 +6,6 @@ import { ServicesPreferencesModeEnum } from "../../../definitions/backend/Servic
 import { InfoBox } from "../../components/box/InfoBox";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H5 } from "../../components/core/typography/H5";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -109,7 +108,7 @@ const OnboardingServicesPreferenceScreen = (
             onSelectMode={handleOnSelectMode}
             showBadge={showBadge}
           />
-          <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
+          <InfoBox iconName="navProfile" iconColor="bluegrey">
             <H5 color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </H5>

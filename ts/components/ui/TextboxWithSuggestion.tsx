@@ -10,9 +10,9 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { Icon } from "../core/icons";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
-import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +66,7 @@ const TextboxWithSuggestionModal = (props: ModalProps) => {
       <AppHeader>
         <Left>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
+            <Icon name="legClose" />
           </ButtonDefaultOpacity>
         </Left>
         <Body style={{ alignItems: "center", marginRight: 32 }}>
