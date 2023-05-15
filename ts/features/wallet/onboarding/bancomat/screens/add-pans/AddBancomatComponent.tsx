@@ -20,7 +20,6 @@ import {
 import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/PreviewBancomatCard";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { isBancomatBlocked } from "../../../../../../utils/paymentMethod";
 import {
   HSpacer,
@@ -89,7 +88,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
             <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
             {isBancomatBlocked(props.pan) ? (
-              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+              <InfoBox iconColor="red" iconName="legError">
                 <Body>{I18n.t("wallet.onboarding.bancomat.add.blocked")}</Body>
               </InfoBox>
             ) : (

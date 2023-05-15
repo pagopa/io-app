@@ -13,7 +13,6 @@ import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMer
 /* Icons */
 import BooksIcon from "../../../../img/bonus/cgn/categories/books.svg";
 import CultureIcon from "../../../../img/bonus/cgn/categories/culture.svg";
-import InfoIcon from "../../../../img/assistance/info.svg";
 
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
@@ -24,6 +23,7 @@ import { TimelineOperationListItem } from "../../idpay/initiative/details/compon
 import { OperationTypeEnum } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Icon } from "../../../components/core/icons/Icon";
 
 export const DSListItems = () => (
   <DesignSystemScreen title="List Items">
@@ -95,7 +95,7 @@ export const DSListItems = () => (
       <ListItemComponent
         title={"Title"}
         iconSize={12}
-        iconName={"io-tick-big"}
+        iconName={"legCompleted"}
         onPress={() => alert("Action triggered")}
       />
     </DSComponentViewerBox>
@@ -113,7 +113,7 @@ export const DSListItems = () => (
       <ListItemComponent
         title={"Title"}
         subTitle={"Subtitle"}
-        iconName={"io-radio-on"}
+        iconName={"legRadioOn"}
         smallIconSize={true}
         iconOnTop={true}
         onPress={() => alert("Action triggered")}
@@ -173,7 +173,7 @@ export const DSListItems = () => (
 
     <DSComponentViewerBox name="ZendeskItemPermissionComponent">
       <ZendeskItemPermissionComponent
-        icon={<InfoIcon width={24} height={24} />}
+        icon={<Icon name="info" size={24} />}
         title="Storico versioni dell'app"
         value="Per capire se il problema dipende dall'ultimo aggiornamento"
         testId="TestID"

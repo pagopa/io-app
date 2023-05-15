@@ -83,39 +83,61 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       }
       testID="SignatureFieldItemButtonTestID"
     >
-      <Text
+      <RNSVGSvgView
         accessibilityElementsHidden={true}
         accessibilityLabel=""
         accessible={false}
-        allowFontScaling={false}
+        align="xMidYMid"
+        bbHeight={22}
+        bbWidth={22}
+        color={4279710285}
+        focusable={false}
+        height={22}
         importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
         style={
           Array [
             Object {
-              "color": "#17324D",
-              "fontSize": 22,
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
-            Array [
-              Object {},
-              Object {
-                "color": "#17324D",
-              },
-              Object {
-                "fontSize": 22,
-              },
-            ],
             Object {
-              "fontFamily": "io-icon-font",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
+              "color": "#17324D",
             },
-            Object {},
+            Object {
+              "flex": 0,
+              "height": 22,
+              "width": 22,
+            },
           ]
         }
         testID="SignatureFieldItemCheckboxTestID"
+        tintColor={4279710285}
+        vbHeight={22}
+        vbWidth={22}
+        width={22}
       >
-        R
-      </Text>
+        <RNSVGGroup>
+          <RNSVGPath
+            clipRule={0}
+            d="M19.25 0H2.75C1.23122 0 0 1.23122 0 2.75v16.5C0 20.7688 1.23122 22 2.75 22h16.5c1.5188 0 2.75-1.2312 2.75-2.75V2.75C22 1.23122 20.7688 0 19.25 0ZM1.83333 2.75c0-.50626.41041-.91667.91667-.91667h16.5c.5063 0 .9167.41041.9167.91667v16.5c0 .5063-.4104.9167-.9167.9167H2.75c-.50626 0-.91667-.4104-.91667-.9167V2.75Z"
+            fill={
+              Array [
+                2,
+              ]
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
     </View>
   </View>
   <View
