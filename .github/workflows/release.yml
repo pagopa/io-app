@@ -13,6 +13,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+      - id: setup
+        uses: ./.github/actions/setup-composite
       - id: setup-jdk-11
         uses: actions/setup-java@v3
         with:
@@ -22,7 +24,7 @@ jobs:
       - id: setup-android-sdk
         uses: android-actions/setup-android@v2
       - id: setup-ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c
         with:
           ruby-version: 2.7
           bundler-cache: true
