@@ -51,7 +51,6 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -102,6 +101,7 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
+import { Icon } from "../../components/core/icons";
 import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
@@ -336,7 +336,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       accessibilityLabel={I18n.t("services.accessibility.edit")}
       onPress={this.props.navigateToServicePreference}
     >
-      <IconFont name={"io-coggle"} size={16} color={IOColors.blue} />
+      <Icon name="legCoggle" size={16} color="blue" />
       <Label color={"blue"} weight={"Bold"} style={{ marginLeft: 8 }}>
         {I18n.t("global.buttons.edit").toLocaleUpperCase()}
       </Label>

@@ -12,11 +12,10 @@ import RegionServiceWebView from "../../components/RegionServiceWebView";
 import { Dispatch } from "../../store/actions/types";
 import { navigateBack } from "../../store/actions/navigation";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import IconFont from "../../components/ui/IconFont";
 import { LabelledItem } from "../../components/LabelledItem";
 import { showToast } from "../../utils/showToast";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
+import { Icon } from "../../components/core/icons/Icon";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -87,12 +86,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               style={styles.contentCenter}
               onPress={() => setLoadUri(navigationURI)}
             >
-              <IconFont
-                name={"io-right"}
-                style={{
-                  color: IOColors.white
-                }}
-              />
+              <Icon name="chevronRight" size={24} color="white" />
             </ButtonDefaultOpacity>
           </View>
           <VSpacer size={16} />
