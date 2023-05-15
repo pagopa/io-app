@@ -38,7 +38,8 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   getClauseLabel,
   getRequiredSignatureFields,
-  getSectionListData
+  getSectionListData,
+  orderSignatureFields
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../components/core/icons/Icon";
@@ -162,7 +163,9 @@ const FciSignatureFieldsScreen = (
   const renderSignatureFields = () => (
     <SectionList
       style={IOStyles.horizontalContentPadding}
-      sections={getSectionListData(signatureFieldsSelector)}
+      sections={getSectionListData(
+        orderSignatureFields(signatureFieldsSelector)
+      )}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}
       testID={"FciSignatureFieldsSectionListTestID"}
       renderItem={({ item }) => (
