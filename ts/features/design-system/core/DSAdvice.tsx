@@ -254,6 +254,20 @@ const renderBanner = () => {
               onClose={onClose}
               labelClose="Nascondi questo banner"
             />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="big"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              action="Dona anche tu"
+              onPress={onLinkPress}
+              pictogramName="donation"
+              onClose={onClose}
+              labelClose="Nascondi questo banner"
+            />
           </DSComponentViewerBox>
           <DSComponentViewerBox name={`Banner · Small size, ${color} variant`}>
             <Banner

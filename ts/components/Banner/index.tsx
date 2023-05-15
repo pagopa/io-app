@@ -1,10 +1,19 @@
+import React, { useCallback } from "react";
 import {
   AccessibilityRole,
   GestureResponderEvent,
+  Pressable,
   StyleSheet,
   View
 } from "react-native";
-import React from "react";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
 import { IOColors } from "../core/variables/IOColors";
@@ -21,6 +30,7 @@ import {
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import IconButton from "../ui/IconButton";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 
 /* Styles */
 
@@ -60,10 +70,8 @@ type BaseBannerProps = WithTestID<{
   pictogramName: IOPictogramsBleed;
   viewRef: React.RefObject<View>;
   // A11y related props
-  accessible?: boolean;
   accessibilityLabel?: string;
   accessibilityHint?: string;
-  accessibilityRole?: AccessibilityRole;
 }>;
 
 /* Description only */
@@ -82,10 +90,12 @@ type BannerActionProps =
   | {
       action?: string;
       onPress: (event: GestureResponderEvent) => void;
+      accessibilityRole?: never;
     }
   | {
       action?: never;
       onPress?: never;
+      accessibilityRole?: AccessibilityRole;
     };
 
 // Banner will display a close button if this event is provided
@@ -132,66 +142,122 @@ export const Banner = ({
   labelClose,
   onPress,
   onClose,
-  accessible,
   accessibilityHint,
   accessibilityLabel,
   accessibilityRole,
   testID
-}: Banner) => (
-  <View
-    ref={viewRef}
-    style={[
-      styles.container,
-      { backgroundColor: IOColors[mapBackgroundColor[color]] }
-    ]}
-    testID={testID}
-    // A11y related props
-    accessible={accessible ?? true}
-    accessibilityHint={accessibilityHint}
-    accessibilityLabel={accessibilityLabel}
-    accessibilityRole={accessibilityRole}
-  >
-    <View style={[IOStyles.flex, IOStyles.selfCenter]}>
-      {title && (
-        <>
-          {/* Once we get 'gap' property, we can get rid of
+}: Banner) => {
+  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+
+  // Scaling transformation applied when the button is pressed
+  const animationScaleValue = IOScaleValues?.magnifiedButton?.pressedState;
+
+  // Using a spring-based animation for our interpolations
+  const progressPressed = useDerivedValue(() =>
+    withSpring(isPressed.value, IOSpringValues.button)
+  );
+
+  // Interpolate animation values from `isPressed` values
+  const pressedAnimationStyle = useAnimatedStyle(() => {
+    // Link color states to the pressed states
+
+    // Scale down button slightly when pressed
+    const scale = interpolate(
+      progressPressed.value,
+      [0, 1],
+      [1, animationScaleValue],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
+
+  const onPressIn = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 1;
+  }, [isPressed]);
+  const onPressOut = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 0;
+  }, [isPressed]);
+
+  return (
+    <Pressable
+      ref={viewRef}
+      testID={testID}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      // A11y related props
+      accessible={action ? true : false}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+      // Disable button if no action is provided
+      disabled={!action}
+    >
+      <Animated.View
+        /* Disable touch events */
+        pointerEvents="box-none"
+        style={[
+          styles.container,
+          { backgroundColor: IOColors[mapBackgroundColor[color]] },
+          pressedAnimationStyle
+        ]}
+        testID={testID}
+        // A11y related props
+        accessible={!action}
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
+      >
+        <View style={[IOStyles.flex, IOStyles.selfCenter]}>
+          {title && (
+            <>
+              {/* Once we get 'gap' property, we can get rid of
           these <VSpacer> components */}
-          <NewH6 weight="SemiBold" color={colorTitle}>
-            {title}
-          </NewH6>
-          <VSpacer size={4} />
-        </>
-      )}
-      {content && (
-        <>
-          <LabelSmall color={colorContent} weight={"Regular"}>
-            {content}
-          </LabelSmall>
-          {action && <VSpacer size={8} />}
-        </>
-      )}
-      {action && (
-        <>
-          <VSpacer size={4} />
-          <ButtonLink color="primary" onPress={onPress} label={action} />
-        </>
-      )}
-    </View>
-    <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
-      <Pictogram
-        name={pictogramName}
-        size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
-      />
-    </View>
-    {onClose && labelClose && (
-      <View style={styles.closeIconButton}>
-        <IconButton
-          icon="closeSmall"
-          color={colorCloseButton}
-          onPress={onClose}
-          accessibilityLabel={labelClose}
-        />
-      </View>
-    )}
-  </View>
-);
+              <NewH6 weight="SemiBold" color={colorTitle}>
+                {title}
+              </NewH6>
+              <VSpacer size={4} />
+            </>
+          )}
+          {content && (
+            <>
+              <LabelSmall color={colorContent} weight={"Regular"}>
+                {content}
+              </LabelSmall>
+              {action && <VSpacer size={8} />}
+            </>
+          )}
+          {action && (
+            /* Disable pointer events to avoid
+            pressed state on the button */
+            <View pointerEvents="none">
+              <VSpacer size={4} />
+              <ButtonLink color="primary" onPress={onPress} label={action} />
+            </View>
+          )}
+        </View>
+        <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
+          <Pictogram
+            name={pictogramName}
+            size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
+          />
+        </View>
+        {onClose && labelClose && (
+          <View style={styles.closeIconButton}>
+            <IconButton
+              icon="closeSmall"
+              color={colorCloseButton}
+              onPress={onClose}
+              accessibilityLabel={labelClose}
+            />
+          </View>
+        )}
+      </Animated.View>
+    </Pressable>
+  );
+};
