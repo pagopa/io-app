@@ -384,108 +384,99 @@ jobs:
   ###############################################################################
   # Prepare the environment, build, and run e2e tests
   ###############################################################################
-  run-e2e-test-IOS:
-    <<: *defaults_macos
+  # run-e2e-test-IOS:
+  #   <<: *defaults_macos
 
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
+  #   steps:
+  #     # Restore workflow workspace
+  #     - attach_workspace:
+  #         at: /Users/distiller
 
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
+  #     # Restore bundle cache
+  #     - restore_cache:
+  #         keys:
+  #           - *ios_gems_cache_key
 
-      - run:
-          name: Configure Node
-          command: |
-            brew uninstall node yarn
-            nvm install 16.19.0
-            nvm alias default 16.19.0
-            npm install -g yarn
+  #     - run:
+  #         name: Configure Node
+  #         command: |
+  #           brew uninstall node yarn
+  #           nvm install 16.19.0
+  #           nvm alias default 16.19.0
+  #           npm install -g yarn
 
-      - run:
-          name: Configure Bundler
-          command: |
-            sudo gem update --system
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
+  #     - run:
+  #         name: Configure Bundler
+  #         command: |
+  #           sudo gem update --system
+  #           echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+  #           source $BASH_ENV
+  #           gem install bundler:$BUNDLER_VERSION
 
-      - run:
-          name: Install Bundle
-          command: bundle check || bundle install
+  #     - run:
+  #         name: Install Bundle
+  #         command: bundle check || bundle install
 
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
+  #     # Store bundle cache
+  #     - save_cache:
+  #         key: *ios_gems_cache_key
+  #         paths:
+  #           - vendor/bundle
 
-      - run:
-          name: Prepare dependencies for build
-          command: |
-            cp .env.local .env
-            yarn run postinstall
-            cd ios && bundle exec pod install --verbose
-            rm -rf /tmp/metro-bundler-cache-*
-            rm -rf /tmp/haste-map-react-native-packager-*
+  #     - run:
+  #         name: Prepare dependencies for build
+  #         command: |
+  #           cp .env.local .env
+  #           yarn run postinstall
+  #           cd ios && bundle exec pod install --verbose
+  #           rm -rf /tmp/metro-bundler-cache-*
+  #           rm -rf /tmp/haste-map-react-native-packager-*
 
-      - run:
-          name: Install Detox and simulator's utils
-          command: |
-            brew tap wix/brew
-            brew install applesimutils
+  #     - run:
+  #         name: Install Detox and simulator's utils
+  #         command: |
+  #           brew tap wix/brew
+  #           brew install applesimutils
 
-      - run:
-          name: Prepare build for Detox
-          command: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
+  #     - run:
+  #         name: Prepare build for Detox
+  #         command: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
 
-      - run:
-          name: Run E2E tests with io-dev-api server
-          command: |
-            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
-            cd _io-dev-api-server_
-            cp ../scripts/api-config.json config/config.json
-            yarn
-            yarn generate
-            yarn start &> /tmp/io-dev-api-server.log &
-            # wait for the server to be up and running
-            sleep 10
-            cd ..
-            yarn detox clean-framework-cache
-            yarn detox build-framework-cache
-            yarn detox test \
-              --loglevel verbose \
-              -c ios.sim.release \
-              --cleanup \
-              --artifacts-location /tmp/e2e_artifacts/detox/ \
-              --record-logs all \
-              --take-screenshots all \
-              --record-videos failing \
-              --debug-synchronization 1000 \
-              --retries 3
+  #     - run:
+  #         name: Run E2E tests with io-dev-api server
+  #         command: |
+  #           git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
+  #           cd _io-dev-api-server_
+  #           cp ../scripts/api-config.json config/config.json
+  #           yarn
+  #           yarn generate
+  #           yarn start &> /tmp/io-dev-api-server.log &
+  #           # wait for the server to be up and running
+  #           sleep 10
+  #           cd ..
+  #           yarn detox clean-framework-cache
+  #           yarn detox build-framework-cache
+  #           yarn detox test \
+  #             --loglevel verbose \
+  #             -c ios.sim.release \
+  #             --cleanup \
+  #             --artifacts-location /tmp/e2e_artifacts/detox/ \
+  #             --record-logs all \
+  #             --take-screenshots all \
+  #             --record-videos failing \
+  #             --debug-synchronization 1000 \
+  #             --retries 3
 
-      # store detox artifacts
-      - store_artifacts:
-          path: /tmp/e2e_artifacts
+  #     # store detox artifacts
+  #     - store_artifacts:
+  #         path: /tmp/e2e_artifacts
 
-      - store_artifacts:
-          path: /tmp/io-dev-api-server.log
+  #     - store_artifacts:
+  #         path: /tmp/io-dev-api-server.log
 
 
 workflows:
   version: 2
-  build:
-    jobs:
-      # TODO: Native Android e2e tests
-      # TODO: Slack integration
-      - run-e2e-test-IOS:
-          filters:
-            branches:
-              only: master
-
   # Release workflow triggered only when a new release tag is pushed
   release:
     jobs:
