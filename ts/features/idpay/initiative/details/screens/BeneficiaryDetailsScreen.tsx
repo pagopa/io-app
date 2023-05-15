@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
@@ -15,6 +16,7 @@ import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -26,12 +28,12 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { format } from "../../../../../utils/dates";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { openWebUrl } from "../../../../../utils/url";
 import { Table } from "../../../common/components/Table";
 import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 import { IDPayDetailsParamsList } from "../navigation";
@@ -40,7 +42,6 @@ import {
   idpayInitiativeDetailsSelector
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -59,7 +60,6 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsScreen = () => {
   const route = useRoute<BeneficiaryDetailsScreenRouteProps>();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const { initiativeId, initiativeName } = route.params;
 
@@ -71,21 +71,6 @@ const BeneficiaryDetailsScreen = () => {
 
   const beneficiaryDetailsPot = useIOSelector(idPayBeneficiaryDetailsSelector);
   const initiativeDetailsPot = useIOSelector(idpayInitiativeDetailsSelector);
-
-  const handlePrivacyLinkPress = () =>
-    pipe(
-      beneficiaryDetailsPot,
-      pot.toOption,
-      O.chain(({ privacyLink }) => O.fromNullable(privacyLink)),
-      O.map(openWebUrl),
-      O.toUndefined
-    );
-
-  const handleUnsubscribePress = () =>
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      initiativeId,
-      initiativeName
-    });
 
   const content = pipe(
     sequenceS(O.Monad)({
@@ -100,28 +85,7 @@ const BeneficiaryDetailsScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={initiativeName}>
-      <ScrollView scrollIndicatorInsets={{ right: 1 }}>
-        <ContentWrapper>
-          {content}
-          <VSpacer size={24} />
-          <View style={styles.linkRow}>
-            <Link onPress={handlePrivacyLinkPress}>
-              {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
-            </Link>
-          </View>
-          <View style={styles.linkRow}>
-            <Link onPress={handleUnsubscribePress} color="red">
-              {I18n.t(
-                "idpay.initiative.beneficiaryDetails.buttons.unsubscribe",
-                {
-                  initiativeName
-                }
-              )}
-            </Link>
-          </View>
-          <VSpacer size={48} />
-        </ContentWrapper>
-      </ScrollView>
+      {content}
     </BaseScreenComponent>
   );
 };
@@ -133,6 +97,9 @@ type BeneficiaryDetailsContentProps = {
 
 const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
   const { details, beneficiaryDetails } = props;
+  const { initiativeId, initiativeName } = details;
+
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const ruleInfoBox = pipe(
     beneficiaryDetails.ruleDescription,
@@ -214,73 +181,107 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
     O.toUndefined
   );
 
+  const handlePrivacyLinkPress = () =>
+    navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: ROUTES.SERVICE_DETAIL,
+      params: { serviceId: "placeholder" as NonEmptyString } // TODO service id
+    });
+
+  const handleUnsubscribePress = () =>
+    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
+      initiativeId,
+      initiativeName
+    });
+
   return (
-    <>
-      {ruleInfoBox}
-      <Table
-        title={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
-        rows={[
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
-            value: statusString
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
-            value: endDateString
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: amountString
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: toBeRefundedString
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: refundedString
-          }
-        ]}
-      />
-      <VSpacer size={8} />
-      <LabelSmall weight="Regular" color="bluegrey">
-        {lastUpdateString}
-      </LabelSmall>
-      <VSpacer size={8} />
-      <Table
-        title={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
-        rows={[
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
-            value: rankingStartDateString
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
-            value: rankingEndDateString
-          },
-          {
-            label: I18n.t(
-              "idpay.initiative.beneficiaryDetails.spendPercentage"
-            ),
-            value: rewardPercentageString
-          }
-        ]}
-      />
-      <VSpacer size={8} />
-      <Table
-        title={I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails")}
-        rows={[
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
-            value: "-"
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
-            value: "-"
-          }
-        ]}
-      />
-    </>
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+      <ContentWrapper>
+        {ruleInfoBox}
+        <Table
+          title={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
+          rows={[
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
+              value: statusString
+            },
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
+              value: endDateString
+            },
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
+              value: amountString
+            },
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
+              value: toBeRefundedString
+            },
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
+              value: refundedString
+            }
+          ]}
+        />
+        <VSpacer size={8} />
+        <LabelSmall weight="Regular" color="bluegrey">
+          {lastUpdateString}
+        </LabelSmall>
+        <VSpacer size={8} />
+        <Table
+          title={I18n.t("idpay.initiative.beneficiaryDetails.spendingRules")}
+          rows={[
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
+              value: rankingStartDateString
+            },
+            {
+              label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
+              value: rankingEndDateString
+            },
+            {
+              label: I18n.t(
+                "idpay.initiative.beneficiaryDetails.spendPercentage"
+              ),
+              value: rewardPercentageString
+            }
+          ]}
+        />
+        <VSpacer size={8} />
+        <Table
+          title={I18n.t(
+            "idpay.initiative.beneficiaryDetails.enrollmentDetails"
+          )}
+          rows={[
+            {
+              label: I18n.t(
+                "idpay.initiative.beneficiaryDetails.enrollmentDate"
+              ),
+              value: "-"
+            },
+            {
+              label: I18n.t(
+                "idpay.initiative.beneficiaryDetails.protocolNumber"
+              ),
+              value: "-"
+            }
+          ]}
+        />
+        <VSpacer size={24} />
+        <View style={styles.linkRow}>
+          <Link onPress={handlePrivacyLinkPress}>
+            {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
+          </Link>
+        </View>
+        <View style={styles.linkRow}>
+          <Link onPress={handleUnsubscribePress} color="red">
+            {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
+              initiativeName
+            })}
+          </Link>
+        </View>
+        <VSpacer size={48} />
+      </ContentWrapper>
+    </ScrollView>
   );
 };
 
