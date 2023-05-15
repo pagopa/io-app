@@ -88,11 +88,10 @@ export const fciIssuerEnvironmentSelector = createSelector(
       : IssuerEnvironmentEnum.TEST
 );
 
-export const fciSignatureRequestIdSelector = createSelector(
-  fciSignatureRequestSelector,
-  signatureDetailView =>
-    pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
-);
+export const fciSignatureRequestIdSelector = (state: GlobalState) =>
+  pot.isSome(state.features.fci.signatureRequest)
+    ? state.features.fci.signatureRequest.value.dossier_title
+    : undefined;
 
 /**
  * Selects the dossier title if present, undefined otherwise.
