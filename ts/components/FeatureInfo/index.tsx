@@ -11,8 +11,6 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { NewLink } from "../core/typography/NewLink";
 
-export type SpacerOrientation = "vertical" | "horizontal";
-
 type PartialFeatureInfo = {
   // Necessary to render main body with different formatting
   body?: string | React.ReactNode;
