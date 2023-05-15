@@ -33,23 +33,12 @@ jobs:
         with:
           ruby-version: 2.7
           bundler-cache: true
-      # Recreate google-services.json from ENV variable
-      - id: recreate-google-services-json
-        run: ./scripts/google-services-json-file-setup.sh ./android/app
+      - id: setup-android-release
+        run: ./scripts/android-release.sh
         shell: bash
         env:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
-      # Recreate JSON key file (for Google Play) from ENV variable
-      - id:  recreate-json-key-file
-        run: ./scripts/json-key-file-setup.sh
-        shell: bash
-        env:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
-      # Recreate keystore from ENV variable
-      - id: recreate-keystore
-        run: ./scripts/keystore-setup.sh
-        shell: bash
-        env:
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
       # Build the js bundle in release mode
       - id: build-js-bundle
