@@ -6,9 +6,7 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
-import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { hexToRgba, IOColors } from "../../core/variables/IOColors";
 import { IOBadge } from "../../core/IOBadge";
@@ -89,11 +87,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "add":
         return (
           <>
-            <IconFont
-              name="io-plus"
-              color={IOColors.white}
-              size={customVariables.fontSize2}
-            />
+            <Icon name="legAdd" size={20} color="white" />
             <HSpacer size={4} />
             <Label color="white" weight="Bold">
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
@@ -117,7 +111,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
             </Label>
             <HSpacer size={8} />
-            <Icon color="white" name="reload" size={20} />
+            <Icon color="white" name="reload" size={16} />
           </View>
         );
       case "show":
@@ -127,12 +121,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
             </Label>
             <HSpacer size={4} />
-            <IconFont
-              style={{ marginTop: 1, marginLeft: 2 }}
-              name={"io-right"}
-              color={IOColors.white}
-              size={20}
-            />
+            <Icon size={20} color="white" name="chevronRightListItem" />
           </View>
         );
     }

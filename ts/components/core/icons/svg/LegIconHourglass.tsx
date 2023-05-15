@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconHourglass = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconHourglass = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M12.451 12.012a.705.705 0 1 0-1.41 0 .705.705 0 0 0 1.41 0ZM12.451 14.217a.705.705 0 1 0-1.41 0 .705.705 0 0 0 1.41 0Z"
       fill="currentColor"

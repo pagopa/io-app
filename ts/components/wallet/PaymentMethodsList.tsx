@@ -29,11 +29,10 @@ import { IOBadge, IOBadgeOutlineColors } from "../core/IOBadge";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
-import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
-import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
+import { Icon } from "../core/icons";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -170,7 +169,7 @@ const renderListItem = (
               {itemInfo.item.description}
             </H5>
           </View>
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+          <Icon name="chevronRightListItem" color="blue" size={24} />
         </ListItem>
       );
     }

@@ -179,7 +179,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         </View>
 
         <View style={{ marginTop: 45 }}>
-          <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
+          <InfoBox iconName="profileAlt" iconColor="bluegrey">
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("onboarding.pin.tutorial")}
             </Label>

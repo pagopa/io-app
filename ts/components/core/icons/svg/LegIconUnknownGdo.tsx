@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconUnknownGdo = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconUnknownGdo = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M23.04 6.72a.48.48 0 0 1 .463.605l-.017.053-2.88 7.2a.48.48 0 0 1-.33.288l-.056.01-11.52 1.44a.48.48 0 0 1-.175-.942l.055-.01 11.24-1.406 2.51-6.278H6.72a.48.48 0 0 1-.477-.424L6.24 7.2a.48.48 0 0 1 .424-.477l.056-.003h16.32Z"
       fill="currentColor"
