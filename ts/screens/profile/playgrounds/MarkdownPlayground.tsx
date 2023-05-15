@@ -8,10 +8,8 @@ import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBody
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";
 import { CTA } from "../../../types/MessageCTA";
 import {
@@ -20,6 +18,7 @@ import {
   handleCtaAction
 } from "../../../utils/messages";
 import { maybeNotNullyString } from "../../../utils/strings";
+import { Icon } from "../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
@@ -70,12 +69,7 @@ const MarkdownPlayground = () => {
                 style={styles.contentCenter}
                 onPress={() => setMarkdownText(inputText)}
               >
-                <IconFont
-                  name={"io-right"}
-                  style={{
-                    color: IOColors.white
-                  }}
-                />
+                <Icon name="chevronRight" color="white" />
               </ButtonDefaultOpacity>
             </View>
           </View>

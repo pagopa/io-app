@@ -3,10 +3,8 @@ import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -22,6 +20,7 @@ import {
 } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -81,7 +80,7 @@ export const FciDocumentPreviewScreen = (
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
+      <Icon name="legChevronLeft" color="bluegrey" />
     </TouchableDefaultOpacity>
   );
 
@@ -114,11 +113,9 @@ export const FciDocumentPreviewScreen = (
         currentPage,
         totalPages
       })}
-      iconLeftColor={currentDoc === 0 ? IOColors.bluegreyLight : IOColors.blue}
+      iconLeftColor={currentDoc === 0 ? "bluegreyLight" : "blue"}
       iconRightColor={
-        currentDoc === documents.length - 1
-          ? IOColors.bluegreyLight
-          : IOColors.blue
+        currentDoc === documents.length - 1 ? "bluegreyLight" : "blue"
       }
       onPrevious={onPrevious}
       onNext={onNext}

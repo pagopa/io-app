@@ -7,10 +7,9 @@ import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { useImageResize } from "../screens/hooks/useImageResize";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 type Props = {
   // TODO: change bank in info and use a generic type
@@ -93,7 +92,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
         </LabelSmall>
         <VSpacer size={16} />
       </View>
-      <IconFont name={"io-right"} color={IOColors.blue} />
+      <Icon name="chevronRightListItem" size={24} color="blue" />
     </ListItem>
   ) : (
     <ButtonDefaultOpacity

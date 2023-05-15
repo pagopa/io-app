@@ -1,14 +1,13 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import IconFont from "../../components/ui/IconFont";
 import { IOColors, hexToRgba } from "../../components/core/variables/IOColors";
+import { Icon } from "../../components/core/icons";
 
 type Props = {
   checked: boolean;
 };
 
 const checkBoxColor = hexToRgba(IOColors.white, 0.15);
-const checkBoxIcon = "io-tick-big";
 
 const styles = StyleSheet.create({
   base: {
@@ -29,11 +28,7 @@ const styles = StyleSheet.create({
 export const IngressCheckBox = (props: Props) => (
   <View style={[styles.base, props.checked ? styles.checked : {}]}>
     {props.checked && (
-      <IconFont
-        name={checkBoxIcon}
-        size={styles.base.width * 0.7}
-        color={IOColors.white}
-      />
+      <Icon name="legCompleted" size={styles.base.width} color="white" />
     )}
   </View>
 );

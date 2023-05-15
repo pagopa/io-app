@@ -4,15 +4,13 @@ import { View, StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import I18n from "../../../../../i18n";
-import MoneyDownIcon from "../../../../../../img/wallet/payment-methods/paypal/money_down.svg";
-import LabelIcon from "../../../../../../img/wallet/payment-methods/paypal/label.svg";
-import EditIcon from "../../../../../../img/wallet/payment-methods/paypal/edit.svg";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Label } from "../../../../../components/core/typography/Label";
 import { Link } from "../../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../../utils/url";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   rowContainer: {
@@ -34,7 +32,7 @@ const iconSize = 24;
 // icon and description
 const getItem = (props: Props) => [
   {
-    icon: <MoneyDownIcon width={iconSize} height={iconSize} />,
+    icon: <Icon name="legPsp" size={iconSize} color="blue" />,
     description: (
       <Body>
         {I18n.t(
@@ -44,7 +42,7 @@ const getItem = (props: Props) => [
     )
   },
   {
-    icon: <LabelIcon width={iconSize} height={iconSize} />,
+    icon: <Icon name="legTag" size={iconSize} color="blue" />,
     description: (
       <Body>
         {I18n.t(
@@ -60,7 +58,7 @@ const getItem = (props: Props) => [
     )
   },
   {
-    icon: <EditIcon width={iconSize} height={iconSize} />,
+    icon: <Icon name="docAgree" size={iconSize} color="blue" />,
     description: (
       <View>
         <TouchableWithoutFeedback
