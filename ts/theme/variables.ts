@@ -85,15 +85,6 @@ const customVariables = Object.assign(materialVariables, {
   iconFamily: "Entypo" /* NB Theme variable, don't remove */,
   iconSizeBase: 24,
 
-  get iconSize2(): number {
-    return this.iconSizeBase * (5 / 6);
-  },
-  get iconSize3(): number {
-    return this.iconSizeBase * 1;
-  },
-  get iconSize6(): number {
-    return this.iconSizeBase * 2;
-  },
   // Content
   contentPadding: 24,
   contentPaddingLarge: 48,

@@ -3,9 +3,9 @@ import { View, StyleSheet } from "react-native";
 import I18n from "../../../../i18n";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
-import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { formatIntegerNumber } from "../../../../utils/stringBuilder";
+import { Icon } from "../../../../components/core/icons";
 
 type Props = {
   date: string;
@@ -37,11 +37,7 @@ const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
     </H3>
     <View style={[styles.row, styles.container]}>
       <View style={styles.row}>
-        <IconFont
-          name={"io-transactions"}
-          size={12}
-          color={IOColors.bluegrey}
-        />
+        <Icon name="transactions" size={12} color="bluegrey" />
         <H5 color={"bluegrey"}>
           {` ${I18n.t(
             "bonus.bpd.details.components.transactionsCountOverview.label",

@@ -15,9 +15,8 @@ import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import { VSpacer } from "../../core/spacer/Spacer";
 import { H4 } from "../../core/typography/H4";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
 import { getCardIconFromBrandLogo } from "../card/Logo";
+import { Icon } from "../../core/icons/Icon";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -185,9 +184,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
         logo={logo}
         title={title}
         description={description}
-        rightElement={
-          <IconFont name={"io-info"} color={IOColors.blue} size={24} />
-        }
+        rightElement={<Icon name="info" color="blue" size={24} />}
         onPress={present}
       />
     </>

@@ -5,10 +5,10 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H3 } from "../core/typography/H3";
-import IconFont from "../ui/IconFont";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { Icon } from "../core/icons";
 
 const styles = StyleSheet.create({
   row: {
@@ -24,9 +24,6 @@ const styles = StyleSheet.create({
   modalClose: {
     paddingRight: 0,
     justifyContent: "flex-end"
-  },
-  icon: {
-    paddingRight: 0
   }
 });
 
@@ -68,7 +65,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
         accessibilityRole={"button"}
         accessibilityLabel={I18n.t("global.buttons.close")}
       >
-        <IconFont name="io-close" color={IOColors.grey} style={styles.icon} />
+        <Icon name="legClose" color="grey" size={24} />
       </ButtonDefaultOpacity>
     </View>
   );

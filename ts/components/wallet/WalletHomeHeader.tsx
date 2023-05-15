@@ -8,7 +8,6 @@ import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { HSpacer } from "../core/spacer/Spacer";
@@ -20,7 +19,7 @@ import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import IconFont from "../ui/IconFont";
+import { Icon } from "../core/icons";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -91,7 +90,7 @@ const WalletHomeHeader = (props: Props) => {
                     {item.subtitle}
                   </H5>
                 </View>
-                <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+                <Icon name="chevronRightListItem" color="blue" size={24} />
               </View>
             </View>
           </ButtonDefaultOpacity>
@@ -128,11 +127,7 @@ const WalletHomeHeader = (props: Props) => {
         accessibilityLabel={I18n.t("wallet.accessibility.addElement")}
         accessibilityRole="button"
       >
-        <IconFont
-          name="io-plus"
-          color={IOColors.white}
-          size={customVariables.fontSize2}
-        />
+        <Icon name="legAdd" color="white" size={20} />
         <HSpacer size={8} />
         <H4 color={"white"}>
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}

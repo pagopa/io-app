@@ -8,14 +8,13 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H4 } from "../../../../components/core/typography/H4";
-import IconFont from "../../../../components/ui/IconFont";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons/Icon";
 import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {
@@ -82,12 +81,13 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             </H5>
           </View>
           <HSpacer size={24} />
-          <IconFont
-            name={isSelected ? "io-radio-on" : "io-radio-off"}
-            color={IOColors.blue}
-            size={28}
-            style={{ alignSelf: "flex-start" }}
-          />
+          <View style={{ alignSelf: "flex-start" }}>
+            <Icon
+              name={isSelected ? "legRadioOn" : "legRadioOff"}
+              color="blue"
+              size={28}
+            />
+          </View>
         </TouchableDefaultOpacity>
         <VSpacer size={16} />
         <ItemSeparatorComponent noPadded />
