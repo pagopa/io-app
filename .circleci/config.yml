@@ -176,210 +176,210 @@ jobs:
       - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
 
   # Send a Slack message to notify the release of a new app version in beta
-  notify-new-app-version:
-    <<: *defaults_js
+  # notify-new-app-version:
+  #   <<: *defaults_js
 
-    steps:
-      - checkout
-      - *restore_node_cache
-      - *install_node_modules
-      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+  #   steps:
+  #     - checkout
+  #     - *restore_node_cache
+  #     - *install_node_modules
+  #     - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
 
   # Create signed Android release
-  android-release:
-    <<: *defaults_android
+  # android-release:
+  #   <<: *defaults_android
 
-    resource_class: xlarge
+  #   resource_class: xlarge
 
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
+  #   steps:
+  #     # Restore workflow workspace
+  #     - attach_workspace:
+  #         at: /home/circleci
 
-      # Restore sdk cache
-      - restore_cache:
-          keys:
-            - *android_sdk_cache_key
+  #     # Restore sdk cache
+  #     - restore_cache:
+  #         keys:
+  #           - *android_sdk_cache_key
 
-      # Install Android SDK
-      - run:
-          command: ./scripts/circleci-android-setup.sh
+  #     # Install Android SDK
+  #     - run:
+  #         command: ./scripts/circleci-android-setup.sh
 
-      # Restore jars cache
-      - restore_cache:
-          key: *android_jars_cache_key
+  #     # Restore jars cache
+  #     - restore_cache:
+  #         key: *android_jars_cache_key
 
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            sudo gem install bundler:$BUNDLER_VERSION
+  #     - run:
+  #         name: Configure Bundler
+  #         command: |
+  #           echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+  #           source $BASH_ENV
+  #           sudo gem install bundler:$BUNDLER_VERSION
 
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
+  #     # Install bundle dependencies
+  #     - run:
+  #         name: Bundle Install
+  #         command: bundle check || bundle install
 
-      # Recreate google-services.json from ENV variable
-      - run:
-          command: ./scripts/google-services-json-file-setup.sh ./android/app
+  #     # Recreate google-services.json from ENV variable
+  #     - run:
+  #         command: ./scripts/google-services-json-file-setup.sh ./android/app
 
-      # Recreate JSON key file (for Google Play) from ENV variable
-      - run:
-          command: ./scripts/json-key-file-setup.sh
+  #     # Recreate JSON key file (for Google Play) from ENV variable
+  #     - run:
+  #         command: ./scripts/json-key-file-setup.sh
 
-      # Recreate keystore from ENV variable
-      - run:
-          command: ./scripts/keystore-setup.sh
+  #     # Recreate keystore from ENV variable
+  #     - run:
+  #         command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode
-      - run: yarn bundle:android-release
+  #     # Build the js bundle in release mode
+  #     - run: yarn bundle:android-release
 
-      # Run alpha lane
-      - run:
-          command: cd android && bundle exec fastlane build_release
+  #     # Run alpha lane
+  #     - run:
+  #         command: cd android && bundle exec fastlane build_release
 
-      - store_artifacts:
-          path: android/app/build/outputs/bundle
-          destination: bundle
+  #     - store_artifacts:
+  #         path: android/app/build/outputs/bundle
+  #         destination: bundle
 
   # Create signed Android release and deploy a new alpha version to the Google Play Store
-  alpha-release-android:
-    <<: *defaults_android
+  # alpha-release-android:
+  #   <<: *defaults_android
 
-    resource_class: xlarge
+  #   resource_class: xlarge
 
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /home/circleci
+  #   steps:
+  #     # Restore workflow workspace
+  #     - attach_workspace:
+  #         at: /home/circleci
 
-      # Restore sdk cache
-      - restore_cache:
-          keys:
-            - *android_sdk_cache_key
+  #     # Restore sdk cache
+  #     - restore_cache:
+  #         keys:
+  #           - *android_sdk_cache_key
 
-      # Install Android SDK
-      - run:
-          command: ./scripts/circleci-android-setup.sh
+  #     # Install Android SDK
+  #     - run:
+  #         command: ./scripts/circleci-android-setup.sh
 
-      # Restore jars cache
-      - restore_cache:
-          key: *android_jars_cache_key
+  #     # Restore jars cache
+  #     - restore_cache:
+  #         key: *android_jars_cache_key
 
-      # Setup ruby version with chruby
-      - run:
-          name: install chruby
-          command: |
-            wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-            tar -xzvf chruby-0.3.9.tar.gz
-            cd chruby-0.3.9/
-            sudo make install
+  #     # Setup ruby version with chruby
+  #     - run:
+  #         name: install chruby
+  #         command: |
+  #           wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+  #           tar -xzvf chruby-0.3.9.tar.gz
+  #           cd chruby-0.3.9/
+  #           sudo make install
 
-      - run:
-          name: install ruby-install
-          command: |
-            wget -O ruby-install-0.8.5.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.5.tar.gz
-            tar -xzvf ruby-install-0.8.5.tar.gz
-            cd ruby-install-0.8.5/
-            sudo make install
+  #     - run:
+  #         name: install ruby-install
+  #         command: |
+  #           wget -O ruby-install-0.8.5.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.5.tar.gz
+  #           tar -xzvf ruby-install-0.8.5.tar.gz
+  #           cd ruby-install-0.8.5/
+  #           sudo make install
 
-      - run: ruby-install ruby 2.7.7
-      - run:
-          name: Set chruby
-          command: |
-            echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
-            echo 'chruby ruby-2.7.7' >> $BASH_ENV 
+  #     - run: ruby-install ruby 2.7.7
+  #     - run:
+  #         name: Set chruby
+  #         command: |
+  #           echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
+  #           echo 'chruby ruby-2.7.7' >> $BASH_ENV 
 
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            sudo gem install bundler:$BUNDLER_VERSION
+  #     - run:
+  #         name: Configure Bundler
+  #         command: |
+  #           echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+  #           source $BASH_ENV
+  #           sudo gem install bundler:$BUNDLER_VERSION
 
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
+  #     # Install bundle dependencies
+  #     - run:
+  #         name: Bundle Install
+  #         command: bundle check || bundle install
 
-      # Recreate google-services.json from ENV variable
-      - run:
-          command: ./scripts/google-services-json-file-setup.sh ./android/app
+  #     # Recreate google-services.json from ENV variable
+  #     - run:
+  #         command: ./scripts/google-services-json-file-setup.sh ./android/app
 
-      # Recreate JSON key file (for Google Play) from ENV variable
-      - run:
-          command: ./scripts/json-key-file-setup.sh
+  #     # Recreate JSON key file (for Google Play) from ENV variable
+  #     - run:
+  #         command: ./scripts/json-key-file-setup.sh
 
-      # Recreate keystore from ENV variable
-      - run:
-          command: ./scripts/keystore-setup.sh
+  #     # Recreate keystore from ENV variable
+  #     - run:
+  #         command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode
-      - run:
-          command: yarn bundle:android-release
+  #     # Build the js bundle in release mode
+  #     - run:
+  #         command: yarn bundle:android-release
 
-      # Run alpha lane
-      - run:
-          command: cd android && bundle exec fastlane alpha
+  #     # Run alpha lane
+  #     - run:
+  #         command: cd android && bundle exec fastlane alpha
 
-      # Promote internal to alpha
-      - run:
-          command: cd android && bundle exec fastlane promote_internal_to_alpha
+  #     # Promote internal to alpha
+  #     - run:
+  #         command: cd android && bundle exec fastlane promote_internal_to_alpha
 
-      - store_artifacts:
-          path: android/app/build/outputs/bundle
-          destination: bundle
+  #     - store_artifacts:
+  #         path: android/app/build/outputs/bundle
+  #         destination: bundle
 
   # Create a release build, submit to the store and distributes to the beta testers
-  ios-beta-release:
-    <<: *defaults_macos
+  # ios-beta-release:
+  #   <<: *defaults_macos
 
-    # Not supported with the current plan
-    # resource_class: large
+  #   # Not supported with the current plan
+  #   # resource_class: large
 
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
+  #   steps:
+  #     # Restore workflow workspace
+  #     - attach_workspace:
+  #         at: /Users/distiller
 
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
+  #     # Restore bundle cache
+  #     - restore_cache:
+  #         keys:
+  #           - *ios_gems_cache_key
 
-      - run:
-          name: Configure Bundler
-          command: |
-            sudo gem update --system
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
+  #     - run:
+  #         name: Configure Bundler
+  #         command: |
+  #           sudo gem update --system
+  #           echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+  #           source $BASH_ENV
+  #           gem install bundler:$BUNDLER_VERSION
 
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
+  #     # Install bundle dependencies
+  #     - run:
+  #         name: Bundle Install
+  #         command: bundle check || bundle install
 
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
+  #     # Store bundle cache
+  #     - save_cache:
+  #         key: *ios_gems_cache_key
+  #         paths:
+  #           - vendor/bundle
 
-      - run: ./scripts/ios-release-build.sh
+  #     - run: ./scripts/ios-release-build.sh
 
-      - add_ssh_keys:
-          fingerprints:
-            - "f6:10:4f:48:64:51:83:2c:e4:3c:80:36:42:f2:4c:0b"
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "f6:10:4f:48:64:51:83:2c:e4:3c:80:36:42:f2:4c:0b"
 
-      # Run beta_circleci_testflight lane
-      - run:
-          name: Build & submit to App store
-          command: |
-            cd ios
-            bundle exec fastlane beta_circleci_testflight
+  #     # Run beta_circleci_testflight lane
+  #     - run:
+  #         name: Build & submit to App store
+  #         command: |
+  #           cd ios
+  #           bundle exec fastlane beta_circleci_testflight
 
   ###############################################################################
   # Prepare the environment, build, and run e2e tests
@@ -487,71 +487,71 @@ workflows:
               only: master
 
   # Release workflow triggered only when a new release tag is pushed
-  release:
-    jobs:
-      - compile-typescript:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
+  # release:
+  #   jobs:
+  #     - compile-typescript:
+  #         filters:
+  #           tags:
+  #             only: *release_tag
+  #           branches:
+  #             ignore: /.*/
 
-      - run-tests:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
+  #     - run-tests:
+  #         filters:
+  #           tags:
+  #             only: *release_tag
+  #           branches:
+  #             ignore: /.*/
 
-      - run-eslint:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
-      - run-prettier:
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
+  #     - run-eslint:
+  #         filters:
+  #           tags:
+  #             only: *release_tag
+  #           branches:
+  #             ignore: /.*/
+  #     - run-prettier:
+  #         filters:
+  #           tags:
+  #             only: *release_tag
+  #           branches:
+  #             ignore: /.*/
 
-      # Build Android alpha release & submit to play store
-      - alpha-release-android:
-          requires:
-            - compile-typescript
-            - run-tests
-            - run-eslint
-            - run-prettier
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
+      # # Build Android alpha release & submit to play store
+      # - alpha-release-android:
+      #     requires:
+      #       - compile-typescript
+      #       - run-tests
+      #       - run-eslint
+      #       - run-prettier
+      #     filters:
+      #       tags:
+      #         only: *release_tag
+      #       branches:
+      #         ignore: /.*/
 
-      # Create a release build, submit to the store and distributes to the beta testers
-      - ios-beta-release:
-          requires:
-            - compile-typescript
-            - run-tests
-            - run-eslint
-            - run-prettier
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
+      # # Create a release build, submit to the store and distributes to the beta testers
+      # - ios-beta-release:
+      #     requires:
+      #       - compile-typescript
+      #       - run-tests
+      #       - run-eslint
+      #       - run-prettier
+      #     filters:
+      #       tags:
+      #         only: *release_tag
+      #       branches:
+      #         ignore: /.*/
 
       # Send a Slack message to notify the release of a new app version in beta
-      - notify-new-app-version:
-          requires:
-            - ios-beta-release
-            - alpha-release-android
-          filters:
-            tags:
-              only: *release_tag
-            branches:
-              ignore: /.*/
+      # - notify-new-app-version:
+      #     requires:
+      #       - ios-beta-release
+      #       - alpha-release-android
+      #     filters:
+      #       tags:
+      #         only: *release_tag
+      #       branches:
+      #         ignore: /.*/
 
   # Run a weekly report At 16:00 on Friday
   weekly-report:
