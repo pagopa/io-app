@@ -55,11 +55,11 @@ platform :android do
       commits_count: 1
     )
 
-    upload_to_play_store(
-      track: "internal",
-      skip_upload_screenshots: true,
-      skip_upload_images: true
-    )
+    # upload_to_play_store(
+    #   track: "internal",
+    #   skip_upload_screenshots: true,
+    #   skip_upload_images: true
+    # )
   end
 
   desc "Promote the internal version to alpha"
