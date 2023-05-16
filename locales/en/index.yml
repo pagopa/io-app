@@ -3216,7 +3216,7 @@ features:
           subTitle: The signature request is not associated with your Tax Code.
     abort:
       title: "Quit signing"
-      content: "Do you want to quit signing the documents?"
+      content: "Do you want to quit signing **{{dossierTitle}}**?"
       cancel: "Quit signing"
       confirm: "Keep signing"
     checkService:
