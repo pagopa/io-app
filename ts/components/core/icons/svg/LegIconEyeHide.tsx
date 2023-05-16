@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconEyeHide = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconEyeHide = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="m22.207 2.5-.707-.707L1.793 21.5l.707.707L22.207 2.5ZM12 4c1.685 0 3.332.353 4.868 1.01l-1.076 1.076A10.906 10.906 0 0 0 12 5.4c-4.268 0-8.272 2.554-10.5 6.682.98 1.817 2.305 3.328 3.845 4.452l-.906.905c-1.774-1.313-3.288-3.087-4.386-5.22a.476.476 0 0 1 0-.437C2.523 6.982 7.101 4 12 4Z"
       fill="currentColor"

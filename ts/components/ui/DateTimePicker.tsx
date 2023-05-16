@@ -5,12 +5,11 @@ import { StyleSheet, View } from "react-native";
 import { H5 } from "../core/typography/H5";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
-import variables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import I18n from "../../i18n";
 import { VSpacer } from "../core/spacer/Spacer";
-import IconFont from "./IconFont";
+import { Icon } from "../core/icons";
 
 type Props = {
   date: Date | undefined;
@@ -26,11 +25,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  icon: {
-    height: 24,
-    width: 24,
-    marginBottom: 5
   }
 });
 
@@ -63,14 +57,10 @@ const DateTimePicker: React.FunctionComponent<Props> = (props: Props) => {
             ? formatDateAsLocal(props.date, true, true)
             : I18n.t("global.dateFormats.dateTimePicker")}
         </H4>
-        <IconFont
-          size={variables.iconSize3}
-          color={
-            props.blocked !== true ? IOColors.blue : IOColors.bluegreyLight
-          }
-          name={"io-calendario"}
-          selectionColor={IOColors.blue}
-          style={styles.icon}
+        <Icon
+          size={24}
+          color={props.blocked !== true ? "blue" : "bluegreyLight"}
+          name="legCalendar"
         />
       </TouchableDefaultOpacity>
 
