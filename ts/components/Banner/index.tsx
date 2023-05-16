@@ -144,7 +144,6 @@ export const Banner = ({
   onClose,
   accessibilityHint,
   accessibilityLabel,
-  accessibilityRole,
   testID
 }: Banner) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
@@ -183,7 +182,56 @@ export const Banner = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  const renderMainBlock = () => (
+    <>
+      <View style={[IOStyles.flex, IOStyles.selfCenter]}>
+        {title && (
+          <>
+            {/* Once we get 'gap' property, we can get rid of
+          these <VSpacer> components */}
+            <NewH6 weight="SemiBold" color={colorTitle}>
+              {title}
+            </NewH6>
+            <VSpacer size={4} />
+          </>
+        )}
+        {content && (
+          <>
+            <LabelSmall color={colorContent} weight={"Regular"}>
+              {content}
+            </LabelSmall>
+            {action && <VSpacer size={8} />}
+          </>
+        )}
+        {action && (
+          /* Disable pointer events to avoid
+            pressed state on the button */
+          <View pointerEvents="none">
+            <VSpacer size={4} />
+            <ButtonLink color="primary" onPress={onPress} label={action} />
+          </View>
+        )}
+      </View>
+      <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
+        <Pictogram
+          name={pictogramName}
+          size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
+        />
+      </View>
+      {onClose && labelClose && (
+        <View style={styles.closeIconButton}>
+          <IconButton
+            icon="closeSmall"
+            color={colorCloseButton}
+            onPress={onClose}
+            accessibilityLabel={labelClose}
+          />
+        </View>
+      )}
+    </>
+  );
+
+  const PressableButton = () => (
     <Pressable
       ref={viewRef}
       testID={testID}
@@ -191,73 +239,40 @@ export const Banner = ({
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       // A11y related props
-      accessible={action ? true : false}
+      accessible={true}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       accessibilityRole={"button"}
-      // Disable button if no action is provided
-      disabled={!action}
     >
       <Animated.View
-        /* Disable touch events */
-        pointerEvents="box-none"
         style={[
           styles.container,
           { backgroundColor: IOColors[mapBackgroundColor[color]] },
           pressedAnimationStyle
         ]}
-        testID={testID}
-        // A11y related props
-        accessible={!action}
-        accessibilityHint={accessibilityHint}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole={accessibilityRole}
       >
-        <View style={[IOStyles.flex, IOStyles.selfCenter]}>
-          {title && (
-            <>
-              {/* Once we get 'gap' property, we can get rid of
-          these <VSpacer> components */}
-              <NewH6 weight="SemiBold" color={colorTitle}>
-                {title}
-              </NewH6>
-              <VSpacer size={4} />
-            </>
-          )}
-          {content && (
-            <>
-              <LabelSmall color={colorContent} weight={"Regular"}>
-                {content}
-              </LabelSmall>
-              {action && <VSpacer size={8} />}
-            </>
-          )}
-          {action && (
-            /* Disable pointer events to avoid
-            pressed state on the button */
-            <View pointerEvents="none">
-              <VSpacer size={4} />
-              <ButtonLink color="primary" onPress={onPress} label={action} />
-            </View>
-          )}
-        </View>
-        <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
-          <Pictogram
-            name={pictogramName}
-            size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
-          />
-        </View>
-        {onClose && labelClose && (
-          <View style={styles.closeIconButton}>
-            <IconButton
-              icon="closeSmall"
-              color={colorCloseButton}
-              onPress={onClose}
-              accessibilityLabel={labelClose}
-            />
-          </View>
-        )}
+        {renderMainBlock()}
       </Animated.View>
     </Pressable>
   );
+
+  const StaticComponent = () => (
+    <View
+      ref={viewRef}
+      testID={testID}
+      style={[
+        styles.container,
+        { backgroundColor: IOColors[mapBackgroundColor[color]] }
+      ]}
+      // A11y related props
+      accessible={false}
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={"text"}
+    >
+      {renderMainBlock()}
+    </View>
+  );
+
+  return action ? <PressableButton /> : <StaticComponent />;
 };
