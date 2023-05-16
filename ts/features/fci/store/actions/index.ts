@@ -92,20 +92,6 @@ export const fciStartSigningRequest = createStandardAction(
 )<void>();
 
 /**
- * start the FCI signed start action
- */
-export const fciShowSignedDocumentsStartRequest = createStandardAction(
-  "FCI_SIGNED_DOCUMENTS_START_REQUEST"
-)<void>();
-
-/**
- * start the FCI signed end action
- */
-export const fciShowSignedDocumentsEndRequest = createStandardAction(
-  "FCI_SIGNED_DOCUMENTS_END_REQUEST"
-)<void>();
-
-/**
  * clear the FCI store
  */
 export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
@@ -147,8 +133,6 @@ export type FciActions =
   | ActionType<typeof fciEndRequest>
   | ActionType<typeof fciDownloadPreview>
   | ActionType<typeof fciDownloadPreviewClear>
-  | ActionType<typeof fciShowSignedDocumentsStartRequest>
-  | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciCancelPollingFilledDocument>
   | ActionType<typeof fciClearAllFiles>

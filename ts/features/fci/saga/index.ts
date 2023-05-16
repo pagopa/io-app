@@ -32,8 +32,6 @@ import {
   fciStartSigningRequest,
   fciSigningRequest,
   fciEndRequest,
-  fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest,
   fciClearAllFiles,
   fciMetadataRequest,
   fciSignaturesListRequest
@@ -109,18 +107,6 @@ export function* watchFciSaga(
     apiUrlPrefix,
     bearerToken,
     keyInfo
-  );
-
-  // const fciLollipopClient = createFciClientWithLollipop(apiUrlPrefix, keyInfo);
-
-  yield* takeLatest(
-    fciShowSignedDocumentsStartRequest,
-    watchFciSignedDocumentsStartSaga
-  );
-
-  yield* takeLatest(
-    fciShowSignedDocumentsEndRequest,
-    watchFciSignedDocumentsEndSaga
   );
 
   yield* takeLatest(fciEndRequest, watchFciEndSaga);
@@ -262,26 +248,6 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       })
     );
   }
-}
-
-function* watchFciSignedDocumentsStartSaga(): SagaIterator {
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    StackActions.replace(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOC_PREVIEW,
-      params: {
-        documentUrl: ""
-      }
-    })
-  );
-}
-
-function* watchFciSignedDocumentsEndSaga(): SagaIterator {
-  yield* put(fciClearStateRequest());
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    CommonActions.goBack()
-  );
 }
 
 function* deletePath(path: string) {
