@@ -10,7 +10,6 @@ import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { Link } from "../../../../../../../components/core/typography/Link";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../../store/actions/navigation";
 import { fetchWalletsRequestWithExpBackoff } from "../../../../../../../store/actions/wallet/wallets";
@@ -105,7 +104,7 @@ const PaymentMethodError = (props: Props) => (
       />
     </View>
     <VSpacer size={16} />
-    <InfoBox iconColor={IOColors.red}>
+    <InfoBox iconColor="red">
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.error")}</Body>
     </InfoBox>
   </>

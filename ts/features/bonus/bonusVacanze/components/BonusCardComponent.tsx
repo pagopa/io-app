@@ -22,7 +22,6 @@ import {
 } from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
 import { makeFontStyleObject } from "../../../../components/core/fonts";
@@ -38,6 +37,7 @@ import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { Icon } from "../../../../components/core/icons/Icon";
 import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {
@@ -202,7 +202,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <Menu>
               <MenuTrigger>
-                <IconFont name={"io-more"} color={IOColors.white} />
+                <Icon name="dotMenu" color="white" />
               </MenuTrigger>
 
               <MenuOptions>

@@ -8,11 +8,11 @@ import { BaseTypography } from "../../../../../../components/core/typography/Bas
 import { H5 } from "../../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../../utils/environment";
 import { addEvery } from "../../../../../../utils/strings";
+import { Icon } from "../../../../../../components/core/icons";
 
 type ProgressConfig = {
   startPercentage: number;
@@ -192,7 +192,7 @@ export const OtpCodeComponent = (props: Props) => {
       >
         {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>
-          <IconFont name="io-copy" color={IOColors.blue} />
+          <Icon name="legCopy" color="blue" />
         </View>
       </TouchableDefaultOpacity>
       <View

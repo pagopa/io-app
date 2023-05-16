@@ -4,11 +4,10 @@ import { View, ActivityIndicator } from "react-native";
 import I18n from "../../../i18n";
 import { TestID } from "../../../types/WithTestID";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
 import Switch from "../../ui/Switch";
 import { calculateSlop } from "../accessibility";
-import { IOColors } from "../variables/IOColors";
 import { IOStyleVariables } from "../variables/IOStyleVariables";
+import { Icon } from "../icons/Icon";
 
 type Props<E> = {
   value: pot.Pot<boolean, E>;
@@ -55,15 +54,9 @@ const NoneErrorVersion = <E, _>(props: NoneErrorProps<E>) => (
     accessibilityLabel={I18n.t("global.genericRetry")}
     hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
     onPress={props.onRetry}
-    style={{ width: IOStyleVariables.switchWidth }}
+    style={{ width: IOStyleVariables.switchWidth, alignItems: "center" }}
   >
-    <IconFont
-      testID={props.testID}
-      name={"io-reload"}
-      size={iconSize}
-      color={IOColors.blue}
-      style={{ textAlign: "center" }}
-    />
+    <Icon testID={props.testID} name="reload" size={iconSize} color="blue" />
   </TouchableDefaultOpacity>
 );
 

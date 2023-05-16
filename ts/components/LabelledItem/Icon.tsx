@@ -8,7 +8,6 @@ import {
 import { isString } from "lodash";
 import { IconProps } from "react-native-vector-icons/Icon";
 import IconFont from "../ui/IconFont";
-import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
@@ -54,7 +53,7 @@ export const Icon: React.FC<Props> = ({
   >
     {isString(icon) ? (
       <IconFont
-        size={variables.iconSize3}
+        size={24}
         color={iconColor}
         name={icon}
         style={[iconStyle, styles.iconFont]}

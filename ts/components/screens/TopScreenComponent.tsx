@@ -2,6 +2,7 @@ import * as React from "react";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import type { IOColors } from "../core/variables/IOColors";
+import type { IOIcons } from "../core/icons";
 import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
 
@@ -10,7 +11,7 @@ interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
   headerTitle?: string;
   customRightIcon?: {
-    iconName: string;
+    iconName: IOIcons;
     onPress: () => void;
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
