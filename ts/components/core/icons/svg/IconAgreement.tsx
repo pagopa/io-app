@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconAgreement = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const IconAgreement = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M20.778 18.628V3.021A3.024 3.024 0 0 0 17.757 0H3.288a3.024 3.024 0 0 0-3.02 3.02v2.352h4.635v15.607A3.024 3.024 0 0 0 7.923 24h12.789a3.024 3.024 0 0 0 3.02-3.02v-2.352h-2.954ZM4.903 3.965H1.674v-.944c0-.89.724-1.615 1.614-1.615.89 0 1.615.724 1.615 1.615v.944ZM9.538 20.98c0 .89-.725 1.614-1.615 1.614S6.31 21.87 6.31 20.98V3.02c0-.593-.173-1.146-.47-1.614h11.918c.89 0 1.614.724 1.614 1.615v15.607H9.538v2.352Zm12.788 0c0 .89-.724 1.614-1.614 1.614H10.475a3.003 3.003 0 0 0 .469-1.614v-.945h11.382v.945Z"
       fill="currentColor"

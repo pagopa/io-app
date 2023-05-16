@@ -22,7 +22,7 @@ type Props = React.ComponentProps<typeof TextualSummary>;
  * @constructor
  */
 const GracePeriod = (props: { period: BpdPeriod }) => (
-  <InfoBox iconName={"io-hourglass"}>
+  <InfoBox iconName="legHourglass">
     <Body testID={"gracePeriod"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.gracePeriodBody",
@@ -43,7 +43,7 @@ const GracePeriod = (props: { period: BpdPeriod }) => (
  * @constructor
  */
 const KO = (props: Props) => (
-  <InfoBox iconName={"io-sad"}>
+  <InfoBox iconName="legEmojiSad">
     <Body testID={"closedPeriodKO"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodKOBody",
@@ -109,7 +109,7 @@ const enhanceOkText = (props: Props): O.Option<string> => {
  * @constructor
  */
 const OK = (props: Props) => (
-  <InfoBox iconName={"io-happy"}>
+  <InfoBox iconName="legEmojiHappy">
     <Body testID={"closedPeriodOK"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodOKBody",

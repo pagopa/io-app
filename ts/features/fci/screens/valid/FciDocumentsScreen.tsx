@@ -13,7 +13,6 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import IconFont from "../../../../components/ui/IconFont";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -35,6 +34,7 @@ import {
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { Icon } from "../../../../components/core/icons/Icon";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
@@ -221,7 +221,7 @@ const FciDocumentsScreen = () => {
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
+      <Icon name="legChevronLeft" color="bluegrey" />
     </TouchableDefaultOpacity>
   );
 
@@ -246,12 +246,8 @@ const FciDocumentsScreen = () => {
             currentPage,
             totalPages
           })}
-          iconLeftColor={
-            currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-          }
-          iconRightColor={
-            currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-          }
+          iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
+          iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
           onPrevious={onPrevious}
           onNext={onNext}
           disabled={false}

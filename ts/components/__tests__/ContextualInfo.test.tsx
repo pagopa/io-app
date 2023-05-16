@@ -38,18 +38,20 @@ const options = {
 };
 
 describe("ContextualInfo component", () => {
-  it("should render a button with the 'io-close' icon", () => {
+  it("should render a close button", () => {
     const component = renderComponent(options);
-    // ensure that the close icon is inside an accessible button
-    expect(buttonByIconName("io-close", component)).toBeDefined();
+    expect(
+      component.queryByTestId("contextualInfo_closeButton")
+    ).not.toBeNull();
   });
 
   describe("when the close button is pressed", () => {
     it("should call `onClose`", () => {
       const onClose = jest.fn();
       const component = renderComponent({ ...options, onClose });
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const closeButton = buttonByIconName("io-close", component)!;
+      const closeButton = component.queryByTestId(
+        "contextualInfo_closeButton"
+      )!;
       fireEvent(closeButton, "onPress");
       expect(onClose).toHaveBeenCalledTimes(1);
     });

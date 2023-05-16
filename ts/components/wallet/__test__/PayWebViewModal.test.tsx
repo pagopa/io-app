@@ -89,7 +89,7 @@ describe("PayWebViewModal component", () => {
     expect(
       component
         .getByTestId("PayWebViewModal-description")
-        .find(node => node.props.iconName === "io-info")
+        .find(node => node.props.iconName === "info")
     ).toBeDefined();
   });
 });

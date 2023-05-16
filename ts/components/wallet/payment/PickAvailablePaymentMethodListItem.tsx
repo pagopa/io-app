@@ -12,9 +12,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
 import { getCardIconFromBrandLogo } from "../card/Logo";
+import { Icon } from "../../core/icons/Icon";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -93,7 +92,7 @@ const PickAvailablePaymentMethodListItem: React.FC<Props> = (props: Props) => {
       description={description}
       rightElement={
         props.rightElement ?? (
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+          <Icon name="chevronRightListItem" color="blue" size={24} />
         )
       }
       onPress={props.onPress}

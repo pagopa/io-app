@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { ColorValue } from "react-native";
 import { getSafeUnreadTransactionsNumSelector } from "../store/reducers/entities/readTransactions";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
 
 type OwnProps = {
-  color?: string;
+  color?: ColorValue;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -18,7 +19,7 @@ class WalletTabIcon extends React.PureComponent<Props> {
     const { color, unreadTransactions } = this.props;
     return (
       <TabIconComponent
-        iconName={"io-portafoglio"}
+        iconName={"navWallet"}
         badgeValue={unreadTransactions}
         color={color}
       />

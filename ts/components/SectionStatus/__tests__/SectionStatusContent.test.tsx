@@ -2,7 +2,6 @@ import React from "react";
 import { View } from "react-native";
 import { render } from "@testing-library/react-native";
 
-import { IOColors } from "../../core/variables/IOColors";
 import StatusContent from "../StatusContent";
 
 describe("StatusContent", () => {
@@ -13,10 +12,9 @@ describe("StatusContent", () => {
         accessibilityLabel={"a label"}
         accessibilityRole={"link"}
         backgroundColor={"aqua"}
-        iconColor={IOColors.aqua}
-        iconName={"io-complete"}
+        foregroundColor={"bluegreyDark"}
+        iconName="ok"
         viewRef={viewRef}
-        labelColor={"bluegreyDark"}
       />
     );
     expect(component.toJSON()).toMatchSnapshot();

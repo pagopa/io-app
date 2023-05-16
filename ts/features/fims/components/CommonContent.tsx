@@ -2,8 +2,8 @@ import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
 import AppHeader from "../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import IconFont from "../../../components/ui/IconFont";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { Icon } from "../../../components/core/icons/Icon";
 
 type Props = {
   close: () => void;
@@ -16,7 +16,7 @@ const CommonContent = ({ close, children }: Props) => (
       <Body />
       <Right>
         <ButtonDefaultOpacity onPress={close} transparent={true}>
-          <IconFont name={"io-close"} />
+          <Icon name="legClose" />
         </ButtonDefaultOpacity>
       </Right>
     </AppHeader>

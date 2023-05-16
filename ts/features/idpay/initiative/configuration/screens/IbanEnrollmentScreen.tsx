@@ -149,7 +149,7 @@ const IbanEnrollmentScreen = () => {
           key={iban.iban}
           title={iban.description}
           subTitle={iban.iban}
-          iconName={isSelected ? "io-radio-on" : "io-radio-off"}
+          iconName={isSelected ? "legRadioOn" : "legRadioOff"}
           smallIconSize={true}
           accessible={true}
           accessibilityRole={"radiogroup"}
