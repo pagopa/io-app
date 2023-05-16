@@ -168,10 +168,10 @@ export const Alert = ({
           {content}
         </Label>
         {action && (
-          <>
+          <View pointerEvents="none">
             <VSpacer size={8} />
             <ButtonLink color={variant} onPress={onPress} label={action} />
-          </>
+          </View>
         )}
       </View>
     </>
