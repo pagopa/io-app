@@ -160,6 +160,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
             onError={_ => {
               setIsError(true);
             }}
+            enablePaging
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>

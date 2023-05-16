@@ -225,6 +225,7 @@ const DocumentWithSignature = (props: Props) => {
       // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
       onError={props.onError}
       onPressLink={constNull}
+      enablePaging
       style={styles.pdf}
     />
   );
