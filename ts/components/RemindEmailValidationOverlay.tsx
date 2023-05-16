@@ -52,7 +52,11 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
 import { Icon } from "./core/icons/Icon";
-import Pictogram, { IOPictograms } from "./core/pictograms/Pictogram";
+import {
+  Pictogram,
+  IOPictograms,
+  IOPictogramSizeScale
+} from "./core/pictograms/Pictogram";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -87,7 +91,7 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
 const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
-const VALIDATION_ILLUSTRATION_WIDTH = 84;
+const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
 const emailCtaKey = "email.validate.cta";
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {

@@ -82,7 +82,7 @@ type IOPictogramsProps = {
 };
 
 export type SVGPictogramProps = {
-  size: number | "100%";
+  size: IOPictogramSizeScale | "100%";
   color: ColorValue;
 };
 
