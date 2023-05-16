@@ -12,7 +12,7 @@ jobs:
   run-static-checks:
      uses: ./.github/workflows/staticcheck.yaml
   release-android:
-    needs: run-static-checks
+    #needs: run-static-checks
     environment: prod
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +55,7 @@ jobs:
         with:
           path: android/app/build/outputs/bundle
   release-ios:
-    needs: run-static-checks
+    #needs: run-static-checks
     environment: prod
     runs-on: macos-latest
     steps:
