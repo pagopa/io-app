@@ -24,25 +24,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 * **Firma con IO:** [[SFEQS-1648](https://pagopa.atlassian.net/browse/SFEQS-1648)] Refactor FCI polling action ([#4599](https://github.com/pagopa/io-app/issues/4599)) ([70a055e](https://github.com/pagopa/io-app/commit/70a055eb14e8ab348450aba7d368a085b8fd95f1))
 * **Firma con IO:** [[SFEQS-1650](https://pagopa.atlassian.net/browse/SFEQS-1650)] Remove unused action ([#4594](https://github.com/pagopa/io-app/issues/4594)) ([1bcbefc](https://github.com/pagopa/io-app/commit/1bcbefc7d2046b7a4a58a0dfc9a9c878f62b349e))
+* **release:** 2.33.0-rc.0 ([d420a98](https://github.com/pagopa/io-app/commit/d420a98693e0ea89052f016833eda855e4307fe8))
 * [[IAI-237](https://pagopa.atlassian.net/browse/IAI-237)] Replace `IconFont` with the `Icon` component ([#4502](https://github.com/pagopa/io-app/issues/4502)) ([3af2b04](https://github.com/pagopa/io-app/commit/3af2b049a760089bb0dda405842498c8c4613405))
 * [[IOAPPFD0-97](https://pagopa.atlassian.net/browse/IOAPPFD0-97)] Update README.md ([#4598](https://github.com/pagopa/io-app/issues/4598)) ([bdbb053](https://github.com/pagopa/io-app/commit/bdbb05363480053b611a9003953beb9c59b58e7e))
-
-## [2.32.0-rc.1](https://github.com/pagopa/io-app/compare/2.32.0-rc.0...2.32.0-rc.1) (2023-05-11)
-
-
-### Features
-
-* [[IOPLT-8](https://pagopa.atlassian.net/browse/IOPLT-8)] Migrate nightly jobs from Circle CI to GitHub Actions ([#4595](https://github.com/pagopa/io-app/issues/4595)) ([f26f197](https://github.com/pagopa/io-app/commit/f26f1970e29d11bf09bf13ff06d1bcc3ff18dfea))
-
-
-### Bug Fixes
-
-* [[IABT-1476](https://pagopa.atlassian.net/browse/IABT-1476)] Remove duplicated fork in startup saga ([#4600](https://github.com/pagopa/io-app/issues/4600)) ([b6df7e4](https://github.com/pagopa/io-app/commit/b6df7e40f26e2e3e7fca6eaa3f67aacac4f768bd))
-
-
-### Chores
-
-* [[IOAPPFD0-2](https://pagopa.atlassian.net/browse/IOAPPFD0-2)] Migrate PR static check to GitHub Actions ([#4110](https://github.com/pagopa/io-app/issues/4110)) ([6f30705](https://github.com/pagopa/io-app/commit/6f307055cd1eea3693396cb777ef6de770df14b4))
 
 ## [2.32.0-rc.0](https://github.com/pagopa/io-app/compare/2.31.0-rc.3...2.32.0-rc.0) (2023-05-09)
 
