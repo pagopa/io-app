@@ -89,7 +89,6 @@ import IconLocationiOS from "./svg/IconLocationiOS";
 import IconLocationiOSFilled from "./svg/IconLocationiOSFilled";
 import IconLocationAndroid from "./svg/IconLocationAndroid";
 import IconExternalLink from "./svg/IconExternalLink";
-import IconUnknownGdo from "./svg/IconUnknownGdo";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconCanceled from "./svg/IconCanceled";
 import IconErrorFilled from "./svg/IconErrorFilled";
@@ -221,7 +220,6 @@ export const IOIcons = {
   tag: IconTag,
   gallery: IconGallery,
   externalLink: IconExternalLink,
-  unknownGdo: IconUnknownGdo,
   cancel: IconCancel,
   help: IconQuestion /* io-question */,
   search: IconSearch /* io-search */,
