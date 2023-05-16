@@ -97,9 +97,10 @@ export const fciSignatureRequestIdSelector = createSelector(
 /**
  * Selects the dossier title if present, undefined otherwise.
  */
-export const fciSignatureRequestDossierTitleSelector = (state: GlobalState) =>
-  pot.isSome(state.features.fci.signatureRequest)
-    ? state.features.fci.signatureRequest.value.dossier_title
+export const fciSignatureRequestDossierTitleSelector = (state: GlobalState) => {
+  const signatureRequest = state.features.fci.signatureRequest;
+  return pot.isSome(signatureRequest)
+    ? signatureRequest.value.dossier_title
     : undefined;
-
+};
 export default reducer;
