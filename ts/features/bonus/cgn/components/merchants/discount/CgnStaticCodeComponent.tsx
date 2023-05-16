@@ -4,13 +4,11 @@ import * as React from "react";
 import { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import Eye from "../../../../../../../img/icons/Eye.svg";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H3 } from "../../../../../../components/core/typography/H3";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
+import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   staticCode: Discount["staticCode"];
@@ -83,18 +81,15 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
           </BaseTypography>
 
           {isCodeVisible ? (
-            <IconFont
-              name={isTap ? "io-complete" : "io-copy"}
-              size={COPY_ICON_SIZE}
-              color={IOColors.blue}
-              style={styles.flexEnd}
-            />
+            <View style={styles.flexEnd}>
+              <Icon
+                name={isTap ? "ok" : "legCopy"}
+                size={COPY_ICON_SIZE}
+                color="blue"
+              />
+            </View>
           ) : (
-            <Eye
-              width={COPY_ICON_SIZE}
-              height={COPY_ICON_SIZE}
-              fill={IOColors.blue}
-            />
+            <Icon name="legEyeShow" size={COPY_ICON_SIZE} color="blue" />
           )}
         </View>
       </TouchableWithoutFeedback>

@@ -188,7 +188,7 @@ const InitiativeDetailsScreen = () => {
       headerBackgroundColor={IOColors["blue-50"]}
       contextualHelp={emptyContextualHelp}
       customRightIcon={{
-        iconName: "io-info",
+        iconName: "info",
         onPress: handleBeneficiaryDetailsPress
       }}
     >

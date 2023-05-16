@@ -56,7 +56,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
   } = servicesMetadata || {};
   return (
     <>
-      <SectionHeader iconName="io-phone" title={"services.contactsAndInfo"} />
+      <SectionHeader iconName="legPhone" title={"services.contactsAndInfo"} />
 
       {/* links */}
       {web_url && <LinkRow text={"services.visitWebsite"} href={web_url} />}
