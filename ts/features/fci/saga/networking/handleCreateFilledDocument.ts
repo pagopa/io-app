@@ -13,7 +13,6 @@ import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import {
-  fciCancelPollingFilledDocument,
   fciLoadQtspFilledDocument,
   fciPollFilledDocument
 } from "../../store/actions";
@@ -83,6 +82,7 @@ export function* watchFciPollSaga(
 ) {
   while (true) {
     try {
+      yield* put(fciPollFilledDocument.request());
       const response = yield* call(fetch, qtspFilledDocumentUrl);
       const responseStatus = response.status;
       if (responseStatus === 200) {
@@ -91,12 +91,12 @@ export function* watchFciPollSaga(
             isReady: true
           })
         );
-        yield* put(fciCancelPollingFilledDocument());
+        yield* put(fciPollFilledDocument.cancel());
       }
       yield* delay(POLLING_FREQ_TIMEOUT);
     } catch (e) {
       yield* put(fciPollFilledDocument.failure(getNetworkError(e)));
-      yield* put(fciCancelPollingFilledDocument());
+      yield* put(fciPollFilledDocument.cancel());
     } finally {
       if (yield* cancelled()) {
         const isFilledDocumentReady: ReturnType<
@@ -119,7 +119,7 @@ export function* filledDocumentPollWatcher(
 ) {
   yield* race({
     task: call(watchFciPollSaga, filledDocumentUrl),
-    cancel: take(fciCancelPollingFilledDocument),
+    cancel: take(fciPollFilledDocument.cancel),
     delay: delay(POLLING_TIME_THRESHOLD)
   });
 }
