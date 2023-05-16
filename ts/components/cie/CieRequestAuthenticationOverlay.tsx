@@ -9,7 +9,10 @@ import {
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 import * as O from "fp-ts/lib/Option";
-import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import {
+  getRedirects,
+  NativeRedirectError
+} from "@pagopa/io-react-native-login-utils";
 import URLParse from "url-parse";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
@@ -29,6 +32,8 @@ import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/l
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { AppDispatch } from "../../App";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { IdpCIE } from "../../screens/authentication/LandingScreen";
+import { mixpanelTrack } from "../../mixpanel";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -149,7 +154,16 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
               reject("Missing SAMLRequest");
             }
           })
-          .catch(error => reject(error));
+          .catch(error => {
+            const e = error as NativeRedirectError;
+            void mixpanelTrack("SPID_ERROR", {
+              idp: IdpCIE.id,
+              code: e.userInfo.StatusCode,
+              description: e.userInfo.Error,
+              domain: e.userInfo.URL
+            });
+            reject(error);
+          });
       })
       .catch(error => reject(error));
   });
