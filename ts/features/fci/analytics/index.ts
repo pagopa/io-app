@@ -125,6 +125,7 @@ const trackFciAction =
       case getType(fciClearStateRequest):
       case getType(fciPollFilledDocument.request):
       case getType(fciPollFilledDocument.success):
+      case getType(fciPollFilledDocument.cancel):
         return mp.track(action.type, { event_type: FciUxEvent.TECH });
       case getType(fciSignatureRequestFromId.failure):
       case getType(fciLoadQtspClauses.failure):
@@ -133,7 +134,7 @@ const trackFciAction =
       case getType(fciPollFilledDocument.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload),
-          event_type: FciUxEvent.TECH
+          event_type: FciUxEvent.KO
         });
     }
     return Promise.resolve();
