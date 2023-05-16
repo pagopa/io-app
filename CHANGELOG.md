@@ -2,48 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.33.0-rc.0](https://github.com/pagopa/io-app/compare/2.32.0-rc.1...2.33.0-rc.0) (2023-05-16)
-
-
-### Features
-
-* [[IOCOM-145](https://pagopa.atlassian.net/browse/IOCOM-145)] Pn preferences removal ([#4591](https://github.com/pagopa/io-app/issues/4591)) ([2ae5328](https://github.com/pagopa/io-app/commit/2ae5328b176ed04ebe4594dc4d725b92e0328d94))
-* [[IOCOM-211](https://pagopa.atlassian.net/browse/IOCOM-211)] Tests on workerMessagePrecondition ([#4605](https://github.com/pagopa/io-app/issues/4605)) ([fd052a9](https://github.com/pagopa/io-app/commit/fd052a991d0dbfc2bff72a97eff31cb29ed7d5c9))
-* [[IOPLT-10](https://pagopa.atlassian.net/browse/IOPLT-10)] Migrate weekly job from Circle CI to GitHub Actions ([#4602](https://github.com/pagopa/io-app/issues/4602)) ([56a0cb9](https://github.com/pagopa/io-app/commit/56a0cb9a39b8c6d59fc6d1e58c5cf6bce42910c6))
-* [[IOPLT-7](https://pagopa.atlassian.net/browse/IOPLT-7)] Migrate e2e tests to Github Actions ([#4593](https://github.com/pagopa/io-app/issues/4593)) ([b5c64f2](https://github.com/pagopa/io-app/commit/b5c64f2c21f74b5956c301c38002f3bb70b876ef))
-* [[IOPLT-9](https://pagopa.atlassian.net/browse/IOPLT-9)] Migrate release workflow ([#4609](https://github.com/pagopa/io-app/issues/4609)) ([40a2bb4](https://github.com/pagopa/io-app/commit/40a2bb4f6235d1963c7d27c4588239c2dcbb5172))
-* **Firma con IO:** [[SFEQS-1661](https://pagopa.atlassian.net/browse/SFEQS-1661)] Edit signature fields order ([#4604](https://github.com/pagopa/io-app/issues/4604)) ([b15303b](https://github.com/pagopa/io-app/commit/b15303b905553a9720c1e363416d5ad6bce95b56))
-
-
-### Bug Fixes
-
-* **Firma con IO:** [[SFEQS-1342](https://pagopa.atlassian.net/browse/SFEQS-1342)] Update abort signature flow bottom sheet copy ([#4603](https://github.com/pagopa/io-app/issues/4603)) ([79cac3a](https://github.com/pagopa/io-app/commit/79cac3a8c377b54d75fe749c81e46438d1c9b104))
-
-
-### Chores
-
-* **Firma con IO:** [[SFEQS-1648](https://pagopa.atlassian.net/browse/SFEQS-1648)] Refactor FCI polling action ([#4599](https://github.com/pagopa/io-app/issues/4599)) ([70a055e](https://github.com/pagopa/io-app/commit/70a055eb14e8ab348450aba7d368a085b8fd95f1))
-* **Firma con IO:** [[SFEQS-1650](https://pagopa.atlassian.net/browse/SFEQS-1650)] Remove unused action ([#4594](https://github.com/pagopa/io-app/issues/4594)) ([1bcbefc](https://github.com/pagopa/io-app/commit/1bcbefc7d2046b7a4a58a0dfc9a9c878f62b349e))
-* [[IAI-237](https://pagopa.atlassian.net/browse/IAI-237)] Replace `IconFont` with the `Icon` component ([#4502](https://github.com/pagopa/io-app/issues/4502)) ([3af2b04](https://github.com/pagopa/io-app/commit/3af2b049a760089bb0dda405842498c8c4613405))
-* [[IOAPPFD0-97](https://pagopa.atlassian.net/browse/IOAPPFD0-97)] Update README.md ([#4598](https://github.com/pagopa/io-app/issues/4598)) ([bdbb053](https://github.com/pagopa/io-app/commit/bdbb05363480053b611a9003953beb9c59b58e7e))
-
-## [2.32.0-rc.1](https://github.com/pagopa/io-app/compare/2.32.0-rc.0...2.32.0-rc.1) (2023-05-11)
-
-
-### Features
-
-* [[IOPLT-8](https://pagopa.atlassian.net/browse/IOPLT-8)] Migrate nightly jobs from Circle CI to GitHub Actions ([#4595](https://github.com/pagopa/io-app/issues/4595)) ([f26f197](https://github.com/pagopa/io-app/commit/f26f1970e29d11bf09bf13ff06d1bcc3ff18dfea))
-
-
-### Bug Fixes
-
-* [[IABT-1476](https://pagopa.atlassian.net/browse/IABT-1476)] Remove duplicated fork in startup saga ([#4600](https://github.com/pagopa/io-app/issues/4600)) ([b6df7e4](https://github.com/pagopa/io-app/commit/b6df7e40f26e2e3e7fca6eaa3f67aacac4f768bd))
-
-
-### Chores
-
-* [[IOAPPFD0-2](https://pagopa.atlassian.net/browse/IOAPPFD0-2)] Migrate PR static check to GitHub Actions ([#4110](https://github.com/pagopa/io-app/issues/4110)) ([6f30705](https://github.com/pagopa/io-app/commit/6f307055cd1eea3693396cb777ef6de770df14b4))
-
 ## [2.32.0-rc.0](https://github.com/pagopa/io-app/compare/2.31.0-rc.3...2.32.0-rc.0) (2023-05-09)
 
 
