@@ -34,7 +34,7 @@ jobs:
           ruby-version: 2.7
           bundler-cache: true
       - id: setup-android-release
-        run: ./scripts/android-release.sh
+        run: ./scripts/android-release.sh ./android/app
         shell: bash
         env:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
