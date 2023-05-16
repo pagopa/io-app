@@ -15,11 +15,11 @@ exports[`SectionHeader component should match the snapshot 1`] = `
     accessibilityLabel=""
     accessible={false}
     align="xMidYMid"
-    bbHeight={18}
-    bbWidth={18}
+    bbHeight={20}
+    bbWidth={20}
     color={4282866285}
     focusable={false}
-    height={18}
+    height={20}
     importantForAccessibility="no-hide-descendants"
     meetOrSlice={0}
     minX={0}
@@ -35,15 +35,15 @@ exports[`SectionHeader component should match the snapshot 1`] = `
         },
         Object {
           "flex": 0,
-          "height": 18,
-          "width": 18,
+          "height": 20,
+          "width": 20,
         },
       ]
     }
     tintColor={4282866285}
     vbHeight={24}
     vbWidth={24}
-    width={18}
+    width={20}
   >
     <RNSVGGroup>
       <RNSVGPath
