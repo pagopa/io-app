@@ -3,8 +3,6 @@ import { View, StyleSheet } from "react-native";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import IconFont from "../../../../../../components/ui/IconFont";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
 import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
@@ -18,6 +16,8 @@ import {
   HSpacer,
   VSpacer
 } from "../../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../../components/core/icons/Icon";
+import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../../components/core/IOBadge";
 
 type Props = {
@@ -77,12 +77,9 @@ const EycaStatusDetailsComponent = (props: Props) => {
         <View style={IOStyles.row}>
           <H4>{I18n.t("bonus.cgn.detail.status.eyca")}</H4>
           <HSpacer size={8} />
-          <IconFont
-            name={"io-info"}
-            size={ICON_SIZE}
-            color={IOColors.blue}
-            onPress={props.openBottomSheet}
-          />
+          <TouchableDefaultOpacity onPress={props.openBottomSheet}>
+            <Icon name="info" size={ICON_SIZE} color="blue" />
+          </TouchableDefaultOpacity>
         </View>
         {badgeByStatus()}
       </View>

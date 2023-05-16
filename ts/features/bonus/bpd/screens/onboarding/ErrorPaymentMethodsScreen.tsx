@@ -5,16 +5,15 @@ import { Dispatch } from "redux";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -46,12 +45,7 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <VSpacer size={40} />
             <VSpacer size={40} />
-            <IconFont
-              name={"io-complete"}
-              size={120}
-              color={IOColors.aqua as string}
-              style={styles.center}
-            />
+            <Icon name="ok" size={120} color="aqua" />
             <VSpacer size={48} />
             <H2 style={styles.center}>{title}</H2>
             <VSpacer size={40} />

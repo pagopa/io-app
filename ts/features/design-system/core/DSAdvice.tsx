@@ -7,8 +7,6 @@ import { InfoBox } from "../../../components/box/InfoBox";
 /* Types */
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
-
 import { Label } from "../../../components/core/typography/Label";
 import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -103,11 +101,7 @@ export const DSAdvice = () => (
         </Body>
       </InfoBox>
     </View>
-    <InfoBox
-      alignedCentral={true}
-      iconSize={24}
-      iconColor={IOColors.bluegreyDark}
-    >
+    <InfoBox alignedCentral={true} iconSize={24} iconColor={"bluegreyDark"}>
       <H5 weight={"Regular"}>
         {
           "Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti restituiremo l'importo al più presto."
@@ -140,7 +134,7 @@ export const DSAdvice = () => (
     />
     <VSpacer size={24} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
+      <InfoBox iconName="profileAlt" iconColor="bluegrey">
         <Label color={"bluegrey"} weight={"Regular"}>
           Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
           visitando la sezione Profilo

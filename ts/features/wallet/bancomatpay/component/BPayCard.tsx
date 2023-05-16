@@ -5,13 +5,13 @@ import { View, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { H4 } from "../../../../components/core/typography/H4";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons";
 
 type Props = {
   phone?: string;
@@ -49,7 +49,7 @@ const topLeft = (phone: string) => (
   <View style={IOStyles.rowSpaceBetween}>
     {phone && (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <IconFont name={"io-phone"} size={22} />
+        <Icon name="legPhone" size={24} />
         <HSpacer size={8} />
         <H4 weight={"Regular"} testID="phone">
           {phone}

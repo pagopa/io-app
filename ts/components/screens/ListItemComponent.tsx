@@ -12,13 +12,12 @@ import {
 import Switch from "../../components/ui/Switch";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
-import { Icon } from "../core/icons";
 import { IOBadge } from "../core/IOBadge";
 import { HSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
+import { IOIcons, Icon } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
-import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
 type Props = Readonly<{
@@ -30,7 +29,7 @@ type Props = Readonly<{
   isFirstItem?: boolean;
   isLastItem?: boolean;
   hasBadge?: boolean;
-  iconName?: string;
+  iconName?: IOIcons;
   smallIconSize?: boolean;
   iconOnTop?: boolean;
   iconSize?: number;
@@ -175,11 +174,10 @@ export default class ListItemComponent extends React.Component<Props> {
         </View>
         {this.props.iconName !== undefined && this.props.hideIcon !== true && (
           <View style={this.props.iconOnTop && styles.alignToStart}>
-            <IconFont
+            <Icon
               name={this.props.iconName}
               size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
-              style={IOStyles.selfCenter}
-              color={customVariables.contentPrimaryBackground}
+              color="blue"
             />
           </View>
         )}
