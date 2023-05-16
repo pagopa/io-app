@@ -9,8 +9,6 @@ import {
   fciSigningRequest,
   fciUpdateDocumentSignaturesRequest,
   fciClearStateRequest,
-  fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest,
   fciPollFilledDocument
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
@@ -125,10 +123,9 @@ const trackFciAction =
       case getType(fciSigningRequest.success):
       case getType(fciUpdateDocumentSignaturesRequest):
       case getType(fciClearStateRequest):
-      case getType(fciShowSignedDocumentsStartRequest):
-      case getType(fciShowSignedDocumentsEndRequest):
       case getType(fciPollFilledDocument.request):
       case getType(fciPollFilledDocument.success):
+      case getType(fciPollFilledDocument.cancel):
         return mp.track(action.type, { event_type: FciUxEvent.TECH });
       case getType(fciSignatureRequestFromId.failure):
       case getType(fciLoadQtspClauses.failure):
@@ -137,7 +134,7 @@ const trackFciAction =
       case getType(fciPollFilledDocument.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload),
-          event_type: FciUxEvent.TECH
+          event_type: FciUxEvent.KO
         });
     }
     return Promise.resolve();

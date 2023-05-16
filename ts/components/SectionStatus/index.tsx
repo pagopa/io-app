@@ -17,6 +17,7 @@ import { maybeNotNullyString } from "../../utils/strings";
 import { openWebUrl } from "../../utils/url";
 import { Link } from "../core/typography/Link";
 import { IOColors } from "../core/variables/IOColors";
+import { IOIcons } from "../core/icons";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -32,18 +33,17 @@ export const statusColorMap: Record<LevelEnum, IOColors> = {
   [LevelEnum.warning]: "orange"
 };
 
-export const statusIconMap: Record<LevelEnum, string> = {
-  [LevelEnum.normal]: "io-complete",
-  [LevelEnum.critical]: "io-warning",
-  [LevelEnum.warning]: "io-info"
+export const statusIconMap: Record<LevelEnum, IOIcons> = {
+  [LevelEnum.normal]: "ok",
+  [LevelEnum.critical]: "legWarning",
+  [LevelEnum.warning]: "info"
 };
 
 // map the text background color with the relative text color
-const textDefaultColor = "white";
 export const getStatusTextColor = (
   level: LevelEnum
 ): "bluegreyDark" | "white" =>
-  level === LevelEnum.normal ? "bluegreyDark" : textDefaultColor;
+  level === LevelEnum.normal ? "bluegreyDark" : "white";
 
 export const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
@@ -84,11 +84,10 @@ export const InnerSectionStatus = (
             "global.accessibility.alert"
           )}`}
           backgroundColor={backgroundColor}
-          iconColor={IOColors[color]}
           iconName={iconName}
           testID={"SectionStatusComponentContent"}
           viewRef={viewRef}
-          labelColor={color}
+          foregroundColor={color}
         >
           {`${sectionStatus.message[locale]} `}
         </StatusContent>
@@ -109,10 +108,9 @@ export const InnerSectionStatus = (
             // disable accessibility to prevent the override of the container
             accessible={false}
             backgroundColor={backgroundColor}
-            iconColor={IOColors[color]}
             iconName={iconName}
             viewRef={viewRef}
-            labelColor={color}
+            foregroundColor={color}
           >
             {`${sectionStatus.message[locale]} `}
             <Link

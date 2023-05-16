@@ -1,9 +1,9 @@
 import { AccessibilityRole, StyleSheet, View } from "react-native";
 import React, { ComponentProps } from "react";
 import { WithTestID } from "../../types/WithTestID";
-import IconFont from "../ui/IconFont";
 import { Label } from "../core/typography/Label";
 import { IOColors } from "../core/variables/IOColors";
+import { IOIcons, Icon } from "../core/icons/Icon";
 
 const iconSize = 24;
 
@@ -28,10 +28,9 @@ type Props = WithTestID<{
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
   backgroundColor: IOColors;
-  iconColor: string;
-  iconName: string;
+  iconName: IOIcons;
   viewRef: React.RefObject<View>;
-  labelColor: ComponentProps<typeof Label>["color"];
+  foregroundColor: ComponentProps<typeof Label>["color"];
   labelPaddingVertical?: number;
 }>;
 
@@ -42,10 +41,9 @@ const StatusContent: React.FC<Props> = ({
   accessibilityRole,
   backgroundColor,
   children,
-  iconColor,
   iconName,
   viewRef,
-  labelColor,
+  foregroundColor,
   labelPaddingVertical
 }) => (
   <View
@@ -57,14 +55,11 @@ const StatusContent: React.FC<Props> = ({
     style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
     testID={"SectionStatusContent"}
   >
-    <IconFont
-      color={iconColor}
-      name={iconName}
-      size={iconSize}
-      style={styles.alignCenter}
-    />
+    <View style={styles.alignCenter}>
+      <Icon color={foregroundColor} name={iconName} size={iconSize} />
+    </View>
     <Label
-      color={labelColor}
+      color={foregroundColor}
       style={[
         styles.text,
         labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}

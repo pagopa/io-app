@@ -9,7 +9,6 @@ import { v4 as uuid } from "uuid";
 
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
@@ -187,11 +186,7 @@ export const PayWebViewModal = (props: Props) => {
             style={styles.descriptionContainer}
             testID={"PayWebViewModal-description"}
           >
-            <InfoBox
-              iconName={"io-info"}
-              iconColor={IOColors.bluegreyDark}
-              iconSize={24}
-            >
+            <InfoBox iconName="info" iconColor="bluegreyDark" iconSize={24}>
               <Label weight={"Regular"} color={"bluegrey"}>
                 {I18n.t("wallet.challenge3ds.description")}
               </Label>

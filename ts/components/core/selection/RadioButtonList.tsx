@@ -5,8 +5,7 @@ import { H4 } from "../typography/H4";
 import { IOStyles } from "../variables/IOStyles";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { IOColors } from "../variables/IOColors";
-import IconFont from "./../../ui/IconFont";
-import themeVariables from "./../../../theme/variables";
+import { Icon } from "../icons/Icon";
 
 export type RadioItem<T> = {
   body: ReactNode;
@@ -119,18 +118,21 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
           ]}
           testID={`pspItemTestID_${item.id}`}
         >
-          <IconFont
-            name={
-              props.selectedItem === item.id ? "io-radio-on" : "io-radio-off"
-            }
-            size={24}
-            color={themeVariables.contentPrimaryBackground}
+          <TouchableDefaultOpacity
             onPress={() => props.onPress(item.id)}
             style={[
               styles.icon,
               props.rightSideSelection && styles.rightSideIcon
             ]}
-          />
+          >
+            <Icon
+              name={
+                props.selectedItem === item.id ? "legRadioOn" : "legRadioOff"
+              }
+              size={24}
+              color="blue"
+            />
+          </TouchableDefaultOpacity>
           {getBody(item, () => props.onPress(item.id))}
         </View>
       ))}

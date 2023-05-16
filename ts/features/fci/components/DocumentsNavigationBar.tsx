@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import IconFont from "../../../components/ui/IconFont";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { WithTestID } from "../../../types/WithTestID";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { HSpacer } from "../../../components/core/spacer/Spacer";
+import { Icon } from "../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,9 +22,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingBottom: 0,
     paddingTop: 0
-  },
-  icon: {
-    paddingRight: 0
   },
   shadow: {
     // iOS
@@ -48,8 +45,8 @@ export type IndicatorPositionEnum = "left" | "right";
 type Props = WithTestID<{
   titleRight: string;
   titleLeft: string;
-  iconRightColor?: string;
-  iconLeftColor?: string;
+  iconRightColor?: IOColors;
+  iconLeftColor?: IOColors;
   disabled?: boolean;
   indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
@@ -69,10 +66,10 @@ const renderNavigationComponent = (
       disabled={disabled}
       testID={"DocumentsNavigationBarLeftButtonTestID"}
     >
-      <IconFont
-        name={"io-back"}
-        style={styles.icon}
-        color={iconLeftColor ?? IOColors.blue}
+      <Icon
+        name="chevronLeft"
+        size={24}
+        color={iconLeftColor ?? "blue"}
         accessible={true}
       />
     </ButtonDefaultOpacity>
@@ -85,10 +82,10 @@ const renderNavigationComponent = (
       disabled={disabled}
       testID={"DocumentsNavigationBarRightButtonTestID"}
     >
-      <IconFont
-        name={"io-right"}
-        style={styles.icon}
-        color={iconRightColor ?? IOColors.blue}
+      <Icon
+        name="chevronRight"
+        size={24}
+        color={iconRightColor ?? "blue"}
         accessible={true}
       />
     </ButtonDefaultOpacity>
