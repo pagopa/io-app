@@ -3,17 +3,6 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import BatteryIcon from "../../../../img/assistance/battery.svg";
-import CardIcon from "../../../../img/assistance/card.svg";
-import EmailIcon from "../../../../img/assistance/email.svg";
-import GalleryIcon from "../../../../img/assistance/gallery.svg";
-import StockIcon from "../../../../img/assistance/giacenza.svg";
-import HistoryIcon from "../../../../img/assistance/history.svg";
-import InfoIcon from "../../../../img/assistance/info.svg";
-import LoginIcon from "../../../../img/assistance/login.svg";
-import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
-import DeviceIcon from "../../../../img/assistance/telefonia.svg";
-import WebSiteIcon from "../../../../img/assistance/website.svg";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
@@ -73,6 +62,8 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
+import { Icon } from "../../../components/core/icons/Icon";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 /**
  * Transform an array of string into a Zendesk
@@ -88,92 +79,92 @@ type ItemProps = {
   identityProvider: string;
 };
 
-const iconProps = { width: 24, height: 24 };
+const iconStyleProps = { size: 24, color: "blue" as IOColors };
 
 const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     id: "profileNameSurname",
-    icon: <NameSurnameIcon {...iconProps} />,
+    icon: <Icon name="profile" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.nameSurname"),
     value: props.nameSurname,
     testId: "profileNameSurname"
   },
   {
     id: "profileFiscalCode",
-    icon: <CardIcon {...iconProps} />,
+    icon: <Icon name="fiscalCodeIndividual" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
   },
   {
     id: "profileEmail",
-    icon: <EmailIcon {...iconProps} />,
+    icon: <Icon name="email" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email,
     testId: "profileEmail"
   },
   {
     id: "galleryProminentDisclosure",
-    icon: <GalleryIcon {...iconProps} />,
+    icon: <Icon name="gallery" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.prominentDisclosure"),
     value: I18n.t("support.askPermissions.prominentDisclosureData"),
     testId: "galleryProminentDisclosure"
   },
   {
     id: "paymentIssues",
-    icon: <StockIcon {...iconProps} />,
+    icon: <Icon name="docGiacenza" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.stock"),
     value: I18n.t("support.askPermissions.stockValue"),
     testId: "paymentIssues"
   },
   {
     id: "addCardIssues",
-    icon: <CardIcon {...iconProps} />,
+    icon: <Icon name="creditCard" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.card"),
     value: I18n.t("support.askPermissions.cardValue"),
     testId: "addCardIssues"
   },
   {
     id: "addFciIssues",
-    icon: <StockIcon {...iconProps} />,
+    icon: <Icon name="docGiacenza" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.fci"),
     value: I18n.t("support.askPermissions.fciValue"),
     testId: "addFciIssues"
   },
   {
-    icon: <DeviceIcon {...iconProps} />,
+    icon: <Icon name="device" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
     value: props.deviceDescription,
     zendeskId: zendeskDeviceAndOSId,
     testId: "deviceAndOS"
   },
   {
-    icon: <BatteryIcon {...iconProps} />,
+    icon: <Icon name="battery" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.devicePerformance"),
     value: I18n.t("support.askPermissions.devicePerformanceData"),
     testId: "devicePerformance"
   },
   {
-    icon: <WebSiteIcon {...iconProps} />,
+    icon: <Icon name="website" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.ipAddress"),
     value: I18n.t("support.askPermissions.ipAddressValue"),
     testId: "ipAddress"
   },
   {
-    icon: <InfoIcon {...iconProps} />,
+    icon: <Icon name="info" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.appVersionsHistory"),
     value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
     testId: "appVersionsHistory"
   },
   {
-    icon: <LoginIcon {...iconProps} />,
+    icon: <Icon name="login" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.identityProvider"),
     value: props.identityProvider,
     zendeskId: zendeskidentityProviderId,
     testId: "identityProvider"
   },
   {
-    icon: <HistoryIcon {...iconProps} />,
+    icon: <Icon name="history" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.navigationData"),
     value: I18n.t("support.askPermissions.navigationDataValue"),
     testId: "navigationData"
@@ -361,11 +352,6 @@ const ZendeskAskPermissions = () => {
     <BaseScreenComponent
       showChat={false}
       goBack={true}
-      // customRightIcon is needed to have a centered header title
-      customRightIcon={{
-        iconName: "",
-        onPress: constNull
-      }}
       headerTitle={I18n.t("support.askPermissions.header")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>

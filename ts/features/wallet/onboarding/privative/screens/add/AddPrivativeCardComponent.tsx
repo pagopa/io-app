@@ -13,7 +13,6 @@ import {
   isCoBadgeOrPrivativeBlocked
 } from "../../../../../../utils/paymentMethod";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { Body } from "../../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import {
@@ -88,7 +87,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
             />
             <VSpacer size={24} />
             {isBlocked && (
-              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+              <InfoBox iconColor="red" iconName="legError">
                 <Body>{blockedCard}</Body>
               </InfoBox>
             )}

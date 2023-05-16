@@ -12,12 +12,12 @@ import {
 } from "../../../store/reducers/wallet/creditCard";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { BadgeComponent } from "../../screens/BadgeComponent";
-import IconFont from "../../ui/IconFont";
 import customVariables from "../../../theme/variables";
 import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { IOColors } from "../../core/variables/IOColors";
 import { VSpacer } from "../../core/spacer/Spacer";
+import { Icon } from "../../core/icons/Icon";
 import { Body } from "../../core/typography/Body";
 
 type Props = Readonly<{
@@ -122,10 +122,10 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
               </Label>
             </View>
             <View style={itemStyles.icon}>
-              <IconFont
-                name={"io-right"}
+              <Icon
+                name="chevronRightListItem"
                 size={ICON_WIDTH}
-                color={customVariables.contentPrimaryBackground}
+                color="blue"
               />
             </View>
           </View>

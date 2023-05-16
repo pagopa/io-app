@@ -282,12 +282,8 @@ const DocumentWithSignature = (props: Props) => {
           currentPage,
           totalPages
         })}
-        iconLeftColor={
-          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-        }
-        iconRightColor={
-          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-        }
+        iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
+        iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}

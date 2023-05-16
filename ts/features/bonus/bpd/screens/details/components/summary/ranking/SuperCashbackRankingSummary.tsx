@@ -1,13 +1,11 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../../../i18n";
 import { bpdRankingEnabledSelector } from "../../../../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
@@ -20,6 +18,7 @@ import {
   isBpdRankingReady
 } from "../../../../../store/reducers/details/periods";
 import { BpdBaseShadowBoxLayout } from "../base/BpdBaseShadowBoxLayout";
+import { Icon } from "../../../../../../../../components/core/icons";
 import { useRankingNotReadyBottomSheet } from "./RankingNotReadyBottomSheet";
 
 const loadLocales = () => ({
@@ -31,8 +30,7 @@ const loadLocales = () => ({
 const styles = StyleSheet.create({
   title: {
     textAlign: "center"
-  },
-  center: { alignSelf: "center" }
+  }
 });
 
 type OwnProps = {
@@ -102,12 +100,9 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
           row2={
             <>
               <VSpacer size={4} />
-              <IconFont
-                name={"io-hourglass"}
-                size={24}
-                color={IOColors.blue as string}
-                style={styles.center}
-              />
+              <View style={{ alignSelf: "center" }}>
+                <Icon name="legHourglass" size={24} color="blue" />
+              </View>
               <VSpacer size={4} />
             </>
           }

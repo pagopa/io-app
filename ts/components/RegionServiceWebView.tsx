@@ -1,7 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Container, Content, Right } from "native-base";
+import {
+  Body,
+  Container,
+  Content,
+  Right,
+  Text as NBButtonText
+} from "native-base";
 import * as React from "react";
 import { View, Alert, Image, StyleSheet } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
@@ -12,7 +18,6 @@ import {
 import URLParse from "url-parse";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
-import customVariables from "../theme/variables";
 import { WebviewMessage } from "../types/WebviewMessage";
 import { getRemoteLocale } from "../utils/messages";
 import { showToast } from "../utils/showToast";
@@ -23,13 +28,13 @@ import {
 } from "../utils/webview";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { VSpacer } from "./core/spacer/Spacer";
-import { Body as BodyText } from "./core/typography/Body";
 import { Label } from "./core/typography/Label";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import AppHeader from "./ui/AppHeader";
-import IconFont from "./ui/IconFont";
 import { LightModalContextInterface } from "./ui/LightModal";
+import { Icon } from "./core/icons/Icon";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   onWebviewClose: () => void;
@@ -39,8 +44,6 @@ type Props = {
 
 const styles = StyleSheet.create({
   itemsCenter: { alignItems: "center" },
-  selfCenter: { alignSelf: "center" },
-  flex1: { flex: 1 },
   errorContainer: {
     flex: 1,
     alignItems: "center"
@@ -77,17 +80,14 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={close} transparent={true}>
-            <IconFont name={"io-close"} />
+            <Icon name="legClose" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
-      <Content style={styles.flex1}>
-        <IconFont
-          name={"io-complete"}
-          size={120}
-          color={customVariables.colorHighlight}
-          style={styles.selfCenter}
-        />
+      <Content style={IOStyles.flex}>
+        <View style={IOStyles.selfCenter}>
+          <Icon name="ok" size={120} color="aqua" />
+        </View>
         <VSpacer size={24} />
 
         <View style={styles.itemsCenter}>
@@ -104,19 +104,15 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={close} transparent={true}>
-            <IconFont name={"io-close"} />
+            <Icon name="legClose" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
-      <Content style={styles.flex1}>
-        <IconFont
-          name={"io-error"}
-          size={120}
-          color={customVariables.brandDanger}
-          style={styles.selfCenter}
-        />
+      <Content style={IOStyles.flex}>
+        <View style={IOStyles.selfCenter}>
+          <Icon name="legError" size={120} color="red" />
+        </View>
         <VSpacer size={16} />
-
         <View style={styles.itemsCenter}>
           <Label weight={"Bold"}>{text}</Label>
         </View>
@@ -151,7 +147,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           light={true}
           bordered={true}
         >
-          <BodyText>{I18n.t("global.buttons.cancel")}</BodyText>
+          <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
         </ButtonDefaultOpacity>
         <ButtonDefaultOpacity
           onPress={handleReload}

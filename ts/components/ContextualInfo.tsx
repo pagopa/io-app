@@ -2,10 +2,10 @@ import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
 import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
 import themeVariables from "../theme/variables";
-import IconFont from "./ui/IconFont";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import AppHeader from "./ui/AppHeader";
 import { H1 } from "./core/typography/H1";
+import { Icon } from "./core/icons";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 
 type Props = Readonly<{
   title: string;
@@ -50,12 +50,12 @@ export default class ContextualInfo extends React.Component<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <ButtonDefaultOpacity
+            <TouchableDefaultOpacity
               onPress={() => this.props.onClose()}
-              transparent={true}
+              testID="contextualInfo_closeButton"
             >
-              <IconFont name="io-close" />
-            </ButtonDefaultOpacity>
+              <Icon name="legClose" color="bluegreyDark" />
+            </TouchableDefaultOpacity>
           </Right>
         </AppHeader>
         <Content

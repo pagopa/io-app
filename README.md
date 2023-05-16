@@ -4,8 +4,8 @@
 </p>
 
 <p align="center">
-    <a href="https://circleci.com/gh/pagopa/io-app">
-        <img src="https://circleci.com/gh/pagopa/io-app.svg?style=svg" />
+    <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
     </a>
     <a href="https://codecov.io/gh/pagopa/io-app">
         <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
