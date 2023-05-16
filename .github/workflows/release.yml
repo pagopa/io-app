@@ -1,9 +1,4 @@
 name: Release new app version
-env:
-  IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
-  IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
-  IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
-  IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
 on:
   push:
     tags: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
@@ -32,22 +27,21 @@ jobs:
         with:
           ruby-version: 2.7
           bundler-cache: true
-      - id: setup-android-release
-        run: ./scripts/android-release.sh ./android/app
+      - id: build-release-android
+        run: |
+          ./scripts/android-release.sh ./android/app
+          yarn bundle:android-release
+          cd android && bundle exec fastlane alpha
+          cd android && bundle exec fastlane promote_internal_to_alpha
         shell: bash
         env:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
-      # Build the js bundle in release mode
-      - id: build-js-bundle
-        run: yarn bundle:android-release
-      # Run alpha lane
-      - id: run-alpha-lane
-        run: cd android && bundle exec fastlane alpha
-      # Promote internal to alpha
-      - id: promote-internal-to-alpha
-        run: cd android && bundle exec fastlane promote_internal_to_alpha
+          IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
+          IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
+          IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
+          IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
       # Store artifacts
       - id: archive-production-artifacts
         uses: actions/upload-artifact@v3
