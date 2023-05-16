@@ -210,10 +210,8 @@ platform :ios do
     # See https://github.com/fastlane/fastlane/issues/20741
     ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
 
-    # Setup the circleci environment
-    setup_ci(
-      provider: "circleci"
-    )
+    # Setup the CI environment
+    setup_ci()
 
     # use the App Store API Key to authenticate
     api_key = app_store_connect_api_key(
