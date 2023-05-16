@@ -5,7 +5,7 @@ import * as React from "react";
 import { View, StatusBar, StyleSheet } from "react-native";
 
 import variables from "../theme/variables";
-import { Icon } from "./core/icons";
+import { IOIconSizeScale, Icon } from "./core/icons";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ICON_SIZE = 96;
+const ICON_SIZE: IOIconSizeScale = 96;
 
 export const IdpSuccessfulAuthentication = () => (
   <View style={styles.container}>

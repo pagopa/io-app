@@ -62,7 +62,7 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
-import { Icon } from "../../../components/core/icons/Icon";
+import { IOIconSizeScale, Icon } from "../../../components/core/icons/Icon";
 import { IOColors } from "../../../components/core/variables/IOColors";
 
 /**
@@ -79,7 +79,10 @@ type ItemProps = {
   identityProvider: string;
 };
 
-const iconStyleProps = { size: 24, color: "blue" as IOColors };
+const iconStyleProps = {
+  size: 24 as IOIconSizeScale,
+  color: "blue" as IOColors
+};
 
 const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {

@@ -26,7 +26,12 @@ import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { AnimatedIcon, IOIcons, IconClassComponent } from "../core/icons/Icon";
+import {
+  AnimatedIcon,
+  IOIconSizeScale,
+  IOIcons,
+  IconClassComponent
+} from "../core/icons/Icon";
 import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonOutline = WithTestID<{
@@ -395,7 +400,7 @@ ButtonOutline) => {
   }, [isPressed]);
 
   // Icon size
-  const iconSize = small ? 16 : 20;
+  const iconSize: IOIconSizeScale = small ? 16 : 20;
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (

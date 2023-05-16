@@ -1,6 +1,6 @@
 import React from "react";
 import { GestureResponderEvent, View } from "react-native";
-import { IOIcons, Icon } from "../core/icons";
+import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { IOPictograms, Pictogram } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";
@@ -18,7 +18,7 @@ type FeatureInfo = {
   actionOnPress?: (event: GestureResponderEvent) => void;
 };
 
-const DEFAULT_ICON_SIZE: number = 24;
+const DEFAULT_ICON_SIZE: IOIconSizeScale = 24;
 const DEFAULT_PICTOGRAM_SIZE: number = 48;
 
 const renderNode = (body: FeatureInfo["body"]) => {

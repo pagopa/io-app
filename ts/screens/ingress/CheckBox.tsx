@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors, hexToRgba } from "../../components/core/variables/IOColors";
-import { Icon } from "../../components/core/icons";
+import { IOIconSizeScaleCheckbox, Icon } from "../../components/core/icons";
 
 type Props = {
   checked: boolean;
@@ -9,8 +9,7 @@ type Props = {
 
 const checkBoxColor = hexToRgba(IOColors.white, 0.15);
 const CHECKBOX_SIZE: number = 20;
-const CHECKBOX_PADDING: number = 3;
-const CHECKBOX_ICON_SIZE: number = CHECKBOX_SIZE - CHECKBOX_PADDING * 2;
+const CHECKBOX_ICON_SIZE: IOIconSizeScaleCheckbox = 14;
 
 const styles = StyleSheet.create({
   base: {

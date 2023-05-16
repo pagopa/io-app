@@ -13,14 +13,14 @@ import {
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../core/variables/IOColors";
-import { IOIcons, Icon } from "../core/icons";
+import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
 
-const iconSize = 24;
+const iconSize: IOIconSizeScale = 24;
 const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
 
 const styles = StyleSheet.create({

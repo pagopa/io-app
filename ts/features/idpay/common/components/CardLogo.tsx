@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Icon } from "../../../../components/core/icons";
+import { IOIconSizeScale, Icon } from "../../../../components/core/icons";
 import {
   IOLogoPaymentType,
   IOPaymentLogos,
@@ -37,7 +37,7 @@ export const getCardLogoComponent = (brand: string, size: number = 24) =>
     O.filter(isIOLogoPaymentType),
     O.alt(() => O.fromNullable(IOPaymentLogosCaseMapping[brand])),
     O.fold(
-      () => <Icon name="creditCard" size={size} />,
+      () => <Icon name="creditCard" size={size as IOIconSizeScale} />,
       brand => <LogoPayment name={brand} size={size} />
     )
   );

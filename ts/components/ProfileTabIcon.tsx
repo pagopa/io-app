@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import { ColorValue } from "react-native";
 import { GlobalState } from "../store/reducers/types";
-import { AnimatedIcon } from "./core/icons/Icon";
+import { AnimatedIcon, IOIconSizeScale } from "./core/icons/Icon";
 
 type OwnProps = {
-  size?: number;
+  size?: IOIconSizeScale;
   color?: ColorValue;
 };
 

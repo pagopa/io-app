@@ -269,10 +269,17 @@ export const IOIcons = {
 
 export type IOIcons = keyof typeof IOIcons;
 
+/* The following values should be deleted: 12, 30 */
+/* 96 is too big for an icon, it should be replaced
+with a Pictogram instead */
+export type IOIconSizeScale = 12 | 16 | 20 | 24 | 30 | 32 | 48 | 96;
+/* Sizes used exclusively for the Checkbox component */
+export type IOIconSizeScaleCheckbox = 14 | 18;
+
 export type IOIconsProps = {
   name: IOIcons;
   color?: IOColors;
-  size?: number | "100%";
+  size?: IOIconSizeScale | IOIconSizeScaleCheckbox | "100%";
   testID?: string;
   accessible?: boolean;
   accessibilityLabel?: string;
@@ -326,7 +333,7 @@ transition between different states.
 type IOAnimatedIconsProps = {
   name: IOIcons;
   color?: ColorValue;
-  size?: number | "100%";
+  size?: IOIconSizeScale | "100%";
   accessible?: boolean;
 };
 

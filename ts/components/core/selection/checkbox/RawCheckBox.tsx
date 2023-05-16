@@ -5,7 +5,7 @@ import TouchableDefaultOpacity, {
 } from "../../../TouchableDefaultOpacity";
 import { calculateSlop } from "../../accessibility";
 import { IOColors } from "../../variables/IOColors";
-import { Icon } from "../../icons/Icon";
+import { IOIconSizeScaleCheckbox, Icon } from "../../icons/Icon";
 
 type Props = {
   // the value of the checkbox
@@ -22,7 +22,8 @@ const INTERNAL_PADDING: number = 3;
 const offColor: IOColors = "bluegrey";
 const onColor: IOColors = "blue";
 const slop = calculateSlop(SIZE);
-const tickSize = SIZE - INTERNAL_PADDING * 2;
+/* SIZE - INTERNAL_PADDING * 2; */
+const tickSize: IOIconSizeScaleCheckbox = 18;
 
 const styles = StyleSheet.create({
   checkBox: {
