@@ -1826,6 +1826,19 @@ messageDetails:
       thirdPart: " per maggiori informazioni."
     failing:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
+messagePDFPreview:
+  title: "Anteprima PDF"
+  singleBtn: "Salva, stampa o condividi"
+  open: "Apri"
+  save: "Salva"
+  savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  errors:
+    previewing:
+      title: "L’anteprima non è disponibile"
+      body: "Per visualizzare il documento, scaricalo e aprilo con un’app di lettura PDF."
+    sharing: "Si è verificato un errore condividendo il documento."
+    opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
+    saving: "Si è verificato un errore salvando il documento."
 notifications:
   installation:
     errorTitle: Notifiche push
@@ -3068,46 +3081,6 @@ features:
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
-  mvl:
-    title: "messaggio a valore legale"
-    ko:
-      genericError:
-        title: "Si è verificato un errore nel recupero del messaggio"
-        subtitle: "Riprova per favore"
-    details:
-      hasAttachments: "contiene allegati"
-      attachments:
-        title: "Allegati"
-        toast:
-          success: "Download completato"
-        pdfPreview:
-          title: "Anteprima PDF"
-          singleBtn: "Salva, stampa o condividi"
-          open: "Apri"
-          save: "Salva"
-          savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
-          errors:
-            previewing:
-              title: "L’anteprima non è disponibile"
-              body: "Per visualizzare il documento, scaricalo e aprilo con un’app di lettura PDF."
-            sharing: "Si è verificato un errore condividendo il documento."
-            opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
-            saving: "Si è verificato un errore salvando il documento."
-      body:
-        plain: "testo semplice"
-        html: "html"
-      metadata:
-        title: "il messaggio ha valore legale"
-        description: "Il giorno {{date}} alle ore {{time}} il messaggio \"{{subject}}\" ti è stato inviato da \"{{sender}}\""
-        messageId: "Identificativo messaggio:"
-        links:
-          copy: "Copia identificativo messaggio"
-          recipients: "Mostra elenco completo dei destinatari"
-          signature: "Mostra dettagli della firma"
-          certificates: "Mostra i certificati"
-          originalMessage: "Scarica il messaggio originale"
-          datiCert: "Scarica daticert.xml"
-          smime: "Scarica smime.p7s"
   euCovidCertificate:
     save:
       album: "IO"
