@@ -65,11 +65,7 @@ const extractInfoFromPaymentMethod = (
         description: paymentMethod.caption
       };
     case "Privative":
-      return {
-        logo: paymentMethod.icon,
-        title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod, nameSurname)
-      };
+      return undefined as unknown as PaymentMethodInformation;
   }
 };
 

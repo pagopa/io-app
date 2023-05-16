@@ -75,11 +75,11 @@ const isWalletV2CreditCard = (
 export const fromPatchedWalletV2ToRawPaymentMethod = (
   wallet: PatchedWalletV2
 ): RawPaymentMethod | undefined => {
-  if (isWalletV2CreditCard(wallet, wallet.info)) {
-    if (wallet.info.type !== TypeEnum.PRV) {
-      return { ...wallet, kind: "CreditCard", info: wallet.info };
-    }
-    return { ...wallet, kind: "Privative", info: wallet.info };
+  if (
+    isWalletV2CreditCard(wallet, wallet.info) &&
+    wallet.info.type !== TypeEnum.PRV
+  ) {
+    return { ...wallet, kind: "CreditCard", info: wallet.info };
   }
   if (isWalletV2Bancomat(wallet, wallet.info)) {
     return { ...wallet, kind: "Bancomat", info: wallet.info };

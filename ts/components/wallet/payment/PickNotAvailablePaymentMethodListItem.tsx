@@ -138,16 +138,7 @@ const extractInfoFromPaymentMethod = (
         snapPoint: 360
       };
     case "Privative":
-      return {
-        logo: paymentMethod.icon,
-        title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(
-          paymentMethod,
-          nameSurname
-        ),
-        bottomSheetTitle: unacceptedBottomSheetTitle(),
-        bottomSheetBody: unacceptedBottomSheetBody()
-      };
+      return undefined as unknown as PaymentMethodInformation;
   }
 };
 

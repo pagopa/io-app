@@ -18,7 +18,6 @@ type CoBadgeRequestQuery = {
 };
 
 const cobadgePrefix = "WALLET_ONBOARDING_COBADGE_SEARCH";
-const privativePrefix = "WALLET_ONBOARDING_PRIVATIVE_SEARCH";
 
 const withTokenSuffix = "WITH_TOKEN";
 const withoutTokenSuffix = "WITHOUT_TOKEN";
@@ -41,9 +40,9 @@ export const searchUserCobadge = async (
   sessionManager: SessionManager<PaymentManagerToken>,
   searchRequestId: string | undefined
 ): Promise<E.Either<NetworkError, CobadgeResponse>> => {
-  const logPrefix = `${
-    cobadgeQuery.panCode ? privativePrefix : cobadgePrefix
-  }_${searchRequestId ? withTokenSuffix : withoutTokenSuffix}`;
+  const logPrefix = `${cobadgeQuery.panCode ? undefined : cobadgePrefix}_${
+    searchRequestId ? withTokenSuffix : withoutTokenSuffix
+  }`;
 
   try {
     void mixpanelTrack(`${logPrefix}_REQUEST`, {
