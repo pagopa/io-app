@@ -40,6 +40,7 @@ import IconSave from "./svg/IconSave";
 import IconCompleted from "./svg/IconCompleted";
 import IconSuccess from "./svg/IconSuccess";
 import IconOk from "./svg/IconOk";
+import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
 import IconCreditCard from "./svg/IconCreditCard";
 import IconBonus from "./svg/IconBonus";
 import IconTransactions from "./svg/IconTransactions";
@@ -158,7 +159,6 @@ import LegIconCompleted from "./svg/LegIconCompleted";
 import LegIconCreditCard from "./svg/LegIconCreditCard";
 import LegIconBonus from "./svg/LegIconBonus";
 import LegIconDocumentAttachment from "./svg/LegIconDocumentAttachment";
-import LegIconTransactions from "./svg/LegIconTransactions";
 import LegIconAmount from "./svg/LegIconAmount";
 import LegIconCoggle from "./svg/LegIconCoggle";
 import LegIconLocation from "./svg/LegIconLocation";
@@ -166,7 +166,6 @@ import LegIconWarning from "./svg/LegIconWarning";
 import LegIconNotice from "./svg/LegIconNotice";
 import LegIconHistory from "./svg/LegIconHistory";
 import LegIconEdit from "./svg/LegIconEdit";
-import LegIconBattery from "./svg/LegIconBattery";
 import LegIconTrashcan from "./svg/LegIconTrashcan";
 import LegIconCalendar from "./svg/LegIconCalendar";
 import LegIconProfile from "./svg/LegIconProfile";
@@ -175,52 +174,52 @@ import LegIconMagicWand from "./svg/LegIconMagicWand";
 import LegIconStarFilled from "./svg/LegIconStarFilled";
 import LegIconStarEmpty from "./svg/LegIconStarEmpty";
 import LegIconSwitchOff from "./svg/LegIconSwitchOff";
-import LegIconDotMenu from "./svg/LegIconDotMenu";
 import LegIconBarcode from "./svg/LegIconBarcode";
 import LegIconSave from "./svg/LegIconSave";
-import LegIconLogin from "./svg/LegIconLogin";
 import LegIconLadybug from "./svg/LegIconLadybug";
 import LegIconTag from "./svg/LegIconTag";
-import LegIconGallery from "./svg/LegIconGallery";
 import LegIconExternalLink from "./svg/LegIconExternalLink";
 import LegIconUnknownGdo from "./svg/LegIconUnknownGdo";
-import LegIconCancel from "./svg/LegIconCancel";
-import LegIconDevice from "./svg/LegIconDevice";
 import LegIconQuestion from "./svg/LegIconQuestion";
 import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
+import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconGiacenza from "./svg/LegIconGiacenza";
 import LegIconPSP from "./svg/LegIconPSP";
 import LegIconError from "./svg/LegIconError";
+import LegIconRadioOn from "./svg/LegIconRadioOn";
+import LegIconRadioOff from "./svg/LegIconRadioOff";
+import LegIconCheckOn from "./svg/LegIconCheckOn";
+import LegIconCheckOff from "./svg/LegIconCheckOff";
 
 export const IOIcons = {
   spid: IconSpid,
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode,
-  legQrCode: LegIconQrCode /* io-qr */,
+  legQrCode: LegIconQrCode,
   bell: IconBell,
   website: IconWebsite,
   legWebsite: LegIconWebsite,
   abacus: IconAbacus,
-  legAbacus: LegIconAbacus /* io-abacus */,
+  legAbacus: LegIconAbacus,
   home: IconHome,
   homeFill: IconHomeFill,
   legHome: LegIconHome,
   copy: IconCopy,
-  legCopy: LegIconCopy /* io-copy */,
+  legCopy: LegIconCopy,
   selfCert: IconSelfCertification,
   institution: IconInstitution,
   legInstitution: LegIconInstitution,
   hourglass: IconHourglass,
-  legHourglass: LegIconHourglass /* io-hourglass */,
+  legHourglass: LegIconHourglass,
   shareiOs: IconShareiOs,
   shareAndroid: IconShareAndroid,
-  legShare: LegIconShare /* io-share */,
+  legShare: LegIconShare,
   locked: IconLockOn,
   unlocked: IconLockOff,
-  legLocked: LegIconLockOn /* io-locker-closed */ /* io-lucchetto */,
-  legUnlocked: LegIconLockOff /* io-locker-open */,
+  legLocked: LegIconLockOn /* io-lucchetto */,
+  legUnlocked: LegIconLockOff,
   initiatives: IconInitiatives,
   legInitiatives: LegIconInitiatives,
   analytics: IconAnalytics,
@@ -237,8 +236,8 @@ export const IOIcons = {
   legPinOn: LegIconPinOn,
   emojiSad: IconEmojiSad,
   emojiHappy: IconEmojiHappy,
-  legEmojiSad: LegIconEmojiSad /* io-sad */,
-  legEmojiHappy: LegIconEmojiHappy /* io-happy */,
+  legEmojiSad: LegIconEmojiSad,
+  legEmojiHappy: LegIconEmojiHappy,
   phone: IconPhone,
   legPhone: LegIconPhone /* io-phone */,
   email: IconEmail,
@@ -249,7 +248,7 @@ export const IOIcons = {
   messageLegal: IconMessageLegal,
   legMessageLegal: LegIconMessageLegal,
   message: IconMessage,
-  legMessage: LegIconMessage /* io-send-message */,
+  legMessage: LegIconMessage,
   chat: IconChat,
   legChat: LegIconChat,
   doc: IconDocument,
@@ -265,17 +264,17 @@ export const IOIcons = {
   attachment: IconAttachment,
   legAttachment: LegIconAttachment,
   add: IconAdd,
-  legAdd: LegIconAdd /* io-plus */,
+  legAdd: LegIconAdd,
   completed: IconCompleted,
-  legCompleted: LegIconCompleted /* io-tick-big */,
-  success: IconSuccess /* io-success */,
-  ok: IconOk /* io-complete */,
+  legCompleted: LegIconCompleted,
+  success: IconSuccess,
+  ok: IconOk,
+  fiscalCodeIndividual: IconFiscalCodeIndividual,
   creditCard: IconCreditCard,
   legCreditCard: LegIconCreditCard /* io-carta */,
   bonus: IconBonus,
   legBonus: LegIconBonus,
-  transactions: IconTransactions /* io-transactions */,
-  legTransactions: LegIconTransactions,
+  transactions: IconTransactions,
   amount: IconAmount,
   legAmount: LegIconAmount,
   psp: IconPSP,
@@ -285,27 +284,26 @@ export const IOIcons = {
   locationAndroid: IconLocationAndroid,
   legLocation: LegIconLocation,
   coggle: IconCoggle,
-  legCoggle: LegIconCoggle /* io-coggle */ /* io-preferenze */,
+  legCoggle: LegIconCoggle,
   warningFilled: IconWarningFilled,
   legWarning: LegIconWarning /* io-warning */,
-  notice: IconNotice /* io-notice */,
+  notice: IconNotice,
   noticeFilled: IconNoticeFilled,
   legNotice: LegIconNotice,
-  info: IconInfo /* io-info */,
+  info: IconInfo,
   infoFilled: IconInfoFilled,
   canceled: IconCanceled,
-  legError: LegIconError /* io-error */,
+  legError: LegIconError,
   errorFilled: IconErrorFilled,
   refund: IconRefund,
-  reload: IconReload /* io-reload */,
+  reload: IconReload,
   history: IconHistory,
   legHistory: LegIconHistory,
   edit: IconEdit,
-  legEdit: LegIconEdit /* io-edit */,
+  legEdit: LegIconEdit,
   battery: IconBattery,
-  legBattery: LegIconBattery,
   trashcan: IconTrashcan,
-  legTrashcan: LegIconTrashcan /* io-trash */,
+  legTrashcan: LegIconTrashcan,
   calendar: IconCalendar,
   legCalendar: LegIconCalendar /* io-calendar */ /* io-calendario */,
   profile: IconProfile,
@@ -313,48 +311,44 @@ export const IOIcons = {
   profileAlt: IconProfileAlt /* io-titolare */,
   legProfile: LegIconProfile,
   profileExperiment: IconProfileExperiment,
-  legProfileExperiment: LegIconProfileExperiment /* io-profilo-exp */,
+  legProfileExperiment: LegIconProfileExperiment,
   magicWand: IconMagicWand,
   legMagicWand: LegIconMagicWand,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
-  legStarFilled: LegIconStarFilled /* io-filled-star */,
-  legStarEmpty: LegIconStarEmpty /* io-empty-star */,
+  legStarFilled: LegIconStarFilled,
+  legStarEmpty: LegIconStarEmpty,
   switchOff: IconSwitchOff,
   legSwitchOff: LegIconSwitchOff,
   device: IconDevice,
-  legDevice: LegIconDevice,
   dotMenu: IconDotMenu,
-  legDotMenu: LegIconDotMenu /* io-more */,
   barcode: IconBarcode,
   legBarcode: LegIconBarcode,
-  save: IconSave /* io-save */,
-  legSave: LegIconSave /* io-save */,
+  save: IconSave,
+  legSave: LegIconSave,
   login: IconLogin,
   logout: IconLogout,
-  legLogin: LegIconLogin,
   ladybug: IconLadybug,
   legLadybug: LegIconLadybug,
   tag: IconTag,
   legTag: LegIconTag,
   gallery: IconGallery,
-  legGallery: LegIconGallery,
   externalLink: IconExternalLink,
   legExternalLink: LegIconExternalLink,
   unknownGdo: IconUnknownGdo,
   legUnknownGdo: LegIconUnknownGdo,
-  cancel: IconCancel /* io-cancel */,
-  legCancel: LegIconCancel /* io-cancel */,
-  help: IconQuestion /* io-question */,
+  cancel: IconCancel,
+  help: IconQuestion,
   legHelp: LegIconQuestion /* io-question */,
-  search: IconSearch /* io-search */,
+  search: IconSearch,
   legSearch: LegIconSearch /* io-search */,
-  chevronRight: IconChevronRight /* io-right */,
-  chevronLeft: IconChevronLeft /* io-back */,
+  chevronRight: IconChevronRight,
+  chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
-  close: IconClose /* io-close */,
+  legChevronLeft: LegIconChevronLeft,
+  close: IconClose,
   legClose: LegIconClose /* io-close */,
   closeSmall: IconCloseSmall,
   legCloseSmall: LegIconCloseSmall,
@@ -368,7 +362,11 @@ export const IOIcons = {
   navWallet: IconNavWallet /* io-portafoglio */,
   navScan: IconNavScan,
   navServices: IconNavServices,
-  navProfile: IconNavProfile /* io-profilo */,
+  navProfile: IconNavProfile,
+  legRadioOn: LegIconRadioOn,
+  legRadioOff: LegIconRadioOff,
+  legCheckOn: LegIconCheckOn,
+  legCheckOff: LegIconCheckOff,
   biomFingerprint: IconBiomFingerprint /* io-fingerprint */,
   biomFaceID: IconBiomFaceID /* io-face-id */,
   categCulture: IconCategCulture,
@@ -383,7 +381,7 @@ export const IOIcons = {
   categJobOffers: IconCategJobOffers,
   categShopping: IconCategShopping,
   categSustainability: IconCategSustainability,
-  productIOApp: IconProductIOApp /* io-logo */,
+  productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */
 } as const;
 
@@ -393,11 +391,23 @@ export type IOIconsProps = {
   name: IOIcons;
   color?: IOColors;
   size?: number | "100%";
+  testID?: string;
+  accessible?: boolean;
+  accessibilityLabel?: string;
 };
 
 export type SVGIconProps = {
   size: number | "100%";
   style: StyleProp<any>;
+  accessible: boolean;
+  accessibilityElementsHidden: boolean;
+  accessibilityLabel: string;
+  importantForAccessibility:
+    | "auto"
+    | "yes"
+    | "no"
+    | "no-hide-descendants"
+    | undefined;
 };
 
 /*
@@ -408,11 +418,21 @@ export const Icon = ({
   name,
   color = "bluegrey",
   size = 24,
+  accessible = false,
+  accessibilityLabel = "",
   ...props
 }: IOIconsProps) => {
   const IconElement = IOIcons[name];
   return (
-    <IconElement {...props} style={{ color: IOColors[color] }} size={size} />
+    <IconElement
+      {...props}
+      style={{ color: IOColors[color] }}
+      size={size}
+      accessible={accessible}
+      accessibilityElementsHidden={true}
+      accessibilityLabel={accessibilityLabel}
+      importantForAccessibility={"no-hide-descendants"}
+    />
   );
 };
 
@@ -425,16 +445,28 @@ type IOAnimatedIconsProps = {
   name: IOIcons;
   color?: ColorValue;
   size?: number | "100%";
+  accessible?: boolean;
 };
 
 export const AnimatedIcon = ({
   name,
   color = IOColors.bluegrey,
   size = 24,
+  accessible = false,
   ...props
 }: IOAnimatedIconsProps) => {
   const IconElement = IOIcons[name];
-  return <IconElement {...props} style={{ color }} size={size} />;
+  return (
+    <IconElement
+      {...props}
+      style={{ color }}
+      size={size}
+      accessible={accessible}
+      accessibilityElementsHidden={true}
+      accessibilityLabel={""}
+      importantForAccessibility={"no-hide-descendants"}
+    />
+  );
 };
 
 /* Make <Icon> component animatable. Reanimated supports class components only,
@@ -489,6 +521,7 @@ const {
   attachment,
   add,
   completed,
+  fiscalCodeIndividual,
   creditCard,
   bonus,
   transactions,
@@ -586,6 +619,7 @@ export const IOIconsNew = {
   attachment,
   add,
   completed,
+  fiscalCodeIndividual,
   creditCard,
   bonus,
   transactions,

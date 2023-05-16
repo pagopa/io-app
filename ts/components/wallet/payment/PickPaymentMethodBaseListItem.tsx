@@ -3,11 +3,10 @@ import { ListItem } from "native-base";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { H4 } from "../../core/typography/H4";
 import { H5 } from "../../core/typography/H5";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { WithTestID } from "../../../types/WithTestID";
 import { VSpacer } from "../../core/spacer/Spacer";
+import { Icon } from "../../core/icons/Icon";
 
 type Props = WithTestID<{
   isFirst: boolean;
@@ -50,7 +49,12 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
   onPress,
   testID
 }) => (
-  <ListItem first={isFirst} onPress={onPress} testID={testID}>
+  <ListItem
+    first={isFirst}
+    onPress={onPress}
+    testID={testID}
+    style={{ paddingEnd: 0 }}
+  >
     <View style={styles.contentContainer}>
       <View style={[styles.row, IOStyles.flex]}>
         <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
@@ -65,9 +69,7 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
         </View>
       </View>
       <View style={styles.row}>
-        {isFavourite && (
-          <IconFont name={"io-filled-star"} color={IOColors.blue} size={24} />
-        )}
+        {isFavourite && <Icon name="legStarFilled" color="blue" size={24} />}
         {rightElement}
       </View>
     </View>

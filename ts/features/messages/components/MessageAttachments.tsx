@@ -10,7 +10,6 @@ import { Icon } from "../../../components/core/icons";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../types/contentType";
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-between",
     flex: 1
   },
@@ -113,12 +112,7 @@ const AttachmentItem = (props: {
             testID={"attachmentActivityIndicator"}
           />
         ) : (
-          <IconFont
-            name={"io-right"}
-            color={IOColors.blue}
-            size={24}
-            style={styles.icon}
-          />
+          <Icon name="chevronRightListItem" color="blue" size={24} />
         )}
       </View>
     </TouchableOpacity>

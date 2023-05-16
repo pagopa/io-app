@@ -21,7 +21,6 @@ import {
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { isCoBadgeOrPrivativeBlocked } from "../../../../../../utils/paymentMethod";
 import {
   HSpacer,
@@ -93,7 +92,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
             {isCoBadgeOrPrivativeBlocked(props.pan) ? (
-              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+              <InfoBox iconColor="red" iconName="legError">
                 <Body>{blockedCard}</Body>
               </InfoBox>
             ) : (
