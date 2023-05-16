@@ -1,7 +1,8 @@
 name: Release new app version
 on:
   push:
-    tags: /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
+    tags: 
+      - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
 jobs:
   run-static-checks:
      uses: ./.github/workflows/staticcheck.yaml
