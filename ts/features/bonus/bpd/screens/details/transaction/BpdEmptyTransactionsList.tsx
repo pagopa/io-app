@@ -9,14 +9,14 @@ import { BottomSheetBpdTransactionsBody } from "../../../components/BpdTransacti
 
 const BpdEmptyTransactionsList: React.FunctionComponent = () => (
   <>
-    <InfoBox iconName={"io-warning"} iconSize={32} alignedCentral={true}>
+    <InfoBox iconName="legWarning" iconSize={32} alignedCentral={true}>
       <H4>{I18n.t("bonus.bpd.details.transaction.detail.empty.text1")}</H4>
       <Body>{I18n.t("bonus.bpd.details.transaction.detail.empty.text2")}</Body>
     </InfoBox>
 
     <VSpacer size={16} />
     <View testID={"BpdEmptyTransactionsList"} />
-    <InfoBox iconName={"io-calendar"} iconSize={32}>
+    <InfoBox iconName="legCalendar" iconSize={32}>
       <H4 weight={"Regular"}>
         {I18n.t(
           "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"

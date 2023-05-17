@@ -19,7 +19,6 @@ import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -29,7 +28,6 @@ import {
 } from "../../../../store/actions/wallet/payment";
 import { useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -41,6 +39,7 @@ import {
 } from "../../onboarding/paypal/components/PspRadioItem";
 import { convertPspData } from "../../onboarding/paypal/store/transformers";
 import { IOPayPalPsp } from "../../onboarding/paypal/types";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
@@ -145,12 +144,9 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
       </View>
       <View style={IOStyles.row}>
         <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
-        <IconFont
-          style={{ justifyContent: "center" }}
-          name={"io-right"}
-          size={24}
-          color={customVariables.contentPrimaryBackground}
-        />
+        <View style={{ justifyContent: "center" }}>
+          <Icon name="chevronRightListItem" size={24} color="blue" />
+        </View>
       </View>
     </ListItem>
   );

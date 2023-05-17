@@ -3,17 +3,16 @@ import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet } from "react-native";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { cgnOtpDataSelector } from "../../../store/reducers/otp";
 import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
 import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
-import Eye from "../../../../../../../img/icons/Eye.svg";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
+import { Icon } from "../../../../../../components/core/icons/Icon";
 import { OtpCodeComponent } from "./OtpCodeComponent";
 
 const styles = StyleSheet.create({
@@ -102,11 +101,7 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
           {"••••••••••"}
         </BaseTypography>
 
-        <Eye
-          width={COPY_ICON_SIZE}
-          height={COPY_ICON_SIZE}
-          fill={IOColors.blue}
-        />
+        <Icon size={COPY_ICON_SIZE} color="blue" name={"legEyeShow"} />
       </View>
     </TouchableWithoutFeedback>
   );

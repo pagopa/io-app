@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconEmailLegal = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const IconEmailLegal = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M5.625 20.25h7.36c1.242-.049 1.243-1.825 0-1.875h-7.36a3.754 3.754 0 0 1-3.75-3.75v-9a3.754 3.754 0 0 1 3.75-3.75h12.75a3.754 3.754 0 0 1 3.75 3.75v1.688c.05 1.242 1.826 1.243 1.875 0V5.625A5.631 5.631 0 0 0 18.375 0H5.625A5.631 5.631 0 0 0 0 5.625v9a5.631 5.631 0 0 0 5.625 5.625Z"
       fill="currentColor"

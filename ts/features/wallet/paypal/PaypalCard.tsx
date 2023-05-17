@@ -6,15 +6,14 @@ import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
 import paypalLogoExt from "../../../../img/wallet/payment-methods/paypal-logo.png";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
-import variables from "../../../theme/variables";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import BaseCardComponent from "../component/card/BaseCardComponent";
 import { BrandImage } from "../component/card/BrandImage";
+import { Icon } from "../../../components/core/icons/Icon";
 
 type Props = {
   paypal: PayPalPaymentMethod;
@@ -46,9 +45,7 @@ const topLeft = (isFavourite: boolean) => (
     <View style={IOStyles.flex}>
       <Image source={paypalLogoExt} style={styles.paypalLogoExt} />
     </View>
-    {isFavourite && (
-      <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
-    )}
+    {isFavourite && <Icon name="legStarFilled" color="blue" />}
   </View>
 );
 
