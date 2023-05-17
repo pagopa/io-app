@@ -7,7 +7,10 @@ import { pipe } from "fp-ts/lib/function";
 import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -15,6 +18,7 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
@@ -32,8 +36,8 @@ import {
 } from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
-import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
+import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
   initiativeNeedsConfigurationSelector
@@ -68,6 +72,10 @@ const InitiativeDetailsScreen = () => {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId }
     });
+  };
+
+  const navigateToPaymentAuthorization = () => {
+    alert("hello");
   };
 
   useFocusEffect(
@@ -118,6 +126,20 @@ const InitiativeDetailsScreen = () => {
   );
 
   const renderScreenContent = () => {
+    if (
+      initiativeData?.initiativeRewardType === InitiativeRewardTypeEnum.DISCOUNT
+    ) {
+      return (
+        <ContentWrapper>
+          {lastUpdateComponent}
+          {missingConfigurationAlertComponent}
+          <VSpacer size={8} />
+          <InitiativeTimelineComponent initiativeId={initiativeId} />
+          <VSpacer size={32} />
+        </ContentWrapper>
+      );
+    }
+
     if (initiativeNeedsConfiguration) {
       return (
         <View style={styles.newInitiativeMessageContainer}>
@@ -155,6 +177,7 @@ const InitiativeDetailsScreen = () => {
       <ContentWrapper>
         {lastUpdateComponent}
         {missingConfigurationAlertComponent}
+        <VSpacer size={8} />
         <InitiativeTimelineComponent initiativeId={initiativeId} />
         <VSpacer size={24} />
         <InitiativeSettingsComponent initiative={initiativeData} />
@@ -182,6 +205,25 @@ const InitiativeDetailsScreen = () => {
     )
   );
 
+  const renderFooter = () => {
+    if (
+      initiativeData?.initiativeRewardType === InitiativeRewardTypeEnum.DISCOUNT
+    ) {
+      return (
+        <View style={[IOStyles.footer, styles.footer]}>
+          <ButtonSolid
+            label="Autorizza pagamento"
+            accessibilityLabel="Autorizza pagamento"
+            icon="qrCode"
+            onPress={navigateToPaymentAuthorization}
+            fullWidth={true}
+          />
+          <VSpacer size={8} />
+        </View>
+      );
+    }
+  };
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -203,6 +245,7 @@ const InitiativeDetailsScreen = () => {
         {cardComponent}
         {renderScreenContent()}
       </ScrollView>
+      {renderFooter()}
     </BaseScreenComponent>
   );
 };
@@ -222,6 +265,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     padding: 16
+  },
+  footer: {
+    paddingBottom: 20
   }
 });
 

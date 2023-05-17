@@ -1,16 +1,12 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from "react-native-reanimated";
-import Placeholder from "rn-placeholder";
 import {
   InitiativeDTO,
+  InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
@@ -20,44 +16,12 @@ import { LabelSmall } from "../../../../../components/core/typography/LabelSmall
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { Skeleton } from "../../../common/components/Skeleton";
+import { BonusPercentageSlider } from "./BonusPercentageSlider";
 import { InitiativeStatusLabel } from "./InitiativeStatusLabel";
 
 type Props = {
   initiative: InitiativeDTO;
-};
-
-type PercentageSliderProps = {
-  percentage: number;
-  isGreyedOut: boolean;
-};
-
-const BonusPercentageSlider = ({
-  percentage,
-  isGreyedOut
-}: PercentageSliderProps) => {
-  const width = useSharedValue(100);
-  React.useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    width.value = percentage;
-  });
-  const scalingWidth = useAnimatedStyle(() => ({
-    width: withTiming(width.value, { duration: 1000 })
-  }));
-  return (
-    <View style={styles.remainingPercentageSliderContainer}>
-      <Animated.View
-        style={[
-          {
-            width: `${width.value}%`,
-            backgroundColor: isGreyedOut ? IOColors.blue : IOColors["grey-450"],
-            flex: 1,
-            borderRadius: 4
-          },
-          scalingWidth
-        ]}
-      />
-    </View>
-  );
 };
 
 const formatNumberRightSign = (amount: number) =>
@@ -67,23 +31,6 @@ const InitiativeCardComponent = (props: Props) => {
   const { initiative } = props;
 
   const { initiativeName, endDate, status } = initiative;
-  /*
-  From BE we have:
-  - amount: the amount still available in the initiative
-  - accrued: total amount accrued with transactions
-  - refunded: amount refunded by wire transfer
-  */
-
-  const amount: number = props.initiative.amount || 0;
-  const accrued: number = props.initiative.accrued || 0;
-  const refunded: number = props.initiative.refunded || 0;
-
-  const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
-  const toBeRepaidAmount = accrued - refunded;
-  const totalAmount = amount + accrued;
-
-  const remainingBonusAmountPercentage =
-    totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
 
   const logoComponent = pipe(
     NonEmptyString.decode(initiative.logoURL),
@@ -96,10 +43,88 @@ const InitiativeCardComponent = (props: Props) => {
     )
   );
 
+  const renderCounters = () => {
+    const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
+
+    const amountString = pipe(
+      initiative.amount,
+      O.fromNullable,
+      O.map(formatNumberRightSign),
+      O.getOrElse(() => "-")
+    );
+
+    const amountPercentage = pipe(
+      sequenceS(O.Monad)({
+        amount: O.fromNullable(initiative.amount),
+        accrued: O.fromNullable(initiative.accrued)
+      }),
+      O.map(({ amount, accrued }) => ({ total: amount + accrued, amount })),
+      O.filter(({ total }) => total !== 0),
+      O.map(({ total, amount }) => (amount / total) * 100.0),
+      O.getOrElse(() => 100.0)
+    );
+
+    const toBeRepaidString = pipe(
+      sequenceS(O.Monad)({
+        accrued: O.fromNullable(initiative.accrued),
+        refunded: O.fromNullable(initiative.refunded)
+      }),
+      O.map(({ accrued, refunded }) => accrued - refunded),
+      O.map(formatNumberRightSign),
+      O.getOrElse(() => "-")
+    );
+
+    if (initiative.initiativeRewardType === InitiativeRewardTypeEnum.REFUND) {
+      return (
+        <>
+          <View style={styles.alignCenter}>
+            <LabelSmall color="bluegreyDark" weight="Regular">
+              {I18n.t(
+                "idpay.initiative.details.initiativeCard.availableAmount"
+              )}
+            </LabelSmall>
+            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {amountString}
+            </H1>
+            <VSpacer size={8} />
+            <BonusPercentageSlider
+              isDisabled={!isInitiativeConfigured}
+              percentage={amountPercentage}
+            />
+          </View>
+          <HSpacer size={48} />
+          <View style={styles.alignCenter}>
+            <LabelSmall color="bluegreyDark" weight="Regular">
+              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+            </LabelSmall>
+            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {toBeRepaidString}
+            </H1>
+          </View>
+        </>
+      );
+    }
+
+    if (initiative.initiativeRewardType === InitiativeRewardTypeEnum.DISCOUNT) {
+      return (
+        <View style={styles.alignCenter}>
+          <LabelSmall color="bluegreyDark" weight="Regular">
+            {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
+          </LabelSmall>
+          <H1>{amountString}</H1>
+          <VSpacer size={8} />
+          <BonusPercentageSlider percentage={amountPercentage} />
+        </View>
+      );
+    }
+
+    return undefined;
+  };
+
   return (
-    <View style={styles.cardContainer} testID={"card-component"}>
+    <View style={styles.hero} testID={"card-component"}>
       <ContentWrapper>
-        <View style={styles.topCardSection}>
+        <View style={styles.heroDetails}>
           {logoComponent}
           <H1 style={styles.initiativeName}>{initiativeName}</H1>
           <LabelSmall color={"black"} weight="Regular">
@@ -109,123 +134,44 @@ const InitiativeCardComponent = (props: Props) => {
           <InitiativeStatusLabel status={initiative.status} endDate={endDate} />
         </View>
         <VSpacer size={32} />
-        <View style={styles.bottomCardSection}>
-          <View style={styles.alignCenter}>
-            <LabelSmall color="bluegreyDark" weight="Regular">
-              {I18n.t(
-                "idpay.initiative.details.initiativeCard.availableAmount"
-              )}
-            </LabelSmall>
-            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-              {formatNumberRightSign(amount)}
-            </H1>
-            <VSpacer size={8} />
-            <BonusPercentageSlider
-              isGreyedOut={isInitiativeConfigured}
-              percentage={remainingBonusAmountPercentage}
-            />
-          </View>
-          <HSpacer size={48} />
-          <View style={styles.alignCenter}>
-            <LabelSmall color="bluegreyDark" weight="Regular">
-              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
-            </LabelSmall>
-            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-              {formatNumberRightSign(toBeRepaidAmount)}
-            </H1>
-          </View>
-        </View>
+        <View style={styles.heroCounters}>{renderCounters()}</View>
       </ContentWrapper>
     </View>
   );
 };
 
 const InitiativeCardComponentSkeleton = () => (
-  <View style={styles.cardContainer} testID={"card-component"}>
-    <View style={styles.topCardSection}>
-      <Placeholder.Box
-        animate="fade"
-        height={56}
-        width={56}
-        radius={4}
-        color="#CED8F9"
-      />
+  <View style={styles.hero} testID={"card-component"}>
+    <View style={styles.heroDetails}>
+      <Skeleton height={56} width={56} color="#CED8F9" />
       <VSpacer size={16} />
-      <Placeholder.Box
-        animate="fade"
-        height={24}
-        width={180}
-        radius={4}
-        color="#CED8F9"
-      />
+      <Skeleton height={24} width={180} color="#CED8F9" />
       <VSpacer size={8} />
-      <Placeholder.Box
-        animate="fade"
-        height={16}
-        width={100}
-        radius={4}
-        color="#CED8F9"
-      />
+      <Skeleton height={16} width={100} color="#CED8F9" />
       <VSpacer size={8} />
-      <Placeholder.Box
-        animate="fade"
-        height={16}
-        width={100}
-        radius={4}
-        color="#CED8F9"
-      />
+      <Skeleton height={16} width={100} color="#CED8F9" />
     </View>
     <VSpacer size={32} />
-    <View style={styles.bottomCardSection}>
+    <View style={styles.heroCounters}>
       <View style={styles.alignCenter}>
-        <Placeholder.Box
-          animate="fade"
-          height={16}
-          width={64}
-          radius={4}
-          color="#CED8F9"
-        />
+        <Skeleton height={16} width={64} color="#CED8F9" />
         <VSpacer size={8} />
-        <Placeholder.Box
-          animate="fade"
-          height={24}
-          width={140}
-          radius={4}
-          color="#CED8F9"
-        />
+        <Skeleton height={24} width={140} color="#CED8F9" />
         <VSpacer size={16} />
-        <Placeholder.Box
-          animate="fade"
-          height={8}
-          width={120}
-          radius={4}
-          color="#CED8F9"
-        />
+        <Skeleton height={8} width={120} color="#CED8F9" />
       </View>
       <HSpacer size={48} />
       <View style={styles.alignCenter}>
-        <Placeholder.Box
-          animate="fade"
-          height={16}
-          width={64}
-          radius={4}
-          color="#CED8F9"
-        />
+        <Skeleton height={16} width={64} color="#CED8F9" />
         <VSpacer size={8} />
-        <Placeholder.Box
-          animate="fade"
-          height={24}
-          width={140}
-          radius={4}
-          color="#CED8F9"
-        />
+        <Skeleton height={24} width={140} color="#CED8F9" />
       </View>
     </View>
   </View>
 );
 
 const styles = StyleSheet.create({
-  cardContainer: {
+  hero: {
     backgroundColor: IOColors["blueIO-50"],
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
@@ -244,23 +190,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 8
   },
-  topCardSection: {
+  heroDetails: {
     flex: 2,
     alignItems: "center"
   },
-  bottomCardSection: {
+  heroCounters: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "center"
   },
   consumedOpacity: {
     opacity: 0.5
-  },
-  remainingPercentageSliderContainer: {
-    height: 4,
-    backgroundColor: IOColors.white,
-    width: 100,
-    borderRadius: 4
   },
   alignCenter: {
     alignItems: "center"
