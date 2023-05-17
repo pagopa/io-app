@@ -139,7 +139,7 @@ const trackFciAction =
       case getType(fciPollFilledDocument.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload),
-          event_type: FciUxEventCategory.KO
+          event_category: FciUxEventCategory.KO
         });
     }
     return Promise.resolve();
