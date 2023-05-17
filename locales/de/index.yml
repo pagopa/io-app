@@ -169,6 +169,7 @@ global:
   navigator:
     messages: "Mitteilungen"
     wallet: "Konto"
+    scan: "Scan"
     documents: "Dokumente"
     profile: "Profil"
     services: "Dienste"

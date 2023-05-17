@@ -168,11 +168,12 @@ global:
     details: "Details"
     choose: "Scegli"
   navigator:
-    messages: messages
-    wallet: wallet
-    documents: documents
-    profile: profile
-    services: services
+    messages: Messages
+    wallet: Wallet
+    scan: Scan
+    documents: Documents
+    profile: Profile
+    services: Services
   actions:
     retry: An error occurred, please retry
     search: Text to search
