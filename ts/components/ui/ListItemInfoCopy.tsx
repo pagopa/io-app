@@ -110,7 +110,7 @@ export const ListItemInfoCopy = ({
   }, [isPressed]);
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
-  const LegacyListItemNav = () => (
+  const LegacyListItemInfoCopy = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -166,7 +166,7 @@ export const ListItemInfoCopy = ({
   );
   /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemNav = () => (
+  const NewListItemInfoCopy = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -213,7 +213,11 @@ export const ListItemInfoCopy = ({
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
   without the following condition */
-  return isDesignSystemEnabled ? <NewListItemNav /> : <LegacyListItemNav />;
+  return isDesignSystemEnabled ? (
+    <NewListItemInfoCopy />
+  ) : (
+    <LegacyListItemInfoCopy />
+  );
 };
 
 export default ListItemInfoCopy;
