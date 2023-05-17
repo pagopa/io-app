@@ -9,7 +9,8 @@ import {
   IOCategoryIcons,
   IOProductIcons,
   IOIconsNew,
-  SVGIconProps
+  SVGIconProps,
+  IOIconSizeScale
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
@@ -45,7 +46,7 @@ const filteredIOIcons = filterIconSet(
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
 // just replace the following array:
-const IOIconSizes = [16, 24, 32, 48];
+const IOIconSizes: Array<IOIconSizeScale> = [16, 24, 32, 48];
 const IOIconColors = [
   "grey-200",
   "grey-450",
@@ -78,7 +79,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -102,7 +103,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IONavIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -125,7 +126,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOBiometricIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -148,7 +149,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOCategoryIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -171,7 +172,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOProductIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -195,7 +196,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name="creditCard"
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size={size}
                 />
               }
