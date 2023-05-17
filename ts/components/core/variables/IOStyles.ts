@@ -1,10 +1,20 @@
 import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
+import { IOIconSizeScale } from "../icons";
 import { IOColors } from "./IOColors";
+import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
 
 /**
  * A collection of default styles used within IO App.
  */
+
+interface IOLayoutCostants {
+  appMarginDefault: IOAppMargin;
+}
+
+export const IOLayoutCostants: IOLayoutCostants = {
+  appMarginDefault: 24
+};
 
 // TODO: in a first iteration, to avoid overlaps,
 //  if a value already exists, will be used from themeVariables
@@ -195,5 +205,40 @@ export const IOIconButtonStyles = StyleSheet.create({
     width: btnSizeLarge,
     height: btnSizeLarge,
     borderRadius: btnSizeLarge
+  }
+});
+
+/**
+ * LIST ITEM STYLES
+ */
+
+interface IOListItemVisualParams {
+  paddingVertical: IOSpacingScale;
+  paddingHorizontal: IOAppMargin;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  chevronSize: IOIconSizeScale;
+}
+
+export const IOListItemVisualParams: IOListItemVisualParams = {
+  paddingVertical: 12,
+  paddingHorizontal: IOLayoutCostants.appMarginDefault,
+  iconMargin: 16,
+  iconSize: 24,
+  chevronSize: 24
+};
+
+export const IOListItemStyles = StyleSheet.create({
+  listItem: {
+    paddingVertical: IOListItemVisualParams.paddingVertical,
+    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
+    marginRight: -IOListItemVisualParams.paddingHorizontal,
+    marginLeft: -IOListItemVisualParams.paddingHorizontal
+  },
+  listItemInner: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   }
 });

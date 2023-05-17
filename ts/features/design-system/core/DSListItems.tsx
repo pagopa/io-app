@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
+import { View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -23,239 +24,285 @@ import { TimelineOperationListItem } from "../../idpay/initiative/details/compon
 import { OperationTypeEnum } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import ListItemNav from "../../../components/ui/ListItemNav";
+import { IOThemeContext } from "../../../components/core/variables/IOColors";
+import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import { Icon } from "../../../components/core/icons/Icon";
 
 export const DSListItems = () => (
-  <DesignSystemScreen title="List Items">
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: 16, marginTop: 16 }}
-    >
-      ListItemComponent (NativeBase)
-    </H2>
-    <DSComponentViewerBox name="ListItemComponent (title)">
-      <ListItemComponent
-        title={"Title"}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (title + subtitle)">
-      <ListItemComponent
-        title={"Title"}
-        subTitle="Subtitle"
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (without icon)">
-      <ListItemComponent
-        title={"Title"}
-        hideIcon={true}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (without separator)">
-      <ListItemComponent
-        title={"Title"}
-        onPress={() => alert("Action triggered")}
-        hideSeparator={true}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (stress test)">
-      <ListItemComponent
-        title={"Let's try a looong looooong looooooooong title"}
-        subTitle="A loooong looooooong looooooooooong subtitle, too"
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (stress test, no truncated subtitle)">
-      <ListItemComponent
-        title={"Let's try a looong looooong looooooooong title"}
-        subTitle="A loooong looooooong looooooooooong subtitle, too"
-        useExtendedSubTitle={true}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
+  <IOThemeContext.Consumer>
+    {theme => (
+      <DesignSystemScreen title="List Items">
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemNav
+        </H2>
+        <DSComponentViewerBox name="ListItemNav">
+          <View>
+            <ListItemNav
+              value={"Value"}
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNav
+              value={"Value"}
+              description="Description"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNav
+              value="A looong looooong looooooooong looooooooooong title"
+              description="Description"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
 
-    <DSComponentViewerBox name="ListItemComponent (badge)">
-      <ListItemComponent
-        title={"A looong looooong looooooooong looooooooooong title"}
-        hasBadge={true}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (badge)">
-      <ListItemComponent
-        title={"A looong looooong looooooooong looooooooooong title"}
-        titleBadge="Badge"
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (custom icon)">
-      <ListItemComponent
-        title={"Title"}
-        iconSize={12}
-        iconName={"legCompleted"}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (switch)">
-      <ListItemComponent
-        title={"Setting with switch"}
-        switchValue={true}
-        accessibilityRole={"switch"}
-        accessibilityState={{ checked: false }}
-        isLongPressEnabled={true}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemComponent (radio)">
-      <ListItemComponent
-        title={"Title"}
-        subTitle={"Subtitle"}
-        iconName={"legRadioOn"}
-        smallIconSize={true}
-        iconOnTop={true}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
+            <ListItemNav
+              value={"Value"}
+              icon="gallery"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNav
+              value={"Value"}
+              description="Description"
+              icon="gallery"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+          </View>
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemNavAlert">
+          <View>
+            <ListItemNavAlert
+              value={"Value"}
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNavAlert
+              value={"Value"}
+              description="Description"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNavAlert
+              withoutIcon
+              value={"Value"}
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+            <ListItemNavAlert
+              withoutIcon
+              value={"Value"}
+              description="Description"
+              onPress={() => {
+                alert("Action triggered");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
+          </View>
+        </DSComponentViewerBox>
 
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: 16, marginTop: 16 }}
-    >
-      Derivated from ListItem (NativeBase)
-    </H2>
+        <DSComponentViewerBox name="ListItemComponent (badge)">
+          <ListItemComponent
+            title={"A looong looooong looooooooong looooooooooong title"}
+            hasBadge={true}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (badge)">
+          <ListItemComponent
+            title={"A looong looooong looooooooong looooooooooong title"}
+            titleBadge="Badge"
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (custom icon)">
+          <ListItemComponent
+            title={"Title"}
+            iconSize={12}
+            iconName={"completed"}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (switch)">
+          <ListItemComponent
+            title={"Setting with switch"}
+            switchValue={true}
+            accessibilityRole={"switch"}
+            accessibilityState={{ checked: false }}
+            isLongPressEnabled={true}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (radio)">
+          <ListItemComponent
+            title={"Title"}
+            subTitle={"Subtitle"}
+            iconName={"legRadioOn"}
+            smallIconSize={true}
+            iconOnTop={true}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
 
-    <DSComponentViewerBox name="CategoryCheckbox">
-      <CategoryCheckbox
-        text={"Title"}
-        value={"Value"}
-        checked={true}
-        onPress={() => alert("Action triggered")}
-        icon={BooksIcon}
-      />
-      <CategoryCheckbox
-        text={"Title"}
-        value={"Value"}
-        checked={false}
-        onPress={() => alert("Action triggered")}
-        icon={CultureIcon}
-      />
-    </DSComponentViewerBox>
+        <H2
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          Derivated from ListItem (NativeBase)
+        </H2>
 
-    <DSComponentViewerBox name="OrderOption">
-      <OrderOption
-        text={"Checked"}
-        value={"Value"}
-        checked={true}
-        onPress={() => alert("Action triggered")}
-      />
-      <OrderOption
-        text={"Unchecked"}
-        value={"Value"}
-        checked={false}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="BankPreviewItem">
-      <BankPreviewItem
-        bank={{
-          abi: "03069",
-          logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
-          name: "Intesa Sanpaolo"
-        }}
-        inList={true}
-        onPress={() => alert("Action triggered")}
-      />
-    </DSComponentViewerBox>
+        <DSComponentViewerBox name="CategoryCheckbox">
+          <CategoryCheckbox
+            text={"Title"}
+            value={"Value"}
+            checked={true}
+            onPress={() => alert("Action triggered")}
+            icon={BooksIcon}
+          />
+          <CategoryCheckbox
+            text={"Title"}
+            value={"Value"}
+            checked={false}
+            onPress={() => alert("Action triggered")}
+            icon={CultureIcon}
+          />
+        </DSComponentViewerBox>
 
-    <DSComponentViewerBox name="ZendeskItemPermissionComponent">
-      <ZendeskItemPermissionComponent
-        icon={<Icon name="info" size={24} />}
-        title="Storico versioni dell'app"
-        value="Per capire se il problema dipende dall'ultimo aggiornamento"
-        testId="TestID"
-      />
-    </DSComponentViewerBox>
+        <DSComponentViewerBox name="OrderOption">
+          <OrderOption
+            text={"Checked"}
+            value={"Value"}
+            checked={true}
+            onPress={() => alert("Action triggered")}
+          />
+          <OrderOption
+            text={"Unchecked"}
+            value={"Value"}
+            checked={false}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="BankPreviewItem">
+          <BankPreviewItem
+            bank={{
+              abi: "03069",
+              logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
+              name: "Intesa Sanpaolo"
+            }}
+            inList={true}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
 
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: 16, marginTop: 16 }}
-    >
-      Misc
-    </H2>
+        <DSComponentViewerBox name="ZendeskItemPermissionComponent">
+          <ZendeskItemPermissionComponent
+            icon={<Icon name="info" size={24} />}
+            title="Storico versioni dell'app"
+            value="Per capire se il problema dipende dall'ultimo aggiornamento"
+            testId="TestID"
+          />
+        </DSComponentViewerBox>
 
-    <DSComponentViewerBox name="DetailedlistItemComponent">
-      <DetailedlistItemComponent
-        isNew={true}
-        text11={"Payment Recipient"}
-        text12={"+200,00 €"}
-        text2={"19/12/2022 - 1:25:23 PM"}
-        text3={"Transaction Name"}
-        onPressItem={() => alert("Action triggered")}
-        accessible={true}
-        accessibilityRole={"button"}
-        accessibilityLabel={"Accessibility Label"}
-      />
-    </DSComponentViewerBox>
+        <H2
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          Misc
+        </H2>
 
-    <DSComponentViewerBox name="TimelineTransactionCard">
-      <TimelineOperationListItem
-        operation={{
-          brand: "MASTERCARD",
-          operationId: "213123",
-          operationType: "Pagamento Pos" as OperationTypeEnum,
-          operationDate: new Date(),
-          brandLogo: "",
-          maskedPan: "****",
-          amount: 100,
-          accrued: 50,
-          circuitType: "MasterCard"
-        }}
-      />
-    </DSComponentViewerBox>
+        <DSComponentViewerBox name="DetailedlistItemComponent">
+          <DetailedlistItemComponent
+            isNew={true}
+            text11={"Payment Recipient"}
+            text12={"+200,00 €"}
+            text2={"19/12/2022 - 1:25:23 PM"}
+            text3={"Transaction Name"}
+            onPressItem={() => alert("Action triggered")}
+            accessible={true}
+            accessibilityRole={"button"}
+            accessibilityLabel={"Accessibility Label"}
+          />
+        </DSComponentViewerBox>
 
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: 16, marginTop: 16 }}
-    >
-      Native (Not NativeBase)
-    </H2>
+        <DSComponentViewerBox name="TimelineTransactionCard">
+          <TimelineOperationListItem
+            operation={{
+              brand: "MASTERCARD",
+              operationId: "213123",
+              operationType: "Pagamento Pos" as OperationTypeEnum,
+              operationDate: new Date(),
+              brandLogo: "",
+              maskedPan: "****",
+              amount: 100,
+              accrued: 50,
+              circuitType: "MasterCard"
+            }}
+          />
+        </DSComponentViewerBox>
 
-    <DSComponentViewerBox name="CgnMerchantDiscountItem">
-      <CgnMerchantDiscountItem
-        discount={{
-          name: "Small Rubber Chips" as NonEmptyString,
-          id: "28201" as NonEmptyString,
-          description: undefined,
-          discount: 25,
-          discountUrl: "https://localhost",
-          endDate: new Date(),
-          isNew: false,
-          productCategories: [ProductCategoryEnum.cultureAndEntertainment],
-          startDate: new Date()
-        }}
-        operatorName={"Operator name"}
-        merchantType={undefined}
-      />
-    </DSComponentViewerBox>
+        <H2
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          Native (Not NativeBase)
+        </H2>
 
-    <DSComponentViewerBox name="CgnMerchantListItem">
-      <CgnMerchantListItem
-        categories={[
-          ProductCategoryEnum.cultureAndEntertainment,
-          ProductCategoryEnum.home
-        ]}
-        name={"Partner Name"}
-        onPress={() => alert("Action triggered")}
-        isNew={true}
-      />
-    </DSComponentViewerBox>
+        <DSComponentViewerBox name="CgnMerchantDiscountItem">
+          <CgnMerchantDiscountItem
+            discount={{
+              name: "Small Rubber Chips" as NonEmptyString,
+              id: "28201" as NonEmptyString,
+              description: undefined,
+              discount: 25,
+              discountUrl: "https://localhost",
+              endDate: new Date(),
+              isNew: false,
+              productCategories: [ProductCategoryEnum.cultureAndEntertainment],
+              startDate: new Date()
+            }}
+            operatorName={"Operator name"}
+            merchantType={undefined}
+          />
+        </DSComponentViewerBox>
 
-    <VSpacer size={40} />
-  </DesignSystemScreen>
+        <DSComponentViewerBox name="CgnMerchantListItem">
+          <CgnMerchantListItem
+            categories={[
+              ProductCategoryEnum.cultureAndEntertainment,
+              ProductCategoryEnum.home
+            ]}
+            name={"Partner Name"}
+            onPress={() => alert("Action triggered")}
+            isNew={true}
+          />
+        </DSComponentViewerBox>
+
+        <VSpacer size={40} />
+      </DesignSystemScreen>
+    )}
+  </IOThemeContext.Consumer>
 );

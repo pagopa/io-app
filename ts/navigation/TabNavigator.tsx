@@ -17,6 +17,7 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
+import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
@@ -49,6 +50,7 @@ export const MainTabNavigator = () => {
   const tabBarHeight = 54;
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   return (
     <LoadingSpinnerOverlay
@@ -58,13 +60,19 @@ export const MainTabNavigator = () => {
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {
-            fontSize: 14,
-            ...makeFontStyleObject("Regular")
+            fontSize: isDesignSystemEnabled ? 10 : 12,
+            ...makeFontStyleObject(
+              "Regular",
+              false,
+              isDesignSystemEnabled ? "ReadexPro" : "TitilliumWeb"
+            )
           },
           keyboardHidesTabBar: true,
           allowFontScaling: false,
-          activeTintColor: IOColors.blue,
-          inactiveTintColor: IOColors.bluegrey,
+          activeTintColor: isDesignSystemEnabled
+            ? IOColors["blueIO-500"]
+            : IOColors.blue,
+          inactiveTintColor: IOColors["grey-850"],
           style: [
             styles.tabBarStyle,
             { height: tabBarHeight + bottomInset },
