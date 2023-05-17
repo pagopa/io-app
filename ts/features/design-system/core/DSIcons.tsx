@@ -79,7 +79,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -103,7 +103,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IONavIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -126,7 +126,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOBiometricIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -149,7 +149,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOCategoryIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -172,7 +172,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOProductIcons}
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size="100%"
                 />
               }
@@ -196,7 +196,7 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name="creditCard"
-                  color={theme["iconColor-default"]}
+                  color={theme["icon-default"]}
                   size={size}
                 />
               }

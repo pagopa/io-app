@@ -16,7 +16,7 @@ import { IOBadge } from "../core/IOBadge";
 import { HSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
-import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -85,7 +85,9 @@ const styles = StyleSheet.create({
 
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
-    const ICON_SIZE = this.props.iconSize || ICON_SIZE_DEFAULT;
+    const ICON_SIZE: IOIconSizeScale = this.props.iconSize
+      ? this.props.iconSize
+      : ICON_SIZE_DEFAULT;
     const showDefaultIcon =
       this.props.iconName === undefined && this.props.hideIcon !== true;
     return (

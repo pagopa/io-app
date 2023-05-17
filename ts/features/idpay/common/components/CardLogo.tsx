@@ -30,7 +30,10 @@ const IOPaymentLogosCaseMapping: { [key: string]: IOLogoPaymentType } = {
 const isIOLogoPaymentType = (u: unknown): u is IOLogoPaymentType =>
   IOPaymentLogos[u as IOLogoPaymentType] !== undefined;
 
-export const getCardLogoComponent = (brand: string, size: number = 24) =>
+export const getCardLogoComponent = (
+  brand: string,
+  size: IOIconSizeScale = 24
+) =>
   pipe(
     brand,
     O.of,
