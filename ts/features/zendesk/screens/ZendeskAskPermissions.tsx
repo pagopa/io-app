@@ -79,7 +79,10 @@ type ItemProps = {
   identityProvider: string;
 };
 
-const iconStyleProps = { size: 24, color: "blue" as IOColors };
+const iconStyleProps = {
+  size: 24,
+  color: "blue" as IOColors
+};
 
 const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
