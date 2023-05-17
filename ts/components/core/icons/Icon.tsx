@@ -105,7 +105,7 @@ import IconBackiOS from "./svg/IconBackiOS";
 import IconBackAndroid from "./svg/IconBackAndroid";
 import IconNavMessages from "./svg/IconNavMessages";
 import IconNavWallet from "./svg/IconNavWallet";
-import IconNavDocuments from "./svg/IconNavDocuments";
+import IconNavScan from "./svg/IconNavScan";
 import IconNavServices from "./svg/IconNavServices";
 import IconNavProfile from "./svg/IconNavProfile";
 import IconBiomFingerprint from "./svg/IconBiomFingerprint";
@@ -238,15 +238,15 @@ export const IOIcons = {
   arrowRight: IconArrowRight,
   backiOS: IconBackiOS,
   backAndroid: IconBackAndroid,
+  navMessages: IconNavMessages /* io-messaggi */,
+  navWallet: IconNavWallet /* io-portafoglio */,
+  navScan: IconNavScan,
+  navServices: IconNavServices,
+  navProfile: IconNavProfile,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
   legCheckOff: LegIconCheckOff,
-  navMessages: IconNavMessages,
-  navWallet: IconNavWallet,
-  navDocuments: IconNavDocuments,
-  navServices: IconNavServices,
-  navProfile: IconNavProfile,
   biomFingerprint: IconBiomFingerprint /* io-fingerprint */,
   biomFaceID: IconBiomFaceID /* io-face-id */,
   categCulture: IconCategCulture,
@@ -378,13 +378,12 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 // export const IOIconsNew = {};
 
 /* Navigation */
-const { navMessages, navWallet, navDocuments, navServices, navProfile } =
-  IOIcons;
+const { navMessages, navWallet, navScan, navServices, navProfile } = IOIcons;
 
 export const IONavIcons = {
   navMessages,
   navWallet,
-  navDocuments,
+  navScan,
   navServices,
   navProfile
 } as const;
