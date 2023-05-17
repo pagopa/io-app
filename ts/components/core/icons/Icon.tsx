@@ -410,6 +410,9 @@ export type SVGIconProps = {
     | undefined;
 };
 
+/* The following values should be deleted: 12, 30 */
+export type IOIconSizeScale = 12 | 16 | 20 | 24 | 30 | 32 | 48;
+
 /*
 Static icon component. Use it when you need an ion that doesn't
 change its color values. It accepts `IOColors` values only.
