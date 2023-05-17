@@ -58,6 +58,8 @@ export const getPaymentMethodHash = (
     case "Bancomat":
     case "CreditCard":
       return pm.info.hashPan;
+    case "Privative":
+      return undefined;
   }
 };
 export const getTitleFromPaymentInstrument = (
@@ -201,7 +203,7 @@ export const enhanceCreditCard = (
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
-): PaymentMethod => {
+): PaymentMethod | null => {
   switch (pm.kind) {
     // bancomat need a special handling, we need to include the abi
     case "Bancomat":
@@ -246,6 +248,8 @@ export const isPaymentMethodExpired = (
         paymentMethod.info.expireMonth,
         paymentMethod.info.expireYear
       );
+    case "Privative":
+      return E.left(new Error("privative methods are deprecated"));
   }
 };
 
