@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.33.0-rc.1](https://github.com/pagopa/io-app/compare/2.33.0-rc.0...2.33.0-rc.1) (2023-05-17)
+
+
+### Features
+
+* [[IOPLT-13](https://pagopa.atlassian.net/browse/IOPLT-13)] Increment Android versionCode on new version bump ([#4618](https://github.com/pagopa/io-app/issues/4618)) ([337ada2](https://github.com/pagopa/io-app/commit/337ada20510dba93c745bb8fb82147eaf1114b6a))
+
+
+### Chores
+
+* [[IOAPPFD0-83](https://pagopa.atlassian.net/browse/IOAPPFD0-83)] Add the new `ListItemNav` and `ListItemNavAlert` components ([#4551](https://github.com/pagopa/io-app/issues/4551)) ([614f777](https://github.com/pagopa/io-app/commit/614f777f293b7d29dff8d287647cec3f7a438301))
+
 ## [2.33.0-rc.0](https://github.com/pagopa/io-app/compare/2.32.0-rc.1...2.33.0-rc.0) (2023-05-16)
 
 
