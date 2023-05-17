@@ -1,0 +1,137 @@
+import * as React from "react";
+import { View, StyleSheet, Text } from "react-native";
+
+import { Icon, IOIcons } from "../core/icons";
+import {
+  IOListItemStyles,
+  IOListItemVisualParams,
+  IOStyles
+} from "../core/variables/IOStyles";
+import { LabelSmall } from "../core/typography/LabelSmall";
+import { IOColors, useIOTheme } from "../core/variables/IOColors";
+import { WithTestID } from "../../types/WithTestID";
+import { useIOSelector } from "../../store/hooks";
+import { makeFontStyleObject } from "../core/fonts";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { NewH6 } from "../core/typography/NewH6";
+import { Body } from "../core/typography/Body";
+import { VSpacer } from "../core/spacer/Spacer";
+
+export type ListItemInfo = WithTestID<{
+  label: string;
+  value: string | React.ReactNode;
+  icon?: IOIcons;
+  // Accessibility
+  accessibilityLabel: string;
+}>;
+
+const styles = StyleSheet.create({
+  textValue: {
+    fontSize: 18,
+    lineHeight: 24,
+    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
+  }
+});
+
+export const ListItemInfo = ({
+  label,
+  value,
+  icon,
+  accessibilityLabel,
+  testID
+}: ListItemInfo) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
+  const theme = useIOTheme();
+
+  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
+  const LegacyListItemNav = () => (
+    <View
+      style={IOListItemStyles.listItem}
+      testID={testID}
+      accessible={true}
+      accessibilityLabel={accessibilityLabel}
+    >
+      <View style={IOListItemStyles.listItemInner}>
+        {icon && (
+          <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+            <Icon
+              name={icon}
+              color="grey-450"
+              size={IOListItemVisualParams.iconSize}
+            />
+          </View>
+        )}
+        <View style={IOStyles.flex}>
+          {/* Let developer using a custom component (e.g: skeleton) */}
+          {typeof label === "string" ? (
+            <Body weight="Regular">{label}</Body>
+          ) : (
+            { label }
+          )}
+          {typeof value === "string" ? (
+            <Text
+              style={[styles.textValue, { color: IOColors.bluegreyDark }]}
+              numberOfLines={2}
+            >
+              {value}
+            </Text>
+          ) : (
+            { value }
+          )}
+        </View>
+        <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+          <Icon
+            name="copy"
+            color="blue"
+            size={IOListItemVisualParams.chevronSize}
+          />
+        </View>
+      </View>
+    </View>
+  );
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+  const NewListItemNav = () => (
+    <View
+      style={IOListItemStyles.listItem}
+      testID={testID}
+      accessible={true}
+      accessibilityLabel={accessibilityLabel}
+    >
+      <View style={IOListItemStyles.listItemInner}>
+        {icon && (
+          <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+            <Icon
+              name={icon}
+              color="grey-450"
+              size={IOListItemVisualParams.iconSize}
+            />
+          </View>
+        )}
+        <View style={IOStyles.flex}>
+          <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+            {label}
+          </LabelSmall>
+          <VSpacer size={4} />
+          <NewH6 color={theme["interactiveElem-default"]} numberOfLines={2}>
+            {value}
+          </NewH6>
+        </View>
+        <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+          <Icon
+            name="copy"
+            color={theme["interactiveElem-default"]}
+            size={IOListItemVisualParams.chevronSize}
+          />
+        </View>
+      </View>
+    </View>
+  );
+
+  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
+  without the following condition */
+  return isDesignSystemEnabled ? <NewListItemNav /> : <LegacyListItemNav />;
+};
+
+export default ListItemInfo;
