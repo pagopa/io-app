@@ -4,15 +4,14 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
 import { IOPayPalPsp } from "../types";
+import { Icon } from "../../../../../components/core/icons/Icon";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
 export const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
@@ -107,7 +106,7 @@ export const PspRadioItem = (
       )}
       <View style={styles.radioItemRight}>
         <TouchableDefaultOpacity testID={"infoIconTestID"} onPress={present}>
-          <IconFont name={"io-info"} size={24} color={IOColors.blue} />
+          <Icon name="info" size={24} color="blue" />
         </TouchableDefaultOpacity>
       </View>
       {bottomSheet}

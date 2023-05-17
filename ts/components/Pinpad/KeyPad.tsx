@@ -3,18 +3,17 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { Col, Grid, Row, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
-import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
-import StyledIconFont from "../ui/IconFont";
+import { IOIcons, Icon } from "../core/icons/Icon";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
 export type DigitRpr = E.Either<
   string,
-  { name: string; size: number; accessibilityLabel: string }
+  { name: IOIcons; size: number; accessibilityLabel: string }
 >;
 type Digit = ITuple2<DigitRpr, () => void> | undefined;
 
@@ -109,16 +108,13 @@ const renderPinCol = (
               </NBButtonText>
             ),
             ic => (
-              <StyledIconFont
-                name={ic.name}
-                size={ic.size}
-                style={styles.noPadded}
-                color={
-                  buttonType === "light"
-                    ? customVariables.contentPrimaryBackground
-                    : IOColors.white
-                }
-              />
+              <View style={styles.noPadded}>
+                <Icon
+                  name={ic.name}
+                  size={ic.size}
+                  color={buttonType === "light" ? "blue" : "white"}
+                />
+              </View>
             )
           )
         )}

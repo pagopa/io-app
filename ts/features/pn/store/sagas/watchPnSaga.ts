@@ -8,7 +8,7 @@ import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPre
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { BackendPnClient } from "../../api/backendPn";
-import { pnActivationUpsert } from "../actions/service";
+import { pnActivationUpsert } from "../actions";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,

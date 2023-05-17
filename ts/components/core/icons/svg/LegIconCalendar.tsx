@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconCalendar = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconCalendar = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M24 15.563a.937.937 0 1 1-1.875 0V5.624A1.877 1.877 0 0 0 20.25 3.75h-1.219v.938a.937.937 0 1 1-1.875 0V3.75h-4.265v.938a.937.937 0 1 1-1.875 0V3.75h-4.22v.938a.937.937 0 1 1-1.874 0V3.75H3.75a1.877 1.877 0 0 0-1.875 1.875V20.25c0 1.034.841 1.875 1.875 1.875h16.5a1.877 1.877 0 0 0 1.875-1.875.937.937 0 1 1 1.875 0A3.754 3.754 0 0 1 20.25 24H3.75A3.754 3.754 0 0 1 0 20.25V5.625a3.754 3.754 0 0 1 3.75-3.75h1.172V.937a.937.937 0 1 1 1.875 0v.938h4.219V.937a.937.937 0 1 1 1.875 0v.938h4.265V.937a.938.938 0 0 1 1.875 0v.938h1.219A3.754 3.754 0 0 1 24 5.625v9.938Z"
       fill="currentColor"

@@ -20,20 +20,17 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type IconButton = WithTestID<{
-  icon: IOIcons;
   color?: "primary" | "neutral" | "contrast";
+  icon: IOIcons;
   disabled?: boolean;
+  // Accessibility
   accessibilityLabel: string;
   accessibilityHint?: string;
+  // Events
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
 type ColorStates = {
-  background: {
-    default: string;
-    pressed: string;
-    disabled: string;
-  };
   icon: {
     default: string;
     pressed: string;
@@ -56,40 +53,25 @@ const mapLegacyColorStates: Record<
 > = {
   // Primary button
   primary: {
-    background: {
-      default: hexToRgba(IOColors.blue, 0),
-      pressed: hexToRgba(IOColors.blue, 0.15),
-      disabled: "transparent"
-    },
     icon: {
       default: IOColors.blue,
-      pressed: IOColors.blue,
+      pressed: IOColors["blue-600"],
       disabled: hexToRgba(IOColors.blue, 0.25)
     }
   },
   // Neutral button
   neutral: {
-    background: {
-      default: IOColors.white,
-      pressed: IOColors.greyUltraLight,
-      disabled: "transparent"
-    },
     icon: {
-      default: IOColors.bluegrey,
-      pressed: IOColors.black,
+      default: IOColors.black,
+      pressed: IOColors.bluegreyDark,
       disabled: IOColors.grey
     }
   },
   // Contrast button
   contrast: {
-    background: {
-      default: hexToRgba(IOColors.white, 0),
-      pressed: hexToRgba(IOColors.white, 0.2),
-      disabled: "transparent"
-    },
     icon: {
       default: IOColors.white,
-      pressed: IOColors.white,
+      pressed: hexToRgba(IOColors.white, 0.85),
       disabled: hexToRgba(IOColors.white, 0.25)
     }
   }
@@ -100,11 +82,6 @@ const mapLegacyColorStates: Record<
 const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
   // Primary button
   primary: {
-    background: {
-      default: hexToRgba(IOColors["blueIO-500"], 0),
-      pressed: hexToRgba(IOColors["blueIO-500"], 0.15),
-      disabled: "transparent"
-    },
     icon: {
       default: IOColors["blueIO-500"],
       pressed: IOColors["blueIO-600"],
@@ -113,27 +90,17 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
   },
   // Neutral button
   neutral: {
-    background: {
-      default: IOColors.white,
-      pressed: IOColors.greyUltraLight,
-      disabled: "transparent"
-    },
     icon: {
-      default: IOColors.bluegrey,
-      pressed: IOColors.black,
+      default: IOColors.black,
+      pressed: IOColors["grey-850"],
       disabled: IOColors.grey
     }
   },
   // Contrast button
   contrast: {
-    background: {
-      default: hexToRgba(IOColors.white, 0),
-      pressed: hexToRgba(IOColors.white, 0.2),
-      disabled: "transparent"
-    },
     icon: {
       default: IOColors.white,
-      pressed: IOColors.white,
+      pressed: hexToRgba(IOColors.white, 0.85),
       disabled: hexToRgba(IOColors.white, 0.25)
     }
   }
@@ -143,8 +110,8 @@ const AnimatedIconClassComponent =
   Animated.createAnimatedComponent(IconClassComponent);
 
 export const IconButton = ({
-  icon,
   color = "primary",
+  icon,
   disabled = false,
   onPress,
   accessibilityLabel,
@@ -165,27 +132,6 @@ export const IconButton = ({
   // Interpolate animation values from `isPressed` values
 
   const pressedAnimationStyle = useAnimatedStyle(() => {
-    // Link color states to the pressed states
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const backgroundColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].background.default,
-            mapColorStates[color].background.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].background.default,
-            mapLegacyColorStates[color].background.pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
-
     // Scale down button slightly when pressed
     const scale = interpolate(
       progressPressed.value,
@@ -195,7 +141,6 @@ export const IconButton = ({
     );
 
     return {
-      backgroundColor,
       transform: [{ scale }]
     };
   });
@@ -235,21 +180,23 @@ export const IconButton = ({
 
   return (
     <Pressable
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
-      testID={testID}
+      style={IOButtonStyles.dimensionsDefault}
+      disabled={disabled}
+      // Events
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      // Accessibility
       accessible={true}
-      disabled={disabled}
-      style={IOButtonStyles.dimensionsDefault}
+      accessibilityRole={"button"}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      // Test
+      testID={testID}
     >
       <Animated.View
         style={[
-          IOIconButtonStyles.button,
-          IOIconButtonStyles.buttonSizeDefault,
+          IOIconButtonStyles.buttonSizeSmall,
           !disabled && pressedAnimationStyle
         ]}
       >

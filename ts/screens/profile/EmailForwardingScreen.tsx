@@ -67,7 +67,7 @@ function renderListItem(
     <ListItemComponent
       title={title}
       subTitle={subTitle}
-      iconName={isActive ? "io-radio-on" : "io-radio-off"}
+      iconName={isActive ? "legRadioOn" : "legRadioOff"}
       smallIconSize={true}
       iconOnTop={true}
       useExtendedSubTitle={true}

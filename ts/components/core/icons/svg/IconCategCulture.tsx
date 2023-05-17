@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconCategCulture = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const IconCategCulture = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M20.78 12.498a.703.703 0 1 0-.992-.996.894.894 0 0 1-1.267 0 .703.703 0 1 0-.992.996 2.3 2.3 0 0 0 3.251 0ZM13.009 18.522a.703.703 0 0 0 1-.007 3.58 3.58 0 0 1 2.51-1.035 3.58 3.58 0 0 1 2.504 1.03.703.703 0 1 0 1.006-.982 4.995 4.995 0 0 0-3.51-1.454c-1.308 0-2.587.53-3.51 1.454a.703.703 0 0 0 0 .994Z"
       fill="currentColor"

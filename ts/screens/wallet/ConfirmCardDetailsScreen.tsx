@@ -19,7 +19,6 @@ import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
@@ -272,11 +271,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             hideFavoriteIcon={true}
           />
           <VSpacer size={16} />
-          <InfoBox
-            alignedCentral={true}
-            iconSize={24}
-            iconColor={IOColors.bluegreyDark}
-          >
+          <InfoBox alignedCentral={true} iconSize={24} iconColor="bluegreyDark">
             <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
           </InfoBox>
           <VSpacer size={24} />

@@ -27,7 +27,6 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
-  fciEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
@@ -40,7 +39,7 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { removePersistMvl, watchMvlSaga } from "../features/mvl/saga";
+import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
@@ -92,7 +91,9 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
+import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
@@ -153,6 +154,7 @@ import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
+import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -267,6 +269,45 @@ export function* initializeApplicationSaga(): Generator<
     return;
   }
 
+  // Now we fork the tasks that will handle the async requests coming from the
+  // UI of the application.
+  // Note that the following sagas will be automatically cancelled each time
+  // this parent saga gets restarted.
+
+  yield* fork(watchLoadUserMetadata, backendClient.getUserMetadata);
+  yield* fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
+
+  yield* fork(
+    watchUserDataProcessingSaga,
+    backendClient.getUserDataProcessingRequest,
+    backendClient.postUserDataProcessingRequest,
+    backendClient.deleteUserDataProcessingRequest
+  );
+
+  // Load visible services and service details from backend when requested
+  yield* fork(watchLoadServicesSaga, backendClient);
+
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchMessagePrecondition,
+    backendClient.getThirdPartyMessagePrecondition
+  );
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
+
+  // watch FCI saga
+  yield* fork(watchFciSaga, sessionToken, keyInfo);
+
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -290,6 +331,7 @@ export function* initializeApplicationSaga(): Generator<
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
+      yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
       yield* put(startApplicationInitialization());
 
       return;
@@ -324,6 +366,7 @@ export function* initializeApplicationSaga(): Generator<
   if (O.isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
     yield* delay(WAIT_INITIALIZE_SAGA);
+    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     yield* put(startApplicationInitialization());
     return;
   }
@@ -364,6 +407,7 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
+  yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
   if (hasPreviousSessionAndPin) {
@@ -382,7 +426,6 @@ export function* initializeApplicationSaga(): Generator<
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
-
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
@@ -424,6 +467,7 @@ export function* initializeApplicationSaga(): Generator<
   // possible to begin receiving push notifications
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
+  yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
   //
   // User is autenticated, session token is valid
   //
@@ -456,9 +500,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
 
-  // Remove persisted features.MVL
-  yield* call(removePersistMvl);
-
   if (mvlEnabled) {
     // Start watching for MVL actions
     yield* fork(watchMvlSaga, sessionToken);
@@ -481,10 +522,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
-  if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken, keyInfo);
-  }
-
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
 
@@ -504,21 +541,6 @@ export function* initializeApplicationSaga(): Generator<
 
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
-
-  // Now we fork the tasks that will handle the async requests coming from the
-  // UI of the application.
-  // Note that the following sagas will be automatically cancelled each time
-  // this parent saga gets restarted.
-
-  yield* fork(watchLoadUserMetadata, backendClient.getUserMetadata);
-  yield* fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
-
-  yield* fork(
-    watchUserDataProcessingSaga,
-    backendClient.getUserDataProcessingRequest,
-    backendClient.postUserDataProcessingRequest,
-    backendClient.deleteUserDataProcessingRequest
-  );
 
   if (isSessionRefreshed) {
     // Only if the user are logging in check the account removal status and,
@@ -576,22 +598,6 @@ export function* initializeApplicationSaga(): Generator<
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
-  // Load visible services and service details from backend when requested
-  yield* fork(watchLoadServicesSaga, backendClient);
-
-  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-  yield* fork(watchReloadAllMessages, backendClient.getMessages);
-  yield* fork(watchLoadMessageById, backendClient.getMessage);
-  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-  yield* fork(
-    watchUpsertMessageStatusAttribues,
-    backendClient.upsertMessageStatusAttributes
-  );
-  yield* fork(
-    watchMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
-  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
@@ -628,8 +634,6 @@ export function* initializeApplicationSaga(): Generator<
         fromNotification: true
       })
     );
-  } else {
-    yield* call(navigateToMainNavigatorAction);
   }
 }
 

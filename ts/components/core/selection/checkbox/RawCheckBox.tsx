@@ -1,11 +1,11 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../TouchableDefaultOpacity";
-import IconFont from "../../../ui/IconFont";
 import { calculateSlop } from "../../accessibility";
 import { IOColors } from "../../variables/IOColors";
+import { Icon } from "../../icons/Icon";
 
 type Props = {
   // the value of the checkbox
@@ -15,20 +15,21 @@ type Props = {
 type OwnProps = Props &
   Pick<TouchableDefaultOpacityProps, "disabled" | "onPress">;
 
-const size = 24;
+const SIZE: number = 24;
+const BORDER_WIDTH: number = 2;
 
-const offColor = IOColors.bluegrey;
-const onColor = IOColors.blue;
-const slop = calculateSlop(size);
-const tickSize = size * 0.85;
+const offColor: IOColors = "bluegrey";
+const onColor: IOColors = "blue";
+const slop = calculateSlop(SIZE);
+const tickSize = SIZE;
 
 const styles = StyleSheet.create({
   checkBox: {
-    width: size,
-    height: size,
+    width: SIZE,
+    height: SIZE,
     backgroundColor: IOColors.white,
     borderColor: IOColors.blue,
-    borderWidth: 2,
+    borderWidth: BORDER_WIDTH,
     borderRadius: 4
   }
 });
@@ -54,10 +55,15 @@ export const RawCheckBox: React.FunctionComponent<OwnProps> = props => {
       testID="RawCheckbox"
       onPress={props.onPress}
       hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
-      style={[styles.checkBox, { borderColor: getBorderColor(checked) }]}
+      style={[
+        styles.checkBox,
+        { borderColor: IOColors[getBorderColor(checked)] }
+      ]}
     >
       {checked && (
-        <IconFont name={"io-tick-big"} size={tickSize} color={onColor} />
+        <View style={{ top: -BORDER_WIDTH, left: -BORDER_WIDTH }}>
+          <Icon name="legCompleted" size={tickSize} color={onColor} />
+        </View>
       )}
     </TouchableDefaultOpacity>
   );

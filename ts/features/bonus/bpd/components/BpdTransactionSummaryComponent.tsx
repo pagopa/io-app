@@ -77,7 +77,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   const { present, bottomSheet } = useIOBottomSheetModal(
     <>
       <VSpacer size={24} />
-      <InfoBox iconName={"io-calendar"} iconSize={32}>
+      <InfoBox iconName="legCalendar" iconSize={32}>
         <H4 weight={"Regular"}>
           {I18n.t(
             "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
@@ -104,7 +104,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   return (
     <>
       <View style={styles.row}>
-        <InfoBox iconName={"io-notice"} iconSize={32}>
+        <InfoBox iconName="notice" iconSize={32}>
           <H4 weight={"Regular"}>
             {I18n.t("bonus.bpd.details.transaction.detail.summary.lastUpdated")}
             <H4>{props.lastUpdateDate}</H4>

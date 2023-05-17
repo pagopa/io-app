@@ -5,7 +5,10 @@ import {
   clausesByType,
   getAllTypes,
   getClauseLabel,
-  getSectionListData
+  getOptionalSignatureFields,
+  getRequiredSignatureFields,
+  getSectionListData,
+  orderSignatureFields
 } from "../signatureFields";
 
 const emptyAttrs = {} as SignatureField["attrs"];
@@ -36,6 +39,57 @@ const signatureFields: ReadonlyArray<SignatureField> = [
     clause: {
       title: "clause title 4",
       type: ClausesTypeEnum.OPTIONAL
+    },
+    attrs: emptyAttrs
+  }
+];
+
+const requiredSignatureFields = [
+  {
+    clause: {
+      title: "clause title 1",
+      type: ClausesTypeEnum.REQUIRED
+    },
+    attrs: emptyAttrs
+  },
+  {
+    clause: {
+      title: "clause title 2",
+      type: ClausesTypeEnum.UNFAIR
+    },
+    attrs: emptyAttrs
+  }
+];
+
+const optionalSignatureFields = [
+  {
+    clause: {
+      title: "clause title 3",
+      type: ClausesTypeEnum.OPTIONAL
+    },
+    attrs: emptyAttrs
+  },
+  {
+    clause: {
+      title: "clause title 4",
+      type: ClausesTypeEnum.OPTIONAL
+    },
+    attrs: emptyAttrs
+  }
+];
+
+const reqAndOptSignatureFields = [
+  {
+    clause: {
+      title: "clause title 3",
+      type: ClausesTypeEnum.OPTIONAL
+    },
+    attrs: emptyAttrs
+  },
+  {
+    clause: {
+      title: "clause title 1",
+      type: ClausesTypeEnum.REQUIRED
     },
     attrs: emptyAttrs
   }
@@ -127,6 +181,77 @@ describe("Test signatureFields utils", () => {
       expect(getClauseLabel(ClausesTypeEnum.UNFAIR)).toStrictEqual(
         I18n.t("features.fci.signatureFields.unfair")
       );
+    });
+  });
+
+  describe("Test getRequiredSignatureFields", () => {
+    it("it should returns an array of UNFAIR and REQUIRED signature fields", () => {
+      expect(getRequiredSignatureFields(signatureFields)).toStrictEqual(
+        requiredSignatureFields
+      );
+    });
+  });
+
+  describe("Test getOptionalSignatureFields", () => {
+    it("it should returns an array of OPTIONAL signature fields", () => {
+      expect(getOptionalSignatureFields(signatureFields)).toStrictEqual(
+        optionalSignatureFields
+      );
+    });
+  });
+
+  describe("Test orderSignatureFields", () => {
+    it("should return a sorted array when every type is present in the following order: UNFAIR, REQUIRED, OPTIONAL", () => {
+      const ordered = [
+        signatureFields[1], // UNFAIR
+        signatureFields[0], // REQUIRED
+        signatureFields[2], // OPTIONAL
+        signatureFields[3] // OPTIONAL
+      ];
+      expect(orderSignatureFields(signatureFields)).toStrictEqual(ordered);
+    });
+
+    it("should return a sorted array when only UNFAIR and REQUIRED types are present in the following order: UNFAIR, REQUIRED", () => {
+      const ordered = [
+        requiredSignatureFields[1], // UNFAIR
+        requiredSignatureFields[0] // REQUIRED
+      ];
+      expect(orderSignatureFields(requiredSignatureFields)).toStrictEqual(
+        ordered
+      );
+    });
+
+    it("should return a sorted array when only REQUIRED and OPTIONAL types are present in the following order: REQUIRED, OPTION", () => {
+      const ordered = [
+        reqAndOptSignatureFields[1], // REQUIRED
+        reqAndOptSignatureFields[0] // OPTIONAL
+      ];
+      expect(orderSignatureFields(reqAndOptSignatureFields)).toStrictEqual(
+        ordered
+      );
+    });
+
+    it("should return a sorted array with unknown types in the following order: UNFAIR, REQUIRED, OPTIONAL, EVERYTHING ELSE", () => {
+      const unknownField = {
+        clause: {
+          title: "clause title 8",
+          type: "Unknown"
+        },
+        attrs: emptyAttrs
+      };
+      const ordered = [
+        signatureFields[1], // UNFAIR
+        signatureFields[0], // REQUIRED
+        signatureFields[2], // OPTIONAL
+        signatureFields[3], // OPTIONAL
+        unknownField // UNKNOWN
+      ];
+      expect(
+        orderSignatureFields([
+          unknownField as SignatureField,
+          ...signatureFields
+        ])
+      ).toStrictEqual(ordered);
     });
   });
 });

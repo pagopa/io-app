@@ -1,16 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -30,7 +28,9 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
+import { Icon } from "../../../../components/core/icons/Icon";
 import ScreenContent from "../../../../components/screens/ScreenContent";
+import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 
 const styles = StyleSheet.create({
   padded: {
@@ -62,6 +62,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const navigation = useNavigation();
+  const route = useRoute();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
     undefined
@@ -80,16 +81,17 @@ const FciDataSharingScreen = (): React.ReactElement => {
       style={[styles.verticalPadding, styles.alertTextContainer]}
       testID="FciDataSharingScreenAlertTextTestID"
     >
-      <IconFont name={"io-notice"} size={iconSize} color={IOColors.bluegrey} />
+      <Icon name="notice" size={iconSize} color="bluegrey" />
       <H4 weight="Regular" style={styles.paddingTextLarge} color={"bluegrey"}>
         {I18n.t("features.fci.shareDataScreen.alertText")}
         <View style={styles.paddingText} />
         <Link
-          onPress={() =>
+          onPress={() => {
+            trackFciUserExit(route.name, "modifica_email");
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.INSERT_EMAIL_SCREEN
-            })
-          }
+            });
+          }}
         >
           {I18n.t("features.fci.shareDataScreen.alertLink")}
         </Link>
@@ -161,10 +163,10 @@ const FciDataSharingScreen = (): React.ReactElement => {
               () => present(),
               I18n.t("features.fci.shareDataScreen.cancel")
             )}
-            rightButton={confirmButtonProps(
-              () => navigation.navigate("FCI_QTSP_TOS"),
-              `${I18n.t("features.fci.shareDataScreen.confirm")}`
-            )}
+            rightButton={confirmButtonProps(() => {
+              trackFciUserDataConfirmed();
+              navigation.navigate("FCI_QTSP_TOS");
+            }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
           />
         </View>
       </SafeAreaView>

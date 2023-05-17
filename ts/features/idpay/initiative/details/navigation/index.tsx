@@ -1,5 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import BeneficiaryDetailsScreen, {
+  BeneficiaryDetailsScreenParams
+} from "../screens/BeneficiaryDetailsScreen";
 import { isGestureEnabled } from "../../../../../utils/navigation";
 import {
   InitiativeDetailsScreen,
@@ -13,12 +16,14 @@ import {
 export const IDPayDetailsRoutes = {
   IDPAY_DETAILS_MAIN: "IDPAY_DETAILS_MAIN",
   IDPAY_DETAILS_MONITORING: "IDPAY_DETAILS_MONITORING",
-  IDPAY_DETAILS_TIMELINE: "IDPAY_DETAILS_TIMELINE"
+  IDPAY_DETAILS_TIMELINE: "IDPAY_DETAILS_TIMELINE",
+  IDPAY_DETAILS_BENEFICIARY: "IDPAY_DETAILS_BENEFICIARY"
 } as const;
 
 export type IDPayDetailsParamsList = {
   [IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING]: InitiativeDetailsScreenParams;
   [IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE]: OperationsListScreenParams;
+  [IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY]: BeneficiaryDetailsScreenParams;
 };
 
 const Stack = createStackNavigator<IDPayDetailsParamsList>();
@@ -36,6 +41,10 @@ export const IDpayDetailsNavigator = () => (
     <Stack.Screen
       name={IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE}
       component={OperationsListScreen}
+    />
+    <Stack.Screen
+      name={IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY}
+      component={BeneficiaryDetailsScreen}
     />
   </Stack.Navigator>
 );

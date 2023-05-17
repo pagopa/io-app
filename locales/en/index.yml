@@ -168,11 +168,12 @@ global:
     details: "Details"
     choose: "Scegli"
   navigator:
-    messages: messages
-    wallet: wallet
-    documents: documents
-    profile: profile
-    services: services
+    messages: Messages
+    wallet: Wallet
+    scan: Scan
+    documents: Documents
+    profile: Profile
+    services: Services
   actions:
     retry: An error occurred, please retry
     search: Text to search
@@ -3142,10 +3143,6 @@ features:
         data:
           buttonTitle: Go back
   pn:
-    open:
-      warning:
-        title: Questo messaggio contiene una comunicazione a valore legale
-        body: !include pn/message_open_warning.html
     service:
       activate: "Attiva il servizio"
       deactivate: "Disattiva il servizio"
@@ -3213,10 +3210,13 @@ features:
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
         signing:
           title: The signature failed
-          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.   
+          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.
+        wrongUser:
+          title: You cannot sign these documents
+          subTitle: The signature request is not associated with your Tax Code.
     abort:
       title: "Quit signing"
-      content: "Do you want to quit signing the documents?"
+      content: "Do you want to quit signing **{{dossierTitle}}**?"
       cancel: "Quit signing"
       confirm: "Keep signing"
     checkService:
@@ -3240,7 +3240,7 @@ features:
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
       title: "Share these data?"
-      content: "They will be shared with the digital signature provider. If you cancel, you won't be able to complete the signature."
+      content: "They will enable the digital signature provider to provide the service and certify your signature."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Do you want to change or update your e-mail address?"
@@ -3366,6 +3366,7 @@ idpay:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          lastUpdated: "Saldo aggiornato al "
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
               content: Inserisci un metodo di pagamento valido per effettuare transazioni 
@@ -3406,17 +3407,62 @@ idpay:
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
+              READMITTED: "Riattivazione"
+    beneficiaryDetails:
+      infobox:
+        title: Cosa ti permette di fare?
+        rulesButton: Leggi le regole
+      infoModal:
+        title: "Regole dell'iniziativa"
+        button: "Ok, ho capito"
+      summary: Riepilogo
+      status: Stato iniziativa
+      endDate: Scadenza
+      amount: Saldo disponibile
+      toBeRefunded: In attesa di rimborso
+      refunded: Totale rimborsato
+      spendingRules: Regole di spesa
+      spendFrom: A partire dal giorno
+      spendTo: Entro il giorno
+      spendPercentage: Percentuale riconosciuta
+      enrollmentDetails: Dettagli dell'adesione
+      enrollmentDate: Data
+      protocolNumber: Numero di protocollo
+      lastUpdate: "Saldo aggiornato al {{dateString}}"
+      buttons:
+        privacy: Preferenze & Privacy
+        unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
-      title: Dettaglio dell'operazione
-      instrument: Metodo di pagamento
-      maskedPan: •••• {{lastDigits}}
-      amountLabel: Importo transazione
-      accruedAmountLabel: Importo rimborsabile
-      infoTitle: Informazioni sull transazione
-      date: Data
-      circuit: Circuito di pagamento
-      acquirerId: ID transazione Acquirer
-      issuerId: ID transazione Issuer
+      title: 
+        TRANSACTION: Dettaglio dell'operazione
+        REVERSAL: Dettaglio dell'operazione
+        PAID_REFUND: Dettaglio del rimborso
+        REJECTED_REFUND: Dettaglio del rimborso
+      transaction:
+        instrument: Metodo di pagamento
+        maskedPan: •••• {{lastDigits}}
+        amountLabel: Importo transazione
+        accruedAmountLabel: Importo rimborsabile
+        infoTitle: Informazioni sulla transazione
+        date: Data
+        circuit: Circuito di pagamento
+        acquirerId: ID transazione Acquirer
+        issuerId: ID transazione Issuer
+        reversalAdvice: Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza.
+      refund:
+        iban: IBAN
+        amount: Importo rimborso
+        resultLabel: Esito
+        result: 
+          PAID_REFUND: Eseguito
+          REJECTED_REFUND: Fallito
+        rejectedAdvice: 
+          text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
+          editIban: Modifica IBAN 
+        period: Periodo di riferimento
+        date: Data rimborso
+        cro: CRO
+      errorBody: Impossibile caricare il dettaglio
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3477,6 +3523,19 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      code:
+        ISEE: ISEE
+        BIRTHDATE: Data di nascita
+        RESIDENCE: Residenza
+      operator:
+        EQ: "{{value}}"
+        NOT_EQ: "Non è {{value}}"
+        LT: "Minore di {{value}}"
+        LE: "Minore o uguale a {{value}}"
+        GT: "Maggiore di {{value}}"
+        GE: "Maggiore o uguale a {{value}}"
+        BTW_CLOSED: "Compreso tra {{value}} e {{value2}}"
+        BTW_OPEN: "Compreso tra {{value}} e {{value2}}"
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3558,6 +3617,36 @@ idpay:
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
+  unsubscription:
+    headerTitle: Rimuovi l'iniziativa
+    title: Vuoi rimuovere {{initiativeName}}?
+    subtitle: Per proseguire, seleziona tutte le informazioni riportate di seguito.
+    checks:
+      1:
+        title: Non puoi iscriverti un’altra volta
+        content: Proseguendo, perdi il diritto di poter aderire nuovamente all’iniziativa da app IO e tutti gli altri canali abilitati.
+      2:
+        title: Non perdi alcun rimborso
+        content: Se hai crediti da rimborsare, li riceverai all’IBAN da te indicato.
+      3:
+        title: I dati dell’iniziativa non verranno rimossi
+        content: L’Ente potrà conservarli secondo i termini indicati nell’Informativa Privacy
+      4:
+        title: Metodi di pagamento e IBAN rimangono in app per eventuali altre iniziative
+        content: Puoi rimuovere in ogni momento l’IBAN e i tuoi metodi di pagamento visitando le sezioni Profilo e Portafoglio.
+    button:
+      continue: Rimuovi
+    modal:
+      title: Rimuovere {{initiativeName}}?
+      content: L’operazione è irreversibile e ha effetto su tutti i canali. Non potrai più utilizzare i fondi a disposizione.
+    success:
+      title: Operazione completata!
+      content: L’iniziativa verrà rimossa entro le prossime 48 ore.
+      button: Torna a Portafoglio
+    failure:
+      title: C’è un problema sui nostri sistemi
+      content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
+      button: Chiudi
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

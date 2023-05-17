@@ -1,9 +1,9 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { OperationDTO } from "../../../../../../../definitions/idpay/OperationDTO";
+import { InitiativeDTO } from "../../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../../definitions/idpay/OperationListDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
-import { InitiativeDTO } from "../../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../../utils/errors";
+import { InitiativeDetailDTO } from "../../../../../../../definitions/idpay/InitiativeDetailDTO";
 
 export type IdPayInitiativeGetPayloadType = { initiativeId: string };
 
@@ -39,13 +39,17 @@ export type IdPayTimelineDetailsGetPayloadType = {
   operationId: OperationListDTO["operationId"];
 };
 
-export const idpayTimelineDetailsGet = createAsyncAction(
-  "IDPAY_TIMELINE_DETAILS_REQUEST",
-  "IDPAY_TIMELINE_DETAILS_SUCCESS",
-  "IDPAY_TIMELINE_DETAILS_FAILURE"
-)<IdPayTimelineDetailsGetPayloadType, OperationDTO, NetworkError>();
+export type IdPayBeneficiaryDetailsGetPayloadType = {
+  initiativeId: InitiativeDTO["initiativeId"];
+};
+
+export const idPayBeneficiaryDetailsGet = createAsyncAction(
+  "IDPAY_BENEFICIARY_DETAILS_REQUEST",
+  "IDPAY_BENEFICIARY_DETAILS_SUCCESS",
+  "IDPAY_BENEFICIARY_DETAILS_FAILURE"
+)<IdPayBeneficiaryDetailsGetPayloadType, InitiativeDetailDTO, NetworkError>();
 
 export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>
   | ActionType<typeof idpayTimelinePageGet>
-  | ActionType<typeof idpayTimelineDetailsGet>;
+  | ActionType<typeof idPayBeneficiaryDetailsGet>;

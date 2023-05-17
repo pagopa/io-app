@@ -52,6 +52,7 @@ import persistedPreferencesReducer, {
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import searchReducer from "./search";
+import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
@@ -101,6 +102,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   cie: cieReducer,
   bonus: bonusReducer,
   assistanceTools: assistanceToolsReducer,
+  startup: startupReducer,
   //
   // persisted state
   //
@@ -187,10 +189,6 @@ export function createRootReducer(
               _persist: state.entities._persist
             },
             features: {
-              pn: {
-                // eslint-disable-next-line no-underscore-dangle
-                _persist: state.features.pn._persist
-              },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist
             },

@@ -12,7 +12,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { MultiImage } from "../../../../components/ui/MultiImage";
 import I18n from "../../../../i18n";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";
@@ -26,6 +25,7 @@ import {
 } from "../../../../utils/stringBuilder";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 import { getRecepientName } from "../../../../utils/strings";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   row: {
@@ -91,7 +91,7 @@ const InfoButton = (props: { onPress: () => void }) => (
     )}
     accessibilityRole={"button"}
   >
-    <IconFont name={"io-info"} size={24} color={IOColors.blue} />
+    <Icon name="info" size={24} color="blue" />
   </TouchableDefaultOpacity>
 );
 
@@ -236,9 +236,10 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       >
         {props.isPaid && !isLoading && (
           <IOBadge
-            text={I18n.t("messages.badge.paid")}
             small
-            labelColor={"bluegreyDark"}
+            text={I18n.t("messages.badge.paid")}
+            variant="solid"
+            color="aqua"
           />
         )}
         {!props.isPaid && !isLoading && (
