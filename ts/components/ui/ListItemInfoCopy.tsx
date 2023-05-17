@@ -31,6 +31,7 @@ import { makeFontStyleObject } from "../core/fonts";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
+import { VSpacer } from "../core/spacer/Spacer";
 
 export type ListItemInfoCopy = WithTestID<{
   label: string;
@@ -136,15 +137,12 @@ export const ListItemInfoCopy = ({
             </View>
           )}
           <View style={IOStyles.flex}>
+            <Body weight="Regular">{label}</Body>
+            <VSpacer size={4} />
             {/* Let developer using a custom component (e.g: skeleton) */}
-            {typeof label === "string" ? (
-              <Body weight="Regular">{label}</Body>
-            ) : (
-              { label }
-            )}
             {typeof value === "string" ? (
               <Text
-                style={[styles.textValue, { color: IOColors.bluegreyDark }]}
+                style={[styles.textValue, { color: IOColors.blue }]}
                 numberOfLines={2}
               >
                 {value}
@@ -195,9 +193,15 @@ export const ListItemInfoCopy = ({
             <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
               {label}
             </LabelSmall>
-            <NewH6 color={theme["interactiveElem-default"]} numberOfLines={2}>
-              {value}
-            </NewH6>
+            <VSpacer size={4} />
+            {/* Let developer using a custom component (e.g: skeleton) */}
+            {typeof value === "string" ? (
+              <NewH6 color={theme["interactiveElem-default"]} numberOfLines={2}>
+                {value}
+              </NewH6>
+            ) : (
+              { value }
+            )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
