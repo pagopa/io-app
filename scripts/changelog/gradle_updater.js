@@ -17,7 +17,7 @@ const versionModule = require("./version_utility.js");
 const versionNameRegex = /(versionName ")(.+)(")/gm;
 const versionCodeRegex = /(versionCode )([0-9]+)/gm;
 
-module.exports.readVersion = function (contents) {
+module.exports.readVersion = function(contents) {
   // return the 2nd group of the regex (the version)
   return versionNameRegex.exec(contents)[2];
 };
@@ -30,7 +30,7 @@ function getVersionCode(contents) {
   return versionCodeRegex.exec(contents)[2];
 }
 
-module.exports.writeVersion = function (contents, version) {
+module.exports.writeVersion = function(contents, version) {
   // replace the old version (match #2 group) of regex, with the new version
 
   const versionCodeNumber = getVersionCode(contents);
