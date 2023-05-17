@@ -47,17 +47,13 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
   };
 
   return (
-    // The void customRightIcon and customGoBack are needed to have a centered header title
+    // The void customGoBack is needed to have a centered header title
     <BaseScreenComponent
       showChat={false}
       goBack={false}
       headerTitle={I18n.t(
         "bonus.bpd.optInPaymentMethods.cashbackUpdate.header"
       )}
-      customRightIcon={{
-        iconName: "",
-        onPress: () => true
-      }}
       customGoBack={
         <ButtonDefaultOpacity onPress={() => true} transparent={true} />
       }

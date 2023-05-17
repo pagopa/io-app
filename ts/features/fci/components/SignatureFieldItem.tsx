@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { H4 } from "../../../components/core/typography/H4";
-import IconFont from "../../../components/ui/IconFont";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
+import { Icon } from "../../../components/core/icons/Icon";
 
 type Props = {
   title: string;
@@ -60,15 +60,15 @@ const SignatureFieldItem = (props: Props) => {
           disabled={props.disabled}
           style={{ alignSelf: "center" }}
         >
-          <IconFont
+          <Icon
             testID="SignatureFieldItemCheckboxTestID"
-            name={checked ? "io-checkbox-on" : "io-checkbox-off"}
+            name={checked ? "legCheckOn" : "legCheckOff"}
             color={
               checked && !props.disabled
-                ? IOColors.blue
+                ? "blue"
                 : props.disabled
-                ? IOColors.grey
-                : IOColors.bluegreyDark
+                ? "grey"
+                : "bluegreyDark"
             }
             size={22}
           />

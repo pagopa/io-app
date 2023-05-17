@@ -117,7 +117,7 @@ div.custom-block.io-demo-block .custom-block-body::after {
   position: absolute;
   right: 0;
   font-family: 'io-icon-font';
-  font-size: ${customVariables.iconSize6}px;
+  font-size: 48px;
   font-weight: normal;
   content: "\\50";
 }

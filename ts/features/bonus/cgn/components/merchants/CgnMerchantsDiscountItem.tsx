@@ -10,10 +10,10 @@ import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/Di
 import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
 import { Label } from "../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
+import { Icon } from "../../../../../components/core/icons";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
@@ -69,7 +69,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
             </>
           )}
         </View>
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        <Icon name="chevronRightListItem" color="blue" size={24} />
       </View>
       {cgnDiscountDetail}
     </TouchableDefaultOpacity>

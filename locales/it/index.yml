@@ -168,11 +168,12 @@ global:
     details: "Dettagli"
     choose: "Scegli"
   navigator:
-    messages: messaggi
-    wallet: portafoglio
-    documents: documenti
-    profile: profilo
-    services: servizi
+    messages: Messaggi
+    wallet: Portafoglio
+    scan: Inquadra
+    documents: Documenti
+    profile: Profilo
+    services: Servizi
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare
@@ -3243,7 +3244,7 @@ features:
           subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
     abort:
       title: "Annulla la firma"
-      content: "Vuoi annullare la firma dei documenti?"
+      content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
     checkService:
