@@ -54,8 +54,12 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
     <TouchableDefaultOpacity style={styles.listItem} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
         <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-          <Label weight={"SemiBold"} color={"bluegreyDark"}>
-            {`${discount.name} `}
+          <Label
+            weight={"SemiBold"}
+            color={"bluegreyDark"}
+            style={{ flexShrink: 1 }}
+          >
+            {discount.name}
           </Label>
           {discount.isNew && (
             <>
