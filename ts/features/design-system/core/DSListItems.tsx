@@ -14,7 +14,6 @@ import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMer
 /* Icons */
 import BooksIcon from "../../../../img/bonus/cgn/categories/books.svg";
 import CultureIcon from "../../../../img/bonus/cgn/categories/culture.svg";
-import InfoIcon from "../../../../img/assistance/info.svg";
 
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
@@ -29,6 +28,7 @@ import ListItemNav from "../../../components/ui/ListItemNav";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
+import { Icon } from "../../../components/core/icons/Icon";
 
 export const DSListItems = () => (
   <IOThemeContext.Consumer>
@@ -226,7 +226,7 @@ export const DSListItems = () => (
           <ListItemComponent
             title={"Title"}
             iconSize={12}
-            iconName={"io-tick-big"}
+            iconName={"completed"}
             onPress={() => alert("Action triggered")}
           />
         </DSComponentViewerBox>
@@ -244,7 +244,7 @@ export const DSListItems = () => (
           <ListItemComponent
             title={"Title"}
             subTitle={"Subtitle"}
-            iconName={"io-radio-on"}
+            iconName={"legRadioOn"}
             smallIconSize={true}
             iconOnTop={true}
             onPress={() => alert("Action triggered")}
@@ -298,9 +298,10 @@ export const DSListItems = () => (
             onPress={() => alert("Action triggered")}
           />
         </DSComponentViewerBox>
+
         <DSComponentViewerBox name="ZendeskItemPermissionComponent">
           <ZendeskItemPermissionComponent
-            icon={<InfoIcon width={24} height={24} />}
+            icon={<Icon name="info" size={24} />}
             title="Storico versioni dell'app"
             value="Per capire se il problema dipende dall'ultimo aggiornamento"
             testId="TestID"

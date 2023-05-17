@@ -14,7 +14,7 @@ export const IOSectionPictograms = {
   messages: PictogramSectionMessages /* io-home-messaggi */,
   payments: PictogramSectionPayments,
   documents: PictogramSectionDocuments,
-  services: PictogramSectionServices /* io-home-servizi */,
+  services: PictogramSectionServices,
   profile: PictogramSectionProfile,
   settings: PictogramSectionSettings
 };

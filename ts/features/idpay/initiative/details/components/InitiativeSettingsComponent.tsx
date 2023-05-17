@@ -13,17 +13,14 @@ import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
-import customVariables from "../../../../../theme/variables";
-import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 type Props = {
   initiative?: InitiativeDTO;
@@ -71,7 +68,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => {
     <NBListItem onPress={onPress} style={{ paddingEnd: 0 }}>
       {hasWarnings && (
         <>
-          <IconFont name={"io-warning"} color={IOColors.red} />
+          <Icon name="legWarning" color="red" />
           <HSpacer size={16} />
         </>
       )}
@@ -79,10 +76,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => {
         <H4>{title}</H4>
         {getSubtitleComponent()}
       </View>
-      <IconFont
-        name={"io-right"}
-        color={customVariables.contentPrimaryBackground}
-      />
+      <Icon name="chevronRightListItem" color="blue" />
     </NBListItem>
   );
 };
@@ -108,16 +102,6 @@ const InitiativeSettingsComponent = (props: Props) => {
       params: {
         initiativeId
       }
-    });
-  };
-
-  const navigateToUnsubscription = (
-    initiativeId: string,
-    initiativeName?: string
-  ) => {
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      initiativeId,
-      initiativeName
     });
   };
 
@@ -182,21 +166,6 @@ const InitiativeSettingsComponent = (props: Props) => {
     )
   );
 
-  const unsubscriptionButton = pipe(
-    initiative,
-    O.fromNullable,
-    O.fold(
-      () => null,
-      ({ initiativeId, initiativeName }) => (
-        <SettingsButtonComponent
-          title={"Rimuovi iniziativa"}
-          onPress={() => navigateToUnsubscription(initiativeId, initiativeName)}
-          subtitle=""
-        />
-      )
-    )
-  );
-
   return (
     <>
       <H3>
@@ -207,8 +176,6 @@ const InitiativeSettingsComponent = (props: Props) => {
       <VSpacer size={8} />
       {instrumentsSettingsButton}
       {ibanSettingsButton}
-      {/* TODO: temporary button, removed in IODPAY-175  */}
-      {unsubscriptionButton}
     </>
   );
 };

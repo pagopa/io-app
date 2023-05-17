@@ -12,10 +12,9 @@ import {
   MessagePaymentExpirationInfo
 } from "../../../utils/messages";
 import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
-
 import { localeDateFormat } from "../../../utils/locale";
 import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
+import { Icon } from "../../core/icons";
 import { Body } from "../../core/typography/Body";
 import { IOStyles } from "../../core/variables/IOStyles";
 import CalendarIconComponent from "./common/CalendarIconComponent";
@@ -161,7 +160,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
   if (isPaid) {
     return (
       <View style={styles.messagePaidBg}>
-        <IconFont name="io-complete" color={IOColors.bluegreyDark} />
+        <Icon name="ok" color="bluegreyDark" />
         <View style={IOStyles.horizontalContentPadding}>
           <Body color="bluegreyDark">{I18n.t("wallet.errors.DUPLICATED")}</Body>
         </View>

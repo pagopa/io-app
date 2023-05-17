@@ -2,8 +2,12 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconDocumentAttachmentPDF = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconDocumentAttachmentPDF = ({
+  size,
+  style,
+  ...props
+}: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M6.84 15.44c0-.398-.277-.635-.765-.635-.2 0-.334.02-.405.038v1.279c.084.018.186.025.328.025.52 0 .841-.263.841-.706ZM9.86 14.818c-.219 0-.36.02-.444.039v2.832c.084.02.219.02.341.02.886.006 1.465-.482 1.465-1.516.006-.9-.52-1.375-1.362-1.375Z"
       fill="currentColor"

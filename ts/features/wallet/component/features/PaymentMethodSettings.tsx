@@ -4,14 +4,13 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import IconFont from "../../../../components/ui/IconFont";
 import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteMethodSwitch";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { isEnabledToPay } from "../../../../utils/paymentMethodCapabilities";
+import { Icon } from "../../../../components/core/icons/Icon";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
@@ -35,13 +34,10 @@ const styles = StyleSheet.create({
 const PaymentMethodSettings = (props: Props): React.ReactElement => (
   <>
     <View style={styles.row}>
-      <IconFont
-        name={"io-preferenze"}
-        size={20}
-        color={IOColors.bluegreyDark}
-        style={styles.icon}
-      />
-      <HSpacer size={16} />
+      <View style={styles.icon}>
+        <Icon name="legCoggle" size={20} color="bluegrey" />
+      </View>
+      <HSpacer size={8} />
       <H3 color={"bluegrey"}>{I18n.t("global.buttons.settings")}</H3>
     </View>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />

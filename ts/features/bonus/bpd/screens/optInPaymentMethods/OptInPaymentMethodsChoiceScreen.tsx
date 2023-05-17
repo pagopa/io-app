@@ -47,6 +47,8 @@ const generateOptionBody = (
     {showBadge && (
       <>
         <IOBadge
+          variant="solid"
+          color="blue"
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
         <VSpacer size={4} />
@@ -164,15 +166,11 @@ const OptInPaymentMethodsChoiceScreen = () => {
         (isReady(showOptInChoice) && !showOptInChoice.value)
       }
     >
-      {/* The void customRightIcon and customGoBack are needed to have a centered header title */}
+      {/* The void customGoBack are needed to have a centered header title */}
       <BaseScreenComponent
         showChat={false}
         goBack={false}
         headerTitle={I18n.t("bonus.bpd.optInPaymentMethods.choice.header")}
-        customRightIcon={{
-          iconName: "",
-          onPress: () => true
-        }}
         customGoBack={
           <ButtonDefaultOpacity onPress={() => true} transparent={true} />
         }

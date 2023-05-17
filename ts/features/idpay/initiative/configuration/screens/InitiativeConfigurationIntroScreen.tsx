@@ -13,7 +13,6 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../../components/ui/IconFont";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import InstitutionIcon from "../../../../../../img/features/idpay/institution.svg";
 import CreditCardIcon from "../../../../../../img/features/idpay/creditcard.svg";
@@ -23,6 +22,7 @@ import { LOADING_TAG } from "../../../../../utils/xstate";
 import I18n from "../../../../../i18n";
 import { ConfigurationMode } from "../xstate/context";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -70,7 +70,7 @@ const InitiativeConfigurationIntroScreen = () => {
 
   const customGoBack = (
     <TouchableDefaultOpacity onPress={navigation.goBack}>
-      <IconFont name={"io-close"} />
+      <Icon name="legClose" />
     </TouchableDefaultOpacity>
   );
 

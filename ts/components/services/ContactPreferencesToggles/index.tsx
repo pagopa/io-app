@@ -116,7 +116,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   return (
     <>
       <SectionHeader
-        iconName="io-envelope"
+        iconName="legEmail"
         title={"serviceDetail.contacts.title"}
       />
       {/*

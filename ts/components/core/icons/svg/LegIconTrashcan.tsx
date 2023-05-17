@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconTrashcan = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconTrashcan = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M10 11H9v7h1v-7ZM12 11h1v7h-1v-7ZM16 11h-1v7h1v-7Z"
       fill="currentColor"

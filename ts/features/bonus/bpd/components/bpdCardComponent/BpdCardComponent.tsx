@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
 import {
   Text,
@@ -23,13 +22,14 @@ import {
   IOColors
 } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { BpdAmount } from "../../saga/networking/amount";
 import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
+import { Icon } from "../../../../../components/core/icons";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   period: BpdPeriod;
@@ -83,13 +83,6 @@ const styles = StyleSheet.create({
     width: 40,
     alignSelf: "center"
   },
-  badgeBase: {
-    alignSelf: "flex-end",
-    backgroundColor: IOColors.white,
-    height: 18,
-    marginTop: 9
-  },
-  badgeTextBase: { fontSize: 12, lineHeight: 16 },
   preview: {
     marginBottom: -20,
     height: 88
@@ -134,10 +127,6 @@ const styles = StyleSheet.create({
   alignItemsCenter: {
     alignItems: "center"
   },
-  badgePreview: {
-    backgroundColor: IOColors.white,
-    height: 18
-  },
   justifyContentCenter: {
     justifyContent: "center"
   },
@@ -162,7 +151,7 @@ type BadgeDefinition = {
   label: string;
 };
 
-type IconType = "io-locker-closed" | "io-locker-open" | "io-fireworks";
+type IconType = "legLocked" | "legUnlocked" | "ok";
 
 type GraphicalState = {
   amount: ReadonlyArray<string>;
@@ -174,7 +163,7 @@ type GraphicalState = {
 const initialGraphicalState: GraphicalState = {
   amount: ["0", "00"],
   isInGracePeriod: false,
-  iconName: "io-locker-closed",
+  iconName: "legLocked",
   statusBadge: {
     label: "-"
   }
@@ -183,7 +172,7 @@ const initialGraphicalState: GraphicalState = {
 /**
  * Closed lock must be shown if period is Inactive or the transactionNumber didn't reach the minimum target
  * Open lock must be shown if period is Closed or Active and the transactionNumber reach the minimum target
- * Fireworks must be shown if period is Closed or Active and the totalCashback reach the maxAmount
+ * "Ok" (was Fireworks) must be shown if period is Closed or Active and the totalCashback reach the maxAmount
  *
  * @param period
  * @param totalAmount
@@ -196,12 +185,12 @@ const iconHandler = (period: BpdPeriod, totalAmount: BpdAmount): IconType => {
     case "Active":
     case "Closed":
       return reachMinTransaction && reachMaxAmount
-        ? "io-fireworks"
+        ? "ok"
         : reachMinTransaction
-        ? "io-locker-open"
-        : "io-locker-closed";
+        ? "legUnlocked"
+        : "legLocked";
     default:
-      return "io-locker-closed";
+      return "legLocked";
   }
 };
 
@@ -331,7 +320,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               {amount[1]}
             </Text>
             <HSpacer size={8} />
-            <IconFont name={iconName} size={16} color={IOColors.white} />
+            <Icon name={iconName} size={16} color="white" />
           </View>
           <H5 color={"white"} weight={"Regular"}>
             {I18n.t("bonus.bpd.earned")}
@@ -339,12 +328,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        {/* IOBadge - White version not available yet */}
-        <Badge style={styles.badgeBase}>
-          <NBBadgeText semibold={true} style={styles.badgeTextBase} dark={true}>
-            {statusBadge.label}
-          </NBBadgeText>
-        </Badge>
+        <IOBadge small variant="solid" color="white" text={statusBadge.label} />
         <Image source={bpdBonusLogo} style={styles.fullLogo} />
       </View>
     </View>
@@ -390,7 +374,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           </H5>
           <HSpacer size={8} />
           {isPeriodClosed && (
-            <IconFont name="io-tick-big" size={20} color={IOColors.white} />
+            <Icon name="legCompleted" size={20} color="white" />
           )}
         </View>
         <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
@@ -404,18 +388,15 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.justifyContentCenter
             ]}
           >
-            <IconFont name={iconName} size={16} color={IOColors.white} />
+            <Icon name={iconName} size={16} color="white" />
             <HSpacer size={8} />
             {isInGracePeriod || isPeriodInactive ? (
-              <Badge style={styles.badgePreview}>
-                <NBBadgeText
-                  semibold={true}
-                  style={styles.badgeTextBase}
-                  dark={true}
-                >
-                  {statusBadge.label}
-                </NBBadgeText>
-              </Badge>
+              <IOBadge
+                small
+                variant="solid"
+                color="white"
+                text={statusBadge.label}
+              />
             ) : (
               <Text
                 style={[styles.amountTextBasePreview, { textAlign: "right" }]}
