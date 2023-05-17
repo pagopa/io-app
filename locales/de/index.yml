@@ -920,7 +920,6 @@ wallet:
       bancomat: "BANCOMAT {{bankName}}"
       coBadge: "{{brand}}-Karte, {{bankName}}"
       bancomatPay: "BANCOMATPay {{bankName}}"
-      privative: "Treuekarte, die Kartennummer endet mit {{blurredNumber}}"
       cta: "Details zur Zahlungsmethode anzeigen"
       bankNotAvailable: "Bankenname nicht verfügbar"
     addElement: "Element zum Konto hinzufügen"
@@ -1081,41 +1080,6 @@ wallet:
           unknown:
             title: "Ich weiß es nicht"
             description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
-    privative:
-      headerTitle: "Supermarktkarte hinzufügen"
-      choosePrivativeIssuer:
-        loading: "Wir laden die Einstellungen\n\nWarte ein paar Sekunden"
-        title: "Wähle die Kette deiner Karte"
-        body: "Wenn du die Karte zu deinem Konto hinzufügst, kannst du dich den auf IO verfügbaren Initiativen anschließen."
-        koDisabled:
-          title: "Dieser Supermarkt bietet diese Funktion noch nicht an."
-          body: "Wir arbeiten daran, dass du deine Karte bald hinzufügen kannst."
-        koUnavailable:
-          title: "Wir können den Server nicht kontaktieren"
-          body: "Wir arbeiten an der Lösung des Problems."
-      addPrivativeCardNumber:
-        title: "Gib die Kartennummer ein"
-        body: "Gib die Ziffern auf der Vorderseite ein. IO prüft, ob die Karte mit deiner Steuernummer verbunden ist."
-        disclaimer:
-          text1: "Wenn du fortfährst, akzeptierst du die "
-          text2: "Datenschutzbestimmungen"
-      search:
-        loading: "Wir überprüfen deine Karte\n\nWarte ein paar Sekunden"
-        koTimeout:
-          title: "Es ist derzeit nicht möglich, deine Karte zu überprüfen"
-          body: "Bitte versuche es erneut"
-        koNotFound:
-          title: "Es gibt ein Problem mit dieser Karte"
-          body: "Versuche die Nummer erneut einzugeben oder wende dich an den Kundendienst deines Supermarktes."
-          cta:
-            modifyCardNumber: "Kartennummer ändern"
-        koServiceError:
-          title: "Es ist derzeit nicht möglich deine Karte abzurufen"
-          body: "Bitte versuche es später erneut"
-      add:
-        screenTitle: "Möchtest du diese Karte hinzufügen?"
-        loading: "Wir fügen deine Karte hinzu\n\nBitte warte ein paar Sekunden..."
-        blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deinen Supermarkt."
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1343,9 +1307,6 @@ wallet:
     digital:
       name: "Apps und digitale Zahlungsmittel"
       description: "Deine bevorzugten digitalen Tools auf IO"
-    loyalty:
-      name: "Supermarkt-Zahlungskarte"
-      description: "Das Zahlungsnetzwerk, mit dem du deine Einkäufe bezahlst"
     pagobancomat:
       name: "PagoBANCOMAT-Karte"
       description: "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
