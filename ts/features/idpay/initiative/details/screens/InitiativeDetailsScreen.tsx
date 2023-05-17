@@ -185,7 +185,7 @@ const InitiativeDetailsScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerBackgroundColor={IOColors["blue-50"]}
+      headerBackgroundColor={IOColors["blueIO-50"]}
       contextualHelp={emptyContextualHelp}
       customRightIcon={{
         iconName: "info",

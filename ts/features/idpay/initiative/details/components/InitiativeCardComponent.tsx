@@ -226,10 +226,10 @@ const InitiativeCardComponentSkeleton = () => (
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: IOColors["blue-50"],
+    backgroundColor: IOColors["blueIO-50"],
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
-    paddingVertical: 32,
+    paddingVertical: 24,
     paddingTop: 500,
     marginTop: -500
   },
