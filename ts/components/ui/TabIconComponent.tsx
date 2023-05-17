@@ -1,6 +1,6 @@
 import { ColorValue, View } from "react-native";
 import React from "react";
-import { IONavIcons, AnimatedIcon } from "../core/icons";
+import { AnimatedIcon, IONavIcons } from "../core/icons";
 import CustomBadge from "./CustomBadge";
 
 type Props = {
