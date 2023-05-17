@@ -9,8 +9,6 @@ import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import WalletTabIcon from "../components/WalletTabIcon";
-// import ScanTabIcon from "../components/ScanTabIcon";
-// import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import I18n from "../i18n";
 import PaginatedMessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
