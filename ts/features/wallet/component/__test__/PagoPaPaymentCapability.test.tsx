@@ -124,7 +124,7 @@ describe("PagoPaPaymentCapability", () => {
     );
     expect(component.getByText("Incompatible")).not.toBeNull();
   });
-  it('should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
+  it(' **DEPRECATED** should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
     const aNonMaestroCreditCard = {
       info: {
         brand: "VISA" as CreditCardType,

@@ -58,8 +58,6 @@ export const getPaymentMethodHash = (
     case "Bancomat":
     case "CreditCard":
       return pm.info.hashPan;
-    case "Privative":
-      return undefined;
   }
 };
 export const getTitleFromPaymentInstrument = (
@@ -248,8 +246,6 @@ export const isPaymentMethodExpired = (
         paymentMethod.info.expireMonth,
         paymentMethod.info.expireYear
       );
-    case "Privative":
-      return E.left(new Error("privative methods are deprecated"));
   }
 };
 
