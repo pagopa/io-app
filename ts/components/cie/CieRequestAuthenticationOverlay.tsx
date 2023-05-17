@@ -8,12 +8,17 @@ import {
   WebViewNavigationEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
 import {
   getRedirects,
   NativeRedirectError
 } from "@pagopa/io-react-native-login-utils";
 import URLParse from "url-parse";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -32,7 +37,6 @@ import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/l
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { AppDispatch } from "../../App";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
-import { IdpCIE } from "../../screens/authentication/LandingScreen";
 import { mixpanelTrack } from "../../mixpanel";
 
 const styles = StyleSheet.create({
@@ -116,60 +120,93 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
   keyTag: string,
   isMixpanelEnabled: boolean | null,
   dipatch: AppDispatch
+) =>
+  pipe(
+    TE.tryCatch(
+      () => handleRegenerateKey(keyTag, isMixpanelEnabled, dipatch),
+      E.toError
+    ),
+    TE.chain(publicKey =>
+      pipe(
+        publicKey,
+        O.fromNullable,
+        O.fold(
+          () => TE.left(new Error("Missing publicKey")),
+          publicKey =>
+            pipe(
+              TE.tryCatch(
+                () => {
+                  const headers = {
+                    "x-pagopa-lollipop-pub-key": Buffer.from(
+                      JSON.stringify(publicKey)
+                    ).toString("base64"),
+                    "x-pagopa-lollipop-pub-key-hash-algo":
+                      DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                  };
+                  return getRedirects(loginUri, headers, "SAMLRequest");
+                },
+                error => {
+                  const e = error as NativeRedirectError;
+                  void mixpanelTrack("SPID_ERROR", {
+                    idp: "cie",
+                    code: e.userInfo.StatusCode,
+                    description: e.userInfo.Error,
+                    domain: e.userInfo.URL
+                  });
+                  return E.toError(error);
+                }
+              ),
+              TE.chain(redirects => {
+                for (const url of redirects) {
+                  const parsedUrl = new URLParse(url, true);
+                  const urlQuery = parsedUrl.query;
+                  return pipe(
+                    urlQuery.SAMLRequest,
+                    O.fromNullable,
+                    O.fold(
+                      () => TE.left(new Error("Missing SAMLRequest")),
+                      urlEncodedSamlRequest =>
+                        TE.tryCatch(
+                          () =>
+                            verifySamlRequest(
+                              url,
+                              urlEncodedSamlRequest,
+                              publicKey
+                            ),
+                          E.toError
+                        )
+                    )
+                  );
+                }
+                return TE.left(new Error("No valid redirect found"));
+              })
+            )
+        )
+      )
+    )
+  )();
+
+const verifySamlRequest = (
+  url: string,
+  urlEncodedSamlRequest: string,
+  publicKey: PublicKey
 ): Promise<string> =>
   new Promise((resolve, reject) => {
-    void handleRegenerateKey(keyTag, isMixpanelEnabled, dipatch)
-      .then(publicKey => {
-        if (!publicKey) {
-          reject("Missing publicKey");
-          return;
-        }
-        const headers = {
-          "x-pagopa-lollipop-pub-key": Buffer.from(
-            JSON.stringify(publicKey)
-          ).toString("base64"),
-          "x-pagopa-lollipop-pub-key-hash-algo":
-            DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-        };
-        void getRedirects(loginUri, headers, "SAMLRequest")
-          .then(value => {
-            for (const url of value) {
-              const parsedUrl = new URLParse(url, true);
-              const urlQuery = parsedUrl.query;
-              if (urlQuery.SAMLRequest) {
-                const urlEncodedSamlRequest = urlQuery.SAMLRequest;
-                lollipopSamlVerify(
-                  urlEncodedSamlRequest,
-                  publicKey,
-                  () => {
-                    resolve(url);
-                  },
-                  (reason: string) => {
-                    trackLollipopIdpLoginFailure(reason);
-                    reject(reason);
-                  }
-                );
-                break;
-              }
-              reject("Missing SAMLRequest");
-            }
-          })
-          .catch(error => {
-            const e = error as NativeRedirectError;
-            void mixpanelTrack("SPID_ERROR", {
-              idp: IdpCIE.id,
-              code: e.userInfo.StatusCode,
-              description: e.userInfo.Error,
-              domain: e.userInfo.URL
-            });
-            reject(error);
-          });
-      })
-      .catch(error => reject(error));
+    lollipopSamlVerify(
+      urlEncodedSamlRequest,
+      publicKey,
+      () => {
+        resolve(url);
+      },
+      (reason: string) => {
+        trackLollipopIdpLoginFailure(reason);
+        reject(new Error(reason));
+      }
+    );
   });
 
 type RequestInfoAuthorizingStates = {
-  requestState: "AUTHORIZING";
+  requestState: "AUTHORIZED";
   nativeAttempts: number;
   url: string;
 };
@@ -284,32 +321,42 @@ const CieWebView = (props: Props) => {
     );
   }
 
-  if (
-    loginUri &&
-    O.isSome(maybeKeyTag) &&
-    requestInfo.requestState === "LOADING"
-  ) {
-    void regenerateKeyGetRedirectsAndVerifySaml(
-      loginUri,
-      maybeKeyTag.value,
-      mixpanelEnabled,
-      dispatch
-    )
-      .then((url: string) => {
-        setRequestInfo({
-          requestState: "AUTHORIZING",
-          nativeAttempts: requestInfo.nativeAttempts,
-          url
-        });
-      })
-      .catch(_ => {
-        handleOnError();
-      });
+  if (O.isSome(maybeKeyTag) && requestInfo.requestState === "LOADING") {
+    void pipe(
+      TE.tryCatch(
+        () =>
+          regenerateKeyGetRedirectsAndVerifySaml(
+            loginUri,
+            maybeKeyTag.value,
+            mixpanelEnabled,
+            dispatch
+          ),
+        E.toError
+      ),
+      TE.fold(
+        _ => T.of(handleOnError()),
+        url =>
+          pipe(
+            url,
+            E.fold(
+              _ => T.of(handleOnError()),
+              url =>
+                T.of(
+                  setRequestInfo({
+                    requestState: "AUTHORIZED",
+                    nativeAttempts: requestInfo.nativeAttempts,
+                    url
+                  })
+                )
+            )
+          )
+      )
+    )();
   }
 
   const WithLoading = withLoadingSpinner(() => (
     <View style={IOStyles.flex}>
-      {requestInfo.requestState === "AUTHORIZING" &&
+      {requestInfo.requestState === "AUTHORIZED" &&
         internalState.authUrl === undefined && (
           <WebView
             androidCameraAccessDisabled={true}

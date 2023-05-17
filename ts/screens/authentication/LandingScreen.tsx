@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const IdpCIE: SpidIdp = {
+const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
   logo: "",
