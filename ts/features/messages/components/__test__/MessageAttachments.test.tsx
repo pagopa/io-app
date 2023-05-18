@@ -6,11 +6,11 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import MVL_ROUTES from "../../../mvl/navigation/routes";
 import { MessageAttachments } from "../MessageAttachments";
 import { Downloads } from "../../../../store/reducers/entities/messages/downloads";
 import { mockPdfAttachment } from "../../../../__mocks__/attachment";
 import { downloadAttachment } from "../../../../store/actions/messages";
+import ROUTES from "./../../../../navigation/routes";
 
 const mockOpenPreview = jest.fn();
 const mockShowToast = jest.fn();
@@ -155,7 +155,7 @@ const renderComponent = (
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessageAttachments {...props} />,
-      MVL_ROUTES.DETAILS,
+      ROUTES.MESSAGE_DETAIL_ATTACHMENT,
       {},
       store
     ),

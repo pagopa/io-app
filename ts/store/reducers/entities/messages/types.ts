@@ -84,7 +84,7 @@ export type Attachment = {
 };
 
 export type UIAttachmentId = string & IUnitTag<"UIAttachmentId">;
-export type AttachmentType = "GENERIC" | "PN" | "MVL";
+export type AttachmentType = "GENERIC" | "PN";
 
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
