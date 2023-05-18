@@ -15,13 +15,13 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../../common/components/Skeleton";
-import { InitiativeBonusCounter } from "./InitiativeBonusCounter";
+import { BonusCounter, InitiativeBonusCounter } from "./InitiativeBonusCounter";
 import { InitiativeStatusLabel } from "./InitiativeStatusLabel";
 
 type BaseProps = {
   footer?: React.ReactElement;
   onHeaderDetailsPress: () => void;
-  counters?: ReadonlyArray<InitiativeBonusCounter>;
+  counters?: ReadonlyArray<BonusCounter>;
 };
 
 type Props =
