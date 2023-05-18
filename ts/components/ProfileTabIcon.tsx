@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { ColorValue } from "react-native";
 import { GlobalState } from "../store/reducers/types";
-import { AnimatedIcon } from "./core/icons/Icon";
+import { AnimatedIcon } from "./core/icons";
 
 type OwnProps = {
   size?: number;

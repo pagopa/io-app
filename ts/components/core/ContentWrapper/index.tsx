@@ -1,13 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import type { IOContentWrapper } from "../variables/IOSpacing";
+import type { IOAppMargin } from "../variables/IOSpacing";
+import { IOLayoutCostants } from "../variables/IOStyles";
 
 type IOContentWrapperProps = {
-  margin?: IOContentWrapper;
+  margin?: IOAppMargin;
   children: React.ReactNode;
 };
-
-const DEFAULT_APP_MARGIN = 24;
 
 /**
 `ContentWrapper` is the main wrapper of the application. It automatically sets side margins,
@@ -15,7 +14,7 @@ depending on the size value
 @param {IOContentWrapper} margin
  */
 export const ContentWrapper = ({
-  margin = DEFAULT_APP_MARGIN,
+  margin = IOLayoutCostants.appMarginDefault,
   children
 }: IOContentWrapperProps) => (
   <View

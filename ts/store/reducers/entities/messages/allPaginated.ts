@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as Either from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-
-import * as Either from "fp-ts/lib/Either";
-
-import { pipe } from "fp-ts/lib/function";
+import messageListData, {
+  MessageListCategory
+} from "../../../../features/messages/types";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -22,15 +23,17 @@ import { UIMessage } from "./types";
 
 export type Cursor = string;
 
+export type MessagePagePot = pot.Pot<
+  {
+    page: ReadonlyArray<UIMessage>;
+    previous?: Cursor;
+    next?: Cursor;
+  },
+  string
+>;
+
 type Collection = {
-  data: pot.Pot<
-    {
-      page: ReadonlyArray<UIMessage>;
-      previous?: Cursor;
-      next?: Cursor;
-    },
-    string
-  >;
+  data: MessagePagePot;
   /** persist the last action type occurred */
   lastRequest: O.Option<"previous" | "next" | "all">;
 };
@@ -552,6 +555,25 @@ export const allArchiveSelector = (
   state: GlobalState
 ): AllPaginated["archive"]["data"] =>
   state.entities.messages.allPaginated.archive.data;
+
+// We can't use createSelector in this case because
+// the category input changes every time based on the route.
+// The selector is shared across multiple component instances so
+// a possible solution could be to create a selector with a cache
+// size greater than one: in this way it is possible to cache more
+// than one value.
+export const messagesByCategorySelector = (
+  state: GlobalState,
+  category: MessageListCategory
+) => {
+  const items = allPaginatedSelector(state);
+
+  return messageListData.fold(
+    category,
+    () => items.inbox.data,
+    () => items.archive.data
+  );
+};
 
 /**
  * Return the list of Inbox messages currently available.
