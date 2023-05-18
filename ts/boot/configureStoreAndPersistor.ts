@@ -285,6 +285,8 @@ const migrations: MigrationManifest = {
   },
   // Version 19
   // add features.MVL section with default preferences
+  // Please note that MVL was completely removed since app version v2.33.x
+  // (last migration version for v2.33.x is migration 22)
   "19": (state: PersistedState) => ({
     ...state,
     features: {
