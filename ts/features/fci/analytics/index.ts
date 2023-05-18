@@ -90,13 +90,13 @@ export const trackFciShowSignatureFields = () =>
 
 export const trackFciUxSuccess = (
   doc_signed_count: number,
-  sign_count: number,
-  optional_sign_count: number
+  signed_count: number,
+  optional_signed_count: number
 ) =>
   void mixpanelTrack("FCI_UX_SUCCESS", {
     doc_signed_count,
-    sign_count,
-    optional_sign_count,
+    signed_count,
+    optional_signed_count,
     event_type: FciUxEvent.UX,
     event_category: FciUxEventCategory.SCREEN_VIEW
   });
