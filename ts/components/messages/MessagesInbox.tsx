@@ -82,6 +82,7 @@ const MessagesInbox = ({
           selectedMessageIds={O.toUndefined(selectedItems)}
           ListEmptyComponent={ListEmptyComponent}
           ListHeaderComponent={<UaDonationsBanner />}
+          testID="asd"
         />
       </View>
       {isSelecting && (
