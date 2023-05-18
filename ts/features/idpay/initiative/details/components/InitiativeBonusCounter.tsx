@@ -1,11 +1,16 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Skeleton } from "../../../common/components/Skeleton";
-import { BonusProgressBar } from "./BonusProgressBar";
 
 type CounterType = "Amount" | "AmountWithProgress";
 
@@ -26,7 +31,7 @@ type AmountWithProgressProps = {
   progress: number;
 };
 
-type Props =
+export type InitiativeBonusCounter =
   | BaseProps &
       (
         | ({ isLoading: true } & { type: CounterType })
@@ -36,7 +41,7 @@ type Props =
 const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 
-const InitiativeBonusCounter = (props: Props) => {
+const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
   switch (props.type) {
     case "Amount":
       if (props.isLoading) {
@@ -90,12 +95,52 @@ const InitiativeBonusCounter = (props: Props) => {
   }
 };
 
+type ProgressBarProps = {
+  progress: number;
+  isDisabled?: boolean;
+};
+
+const BonusProgressBar = ({
+  progress,
+  isDisabled = false
+}: ProgressBarProps) => {
+  const width = useSharedValue(100);
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    width.value = progress;
+  });
+  const scalingWidth = useAnimatedStyle(() => ({
+    width: withTiming(width.value, { duration: 1000 })
+  }));
+  return (
+    <View style={styles.progressBarContainer}>
+      <Animated.View
+        style={[
+          {
+            width: `${width.value}%`,
+            backgroundColor: !isDisabled ? IOColors.blue : IOColors["grey-450"],
+            flex: 1,
+            borderRadius: 4
+          },
+          scalingWidth
+        ]}
+      />
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   alignCenter: {
     alignItems: "center"
   },
   consumedOpacity: {
     opacity: 0.5
+  },
+  progressBarContainer: {
+    height: 4,
+    backgroundColor: IOColors.white,
+    width: 100,
+    borderRadius: 4
   }
 });
 
