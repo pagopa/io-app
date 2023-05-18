@@ -18,7 +18,6 @@ import {
   NativeRedirectError
 } from "@pagopa/io-react-native-login-utils";
 import URLParse from "url-parse";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -30,9 +29,8 @@ import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { handleRegenerateKey } from "../../features/lollipop";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-  lollipopSamlVerify
+  verifyLollipopSamlRequestTask
 } from "../../features/lollipop/utils/login";
-import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { AppDispatch } from "../../App";
@@ -168,7 +166,7 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
                       urlEncodedSamlRequest =>
                         TE.tryCatch(
                           () =>
-                            verifySamlRequest(
+                            verifyLollipopSamlRequestTask(
                               url,
                               urlEncodedSamlRequest,
                               publicKey
@@ -185,25 +183,6 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
       )
     )
   )();
-
-const verifySamlRequest = (
-  url: string,
-  urlEncodedSamlRequest: string,
-  publicKey: PublicKey
-): Promise<string> =>
-  new Promise((resolve, reject) => {
-    lollipopSamlVerify(
-      urlEncodedSamlRequest,
-      publicKey,
-      () => {
-        resolve(url);
-      },
-      (reason: string) => {
-        trackLollipopIdpLoginFailure(reason);
-        reject(new Error(reason));
-      }
-    );
-  });
 
 type RequestInfoAuthorizingStates = {
   requestState: "AUTHORIZED";

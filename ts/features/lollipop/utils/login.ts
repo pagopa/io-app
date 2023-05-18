@@ -1,6 +1,7 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
 import { parseStringPromise } from "xml2js";
+import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { toBase64EncodedThumbprint } from "./crypto";
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT = "SHA-256";
@@ -58,3 +59,22 @@ export const lollipopSamlVerify = (
       onFailure("Unable to convert saml request from xml to json");
     });
 };
+
+export const verifyLollipopSamlRequestTask = (
+  url: string,
+  urlEncodedSamlRequest: string,
+  publicKey: PublicKey
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    lollipopSamlVerify(
+      urlEncodedSamlRequest,
+      publicKey,
+      () => {
+        resolve(url);
+      },
+      (reason: string) => {
+        trackLollipopIdpLoginFailure(reason);
+        reject(new Error(reason));
+      }
+    );
+  });
