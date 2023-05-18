@@ -2,7 +2,8 @@ import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
-  View
+  View,
+  Text
 } from "react-native";
 import React, { useCallback } from "react";
 import Animated, {
@@ -26,8 +27,10 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
 import { NewH4 } from "../core/typography/NewH4";
-import ButtonLink from "../ui/ButtonLink";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { makeFontStyleObject } from "../core/fonts";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 const iconSize: number = 24;
 const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
@@ -44,7 +47,17 @@ const styles = StyleSheet.create({
   },
   spacingFullWidth: {
     padding: spacingFullWidth
+  },
+  label: {
+    fontSize: 16,
+    ...makeFontStyleObject("Regular", false, "ReadexPro")
+  },
+  /* REMOVE_LEGACY_COMPONENT: Start ▶ */
+  labelLegacy: {
+    fontSize: 16,
+    ...makeFontStyleObject("Bold", false, "TitilliumWeb")
   }
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 });
 
 type AlertProps = WithTestID<{
@@ -111,6 +124,7 @@ export const Alert = ({
   accessibilityHint,
   testID
 }: Alert) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
@@ -168,10 +182,19 @@ export const Alert = ({
           {content}
         </Label>
         {action && (
-          <View pointerEvents="none">
+          <>
             <VSpacer size={8} />
-            <ButtonLink color={variant} onPress={onPress} label={action} />
-          </View>
+            <Text
+              style={[
+                isDesignSystemEnabled ? styles.label : styles.labelLegacy,
+                { color: IOColors[mapVariantStates[variant].foreground] }
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {action}
+            </Text>
+          </>
         )}
       </View>
     </>
