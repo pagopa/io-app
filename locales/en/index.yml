@@ -3225,10 +3225,10 @@ features:
       cancel: "Not now"
       confirm: "Turn on"
     noFields:
-      title: "Firma tutto il documento"
-      content: "Vuoi firmare tutto il documento?"
-      leftButton: "Rileggi"
-      rightButton: "Firma"
+      title: "Sign the entire document"
+      content: "Do you want to sign the entire document?"
+      leftButton: "Reread"
+      rightButton: "Sign"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
