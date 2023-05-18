@@ -244,7 +244,7 @@ const InitiativeDetailsScreen = () => {
       )
     );
 
-  const getInitiativeFooterCta = (initiative: InitiativeDTO) =>
+  const getInitiativeFooter = (initiative: InitiativeDTO) =>
     pipe(
       initiative.initiativeRewardType,
       O.fromNullable,
@@ -257,8 +257,12 @@ const InitiativeDetailsScreen = () => {
               return (
                 <>
                   <ButtonSolid
-                    label="Autorizza pagamento"
-                    accessibilityLabel="Autorizza pagamento"
+                    label={I18n.t(
+                      "idpay.initiative.discountDetails.authorizeButton"
+                    )}
+                    accessibilityLabel={I18n.t(
+                      "idpay.initiative.discountDetails.authorizeButton"
+                    )}
                     icon="qrCode"
                     onPress={navigateToPaymentAuthorization}
                     fullWidth={true}
@@ -296,7 +300,7 @@ const InitiativeDetailsScreen = () => {
           initiative={initiative}
           onHeaderDetailsPress={navigateToBeneficiaryDetails}
           counters={getInitiativeCounters(initiative)}
-          footer={getInitiativeFooterCta(initiative)}
+          footer={getInitiativeFooter(initiative)}
         >
           {getInitiativeDetailsContent(initiative)}
         </InitiativeDetailsBaseScreenComponent>

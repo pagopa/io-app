@@ -59,6 +59,7 @@ const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
           <LabelSmall color="bluegreyDark" weight="Regular">
             {props.label}
           </LabelSmall>
+          <VSpacer size={8} />
           <H1 style={props.isDisabled ? styles.consumedOpacity : {}}>
             {formatNumberRightSign(props.amount)}
           </H1>
@@ -82,6 +83,7 @@ const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
           <LabelSmall color="bluegreyDark" weight="Regular">
             {props.label}
           </LabelSmall>
+          <VSpacer size={8} />
           <H1 style={props.isDisabled ? styles.consumedOpacity : {}}>
             {formatNumberRightSign(props.amount)}
           </H1>
