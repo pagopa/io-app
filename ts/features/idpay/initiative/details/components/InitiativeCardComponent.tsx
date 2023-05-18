@@ -42,13 +42,17 @@ const InitiativeCardComponent = (props: Props) => {
   const renderCounters = () => {
     const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
 
-    const totalAmount = pipe(
+    const availableAmount = initiative.amount || 0;
+
+    const amountProgress = pipe(
       sequenceS(O.Monad)({
         amount: O.fromNullable(initiative.amount),
         accrued: O.fromNullable(initiative.accrued)
       }),
-      O.map(({ amount, accrued }) => amount + accrued),
-      O.toUndefined
+      O.map(({ amount, accrued }) => ({ total: amount + accrued, amount })),
+      O.filter(({ total }) => total !== 0),
+      O.map(({ amount, total }) => (amount / total) * 100.0),
+      O.getOrElse(() => 100.0)
     );
 
     const refundableAmount = pipe(
@@ -57,7 +61,7 @@ const InitiativeCardComponent = (props: Props) => {
         refunded: O.fromNullable(initiative.refunded)
       }),
       O.map(({ accrued, refunded }) => accrued - refunded),
-      O.toUndefined
+      O.getOrElse(() => 0)
     );
 
     if (initiative.initiativeRewardType === InitiativeRewardTypeEnum.REFUND) {
@@ -68,15 +72,15 @@ const InitiativeCardComponent = (props: Props) => {
             label={I18n.t(
               "idpay.initiative.details.initiativeCard.availableAmount"
             )}
-            amount={initiative.amount || 0}
-            total={totalAmount || 0}
+            amount={availableAmount}
+            progress={amountProgress}
             isDisabled={!isInitiativeConfigured}
           />
           <HSpacer size={48} />
           <InitiativeBonusCounter
             type="Amount"
             label={I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
-            amount={refundableAmount || 0}
+            amount={refundableAmount}
             isDisabled={!isInitiativeConfigured}
           />
         </>
@@ -90,8 +94,8 @@ const InitiativeCardComponent = (props: Props) => {
           label={I18n.t(
             "idpay.initiative.details.initiativeCard.availableAmount"
           )}
-          amount={initiative.amount || 0}
-          total={totalAmount || 0}
+          amount={availableAmount}
+          progress={amountProgress}
         />
       );
     }

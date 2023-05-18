@@ -8,15 +8,15 @@ import Animated, {
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type Props = {
-  percentage: number;
+  progress: number;
   isDisabled?: boolean;
 };
 
-const BonusProgressBar = ({ percentage, isDisabled = false }: Props) => {
+const BonusProgressBar = ({ progress, isDisabled = false }: Props) => {
   const width = useSharedValue(100);
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
-    width.value = percentage;
+    width.value = progress;
   });
   const scalingWidth = useAnimatedStyle(() => ({
     width: withTiming(width.value, { duration: 1000 })

@@ -7,37 +7,36 @@ import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Skeleton } from "../../../common/components/Skeleton";
 import { BonusProgressBar } from "./BonusProgressBar";
 
+type CounterType = "Amount" | "AmountWithProgress";
+
 type BaseProps = {
+  type: CounterType;
   isDisabled?: boolean;
+  label?: string;
+};
+
+type AmountProps = {
+  type: "Amount";
+  amount: number;
+};
+
+type AmountWithProgressProps = {
+  type: "AmountWithProgress";
+  amount: number;
+  progress: number;
 };
 
 type Props =
-  | {
-      type: "Amount";
-      isLoading?: undefined | false;
-      label: string;
-      amount: number;
-    }
-  | {
-      type: "Amount";
-      isLoading: true;
-    }
-  | {
-      type: "AmountWithProgress";
-      isLoading?: undefined | false;
-      label: string;
-      amount: number;
-      total: number;
-    }
-  | {
-      type: "AmountWithProgress";
-      isLoading: true;
-    };
+  | BaseProps &
+      (
+        | ({ isLoading: true } & { type: CounterType })
+        | ({ isLoading?: false } & (AmountProps | AmountWithProgressProps))
+      );
 
 const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 
-const InitiativeBonusCounter = (props: Props & BaseProps) => {
+const InitiativeBonusCounter = (props: Props) => {
   switch (props.type) {
     case "Amount":
       if (props.isLoading) {
@@ -73,8 +72,6 @@ const InitiativeBonusCounter = (props: Props & BaseProps) => {
         );
       }
 
-      const percentage = props.total !== 0 ? props.amount / props.total : 1.0;
-
       return (
         <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
@@ -86,7 +83,7 @@ const InitiativeBonusCounter = (props: Props & BaseProps) => {
           <VSpacer size={8} />
           <BonusProgressBar
             isDisabled={props.isDisabled}
-            percentage={percentage * 100.0}
+            progress={props.progress}
           />
         </View>
       );
