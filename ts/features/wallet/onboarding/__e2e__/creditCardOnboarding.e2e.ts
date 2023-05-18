@@ -78,7 +78,7 @@ describe("Credit Card onboarding", () => {
         .withTimeout(e2eWaitRenderTimeout);
 
       // Wait for return to wallet
-      await waitFor(element(by.text(I18n.t("wallet.wallet"))))
+      await waitFor(element(by.id("wallet-home-header-title")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
     });

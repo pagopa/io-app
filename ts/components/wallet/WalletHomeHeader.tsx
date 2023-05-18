@@ -114,7 +114,12 @@ const WalletHomeHeader = (props: Props) => {
         paddingHorizontal: 8
       }}
     >
-      <H1 color={"white"} accessible={true} accessibilityRole="header">
+      <H1
+        color={"white"}
+        accessible={true}
+        accessibilityRole="header"
+        testID="wallet-home-header-title"
+      >
         {I18n.t("wallet.wallet")}
       </H1>
       <TouchableDefaultOpacity
