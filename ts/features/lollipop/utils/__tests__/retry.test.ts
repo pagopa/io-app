@@ -26,10 +26,10 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("", async () => {
+  it("should be succeded", async () => {
     const result = await regenerateKeyGetRedirectsAndVerifySaml(
       "loginUri",
-      "keyTak",
+      "keyTag",
       false,
       dispatch
     );
