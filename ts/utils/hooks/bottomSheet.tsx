@@ -5,8 +5,9 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { View, Dimensions, Modal, Platform } from "react-native";
+import { View, Modal, Platform, LayoutChangeEvent } from "react-native";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
+import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
@@ -38,7 +39,6 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
 export type BottomSheetModalProps = {
   content: React.ReactNode;
   config: {
-    snapPoints: ReadonlyArray<number>;
     backdropComponent: ComponentProps<
       typeof BottomSheetModal
     >["backdropComponent"];
@@ -63,7 +63,6 @@ export type IOBottomSheetModal = {
 export const bottomSheetContent = (
   content: React.ReactNode,
   title: string | React.ReactNode,
-  snapPoint: number,
   onClose: () => void
 ): BottomSheetModalProps => {
   const header = <BottomSheetHeader title={title} onClose={onClose} />;
@@ -75,7 +74,6 @@ export const bottomSheetContent = (
   return {
     content: bottomSheetBody,
     config: {
-      snapPoints: [Math.min(snapPoint, Dimensions.get("window").height)],
       backdropComponent: () => BlurredBackgroundComponent(onClose),
       handleComponent: header
     }
@@ -83,32 +81,41 @@ export const bottomSheetContent = (
 };
 
 /**
- * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
- * @param component
- * @param title
- * @param snapPoint
- * @param footer
- * @param onDismiss callback to be called when the bottom sheet is dismissed
+ * @typedef BottomSheetOptions
+ * @type {BottomSheetOptions}
+ * @property {component} component The React.Element to be rendered inside the bottom sheet body
+ * @property {title} title String or React.Element to be rendered as bottom-sheet header title
+ * @property {footer} footer React.Element or undefined to be rendered as sticky footer of our bottom sheet
+ * @property {snapPoint} snapPoint The array of points used to pin the height of the bottom sheet
+ * @property {onDismiss} onDismiss The possible function to be used as an effect of the dismissal of the bottom sheet
  */
-export const useIOBottomSheetModal = (
-  component: React.ReactNode,
-  title: string | React.ReactNode,
-  snapPoint: number,
-  footer?: React.ReactElement,
-  onDismiss?: () => void
-): IOBottomSheetModal => {
+type BottomSheetOptions = {
+  component: React.ReactNode;
+  title: string | React.ReactNode;
+  snapPoint: NonEmptyArray<number>;
+  footer?: React.ReactElement;
+  onDismiss?: () => void;
+};
+
+/**
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
+ * @param bottomSheetOptions
+ * @see {BottomSheetOptions}
+ */
+export const useIOBottomSheetModalNew = ({
+  component,
+  title,
+  snapPoint,
+  footer,
+  onDismiss
+}: BottomSheetOptions): IOBottomSheetModal => {
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
-  const bottomSheetProps = bottomSheetContent(
-    component,
-    title,
-    snapPoint,
-    dismissAll
-  );
+  const bottomSheetProps = bottomSheetContent(component, title, dismissAll);
 
   const present = () => {
     bottomSheetModalRef.current?.present();
@@ -131,7 +138,7 @@ export const useIOBottomSheetModal = (
           </>
         ) : null
       }
-      snapPoints={[snapPoint]}
+      snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
       handleComponent={_ => bottomSheetProps.config.handleComponent}
       backdropComponent={bottomSheetProps.config.backdropComponent}
@@ -168,3 +175,62 @@ export const useIOBottomSheetModal = (
   );
   return { present, dismiss: dismissAll, bottomSheet };
 };
+
+/**
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
+ * @param bottomSheetOptions
+ * @see {BottomSheetOptions}
+ * @param bottomPadding the bottom padding of the bottom sheet, defaul is 0
+ */
+export const useIOBottomSheetAutoresizableModal = (
+  {
+    component,
+    title,
+    snapPoint: originSnap,
+    footer,
+    onDismiss
+  }: BottomSheetOptions,
+  bottomPadding: number = 0
+) => {
+  const [snapPoint, setSnapPoint] = React.useState<number>(originSnap[0]);
+
+  const handleContentOnLayout = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+
+    setSnapPoint(bottomPadding + height);
+  };
+
+  return useIOBottomSheetModalNew({
+    component: <View onLayout={handleContentOnLayout}>{component}</View>,
+    title,
+    snapPoint: [snapPoint],
+    footer,
+    onDismiss
+  });
+};
+
+/**
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
+ * @param component
+ * @param title
+ * @param snapPoint
+ * @param footer
+ * @param onDismiss callback to be called when the bottom sheet is dismissed
+ * @deprecated
+ * use `useIOBottomSheetModalNew` instead
+ * TODO remove once all the occurencies of `useIOBottomSheetModal` will be replaced by `useIOBottomSheetModalNew`
+ */
+export const useIOBottomSheetModal = (
+  component: React.ReactNode,
+  title: string | React.ReactNode,
+  snapPoint: number,
+  footer?: React.ReactElement,
+  onDismiss?: () => void
+): IOBottomSheetModal =>
+  useIOBottomSheetModalNew({
+    component,
+    title,
+    snapPoint: [snapPoint],
+    footer,
+    onDismiss
+  });
