@@ -5,7 +5,7 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Skeleton } from "../../../common/components/Skeleton";
-import { BonusPercentageSlider } from "./BonusPercentageSlider";
+import { BonusProgressBar } from "./BonusProgressBar";
 
 type BaseProps = {
   isDisabled?: boolean;
@@ -84,7 +84,7 @@ const InitiativeBonusCounter = (props: Props & BaseProps) => {
             {formatNumberRightSign(props.amount)}
           </H1>
           <VSpacer size={8} />
-          <BonusPercentageSlider
+          <BonusProgressBar
             isDisabled={props.isDisabled}
             percentage={percentage * 100.0}
           />

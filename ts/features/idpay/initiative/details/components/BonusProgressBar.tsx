@@ -12,7 +12,7 @@ type Props = {
   isDisabled?: boolean;
 };
 
-const BonusPercentageSlider = ({ percentage, isDisabled = false }: Props) => {
+const BonusProgressBar = ({ percentage, isDisabled = false }: Props) => {
   const width = useSharedValue(100);
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { BonusPercentageSlider };
+export { BonusProgressBar };
