@@ -1,6 +1,18 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
+import { parseStringPromise } from "xml2js";
+import {
+  NativeRedirectError,
+  getRedirects
+} from "@pagopa/io-react-native-login-utils";
+import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
-import { parseStringPromise } from "xml2js";
+import { handleRegenerateKey } from "..";
+import { AppDispatch } from "../../../App";
+import { mixpanelTrack } from "../../../mixpanel";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { toBase64EncodedThumbprint } from "./crypto";
 
@@ -78,3 +90,74 @@ export const verifyLollipopSamlRequestTask = (
       }
     );
   });
+
+export const regenerateKeyGetRedirectsAndVerifySaml = (
+  loginUri: string,
+  keyTag: string,
+  isMixpanelEnabled: boolean | null,
+  dipatch: AppDispatch
+) =>
+  pipe(
+    TE.tryCatch(
+      () => handleRegenerateKey(keyTag, isMixpanelEnabled, dipatch),
+      E.toError
+    ),
+    TE.chain(publicKey =>
+      pipe(
+        publicKey,
+        O.fromNullable,
+        O.fold(
+          () => TE.left(new Error("Missing publicKey")),
+          publicKey =>
+            pipe(
+              TE.tryCatch(
+                () => {
+                  const headers = {
+                    "x-pagopa-lollipop-pub-key": Buffer.from(
+                      JSON.stringify(publicKey)
+                    ).toString("base64"),
+                    "x-pagopa-lollipop-pub-key-hash-algo":
+                      DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                  };
+                  return getRedirects(loginUri, headers, "SAMLRequest");
+                },
+                error => {
+                  const e = error as NativeRedirectError;
+                  void mixpanelTrack("SPID_ERROR", {
+                    idp: "cie",
+                    code: e.userInfo.StatusCode,
+                    description: e.userInfo.Error,
+                    domain: e.userInfo.URL
+                  });
+                  return E.toError(error);
+                }
+              ),
+              TE.chain(redirects => {
+                for (const url of redirects) {
+                  const parsedUrl = new URLParse(url, true);
+                  const urlQuery = parsedUrl.query;
+                  return pipe(
+                    urlQuery.SAMLRequest,
+                    O.fromNullable,
+                    O.fold(
+                      () => TE.left(new Error("Missing SAMLRequest")),
+                      urlEncodedSamlRequest =>
+                        TE.tryCatch(
+                          () =>
+                            verifyLollipopSamlRequestTask(
+                              url,
+                              urlEncodedSamlRequest,
+                              publicKey
+                            ),
+                          E.toError
+                        )
+                    )
+                  );
+                }
+                return TE.left(new Error("No valid redirect found"));
+              })
+            )
+        )
+      )
+    )
+  )();

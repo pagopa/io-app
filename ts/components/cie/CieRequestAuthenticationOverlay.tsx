@@ -13,11 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import {
-  getRedirects,
-  NativeRedirectError
-} from "@pagopa/io-react-native-login-utils";
-import URLParse from "url-parse";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -26,16 +21,10 @@ import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
-import { handleRegenerateKey } from "../../features/lollipop";
-import {
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-  verifyLollipopSamlRequestTask
-} from "../../features/lollipop/utils/login";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { AppDispatch } from "../../App";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
-import { mixpanelTrack } from "../../mixpanel";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -112,77 +101,6 @@ const generateRetryState: (state: InternalState) => InternalState = (
   error: false,
   key: state.key + 1
 });
-
-const regenerateKeyGetRedirectsAndVerifySaml = (
-  loginUri: string,
-  keyTag: string,
-  isMixpanelEnabled: boolean | null,
-  dipatch: AppDispatch
-) =>
-  pipe(
-    TE.tryCatch(
-      () => handleRegenerateKey(keyTag, isMixpanelEnabled, dipatch),
-      E.toError
-    ),
-    TE.chain(publicKey =>
-      pipe(
-        publicKey,
-        O.fromNullable,
-        O.fold(
-          () => TE.left(new Error("Missing publicKey")),
-          publicKey =>
-            pipe(
-              TE.tryCatch(
-                () => {
-                  const headers = {
-                    "x-pagopa-lollipop-pub-key": Buffer.from(
-                      JSON.stringify(publicKey)
-                    ).toString("base64"),
-                    "x-pagopa-lollipop-pub-key-hash-algo":
-                      DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-                  };
-                  return getRedirects(loginUri, headers, "SAMLRequest");
-                },
-                error => {
-                  const e = error as NativeRedirectError;
-                  void mixpanelTrack("SPID_ERROR", {
-                    idp: "cie",
-                    code: e.userInfo.StatusCode,
-                    description: e.userInfo.Error,
-                    domain: e.userInfo.URL
-                  });
-                  return E.toError(error);
-                }
-              ),
-              TE.chain(redirects => {
-                for (const url of redirects) {
-                  const parsedUrl = new URLParse(url, true);
-                  const urlQuery = parsedUrl.query;
-                  return pipe(
-                    urlQuery.SAMLRequest,
-                    O.fromNullable,
-                    O.fold(
-                      () => TE.left(new Error("Missing SAMLRequest")),
-                      urlEncodedSamlRequest =>
-                        TE.tryCatch(
-                          () =>
-                            verifyLollipopSamlRequestTask(
-                              url,
-                              urlEncodedSamlRequest,
-                              publicKey
-                            ),
-                          E.toError
-                        )
-                    )
-                  );
-                }
-                return TE.left(new Error("No valid redirect found"));
-              })
-            )
-        )
-      )
-    )
-  )();
 
 type RequestInfoAuthorizingStates = {
   requestState: "AUTHORIZED";
