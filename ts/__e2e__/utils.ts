@@ -1,19 +1,19 @@
-import I18n from "../i18n";
 import { e2ePinChar, e2eWaitRenderTimeout } from "./config";
 
-const loginButtonId = "landing-button-login-spid";
-const posteIdpButtonId = "idp-posteid-button";
+const onboardingPinTitleId = "pin-creation-form-title";
 
 /**
  * Complete the login with SPID
  */
 export const loginWithSPID = async () => {
+  const loginButtonId = "landing-button-login-spid";
   await waitFor(element(by.id(loginButtonId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
   await element(by.id(loginButtonId)).tap();
 
+  const posteIdpButtonId = "idp-posteid-button";
   await waitFor(element(by.id(posteIdpButtonId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
@@ -22,17 +22,15 @@ export const loginWithSPID = async () => {
 
   // the webview returned by the server has 250ms timeout and reloads automagically
 
-  await waitFor(
-    element(by.text(I18n.t("profile.main.privacy.shareData.screen.title")))
-  )
+  const shareDataComponentTitleId = "share-data-component-title";
+  await waitFor(element(by.id(shareDataComponentTitleId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
-  await element(
-    by.text(I18n.t("profile.main.privacy.shareData.screen.cta.shareData"))
-  ).tap();
+  const shareDataRightButtonId = "share-data-confirm-button";
+  await element(by.id(shareDataRightButtonId)).tap();
 
-  await waitFor(element(by.text(I18n.t("onboarding.pin.title"))))
+  await waitFor(element(by.id(onboardingPinTitleId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
@@ -64,22 +62,27 @@ export const createE2EPin = async () => {
     e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar;
   const wrongPin = "123456";
 
-  await element(by.id("PinFieldInput")).typeText(pin);
-  await element(by.id("PinConfirmationFieldInput")).typeText(wrongPin);
+  const onboardingPingFieldInputId = "PinFieldInput";
+  await element(by.id(onboardingPingFieldInputId)).typeText(pin);
 
-  await element(by.text(I18n.t("onboarding.pin.title"))).tap();
-  await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+  const onboardingPinConfirmationFieldId = "PinConfirmationFieldInput";
+  await element(by.id(onboardingPinConfirmationFieldId)).typeText(wrongPin);
+
+  await element(by.id(onboardingPinTitleId)).tap();
+
+  const onboardingPinConfirmButtonId = "pin-creation-form-confirm";
+  await waitFor(element(by.id(onboardingPinConfirmButtonId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
-  await element(by.text(I18n.t("global.buttons.continue"))).tap();
+  await element(by.id(onboardingPinTitleId)).tap();
 
-  await element(by.id("PinConfirmationFieldInput")).replaceText(pin);
+  await element(by.id(onboardingPinConfirmationFieldId)).replaceText(pin);
 
-  await element(by.text(I18n.t("onboarding.pin.title"))).tap();
-  await waitFor(element(by.text(I18n.t("global.buttons.continue"))))
+  await element(by.id(onboardingPinTitleId)).tap();
+  await waitFor(element(by.id(onboardingPinConfirmButtonId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
-  await element(by.text(I18n.t("global.buttons.continue"))).tap();
+  await element(by.id(onboardingPinConfirmButtonId)).tap();
 };
 
 /**
@@ -87,7 +90,8 @@ export const createE2EPin = async () => {
  */
 export const ensureLoggedIn = async () => {
   try {
-    await waitFor(element(by.text(I18n.t("identification.subtitleCode"))))
+    const identificationModalBodyId = "identification-modal-body";
+    await waitFor(element(by.id(identificationModalBodyId)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
     await insertE2EPin();
