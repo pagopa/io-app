@@ -15,17 +15,13 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
-import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Skeleton } from "../../../common/components/Skeleton";
-import { BonusPercentageSlider } from "./BonusPercentageSlider";
+import { InitiativeBonusCounter } from "./InitiativeBonusCounter";
 import { InitiativeStatusLabel } from "./InitiativeStatusLabel";
 
 type Props = {
   initiative: InitiativeDTO;
 };
-
-const formatNumberRightSign = (amount: number) =>
-  `${formatNumberAmount(amount, false)} €`;
 
 const InitiativeCardComponent = (props: Props) => {
   const { initiative } = props;
@@ -46,75 +42,57 @@ const InitiativeCardComponent = (props: Props) => {
   const renderCounters = () => {
     const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
 
-    const amountString = pipe(
-      initiative.amount,
-      O.fromNullable,
-      O.map(formatNumberRightSign),
-      O.getOrElse(() => "-")
-    );
-
-    const amountPercentage = pipe(
+    const totalAmount = pipe(
       sequenceS(O.Monad)({
         amount: O.fromNullable(initiative.amount),
         accrued: O.fromNullable(initiative.accrued)
       }),
-      O.map(({ amount, accrued }) => ({ total: amount + accrued, amount })),
-      O.filter(({ total }) => total !== 0),
-      O.map(({ total, amount }) => (amount / total) * 100.0),
-      O.getOrElse(() => 100.0)
+      O.map(({ amount, accrued }) => amount + accrued),
+      O.toUndefined
     );
 
-    const toBeRepaidString = pipe(
+    const refundableAmount = pipe(
       sequenceS(O.Monad)({
         accrued: O.fromNullable(initiative.accrued),
         refunded: O.fromNullable(initiative.refunded)
       }),
       O.map(({ accrued, refunded }) => accrued - refunded),
-      O.map(formatNumberRightSign),
-      O.getOrElse(() => "-")
+      O.toUndefined
     );
 
     if (initiative.initiativeRewardType === InitiativeRewardTypeEnum.REFUND) {
       return (
         <>
-          <View style={styles.alignCenter}>
-            <LabelSmall color="bluegreyDark" weight="Regular">
-              {I18n.t(
-                "idpay.initiative.details.initiativeCard.availableAmount"
-              )}
-            </LabelSmall>
-            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-              {amountString}
-            </H1>
-            <VSpacer size={8} />
-            <BonusPercentageSlider
-              isDisabled={!isInitiativeConfigured}
-              percentage={amountPercentage}
-            />
-          </View>
+          <InitiativeBonusCounter
+            type="AmountWithProgress"
+            label={I18n.t(
+              "idpay.initiative.details.initiativeCard.availableAmount"
+            )}
+            amount={initiative.amount || 0}
+            total={totalAmount || 0}
+            isDisabled={!isInitiativeConfigured}
+          />
           <HSpacer size={48} />
-          <View style={styles.alignCenter}>
-            <LabelSmall color="bluegreyDark" weight="Regular">
-              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
-            </LabelSmall>
-            <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-              {toBeRepaidString}
-            </H1>
-          </View>
+          <InitiativeBonusCounter
+            type="Amount"
+            label={I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+            amount={refundableAmount || 0}
+            isDisabled={!isInitiativeConfigured}
+          />
         </>
       );
     }
 
     if (initiative.initiativeRewardType === InitiativeRewardTypeEnum.DISCOUNT) {
       return (
-        <View style={styles.alignCenter}>
-          <LabelSmall color="bluegreyDark" weight="Regular">
-            {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
-          </LabelSmall>
-          <H1>{amountString}</H1>
-          <VSpacer size={8} />
-          <BonusPercentageSlider percentage={amountPercentage} />
-        </View>
+        <InitiativeBonusCounter
+          type="AmountWithProgress"
+          label={I18n.t(
+            "idpay.initiative.details.initiativeCard.availableAmount"
+          )}
+          amount={initiative.amount || 0}
+          total={totalAmount || 0}
+        />
       );
     }
 
@@ -153,19 +131,9 @@ const InitiativeCardComponentSkeleton = () => (
     </View>
     <VSpacer size={32} />
     <View style={styles.heroCounters}>
-      <View style={styles.alignCenter}>
-        <Skeleton height={16} width={64} color="#CED8F9" />
-        <VSpacer size={8} />
-        <Skeleton height={24} width={140} color="#CED8F9" />
-        <VSpacer size={16} />
-        <Skeleton height={8} width={120} color="#CED8F9" />
-      </View>
+      <InitiativeBonusCounter type="AmountWithProgress" isLoading={true} />
       <HSpacer size={48} />
-      <View style={styles.alignCenter}>
-        <Skeleton height={16} width={64} color="#CED8F9" />
-        <VSpacer size={8} />
-        <Skeleton height={24} width={140} color="#CED8F9" />
-      </View>
+      <InitiativeBonusCounter type="Amount" isLoading={true} />
     </View>
   </View>
 );
@@ -198,12 +166,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "center"
-  },
-  consumedOpacity: {
-    opacity: 0.5
-  },
-  alignCenter: {
-    alignItems: "center"
   }
 });
 
