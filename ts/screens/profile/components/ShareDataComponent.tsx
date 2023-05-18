@@ -36,7 +36,9 @@ export const ShareDataComponent = (): React.ReactElement => {
 
   return (
     <>
-      <H1>{I18n.t("profile.main.privacy.shareData.screen.title")}</H1>
+      <H1 testID="share-data-component-title">
+        {I18n.t("profile.main.privacy.shareData.screen.title")}
+      </H1>
       <VSpacer size={16} />
       <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
       <VSpacer size={16} />
