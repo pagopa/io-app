@@ -8,7 +8,6 @@ import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 import Item from "../Item";
 
 jest.mock("../../../../config", () => ({
-  mvlEnabled: true,
   pnEnabled: true
 }));
 jest.useFakeTimers();
