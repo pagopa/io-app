@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - IABT-1479-e2etests # TODO revert before merge
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
