@@ -35,13 +35,18 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
         present,
         I18n.t("profile.main.privacy.shareData.screen.cta.dontShareData")
       )
-    : confirmButtonProps(() => {
-        props.setMixpanelEnabled(true);
-        showToast(
-          I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
-          "success"
-        );
-      }, I18n.t("profile.main.privacy.shareData.screen.cta.shareData"));
+    : confirmButtonProps(
+        () => {
+          props.setMixpanelEnabled(true);
+          showToast(
+            I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
+            "success"
+          );
+        },
+        I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
+        undefined,
+        "share-data-confirm-button"
+      );
 
   return (
     <BaseScreenComponent

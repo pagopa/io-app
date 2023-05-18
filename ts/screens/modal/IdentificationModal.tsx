@@ -470,7 +470,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                 )
               )}
         </H2>
-        <Body color={isValidatingTask ? "bluegreyDark" : "white"}>
+        <Body
+          color={isValidatingTask ? "bluegreyDark" : "white"}
+          testID="identification-modal-body"
+        >
           {this.getInstructions()}
         </Body>
       </View>
