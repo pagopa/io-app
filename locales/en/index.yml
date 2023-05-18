@@ -1767,6 +1767,19 @@ messageDetails:
       thirdPart: " for more information."
     failing:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
+messagePDFPreview:
+  title: "PDF Preview"
+  singleBtn: "Save, print, or share"
+  open: "Open"
+  save: "Save"
+  savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  errors:
+    previewing:
+      title: "Preview is not available"
+      body: "To view the document, download and open it with a PDF reader app."
+    sharing: "An error occurred while sharing the document"
+    opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+    saving: "An error occurred while saving the document"
 notifications:
   installation:
     errorTitle: Push notifications
@@ -3006,46 +3019,6 @@ features:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
-  mvl:
-    title: "legal message"
-    ko:
-      genericError:
-        title: "There was an error retrieving the message"
-        subtitle: "Please try again"
-    details:
-      hasAttachments: "contains attachments"
-      attachments:
-        title: "Attachments"
-        toast:
-          success: "Download complete"
-        pdfPreview:
-          title: "PDF Preview"
-          singleBtn: "Save, print, or share"
-          open: "Open"
-          save: "Save"
-          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
-          errors:
-            previewing:
-              title: "Preview is not available"
-              body: "To view the document, download and open it with a PDF reader app."
-            sharing: "An error occurred while sharing the document"
-            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
-            saving: "An error occurred while saving the document"
-      body:
-        plain: "plain text"
-        html: "html"
-      metadata:
-        title: "the message has legal value"
-        description: "On {{date}} at {{time}} the message \"{{subject}}\" was sent to you by \"{{sender}}\""
-        messageId: "Message identifier:"
-        links:
-          copy: "Copy message identifier"
-          recipients: "Show full list of recipients"
-          signature: "Show signature details"
-          certificates: "Show certificates"
-          originalMessage: "Download original message"
-          datiCert: "Download daticert.xml"
-          smime: "Download smime.p7s"
   euCovidCertificate:
     save:
       album: "IO"

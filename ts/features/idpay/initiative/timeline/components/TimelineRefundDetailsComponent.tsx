@@ -92,22 +92,25 @@ const TimelineRefundDetailsComponent = (props: Props) => {
         <Body>
           {I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
         </Body>
-        <IOBadge
-          small
-          variant={
-            refund.operationType === OperationTypeEnum.REJECTED_REFUND
-              ? "outline"
-              : "solid"
-          }
-          color={
-            refund.operationType === OperationTypeEnum.REJECTED_REFUND
-              ? "red"
-              : "aqua"
-          }
-          text={I18n.t(
-            `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
-          )}
-        />
+        {refund.operationType === OperationTypeEnum.REJECTED_REFUND ? (
+          <IOBadge
+            small
+            variant="outline"
+            color="red"
+            text={I18n.t(
+              `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
+            )}
+          />
+        ) : (
+          <IOBadge
+            small
+            variant="solid"
+            color="aqua"
+            text={I18n.t(
+              `idpay.initiative.operationDetails.refund.result.${refund.operationType}`
+            )}
+          />
+        )}
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.period")}</Body>
