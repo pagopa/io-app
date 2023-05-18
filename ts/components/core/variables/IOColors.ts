@@ -31,6 +31,7 @@ export const IOColors = asIOColors({
   "grey-50": "#F4F5F8",
   "grey-100": "#E8EBF1",
   "grey-200": "#D2D6E3",
+  "grey-300": "#BBC2D6",
   "grey-450": "#99A3C1",
   "grey-650": "#636B82",
   "grey-700": "#555C70",
@@ -188,6 +189,7 @@ export const IOColorsNeutral = asIOColors({
   "grey-700": IOColors["grey-700"],
   "grey-650": IOColors["grey-650"],
   "grey-450": IOColors["grey-450"],
+  "grey-300": IOColors["grey-300"],
   "grey-200": IOColors["grey-200"],
   "grey-150": IOColors["grey-100"],
   "grey-50": IOColors["grey-50"],
@@ -269,6 +271,7 @@ export type IOTheme = {
   "appBackground-tertiary": IOColors;
   "interactiveElem-default": IOColors;
   "interactiveElem-pressed": IOColors;
+  "listItem-pressed": IOColors;
   // Typography
   "textHeading-default": IOColors;
   "textBody-default": IOColors;
@@ -276,9 +279,12 @@ export type IOTheme = {
   "textBody-tertiary": IOColors;
   // Design System related
   "cardBorder-default": IOColors;
-  "iconColor-default": IOColors;
+  "icon-default": IOColors;
   // Layout
   "divider-default": IOColors;
+  // Status
+  errorIcon: IOColors;
+  errorText: IOColors;
 };
 
 export const IOThemeLight: IOTheme = {
@@ -288,6 +294,7 @@ export const IOThemeLight: IOTheme = {
   "appBackground-tertiary": "grey-100",
   "interactiveElem-default": "blueIO-500",
   "interactiveElem-pressed": "blueIO-600",
+  "listItem-pressed": "grey-50",
   // Typography
   "textHeading-default": "black",
   "textBody-default": "black",
@@ -295,9 +302,12 @@ export const IOThemeLight: IOTheme = {
   "textBody-tertiary": "grey-700",
   // Design System related
   "cardBorder-default": "grey-100",
-  "iconColor-default": "grey-650",
+  "icon-default": "grey-650",
   // Layout
-  "divider-default": "grey-100"
+  "divider-default": "grey-100",
+  // Status
+  errorIcon: "error-500",
+  errorText: "error-850"
 };
 
 export const IOThemeDark: IOTheme = {
@@ -308,6 +318,7 @@ export const IOThemeDark: IOTheme = {
   "appBackground-tertiary": "grey-700",
   "interactiveElem-default": "blueIO-450",
   "interactiveElem-pressed": "blueIO-600",
+  "listItem-pressed": "grey-850",
   // Typography
   "textHeading-default": "grey-200",
   "textBody-default": "white",
@@ -315,9 +326,12 @@ export const IOThemeDark: IOTheme = {
   "textBody-tertiary": "grey-450",
   // Design System related
   "cardBorder-default": "grey-850",
-  "iconColor-default": "grey-450",
+  "icon-default": "grey-450",
   // Layout
-  "divider-default": "grey-850"
+  "divider-default": "grey-850",
+  // Status
+  errorIcon: "error-400",
+  errorText: "error-400"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
@@ -373,6 +387,7 @@ export const IOThemes = { light: IOThemeLight, dark: IOThemeDark };
 export const IOThemeContext: React.Context<IOTheme> = React.createContext(
   Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light
 );
+export const useIOTheme = () => React.useContext(IOThemeContext);
 
 /*
 UTILS

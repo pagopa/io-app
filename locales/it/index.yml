@@ -168,11 +168,12 @@ global:
     details: "Dettagli"
     choose: "Scegli"
   navigator:
-    messages: messaggi
-    wallet: portafoglio
-    documents: documenti
-    profile: profilo
-    services: servizi
+    messages: Messaggi
+    wallet: Portafoglio
+    scan: Inquadra
+    documents: Documenti
+    profile: Profilo
+    services: Servizi
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare
@@ -3239,7 +3240,7 @@ features:
           subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
     abort:
       title: "Annulla la firma"
-      content: "Vuoi annullare la firma dei documenti?"
+      content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
     checkService:
@@ -3263,7 +3264,7 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
+      content: "Consentiranno al fornitore della firma digitale di offrirti il servizio e di certificare la tua firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo e-mail?"
@@ -3430,6 +3431,30 @@ idpay:
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
+    beneficiaryDetails:
+      infobox:
+        title: Cosa ti permette di fare?
+        rulesButton: Leggi le regole
+      infoModal:
+        title: "Regole dell'iniziativa"
+        button: "Ok, ho capito"
+      summary: Riepilogo
+      status: Stato iniziativa
+      endDate: Scadenza
+      amount: Saldo disponibile
+      toBeRefunded: In attesa di rimborso
+      refunded: Totale rimborsato
+      spendingRules: Regole di spesa
+      spendFrom: A partire dal giorno
+      spendTo: Entro il giorno
+      spendPercentage: Percentuale riconosciuta
+      enrollmentDetails: Dettagli dell'adesione
+      enrollmentDate: Data
+      protocolNumber: Numero di protocollo
+      lastUpdate: "Saldo aggiornato al {{dateString}}"
+      buttons:
+        privacy: Preferenze & Privacy
+        unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
       title: 
         TRANSACTION: Dettaglio dell'operazione
@@ -3521,6 +3546,19 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      code:
+        ISEE: ISEE
+        BIRTHDATE: Data di nascita
+        RESIDENCE: Residenza
+      operator:
+        EQ: "{{value}}"
+        NOT_EQ: "Non è {{value}}"
+        LT: "Minore di {{value}}"
+        LE: "Minore o uguale a {{value}}"
+        GT: "Maggiore di {{value}}"
+        GE: "Maggiore o uguale a {{value}}"
+        BTW_CLOSED: "Compreso tra {{value}} e {{value2}}"
+        BTW_OPEN: "Compreso tra {{value}} e {{value2}}"
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del

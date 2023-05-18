@@ -8,7 +8,6 @@ import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVis
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
@@ -90,10 +89,9 @@ const ErrorButton = (props: ErrorButtonProp) => {
           "bonus.cdc.serviceCta.error.status"
         )} ${I18n.t("global.accessibility.alert")}`}
         backgroundColor={"orange"}
-        iconColor={IOColors.white}
-        iconName={"io-warning"}
+        foregroundColor={"white"}
+        iconName={"legWarning"}
         viewRef={viewRef}
-        labelColor={"white"}
       >
         {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>

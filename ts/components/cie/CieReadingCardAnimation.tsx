@@ -4,8 +4,8 @@ import { View, Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
-import IconFont from "../ui/IconFont";
 import { IOColors } from "../core/variables/IOColors";
+import { Icon } from "../core/icons/Icon";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -215,12 +215,9 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             />
           </ProgressCircle>
           {this.props.readingState === ReadingState.completed && (
-            <IconFont
-              name={"io-success"}
-              color={customVariables.textLinkColor}
-              size={50}
-              style={styles.successIcon}
-            />
+            <View style={styles.successIcon}>
+              <Icon name="success" color="blue" size={50} />
+            </View>
           )}
         </View>
       </View>

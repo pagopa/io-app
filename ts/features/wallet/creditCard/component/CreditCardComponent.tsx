@@ -8,12 +8,10 @@ import { Dispatch } from "redux";
 import { Body } from "../../../../components/core/typography/Body";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../components/ui/IconFont";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../../store/reducers/wallet/wallets";
-import variables from "../../../../theme/variables";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { TestID } from "../../../../types/WithTestID";
 import { isPaymentMethodExpired } from "../../../../utils/paymentMethod";
@@ -22,6 +20,7 @@ import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
 import { BrandImage } from "../../component/card/BrandImage";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 type OwnProps = {
   creditCard: CreditCardPaymentMethod;
@@ -81,7 +80,7 @@ const topLeft = (
         </H5>
       </View>
       {pot.getOrElse(favorite, false) && (
-        <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
+        <Icon name="legStarFilled" color="blue" />
       )}
     </View>
   );

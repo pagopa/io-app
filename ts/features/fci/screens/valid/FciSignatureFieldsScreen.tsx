@@ -24,7 +24,6 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { FCI_ROUTES } from "../../navigation/routes";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import {
   fciEndRequest,
@@ -39,9 +38,11 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   getClauseLabel,
   getRequiredSignatureFields,
-  getSectionListData
+  getSectionListData,
+  orderSignatureFields
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons/Icon";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
@@ -162,7 +163,9 @@ const FciSignatureFieldsScreen = (
   const renderSignatureFields = () => (
     <SectionList
       style={IOStyles.horizontalContentPadding}
-      sections={getSectionListData(signatureFieldsSelector)}
+      sections={getSectionListData(
+        orderSignatureFields(signatureFieldsSelector)
+      )}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}
       testID={"FciSignatureFieldsSectionListTestID"}
       renderItem={({ item }) => (
@@ -225,7 +228,7 @@ const FciSignatureFieldsScreen = (
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
+      <Icon name="legChevronLeft" color="bluegrey" />
     </TouchableDefaultOpacity>
   );
 

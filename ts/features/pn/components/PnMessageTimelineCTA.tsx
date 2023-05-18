@@ -1,12 +1,12 @@
 import React from "react";
 import { View } from "react-native";
 import { H5 } from "../../../components/core/typography/H5";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import BlockButtons from "../../../components/ui/BlockButtons";
-import IconFont from "../../../components/ui/IconFont";
 import i18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import { handleItemOnPress } from "../../../utils/url";
+import { HSpacer } from "../../../components/core/spacer/Spacer";
+import { Icon } from "../../../components/core/icons/Icon";
 
 export const PnMessageTimelineCTA = (props: { url: string }) => (
   <View
@@ -23,12 +23,8 @@ export const PnMessageTimelineCTA = (props: { url: string }) => (
         marginBottom: 8
       }}
     >
-      <IconFont
-        name={"io-info"}
-        size={24}
-        color={IOColors.bluegrey}
-        style={{ marginRight: 18 }}
-      />
+      <Icon name="info" size={24} color="bluegrey" />
+      <HSpacer size={16} />
       <H5
         weight="Regular"
         color="bluegreyDark"

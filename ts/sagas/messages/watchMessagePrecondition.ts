@@ -9,6 +9,11 @@ import {
   getMessagePrecondition,
   clearMessagePrecondition
 } from "../../store/actions/messages";
+import { isTestEnv } from "../../utils/environment";
+
+export const testWorkerMessagePrecondition = isTestEnv
+  ? workerMessagePrecondition
+  : undefined;
 
 function* workerMessagePrecondition(
   getThirdPartyMessagePrecondition: ReturnType<

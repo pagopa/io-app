@@ -91,9 +91,8 @@ const renderThirdPartyAttachmentsError = (viewRef: React.RefObject<View>) => (
   <>
     <StatusContent
       backgroundColor={"orange"}
-      iconColor={IOColors.white}
-      iconName={"io-notice"}
-      labelColor={"white"}
+      foregroundColor={"white"}
+      iconName={"notice"}
       viewRef={viewRef}
       labelPaddingVertical={16}
     >

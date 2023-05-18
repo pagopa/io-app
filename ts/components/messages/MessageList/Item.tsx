@@ -27,7 +27,7 @@ import { IOColors } from "../../core/variables/IOColors";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { BadgeComponent } from "../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
+import { Icon } from "../../core/icons/Icon";
 
 const ICON_WIDTH = 24;
 
@@ -148,7 +148,8 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
       return (
         <IOBadge
           text={I18n.t("messages.badge.paid")}
-          labelColor={"bluegreyDark"}
+          variant="solid"
+          color="aqua"
         />
       );
 
@@ -248,7 +249,6 @@ const MessageListItem = ({
     message.organizationName || UNKNOWN_SERVICE_DATA.organizationName;
   const serviceName = message.serviceName || UNKNOWN_SERVICE_DATA.serviceName;
   const messageTitle = message.title || I18n.t("messages.errorLoading.noTitle");
-  const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
   const hasQrCode = category?.tag === "EU_COVID_CERT";
   const showQrCode = hasQrCode && !isSelectionModeEnabled;
 
@@ -309,10 +309,10 @@ const MessageListItem = ({
               hasQrCode && styles.qrCheckBoxContainer
             ]}
           >
-            <IconFont
-              name={iconName}
+            <Icon
+              name={isSelected ? "legCheckOn" : "legCheckOff"}
               size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
+              color="blue"
             />
           </View>
         ) : (

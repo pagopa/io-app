@@ -1,13 +1,11 @@
-import { View } from "react-native";
+import { ColorValue, View } from "react-native";
 import React from "react";
-import variables from "../../theme/variables";
+import { AnimatedIcon, IONavIcons } from "../core/icons";
 import CustomBadge from "./CustomBadge";
 
-import IconFont from "./IconFont";
-
 type Props = {
-  iconName: string;
-  color?: string;
+  iconName: IONavIcons;
+  color?: ColorValue;
   badgeValue?: number;
 };
 
@@ -20,7 +18,7 @@ class TabIconComponent extends React.PureComponent<Props> {
     return (
       // accessibilityLabel={""} in order to read the font icon, without modify the library element
       <View accessibilityLabel={""}>
-        <IconFont name={iconName} size={variables.iconSize3} color={color} />
+        <AnimatedIcon name={iconName} size={24} color={color} />
         <CustomBadge badgeValue={badgeValue} />
       </View>
     );

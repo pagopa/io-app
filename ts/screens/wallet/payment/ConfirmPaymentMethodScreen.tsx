@@ -12,7 +12,7 @@ import CardIcon from "../../../../img/wallet/card.svg";
 import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import TagIcon from "../../../../img/wallet/tag.svg";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -25,7 +25,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
@@ -92,6 +91,7 @@ import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
+import { Icon } from "../../../components/core/icons/Icon";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -128,8 +128,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-
-  iconRowText: { marginLeft: 8 },
 
   flex: { flex: 1 }
 });
@@ -405,19 +403,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <VSpacer size={24} />
 
             <View style={styles.iconRow}>
-              <IconFont
-                name="io-info"
-                size={20}
-                style={{
-                  color: IOColors.bluegrey
-                }}
-              />
-
-              <H3
-                color="bluegrey"
-                style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+              <Icon name="info" size={20} color="bluegrey" />
+              <HSpacer size={8} />
+              <H3 color="bluegrey" accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.paymentInformations")}
               </H3>
             </View>
@@ -441,12 +429,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View style={styles.iconRow}>
               <CardIcon width={20} height={20} />
-
-              <H3
-                color="bluegrey"
-                style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+              <HSpacer size={8} />
+              <H3 color="bluegrey" accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.payWith")}
               </H3>
             </View>
@@ -468,12 +452,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View style={styles.iconRow}>
               <TagIcon width={20} height={20} />
-
-              <H3
-                color="bluegrey"
-                style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+              <HSpacer size={8} />
+              <H3 color="bluegrey" accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.transactionCosts")}
               </H3>
             </View>

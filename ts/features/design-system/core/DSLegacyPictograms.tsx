@@ -245,15 +245,6 @@ export const DSLegacyPictograms = () => (
           />
         }
       />
-      <DSAssetViewerBox
-        size="small"
-        colorMode="dark"
-        type="iconFont"
-        name={"Services"}
-        image={
-          <IconFont name={"io-home-servizi"} color={IOColors.white} size={48} />
-        }
-      />
     </View>
   </DesignSystemScreen>
 );

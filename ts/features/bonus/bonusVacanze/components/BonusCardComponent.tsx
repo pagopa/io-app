@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
 import {
   Text,
@@ -23,11 +22,9 @@ import {
 } from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
 import { makeFontStyleObject } from "../../../../components/core/fonts";
-import customVariables from "../../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
@@ -40,6 +37,8 @@ import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { Icon } from "../../../../components/core/icons/Icon";
+import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -117,16 +116,6 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40
   },
-  badge: {
-    alignSelf: "center",
-    height: 18,
-    backgroundColor: IOColors.white
-  },
-  statusText: {
-    fontSize: 12,
-    lineHeight: 16,
-    color: customVariables.textColor
-  },
   consumedOpacity: {
     opacity: 0.5
   },
@@ -188,12 +177,14 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             </View>
             <HSpacer size={8} />
             {O.isSome(maybeStatusDescription) && (
-              // IOBadge · White version not available yet
-              <Badge style={styles.badge}>
-                <NBBadgeText style={styles.statusText} semibold={true}>
-                  {maybeStatusDescription.value}
-                </NBBadgeText>
-              </Badge>
+              <View style={{ alignSelf: "flex-start" }}>
+                <IOBadge
+                  small
+                  variant="solid"
+                  color="white"
+                  text={maybeStatusDescription.value}
+                />
+              </View>
             )}
           </View>
           <VSpacer size={16} />
@@ -211,7 +202,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <Menu>
               <MenuTrigger>
-                <IconFont name={"io-more"} color={IOColors.white} />
+                <Icon name="dotMenu" color="white" />
               </MenuTrigger>
 
               <MenuOptions>

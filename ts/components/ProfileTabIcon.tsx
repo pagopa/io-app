@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { ColorValue } from "react-native";
 import { GlobalState } from "../store/reducers/types";
-import IconFont from "./ui/IconFont";
+import { AnimatedIcon } from "./core/icons";
 
 type OwnProps = {
   size?: number;
-  color?: string;
+  color?: ColorValue;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -21,10 +22,12 @@ class ProfileTabIcon extends React.PureComponent<Props> {
     // when new experimental features will be avaible, pick this flag from props
     const isExperimentalFeaturesEnabled = false;
     return (
-      <IconFont
+      <AnimatedIcon
         size={size}
         color={color}
-        name={isExperimentalFeaturesEnabled ? "io-profilo-exp" : "io-profilo"}
+        name={
+          isExperimentalFeaturesEnabled ? "legProfileExperiment" : "navProfile"
+        }
       />
     );
   }

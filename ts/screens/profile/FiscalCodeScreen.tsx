@@ -17,7 +17,6 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import IconFont from "../../components/ui/IconFont";
 import {
   BottomTopAnimation,
   LightModalContextInterface
@@ -30,6 +29,7 @@ import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { Icon } from "../../components/core/icons";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
@@ -102,7 +102,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-back"} style={{ color: IOColors.white }} />
+      <Icon name="legChevronLeft" color="white" />
     </TouchableDefaultOpacity>
   );
 

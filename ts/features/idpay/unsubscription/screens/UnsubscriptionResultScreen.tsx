@@ -3,7 +3,7 @@ import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
-  IOPictogramType,
+  IOPictograms,
   Pictogram
 } from "../../../../components/core/pictograms";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -16,7 +16,7 @@ import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { selectIsFailure } from "../xstate/selectors";
 
 type ScreenContentType = {
-  pictogram: IOPictogramType;
+  pictogram: IOPictograms;
   title: string;
   content: string;
   buttonLabel: string;

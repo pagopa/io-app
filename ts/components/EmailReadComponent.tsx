@@ -11,10 +11,10 @@ import TopScreenComponent from "./screens/TopScreenComponent";
 import SectionStatusComponent from "./SectionStatus";
 import { BlockButtonsProps } from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import IconFont from "./ui/IconFont";
 import { Body } from "./core/typography/Body";
 import { VSpacer } from "./core/spacer/Spacer";
 import { H3 } from "./core/typography/H3";
+import { Icon } from "./core/icons/Icon";
 
 const styles = StyleSheet.create({
   flex: {
@@ -61,13 +61,14 @@ const EmailReadComponent = ({ handleGoBack, footerProps }: Props) => {
             <Body>{I18n.t("email.insert.label")}</Body>
             <VSpacer size={8} />
             <View style={styles.emailWithIcon}>
-              <IconFont
-                name="io-envelope"
-                accessible={true}
-                accessibilityLabel={I18n.t("email.read.title")}
-                size={24}
-                style={styles.icon}
-              />
+              <View style={styles.icon}>
+                <Icon
+                  name="email"
+                  accessible={true}
+                  accessibilityLabel={I18n.t("email.read.title")}
+                  size={24}
+                />
+              </View>
               {O.isSome(optionEmail) && <H3>{optionEmail.value}</H3>}
             </View>
             <VSpacer size={24} />

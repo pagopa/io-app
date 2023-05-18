@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.31.0-rc.1",
+  "version": "2.33.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/definitions.yml",
@@ -23,18 +23,19 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
-  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.52.1/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
+  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.55.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_lollipop_first_consumer.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
+    "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
-    "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc",
-    "start-fix-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch",
-    "start-release-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as minor",
-    "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major",
+    "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc --no-verify && yarn push-hint",
+    "start-fix-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch --no-verify && yarn push-hint",
+    "start-release-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as minor --no-verify && yarn push-hint",
+    "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major --no-verify && yarn push-hint",
     "attach": "react-native attach",
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test:ci": "jest --ci --maxWorkers=2 --silent",
@@ -92,7 +93,14 @@
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
-    "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\""
+    "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\"",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint -c .eslintrc.js --fix"
+    ]
   },
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
@@ -273,11 +281,13 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-sonarjs": "^0.11.0",
     "fs-extra": "^7.0.0",
+    "husky": "^8.0.0",
     "jest": "^26.6.3",
     "jest-circus": "^26.6.3",
     "jest-junit": "^13.0.0",
     "js-yaml": "^3.13.1",
     "jsdoc-to-markdown": "^6.0.1",
+    "lint-staged": "^13.2.0",
     "metro-react-native-babel-preset": "^0.70.3",
     "mockdate": "^3.0.2",
     "mockttp": "2.4.0",

@@ -32,8 +32,8 @@ import {
 } from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
+import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
-import { IDPayDetailsParamsList } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
   initiativeNeedsConfigurationSelector
@@ -163,6 +163,16 @@ const InitiativeDetailsScreen = () => {
     );
   };
 
+  const handleBeneficiaryDetailsPress = () => {
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY,
+      params: {
+        initiativeId,
+        initiativeName: initiativeData?.initiativeName
+      }
+    });
+  };
+
   const cardComponent = pipe(
     initiativeData,
     O.fromNullable,
@@ -177,6 +187,10 @@ const InitiativeDetailsScreen = () => {
       goBack={true}
       headerBackgroundColor={IOColors["blue-50"]}
       contextualHelp={emptyContextualHelp}
+      customRightIcon={{
+        iconName: "info",
+        onPress: handleBeneficiaryDetailsPress
+      }}
     >
       <FocusAwareStatusBar
         backgroundColor={IOColors["blue-50"]}

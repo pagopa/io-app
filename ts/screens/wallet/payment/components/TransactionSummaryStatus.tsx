@@ -2,18 +2,17 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import I18n from "../../../../i18n";
 import { getV2ErrorMainType } from "../../../../utils/payment";
 import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
+import { IOIcons } from "../../../../components/core/icons";
 
 type StatusContentProps = {
   viewRef: React.RefObject<View>;
   backgroundColor: "orange" | "aqua";
-  iconName: string;
-  iconColor: string;
-  labelColor: "white" | "bluegreyDark";
+  iconName: IOIcons;
+  foregroundColor: "white" | "bluegreyDark";
   line1: string;
   line2?: string;
 };
@@ -22,17 +21,16 @@ export const renderStatusContent = (props: StatusContentProps) => (
   <StatusContent
     accessibilityRole={"alert"}
     backgroundColor={props.backgroundColor}
-    iconColor={props.iconColor}
+    foregroundColor={props.foregroundColor}
     iconName={props.iconName}
-    labelColor={props.labelColor}
     viewRef={props.viewRef}
     labelPaddingVertical={props.line2 ? 4 : 14}
   >
-    <LabelSmall color={props.labelColor} weight={"Regular"}>
+    <LabelSmall color={props.foregroundColor} weight={"Regular"}>
       {props.line1}
     </LabelSmall>
     {props.line2 && (
-      <LabelSmall color={props.labelColor} weight={"Bold"}>
+      <LabelSmall color={props.foregroundColor} weight={"Bold"}>
         {"\n"}
         {props.line2}
       </LabelSmall>
@@ -62,9 +60,8 @@ export const TransactionSummaryStatus = (props: {
       statusContentProps = {
         viewRef,
         backgroundColor: "orange",
-        labelColor: "white",
-        iconName: "io-notice",
-        iconColor: IOColors.white,
+        foregroundColor: "white",
+        iconName: "notice",
         line1: I18n.t("wallet.errors.TECHNICAL"),
         line2: I18n.t("wallet.errors.contactECsubtitle")
       };
@@ -73,9 +70,8 @@ export const TransactionSummaryStatus = (props: {
       statusContentProps = {
         viewRef,
         backgroundColor: "orange",
-        labelColor: "white",
-        iconName: "io-notice",
-        iconColor: IOColors.white,
+        foregroundColor: "white",
+        iconName: "notice",
         line1: I18n.t("wallet.errors.REVOKED"),
         line2: I18n.t("wallet.errors.contactECsubtitle")
       };
@@ -84,9 +80,8 @@ export const TransactionSummaryStatus = (props: {
       statusContentProps = {
         viewRef,
         backgroundColor: "orange",
-        labelColor: "white",
-        iconName: "io-notice",
-        iconColor: IOColors.white,
+        foregroundColor: "white",
+        iconName: "notice",
         line1: I18n.t("wallet.errors.EXPIRED"),
         line2: I18n.t("wallet.errors.contactECsubtitle")
       };
@@ -95,9 +90,8 @@ export const TransactionSummaryStatus = (props: {
       statusContentProps = {
         viewRef,
         backgroundColor: "orange",
-        labelColor: "white",
-        iconName: "io-notice",
-        iconColor: IOColors.white,
+        foregroundColor: "white",
+        iconName: "notice",
         line1: I18n.t("wallet.errors.ONGOING"),
         line2: I18n.t("wallet.errors.ONGOING_SUBTITLE")
       };
@@ -106,9 +100,8 @@ export const TransactionSummaryStatus = (props: {
       statusContentProps = {
         viewRef,
         backgroundColor: "aqua",
-        iconName: "io-complete",
-        iconColor: IOColors.bluegreyDark,
-        labelColor: "bluegreyDark",
+        iconName: "ok",
+        foregroundColor: "bluegreyDark",
         line1: I18n.t("wallet.errors.DUPLICATED")
       };
       break;
@@ -116,9 +109,8 @@ export const TransactionSummaryStatus = (props: {
       statusContentProps = {
         viewRef,
         backgroundColor: "orange",
-        iconName: "io-notice",
-        iconColor: IOColors.white,
-        labelColor: "white",
+        iconName: "notice",
+        foregroundColor: "white",
         line1: I18n.t("wallet.errors.TECHNICAL"),
         line2: I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")
       };
