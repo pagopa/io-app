@@ -107,7 +107,7 @@
     "@gorhom/bottom-sheet": "^4.1.5",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.2.1",
-    "@pagopa/io-react-native-login-utils": "https://github.com/pagopa/io-react-native-login-utils.git#7bc6ab3da17363843f2e26c626565b4e19926012",
+    "@pagopa/io-react-native-login-utils": "^0.2.0",
     "@pagopa/react-native-cie": "^1.1.5",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^1.17.10",

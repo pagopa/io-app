@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { NativeRedirectError } from "@pagopa/io-react-native-login-utils";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 import { AppDispatch } from "../../../../App";
 
@@ -41,7 +41,7 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
     );
     expect(E.isLeft(result)).toBeTruthy();
     if (E.isLeft(result)) {
-      const e = JSON.parse(result.left.message) as NativeRedirectError;
+      const e = JSON.parse(result.left.message) as LoginUtilsError;
       expect(e.code).toEqual("409");
     }
   });

@@ -4,12 +4,13 @@ import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { parseStringPromise } from "xml2js";
 import {
-  NativeRedirectError,
+  LoginUtilsError,
   getRedirects
 } from "@pagopa/io-react-native-login-utils";
 import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
+import { last } from "fp-ts/lib/Array";
 import { handleRegenerateKey } from "..";
 import { AppDispatch } from "../../../App";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -122,7 +123,7 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },
                 error => {
-                  const e = error as NativeRedirectError;
+                  const e = error as LoginUtilsError;
                   void mixpanelTrack("SPID_ERROR", {
                     idp: "cie",
                     code: e.userInfo.StatusCode,
@@ -132,30 +133,33 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                   return new Error(JSON.stringify(e));
                 }
               ),
-              TE.chain(redirects => {
-                for (const url of redirects) {
-                  const parsedUrl = new URLParse(url, true);
-                  const urlQuery = parsedUrl.query;
-                  return pipe(
-                    urlQuery.SAMLRequest,
-                    O.fromNullable,
-                    O.fold(
-                      () => TE.left(new Error("Missing SAMLRequest")),
-                      urlEncodedSamlRequest =>
-                        TE.tryCatch(
-                          () =>
-                            verifyLollipopSamlRequestTask(
-                              url,
-                              urlEncodedSamlRequest,
-                              publicKey
-                            ),
-                          E.toError
+              TE.chain(redirects =>
+                pipe(
+                  redirects,
+                  last,
+                  O.fold(
+                    () => TE.left(new Error("Missing Redirects")),
+                    url =>
+                      pipe(
+                        new URLParse(url, true).query.SAMLRequest,
+                        O.fromNullable,
+                        O.fold(
+                          () => TE.left(new Error("Missing SAMLRequest")),
+                          urlEncodedSamlRequest =>
+                            TE.tryCatch(
+                              () =>
+                                verifyLollipopSamlRequestTask(
+                                  url,
+                                  urlEncodedSamlRequest,
+                                  publicKey
+                                ),
+                              E.toError
+                            )
                         )
-                    )
-                  );
-                }
-                return TE.left(new Error("No valid redirect found"));
-              })
+                      )
+                  )
+                )
+              )
             )
         )
       )
