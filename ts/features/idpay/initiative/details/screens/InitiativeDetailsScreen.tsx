@@ -27,7 +27,10 @@ import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigat
 import { InitiativeBonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
-import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
+import {
+  InitiativeTimelineComponent,
+  InitiativeTimelineComponentSkeleton
+} from "../components/InitiativeTimelineComponent";
 import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
@@ -82,7 +85,9 @@ const InitiativeDetailsScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
-      dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
+      dispatch(
+        idpayTimelinePageGet.request({ initiativeId, page: 0, pageSize: 5 })
+      );
     }, [dispatch, initiativeId])
   );
 
@@ -176,7 +181,10 @@ const InitiativeDetailsScreen = () => {
               return (
                 <ContentWrapper>
                   <VSpacer size={8} />
-                  <InitiativeTimelineComponent initiativeId={initiativeId} />
+                  <InitiativeTimelineComponent
+                    initiativeId={initiativeId}
+                    size={5}
+                  />
                   <VSpacer size={32} />
                 </ContentWrapper>
               );
@@ -222,7 +230,10 @@ const InitiativeDetailsScreen = () => {
                     status={initiative.status}
                   />
                   <VSpacer size={8} />
-                  <InitiativeTimelineComponent initiativeId={initiativeId} />
+                  <InitiativeTimelineComponent
+                    initiativeId={initiativeId}
+                    size={3}
+                  />
                   <VSpacer size={24} />
                   <InitiativeSettingsComponent initiative={initiative} />
                   <VSpacer size={32} />
@@ -275,7 +286,7 @@ const InitiativeDetailsScreen = () => {
         >
           <ContentWrapper>
             <VSpacer size={8} />
-            <InitiativeTimelineComponent initiativeId={initiativeId} />
+            <InitiativeTimelineComponentSkeleton size={5} />
             <VSpacer size={32} />
           </ContentWrapper>
         </InitiativeDetailsBaseScreenComponent>
