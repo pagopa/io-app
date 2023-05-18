@@ -70,7 +70,12 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
 
   const computedConfirmButtonProps = React.useMemo(
     () => ({
-      ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
+      ...confirmButtonProps(
+        () => null,
+        I18n.t("global.buttons.continue"),
+        undefined,
+        "pin-creation-form-confirm"
+      ),
       disabled: !isFormValid,
       onPress: handleSubmit
     }),
@@ -100,7 +105,9 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
       <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
         <View style={{ marginTop: 10 }} />
 
-        <H1>{I18n.t("onboarding.pin.title")}</H1>
+        <H1 testID="pin-creation-form-title">
+          {I18n.t("onboarding.pin.title")}
+        </H1>
 
         <View style={{ marginTop: 10 }} />
 
