@@ -78,7 +78,7 @@ const InitiativeDetailsScreen = () => {
   };
 
   const navigateToPaymentAuthorization = () => {
-    // TODO payment authorization
+    // TODO navigation to payment authorization, will be added in another PR
     alert("TBD");
   };
 

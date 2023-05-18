@@ -35,7 +35,7 @@ const InitiativeDetailsBaseScreenComponent = (
     if (props.isLoading) {
       return (
         <>
-          <View style={styles.hero} testID={"card-component"}>
+          <View style={styles.hero} testID={"IDPayDetailsHeroSkeletonTestID"}>
             <View style={styles.heroDetails}>
               <Skeleton height={56} width={56} color="#CED8F9" />
               <VSpacer size={16} />
@@ -71,7 +71,11 @@ const InitiativeDetailsBaseScreenComponent = (
       O.fold(
         () => undefined,
         logoUrl => (
-          <Image source={{ uri: logoUrl }} style={styles.initiativeLogo} />
+          <Image
+            testID="IDPayInitiativeLogoTestID"
+            source={{ uri: logoUrl }}
+            style={styles.initiativeLogo}
+          />
         )
       )
     );
@@ -87,6 +91,7 @@ const InitiativeDetailsBaseScreenComponent = (
             style={styles.lastUpdate}
             color="bluegrey"
             weight="Regular"
+            testID={"IDPayDetailsLastUpdatedTestID"}
           >
             {I18n.t(
               "idpay.initiative.details.initiativeDetailsScreen.configured.lastUpdated"
@@ -99,7 +104,7 @@ const InitiativeDetailsBaseScreenComponent = (
 
     return (
       <>
-        <View style={styles.hero} testID={"card-component"}>
+        <View style={styles.hero} testID={"IDPayDetailsHeroTestID"}>
           <ContentWrapper>
             <View style={styles.heroDetails}>
               {logoComponent}
