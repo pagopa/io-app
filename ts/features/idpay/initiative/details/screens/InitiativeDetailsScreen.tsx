@@ -24,7 +24,7 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { InitiativeBonusCounter } from "../components/InitiativeBonusCounter";
+import { BonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import {
@@ -97,7 +97,7 @@ const InitiativeDetailsScreen = () => {
 
   const getInitiativeCounters = (
     initiative: InitiativeDTO
-  ): ReadonlyArray<InitiativeBonusCounter> | undefined => {
+  ): ReadonlyArray<BonusCounter> | undefined => {
     const isRefundable = initiative.status === InitiativeStatusEnum.REFUNDABLE;
 
     const availableAmount = initiative.amount || 0;
@@ -128,7 +128,7 @@ const InitiativeDetailsScreen = () => {
       O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
       O.fold(
         () => undefined,
-        (type): ReadonlyArray<InitiativeBonusCounter> => {
+        (type): ReadonlyArray<BonusCounter> => {
           switch (type) {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return [
@@ -309,7 +309,7 @@ const InitiativeDetailsScreen = () => {
   );
 };
 
-const defaultLoadingCounters: ReadonlyArray<InitiativeBonusCounter> = [
+const defaultLoadingCounters: ReadonlyArray<BonusCounter> = [
   {
     type: "AmountWithProgress",
     isLoading: true

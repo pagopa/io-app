@@ -31,7 +31,7 @@ type AmountWithProgressProps = {
   progress: number;
 };
 
-export type InitiativeBonusCounter =
+export type BonusCounter =
   | BaseProps &
       (
         | ({ isLoading: true } & { type: CounterType })
@@ -41,12 +41,12 @@ export type InitiativeBonusCounter =
 const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 
-const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
+const InitiativeBonusCounter = (props: BonusCounter) => {
   switch (props.type) {
     case "Amount":
       if (props.isLoading) {
         return (
-          <View style={styles.alignCenter}>
+          <View style={styles.alignCenter} testID="AmountSkeletonTestID">
             <Skeleton height={16} width={64} color="#CED8F9" />
             <VSpacer size={8} />
             <Skeleton height={24} width={140} color="#CED8F9" />
@@ -68,7 +68,10 @@ const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
     case "AmountWithProgress":
       if (props.isLoading) {
         return (
-          <View style={styles.alignCenter}>
+          <View
+            style={styles.alignCenter}
+            testID="AmountWithProgressSkeletonTestID"
+          >
             <Skeleton height={16} width={64} color="#CED8F9" />
             <VSpacer size={8} />
             <Skeleton height={24} width={140} color="#CED8F9" />
@@ -89,6 +92,7 @@ const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
           </H1>
           <VSpacer size={8} />
           <BonusProgressBar
+            testID="BonusProgressBarTestID"
             isDisabled={props.isDisabled}
             progress={props.progress}
           />
@@ -100,11 +104,13 @@ const InitiativeBonusCounter = (props: InitiativeBonusCounter) => {
 type ProgressBarProps = {
   progress: number;
   isDisabled?: boolean;
+  testID?: string;
 };
 
 const BonusProgressBar = ({
   progress,
-  isDisabled = false
+  isDisabled = false,
+  testID
 }: ProgressBarProps) => {
   const width = useSharedValue(100);
   React.useEffect(() => {
@@ -115,7 +121,7 @@ const BonusProgressBar = ({
     width: withTiming(width.value, { duration: 1000 })
   }));
   return (
-    <View style={styles.progressBarContainer}>
+    <View style={styles.progressBarContainer} testID={testID}>
       <Animated.View
         style={[
           {
