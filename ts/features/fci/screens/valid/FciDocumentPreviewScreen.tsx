@@ -61,7 +61,7 @@ export const FciDocumentPreviewScreen = (
       goBack={true}
       customGoBack={customGoBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+      headerTitle={I18n.t("messagePDFPreview.title")}
     >
       <SafeAreaView
         style={styles.container}

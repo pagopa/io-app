@@ -1081,11 +1081,6 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
         ]
       }
     >
-      <SvgMock
-        fill="#CCD4DC"
-        height={20}
-        width={20}
-      />
       <View
         style={
           Object {
