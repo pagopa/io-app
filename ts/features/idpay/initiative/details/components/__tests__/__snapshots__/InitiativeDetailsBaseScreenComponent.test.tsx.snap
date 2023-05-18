@@ -1036,7 +1036,7 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                               weight="Regular"
                                             >
                                               Saldo aggiornato al 
-                                              18/05/2023, 19:07
+                                              04/03/2023, 05:06
                                             </Text>
                                             <View
                                               style={

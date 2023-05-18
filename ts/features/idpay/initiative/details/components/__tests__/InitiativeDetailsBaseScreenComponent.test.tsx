@@ -21,7 +21,7 @@ const mockedInitiative: InitiativeDTO = {
   nInstr: 2,
   status: StatusEnum.REFUNDABLE,
   initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
-  lastCounterUpdate: new Date(),
+  lastCounterUpdate: new Date(2023, 2, 4, 5, 6),
   logoURL: "ABC"
 };
 
