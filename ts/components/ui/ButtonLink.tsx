@@ -27,7 +27,7 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type ButtonLink = WithTestID<{
-  color?: "primary" | "error" | "warning" | "success" | "info";
+  color?: "primary";
   label: string;
   disabled?: boolean;
   // Icons
@@ -68,34 +68,6 @@ const mapLegacyColorStates: Record<
       pressed: IOColors["blue-600"],
       disabled: IOColors["grey-700"]
     }
-  },
-  error: {
-    label: {
-      default: IOColors["error-850"],
-      pressed: IOColors["error-850"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  warning: {
-    label: {
-      default: IOColors["warning-850"],
-      pressed: IOColors["warning-850"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  success: {
-    label: {
-      default: IOColors["success-850"],
-      pressed: IOColors["success-850"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  info: {
-    label: {
-      default: IOColors["info-850"],
-      pressed: IOColors["info-850"],
-      disabled: IOColors["grey-700"]
-    }
   }
 };
 
@@ -114,34 +86,6 @@ const mapColorStates: Record<NonNullable<ButtonLink["color"]>, ColorStates> = {
     label: {
       default: IOColors["blueIO-500"],
       pressed: IOColors["blueIO-600"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  error: {
-    label: {
-      default: IOColors["error-850"],
-      pressed: IOColors["error-850"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  warning: {
-    label: {
-      default: IOColors["warning-850"],
-      pressed: IOColors["warning-850"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  success: {
-    label: {
-      default: IOColors["success-850"],
-      pressed: IOColors["success-850"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  info: {
-    label: {
-      default: IOColors["info-850"],
-      pressed: IOColors["info-850"],
       disabled: IOColors["grey-700"]
     }
   }
