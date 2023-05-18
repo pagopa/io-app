@@ -135,8 +135,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
-        versionName "2.33.0.0"
+        versionCode 100154726
+        versionName "2.33.0.1"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.

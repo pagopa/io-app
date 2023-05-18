@@ -4,5 +4,6 @@ import { isDevEnv } from "../../utils/environment";
 export const originSchemasWhiteList = [
   "https://*",
   "intent://*",
+  "iologin://*",
   ...(isDevEnv ? ["http://*"] : [])
 ];

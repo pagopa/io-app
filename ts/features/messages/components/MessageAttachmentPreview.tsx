@@ -85,12 +85,8 @@ const renderPDF = (
   <>
     {isPDFError ? (
       renderError(
-        I18n.t(
-          "features.mvl.details.attachments.pdfPreview.errors.previewing.title"
-        ),
-        I18n.t(
-          "features.mvl.details.attachments.pdfPreview.errors.previewing.body"
-        )
+        I18n.t("messagePDFPreview.errors.previewing.title"),
+        I18n.t("messagePDFPreview.errors.previewing.body")
       )
     ) : (
       <PdfViewer
@@ -124,7 +120,7 @@ const renderFooter = (
       leftButton={confirmButtonProps(() => {
         onShare?.();
         ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
-      }, I18n.t(isGenericAttachment ? "features.mvl.details.attachments.pdfPreview.open" : "features.mvl.details.attachments.pdfPreview.singleBtn"))}
+      }, I18n.t(isGenericAttachment ? "messagePDFPreview.open" : "messagePDFPreview.singleBtn"))}
     />
   ) : (
     <FooterWithButtons
@@ -136,11 +132,7 @@ const renderFooter = (
         onPress: () => {
           onShare?.();
           share(`file://${downloadPath}`, undefined, false)().catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.sharing"
-              )
-            );
+            showToast(I18n.t("messagePDFPreview.errors.sharing"));
           });
         },
         title: I18n.t("global.buttons.share")
@@ -162,24 +154,17 @@ const renderFooter = (
           )
             .then(_ => {
               showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.savedAtLocation",
-                  {
-                    name: attachment.displayName
-                  }
-                ),
+                I18n.t("messagePDFPreview.savedAtLocation", {
+                  name: attachment.displayName
+                }),
                 "success"
               );
             })
             .catch(_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.errors.saving"
-                )
-              );
+              showToast(I18n.t("messagePDFPreview.errors.saving"));
             });
         },
-        title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
+        title: I18n.t("messagePDFPreview.save")
       }}
       rightButton={confirmButtonProps(
         () => {
@@ -187,14 +172,10 @@ const renderFooter = (
           ReactNativeBlobUtil.android
             .actionViewIntent(downloadPath, attachment.contentType)
             .catch(_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.errors.opening"
-                )
-              );
+              showToast(I18n.t("messagePDFPreview.errors.opening"));
             });
         },
-        I18n.t("features.mvl.details.attachments.pdfPreview.open"),
+        I18n.t("messagePDFPreview.open"),
         undefined,
         undefined,
         undefined,
@@ -287,7 +268,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={customGoBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+      headerTitle={I18n.t("messagePDFPreview.title")}
     >
       <SafeAreaView
         style={styles.container}

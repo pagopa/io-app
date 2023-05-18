@@ -1,6 +1,6 @@
 import React from "react";
 import { GestureResponderEvent, View } from "react-native";
-import { IOIcons, Icon } from "../core/icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../core/icons";
 import {
   IOPictogramSizeScale,
   IOPictograms,
@@ -34,7 +34,7 @@ type FeatureInfo = FeatureInfoGraphicProps &
   PartialFeatureInfo &
   FeatureInfoActionProps;
 
-const DEFAULT_ICON_SIZE: number = 24;
+const DEFAULT_ICON_SIZE: IOIconSizeScale = 24;
 const DEFAULT_PICTOGRAM_SIZE: IOPictogramSizeScale = 48;
 
 const renderNode = (body: FeatureInfo["body"]) => {

@@ -6,7 +6,7 @@ import { isDesignSystemEnabledSelector } from "../../../store/reducers/persisted
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-type AllowedColors = IOTheme["textHeading-default"] | "blueIO-850";
+type AllowedColors = IOTheme["textBody-default"] | "blueIO-850";
 type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
 
 type OwnProps = ExternalTypographyProps<
@@ -25,7 +25,7 @@ const h6DefaultColor: AllowedColors = "black";
 const h6DefaultWeight: AllowedWeight = "Regular";
 
 /**
- * Typography component to render `H2` text with font size {@link fontSize} and fontFamily {@link fontName}.
+ * Typography component to render `H4` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `Bold`, color: `bluegreyDark`
  * @param props
  * @constructor
