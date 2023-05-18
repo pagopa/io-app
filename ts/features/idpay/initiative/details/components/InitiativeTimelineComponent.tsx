@@ -25,12 +25,6 @@ import {
   TimelineOperationListItemSkeleton
 } from "./TimelineOperationListItem";
 
-const styles = StyleSheet.create({
-  spaceBetween: {
-    justifyContent: "space-between"
-  }
-});
-
 type Props = {
   initiativeId: string;
   size?: number;
@@ -59,7 +53,9 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
 
   const renderTimelineContent = () => {
     if (isLoading) {
-      return <InitiativeTimelineComponentSkeleton size={size} />;
+      return Array.from({ length: size }).map((_, index) => (
+        <TimelineOperationListItemSkeleton key={index} />
+      ));
     }
 
     if (timeline.length === 0) {
@@ -135,5 +131,12 @@ const InitiativeTimelineComponentSkeleton = ({ size = 3 }: SkeletonProps) => (
     ))}
   </>
 );
+
+const styles = StyleSheet.create({
+  spaceBetween: {
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
+});
 
 export { InitiativeTimelineComponent, InitiativeTimelineComponentSkeleton };
