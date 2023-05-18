@@ -1,6 +1,5 @@
 import { device } from "detox";
 
-import I18n from "../i18n";
 import { e2eWaitRenderTimeout } from "./config";
 import { ensureLoggedIn } from "./utils";
 
@@ -12,7 +11,7 @@ describe("Messages Screen", () => {
 
   describe("when the user is already logged in", () => {
     it("should load the user's messages", async () => {
-      await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
+      await waitFor(element(by.id("MessageList_inbox")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
 
