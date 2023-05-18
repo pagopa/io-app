@@ -129,7 +129,7 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                     description: e.userInfo.Error,
                     domain: e.userInfo.URL
                   });
-                  return E.toError(error);
+                  return new Error(JSON.stringify(e));
                 }
               ),
               TE.chain(redirects => {
