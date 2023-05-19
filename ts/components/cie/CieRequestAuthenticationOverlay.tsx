@@ -102,18 +102,18 @@ const generateRetryState: (state: InternalState) => InternalState = (
   key: state.key + 1
 });
 
-type RequestInfoAuthorizingStates = {
+type RequestInfoAuthorizedState = {
   requestState: "AUTHORIZED";
   nativeAttempts: number;
   url: string;
 };
 
-type RequestInfoLoadingStates = {
+type RequestInfoLoadingState = {
   requestState: "LOADING";
   nativeAttempts: number;
 };
 
-type RequestInfo = RequestInfoLoadingStates | RequestInfoAuthorizingStates;
+type RequestInfo = RequestInfoLoadingState | RequestInfoAuthorizedState;
 
 function retryRequest(
   setInternalState: React.Dispatch<React.SetStateAction<InternalState>>,
@@ -147,10 +147,6 @@ const CieWebView = (props: Props) => {
   const handleOnError = React.useCallback(() => {
     setInternalState(state => generateErrorState(state));
   }, []);
-
-  // Android CIE login flow is different from iOS.
-  // On Android to be sure to regenerate a new crypto key,
-  // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
