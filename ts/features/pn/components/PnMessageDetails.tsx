@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { identity, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as AR from "fp-ts/lib/Array";
 import React, { useCallback, useEffect, useState } from "react";
@@ -67,7 +67,6 @@ export const PnMessageDetails = (props: Props) => {
     props.message.recipients,
     AR.findFirst(_ => _.taxId === currentFiscalCode),
     O.chainNullableK(_ => _.payment),
-    O.map(identity),
     O.getOrElseW(() => undefined)
   );
   const rptId = getRptIdFromPayment(maybePayment);
