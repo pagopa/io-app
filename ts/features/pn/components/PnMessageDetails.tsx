@@ -63,13 +63,13 @@ export const PnMessageDetails = (props: Props) => {
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
 
-  const maybePayment = pipe(
+  const payment = pipe(
     props.message.recipients,
     AR.findFirst(_ => _.taxId === currentFiscalCode),
     O.chainNullableK(_ => _.payment),
     O.getOrElseW(() => undefined)
   );
-  const rptId = getRptIdFromPayment(maybePayment);
+  const rptId = getRptIdFromPayment(payment);
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -170,7 +170,7 @@ export const PnMessageDetails = (props: Props) => {
             />
           </PnMessageDetailsSection>
         )}
-        {maybePayment && (
+        {payment && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.paymentSection.title")}
           >
@@ -178,15 +178,15 @@ export const PnMessageDetails = (props: Props) => {
               <>
                 <TransactionSummary
                   paymentVerification={paymentVerification}
-                  paymentNoticeNumber={maybePayment.noticeCode}
-                  organizationFiscalCode={maybePayment.creditorTaxId}
+                  paymentNoticeNumber={payment.noticeCode}
+                  organizationFiscalCode={payment.creditorTaxId}
                   isPaid={isPaid}
                 />
                 {O.isSome(paymentVerificationError) && (
                   <TransactionSummaryErrorDetails
                     error={paymentVerificationError}
-                    paymentNoticeNumber={maybePayment.noticeCode}
-                    organizationFiscalCode={maybePayment.creditorTaxId}
+                    paymentNoticeNumber={payment.noticeCode}
+                    organizationFiscalCode={payment.creditorTaxId}
                     messageId={props.messageId}
                   />
                 )}
