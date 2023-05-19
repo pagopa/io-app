@@ -76,9 +76,6 @@ export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
-// MVL messages
-export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
-
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
 
