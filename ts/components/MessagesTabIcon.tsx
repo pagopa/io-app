@@ -1,9 +1,10 @@
 import React from "react";
 
+import { ColorValue } from "react-native";
 import TabIconComponent from "./ui/TabIconComponent";
 
 type OwnProps = {
-  color?: string;
+  color?: ColorValue;
 };
 
 type Props = OwnProps;
@@ -16,7 +17,7 @@ class MessagesTabIcon extends React.PureComponent<Props> {
     const { color } = this.props;
     return (
       <TabIconComponent
-        iconName={"io-messaggi"}
+        iconName={"navMessages"}
         // badge is disabled with paginated messages see https://pagopa.atlassian.net/browse/IA-572
         badgeValue={undefined}
         color={color}

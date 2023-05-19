@@ -7,9 +7,7 @@ import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyleVariables } from "../../../../components/core/variables/IOStyleVariables";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
@@ -21,6 +19,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getPaymentStatusById } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -62,7 +61,7 @@ const Fallback = () => {
   void mixpanelTrack("PAYMENT_STATUS_SWITCH_ID_NOT_IN_WALLET_LIST");
   return (
     <View style={{ paddingLeft: IOStyleVariables.switchWidth - 24 }}>
-      <IconFont name={"io-close"} size={24} color={IOColors.blue} />
+      <Icon name="legClose" size={24} color="blue" />
     </View>
   );
 };

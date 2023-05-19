@@ -13,16 +13,14 @@ import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
-import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 type Props = {
   initiative?: InitiativeDTO;
@@ -70,7 +68,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => {
     <NBListItem onPress={onPress} style={{ paddingEnd: 0 }}>
       {hasWarnings && (
         <>
-          <IconFont name={"io-warning"} color={IOColors.red} />
+          <Icon name="legWarning" color="red" />
           <HSpacer size={16} />
         </>
       )}
@@ -78,10 +76,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => {
         <H4>{title}</H4>
         {getSubtitleComponent()}
       </View>
-      <IconFont
-        name={"io-right"}
-        color={customVariables.contentPrimaryBackground}
-      />
+      <Icon name="chevronRightListItem" color="blue" />
     </NBListItem>
   );
 };
@@ -172,7 +167,7 @@ const InitiativeSettingsComponent = (props: Props) => {
   );
 
   return (
-    <>
+    <View testID={"IDPayDetailsSettingsTestID"}>
       <H3>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
@@ -181,7 +176,7 @@ const InitiativeSettingsComponent = (props: Props) => {
       <VSpacer size={8} />
       {instrumentsSettingsButton}
       {ibanSettingsButton}
-    </>
+    </View>
   );
 };
 

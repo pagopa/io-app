@@ -27,7 +27,7 @@ import {
 import { LabelledItem } from "./LabelledItem";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import IconFont from "./ui/IconFont";
+import { Icon } from "./core/icons/Icon";
 
 type OwnProps<T> = {
   items: ReadonlyArray<T>;
@@ -153,8 +153,8 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
               onPress={this.handleSearchPress}
               transparent={true}
             >
-              <IconFont
-                name="io-search"
+              <Icon
+                name="legSearch"
                 accessible={true}
                 accessibilityLabel={I18n.t("global.actions.search")}
               />

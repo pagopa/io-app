@@ -61,7 +61,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <ShareDataComponent />
           <VSpacer size={16} />
-          <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
+          <InfoBox iconName="profileAlt" iconColor="bluegrey">
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </Label>
@@ -75,7 +75,9 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
           )}
           rightButton={confirmButtonProps(
             () => props.setMixpanelEnabled(true),
-            I18n.t("profile.main.privacy.shareData.screen.cta.shareData")
+            I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
+            undefined,
+            "share-data-confirm-button"
           )}
         />
         {bottomSheet}

@@ -37,7 +37,7 @@ const renderFooter = (url: string, filePath: string) =>
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.ios.presentOptionsMenu(filePath);
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      }, I18n.t("messagePDFPreview.open"))}
     />
   ) : (
     <FooterWithButtons
@@ -53,11 +53,7 @@ const renderFooter = (url: string, filePath: string) =>
             undefined,
             false
           )().catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.sharing"
-              )
-            );
+            showToast(I18n.t("messagePDFPreview.errors.sharing"));
           });
         },
         title: I18n.t("global.buttons.share")
@@ -77,24 +73,17 @@ const renderFooter = (url: string, filePath: string) =>
           )
             .then(_ => {
               showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.savedAtLocation",
-                  {
-                    name: "attachment.displayName"
-                  }
-                ),
+                I18n.t("messagePDFPreview.savedAtLocation", {
+                  name: "attachment.displayName"
+                }),
                 "success"
               );
             })
             .catch(_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.errors.saving"
-                )
-              );
+              showToast(I18n.t("messagePDFPreview.errors.saving"));
             });
         },
-        title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
+        title: I18n.t("messagePDFPreview.save")
       }}
       rightButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.android
@@ -103,13 +92,9 @@ const renderFooter = (url: string, filePath: string) =>
             "application/pdf"
           )
           .catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.opening"
-              )
-            );
+            showToast(I18n.t("messagePDFPreview.errors.opening"));
           });
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      }, I18n.t("messagePDFPreview.open"))}
     />
   );
 
@@ -160,6 +145,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
             onError={_ => {
               setIsError(true);
             }}
+            enablePaging
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>

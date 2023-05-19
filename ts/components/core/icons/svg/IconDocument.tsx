@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconDocument = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const IconDocument = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M8.703 9C8.315 9 8 9.336 8 9.75s.315.75.703.75h5.844c.388 0 .703-.336.703-.75S14.935 9 14.547 9H8.703ZM8 12.75c0-.414.308-.75.687-.75h6.876c.38 0 .687.336.687.75s-.308.75-.688.75H8.688c-.38 0-.687-.336-.687-.75ZM8.687 15c-.38 0-.687.336-.687.75s.308.75.687.75h6.876c.38 0 .687-.336.687-.75s-.308-.75-.688-.75H8.688ZM8 18.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z"
       fill="currentColor"

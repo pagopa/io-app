@@ -225,6 +225,7 @@ const DocumentWithSignature = (props: Props) => {
       // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
       onError={props.onError}
       onPressLink={constNull}
+      enablePaging
       style={styles.pdf}
     />
   );
@@ -259,7 +260,7 @@ const DocumentWithSignature = (props: Props) => {
         <Left />
         <Body style={{ alignItems: "center" }}>
           <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+            {I18n.t("messagePDFPreview.title")}
           </H5>
         </Body>
         <Right>
@@ -282,12 +283,8 @@ const DocumentWithSignature = (props: Props) => {
           currentPage,
           totalPages
         })}
-        iconLeftColor={
-          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-        }
-        iconRightColor={
-          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-        }
+        iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
+        iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}

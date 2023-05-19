@@ -10,7 +10,6 @@ import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 /* Types */
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
@@ -226,18 +225,14 @@ export const DSAlert = () => {
       <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
         Legacy components
       </H2>
-
       <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.normal}
-          iconColor={
-            IOColors[getStatusTextColor(LevelEnum.normal as LevelEnum)]
-          }
+          foregroundColor={getStatusTextColor(LevelEnum.normal)}
           iconName={statusIconMap.normal}
           testID={"SectionStatusComponentContent"}
           viewRef={viewRef}
-          labelColor={getStatusTextColor(LevelEnum.normal)}
         >
           {
             "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
@@ -253,13 +248,10 @@ export const DSAlert = () => {
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.warning}
-          iconColor={
-            IOColors[getStatusTextColor(LevelEnum.warning as LevelEnum)]
-          }
+          foregroundColor={getStatusTextColor(LevelEnum.warning)}
           iconName={statusIconMap.warning}
           testID={"SectionStatusComponentContent"}
           viewRef={viewRef}
-          labelColor={getStatusTextColor(LevelEnum.warning)}
         >
           {"La sezione Messaggi è in manutenzione, tornerà operativa a breve"}
         </StatusContent>
@@ -269,13 +261,10 @@ export const DSAlert = () => {
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.critical}
-          iconColor={
-            IOColors[getStatusTextColor(LevelEnum.critical as LevelEnum)]
-          }
+          foregroundColor={getStatusTextColor(LevelEnum.critical)}
           iconName={statusIconMap.critical}
           testID={"SectionStatusComponentContent"}
           viewRef={viewRef}
-          labelColor={getStatusTextColor(LevelEnum.critical)}
         >
           {
             "I nostri sistemi potrebbero rispondere con lentezza, ci scusiamo per il disagio."

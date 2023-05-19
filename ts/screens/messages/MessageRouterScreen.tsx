@@ -6,16 +6,14 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { pipe } from "fp-ts/lib/function";
-import { TagEnum as TagEnumBase } from "../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../definitions/backend/MessageCategoryPN";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
-import { euCovidCertificateEnabled, mvlEnabled } from "../../config";
+import { euCovidCertificateEnabled } from "../../config";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
-import { navigateToMvlDetailsScreen } from "../../features/mvl/navigation/actions";
 import { navigateToPnMessageDetailsScreen } from "../../features/pn/navigation/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -81,12 +79,6 @@ const navigateToScreenHandler =
           .authCode as EUCovidCertificateAuthCode,
         messageId: message.id
       });
-    } else if (
-      mvlEnabled &&
-      message.category.tag === TagEnumBase.LEGAL_MESSAGE
-    ) {
-      navigateBack();
-      dispatch(navigateToMvlDetailsScreen({ id: message.id }));
     } else if (isPnEnabled && message.category.tag === TagEnumPN.PN) {
       navigateBack();
       dispatch(
