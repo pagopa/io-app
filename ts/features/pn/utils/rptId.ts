@@ -7,7 +7,7 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 
-const getRptIdFromPayment = (payment: NotificationPaymentInfo | undefined) =>
+const getRptIdFromPayment = (payment?: NotificationPaymentInfo) =>
   pipe(
     payment,
     O.fromNullable,
