@@ -8,6 +8,7 @@ import {
 import { View, Modal, Platform, LayoutChangeEvent } from "react-native";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
@@ -176,29 +177,36 @@ export const useIOBottomSheetModalNew = ({
   return { present, dismiss: dismissAll, bottomSheet };
 };
 
+const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
+const DEFAULT_BOTTOM_PADDING = 300;
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
  * @param bottomSheetOptions
  * @see {BottomSheetOptions}
- * @param bottomPadding the bottom padding of the bottom sheet, defaul is 0
+ * @param bottomPadding the bottom padding of the bottom sheet, default is 0
  */
 export const useIOBottomSheetAutoresizableModal = (
   {
     component,
     title,
-    snapPoint: originSnap,
     footer,
     onDismiss
-  }: BottomSheetOptions,
-  bottomPadding: number = 0
+  }: Omit<BottomSheetOptions, "snapPoint">,
+  bottomPadding: number = DEFAULT_BOTTOM_PADDING
 ) => {
-  const [snapPoint, setSnapPoint] = React.useState<number>(originSnap[0]);
+  const [snapPoint, setSnapPoint] = React.useState<number>(
+    DEFAULT_AUTORESIZABLE_SNAP_POINT
+  );
+  const insets = useSafeAreaInsets();
 
-  const handleContentOnLayout = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
+  const handleContentOnLayout = React.useCallback(
+    (event: LayoutChangeEvent) => {
+      const { height } = event.nativeEvent.layout;
 
-    setSnapPoint(bottomPadding + height);
-  };
+      setSnapPoint(insets.bottom + bottomPadding + height);
+    },
+    [insets, bottomPadding]
+  );
 
   return useIOBottomSheetModalNew({
     component: <View onLayout={handleContentOnLayout}>{component}</View>,
