@@ -259,7 +259,7 @@ const DocumentWithSignature = (props: Props) => {
         <Left />
         <Body style={{ alignItems: "center" }}>
           <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+            {I18n.t("messagePDFPreview.title")}
           </H5>
         </Body>
         <Right>
