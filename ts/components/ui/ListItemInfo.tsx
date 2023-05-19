@@ -20,6 +20,7 @@ import { VSpacer } from "../core/spacer/Spacer";
 export type ListItemInfo = WithTestID<{
   label: string;
   value: string | React.ReactNode;
+  numberOfLines?: number;
   icon?: IOIcons;
   // Accepted components: ButtonLink, IconButton
   // Don't use any components other than these
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
 export const ListItemInfo = ({
   label,
   value,
+  numberOfLines = 2,
   icon,
   action,
   accessibilityLabel,
@@ -49,7 +51,7 @@ export const ListItemInfo = ({
   const theme = useIOTheme();
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
-  const LegacyListItemNav = () => (
+  const LegacyListItemInfo = () => (
     <View
       style={IOListItemStyles.listItem}
       testID={testID}
@@ -76,7 +78,7 @@ export const ListItemInfo = ({
           {typeof value === "string" ? (
             <Text
               style={[styles.textValue, { color: IOColors.bluegreyDark }]}
-              numberOfLines={2}
+              numberOfLines={numberOfLines}
             >
               {value}
             </Text>
@@ -94,7 +96,7 @@ export const ListItemInfo = ({
   );
   /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemNav = () => (
+  const NewListItemInfo = () => (
     <View
       style={IOListItemStyles.listItem}
       testID={testID}
@@ -116,7 +118,10 @@ export const ListItemInfo = ({
             {label}
           </LabelSmall>
           <VSpacer size={4} />
-          <NewH6 color={theme["textBody-default"]} numberOfLines={2}>
+          <NewH6
+            color={theme["textBody-default"]}
+            numberOfLines={numberOfLines}
+          >
             {value}
           </NewH6>
         </View>
@@ -129,9 +134,9 @@ export const ListItemInfo = ({
     </View>
   );
 
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
+  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemInfo /> here,
   without the following condition */
-  return isDesignSystemEnabled ? <NewListItemNav /> : <LegacyListItemNav />;
+  return isDesignSystemEnabled ? <NewListItemInfo /> : <LegacyListItemInfo />;
 };
 
 export default ListItemInfo;
