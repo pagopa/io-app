@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { createStore } from "redux";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
-import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../store/actions/wallet/wallets";
