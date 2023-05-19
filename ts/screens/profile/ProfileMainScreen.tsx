@@ -173,6 +173,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           value={value}
           onPress={onPress}
           accessibilityLabel={value}
+          numberOfLines={5}
         />
         <Divider />
       </>

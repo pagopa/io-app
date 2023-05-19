@@ -157,6 +157,14 @@ export const DSListItems = () => (
               accessibilityLabel="Empty just for testing purposes"
               icon="creditCard"
             />
+            <ListItemInfoCopy
+              label={"Indirizzo"}
+              value={`P.za Colonna, 370\n00186 Roma (RM)`}
+              onPress={() => {
+                alert("Value copied");
+              }}
+              accessibilityLabel="Empty just for testing purposes"
+            />
           </View>
         </DSComponentViewerBox>
         <H2

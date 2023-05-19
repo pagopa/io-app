@@ -36,6 +36,7 @@ import { VSpacer } from "../core/spacer/Spacer";
 export type ListItemInfoCopy = WithTestID<{
   label: string;
   value: string | React.ReactNode;
+  numberOfLines?: number;
   onPress: (event: GestureResponderEvent) => void;
   icon?: IOIcons;
   // Accessibility
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
 export const ListItemInfoCopy = ({
   label,
   value,
+  numberOfLines = 2,
   onPress,
   icon,
   accessibilityLabel,
@@ -143,7 +145,7 @@ export const ListItemInfoCopy = ({
             {typeof value === "string" ? (
               <Text
                 style={[styles.textValue, { color: IOColors.blue }]}
-                numberOfLines={2}
+                numberOfLines={numberOfLines}
               >
                 {value}
               </Text>
@@ -196,7 +198,10 @@ export const ListItemInfoCopy = ({
             <VSpacer size={4} />
             {/* Let developer using a custom component (e.g: skeleton) */}
             {typeof value === "string" ? (
-              <NewH6 color={theme["interactiveElem-default"]} numberOfLines={2}>
+              <NewH6
+                color={theme["interactiveElem-default"]}
+                numberOfLines={numberOfLines}
+              >
                 {value}
               </NewH6>
             ) : (
