@@ -161,6 +161,7 @@ const FciDocumentsScreen = () => {
       onPageChanged={(page, _) => {
         setCurrentPage(page);
       }}
+      enablePaging
       style={styles.pdf}
     />
   );
