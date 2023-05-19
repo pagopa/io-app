@@ -19,7 +19,7 @@ import {
   idpayTimelinePageGet
 } from "./actions";
 
-type PaginatedTimelineDTO = Record<number, TimelineDTO>;
+export type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
