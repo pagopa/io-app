@@ -97,8 +97,8 @@ export const trackFciUxSuccess = (
     doc_signed_count,
     signed_count,
     optional_signed_count,
-    event_type: FciUxEvent.UX,
-    event_category: FciUxEventCategory.SCREEN_VIEW
+    event_type: FciUxEventType.SCREEN_VIEW,
+    event_category: FciUxEventCategory.UX
   });
 
 export const trackFciStartSignature = () =>
