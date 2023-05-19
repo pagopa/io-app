@@ -25,6 +25,7 @@ import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/l
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
+import { mixpanelTrack } from "../../mixpanel";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -144,7 +145,15 @@ const CieWebView = (props: Props) => {
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
-  const handleOnError = React.useCallback(() => {
+  const handleOnError = React.useCallback((e: Error | WebViewErrorEvent) => {
+    if (e instanceof Error) {
+      void mixpanelTrack("SPID_ERROR", {
+        idp: "cie",
+        code: e.message,
+        description: e.message,
+        domain: e.message
+      });
+    }
     setInternalState(state => generateErrorState(state));
   }, []);
 
@@ -195,7 +204,7 @@ const CieWebView = (props: Props) => {
       // we are presented with an error page titled "ERROR".
       eventTitle === "errore"
     ) {
-      handleOnError();
+      handleOnError(new Error(eventTitle));
     }
     // inject JS on every page load end
     if (injectJs && webView.current) {
@@ -224,15 +233,15 @@ const CieWebView = (props: Props) => {
             mixpanelEnabled,
             dispatch
           ),
-        E.toError
+        e => T.of(handleOnError(E.toError(e)))
       ),
       TE.fold(
-        _ => T.of(handleOnError()),
+        e => T.of(handleOnError(E.toError(e))),
         url =>
           pipe(
             url,
             E.fold(
-              _ => T.of(handleOnError()),
+              e => T.of(handleOnError(e)),
               url =>
                 T.of(
                   setRequestInfo({
