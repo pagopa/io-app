@@ -17,7 +17,7 @@ import { fciEndRequest, fciStartRequest } from "../../store/actions";
 import { trackFciUxSuccess } from "../../analytics";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { getClausesCount } from "../../utils/signatureFields";
+import { getClausesCountByTypes } from "../../utils/signatureFields";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
@@ -76,11 +76,11 @@ const FciThankyouScreen = () => {
     _ => {
       trackFciUxSuccess(
         documentSignatures.length,
-        getClausesCount(documentSignatures, [
+        getClausesCountByTypes(documentSignatures, [
           ClauseTypeEnum.REQUIRED,
           ClauseTypeEnum.UNFAIR
         ]),
-        getClausesCount(documentSignatures, [ClauseTypeEnum.OPTIONAL])
+        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL])
       );
       return <SuccessComponent />;
     },

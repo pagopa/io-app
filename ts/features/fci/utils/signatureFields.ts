@@ -123,7 +123,7 @@ export const orderSignatureFields = (
  * @param documentsToSign the list of documents to sign
  * @returns the number of OPTIONAL clauses
  */
-export const getClausesCount = (
+export const getClausesCountByTypes = (
   documentsToSign: ReadonlyArray<DocumentToSign>,
   clausesType: ReadonlyArray<string>
 ): number =>
