@@ -178,7 +178,7 @@ export const useIOBottomSheetModalNew = ({
 };
 
 const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
-const DEFAULT_BOTTOM_PADDING = 300;
+const DEFAULT_BOTTOM_PADDING = 24;
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
  * @param bottomSheetOptions
