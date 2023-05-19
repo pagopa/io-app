@@ -182,10 +182,16 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
   );
 
   const handlePrivacyLinkPress = () =>
-    navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-      screen: ROUTES.SERVICE_DETAIL,
-      params: { serviceId: "placeholder" as NonEmptyString } // TODO service id
-    });
+    pipe(
+      NonEmptyString.decode(beneficiaryDetails.serviceId),
+      O.fromEither,
+      O.map(serviceId =>
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: ROUTES.SERVICE_DETAIL,
+          params: { serviceId }
+        })
+      )
+    );
 
   const handleUnsubscribePress = () =>
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
@@ -334,7 +340,7 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
 };
 
 const ScreenSkeleton = () => (
-  <>
+  <ContentWrapper>
     <View style={styles.infoBox}>
       <Placeholder.Box animate="fade" height={24} width={"40%"} radius={4} />
       <VSpacer size={16} />
@@ -376,7 +382,7 @@ const ScreenSkeleton = () => (
         ))}
       </View>
     ))}
-  </>
+  </ContentWrapper>
 );
 
 const styles = StyleSheet.create({
