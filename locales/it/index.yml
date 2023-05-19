@@ -3409,6 +3409,8 @@ idpay:
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
+    discountDetails:
+      authorizeButton: Autorizza un pagamento
     beneficiaryDetails:
       infobox:
         title: Cosa ti permette di fare?
