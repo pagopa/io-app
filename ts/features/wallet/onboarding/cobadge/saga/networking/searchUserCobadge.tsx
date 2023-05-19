@@ -24,8 +24,7 @@ const withoutTokenSuffix = "WITHOUT_TOKEN";
 
 /**
  * This method contains the generic networking logic used to request a user's cobadge
- * { and privative cards. The request for privative cards also requires the pancode ** DEPRECATED **}
- * @param cobadgeQuery  the input data to search the {privative} / cobadge
+ * @param cobadgeQuery  the input data to search the cobadge
  * @param getCobadgePans the http client for /cobadge/pans
  * @param searchCobadgePans the http client for /cobadge/search
  * @param sessionManager
