@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -29,6 +29,12 @@ import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import { Icon } from "../../../components/core/icons/Icon";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
+import ButtonLink from "../../../components/ui/ButtonLink";
+import IconButton from "../../../components/ui/IconButton";
+
+const onButtonPress = () => {
+  Alert.alert("Alert", "Action triggered");
+};
 
 export const DSListItems = () => (
   <IOThemeContext.Consumer>
@@ -337,10 +343,37 @@ const renderListItemInfo = () => (
           value={"Value"}
           accessibilityLabel="Empty just for testing purposes"
         />
+
         <ListItemInfo
           label="Label"
           value="A looong looooong looooooooong looooooooooong title"
           accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemInfo
+          icon="creditCard"
+          label="Label"
+          value="A looong looooong looooooooong looooooooooong title"
+          accessibilityLabel="Empty just for testing purposes"
+          action={
+            <ButtonLink
+              label="Modifica"
+              onPress={onButtonPress}
+              accessibilityLabel={""}
+            />
+          }
+        />
+        <ListItemInfo
+          icon="psp"
+          label="Label"
+          value="A looong looooong looooooooong looooooooooong title"
+          accessibilityLabel="Empty just for testing purposes"
+          action={
+            <IconButton
+              icon="info"
+              onPress={onButtonPress}
+              accessibilityLabel={""}
+            />
+          }
         />
 
         <ListItemInfo

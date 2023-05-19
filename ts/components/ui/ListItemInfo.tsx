@@ -21,6 +21,9 @@ export type ListItemInfo = WithTestID<{
   label: string;
   value: string | React.ReactNode;
   icon?: IOIcons;
+  // Accepted components: ButtonLink, IconButton
+  // Don't use any components other than these
+  action?: React.ReactNode;
   // Accessibility
   accessibilityLabel: string;
 }>;
@@ -37,6 +40,7 @@ export const ListItemInfo = ({
   label,
   value,
   icon,
+  action,
   accessibilityLabel,
   testID
 }: ListItemInfo) => {
@@ -80,13 +84,11 @@ export const ListItemInfo = ({
             { value }
           )}
         </View>
-        <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-          <Icon
-            name="copy"
-            color="blue"
-            size={IOListItemVisualParams.chevronSize}
-          />
-        </View>
+        {action && (
+          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+            {action}
+          </View>
+        )}
       </View>
     </View>
   );
@@ -114,17 +116,15 @@ export const ListItemInfo = ({
             {label}
           </LabelSmall>
           <VSpacer size={4} />
-          <NewH6 color={theme["interactiveElem-default"]} numberOfLines={2}>
+          <NewH6 color={theme["textBody-default"]} numberOfLines={2}>
             {value}
           </NewH6>
         </View>
-        <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-          <Icon
-            name="copy"
-            color={theme["interactiveElem-default"]}
-            size={IOListItemVisualParams.chevronSize}
-          />
-        </View>
+        {action && (
+          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+            {action}
+          </View>
+        )}
       </View>
     </View>
   );
