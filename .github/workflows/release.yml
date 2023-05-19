@@ -13,6 +13,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-11
@@ -52,6 +54,8 @@ jobs:
         shell: bash
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
