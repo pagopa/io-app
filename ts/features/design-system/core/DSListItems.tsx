@@ -382,12 +382,6 @@ const renderListItemInfo = () => (
           icon="gallery"
           accessibilityLabel="Empty just for testing purposes"
         />
-        <ListItemInfo
-          label="Label"
-          value={"Value"}
-          icon="gallery"
-          accessibilityLabel="Empty just for testing purposes"
-        />
       </View>
     </DSComponentViewerBox>
   </>
