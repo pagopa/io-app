@@ -33,6 +33,7 @@ import {
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
+import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -166,6 +167,7 @@ const ZendeskSupportHelpCenter = () => {
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
+  const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
@@ -230,7 +232,9 @@ const ZendeskSupportHelpCenter = () => {
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
             assistanceForCard={assistanceForCard}
-            assistanceForFci={assistanceForFci}
+            assistanceForFci={
+              assistanceForFci || signatureRequestId !== undefined
+            }
           />
           <VSpacer size={16} />
         </ScrollView>

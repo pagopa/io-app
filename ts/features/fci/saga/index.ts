@@ -16,6 +16,7 @@ import {
 } from "../../../store/actions/identification";
 import I18n from "../../../i18n";
 import {
+  fciSignatureRequestIdSelector,
   fciSignatureRequestSelector,
   FciSignatureRequestState
 } from "../store/reducers/fciSignatureRequest";
@@ -44,6 +45,13 @@ import {
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
+import {
+  addTicketCustomField,
+  resetCustomFields,
+  zendeskCategoryId,
+  zendeskFCICategory,
+  zendeskFciId
+} from "../../../utils/supportAssistance";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -159,6 +167,11 @@ function* watchFciQtspClausesSaga(): SagaIterator {
  * Handle the FCI start requests saga
  */
 function* watchFciStartSaga(): SagaIterator {
+  const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
+  resetCustomFields();
+  addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+  addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
+
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
@@ -274,4 +287,5 @@ function* watchFciEndSaga(): SagaIterator {
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)
   );
+  resetCustomFields();
 }
