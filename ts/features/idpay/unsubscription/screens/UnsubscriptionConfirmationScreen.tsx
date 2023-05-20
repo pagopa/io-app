@@ -87,7 +87,8 @@ const UnsubscriptionConfirmationScreen = () => {
         block: true,
         bordered: true,
         title: I18n.t("idpay.unsubscription.button.continue"),
-        danger: true
+        danger: true,
+        labelColor: IOColors.red
       }}
       rightButton={{
         onPress: () => {
