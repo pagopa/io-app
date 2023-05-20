@@ -148,14 +148,27 @@ const CieWebView = (props: Props) => {
   const handleOnError = React.useCallback(
     (e: Error | LoginUtilsError | WebViewErrorEvent) => {
       const isLoginUtilError = (e as LoginUtilsError).userInfo !== undefined;
+      const error = e as Error;
+      const webViewError = e as WebViewErrorEvent;
+
       // We've already tracked the error before
-      if (e instanceof Error && !isLoginUtilError) {
-        void mixpanelTrack("SPID_ERROR", {
-          idp: "cie",
-          code: e.message,
-          description: e.message,
-          domain: e.message
-        });
+      if (!isLoginUtilError) {
+        if (error.message !== undefined) {
+          void mixpanelTrack("SPID_ERROR", {
+            idp: "cie",
+            code: error.message,
+            description: error.message,
+            domain: error.message
+          });
+        } else if (webViewError.nativeEvent) {
+          const { code, description, domain } = webViewError.nativeEvent;
+          void mixpanelTrack("SPID_ERROR", {
+            idp: "cie",
+            code,
+            description,
+            domain
+          });
+        }
       }
       setInternalState(state => generateErrorState(state));
     },
