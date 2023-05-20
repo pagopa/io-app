@@ -13,7 +13,6 @@ import pako from "pako";
 import { last } from "fp-ts/lib/Array";
 import { handleRegenerateKey } from "..";
 import { AppDispatch } from "../../../App";
-import { mixpanelTrack } from "../../../mixpanel";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { toBase64EncodedThumbprint } from "./crypto";
 
@@ -96,6 +95,9 @@ export const verifyLollipopSamlRequestTask = (
     );
   });
 
+export const isLoginUtilsError = (error: unknown): error is LoginUtilsError =>
+  (error as LoginUtilsError) !== undefined;
+
 export const regenerateKeyGetRedirectsAndVerifySaml = (
   loginUri: string,
   keyTag: string,
@@ -127,15 +129,8 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },
                 error => {
-                  const e = error as LoginUtilsError;
-                  if (e.userInfo) {
-                    void mixpanelTrack("SPID_ERROR", {
-                      idp: "cie",
-                      code: e.userInfo.StatusCode,
-                      description: e.userInfo.Error,
-                      domain: e.userInfo.URL
-                    });
-                    return e;
+                  if (isLoginUtilsError(error)) {
+                    return error;
                   }
                   return E.toError(error);
                 }

@@ -1,4 +1,6 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import { WebViewErrorEvent } from "react-native-webview/lib/WebViewTypes";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
@@ -6,6 +8,7 @@ import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { isLoginUtilsError } from "../features/lollipop/utils/login";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -154,6 +157,42 @@ export function trackLollipopIdpLoginFailure(reason: string) {
 }
 
 // End of lollipop events
+
+// SPID Login
+export function trackSpidLoginError(
+  idpName: string | undefined,
+  e: Error | LoginUtilsError | WebViewErrorEvent
+) {
+  const eventName = "SPID_ERROR";
+  if (isLoginUtilsError(e)) {
+    void mixpanelTrack(eventName, {
+      idp: idpName,
+      code: e.userInfo.StatusCode,
+      description: e.userInfo.Error,
+      domain: e.userInfo.URL
+    });
+  } else {
+    const error = e as Error;
+    const webViewError = e as WebViewErrorEvent;
+    if (webViewError.nativeEvent) {
+      const { code, description, domain } = webViewError.nativeEvent;
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code,
+        description,
+        domain
+      });
+    } else if (error.message !== undefined) {
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code: error.message,
+        description: error.message,
+        domain: error.message
+      });
+    }
+  }
+}
+// End of SPID Login
 
 // Keychain
 // workaround to send keychainError for Pixel devices

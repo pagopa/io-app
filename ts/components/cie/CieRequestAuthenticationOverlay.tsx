@@ -25,7 +25,7 @@ import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/l
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
-import { mixpanelTrack } from "../../mixpanel";
+import { trackSpidLoginError } from "../../utils/analytics";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -147,29 +147,7 @@ const CieWebView = (props: Props) => {
 
   const handleOnError = React.useCallback(
     (e: Error | LoginUtilsError | WebViewErrorEvent) => {
-      const isLoginUtilError = (e as LoginUtilsError).userInfo !== undefined;
-      const error = e as Error;
-      const webViewError = e as WebViewErrorEvent;
-
-      // We've already tracked the error before
-      if (!isLoginUtilError) {
-        if (error.message !== undefined) {
-          void mixpanelTrack("SPID_ERROR", {
-            idp: "cie",
-            code: error.message,
-            description: error.message,
-            domain: error.message
-          });
-        } else if (webViewError.nativeEvent) {
-          const { code, description, domain } = webViewError.nativeEvent;
-          void mixpanelTrack("SPID_ERROR", {
-            idp: "cie",
-            code,
-            description,
-            domain
-          });
-        }
-      }
+      trackSpidLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
     []
