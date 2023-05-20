@@ -41,7 +41,7 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
     );
     expect(E.isLeft(result)).toBeTruthy();
     if (E.isLeft(result)) {
-      const e = JSON.parse(result.left.message) as LoginUtilsError;
+      const e = result.left as LoginUtilsError;
       expect(e.code).toEqual("409");
     }
   });

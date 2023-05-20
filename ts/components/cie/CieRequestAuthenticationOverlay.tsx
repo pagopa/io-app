@@ -10,9 +10,9 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -145,17 +145,22 @@ const CieWebView = (props: Props) => {
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
-  const handleOnError = React.useCallback((e: Error | WebViewErrorEvent) => {
-    if (e instanceof Error) {
-      void mixpanelTrack("SPID_ERROR", {
-        idp: "cie",
-        code: e.message,
-        description: e.message,
-        domain: e.message
-      });
-    }
-    setInternalState(state => generateErrorState(state));
-  }, []);
+  const handleOnError = React.useCallback(
+    (e: Error | LoginUtilsError | WebViewErrorEvent) => {
+      const isLoginUtilError = (e as LoginUtilsError).userInfo !== undefined;
+      // We've already tracked the error before
+      if (e instanceof Error && !isLoginUtilError) {
+        void mixpanelTrack("SPID_ERROR", {
+          idp: "cie",
+          code: e.message,
+          description: e.message,
+          domain: e.message
+        });
+      }
+      setInternalState(state => generateErrorState(state));
+    },
+    []
+  );
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
@@ -225,32 +230,22 @@ const CieWebView = (props: Props) => {
 
   if (O.isSome(maybeKeyTag) && requestInfo.requestState === "LOADING") {
     void pipe(
-      TE.tryCatch(
-        () =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            maybeKeyTag.value,
-            mixpanelEnabled,
-            dispatch
-          ),
-        e => T.of(handleOnError(E.toError(e)))
-      ),
+      () =>
+        regenerateKeyGetRedirectsAndVerifySaml(
+          loginUri,
+          maybeKeyTag.value,
+          mixpanelEnabled,
+          dispatch
+        ),
       TE.fold(
-        e => T.of(handleOnError(E.toError(e))),
+        e => T.of(handleOnError(e)),
         url =>
-          pipe(
-            url,
-            E.fold(
-              e => T.of(handleOnError(e)),
-              url =>
-                T.of(
-                  setRequestInfo({
-                    requestState: "AUTHORIZED",
-                    nativeAttempts: requestInfo.nativeAttempts,
-                    url
-                  })
-                )
-            )
+          T.of(
+            setRequestInfo({
+              requestState: "AUTHORIZED",
+              nativeAttempts: requestInfo.nativeAttempts,
+              url
+            })
           )
       )
     )();

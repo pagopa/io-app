@@ -128,16 +128,19 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                 },
                 error => {
                   const e = error as LoginUtilsError;
-                  void mixpanelTrack("SPID_ERROR", {
-                    idp: "cie",
-                    code: e.userInfo.StatusCode,
-                    description: e.userInfo.Error,
-                    domain: e.userInfo.URL
-                  });
-                  return new Error(JSON.stringify(e));
+                  if (e.userInfo) {
+                    void mixpanelTrack("SPID_ERROR", {
+                      idp: "cie",
+                      code: e.userInfo.StatusCode,
+                      description: e.userInfo.Error,
+                      domain: e.userInfo.URL
+                    });
+                    return e;
+                  }
+                  return E.toError(error);
                 }
               ),
-              TE.chain(redirects =>
+              TE.chainW(redirects =>
                 pipe(
                   redirects,
                   last,
