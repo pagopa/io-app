@@ -95,7 +95,6 @@ export const DesignSystem = (props: Props) => {
     >
       <View
         style={{
-          flex: 1,
           backgroundColor: IOColors[theme["appBackground-primary"]]
         }}
       >
