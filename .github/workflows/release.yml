@@ -13,6 +13,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-jdk-11
@@ -32,7 +34,7 @@ jobs:
           ./scripts/android-release.sh ./android/app
           yarn bundle:android-release
           cd android && bundle exec fastlane alpha
-          cd android && bundle exec fastlane promote_internal_to_alpha
+          bundle exec fastlane promote_internal_to_alpha
         shell: bash
         env:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
@@ -52,6 +54,8 @@ jobs:
         shell: bash
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: setup-ruby
