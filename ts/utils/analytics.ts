@@ -1,4 +1,3 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import {
   WebViewErrorEvent,
@@ -10,9 +9,8 @@ import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
 import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import { isLoginUtilsError } from "../features/lollipop/utils/login";
+import { ServicesDetailLoadTrack } from "../sagas/startup/loadServiceDetailRequestHandler";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -24,12 +22,10 @@ export const noAnalyticsRoutes = new Set<string>(
   )
 );
 
-// Premium events
+// Notifications related events
 
-export function trackMessageNotificationTap(messageId: NonEmptyString) {
-  void mixpanelTrack("NOTIFICATIONS_MESSAGE_TAP", {
-    messageId
-  });
+export function trackNotificationInstallationTokenNotChanged() {
+  void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
 }
 
 export function trackNotificationsOptInPreviewStatus(
@@ -72,74 +68,21 @@ export function trackNotificationsPreferencesReminderStatus(enabled: boolean) {
   });
 }
 
-export function trackThirdPartyMessageAttachmentCount(attachmentCount: number) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT", {
-    attachmentCount
-  });
-}
+// End of Notifications related events
 
-export function trackThirdPartyMessageAttachmentUnavailable(
-  messageId: UIMessageId,
-  serviceId: ServiceId | undefined
+// Services related events
+
+export function trackServiceDetailLoadingStatistics(
+  trackingStats: ServicesDetailLoadTrack
 ) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE", {
-    messageId,
-    serviceId: serviceId ?? ""
+  void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
+    ...trackingStats,
+    // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
+    servicesId: undefined
   });
 }
 
-export function trackThirdPartyMessageAttachmentDownloadFailed(
-  messageId: UIMessageId,
-  serviceId: ServiceId | undefined
-) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
-}
-
-export function trackThirdPartyMessageAttachmentBadFormat(
-  messageId: UIMessageId,
-  serviceId: ServiceId | undefined
-) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
-}
-
-export function trackThirdPartyMessageAttachmentCorruptedFile(
-  messageId: UIMessageId,
-  serviceId: ServiceId | undefined
-) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
-}
-
-export function trackThirdPartyMessageAttachmentPreviewSuccess() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS");
-}
-
-export function trackThirdPartyMessageAttachmentShowPreview() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
-}
-
-export function trackThirdPartyMessageAttachmentDoNotShow() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
-}
-
-type ThirdPartyMessageAttachmentUserAction = "download" | "open" | "share";
-export function trackThirdPartyMessageAttachmentUserAction(
-  userAction: ThirdPartyMessageAttachmentUserAction
-) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION", {
-    userAction
-  });
-}
-
-// End of premium events
+// End of Services related events
 
 // Lollipop events
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
