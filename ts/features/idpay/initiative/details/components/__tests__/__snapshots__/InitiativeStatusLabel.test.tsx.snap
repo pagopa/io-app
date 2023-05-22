@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test InitiativeStatusLabel component should render a InitiativeStatusLabel component with props correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderRadius": 50,
+          "justifyContent": "center",
+          "paddingHorizontal": 20,
+          "paddingVertical": 2.5,
+        },
+        false,
+        Object {
+          "backgroundColor": "#0073E6",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "alignSelf": "center",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+          Object {
+            "fontSize": 11,
+            "lineHeight": 16,
+          },
+          false,
+          Object {
+            "color": "#FFFFFF",
+          },
+        ]
+      }
+    >
+      Attiva
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "width": 8,
+      }
+    }
+  />
+  <Text
+    color="bluegreyDark"
+    defaultColor="blue"
+    defaultWeight="Bold"
+    font="TitilliumWeb"
+    fontSize="small"
+    fontStyle={
+      Object {
+        "fontSize": 12,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 12,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+    Fino al 02/10/23
+  </Text>
+</View>
+`;
