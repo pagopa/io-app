@@ -10,7 +10,6 @@ import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
 import ROUTES from "../../../navigation/routes";
 import {
   TransactionSummary,
@@ -35,6 +34,11 @@ import { MessageAttachments } from "../../messages/components/MessageAttachments
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { getRptIdFromPayment } from "../utils/rptId";
+import {
+  trackPNPaymentInfoError,
+  trackPNPaymentInfoPaid,
+  trackPNPaymentInfoPayable
+} from "../analytics";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
@@ -126,16 +130,11 @@ export const PnMessageDetails = (props: Props) => {
     }
 
     if (isPaid) {
-      void mixpanelTrack("PN_PAYMENTINFO_PAID");
+      trackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
-      void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
-        paymentStatus: pipe(
-          paymentVerificationError,
-          O.getOrElseW(() => undefined)
-        )
-      });
+      trackPNPaymentInfoError(paymentVerificationError);
     } else {
-      void mixpanelTrack("PN_PAYMENTINFO_PAYABLE");
+      trackPNPaymentInfoPayable();
     }
     setShouldTrackMixpanel(false);
   }, [

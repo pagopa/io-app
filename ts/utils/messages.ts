@@ -23,11 +23,11 @@ import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { localeFallback } from "../i18n";
 import { Locales } from "../../locales/locales";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { mixpanelTrack } from "../mixpanel";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import ROUTES from "../navigation/routes";
+import { trackMessageCTAFrontMatterDecodingError } from "../features/messages/analytics";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -248,9 +248,7 @@ const extractCTA = (
       try {
         return FM<MessageCTA>(text).attributes;
       } catch (e) {
-        void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
-          serviceId
-        });
+        trackMessageCTAFrontMatterDecodingError(serviceId);
         return null;
       }
     }),

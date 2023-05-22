@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { mixpanelTrack } from "../../../mixpanel";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -36,6 +35,11 @@ import { H4 } from "../../../components/core/typography/H4";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import ROUTES from "../../../navigation/routes";
+import {
+  trackPNDisclaimerAccepted,
+  trackPNDisclaimerRejected,
+  trackPNDisclaimerShowSuccess
+} from "../../../features/pn/analytics";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -70,7 +74,7 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
   );
 
   const handleCancelPress = () => {
-    void mixpanelTrack("PN_DISCLAIMER_REJECTED");
+    trackPNDisclaimerRejected();
     props.onDismiss();
   };
 
@@ -87,13 +91,8 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
           O.fromEither,
           O.chainNullableK(category => category.original_receipt_date),
           O.map(originalReceiptDate => {
-            const notificationTimestamp = originalReceiptDate.toISOString();
-
-            void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
-              eventTimestamp: new Date().toISOString(),
-              messageTimestamp: message.createdAt.toISOString(),
-              notificationTimestamp
-            });
+            const messageCreatedAt = message.createdAt;
+            trackPNDisclaimerAccepted(messageCreatedAt, originalReceiptDate);
           })
         );
         props.navigationAction(message);
@@ -228,7 +227,7 @@ export const useMessageOpening = () => {
 
   const present = (message: UIMessage) => {
     if (message.hasPrecondition) {
-      void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
+      trackPNDisclaimerShowSuccess();
       dispatch(getMessagePrecondition.request(message.id));
       modal.present();
       return;
