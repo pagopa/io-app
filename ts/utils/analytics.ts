@@ -1,6 +1,10 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
-import { WebViewErrorEvent } from "react-native-webview/lib/WebViewTypes";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
@@ -161,7 +165,7 @@ export function trackLollipopIdpLoginFailure(reason: string) {
 // SPID Login
 export function trackSpidLoginError(
   idpName: string | undefined,
-  e: Error | LoginUtilsError | WebViewErrorEvent
+  e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
 ) {
   const eventName = "SPID_ERROR";
   if (isLoginUtilsError(e)) {
@@ -174,7 +178,16 @@ export function trackSpidLoginError(
   } else {
     const error = e as Error;
     const webViewError = e as WebViewErrorEvent;
-    if (webViewError.nativeEvent) {
+    const webViewHttpError = e as WebViewHttpErrorEvent;
+    if (webViewHttpError.nativeEvent) {
+      const { description, statusCode, url } = webViewHttpError.nativeEvent;
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code: statusCode,
+        description,
+        domain: toUrlWithoutQueryParams(url)
+      });
+    } else if (webViewError.nativeEvent) {
       const { code, description, domain } = webViewError.nativeEvent;
       void mixpanelTrack(eventName, {
         idp: idpName,
@@ -203,4 +216,9 @@ export function trackKeychainGetFailure(reason: string | undefined) {
       reason
     });
   }
+}
+
+function toUrlWithoutQueryParams(url: string) {
+  const urlAsURL = URLParse(url);
+  return urlAsURL.origin + urlAsURL.pathname;
 }

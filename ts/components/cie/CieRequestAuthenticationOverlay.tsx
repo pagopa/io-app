@@ -4,6 +4,7 @@ import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
+  WebViewHttpErrorEvent,
   WebViewNavigation,
   WebViewNavigationEvent,
   WebViewSource
@@ -146,7 +147,9 @@ const CieWebView = (props: Props) => {
   const { onSuccess } = props;
 
   const handleOnError = React.useCallback(
-    (e: Error | LoginUtilsError | WebViewErrorEvent) => {
+    (
+      e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+    ) => {
       trackSpidLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
@@ -255,6 +258,7 @@ const CieWebView = (props: Props) => {
             injectedJavaScript={injectJs}
             onLoadEnd={handleOnLoadEnd}
             onError={handleOnError}
+            onHttpError={handleOnError}
             onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
             source={{ uri: requestInfo.url } as WebViewSource}
             key={internalState.key}

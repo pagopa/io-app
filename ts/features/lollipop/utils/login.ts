@@ -96,7 +96,7 @@ export const verifyLollipopSamlRequestTask = (
   });
 
 export const isLoginUtilsError = (error: unknown): error is LoginUtilsError =>
-  (error as LoginUtilsError) !== undefined;
+  (error as LoginUtilsError).userInfo !== undefined;
 
 export const regenerateKeyGetRedirectsAndVerifySaml = (
   loginUri: string,

@@ -7,6 +7,7 @@ import { Image, Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
+  WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
@@ -138,7 +139,9 @@ const IdpLoginScreen = (props: Props) => {
     [props.loggedOutWithIdpAuth]
   );
 
-  const handleLoadingError = (error: WebViewErrorEvent): void => {
+  const handleLoadingError = (
+    error: WebViewErrorEvent | WebViewHttpErrorEvent
+  ): void => {
     trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
     setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
   };
@@ -349,6 +352,7 @@ const IdpLoginScreen = (props: Props) => {
             originWhitelist={originSchemasWhiteList}
             source={webviewSource}
             onError={handleLoadingError}
+            onHttpError={handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}
             onShouldStartLoadWithRequest={handleShouldStartLoading}
