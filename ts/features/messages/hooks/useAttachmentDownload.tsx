@@ -6,7 +6,6 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import i18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { ContentTypeValues } from "../../../types/contentType";
 import { isAndroid } from "../../../utils/platform";
@@ -17,8 +16,12 @@ import {
 } from "../../../store/actions/messages";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
-import { trackThirdPartyMessageAttachmentShowPreview } from "../../../utils/analytics";
 import { isTestEnv } from "../../../utils/environment";
+import {
+  trackPNAttachmentDownloadFailure,
+  trackPNAttachmentOpen
+} from "../../pn/analytics";
+import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 
 const taskCopyToMediaStore = (
   { displayName, contentType }: UIAttachment,
@@ -104,7 +107,7 @@ export const useAttachmentDownload = (
     const download = pot.toUndefined(downloadPot);
 
     if (pot.isError(downloadPot)) {
-      void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
+      trackPNAttachmentDownloadFailure();
       showToast(i18n.t("messageDetails.attachments.failing.details"));
     } else if (download) {
       const { path, attachment } = download;
@@ -172,7 +175,7 @@ export const useAttachmentDownload = (
 
   const onAttachmentSelect = () => {
     if (!isGenericAttachment) {
-      void mixpanelTrack("PN_ATTACHMENT_OPEN");
+      trackPNAttachmentOpen();
     }
     void downloadAttachmentIfNeeded();
   };

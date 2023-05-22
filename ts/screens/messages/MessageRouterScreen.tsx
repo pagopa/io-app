@@ -42,8 +42,8 @@ import { serviceByIdSelector } from "../../store/reducers/entities/services/serv
 import { GlobalState } from "../../store/reducers/types";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../utils/pot";
-import { mixpanelTrack } from "../../mixpanel";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/entities/messages/allPaginated";
+import { trackPNPushOpened } from "../../features/pn/analytics";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -171,7 +171,7 @@ const MessageRouterScreen = ({
         !fromNotification || !isSynchronizingInbox;
 
       if (isPNDetailsFromNotification) {
-        void mixpanelTrack("PN_PUSH_OPENED");
+        trackPNPushOpened();
         navigation.navigate(ROUTES.MAIN, {
           screen: ROUTES.MESSAGES_HOME
         });
