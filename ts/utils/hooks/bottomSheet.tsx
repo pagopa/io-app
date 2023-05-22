@@ -198,7 +198,6 @@ export const useIOBottomSheetAutoresizableModal = (
     DEFAULT_AUTORESIZABLE_SNAP_POINT
   );
   const insets = useSafeAreaInsets();
-
   const handleContentOnLayout = React.useCallback(
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
@@ -209,7 +208,14 @@ export const useIOBottomSheetAutoresizableModal = (
   );
 
   return useIOBottomSheetModalNew({
-    component: <View onLayout={handleContentOnLayout}>{component}</View>,
+    component: (
+      <View
+        style={{ paddingBottom: insets.bottom + bottomPadding }}
+        onLayout={handleContentOnLayout}
+      >
+        {component}
+      </View>
+    ),
     title,
     snapPoint: [snapPoint],
     footer,

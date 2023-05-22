@@ -27,6 +27,7 @@ export const DSBottomSheet = () => {
       />
       <ListItemComponent
         title="Dismiss"
+        isLastItem
         subTitle="This is a item that will close the bottom sheet"
         onPress={handlePressDismiss}
       />
