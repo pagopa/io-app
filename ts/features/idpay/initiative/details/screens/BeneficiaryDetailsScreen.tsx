@@ -168,24 +168,21 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
     O.getOrElse(() => "-")
   );
 
-  const amountString = pipe(
+  const availableAmountString = pipe(
     details.amount,
     O.fromNullable,
     O.map(formatNumberCurrency),
     O.getOrElse(() => "-")
   );
 
-  const toBeRefundedString = pipe(
-    sequenceS(O.Monad)({
-      accrued: pipe(details.accrued, O.fromNullable),
-      refunded: pipe(details.refunded, O.fromNullable)
-    }),
-    O.map(({ accrued, refunded }) => accrued - refunded),
+  const accuredAmountString = pipe(
+    details.accrued,
+    O.fromNullable,
     O.map(formatNumberCurrency),
     O.getOrElse(() => "-")
   );
 
-  const refundedString = pipe(
+  const refundedAmountString = pipe(
     details.refunded,
     O.fromNullable,
     O.map(formatNumberCurrency),
@@ -239,15 +236,15 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsContentProps) => {
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: amountString
+            value: availableAmountString
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: toBeRefundedString
+            value: accuredAmountString
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: refundedString
+            value: refundedAmountString
           }
         ]}
       />
