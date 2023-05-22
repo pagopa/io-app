@@ -167,7 +167,7 @@ const InitiativeSettingsComponent = (props: Props) => {
   );
 
   return (
-    <>
+    <View testID={"IDPayDetailsSettingsTestID"}>
       <H3>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
@@ -176,7 +176,7 @@ const InitiativeSettingsComponent = (props: Props) => {
       <VSpacer size={8} />
       {instrumentsSettingsButton}
       {ibanSettingsButton}
-    </>
+    </View>
   );
 };
 
