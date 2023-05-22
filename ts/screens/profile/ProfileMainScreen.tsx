@@ -182,7 +182,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
-      <ListItem style={styles.noRightPadding}>
+      <View style={{ paddingVertical: 8 }}>
         {isDanger ? (
           <ButtonSolid
             color="danger"
@@ -198,7 +198,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             accessibilityLabel={title}
           />
         )}
-      </ListItem>
+      </View>
     );
   }
 
@@ -471,6 +471,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               this.debugCopyListItem("Thumbprint", thumbprint, () =>
                 clipboardSetStringWithFeedback(thumbprint)
               )}
+
+            <VSpacer size={16} />
 
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
