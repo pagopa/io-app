@@ -14,10 +14,13 @@ import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
-import { mixpanelTrack } from "../../mixpanel";
 import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
-import { trackThirdPartyMessageAttachmentCount } from "../../utils/analytics";
 import { getError } from "../../utils/errors";
+import {
+  trackPNNotificationLoadError,
+  trackPNNotificationLoadSuccess
+} from "../../features/pn/analytics";
+import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
 
 function* getThirdPartyMessage(
   client: ReturnType<typeof BackendClient>,
@@ -63,17 +66,9 @@ function* trackSuccess(
 
     if (O.isSome(pnMessageOption)) {
       const pnMessage = pnMessageOption.value;
-      void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
-        notificationLastStatus:
-          pnMessage.notificationStatusHistory[
-            pnMessage.notificationStatusHistory.length - 1
-          ].status,
-        hasAttachments: (pnMessage.attachments?.length ?? 0) > 0
-      });
+      trackPNNotificationLoadSuccess(pnMessage);
     } else {
-      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
-        jsonDecodeFailed: true
-      });
+      trackPNNotificationLoadError();
     }
   } else {
     const attachments = messageFromApi.third_party_message.attachments;
@@ -86,14 +81,11 @@ function* trackFailure(
   action: ActionType<typeof loadThirdPartyMessage.failure>
 ) {
   const messageId = action.payload.id;
-  const errorCode = action.payload.error.message;
-
   const message = pot.toUndefined(yield* select(getMessageById, messageId));
 
   if (message?.category.tag === "PN") {
-    void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
-      errorCode
-    });
+    const errorCode = action.payload.error.message;
+    trackPNNotificationLoadError(errorCode);
   }
 }
 
