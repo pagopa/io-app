@@ -98,8 +98,17 @@ const BeneficiaryDetailsScreen = () => {
     )
   );
 
+  const headerTitle = pipe(
+    initiativeDetailsPot,
+    pot.toOption,
+    O.fold(
+      () => initiativeName,
+      details => details.initiativeName
+    )
+  );
+
   return (
-    <BaseScreenComponent goBack={true} headerTitle={initiativeName}>
+    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
       <ScrollView scrollIndicatorInsets={{ right: 1 }}>
         <ContentWrapper>
           {content}
