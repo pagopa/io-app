@@ -1,9 +1,15 @@
+import { identity, pipe } from "fp-ts/lib/function";
+import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { mixpanelTrack } from "../../../mixpanel";
 import { TransactionSummaryErrorContent } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { PnActivationState } from "../../pn/store/reducers/activation";
-import { PNMessage } from "../../pn/store/types/types";
+import {
+  NotificationStatusHistoryElement,
+  PNMessage
+} from "../../pn/store/types/types";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
@@ -54,24 +60,31 @@ export function trackPNNotificationLoadError(errorCode?: string) {
 }
 
 export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
-  const notificationStatusHistory = pnMessage.notificationStatusHistory;
-  const lastNotificationIndex = notificationStatusHistory.length - 1;
-  const lastNotification = notificationStatusHistory[lastNotificationIndex];
-  const lastNotificationStatus = lastNotification.status;
-  const messageAttachments = pnMessage.attachments;
-  const messageAttachmentLength = messageAttachments?.length ?? 0;
-  const messageHasAttachments = messageAttachmentLength > 0;
-  void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
-    notificationLastStatus: lastNotificationStatus,
-    hasAttachments: messageHasAttachments
-  });
+  pipe(
+    pnMessage.notificationStatusHistory as Array<NotificationStatusHistoryElement>,
+    A.last,
+    O.map(lastNotification => lastNotification.status),
+    O.fold(
+      () => undefined,
+      (status: string) =>
+        void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
+          notificationLastStatus: status,
+          hasAttachments: pipe(
+            pnMessage.attachments as Array<UIAttachment>,
+            O.fromNullable,
+            O.map(A.isNonEmpty),
+            O.getOrElse(() => false)
+          )
+        })
+    )
+  );
 }
 
 export function trackPNPaymentInfoError(
   paymentVerificationError: O.Some<TransactionSummaryErrorContent>
 ) {
   void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
-    paymentStatus: paymentVerificationError
+    paymentStatus: O.toUndefined(paymentVerificationError)
   });
 }
 

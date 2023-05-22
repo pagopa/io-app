@@ -107,7 +107,7 @@ function configurePushNotifications() {
       pipe(
         notification,
         NotificationPayload.decode,
-        E.mapLeft(errors => trackMessageNotificationParsingFailure(errors)),
+        E.mapLeft(trackMessageNotificationParsingFailure),
         O.fromEither,
         O.chain(payload =>
           pipe(
