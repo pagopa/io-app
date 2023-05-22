@@ -179,7 +179,7 @@ export function trackSpidLoginError(
     const error = e as Error;
     const webViewError = e as WebViewErrorEvent;
     const webViewHttpError = e as WebViewHttpErrorEvent;
-    if (webViewHttpError.nativeEvent) {
+    if (webViewHttpError.nativeEvent.statusCode) {
       const { description, statusCode, url } = webViewHttpError.nativeEvent;
       void mixpanelTrack(eventName, {
         idp: idpName,
