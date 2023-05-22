@@ -101,8 +101,18 @@ export const handleRegenerateKey = (
     )
   )();
 
-const taskRegenerateKey = (keyTag: string) =>
+export const taskRegenerateKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
   );
+
+export const getLollipopHeaders = (
+  publicKey: PublicKey,
+  hashAlgorithm: string
+) => ({
+  "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
+    "base64"
+  ),
+  "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm
+});

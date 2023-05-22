@@ -11,7 +11,7 @@ import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
 import { last } from "fp-ts/lib/Array";
-import { handleRegenerateKey } from "..";
+import { getLollipopHeaders, handleRegenerateKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { toBase64EncodedThumbprint } from "./crypto";
@@ -102,11 +102,11 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
   loginUri: string,
   keyTag: string,
   isMixpanelEnabled: boolean | null,
-  dipatch: AppDispatch
+  dispatch: AppDispatch
 ) =>
   pipe(
     TE.tryCatch(
-      () => handleRegenerateKey(keyTag, isMixpanelEnabled, dipatch),
+      () => handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch),
       E.toError
     ),
     TE.chain(publicKey =>
@@ -119,13 +119,10 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
             pipe(
               TE.tryCatch(
                 () => {
-                  const headers = {
-                    "x-pagopa-lollipop-pub-key": Buffer.from(
-                      JSON.stringify(publicKey)
-                    ).toString("base64"),
-                    "x-pagopa-lollipop-pub-key-hash-algo":
-                      DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-                  };
+                  const headers = getLollipopHeaders(
+                    publicKey,
+                    DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                  );
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },
                 error => {

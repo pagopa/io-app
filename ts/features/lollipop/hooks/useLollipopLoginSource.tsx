@@ -1,23 +1,14 @@
-import { generate, deleteKey, PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
+import * as T from "fp-ts/lib/Task";
 import { useCallback, useState } from "react";
 import URLParse from "url-parse";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import {
-  trackLollipopIdpLoginFailure,
-  trackLollipopKeyGenerationFailure,
-  trackLollipopKeyGenerationSuccess
-} from "../../../utils/analytics";
-import { toCryptoError } from "../utils/crypto";
+import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  lollipopRemovePublicKey,
-  lollipopSetPublicKey
-} from "../store/actions/lollipop";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
@@ -28,12 +19,7 @@ import {
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-
-const taskRegenerateKey = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
-    TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
-  );
+import { getLollipopHeaders, handleRegenerateKey } from "..";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -112,35 +98,29 @@ export const useLollipopLoginSource = (
      * need to garantee the public key uniqueness on every login request.
      * https://pagopa.atlassian.net/browse/LLK-37
      */
+
     void pipe(
-      maybeKeyTag.value,
-      taskRegenerateKey,
-      TE.map(key => {
-        dispatch(lollipopSetPublicKey({ publicKey: key }));
-        if (mixpanelEnabled) {
-          trackLollipopKeyGenerationSuccess(key.kty);
-        }
-        setWebviewSource({
-          uri: loginUri,
-          headers: {
-            "x-pagopa-lollipop-pub-key": Buffer.from(
-              JSON.stringify(key)
-            ).toString("base64"),
-            "x-pagopa-lollipop-pub-key-hash-algo":
-              DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-          }
-        });
-      }),
-      TE.mapLeft(error => {
-        trackLollipopIdpLoginFailure(error.message);
-        if (mixpanelEnabled) {
-          trackLollipopKeyGenerationFailure(error.message);
-        }
-        dispatch(lollipopRemovePublicKey());
-        setWebviewSource({
-          uri: loginUri
-        });
-      })
+      () => handleRegenerateKey(maybeKeyTag.value, mixpanelEnabled, dispatch),
+      T.map(a =>
+        pipe(
+          a,
+          O.fromNullable,
+          O.fold(
+            () =>
+              setWebviewSource({
+                uri: loginUri
+              }),
+            key =>
+              setWebviewSource({
+                uri: loginUri,
+                headers: getLollipopHeaders(
+                  key,
+                  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                )
+              })
+          )
+        )
+      )
     )();
   }, [
     dispatch,
