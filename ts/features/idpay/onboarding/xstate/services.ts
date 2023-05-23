@@ -13,21 +13,16 @@ import { OnboardingFailureEnum } from "./failure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
-// prettier-ignore
-const onboardingStatusToFailure: Record<
-  OnboardingStatusEnum,
-  O.Option<OnboardingFailureEnum>
+const onboardingStatusToFailure: Partial<
+  Record<OnboardingStatusEnum, OnboardingFailureEnum>
 > = {
-  [OnboardingStatusEnum.ELIGIBLE_KO]: O.some(OnboardingFailureEnum.NOT_ELIGIBLE),
-  [OnboardingStatusEnum.ONBOARDING_KO]: O.some(OnboardingFailureEnum.NO_REQUIREMENTS),
-  [OnboardingStatusEnum.ONBOARDING_OK]: O.some(OnboardingFailureEnum.ONBOARDED),
-  [OnboardingStatusEnum.UNSUBSCRIBED]: O.some(OnboardingFailureEnum.UNSUBSCRIBED),
-  [OnboardingStatusEnum.ELIGIBLE]: O.some(OnboardingFailureEnum.ON_EVALUATION),
-  [OnboardingStatusEnum.ON_EVALUATION]: O.some(OnboardingFailureEnum.ON_EVALUATION),
-  [OnboardingStatusEnum.SUSPENDED]: O.some(OnboardingFailureEnum.SUSPENDED),
-  [OnboardingStatusEnum.ACCEPTED_TC]: O.none, // Onboarding started but not yet completed, no failure
-  [OnboardingStatusEnum.INVITED]: O.none, // Whitelisted CF, no failure
-  [OnboardingStatusEnum.DEMANDED]: O.none, // No error
+  [OnboardingStatusEnum.ELIGIBLE_KO]: OnboardingFailureEnum.NOT_ELIGIBLE,
+  [OnboardingStatusEnum.ONBOARDING_KO]: OnboardingFailureEnum.NO_REQUIREMENTS,
+  [OnboardingStatusEnum.ONBOARDING_OK]: OnboardingFailureEnum.ONBOARDED,
+  [OnboardingStatusEnum.UNSUBSCRIBED]: OnboardingFailureEnum.UNSUBSCRIBED,
+  [OnboardingStatusEnum.ELIGIBLE]: OnboardingFailureEnum.ON_EVALUATION,
+  [OnboardingStatusEnum.ON_EVALUATION]: OnboardingFailureEnum.ON_EVALUATION,
+  [OnboardingStatusEnum.SUSPENDED]: OnboardingFailureEnum.SUSPENDED
 };
 
 // prettier-ignore
@@ -95,10 +90,10 @@ const createServicesImplementation = (
         response => {
           if (response.status === 200) {
             const onboardingStatus = response.value.status;
-            const failureOption = onboardingStatusToFailure[onboardingStatus];
 
             return pipe(
-              failureOption,
+              onboardingStatusToFailure[onboardingStatus],
+              O.fromNullable,
               O.fold(
                 () => Promise.resolve(O.some(response.value.status)), // No failure, return onboarding status
                 failure => Promise.reject(failure)
