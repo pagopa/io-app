@@ -25,6 +25,7 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
+import { originSchemasWhiteList } from "../originSchemasWhiteList";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -165,6 +166,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           textZoom={100}
+          originWhitelist={originSchemasWhiteList}
           source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
