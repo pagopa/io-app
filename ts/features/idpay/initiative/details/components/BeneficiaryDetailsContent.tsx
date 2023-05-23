@@ -10,8 +10,8 @@ import { LabelSmall } from "../../../../../components/core/typography/LabelSmall
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { format } from "../../../../../utils/dates";
-import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Table } from "../../../common/components/Table";
+import { formatNumberCurrencyOrDefault } from "../../../common/utils/strings";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -21,9 +21,6 @@ type Props = {
   initiativeDetails: InitiativeDTO;
   beneficiaryDetails: InitiativeDetailDTO;
 };
-
-const formatNumberCurrency = (amount: number) =>
-  `${formatNumberAmount(amount, false)} €`;
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
@@ -52,27 +49,6 @@ const BeneficiaryDetailsContent = (props: Props) => {
     beneficiaryDetails.endDate,
     O.fromNullable,
     O.map(formatDate("DD/MM/YYYY")),
-    O.getOrElse(() => "-")
-  );
-
-  const availableAmountString = pipe(
-    initiativeDetails.amount,
-    O.fromNullable,
-    O.map(formatNumberCurrency),
-    O.getOrElse(() => "-")
-  );
-
-  const accuredAmountString = pipe(
-    initiativeDetails.accrued,
-    O.fromNullable,
-    O.map(formatNumberCurrency),
-    O.getOrElse(() => "-")
-  );
-
-  const refundedAmountString = pipe(
-    initiativeDetails.refunded,
-    O.fromNullable,
-    O.map(formatNumberCurrency),
     O.getOrElse(() => "-")
   );
 
@@ -123,15 +99,15 @@ const BeneficiaryDetailsContent = (props: Props) => {
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: availableAmountString
+            value: formatNumberCurrencyOrDefault(initiativeDetails.amount)
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: accuredAmountString
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: refundedAmountString
+            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded)
           }
         ]}
       />
