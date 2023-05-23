@@ -93,7 +93,7 @@ export const bottomSheetContent = (
 type BottomSheetOptions = {
   component: React.ReactNode;
   title: string | React.ReactNode;
-  snapPoint: NonEmptyArray<number>;
+  snapPoint: NonEmptyArray<number | string>;
   footer?: React.ReactElement;
   onDismiss?: () => void;
 };
