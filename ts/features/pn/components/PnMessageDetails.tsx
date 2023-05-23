@@ -1,18 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
 import ROUTES from "../../../navigation/routes";
 import {
   TransactionSummary,
@@ -32,13 +29,16 @@ import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  getRptIdFromNoticeNumber,
-  isDuplicatedPayment
-} from "../../../utils/payment";
+import { isDuplicatedPayment } from "../../../utils/payment";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
+import { getRptIdFromPayment } from "../utils/rptId";
+import {
+  trackPNPaymentInfoError,
+  trackPNPaymentInfoPaid,
+  trackPNPaymentInfoPayable
+} from "../analytics";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
@@ -67,21 +67,13 @@ export const PnMessageDetails = (props: Props) => {
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
 
-  const maybePayment = props.message.recipients.find(
-    _ => _.taxId === currentFiscalCode
-  )?.payment;
-
-  const noticeNumber = PaymentNoticeNumber.decode(maybePayment?.noticeCode);
-  const creditorTaxId = OrganizationFiscalCode.decode(
-    maybePayment?.creditorTaxId
+  const payment = pipe(
+    props.message.recipients,
+    AR.findFirst(_ => _.taxId === currentFiscalCode),
+    O.chainNullableK(_ => _.payment),
+    O.getOrElseW(() => undefined)
   );
-
-  const rptId =
-    E.isRight(noticeNumber) && E.isRight(creditorTaxId)
-      ? O.toUndefined(
-          getRptIdFromNoticeNumber(creditorTaxId.right, noticeNumber.right)
-        )
-      : undefined;
+  const rptId = getRptIdFromPayment(payment);
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -138,16 +130,11 @@ export const PnMessageDetails = (props: Props) => {
     }
 
     if (isPaid) {
-      void mixpanelTrack("PN_PAYMENTINFO_PAID");
+      trackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
-      void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
-        paymentStatus: pipe(
-          paymentVerificationError,
-          O.getOrElseW(() => undefined)
-        )
-      });
+      trackPNPaymentInfoError(paymentVerificationError);
     } else {
-      void mixpanelTrack("PN_PAYMENTINFO_PAYABLE");
+      trackPNPaymentInfoPayable();
     }
     setShouldTrackMixpanel(false);
   }, [
@@ -182,7 +169,7 @@ export const PnMessageDetails = (props: Props) => {
             />
           </PnMessageDetailsSection>
         )}
-        {maybePayment && (
+        {payment && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.paymentSection.title")}
           >
@@ -190,15 +177,15 @@ export const PnMessageDetails = (props: Props) => {
               <>
                 <TransactionSummary
                   paymentVerification={paymentVerification}
-                  paymentNoticeNumber={maybePayment.noticeCode}
-                  organizationFiscalCode={maybePayment.creditorTaxId}
+                  paymentNoticeNumber={payment.noticeCode}
+                  organizationFiscalCode={payment.creditorTaxId}
                   isPaid={isPaid}
                 />
                 {O.isSome(paymentVerificationError) && (
                   <TransactionSummaryErrorDetails
                     error={paymentVerificationError}
-                    paymentNoticeNumber={maybePayment.noticeCode}
-                    organizationFiscalCode={maybePayment.creditorTaxId}
+                    paymentNoticeNumber={payment.noticeCode}
+                    organizationFiscalCode={payment.creditorTaxId}
                     messageId={props.messageId}
                   />
                 )}

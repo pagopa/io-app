@@ -41,12 +41,15 @@ export const NotificationPaymentInfoR = t.interface({
   noticeCode: t.string,
   creditorTaxId: t.string
 });
+
 export const NotificationPaymentInfoO = t.partial({});
 
 export const NotificationPaymentInfo = t.intersection(
   [NotificationPaymentInfoR, NotificationPaymentInfoO],
   "NotificationPaymentInfo"
 );
+
+export type NotificationPaymentInfo = t.TypeOf<typeof NotificationPaymentInfo>;
 
 export const NotificationRecipientR = t.interface({
   denomination: t.string,
