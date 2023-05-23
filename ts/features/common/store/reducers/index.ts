@@ -7,7 +7,6 @@ import {
   euCovidCertReducer,
   EuCovidCertState
 } from "../../../euCovidCert/store/reducers";
-import { mvlReducer, MvlState } from "../../../mvl/store/reducers";
 import { PnState, pnReducer } from "../../../pn/store/reducers";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
 import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
@@ -27,7 +26,6 @@ type LoginFeaturesState = {
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
-  mvl: MvlState;
   pn: PnState;
   fci: FciState;
   idPay: IDPayState;
@@ -38,7 +36,6 @@ export type PersistedFeaturesState = FeaturesState & PersistPartial;
 
 const rootReducer = combineReducers<FeaturesState, Action>({
   euCovidCert: euCovidCertReducer,
-  mvl: mvlReducer,
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,

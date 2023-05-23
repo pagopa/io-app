@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.33.0-rc.1",
+  "version": "2.33.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/definitions.yml",
@@ -107,7 +107,7 @@
     "@gorhom/bottom-sheet": "^4.1.5",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.2.1",
-    "@pagopa/io-react-native-login-utils": "https://github.com/pagopa/io-react-native-login-utils.git#f375b539f79ba404d1aad2002583febde2703261",
+    "@pagopa/io-react-native-login-utils": "^0.2.0",
     "@pagopa/react-native-cie": "^1.1.5",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^1.17.10",

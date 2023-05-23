@@ -17,7 +17,7 @@ import {
   pageSize,
   remindersOptInEnabled
 } from "../config";
-import { mixpanelTrack, setMixpanelPushNotificationToken } from "../mixpanel";
+import { setMixpanelPushNotificationToken } from "../mixpanel";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
@@ -28,8 +28,10 @@ import {
 } from "../store/actions/notifications";
 import { getCursors } from "../store/reducers/entities/messages/allPaginated";
 import { isDevEnv } from "../utils/environment";
-import { readablePrivacyReport } from "../utils/reporters";
-import { trackMessageNotificationTap } from "../utils/analytics";
+import {
+  trackMessageNotificationParsingFailure,
+  trackMessageNotificationTap
+} from "../features/messages/analytics";
 import { store } from "./configureStoreAndPersistor";
 
 /**
@@ -105,11 +107,7 @@ function configurePushNotifications() {
       pipe(
         notification,
         NotificationPayload.decode,
-        E.mapLeft(errors => {
-          void mixpanelTrack("NOTIFICATION_PARSING_FAILURE", {
-            reason: readablePrivacyReport(errors)
-          });
-        }),
+        E.mapLeft(trackMessageNotificationParsingFailure),
         O.fromEither,
         O.chain(payload =>
           pipe(

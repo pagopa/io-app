@@ -1,5 +1,7 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
 import { useCallback, useState } from "react";
 import URLParse from "url-parse";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
@@ -16,8 +18,8 @@ import {
   lollipopSamlVerify
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
-import { handleRegenerateKey } from "..";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { getLollipopHeaders, handleRegenerateKey } from "..";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -98,26 +100,29 @@ export const useLollipopLoginSource = (
      * https://pagopa.atlassian.net/browse/LLK-37
      */
 
-    void handleRegenerateKey(maybeKeyTag.value, mixpanelEnabled, dispatch).then(
-      response => {
-        if (response) {
-          setWebviewSource({
-            uri: loginUri,
-            headers: {
-              "x-pagopa-lollipop-pub-key": Buffer.from(
-                JSON.stringify(response)
-              ).toString("base64"),
-              "x-pagopa-lollipop-pub-key-hash-algo":
-                DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-            }
-          });
-        } else {
-          setWebviewSource({
-            uri: loginUri
-          });
-        }
-      }
-    );
+    void pipe(
+      () => handleRegenerateKey(maybeKeyTag.value, mixpanelEnabled, dispatch),
+      T.map(nullableKey =>
+        pipe(
+          nullableKey,
+          O.fromNullable,
+          O.fold(
+            () =>
+              setWebviewSource({
+                uri: loginUri
+              }),
+            key =>
+              setWebviewSource({
+                uri: loginUri,
+                headers: getLollipopHeaders(
+                  key,
+                  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                )
+              })
+          )
+        )
+      )
+    )();
   }, [
     dispatch,
     loginUri,

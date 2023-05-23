@@ -214,7 +214,7 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
-    files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "mvlMock.ts", "message.ts",
+    files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "message.ts",
                         "supportAssistance.ts", "ZendeskAskPermissions.tsx"}
 
     manager = Manager()
