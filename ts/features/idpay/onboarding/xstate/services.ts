@@ -27,7 +27,7 @@ const onboardingStatusToFailure: Record<
   [OnboardingStatusEnum.SUSPENDED]: O.some(OnboardingFailureEnum.SUSPENDED),
   [OnboardingStatusEnum.ACCEPTED_TC]: O.none, // Onboarding started but not yet completed, no failure
   [OnboardingStatusEnum.INVITED]: O.none, // Whitelisted CF, no failure
-  [OnboardingStatusEnum.DEMANDED]: O.none, // TODO This failure will be handled in a future PR
+  [OnboardingStatusEnum.DEMANDED]: O.none, // No error
 };
 
 // prettier-ignore
