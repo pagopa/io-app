@@ -31,12 +31,11 @@ export const useLollipopLoginSource = (
     undefined
   );
 
+  const dispatch = useIODispatch();
   const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
-
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
-  const dispatch = useIODispatch();
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
