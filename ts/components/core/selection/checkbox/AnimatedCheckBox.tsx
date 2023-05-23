@@ -6,7 +6,9 @@ import Animated, {
   interpolate,
   withSpring,
   useAnimatedProps,
-  useAnimatedRef
+  useAnimatedRef,
+  withTiming,
+  Easing
 } from "react-native-reanimated";
 import Svg, { Path, PathProps } from "react-native-svg";
 import { calculateSlop } from "../../accessibility";
@@ -30,7 +32,7 @@ const slop = calculateSlop(SIZE);
 const checkMarkPath = "m7 12 4 4 7-7";
 
 const styles = StyleSheet.create({
-  checkBox: {
+  checkBoxWrapper: {
     width: SIZE,
     height: SIZE
   },
@@ -44,7 +46,8 @@ const styles = StyleSheet.create({
     borderWidth: BORDER_WIDTH,
     borderRadius: checkBoxRadius
   },
-  checkBoxInner: {
+  checkBoxSquare: {
+    backgroundColor: IOColors[onColor],
     position: "absolute",
     left: 0,
     top: 0,
@@ -106,19 +109,25 @@ const AnimatedCheckmark = ({
 export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
   const isChecked = checked ?? false;
 
-  const animationProgress = useSharedValue(checked ? 1 : 0);
+  const squareAnimationProgress = useSharedValue(checked ? 1 : 0);
+  const checkmarkAnimationProgress = useSharedValue(checked ? 1 : 0);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
-    animationProgress.value = withSpring(
+    squareAnimationProgress.value = withSpring(
       checked ? 1 : 0,
       IOSpringValues.selection
     );
-  }, [checked, animationProgress]);
+    // eslint-disable-next-line functional/immutable-data
+    checkmarkAnimationProgress.value = withTiming(checked ? 1 : 0, {
+      duration: 400,
+      easing: Easing.elastic(1)
+    });
+  }, [checked, squareAnimationProgress, checkmarkAnimationProgress]);
 
-  const boxStyle = useAnimatedStyle(() => {
-    const scale = interpolate(animationProgress.value, [0, 1], [0.5, 1]);
-    const opacity = animationProgress.value;
+  const animatedCheckboxSquare = useAnimatedStyle(() => {
+    const scale = interpolate(squareAnimationProgress.value, [0, 1], [0.5, 1]);
+    const opacity = squareAnimationProgress.value;
 
     return {
       opacity,
@@ -132,20 +141,14 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
       testID="AnimatedCheckbox"
       onPress={onPress}
       hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
-      style={styles.checkBox}
+      style={styles.checkBoxWrapper}
     >
       <View style={styles.checkboxBorder} />
-      <Animated.View
-        style={[
-          styles.checkBoxInner,
-          { backgroundColor: IOColors[onColor] },
-          boxStyle
-        ]}
-      />
+      <Animated.View style={[styles.checkBoxSquare, animatedCheckboxSquare]} />
       {isChecked && (
         <View>
           <AnimatedCheckmark
-            progress={animationProgress}
+            progress={checkmarkAnimationProgress}
             d={checkMarkPath}
             stroke={IOColors.white}
             strokeWidth={2}

@@ -6,7 +6,9 @@ import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { Label } from "../../../components/core/typography/Label";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
-import { CheckBoxAlt } from "../../../components/core/selection/checkbox/CheckBoxAlt";
+import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   content: {
@@ -22,9 +24,14 @@ const styles = StyleSheet.create({
 export const DSSelection = () => (
   <DesignSystemScreen title={"Selection"}>
     <H2>Checkbox</H2>
-    <View>
-      <CheckBoxAlt />
-    </View>
+    <VSpacer size={16} />
+    <DSComponentViewerBox name="CheckboxLabel">
+      <CheckboxLabel label="This is a test" />
+      <VSpacer size={16} />
+      <CheckboxLabel disabled checked={true} label="This is a test" />
+      <VSpacer size={16} />
+      <CheckboxLabel disabled label="This is a test" />
+    </DSComponentViewerBox>
     <Label>{"<CheckBox />"}</Label>
     <View style={styles.content}>
       <CheckBox />

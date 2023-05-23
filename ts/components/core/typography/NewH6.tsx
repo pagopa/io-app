@@ -14,7 +14,7 @@ type OwnProps = ExternalTypographyProps<
 
 const fontName: IOFontFamily = "ReadexPro";
 export const h6FontSize = 16;
-export const h6LineHeight = 20;
+export const h6LineHeight = 24;
 export const h6DefaultColor: AllowedColors = IOThemeLight["textBody-default"];
 export const h6DefaultWeight: AllowedWeight = "Regular";
 
