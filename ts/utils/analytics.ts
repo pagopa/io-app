@@ -1,8 +1,15 @@
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
 import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
+import { isLoginUtilsError } from "../features/lollipop/utils/login";
 import { ServicesDetailLoadTrack } from "../sagas/startup/loadServiceDetailRequestHandler";
 
 const blackListRoutes: ReadonlyArray<string> = [];
@@ -98,6 +105,51 @@ export function trackLollipopIdpLoginFailure(reason: string) {
 
 // End of lollipop events
 
+// SPID Login
+export function trackSpidLoginError(
+  idpName: string | undefined,
+  e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  const eventName = "SPID_ERROR";
+  if (isLoginUtilsError(e)) {
+    void mixpanelTrack(eventName, {
+      idp: idpName,
+      code: e.userInfo.StatusCode,
+      description: e.userInfo.Error,
+      domain: e.userInfo.URL
+    });
+  } else {
+    const error = e as Error;
+    const webViewError = e as WebViewErrorEvent;
+    const webViewHttpError = e as WebViewHttpErrorEvent;
+    if (webViewHttpError.nativeEvent.statusCode) {
+      const { description, statusCode, url } = webViewHttpError.nativeEvent;
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code: statusCode,
+        description,
+        domain: toUrlWithoutQueryParams(url)
+      });
+    } else if (webViewError.nativeEvent) {
+      const { code, description, domain } = webViewError.nativeEvent;
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code,
+        description,
+        domain
+      });
+    } else if (error.message !== undefined) {
+      void mixpanelTrack(eventName, {
+        idp: idpName,
+        code: error.message,
+        description: error.message,
+        domain: error.message
+      });
+    }
+  }
+}
+// End of SPID Login
+
 // Keychain
 // workaround to send keychainError for Pixel devices
 // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
@@ -107,4 +159,9 @@ export function trackKeychainGetFailure(reason: string | undefined) {
       reason
     });
   }
+}
+
+function toUrlWithoutQueryParams(url: string) {
+  const urlAsURL = URLParse(url);
+  return urlAsURL.origin + urlAsURL.pathname;
 }
