@@ -5,11 +5,13 @@ import Animated, {
   withTiming,
   useAnimatedStyle,
   Easing,
-  interpolate
+  interpolate,
+  withSpring
 } from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 import { calculateSlop } from "../../accessibility";
 import { IOColors } from "../../variables/IOColors";
+import { IOSpringValues } from "../../variables/IOAnimations";
 
 type Props = {
   // the value of the checkbox
@@ -67,14 +69,14 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
-    animationProgress.value = withTiming(checked ? 1 : 0, {
-      duration: 350,
-      easing: Easing.elastic(1.25)
-    });
+    animationProgress.value = withSpring(
+      checked ? 1 : 0,
+      IOSpringValues.selection
+    );
   }, [checked, animationProgress]);
 
   const boxStyle = useAnimatedStyle(() => {
-    const scale = interpolate(animationProgress.value, [0, 1], [0.6, 1]);
+    const scale = interpolate(animationProgress.value, [0, 1], [0.5, 1]);
     const opacity = animationProgress.value;
 
     return {
