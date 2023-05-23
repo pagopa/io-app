@@ -9,8 +9,9 @@ import {
   useIOBottomSheetAutoresizableModal,
   useIOBottomSheetModalNew
 } from "../../../utils/hooks/bottomSheet";
-import ListItemComponent from "../../../components/screens/ListItemComponent";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
+import ListItemNav from "../../../components/ui/ListItemNav";
+import { Body } from "../../../components/core/typography/Body";
 
 export const DSBottomSheet = () => {
   const handlePressDismiss = () => {
@@ -20,15 +21,14 @@ export const DSBottomSheet = () => {
 
   const BottomSheetContentBody = () => (
     <>
-      <ListItemComponent
-        title="Lorem ipsum dolor"
-        hideIcon
-        subTitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      />
-      <ListItemComponent
-        title="Dismiss"
-        isLastItem
-        subTitle="This is a item that will close the bottom sheet"
+      <Body>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </Body>
+      <ListItemNav
+        value="Dismiss"
+        description="This is a item that will close the bottom sheet"
+        accessibilityLabel="Dismiss"
         onPress={handlePressDismiss}
       />
     </>
@@ -68,16 +68,16 @@ export const DSBottomSheet = () => {
           >
             Available bottom sheets
           </H2>
-          <ListItemComponent
-            title="Autoresizable bottom sheet"
-            useExtendedSubTitle
-            subTitle="This bottom sheet has a snap point that is calculated based on the content height"
+          <ListItemNav
+            value="Autoresizable bottom sheet"
+            description="This bottom sheet has a snap point that is calculated based on the content height"
+            accessibilityLabel="Autoresizable bottom sheet"
             onPress={presentAutoresizableBottomSheet}
           />
-          <ListItemComponent
-            title="Static bottom sheet"
-            useExtendedSubTitle
-            subTitle="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
+          <ListItemNav
+            value="Static bottom sheet"
+            description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
+            accessibilityLabel="Static bottom sheet"
             onPress={presentStaticBottomSheet}
           />
           <VSpacer size={24} />
