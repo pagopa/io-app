@@ -4,10 +4,16 @@ import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
+  WebViewHttpErrorEvent,
   WebViewNavigation,
-  WebViewNavigationEvent
+  WebViewNavigationEvent,
+  WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
-import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
+import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -16,6 +22,11 @@ import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
+import { trackSpidLoginError } from "../../utils/analytics";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -43,12 +54,15 @@ const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
  * This script also tries also to call apriIosUL.
  * If it is defined it starts the authentication process (iOS only).
  */
-const injectJs = `
+const injectJs =
+  Platform.OS === "ios"
+    ? `
   seconds = 0;
   if(typeof apriIosUL !== 'undefined' && apriIosUL !== null){
     apriIosUL();
   }
-`;
+`
+    : undefined;
 
 type Props = {
   onClose: () => void;
@@ -90,25 +104,57 @@ const generateRetryState: (state: InternalState) => InternalState = (
   key: state.key + 1
 });
 
+type RequestInfoAuthorizedState = {
+  requestState: "AUTHORIZED";
+  nativeAttempts: number;
+  url: string;
+};
+
+type RequestInfoLoadingState = {
+  requestState: "LOADING";
+  nativeAttempts: number;
+};
+
+type RequestInfo = RequestInfoLoadingState | RequestInfoAuthorizedState;
+
+function retryRequest(
+  setInternalState: React.Dispatch<React.SetStateAction<InternalState>>,
+  setRequestInfo: React.Dispatch<React.SetStateAction<RequestInfo>>
+) {
+  setInternalState(generateRetryState);
+  setRequestInfo(requestInfo => ({
+    requestState: "LOADING",
+    nativeAttempts: requestInfo.nativeAttempts + 1
+  }));
+}
+
 const CieWebView = (props: Props) => {
   const [internalState, setInternalState] = React.useState<InternalState>(
     generateResetState()
   );
+
+  const [requestInfo, setRequestInfo] = React.useState<RequestInfo>({
+    requestState: "LOADING",
+    nativeAttempts: 0
+  });
+
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+  const dispatch = useIODispatch();
+
+  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
-  const handleOnError = React.useCallback(() => {
-    setInternalState(state => generateErrorState(state));
-  }, []);
-
-  // Android CIE login flow is different from iOS.
-  // On Android to be sure to regenerate a new crypto key,
-  // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
-  const {
-    retryLollipopLogin,
-    shouldBlockUrlNavigationWhileCheckingLollipop,
-    webviewSource
-  } = useLollipopLoginSource(handleOnError, loginUri);
+  const handleOnError = React.useCallback(
+    (
+      e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
+    ) => {
+      trackSpidLoginError("cie", e);
+      setInternalState(state => generateErrorState(state));
+    },
+    []
+  );
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
@@ -126,9 +172,6 @@ const CieWebView = (props: Props) => {
     }
 
     const url = event.url;
-    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
-      return false;
-    }
 
     // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
     if (
@@ -160,10 +203,10 @@ const CieWebView = (props: Props) => {
       // we are presented with an error page titled "ERROR".
       eventTitle === "errore"
     ) {
-      handleOnError();
+      handleOnError(new Error(eventTitle));
     }
     // inject JS on every page load end
-    if (webView.current) {
+    if (injectJs && webView.current) {
       webView.current.injectJavaScript(closeInjectedScript(injectJs));
     }
   };
@@ -172,32 +215,55 @@ const CieWebView = (props: Props) => {
     return (
       <ErrorComponent
         onRetry={() => {
-          setInternalState(state => generateRetryState(state));
-          retryLollipopLogin();
+          retryRequest(setInternalState, setRequestInfo);
         }}
         onClose={props.onClose}
       />
     );
   }
 
+  if (O.isSome(maybeKeyTag) && requestInfo.requestState === "LOADING") {
+    void pipe(
+      () =>
+        regenerateKeyGetRedirectsAndVerifySaml(
+          loginUri,
+          maybeKeyTag.value,
+          mixpanelEnabled,
+          dispatch
+        ),
+      TE.fold(
+        e => T.of(handleOnError(e)),
+        url =>
+          T.of(
+            setRequestInfo({
+              requestState: "AUTHORIZED",
+              nativeAttempts: requestInfo.nativeAttempts,
+              url
+            })
+          )
+      )
+    )();
+  }
+
   const WithLoading = withLoadingSpinner(() => (
     <View style={IOStyles.flex}>
-      {internalState.authUrl === undefined && (
-        <WebView
-          cacheEnabled={false}
-          androidCameraAccessDisabled={true}
-          androidMicrophoneAccessDisabled={true}
-          ref={webView}
-          userAgent={defaultUserAgent}
-          javaScriptEnabled={true}
-          injectedJavaScript={injectJs}
-          onLoadEnd={handleOnLoadEnd}
-          onError={handleOnError}
-          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          source={webviewSource}
-          key={internalState.key}
-        />
-      )}
+      {requestInfo.requestState === "AUTHORIZED" &&
+        internalState.authUrl === undefined && (
+          <WebView
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
+            ref={webView}
+            userAgent={defaultUserAgent}
+            javaScriptEnabled={true}
+            injectedJavaScript={injectJs}
+            onLoadEnd={handleOnLoadEnd}
+            onError={handleOnError}
+            onHttpError={handleOnError}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            source={{ uri: requestInfo.url } as WebViewSource}
+            key={internalState.key}
+          />
+        )}
     </View>
   ));
 
