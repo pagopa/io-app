@@ -29,6 +29,9 @@ import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import { Icon } from "../../../components/core/icons/Icon";
 import ListItemAction from "../../../components/ui/ListItemAction";
+import ListItemInfo from "../../../components/ui/ListItemInfo";
+import ButtonLink from "../../../components/ui/ButtonLink";
+import IconButton from "../../../components/ui/IconButton";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -52,9 +55,26 @@ export const DSListItems = () => (
           weight={"SemiBold"}
           style={{ marginBottom: 16, marginTop: 16 }}
         >
+          ListItemInfo
+        </H2>
+        {renderListItemInfo()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
           ListItemAction
         </H2>
         {renderListItemAction()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          NativeBase
+        </H2>
 
         <DSComponentViewerBox name="ListItemComponent (badge)">
           <ListItemComponent
@@ -388,4 +408,60 @@ const renderListItemAction = () => (
       />
     </DSComponentViewerBox>
   </>
+);
+
+const renderListItemInfo = () => (
+  <DSComponentViewerBox name="ListItemInfo">
+    <View>
+      <ListItemInfo
+        label="Label"
+        value={"Value"}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemInfo
+        label="Label"
+        value={"Value"}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+
+      <ListItemInfo
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemInfo
+        icon="creditCard"
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+        action={
+          <ButtonLink
+            label="Modifica"
+            onPress={onButtonPress}
+            accessibilityLabel={""}
+          />
+        }
+      />
+      <ListItemInfo
+        icon="psp"
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+        action={
+          <IconButton
+            icon="info"
+            onPress={onButtonPress}
+            accessibilityLabel={""}
+          />
+        }
+      />
+
+      <ListItemInfo
+        label="Label"
+        value={"Value"}
+        icon="gallery"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+    </View>
+  </DSComponentViewerBox>
 );
