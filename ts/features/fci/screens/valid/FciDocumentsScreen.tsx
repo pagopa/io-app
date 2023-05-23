@@ -40,10 +40,10 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 import {
   getOptionalSignatureFields,
-  getRequiredSignatureFields
+  getRequiredSignatureFields,
+  getSignatureFieldsLength
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -55,15 +55,6 @@ const styles = StyleSheet.create({
 export type FciDocumentsScreenNavigationParams = Readonly<{
   currentDoc: number;
 }>;
-
-const getSignatureFieldsLength = (doc: DocumentDetailView) =>
-  pipe(
-    doc,
-    O.fromNullable,
-    O.map(_ => _.metadata.signature_fields),
-    O.map(_ => _.length),
-    O.getOrElse(() => 0)
-  );
 
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
