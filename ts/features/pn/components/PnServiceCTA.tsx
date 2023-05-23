@@ -16,7 +16,11 @@ import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
-import { mixpanelTrack } from "../../../mixpanel";
+import {
+  trackPNServiceCTAFired,
+  trackPNServiceStatusChangedError,
+  trackPNServiceStatusChangedSuccess
+} from "../analytics";
 
 type Props = {
   serviceId: ServiceId;
@@ -55,7 +59,7 @@ const ActivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
-      void mixpanelTrack("PN_SERVICE_CTAFIRED");
+      trackPNServiceCTAFired();
       props.dispatch(pnActivationUpsert.request(true));
     }}
   >
@@ -68,7 +72,7 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
-      void mixpanelTrack("PN_SERVICE_CTAFIRED");
+      trackPNServiceCTAFired();
       props.dispatch(pnActivationUpsert.request(false));
     }}
     style={{
@@ -106,14 +110,10 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     const isError = pot.isError(serviceActivation);
     if (wasUpdating && !isStillUpdating) {
       if (isError) {
-        void mixpanelTrack("PN_SERVICE_STATUSCHANGE_ERROR", {
-          currentStatus: isServiceActive
-        });
+        trackPNServiceStatusChangedError(isServiceActive);
         showToast(I18n.t("features.pn.service.toast.error"), "danger");
       } else {
-        void mixpanelTrack("PN_SERVICE_STATUSCHANGE_SUCCESS", {
-          newStatus: pot.toUndefined(serviceActivation)
-        });
+        trackPNServiceStatusChangedSuccess(serviceActivation);
         dispatch(loadServicePreference.request(serviceId));
         if (pot.toUndefined(serviceActivation)) {
           showToast(I18n.t("features.pn.service.toast.activated"), "success");
