@@ -101,9 +101,9 @@ export const useLollipopLoginSource = (
 
     void pipe(
       () => handleRegenerateKey(maybeKeyTag.value, mixpanelEnabled, dispatch),
-      T.map(a =>
+      T.map(nullableKey =>
         pipe(
-          a,
+          nullableKey,
           O.fromNullable,
           O.fold(
             () =>
