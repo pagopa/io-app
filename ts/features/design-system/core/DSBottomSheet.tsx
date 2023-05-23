@@ -19,18 +19,41 @@ export const DSBottomSheet = () => {
     dismissAutoresizableBottomSheet();
   };
 
+  const DimissBottomSheetItem = () => (
+    <ListItemNav
+      value="Dismiss"
+      description="This is a item that will close the bottom sheet"
+      accessibilityLabel="Dismiss"
+      onPress={handlePressDismiss}
+    />
+  );
+
   const BottomSheetContentBody = () => (
     <>
       <Body>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
       </Body>
-      <ListItemNav
-        value="Dismiss"
-        description="This is a item that will close the bottom sheet"
-        accessibilityLabel="Dismiss"
-        onPress={handlePressDismiss}
-      />
+      <DimissBottomSheetItem />
+    </>
+  );
+
+  const BottomSheetLongContentBody = () => (
+    <>
+      <Body>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+        ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua.
+      </Body>
+      <DimissBottomSheetItem />
     </>
   );
 
@@ -41,7 +64,7 @@ export const DSBottomSheet = () => {
     dismiss: dismissAutoresizableBottomSheet
   } = useIOBottomSheetAutoresizableModal({
     title: "Autoresizable Bottom Sheet",
-    component: <BottomSheetContentBody />
+    component: <BottomSheetLongContentBody />
   });
 
   // Static bottom sheet hook
