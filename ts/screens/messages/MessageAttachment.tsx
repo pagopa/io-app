@@ -12,12 +12,12 @@ import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
 import { showToast } from "../../utils/showToast";
 import { getServiceByMessageId } from "../../store/reducers/entities/messages/paginatedById";
 import { useIOSelector } from "../../store/hooks";
+import { thirdPartyMessageUIAttachment } from "../../store/reducers/entities/messages/thirdPartyById";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
-} from "../../utils/analytics";
-import { thirdPartyMessageUIAttachment } from "../../store/reducers/entities/messages/thirdPartyById";
+} from "../../features/messages/analytics";
 
 export type MessageDetailAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
