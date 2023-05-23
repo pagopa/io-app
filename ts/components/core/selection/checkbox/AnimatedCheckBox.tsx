@@ -24,6 +24,7 @@ const BORDER_WIDTH: number = 2;
 
 const offColor: IOColors = "grey-650";
 const onColor: IOColors = "blueIO-500";
+const checkBoxRadius: number = 5;
 const slop = calculateSlop(SIZE);
 
 const checkMarkPath = "m7 12 4 4 7-7";
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     height: SIZE,
     borderColor: IOColors[offColor],
     borderWidth: BORDER_WIDTH,
-    borderRadius: 4
+    borderRadius: checkBoxRadius
   },
   checkBoxInner: {
     position: "absolute",
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: SIZE,
     height: SIZE,
-    borderRadius: 4
+    borderRadius: checkBoxRadius
   }
 });
 
