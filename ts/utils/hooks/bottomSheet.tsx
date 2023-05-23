@@ -16,6 +16,7 @@ import { TestID } from "../../types/WithTestID";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
 
 type Props = {
   children: React.ReactNode;
@@ -178,7 +179,7 @@ export const useIOBottomSheetModalNew = ({
 };
 
 const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
-const DEFAULT_BOTTOM_PADDING = 24;
+const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 24;
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
  * @param bottomSheetOptions
