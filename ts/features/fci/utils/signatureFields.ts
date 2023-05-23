@@ -8,6 +8,7 @@ import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 import { TranslationKeys } from "../../../../locales/locales";
+import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
 
 const clausesEnumValues = {
   [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
@@ -115,3 +116,17 @@ const sortByType = RA.sortBy([byClausesType]);
 export const orderSignatureFields = (
   signatureFields: ReadonlyArray<SignatureField>
 ): ReadonlyArray<SignatureField> => pipe(signatureFields, sortByType);
+
+/**
+ * Get the number of signature fields
+ * @param doc the document detail view
+ * @returns the number of signature fields
+ */
+export const getSignatureFieldsLength = (doc: DocumentDetailView) =>
+  pipe(
+    doc,
+    O.fromNullable,
+    O.map(_ => _.metadata.signature_fields),
+    O.map(_ => _.length),
+    O.getOrElse(() => 0)
+  );
