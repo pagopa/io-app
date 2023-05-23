@@ -4,6 +4,8 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { ScrollView } from "react-native";
+import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -64,7 +66,9 @@ const BeneficiaryDetailsScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
-      {content}
+      <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+        <ContentWrapper>{content}</ContentWrapper>
+      </ScrollView>
     </BaseScreenComponent>
   );
 };
