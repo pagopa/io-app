@@ -60,7 +60,7 @@ const QtspClauseListItem = (props: Props) => {
             testID="QtspClauseListItemCheckboxTestID"
             name={checked ? "legCheckOn" : "legCheckOff"}
             color={checked ? "blue" : "bluegreyDark"}
-            size={22}
+            size={24}
           />
         </View>
       </TouchableDefaultOpacity>

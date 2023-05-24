@@ -30,7 +30,7 @@ import ZendeskItemPermissionComponent, {
   ItemPermissionProps
 } from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
-import { Icon } from "../../../components/core/icons/Icon";
+import { IOIconSizeScale, Icon } from "../../../components/core/icons/Icon";
 import { IOColors } from "../../../components/core/variables/IOColors";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
@@ -45,7 +45,10 @@ type ItemProps = {
   email?: string;
 };
 
-const iconStyleProps = { size: 24, color: "blue" as IOColors };
+const iconStyleProps = {
+  size: 24 as IOIconSizeScale,
+  color: "blue" as IOColors
+};
 
 const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {

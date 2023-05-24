@@ -90,7 +90,7 @@ const ErrorButton = (props: ErrorButtonProp) => {
         )} ${I18n.t("global.accessibility.alert")}`}
         backgroundColor={"orange"}
         foregroundColor={"white"}
-        iconName={"legWarning"}
+        iconName={"notice"}
         viewRef={viewRef}
       >
         {I18n.t("bonus.cdc.serviceCta.error.status")}
