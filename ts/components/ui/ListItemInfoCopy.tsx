@@ -16,7 +16,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import { Icon } from "../core/icons";
+import { Icon, IOIcons } from "../core/icons";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
@@ -33,11 +33,12 @@ import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
 import { VSpacer } from "../core/spacer/Spacer";
 
-export type ListItemNavAlert = WithTestID<{
-  value: string;
-  description?: string;
-  withoutIcon?: boolean;
+export type ListItemInfoCopy = WithTestID<{
+  label: string;
+  value: string | React.ReactNode;
+  numberOfLines?: number;
   onPress: (event: GestureResponderEvent) => void;
+  icon?: IOIcons;
   // Accessibility
   accessibilityLabel: string;
 }>;
@@ -50,14 +51,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ListItemNavAlert = ({
+export const ListItemInfoCopy = ({
+  label,
   value,
-  description,
-  withoutIcon = false,
+  numberOfLines = 2,
   onPress,
+  icon,
   accessibilityLabel,
   testID
-}: ListItemNavAlert) => {
+}: ListItemInfoCopy) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -111,7 +113,7 @@ export const ListItemNavAlert = ({
   }, [isPressed]);
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
-  const LegacyListItemNavAlert = () => (
+  const LegacyListItemInfoCopy = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -127,31 +129,33 @@ export const ListItemNavAlert = ({
         <Animated.View
           style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
         >
-          {!withoutIcon && (
+          {icon && (
             <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
               <Icon
-                name="errorFilled"
-                color={theme.errorIcon}
+                name={icon}
+                color="grey-450"
                 size={IOListItemVisualParams.iconSize}
               />
             </View>
           )}
           <View style={IOStyles.flex}>
-            <Text style={[styles.textValue, { color: IOColors.bluegreyDark }]}>
-              {value}
-            </Text>
-            {description && (
-              <>
-                <VSpacer size={4} />
-                <Body weight="SemiBold" color={theme.errorText}>
-                  {description}
-                </Body>
-              </>
+            <Body weight="Regular">{label}</Body>
+            <VSpacer size={4} />
+            {/* Let developer using a custom component (e.g: skeleton) */}
+            {typeof value === "string" ? (
+              <Text
+                style={[styles.textValue, { color: IOColors.blue }]}
+                numberOfLines={numberOfLines}
+              >
+                {value}
+              </Text>
+            ) : (
+              { value }
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
-              name="chevronRightListItem"
+              name="copy"
               color="blue"
               size={IOListItemVisualParams.chevronSize}
             />
@@ -162,7 +166,7 @@ export const ListItemNavAlert = ({
   );
   /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemNavAlert = () => (
+  const NewListItemInfoCopy = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -178,29 +182,35 @@ export const ListItemNavAlert = ({
         <Animated.View
           style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
         >
-          {!withoutIcon && (
+          {icon && (
             <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
               <Icon
-                name="errorFilled"
-                color={theme.errorIcon}
+                name={icon}
+                color="grey-450"
                 size={IOListItemVisualParams.iconSize}
               />
             </View>
           )}
           <View style={IOStyles.flex}>
-            <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
-            {description && (
-              <>
-                <VSpacer size={4} />
-                <LabelSmall weight="SemiBold" color={theme.errorText}>
-                  {description}
-                </LabelSmall>
-              </>
+            <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+              {label}
+            </LabelSmall>
+            <VSpacer size={4} />
+            {/* Let developer using a custom component (e.g: skeleton) */}
+            {typeof value === "string" ? (
+              <NewH6
+                color={theme["interactiveElem-default"]}
+                numberOfLines={numberOfLines}
+              >
+                {value}
+              </NewH6>
+            ) : (
+              { value }
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
-              name="chevronRightListItem"
+              name="copy"
               color={theme["interactiveElem-default"]}
               size={IOListItemVisualParams.chevronSize}
             />
@@ -213,10 +223,10 @@ export const ListItemNavAlert = ({
   /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
   without the following condition */
   return isDesignSystemEnabled ? (
-    <NewListItemNavAlert />
+    <NewListItemInfoCopy />
   ) : (
-    <LegacyListItemNavAlert />
+    <LegacyListItemInfoCopy />
   );
 };
 
-export default ListItemNavAlert;
+export default ListItemInfoCopy;
