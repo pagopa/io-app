@@ -101,25 +101,21 @@ const InitiativeDetailsScreen = () => {
     const isRefundable = initiative.status === InitiativeStatusEnum.REFUNDABLE;
 
     const availableAmount = initiative.amount || 0;
+    const accruedAmount = initiative.accrued || 0;
 
     const amountProgress = pipe(
       sequenceS(O.Monad)({
         amount: O.fromNullable(initiative.amount),
-        accrued: O.fromNullable(initiative.accrued)
-      }),
-      O.map(({ amount, accrued }) => ({ total: amount + accrued, amount })),
-      O.filter(({ total }) => total !== 0),
-      O.map(({ amount, total }) => (amount / total) * 100.0),
-      O.getOrElse(() => 100.0)
-    );
-
-    const refundableAmount = pipe(
-      sequenceS(O.Monad)({
         accrued: O.fromNullable(initiative.accrued),
         refunded: O.fromNullable(initiative.refunded)
       }),
-      O.map(({ accrued, refunded }) => accrued - refunded),
-      O.getOrElse(() => 0)
+      O.map(({ amount, accrued, refunded }) => ({
+        total: amount + accrued + refunded,
+        amount
+      })),
+      O.filter(({ total }) => total !== 0),
+      O.map(({ amount, total }) => (amount / total) * 100.0),
+      O.getOrElse(() => 100.0)
     );
 
     return pipe(
@@ -158,7 +154,7 @@ const InitiativeDetailsScreen = () => {
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.toRefund"
                   ),
-                  amount: refundableAmount,
+                  amount: accruedAmount,
                   isDisabled: !isRefundable
                 }
               ];

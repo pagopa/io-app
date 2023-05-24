@@ -40,8 +40,10 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 import {
   getOptionalSignatureFields,
-  getRequiredSignatureFields
+  getRequiredSignatureFields,
+  getSignatureFieldsLength
 } from "../../utils/signatureFields";
+import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -107,14 +109,23 @@ const FciDocumentsScreen = () => {
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
+  const {
+    present: showNoSignatureFieldsBs,
+    bottomSheet: fciNoSignatureFields
+  } = useFciNoSignatureFields({ currentDoc });
+
   const onContinuePress = () => {
-    trackFciSigningDoc();
-    navigation.dispatch(
-      StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
-        documentId: documents[currentDoc].id,
-        currentDoc
-      })
-    );
+    if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
+      trackFciSigningDoc();
+      navigation.dispatch(
+        StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
+          documentId: documents[currentDoc].id,
+          currentDoc
+        })
+      );
+    } else {
+      showNoSignatureFieldsBs();
+    }
   };
 
   const onCancelPress = () => present();
@@ -247,6 +258,7 @@ const FciDocumentsScreen = () => {
           )}
         </SafeAreaView>
         {fciAbortSignature}
+        {fciNoSignatureFields}
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
