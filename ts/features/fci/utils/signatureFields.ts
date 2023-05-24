@@ -9,6 +9,7 @@ import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 import { TranslationKeys } from "../../../../locales/locales";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
+import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
 
 const clausesEnumValues = {
   [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
@@ -134,4 +135,18 @@ export const getClausesCountByTypes = (
       clausesType.includes(f.clause.type) ? O.some(f) : O.none
     ),
     RA.size
+  );
+
+/**
+ * Get the number of signature fields
+ * @param doc the document detail view
+ * @returns the number of signature fields
+ */
+export const getSignatureFieldsLength = (doc: DocumentDetailView) =>
+  pipe(
+    doc,
+    O.fromNullable,
+    O.map(_ => _.metadata.signature_fields),
+    O.map(_ => _.length),
+    O.getOrElse(() => 0)
   );

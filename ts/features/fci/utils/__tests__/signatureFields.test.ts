@@ -1,6 +1,7 @@
 import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import I18n from "../../../../i18n";
+import { mockDocuments } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   clausesByType,
   getAllTypes,
@@ -9,6 +10,7 @@ import {
   getOptionalSignatureFields,
   getRequiredSignatureFields,
   getSectionListData,
+  getSignatureFieldsLength,
   orderSignatureFields
 } from "../signatureFields";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
@@ -294,6 +296,22 @@ describe("Test signatureFields utils", () => {
           ClausesTypeEnum.UNFAIR
         ])
       ).toStrictEqual(2);
+    });
+  });
+
+  describe("Test getSignatureFieldsLength", () => {
+    it("it should returns 3 if document has a signatureFields of length 3", () => {
+      expect(getSignatureFieldsLength(mockDocuments[0])).toStrictEqual(3);
+    });
+    it("it should returns 0 if document has and empty signatureFields array", () => {
+      const doc = {
+        ...mockDocuments[0],
+        metadata: {
+          ...mockDocuments[0].metadata,
+          signature_fields: []
+        }
+      };
+      expect(getSignatureFieldsLength(doc)).toStrictEqual(0);
     });
   });
 });
