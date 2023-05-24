@@ -34,6 +34,10 @@ import {
   zendeskSupportCompleted
 } from "../store/actions";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import {
+  addTicketCustomField,
+  zendeskFciId
+} from "../../../utils/supportAssistance";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -205,6 +209,13 @@ const ZendeskSupportHelpCenter = () => {
   useEffect(() => {
     dispatch(getZendeskConfig.request());
   }, [dispatch]);
+
+  // add the signatureRequestId to the ticket custom fields
+  // this is needed to allow the user to see the ticket in the zendesk portal
+  // this is the case of a user that has opened a ticket from the siggning flow
+  if (signatureRequestId !== undefined) {
+    addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
+  }
 
   return (
     <BaseScreenComponent
