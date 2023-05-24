@@ -101,7 +101,8 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       accrued: 50,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
-      circuitType: "CREDIT_CARD"
+      circuitType: "CREDIT_CARD",
+      status: ""
     }
   ],
   pageNo: 1,
