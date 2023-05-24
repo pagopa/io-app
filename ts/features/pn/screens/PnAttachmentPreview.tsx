@@ -7,9 +7,14 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
-import { mixpanelTrack } from "../../../mixpanel";
 import { useIOSelector } from "../../../store/hooks";
 import { pnMessageAttachmentSelector } from "../store/reducers";
+import {
+  trackPNAttachmentOpen,
+  trackPNAttachmentPreviewStatus,
+  trackPNAttachmentSave,
+  trackPNAttachmentShare
+} from "../analytics";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -49,25 +54,11 @@ export const PnAttachmentPreview = (
     <MessageAttachmentPreview
       messageId={messageId}
       attachment={pnMessageAttachmentOption.value}
-      onPDFError={() => {
-        void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
-          previewStatus: "error"
-        });
-      }}
-      onLoadComplete={() => {
-        void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
-          previewStatus: "displayed"
-        });
-      }}
-      onShare={() => {
-        void mixpanelTrack("PN_ATTACHMENT_SHARE");
-      }}
-      onOpen={() => {
-        void mixpanelTrack("PN_ATTACHMENT_OPEN");
-      }}
-      onDownload={() => {
-        void mixpanelTrack("PN_ATTACHMENT_SAVE");
-      }}
+      onPDFError={() => trackPNAttachmentPreviewStatus("error")}
+      onLoadComplete={() => () => trackPNAttachmentPreviewStatus("displayed")}
+      onShare={() => trackPNAttachmentShare()}
+      onOpen={() => trackPNAttachmentOpen()}
+      onDownload={() => trackPNAttachmentSave()}
     />
   ) : (
     <></>
