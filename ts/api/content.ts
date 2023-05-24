@@ -15,7 +15,6 @@ import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { VersionInfo } from "../../definitions/content/VersionInfo";
 import { Zendesk } from "../../definitions/content/Zendesk";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
-import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
@@ -98,20 +97,6 @@ const getCobadgeServicesT: GetCoBadgeServicesT = {
   response_decoder: basicResponseDecoder(CoBadgeServices)
 };
 
-type GetPrivativeServicesT = IGetApiRequestType<
-  void,
-  never,
-  never,
-  BasicResponseType<PrivativeServices>
->;
-const getPrivativeServicesT: GetPrivativeServicesT = {
-  method: "get",
-  url: () => "/status/privativeServices.json",
-  query: _ => ({}),
-  headers: () => ({}),
-  response_decoder: basicResponseDecoder(PrivativeServices)
-};
-
 type GetVersionInfoT = IGetApiRequestType<
   void,
   never,
@@ -170,10 +155,6 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
     getAbiList: createFetchRequestForApi(getAbisListT, options),
     getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),
-    getPrivativeServices: createFetchRequestForApi(
-      getPrivativeServicesT,
-      options
-    ),
     getVersionInfo: createFetchRequestForApi(getVersionInfoT, options),
     getIdps: createFetchRequestForApi(getIdpsT, options),
     getZendeskConfig: createFetchRequestForApi(getZendeskConfigT, options)
