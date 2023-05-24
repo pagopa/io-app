@@ -75,8 +75,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   fetchTransactionsLoadComplete,
-  fetchTransactionsRequestWithExpBackoff,
-  readTransaction
+  fetchTransactionsRequestWithExpBackoff
 } from "../../store/actions/wallet/transactions";
 import {
   fetchWalletsRequestWithExpBackoff,
@@ -605,8 +604,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
   navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
-    dispatch(readTransaction(transaction));
-
     navigateToTransactionDetailsScreen({
       transaction,
       isPaymentCompletedTransaction: false

@@ -35,9 +35,6 @@ export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
 )<Error>();
 
-export const readTransaction =
-  createStandardAction("READ_TRANSACTION")<Transaction>();
-
 // all transactions id to remove from the store
 export const deleteReadTransaction = createStandardAction(
   "DELETE_READ_TRANSACTION"
@@ -90,7 +87,6 @@ export const fetchPsp = createAsyncAction(
 )<FetchPspRequestPayload, FetchPspSuccessPayload, FetchPspFailurePayload>();
 
 export type TransactionsActions =
-  | ActionType<typeof readTransaction>
   | ActionType<typeof fetchTransactionsSuccess>
   | ActionType<typeof fetchTransactionsRequest>
   | ActionType<typeof fetchTransactionsFailure>
