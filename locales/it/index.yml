@@ -3418,6 +3418,7 @@ idpay:
       infoModal:
         title: "Regole dell'iniziativa"
         button: "Ok, ho capito"
+      spentUntilNow: Speso finora
       summary: Riepilogo
       status: Stato iniziativa
       endDate: Scadenza
