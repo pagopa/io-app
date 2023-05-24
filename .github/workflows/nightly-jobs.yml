@@ -2,8 +2,9 @@ name: Nightly Jobs
 env:
   IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
 on:
-  schedule:
-    - cron:  '0 03 * * *'
+  - pull_request
+  # - schedule:
+  #   - cron:  '0 03 * * *'
 jobs:
   pagopa_specs_diff:
     runs-on: ubuntu-latest
