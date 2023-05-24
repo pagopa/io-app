@@ -16,6 +16,7 @@ import {
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../features/bonus/bpd/screens/iban/MainIbanScreen";
+import { IdPayInitiativeListScreen } from "../features/idpay/wallet/screens/AvailableInitiativesListScreen";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreen } from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
@@ -32,20 +33,19 @@ import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge
 import { ActivateBpdOnNewCreditCardScreen } from "../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import { PaymentMethodOnboardingPayPalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
-import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
-import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
-import ActivateBpdOnNewPrivativeScreen from "../features/wallet/onboarding/privative/screens/ActivateBpdOnNewPrivativeScreen";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import ActivateBpdOnNewSatispayScreen from "../features/wallet/onboarding/satispay/screens/ActivateBpdOnNewSatispayScreen";
-import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
-import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
+import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
+import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
+import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
+import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
@@ -57,12 +57,8 @@ import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
-import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
-import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
-import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import { useIOSelector } from "../store/hooks";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
-import { IdPayInitiativeListScreen } from "../features/idpay/wallet/screens/AvailableInitiativesListScreen";
 import ROUTES from "./routes";
 
 const Stack = createStackNavigator();
@@ -118,14 +114,6 @@ const bptRoutes = () => (
       name={WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW}
       component={ActivateBpdOnNewCoBadgeScreen}
     />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN}
-      component={PaymentMethodOnboardingPrivativeNavigator}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW}
-      component={ActivateBpdOnNewPrivativeScreen}
-    />
   </>
 );
 
@@ -179,10 +167,6 @@ const WalletNavigator = () => {
       <Stack.Screen
         name={ROUTES.WALLET_COBADGE_DETAIL}
         component={CobadgeDetailScreen}
-      />
-      <Stack.Screen
-        name={ROUTES.WALLET_PRIVATIVE_DETAIL}
-        component={PrivativeDetailScreen}
       />
       <Stack.Screen name={ROUTES.WALLET_ADD_CARD} component={AddCardScreen} />
       <Stack.Screen

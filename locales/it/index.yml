@@ -1008,7 +1008,6 @@ wallet:
       bancomat: "BANCOMAT {{bankName}}"
       coBadge: "Carta {{brand}}, {{bankName}}"
       bancomatPay: "BANCOMATPay {{bankName}}"
-      privative: "Carta fedeltà, il numero della carta finisce con {{blurredNumber}}"
       cta: "Visualizza i dettagli del metodo"
       bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
@@ -1169,41 +1168,6 @@ wallet:
           unknown:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
-    privative:
-      headerTitle: "Aggiungi carta supermercato"
-      choosePrivativeIssuer:
-        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
-        title: "Scegli il marchio della tua carta"
-        body: "Aggiungendo la carta al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO."
-        koDisabled:
-          title: "Questo supermercato non offre ancora questa funzionalità"
-          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
-        koUnavailable:
-          title: "Non riusciamo a contattare il server"
-          body: "Siamo al lavoro per risolvere il problema."
-      addPrivativeCardNumber:
-        title: "Inserisci il numero carta"
-        body: "Digita le cifre riportate sul fronte. IO verificherà se la carta è associata al tuo codice fiscale."
-        disclaimer:
-          text1: "Proseguendo accetti l’"
-          text2: "informativa sul trattamento dei dati personali"
-      search:
-        loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
-        koTimeout:
-          title: "Al momento è impossibile verificare la tua carta"
-          body: "Riprova per favore"
-        koNotFound:
-          title: "C'è un problema con questa carta"
-          body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
-          cta:
-            modifyCardNumber: "Modifica numero carta"
-        koServiceError:
-          title: "Al momento è impossibile recuperare la tua carta"
-          body: "Riprova più tardi per favore"
-      add:
-        screenTitle: "Vuoi aggiungere questa carta?"
-        loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
-        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta il tuo supermercato."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1440,9 +1404,6 @@ wallet:
     digital:
       name: App e strumenti di pagamento digitali
       description: I tuoi strumenti digitali preferiti su IO
-    loyalty:
-      name: Carta di pagamento supermercati
-      description: Il circuito che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: Il circuito che usi per pagare nei negozi
