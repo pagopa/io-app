@@ -17,7 +17,7 @@ const ICON_SIZE = 24;
 const okColor: IOColors = "green";
 const koColor: IOColors = "red";
 const okIcon: IOIcons = "ok";
-const koIcon: IOIcons = "legError";
+const koIcon: IOIcons = "errorFilled";
 const markDownElements = 2;
 const CieNotSupported: React.FunctionComponent<Props> = props => {
   const [markdownLoaded, setMarkdownLoaded] = useState(0);

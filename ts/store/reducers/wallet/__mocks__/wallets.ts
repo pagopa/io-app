@@ -1,10 +1,8 @@
 // 2 bancomat, 1 credit card. All compliant with pagoPa
 import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
-import {
-  PrivativePaymentMethod,
-  RawBPayPaymentMethod
-} from "../../../../types/pagopa";
+import { PaymentMethod, RawBPayPaymentMethod } from "../../../../types/pagopa";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
+import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 
 export const walletsV2_1 = {
   data: [
@@ -282,8 +280,8 @@ export const rawBPay: RawBPayPaymentMethod = {
   kind: "BPay"
 };
 
-export const mockPrivativeCard: PrivativePaymentMethod = {
-  walletType: "Card",
+export const mockCreditCardPaymentMethod: PaymentMethod = {
+  walletType: WalletTypeEnum.Card,
   createDate: "2021-07-08",
   enableableFunctions: [
     EnableableFunctionsEnum.FA,
@@ -303,13 +301,13 @@ export const mockPrivativeCard: PrivativePaymentMethod = {
       "d48a59cdfbe3da7e4fe25e28cbb47d5747720ecc6fc392c87f1636fe95db22f90004",
     holder: "Maria Rossi",
     htokenList: ["token1", "token2"],
-    issuerAbiCode: "CONAD",
-    type: "PRV"
+    issuerAbiCode: "ABICODE",
+    type: TypeEnum.DEB
   },
   onboardingChannel: "IO",
   pagoPA: false,
   updateDate: "2020-11-20",
-  kind: "Privative",
+  kind: "CreditCard",
   caption: "●●●●0001",
   icon: 37
-} as PrivativePaymentMethod;
+};

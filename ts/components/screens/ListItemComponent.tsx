@@ -16,7 +16,7 @@ import { IOBadge } from "../core/IOBadge";
 import { HSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
-import { IOIcons, Icon, IOIconSizeScale } from "../core/icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "./BadgeComponent";
 

@@ -8,9 +8,6 @@ import onboardingBPayReducer, {
 import onboardingCoBadgeReducer, {
   OnboardingCoBadgeState
 } from "../cobadge/store/reducers";
-import onboardingPrivativeReducer, {
-  OnboardingPrivativeState
-} from "../privative/store/reducers";
 import onboardingSatispayReducer, {
   OnboardSatispayState
 } from "../satispay/store/reducers";
@@ -25,7 +22,6 @@ export type PaymentMethodOnboardingState = {
   satispay: OnboardSatispayState;
   bPay: OnboardingBPayState;
   coBadge: OnboardingCoBadgeState;
-  privative: OnboardingPrivativeState;
   paypal: OnboardPayPalState;
 };
 
@@ -35,7 +31,6 @@ const onboardingReducer = combineReducers<PaymentMethodOnboardingState, Action>(
     satispay: onboardingSatispayReducer,
     bPay: onboardingBPayReducer,
     coBadge: onboardingCoBadgeReducer,
-    privative: onboardingPrivativeReducer,
     paypal: onboardingPaypalReducer
   }
 );

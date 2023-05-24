@@ -995,7 +995,6 @@ wallet:
       bancomat: "{{bankName}} BANCOMAT"
       coBadge: "{{brand}} Card, {{bankName}}"
       bancomatPay: "{{bankName}} BANCOMATPay"
-      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
       cta: "View method details"
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
@@ -1156,41 +1155,6 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
-    privative:
-      headerTitle: "Add supermarket card"
-      choosePrivativeIssuer:
-        loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose the card brand"
-        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
-        koDisabled:
-          title: "This supermarket doesn't offer this feature yet"
-          body: "We are working to allow you to add your card soon."
-        koUnavailable:
-          title: "We're unable to contact the server"
-          body: "We are working to solve the problem."
-      addPrivativeCardNumber:
-        title: "Insert card number"
-        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
-        disclaimer:
-          text1: "By continuing you accept the"
-          text2: "information on the processing of personal data"
-      search:
-        loading: "We are verifying your card\n\nPlease wait"
-        koTimeout:
-          title: "It is currently impossible to verify your card"
-          body: "Please try again"
-        koNotFound:
-          title: "There is an issue with this card"
-          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
-          cta:
-            modifyCardNumber: "Change card number"
-        koServiceError:
-          title: "We're unable to retrieve your card"
-          body: "Please try again later."
-      add:
-        screenTitle: "Do you want to add this card?"
-        loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1427,9 +1391,6 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
-    loyalty:
-      name: Supermarket Loyalty Card
-      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card used to pay in stores
@@ -3399,6 +3360,7 @@ idpay:
       infoModal:
         title: "Regole dell'iniziativa"
         button: "Ok, ho capito"
+      spentUntilNow: Speso finora
       summary: Riepilogo
       status: Stato iniziativa
       endDate: Scadenza

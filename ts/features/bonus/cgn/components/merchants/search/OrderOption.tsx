@@ -24,7 +24,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
     </H4>
     <Icon
       name={checked ? "legRadioOn" : "legRadioOff"}
-      size={22}
+      size={24}
       color={checked ? "blue" : "bluegrey"}
     />
   </ListItem>

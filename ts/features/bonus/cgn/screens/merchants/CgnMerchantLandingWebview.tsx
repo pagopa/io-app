@@ -36,7 +36,7 @@ const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
   return (
     <BaseScreenComponent
       customRightIcon={{
-        iconName: "legClose",
+        iconName: "close",
         onPress: () => props.navigation.goBack()
       }}
     >

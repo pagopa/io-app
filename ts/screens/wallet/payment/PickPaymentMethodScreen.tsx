@@ -50,7 +50,6 @@ import {
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
   paypalListSelector,
-  privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
@@ -219,7 +218,6 @@ const mapStateToProps = (state: GlobalState) => {
     ? bPayListVisibleInWalletSelector(state)
     : pot.none;
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
-  const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const psps = state.wallet.payment.pspsV2.psps;
   const pspV2 = pspV2ListSelector(state);
   const isLoading =
@@ -232,8 +230,7 @@ const mapStateToProps = (state: GlobalState) => {
     potVisiblePaypal,
     potVisibleBancomat,
     potVisibleBPay,
-    potVisibleSatispay,
-    potVisiblePrivative
+    potVisibleSatispay
   ].reduce(
     (
       acc: ReadonlyArray<PaymentMethod>,

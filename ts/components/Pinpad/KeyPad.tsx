@@ -7,13 +7,13 @@ import { Platform, StyleSheet, View } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
-import { IOIcons, Icon } from "../core/icons/Icon";
+import { IOIconSizeScale, IOIcons, Icon } from "../core/icons/Icon";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
 export type DigitRpr = E.Either<
   string,
-  { name: IOIcons; size: number; accessibilityLabel: string }
+  { name: IOIcons; size: IOIconSizeScale; accessibilityLabel: string }
 >;
 type Digit = ITuple2<DigitRpr, () => void> | undefined;
 
