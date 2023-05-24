@@ -54,7 +54,7 @@ export const CheckboxLabel = ({
         opacity: disabled ? DISABLED_OPACITY : 1
       }}
     >
-      <View style={[IOStyles.row, IOStyles.alignCenter]}>
+      <View style={[IOStyles.row, { alignItems: "flex-start" }]}>
         <View pointerEvents="none">
           <AnimatedCheckbox checked={checked ?? toggleValue} />
         </View>

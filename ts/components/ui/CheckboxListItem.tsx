@@ -37,10 +37,10 @@ const DISABLED_OPACITY = 0.5;
 // disabled: the component is no longer touchable
 // onPress:
 type OwnProps = Props &
-  Pick<React.ComponentProps<typeof AnimatedCheckbox>, "disabled" | "checked"> &
+  Pick<React.ComponentProps<typeof AnimatedCheckbox>, "checked"> &
   Pick<
     React.ComponentProps<typeof Pressable>,
-    "onPress" | "accessibilityLabel"
+    "onPress" | "accessibilityLabel" | "disabled"
   >;
 
 /**
@@ -122,11 +122,11 @@ export const CheckboxListItem = ({
 
   return (
     <Pressable
-      disabled={disabled}
       onPress={toggleCheckbox}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       testID="AnimatedCheckbox"
+      disabled={disabled}
       style={{
         opacity: disabled ? DISABLED_OPACITY : 1
       }}

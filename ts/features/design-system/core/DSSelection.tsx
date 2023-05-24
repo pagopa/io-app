@@ -3,7 +3,6 @@ import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
-import { Label } from "../../../components/core/typography/Label";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
 import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
@@ -11,7 +10,6 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { Divider } from "../../../components/core/Divider";
-import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
@@ -27,15 +25,56 @@ const styles = StyleSheet.create({
 
 export const DSSelection = () => (
   <DesignSystemScreen title={"Selection"}>
-    <H2>Checkbox</H2>
-    <VSpacer size={16} />
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Checkbox
+    </H2>
+    {/* CheckboxLabel */}
+    {renderCheckboxLabel()}
+    {/* CheckboxListItem */}
+    {renderCheckboxListItem()}
+
+    {/* Legacy components */}
+    <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
+      Legacy components
+    </H2>
+    <H4>{"<CheckBox />"}</H4>
+    <View style={styles.content}>
+      <CheckBox />
+      <CheckBox checked={true} />
+    </View>
+    <H4>{"<RemoteSwitch />"}</H4>
+    <View style={styles.content}>
+      <RemoteSwitch value={pot.none} />
+      <RemoteSwitch
+        value={pot.noneError(new Error())}
+        onRetry={() => Alert.alert("Retry!")}
+      />
+      <RemoteSwitch value={pot.some(true)} />
+      <RemoteSwitch value={pot.someUpdating(false, true)} />
+      <RemoteSwitch value={pot.some(false)} />
+      <RemoteSwitch value={pot.someUpdating(true, false)} />
+      <VSpacer size={48} />
+    </View>
+  </DesignSystemScreen>
+);
+
+const renderCheckboxLabel = () => (
+  <>
     <DSComponentViewerBox name="CheckboxLabel">
       <CheckboxLabel label="This is a test" />
       <VSpacer size={16} />
+      <CheckboxLabel label="This is a test with a very loooong looooooong loooooooong text" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="CheckboxLabel (disabled)">
       <CheckboxLabel disabled checked={true} label="This is a test" />
       <VSpacer size={16} />
       <CheckboxLabel disabled label="This is a test" />
     </DSComponentViewerBox>
+  </>
+);
+
+const renderCheckboxListItem = () => (
+  <>
     <DSComponentViewerBox name="CheckboxListItem">
       <CheckboxListItem
         value="Usa configurazione rapida"
@@ -82,26 +121,22 @@ export const DSSelection = () => (
         accessibilityLabel={""}
       />
     </DSComponentViewerBox>
-    <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
-      Legacy components
-    </H2>
-    <H4>{"<CheckBox />"}</H4>
-    <View style={styles.content}>
-      <CheckBox />
-      <CheckBox checked={true} />
-    </View>
-    <H4>{"<RemoteSwitch />"}</H4>
-    <View style={styles.content}>
-      <RemoteSwitch value={pot.none} />
-      <RemoteSwitch
-        value={pot.noneError(new Error())}
-        onRetry={() => Alert.alert("Retry!")}
+    <DSComponentViewerBox name="CheckBoxListItem (disabled)">
+      <CheckboxListItem
+        disabled
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
       />
-      <RemoteSwitch value={pot.some(true)} />
-      <RemoteSwitch value={pot.someUpdating(false, true)} />
-      <RemoteSwitch value={pot.some(false)} />
-      <RemoteSwitch value={pot.someUpdating(true, false)} />
-      <VSpacer size={48} />
-    </View>
-  </DesignSystemScreen>
+      <Divider />
+      <CheckboxListItem
+        disabled
+        icon="coggle"
+        value="Usa configurazione rapida"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
+        }
+        accessibilityLabel={""}
+      />
+    </DSComponentViewerBox>
+  </>
 );
