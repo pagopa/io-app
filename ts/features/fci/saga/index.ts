@@ -167,11 +167,6 @@ function* watchFciQtspClausesSaga(): SagaIterator {
  * Handle the FCI start requests saga
  */
 function* watchFciStartSaga(): SagaIterator {
-  const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
-  resetCustomFields();
-  addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
-  addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
-
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
