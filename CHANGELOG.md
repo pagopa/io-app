@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.34.0-rc.1](https://github.com/pagopa/io-app/compare/2.34.0-rc.0...2.34.0-rc.1) (2023-05-24)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1630](https://pagopa.atlassian.net/browse/SFEQS-1630)] Add context based assistance ([#4635](https://github.com/pagopa/io-app/issues/4635)) ([87fad94](https://github.com/pagopa/io-app/commit/87fad94e57e12370b93b72ba075dec33c1606b3f))
+* [[IOBP-48](https://pagopa.atlassian.net/browse/IOBP-48)] Discount initiative details update ([#4647](https://github.com/pagopa/io-app/issues/4647)) ([f19848c](https://github.com/pagopa/io-app/commit/f19848c16ffcfd1719a876224dae246e9660a1de))
+* **Firma con IO:** [[SFEQS-1265](https://pagopa.atlassian.net/browse/SFEQS-1265)] Add the signing flow without signature fields ([#4608](https://github.com/pagopa/io-app/issues/4608)) ([79f73a8](https://github.com/pagopa/io-app/commit/79f73a8ce8a3abc5dc078e049ea1f61d29c853ee))
+
+
+### Bug Fixes
+
+* [[IABT-1478](https://pagopa.atlassian.net/browse/IABT-1478)] Fix visual regression of the `CgnMerchantsDiscountItem` component ([#4621](https://github.com/pagopa/io-app/issues/4621)) ([b7785fd](https://github.com/pagopa/io-app/commit/b7785fd8ff3fe327b7c4510309acca374bab07af))
+* [[IOBP-31](https://pagopa.atlassian.net/browse/IOBP-31)] Fix privacy button in IDPay beneficiary details screen ([#4637](https://github.com/pagopa/io-app/issues/4637)) ([4ec6f60](https://github.com/pagopa/io-app/commit/4ec6f609733ec73383dda3e37c3ef37ecdd94262))
+* [[IOBP-43](https://pagopa.atlassian.net/browse/IOBP-43)] Removed now deprecated privative cards code ([#4615](https://github.com/pagopa/io-app/issues/4615)) ([b81de31](https://github.com/pagopa/io-app/commit/b81de31337f1355a365c57b833693f407c10ca8d))
+* [[IOBP-51](https://pagopa.atlassian.net/browse/IOBP-51)] Fix IDPay initiative budget info in details screen ([#4639](https://github.com/pagopa/io-app/issues/4639)) ([dc745bd](https://github.com/pagopa/io-app/commit/dc745bd504e876458f30f7fc6cc830d219537889))
+* [[IOBP-53](https://pagopa.atlassian.net/browse/IOBP-53)] Fix IDPay initiative bonus counters ([#4640](https://github.com/pagopa/io-app/issues/4640)) ([c391ebf](https://github.com/pagopa/io-app/commit/c391ebf12de80692debdfad37dd7bdc89228e5bc))
+
+
+### Chores
+
+* [[IOAPPFD0-94](https://pagopa.atlassian.net/browse/IOAPPFD0-94)] Remove legacy icons ([#4579](https://github.com/pagopa/io-app/issues/4579)) ([865d08c](https://github.com/pagopa/io-app/commit/865d08c7beb3fd29f15a11fd0beee093f6eb0c47))
+* add autoverify true property to intent-filter app link ([#4643](https://github.com/pagopa/io-app/issues/4643)) ([9d013ef](https://github.com/pagopa/io-app/commit/9d013ef6c5a0b3cd730585091589d1c47122b766))
+* **deps:** bump requests from 2.26.0 to 2.31.0 in /scripts/check_cie_button_exists ([#4641](https://github.com/pagopa/io-app/issues/4641)) ([3450b49](https://github.com/pagopa/io-app/commit/3450b49cfa869dca92d1d5cc2c451cd02bdaed20))
+* **deps:** bump requests from 2.26.0 to 2.31.0 in /scripts/check_urls ([#4642](https://github.com/pagopa/io-app/issues/4642)) ([c6432f9](https://github.com/pagopa/io-app/commit/c6432f9c71748572c7d52a525dee2ef717b26f1d))
+* [[IOAPPFD0-103](https://pagopa.atlassian.net/browse/IOAPPFD0-103)] Focus of `ListItemNav` when touch ends ([#4644](https://github.com/pagopa/io-app/issues/4644)) ([6407cd0](https://github.com/pagopa/io-app/commit/6407cd02862d3fc8499a52be9672268b4c64426a))
+* [[IOAPPFD0-95](https://pagopa.atlassian.net/browse/IOAPPFD0-95)] Add the new `ListItemInfoCopy` component ([#4584](https://github.com/pagopa/io-app/issues/4584)) ([6eb807e](https://github.com/pagopa/io-app/commit/6eb807eb93f85963556d9921b7d2a272e4c12687))
+
 ## [2.34.0-rc.0](https://github.com/pagopa/io-app/compare/2.33.0-rc.1...2.34.0-rc.0) (2023-05-23)
 
 

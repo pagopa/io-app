@@ -21,7 +21,12 @@ import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
-import { AnimatedIcon, IOIcons, IconClassComponent } from "../core/icons/Icon";
+import {
+  AnimatedIcon,
+  IOIconSizeScale,
+  IOIcons,
+  IconClassComponent
+} from "../core/icons/Icon";
 import { HSpacer } from "../core/spacer/Spacer";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -262,7 +267,7 @@ ButtonLink) => {
   }, [isPressed]);
 
   // Icon size
-  const iconSize = 24;
+  const iconSize: IOIconSizeScale = 24;
 
   return (
     <Pressable

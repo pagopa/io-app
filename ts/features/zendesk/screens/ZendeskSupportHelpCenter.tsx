@@ -33,6 +33,11 @@ import {
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
+import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import {
+  addTicketCustomField,
+  zendeskFciId
+} from "../../../utils/supportAssistance";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -166,6 +171,7 @@ const ZendeskSupportHelpCenter = () => {
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
+  const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
@@ -204,12 +210,19 @@ const ZendeskSupportHelpCenter = () => {
     dispatch(getZendeskConfig.request());
   }, [dispatch]);
 
+  // add the signatureRequestId to the ticket custom fields
+  // this is needed to allow the user to see the ticket in the zendesk portal
+  // this is the case of a user that has opened a ticket from the siggning flow
+  if (signatureRequestId !== undefined) {
+    addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
+  }
+
   return (
     <BaseScreenComponent
       showChat={false}
       customGoBack={<View />}
       customRightIcon={{
-        iconName: "legClose",
+        iconName: "close",
         onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}
@@ -230,7 +243,9 @@ const ZendeskSupportHelpCenter = () => {
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
             assistanceForCard={assistanceForCard}
-            assistanceForFci={assistanceForFci}
+            assistanceForFci={
+              assistanceForFci || signatureRequestId !== undefined
+            }
           />
           <VSpacer size={16} />
         </ScrollView>

@@ -488,7 +488,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         }
         activeOpacity={1}
       >
-        <Icon name="legQrCode" color="white" size={24} />
+        <Icon name="qrCode" color="white" size={24} />
         <HSpacer size={8} />
         <NBButtonText>{I18n.t("wallet.payNotice")}</NBButtonText>
       </ButtonDefaultOpacity>

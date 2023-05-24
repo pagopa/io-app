@@ -1,6 +1,6 @@
 import React from "react";
 import { GestureResponderEvent, View } from "react-native";
-import { IOIcons, Icon, IOIconSizeScale } from "../core/icons";
+import { Icon, IOIcons, IOIconSizeScale } from "../core/icons";
 import { IOPictograms, Pictogram } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";

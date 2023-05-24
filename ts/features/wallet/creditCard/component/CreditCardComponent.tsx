@@ -80,7 +80,7 @@ const topLeft = (
         </H5>
       </View>
       {pot.getOrElse(favorite, false) && (
-        <Icon name="legStarFilled" color="blue" />
+        <Icon name="starFilled" color="blue" />
       )}
     </View>
   );

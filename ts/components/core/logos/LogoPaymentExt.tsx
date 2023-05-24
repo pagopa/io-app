@@ -37,12 +37,12 @@ export const IOPaymentExtLogos = {
 
 export type IOLogoPaymentExtType = keyof typeof IOPaymentExtLogos;
 
-type IOIconsProps = {
+type IOPaymentLogos = {
   name: IOLogoPaymentExtType;
   size?: number | "100%";
 };
 
-const LogoPaymentExt = ({ name, size = 24, ...props }: IOIconsProps) => {
+const LogoPaymentExt = ({ name, size = 24, ...props }: IOPaymentLogos) => {
   const LogoElement = IOPaymentExtLogos[name];
   return <LogoElement {...props} size={size} />;
 };

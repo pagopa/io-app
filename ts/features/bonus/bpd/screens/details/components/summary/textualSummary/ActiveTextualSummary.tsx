@@ -14,7 +14,7 @@ type Props = React.ComponentProps<typeof TextualSummary>;
  * Display a warning for the current period if transactions < minTransaction and status === "Active"
  */
 const Warning = (props: { period: BpdPeriod }) => (
-  <InfoBox iconName="legLocked">
+  <InfoBox iconName="locked">
     <Body testID={"currentPeriodWarning"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodKOBody.one"
@@ -38,7 +38,7 @@ const Warning = (props: { period: BpdPeriod }) => (
  * Display a message informing the user that the cashback is unlocked for the current period
  */
 const Unlock = (props: Props) => (
-  <InfoBox iconName="legUnlocked">
+  <InfoBox iconName="unlocked">
     <Body testID={"currentPeriodUnlock"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodUnlockBody",
@@ -71,7 +71,7 @@ const MaxAmount = (props: { name: string | undefined }) => (
  * Display a message informing the user that at the moment he may be eligible for supercashback
  */
 const SuperCashback = (props: { superCashbackAmount: number }) => (
-  <InfoBox iconName="legAbacus">
+  <InfoBox iconName="abacus">
     <Body testID={"currentPeriodSuperCashback"}>
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.currentPeriodSuperCashback",

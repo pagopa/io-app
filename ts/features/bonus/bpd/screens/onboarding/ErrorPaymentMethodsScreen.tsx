@@ -45,7 +45,7 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <VSpacer size={40} />
             <VSpacer size={40} />
-            <Icon name="ok" size={120} color="aqua" />
+            <Icon name="ok" size={96} color="aqua" />
             <VSpacer size={48} />
             <H2 style={styles.center}>{title}</H2>
             <VSpacer size={40} />
