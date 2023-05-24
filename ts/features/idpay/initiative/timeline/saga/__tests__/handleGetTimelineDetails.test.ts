@@ -19,7 +19,8 @@ const mockResponseSuccess: OperationDTO = {
   operationId: "1",
   accrued: 100.0,
   idTrxAcquirer: "1",
-  idTrxIssuer: "1"
+  idTrxIssuer: "1",
+  status: ""
 };
 const mockToken = "mock";
 const mockLanguage = PreferredLanguageEnum.it_IT;
