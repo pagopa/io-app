@@ -66,7 +66,7 @@ const PossibleVoucherStateOption = ({
     </H4>
     <Icon
       name={checked ? "legRadioOn" : "legRadioOff"}
-      size={22}
+      size={24}
       color={checked ? "blue" : "bluegrey"}
     />
   </ListItem>
@@ -137,7 +137,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         </Body>
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="legClose" />
+            <Icon name="close" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

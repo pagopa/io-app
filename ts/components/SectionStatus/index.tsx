@@ -35,7 +35,7 @@ export const statusColorMap: Record<LevelEnum, IOColors> = {
 
 export const statusIconMap: Record<LevelEnum, IOIcons> = {
   [LevelEnum.normal]: "ok",
-  [LevelEnum.critical]: "legWarning",
+  [LevelEnum.critical]: "notice",
   [LevelEnum.warning]: "info"
 };
 

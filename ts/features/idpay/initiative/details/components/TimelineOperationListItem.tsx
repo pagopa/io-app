@@ -40,7 +40,7 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
     case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case RefundOperationTypeEnum.REJECTED_REFUND:
-      return <Icon name={"legWarning"} color="red" />;
+      return <Icon name={"notice"} color="red" />;
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
