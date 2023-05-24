@@ -3,13 +3,13 @@
  */
 
 export const IOSpringValues = {
-  /* Used by react-reanimated package.
-  For reference: https://docs.swmansion.com/react-native-reanimated/docs/2.3.x/api/animations/withSpring */
+  /* Used by Reanimated package */
   button: {
     damping: 20,
     mass: 0.5,
     stiffness: 300
   },
+  /* Used by selection items (checkbox, radio, etc…) */
   selection: {
     damping: 10,
     mass: 0.5,

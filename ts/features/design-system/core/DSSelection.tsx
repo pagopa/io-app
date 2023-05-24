@@ -11,6 +11,8 @@ import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { Divider } from "../../../components/core/Divider";
+import { H3 } from "../../../components/core/typography/H3";
+import { H4 } from "../../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
   content: {
@@ -36,6 +38,12 @@ export const DSSelection = () => (
     </DSComponentViewerBox>
     <DSComponentViewerBox name="CheckboxListItem">
       <CheckboxListItem
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        icon="coggle"
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
@@ -74,12 +82,15 @@ export const DSSelection = () => (
         accessibilityLabel={""}
       />
     </DSComponentViewerBox>
-    <Label>{"<CheckBox />"}</Label>
+    <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
+      Legacy components
+    </H2>
+    <H4>{"<CheckBox />"}</H4>
     <View style={styles.content}>
       <CheckBox />
       <CheckBox checked={true} />
     </View>
-    <Label>{"<RemoteSwitch />"}</Label>
+    <H4>{"<RemoteSwitch />"}</H4>
     <View style={styles.content}>
       <RemoteSwitch value={pot.none} />
       <RemoteSwitch
@@ -90,6 +101,7 @@ export const DSSelection = () => (
       <RemoteSwitch value={pot.someUpdating(false, true)} />
       <RemoteSwitch value={pot.some(false)} />
       <RemoteSwitch value={pot.someUpdating(true, false)} />
+      <VSpacer size={48} />
     </View>
   </DesignSystemScreen>
 );

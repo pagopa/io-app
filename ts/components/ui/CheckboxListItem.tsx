@@ -1,7 +1,16 @@
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Pressable, View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
 import { NewH6 } from "../core/typography/NewH6";
 import {
   IOSelectionItemStyles,
@@ -11,8 +20,9 @@ import {
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { useIOTheme } from "../core/variables/IOColors";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import { IOIcons, Icon } from "../core/icons";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 
 type Props = {
   value: string;
@@ -49,8 +59,58 @@ export const CheckboxListItem = ({
   onValueChange
 }: OwnProps) => {
   const [toggleValue, setToggleValue] = useState(checked ?? false);
+  // Animations
+  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
+  // Scaling transformation applied when the button is pressed
+  const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
+
+  const progressPressed = useDerivedValue(() =>
+    withSpring(isPressed.value, IOSpringValues.button)
+  );
+
+  // Theme
   const theme = useIOTheme();
+
+  const mapBackgroundStates: Record<string, string> = {
+    default: hexToRgba(IOColors[theme["listItem-pressed"]], 0),
+    pressed: IOColors[theme["listItem-pressed"]]
+  };
+
+  // Interpolate animation values from `isPressed` values
+  const animatedScaleStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      progressPressed.value,
+      [0, 1],
+      [1, animationScaleValue],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
+
+  const onPressIn = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 1;
+  }, [isPressed]);
+  const onPressOut = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 0;
+  }, [isPressed]);
+
+  const animatedBackgroundStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [mapBackgroundStates.default, mapBackgroundStates.pressed]
+    );
+
+    return {
+      backgroundColor
+    };
+  });
 
   const toggleCheckbox = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
@@ -64,41 +124,49 @@ export const CheckboxListItem = ({
     <Pressable
       disabled={disabled}
       onPress={toggleCheckbox}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
       testID="AnimatedCheckbox"
       style={{
         opacity: disabled ? DISABLED_OPACITY : 1
       }}
     >
-      <View style={IOSelectionItemStyles.listItem}>
-        <View style={IOSelectionItemStyles.listItemInner}>
-          <View style={IOStyles.row}>
-            {icon && (
-              <View
-                style={{ marginRight: IOSelectionItemVisualParams.iconMargin }}
-              >
-                <Icon
-                  name={icon}
-                  color="grey-300"
-                  size={IOSelectionItemVisualParams.iconSize}
-                />
-              </View>
-            )}
-            <NewH6 color={"black"}>{value}</NewH6>
+      <Animated.View
+        style={[IOSelectionItemStyles.listItem, animatedBackgroundStyle]}
+      >
+        <Animated.View style={animatedScaleStyle}>
+          <View style={IOSelectionItemStyles.listItemInner}>
+            <View style={IOStyles.row}>
+              {icon && (
+                <View
+                  style={{
+                    marginRight: IOSelectionItemVisualParams.iconMargin
+                  }}
+                >
+                  <Icon
+                    name={icon}
+                    color="grey-300"
+                    size={IOSelectionItemVisualParams.iconSize}
+                  />
+                </View>
+              )}
+              <NewH6 color={"black"}>{value}</NewH6>
+            </View>
+            <HSpacer size={8} />
+            <View pointerEvents="none">
+              <AnimatedCheckbox checked={checked ?? toggleValue} />
+            </View>
           </View>
-          <HSpacer size={8} />
-          <View pointerEvents="none">
-            <AnimatedCheckbox checked={checked ?? toggleValue} />
-          </View>
-        </View>
-        {description && (
-          <View>
-            <VSpacer size={4} />
-            <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
-              {description}
-            </LabelSmall>
-          </View>
-        )}
-      </View>
+          {description && (
+            <View>
+              <VSpacer size={4} />
+              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+                {description}
+              </LabelSmall>
+            </View>
+          )}
+        </Animated.View>
+      </Animated.View>
     </Pressable>
   );
 };
