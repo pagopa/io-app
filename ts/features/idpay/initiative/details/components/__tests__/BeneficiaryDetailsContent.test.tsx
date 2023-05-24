@@ -10,6 +10,17 @@ import {
   BeneficiaryDetailsProps
 } from "../BeneficiaryDetailsContent";
 
+const mockNavigation = jest.fn();
+
+jest.mock("@react-navigation/native", () => {
+  const actualNav = jest.requireActual("@react-navigation/native");
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockNavigation
+    })
+  };
+});
 const mockDiscountActiveInitiative: BeneficiaryDetailsProps = {
   initiativeDetails: {
     initiativeId: "a",
@@ -38,6 +49,7 @@ describe("Test BeneficiaryDetailsContent component", () => {
   it("should render a BeneficiaryDetailsContent component with props correctly", () => {
     const component = renderComponent({ ...mockDiscountActiveInitiative });
     expect(component).toBeTruthy();
+    expect(component).toMatchSnapshot();
   });
   it("should correctly render type dependant entries in case of a discount initiative", () => {
     const component = renderComponent({ ...mockDiscountActiveInitiative });
