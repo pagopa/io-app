@@ -115,10 +115,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <SectionHeader
-        iconName="legEmail"
-        title={"serviceDetail.contacts.title"}
-      />
+      <SectionHeader iconName="email" title={"serviceDetail.contacts.title"} />
       {/*
         This Toggle is disabled if the current service is a Special Service cause user can
         enable or disable the service only using the proper Special Service flow and not only tapping the specific toggle

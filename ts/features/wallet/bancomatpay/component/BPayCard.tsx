@@ -49,7 +49,7 @@ const topLeft = (phone: string) => (
   <View style={IOStyles.rowSpaceBetween}>
     {phone && (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon name="legPhone" size={24} />
+        <Icon name="phone" size={24} />
         <HSpacer size={8} />
         <H4 weight={"Regular"} testID="phone">
           {phone}
