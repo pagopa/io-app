@@ -192,7 +192,7 @@ export const OtpCodeComponent = (props: Props) => {
       >
         {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>
-          <Icon name="legCopy" color="blue" />
+          <Icon name="copy" color="blue" />
         </View>
       </TouchableDefaultOpacity>
       <View

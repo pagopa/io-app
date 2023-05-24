@@ -12,7 +12,8 @@ import {
   Easing,
   SafeAreaView,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  Platform
 } from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
@@ -398,7 +399,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     <ActiveBonusFooterButtons
       firstButton={{
         label: I18n.t("bonus.bonusVacanze.cta.qrCode"),
-        iconName: "legQrCode",
+        iconName: "qrCode",
         onPress: openModalBox
       }}
       secondButton={
@@ -408,14 +409,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         isShareEnabled()
           ? {
               label: I18n.t("global.genericShare").toLowerCase(),
-              iconName: "legShare",
+              iconName: Platform.OS === "android" ? "shareAndroid" : "shareiOs",
               onPress: handleShare
             }
           : undefined
       }
       thirdButton={{
         label: I18n.t("global.genericSave").toLowerCase(),
-        iconName: "legSave",
+        iconName: "save",
         onPress: saveScreenShot
       }}
     />
@@ -469,7 +470,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     switch (bonus.status) {
       case BonusActivationStatusEnum.ACTIVE:
         return renderInformationBlock(
-          "legCalendar",
+          "calendar",
           I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
             from: pipe(
               bonusValidityInterval,

@@ -54,7 +54,7 @@ export default class ContextualInfo extends React.Component<Props> {
               onPress={() => this.props.onClose()}
               testID="contextualInfo_closeButton"
             >
-              <Icon name="legClose" color="bluegreyDark" />
+              <Icon name="close" color="bluegreyDark" />
             </TouchableDefaultOpacity>
           </Right>
         </AppHeader>

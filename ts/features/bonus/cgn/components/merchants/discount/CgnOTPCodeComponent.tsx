@@ -101,7 +101,7 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
           {"••••••••••"}
         </BaseTypography>
 
-        <Icon size={COPY_ICON_SIZE} color="blue" name={"legEyeShow"} />
+        <Icon size={COPY_ICON_SIZE} color="blue" name={"eyeShow"} />
       </View>
     </TouchableWithoutFeedback>
   );

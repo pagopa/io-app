@@ -64,12 +64,6 @@ const extractInfoFromPaymentMethod = (
         title: I18n.t("wallet.methods.paypal.name"),
         description: paymentMethod.caption
       };
-    case "Privative":
-      return {
-        logo: paymentMethod.icon,
-        title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod, nameSurname)
-      };
   }
 };
 

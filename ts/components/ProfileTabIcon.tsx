@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import { ColorValue } from "react-native";
 import { GlobalState } from "../store/reducers/types";
-import { AnimatedIcon } from "./core/icons";
+import { AnimatedIcon, IOIconSizeScale } from "./core/icons/Icon";
 
 type OwnProps = {
-  size?: number;
+  size?: IOIconSizeScale;
   color?: ColorValue;
 };
 
@@ -26,7 +26,7 @@ class ProfileTabIcon extends React.PureComponent<Props> {
         size={size}
         color={color}
         name={
-          isExperimentalFeaturesEnabled ? "legProfileExperiment" : "navProfile"
+          isExperimentalFeaturesEnabled ? "profileExperiment" : "navProfile"
         }
       />
     );
