@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -28,6 +28,13 @@ import ListItemNav from "../../../components/ui/ListItemNav";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import { Icon } from "../../../components/core/icons/Icon";
+import ListItemInfo from "../../../components/ui/ListItemInfo";
+import ButtonLink from "../../../components/ui/ButtonLink";
+import IconButton from "../../../components/ui/IconButton";
+
+const onButtonPress = () => {
+  Alert.alert("Alert", "Action triggered");
+};
 
 export const DSListItems = () => (
   <IOThemeContext.Consumer>
@@ -40,87 +47,24 @@ export const DSListItems = () => (
         >
           ListItemNav
         </H2>
-        <DSComponentViewerBox name="ListItemNav">
-          <View>
-            <ListItemNav
-              value={"Value"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNav
-              value={"Value"}
-              description="Description"
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNav
-              value="A looong looooong looooooooong looooooooooong title"
-              description="Description"
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNav
-              value={"Value"}
-              icon="gallery"
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNav
-              value={"Value"}
-              description="Description"
-              icon="gallery"
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-          </View>
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="ListItemNavAlert">
-          <View>
-            <ListItemNavAlert
-              value={"Value"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNavAlert
-              value={"Value"}
-              description="Description"
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNavAlert
-              withoutIcon
-              value={"Value"}
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-            <ListItemNavAlert
-              withoutIcon
-              value={"Value"}
-              description="Description"
-              onPress={() => {
-                alert("Action triggered");
-              }}
-              accessibilityLabel="Empty just for testing purposes"
-            />
-          </View>
-        </DSComponentViewerBox>
+        {renderListItemNav()}
 
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemInfo
+        </H2>
+        {renderListItemInfo()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          NativeBase
+        </H2>
         <DSComponentViewerBox name="ListItemComponent (badge)">
           <ListItemComponent
             title={"A looong looooong looooooooong looooooooooong title"}
@@ -304,4 +248,148 @@ export const DSListItems = () => (
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
+);
+
+const renderListItemNav = () => (
+  <>
+    <DSComponentViewerBox name="ListItemNav">
+      <View>
+        <ListItemNav
+          value={"Value"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNav
+          value={"Value"}
+          description="Description"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNav
+          value="A looong looooong looooooooong looooooooooong title"
+          description="Description"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+
+        <ListItemNav
+          value={"Value"}
+          icon="gallery"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNav
+          value={"Value"}
+          description="Description"
+          icon="gallery"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemNavAlert">
+      <View>
+        <ListItemNavAlert
+          value={"Value"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNavAlert
+          value={"Value"}
+          description="Description"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNavAlert
+          withoutIcon
+          value={"Value"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNavAlert
+          withoutIcon
+          value={"Value"}
+          description="Description"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+      </View>
+    </DSComponentViewerBox>
+  </>
+);
+
+const renderListItemInfo = () => (
+  <>
+    <DSComponentViewerBox name="ListItemInfo">
+      <View>
+        <ListItemInfo
+          label="Label"
+          value={"Value"}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemInfo
+          label="Label"
+          value={"Value"}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+
+        <ListItemInfo
+          label="Label"
+          value="A looong looooong looooooooong looooooooooong title"
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemInfo
+          icon="creditCard"
+          label="Label"
+          value="A looong looooong looooooooong looooooooooong title"
+          accessibilityLabel="Empty just for testing purposes"
+          action={
+            <ButtonLink
+              label="Modifica"
+              onPress={onButtonPress}
+              accessibilityLabel={""}
+            />
+          }
+        />
+        <ListItemInfo
+          icon="psp"
+          label="Label"
+          value="A looong looooong looooooooong looooooooooong title"
+          accessibilityLabel="Empty just for testing purposes"
+          action={
+            <IconButton
+              icon="info"
+              onPress={onButtonPress}
+              accessibilityLabel={""}
+            />
+          }
+        />
+
+        <ListItemInfo
+          label="Label"
+          value={"Value"}
+          icon="gallery"
+          accessibilityLabel="Empty just for testing purposes"
+        />
+      </View>
+    </DSComponentViewerBox>
+  </>
 );
