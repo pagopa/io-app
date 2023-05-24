@@ -1,6 +1,7 @@
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
 import { isStringNullyOrEmpty } from "./strings";
@@ -19,6 +20,11 @@ type LoginFailure = {
 };
 
 export type LoginResult = LoginSuccess | LoginFailure;
+
+export const getEitherLoginResult = (
+  result: LoginResult
+): E.Either<LoginFailure, LoginSuccess> =>
+  result.success ? E.right(result) : E.left(result);
 
 /**
  * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url

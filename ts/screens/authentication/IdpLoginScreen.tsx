@@ -31,7 +31,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
-  isLoggedOutWithIdp,
+  loggedOutWithIdpAuthSelector,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -301,16 +301,12 @@ const IdpLoginScreen = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = pipe(
-    selectedIdp,
-    O.fromNullable,
-    O.chain(idp => idpContextualHelpDataFromIdSelector(idp.id)(state))
-  );
+  const selectedIdpTextData = idpContextualHelpDataFromIdSelector(
+    selectedIdp?.id
+  )(state);
 
   return {
-    loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
-      ? state.authentication
-      : undefined,
+    loggedOutWithIdpAuth: loggedOutWithIdpAuthSelector(state),
     loggedInAuth: isLoggedIn(state.authentication)
       ? state.authentication
       : undefined,

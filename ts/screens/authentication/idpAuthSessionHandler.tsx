@@ -1,32 +1,35 @@
+/* eslint-disable import/order */
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18n-js";
 import * as React from "react";
 import {
+  LoginUtilsError,
   openAuthenticationSession,
-  getRedirects
+  Error as LoginUtilsErrorType
 } from "@pagopa/io-react-native-login-utils";
 import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
 import {
   CommonActions,
   useFocusEffect,
   useNavigation
 } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import URLParse from "url-parse";
 import { AppState, SafeAreaView, View, StyleSheet } from "react-native";
 import { Text } from "native-base";
 import { H3 } from "../../components/core/typography/H3";
-import { store } from "../../boot/configureStoreAndPersistor";
 import BaseScreenComponent, {
   ContextualHelpProps
 } from "../../components/screens/BaseScreenComponent";
 import { mixpanelTrack } from "../../mixpanel";
-import {
-  isLoggedOutWithIdp,
-  selectedIdentityProviderSelector
-} from "../../store/reducers/authentication";
 
-import { extractLoginResult, getIdpLoginUri } from "../../utils/login";
+import {
+  extractLoginResult,
+  getEitherLoginResult,
+  getIdpLoginUri
+} from "../../utils/login";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import Markdown from "../../components/ui/Markdown";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
@@ -35,12 +38,8 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import {
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-  lollipopSamlVerify
-} from "../../features/lollipop/utils/login";
+import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import { handleRegenerateKey } from "../../features/lollipop";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,
@@ -60,12 +59,17 @@ import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import themeVariables from "../../theme/variables";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
-import { AppDispatch } from "../../App";
 import {
   ErrorType,
   IdpAuthErrorScreen,
   IdpAuthErrorScreenType
 } from "./idpAuthErrorScreen";
+import { useSelector } from "react-redux";
+import {
+  loggedOutWithIdpAuthSelector,
+  selectedIdentityProviderSelector
+} from "../../store/reducers/authentication";
+import { IdpData } from "../../../definitions/content/IdpData";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -83,12 +87,6 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-
-const getNativeCodeError = (error: string) => {
-  const regex = /(?<=Code=)\d+/;
-  const match = error.match(regex);
-  return match ? match[0] : undefined;
-};
 
 export type AuthSessionErrorPageType = {
   contextualHelp: ContextualHelpProps;
@@ -117,66 +115,15 @@ const isBackButtonEnabled = (requestInfo: RequestInfo): boolean =>
 const onBack = () =>
   NavigationService.dispatchNavigationAction(CommonActions.goBack());
 
-// NativeCodeError 1 occurs when user cancels login.
-const idpAuthSession = (loginUri: string): Promise<string> =>
-  new Promise((resolve, reject) =>
-    openAuthenticationSession(loginUri, "iologin")
-      .then(value => resolve(value))
-      .catch(error => {
-        if (getNativeCodeError(error.toString()) !== "1") {
-          reject(error.toString());
-        } else {
-          onBack();
-        }
-      })
+const idpAuthSession = (
+  loginUri: string
+): TE.TaskEither<LoginUtilsError, string> =>
+  pipe(loginUri, () =>
+    TE.tryCatch(
+      () => openAuthenticationSession(loginUri, "iologin"),
+      error => error as LoginUtilsError
+    )
   );
-
-const regenerateKeyGetRedirectsAndVerifySaml = (
-  loginUri: string,
-  keyTag: string,
-  isMixpanelEnabled: boolean | null,
-  dispatch: AppDispatch
-): Promise<string> =>
-  new Promise((resolve, reject) => {
-    void handleRegenerateKey(keyTag, isMixpanelEnabled, dispatch)
-      .then(publicKey => {
-        if (!publicKey) {
-          reject("Missing publicKey");
-          return;
-        }
-        const headers = {
-          "x-pagopa-lollipop-pub-key": Buffer.from(
-            JSON.stringify(publicKey)
-          ).toString("base64"),
-          "x-pagopa-lollipop-pub-key-hash-algo":
-            DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-        };
-        void getRedirects(loginUri, headers, "SAMLRequest")
-          .then(value => {
-            for (const url of value) {
-              const parsedUrl = new URLParse(url, true);
-              const urlQuery = parsedUrl.query;
-              if (urlQuery.SAMLRequest) {
-                const urlEncodedSamlRequest = urlQuery.SAMLRequest;
-                lollipopSamlVerify(
-                  urlEncodedSamlRequest,
-                  publicKey,
-                  () => {
-                    resolve(url);
-                  },
-                  (reason: string) => {
-                    trackLollipopIdpLoginFailure(reason);
-                    reject(reason);
-                  }
-                );
-                break;
-              }
-            }
-          })
-          .catch(error => reject(error));
-      })
-      .catch(error => reject(error));
-  });
 
 export const AuthSessionPage = () => {
   const [requestInfo, setRequestInfo] = useState<RequestInfo>({
@@ -204,35 +151,15 @@ export const AuthSessionPage = () => {
 
   const dispatch = useIODispatch();
 
-  const state = store.getState();
+  const loggedOutWithIdpAuth = useSelector(loggedOutWithIdpAuthSelector);
 
-  const loggedOutWithIdpAuth = useMemo(
-    () =>
-      isLoggedOutWithIdp(state.authentication)
-        ? state.authentication
-        : undefined,
-    [state.authentication]
+  const selectedIdp = useSelector(selectedIdentityProviderSelector);
+
+  const selectedIdpTextData = useSelector(
+    idpContextualHelpDataFromIdSelector(selectedIdp?.id)
   );
 
-  const selectedIdp = useMemo(
-    () => selectedIdentityProviderSelector(state),
-    [state]
-  );
-
-  const selectedIdpTextData = useMemo(
-    () =>
-      pipe(
-        selectedIdp,
-        O.fromNullable,
-        O.chain(idp => idpContextualHelpDataFromIdSelector(idp.id)(state))
-      ),
-    [selectedIdp, state]
-  );
-
-  const assistanceToolConfig = useMemo(
-    () => assistanceToolConfigSelector(state),
-    [state]
-  );
+  const assistanceToolConfig = useSelector(assistanceToolConfigSelector);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
@@ -240,7 +167,7 @@ export const AuthSessionPage = () => {
   );
 
   const idp = useMemo(
-    () => loggedOutWithIdpAuth?.idp.id ?? "n/a",
+    () => loggedOutWithIdpAuth?.idp.id as keyof IdpData | undefined,
     [loggedOutWithIdpAuth]
   );
 
@@ -277,21 +204,32 @@ export const AuthSessionPage = () => {
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
+      setRequestInfo({
+        requestState: "AUTHORIZED",
+        nativeAttempts: requestInfo.nativeAttempts
+      });
       handleSendAssistanceLog(choosenTool, `login success`);
-      dispatch(loginSuccess({ token, idp }));
+      return idp
+        ? dispatch(loginSuccess({ token, idp }))
+        : handleLoginFailure("n/a");
     },
-    [choosenTool, dispatch, idp]
+    [choosenTool, dispatch, handleLoginFailure, idp, requestInfo.nativeAttempts]
   );
   // This function is executed when the native component resolve with an error or when loginUri is undefined.
-  // This error is a string.
   // About the first case, unless there is a problem with the phone crashing for other reasons, this is very unlikely to happen.
   const handleLoadingError = useCallback(
-    (error?: string) => {
+    (error?: LoginUtilsError) => {
       void mixpanelTrack("SPID_ERROR", {
         idp: loggedOutWithIdpAuth?.idp.id,
-        description: error,
+        description: error?.userInfo.Error,
         errorType: ErrorType.LOADING_ERROR
       });
+
+      const backPressed: LoginUtilsErrorType = "NativeAuthSessionClosed";
+      if (error?.userInfo.Error === backPressed) {
+        onBack();
+        return;
+      }
 
       // If native login component fails 3 times, it returns to idp selection screen and tries to login with WebView.
       if (requestInfo.nativeAttempts > 1) {
@@ -334,37 +272,52 @@ export const AuthSessionPage = () => {
     O.isSome(maybeKeyTag) &&
     requestInfo.requestState === "LOADING"
   ) {
-    regenerateKeyGetRedirectsAndVerifySaml(
-      loginUri,
-      maybeKeyTag.value,
-      mixpanelEnabled,
-      dispatch
-    )
-      .then((url: string) => {
-        idpAuthSession(url)
-          .then((response: string) => {
-            const result = extractLoginResult(response);
-            if (result?.success) {
-              setRequestInfo({
-                requestState: "AUTHORIZED",
-                nativeAttempts: requestInfo.nativeAttempts
-              });
-              handleLoginSuccess(result.token);
-            } else {
-              // If result is undefined or error,
-              // it tries to extract error code and starts the handleLoginFailure flow.
-              handleLoginFailure(result?.errorCode);
-            }
-          })
-          .catch(error => handleLoadingError(error));
-      })
-      .catch(_ =>
-        setRequestInfo({
-          requestState: "ERROR",
-          errorType: ErrorType.LOGIN_ERROR,
-          nativeAttempts: requestInfo.nativeAttempts
-        })
-      );
+    void pipe(
+      () =>
+        regenerateKeyGetRedirectsAndVerifySaml(
+          loginUri,
+          maybeKeyTag.value,
+          mixpanelEnabled,
+          dispatch
+        ),
+      TE.fold(
+        () =>
+          T.of(
+            setRequestInfo({
+              requestState: "ERROR",
+              errorType: ErrorType.LOGIN_ERROR,
+              nativeAttempts: requestInfo.nativeAttempts
+            })
+          ),
+        url =>
+          pipe(
+            url,
+            () => idpAuthSession(url),
+            TE.fold(
+              error => T.of(handleLoadingError(error)),
+              response =>
+                T.of(
+                  pipe(
+                    extractLoginResult(response),
+                    O.fromNullable,
+                    O.fold(
+                      () => handleLoginFailure(),
+                      result =>
+                        pipe(
+                          result,
+                          getEitherLoginResult,
+                          E.fold(
+                            e => handleLoginFailure(e.errorCode),
+                            success => handleLoginSuccess(success.token)
+                          )
+                        )
+                    )
+                  )
+                )
+            )
+          )
+      )
+    )();
   } else if (!loginUri) {
     handleLoadingError();
   } else if (O.isNone(maybeKeyTag)) {
@@ -412,7 +365,7 @@ export const AuthSessionPage = () => {
         contextualHelp={contextualHelp}
         faqCategories={["authentication_SPID"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
-          loggedOutWithIdpAuth.idp.name
+          loggedOutWithIdpAuth?.idp.name
         }`}
       >
         <LoadingSpinnerOverlay
