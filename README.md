@@ -610,7 +610,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
     <h3>miscs</h3>
     <table>
         <tr>
-            <td>ioit://uadonations-webview </td>
+            <td>ioit://uadonations-webview</td>
         </tr>
         <tr>
             <td>ioit://fims/webview</td>
@@ -620,5 +620,4 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
         </tr>
     </table>
 </details>
-
 

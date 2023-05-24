@@ -146,7 +146,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
                     title={languageTitle}
                     hideIcon={!isSelectedLanguage}
                     iconSize={iconSize}
-                    iconName={isSelectedLanguage ? "legCompleted" : undefined}
+                    iconName={isSelectedLanguage ? "completed" : undefined}
                     onPress={() => this.onLanguageSelected(lang)}
                     accessible={true}
                     accessibilityRole={"radio"}

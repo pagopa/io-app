@@ -67,7 +67,7 @@ export default class ChooserListItem extends React.Component<Props> {
             </H3>
           </View>
           <TouchableDefaultOpacity onPress={this.handleOnPress}>
-            <Icon name={iconName} color={iconColor} size={22} />
+            <Icon name={iconName} color={iconColor} size={24} />
           </TouchableDefaultOpacity>
         </View>
       </TouchableDefaultOpacity>

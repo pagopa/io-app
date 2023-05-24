@@ -94,7 +94,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
             accessibilityRole={"button"}
             accessibilityLabel={I18n.t("global.buttons.close")}
           >
-            <Icon name="legClose" color="white" />
+            <Icon name="close" color="white" />
           </Button>
         </Right>
       </AppHeader>

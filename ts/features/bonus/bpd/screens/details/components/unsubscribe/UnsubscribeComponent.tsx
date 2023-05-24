@@ -4,9 +4,12 @@ import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../../../components/core/typography/H3";
 import Markdown from "../../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../../i18n";
-import { Icon } from "../../../../../../../components/core/icons";
+import {
+  IOIconSizeScale,
+  Icon
+} from "../../../../../../../components/core/icons";
 
-const iconSize = 64;
+const iconSize: IOIconSizeScale = 48;
 
 /**
  * Informs the user about the consequences of the cashback unsubscription

@@ -69,7 +69,7 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
         </View>
       </View>
       <View style={styles.row}>
-        {isFavourite && <Icon name="legStarFilled" color="blue" size={24} />}
+        {isFavourite && <Icon name="starFilled" color="blue" size={24} />}
         {rightElement}
       </View>
     </View>

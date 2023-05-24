@@ -87,7 +87,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "add":
         return (
           <>
-            <Icon name="legAdd" size={20} color="white" />
+            <Icon name="add" size={20} color="white" />
             <HSpacer size={4} />
             <Label color="white" weight="Bold">
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
