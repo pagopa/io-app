@@ -5,7 +5,10 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -26,16 +29,15 @@ import {
   InitiativeRulesInfoBoxSkeleton
 } from "./InitiativeRulesInfoBox";
 
-type Props = {
+export type BeneficiaryDetailsProps = {
   initiativeDetails: InitiativeDTO;
   beneficiaryDetails: InitiativeDetailDTO;
 };
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
-const BeneficiaryDetailsContent = (props: Props) => {
+const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-
   const { initiativeDetails, beneficiaryDetails } = props;
   const { initiativeId, initiativeName } = initiativeDetails;
 
@@ -94,6 +96,32 @@ const BeneficiaryDetailsContent = (props: Props) => {
     ),
     O.toUndefined
   );
+  const typeDependantEntries = () => {
+    switch (initiativeDetails.initiativeRewardType) {
+      case InitiativeRewardTypeEnum.DISCOUNT:
+        return [
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
+            // in DISCOUNT initiatives, the spent amount is held in the accrued field,
+            // while the refunded amount is always 0
+          }
+        ];
+      case InitiativeRewardTypeEnum.REFUND:
+        return [
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded)
+          }
+        ];
+      default:
+        return [];
+    }
+  };
 
   const handlePrivacyLinkPress = () =>
     pipe(
@@ -131,14 +159,7 @@ const BeneficiaryDetailsContent = (props: Props) => {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
             value: formatNumberCurrencyOrDefault(initiativeDetails.amount)
           },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded)
-          }
+          ...typeDependantEntries()
         ]}
       />
       <VSpacer size={8} />

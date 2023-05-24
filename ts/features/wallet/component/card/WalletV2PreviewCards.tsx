@@ -47,8 +47,6 @@ const paymentMethodPreview = (
         return null;
       }
       return <BPayWalletPreview key={pm.idWallet} bPay={pm} />;
-    case "Privative":
-      return null;
   }
 };
 

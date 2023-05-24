@@ -73,16 +73,6 @@ import {
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
-import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
-import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
-import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
-import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
-import {
-  addPrivativeToWallet,
-  loadPrivativeIssuers,
-  searchUserPrivative,
-  walletAddPrivativeStart
-} from "../features/wallet/onboarding/privative/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -922,33 +912,8 @@ export function* watchWalletSaga(
       contentClient.getCobadgeServices
     );
 
-    yield* takeLatest(
-      loadPrivativeIssuers.request,
-      handleLoadPrivativeConfiguration,
-      contentClient.getPrivativeServices
-    );
-
     // watch for add co-badge to Wallet workflow
     yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
-
-    // watch for add privative to Wallet workflow
-    yield* takeLatest(
-      walletAddPrivativeStart,
-      addPrivativeToWalletAndActivateBpd
-    );
-    yield* takeLatest(
-      searchUserPrivative.request,
-      handleSearchUserPrivative,
-      paymentManagerClient.getCobadgePans,
-      paymentManagerClient.searchCobadgePans,
-      pmSessionManager
-    );
-    yield* takeLatest(
-      addPrivativeToWallet.request,
-      handleAddPrivativeToWallet,
-      paymentManagerClient.addCobadgeToWallet,
-      pmSessionManager
-    );
 
     yield* fork(
       watchPaypalOnboardingSaga,
