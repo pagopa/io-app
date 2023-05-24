@@ -1,9 +1,13 @@
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  InitiativeRewardTypeEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -11,7 +15,10 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { format } from "../../../../../utils/dates";
 import { Table } from "../../../common/components/Table";
-import { formatNumberCurrencyOrDefault } from "../../../common/utils/strings";
+import {
+  formatNumberCurrency,
+  formatNumberCurrencyOrDefault
+} from "../../../common/utils/strings";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -82,7 +89,40 @@ const BeneficiaryDetailsContent = (props: Props) => {
     ),
     O.toUndefined
   );
-
+  const typeDependantEntries = () => {
+    const spentUntilNowString = pipe(
+      sequenceS(O.Monad)({
+        refunded: O.fromNullable(initiativeDetails.refunded),
+        accrued: O.fromNullable(initiativeDetails.accrued)
+      }),
+      O.fold(
+        () => "-",
+        ({ refunded, accrued }) => formatNumberCurrency(refunded + accrued)
+      )
+    );
+    switch (initiativeDetails.initiativeRewardType) {
+      case InitiativeRewardTypeEnum.DISCOUNT:
+        return [
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
+            value: spentUntilNowString
+          }
+        ];
+      case InitiativeRewardTypeEnum.REFUND:
+        return [
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
+          },
+          {
+            label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded)
+          }
+        ];
+      default:
+        return [];
+    }
+  };
   return (
     <>
       {ruleInfoBox}
@@ -101,14 +141,7 @@ const BeneficiaryDetailsContent = (props: Props) => {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
             value: formatNumberCurrencyOrDefault(initiativeDetails.amount)
           },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
-          },
-          {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded)
-          }
+          ...typeDependantEntries()
         ]}
       />
       <VSpacer size={8} />
