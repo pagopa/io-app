@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { createStore } from "redux";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
-import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../store/actions/wallet/wallets";
@@ -123,31 +122,5 @@ describe("PagoPaPaymentCapability", () => {
       store
     );
     expect(component.getByText("Incompatible")).not.toBeNull();
-  });
-  it('should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
-    const aNonMaestroCreditCard = {
-      info: {
-        brand: "VISA" as CreditCardType,
-        issuerAbiCode: "123",
-        type: TypeEnum.PRV
-      }
-    } as CreditCardPaymentMethod;
-    const aPaymentMethod = {
-      ...aNonMaestroCreditCard,
-      kind: "CreditCard",
-      enableableFunctions: [EnableableFunctionsEnum.BPD],
-      pagoPA: false
-    } as PaymentMethod;
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    const component = renderScreenFakeNavRedux<GlobalState>(
-      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    );
-    expect(component.getByText("Incompatible")).toBeTruthy();
   });
 });

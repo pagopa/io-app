@@ -27,7 +27,6 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
-  PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 
@@ -422,19 +421,6 @@ export const navigateToCobadgeDetailScreen = (
     CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_COBADGE_DETAIL,
       params: { cobadge }
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToPrivativeDetailScreen = (
-  privative: PrivativePaymentMethod
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_PRIVATIVE_DETAIL,
-      params: { privative }
     })
   );
 

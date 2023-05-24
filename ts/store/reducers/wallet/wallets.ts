@@ -24,12 +24,10 @@ import {
   isBPay,
   isCreditCard,
   isPayPal,
-  isPrivativeCard,
   isRawCreditCard,
   isSatispay,
   PaymentMethod,
   PayPalPaymentMethod,
-  PrivativePaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
   SatispayPaymentMethod,
@@ -318,17 +316,6 @@ export const paypalListSelector = createSelector(
 );
 
 /**
- * Return a privative card list in the wallet
- */
-export const privativeListSelector = createSelector(
-  [paymentMethodsSelector],
-  (paymentMethodPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
-    pot.map(paymentMethodPot, paymentMethod =>
-      paymentMethod.filter(isPrivativeCard)
-    )
-);
-
-/**
  * Return a satispay list in the wallet
  */
 export const satispayListSelector = createSelector(
@@ -426,17 +413,6 @@ export const cobadgeListVisibleInWalletSelector = createSelector(
           cc.info.issuerAbiCode !== undefined &&
           cc.info.type !== TypeEnum.PRV
       )
-    )
-);
-
-/**
- * Return a Privative card list visible in the wallet
- */
-export const privativeListVisibleInWalletSelector = createSelector(
-  [privativeListSelector],
-  (privativeListPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
-    pot.map(privativeListPot, privativeList =>
-      privativeList.filter(isVisibleInWallet)
     )
 );
 
