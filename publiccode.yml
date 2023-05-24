@@ -5,11 +5,11 @@
 publiccodeYmlVersion: '0.2'
 name: IO
 logo: "img/app-logo.svg"
-releaseDate: '2023-05-23'
+releaseDate: '2023-05-24'
 url: 'https://github.com/pagopa/io-app'
 applicationSuite: IO
 landingURL: 'https://io.italia.it/'
-softwareVersion: 2.34.0-rc.0
+softwareVersion: 2.34.0-rc.1
 developmentStatus: beta
 softwareType: standalone/mobile
 roadmap: 'https://io.italia.it/'
