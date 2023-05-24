@@ -27,6 +27,7 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
+import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import { Icon } from "../../../components/core/icons/Icon";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import ButtonLink from "../../../components/ui/ButtonLink";
@@ -54,9 +55,68 @@ export const DSListItems = () => (
           weight={"SemiBold"}
           style={{ marginBottom: 16, marginTop: 16 }}
         >
+          ListItemInfoCopy
+        </H2>
+        {renderListItemInfoCopy()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
           ListItemInfo
         </H2>
         {renderListItemInfo()}
+
+        <H2
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemComponent (NativeBase)
+        </H2>
+        <DSComponentViewerBox name="ListItemComponent (title)">
+          <ListItemComponent
+            title={"Title"}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (title + subtitle)">
+          <ListItemComponent
+            title={"Title"}
+            subTitle="Subtitle"
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (without icon)">
+          <ListItemComponent
+            title={"Title"}
+            hideIcon={true}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (without separator)">
+          <ListItemComponent
+            title={"Title"}
+            onPress={() => alert("Action triggered")}
+            hideSeparator={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (stress test)">
+          <ListItemComponent
+            title={"Let's try a looong looooong looooooooong title"}
+            subTitle="A loooong looooooong looooooooooong subtitle, too"
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemComponent (stress test, no truncated subtitle)">
+          <ListItemComponent
+            title={"Let's try a looong looooong looooooooong title"}
+            subTitle="A loooong looooooong looooooooooong subtitle, too"
+            useExtendedSubTitle={true}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
 
         <DSComponentViewerBox name="ListItemComponent (badge)">
           <ListItemComponent
@@ -100,7 +160,6 @@ export const DSListItems = () => (
             onPress={() => alert("Action triggered")}
           />
         </DSComponentViewerBox>
-
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -108,7 +167,6 @@ export const DSListItems = () => (
         >
           Derivated from ListItem (NativeBase)
         </H2>
-
         <DSComponentViewerBox name="CategoryCheckbox">
           <CategoryCheckbox
             text={"Title"}
@@ -125,7 +183,6 @@ export const DSListItems = () => (
             icon={CultureIcon}
           />
         </DSComponentViewerBox>
-
         <DSComponentViewerBox name="OrderOption">
           <OrderOption
             text={"Checked"}
@@ -160,7 +217,6 @@ export const DSListItems = () => (
             testId="TestID"
           />
         </DSComponentViewerBox>
-
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -168,7 +224,6 @@ export const DSListItems = () => (
         >
           Misc
         </H2>
-
         <DSComponentViewerBox name="DetailedlistItemComponent">
           <DetailedlistItemComponent
             isNew={true}
@@ -182,7 +237,6 @@ export const DSListItems = () => (
             accessibilityLabel={"Accessibility Label"}
           />
         </DSComponentViewerBox>
-
         <DSComponentViewerBox name="TimelineTransactionCard">
           <TimelineOperationListItem
             operation={{
@@ -194,11 +248,11 @@ export const DSListItems = () => (
               maskedPan: "****",
               amount: 100,
               accrued: 50,
-              circuitType: "MasterCard"
+              circuitType: "MasterCard",
+              status: ""
             }}
           />
         </DSComponentViewerBox>
-
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -206,7 +260,6 @@ export const DSListItems = () => (
         >
           Native (Not NativeBase)
         </H2>
-
         <DSComponentViewerBox name="CgnMerchantDiscountItem">
           <CgnMerchantDiscountItem
             discount={{
@@ -224,7 +277,6 @@ export const DSListItems = () => (
             merchantType={undefined}
           />
         </DSComponentViewerBox>
-
         <DSComponentViewerBox name="CgnMerchantListItem">
           <CgnMerchantListItem
             categories={[
@@ -236,7 +288,6 @@ export const DSListItems = () => (
             isNew={true}
           />
         </DSComponentViewerBox>
-
         <VSpacer size={40} />
       </DesignSystemScreen>
     )}
@@ -327,6 +378,47 @@ const renderListItemNav = () => (
       </View>
     </DSComponentViewerBox>
   </>
+);
+
+const renderListItemInfoCopy = () => (
+  <DSComponentViewerBox name="ListItemInfoCopy">
+    <View>
+      <ListItemInfoCopy
+        label={"Label"}
+        value="Value"
+        onPress={() => {
+          alert("Value copied");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemInfoCopy
+        label={"Codice fiscale"}
+        value="01199250158"
+        onPress={() => {
+          alert("Value copied");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        icon="institution"
+      />
+      <ListItemInfoCopy
+        label={"Carta di credito"}
+        value="4975 3013 5042 7899"
+        onPress={() => {
+          alert("Value copied");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        icon="creditCard"
+      />
+      <ListItemInfoCopy
+        label={"Indirizzo"}
+        value={`P.za Colonna, 370\n00186 Roma (RM)`}
+        onPress={() => {
+          alert("Value copied");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+    </View>
+  </DSComponentViewerBox>
 );
 
 const renderListItemInfo = () => (
