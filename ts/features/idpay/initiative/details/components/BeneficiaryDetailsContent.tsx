@@ -1,7 +1,9 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
   InitiativeDTO,
@@ -10,11 +12,18 @@ import {
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 import { format } from "../../../../../utils/dates";
 import { Table } from "../../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../../common/utils/strings";
+import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -28,7 +37,9 @@ export type BeneficiaryDetailsProps = {
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const { initiativeDetails, beneficiaryDetails } = props;
+  const { initiativeId, initiativeName } = initiativeDetails;
 
   const ruleInfoBox = pipe(
     beneficiaryDetails.ruleDescription,
@@ -111,6 +122,25 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         return [];
     }
   };
+
+  const handlePrivacyLinkPress = () =>
+    pipe(
+      NonEmptyString.decode(beneficiaryDetails.serviceId),
+      O.fromEither,
+      O.map(serviceId =>
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: ROUTES.SERVICE_DETAIL,
+          params: { serviceId }
+        })
+      )
+    );
+
+  const handleUnsubscribePress = () =>
+    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
+      initiativeId,
+      initiativeName
+    });
+
   return (
     <>
       {ruleInfoBox}
@@ -170,6 +200,20 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           }
         ]}
       />
+      <VSpacer size={24} />
+      <View style={styles.linkRow}>
+        <Link onPress={handlePrivacyLinkPress}>
+          {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
+        </Link>
+      </View>
+      <View style={styles.linkRow}>
+        <Link onPress={handleUnsubscribePress} color="red">
+          {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
+            initiativeName
+          })}
+        </Link>
+      </View>
+      <VSpacer size={48} />
     </>
   );
 };
@@ -205,5 +249,11 @@ const BeneficiaryDetailsContentSkeleton = () => (
     ))}
   </>
 );
+
+const styles = StyleSheet.create({
+  linkRow: {
+    paddingVertical: 16
+  }
+});
 
 export { BeneficiaryDetailsContent, BeneficiaryDetailsContentSkeleton };
