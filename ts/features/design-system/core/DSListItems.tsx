@@ -248,7 +248,8 @@ export const DSListItems = () => (
               maskedPan: "****",
               amount: 100,
               accrued: 50,
-              circuitType: "MasterCard"
+              circuitType: "MasterCard",
+              status: ""
             }}
           />
         </DSComponentViewerBox>
