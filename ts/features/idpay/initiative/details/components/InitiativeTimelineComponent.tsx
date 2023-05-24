@@ -25,19 +25,12 @@ import {
   TimelineOperationListItemSkeleton
 } from "./TimelineOperationListItem";
 
-const styles = StyleSheet.create({
-  spaceBetween: {
-    justifyContent: "space-between"
-  }
-});
-
 type Props = {
   initiativeId: string;
+  size?: number;
 };
 
-const ConfiguredInitiativeData = (props: Props) => {
-  const { initiativeId } = props;
-
+const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
@@ -60,14 +53,22 @@ const ConfiguredInitiativeData = (props: Props) => {
 
   const renderTimelineContent = () => {
     if (isLoading) {
-      return Array.from({ length: 3 }).map((_, index) => (
-        <TimelineOperationListItemSkeleton key={index} />
-      ));
+      return (
+        <View testID="IDPayTimelineSkeletonTestID">
+          {Array.from({ length: size }).map((_, index) => (
+            <TimelineOperationListItemSkeleton key={index} />
+          ))}
+        </View>
+      );
     }
 
     if (timeline.length === 0) {
       return (
-        <LabelSmall weight="Regular" color="bluegreyDark">
+        <LabelSmall
+          weight="Regular"
+          color="bluegreyDark"
+          testID="IDPayEmptyTimelineTestID"
+        >
           {I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
           )}
@@ -82,7 +83,7 @@ const ConfiguredInitiativeData = (props: Props) => {
 
     return (
       <>
-        {timeline.slice(0, 3).map(operation => (
+        {timeline.slice(0, size).map(operation => (
           <TimelineOperationListItem
             key={operation.operationId}
             operation={operation}
@@ -95,7 +96,10 @@ const ConfiguredInitiativeData = (props: Props) => {
 
   return (
     <>
-      <View style={[IOStyles.row, styles.spaceBetween]}>
+      <View
+        style={[IOStyles.row, styles.spaceBetween]}
+        testID="IDPayTimelineTestID"
+      >
         <H3>
           {I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
@@ -114,4 +118,39 @@ const ConfiguredInitiativeData = (props: Props) => {
   );
 };
 
-export default ConfiguredInitiativeData;
+type SkeletonProps = {
+  size?: number;
+};
+
+const InitiativeTimelineComponentSkeleton = ({ size = 3 }: SkeletonProps) => (
+  <>
+    <View
+      style={[IOStyles.row, styles.spaceBetween]}
+      testID="IDPayTimelineSkeletonTestID"
+    >
+      <H3>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+        )}
+      </H3>
+      <Body weight="SemiBold" color="blue">
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+        )}
+      </Body>
+    </View>
+    <VSpacer size={8} />
+    {Array.from({ length: size }).map((_, index) => (
+      <TimelineOperationListItemSkeleton key={index} />
+    ))}
+  </>
+);
+
+const styles = StyleSheet.create({
+  spaceBetween: {
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
+});
+
+export { InitiativeTimelineComponent, InitiativeTimelineComponentSkeleton };

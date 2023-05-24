@@ -21,7 +21,7 @@ import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
   trackThirdPartyMessageAttachmentUnavailable
-} from "../../../../utils/analytics";
+} from "../../analytics";
 
 export const AttachmentsDirectoryPath =
   RNFS.CachesDirectoryPath + "/attachments";
