@@ -28,7 +28,6 @@ import {
   OnOnboardingCompleted,
   walletAddPaypalStart
 } from "../../features/wallet/onboarding/paypal/store/actions";
-import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -249,7 +248,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startPaypalOnboarding: (onOboardingCompleted: OnOnboardingCompleted) =>
     dispatch(walletAddPaypalStart(onOboardingCompleted)),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
-  startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>
     navigateToWalletAddCreditCard({
       inPayment: props.route.params.inPayment,

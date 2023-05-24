@@ -15,7 +15,6 @@ import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analy
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
-import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import trackFciAction from "../../features/fci/analytics";
 import trackZendesk from "../../features/zendesk/analytics/index";
 import { mixpanel } from "../../mixpanel";
@@ -421,7 +420,6 @@ export const actionTracking =
       // void trackSatispayAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
-      void trackPrivativeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
       void trackServiceAction(mixpanel)(action);
