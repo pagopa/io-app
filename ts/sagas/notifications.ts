@@ -8,7 +8,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
-import { mixpanelTrack } from "../mixpanel";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
@@ -16,6 +15,7 @@ import {
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
+import { trackNotificationInstallationTokenNotChanged } from "../utils/analytics";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -45,7 +45,7 @@ export function* updateInstallationSaga(
     notificationsInstallation.token ===
     notificationsInstallation.registeredToken
   ) {
-    void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
+    trackNotificationInstallationTokenNotChanged();
     return undefined;
   }
   try {
