@@ -83,7 +83,9 @@ export const areMoreTransactionsAvailable = (state: GlobalState): boolean =>
       pot.getOrElse(
         pot.map(
           state.wallet.transactions.total,
-          t => Object.keys(transactions).length < t
+          t =>
+            Object.keys(transactions).length <
+            Math.min(t, MAX_TRANSACTIONS_IN_LIST)
         ),
         false
       )
