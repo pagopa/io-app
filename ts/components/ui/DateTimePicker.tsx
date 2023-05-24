@@ -60,7 +60,7 @@ const DateTimePicker: React.FunctionComponent<Props> = (props: Props) => {
         <Icon
           size={24}
           color={props.blocked !== true ? "blue" : "bluegreyLight"}
-          name="legCalendar"
+          name="calendar"
         />
       </TouchableDefaultOpacity>
 

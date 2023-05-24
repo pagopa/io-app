@@ -70,7 +70,7 @@ const InitiativeConfigurationIntroScreen = () => {
 
   const customGoBack = (
     <TouchableDefaultOpacity onPress={navigation.goBack}>
-      <Icon name="legClose" />
+      <Icon name="close" />
     </TouchableDefaultOpacity>
   );
 

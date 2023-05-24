@@ -62,7 +62,7 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
-import { Icon } from "../../../components/core/icons/Icon";
+import { IOIconSizeScale, Icon } from "../../../components/core/icons/Icon";
 import { IOColors } from "../../../components/core/variables/IOColors";
 
 /**
@@ -80,7 +80,7 @@ type ItemProps = {
 };
 
 const iconStyleProps = {
-  size: 24,
+  size: 24 as IOIconSizeScale,
   color: "blue" as IOColors
 };
 
