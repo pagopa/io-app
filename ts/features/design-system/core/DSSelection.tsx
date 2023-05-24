@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { Alert, GestureResponderEvent, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { Label } from "../../../components/core/typography/Label";
@@ -10,6 +10,7 @@ import { CheckboxLabel } from "../../../components/core/selection/checkbox/Check
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
+import { Divider } from "../../../components/core/Divider";
 
 const styles = StyleSheet.create({
   content: {
@@ -36,8 +37,39 @@ export const DSSelection = () => (
     <DSComponentViewerBox name="CheckboxListItem">
       <CheckboxListItem
         value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        value="Usa configurazione rapida"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        value="Let's try with a loooong loooooong looooooong title"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        icon="bonus"
+        value="Let's try with a loooong loooooong looooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        icon="coggle"
+        value="Usa configurazione rapida"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
         }
         accessibilityLabel={""}
       />

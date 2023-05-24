@@ -232,13 +232,44 @@ export const IOListItemStyles = StyleSheet.create({
   listItem: {
     paddingVertical: IOListItemVisualParams.paddingVertical,
     paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
-    marginRight: -IOListItemVisualParams.paddingHorizontal,
-    marginLeft: -IOListItemVisualParams.paddingHorizontal
+    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
   },
   listItemInner: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between"
+  }
+});
+
+/**
+ * SELECTION ITEM STYLES
+ */
+
+interface IOSelectionItemVisualParams {
+  paddingVertical: IOSpacingScale;
+  paddingHorizontal: IOAppMargin;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+}
+
+export const IOSelectionItemVisualParams: IOSelectionItemVisualParams = {
+  paddingVertical: 16,
+  paddingHorizontal: IOLayoutCostants.appMarginDefault,
+  iconMargin: 8,
+  iconSize: 24
+};
+
+export const IOSelectionItemStyles = StyleSheet.create({
+  listItem: {
+    paddingVertical: IOListItemVisualParams.paddingVertical,
+    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
+    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
+  },
+  listItemInner: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start",
     justifyContent: "space-between"
   }
 });
