@@ -18,7 +18,7 @@ type Props = {
 const SuccessContent = ({ text, close }: Props) => (
   <CommonContent close={close}>
     <View style={styles.selfCenter}>
-      <Icon name="ok" size={120} color="aqua" />
+      <Icon name="ok" size={96} color="aqua" />
     </View>
     <VSpacer size={24} />
 

@@ -111,7 +111,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="legClose" />
+            <Icon name="close" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

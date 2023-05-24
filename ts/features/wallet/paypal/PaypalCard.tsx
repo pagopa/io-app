@@ -45,7 +45,7 @@ const topLeft = (isFavourite: boolean) => (
     <View style={IOStyles.flex}>
       <Image source={paypalLogoExt} style={styles.paypalLogoExt} />
     </View>
-    {isFavourite && <Icon name="legStarFilled" color="blue" />}
+    {isFavourite && <Icon name="starFilled" color="blue" />}
   </View>
 );
 

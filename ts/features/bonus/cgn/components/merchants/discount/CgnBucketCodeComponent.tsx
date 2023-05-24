@@ -135,7 +135,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
       <>
         <InfoBox
           iconColor="aqua"
-          iconName="legError"
+          iconName="errorFilled"
           iconSize={24}
           alignedCentral
         >
@@ -155,7 +155,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
         icon={
           <View style={styles.flexEnd}>
             <Icon
-              name={isTap ? "ok" : "legCopy"}
+              name={isTap ? "ok" : "copy"}
               size={COPY_ICON_SIZE}
               color="blue"
             />
@@ -169,7 +169,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
     <BucketCodeHandler
       onPress={props.onRequestBucket}
       content={EMPTY_CODE_CONTENT}
-      icon={<Icon size={COPY_ICON_SIZE} name="legEyeShow" color="blue" />}
+      icon={<Icon size={COPY_ICON_SIZE} name="eyeShow" color="blue" />}
     />
   );
 };
