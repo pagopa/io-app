@@ -14,7 +14,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
 import { Icon } from "../../../../../components/core/icons";
-import { HSpacer } from "../../../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   discount: Discount;
@@ -54,20 +54,29 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
     <TouchableDefaultOpacity style={styles.listItem} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
         <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-          <Label weight={"SemiBold"} color={"bluegreyDark"}>
-            {`${discount.name} `}
-          </Label>
-          {discount.isNew && (
-            <>
-              <HSpacer size={4} />
-              <IOBadge
-                variant="solid"
-                color="blue"
-                text={I18n.t("bonus.cgn.merchantsList.news")}
-                small
-              />
-            </>
-          )}
+          <View>
+            {discount.isNew && (
+              <>
+                <View style={{ alignSelf: "flex-start" }}>
+                  <HSpacer size={4} />
+                  <IOBadge
+                    variant="solid"
+                    color="blue"
+                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                    small
+                  />
+                </View>
+                <VSpacer size={4} />
+              </>
+            )}
+            <Label
+              weight={"SemiBold"}
+              color={"bluegreyDark"}
+              style={{ flexShrink: 1 }}
+            >
+              {discount.name}
+            </Label>
+          </View>
         </View>
         <Icon name="chevronRightListItem" color="blue" size={24} />
       </View>

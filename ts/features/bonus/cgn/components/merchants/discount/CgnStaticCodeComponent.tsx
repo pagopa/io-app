@@ -83,13 +83,13 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
           {isCodeVisible ? (
             <View style={styles.flexEnd}>
               <Icon
-                name={isTap ? "ok" : "legCopy"}
+                name={isTap ? "ok" : "copy"}
                 size={COPY_ICON_SIZE}
                 color="blue"
               />
             </View>
           ) : (
-            <Icon name="legEyeShow" size={COPY_ICON_SIZE} color="blue" />
+            <Icon name="eyeShow" size={COPY_ICON_SIZE} color="blue" />
           )}
         </View>
       </TouchableWithoutFeedback>

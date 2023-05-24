@@ -42,7 +42,7 @@ export const ShareDataComponent = (): React.ReactElement => {
       <VSpacer size={16} />
       <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
       <VSpacer size={16} />
-      <InfoBox iconName="legAnalytics">
+      <InfoBox iconName="analytics">
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
           <Label color={"bluegrey"}>
@@ -59,7 +59,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         </Body>
       </InfoBox>
       <VSpacer size={16} />
-      <InfoBox iconName="legEyeHide">
+      <InfoBox iconName="eyeHide">
         <Body>
           {`${I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
@@ -73,7 +73,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         </Body>
       </InfoBox>
       <VSpacer size={16} />
-      <InfoBox iconName="legFornitori">
+      <InfoBox iconName="fornitori">
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
           <Label color={"bluegrey"}>

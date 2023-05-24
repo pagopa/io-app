@@ -283,7 +283,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         bordered={true}
         block={true}
       >
-        <Icon name="legChat" color="blue" />
+        <Icon name="chat" color="blue" />
         <HSpacer size={8} />
         <NBButtonText>
           {I18n.t("payment.details.info.buttons.help")}

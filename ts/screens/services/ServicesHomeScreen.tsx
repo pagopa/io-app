@@ -336,7 +336,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       accessibilityLabel={I18n.t("services.accessibility.edit")}
       onPress={this.props.navigateToServicePreference}
     >
-      <Icon name="legCoggle" size={16} color="blue" />
+      <Icon name="coggle" size={20} color="blue" />
       <Label color={"blue"} weight={"Bold"} style={{ marginLeft: 8 }}>
         {I18n.t("global.buttons.edit").toLocaleUpperCase()}
       </Label>

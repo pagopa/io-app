@@ -216,7 +216,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
           </ProgressCircle>
           {this.props.readingState === ReadingState.completed && (
             <View style={styles.successIcon}>
-              <Icon name="success" color="blue" size={50} />
+              <Icon name="success" color="blue" size={48} />
             </View>
           )}
         </View>
