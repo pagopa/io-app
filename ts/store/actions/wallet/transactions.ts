@@ -35,11 +35,6 @@ export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
 )<Error>();
 
-// all transactions id to remove from the store
-export const deleteReadTransaction = createStandardAction(
-  "DELETE_READ_TRANSACTION"
-)<ReadonlyArray<number>>();
-
 // notify all transactions are been fully loaded
 export const fetchTransactionsLoadComplete = createStandardAction(
   "FETCH_TRANSACTION_LOAD_COMPLETE"
@@ -95,6 +90,5 @@ export type TransactionsActions =
   | ActionType<typeof fetchTransactionFailure>
   | ActionType<typeof fetchPsp>
   | ActionType<typeof clearTransactions>
-  | ActionType<typeof deleteReadTransaction>
   | ActionType<typeof fetchTransactionsLoadComplete>
   | ActionType<typeof fetchTransactionsRequestWithExpBackoff>;
