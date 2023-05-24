@@ -1,4 +1,3 @@
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -15,23 +14,20 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { format } from "../../../../../utils/dates";
 import { Table } from "../../../common/components/Table";
-import {
-  formatNumberCurrency,
-  formatNumberCurrencyOrDefault
-} from "../../../common/utils/strings";
+import { formatNumberCurrencyOrDefault } from "../../../common/utils/strings";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
 } from "./InitiativeRulesInfoBox";
 
-type Props = {
+export type BeneficiaryDetailsProps = {
   initiativeDetails: InitiativeDTO;
   beneficiaryDetails: InitiativeDetailDTO;
 };
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
-const BeneficiaryDetailsContent = (props: Props) => {
+const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const { initiativeDetails, beneficiaryDetails } = props;
 
   const ruleInfoBox = pipe(
@@ -90,22 +86,14 @@ const BeneficiaryDetailsContent = (props: Props) => {
     O.toUndefined
   );
   const typeDependantEntries = () => {
-    const spentUntilNowString = pipe(
-      sequenceS(O.Monad)({
-        refunded: O.fromNullable(initiativeDetails.refunded),
-        accrued: O.fromNullable(initiativeDetails.accrued)
-      }),
-      O.fold(
-        () => "-",
-        ({ refunded, accrued }) => formatNumberCurrency(refunded + accrued)
-      )
-    );
     switch (initiativeDetails.initiativeRewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
         return [
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
-            value: spentUntilNowString
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
+            // in DISCOUNT initiatives, the spent amount is held in the accrued field,
+            // while the refunded amount is always 0
           }
         ];
       case InitiativeRewardTypeEnum.REFUND:
