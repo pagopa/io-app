@@ -1,11 +1,10 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Text as NBButtonText, Toast } from "native-base";
+import { List, ListItem, Toast } from "native-base";
 import * as React from "react";
 import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
@@ -64,6 +63,8 @@ import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import ListItemNav from "../../components/ui/ListItemNav";
 import { Divider } from "../../components/core/Divider";
+import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
+import ButtonSolid from "../../components/ui/ButtonSolid";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -164,18 +165,40 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  private debugCopyListItem(label: string, value: string, onPress: () => void) {
+    return (
+      <>
+        <ListItemInfoCopy
+          label={label}
+          value={value}
+          onPress={onPress}
+          accessibilityLabel={value}
+          numberOfLines={5}
+        />
+        <Divider />
+      </>
+    );
+  }
+
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
-      <ListItem style={styles.noRightPadding}>
-        <ButtonDefaultOpacity
-          primary={true}
-          danger={isDanger}
-          small={true}
-          onPress={onPress}
-        >
-          <NBButtonText numberOfLines={1}>{title}</NBButtonText>
-        </ButtonDefaultOpacity>
-      </ListItem>
+      <View style={{ paddingVertical: 8 }}>
+        {isDanger ? (
+          <ButtonSolid
+            color="danger"
+            label={title}
+            onPress={onPress}
+            accessibilityLabel={title}
+          />
+        ) : (
+          <ButtonSolid
+            color="primary"
+            label={title}
+            onPress={onPress}
+            accessibilityLabel={title}
+          />
+        )}
+      </View>
     );
   }
 
@@ -417,47 +440,39 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             {isDevEnv &&
               sessionToken &&
-              this.debugListItem(
-                `Session Token ${sessionToken}`,
-                () => clipboardSetStringWithFeedback(sessionToken),
-                false
+              this.debugCopyListItem("Session token", sessionToken, () =>
+                clipboardSetStringWithFeedback(sessionToken)
               )}
 
             {isDevEnv &&
               walletToken &&
-              this.debugListItem(
-                `Wallet token ${walletToken}`,
-                () => clipboardSetStringWithFeedback(walletToken),
-                false
+              this.debugCopyListItem("Wallet token", walletToken, () =>
+                clipboardSetStringWithFeedback(walletToken)
               )}
 
             {isDevEnv &&
-              this.debugListItem(
-                `Notification ID ${notificationId}`,
-                () => clipboardSetStringWithFeedback(notificationId),
-                false
+              this.debugCopyListItem("Notification ID", notificationId, () =>
+                clipboardSetStringWithFeedback(notificationId)
               )}
 
             {isDevEnv &&
               notificationToken &&
-              this.debugListItem(
-                `Notification token ${notificationToken}`,
-                () => clipboardSetStringWithFeedback(notificationToken),
-                false
+              this.debugCopyListItem(
+                "Notification token",
+                notificationToken,
+                () => clipboardSetStringWithFeedback(notificationToken)
               )}
 
-            {this.debugListItem(
-              `Device unique ID ${deviceUniqueId}`,
-              () => clipboardSetStringWithFeedback(deviceUniqueId),
-              false
+            {this.debugCopyListItem("Device unique ID", deviceUniqueId, () =>
+              clipboardSetStringWithFeedback(deviceUniqueId)
             )}
 
             {thumbprint &&
-              this.debugListItem(
-                `Thumbprint ${thumbprint}`,
-                () => clipboardSetStringWithFeedback(thumbprint),
-                false
+              this.debugCopyListItem("Thumbprint", thumbprint, () =>
+                clipboardSetStringWithFeedback(thumbprint)
               )}
+
+            <VSpacer size={16} />
 
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
