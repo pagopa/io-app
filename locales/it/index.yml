@@ -3225,6 +3225,11 @@ features:
       content: "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati."
       cancel: "Non ora"
       confirm: "Attiva"
+    noFields:
+      title: "Firma tutto il documento"
+      content: "Vuoi firmare tutto il documento?"
+      leftButton: "Rileggi"
+      rightButton: "Firma"
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"

@@ -24,7 +24,8 @@ const mockTransactionDetail: TransactionDetailDTO = {
   operationId: "1",
   accrued: 100,
   idTrxAcquirer: "1",
-  idTrxIssuer: "1"
+  idTrxIssuer: "1",
+  status: ""
 };
 
 describe("Test timeline operation details reducer", () => {
