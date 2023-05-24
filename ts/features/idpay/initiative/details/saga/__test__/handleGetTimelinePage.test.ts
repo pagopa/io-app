@@ -21,7 +21,8 @@ const mockResponseSuccess: TimelineDTO = {
       amount: 100,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
-      circuitType: "MASTERCARD"
+      circuitType: "MASTERCARD",
+      status: ""
     }
   ],
   pageNo: 0,
