@@ -21,7 +21,7 @@ import {
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
-import { isCoBadgeOrPrivativeBlocked } from "../../../../../../utils/paymentMethod";
+import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
 import {
   HSpacer,
   VSpacer
@@ -91,7 +91,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             <VSpacer size={24} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
-            {isCoBadgeOrPrivativeBlocked(props.pan) ? (
+            {isCoBadgeBlocked(props.pan) ? (
               <InfoBox iconColor="red" iconName="legError">
                 <Body>{blockedCard}</Body>
               </InfoBox>
@@ -105,7 +105,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <VSpacer size={16} />
         </ScrollView>
-        {isCoBadgeOrPrivativeBlocked(props.pan) ? (
+        {isCoBadgeBlocked(props.pan) ? (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(

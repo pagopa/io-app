@@ -9,10 +9,9 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { appReducer } from "../../../../../../store/reducers";
 import { bpdRemoteConfigSelector } from "../../../../../../store/reducers/backendStatus";
-import { mockPrivativeCard } from "../../../../../../store/reducers/wallet/__mocks__/wallets";
+import { mockCreditCardPaymentMethod } from "../../../../../../store/reducers/wallet/__mocks__/wallets";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { navigateToSuggestBpdActivation } from "../../../../../wallet/onboarding/bancomat/navigation/action";
-import { navigateToActivateBpdOnNewPrivative } from "../../../../../wallet/onboarding/privative/navigation/action";
 import { activateBpdOnNewPaymentMethods } from "../activateBpdOnNewAddedPaymentMethods";
 import { isBpdEnabled } from "../onboarding/startOnboarding";
 
@@ -30,6 +29,8 @@ const enrollAfterAddFalse: BpdConfig = {
   opt_in_payment_methods_v2: false
 };
 
+const navFunc = jest.fn();
+
 describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
   jest.useFakeTimers();
 
@@ -46,16 +47,12 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     // We trigger the initialization of the NavigationService
     renderScreenFakeNavRedux(View, "DUMMY", {}, store);
 
-    await expectSaga(
-      activateBpdOnNewPaymentMethods,
-      [],
-      navigateToActivateBpdOnNewPrivative
-    )
+    await expectSaga(activateBpdOnNewPaymentMethods, [], navFunc)
       .withState(store.getState())
       .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -63,8 +60,8 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
   it("With at least one payment method with bpd capability and an error to retrieve the bpd enrolling, should navigate to wallet home", async () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
-      [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative
+      [mockCreditCardPaymentMethod],
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.left(new Error("An error"))],
@@ -73,7 +70,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .call(isBpdEnabled)
       .call(navigateToWalletHome)
       .select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -83,14 +80,14 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       activateBpdOnNewPaymentMethods,
       [
         {
-          ...mockPrivativeCard,
+          ...mockCreditCardPaymentMethod,
           enableableFunctions: [
             EnableableFunctionsEnum.FA,
             EnableableFunctionsEnum.pagoPA
           ]
         }
       ],
-      navigateToActivateBpdOnNewPrivative
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.right(true)],
@@ -99,16 +96,16 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
-  it("With at least one payment method with bpd capability, bpd enrolled and program_active === true, should navigate to navigateToActivateBpdOnNewPrivative", async () => {
+  it("With at least one payment method with bpd capability, bpd enrolled and program_active === true, should navigate to navFunc", async () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
-      [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative
+      [mockCreditCardPaymentMethod],
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.right(true)],
@@ -117,16 +114,16 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .call(navigateToActivateBpdOnNewPrivative)
+      .call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
-  it("With at least one payment method with bpd capability, bpd enrolled and program_active === false, should navigate to navigateToActivateBpdOnNewPrivative", async () => {
+  it("With at least one payment method with bpd capability, bpd enrolled and program_active === false, should navigate to navFunc", async () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
-      [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative
+      [mockCreditCardPaymentMethod],
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.right(true)],
@@ -138,7 +135,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -146,8 +143,8 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
   it("With at least one payment method with bpd capability, bpd not enrolled and remote configuration false or undefined should navigate to navigateToWalletHome", async () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
-      [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative
+      [mockCreditCardPaymentMethod],
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.right(false)],
@@ -155,14 +152,14 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
 
     await expectSaga(
       activateBpdOnNewPaymentMethods,
-      [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative
+      [mockCreditCardPaymentMethod],
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.right(false)],
@@ -170,7 +167,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -178,8 +175,8 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
   it("With at least one payment method with bpd capability, bpd not enrolled and remote configuration true, should navigate to navigateToWalletHome", async () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
-      [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative
+      [mockCreditCardPaymentMethod],
+      navFunc
     )
       .provide([
         [matchers.call(isBpdEnabled), E.right(false)],
@@ -187,7 +184,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navFunc)
       .call(navigateToSuggestBpdActivation)
       .run();
   });
