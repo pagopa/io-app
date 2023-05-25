@@ -104,7 +104,7 @@ type BottomSheetOptions = {
  * @param bottomSheetOptions
  * @see {BottomSheetOptions}
  */
-export const useIOBottomSheetModalNew = ({
+export const useIOBottomSheetModal = ({
   component,
   title,
   snapPoint,
@@ -208,7 +208,7 @@ export const useIOBottomSheetAutoresizableModal = (
     [insets, bottomPadding]
   );
 
-  return useIOBottomSheetModalNew({
+  return useIOBottomSheetModal({
     component: (
       <View
         style={{ paddingBottom: insets.bottom + bottomPadding }}
@@ -235,14 +235,14 @@ export const useIOBottomSheetAutoresizableModal = (
  * use `useIOBottomSheetModalNew` instead
  * TODO remove once all the occurencies of `useIOBottomSheetModal` will be replaced by `useIOBottomSheetModalNew`
  */
-export const useIOBottomSheetModal = (
+export const useLegacyIOBottomSheetModal = (
   component: React.ReactNode,
   title: string | React.ReactNode,
   snapPoint: number,
   footer?: React.ReactElement,
   onDismiss?: () => void
 ): IOBottomSheetModal =>
-  useIOBottomSheetModalNew({
+  useIOBottomSheetModal({
     component,
     title,
     snapPoint: [snapPoint],

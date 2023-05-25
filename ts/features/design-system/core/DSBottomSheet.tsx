@@ -7,7 +7,7 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import {
   useIOBottomSheetAutoresizableModal,
-  useIOBottomSheetModalNew
+  useIOBottomSheetModal
 } from "../../../utils/hooks/bottomSheet";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -72,7 +72,7 @@ export const DSBottomSheet = () => {
     present: presentStaticBottomSheet,
     bottomSheet: staticBottomSheet,
     dismiss: dismissStaticBottomSheet
-  } = useIOBottomSheetModalNew({
+  } = useIOBottomSheetModal({
     title: "Static Bottom Sheet",
     component: <BottomSheetContentBody />,
     snapPoint: [300]
