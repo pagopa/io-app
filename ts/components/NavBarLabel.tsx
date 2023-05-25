@@ -7,7 +7,6 @@ import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
 import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages/messagesStatus";
-import { getSafeUnreadTransactionsNumSelector } from "../store/reducers/entities/readTransactions";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -80,13 +79,7 @@ const computeAccessibilityLabel = (
  * @param props
  */
 const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
-  const {
-    options,
-    routeName,
-    preferredLanguage,
-    messagesUnread,
-    transactionsNumUnread
-  } = props;
+  const { options, routeName, preferredLanguage, messagesUnread } = props;
   const locale: Locales = pipe(
     preferredLanguage,
     O.fold(
@@ -101,8 +94,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     : "";
 
   const unreadMessagesMap: Record<string, number> = {
-    [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length,
-    [ROUTES.WALLET_HOME]: transactionsNumUnread
+    [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length
   };
 
   const computedUnreadMessages = unreadMessagesMap[routeName] || undefined;
@@ -130,8 +122,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
-  messagesUnread: messagesUnreadAndUnarchivedSelector(state),
-  transactionsNumUnread: getSafeUnreadTransactionsNumSelector(state)
+  messagesUnread: messagesUnreadAndUnarchivedSelector(state)
 });
 
 export default connect(mapStateToProps)(NavBarLabel);

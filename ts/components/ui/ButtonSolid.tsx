@@ -25,7 +25,7 @@ import {
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { IOIcons, Icon } from "../core/icons";
+import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonSolid = WithTestID<{
@@ -225,7 +225,7 @@ ButtonSolid) => {
     : mapColorStates[color]?.label?.default;
 
   // Icon size
-  const iconSize = small ? 16 : 20;
+  const iconSize: IOIconSizeScale = small ? 16 : 20;
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (

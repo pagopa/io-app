@@ -19,7 +19,7 @@ const TosAndPrivacy: React.FC<Props> = ({ tosUrl, privacyUrl }) => {
   }
   return (
     <View>
-      <SectionHeader iconName="legLocked" title={"services.tosAndPrivacy"} />
+      <SectionHeader iconName="locked" title={"services.tosAndPrivacy"} />
       {tosUrl && <LinkRow text="services.tosLink" href={tosUrl} />}
       {privacyUrl && <LinkRow text="services.privacyLink" href={privacyUrl} />}
     </View>

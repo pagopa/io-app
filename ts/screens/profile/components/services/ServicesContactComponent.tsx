@@ -85,7 +85,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             <Icon
               name={isSelected ? "legRadioOn" : "legRadioOff"}
               color="blue"
-              size={28}
+              size={24}
             />
           </View>
         </TouchableDefaultOpacity>

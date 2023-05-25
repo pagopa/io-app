@@ -21,7 +21,7 @@ import {
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../core/variables/IOColors";
-import { IOIcons, Icon } from "../core/icons";
+import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
@@ -32,7 +32,8 @@ import { makeFontStyleObject } from "../core/fonts";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
-const iconSize: number = 24;
+const iconSize: IOIconSizeScale = 24;
+
 const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
 
 const styles = StyleSheet.create({

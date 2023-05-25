@@ -40,7 +40,7 @@ const EycaErrorComponent = (props: Props) => (
       </TouchableDefaultOpacity>
     </View>
     <VSpacer size={16} />
-    <InfoBox iconName="legError" alignedCentral iconSize={INFOBOX_ICON_SIZE}>
+    <InfoBox iconName="errorFilled" alignedCentral iconSize={INFOBOX_ICON_SIZE}>
       <H4 weight={"Regular"} testID={"eyca-error-text"}>
         {I18n.t("bonus.cgn.detail.status.eycaError")}
       </H4>

@@ -90,7 +90,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
         {item.full_address}
       </H4>
       <View style={styles.flexEnd}>
-        <Icon name="legCopy" size={COPY_ICON_SIZE} color="blue" />
+        <Icon name="copy" size={COPY_ICON_SIZE} color="blue" />
       </View>
     </TouchableDefaultOpacity>
   );
@@ -155,7 +155,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                           {url}
                         </H4>
                         <Icon
-                          name="legExternalLink"
+                          name="externalLink"
                           size={EXTERNAL_LINK_ICON_SIZE}
                           color="blue"
                         />
