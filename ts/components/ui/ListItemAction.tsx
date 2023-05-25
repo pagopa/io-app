@@ -137,6 +137,7 @@ export const ListItemAction = ({
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessible={true}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="button"
