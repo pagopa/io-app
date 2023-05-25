@@ -5,8 +5,10 @@
 import { Platform } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
@@ -20,6 +22,7 @@ import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfi
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
+  fastLoginEnabled,
   fciEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
@@ -233,6 +236,38 @@ export const isLollipopEnabledSelector = createSelector(
         )
       ),
       O.getOrElse(() => false)
+    )
+);
+
+/**
+ * return the remote config about FastLogin enabled/disabled
+ * based on a minumum version of the app.
+ * if there is no data, false is the default value -> (FastLogin disabled)
+ */
+export const isFastLoginEnabledSelector = createSelector(
+  backendStatusSelector,
+  backendStatus =>
+    fastLoginEnabled &&
+    pipe(
+      backendStatus,
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(cfg => cfg.fastLogin),
+      O.chainNullableK(lp => lp.min_app_version),
+      O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+      O.chain(semVer =>
+        pipe(
+          semVer,
+          PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
+          E.fold(
+            _ => O.none,
+            v => O.some(v)
+          )
+        )
+      ),
+      O.fold(
+        () => false,
+        v => isVersionSupported(`${v}`, getAppVersion())
+      )
     )
 );
 
