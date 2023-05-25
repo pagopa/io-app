@@ -14,6 +14,8 @@ import Svg, { Path, PathProps } from "react-native-svg";
 import { calculateSlop } from "../../accessibility";
 import { IOColors } from "../../variables/IOColors";
 import { IOSpringValues } from "../../variables/IOAnimations";
+import { useIOSelector } from "../../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 type Props = {
   checked?: boolean;
@@ -24,10 +26,13 @@ type OwnProps = Props & Pick<PressableProps, "disabled" | "onPress">;
 const SIZE: number = 24;
 const BORDER_WIDTH: number = 2;
 
-const offColor: IOColors = "grey-650";
-const onColor: IOColors = "blueIO-500";
+const borderColorOFF: IOColors = "grey-650";
+const backgroundColorON: IOColors = "blueIO-500";
 const checkBoxRadius: number = 5;
 const slop = calculateSlop(SIZE);
+/* Legacy visual parameters */
+const borderColorLegacyOFF: IOColors = "bluegrey";
+const backgroundColorLegacyON: IOColors = "blue";
 
 const checkMarkPath = "m7 12 4 4 7-7";
 
@@ -42,12 +47,10 @@ const styles = StyleSheet.create({
     top: 0,
     width: SIZE,
     height: SIZE,
-    borderColor: IOColors[offColor],
     borderWidth: BORDER_WIDTH,
     borderRadius: checkBoxRadius
   },
   checkBoxSquare: {
-    backgroundColor: IOColors[onColor],
     position: "absolute",
     left: 0,
     top: 0,
@@ -107,6 +110,7 @@ const AnimatedCheckmark = ({
  * @constructor
  */
 export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isChecked = checked ?? false;
 
   const squareAnimationProgress = useSharedValue(checked ? 1 : 0);
@@ -143,8 +147,29 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
       hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
       style={styles.checkBoxWrapper}
     >
-      <View style={styles.checkboxBorder} />
-      <Animated.View style={[styles.checkBoxSquare, animatedCheckboxSquare]} />
+      {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following conditions */}
+      <View
+        style={[
+          styles.checkboxBorder,
+          {
+            borderColor: isDesignSystemEnabled
+              ? IOColors[borderColorOFF]
+              : IOColors[borderColorLegacyOFF]
+          }
+        ]}
+      />
+      <Animated.View
+        style={[
+          styles.checkBoxSquare,
+          {
+            backgroundColor: isDesignSystemEnabled
+              ? IOColors[backgroundColorON]
+              : IOColors[backgroundColorLegacyON]
+          },
+          animatedCheckboxSquare
+        ]}
+      />
+      {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       {isChecked && (
         <View>
           <AnimatedCheckmark

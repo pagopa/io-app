@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, View, StyleSheet, Text } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   Extrapolate,
@@ -23,6 +23,9 @@ import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import { IOIcons, Icon } from "../core/icons";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { makeFontStyleObject } from "../core/fonts";
 
 type Props = {
   value: string;
@@ -43,6 +46,17 @@ type OwnProps = Props &
     "onPress" | "accessibilityLabel" | "disabled"
   >;
 
+/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+const styles = StyleSheet.create({
+  legacyTextValue: {
+    fontSize: 18,
+    lineHeight: 24,
+    color: IOColors.bluegreyDark,
+    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
+  }
+});
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
+
 /**
  *  with the automatic state management that uses a {@link AnimatedCheckBox}
  * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
@@ -58,6 +72,9 @@ export const CheckboxListItem = ({
   disabled,
   onValueChange
 }: OwnProps) => {
+  // Experimental Design System
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
   const [toggleValue, setToggleValue] = useState(checked ?? false);
   // Animations
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
@@ -125,6 +142,7 @@ export const CheckboxListItem = ({
       onPress={toggleCheckbox}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       testID="AnimatedCheckbox"
       disabled={disabled}
       style={{
@@ -150,7 +168,13 @@ export const CheckboxListItem = ({
                   />
                 </View>
               )}
-              <NewH6 color={"black"}>{value}</NewH6>
+              {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
+              {isDesignSystemEnabled ? (
+                <NewH6 color={"black"}>{value}</NewH6>
+              ) : (
+                <Text style={styles.legacyTextValue}>{value}</Text>
+              )}
+              {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
             </View>
             <HSpacer size={8} />
             <View pointerEvents="none">

@@ -1,10 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { NewH6 } from "../../typography/NewH6";
 import { IOStyles } from "../../variables/IOStyles";
 import { HSpacer } from "../../spacer/Spacer";
+import { IOColors } from "../../variables/IOColors";
+import { useIOSelector } from "../../../../store/hooks";
+import { makeFontStyleObject } from "../../fonts";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { AnimatedCheckbox } from "./AnimatedCheckbox";
 
 type Props = {
@@ -21,6 +25,17 @@ type OwnProps = Props &
   Pick<React.ComponentProps<typeof AnimatedCheckbox>, "disabled" | "checked"> &
   Pick<React.ComponentProps<typeof Pressable>, "onPress">;
 
+/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+const styles = StyleSheet.create({
+  legacyTextValue: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: IOColors.bluegreyDark,
+    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
+  }
+});
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
+
 /**
  * A checkbox with the automatic state management that uses a {@link AnimatedCheckBox}
  * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
@@ -34,6 +49,9 @@ export const CheckboxLabel = ({
   disabled,
   onValueChange
 }: OwnProps) => {
+  // Experimental Design System
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
   const [toggleValue, setToggleValue] = useState(checked ?? false);
 
   const toggleCheckbox = () => {
@@ -59,7 +77,13 @@ export const CheckboxLabel = ({
           <AnimatedCheckbox checked={checked ?? toggleValue} />
         </View>
         <HSpacer size={8} />
-        <NewH6 color={"black"}>{label}</NewH6>
+        {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
+        {isDesignSystemEnabled ? (
+          <NewH6 color={"black"}>{label}</NewH6>
+        ) : (
+          <Text style={styles.legacyTextValue}>{label}</Text>
+        )}
+        {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       </View>
     </Pressable>
   );
