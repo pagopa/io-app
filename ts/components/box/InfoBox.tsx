@@ -2,12 +2,12 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { IOColors } from "../core/variables/IOColors";
 import { HSpacer } from "../core/spacer/Spacer";
-import { IOIcons, Icon } from "../core/icons";
+import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 
 type Props = {
   iconName?: IOIcons;
   iconColor?: IOColors;
-  iconSize?: number;
+  iconSize?: IOIconSizeScale;
   alignedCentral?: boolean;
 };
 
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ICON_SIZE = 32;
+const ICON_SIZE: IOIconSizeScale = 32;
 
 /**
  * This component display a box with an icon and a component on the right.

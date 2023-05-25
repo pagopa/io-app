@@ -102,7 +102,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
         </Body>
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="legClose" />
+            <Icon name="close" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

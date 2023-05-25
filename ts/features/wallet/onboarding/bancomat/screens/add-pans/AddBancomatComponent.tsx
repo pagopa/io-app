@@ -88,7 +88,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
             <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
             {isBancomatBlocked(props.pan) ? (
-              <InfoBox iconColor="red" iconName="legError">
+              <InfoBox iconColor="red" iconName="errorFilled">
                 <Body>{I18n.t("wallet.onboarding.bancomat.add.blocked")}</Body>
               </InfoBox>
             ) : (

@@ -40,7 +40,7 @@ export const getCardLogoComponent = (
     O.filter(isIOLogoPaymentType),
     O.alt(() => O.fromNullable(IOPaymentLogosCaseMapping[brand])),
     O.fold(
-      () => <Icon name="creditCard" size={size} />,
+      () => <Icon name="creditCard" size={size as IOIconSizeScale} />,
       brand => <LogoPayment name={brand} size={size} />
     )
   );

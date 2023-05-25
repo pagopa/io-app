@@ -2,9 +2,9 @@ import React from "react";
 import { GestureResponderEvent, View } from "react-native";
 import { Icon, IOIcons, IOIconSizeScale } from "../core/icons";
 import {
-  IOPictogramSizeScale,
+  Pictogram,
   IOPictograms,
-  Pictogram
+  IOPictogramSizeScale
 } from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";
