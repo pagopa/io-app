@@ -137,6 +137,14 @@ const renderCheckboxListItem = () => (
         }
         accessibilityLabel={""}
       />
+      <Divider />
+      <CheckboxListItem
+        disabled
+        checked={true}
+        icon="coggle"
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
     </DSComponentViewerBox>
   </>
 );
