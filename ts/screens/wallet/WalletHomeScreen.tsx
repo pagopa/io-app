@@ -75,8 +75,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   fetchTransactionsLoadComplete,
-  fetchTransactionsRequestWithExpBackoff,
-  readTransaction
+  fetchTransactionsRequestWithExpBackoff
 } from "../../store/actions/wallet/transactions";
 import {
   fetchWalletsRequestWithExpBackoff,
@@ -87,7 +86,6 @@ import {
   isCGNEnabledSelector,
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
-import { transactionsReadSelector } from "../../store/reducers/entities";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
@@ -474,7 +472,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent(renderHelpInfoBox)}
       />
     );
@@ -491,7 +488,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         }
         activeOpacity={1}
       >
-        <Icon name="legQrCode" color="white" size={24} />
+        <Icon name="qrCode" color="white" size={24} />
         <HSpacer size={8} />
         <NBButtonText>{I18n.t("wallet.payNotice")}</NBButtonText>
       </ButtonDefaultOpacity>
@@ -589,7 +586,6 @@ const mapStateToProps = (state: GlobalState) => ({
   transactionsLoadedLength: getTransactionsLoadedLength(state),
   areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  readTransactions: transactionsReadSelector(state),
   bpdLoadState: bpdLastUpdateSelector(state),
   cgnDetails: cgnDetailSelector(state),
   isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
@@ -608,8 +604,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
   navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
-    dispatch(readTransaction(transaction));
-
     navigateToTransactionDetailsScreen({
       transaction,
       isPaymentCompletedTransaction: false

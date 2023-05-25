@@ -95,7 +95,8 @@ export const DesignSystem = (props: Props) => {
     >
       <View
         style={{
-          backgroundColor: IOColors[theme["appBackground-primary"]]
+          backgroundColor: IOColors[theme["appBackground-primary"]],
+          paddingBottom: 120
         }}
       >
         <SectionList

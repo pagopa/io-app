@@ -24,7 +24,7 @@ import { GlobalState } from "../types";
 /**
  * The transactions selector will truncate the list at this length
  */
-const MAX_TRANSACTIONS_IN_LIST = 50;
+const MAX_TRANSACTIONS_IN_LIST = 500;
 
 export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
@@ -83,7 +83,9 @@ export const areMoreTransactionsAvailable = (state: GlobalState): boolean =>
       pot.getOrElse(
         pot.map(
           state.wallet.transactions.total,
-          t => Object.keys(transactions).length < t
+          t =>
+            Object.keys(transactions).length <
+            Math.min(t, MAX_TRANSACTIONS_IN_LIST)
         ),
         false
       )

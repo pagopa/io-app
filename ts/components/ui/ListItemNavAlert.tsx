@@ -31,6 +31,7 @@ import { makeFontStyleObject } from "../core/fonts";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
+import { VSpacer } from "../core/spacer/Spacer";
 
 export type ListItemNavAlert = WithTestID<{
   value: string;
@@ -140,9 +141,12 @@ export const ListItemNavAlert = ({
               {value}
             </Text>
             {description && (
-              <Body weight="SemiBold" color={theme.errorText}>
-                {description}
-              </Body>
+              <>
+                <VSpacer size={4} />
+                <Body weight="SemiBold" color={theme.errorText}>
+                  {description}
+                </Body>
+              </>
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
@@ -186,9 +190,12 @@ export const ListItemNavAlert = ({
           <View style={IOStyles.flex}>
             <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
             {description && (
-              <LabelSmall weight="SemiBold" color={theme.errorText}>
-                {description}
-              </LabelSmall>
+              <>
+                <VSpacer size={4} />
+                <LabelSmall weight="SemiBold" color={theme.errorText}>
+                  {description}
+                </LabelSmall>
+              </>
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>

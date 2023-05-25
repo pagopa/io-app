@@ -142,7 +142,6 @@ describe("getPaymentMethods", () => {
     startSatispayOnboarding: jest.fn(),
     startPaypalOnboarding: jest.fn(),
     startAddBancomat: jest.fn(),
-    startAddPrivative: jest.fn(),
     navigateToAddCreditCard: jest.fn(),
     isPaypalAlreadyAdded: true,
     isPaypalEnabled: true,
