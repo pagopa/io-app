@@ -184,7 +184,6 @@ export function createRootReducer(
               messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
-              transactionsRead: state.entities.transactionsRead,
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.entities._persist
             },
