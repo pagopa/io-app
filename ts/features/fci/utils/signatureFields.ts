@@ -8,6 +8,7 @@ import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 import { TranslationKeys } from "../../../../locales/locales";
+import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
 
 const clausesEnumValues = {
@@ -116,6 +117,25 @@ const sortByType = RA.sortBy([byClausesType]);
 export const orderSignatureFields = (
   signatureFields: ReadonlyArray<SignatureField>
 ): ReadonlyArray<SignatureField> => pipe(signatureFields, sortByType);
+
+/**
+ * Given a list of documents to sign and an array of Clauses types
+ * it returns the number of clauses
+ * @param documentsToSign the list of documents to sign
+ * @returns the number of OPTIONAL clauses
+ */
+export const getClausesCountByTypes = (
+  documentsToSign: ReadonlyArray<DocumentToSign>,
+  clausesType: ReadonlyArray<string>
+): number =>
+  pipe(
+    documentsToSign,
+    RA.chain(d => d.signature_fields),
+    RA.filterMap(f =>
+      clausesType.includes(f.clause.type) ? O.some(f) : O.none
+    ),
+    RA.size
+  );
 
 /**
  * Get the number of signature fields
