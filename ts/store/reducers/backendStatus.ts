@@ -24,6 +24,7 @@ import {
   cgnMerchantsV2Enabled,
   fastLoginEnabled,
   fciEnabled,
+  nativeLoginEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -254,6 +255,39 @@ export const isFastLoginEnabledSelector = createSelector(
       O.chainNullableK(cfg => cfg.fastLogin),
       O.chainNullableK(lp => lp.min_app_version),
       O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+      O.chain(semVer =>
+        pipe(
+          semVer,
+          PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
+          E.fold(
+            _ => O.none,
+            v => O.some(v)
+          )
+        )
+      ),
+      O.fold(
+        () => false,
+        v => isVersionSupported(`${v}`, getAppVersion())
+      )
+    )
+);
+
+/**
+ * return the remote config about NativeLogin enabled/disabled
+ * based on a minumum version of the app.
+ * if there is no data, false is the default value -> (NativeLogin disabled)
+ */
+export const isNativeLoginEnabledSelector = createSelector(
+  backendStatusSelector,
+  backendStatus =>
+    nativeLoginEnabled &&
+    pipe(
+      backendStatus,
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(cfg => cfg.nativeLogin),
+      O.chainNullableK(lp => lp.min_app_version),
+      O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+      // eslint-disable-next-line sonarjs/no-identical-functions
       O.chain(semVer =>
         pipe(
           semVer,
