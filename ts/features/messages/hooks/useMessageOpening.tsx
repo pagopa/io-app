@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
+import Placeholder from "rn-placeholder";
 import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
@@ -17,13 +18,7 @@ import {
 import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
 import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import MessageMarkdown from "../../../components/messages/MessageDetail/MessageMarkdown";
-import {
-  RemoteValue,
-  getValueOrElse,
-  isLoading,
-  isError,
-  isReady
-} from "../../../features/bonus/bpd/model/RemoteValue";
+import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import { Pictogram } from "../../../components/core/pictograms";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
@@ -31,34 +26,23 @@ import I18n from "../../../i18n";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
-import { H4 } from "../../../components/core/typography/H4";
+import { H3 } from "../../../components/core/typography/H3";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import ROUTES from "../../../navigation/routes";
 import {
   trackPNDisclaimerAccepted,
   trackPNDisclaimerRejected,
   trackPNDisclaimerShowSuccess
-} from "../../../features/pn/analytics";
+} from "../../pn/analytics";
 
 const BOTTOM_SHEET_HEIGHT = 500;
-
-const ErrorComponent = () => (
-  <View style={[IOStyles.flex, IOStyles.alignCenter]}>
-    <VSpacer size={24} />
-    <Pictogram name="error" />
-    <VSpacer size={24} />
-    <H2 accessible>{I18n.t("global.genericError")}</H2>
-    <VSpacer size={16} />
-  </View>
-);
 
 type MessagePreconditionProps = {
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>;
 };
 
 type MessagePreconditionContentProps = MessagePreconditionProps & {
-  handleOnLoadEnd: () => void;
+  onLoadEnd: () => void;
 };
 
 type MessagePreconditionFooterProps = {
@@ -127,54 +111,107 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
   );
 };
 
+const MessagePreconditionContentSkeleton = () => (
+  <View style={{ marginTop: customVariables.spacerWidth }}>
+    {Array.from({ length: 4 }).map((_, i) => (
+      <View key={i}>
+        <Placeholder.Box
+          width={"100%"}
+          animate={"fade"}
+          height={21}
+          radius={4}
+        />
+        <VSpacer size={8} />
+        <Placeholder.Box
+          width={"100%"}
+          animate={"fade"}
+          height={21}
+          radius={4}
+        />
+        <VSpacer size={8} />
+        <Placeholder.Box
+          width={"90%"}
+          animate={"fade"}
+          height={21}
+          radius={4}
+        />
+        <VSpacer size={8} />
+      </View>
+    ))}
+  </View>
+);
+
 const MessagePreconditionContent = ({
   content,
-  handleOnLoadEnd
+  onLoadEnd
 }: MessagePreconditionContentProps) => {
-  const renderContent = () => {
-    if (isError(content)) {
-      return <ErrorComponent />;
-    } else if (isReady(content)) {
-      return (
-        <MessageMarkdown onLoadEnd={handleOnLoadEnd}>
-          {content.value.markdown}
-        </MessageMarkdown>
-      );
-    }
-    return null;
+  const [isLoaded, setLoaded] = useState(false);
+
+  const handleOnLoadEnd = () => {
+    setLoaded(true);
+    onLoadEnd();
   };
 
-  return (
-    <View style={{ minHeight: "70%" }}>
-      <LoadingSpinnerOverlay isLoading={isLoading(content)}>
-        <VSpacer size={24} />
-        {renderContent()}
-      </LoadingSpinnerOverlay>
-    </View>
+  return fold(
+    content,
+    constNull,
+    () => <MessagePreconditionContentSkeleton />,
+    ({ markdown }) => (
+      <>
+        {!isLoaded && <MessagePreconditionContentSkeleton />}
+        <View
+          style={{
+            display: isLoaded ? "flex" : "none",
+            marginTop: customVariables.spacerWidth
+          }}
+        >
+          <MessageMarkdown onLoadEnd={handleOnLoadEnd}>
+            {markdown}
+          </MessageMarkdown>
+        </View>
+      </>
+    ),
+    () => <ErrorComponent />
   );
 };
 
-const MessagePreconditionHeader = ({ content }: MessagePreconditionProps) => {
-  const data = getValueOrElse(content, undefined);
+const ErrorComponent = () => (
+  <View style={[IOStyles.flex, IOStyles.alignCenter]}>
+    <VSpacer size={24} />
+    <Pictogram name="error" />
+    <VSpacer size={24} />
+    <H2 accessible>{I18n.t("global.genericError")}</H2>
+    <VSpacer size={16} />
+  </View>
+);
 
-  return (
-    <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-      {data ? (
-        <>
-          <HeaderImage
-            width={32}
-            height={32}
-            fill={IOColors.blue}
-            style={{ marginRight: customVariables.spacerWidth }}
-          />
-          <H4 weight="SemiBold" color="bluegreyDark">
-            {data.title}
-          </H4>
-        </>
-      ) : null}
+const MessagePreconditionHeaderSkeleton = () => (
+  <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
+    <View style={{ marginRight: customVariables.spacerWidth }}>
+      <Placeholder.Box animate={"fade"} width={32} height={32} radius={32} />
     </View>
+    <Placeholder.Box animate="fade" width={150} height={21} radius={4} />
+  </View>
+);
+
+const MessagePreconditionHeader = ({ content }: MessagePreconditionProps) =>
+  fold(
+    content,
+    constNull,
+    () => <MessagePreconditionHeaderSkeleton />,
+    ({ title }) => (
+      <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
+        <HeaderImage
+          width={32}
+          height={32}
+          fill={IOColors.blue}
+          style={{ marginRight: customVariables.spacerWidth }}
+        />
+        <H3>{title}</H3>
+      </View>
+    ),
+    () => <View />
   );
-};
 
 export const useMessageOpening = () => {
   const navigation = useNavigation();
@@ -201,7 +238,7 @@ export const useMessageOpening = () => {
   const modal = useIOBottomSheetModal(
     <MessagePreconditionContent
       content={content}
-      handleOnLoadEnd={() => setIsContentLoadCompleted(true)}
+      onLoadEnd={() => setIsContentLoadCompleted(true)}
     />,
     <MessagePreconditionHeader content={content} />,
     BOTTOM_SHEET_HEIGHT,
