@@ -29,6 +29,7 @@ import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import { Icon } from "../../../components/core/icons/Icon";
+import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
@@ -68,6 +69,14 @@ export const DSListItems = () => (
         </H2>
         {renderListItemInfo()}
 
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemAction
+        </H2>
+        {renderListItemAction()}
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -421,60 +430,121 @@ const renderListItemInfoCopy = () => (
   </DSComponentViewerBox>
 );
 
-const renderListItemInfo = () => (
+const renderListItemAction = () => (
   <>
-    <DSComponentViewerBox name="ListItemInfo">
-      <View>
-        <ListItemInfo
-          label="Label"
-          value={"Value"}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <ListItemInfo
-          label="Label"
-          value={"Value"}
-          accessibilityLabel="Empty just for testing purposes"
-        />
-
-        <ListItemInfo
-          label="Label"
-          value="A looong looooong looooooooong looooooooooong title"
-          accessibilityLabel="Empty just for testing purposes"
-        />
-        <ListItemInfo
-          icon="creditCard"
-          label="Label"
-          value="A looong looooong looooooooong looooooooooong title"
-          accessibilityLabel="Empty just for testing purposes"
-          action={
-            <ButtonLink
-              label="Modifica"
-              onPress={onButtonPress}
-              accessibilityLabel={""}
-            />
-          }
-        />
-        <ListItemInfo
-          icon="psp"
-          label="Label"
-          value="A looong looooong looooooooong looooooooooong title"
-          accessibilityLabel="Empty just for testing purposes"
-          action={
-            <IconButton
-              icon="info"
-              onPress={onButtonPress}
-              accessibilityLabel={""}
-            />
-          }
-        />
-
-        <ListItemInfo
-          label="Label"
-          value={"Value"}
-          icon="gallery"
-          accessibilityLabel="Empty just for testing purposes"
-        />
-      </View>
+    <DSComponentViewerBox name="ListItemAction · Primary variant">
+      <ListItemAction
+        variant="primary"
+        label={"Link interno oppure link ad una pagina esterna"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemAction
+        variant="primary"
+        icon="website"
+        label={"Link interno oppure link ad una pagina esterna"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemAction
+        variant="primary"
+        icon="device"
+        label={"Scarica l'app"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemAction
+        variant="primary"
+        icon="security"
+        label={"Informativa sulla privacy"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemAction
+        variant="primary"
+        icon="chat"
+        label={"Richiedi assistenza"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemAction · Danger variant">
+      <ListItemAction
+        variant="danger"
+        label={"Danger action"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemAction
+        variant="danger"
+        icon="trashcan"
+        label={"Elimina"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemAction
+        variant="danger"
+        icon="logout"
+        label={"Esci da IO"}
+        onPress={onButtonPress}
+        accessibilityLabel="Empty just for testing purposes"
+      />
     </DSComponentViewerBox>
   </>
+);
+
+const renderListItemInfo = () => (
+  <DSComponentViewerBox name="ListItemInfo">
+    <View>
+      <ListItemInfo
+        label="Label"
+        value={"Value"}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemInfo
+        label="Label"
+        value={"Value"}
+        accessibilityLabel="Empty just for testing purposes"
+      />
+
+      <ListItemInfo
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemInfo
+        icon="creditCard"
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+        action={
+          <ButtonLink
+            label="Modifica"
+            onPress={onButtonPress}
+            accessibilityLabel={""}
+          />
+        }
+      />
+      <ListItemInfo
+        icon="psp"
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+        action={
+          <IconButton
+            icon="info"
+            onPress={onButtonPress}
+            accessibilityLabel={""}
+          />
+        }
+      />
+
+      <ListItemInfo
+        label="Label"
+        value={"Value"}
+        icon="gallery"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+    </View>
+  </DSComponentViewerBox>
 );
