@@ -166,7 +166,7 @@ const ErrorComponent = () => (
   <View
     style={{ paddingTop: 16, justifyContent: "center", alignItems: "center" }}
   >
-    <Pictogram name="error" />
+    <Pictogram name="attention" size={100} />
     <VSpacer size={16} />
     <H3>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H3>
   </View>
