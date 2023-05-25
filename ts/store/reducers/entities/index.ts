@@ -15,7 +15,6 @@ import { isDevEnv } from "../../../utils/environment";
 import { Action } from "../../actions/types";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import { PotTransform } from "../../transforms/potTransform";
-import { GlobalState } from "../types";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import messagesStatusReducer, {
@@ -23,10 +22,6 @@ import messagesStatusReducer, {
 } from "./messages/messagesStatus";
 import organizationsReducer, { OrganizationsState } from "./organizations";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
-import {
-  ReadTransactionsState,
-  transactionsReadReducer
-} from "./readTransactions";
 import servicesReducer, { ServicesState } from "./services";
 
 export type EntitiesState = Readonly<{
@@ -36,7 +31,6 @@ export type EntitiesState = Readonly<{
   organizations: OrganizationsState;
   paymentByRptId: PaymentByRptIdState;
   calendarEvents: CalendarEventsState;
-  transactionsRead: ReadTransactionsState;
 }>;
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
@@ -90,12 +84,7 @@ const reducer = combineReducers<EntitiesState, Action>({
   services: servicesReducer,
   organizations: organizationsReducer,
   paymentByRptId: paymentByRptIdReducer,
-  calendarEvents: calendarEventsReducer,
-  transactionsRead: transactionsReadReducer
+  calendarEvents: calendarEventsReducer
 });
 
 export default reducer;
-
-// Selector
-export const transactionsReadSelector = (state: GlobalState) =>
-  state.entities.transactionsRead;
