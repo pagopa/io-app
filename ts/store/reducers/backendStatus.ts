@@ -240,6 +240,34 @@ export const isLollipopEnabledSelector = createSelector(
     )
 );
 
+const isPropertyEnabled = (
+  localFlag: boolean,
+  configPropertyName: "fastLogin" | "nativeLogin",
+  backendStatus: O.Option<BackendStatus>
+): boolean =>
+  localFlag &&
+  pipe(
+    backendStatus,
+    O.chainNullableK(bs => bs.config),
+    O.chainNullableK(cfg => cfg[configPropertyName]),
+    O.chainNullableK(lp => lp.min_app_version),
+    O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+    O.chain(semVer =>
+      pipe(
+        semVer,
+        PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
+        E.fold(
+          _ => O.none,
+          v => O.some(v)
+        )
+      )
+    ),
+    O.fold(
+      () => false,
+      v => isVersionSupported(v, getAppVersion())
+    )
+  );
+
 /**
  * return the remote config about FastLogin enabled/disabled
  * based on a minumum version of the app.
@@ -248,28 +276,7 @@ export const isLollipopEnabledSelector = createSelector(
 export const isFastLoginEnabledSelector = createSelector(
   backendStatusSelector,
   backendStatus =>
-    fastLoginEnabled &&
-    pipe(
-      backendStatus,
-      O.chainNullableK(bs => bs.config),
-      O.chainNullableK(cfg => cfg.fastLogin),
-      O.chainNullableK(lp => lp.min_app_version),
-      O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
-      O.chain(semVer =>
-        pipe(
-          semVer,
-          PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
-          E.fold(
-            _ => O.none,
-            v => O.some(v)
-          )
-        )
-      ),
-      O.fold(
-        () => false,
-        v => isVersionSupported(`${v}`, getAppVersion())
-      )
-    )
+    isPropertyEnabled(fastLoginEnabled, "fastLogin", backendStatus)
 );
 
 /**
@@ -280,29 +287,7 @@ export const isFastLoginEnabledSelector = createSelector(
 export const isNativeLoginEnabledSelector = createSelector(
   backendStatusSelector,
   backendStatus =>
-    nativeLoginEnabled &&
-    pipe(
-      backendStatus,
-      O.chainNullableK(bs => bs.config),
-      O.chainNullableK(cfg => cfg.nativeLogin),
-      O.chainNullableK(lp => lp.min_app_version),
-      O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
-      // eslint-disable-next-line sonarjs/no-identical-functions
-      O.chain(semVer =>
-        pipe(
-          semVer,
-          PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
-          E.fold(
-            _ => O.none,
-            v => O.some(v)
-          )
-        )
-      ),
-      O.fold(
-        () => false,
-        v => isVersionSupported(`${v}`, getAppVersion())
-      )
-    )
+    isPropertyEnabled(nativeLoginEnabled, "nativeLogin", backendStatus)
 );
 
 /**
