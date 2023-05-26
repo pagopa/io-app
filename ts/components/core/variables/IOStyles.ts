@@ -2,7 +2,7 @@ import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 import { IOIconSizeScale } from "../icons";
 import { IOColors } from "./IOColors";
-import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
+import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 
 /**
  * A collection of default styles used within IO App.
@@ -278,6 +278,7 @@ interface IOSelectionListItemVisualParams {
   paddingHorizontal: IOAppMargin;
   iconMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
+  descriptionMargin: IOSpacer;
 }
 
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
@@ -285,7 +286,8 @@ export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
     paddingVertical: 16,
     paddingHorizontal: IOLayoutCostants.appMarginDefault,
     iconMargin: 8,
-    iconSize: 24
+    iconSize: 24,
+    descriptionMargin: 4
   };
 
 export const IOSelectionListItemStyles = StyleSheet.create({

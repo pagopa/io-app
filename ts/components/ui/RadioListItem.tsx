@@ -184,7 +184,9 @@ export const RadioListItem = ({
           </View>
           {description && (
             <View>
-              <VSpacer size={4} />
+              <VSpacer
+                size={IOSelectionListItemVisualParams.descriptionMargin}
+              />
               <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
                 {description}
               </LabelSmall>
