@@ -112,7 +112,7 @@ export const pnEnabled = Config.PN_ENABLED === "YES";
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 
-// Fast Login Feature Flag
+// Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
 // Opt-in for reminder push notifications
