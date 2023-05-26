@@ -9,6 +9,7 @@ import { IDPayAuthorizationCodeScanScreen } from "../screens/IDPayAuthorizationC
 import { IDPayAuthorizationCodeInputScreen } from "../screens/IDPayAuthorizationCodeInputScreen";
 import { IDPayAuthorizationConfirmScreen } from "../screens/IDPayAuthorizationConfirmScreen";
 import { IDPayAuthorizationResultScreen } from "../screens/IDPayAuthorizationResultScreen";
+import { IDPayAuthorizationMachineProvider } from "../xstate/provider";
 
 export const IDPayAuthorizationRoutes = {
   IDPAY_AUTHORIZATION_MAIN: "IDPAY_AUTHORIZATION_MAIN",
@@ -28,28 +29,30 @@ export type IDPayAuthorizationParamsList = {
 const Stack = createStackNavigator<IDPayAuthorizationParamsList>();
 
 export const IDPayAuthorizationNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CODE_SCAN}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
-    <Stack.Screen
-      name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CODE_SCAN}
-      component={IDPayAuthorizationCodeScanScreen}
-    />
-    <Stack.Screen
-      name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CODE_INPUT}
-      component={IDPayAuthorizationCodeInputScreen}
-    />
-    <Stack.Screen
-      name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CONFIRM}
-      component={IDPayAuthorizationConfirmScreen}
-    />
-    <Stack.Screen
-      name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_RESULT}
-      component={IDPayAuthorizationResultScreen}
-    />
-  </Stack.Navigator>
+  <IDPayAuthorizationMachineProvider>
+    <Stack.Navigator
+      initialRouteName={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CODE_SCAN}
+      headerMode={"none"}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
+    >
+      <Stack.Screen
+        name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CODE_SCAN}
+        component={IDPayAuthorizationCodeScanScreen}
+      />
+      <Stack.Screen
+        name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CODE_INPUT}
+        component={IDPayAuthorizationCodeInputScreen}
+      />
+      <Stack.Screen
+        name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_CONFIRM}
+        component={IDPayAuthorizationConfirmScreen}
+      />
+      <Stack.Screen
+        name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_RESULT}
+        component={IDPayAuthorizationResultScreen}
+      />
+    </Stack.Navigator>
+  </IDPayAuthorizationMachineProvider>
 );
 export type IDPayAuthorizationStackNavigationRouteProps<
   ParamList extends ParamListBase,
