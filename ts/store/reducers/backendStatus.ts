@@ -22,9 +22,7 @@ import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfi
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
-  fastLoginEnabled,
   fciEnabled,
-  nativeLoginEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -34,7 +32,10 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
+import { NativeLoginConfig } from "../../../definitions/content/NativeLoginConfig";
+import { FastLoginConfig } from "../../../definitions/content/FastLoginConfig";
 import { Action } from "../actions/types";
+import { Config } from "../../../definitions/content/Config";
 import { GlobalState } from "./types";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 
@@ -240,16 +241,24 @@ export const isLollipopEnabledSelector = createSelector(
     )
 );
 
-const isPropertyEnabled = (
+type KeysWithMinAppVersion<T> = {
+  [K in keyof T]: T[K] extends { min_app_version?: any } ? K : never;
+}[keyof T];
+
+export const isPropertyWithMinAppVersionEnabled = (
   localFlag: boolean,
-  configPropertyName: "fastLogin" | "nativeLogin",
+  configPropertyName: KeysWithMinAppVersion<
+    Config & { nativeLogin: NativeLoginConfig; fastLogin: FastLoginConfig }
+  >,
   backendStatus: O.Option<BackendStatus>
 ): boolean =>
   localFlag &&
   pipe(
     backendStatus,
     O.chainNullableK(bs => bs.config),
-    O.chainNullableK(cfg => cfg[configPropertyName]),
+    O.chainNullableK(cfg =>
+      configPropertyName ? cfg[configPropertyName] : undefined
+    ),
     O.chainNullableK(lp => lp.min_app_version),
     O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
     O.chain(semVer =>
@@ -267,28 +276,6 @@ const isPropertyEnabled = (
       v => isVersionSupported(v, getAppVersion())
     )
   );
-
-/**
- * return the remote config about FastLogin enabled/disabled
- * based on a minumum version of the app.
- * if there is no data, false is the default value -> (FastLogin disabled)
- */
-export const isFastLoginEnabledSelector = createSelector(
-  backendStatusSelector,
-  backendStatus =>
-    isPropertyEnabled(fastLoginEnabled, "fastLogin", backendStatus)
-);
-
-/**
- * return the remote config about NativeLogin enabled/disabled
- * based on a minumum version of the app.
- * if there is no data, false is the default value -> (NativeLogin disabled)
- */
-export const isNativeLoginEnabledSelector = createSelector(
-  backendStatusSelector,
-  backendStatus =>
-    isPropertyEnabled(nativeLoginEnabled, "nativeLogin", backendStatus)
-);
 
 /**
  * return the remote config about CGN enabled/disabled

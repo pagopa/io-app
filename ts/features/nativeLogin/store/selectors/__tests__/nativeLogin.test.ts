@@ -2,9 +2,9 @@ import * as O from "fp-ts/lib/Option";
 import { Tuple2, ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
-import { isFastLoginEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
+import { isNativeLoginEnabledSelector } from "..";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
@@ -12,18 +12,18 @@ jest.mock("react-native-device-info", () => ({
 }));
 
 jest.mock("../../../../../config", () => ({
-  fastLoginEnabled: true
+  nativeLoginEnabled: true
 }));
 
 const currentAppVersion = getAppVersion();
 
-describe("FastLogin remote flag test", () => {
+describe("NativeLogin remote flag test", () => {
   const status: BackendStatus = {
     ...baseRawBackendStatus
   };
 
-  function checkFastLoginFlagWithBrokenStatus(expectedValue: boolean) {
-    const customStoreWithMissingMinAppVersionInFastLoginConfig = {
+  function checkNativeLoginFlagWithBrokenStatus(expectedValue: boolean) {
+    const customStoreWithMissingMinAppVersionInNativeLoginConfig = {
       backendStatus: {
         status: O.some({
           ...status,
@@ -32,31 +32,32 @@ describe("FastLogin remote flag test", () => {
       }
     } as unknown as GlobalState;
     const actualStatus =
-      customStoreWithMissingMinAppVersionInFastLoginConfig.backendStatus.status;
+      customStoreWithMissingMinAppVersionInNativeLoginConfig.backendStatus
+        .status;
     expect(O.isSome(actualStatus)).toBe(true);
     if (O.isSome(actualStatus)) {
-      expect(actualStatus.value.config.fastLogin).toBeUndefined();
+      expect(actualStatus.value.config.nativeLogin).toBeUndefined();
     }
-    const isFastLoginEnabled = isFastLoginEnabledSelector(
-      customStoreWithMissingMinAppVersionInFastLoginConfig
+    const isNativeLoginEnabled = isNativeLoginEnabledSelector(
+      customStoreWithMissingMinAppVersionInNativeLoginConfig
     );
-    expect(isFastLoginEnabled).toBe(expectedValue);
+    expect(isNativeLoginEnabled).toBe(expectedValue);
   }
 
-  function checkBrokenFastLoginFlagTest(
+  function checkBrokenNativeLoginFlagTest(
     minAppVersion: string | undefined,
     currentAppVersion: string,
     expectedValue: boolean
   ) {
-    const testTitle = `FastLogin${
+    const testTitle = `NativeLogin${
       expectedValue ? "" : " NOT"
     } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
     it(testTitle, () => {
-      checkFastLoginFlagWithBrokenStatus(expectedValue);
+      checkNativeLoginFlagWithBrokenStatus(expectedValue);
     });
   }
 
-  describe("FastLogin flag test for empty values", () => {
+  describe("NativeLogin flag test for empty values", () => {
     [
       Tuple2("0", false),
       Tuple2("0.0", false),
@@ -76,11 +77,11 @@ describe("FastLogin remote flag test", () => {
       Tuple2(undefined, false),
       Tuple2("?$&&/!@", false)
     ].forEach((t: ITuple2<string | undefined, boolean>) =>
-      checkBrokenFastLoginFlagTest(t.e1, currentAppVersion, t.e2)
+      checkBrokenNativeLoginFlagTest(t.e1, currentAppVersion, t.e2)
     );
   });
 
-  function checkIfFastLoginFlagIsEnableForThisAppVersion(
+  function checkIfNativeLoginFlagIsEnableForThisAppVersion(
     minAppVersion: string | undefined,
     expectedValue: boolean
   ) {
@@ -90,7 +91,7 @@ describe("FastLogin remote flag test", () => {
           ...status,
           config: {
             ...status.config,
-            fastLogin: {
+            nativeLogin: {
               min_app_version: {
                 android: minAppVersion,
                 ios: minAppVersion
@@ -101,27 +102,27 @@ describe("FastLogin remote flag test", () => {
       }
     } as unknown as GlobalState;
 
-    const isFastLoginEnabled = isFastLoginEnabledSelector(customStore);
-    expect(isFastLoginEnabled).toBe(expectedValue);
+    const isNativeLoginEnabled = isNativeLoginEnabledSelector(customStore);
+    expect(isNativeLoginEnabled).toBe(expectedValue);
   }
 
-  function checkFastLoginFlagTest(
+  function checkNativeLoginFlagTest(
     minAppVersion: string | undefined,
     currentAppVersion: string,
     expectedValue: boolean
   ) {
-    const testTitle = `FastLogin${
+    const testTitle = `NativeLogin${
       expectedValue ? "" : " NOT"
     } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
     it(testTitle, () => {
-      checkIfFastLoginFlagIsEnableForThisAppVersion(
+      checkIfNativeLoginFlagIsEnableForThisAppVersion(
         minAppVersion,
         expectedValue
       );
     });
   }
 
-  describe("FastLogin flag test for different config values", () => {
+  describe("NativeLogin flag test for different config values", () => {
     [
       Tuple2("0", false),
       Tuple2("0.0", false),
@@ -141,7 +142,7 @@ describe("FastLogin remote flag test", () => {
       Tuple2(undefined, false),
       Tuple2("?$&&/!@", false)
     ].forEach((t: ITuple2<string | undefined, boolean>) =>
-      checkFastLoginFlagTest(t.e1, currentAppVersion, t.e2)
+      checkNativeLoginFlagTest(t.e1, currentAppVersion, t.e2)
     );
   });
 });
