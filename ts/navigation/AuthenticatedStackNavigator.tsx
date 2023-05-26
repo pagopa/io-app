@@ -1,8 +1,9 @@
-import * as React from "react";
 import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
+import * as React from "react";
+import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
@@ -16,6 +17,10 @@ import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator"
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import {
+  IDPayAuthorizationNavigator,
+  IDPayAuthorizationRoutes
+} from "../features/idpay/authorization/navigation/navigator";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
@@ -40,21 +45,20 @@ import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
-  isFIMSEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
+  isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { isGestureEnabled } from "../utils/navigation";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
+import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
-import { AppParamsList } from "./params/AppParamsList";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -164,10 +168,14 @@ const AuthenticatedStackNavigator = () => {
             component={IDPayConfigurationNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
           />
-
           <Stack.Screen
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
+            options={{ gestureEnabled: isGestureEnabled }}
+          />
+          <Stack.Screen
+            name={IDPayAuthorizationRoutes.IDPAY_AUTHORIZATION_MAIN}
+            component={IDPayAuthorizationNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
           />
         </>
