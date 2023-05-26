@@ -4,12 +4,18 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/IbanOperationDTO";
+import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as RejectedInstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
-import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  ChannelEnum,
+  TransactionOperationDTO,
+  OperationTypeEnum as TransactionOperationTypeEnum,
+  StatusEnum as TransactionStatusEnum
+} from "../../../../../../definitions/idpay/TransactionOperationDTO";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -51,9 +57,27 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
   }
 };
 
-const OperationAmount = ({ operation }: OperationComponentProps) => {
+const pickLabel = (operation: TransactionOperationDTO) => {
+  switch (operation.status) {
+    case TransactionStatusEnum.CANCELED:
+      return <IOBadge color="red" variant="solid" text="Canceled" />;
+    case TransactionStatusEnum.AUTHORIZED:
+      return <IOBadge color="blue" variant="solid" text="Authorized" />;
+    case TransactionStatusEnum.REWARDED:
+      return (
+        <H4>{`-${formatNumberAmount(
+          Math.abs(operation.accrued),
+          false
+        )} €`}</H4>
+      );
+  }
+};
+const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
+      if (operation.channel === ChannelEnum.QRCODE) {
+        return pickLabel(operation);
+      }
       return (
         <H4>{`-${formatNumberAmount(
           Math.abs(operation.accrued),
@@ -79,16 +103,21 @@ const OperationAmount = ({ operation }: OperationComponentProps) => {
 };
 
 const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
-  const operationTitle =
-    "maskedPan" in operation
-      ? I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
-          { maskedPan: operation.maskedPan }
-        )
-      : I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
-        );
+  const operationTitle = () => {
+    if ("channel" in operation && operation.channel === ChannelEnum.QRCODE) {
+      return "QRCODE";
+    }
 
+    if ("maskedPan" in operation) {
+      return I18n.t(
+        `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
+        { maskedPan: operation.maskedPan }
+      );
+    }
+    return I18n.t(
+      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
+    );
+  };
   const generateOperationInvoiceText = () => {
     switch (operation.operationType) {
       case TransactionOperationTypeEnum.TRANSACTION:
@@ -100,7 +129,7 @@ const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
     }
   };
   return {
-    operationTitle,
+    operationTitle: operationTitle(),
     bonusInvoiceText: generateOperationInvoiceText()
   };
 };
@@ -110,6 +139,14 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
 
   const { operationTitle, bonusInvoiceText } =
     generateTimelineOperationListItemText(operation);
+
+  const isDiscount =
+    operation.operationType === TransactionOperationTypeEnum.TRANSACTION &&
+    operation.channel === ChannelEnum.QRCODE;
+
+  const shouldTextBeGrayedOut = () =>
+    isDiscount && operation.status === TransactionStatusEnum.CANCELED;
+  const maybeGrayedOut = shouldTextBeGrayedOut() ? { opacity: 0.6 } : {};
 
   return (
     <ListItem
@@ -125,8 +162,8 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
       <OperationIcon operation={operation} />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
-        <H4>{operationTitle}</H4>
-        <LabelSmall weight="Regular" color="bluegrey">
+        <H4 style={maybeGrayedOut}>{operationTitle}</H4>
+        <LabelSmall style={maybeGrayedOut} weight="Regular" color="bluegrey">
           {`${formatDateAsShortFormat(
             operation.operationDate
           )}, ${getHourAndMinuteFromDate(
@@ -134,7 +171,7 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
           )} ${bonusInvoiceText}`}
         </LabelSmall>
       </View>
-      <OperationAmount operation={operation} />
+      <OperationAmountOrLabel operation={operation} />
     </ListItem>
   );
 };
