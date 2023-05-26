@@ -13,8 +13,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { NewH6 } from "../core/typography/NewH6";
 import {
-  IOSelectionItemStyles,
-  IOSelectionItemVisualParams,
+  IOSelectionListItemStyles,
+  IOSelectionListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
@@ -31,6 +31,7 @@ type Props = {
   value: string;
   description?: string;
   icon?: IOIcons;
+  selected?: boolean;
   // dispatch the new value after the checkbox changes state
   onValueChange?: (newValue: boolean) => void;
 };
@@ -40,7 +41,6 @@ const DISABLED_OPACITY = 0.5;
 // disabled: the component is no longer touchable
 // onPress:
 type OwnProps = Props &
-  Pick<React.ComponentProps<typeof AnimatedCheckbox>, "checked"> &
   Pick<
     React.ComponentProps<typeof Pressable>,
     "onPress" | "accessibilityLabel" | "disabled"
@@ -68,14 +68,14 @@ export const CheckboxListItem = ({
   value,
   description,
   icon,
-  checked,
+  selected,
   disabled,
   onValueChange
 }: OwnProps) => {
   // Experimental Design System
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const [toggleValue, setToggleValue] = useState(checked ?? false);
+  const [toggleValue, setToggleValue] = useState(selected ?? false);
   // Animations
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -150,21 +150,21 @@ export const CheckboxListItem = ({
       }}
     >
       <Animated.View
-        style={[IOSelectionItemStyles.listItem, animatedBackgroundStyle]}
+        style={[IOSelectionListItemStyles.listItem, animatedBackgroundStyle]}
       >
         <Animated.View style={animatedScaleStyle}>
-          <View style={IOSelectionItemStyles.listItemInner}>
-            <View style={IOStyles.row}>
+          <View style={IOSelectionListItemStyles.listItemInner}>
+            <View style={[IOStyles.row, { flexShrink: 1 }]}>
               {icon && (
                 <View
                   style={{
-                    marginRight: IOSelectionItemVisualParams.iconMargin
+                    marginRight: IOSelectionListItemVisualParams.iconMargin
                   }}
                 >
                   <Icon
                     name={icon}
                     color="grey-300"
-                    size={IOSelectionItemVisualParams.iconSize}
+                    size={IOSelectionListItemVisualParams.iconSize}
                   />
                 </View>
               )}
@@ -178,7 +178,7 @@ export const CheckboxListItem = ({
             </View>
             <HSpacer size={8} />
             <View pointerEvents="none">
-              <AnimatedCheckbox checked={checked ?? toggleValue} />
+              <AnimatedCheckbox checked={selected ?? toggleValue} />
             </View>
           </View>
           {description && (

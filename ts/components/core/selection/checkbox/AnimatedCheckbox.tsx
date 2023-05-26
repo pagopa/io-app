@@ -14,6 +14,10 @@ import { IOSpringValues } from "../../variables/IOAnimations";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { AnimatedTick } from "../AnimatedTick";
+import {
+  IOSelectionTickLegacyVisualParams,
+  IOSelectionTickVisualParams
+} from "../../variables/IOStyles";
 
 type Props = {
   checked?: boolean;
@@ -21,54 +25,42 @@ type Props = {
 
 type OwnProps = Props & Pick<PressableProps, "disabled" | "onPress">;
 
-const SIZE: number = 24;
-const BORDER_WIDTH: number = 2;
-
-const borderColorOFF: IOColors = "grey-650";
-const backgroundColorON: IOColors = "blueIO-500";
 const checkBoxRadius: number = 5;
-const slop = calculateSlop(SIZE);
-/* Legacy visual parameters */
-const borderColorLegacyOFF: IOColors = "bluegrey";
-const backgroundColorLegacyON: IOColors = "blue";
 
 const styles = StyleSheet.create({
   checkBoxWrapper: {
-    width: SIZE,
-    height: SIZE
+    width: IOSelectionTickVisualParams.size,
+    height: IOSelectionTickVisualParams.size
   },
   checkboxBorder: {
     position: "absolute",
     left: 0,
     top: 0,
-    width: SIZE,
-    height: SIZE,
-    borderWidth: BORDER_WIDTH,
+    width: IOSelectionTickVisualParams.size,
+    height: IOSelectionTickVisualParams.size,
+    borderWidth: IOSelectionTickVisualParams.borderWidth,
     borderRadius: checkBoxRadius
   },
   checkBoxSquare: {
     position: "absolute",
     left: 0,
     top: 0,
-    width: SIZE,
-    height: SIZE,
+    width: IOSelectionTickVisualParams.size,
+    height: IOSelectionTickVisualParams.size,
     borderRadius: checkBoxRadius
   }
 });
 
 /**
- * A raw checkbox that follows the style guidelines without any state logic.
- * This can be used to implement a standard {@link CheckBox} or others custom logics.
- *
- * @param props
- * @constructor
+ * An animated checkbox. This can be used to implement a
+ * standard {@link CheckBox} or other composite components.
  */
 export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isChecked = checked ?? false;
 
   const squareAnimationProgress = useSharedValue(checked ? 1 : 0);
-  const checkmarkAnimationProgress = useSharedValue(checked ? 1 : 0);
+  const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -77,11 +69,11 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
       IOSpringValues.selection
     );
     // eslint-disable-next-line functional/immutable-data
-    checkmarkAnimationProgress.value = withTiming(checked ? 1 : 0, {
+    tickAnimationProgress.value = withTiming(checked ? 1 : 0, {
       duration: 400,
       easing: Easing.elastic(1)
     });
-  }, [checked, squareAnimationProgress, checkmarkAnimationProgress]);
+  }, [checked, squareAnimationProgress, tickAnimationProgress]);
 
   const animatedCheckboxSquare = useAnimatedStyle(() => {
     const scale = interpolate(squareAnimationProgress.value, [0, 1], [0.5, 1]);
@@ -96,9 +88,8 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
   return (
     <Pressable
       disabled={disabled}
-      testID="AnimatedCheckbox"
+      testID="AnimatedCheckboxInput"
       onPress={onPress}
-      hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
       style={styles.checkBoxWrapper}
     >
       {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following conditions */}
@@ -107,8 +98,8 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
           styles.checkboxBorder,
           {
             borderColor: isDesignSystemEnabled
-              ? IOColors[borderColorOFF]
-              : IOColors[borderColorLegacyOFF]
+              ? IOColors[IOSelectionTickVisualParams.borderColorOffState]
+              : IOColors[IOSelectionTickLegacyVisualParams.borderColorOffState]
           }
         ]}
       />
@@ -117,8 +108,8 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
           styles.checkBoxSquare,
           {
             backgroundColor: isDesignSystemEnabled
-              ? IOColors[backgroundColorON]
-              : IOColors[backgroundColorLegacyON]
+              ? IOColors[IOSelectionTickVisualParams.bgColorOnState]
+              : IOColors[IOSelectionTickLegacyVisualParams.bgColorOnState]
           },
           animatedCheckboxSquare
         ]}
@@ -127,8 +118,8 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
       {isChecked && (
         <View>
           <AnimatedTick
-            progress={checkmarkAnimationProgress}
-            stroke={IOColors.white}
+            progress={tickAnimationProgress}
+            stroke={IOColors[IOSelectionTickVisualParams.tickColor]}
           />
         </View>
       )}

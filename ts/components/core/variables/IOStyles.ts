@@ -246,21 +246,49 @@ export const IOListItemStyles = StyleSheet.create({
  * SELECTION ITEM STYLES
  */
 
-interface IOSelectionItemVisualParams {
+interface IOSelectionTickVisualParams {
+  size: IOIconSizeScale;
+  borderWidth: number;
+  borderColorOffState: IOColors;
+  bgColorOnState: IOColors;
+  tickColor: IOColors;
+}
+
+interface IOSelectionTickLegacyVisualParams {
+  borderColorOffState: IOColors;
+  bgColorOnState: IOColors;
+}
+
+export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
+  size: 24,
+  borderWidth: 2,
+  borderColorOffState: "grey-650",
+  bgColorOnState: "blueIO-500",
+  tickColor: "white"
+};
+
+export const IOSelectionTickLegacyVisualParams: IOSelectionTickLegacyVisualParams =
+  {
+    borderColorOffState: "bluegrey",
+    bgColorOnState: "blue"
+  };
+
+interface IOSelectionListItemVisualParams {
   paddingVertical: IOSpacingScale;
   paddingHorizontal: IOAppMargin;
   iconMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
 }
 
-export const IOSelectionItemVisualParams: IOSelectionItemVisualParams = {
-  paddingVertical: 16,
-  paddingHorizontal: IOLayoutCostants.appMarginDefault,
-  iconMargin: 8,
-  iconSize: 24
-};
+export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
+  {
+    paddingVertical: 16,
+    paddingHorizontal: IOLayoutCostants.appMarginDefault,
+    iconMargin: 8,
+    iconSize: 24
+  };
 
-export const IOSelectionItemStyles = StyleSheet.create({
+export const IOSelectionListItemStyles = StyleSheet.create({
   listItem: {
     paddingVertical: IOListItemVisualParams.paddingVertical,
     paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
