@@ -35,6 +35,7 @@ import PictogramFollowMessage from "./svg/PictogramFollowMessage";
 import PictogramManual from "./svg/PictogramManual";
 import PictogramSetup from "./svg/PictogramSetup";
 import PictogramDonation from "./svg/PictogramDonation";
+import PictogramAttention from "./svg/PictogramAttention";
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
@@ -69,7 +70,8 @@ export const IOPictograms = {
   followMessage: PictogramFollowMessage,
   manual: PictogramManual,
   setup: PictogramSetup,
-  donation: PictogramDonation
+  donation: PictogramDonation,
+  attention: PictogramAttention
 };
 
 export type IOPictograms = keyof typeof IOPictograms;
