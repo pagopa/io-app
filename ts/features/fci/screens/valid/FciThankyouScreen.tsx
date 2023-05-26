@@ -15,9 +15,13 @@ import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScree
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { fciEndRequest, fciStartRequest } from "../../store/actions";
 import { trackFciUxSuccess } from "../../analytics";
+import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
+import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
+import { getClausesCountByTypes } from "../../utils/signatureFields";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
+  const documentSignatures = useIOSelector(fciDocumentSignaturesSelector);
   const dispatch = useIODispatch();
 
   const LoadingComponent = () => (
@@ -70,7 +74,14 @@ const FciThankyouScreen = () => {
     () => <LoadingComponent />,
     _ => <ErrorComponent />,
     _ => {
-      trackFciUxSuccess(0, 0, 0);
+      trackFciUxSuccess(
+        documentSignatures.length,
+        getClausesCountByTypes(documentSignatures, [
+          ClauseTypeEnum.REQUIRED,
+          ClauseTypeEnum.UNFAIR
+        ]),
+        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL])
+      );
       return <SuccessComponent />;
     },
     () => <LoadingComponent />,
