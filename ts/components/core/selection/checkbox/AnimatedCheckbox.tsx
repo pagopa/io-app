@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Pressable, PressableProps } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   interpolate,
   withSpring,
-  useAnimatedProps,
-  useAnimatedRef,
   withTiming,
   Easing
 } from "react-native-reanimated";
-import Svg, { Path, PathProps } from "react-native-svg";
 import { calculateSlop } from "../../accessibility";
 import { IOColors } from "../../variables/IOColors";
 import { IOSpringValues } from "../../variables/IOAnimations";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { AnimatedTick } from "../AnimatedTick";
 
 type Props = {
   checked?: boolean;
@@ -33,8 +31,6 @@ const slop = calculateSlop(SIZE);
 /* Legacy visual parameters */
 const borderColorLegacyOFF: IOColors = "bluegrey";
 const backgroundColorLegacyON: IOColors = "blue";
-
-const checkMarkPath = "m7 12 4 4 7-7";
 
 const styles = StyleSheet.create({
   checkBoxWrapper: {
@@ -59,48 +55,6 @@ const styles = StyleSheet.create({
     borderRadius: checkBoxRadius
   }
 });
-
-// Animated checkmark
-
-const AnimatedPath = Animated.createAnimatedComponent(Path);
-
-interface AnimatedCheckmarkProps extends PathProps {
-  progress: Animated.SharedValue<number>;
-  onLayout?: () => void;
-}
-
-const AnimatedCheckmark = ({
-  progress,
-  ...pathProps
-}: AnimatedCheckmarkProps) => {
-  const [length, setLength] = useState(0);
-  const ref = useAnimatedRef();
-
-  // SVG trick to animate the checkmark
-  // Ref: https://github.com/craftzdog/react-native-checkbox-reanimated/blob/master/src/animated-stroke.tsx
-  const animatedProps = useAnimatedProps(() => ({
-    strokeDashoffset: Math.max(0, length - length * progress.value - 0.1)
-  }));
-
-  const onLayout = () => {
-    // "as any" to fix an annoying TS error.
-    // I honestly don't know which type to use
-    const currentRef = ref.current as any;
-    setLength(currentRef.getTotalLength());
-  };
-
-  return (
-    <Svg viewBox="0 0 24 24">
-      <AnimatedPath
-        ref={ref}
-        onLayout={onLayout}
-        animatedProps={animatedProps}
-        strokeDasharray={length}
-        {...pathProps}
-      />
-    </Svg>
-  );
-};
 
 /**
  * A raw checkbox that follows the style guidelines without any state logic.
@@ -172,13 +126,9 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
       {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       {isChecked && (
         <View>
-          <AnimatedCheckmark
+          <AnimatedTick
             progress={checkmarkAnimationProgress}
-            d={checkMarkPath}
             stroke={IOColors.white}
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
           />
         </View>
       )}

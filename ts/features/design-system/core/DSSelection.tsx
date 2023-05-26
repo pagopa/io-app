@@ -33,6 +33,10 @@ export const DSSelection = () => (
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
 
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Radio
+    </H2>
+
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
       Legacy components
