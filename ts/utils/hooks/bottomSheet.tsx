@@ -13,7 +13,10 @@ import { BlurredBackgroundComponent } from "../../components/bottomSheet/Blurred
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import {
+  IOLayoutCostants,
+  IOStyles
+} from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
@@ -33,7 +36,7 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
   <BottomSheetScrollView
     style={{
       flex: 1,
-      ...IOStyles.horizontalContentPadding
+      paddingHorizontal: IOLayoutCostants.appMarginDefault
     }}
     testID={testID}
   >
