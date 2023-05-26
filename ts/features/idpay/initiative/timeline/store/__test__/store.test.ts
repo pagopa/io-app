@@ -1,7 +1,10 @@
 import { pot } from "@pagopa/ts-commons";
 import { createStore } from "redux";
 import { idpayTimelineDetailsSelector } from "..";
-import { TransactionDetailDTO } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/TransactionDetailDTO";
+import {
+  StatusEnum,
+  TransactionDetailDTO
+} from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/TransactionDetailDTO";
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -25,7 +28,7 @@ const mockTransactionDetail: TransactionDetailDTO = {
   accrued: 100,
   idTrxAcquirer: "1",
   idTrxIssuer: "1",
-  status: ""
+  status: StatusEnum.AUTHORIZED
 };
 
 describe("Test timeline operation details reducer", () => {

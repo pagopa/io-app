@@ -3,7 +3,10 @@ import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
 import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
-import { OperationTypeEnum } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  OperationTypeEnum,
+  StatusEnum
+} from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
@@ -22,7 +25,7 @@ const mockResponseSuccess: TimelineDTO = {
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "MASTERCARD",
-      status: ""
+      status: StatusEnum.AUTHORIZED
     }
   ],
   pageNo: 0,

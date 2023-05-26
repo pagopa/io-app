@@ -13,7 +13,10 @@ import {
   StatusEnum
 } from "../../../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  OperationTypeEnum as TransactionOperationType,
+  StatusEnum as TransactionStatusEnum
+} from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -102,7 +105,7 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "CREDIT_CARD",
-      status: ""
+      status: TransactionStatusEnum.AUTHORIZED
     }
   ],
   pageNo: 1,
