@@ -30,12 +30,15 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
   children,
   testID
 }: Props) => (
-  <View
-    style={{ flex: 1, ...IOStyles.horizontalContentPadding }}
+  <BottomSheetScrollView
+    style={{
+      flex: 1,
+      ...IOStyles.horizontalContentPadding
+    }}
     testID={testID}
   >
-    <BottomSheetScrollView>{children}</BottomSheetScrollView>
-  </View>
+    {children}
+  </BottomSheetScrollView>
 );
 
 export type BottomSheetModalProps = {
@@ -232,8 +235,8 @@ export const useIOBottomSheetAutoresizableModal = (
  * @param footer
  * @param onDismiss callback to be called when the bottom sheet is dismissed
  * @deprecated
- * use `useIOBottomSheetModalNew` instead
- * TODO remove once all the occurencies of `useIOBottomSheetModal` will be replaced by `useIOBottomSheetModalNew`
+ * use `useIOBottomSheetModal` instead
+ * TODO remove once all the occurencies of `useLegacyIOBottomSheetModal` will be replaced by `useIOBottomSheetModal`
  */
 export const useLegacyIOBottomSheetModal = (
   component: React.ReactNode,
