@@ -1,8 +1,9 @@
 import { createMachine } from "xstate";
+import { WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
 import { Context } from "./context";
-import { States } from "./states";
 import { Events } from "./events";
 import { Services } from "./services";
+import { States } from "./states";
 
 const createIDPayAuthorizationMachine = () =>
   createMachine(
@@ -19,12 +20,9 @@ const createIDPayAuthorizationMachine = () =>
       id: "IDPAY_AUTHORIZATION",
       initial: States.AWAITING_CODE_INPUT,
       states: {
-        [States.AWAITING_CODE_INPUT]: {},
-        [States.LOADING_TRANSACTION_DATA]: {},
-        [States.DISPLAYING_TRANSACTION_DATA]: {},
-        [States.AUTHORIZING]: {},
-        [States.AUTHORIZATION_SUCCESS]: {},
-        [States.AUTHORIZATION_FAILURE]: {}
+        [States.AWAITING_CODE_INPUT]: {
+          tags: [WAITING_USER_INPUT_TAG]
+        }
       }
     },
     {

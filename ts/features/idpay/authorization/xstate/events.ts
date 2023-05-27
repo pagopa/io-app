@@ -2,12 +2,9 @@ type E_EXIT = {
   type: "EXIT";
 };
 
-type E_START_AUTHORIZATION = {
-  type: "START_AUTHORIZATION";
+type E_BEGIN_AUTHORIZATION = {
+  type: "BEGIN_AUTHORIZATION";
+  transactionId: string;
 };
 
-type E_AUTHORIZE = {
-  type: "AUTHORIZE";
-};
-
-export type Events = E_EXIT | E_START_AUTHORIZATION | E_AUTHORIZE;
+export type Events = E_EXIT | E_BEGIN_AUTHORIZATION;
