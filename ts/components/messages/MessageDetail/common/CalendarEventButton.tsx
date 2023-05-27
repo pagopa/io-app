@@ -340,9 +340,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         : "messages.cta.reminder"
     );
     const { small, disabled, medium } = this.props;
-    const iconName = this.state.isEventInDeviceCalendar
-      ? "legCompleted"
-      : "legAdd";
+    const iconName = this.state.isEventInDeviceCalendar ? "completed" : "add";
     return (
       <ButtonDefaultOpacity
         disabled={disabled}

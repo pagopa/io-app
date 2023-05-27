@@ -991,7 +991,6 @@ wallet:
       bancomat: "{{bankName}} BANCOMAT"
       coBadge: "{{brand}} Card, {{bankName}}"
       bancomatPay: "{{bankName}} BANCOMATPay"
-      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
       cta: "View method details"
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
@@ -1152,41 +1151,6 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
-    privative:
-      headerTitle: "Add supermarket card"
-      choosePrivativeIssuer:
-        loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose the card brand"
-        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
-        koDisabled:
-          title: "This supermarket doesn't offer this feature yet"
-          body: "We are working to allow you to add your card soon."
-        koUnavailable:
-          title: "We're unable to contact the server"
-          body: "We are working to solve the problem."
-      addPrivativeCardNumber:
-        title: "Insert card number"
-        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
-        disclaimer:
-          text1: "By continuing you accept the"
-          text2: "information on the processing of personal data"
-      search:
-        loading: "We are verifying your card\n\nPlease wait"
-        koTimeout:
-          title: "It is currently impossible to verify your card"
-          body: "Please try again"
-        koNotFound:
-          title: "There is an issue with this card"
-          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
-          cta:
-            modifyCardNumber: "Change card number"
-        koServiceError:
-          title: "We're unable to retrieve your card"
-          body: "Please try again later."
-      add:
-        screenTitle: "Do you want to add this card?"
-        loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1423,9 +1387,6 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
-    loyalty:
-      name: Supermarket Loyalty Card
-      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card used to pay in stores
@@ -1806,6 +1767,19 @@ messageDetails:
       thirdPart: " for more information."
     failing:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
+messagePDFPreview:
+  title: "PDF Preview"
+  singleBtn: "Save, print, or share"
+  open: "Open"
+  save: "Save"
+  savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  errors:
+    previewing:
+      title: "Preview is not available"
+      body: "To view the document, download and open it with a PDF reader app."
+    sharing: "An error occurred while sharing the document"
+    opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+    saving: "An error occurred while saving the document"
 notifications:
   installation:
     errorTitle: Push notifications
@@ -3045,46 +3019,6 @@ features:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
-  mvl:
-    title: "legal message"
-    ko:
-      genericError:
-        title: "There was an error retrieving the message"
-        subtitle: "Please try again"
-    details:
-      hasAttachments: "contains attachments"
-      attachments:
-        title: "Attachments"
-        toast:
-          success: "Download complete"
-        pdfPreview:
-          title: "PDF Preview"
-          singleBtn: "Save, print, or share"
-          open: "Open"
-          save: "Save"
-          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
-          errors:
-            previewing:
-              title: "Preview is not available"
-              body: "To view the document, download and open it with a PDF reader app."
-            sharing: "An error occurred while sharing the document"
-            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
-            saving: "An error occurred while saving the document"
-      body:
-        plain: "plain text"
-        html: "html"
-      metadata:
-        title: "the message has legal value"
-        description: "On {{date}} at {{time}} the message \"{{subject}}\" was sent to you by \"{{sender}}\""
-        messageId: "Message identifier:"
-        links:
-          copy: "Copy message identifier"
-          recipients: "Show full list of recipients"
-          signature: "Show signature details"
-          certificates: "Show certificates"
-          originalMessage: "Download original message"
-          datiCert: "Download daticert.xml"
-          smime: "Download smime.p7s"
   euCovidCertificate:
     save:
       album: "IO"
@@ -3224,6 +3158,11 @@ features:
       content: "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents."
       cancel: "Not now"
       confirm: "Turn on"
+    noFields:
+      title: "Sign the entire document"
+      content: "Do you want to sign the entire document?"
+      leftButton: "Reread"
+      rightButton: "Sign"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
@@ -3408,6 +3347,8 @@ idpay:
               REJECTED_REFUND:  "Errore rimboso"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
+    discountDetails:
+      authorizeButton: Autorizza un pagamento
     beneficiaryDetails:
       infobox:
         title: Cosa ti permette di fare?
@@ -3415,6 +3356,7 @@ idpay:
       infoModal:
         title: "Regole dell'iniziativa"
         button: "Ok, ho capito"
+      spentUntilNow: Speso finora
       summary: Riepilogo
       status: Stato iniziativa
       endDate: Scadenza

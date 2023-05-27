@@ -14,12 +14,10 @@ import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
 import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
-import { MvlActions } from "../../features/mvl/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
-import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
@@ -91,7 +89,6 @@ export type Action =
   | AbiActions
   | BPayActions
   | CoBadgeActions
-  | PrivativeActions
   | SatispayActions
   | PayPalOnboardingActions
   | CrossSessionsActions
@@ -99,7 +96,6 @@ export type Action =
   | EuCovidCertActions
   | OutcomeCodeActions
   | SvActions
-  | MvlActions
   | ZendeskSupportActions
   | CdcActions
   | PnActions

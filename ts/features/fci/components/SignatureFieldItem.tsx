@@ -70,7 +70,7 @@ const SignatureFieldItem = (props: Props) => {
                 ? "grey"
                 : "bluegreyDark"
             }
-            size={22}
+            size={24}
           />
         </TouchableDefaultOpacity>
       </View>

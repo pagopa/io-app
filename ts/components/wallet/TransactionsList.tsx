@@ -12,7 +12,6 @@ import {
   StyleSheet
 } from "react-native";
 import I18n from "../../i18n";
-import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import {
@@ -44,7 +43,6 @@ type Props = Readonly<{
   navigateToTransactionDetails: (transaction: Transaction) => void;
   helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactNode;
-  readTransactions: ReadTransactionsState;
 }>;
 const screenWidth = Dimensions.get("screen").width;
 const styles = StyleSheet.create({
@@ -93,8 +91,6 @@ export default class TransactionsList extends React.Component<Props, State> {
     const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
     const recipient = item.merchant;
-    // Check if the current transaction is stored among the read transactions.
-    const isNew = this.props.readTransactions[item.id.toString()] === undefined;
 
     const amount = formatNumberCentsToAmount(item.amount.amount);
     const datetime: string = `${formatDateAsLocal(
@@ -104,7 +100,7 @@ export default class TransactionsList extends React.Component<Props, State> {
     )} - ${item.created.toLocaleTimeString()}`;
     return (
       <DetailedlistItemComponent
-        isNew={isNew}
+        isNew={false}
         text11={recipient}
         text12={amount}
         text2={datetime}
@@ -115,11 +111,9 @@ export default class TransactionsList extends React.Component<Props, State> {
         accessibilityLabel={I18n.t(
           "wallet.accessibility.transactionListItem.label",
           {
-            payment: isNew
-              ? I18n.t(
-                  "wallet.accessibility.transactionListItem.payment.unread"
-                )
-              : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
+            payment: I18n.t(
+              "wallet.accessibility.transactionListItem.payment.read"
+            ),
             merchant: recipient,
             amount,
             datetime: dateToAccessibilityReadableFormat(item.created),

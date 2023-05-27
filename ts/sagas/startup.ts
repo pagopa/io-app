@@ -27,7 +27,6 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
-  mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   pnEnabled,
@@ -39,7 +38,6 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
@@ -196,10 +194,8 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchZendeskSupportSaga);
   }
 
-  if (mvlEnabled) {
-    // clear cached downloads when the logged user changes
-    yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
-  }
+  // clear cached downloads when the logged user changes
+  yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -500,18 +496,13 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
 
-  if (mvlEnabled) {
-    // Start watching for MVL actions
-    yield* fork(watchMvlSaga, sessionToken);
-  }
-
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
   }
 
   // Start watching for message attachments actions (general
-  // third-party message attachments, PN attachments and MVL ones)
+  // third-party message attachments and PN attachments)
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =

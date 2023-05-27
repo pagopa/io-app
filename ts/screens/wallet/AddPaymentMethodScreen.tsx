@@ -10,7 +10,6 @@ import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
 import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
 import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import SatispayLogo from "../../../img/wallet/payment-methods/satispay-logo.svg";
-import GDOLogo from "../../../img/wallet/unknown-gdo-primary.svg";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -29,7 +28,6 @@ import {
   OnOnboardingCompleted,
   walletAddPaypalStart
 } from "../../features/wallet/onboarding/paypal/store/actions";
-import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -153,13 +151,6 @@ const getPaymentMethods = (
         ? "implemented"
         : "notImplemented",
     section: "bancomat"
-  },
-  {
-    name: I18n.t("wallet.methods.loyalty.name"),
-    description: I18n.t("wallet.methods.loyalty.description"),
-    icon: GDOLogo,
-    onPress: props.startAddPrivative,
-    status: !options.onlyPaymentMethodCanPay ? "implemented" : "notImplemented"
   }
 ];
 
@@ -257,7 +248,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startPaypalOnboarding: (onOboardingCompleted: OnOnboardingCompleted) =>
     dispatch(walletAddPaypalStart(onOboardingCompleted)),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
-  startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>
     navigateToWalletAddCreditCard({
       inPayment: props.route.params.inPayment,

@@ -114,7 +114,12 @@ const WalletHomeHeader = (props: Props) => {
         paddingHorizontal: 8
       }}
     >
-      <H1 color={"white"} accessible={true} accessibilityRole="header">
+      <H1
+        color={"white"}
+        accessible={true}
+        accessibilityRole="header"
+        testID="wallet-home-header-title"
+      >
         {I18n.t("wallet.wallet")}
       </H1>
       <TouchableDefaultOpacity
@@ -127,7 +132,7 @@ const WalletHomeHeader = (props: Props) => {
         accessibilityLabel={I18n.t("wallet.accessibility.addElement")}
         accessibilityRole="button"
       >
-        <Icon name="legAdd" color="white" size={20} />
+        <Icon name="add" color="white" size={20} />
         <HSpacer size={8} />
         <H4 color={"white"}>
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}

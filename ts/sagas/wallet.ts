@@ -1,16 +1,15 @@
 /* eslint-disable */
 
-import { NavigationActions, StackActions } from "@react-navigation/compat";
 /**
  * A saga that manages the Wallet.
  */
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import _ from "lodash";
+import { NavigationActions, StackActions } from "@react-navigation/compat";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import {
   call,
   delay,
@@ -23,7 +22,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
-
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { ContentClient } from "../api/content";
@@ -75,16 +73,6 @@ import {
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
-import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
-import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
-import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
-import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
-import {
-  addPrivativeToWallet,
-  loadPrivativeIssuers,
-  searchUserPrivative,
-  walletAddPrivativeStart
-} from "../features/wallet/onboarding/privative/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -122,11 +110,9 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
-  deleteReadTransaction,
   fetchPsp,
   fetchTransactionRequest,
   fetchTransactionsFailure,
-  fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
   fetchTransactionsRequestWithExpBackoff
 } from "../store/actions/wallet/transactions";
@@ -150,28 +136,25 @@ import {
   updatePaymentStatus
 } from "../store/actions/wallet/wallets";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
-import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { getAllWallets } from "../store/reducers/wallet/wallets";
-
-import {
-  isRawCreditCard,
-  NullableWallet,
-  PaymentManagerToken
-} from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
+import {
+  NullableWallet,
+  PaymentManagerToken,
+  isRawCreditCard
+} from "../types/pagopa";
 import { ReduxSagaEffect } from "../types/utils";
+import { SessionManager } from "../utils/SessionManager";
 import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 import { convertUnknownToError } from "../utils/errors";
-
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getTitleFromCard } from "../utils/paymentMethod";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
-import { SessionManager } from "../utils/SessionManager";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
@@ -195,7 +178,6 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { pipe } from "fp-ts/lib/function";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -691,28 +673,6 @@ export function* watchWalletSaga(
     }
   );
 
-  /**
-   * watch when all transactions are been loaded
-   * check if transaction read store section (entities.transactionsRead) is dirty:
-   * it could contain transactions different from the loaded ones
-   * This scenario could happen when same app instance is used across multiple users
-   */
-  yield* takeLatest(
-    getType(fetchTransactionsLoadComplete),
-    function* (action: ActionType<typeof fetchTransactionsLoadComplete>) {
-      const transactionRead: ReturnType<typeof getTransactionsRead> =
-        yield* select(getTransactionsRead);
-      const transactionReadId = Object.keys(transactionRead).map(
-        k => transactionRead[k]
-      );
-      const allTransactionsId = action.payload.map(t => t.id);
-      const toDelete = _.difference(transactionReadId, allTransactionsId);
-      if (toDelete.length > 0) {
-        yield* put(deleteReadTransaction(toDelete));
-      }
-    }
-  );
-
   yield* takeLatest(
     getType(fetchTransactionRequest),
     fetchTransactionRequestHandler,
@@ -952,33 +912,8 @@ export function* watchWalletSaga(
       contentClient.getCobadgeServices
     );
 
-    yield* takeLatest(
-      loadPrivativeIssuers.request,
-      handleLoadPrivativeConfiguration,
-      contentClient.getPrivativeServices
-    );
-
     // watch for add co-badge to Wallet workflow
     yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
-
-    // watch for add privative to Wallet workflow
-    yield* takeLatest(
-      walletAddPrivativeStart,
-      addPrivativeToWalletAndActivateBpd
-    );
-    yield* takeLatest(
-      searchUserPrivative.request,
-      handleSearchUserPrivative,
-      paymentManagerClient.getCobadgePans,
-      paymentManagerClient.searchCobadgePans,
-      pmSessionManager
-    );
-    yield* takeLatest(
-      addPrivativeToWallet.request,
-      handleAddPrivativeToWallet,
-      paymentManagerClient.addCobadgeToWallet,
-      pmSessionManager
-    );
 
     yield* fork(
       watchPaypalOnboardingSaga,
