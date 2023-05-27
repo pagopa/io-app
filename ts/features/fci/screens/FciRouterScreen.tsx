@@ -94,12 +94,14 @@ const FciSignatureScreen = (
       O.fromNullable,
       O.map(e => getErrorFromNetworkError(e)),
       O.map(error => getGenericError(error)),
-      O.map(error =>
-        TE.tryCatch(
-          () => JSON.parse(error.value.message),
-          () => GenericError()
-        )
-      ),
+      O.chain(error => {
+        try {
+          const problemJson = JSON.parse(error.value.message);
+          return O.some(problemJson);
+        } catch (e) {
+          return O.none;
+        }
+      }),
       O.map(ProblemJson.decode),
       O.map(
         E.fold(
