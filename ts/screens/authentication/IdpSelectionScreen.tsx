@@ -2,7 +2,7 @@ import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import AdviceComponent from "../../components/AdviceComponent";
@@ -35,6 +35,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../store/reducers/nativeLogin";
+import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -81,15 +82,20 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       >
     >();
 
-  const isNativeLogiEnabled = () =>
+  const isNativeLoginFeatureFlagEnabled = useSelector(
+    isNativeLoginEnabledSelector
+  );
+
+  const isNativeLoginEnabled = () =>
     (Platform.OS !== "ios" ||
       (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
-    props.nativeLoginFeature.enabled;
+    props.nativeLoginFeature.enabled &&
+    isNativeLoginFeatureFlagEnabled;
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    if (isNativeLogiEnabled()) {
+    if (isNativeLoginEnabled()) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_AUTH_SESSION
       });
