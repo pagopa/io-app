@@ -20,7 +20,7 @@ describe("isValidSixDigitNumber", () => {
     );
   });
 
-  describe("returns false for ascending sequences", () => {
+  it("returns false for ascending sequences", () => {
     expect(isValidSixDigitNumber(123456)).toBe(false);
     expect(isValidSixDigitNumber(234567)).toBe(false);
     expect(isValidSixDigitNumber("123456")).toBe(false);
