@@ -24,7 +24,7 @@ type Props<T> = {
  */
 export const RadioGroup = <T,>({ items, selectedItem, onPress }: Props<T>) => (
   <View>
-    {items.map(item => (
+    {items.map((item, index) => (
       <React.Fragment key={`radio_item_${item.id}`}>
         <RadioListItem
           testID={`RadioItemTestID_${item.id}`}
@@ -34,7 +34,7 @@ export const RadioGroup = <T,>({ items, selectedItem, onPress }: Props<T>) => (
           onValueChange={() => onPress(item.id)}
           selected={selectedItem === item.id}
         />
-        <Divider />
+        {index < items.length - 1 && <Divider />}
       </React.Fragment>
     ))}
   </View>
