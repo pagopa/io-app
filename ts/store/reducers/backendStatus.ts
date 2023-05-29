@@ -5,8 +5,10 @@
 import { Platform } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
@@ -30,7 +32,10 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
+import { NativeLoginConfig } from "../../../definitions/content/NativeLoginConfig";
+import { FastLoginConfig } from "../../../definitions/content/FastLoginConfig";
 import { Action } from "../actions/types";
+import { Config } from "../../../definitions/content/Config";
 import { GlobalState } from "./types";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 
@@ -235,6 +240,42 @@ export const isLollipopEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+type KeysWithMinAppVersion<T> = {
+  [K in keyof T]: T[K] extends { min_app_version?: any } ? K : never;
+}[keyof T];
+
+export const isPropertyWithMinAppVersionEnabled = (
+  localFlag: boolean,
+  configPropertyName: KeysWithMinAppVersion<
+    Config & { nativeLogin: NativeLoginConfig; fastLogin: FastLoginConfig }
+  >,
+  backendStatus: O.Option<BackendStatus>
+): boolean =>
+  localFlag &&
+  pipe(
+    backendStatus,
+    O.chainNullableK(bs => bs.config),
+    O.chainNullableK(cfg =>
+      configPropertyName ? cfg[configPropertyName] : undefined
+    ),
+    O.chainNullableK(lp => lp.min_app_version),
+    O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+    O.chain(semVer =>
+      pipe(
+        semVer,
+        PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
+        E.fold(
+          _ => O.none,
+          v => O.some(v)
+        )
+      )
+    ),
+    O.fold(
+      () => false,
+      v => isVersionSupported(v, getAppVersion())
+    )
+  );
 
 /**
  * return the remote config about CGN enabled/disabled
