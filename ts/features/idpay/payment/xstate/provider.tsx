@@ -21,12 +21,11 @@ import { IDPayPaymentMachineType, createIDPayPaymentMachine } from "./machine";
 import { createServicesImplementation } from "./services";
 import { createActionsImplementation } from "./actions";
 
-type AuthorizationMachineContext = InterpreterFrom<IDPayPaymentMachineType>;
+type PaymentMachineContext = InterpreterFrom<IDPayPaymentMachineType>;
 
-const AuthorizationMachineContext =
-  React.createContext<AuthorizationMachineContext>(
-    {} as AuthorizationMachineContext
-  );
+const PaymentMachineContext = React.createContext<PaymentMachineContext>(
+  {} as PaymentMachineContext
+);
 
 type Props = {
   children: React.ReactNode;
@@ -59,17 +58,16 @@ const IDPayPaymentMachineProvider = (props: Props) => {
   const machineService = useInterpret(machine, { services, actions });
 
   return (
-    <AuthorizationMachineContext.Provider value={machineService}>
+    <PaymentMachineContext.Provider value={machineService}>
       {props.children}
-    </AuthorizationMachineContext.Provider>
+    </PaymentMachineContext.Provider>
   );
 };
 
-const useAuthorizationMachineService = () =>
-  React.useContext(AuthorizationMachineContext);
+const usePaymentMachineService = () => React.useContext(PaymentMachineContext);
 
 export {
   IDPayPaymentMachineProvider,
-  useAuthorizationMachineService,
-  AuthorizationMachineContext
+  usePaymentMachineService,
+  PaymentMachineContext
 };
