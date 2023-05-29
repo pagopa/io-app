@@ -109,6 +109,12 @@ export const fciEnabled = Config.FCI_ENABLED === "YES";
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
+// Fast Login Feature Flag
+export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
+
+// Native Login Feature Flag
+export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
+
 // Opt-in for reminder push notifications
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
