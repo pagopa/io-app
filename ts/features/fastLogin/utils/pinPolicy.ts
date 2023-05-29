@@ -1,11 +1,13 @@
 type SequenceOrder = "ASCENDING" | "DESCENDING";
 
-const checkSequence = (order: SequenceOrder) => (digits: Array<number>) =>
-  digits
-    .slice(1)
-    .every(
-      (digit, i) => digit === digits[i] + (order === "ASCENDING" ? 1 : -1)
-    );
+const checkSequence =
+  (sequenceOrder: SequenceOrder) => (digits: Array<number>) =>
+    digits
+      .slice(1)
+      .every(
+        (digit, i) =>
+          digit === digits[i] + (sequenceOrder === "ASCENDING" ? 1 : -1)
+      );
 
 export function isValidSixDigitNumber(input: number | string): boolean {
   const str = String(input);
@@ -16,12 +18,12 @@ export function isValidSixDigitNumber(input: number | string): boolean {
   }
 
   // Check if all digits are the same
-  if (new Set(str.split("")).size === 1) {
+  if (new Set(str).size === 1) {
     return false;
   }
 
   // Generate an array of digits
-  const digits = str.split("").map(Number);
+  const digits = Array.from(str, Number);
 
   // Check for ascending sequence
   const isAscending = checkSequence("ASCENDING")(digits);
