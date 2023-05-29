@@ -20,7 +20,7 @@ import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
   IDPayAuthorizationNavigator,
   IDPayAuthorizationRoutes
-} from "../features/idpay/authorization/navigation/navigator";
+} from "../features/idpay/payment/navigation/navigator";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes

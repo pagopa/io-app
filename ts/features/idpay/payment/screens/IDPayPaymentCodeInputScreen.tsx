@@ -1,8 +1,8 @@
 import React from "react";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 
-const IDPayAuthorizationCodeInputScreen = () => (
+const IDPayPaymentCodeInputScreen = () => (
   <BaseScreenComponent goBack={true} headerTitle="Input" />
 );
 
-export { IDPayAuthorizationCodeInputScreen };
+export { IDPayPaymentCodeInputScreen };

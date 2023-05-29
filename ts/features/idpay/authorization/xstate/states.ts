@@ -1,3 +1,0 @@
-export enum States {
-  AWAITING_CODE_INPUT = "AWAITING_CODE_INPUT"
-}
