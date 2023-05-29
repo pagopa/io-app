@@ -205,7 +205,7 @@ export const unsupportedDeviceLearnMoreUrl: string = pipe(
 export const cieSpidMoreInfoUrl: string = pipe(
   Config.CIE_SPID_INFORMATION_URL,
   NonEmptyString.decode,
-  E.getOrElse(() => "https://identitadigitale.gov.it/")
+  E.getOrElse(() => "https://identitadigitale.gov.it")
 );
 
 export const pinPukHelpUrl: string = pipe(
@@ -213,7 +213,7 @@ export const pinPukHelpUrl: string = pipe(
   NonEmptyString.decode,
   E.getOrElse(
     () =>
-      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/"
+      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk"
   )
 );
 
