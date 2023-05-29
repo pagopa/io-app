@@ -132,10 +132,10 @@ import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
-import IconNavMessagesSelected from "./svg/IconNavMessagesSelected";
-import IconNavWalletSelected from "./svg/IconNavWalletSelected";
-import IconNavServicesSelected from "./svg/IconNavServicesSelected";
-import IconNavProfileSelected from "./svg/IconNavProfileSelected";
+import IconNavMessagesFocused from "./svg/IconNavMessagesFocused";
+import IconNavWalletFocused from "./svg/IconNavWalletFocused";
+import IconNavServicesFocused from "./svg/IconNavServicesFocused";
+import IconNavProfileFocused from "./svg/IconNavProfileFocused";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -243,14 +243,14 @@ export const IOIcons = {
   backiOS: IconBackiOS,
   backAndroid: IconBackAndroid,
   navMessages: IconNavMessages /* io-messaggi */,
-  navMessagesSelected: IconNavMessagesSelected,
+  navMessagesFocused: IconNavMessagesFocused,
   navWallet: IconNavWallet /* io-portafoglio */,
-  navWalletSelected: IconNavWalletSelected,
+  navWalletFocused: IconNavWalletFocused,
   navScan: IconNavScan,
   navServices: IconNavServices,
-  navServicesSelected: IconNavServicesSelected,
+  navServicesFocused: IconNavServicesFocused,
   navProfile: IconNavProfile,
-  navProfileSelected: IconNavProfileSelected,
+  navProfileFocused: IconNavProfileFocused,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
@@ -392,10 +392,10 @@ const {
   navScan,
   navServices,
   navProfile,
-  navMessagesSelected,
-  navWalletSelected,
-  navServicesSelected,
-  navProfileSelected
+  navMessagesFocused,
+  navWalletFocused,
+  navServicesFocused,
+  navProfileFocused
 } = IOIcons;
 
 export const IONavIcons = {
@@ -404,10 +404,10 @@ export const IONavIcons = {
   navScan,
   navServices,
   navProfile,
-  navMessagesSelected,
-  navWalletSelected,
-  navServicesSelected,
-  navProfileSelected
+  navMessagesFocused,
+  navWalletFocused,
+  navServicesFocused,
+  navProfileFocused
 } as const;
 
 export type IONavIcons = keyof typeof IONavIcons;

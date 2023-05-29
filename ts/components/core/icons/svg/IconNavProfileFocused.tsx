@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconNavProfileSelected = ({ size, style, ...props }: SVGIconProps) => (
+const IconNavProfileFocused = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       fillRule="evenodd"
@@ -13,4 +13,4 @@ const IconNavProfileSelected = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconNavProfileSelected;
+export default IconNavProfileFocused;

@@ -85,7 +85,7 @@ export const MainTabNavigator = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 iconName={"navMessages"}
-                iconNameSelected={"navMessagesSelected"}
+                iconNameFocused={"navMessagesFocused"}
                 color={color}
                 focused={focused}
                 // Badge is disabled with paginated messages.
@@ -102,7 +102,7 @@ export const MainTabNavigator = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 iconName={"navWallet"}
-                iconNameSelected={"navWalletSelected"}
+                iconNameFocused={"navWalletFocused"}
                 color={color}
                 focused={focused}
               />
@@ -117,7 +117,7 @@ export const MainTabNavigator = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 iconName="navServices"
-                iconNameSelected="navServicesSelected"
+                iconNameFocused="navServicesFocused"
                 color={color}
                 focused={focused}
                 // Badge counter has been disabled
@@ -134,7 +134,7 @@ export const MainTabNavigator = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
                 iconName={"navProfile"}
-                iconNameSelected={"navProfileSelected"}
+                iconNameFocused={"navProfileFocused"}
                 color={color}
                 focused={focused}
               />

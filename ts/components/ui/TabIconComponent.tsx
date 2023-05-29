@@ -6,7 +6,7 @@ import CustomBadge from "./CustomBadge";
 type TabIconComponent = {
   focused: boolean;
   iconName: IONavIcons;
-  iconNameSelected: IONavIcons;
+  iconNameFocused: IONavIcons;
   color?: ColorValue;
   badgeValue?: number;
 };
@@ -19,14 +19,14 @@ export const TabIconComponent = React.memo(
   ({
     focused,
     iconName,
-    iconNameSelected,
+    iconNameFocused,
     color,
     badgeValue
   }: TabIconComponent) => (
     // accessibilityLabel={""} in order to read the font icon, without modify the library element
     <View accessibilityLabel={""}>
       <AnimatedIcon
-        name={focused ? iconNameSelected : iconName}
+        name={focused ? iconNameFocused : iconName}
         size={24}
         color={color}
       />
