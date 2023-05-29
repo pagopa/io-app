@@ -1,10 +1,20 @@
+import { E_BACK } from "../../common/xstate/events";
+
 type E_EXIT = {
   type: "EXIT";
 };
 
-type E_BEGIN_AUTHORIZATION = {
-  type: "BEGIN_AUTHORIZATION";
-  transactionId: string;
+type E_PRE_AUTHORIZE_PAYMENT = {
+  type: "PRE_AUTHORIZE_PAYMENT";
+  trxCode: string;
 };
 
-export type Events = E_EXIT | E_BEGIN_AUTHORIZATION;
+type E_AUTHORIZE_PAYMENT = {
+  type: "AUTHORIZE_PAYMENT";
+};
+
+export type Events =
+  | E_EXIT
+  | E_BACK
+  | E_PRE_AUTHORIZE_PAYMENT
+  | E_AUTHORIZE_PAYMENT;
