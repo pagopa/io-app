@@ -71,6 +71,8 @@ import {
   withBearerToken as withToken
 } from "../utils/api";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
+import { lollipopFetch } from "../features/lollipop/utils/fetch";
+import { LollipopConfig } from "../features/lollipop";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -390,8 +392,11 @@ export function BackendClient(
       createFetchRequestForApi(getMessagesT, options)
     ),
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
-    getThirdPartyMessage: withBearerToken(
-      createFetchRequestForApi(getThirdPartyMessage, options)
+    getThirdPartyMessage: (nonce: string) => withBearerToken(
+      createFetchRequestForApi(getThirdPartyMessage, { baseUrl, fetchApi: lollipopFetch(
+        {
+          nonce
+        } as LollipopConfig, _keyInfo) })
     ),
     getThirdPartyMessagePrecondition: withBearerToken(
       createFetchRequestForApi(getThirdPartyMessagePreconditionT, options)
