@@ -101,7 +101,7 @@ describe("IDPay Unsubscription machine services", () => {
 
     it("should unsubscribe from initiative", async () => {
       const response: E.Either<Error, { status: number; value?: undefined }> =
-        E.right({ status: 200, value: undefined });
+        E.right({ status: 204, value: undefined });
 
       mockIDPayClient.unsubscribe.mockImplementation(() => response);
 

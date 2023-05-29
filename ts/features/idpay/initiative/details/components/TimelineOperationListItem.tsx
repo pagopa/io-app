@@ -49,6 +49,12 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
       return <Icon name={"notice"} color="red" />;
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
+      if (operation.channel === ChannelEnum.QRCODE) {
+        return (
+          <Icon name={"productIOAppBlueBackground"} color="bluegreyLight" />
+        );
+      }
+    // eslint-disable-next-line no-fallthrough
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
       return getCardLogoComponent(operation.brand);
