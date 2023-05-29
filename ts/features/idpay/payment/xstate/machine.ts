@@ -3,7 +3,6 @@ import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
 import { Context } from "./context";
 import { Events } from "./events";
 import { Services } from "./services";
-import { States } from "./states";
 
 const createIDPayPaymentMachine = () =>
   createMachine(
@@ -18,27 +17,27 @@ const createIDPayPaymentMachine = () =>
       },
       predictableActionArguments: true,
       id: "IDPAY_PAYMENT",
-      initial: States.AWAITING_PRE_AUTHORIZATION,
+      initial: "AWAITING_TRX_CODE",
       states: {
-        [States.AWAITING_PRE_AUTHORIZATION]: {
+        AWAITING_TRX_CODE: {
           tags: [WAITING_USER_INPUT_TAG]
         },
-        [States.PRE_AUTHORIZING]: {
+        PRE_AUTHORIZING: {
           tags: [LOADING_TAG]
         },
-        [States.LOADING_TRANSACTION_DATA]: {
+        LOADING_TRANSACTION_DATA: {
           tags: [LOADING_TAG]
         },
-        [States.AWAITING_AUTHORIZATION]: {
+        AWAITING_AUTHORIZATION: {
           tags: [WAITING_USER_INPUT_TAG]
         },
-        [States.AUTHORIZING]: {
+        AUTHORIZING: {
           tags: [WAITING_USER_INPUT_TAG]
         },
-        [States.PAYMENT_SUCCESS]: {
+        PAYMENT_SUCCESS: {
           tags: [WAITING_USER_INPUT_TAG]
         },
-        [States.PAYMENT_FAILURE]: {
+        PAYMENT_FAILURE: {
           tags: [WAITING_USER_INPUT_TAG]
         }
       }
