@@ -50,6 +50,82 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
         {
           clause: {
             title: "clause title 3",
+            type: ClausesTypeEnum.OPTIONAL
+          },
+          attrs: {
+            unique_name: "unique_name_3" as NonEmptyString
+          }
+        }
+      ] as ReadonlyArray<SignatureField>
+    }
+  },
+  {
+    id: "2" as NonEmptyString,
+    created_at: new Date(),
+    url: `http://127.0.0.1:3000/static_content/fci/modulo_2` as NonEmptyString,
+    updated_at: new Date(),
+    metadata: {
+      title: "Modulo 2" as NonEmptyString,
+      signature_fields: [
+        {
+          clause: {
+            title: "clause title 1" as NonEmptyString,
+            type: ClausesTypeEnum.REQUIRED
+          },
+          attrs: {
+            unique_name: "unique_name_1" as NonEmptyString
+          }
+        },
+        {
+          clause: {
+            title: "clause title 2" as NonEmptyString,
+            type: ClausesTypeEnum.OPTIONAL
+          },
+          attrs: {
+            unique_name: "unique_name_2" as NonEmptyString
+          }
+        },
+        {
+          clause: {
+            title: "clause title 3",
+            type: ClausesTypeEnum.UNFAIR
+          },
+          attrs: {
+            unique_name: "unique_name_3" as NonEmptyString
+          }
+        }
+      ] as ReadonlyArray<SignatureField>
+    }
+  },
+  {
+    id: "3" as NonEmptyString,
+    created_at: new Date(),
+    url: `http://127.0.0.1:3000/static_content/fci/modulo_3` as NonEmptyString,
+    updated_at: new Date(),
+    metadata: {
+      title: "Modulo 3" as NonEmptyString,
+      signature_fields: [
+        {
+          clause: {
+            title: "clause title 1" as NonEmptyString,
+            type: ClausesTypeEnum.REQUIRED
+          },
+          attrs: {
+            unique_name: "unique_name_1" as NonEmptyString
+          }
+        },
+        {
+          clause: {
+            title: "clause title 2" as NonEmptyString,
+            type: ClausesTypeEnum.REQUIRED
+          },
+          attrs: {
+            unique_name: "unique_name_2" as NonEmptyString
+          }
+        },
+        {
+          clause: {
+            title: "clause title 3",
             type: ClausesTypeEnum.UNFAIR
           },
           attrs: {
