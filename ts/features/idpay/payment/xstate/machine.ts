@@ -1,9 +1,11 @@
-import { createMachine } from "xstate";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { assign, createMachine } from "xstate";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
 import { Context } from "./context";
 import { Events } from "./events";
 import { Services } from "./services";
-import { States } from "./states";
+import { PaymentFailure } from "./failure";
 
 const createIDPayPaymentMachine = () =>
   createMachine(
@@ -18,33 +20,77 @@ const createIDPayPaymentMachine = () =>
       },
       predictableActionArguments: true,
       id: "IDPAY_PAYMENT",
-      initial: States.AWAITING_PRE_AUTHORIZATION,
+      initial: "AWAITING_TRX_CODE",
       states: {
-        [States.AWAITING_PRE_AUTHORIZATION]: {
+        AWAITING_TRX_CODE: {
+          tags: [WAITING_USER_INPUT_TAG],
+          on: {
+            PRE_AUTHORIZE_PAYMENT: {
+              target: "PRE_AUTHORIZING"
+            }
+          }
+        },
+        PRE_AUTHORIZING: {
+          tags: [LOADING_TAG],
+          invoke: {
+            id: "preAuthorizePayment",
+            src: "preAuthorizePayment",
+            onDone: {
+              actions: "preAuthorizePaymentSuccess",
+              target: "LOADING_TRANSACTION_DATA"
+            },
+            onError: {
+              actions: "setFailure",
+              target: "AWAITING_TRX_CODE"
+            }
+          }
+        },
+        LOADING_TRANSACTION_DATA: {
+          tags: [LOADING_TAG],
+          invoke: {
+            id: "getTransaction",
+            src: "getTransaction",
+            onDone: {
+              actions: "getTransactionSuccess",
+              target: "AWAITING_AUTHORIZATION"
+            },
+            onError: {
+              actions: "setFailure",
+              target: "AWAITING_TRX_CODE"
+            }
+          }
+        },
+        AWAITING_AUTHORIZATION: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToAuthorizationScreen"
+        },
+        AUTHORIZING: {
           tags: [WAITING_USER_INPUT_TAG]
         },
-        [States.PRE_AUTHORIZING]: {
-          tags: [LOADING_TAG]
-        },
-        [States.LOADING_TRANSACTION_DATA]: {
-          tags: [LOADING_TAG]
-        },
-        [States.AWAITING_AUTHORIZATION]: {
+        PAYMENT_SUCCESS: {
           tags: [WAITING_USER_INPUT_TAG]
         },
-        [States.AUTHORIZING]: {
-          tags: [WAITING_USER_INPUT_TAG]
-        },
-        [States.PAYMENT_SUCCESS]: {
-          tags: [WAITING_USER_INPUT_TAG]
-        },
-        [States.PAYMENT_FAILURE]: {
+        PAYMENT_FAILURE: {
           tags: [WAITING_USER_INPUT_TAG]
         }
       }
     },
     {
-      actions: {},
+      actions: {
+        preAuthorizePaymentSuccess: assign((_, event) => ({
+          transaction: event.data
+        })),
+        getTransactionSuccess: assign((_, event) => ({
+          transaction: event.data
+        })),
+        setFailure: assign((_, event) => ({
+          failure: pipe(
+            O.of(event.data),
+            O.filter(PaymentFailure.is),
+            O.toUndefined
+          )
+        }))
+      },
       guards: {}
     }
   );

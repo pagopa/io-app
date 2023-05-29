@@ -17,7 +17,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IDPayTransactionCode } from "../common/types";
-import { useAuthorizationMachineService } from "../xstate/provider";
+import { usePaymentMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
 
 type InputState = {
@@ -26,7 +26,7 @@ type InputState = {
 };
 
 const IDPayPaymentCodeInputScreen = () => {
-  const machine = useAuthorizationMachineService();
+  const machine = usePaymentMachineService();
   const [inputState, setInputState] = React.useState<InputState>({
     value: undefined,
     code: O.none
