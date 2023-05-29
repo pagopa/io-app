@@ -33,6 +33,8 @@ export type FciRouterScreenNavigationParams = Readonly<{
 const FciSignatureScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): React.ReactElement => {
+  // TODO: add a check to validate signatureRequestId using io-ts
+  // https://pagopa.atlassian.net/browse/SFEQS-1705?atlOrigin=eyJpIjoiOWY2NDA4YmQ0ZTQ0NGRjZTk5MGNlZDczZGIxMDllMmIiLCJwIjoiaiJ9
   const signatureRequestId = props.route.params.signatureRequestId;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
