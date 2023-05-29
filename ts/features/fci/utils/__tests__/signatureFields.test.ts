@@ -6,12 +6,14 @@ import {
   clausesByType,
   getAllTypes,
   getClauseLabel,
+  getClausesCountByTypes,
   getOptionalSignatureFields,
   getRequiredSignatureFields,
   getSectionListData,
   getSignatureFieldsLength,
   orderSignatureFields
 } from "../signatureFields";
+import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 
 const emptyAttrs = {} as SignatureField["attrs"];
 
@@ -254,6 +256,46 @@ describe("Test signatureFields utils", () => {
           ...signatureFields
         ])
       ).toStrictEqual(ordered);
+    });
+  });
+
+  describe("Test getClausesCountByTypes", () => {
+    it("it should return 4 if the clauses array contains REQUIRED", () => {
+      expect(
+        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
+          ClausesTypeEnum.REQUIRED
+        ])
+      ).toStrictEqual(4);
+    });
+    it("it should return 6 if the clauses array contains REQUIRED and UNFAIR", () => {
+      expect(
+        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
+          ClausesTypeEnum.REQUIRED,
+          ClausesTypeEnum.UNFAIR
+        ])
+      ).toStrictEqual(6);
+    });
+    it("it should return 3 if the clauses array contains OPTIONAL", () => {
+      expect(
+        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
+          ClausesTypeEnum.OPTIONAL
+        ])
+      ).toStrictEqual(3);
+    });
+    it("it should return 7 if the clauses array contains REQUIRED and OPTIONAL", () => {
+      expect(
+        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
+          ClausesTypeEnum.OPTIONAL,
+          ClausesTypeEnum.REQUIRED
+        ])
+      ).toStrictEqual(7);
+    });
+    it("it should return 2 if the clauses array contains UNFAIR", () => {
+      expect(
+        getClausesCountByTypes(mockCreateSignatureBody.documents_to_sign, [
+          ClausesTypeEnum.UNFAIR
+        ])
+      ).toStrictEqual(2);
     });
   });
 
