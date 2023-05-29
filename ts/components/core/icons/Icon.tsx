@@ -132,6 +132,10 @@ import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
+import IconNavMessagesSelected from "./svg/IconNavMessagesSelected";
+import IconNavWalletSelected from "./svg/IconNavWalletSelected";
+import IconNavServicesSelected from "./svg/IconNavServicesSelected";
+import IconNavProfileSelected from "./svg/IconNavProfileSelected";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -239,10 +243,14 @@ export const IOIcons = {
   backiOS: IconBackiOS,
   backAndroid: IconBackAndroid,
   navMessages: IconNavMessages /* io-messaggi */,
+  navMessagesSelected: IconNavMessagesSelected,
   navWallet: IconNavWallet /* io-portafoglio */,
+  navWalletSelected: IconNavWalletSelected,
   navScan: IconNavScan,
   navServices: IconNavServices,
+  navServicesSelected: IconNavServicesSelected,
   navProfile: IconNavProfile,
+  navProfileSelected: IconNavProfileSelected,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
@@ -378,14 +386,28 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 // export const IOIconsNew = {};
 
 /* Navigation */
-const { navMessages, navWallet, navScan, navServices, navProfile } = IOIcons;
+const {
+  navMessages,
+  navWallet,
+  navScan,
+  navServices,
+  navProfile,
+  navMessagesSelected,
+  navWalletSelected,
+  navServicesSelected,
+  navProfileSelected
+} = IOIcons;
 
 export const IONavIcons = {
   navMessages,
   navWallet,
   navScan,
   navServices,
-  navProfile
+  navProfile,
+  navMessagesSelected,
+  navWalletSelected,
+  navServicesSelected,
+  navProfileSelected
 } as const;
 
 export type IONavIcons = keyof typeof IONavIcons;

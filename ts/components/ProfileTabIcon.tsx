@@ -1,41 +1,24 @@
 import React from "react";
-import { connect } from "react-redux";
 
 import { ColorValue } from "react-native";
-import { GlobalState } from "../store/reducers/types";
-import { AnimatedIcon, IOIconSizeScale } from "./core/icons/Icon";
+import { TabIconComponent } from "./ui/TabIconComponent";
 
-type OwnProps = {
-  size?: IOIconSizeScale;
+type ProfileTabIcon = {
+  focused: boolean;
   color?: ColorValue;
 };
-
-type Props = OwnProps & ReturnType<typeof mapStateToProps>;
-
 /**
- * Profile icon that changes if the experimental features flag is enabled.
+ * Profile Tab Icon
  */
-class ProfileTabIcon extends React.PureComponent<Props> {
-  public render() {
-    const { size, color } = this.props;
-    // since no experimental features are available we force the flag to false (see https://www.pivotaltracker.com/story/show/168263994)
-    // when new experimental features will be avaible, pick this flag from props
-    const isExperimentalFeaturesEnabled = false;
-    return (
-      <AnimatedIcon
-        size={size}
-        color={color}
-        name={
-          isExperimentalFeaturesEnabled ? "profileExperiment" : "navProfile"
-        }
-      />
-    );
-  }
-}
+const ProfileTabIcon = ({ focused, color }: ProfileTabIcon) => (
+  <TabIconComponent
+    iconName={"navProfile"}
+    iconNameFocused={"navProfileSelected"}
+    color={color}
+    focused={focused}
+    // Badge is disabled with paginated messages.
+    // https://pagopa.atlassian.net/browse/IA-572
+  />
+);
 
-const mapStateToProps = (state: GlobalState) => ({
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
-});
-
-export default connect(mapStateToProps)(ProfileTabIcon);
+export default ProfileTabIcon;

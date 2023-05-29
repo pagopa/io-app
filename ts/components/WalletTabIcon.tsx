@@ -1,18 +1,22 @@
 import React from "react";
 import { ColorValue } from "react-native";
-import TabIconComponent from "./ui/TabIconComponent";
+import { TabIconComponent } from "./ui/TabIconComponent";
 
-type Props = {
+type WalletTabIcon = {
+  focused: boolean;
   color?: ColorValue;
 };
 
 /**
  * Wallet tab icon with badge indicator
  */
-class WalletTabIcon extends React.PureComponent<Props> {
-  public render() {
-    return <TabIconComponent iconName={"navWallet"} color={this.props.color} />;
-  }
-}
+const WalletTabIcon = ({ focused, color }: WalletTabIcon) => (
+  <TabIconComponent
+    iconName={"navWallet"}
+    iconNameFocused={"navWalletSelected"}
+    color={color}
+    focused={focused}
+  />
+);
 
 export default WalletTabIcon;

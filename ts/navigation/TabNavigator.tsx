@@ -85,7 +85,9 @@ export const MainTabNavigator = () => {
           component={PaginatedMessagesHomeScreen}
           options={{
             title: I18n.t("global.navigator.messages"),
-            tabBarIcon: ({ color }) => <MessagesTabIcon color={color} />
+            tabBarIcon: ({ color, focused }) => (
+              <MessagesTabIcon color={color} focused={focused} />
+            )
           }}
         />
         <Tab.Screen
@@ -93,7 +95,9 @@ export const MainTabNavigator = () => {
           component={WalletHomeScreen}
           options={{
             title: I18n.t("global.navigator.wallet"),
-            tabBarIcon: ({ color }) => <WalletTabIcon color={color} />
+            tabBarIcon: ({ color, focused }) => (
+              <WalletTabIcon color={color} focused={focused} />
+            )
           }}
         />
         <Tab.Screen
@@ -101,7 +105,9 @@ export const MainTabNavigator = () => {
           component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),
-            tabBarIcon: ({ color }) => <ServiceTabIcon color={color} />
+            tabBarIcon: ({ color, focused }) => (
+              <ServiceTabIcon color={color} focused={focused} />
+            )
           }}
         />
         <Tab.Screen
@@ -109,7 +115,9 @@ export const MainTabNavigator = () => {
           component={ProfileMainScreen}
           options={{
             title: I18n.t("global.navigator.profile"),
-            tabBarIcon: ({ color }) => <ProfileTabIcon color={color} />
+            tabBarIcon: ({ color, focused }) => (
+              <ProfileTabIcon color={color} focused={focused} />
+            )
           }}
         />
       </Tab.Navigator>

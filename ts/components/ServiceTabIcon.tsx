@@ -4,16 +4,20 @@
  */
 import React from "react";
 import { ColorValue } from "react-native";
-import TabIconComponent from "./ui/TabIconComponent";
+import { TabIconComponent } from "./ui/TabIconComponent";
 
-type Props = {
-  color?: ColorValue;
+type ServiceTabIcon = {
+  focused: boolean;
+  color: ColorValue;
 };
 
-class ServiceTabIcon extends React.PureComponent<Props> {
-  public render() {
-    return <TabIconComponent iconName="navServices" color={this.props.color} />;
-  }
-}
+const ServiceTabIcon = ({ focused, color }: ServiceTabIcon) => (
+  <TabIconComponent
+    iconName="navServices"
+    iconNameFocused="navServicesSelected"
+    color={color}
+    focused={focused}
+  />
+);
 
 export default ServiceTabIcon;

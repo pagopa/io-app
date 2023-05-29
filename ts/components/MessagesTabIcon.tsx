@@ -1,29 +1,25 @@
 import React from "react";
 
 import { ColorValue } from "react-native";
-import TabIconComponent from "./ui/TabIconComponent";
+import { TabIconComponent } from "./ui/TabIconComponent";
 
-type OwnProps = {
+type WalletTabIcon = {
   color?: ColorValue;
+  focused: boolean;
 };
 
-type Props = OwnProps;
-
 /**
- * Message tab icon with badge indicator
+ * Message Tab Icon
  */
-class MessagesTabIcon extends React.PureComponent<Props> {
-  public render() {
-    const { color } = this.props;
-    return (
-      <TabIconComponent
-        iconName={"navMessages"}
-        // badge is disabled with paginated messages see https://pagopa.atlassian.net/browse/IA-572
-        badgeValue={undefined}
-        color={color}
-      />
-    );
-  }
-}
+const MessagesTabIcon = ({ focused, color }: WalletTabIcon) => (
+  <TabIconComponent
+    iconName={"navMessages"}
+    iconNameFocused={"navMessagesSelected"}
+    color={color}
+    focused={focused}
+    // Badge is disabled with paginated messages.
+    // https://pagopa.atlassian.net/browse/IA-572
+  />
+);
 
 export default MessagesTabIcon;
