@@ -3,6 +3,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import * as J from "fp-ts/lib/Json";
 import I18n from "../../../i18n";
 import doubt from "../../../../img/pictograms/doubt.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
@@ -65,6 +66,7 @@ const FciSignatureScreen = (
   );
 
   const GenericError = (status?: ProblemJson["status"]) => {
+    // if the status is 404, the user is not the owner of the signature request
     if (status === 404) {
       return (
         <ErrorComponent
@@ -87,20 +89,14 @@ const FciSignatureScreen = (
     );
   };
 
+  // given an error should parse it and return a GenericErrorComponent
   const renderErrorComponent = (error?: NetworkError) =>
     pipe(
       error,
       O.fromNullable,
       O.map(e => getErrorFromNetworkError(e)),
       O.map(error => getGenericError(error)),
-      O.chain(error => {
-        try {
-          const problemJson = JSON.parse(error.value.message);
-          return O.some(problemJson);
-        } catch (e) {
-          return O.none;
-        }
-      }),
+      O.chain(error => pipe(error.value.message, J.parse, O.fromEither)),
       O.map(ProblemJson.decode),
       O.map(
         E.fold(
