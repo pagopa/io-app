@@ -63,18 +63,33 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
   }
 };
 
-const pickLabel = (operation: TransactionOperationDTO) => {
+const pickDiscountInitiativeTransactionLabel = (
+  operation: TransactionOperationDTO
+) => {
   switch (operation.status) {
     case TransactionStatusEnum.CANCELED:
-      return <IOBadge color="red" variant="solid" text="Canceled" />;
+      return (
+        <IOBadge
+          color="red"
+          variant="solid"
+          text={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.discountLabels.canceled"
+          )}
+        />
+      );
     case TransactionStatusEnum.AUTHORIZED:
-      return <IOBadge color="blue" variant="solid" text="Authorized" />;
+      return (
+        <IOBadge
+          color="blue"
+          variant="solid"
+          text={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.discountLabels.pending"
+          )}
+        />
+      );
     case TransactionStatusEnum.REWARDED:
       return (
-        <H4>{`-${formatNumberAmount(
-          Math.abs(operation.accrued),
-          false
-        )} €`}</H4>
+        <H4>{`-${formatNumberAmount(Math.abs(operation.amount), false)} €`}</H4>
       );
   }
 };
@@ -82,7 +97,7 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
       if (operation.channel === ChannelEnum.QRCODE) {
-        return pickLabel(operation);
+        return pickDiscountInitiativeTransactionLabel(operation);
       }
       return (
         <H4>{`-${formatNumberAmount(
@@ -111,7 +126,9 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
 const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
   const operationTitle = () => {
     if ("channel" in operation && operation.channel === ChannelEnum.QRCODE) {
-      return "QRCODE";
+      return I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.QRCODE_TRANSACTION"
+      );
     }
 
     if ("maskedPan" in operation) {

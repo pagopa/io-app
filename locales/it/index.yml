@@ -3357,7 +3357,11 @@ idpay:
             header: Tutte le operazioni
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
+            discountLabels:
+              pending: In corso
+              canceled: Annullata
             operationDescriptions:
+              QRCODE_TRANSACTION: Pagamento Online
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
