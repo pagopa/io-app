@@ -11,7 +11,7 @@ export function isValidSixDigitNumber(input: number | string): boolean {
   const str = String(input);
 
   // Check for non-numeric strings and for strings of incorrect length
-  if (str.length !== 6 || /\D/.test(str)) {
+  if (!/^\d{6}$/.test(str)) {
     return false;
   }
 
