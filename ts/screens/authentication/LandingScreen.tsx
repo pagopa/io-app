@@ -58,6 +58,8 @@ import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { Icon } from "../../components/core/icons";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { openWebUrl } from "../../utils/url";
+import { cieSpidMoreInfoUrl } from "../../config";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -233,11 +235,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToSpidCieInformationRequest = () =>
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: this.isCieSupported()
-        ? ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
-        : ROUTES.AUTHENTICATION_SPID_INFORMATION
-    });
+    openWebUrl(cieSpidMoreInfoUrl);
 
   private renderCardComponents = () => {
     const cardProps = getCards(this.isCieSupported());
