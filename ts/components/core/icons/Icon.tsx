@@ -60,7 +60,7 @@ import IconEdit from "./svg/IconEdit";
 import IconBattery from "./svg/IconBattery";
 import IconTrashcan from "./svg/IconTrashcan";
 import IconCalendar from "./svg/IconCalendar";
-import IconProfileExperiment from "./svg/IconProfileExperiment";
+import IconLightbulb from "./svg/IconLightbulb";
 import IconMagicWand from "./svg/IconMagicWand";
 import IconProfile from "./svg/IconProfile";
 import IconProfileFilled from "./svg/IconProfileFilled";
@@ -209,7 +209,7 @@ export const IOIcons = {
   profile: IconProfile,
   profileFilled: IconProfileFilled,
   profileAlt: IconProfileAlt /* io-titolare */,
-  profileExperiment: IconProfileExperiment,
+  lightbulb: IconLightbulb,
   magicWand: IconMagicWand,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,

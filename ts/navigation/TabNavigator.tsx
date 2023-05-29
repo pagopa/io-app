@@ -5,10 +5,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { makeFontStyleObject } from "../components/core/fonts";
 import { IOColors } from "../components/core/variables/IOColors";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import MessagesTabIcon from "../components/MessagesTabIcon";
-import ProfileTabIcon from "../components/ProfileTabIcon";
-import ServiceTabIcon from "../components/ServiceTabIcon";
-import WalletTabIcon from "../components/WalletTabIcon";
 import I18n from "../i18n";
 import PaginatedMessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
@@ -18,6 +14,7 @@ import { useIOSelector } from "../store/hooks";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
+import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
@@ -86,7 +83,14 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
-              <MessagesTabIcon color={color} focused={focused} />
+              <TabIconComponent
+                iconName={"navMessages"}
+                iconNameSelected={"navMessagesSelected"}
+                color={color}
+                focused={focused}
+                // Badge is disabled with paginated messages.
+                // https://pagopa.atlassian.net/browse/IA-572
+              />
             )
           }}
         />
@@ -96,7 +100,12 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
-              <WalletTabIcon color={color} focused={focused} />
+              <TabIconComponent
+                iconName={"navWallet"}
+                iconNameSelected={"navWalletSelected"}
+                color={color}
+                focused={focused}
+              />
             )
           }}
         />
@@ -106,7 +115,14 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
-              <ServiceTabIcon color={color} focused={focused} />
+              <TabIconComponent
+                iconName="navServices"
+                iconNameSelected="navServicesSelected"
+                color={color}
+                focused={focused}
+                // Badge counter has been disabled
+                // https://www.pivotaltracker.com/story/show/176919053
+              />
             )
           }}
         />
@@ -116,7 +132,12 @@ export const MainTabNavigator = () => {
           options={{
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
-              <ProfileTabIcon color={color} focused={focused} />
+              <TabIconComponent
+                iconName={"navProfile"}
+                iconNameSelected={"navProfileSelected"}
+                color={color}
+                focused={focused}
+              />
             )
           }}
         />
