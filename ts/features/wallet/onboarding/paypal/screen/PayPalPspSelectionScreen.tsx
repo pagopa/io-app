@@ -18,7 +18,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
@@ -100,7 +100,7 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useIOBottomSheetModal(
+    useLegacyIOBottomSheetModal(
       <Body>{locales.whatIsPspBody}</Body>,
       locales.whatIsPspTitle,
       280

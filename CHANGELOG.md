@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.34.0-rc.2](https://github.com/pagopa/io-app/compare/2.34.0-rc.1...2.34.0-rc.2) (2023-05-29)
+
+
+### Features
+
+* [[IOPID-205](https://pagopa.atlassian.net/browse/IOPID-205)] CIE-SPID Deprecated info ([#4656](https://github.com/pagopa/io-app/issues/4656)) ([4d09ded](https://github.com/pagopa/io-app/commit/4d09dedef2a6feabda33731479f784c65caba886))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1680](https://pagopa.atlassian.net/browse/SFEQS-1680)] Fix ux success event adding missing properties ([#4633](https://github.com/pagopa/io-app/issues/4633)) ([d9d731d](https://github.com/pagopa/io-app/commit/d9d731db558de1aaaf12bf2b9d8d560bada1fc8d))
+* [[IOBP-36](https://pagopa.atlassian.net/browse/IOBP-36),[IOBP-37](https://pagopa.atlassian.net/browse/IOBP-37)] Remove read status from transactions ([#4646](https://github.com/pagopa/io-app/issues/4646)) ([5572611](https://github.com/pagopa/io-app/commit/557261157cbff253be3c707e4f40ebfec806f5b7))
+* [[IOBP-38](https://pagopa.atlassian.net/browse/IOBP-38),[IOBP-39](https://pagopa.atlassian.net/browse/IOBP-39)] Increase size limit for transaction list in wallet  ([#4648](https://github.com/pagopa/io-app/issues/4648)) ([47dff68](https://github.com/pagopa/io-app/commit/47dff68b616091e390a649f4c15fcd326ffcacde))
+
+
+### Chores
+
+* [[IOAPPFD0-101](https://pagopa.atlassian.net/browse/IOAPPFD0-101)] Add the new `ListItemAction` component ([#4634](https://github.com/pagopa/io-app/issues/4634)) ([fa32526](https://github.com/pagopa/io-app/commit/fa32526f583774c73a251305e57bc86856c887ec))
+* [[IOBP-50](https://pagopa.atlassian.net/browse/IOBP-50)] Added new error pictogram in transaction details ([#4649](https://github.com/pagopa/io-app/issues/4649)) ([52c5de9](https://github.com/pagopa/io-app/commit/52c5de99bf7051b20254cfc3869069f62624d9e2))
+* [[IOPID-243](https://pagopa.atlassian.net/browse/IOPID-243)] Add local and remote FF for fast and native login ([#4651](https://github.com/pagopa/io-app/issues/4651)) ([9dd1f97](https://github.com/pagopa/io-app/commit/9dd1f97c07c26ec42ffe15f720f582c59f5f6bae)), closes [/github.com/pagopa/io-app/pull/4651/files#diff-74dd9d08974aed4457940214a64b43ce175d062d74e72309b003f02c24f98b30](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-74dd9d08974aed4457940214a64b43ce175d062d74e72309b003f02c24f98b30) [/github.com/pagopa/io-app/pull/4651/files#diff-48f73ea2653e45c41f31afc2d42dfde14d8caf26d8dd24d3d2a81a52604f4cb6](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-48f73ea2653e45c41f31afc2d42dfde14d8caf26d8dd24d3d2a81a52604f4cb6) [/github.com/pagopa/io-app/pull/4651/files#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519) [/github.com/pagopa/io-app/pull/4651/files#diff-0f5e4629af7b77f0b21af3a54fe1d4d21314eb44c8a54193316d9d80ba2654](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-0f5e4629af7b77f0b21af3a54fe1d4d21314eb44c8a54193316d9d80ba2654) [/github.com/pagopa/io-app/pull/4651/files#diff-77b2bc00cdd44900b86f533de9771b38b7d79e0e7dbfedf5b3119ca11b1d6](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-77b2bc00cdd44900b86f533de9771b38b7d79e0e7dbfedf5b3119ca11b1d6) [/github.com/pagopa/io-app/pull/4651/files#diff-4184bb1097ce53f8a3e5f22be9786a1303502e948d1c3016c17bb6cc7ef184f6](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-4184bb1097ce53f8a3e5f22be9786a1303502e948d1c3016c17bb6cc7ef184f6) [/github.com/pagopa/io-app/pull/4651/files#diff-5da0f6684e8f402fce1941a4ed4bde7c83d04e2c7769fdda96f9d61e8adfcaf6](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-5da0f6684e8f402fce1941a4ed4bde7c83d04e2c7769fdda96f9d61e8adfcaf6) [/github.com/pagopa/io-app/pull/4651/files#diff-b7193eff79bd4f250120cd35c1623de04b1d1212d4a1b1aa0ca449f9c9b9823](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-b7193eff79bd4f250120cd35c1623de04b1d1212d4a1b1aa0ca449f9c9b9823) [/github.com/pagopa/io-app/pull/4651/files#diff-164bd382961cc4552dea2afabb89bc07bf7c2b20e3ab109f344be2474fa40b1](https://github.com/pagopa//github.com/pagopa/io-app/pull/4651/files/issues/diff-164bd382961cc4552dea2afabb89bc07bf7c2b20e3ab109f344be2474fa40b1) [/github.com/pagopa/io-dev-api-server/blob/482d4da8e19d49a0a0caaebe9942e4b53ca6f1d9/src/payloads/backend.ts#L94](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/482d4da8e19d49a0a0caaebe9942e4b53ca6f1d9/src/payloads/backend.ts/issues/L94)
+
+## [2.34.0-rc.1](https://github.com/pagopa/io-app/compare/2.34.0-rc.0...2.34.0-rc.1) (2023-05-24)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1630](https://pagopa.atlassian.net/browse/SFEQS-1630)] Add context based assistance ([#4635](https://github.com/pagopa/io-app/issues/4635)) ([87fad94](https://github.com/pagopa/io-app/commit/87fad94e57e12370b93b72ba075dec33c1606b3f))
+* [[IOBP-48](https://pagopa.atlassian.net/browse/IOBP-48)] Discount initiative details update ([#4647](https://github.com/pagopa/io-app/issues/4647)) ([f19848c](https://github.com/pagopa/io-app/commit/f19848c16ffcfd1719a876224dae246e9660a1de))
+* **Firma con IO:** [[SFEQS-1265](https://pagopa.atlassian.net/browse/SFEQS-1265)] Add the signing flow without signature fields ([#4608](https://github.com/pagopa/io-app/issues/4608)) ([79f73a8](https://github.com/pagopa/io-app/commit/79f73a8ce8a3abc5dc078e049ea1f61d29c853ee))
+
+
+### Bug Fixes
+
+* [[IABT-1478](https://pagopa.atlassian.net/browse/IABT-1478)] Fix visual regression of the `CgnMerchantsDiscountItem` component ([#4621](https://github.com/pagopa/io-app/issues/4621)) ([b7785fd](https://github.com/pagopa/io-app/commit/b7785fd8ff3fe327b7c4510309acca374bab07af))
+* [[IOBP-31](https://pagopa.atlassian.net/browse/IOBP-31)] Fix privacy button in IDPay beneficiary details screen ([#4637](https://github.com/pagopa/io-app/issues/4637)) ([4ec6f60](https://github.com/pagopa/io-app/commit/4ec6f609733ec73383dda3e37c3ef37ecdd94262))
+* [[IOBP-43](https://pagopa.atlassian.net/browse/IOBP-43)] Removed now deprecated privative cards code ([#4615](https://github.com/pagopa/io-app/issues/4615)) ([b81de31](https://github.com/pagopa/io-app/commit/b81de31337f1355a365c57b833693f407c10ca8d))
+* [[IOBP-51](https://pagopa.atlassian.net/browse/IOBP-51)] Fix IDPay initiative budget info in details screen ([#4639](https://github.com/pagopa/io-app/issues/4639)) ([dc745bd](https://github.com/pagopa/io-app/commit/dc745bd504e876458f30f7fc6cc830d219537889))
+* [[IOBP-53](https://pagopa.atlassian.net/browse/IOBP-53)] Fix IDPay initiative bonus counters ([#4640](https://github.com/pagopa/io-app/issues/4640)) ([c391ebf](https://github.com/pagopa/io-app/commit/c391ebf12de80692debdfad37dd7bdc89228e5bc))
+
+
+### Chores
+
+* [[IOAPPFD0-94](https://pagopa.atlassian.net/browse/IOAPPFD0-94)] Remove legacy icons ([#4579](https://github.com/pagopa/io-app/issues/4579)) ([865d08c](https://github.com/pagopa/io-app/commit/865d08c7beb3fd29f15a11fd0beee093f6eb0c47))
+* add autoverify true property to intent-filter app link ([#4643](https://github.com/pagopa/io-app/issues/4643)) ([9d013ef](https://github.com/pagopa/io-app/commit/9d013ef6c5a0b3cd730585091589d1c47122b766))
+* **deps:** bump requests from 2.26.0 to 2.31.0 in /scripts/check_cie_button_exists ([#4641](https://github.com/pagopa/io-app/issues/4641)) ([3450b49](https://github.com/pagopa/io-app/commit/3450b49cfa869dca92d1d5cc2c451cd02bdaed20))
+* **deps:** bump requests from 2.26.0 to 2.31.0 in /scripts/check_urls ([#4642](https://github.com/pagopa/io-app/issues/4642)) ([c6432f9](https://github.com/pagopa/io-app/commit/c6432f9c71748572c7d52a525dee2ef717b26f1d))
+* [[IOAPPFD0-103](https://pagopa.atlassian.net/browse/IOAPPFD0-103)] Focus of `ListItemNav` when touch ends ([#4644](https://github.com/pagopa/io-app/issues/4644)) ([6407cd0](https://github.com/pagopa/io-app/commit/6407cd02862d3fc8499a52be9672268b4c64426a))
+* [[IOAPPFD0-95](https://pagopa.atlassian.net/browse/IOAPPFD0-95)] Add the new `ListItemInfoCopy` component ([#4584](https://github.com/pagopa/io-app/issues/4584)) ([6eb807e](https://github.com/pagopa/io-app/commit/6eb807eb93f85963556d9921b7d2a272e4c12687))
+
 ## [2.34.0-rc.0](https://github.com/pagopa/io-app/compare/2.33.0-rc.1...2.34.0-rc.0) (2023-05-23)
 
 
