@@ -25,9 +25,6 @@ const createIDPayPaymentMachine = () =>
         PRE_AUTHORIZING: {
           tags: [LOADING_TAG]
         },
-        LOADING_TRANSACTION_DATA: {
-          tags: [LOADING_TAG]
-        },
         AWAITING_AUTHORIZATION: {
           tags: [WAITING_USER_INPUT_TAG]
         },

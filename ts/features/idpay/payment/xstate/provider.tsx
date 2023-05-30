@@ -16,10 +16,10 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { createIDPayPaymentClient } from "../api/client";
+import { createIDPayClient } from "../../common/api/client";
+import { createActionsImplementation } from "./actions";
 import { IDPayPaymentMachineType, createIDPayPaymentMachine } from "./machine";
 import { createServicesImplementation } from "./services";
-import { createActionsImplementation } from "./actions";
 
 type PaymentMachineContext = InterpreterFrom<IDPayPaymentMachineType>;
 
@@ -47,7 +47,7 @@ const IDPayPaymentMachineProvider = (props: Props) => {
 
   const idPayToken = idPayTestToken ?? bpdToken;
 
-  const IDPayPaymentClient = createIDPayPaymentClient(
+  const IDPayPaymentClient = createIDPayClient(
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );
 
