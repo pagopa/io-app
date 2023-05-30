@@ -9,6 +9,13 @@ import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/T
 const workerMessagePrecondition = testWorkerMessagePrecondition!;
 
 const id = "MSG001" as UIMessageId;
+
+const mockLollipopHeaders: Record<string, string> = {
+  "x-pagopa-lollipop-original-method": "GET",
+  "x-pagopa-lollipop-original-url": "",
+  "signature-input": ""
+};
+
 const mockResponseSuccess: ThirdPartyMessagePrecondition = {
   title: "-",
   markdown: "-"
@@ -26,7 +33,7 @@ describe("workerMessagePrecondition", () => {
       getMessagePrecondition.request(id)
     )
       .next()
-      .call(getThirdPartyMessagePrecondition, { id })
+      .call(getThirdPartyMessagePrecondition, { id, ...mockLollipopHeaders })
       .next(E.right({ status: 200, value: mockResponseSuccess }))
       .put(getMessagePrecondition.success(mockResponseSuccess))
       .next()
@@ -44,7 +51,7 @@ describe("workerMessagePrecondition", () => {
       getMessagePrecondition.request(id)
     )
       .next()
-      .call(getThirdPartyMessagePrecondition, { id })
+      .call(getThirdPartyMessagePrecondition, { id, ...mockLollipopHeaders })
       .next(E.right({ status: 500, value: `response status ${500}` }))
       .put(getMessagePrecondition.failure(new Error(`response status ${500}`)))
       .next()
@@ -62,7 +69,7 @@ describe("workerMessagePrecondition", () => {
       getMessagePrecondition.request(id)
     )
       .next()
-      .call(getThirdPartyMessagePrecondition, { id })
+      .call(getThirdPartyMessagePrecondition, { id, ...mockLollipopHeaders })
       .next(E.left([]))
       .put(getMessagePrecondition.failure(new Error()))
       .next()
