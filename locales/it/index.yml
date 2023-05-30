@@ -3172,6 +3172,9 @@ features:
         wrongUser:
           title: Non puoi firmare questi documenti
           subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
+        cancelled:
+          title: La richiesta firma è stata annullata
+          subTitle: Per assistenza, scrivi a
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma di **{{dossierTitle}}**?"

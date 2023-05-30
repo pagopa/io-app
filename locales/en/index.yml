@@ -3142,6 +3142,9 @@ features:
         rejected:
           title: The signature failed
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
+        cancelled:
+          title: The signature request has been cancelled
+          subTitle: For further support, write to
         signing:
           title: The signature failed
           subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.

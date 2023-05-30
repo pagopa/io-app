@@ -105,6 +105,17 @@ const SuccessComponent = (props: {
           testID="RejectedSignatureRequestTestID"
         />
       );
+    case SignatureRequestStatusEnum.CANCELLED:
+      return (
+        <ErrorComponent
+          title={I18n.t("features.fci.errors.generic.cancelled.title")}
+          subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
+          email={issuer_email}
+          onPress={() => dispatch(fciEndRequest())}
+          image={fireworks}
+          testID={"CancelledSignatureRequestTestID"}
+        />
+      );
     default:
       return (
         <GenericErrorComponent
