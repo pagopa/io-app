@@ -24,8 +24,8 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
     }
 
     const dataResponse = await TE.tryCatch(
-      () =>
-        client.putPreAuthPayment({
+      async () =>
+        await client.putPreAuthPayment({
           bearerAuth: token,
           trxCode: context.trxCode || ""
         }),
@@ -61,8 +61,8 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
     }
 
     const dataResponse = await TE.tryCatch(
-      () =>
-        client.putAuthPayment({
+      async () =>
+        await client.putAuthPayment({
           bearerAuth: token,
           trxCode: context.trxCode || ""
         }),
