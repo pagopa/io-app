@@ -225,6 +225,7 @@ export const Alert = ({
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       // A11y related props
       accessible={true}
       accessibilityHint={accessibilityHint}
