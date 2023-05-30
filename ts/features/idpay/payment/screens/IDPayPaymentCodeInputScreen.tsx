@@ -19,6 +19,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IDPayTransactionCode } from "../common/types";
 import { usePaymentMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
+import I18n from "../../../../i18n";
 
 type InputState = {
   value?: string;
@@ -42,16 +43,13 @@ const IDPayPaymentCodeInputScreen = () => {
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.wrapper}>
-          <H1>Cosa devi pagare?</H1>
+          <H1>{I18n.t("idpay.payment.qrCode.manual.title")}</H1>
           <VSpacer size={16} />
-          <Body>
-            Inserisci il codice numerico di 6 cifre riportato sotto al codice
-            QR.
-          </Body>
+          <Body>{I18n.t("idpay.payment.qrCode.manual.subtitle")}</Body>
           <VSpacer size={40} />
           <LabelledItem
             isValid={isInputValid}
-            accessibilityLabel={"Codice Transazione"}
+            accessibilityLabel={I18n.t("idpay.payment.qrCode.manual.input")}
             inputMaskProps={{
               type: "custom",
               options: { mask: "999999" },
@@ -59,7 +57,7 @@ const IDPayPaymentCodeInputScreen = () => {
               returnKeyType: "done",
               value: inputState.value,
               autoCapitalize: "none",
-              placeholder: "Codice Transazione",
+              placeholder: I18n.t("idpay.payment.qrCode.manual.input"),
               onChangeText: value => {
                 setInputState({
                   value,
@@ -77,8 +75,8 @@ const IDPayPaymentCodeInputScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: "Continua",
-            accessibilityLabel: "Continue",
+            title: I18n.t("idpay.payment.qrCode.manual.button"),
+            accessibilityLabel: I18n.t("idpay.payment.qrCode.manual.button"),
             disabled: !isInputValid,
             onPress: navigateToPaymentAuthorization,
             isLoading

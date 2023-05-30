@@ -3589,6 +3589,13 @@ idpay:
       title: C’è un problema sui nostri sistemi
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
+  payment:
+    qrCode:
+      manual:
+        title: Cosa devi pagare?
+        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        input: Codice Transazione
+        button: Continua
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

@@ -266,7 +266,7 @@ const InitiativeDetailsScreen = () => {
                     onPress={navigateToPaymentAuthorization}
                     fullWidth={true}
                   />
-                  <VSpacer size={16} />
+                  <VSpacer size={32} />
                 </>
               );
 
