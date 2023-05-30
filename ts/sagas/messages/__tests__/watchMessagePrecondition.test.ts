@@ -13,7 +13,8 @@ const id = "MSG001" as UIMessageId;
 const mockLollipopHeaders: Record<string, string> = {
   "x-pagopa-lollipop-original-method": "GET",
   "x-pagopa-lollipop-original-url": "",
-  "signature-input": ""
+  "signature-input": "",
+  signature: ""
 };
 
 const mockResponseSuccess: ThirdPartyMessagePrecondition = {
