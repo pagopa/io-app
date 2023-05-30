@@ -67,13 +67,13 @@ const pickDiscountInitiativeTransactionLabel = (
   operation: TransactionOperationDTO
 ) => {
   switch (operation.status) {
-    case TransactionStatusEnum.CANCELED:
+    case TransactionStatusEnum.CANCELLED:
       return (
         <IOBadge
           color="red"
           variant="solid"
           text={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.discountLabels.canceled"
+            "idpay.initiative.operationDetails.discount.labels.CANCELLED"
           )}
         />
       );
@@ -83,7 +83,7 @@ const pickDiscountInitiativeTransactionLabel = (
           color="blue"
           variant="solid"
           text={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.discountLabels.pending"
+            "idpay.initiative.operationDetails.discount.labels.AUTHORIZED"
           )}
         />
       );
@@ -168,7 +168,7 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
     operation.channel === ChannelEnum.QRCODE;
 
   const shouldTextBeGrayedOut = () =>
-    isDiscount && operation.status === TransactionStatusEnum.CANCELED;
+    isDiscount && operation.status === TransactionStatusEnum.CANCELLED;
   const maybeGrayedOut = shouldTextBeGrayedOut() ? { opacity: 0.6 } : {};
 
   return (

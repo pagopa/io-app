@@ -3333,9 +3333,6 @@ idpay:
             header: Tutte le operazioni
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
-            discountLabels:
-              pending: In corso
-              canceled: Annullata
             operationDescriptions:
               QRCODE_TRANSACTION: Pagamento Online
               ONBOARDING:  "Adesione all'iniziativa"
@@ -3379,6 +3376,20 @@ idpay:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
+      discount:
+        labels:
+          AUTHORIZED: In corso
+          CANCELLED: Annullata
+          REWARDED: Eseguita
+        details:
+          alerts:
+            AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
+            CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+          labels:
+            status: Stato
+            totalAmount: Importo totale
+            idpayAmount: Importo transazione ID Pay
+            transactionID: ID transazione
       title: 
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione

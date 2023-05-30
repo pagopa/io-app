@@ -10,7 +10,11 @@ import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import {
+  TransactionDetailDTO,
+  OperationTypeEnum as TransactionOperationTypeEnum
+} from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import { ChannelEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -27,6 +31,7 @@ import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 import { TimelineRefundDetailsComponent } from "./TimelineRefundDetailsComponent";
 import { TimelineTransactionDetailsComponent } from "./TimelineTransactionDetailsComponent";
+import { TimelineDiscountTransactionDetailsComponent } from "./TimelineDiscountTransactionDetailsComponent";
 
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
@@ -82,12 +87,23 @@ const useTimelineDetailsBottomSheet = (
       return <ErrorComponent />;
     }
 
+    const isDiscount = (operation: TransactionDetailDTO) =>
+      operation.operationType === TransactionOperationTypeEnum.TRANSACTION &&
+      operation.channel === ChannelEnum.QRCODE;
     return pipe(
       detailsPot,
       pot.toOption,
       O.map(details => {
         switch (details.operationType) {
           case TransactionOperationTypeEnum.TRANSACTION:
+            if (isDiscount(details)) {
+              return (
+                <TimelineDiscountTransactionDetailsComponent
+                  transaction={details}
+                />
+              );
+            }
+          // eslint-disable-next-line no-fallthrough
           case TransactionOperationTypeEnum.REVERSAL:
             return (
               <TimelineTransactionDetailsComponent transaction={details} />
@@ -172,5 +188,5 @@ const ErrorComponent = () => (
   </View>
 );
 
-export type { TimelineDetailsBottomSheetModal };
 export { useTimelineDetailsBottomSheet };
+export type { TimelineDetailsBottomSheetModal };
