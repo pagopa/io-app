@@ -38,7 +38,7 @@ const createIDPayPaymentMachine = () =>
             id: "preAuthorizePayment",
             src: "preAuthorizePayment",
             onDone: {
-              actions: "preAuthorizePaymentSuccess",
+              actions: "setTransactionData",
               target: "AWAITING_USER_AUTHORIZATION"
             },
             onError: {
@@ -50,21 +50,44 @@ const createIDPayPaymentMachine = () =>
         AWAITING_USER_AUTHORIZATION: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
+            AUTHORIZE_PAYMENT: {
+              target: "AUTHORIZING"
+            },
             EXIT: {
               actions: "exitAuthorization"
             }
           }
         },
         AUTHORIZING: {
-          tags: [WAITING_USER_INPUT_TAG]
+          tags: [LOADING_TAG],
+          invoke: {
+            id: "authorizePayment",
+            src: "authorizePayment",
+            onDone: {
+              actions: "setTransactionData",
+              target: "PAYMENT_SUCCESS"
+            },
+            onError: {
+              actions: "setFailure",
+              target: "PAYMENT_FAILURE"
+            }
+          }
         },
         PAYMENT_SUCCESS: {
-          type: "final",
-          entry: "navigateToResultScreen"
+          entry: "navigateToResultScreen",
+          on: {
+            EXIT: {
+              actions: "exitAuthorization"
+            }
+          }
         },
         PAYMENT_FAILURE: {
-          type: "final",
-          entry: "navigateToResultScreen"
+          entry: "navigateToResultScreen",
+          on: {
+            EXIT: {
+              actions: "exitAuthorization"
+            }
+          }
         }
       }
     },
@@ -73,7 +96,7 @@ const createIDPayPaymentMachine = () =>
         startAuthorization: assign((_, event) => ({
           trxCode: event.trxCode
         })),
-        preAuthorizePaymentSuccess: assign((_, event) => ({
+        setTransactionData: assign((_, event) => ({
           transaction: event.data
         })),
         setFailure: assign((_, event) => ({
