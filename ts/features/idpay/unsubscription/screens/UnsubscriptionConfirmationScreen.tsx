@@ -16,7 +16,7 @@ import IconFont from "../../../../components/ui/IconFont";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
@@ -71,7 +71,7 @@ const UnsubscriptionConfirmationScreen = () => {
     </TouchableDefaultOpacity>
   );
 
-  const confirmModal = useIOBottomSheetModal(
+  const confirmModal = useLegacyIOBottomSheetModal(
     <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>,
 
     I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
