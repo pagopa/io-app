@@ -20,7 +20,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
@@ -62,7 +62,7 @@ export const PDNDPrerequisitesScreen = () => {
     machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
   const goBackOnPress = () => machine.send({ type: "BACK" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <Markdown>
       {I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.body", {
         provider: authority
