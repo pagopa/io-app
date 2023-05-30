@@ -8,7 +8,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
 import { IOPayPalPsp } from "../types";
 import { Icon } from "../../../../../components/core/icons/Icon";
@@ -55,7 +55,7 @@ export const PspRadioItem = (
     psp.logoUrl
   );
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <PspInfoBottomSheetContent
       pspFee={psp.fee}
       pspName={psp.name}

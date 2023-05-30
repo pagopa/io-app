@@ -8,7 +8,7 @@ import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   getMessagePrecondition,
@@ -198,7 +198,7 @@ export const useMessageOpening = () => {
     [navigation]
   );
 
-  const modal = useIOBottomSheetModal(
+  const modal = useLegacyIOBottomSheetModal(
     <MessagePreconditionContent
       content={content}
       handleOnLoadEnd={() => setIsContentLoadCompleted(true)}

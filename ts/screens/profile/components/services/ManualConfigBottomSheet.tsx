@@ -6,7 +6,7 @@ import {
 } from "../../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const ManualConfigConfirm = (): React.ReactElement => (
@@ -23,7 +23,7 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useIOBottomSheetModal(
+  } = useLegacyIOBottomSheetModal(
     <ManualConfigConfirm />,
     I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
     350,

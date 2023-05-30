@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { InfoBox } from "../../../../components/box/InfoBox";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import Markdown from "../../../../components/ui/Markdown";
@@ -74,7 +74,7 @@ export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <>
       <VSpacer size={24} />
       <InfoBox iconName="calendar" iconSize={32}>
