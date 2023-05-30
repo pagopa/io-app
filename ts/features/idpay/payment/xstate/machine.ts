@@ -26,42 +26,53 @@ const createIDPayPaymentMachine = () =>
           tags: [WAITING_USER_INPUT_TAG],
           on: {
             START_AUTHORIZATION: {
-              target: "PRE_AUTHORIZING"
+              target: "PRE_AUTHORIZING",
+              actions: "startAuthorization"
             }
           }
         },
         PRE_AUTHORIZING: {
           tags: [LOADING_TAG],
+          entry: "navigateToAuthorizationScreen",
           invoke: {
             id: "preAuthorizePayment",
             src: "preAuthorizePayment",
             onDone: {
               actions: "preAuthorizePaymentSuccess",
-              target: "AWAITING_AUTHORIZATION"
+              target: "AWAITING_USER_AUTHORIZATION"
             },
             onError: {
               actions: "setFailure",
-              target: "AWAITING_TRX_CODE"
+              target: "PAYMENT_FAILURE"
             }
           }
         },
-        AWAITING_AUTHORIZATION: {
+        AWAITING_USER_AUTHORIZATION: {
           tags: [WAITING_USER_INPUT_TAG],
-          entry: "navigateToAuthorizationScreen"
+          on: {
+            EXIT: {
+              actions: "exitAuthorization"
+            }
+          }
         },
         AUTHORIZING: {
           tags: [WAITING_USER_INPUT_TAG]
         },
         PAYMENT_SUCCESS: {
-          tags: [WAITING_USER_INPUT_TAG]
+          type: "final",
+          entry: "navigateToResultScreen"
         },
         PAYMENT_FAILURE: {
-          tags: [WAITING_USER_INPUT_TAG]
+          type: "final",
+          entry: "navigateToResultScreen"
         }
       }
     },
     {
       actions: {
+        startAuthorization: assign((_, event) => ({
+          trxCode: event.trxCode
+        })),
         preAuthorizePaymentSuccess: assign((_, event) => ({
           transaction: event.data
         })),

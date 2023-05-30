@@ -37,7 +37,12 @@ const IDPayPaymentCodeInputScreen = () => {
   const isLoading = useSelector(machine, isLoadingSelector);
 
   const navigateToPaymentAuthorization = () =>
-    machine.send("PRE_AUTHORIZE_PAYMENT", inputState.code);
+    pipe(
+      inputState.code,
+      O.filter(E.isRight),
+      O.map(trxCode => trxCode.right),
+      O.map(trxCode => machine.send("START_AUTHORIZATION", { trxCode }))
+    );
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>

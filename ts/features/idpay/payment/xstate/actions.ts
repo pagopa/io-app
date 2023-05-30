@@ -14,7 +14,7 @@ const createActionsImplementation = (
   };
 
   const navigateToResultScreen = () =>
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+    navigation.replace(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT
     });
 
