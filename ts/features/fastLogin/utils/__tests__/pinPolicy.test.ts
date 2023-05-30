@@ -1,10 +1,10 @@
-import { isValidSixDigitNumber } from "../pinPolicy";
+import { isValidPinNumber } from "../pinPolicy";
 
 describe("isValidSixDigitNumber", () => {
   describe("returns false for numbers of incorrect length", () => {
     [13452, 1345672, "13452", "1345672"].forEach(input => {
       it(`${input}`, () => {
-        expect(isValidSixDigitNumber(input)).toBe(false);
+        expect(isValidPinNumber(input)).toBe(false);
       });
     });
   });
@@ -14,7 +14,7 @@ describe("isValidSixDigitNumber", () => {
       str => {
         it(`${str}`, () => {
           expect(str.length).toBe(6);
-          expect(isValidSixDigitNumber(str)).toBe(false);
+          expect(isValidPinNumber(str)).toBe(false);
         });
       }
     );
@@ -35,7 +35,7 @@ describe("isValidSixDigitNumber", () => {
       input => {
         it(`${input}`, () => {
           expect(String(input).length).toBe(6);
-          expect(isValidSixDigitNumber(input)).toBe(false);
+          expect(isValidPinNumber(input)).toBe(false);
         });
       }
     );
@@ -57,7 +57,7 @@ describe("isValidSixDigitNumber", () => {
     ].forEach(input => {
       it(`${input}`, () => {
         expect(String(input).length).toBe(6);
-        expect(isValidSixDigitNumber(input)).toBe(false);
+        expect(isValidPinNumber(input)).toBe(false);
       });
     });
   });
@@ -66,7 +66,7 @@ describe("isValidSixDigitNumber", () => {
     // eslint-disable-next-line sonarjs/no-identical-functions
     ["abcdef", "12345a"].forEach(input => {
       it(`${input}`, () => {
-        expect(isValidSixDigitNumber(input)).toBe(false);
+        expect(isValidPinNumber(input)).toBe(false);
       });
     });
   });
@@ -93,7 +93,7 @@ describe("isValidSixDigitNumber", () => {
       267845
     ].forEach(input => {
       it(`${input}`, () => {
-        expect(isValidSixDigitNumber(input)).toBe(true);
+        expect(isValidPinNumber(input)).toBe(true);
       });
     });
   });

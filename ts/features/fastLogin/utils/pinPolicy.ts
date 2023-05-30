@@ -9,7 +9,7 @@ const checkSequence =
           digit === digits[i] + (sequenceOrder === "ASCENDING" ? 1 : -1)
       );
 
-export function isValidSixDigitNumber(input: number | string): boolean {
+export function isValidPinNumber(input: number | string): boolean {
   const str = String(input);
 
   // Check for non-numeric strings and for strings of incorrect length
