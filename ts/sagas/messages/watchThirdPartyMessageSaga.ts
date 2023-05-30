@@ -21,10 +21,6 @@ import {
   trackPNNotificationLoadSuccess
 } from "../../features/pn/analytics";
 import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
-import { LollipopMethodEnum } from "../../../definitions/backend/LollipopMethod";
-import { LollipopOriginalURL } from "../../../definitions/backend/LollipopOriginalURL";
-import { LollipopSignatureInput } from "../../../definitions/backend/LollipopSignatureInput";
-import { LollipopSignature } from "../../../definitions/backend/LollipopSignature";
 
 function* getThirdPartyMessage(
   client: BackendClient,
@@ -32,13 +28,7 @@ function* getThirdPartyMessage(
 ) {
   const id = action.payload;
   try {
-    const result = yield* call(client.getThirdPartyMessage(), {
-      id,
-      "x-pagopa-lollipop-original-method": LollipopMethodEnum.GET,
-      "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
-      "signature-input": "" as LollipopSignatureInput,
-      signature: "" as LollipopSignature
-    });
+    const result = yield* call(client.getThirdPartyMessage(), { id });
     if (E.isLeft(result)) {
       yield* put(
         loadThirdPartyMessage.failure({

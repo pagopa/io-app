@@ -5,22 +5,10 @@ import { getMessagePrecondition } from "../../../store/actions/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { testWorkerMessagePrecondition } from "../watchMessagePrecondition";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { LollipopMethodEnum } from "../../../../definitions/backend/LollipopMethod";
-import { LollipopOriginalURL } from "../../../../definitions/backend/LollipopOriginalURL";
-import { LollipopSignatureInput } from "../../../../definitions/backend/LollipopSignatureInput";
-import { LollipopSignature } from "../../../../definitions/backend/LollipopSignature";
 
 const workerMessagePrecondition = testWorkerMessagePrecondition!;
 
 const id = "MSG001" as UIMessageId;
-
-const mockLollipopHeaders = {
-  "x-pagopa-lollipop-original-method": LollipopMethodEnum.GET,
-  "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
-  "signature-input": "" as LollipopSignatureInput,
-  signature: "" as LollipopSignature
-};
-
 const mockResponseSuccess: ThirdPartyMessagePrecondition = {
   title: "-",
   markdown: "-"
@@ -38,7 +26,7 @@ describe("workerMessagePrecondition", () => {
       getMessagePrecondition.request(id)
     )
       .next()
-      .call(getThirdPartyMessagePrecondition, { id, ...mockLollipopHeaders })
+      .call(getThirdPartyMessagePrecondition, { id })
       .next(E.right({ status: 200, value: mockResponseSuccess }))
       .put(getMessagePrecondition.success(mockResponseSuccess))
       .next()
@@ -56,7 +44,7 @@ describe("workerMessagePrecondition", () => {
       getMessagePrecondition.request(id)
     )
       .next()
-      .call(getThirdPartyMessagePrecondition, { id, ...mockLollipopHeaders })
+      .call(getThirdPartyMessagePrecondition, { id })
       .next(E.right({ status: 500, value: `response status ${500}` }))
       .put(getMessagePrecondition.failure(new Error(`response status ${500}`)))
       .next()
@@ -74,7 +62,7 @@ describe("workerMessagePrecondition", () => {
       getMessagePrecondition.request(id)
     )
       .next()
-      .call(getThirdPartyMessagePrecondition, { id, ...mockLollipopHeaders })
+      .call(getThirdPartyMessagePrecondition, { id })
       .next(E.left([]))
       .put(getMessagePrecondition.failure(new Error()))
       .next()

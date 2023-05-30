@@ -10,10 +10,6 @@ import {
   clearMessagePrecondition
 } from "../../store/actions/messages";
 import { isTestEnv } from "../../utils/environment";
-import { LollipopMethodEnum } from "../../../definitions/backend/LollipopMethod";
-import { LollipopOriginalURL } from "../../../definitions/backend/LollipopOriginalURL";
-import { LollipopSignatureInput } from "../../../definitions/backend/LollipopSignatureInput";
-import { LollipopSignature } from "../../../definitions/backend/LollipopSignature";
 
 export const testWorkerMessagePrecondition = isTestEnv
   ? workerMessagePrecondition
@@ -29,11 +25,7 @@ function* workerMessagePrecondition(
 
   try {
     const result = yield* call(getThirdPartyMessagePrecondition, {
-      id: messageId,
-      "x-pagopa-lollipop-original-method": LollipopMethodEnum.GET,
-      "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
-      "signature-input": "" as LollipopSignatureInput,
-      signature: "" as LollipopSignature
+      id: messageId
     });
 
     if (E.isRight(result)) {
