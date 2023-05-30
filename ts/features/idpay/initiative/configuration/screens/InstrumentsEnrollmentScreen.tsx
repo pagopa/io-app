@@ -17,7 +17,7 @@ import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
 import customVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
@@ -119,7 +119,7 @@ const InstrumentsEnrollmentScreen = () => {
     }
   };
 
-  const enrollmentBottomSheetModal = useIOBottomSheetModal(
+  const enrollmentBottomSheetModal = useLegacyIOBottomSheetModal(
     <Body>
       {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
       <Body weight="SemiBold">

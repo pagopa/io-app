@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import {
@@ -45,7 +45,7 @@ export const getSubtitle = (transaction: BpdTransaction) => {
 };
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
-  const { present: openBottomSheet, bottomSheet } = useIOBottomSheetModal(
+  const { present: openBottomSheet, bottomSheet } = useLegacyIOBottomSheetModal(
     <BpdTransactionDetailComponent transaction={props.transaction} />,
     I18n.t("bonus.bpd.details.transaction.detail.title"),
     522
