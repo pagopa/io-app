@@ -5,16 +5,20 @@ import { getMessagePrecondition } from "../../../store/actions/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { testWorkerMessagePrecondition } from "../watchMessagePrecondition";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { LollipopMethodEnum } from "../../../../definitions/backend/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../definitions/backend/LollipopOriginalURL";
+import { LollipopSignatureInput } from "../../../../definitions/backend/LollipopSignatureInput";
+import { LollipopSignature } from "../../../../definitions/backend/LollipopSignature";
 
 const workerMessagePrecondition = testWorkerMessagePrecondition!;
 
 const id = "MSG001" as UIMessageId;
 
-const mockLollipopHeaders: Record<string, string> = {
-  "x-pagopa-lollipop-original-method": "GET",
-  "x-pagopa-lollipop-original-url": "",
-  "signature-input": "",
-  signature: ""
+const mockLollipopHeaders = {
+  "x-pagopa-lollipop-original-method": LollipopMethodEnum.GET,
+  "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+  "signature-input": "" as LollipopSignatureInput,
+  signature: "" as LollipopSignature
 };
 
 const mockResponseSuccess: ThirdPartyMessagePrecondition = {
