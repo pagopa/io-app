@@ -20,32 +20,54 @@ import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
+import { useIOSelector } from "../../../../store/hooks";
+import { idPayisDiscountInitiativeSelector } from "../../initiative/details/store";
 
-const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
-  [
-    {
-      title: I18n.t("idpay.unsubscription.checks.1.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.2.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.3.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-    },
-    {
-      title: I18n.t("idpay.unsubscription.checks.4.title"),
-      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
-    }
-  ];
+const refundUnsubscriptionChecks: ReadonlyArray<{
+  title: string;
+  subtitle: string;
+}> = [
+  {
+    title: I18n.t("idpay.unsubscription.checks.1.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.2.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.3.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.4.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+  }
+];
+
+const discountUnsubscriptionChecks: ReadonlyArray<{
+  title: string;
+  subtitle: string;
+}> = [
+  {
+    title: I18n.t("idpay.unsubscription.checks.1.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.3.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+  }
+];
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
 
   const isLoading = useSelector(machine, isLoadingSelector);
   const initiativeName = useSelector(machine, selectInitiativeName);
+  const isRefund = useIOSelector(idPayisDiscountInitiativeSelector);
+  const unsubscriptionChecks = isRefund
+    ? discountUnsubscriptionChecks
+    : refundUnsubscriptionChecks;
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
 

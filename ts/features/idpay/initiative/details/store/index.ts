@@ -7,6 +7,7 @@ import { getType } from "typesafe-actions";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   InitiativeDTO,
+  InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
@@ -208,4 +209,17 @@ export const idPayBeneficiaryDetailsSelector = createSelector(
   initiative => initiative.beneficiaryDetails
 );
 
+export const idPayisDiscountInitiativeSelector = createSelector(
+  idpayInitiativeDetailsSelector,
+  details =>
+    pipe(
+      details,
+      pot.toOption,
+      O.fold(
+        () => false,
+        details =>
+          details.initiativeRewardType === InitiativeRewardTypeEnum.DISCOUNT
+      )
+    )
+);
 export default reducer;
