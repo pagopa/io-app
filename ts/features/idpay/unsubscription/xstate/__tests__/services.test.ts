@@ -40,7 +40,7 @@ describe("IDPay Unsubscription machine services", () => {
   describe("loadInitiative", () => {
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "400", message: "" } });
 
       mockIDPayClient.getWalletDetail.mockImplementation(() => response);
 
@@ -82,7 +82,7 @@ describe("IDPay Unsubscription machine services", () => {
   describe("unsubscribeFromInitiative", () => {
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "400", message: "" } });
 
       mockIDPayClient.unsubscribe.mockImplementation(() => response);
 
