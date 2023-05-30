@@ -11,7 +11,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { getBPDMethodsVisibleInWalletSelector } from "../../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
 type Props = {
@@ -56,7 +56,7 @@ export const useBottomSheetMethodsToDelete = (props: {
     // (subtitle + footer) + items
     280 + paymentMethods.length * 58
   );
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <BottomSheetMethodsToDelete paymentMethods={paymentMethods} />,
     <View style={IOStyles.flex}>
       <H3>

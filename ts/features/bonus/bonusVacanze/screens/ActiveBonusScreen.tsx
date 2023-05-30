@@ -41,7 +41,7 @@ import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { getRemoteLocale } from "../../../../utils/messages";
 import {
@@ -376,7 +376,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const { present: openModalBox, bottomSheet } = useIOBottomSheetModal(
+  const { present: openModalBox, bottomSheet } = useLegacyIOBottomSheetModal(
     <QrModalBox
       codeToDisplay={getBonusCodeFormatted(bonus)}
       codeToCopy={bonus.id}
