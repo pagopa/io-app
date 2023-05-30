@@ -21,7 +21,7 @@ import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { showToast } from "../../../../utils/showToast";
 import {
@@ -172,7 +172,7 @@ const Footer = (props: FooterProps): React.ReactElement => {
     present: presentBottomSheet,
     bottomSheet,
     dismiss
-  } = useIOBottomSheetModal(
+  } = useLegacyIOBottomSheetModal(
     <View>
       {addBottomSheetItem({
         title: I18n.t(

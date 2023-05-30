@@ -23,6 +23,7 @@ import { DSLayout } from "../core/DSLayout";
 import { DSAlert } from "../core/DSAlert";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSBottomSheet } from "../core/DSBottomSheet";
 import {
   IOThemeContext,
   IOThemes
@@ -133,6 +134,11 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
           component={DSAdvice}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
+          component={DSBottomSheet}
         />
 
         {/* LEGACY */}

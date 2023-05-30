@@ -1,12 +1,12 @@
 import React from "react";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { Body } from "../../../../components/core/typography/Body";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 
 export const usePaymentAmountInfoBottomSheet = () => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <Body>{I18n.t("wallet.firstTransactionSummary.amountInfo.message")}</Body>,
     I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
     260,

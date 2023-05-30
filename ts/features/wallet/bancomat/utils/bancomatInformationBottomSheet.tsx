@@ -5,7 +5,7 @@ import InternationalCircuitIconsBar from "../../../../components/wallet/Internat
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { H4 } from "../../../../components/core/typography/H4";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 /**
@@ -14,7 +14,7 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
  * This will be also visualized inside a bottomsheet after an addition of a new bancomat
  */
 export default (onAdd?: () => void) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View>
       <InternationalCircuitIconsBar />
       <VSpacer size={16} />
