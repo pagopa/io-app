@@ -7,7 +7,7 @@ import {
   CgnDiscountDetail,
   CgnDiscountDetailHeader
 } from "../components/merchants/CgnDiscountDetail";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 const screenHeight = Dimensions.get("screen").height;
 const calculateBottomSheetHeight = (
@@ -38,7 +38,7 @@ export const useCgnDiscountDetailBottomSheet = (
     [discount, merchantType]
   );
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <CgnDiscountDetail
       discount={discount}
       merchantType={merchantType}

@@ -9,7 +9,7 @@ import Markdown from "../../../components/ui/Markdown";
 import { privacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { ioSuppliersUrl } from "../../../urls";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
 type MarkdownProps = {
@@ -26,7 +26,7 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
 const shareDataSecurityMoreLink =
   "https://www.pagopa.it/static/781646994f1f8ddad2d95af3aaedac3d/Sicurezza-delle-informazioni_PagoPA-S.p.A..pdf";
 export const ShareDataComponent = (): React.ReactElement => {
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <MarkdownBody
       body={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
     />,

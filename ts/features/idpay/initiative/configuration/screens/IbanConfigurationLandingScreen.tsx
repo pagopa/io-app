@@ -16,7 +16,7 @@ import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { Pictogram } from "../../../../../components/core/pictograms";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 
@@ -49,7 +49,7 @@ const IbanConfigurationLanding = () => {
     setModalSnapPoint(height + 200);
   };
 
-  const modal = useIOBottomSheetModal(
+  const modal = useLegacyIOBottomSheetModal(
     <View onLayout={handleOnLayout}>
       <VSpacer size={8} />
       <Body>{I18n.t("idpay.configuration.iban.landing.modal.content")}</Body>
