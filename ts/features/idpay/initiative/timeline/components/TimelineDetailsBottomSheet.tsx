@@ -10,10 +10,7 @@ import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import {
-  TransactionDetailDTO,
-  OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
@@ -87,16 +84,13 @@ const useTimelineDetailsBottomSheet = (
       return <ErrorComponent />;
     }
 
-    const isDiscount = (operation: TransactionDetailDTO) =>
-      operation.operationType === TransactionOperationTypeEnum.TRANSACTION &&
-      operation.channel === ChannelEnum.QRCODE;
     return pipe(
       detailsPot,
       pot.toOption,
       O.map(details => {
         switch (details.operationType) {
           case TransactionOperationTypeEnum.TRANSACTION:
-            if (isDiscount(details)) {
+            if (details.channel === ChannelEnum.QRCODE) {
               return (
                 <TimelineDiscountTransactionDetailsComponent
                   transaction={details}

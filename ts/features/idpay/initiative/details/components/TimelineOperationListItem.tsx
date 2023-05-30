@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { ListItem } from "native-base";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
@@ -39,14 +39,18 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
       return <Icon name={"ok"} />;
+
     case IbanOperationTypeEnum.ADD_IBAN:
       return <Icon name={"institution"} color="bluegreyLight" />;
+
     case RefundOperationTypeEnum.PAID_REFUND:
       return <Icon name="refund" color="bluegrey" />;
+
     case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case RefundOperationTypeEnum.REJECTED_REFUND:
       return <Icon name={"notice"} color="red" />;
+
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
       if (operation.channel === ChannelEnum.QRCODE) {
@@ -54,16 +58,19 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
           <Icon name={"productIOAppBlueBackground"} color="bluegreyLight" />
         );
       }
-    // eslint-disable-next-line no-fallthrough
+
+      return getCardLogoComponent(operation.brand);
+
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
       return getCardLogoComponent(operation.brand);
+
     default:
       return null;
   }
 };
 
-const pickDiscountInitiativeTransactionLabel = (
+const getDiscountInitiativeTransactionLabel = (
   operation: TransactionOperationDTO
 ) => {
   switch (operation.status) {
@@ -93,11 +100,12 @@ const pickDiscountInitiativeTransactionLabel = (
       );
   }
 };
+
 const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
       if (operation.channel === ChannelEnum.QRCODE) {
-        return pickDiscountInitiativeTransactionLabel(operation);
+        return getDiscountInitiativeTransactionLabel(operation);
       }
       return (
         <H4>{`-${formatNumberAmount(
@@ -125,21 +133,30 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
 
 const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
   const operationTitle = () => {
-    if ("channel" in operation && operation.channel === ChannelEnum.QRCODE) {
-      return I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.QRCODE_TRANSACTION"
-      );
-    }
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        if (operation.channel === ChannelEnum.QRCODE) {
+          return I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.QRCODE_TRANSACTION"
+          );
+        }
 
-    if ("maskedPan" in operation) {
-      return I18n.t(
-        `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
-        { maskedPan: operation.maskedPan }
-      );
+        return I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
+          { maskedPan: operation.maskedPan }
+        );
+
+      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+        return I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
+          { maskedPan: operation.maskedPan }
+        );
+
+      default:
+        return I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
+        );
     }
-    return I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
-    );
   };
   const generateOperationInvoiceText = () => {
     switch (operation.operationType) {
@@ -163,13 +180,16 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
   const { operationTitle, bonusInvoiceText } =
     generateTimelineOperationListItemText(operation);
 
-  const isDiscount =
+  const isQrCodeTransaction =
     operation.operationType === TransactionOperationTypeEnum.TRANSACTION &&
     operation.channel === ChannelEnum.QRCODE;
 
-  const shouldTextBeGrayedOut = () =>
-    isDiscount && operation.status === TransactionStatusEnum.CANCELLED;
-  const maybeGrayedOut = shouldTextBeGrayedOut() ? { opacity: 0.6 } : {};
+  const isCancelledQrCodeTransaction =
+    isQrCodeTransaction && operation.status === TransactionStatusEnum.CANCELLED;
+
+  const labelStyle: ViewStyle = isCancelledQrCodeTransaction
+    ? { opacity: 0.6 }
+    : {};
 
   return (
     <ListItem
@@ -185,8 +205,8 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
       <OperationIcon operation={operation} />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
-        <H4 style={maybeGrayedOut}>{operationTitle}</H4>
-        <LabelSmall style={maybeGrayedOut} weight="Regular" color="bluegrey">
+        <H4 style={labelStyle}>{operationTitle}</H4>
+        <LabelSmall style={labelStyle} weight="Regular" color="bluegrey">
           {`${formatDateAsShortFormat(
             operation.operationDate
           )}, ${getHourAndMinuteFromDate(
