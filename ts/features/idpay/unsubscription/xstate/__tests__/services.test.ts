@@ -1,6 +1,5 @@
 import * as E from "fp-ts/lib/Either";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
 import {
   InitiativeDTO,
   StatusEnum
@@ -9,6 +8,7 @@ import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context } from "../context";
 
 import { createServicesImplementation } from "../services";
+import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";
@@ -101,7 +101,7 @@ describe("IDPay Unsubscription machine services", () => {
 
     it("should unsubscribe from initiative", async () => {
       const response: E.Either<Error, { status: number; value?: undefined }> =
-        E.right({ status: 200, value: undefined });
+        E.right({ status: 204, value: undefined });
 
       mockIDPayClient.unsubscribe.mockImplementation(() => response);
 
