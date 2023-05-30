@@ -42,9 +42,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 403:
-                return Promise.reject(PaymentFailureEnum.NOT_ACTIVE);
-              case 404:
-                return Promise.reject(PaymentFailureEnum.NOT_FOUND);
+                return Promise.reject(PaymentFailureEnum.UNAUTHORIZED);
               default:
                 return Promise.reject(PaymentFailureEnum.GENERIC);
             }
@@ -81,11 +79,9 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 400:
-                return Promise.reject(PaymentFailureEnum.NOT_VALID);
+                return Promise.reject(PaymentFailureEnum.TIMEOUT);
               case 403:
-                return Promise.reject(PaymentFailureEnum.NOT_ACTIVE);
-              case 404:
-                return Promise.reject(PaymentFailureEnum.NOT_FOUND);
+                return Promise.reject(PaymentFailureEnum.UNAUTHORIZED);
               default:
                 return Promise.reject(PaymentFailureEnum.GENERIC);
             }
