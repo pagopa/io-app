@@ -44,6 +44,12 @@ export const DSSelection = () => (
     {/* RadioListItem */}
     <RadioListItemsShowroom />
 
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Switch
+    </H2>
+    {/* Switch */}
+    {renderSwitch()}
+
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
       Legacy components
@@ -198,3 +204,13 @@ const RadioListItemsShowroom = () => {
     </DSComponentViewerBox>
   );
 };
+
+// SWITCH
+
+const renderSwitch = () => (
+  <DSComponentViewerBox name="Switch">
+    <CheckboxLabel label="This is a test" />
+    <VSpacer size={16} />
+    <CheckboxLabel label="This is a test with a very loooong looooooong loooooooong text" />
+  </DSComponentViewerBox>
+);
