@@ -57,7 +57,7 @@ const IDPayPaymentCodeInputScreen = () => {
             accessibilityLabel={I18n.t("idpay.payment.qrCode.manual.input")}
             inputMaskProps={{
               type: "custom",
-              options: { mask: "999999" },
+              options: { mask: "99999999" },
               keyboardType: "numeric",
               returnKeyType: "done",
               value: inputState.value,
