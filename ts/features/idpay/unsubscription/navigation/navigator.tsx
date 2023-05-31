@@ -23,7 +23,7 @@ const Stack = createStackNavigator<IDPayUnsubscriptionParamsList>();
 export type IDPayUnsubscriptionNavigatorParams = {
   initiativeId: string;
   initiativeName?: string;
-  initiativeType: InitiativeRewardTypeEnum;
+  initiativeType?: InitiativeRewardTypeEnum;
 };
 
 type IDPayUnsubscriptionScreenRouteProps = RouteProp<

@@ -8,7 +8,7 @@ import { Services } from "./services";
 type UnsubscriptionMachineParams = {
   initiativeId: string;
   initiativeName?: string;
-  initiativeType: InitiativeRewardTypeEnum;
+  initiativeType?: InitiativeRewardTypeEnum;
 };
 
 const createIDPayUnsubscriptionMachine = (
@@ -104,7 +104,8 @@ const createIDPayUnsubscriptionMachine = (
     {
       actions: {
         loadInitiativeSuccess: assign((_, event) => ({
-          initiativeName: event.data.initiativeName
+          initiativeName: event.data.initiativeName,
+          initiativeType: event.data.initiativeRewardType
         }))
       },
       guards: {

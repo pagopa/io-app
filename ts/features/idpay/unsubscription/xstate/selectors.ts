@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import { LOADING_TAG } from "../../../../utils/xstate";
 import { IDPayUnsubscriptionMachineType } from "./machine";
 
@@ -18,4 +19,4 @@ export const selectIsFailure = (state: StateWithContext) =>
   state.matches("UNSUBSCRIPTION_FAILURE");
 
 export const selectInitiativeType = (state: StateWithContext) =>
-  state.context.initiativeType;
+  state.context.initiativeType ?? InitiativeRewardTypeEnum.REFUND;

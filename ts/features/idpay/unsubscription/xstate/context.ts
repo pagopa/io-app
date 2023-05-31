@@ -3,5 +3,5 @@ import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/Initi
 export type Context = {
   initiativeId: string;
   initiativeName?: string;
-  initiativeType: InitiativeRewardTypeEnum;
+  initiativeType?: InitiativeRewardTypeEnum;
 };

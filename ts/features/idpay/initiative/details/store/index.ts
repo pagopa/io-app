@@ -7,7 +7,6 @@ import { getType } from "typesafe-actions";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
@@ -213,14 +212,8 @@ export const idPayInitiativeTypeSelector = createSelector(
   idpayInitiativeDetailsSelector,
   details =>
     pot.getOrElse(
-      pot.map(details, details =>
-        pipe(
-          details.initiativeRewardType,
-          O.fromNullable,
-          O.getOrElse(() => InitiativeRewardTypeEnum.REFUND)
-        )
-      ),
-      InitiativeRewardTypeEnum.REFUND
+      pot.map(details, details => details.initiativeRewardType),
+      undefined
     )
 );
 export default reducer;

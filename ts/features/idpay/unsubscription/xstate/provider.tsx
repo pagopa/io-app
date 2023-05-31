@@ -43,7 +43,7 @@ type Props = {
   children: React.ReactNode;
   initiativeId: string;
   initiativeName?: string;
-  initiativeType: InitiativeRewardTypeEnum;
+  initiativeType?: InitiativeRewardTypeEnum;
 };
 
 const IDPayUnsubscriptionMachineProvider = (props: Props) => {
