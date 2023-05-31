@@ -23,7 +23,10 @@ import {
   trackThirdPartyMessageAttachmentDownloadFailed,
   trackThirdPartyMessageAttachmentUnavailable
 } from "../../analytics";
-import { lollipopKeyTagSelector, lollipopPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../../../lollipop/store/reducers/lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
 import { LollipopConfig } from "../../../lollipop";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
@@ -97,7 +100,12 @@ export function* downloadAttachmentSaga(
       timeout: fetchTimeout
     });
 
-    const { method, attachmentFullUrl, headers } = yield* call(generateReactNativeBlobUtilsFetchParameters, attachment, bearerToken);
+    const { method, attachmentFullUrl, headers } = yield* call(
+      generateReactNativeBlobUtilsFetchParameters,
+      attachment,
+      bearerToken,
+      uuid()
+    );
     const result = yield* call(
       config.fetch,
       method,
@@ -142,9 +150,13 @@ export function* downloadAttachmentSaga(
 
 type HeaderType = { [key: string]: string };
 
-function* generateReactNativeBlobUtilsFetchParameters(attachment: UIAttachment, bearerToken: string) {
+function* generateReactNativeBlobUtilsFetchParameters(
+  attachment: UIAttachment,
+  bearerToken: string,
+  nonce: string
+) {
   const lollopopConfig = {
-    nonce: uuid()
+    nonce
   } as LollipopConfig;
 
   const keyTag = yield* select(lollipopKeyTagSelector);
@@ -158,22 +170,42 @@ function* generateReactNativeBlobUtilsFetchParameters(attachment: UIAttachment, 
       Authorization: `Bearer ${bearerToken}`
     } as HeaderType,
     method: "GET" as const
-   };
+  };
 
-   try {
-    const lollipopInit = yield* call(lollipopRequestInit, lollopopConfig, keyInfo, attachmentFullUrl, requestInit); 
-    return reactNativeBlobUtilsFetchParametersFactory(requestInit.method, attachmentFullUrl, (lollipopInit.headers ?? requestInit.headers) as HeaderType);
-   } catch {
+  try {
+    const lollipopInit = yield* call(
+      lollipopRequestInit,
+      lollopopConfig,
+      keyInfo,
+      attachmentFullUrl,
+      requestInit
+    );
+    return reactNativeBlobUtilsFetchParametersFactory(
+      requestInit.method,
+      attachmentFullUrl,
+      (lollipopInit.headers ?? requestInit.headers) as HeaderType
+    );
+  } catch {
     // We are not interested in doing anything here, since the
     // later http call will be refused by the lollipop consumer
-   }
+  }
 
-   return reactNativeBlobUtilsFetchParametersFactory(requestInit.method, attachmentFullUrl, requestInit.headers);
+  return reactNativeBlobUtilsFetchParametersFactory(
+    requestInit.method,
+    attachmentFullUrl,
+    requestInit.headers
+  );
 }
 
-const reactNativeBlobUtilsFetchParametersFactory = (method: "GET", attachmentFullUrl: string, headers: HeaderType) => ({ method, attachmentFullUrl, headers });
+const reactNativeBlobUtilsFetchParametersFactory = (
+  method: "GET",
+  attachmentFullUrl: string,
+  headers: HeaderType
+) => ({ method, attachmentFullUrl, headers });
 
-// Test that , having mocked lollipopRequestInit to succeed, function generateReactNativeBlobUtilsFetchParameters returns the enhanced headers
-// Test that , having mocked lollipopRequestInit to fail, function generateReactNativeBlobUtilsFetchParameters returns the standard headers
-
-export const testableData = isTestEnv ? { generateReactNativeBlobUtilsFetchParameters, reactNativeBlobUtilsFetchParametersFactory } : undefined;
+export const testableData = isTestEnv
+  ? {
+      generateReactNativeBlobUtilsFetchParameters,
+      reactNativeBlobUtilsFetchParametersFactory
+    }
+  : undefined;
