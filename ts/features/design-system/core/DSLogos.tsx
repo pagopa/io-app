@@ -22,7 +22,11 @@ import LogoComuneDiMilano from "../../../../img/utils/logo-entities/1199250158.p
 import LogoComuneDiSottoIlMonte from "../../../../img/utils/logo-entities/82003830161.png";
 import LogoComuneDiControguerra from "../../../../img/utils/logo-entities/82001760675.png";
 import LogoINPS from "../../../../img/utils/logo-entities/80078750587.png";
+import LogoEDistribuzione from "../../../../img/utils/logo-entities/5779711000.png";
+import LogoAgenziaDifesa from "../../../../img/utils/logo-entities/97254170588.png";
+import LogoMinisteroInterno from "../../../../img/utils/logo-entities/80215430580.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -93,17 +97,37 @@ export const DSLogos = () => {
 //   }
 // ];
 
-const renderAvatar = () => (
-  <View style={IOStyles.row}>
-    <Avatar logoUri={LogoComuneDiMilano} />
-    <HSpacer size={16} />
-    <Avatar logoUri={LogoComuneDiSottoIlMonte} />
-    <HSpacer size={16} />
-    <Avatar logoUri={LogoComuneDiControguerra} />
-    <HSpacer size={16} />
-    <Avatar logoUri={LogoINPS} />
-  </View>
-);
+const avatarPaddings = [4, 6, 10];
+
+const renderAvatar = () =>
+  avatarPaddings.map(internalSpace => (
+    <DSComponentViewerBox
+      key={`avatar-${internalSpace}`}
+      name={`Avatar, padding = ${internalSpace}`}
+    >
+      <View style={IOStyles.row}>
+        <Avatar internalSpace={internalSpace} logoUri={LogoComuneDiMilano} />
+        <HSpacer size={8} />
+        <Avatar
+          internalSpace={internalSpace}
+          logoUri={LogoComuneDiSottoIlMonte}
+        />
+        <HSpacer size={8} />
+        <Avatar
+          internalSpace={internalSpace}
+          logoUri={LogoComuneDiControguerra}
+        />
+        <HSpacer size={8} />
+        <Avatar internalSpace={internalSpace} logoUri={LogoINPS} />
+        <HSpacer size={8} />
+        <Avatar internalSpace={internalSpace} logoUri={LogoEDistribuzione} />
+        <HSpacer size={8} />
+        <Avatar internalSpace={internalSpace} logoUri={LogoAgenziaDifesa} />
+        <HSpacer size={8} />
+        <Avatar internalSpace={internalSpace} logoUri={LogoMinisteroInterno} />
+      </View>
+    </DSComponentViewerBox>
+  ));
 
 const renderPaymentLogosSmall = () => (
   <View style={styles.itemsWrapper}>
