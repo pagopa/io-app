@@ -1,5 +1,19 @@
-import { GestureResponderEvent, StyleSheet, View } from "react-native";
-import React from "react";
+import {
+  GestureResponderEvent,
+  Pressable,
+  StyleSheet,
+  View,
+  Text
+} from "react-native";
+import React, { useCallback } from "react";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
 import {
@@ -13,7 +27,10 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
 import { NewH4 } from "../core/typography/NewH4";
-import ButtonLink from "../ui/ButtonLink";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { makeFontStyleObject } from "../core/fonts";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 const iconSize: IOIconSizeScale = 24;
 
@@ -31,7 +48,17 @@ const styles = StyleSheet.create({
   },
   spacingFullWidth: {
     padding: spacingFullWidth
+  },
+  label: {
+    fontSize: 16,
+    ...makeFontStyleObject("Regular", false, "ReadexPro")
+  },
+  /* REMOVE_LEGACY_COMPONENT: Start ▶ */
+  labelLegacy: {
+    fontSize: 16,
+    ...makeFontStyleObject("Bold", false, "TitilliumWeb")
   }
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 });
 
 type AlertProps = WithTestID<{
@@ -97,45 +124,126 @@ export const Alert = ({
   fullWidth = false,
   accessibilityHint,
   testID
-}: Alert) => (
-  <View
-    ref={viewRef}
-    style={[
-      styles.container,
-      fullWidth ? styles.spacingFullWidth : styles.spacingDefault,
-      { backgroundColor: IOColors[mapVariantStates[variant].background] }
-    ]}
-    testID={testID}
-    accessible={false}
-    accessibilityRole="alert"
-    accessibilityHint={accessibilityHint}
-  >
-    <Icon
-      name={mapVariantStates[variant].icon}
-      size={iconSize}
-      color={mapVariantStates[variant].foreground}
-    />
-    <HSpacer />
-    <View style={IOStyles.flex}>
-      {title && (
-        <>
-          <NewH4 color={mapVariantStates[variant].foreground}>{title}</NewH4>
-          <VSpacer size={8} />
-        </>
-      )}
-      <Label
+}: Alert) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+
+  // Scaling transformation applied when the button is pressed
+  const animationScaleValue = IOScaleValues?.magnifiedButton?.pressedState;
+
+  // Using a spring-based animation for our interpolations
+  const progressPressed = useDerivedValue(() =>
+    withSpring(isPressed.value, IOSpringValues.button)
+  );
+
+  // Interpolate animation values from `isPressed` values
+  const pressedAnimationStyle = useAnimatedStyle(() => {
+    // Scale down button slightly when pressed
+    const scale = interpolate(
+      progressPressed.value,
+      [0, 1],
+      [1, animationScaleValue],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
+
+  const onPressIn = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 1;
+  }, [isPressed]);
+  const onPressOut = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 0;
+  }, [isPressed]);
+
+  const renderMainBlock = () => (
+    <>
+      <Icon
+        name={mapVariantStates[variant].icon}
+        size={iconSize}
         color={mapVariantStates[variant].foreground}
-        weight={"Regular"}
-        accessibilityRole="text"
-      >
-        {content}
-      </Label>
-      {action && (
-        <>
-          <VSpacer size={8} />
-          <ButtonLink color={variant} onPress={onPress} label={action} />
-        </>
-      )}
+      />
+      <HSpacer />
+      <View style={IOStyles.flex}>
+        {title && (
+          <>
+            <NewH4 color={mapVariantStates[variant].foreground}>{title}</NewH4>
+            <VSpacer size={8} />
+          </>
+        )}
+        <Label
+          color={mapVariantStates[variant].foreground}
+          weight={"Regular"}
+          accessibilityRole="text"
+        >
+          {content}
+        </Label>
+        {action && (
+          <>
+            <VSpacer size={8} />
+            <Text
+              style={[
+                isDesignSystemEnabled ? styles.label : styles.labelLegacy,
+                { color: IOColors[mapVariantStates[variant].foreground] }
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {action}
+            </Text>
+          </>
+        )}
+      </View>
+    </>
+  );
+
+  const StaticComponent = () => (
+    <View
+      ref={viewRef}
+      style={[
+        styles.container,
+        fullWidth ? styles.spacingFullWidth : styles.spacingDefault,
+        { backgroundColor: IOColors[mapVariantStates[variant].background] }
+      ]}
+      testID={testID}
+      accessible={false}
+      accessibilityRole="alert"
+      accessibilityHint={accessibilityHint}
+    >
+      {renderMainBlock()}
     </View>
-  </View>
-);
+  );
+
+  const PressableButton = () => (
+    <Pressable
+      ref={viewRef}
+      testID={testID}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+      // A11y related props
+      accessible={true}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+    >
+      <Animated.View
+        style={[
+          styles.container,
+          fullWidth ? styles.spacingFullWidth : styles.spacingDefault,
+          { backgroundColor: IOColors[mapVariantStates[variant].background] },
+          // Disable pressed animation when component is full width
+          !fullWidth && pressedAnimationStyle
+        ]}
+      >
+        {renderMainBlock()}
+      </Animated.View>
+    </Pressable>
+  );
+
+  return action ? <PressableButton /> : <StaticComponent />;
+};
