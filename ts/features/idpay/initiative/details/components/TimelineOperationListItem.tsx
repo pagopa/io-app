@@ -142,8 +142,7 @@ const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
         }
 
         return I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
-          { maskedPan: operation.maskedPan }
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
         );
 
       case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
