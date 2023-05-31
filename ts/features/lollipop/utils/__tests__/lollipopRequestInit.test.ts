@@ -64,7 +64,7 @@ describe("Test lollipopRequestInit", () => {
     expect(init).toStrictEqual(testInit(getUnixTimestamp()));
   });
 
-  it("should succeed with also body signature", async () => {
+  it("should succeed with body signature", async () => {
     const init = await lollipopRequestInit(
       {
         ...lollipopConfig,
@@ -87,55 +87,70 @@ describe("Test lollipopRequestInit", () => {
       }
     });
   });
+
+  it("should succeed with custom content", async () => {
+    const externalMessageId = "00000000000000000005";
+    const init = await lollipopRequestInit(
+      {
+        ...lollipopConfig,
+        customContentToSign: {
+          externalMessageId
+        }
+      },
+      keyInfo,
+      fullUrl,
+      {
+        ...requestInit
+      }
+    );
+    const timestamp = getUnixTimestamp();
+    const initToMatch = testInit(timestamp);
+    expect(init).toStrictEqual({
+      ...initToMatch,
+      headers: {
+        ...initToMatch.headers,
+        signature: `${initToMatch.headers.signature},sig2=:MockSignature:`,
+        "signature-input": `${initToMatch.headers["signature-input"]},sig2=("x-pagopa-lollipop-custom-externalmessageid");created=${timestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="SXn6l6BNlwAb60cJUKpvKB3H-UQbe2slQ_8LBR70cfA"`,
+        "x-pagopa-lollipop-custom-externalMessageId": `${externalMessageId}`
+      }
+    });
+  });
+
   it("should throw if no keyTag is set", async () => {
-    try {
-      return await lollipopRequestInit(
+    await expect(
+      lollipopRequestInit(
         lollipopConfig,
         { ...keyInfo, keyTag: undefined },
         fullUrl,
         requestInit
-      );
-    } catch (e) {
-      return expect(`${e}`).toMatch(configurationError);
-    }
+      )
+    ).rejects.toEqual(new Error(configurationError));
   });
 
   it("should throw if no public key is set", async () => {
-    try {
-      return await lollipopRequestInit(
+    await expect(
+      lollipopRequestInit(
         lollipopConfig,
         { ...keyInfo, publicKey: undefined },
         fullUrl,
         requestInit
-      );
-    } catch (e) {
-      return expect(`${e}`).toMatch(configurationError);
-    }
+      )
+    ).rejects.toEqual(new Error(configurationError));
   });
 
   it("should throw if input is not a string", async () => {
-    const fullUrlRequest = {} as Request;
-    try {
-      return await lollipopRequestInit(
-        lollipopConfig,
-        keyInfo,
-        fullUrlRequest,
-        requestInit
-      );
-    } catch (e) {
-      return expect(`${e}`).toMatch(configurationError);
-    }
+    await expect(
+      lollipopRequestInit(lollipopConfig, keyInfo, {} as Request, requestInit)
+    ).rejects.toEqual(new Error(configurationError));
   });
 
   it("should throw if no headers are set", async () => {
-    try {
-      return await lollipopRequestInit(lollipopConfig, keyInfo, fullUrl, {
+    await expect(
+      lollipopRequestInit(lollipopConfig, keyInfo, fullUrl, {
         ...requestInit,
         headers: undefined
-      });
-    } catch (e) {
-      return expect(`${e}`).toMatch(configurationError);
-    }
+      })
+    ).rejects.toEqual(new Error(configurationError));
   });
 
   it("should throw if no request method is set", async () => {
