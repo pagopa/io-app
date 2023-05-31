@@ -1,3 +1,5 @@
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
@@ -20,7 +22,11 @@ export const selectIsFailure = (state: StateWithContext) =>
   state.matches("UNSUBSCRIPTION_FAILURE");
 
 export const selectInitiativeType = (state: StateWithContext) =>
-  state.context.initiativeType ?? InitiativeRewardTypeEnum.REFUND;
+  pipe(
+    state.context.initiativeType,
+    O.fromNullable,
+    O.getOrElse(() => InitiativeRewardTypeEnum.REFUND)
+  );
 
 type checks = ReadonlyArray<{
   title: string;
