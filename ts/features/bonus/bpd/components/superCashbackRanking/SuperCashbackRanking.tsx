@@ -8,7 +8,7 @@ import ItemSeparatorComponent from "../../../../../components/ItemSeparatorCompo
 import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   formatIntegerNumber,
   formatNumberWithNoDigits
@@ -115,4 +115,8 @@ const SuperCashbackRanking = connect(mapStateToProps)(SuperCashbackBottomSheet);
 export default SuperCashbackRanking;
 
 export const useSuperCashbackRankingBottomSheet = () =>
-  useIOBottomSheetModal(<SuperCashbackRanking />, <SuperCashbackHeader />, 470);
+  useLegacyIOBottomSheetModal(
+    <SuperCashbackRanking />,
+    <SuperCashbackHeader />,
+    470
+  );

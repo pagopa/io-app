@@ -10,7 +10,7 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import { VSpacer } from "../../core/spacer/Spacer";
@@ -155,7 +155,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
     props.nameSurname ?? ""
   );
 
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     bottomSheetBody,
     bottomSheetTitle,
     snapPoint ?? 300
