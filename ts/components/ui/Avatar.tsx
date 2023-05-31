@@ -1,21 +1,21 @@
 // A component to provide organization logo
 import * as React from "react";
-import { StyleSheet, Image, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { IOVisualCostants } from "../core/variables/IOStyles";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { MultiImage } from "./MultiImage";
 
 type Avatar = {
-  logoUri: React.ComponentProps<typeof Image>["source"];
-  internalSpace: number;
+  logoUri: React.ComponentProps<typeof MultiImage>["source"];
 };
 
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
+const internalSpace: number = 6;
 
 const styles = StyleSheet.create({
   avatarWrapper: {
     overflow: "hidden",
-
+    padding: internalSpace,
     resizeMode: "contain",
     borderColor: avatarBorderLightMode,
     borderWidth: 1,
@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const Avatar = ({ logoUri, internalSpace }: Avatar) => (
-  <View style={[styles.avatarWrapper, { padding: internalSpace }]}>
+const Avatar = ({ logoUri }: Avatar) => (
+  <View style={styles.avatarWrapper}>
     <MultiImage style={styles.avatarImage} source={logoUri} />
   </View>
 );

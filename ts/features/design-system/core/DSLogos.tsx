@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, ImageURISource } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
   DSLogoPaymentViewerBox,
   logoItemGutter
@@ -17,14 +17,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { useIOTheme } from "../../../components/core/variables/IOColors";
 import Avatar from "../../../components/ui/Avatar";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-// Assets
-import LogoComuneDiMilano from "../../../../img/utils/logo-entities/1199250158.png";
-import LogoComuneDiSottoIlMonte from "../../../../img/utils/logo-entities/82003830161.png";
-import LogoComuneDiControguerra from "../../../../img/utils/logo-entities/82001760675.png";
-import LogoINPS from "../../../../img/utils/logo-entities/80078750587.png";
-import LogoEDistribuzione from "../../../../img/utils/logo-entities/5779711000.png";
-import LogoAgenziaDifesa from "../../../../img/utils/logo-entities/97254170588.png";
-import LogoMinisteroInterno from "../../../../img/utils/logo-entities/80215430580.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
@@ -76,58 +68,58 @@ export const DSLogos = () => {
   );
 };
 
-// const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
 
-// const organizationsURIs = [
-//   {
-//     image: `https://assets.cdn.io.italia.it/logos/organizations/1199250158.png`,
-//     name: "Comune di Milano"
-//   },
-//   {
-//     image: "https://assets.cdn.io.italia.it/logos/organizations/2438750586.png",
-//     name: "Comune di Roma"
-//   },
-//   {
-//     image: "162210348",
-//     name: "Comune di Parma"
-//   },
-//   {
-//     image: "82003830161",
-//     name: "Comune di Sotto il Monte Giovanni XXIII"
-//   }
-// ];
+const organizationsURIs = [
+  {
+    imageSource: `${cdnPath}1199250158.png`,
+    name: "Comune di Milano"
+  },
+  {
+    imageSource: `${cdnPath}82003830161.png`,
+    name: "Comune di Sotto il Monte Giovanni XXIII"
+  },
+  {
+    imageSource: `${cdnPath}82001760675.png`,
+    name: "Comune di Controguerra"
+  },
+  {
+    imageSource: `${cdnPath}80078750587.png`,
+    name: "INPS"
+  },
+  {
+    imageSource: `${cdnPath}5779711000.png`,
+    name: "e-distribuzione"
+  },
+  {
+    imageSource: `${cdnPath}97254170588.png`,
+    name: "Agenzia della Difesa"
+  },
+  {
+    imageSource: `${cdnPath}80215430580.png`,
+    name: "Ministero dell'Interno"
+  }
+];
 
-const avatarPaddings = [4, 6, 10];
-
-const renderAvatar = () =>
-  avatarPaddings.map(internalSpace => (
-    <DSComponentViewerBox
-      key={`avatar-${internalSpace}`}
-      name={`Avatar, padding = ${internalSpace}`}
-    >
-      <View style={IOStyles.row}>
-        <Avatar internalSpace={internalSpace} logoUri={LogoComuneDiMilano} />
-        <HSpacer size={8} />
-        <Avatar
-          internalSpace={internalSpace}
-          logoUri={LogoComuneDiSottoIlMonte}
-        />
-        <HSpacer size={8} />
-        <Avatar
-          internalSpace={internalSpace}
-          logoUri={LogoComuneDiControguerra}
-        />
-        <HSpacer size={8} />
-        <Avatar internalSpace={internalSpace} logoUri={LogoINPS} />
-        <HSpacer size={8} />
-        <Avatar internalSpace={internalSpace} logoUri={LogoEDistribuzione} />
-        <HSpacer size={8} />
-        <Avatar internalSpace={internalSpace} logoUri={LogoAgenziaDifesa} />
-        <HSpacer size={8} />
-        <Avatar internalSpace={internalSpace} logoUri={LogoMinisteroInterno} />
-      </View>
-    </DSComponentViewerBox>
-  ));
+const renderAvatar = () => (
+  <DSComponentViewerBox name={`Avatar, default size`}>
+    <View style={IOStyles.row}>
+      {organizationsURIs.map(({ imageSource }, i) => (
+        <>
+          <Avatar
+            key={i}
+            logoUri={[
+              {
+                uri: imageSource
+              }
+            ]}
+          />
+          {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
+        </>
+      ))}
+    </View>
+  </DSComponentViewerBox>
+);
 
 const renderPaymentLogosSmall = () => (
   <View style={styles.itemsWrapper}>
