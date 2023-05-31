@@ -6,11 +6,11 @@ import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { usePaymentMachineService } from "../xstate/provider";
-import { selectIsFailure, transactionDataSelector } from "../xstate/selectors";
+import { selectIsFailure, selectTransactionData } from "../xstate/selectors";
 
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
-  const transactionData = useSelector(machine, transactionDataSelector);
+  const transactionData = useSelector(machine, selectTransactionData);
   const isFailure = useSelector(machine, selectIsFailure);
 
   const handleClose = () => {

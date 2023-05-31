@@ -10,21 +10,22 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
-  isAwaitingUserInputSelector,
-  transactionDataSelector
+  selectIsAuthorizing,
+  selectIsPreAuthorizing,
+  selectTransactionData
 } from "../xstate/selectors";
 
 const IDPayPaymentAuthorizationScreen = () => {
   const machine = usePaymentMachineService();
-  const transactionData = useSelector(machine, transactionDataSelector);
+  const transactionData = useSelector(machine, selectTransactionData);
 
-  // To show loading state we check if there is the need of user input with
-  // isAwaitingUserInputSelector. In this way we avoid to show data for a couple
-  // of frames before navigating to the next screen, which happens with isLoadingSelector
-  const isAwaitingUserInput = useSelector(machine, isAwaitingUserInputSelector);
+  // Loading state for screen content
+  const isLoading = useSelector(machine, selectIsPreAuthorizing);
+  // Loading state for "Confirm" button
+  const isUpserting = useSelector(machine, selectIsAuthorizing);
 
   const handleCancel = () => {
-    machine.send("EXIT");
+    machine.send("CANCEL_AUTHORIZATION");
   };
 
   const handleConfirm = () => {
@@ -39,10 +40,7 @@ const IDPayPaymentAuthorizationScreen = () => {
       headerTitle="Autorizza operazione"
       contextualHelp={emptyContextualHelp}
     >
-      <LoadingSpinnerOverlay
-        isLoading={!isAwaitingUserInput}
-        loadingOpacity={100}
-      >
+      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
         <SafeAreaView style={IOStyles.flex}>
           <View style={IOStyles.flex}>
             <ContentWrapper>{content}</ContentWrapper>
@@ -52,11 +50,14 @@ const IDPayPaymentAuthorizationScreen = () => {
             leftButton={{
               title: "Annulla",
               bordered: true,
-              onPress: handleCancel
+              onPress: handleCancel,
+              disabled: isUpserting
             }}
             rightButton={{
-              title: "Conferma",
-              onPress: handleConfirm
+              title: isUpserting ? "" : "Conferma",
+              onPress: handleConfirm,
+              isLoading: isUpserting,
+              disabled: isUpserting
             }}
           />
         </SafeAreaView>

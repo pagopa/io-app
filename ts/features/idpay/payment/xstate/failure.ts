@@ -3,8 +3,9 @@ import * as t from "io-ts";
 
 export enum PaymentFailureEnum {
   GENERIC = "GENERIC",
-  UNAUTHORIZED = "UNAUTHORIZED",
-  TIMEOUT = "TIMEOUT"
+  // Transaction cancelled by the user
+  CANCELLED = "CANCELLED"
+  // TODO failure mapping will be added in another PR
 }
 
 export type PaymentFailure = t.TypeOf<typeof PaymentFailure>;

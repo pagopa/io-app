@@ -1,12 +1,11 @@
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { assign, createMachine } from "xstate";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
 import { Context, INITIAL_CONTEXT } from "./context";
 import { Events } from "./events";
+import { PaymentFailure, PaymentFailureEnum } from "./failure";
 import { Services } from "./services";
-import { PaymentFailure } from "./failure";
 
 const createIDPayPaymentMachine = () =>
   createMachine(
@@ -43,7 +42,7 @@ const createIDPayPaymentMachine = () =>
               target: "AWAITING_USER_AUTHORIZATION"
             },
             onError: {
-              actions: "setTransactionFailure",
+              actions: "setFailure",
               target: "PAYMENT_FAILURE"
             }
           }
@@ -54,8 +53,9 @@ const createIDPayPaymentMachine = () =>
             CONFIRM_AUTHORIZATION: {
               target: "AUTHORIZING"
             },
-            EXIT: {
-              actions: "exitAuthorization"
+            CANCEL_AUTHORIZATION: {
+              actions: "cancelTransaction",
+              target: "PAYMENT_FAILURE"
             }
           }
         },
@@ -65,11 +65,10 @@ const createIDPayPaymentMachine = () =>
             id: "authorizePayment",
             src: "authorizePayment",
             onDone: {
-              actions: "setTransactionData",
               target: "PAYMENT_SUCCESS"
             },
             onError: {
-              actions: "setTransactionFailure",
+              actions: "setFailure",
               target: "PAYMENT_FAILURE"
             }
           }
@@ -98,14 +97,13 @@ const createIDPayPaymentMachine = () =>
           trxCode: O.some(event.trxCode)
         })),
         setTransactionData: assign((_, event) => ({
-          transactionData: O.some(E.right(event.data))
+          transactionData: O.some(event.data)
         })),
-        setTransactionFailure: assign((_, event) => ({
-          transactionData: pipe(
-            O.of(event.data),
-            O.filter(PaymentFailure.is),
-            O.map(E.left)
-          )
+        setFailure: assign((_, event) => ({
+          failure: pipe(O.of(event.data), O.filter(PaymentFailure.is))
+        })),
+        cancelTransaction: assign(_ => ({
+          failure: O.some(PaymentFailureEnum.CANCELLED)
         }))
       },
       guards: {}

@@ -1,6 +1,5 @@
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
-import { Errors } from "io-ts";
+import * as O from "fp-ts/lib/Option";
 import {
   AuthPaymentResponseDTO,
   StatusEnum
@@ -38,27 +37,6 @@ describe("IDPay Payment machine services", () => {
       ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
       expect(mockIDPayClient.putPreAuthPayment).not.toHaveBeenCalled();
-    });
-
-    it("should get a UNAUTHORIZED failure if status code is 403", async () => {
-      const response: E.Either<Errors, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 403, value: { code: "403", message: "" } });
-
-      mockIDPayClient.putPreAuthPayment.mockImplementation(() => response);
-
-      await expect(
-        services.preAuthorizePayment({
-          ...T_CONTEXT,
-          trxCode: O.some(T_TRX_CODE)
-        })
-      ).rejects.toStrictEqual(PaymentFailureEnum.UNAUTHORIZED);
-
-      expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          bearerAuth: T_AUTH_TOKEN,
-          trxCode: T_TRX_CODE
-        })
-      );
     });
 
     it("should get a GENERIC failure if status codeis not 200", async () => {
@@ -115,39 +93,7 @@ describe("IDPay Payment machine services", () => {
       expect(mockIDPayClient.putAuthPayment).not.toHaveBeenCalled();
     });
 
-    it("should fail if transactionData is left", async () => {
-      await expect(
-        services.authorizePayment({
-          ...T_CONTEXT,
-          transactionData: O.some(E.left(PaymentFailureEnum.GENERIC))
-        })
-      ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
-
-      expect(mockIDPayClient.putAuthPayment).not.toHaveBeenCalled();
-    });
-
-    it("should get a UNAUTHORIZED failure if status code is 403", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 403, value: { code: "403", message: "" } });
-
-      mockIDPayClient.putAuthPayment.mockImplementation(() => response);
-
-      await expect(
-        services.authorizePayment({
-          ...T_CONTEXT,
-          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
-        })
-      ).rejects.toStrictEqual(PaymentFailureEnum.UNAUTHORIZED);
-
-      expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          bearerAuth: T_AUTH_TOKEN,
-          trxCode: T_TRX_CODE
-        })
-      );
-    });
-
-    it("should get a TIMEOUT failure if status code is 400", async () => {
+    it("should fail if status code is not 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: "400", message: "" } });
 
@@ -156,9 +102,9 @@ describe("IDPay Payment machine services", () => {
       await expect(
         services.authorizePayment({
           ...T_CONTEXT,
-          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+          transactionData: O.some(T_TRANSACTION_DATA_DTO)
         })
-      ).rejects.toStrictEqual(PaymentFailureEnum.TIMEOUT);
+      ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
       expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -168,16 +114,19 @@ describe("IDPay Payment machine services", () => {
       );
     });
 
-    it("should get a GENERIC failure if status codeis not 200", async () => {
+    it("should fail if status code is 200 and transaction is not AUTHORIZED", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 404, value: { code: "404", message: "" } });
+        E.right({ status: 400, value: { code: "400", message: "" } });
 
       mockIDPayClient.putAuthPayment.mockImplementation(() => response);
 
       await expect(
         services.authorizePayment({
           ...T_CONTEXT,
-          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+          transactionData: O.some({
+            ...T_TRANSACTION_DATA_DTO,
+            status: StatusEnum.REJECTED
+          })
         })
       ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
@@ -200,7 +149,7 @@ describe("IDPay Payment machine services", () => {
       await expect(
         services.authorizePayment({
           ...T_CONTEXT,
-          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+          transactionData: O.some(T_TRANSACTION_DATA_DTO)
         })
       ).resolves.toStrictEqual(T_TRANSACTION_DATA_DTO);
 
