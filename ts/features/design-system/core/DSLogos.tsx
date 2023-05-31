@@ -16,10 +16,13 @@ import { H2 } from "../../../components/core/typography/H2";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { useIOTheme } from "../../../components/core/variables/IOColors";
 import Avatar from "../../../components/ui/Avatar";
-import { getLogoForOrganization } from "../../../utils/organizations";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { logosForService } from "../../../utils/services";
-import LogoComuneDiMilano from "../../../../img/utils/1199250158.png";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
+// Assets
+import LogoComuneDiMilano from "../../../../img/utils/logo-entities/1199250158.png";
+import LogoComuneDiSottoIlMonte from "../../../../img/utils/logo-entities/82003830161.png";
+import LogoComuneDiControguerra from "../../../../img/utils/logo-entities/82001760675.png";
+import LogoINPS from "../../../../img/utils/logo-entities/80078750587.png";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -69,30 +72,36 @@ export const DSLogos = () => {
   );
 };
 
-const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+// const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
 
-const organizationsURIs = [
-  {
-    image: `https://assets.cdn.io.italia.it/logos/organizations/1199250158.png`,
-    name: "Comune di Milano"
-  },
-  {
-    image: "https://assets.cdn.io.italia.it/logos/organizations/2438750586.png",
-    name: "Comune di Roma"
-  },
-  {
-    image: "162210348",
-    name: "Comune di Parma"
-  },
-  {
-    image: "82003830161",
-    name: "Comune di Sotto il Monte Giovanni XXIII"
-  }
-];
+// const organizationsURIs = [
+//   {
+//     image: `https://assets.cdn.io.italia.it/logos/organizations/1199250158.png`,
+//     name: "Comune di Milano"
+//   },
+//   {
+//     image: "https://assets.cdn.io.italia.it/logos/organizations/2438750586.png",
+//     name: "Comune di Roma"
+//   },
+//   {
+//     image: "162210348",
+//     name: "Comune di Parma"
+//   },
+//   {
+//     image: "82003830161",
+//     name: "Comune di Sotto il Monte Giovanni XXIII"
+//   }
+// ];
 
 const renderAvatar = () => (
-  <View>
+  <View style={IOStyles.row}>
     <Avatar logoUri={LogoComuneDiMilano} />
+    <HSpacer size={16} />
+    <Avatar logoUri={LogoComuneDiSottoIlMonte} />
+    <HSpacer size={16} />
+    <Avatar logoUri={LogoComuneDiControguerra} />
+    <HSpacer size={16} />
+    <Avatar logoUri={LogoINPS} />
   </View>
 );
 
