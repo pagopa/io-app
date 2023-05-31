@@ -2,6 +2,7 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LollipopConfig } from "../..";
 import { KeyInfo } from "../crypto";
 import { lollipopRequestInit } from "../fetch";
+import { getUnixTimestamp } from "../../httpSignature/signature";
 
 const publicKey: PublicKey = {
   crv: "P-256",
@@ -32,7 +33,60 @@ const requestInit: RequestInit = {
 const configurationError =
   "Bad input parameters, unable to compose RequestAndKeyInfoForLPFetch";
 
+jest.mock("@pagopa/io-react-native-crypto", () => ({
+  sign: jest.fn().mockResolvedValue("MockSignature")
+}));
+
+const testInit = (timestamp: number, signBody: boolean = false) => ({
+  headers: {
+    Authorization: "Bearer 123",
+    "x-pagopa-lollipop-original-method": "GET",
+    "x-pagopa-lollipop-original-url": "https://localhost:3000/method",
+    signature: "sig1=:MockSignature:",
+    "signature-input": `sig1=(${
+      signBody ? '"content-digest" ' : ""
+    }"x-pagopa-lollipop-original-method" "x-pagopa-lollipop-original-url");created=${timestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="SXn6l6BNlwAb60cJUKpvKB3H-UQbe2slQ_8LBR70cfA"`
+  },
+  method: "GET"
+});
+
+const testContentDigest =
+  "sha-256=:Iw2DWNyOiJC0xY3utikS7i8gNXrpKlzIYbmOaP4xrLU=:";
+
 describe("Test lollipopRequestInit", () => {
+  it("should succeed if all is set correctly", async () => {
+    const init = await lollipopRequestInit(
+      lollipopConfig,
+      keyInfo,
+      fullUrl,
+      requestInit
+    );
+    expect(init).toStrictEqual(testInit(getUnixTimestamp()));
+  });
+
+  it("should succeed with also body signature", async () => {
+    const init = await lollipopRequestInit(
+      {
+        ...lollipopConfig,
+        signBody: true
+      },
+      keyInfo,
+      fullUrl,
+      {
+        ...requestInit,
+        body: "body"
+      }
+    );
+    const initToMatch = testInit(getUnixTimestamp(), true);
+    expect(init).toStrictEqual({
+      ...initToMatch,
+      body: "body",
+      headers: {
+        "Content-Digest": testContentDigest,
+        ...initToMatch.headers
+      }
+    });
+  });
   it("should throw if no keyTag is set", async () => {
     try {
       return await lollipopRequestInit(
@@ -85,13 +139,11 @@ describe("Test lollipopRequestInit", () => {
   });
 
   it("should throw if no request method is set", async () => {
-    try {
-      return await lollipopRequestInit(lollipopConfig, keyInfo, fullUrl, {
+    await expect(
+      lollipopRequestInit(lollipopConfig, keyInfo, fullUrl, {
         ...requestInit,
         method: undefined
-      });
-    } catch (e) {
-      return expect(`${e}`).toMatch(configurationError);
-    }
+      })
+    ).rejects.toEqual(new Error(configurationError));
   });
 });
