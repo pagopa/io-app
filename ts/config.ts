@@ -109,6 +109,12 @@ export const fciEnabled = Config.FCI_ENABLED === "YES";
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
+// Fast Login Feature Flag
+export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
+
+// Native Login Feature Flag
+export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
+
 // Opt-in for reminder push notifications
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
@@ -194,6 +200,21 @@ export const unsupportedDeviceLearnMoreUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
   NonEmptyString.decode,
   E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
+);
+
+export const cieSpidMoreInfoUrl: string = pipe(
+  Config.CIE_SPID_INFORMATION_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://identitadigitale.gov.it")
+);
+
+export const pinPukHelpUrl: string = pipe(
+  Config.PIN_PUK_HELP_URL,
+  NonEmptyString.decode,
+  E.getOrElse(
+    () =>
+      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk"
+  )
 );
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;

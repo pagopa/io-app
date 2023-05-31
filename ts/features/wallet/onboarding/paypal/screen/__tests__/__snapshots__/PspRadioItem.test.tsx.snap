@@ -156,7 +156,7 @@ exports[`PspRadioItem match snapshot 1`] = `
     }
     visible={true}
   >
-    <View
+    <RCTScrollView
       style={
         Object {
           "flex": 1,
@@ -164,381 +164,379 @@ exports[`PspRadioItem match snapshot 1`] = `
         }
       }
     >
-      <RCTScrollView>
-        <View>
+      <View>
+        <View
+          testID="PspInfoBottomSheetContentTestID"
+        >
           <View
-            testID="PspInfoBottomSheetContentTestID"
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginTop": 12,
+              }
+            }
           >
             <View
               style={
                 Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "marginTop": 12,
+                  "marginRight": 16,
+                  "marginTop": 6,
                 }
               }
             >
-              <View
+              <RNSVGSvgView
+                accessibilityElementsHidden={true}
+                accessibilityLabel=""
+                accessible={false}
+                align="xMidYMid"
+                bbHeight={24}
+                bbWidth={24}
+                color={4278219750}
+                focusable={false}
+                height={24}
+                importantForAccessibility="no-hide-descendants"
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
                 style={
-                  Object {
-                    "marginRight": 16,
-                    "marginTop": 6,
-                  }
-                }
-              >
-                <RNSVGSvgView
-                  accessibilityElementsHidden={true}
-                  accessibilityLabel=""
-                  accessible={false}
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4278219750}
-                  focusable={false}
-                  height={24}
-                  importantForAccessibility="no-hide-descendants"
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {
-                        "color": "#0073E6",
-                      },
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4278219750}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      clipRule={0}
-                      d="M.9995 12.9945C.44722 12.9943-.00027 12.5463 0 11.994a12.00002 12.00002 0 0 1 20.5-8.46455v-1.0295c0-.55228.4477-1 1-1s1 .44772 1 1v3.5a.99997.99997 0 0 1-1 1H18c-.5523 0-1-.44772-1-1s.4477-1 1-1h1.1414A10 10 0 0 0 2 11.995c-.00027.5523-.44821.9998-1.0005.9995ZM24 12.006c.0003-.5523-.4472-1.0003-.9995-1.0005-.5523-.0003-1.0002.4472-1.0005.9995a10.00034 10.00034 0 0 1-1.9878 5.9787 10.0006 10.0006 0 0 1-5.1683 3.6034 9.99992 9.99992 0 0 1-6.29728-.2023A10.00062 10.00062 0 0 1 4.85861 19H6c.55228 0 1-.4477 1-1 0-.5522-.44772-1-1-1H2.5c-.26522 0-.51957.1054-.70711.2929A1.0001 1.0001 0 0 0 1.5 18v3.5c0 .5523.44771 1 1 1 .55228 0 1-.4477 1-1v-1.0295a11.99855 11.99855 0 0 0 4.35595 2.7912 11.9998 11.9998 0 0 0 7.55665.2428c2.4793-.7354 4.6546-2.2521 6.2021-4.3241A12.00001 12.00001 0 0 0 24 12.006ZM12.8057 8.411a3.74994 3.74994 0 0 0-4.13036 1.39806 3.7515 3.7515 0 0 0-.39353.69094h3.43689c.4143 0 .75.3358.75.75s-.3357.75-.75.75H7.96875c0 .2532.02563.5044.07576.75h3.67419c.4143 0 .75.3358.75.75s-.3357.75-.75.75H8.71875a3.75036 3.75036 0 0 0 1.77295 1.2936 3.75037 3.75037 0 0 0 2.289.0529 3.75045 3.75045 0 0 0 1.8931-1.2878c.255-.3264.7263-.3842 1.0527-.1292s.3843.7263.1293 1.0527a5.25005 5.25005 0 0 1-2.6504 1.8029 5.24931 5.24931 0 0 1-3.2045-.0741 5.2501 5.2501 0 0 1-3.02557-2.711h-.50658c-.41422 0-.75-.3358-.75-.75s.33578-.75.75-.75h.05384a5.25096 5.25096 0 0 1-.05384-.75c-.41422 0-.75-.3358-.75-.75s.33578-.75.75-.75h.21884a5.25011 5.25011 0 0 1 3.34791-3.47286 5.24998 5.24998 0 0 1 3.205-.05174 5.24994 5.24994 0 0 1 2.6378 1.82134c.2527.32817.1915.79909-.1366 1.05182-.3282.25274-.7991.19154-1.0519-.13661A3.74976 3.74976 0 0 0 12.8057 8.411Z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      fillRule={0}
-                      propList={
-                        Array [
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              >
-                <Text
-                  color="bluegrey"
-                  defaultColor="bluegrey"
-                  defaultWeight="Regular"
-                  font="TitilliumWeb"
-                  fontStyle={
+                  Array [
                     Object {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    }
-                  }
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      },
-                      Object {
-                        "color": "#475A6D",
-                        "fontFamily": "Titillium Web",
-                        "fontStyle": "normal",
-                        "fontWeight": "400",
-                      },
-                    ]
-                  }
-                  weight="Regular"
-                >
-                  It's a Payment Service Provider (PSP) which can process your transactions via PayPal.
-                </Text>
-              </View>
-            </View>
-            <View
-              style={
-                Object {
-                  "flex": 1,
-                  "flexDirection": "row",
-                  "marginTop": 12,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "marginRight": 16,
-                    "marginTop": 6,
-                  }
-                }
-              >
-                <RNSVGSvgView
-                  accessibilityElementsHidden={true}
-                  accessibilityLabel=""
-                  accessible={false}
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4278219750}
-                  focusable={false}
-                  height={24}
-                  importantForAccessibility="no-hide-descendants"
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {
-                        "color": "#0073E6",
-                      },
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4278219750}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M12.8287 1.41417A4.99995 4.99995 0 0 0 9.29318-.05029H5.05054c-2.76143 0-5 2.23857-5 5v4.24264A5.00013 5.00013 0 0 0 1.515 12.7279l9.6066 9.6066c1.9526 1.9526 5.1185 1.9526 7.0711 0l4.2426-4.2427c1.9526-1.9526 1.9526-5.1184 0-7.071l-9.6066-9.60663Zm-3.53552.53554a3.00003 3.00003 0 0 1 2.12132.87868l9.6066 9.60661c1.1716 1.1716 1.1716 3.0711 0 4.2426l-4.2426 4.2427c-1.1716 1.1715-3.0711 1.1715-4.2427 0l-9.60658-9.6066a3.00005 3.00005 0 0 1-.87868-2.12135V4.94971c0-1.65686 1.34314-3 3-3h4.24264Zm-1.2932 4.05028c0 1.10457-.89543 2-2 2s-2-.89543-2-2 .89543-2 2-2 2 .89543 2 2Z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              >
-                <Text
-                  color="bluegrey"
-                  defaultColor="bluegrey"
-                  defaultWeight="Regular"
-                  font="TitilliumWeb"
-                  fontStyle={
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
                     Object {
-                      "fontSize": 16,
-                      "lineHeight": 24,
-                    }
-                  }
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 16,
-                        "lineHeight": 24,
-                      },
-                      Object {
-                        "color": "#475A6D",
-                        "fontFamily": "Titillium Web",
-                        "fontStyle": "normal",
-                        "fontWeight": "400",
-                      },
-                    ]
-                  }
-                  weight="Regular"
-                >
-                  When you pay a notice, this PSP can apply a maximum fee of 
-                  <Text
-                    color="bluegreyDark"
-                    defaultColor="blue"
-                    defaultWeight="Bold"
-                    font="TitilliumWeb"
-                    fontStyle={
-                      Object {
-                        "fontSize": 16,
-                      }
-                    }
-                    style={
+                      "color": "#0073E6",
+                    },
+                    Object {
+                      "flex": 0,
+                      "height": 24,
+                      "width": 24,
+                    },
+                  ]
+                }
+                tintColor={4278219750}
+                vbHeight={24}
+                vbWidth={24}
+                width={24}
+              >
+                <RNSVGGroup>
+                  <RNSVGPath
+                    clipRule={0}
+                    d="M.9995 12.9945C.44722 12.9943-.00027 12.5463 0 11.994a12.00002 12.00002 0 0 1 20.5-8.46455v-1.0295c0-.55228.4477-1 1-1s1 .44772 1 1v3.5a.99997.99997 0 0 1-1 1H18c-.5523 0-1-.44772-1-1s.4477-1 1-1h1.1414A10 10 0 0 0 2 11.995c-.00027.5523-.44821.9998-1.0005.9995ZM24 12.006c.0003-.5523-.4472-1.0003-.9995-1.0005-.5523-.0003-1.0002.4472-1.0005.9995a10.00034 10.00034 0 0 1-1.9878 5.9787 10.0006 10.0006 0 0 1-5.1683 3.6034 9.99992 9.99992 0 0 1-6.29728-.2023A10.00062 10.00062 0 0 1 4.85861 19H6c.55228 0 1-.4477 1-1 0-.5522-.44772-1-1-1H2.5c-.26522 0-.51957.1054-.70711.2929A1.0001 1.0001 0 0 0 1.5 18v3.5c0 .5523.44771 1 1 1 .55228 0 1-.4477 1-1v-1.0295a11.99855 11.99855 0 0 0 4.35595 2.7912 11.9998 11.9998 0 0 0 7.55665.2428c2.4793-.7354 4.6546-2.2521 6.2021-4.3241A12.00001 12.00001 0 0 0 24 12.006ZM12.8057 8.411a3.74994 3.74994 0 0 0-4.13036 1.39806 3.7515 3.7515 0 0 0-.39353.69094h3.43689c.4143 0 .75.3358.75.75s-.3357.75-.75.75H7.96875c0 .2532.02563.5044.07576.75h3.67419c.4143 0 .75.3358.75.75s-.3357.75-.75.75H8.71875a3.75036 3.75036 0 0 0 1.77295 1.2936 3.75037 3.75037 0 0 0 2.289.0529 3.75045 3.75045 0 0 0 1.8931-1.2878c.255-.3264.7263-.3842 1.0527-.1292s.3843.7263.1293 1.0527a5.25005 5.25005 0 0 1-2.6504 1.8029 5.24931 5.24931 0 0 1-3.2045-.0741 5.2501 5.2501 0 0 1-3.02557-2.711h-.50658c-.41422 0-.75-.3358-.75-.75s.33578-.75.75-.75h.05384a5.25096 5.25096 0 0 1-.05384-.75c-.41422 0-.75-.3358-.75-.75s.33578-.75.75-.75h.21884a5.25011 5.25011 0 0 1 3.34791-3.47286 5.24998 5.24998 0 0 1 3.205-.05174 5.24994 5.24994 0 0 1 2.6378 1.82134c.2527.32817.1915.79909-.1366 1.05182-.3282.25274-.7991.19154-1.0519-.13661A3.74976 3.74976 0 0 0 12.8057 8.411Z"
+                    fill={
                       Array [
-                        Object {
-                          "fontSize": 16,
-                        },
-                        Object {
-                          "color": "#17324D",
-                          "fontFamily": "Titillium Web",
-                          "fontStyle": "normal",
-                          "fontWeight": "700",
-                        },
+                        2,
                       ]
                     }
-                    weight="Bold"
-                  >
-                    € 1.00
-                  </Text>
-                  . You'll see the right amount before confirming the payment.
-                </Text>
-              </View>
+                    fillRule={0}
+                    propList={
+                      Array [
+                        "fill",
+                        "fillRule",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </View>
             <View
               style={
                 Object {
                   "flex": 1,
-                  "flexDirection": "row",
-                  "marginTop": 12,
                 }
               }
             >
-              <View
-                style={
+              <Text
+                color="bluegrey"
+                defaultColor="bluegrey"
+                defaultWeight="Regular"
+                font="TitilliumWeb"
+                fontStyle={
                   Object {
-                    "marginRight": 16,
-                    "marginTop": 6,
+                    "fontSize": 16,
+                    "lineHeight": 24,
                   }
                 }
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "color": "#475A6D",
+                      "fontFamily": "Titillium Web",
+                      "fontStyle": "normal",
+                      "fontWeight": "400",
+                    },
+                  ]
+                }
+                weight="Regular"
               >
-                <RNSVGSvgView
-                  accessibilityElementsHidden={true}
-                  accessibilityLabel=""
-                  accessible={false}
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4278219750}
-                  focusable={false}
-                  height={24}
-                  importantForAccessibility="no-hide-descendants"
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
+                It's a Payment Service Provider (PSP) which can process your transactions via PayPal.
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginTop": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginRight": 16,
+                  "marginTop": 6,
+                }
+              }
+            >
+              <RNSVGSvgView
+                accessibilityElementsHidden={true}
+                accessibilityLabel=""
+                accessible={false}
+                align="xMidYMid"
+                bbHeight={24}
+                bbWidth={24}
+                color={4278219750}
+                focusable={false}
+                height={24}
+                importantForAccessibility="no-hide-descendants"
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    Object {
+                      "color": "#0073E6",
+                    },
+                    Object {
+                      "flex": 0,
+                      "height": 24,
+                      "width": 24,
+                    },
+                  ]
+                }
+                tintColor={4278219750}
+                vbHeight={24}
+                vbWidth={24}
+                width={24}
+              >
+                <RNSVGGroup>
+                  <RNSVGPath
+                    d="M12.8287 1.41417A4.99995 4.99995 0 0 0 9.29318-.05029H5.05054c-2.76143 0-5 2.23857-5 5v4.24264A5.00013 5.00013 0 0 0 1.515 12.7279l9.6066 9.6066c1.9526 1.9526 5.1185 1.9526 7.0711 0l4.2426-4.2427c1.9526-1.9526 1.9526-5.1184 0-7.071l-9.6066-9.60663Zm-3.53552.53554a3.00003 3.00003 0 0 1 2.12132.87868l9.6066 9.60661c1.1716 1.1716 1.1716 3.0711 0 4.2426l-4.2426 4.2427c-1.1716 1.1715-3.0711 1.1715-4.2427 0l-9.60658-9.6066a3.00005 3.00005 0 0 1-.87868-2.12135V4.94971c0-1.65686 1.34314-3 3-3h4.24264Zm-1.2932 4.05028c0 1.10457-.89543 2-2 2s-2-.89543-2-2 .89543-2 2-2 2 .89543 2 2Z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <Text
+                color="bluegrey"
+                defaultColor="bluegrey"
+                defaultWeight="Regular"
+                font="TitilliumWeb"
+                fontStyle={
+                  Object {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  }
+                }
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 16,
+                      "lineHeight": 24,
+                    },
+                    Object {
+                      "color": "#475A6D",
+                      "fontFamily": "Titillium Web",
+                      "fontStyle": "normal",
+                      "fontWeight": "400",
+                    },
+                  ]
+                }
+                weight="Regular"
+              >
+                When you pay a notice, this PSP can apply a maximum fee of 
+                <Text
+                  color="bluegreyDark"
+                  defaultColor="blue"
+                  defaultWeight="Bold"
+                  font="TitilliumWeb"
+                  fontStyle={
+                    Object {
+                      "fontSize": 16,
+                    }
+                  }
                   style={
                     Array [
                       Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
+                        "fontSize": 16,
                       },
                       Object {
-                        "color": "#0073E6",
-                      },
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
+                        "color": "#17324D",
+                        "fontFamily": "Titillium Web",
+                        "fontStyle": "normal",
+                        "fontWeight": "700",
                       },
                     ]
                   }
-                  tintColor={4278219750}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
+                  weight="Bold"
                 >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      clipRule={0}
-                      d="m12.316.05173 6.265 2.089a4.99323 4.99323 0 0 1 2.4764 1.81871A4.9932 4.9932 0 0 1 22 6.88373v5.11697c0 7.563-9.2 11.74-9.594 11.914a.99966.99966 0 0 1-.406.0862.99966.99966 0 0 1-.406-.0862C11.2 23.7407 2 19.5637 2 12.0007V6.88373a4.99297 4.99297 0 0 1 3.419-4.743l6.265-2.089a1 1 0 0 1 .632 0ZM12 21.8897c1.681-.856 8-4.434 8-9.889V6.88373a3.00028 3.00028 0 0 0-.5666-1.75426 2.99978 2.99978 0 0 0-1.4854-1.09174L12 2.05473l-5.948 1.983A3.00003 3.00003 0 0 0 4 6.88373v5.11697c0 5.469 6.317 9.036 8 9.889Zm4.7071-11.1826c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L11 13.5858l-2.29289-2.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L9.58579 15c.78101.7811 2.04741.781 2.82841 0l4.2929-4.2929Z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      fillRule={0}
-                      propList={
-                        Array [
-                          "fill",
-                          "fillRule",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
+                  € 1.00
+                </Text>
+                . You'll see the right amount before confirming the payment.
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginTop": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "marginRight": 16,
+                  "marginTop": 6,
                 }
+              }
+            >
+              <RNSVGSvgView
+                accessibilityElementsHidden={true}
+                accessibilityLabel=""
+                accessible={false}
+                align="xMidYMid"
+                bbHeight={24}
+                bbWidth={24}
+                color={4278219750}
+                focusable={false}
+                height={24}
+                importantForAccessibility="no-hide-descendants"
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    Object {
+                      "color": "#0073E6",
+                    },
+                    Object {
+                      "flex": 0,
+                      "height": 24,
+                      "width": 24,
+                    },
+                  ]
+                }
+                tintColor={4278219750}
+                vbHeight={24}
+                vbWidth={24}
+                width={24}
               >
-                <View>
-                  <Text
-                    accessible={true}
-                    color="blue"
-                    defaultColor="blue"
-                    defaultWeight="SemiBold"
-                    focusable={true}
-                    font="TitilliumWeb"
-                    fontStyle={
+                <RNSVGGroup>
+                  <RNSVGPath
+                    clipRule={0}
+                    d="m12.316.05173 6.265 2.089a4.99323 4.99323 0 0 1 2.4764 1.81871A4.9932 4.9932 0 0 1 22 6.88373v5.11697c0 7.563-9.2 11.74-9.594 11.914a.99966.99966 0 0 1-.406.0862.99966.99966 0 0 1-.406-.0862C11.2 23.7407 2 19.5637 2 12.0007V6.88373a4.99297 4.99297 0 0 1 3.419-4.743l6.265-2.089a1 1 0 0 1 .632 0ZM12 21.8897c1.681-.856 8-4.434 8-9.889V6.88373a3.00028 3.00028 0 0 0-.5666-1.75426 2.99978 2.99978 0 0 0-1.4854-1.09174L12 2.05473l-5.948 1.983A3.00003 3.00003 0 0 0 4 6.88373v5.11697c0 5.469 6.317 9.036 8 9.889Zm4.7071-11.1826c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L11 13.5858l-2.29289-2.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L9.58579 15c.78101.7811 2.04741.781 2.82841 0l4.2929-4.2929Z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    fillRule={0}
+                    propList={
+                      Array [
+                        "fill",
+                        "fillRule",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View>
+                <Text
+                  accessible={true}
+                  color="blue"
+                  defaultColor="blue"
+                  defaultWeight="SemiBold"
+                  focusable={true}
+                  font="TitilliumWeb"
+                  fontStyle={
+                    Object {
+                      "fontSize": 16,
+                      "textDecorationLine": "underline",
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Array [
                       Object {
                         "fontSize": 16,
                         "textDecorationLine": "underline",
-                      }
-                    }
-                    onClick={[Function]}
-                    onResponderGrant={[Function]}
-                    onResponderMove={[Function]}
-                    onResponderRelease={[Function]}
-                    onResponderTerminate={[Function]}
-                    onResponderTerminationRequest={[Function]}
-                    onStartShouldSetResponder={[Function]}
-                    style={
-                      Array [
-                        Object {
-                          "fontSize": 16,
-                          "textDecorationLine": "underline",
-                        },
-                        Object {
-                          "color": "#0073E6",
-                          "fontFamily": "Titillium Web",
-                          "fontStyle": "normal",
-                          "fontWeight": "600",
-                        },
-                      ]
-                    }
-                    weight="SemiBold"
-                  >
-                    PayTipper’s Terms and Conditions and Privacy Policy apply
-                  </Text>
-                </View>
+                      },
+                      Object {
+                        "color": "#0073E6",
+                        "fontFamily": "Titillium Web",
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                      },
+                    ]
+                  }
+                  weight="SemiBold"
+                >
+                  PayTipper’s Terms and Conditions and Privacy Policy apply
+                </Text>
               </View>
             </View>
           </View>
         </View>
-      </RCTScrollView>
-    </View>
+      </View>
+    </RCTScrollView>
   </Modal>
 </View>
 `;

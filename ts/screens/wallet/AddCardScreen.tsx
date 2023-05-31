@@ -37,7 +37,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
@@ -242,7 +242,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
   const inPayment = props.route.params.inPayment;
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <>
       <Body>{I18n.t("wallet.missingDataText.body")}</Body>
       <VSpacer size={24} />

@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H3 } from "../../../components/core/typography/H3";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -32,7 +32,7 @@ export const useFciNoSignatureFields = (props: Props) => {
   const navigation = useNavigation();
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const { currentDoc } = props;
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View style={styles.verticalPad}>
       <H4 weight={"Regular"}>{I18n.t("features.fci.noFields.content")}</H4>
     </View>,
