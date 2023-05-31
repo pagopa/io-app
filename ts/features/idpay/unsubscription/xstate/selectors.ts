@@ -28,42 +28,39 @@ export const selectInitiativeType = (state: StateWithContext) =>
     O.getOrElse(() => InitiativeRewardTypeEnum.REFUND)
   );
 
-type checks = ReadonlyArray<{
-  title: string;
-  subtitle: string;
-}>;
+const checks = {
+  [InitiativeRewardTypeEnum.REFUND]: [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.2.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.4.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+    }
+  ],
 
-const refundUnsubscriptionChecks: checks = [
-  {
-    title: I18n.t("idpay.unsubscription.checks.1.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.2.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.2.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.3.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.4.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.4.content")
-  }
-];
+  [InitiativeRewardTypeEnum.DISCOUNT]: [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    }
+  ]
+};
 
-const discountUnsubscriptionChecks: checks = [
-  {
-    title: I18n.t("idpay.unsubscription.checks.1.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.3.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-  }
-];
-
-export const selectUnsubscriptionChecks = (state: StateWithContext) =>
-  selectInitiativeType(state) === InitiativeRewardTypeEnum.DISCOUNT
-    ? discountUnsubscriptionChecks
-    : refundUnsubscriptionChecks;
+export const selectUnsubscriptionChecks = createSelector(
+  selectInitiativeType,
+  type => checks[type]
+);
