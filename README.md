@@ -607,7 +607,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://idpay/initiative/:initiativeId</td>
         </tr>
         <tr>
-            <td>ioit://idpay/auth</td>
+            <td>ioit://idpay/auth/:trxCode</td>
         </tr>
     </table>
     <h3>miscs</h3>

@@ -35,9 +35,9 @@ export const idPayLinkingOptions: PathConfigMap = {
     path: "idpay/auth",
     screens: {
       /**
-       * Handles ioit://idpay/auth?trxCode={transactionCode}
+       * Handles ioit://idpay/auth/{trxCode}
        */
-      [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: ""
+      [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: "/:trxCode"
     }
   }
 };
