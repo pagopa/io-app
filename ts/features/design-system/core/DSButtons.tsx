@@ -963,51 +963,6 @@ export const DSButtons = () => {
           />
         </View>
       </DSComponentViewerBox>
-      <DSComponentViewerBox name="ButtonLink · Status variants">
-        <ButtonLink
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Danger button"}
-          onPress={onButtonPress}
-          color="error"
-        />
-
-        <VSpacer size={16} />
-
-        <ButtonLink
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Danger button"}
-          color="error"
-          icon="trashcan"
-          onPress={onButtonPress}
-        />
-
-        <VSpacer size={16} />
-
-        <ButtonLink
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Warning button"}
-          color="warning"
-          onPress={onButtonPress}
-        />
-
-        <VSpacer size={16} />
-
-        <ButtonLink
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Success button"}
-          color="success"
-          onPress={onButtonPress}
-        />
-
-        <VSpacer size={16} />
-
-        <ButtonLink
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Info button"}
-          color="info"
-          onPress={onButtonPress}
-        />
-      </DSComponentViewerBox>
 
       <VSpacer size={40} />
 
