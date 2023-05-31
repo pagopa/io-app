@@ -109,7 +109,7 @@ const SuccessComponent = (props: {
           subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
           email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
-          image={fireworks}
+          pictogram={"timeout"}
           testID={"CancelledSignatureRequestTestID"}
         />
       );
