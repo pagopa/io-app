@@ -18,10 +18,6 @@ const createActionsImplementation = (
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT
     });
 
-  const navigateBack = () => {
-    navigation.goBack();
-  };
-
   const exitAuthorization = () => {
     navigation.pop();
   };
@@ -29,7 +25,6 @@ const createActionsImplementation = (
   return {
     navigateToAuthorizationScreen,
     navigateToResultScreen,
-    navigateBack,
     exitAuthorization
   };
 };
