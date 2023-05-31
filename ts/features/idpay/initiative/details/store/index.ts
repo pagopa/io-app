@@ -209,17 +209,18 @@ export const idPayBeneficiaryDetailsSelector = createSelector(
   initiative => initiative.beneficiaryDetails
 );
 
-export const idPayisDiscountInitiativeSelector = createSelector(
+export const idPayInitiativeTypeSelector = createSelector(
   idpayInitiativeDetailsSelector,
   details =>
-    pipe(
-      details,
-      pot.toOption,
-      O.fold(
-        () => false,
-        details =>
-          details.initiativeRewardType === InitiativeRewardTypeEnum.DISCOUNT
-      )
+    pot.getOrElse(
+      pot.map(details, details =>
+        pipe(
+          details.initiativeRewardType,
+          O.fromNullable,
+          O.getOrElse(() => InitiativeRewardTypeEnum.REFUND)
+        )
+      ),
+      InitiativeRewardTypeEnum.REFUND
     )
 );
 export default reducer;

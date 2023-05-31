@@ -16,3 +16,6 @@ export const isLoadingSelector = createSelector(selectTags, tags =>
 
 export const selectIsFailure = (state: StateWithContext) =>
   state.matches("UNSUBSCRIPTION_FAILURE");
+
+export const selectInitiativeType = (state: StateWithContext) =>
+  state.context.initiativeType;

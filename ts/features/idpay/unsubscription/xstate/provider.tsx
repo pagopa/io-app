@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
@@ -25,8 +26,8 @@ import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import {
-  createIDPayUnsubscriptionMachine,
-  IDPayUnsubscriptionMachineType
+  IDPayUnsubscriptionMachineType,
+  createIDPayUnsubscriptionMachine
 } from "./machine";
 import { createServicesImplementation } from "./services";
 
@@ -42,15 +43,17 @@ type Props = {
   children: React.ReactNode;
   initiativeId: string;
   initiativeName?: string;
+  initiativeType: InitiativeRewardTypeEnum;
 };
 
 const IDPayUnsubscriptionMachineProvider = (props: Props) => {
-  const { initiativeId, initiativeName } = props;
+  const { initiativeId, initiativeName, initiativeType } = props;
 
   const [machine] = useXStateMachine(() =>
     createIDPayUnsubscriptionMachine({
       initiativeId,
-      initiativeName
+      initiativeName,
+      initiativeType
     })
   );
 
@@ -102,6 +105,6 @@ const useUnsubscriptionMachineService = () =>
 
 export {
   IDPayUnsubscriptionMachineProvider,
-  useUnsubscriptionMachineService,
-  UnsubscriptionMachineContext
+  UnsubscriptionMachineContext,
+  useUnsubscriptionMachineService
 };

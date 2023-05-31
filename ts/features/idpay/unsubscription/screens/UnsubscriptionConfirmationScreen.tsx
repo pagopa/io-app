@@ -2,6 +2,7 @@ import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
@@ -19,9 +20,11 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
-import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
-import { useIOSelector } from "../../../../store/hooks";
-import { idPayisDiscountInitiativeSelector } from "../../initiative/details/store";
+import {
+  isLoadingSelector,
+  selectInitiativeName,
+  selectInitiativeType
+} from "../xstate/selectors";
 
 const refundUnsubscriptionChecks: ReadonlyArray<{
   title: string;
@@ -61,13 +64,13 @@ const discountUnsubscriptionChecks: ReadonlyArray<{
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
-
+  const initiativeType = useSelector(machine, selectInitiativeType);
   const isLoading = useSelector(machine, isLoadingSelector);
   const initiativeName = useSelector(machine, selectInitiativeName);
-  const isRefund = useIOSelector(idPayisDiscountInitiativeSelector);
-  const unsubscriptionChecks = isRefund
-    ? discountUnsubscriptionChecks
-    : refundUnsubscriptionChecks;
+  const unsubscriptionChecks =
+    initiativeType === InitiativeRewardTypeEnum.DISCOUNT
+      ? discountUnsubscriptionChecks
+      : refundUnsubscriptionChecks;
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
 
