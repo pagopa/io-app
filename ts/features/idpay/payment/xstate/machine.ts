@@ -39,15 +39,15 @@ const createIDPayPaymentMachine = () =>
             src: "preAuthorizePayment",
             onDone: {
               actions: "setTransactionData",
-              target: "AWAITING_USER_AUTHORIZATION"
+              target: "AWAITING_USER_CONFIRMATION"
             },
             onError: {
               actions: "setFailure",
-              target: "PAYMENT_FAILURE"
+              target: "AUTHORIZATION_FAILURE"
             }
           }
         },
-        AWAITING_USER_AUTHORIZATION: {
+        AWAITING_USER_CONFIRMATION: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
             CONFIRM_AUTHORIZATION: {
@@ -55,7 +55,7 @@ const createIDPayPaymentMachine = () =>
             },
             CANCEL_AUTHORIZATION: {
               actions: "cancelTransaction",
-              target: "PAYMENT_FAILURE"
+              target: "AUTHORIZATION_FAILURE"
             }
           }
         },
@@ -65,15 +65,15 @@ const createIDPayPaymentMachine = () =>
             id: "authorizePayment",
             src: "authorizePayment",
             onDone: {
-              target: "PAYMENT_SUCCESS"
+              target: "AUTHORIZATION_SUCCESS"
             },
             onError: {
               actions: "setFailure",
-              target: "PAYMENT_FAILURE"
+              target: "AUTHORIZATION_FAILURE"
             }
           }
         },
-        PAYMENT_SUCCESS: {
+        AUTHORIZATION_SUCCESS: {
           entry: "navigateToResultScreen",
           on: {
             EXIT: {
@@ -81,7 +81,7 @@ const createIDPayPaymentMachine = () =>
             }
           }
         },
-        PAYMENT_FAILURE: {
+        AUTHORIZATION_FAILURE: {
           entry: "navigateToResultScreen",
           on: {
             EXIT: {

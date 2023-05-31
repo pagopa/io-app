@@ -11,7 +11,7 @@ import { PaymentFailureEnum } from "../failure";
 import { createServicesImplementation } from "../services";
 
 const T_AUTH_TOKEN = "abc123";
-const T_TRX_CODE = "123456";
+const T_TRX_CODE = "ABCD1234";
 const T_TRANSACTION_DATA_DTO: AuthPaymentResponseDTO = {
   amountCents: 100,
   id: "",

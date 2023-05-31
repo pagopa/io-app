@@ -20,7 +20,7 @@ export const selectIsAuthorizing = (state: StateWithContext) =>
   state.matches("AUTHORIZING");
 
 export const selectIsFailure = (state: StateWithContext) =>
-  state.matches("PAYMENT_FAILURE");
+  state.matches("AUTHORIZATION_FAILURE");
 
 export const selectTransactionData = (state: StateWithContext) =>
   pipe(state.context.transactionData, O.toUndefined);
