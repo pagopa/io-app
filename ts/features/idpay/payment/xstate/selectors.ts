@@ -1,3 +1,5 @@
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { LOADING_TAG } from "../../../../utils/xstate";
@@ -21,4 +23,4 @@ export const selectIsFailure = (state: StateWithContext) =>
   state.matches("PAYMENT_FAILURE");
 
 export const selectTransactionData = (state: StateWithContext) =>
-  state.context.transactionData;
+  pipe(state.context.transactionData, O.toUndefined);
