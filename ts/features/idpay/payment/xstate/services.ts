@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { flow, pipe } from "fp-ts/lib/function";
@@ -19,7 +20,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
   const preAuthorizePayment = async (
     context: Context
   ): Promise<AuthPaymentResponseDTO> => {
-    if (context.trxCode === undefined) {
+    if (O.isNone(context.trxCode)) {
       return Promise.reject(PaymentFailureEnum.GENERIC);
     }
 
@@ -27,7 +28,10 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
       async () =>
         await client.putPreAuthPayment({
           bearerAuth: token,
-          trxCode: context.trxCode || ""
+          trxCode: pipe(
+            context.trxCode,
+            O.getOrElse(() => "")
+          )
         }),
       E.toError
     )();
@@ -56,7 +60,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
   const authorizePayment = async (
     context: Context
   ): Promise<AuthPaymentResponseDTO> => {
-    if (context.trxCode === undefined) {
+    if (O.isNone(context.trxCode)) {
       return Promise.reject(PaymentFailureEnum.GENERIC);
     }
 
@@ -64,7 +68,10 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
       async () =>
         await client.putAuthPayment({
           bearerAuth: token,
-          trxCode: context.trxCode || ""
+          trxCode: pipe(
+            context.trxCode,
+            O.getOrElse(() => "")
+          )
         }),
       E.toError
     )();

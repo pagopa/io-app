@@ -11,12 +11,12 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
   isAwaitingUserInputSelector,
-  selectTransactionData
+  transactionDataSelector
 } from "../xstate/selectors";
 
 const IDPayPaymentAuthorizationScreen = () => {
   const machine = usePaymentMachineService();
-  const transactionData = useSelector(machine, selectTransactionData);
+  const transactionData = useSelector(machine, transactionDataSelector);
 
   // To show loading state we check if there is the need of user input with
   // isAwaitingUserInputSelector. In this way we avoid to show data for a couple
@@ -28,7 +28,7 @@ const IDPayPaymentAuthorizationScreen = () => {
   };
 
   const handleConfirm = () => {
-    machine.send("AUTHORIZE_PAYMENT");
+    machine.send("CONFIRM_AUTHORIZATION");
   };
 
   // TODO Debug. Screen content will be added in another PR
