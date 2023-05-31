@@ -2,7 +2,6 @@ import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
@@ -23,54 +22,14 @@ import { useUnsubscriptionMachineService } from "../xstate/provider";
 import {
   isLoadingSelector,
   selectInitiativeName,
-  selectInitiativeType
+  selectUnsubscriptionChecks
 } from "../xstate/selectors";
-
-const refundUnsubscriptionChecks: ReadonlyArray<{
-  title: string;
-  subtitle: string;
-}> = [
-  {
-    title: I18n.t("idpay.unsubscription.checks.1.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.2.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.2.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.3.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.4.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.4.content")
-  }
-];
-
-const discountUnsubscriptionChecks: ReadonlyArray<{
-  title: string;
-  subtitle: string;
-}> = [
-  {
-    title: I18n.t("idpay.unsubscription.checks.1.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.3.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
-  }
-];
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
-  const initiativeType = useSelector(machine, selectInitiativeType);
   const isLoading = useSelector(machine, isLoadingSelector);
   const initiativeName = useSelector(machine, selectInitiativeName);
-  const unsubscriptionChecks =
-    initiativeType === InitiativeRewardTypeEnum.DISCOUNT
-      ? discountUnsubscriptionChecks
-      : refundUnsubscriptionChecks;
+  const unsubscriptionChecks = useSelector(machine, selectUnsubscriptionChecks);
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
 

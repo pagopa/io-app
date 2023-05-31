@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import I18n from "../../../../i18n";
 import { LOADING_TAG } from "../../../../utils/xstate";
 import { IDPayUnsubscriptionMachineType } from "./machine";
 
@@ -20,3 +21,43 @@ export const selectIsFailure = (state: StateWithContext) =>
 
 export const selectInitiativeType = (state: StateWithContext) =>
   state.context.initiativeType ?? InitiativeRewardTypeEnum.REFUND;
+
+type checks = ReadonlyArray<{
+  title: string;
+  subtitle: string;
+}>;
+
+const refundUnsubscriptionChecks: checks = [
+  {
+    title: I18n.t("idpay.unsubscription.checks.1.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.2.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.3.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.4.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+  }
+];
+
+const discountUnsubscriptionChecks: checks = [
+  {
+    title: I18n.t("idpay.unsubscription.checks.1.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.3.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+  }
+];
+
+export const selectUnsubscriptionChecks = (state: StateWithContext) =>
+  selectInitiativeType(state) === InitiativeRewardTypeEnum.DISCOUNT
+    ? discountUnsubscriptionChecks
+    : refundUnsubscriptionChecks;
