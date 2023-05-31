@@ -46,7 +46,7 @@ const IDPayPaymentAuthorizationScreen = () => {
             <ContentWrapper>{content}</ContentWrapper>
           </View>
           <FooterWithButtons
-            type="TwoButtonsInlineThird"
+            type="TwoButtonsInlineHalf"
             leftButton={{
               title: "Annulla",
               bordered: true,
