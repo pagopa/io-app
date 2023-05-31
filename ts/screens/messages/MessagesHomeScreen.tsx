@@ -9,7 +9,7 @@ import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { useMessageOpening } from "../../components/messages/hooks/useMessageOpening";
+import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
