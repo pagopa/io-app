@@ -17,8 +17,8 @@ export const testWorkerMessagePrecondition = isTestEnv
 
 function* workerMessagePrecondition(
   getThirdPartyMessagePrecondition: ReturnType<
-    typeof BackendClient
-  >["getThirdPartyMessagePrecondition"],
+    BackendClient["getThirdPartyMessagePrecondition"]
+  >,
   action: ActionType<typeof getMessagePrecondition.request>
 ) {
   const messageId = action.payload;
@@ -43,9 +43,7 @@ function* workerMessagePrecondition(
 }
 
 export function* watchMessagePrecondition(
-  getThirdPartyMessagePrecondition: ReturnType<
-    typeof BackendClient
-  >["getThirdPartyMessagePrecondition"]
+  getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"]
 ): SagaIterator {
   yield* takeLatest(
     getType(getMessagePrecondition.request),
@@ -53,7 +51,7 @@ export function* watchMessagePrecondition(
       yield* race({
         response: call(
           workerMessagePrecondition,
-          getThirdPartyMessagePrecondition,
+          getThirdPartyMessagePrecondition(),
           action
         ),
         cancel: take(clearMessagePrecondition)
