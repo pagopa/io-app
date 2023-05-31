@@ -20,26 +20,26 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
   const preAuthorizePayment = async (
     context: Context
   ): Promise<AuthPaymentResponseDTO> => {
-    if (O.isNone(context.trxCode)) {
-      return Promise.reject(PaymentFailureEnum.GENERIC);
-    }
+    const putPreAuthPaymentTask = (trxCode: string) =>
+      TE.tryCatch(
+        () =>
+          client.putPreAuthPayment({
+            bearerAuth: token,
+            trxCode
+          }),
+        () => PaymentFailureEnum.GENERIC
+      );
 
-    const dataResponse = await TE.tryCatch(
-      async () =>
-        await client.putPreAuthPayment({
-          bearerAuth: token,
-          trxCode: pipe(
-            context.trxCode,
-            O.getOrElse(() => "")
-          )
-        }),
-      E.toError
+    const dataResponse = await pipe(
+      context.trxCode,
+      TE.fromOption(() => PaymentFailureEnum.GENERIC),
+      TE.chain(putPreAuthPaymentTask)
     )();
 
     return pipe(
       dataResponse,
       E.fold(
-        () => Promise.reject(PaymentFailureEnum.GENERIC),
+        failure => Promise.reject(failure),
         flow(
           E.map(({ status, value }) => {
             switch (status) {
@@ -60,26 +60,28 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
   const authorizePayment = async (
     context: Context
   ): Promise<AuthPaymentResponseDTO> => {
-    if (O.isNone(context.trxCode)) {
-      return Promise.reject(PaymentFailureEnum.GENERIC);
-    }
+    const putAuthPaymentTask = (trxCode: string) =>
+      TE.tryCatch(
+        () =>
+          client.putAuthPayment({
+            bearerAuth: token,
+            trxCode
+          }),
+        () => PaymentFailureEnum.GENERIC
+      );
 
-    const dataResponse = await TE.tryCatch(
-      async () =>
-        await client.putAuthPayment({
-          bearerAuth: token,
-          trxCode: pipe(
-            context.trxCode,
-            O.getOrElse(() => "")
-          )
-        }),
-      E.toError
+    const dataResponse = await pipe(
+      context.transactionData,
+      O.filter(E.isRight),
+      O.map(data => data.right.trxCode),
+      TE.fromOption(() => PaymentFailureEnum.GENERIC),
+      TE.chain(putAuthPaymentTask)
     )();
 
     return pipe(
       dataResponse,
       E.fold(
-        () => Promise.reject(PaymentFailureEnum.GENERIC),
+        failure => Promise.reject(failure),
         flow(
           E.map(({ status, value }) => {
             switch (status) {
