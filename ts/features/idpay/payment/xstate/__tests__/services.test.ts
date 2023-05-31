@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import {
@@ -6,25 +7,22 @@ import {
 } from "../../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
-import { Context } from "../context";
+import { Context, INITIAL_CONTEXT } from "../context";
 import { PaymentFailureEnum } from "../failure";
 import { createServicesImplementation } from "../services";
 
 const T_AUTH_TOKEN = "abc123";
 const T_TRX_CODE = "123456";
-const T_RESPONSE_DTO: AuthPaymentResponseDTO = {
+const T_TRANSACTION_DATA_DTO: AuthPaymentResponseDTO = {
   amountCents: 100,
   id: "",
   initiativeId: "",
   rejectionReasons: [],
   status: StatusEnum.AUTHORIZED,
-  trxCode: ""
+  trxCode: T_TRX_CODE
 };
 
-const T_CONTEXT: Context = {
-  trxCode: undefined,
-  transaction: undefined
-};
+const T_CONTEXT: Context = INITIAL_CONTEXT;
 
 describe("IDPay Payment machine services", () => {
   const services = createServicesImplementation(mockIDPayClient, T_AUTH_TOKEN);
@@ -49,7 +47,10 @@ describe("IDPay Payment machine services", () => {
       mockIDPayClient.putPreAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.preAuthorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
+        services.preAuthorizePayment({
+          ...T_CONTEXT,
+          trxCode: O.some(T_TRX_CODE)
+        })
       ).rejects.toStrictEqual(PaymentFailureEnum.UNAUTHORIZED);
 
       expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
@@ -67,7 +68,10 @@ describe("IDPay Payment machine services", () => {
       mockIDPayClient.putPreAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.preAuthorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
+        services.preAuthorizePayment({
+          ...T_CONTEXT,
+          trxCode: O.some(T_TRX_CODE)
+        })
       ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
       expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
@@ -82,13 +86,16 @@ describe("IDPay Payment machine services", () => {
       const response: E.Either<
         Error,
         { status: number; value?: AuthPaymentResponseDTO }
-      > = E.right({ status: 200, value: T_RESPONSE_DTO });
+      > = E.right({ status: 200, value: T_TRANSACTION_DATA_DTO });
 
       mockIDPayClient.putPreAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.preAuthorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
-      ).resolves.toStrictEqual(T_RESPONSE_DTO);
+        services.preAuthorizePayment({
+          ...T_CONTEXT,
+          trxCode: O.some(T_TRX_CODE)
+        })
+      ).resolves.toStrictEqual(T_TRANSACTION_DATA_DTO);
 
       expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -100,10 +107,21 @@ describe("IDPay Payment machine services", () => {
   });
 
   describe("authorizePayment", () => {
-    it("should fail if trxCode is not in context", async () => {
+    it("should fail if transactionData is not in context", async () => {
       await expect(services.authorizePayment(T_CONTEXT)).rejects.toStrictEqual(
         PaymentFailureEnum.GENERIC
       );
+
+      expect(mockIDPayClient.putAuthPayment).not.toHaveBeenCalled();
+    });
+
+    it("should fail if transactionData is left", async () => {
+      await expect(
+        services.authorizePayment({
+          ...T_CONTEXT,
+          transactionData: O.some(E.left(PaymentFailureEnum.GENERIC))
+        })
+      ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
       expect(mockIDPayClient.putAuthPayment).not.toHaveBeenCalled();
     });
@@ -115,7 +133,10 @@ describe("IDPay Payment machine services", () => {
       mockIDPayClient.putAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.authorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
+        services.authorizePayment({
+          ...T_CONTEXT,
+          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+        })
       ).rejects.toStrictEqual(PaymentFailureEnum.UNAUTHORIZED);
 
       expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
@@ -133,7 +154,10 @@ describe("IDPay Payment machine services", () => {
       mockIDPayClient.putAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.authorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
+        services.authorizePayment({
+          ...T_CONTEXT,
+          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+        })
       ).rejects.toStrictEqual(PaymentFailureEnum.TIMEOUT);
 
       expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
@@ -151,7 +175,10 @@ describe("IDPay Payment machine services", () => {
       mockIDPayClient.putAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.authorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
+        services.authorizePayment({
+          ...T_CONTEXT,
+          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+        })
       ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
       expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
@@ -166,13 +193,16 @@ describe("IDPay Payment machine services", () => {
       const response: E.Either<
         Error,
         { status: number; value?: AuthPaymentResponseDTO }
-      > = E.right({ status: 200, value: T_RESPONSE_DTO });
+      > = E.right({ status: 200, value: T_TRANSACTION_DATA_DTO });
 
       mockIDPayClient.putAuthPayment.mockImplementation(() => response);
 
       await expect(
-        services.authorizePayment({ ...T_CONTEXT, trxCode: T_TRX_CODE })
-      ).resolves.toStrictEqual(T_RESPONSE_DTO);
+        services.authorizePayment({
+          ...T_CONTEXT,
+          transactionData: O.some(E.right(T_TRANSACTION_DATA_DTO))
+        })
+      ).resolves.toStrictEqual(T_TRANSACTION_DATA_DTO);
 
       expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
         expect.objectContaining({
