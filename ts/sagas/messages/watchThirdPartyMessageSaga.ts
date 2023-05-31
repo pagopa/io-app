@@ -23,12 +23,12 @@ import {
 import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
 
 function* getThirdPartyMessage(
-  client: ReturnType<typeof BackendClient>,
+  client: BackendClient,
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const id = action.payload;
   try {
-    const result = yield* call(client.getThirdPartyMessage, { id });
+    const result = yield* call(client.getThirdPartyMessage(), { id });
     if (E.isLeft(result)) {
       yield* put(
         loadThirdPartyMessage.failure({
@@ -90,7 +90,7 @@ function* trackFailure(
 }
 
 export function* watchThirdPartyMessageSaga(
-  client: ReturnType<typeof BackendClient>
+  client: BackendClient
 ): SagaIterator {
   yield* takeLatest(
     getType(loadThirdPartyMessage.request),
