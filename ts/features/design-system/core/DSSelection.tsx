@@ -16,6 +16,8 @@ import {
   NewRadioItem,
   RadioGroup
 } from "../../../components/core/selection/RadioGroup";
+import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
+import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
 
 const styles = StyleSheet.create({
   content: {
@@ -37,18 +39,18 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
-
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Radio
     </H2>
     {/* RadioListItem */}
     <RadioListItemsShowroom />
-
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
     </H2>
     {/* Switch */}
     {renderSwitch()}
+    {/* Native Switch */}
+    <NativeSwitchShowroom />
 
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
@@ -209,8 +211,19 @@ const RadioListItemsShowroom = () => {
 
 const renderSwitch = () => (
   <DSComponentViewerBox name="Switch">
-    <CheckboxLabel label="This is a test" />
+    <SwitchLabel label="This is a test" />
     <VSpacer size={16} />
-    <CheckboxLabel label="This is a test with a very loooong looooooong loooooooong text" />
+    <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
   </DSComponentViewerBox>
 );
+
+const NativeSwitchShowroom = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <DSComponentViewerBox name="Switch">
+      <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
+    </DSComponentViewerBox>
+  );
+};
