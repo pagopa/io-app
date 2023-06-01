@@ -64,11 +64,8 @@ import {
   IdpAuthErrorScreen,
   IdpAuthErrorScreenType
 } from "./idpAuthErrorScreen";
-import { useSelector } from "react-redux";
-import {
-  loggedOutWithIdpAuthSelector,
-  selectedIdentityProviderSelector
-} from "../../store/reducers/authentication";
+import { useStore } from "react-redux";
+import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { IdpData } from "../../../definitions/content/IdpData";
 
 const styles = StyleSheet.create({
@@ -151,24 +148,61 @@ export const AuthSessionPage = () => {
 
   const dispatch = useIODispatch();
 
-  const loggedOutWithIdpAuth = useSelector(loggedOutWithIdpAuthSelector);
+  // We call useStore beacause we only need some values from store, we don't need any re-render logic
+  const store = useStore();
 
-  const selectedIdp = useSelector(selectedIdentityProviderSelector);
+  // Memoized values/func --start--
+  const state = useMemo(() => store.getState(), [store]);
 
-  const selectedIdpTextData = useSelector(
-    idpContextualHelpDataFromIdSelector(selectedIdp?.id)
+  const selectedIdp = useMemo(
+    () => selectedIdentityProviderSelector(state),
+    [state]
   );
 
-  const assistanceToolConfig = useSelector(assistanceToolConfigSelector);
+  const idp = useMemo(
+    () => selectedIdp?.id as keyof IdpData | undefined,
+    [selectedIdp?.id]
+  );
+
+  const selectedIdpTextData = useMemo(
+    () => idpContextualHelpDataFromIdSelector(idp)(state),
+    [idp, state]
+  );
+
+  const assistanceToolConfig = useMemo(
+    () => assistanceToolConfigSelector(state),
+    [state]
+  );
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
     [assistanceToolConfig]
   );
 
-  const idp = useMemo(
-    () => loggedOutWithIdpAuth?.idp.id as keyof IdpData | undefined,
-    [loggedOutWithIdpAuth]
+  const loginUri = useMemo(
+    () => (idp ? getIdpLoginUri(idp, 2) : undefined),
+    [idp]
+  );
+
+  const maybeKeyTag = useMemo(() => lollipopKeyTagSelector(state), [state]);
+
+  const contextualHelp = useMemo(
+    () =>
+      pipe(
+        selectedIdpTextData,
+        O.fold(
+          () => ({
+            title: I18n.t("authentication.idp_login.contextualHelpTitle"),
+            body: () => (
+              <Markdown>
+                {I18n.t("authentication.idp_login.contextualHelpContent")}
+              </Markdown>
+            )
+          }),
+          idpTextData => IdpCustomContextualHelpContent(idpTextData)
+        )
+      ),
+    [selectedIdpTextData]
   );
 
   const handleLoginFailure = useCallback(
@@ -220,7 +254,7 @@ export const AuthSessionPage = () => {
   const handleLoadingError = useCallback(
     (error?: LoginUtilsError) => {
       void mixpanelTrack("SPID_ERROR", {
-        idp: loggedOutWithIdpAuth?.idp.id,
+        idp,
         description: error?.userInfo.Error,
         errorType: ErrorType.LOADING_ERROR
       });
@@ -244,28 +278,10 @@ export const AuthSessionPage = () => {
         nativeAttempts: requestInfo.nativeAttempts
       });
     },
-    [dispatch, loggedOutWithIdpAuth?.idp.id, requestInfo.nativeAttempts]
+    [dispatch, idp, requestInfo.nativeAttempts]
   );
 
-  const contextualHelp = useMemo(() => {
-    if (O.isNone(selectedIdpTextData)) {
-      return {
-        title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-        body: () => (
-          <Markdown>
-            {I18n.t("authentication.idp_login.contextualHelpContent")}
-          </Markdown>
-        )
-      };
-    }
-    const idpTextData = selectedIdpTextData.value;
-    return IdpCustomContextualHelpContent(idpTextData);
-  }, [selectedIdpTextData]);
-
-  const idpId = loggedOutWithIdpAuth?.idp.id;
-  const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
-
-  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+  // Memoized values/func --end--
 
   if (
     loginUri &&
@@ -365,7 +381,7 @@ export const AuthSessionPage = () => {
         contextualHelp={contextualHelp}
         faqCategories={["authentication_SPID"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
-          loggedOutWithIdpAuth?.idp.name
+          selectedIdp?.name
         }`}
       >
         <LoadingSpinnerOverlay
