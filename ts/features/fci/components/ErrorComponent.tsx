@@ -4,7 +4,6 @@ import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { WithTestID } from "../../../types/WithTestID";
 import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import {
@@ -23,12 +22,13 @@ import {
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { IOPictograms, Pictogram } from "../../../components/core/pictograms";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 
-type Props = WithTestID<{
+export type Props = WithTestID<{
   title: string;
   subTitle: string;
-  image: number;
+  pictogram: IOPictograms;
   email?: EmailString;
   retry?: boolean;
   assistance?: boolean;
@@ -113,12 +113,11 @@ const ErrorComponent = (props: Props) => {
     <BaseScreenComponent goBack={false}>
       <SafeAreaView style={IOStyles.flex} testID={props.testID}>
         <InfoScreenComponent
-          image={renderInfoRasterImage(props.image)}
+          image={<Pictogram name={props.pictogram} />}
           title={props.title}
           body={props.subTitle}
           email={props.email}
         />
-
         <FooterStackButton buttons={footerButtons()} />
       </SafeAreaView>
     </BaseScreenComponent>

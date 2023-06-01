@@ -3,8 +3,8 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import * as J from "fp-ts/lib/Json";
 import I18n from "../../../i18n";
-import doubt from "../../../../img/pictograms/doubt.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -32,6 +32,8 @@ export type FciRouterScreenNavigationParams = Readonly<{
 const FciSignatureScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): React.ReactElement => {
+  // TODO: add a check to validate signatureRequestId using io-ts
+  // https://pagopa.atlassian.net/browse/SFEQS-1705?atlOrigin=eyJpIjoiOWY2NDA4YmQ0ZTQ0NGRjZTk5MGNlZDczZGIxMDllMmIiLCJwIjoiaiJ9
   const signatureRequestId = props.route.params.signatureRequestId;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
@@ -65,12 +67,13 @@ const FciSignatureScreen = (
   );
 
   const GenericError = (status?: ProblemJson["status"]) => {
+    // if the status is 404, the user is not the owner of the signature request
     if (status === 404) {
       return (
         <ErrorComponent
           title={I18n.t("features.fci.errors.generic.wrongUser.title")}
           subTitle={I18n.t("features.fci.errors.generic.wrongUser.subTitle")}
-          image={doubt}
+          pictogram="question"
           onPress={() => dispatch(fciEndRequest())}
           testID="WrongUserErrorComponentTestID"
         />
@@ -87,13 +90,14 @@ const FciSignatureScreen = (
     );
   };
 
+  // given an error should parse it and return a GenericErrorComponent
   const renderErrorComponent = (error?: NetworkError) =>
     pipe(
       error,
       O.fromNullable,
       O.map(e => getErrorFromNetworkError(e)),
       O.map(error => getGenericError(error)),
-      O.map(error => JSON.parse(error.value.message)),
+      O.chain(error => pipe(error.value.message, J.parse, O.fromEither)),
       O.map(ProblemJson.decode),
       O.map(
         E.fold(
