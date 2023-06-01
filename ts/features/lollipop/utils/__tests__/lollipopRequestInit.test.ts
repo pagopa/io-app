@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LollipopConfig } from "../..";
 import { KeyInfo } from "../crypto";
@@ -37,7 +38,10 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
   sign: jest.fn().mockResolvedValue("MockSignature")
 }));
 
-const testInit = (timestamp: number, signBody: boolean = false) => ({
+MockDate.set("2023-01-01T01:00:00");
+const mockTimestamp = 1672534800; // 2023-01-01T01:00:00
+
+const testInit = (signBody: boolean = false) => ({
   headers: {
     Authorization: "Bearer 123",
     "x-pagopa-lollipop-original-method": "GET",
@@ -45,13 +49,21 @@ const testInit = (timestamp: number, signBody: boolean = false) => ({
     signature: "sig1=:MockSignature:",
     "signature-input": `sig1=(${
       signBody ? '"content-digest" ' : ""
-    }"x-pagopa-lollipop-original-method" "x-pagopa-lollipop-original-url");created=${timestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="SXn6l6BNlwAb60cJUKpvKB3H-UQbe2slQ_8LBR70cfA"`
+    }"x-pagopa-lollipop-original-method" "x-pagopa-lollipop-original-url");created=${mockTimestamp};nonce="nonce";alg="ecdsa-p256-sha256";keyid="SXn6l6BNlwAb60cJUKpvKB3H-UQbe2slQ_8LBR70cfA"`
   },
   method: "GET"
 });
 
 const testContentDigest =
   "sha-256=:Iw2DWNyOiJC0xY3utikS7i8gNXrpKlzIYbmOaP4xrLU=:";
+
+describe("Check lollipopRequestInit mocks", () => {
+  describe("timestamp from getUnixTimestamp()", () => {
+    it(`should be ${mockTimestamp}`, () => {
+      expect(getUnixTimestamp()).toBe(mockTimestamp);
+    });
+  });
+});
 
 describe("Test lollipopRequestInit", () => {
   it("should succeed if all is set correctly", async () => {
@@ -61,7 +73,7 @@ describe("Test lollipopRequestInit", () => {
       fullUrl,
       requestInit
     );
-    expect(init).toStrictEqual(testInit(getUnixTimestamp()));
+    expect(init).toStrictEqual(testInit());
   });
 
   it("should succeed with body signature", async () => {
@@ -77,7 +89,7 @@ describe("Test lollipopRequestInit", () => {
         body: "body"
       }
     );
-    const initToMatch = testInit(getUnixTimestamp(), true);
+    const initToMatch = testInit(true);
     expect(init).toStrictEqual({
       ...initToMatch,
       body: "body",
@@ -104,7 +116,7 @@ describe("Test lollipopRequestInit", () => {
       }
     );
     const timestamp = getUnixTimestamp();
-    const initToMatch = testInit(timestamp);
+    const initToMatch = testInit();
     expect(init).toStrictEqual({
       ...initToMatch,
       headers: {
