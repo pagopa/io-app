@@ -4,7 +4,7 @@ import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { PaymentMethodRepresentation } from "../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   errorButtonProps
@@ -38,7 +38,7 @@ export const useRemovePaymentMethodBottomSheet = (
     present,
     bottomSheet: removePaymentMethodBottomSheet,
     dismiss
-  } = useIOBottomSheetModal(
+  } = useLegacyIOBottomSheetModal(
     <RemovePaymentMethod
       representation={{
         caption: representation.caption,

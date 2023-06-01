@@ -13,7 +13,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = {
   content: string;
@@ -22,7 +22,7 @@ type Props = {
 const InitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal(
+  const { bottomSheet, present, dismiss } = useLegacyIOBottomSheetModal(
     <Markdown>{content}</Markdown>,
     <H3>{I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title")}</H3>,
     700,

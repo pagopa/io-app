@@ -25,7 +25,7 @@ import { navigateBack } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { showToast } from "../../../../../utils/showToast";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
@@ -123,7 +123,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
     );
   }, [pdfVoucherState]);
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     isReady(props.selectedVoucher) ? (
       <VoucherDetailBottomSheet
         barCode={props.selectedVoucher.value.barCode}

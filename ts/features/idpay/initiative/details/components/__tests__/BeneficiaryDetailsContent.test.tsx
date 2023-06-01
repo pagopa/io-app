@@ -21,6 +21,17 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
+
+jest.mock("../../../../../../store/hooks", () => {
+  const actualUseIOSelector = jest.requireActual(
+    "../../../../../../store/hooks"
+  );
+  return {
+    ...actualUseIOSelector,
+    useIOSelector: () => undefined
+  };
+});
+
 const mockDiscountActiveInitiative: BeneficiaryDetailsProps = {
   initiativeDetails: {
     initiativeId: "a",
