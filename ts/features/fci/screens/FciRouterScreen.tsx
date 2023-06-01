@@ -5,7 +5,6 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as J from "fp-ts/lib/Json";
 import I18n from "../../../i18n";
-import doubt from "../../../../img/pictograms/doubt.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -74,7 +73,7 @@ const FciSignatureScreen = (
         <ErrorComponent
           title={I18n.t("features.fci.errors.generic.wrongUser.title")}
           subTitle={I18n.t("features.fci.errors.generic.wrongUser.subTitle")}
-          image={doubt}
+          pictogram="question"
           onPress={() => dispatch(fciEndRequest())}
           testID="WrongUserErrorComponentTestID"
         />
