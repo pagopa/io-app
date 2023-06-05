@@ -1,13 +1,7 @@
 import React from "react";
 import { Switch, SwitchProps } from "react-native";
 import { IOColors } from "../../variables/IOColors";
-// import { useIOSelector } from "../../../../store/hooks";
-// import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-// import { AnimatedTick } from "../AnimatedTick";
-import {
-  // IOSelectionTickLegacyVisualParams,
-  IOSwitchVisualParams
-} from "../../variables/IOStyles";
+import { IOSwitchVisualParams } from "../../variables/IOStyles";
 
 type OwnProps = Pick<SwitchProps, "onValueChange" | "value">;
 

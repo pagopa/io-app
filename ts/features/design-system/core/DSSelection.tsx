@@ -18,6 +18,7 @@ import {
 } from "../../../components/core/selection/RadioGroup";
 import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
 import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
+import { SwitchListItem } from "../../../components/ui/SwitchListItem";
 
 const styles = StyleSheet.create({
   content: {
@@ -47,10 +48,12 @@ export const DSSelection = () => (
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
     </H2>
-    {/* Switch */}
-    {renderSwitch()}
     {/* Native Switch */}
     <NativeSwitchShowroom />
+    {/* Switch */}
+    {renderSwitch()}
+    {/* SwitchListItem */}
+    {renderSwitchListItem()}
 
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
@@ -210,7 +213,7 @@ const RadioListItemsShowroom = () => {
 // SWITCH
 
 const renderSwitch = () => (
-  <DSComponentViewerBox name="Switch">
+  <DSComponentViewerBox name="SwitchLabel">
     <SwitchLabel label="This is a test" />
     <VSpacer size={16} />
     <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
@@ -227,3 +230,53 @@ const NativeSwitchShowroom = () => {
     </DSComponentViewerBox>
   );
 };
+
+const renderSwitchListItem = () => (
+  <>
+    <DSComponentViewerBox name="SwitchListItem">
+      <SwitchListItem label="Testo molto breve" value={true} />
+      <Divider />
+      <SwitchListItem
+        label="Testo molto breve"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <SwitchListItem
+        label="Questa è un'altra prova ancora più lunga per andare su due righe"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <SwitchListItem
+        icon="bonus"
+        label="Let's try with a loooong loooooong looooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="SwitchListItem, disabled">
+      <SwitchListItem disabled label="Testo molto breve" value={true} />
+      <Divider />
+      <SwitchListItem
+        disabled
+        label="Testo molto breve"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <SwitchListItem
+        disabled
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+    </DSComponentViewerBox>
+  </>
+);
