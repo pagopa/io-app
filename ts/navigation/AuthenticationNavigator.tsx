@@ -11,8 +11,6 @@ import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinSc
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
-import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
-import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
@@ -49,16 +47,6 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_IDP_TEST}
       component={TestAuthenticationScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.AUTHENTICATION_SPID_INFORMATION}
-      component={SpidInformationScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION}
-      component={SpidCIEInformationScreen}
     />
 
     <Stack.Screen name={ROUTES.MARKDOWN} component={MarkdownScreen} />

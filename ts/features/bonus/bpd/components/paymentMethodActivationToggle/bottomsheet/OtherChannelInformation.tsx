@@ -6,7 +6,7 @@ import BlockButtons from "../../../../../../components/ui/BlockButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../store/actions/navigation";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 // NotActivable: already activated by someone else
@@ -46,7 +46,7 @@ export const OtherChannelInformation: React.FunctionComponent<Props> =
   );
 
 export const useOtherChannelInformationBottomSheet = () => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <OtherChannelInformation
       onAddPayment={() => {
         dismiss();

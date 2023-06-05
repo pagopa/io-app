@@ -11,7 +11,7 @@ import Switch from "../../../../components/ui/Switch";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
 import PaymentStatusSwitch from "./PaymentStatusSwitch";
@@ -67,7 +67,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
     openWebUrl(IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL);
   const paymentSupported = isPaymentSupported(props.paymentMethod);
 
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <View>
       <Markdown>
         {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetBody")}
