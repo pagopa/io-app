@@ -144,11 +144,13 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
   switch (itemBadge) {
     case "paid":
       return (
-        <IOBadge
-          text={I18n.t("messages.badge.paid")}
-          variant="solid"
-          color="aqua"
-        />
+        <View style={{ alignSelf: "flex-start" }}>
+          <IOBadge
+            text={I18n.t("messages.badge.paid")}
+            variant="solid"
+            color="aqua"
+          />
+        </View>
       );
 
     case "qrcode":
