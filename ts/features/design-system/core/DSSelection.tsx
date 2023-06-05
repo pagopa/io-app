@@ -50,10 +50,10 @@ export const DSSelection = () => (
     </H2>
     {/* Native Switch */}
     <NativeSwitchShowroom />
-    {/* Switch */}
-    {renderSwitch()}
     {/* SwitchListItem */}
     {renderSwitchListItem()}
+    {/* SwitchLabel */}
+    {renderAnimatedSwitch()}
 
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
@@ -85,7 +85,7 @@ const renderCheckboxLabel = () => (
     <DSComponentViewerBox name="CheckboxLabel">
       <CheckboxLabel label="This is a test" />
       <VSpacer size={16} />
-      <CheckboxLabel label="This is a test with a very loooong looooooong loooooooong text" />
+      <CheckboxLabel label="This is a test with a very loooong looooooooong loooooooong text" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="CheckboxLabel (disabled)">
       <CheckboxLabel disabled checked={true} label="This is a test" />
@@ -212,8 +212,8 @@ const RadioListItemsShowroom = () => {
 
 // SWITCH
 
-const renderSwitch = () => (
-  <DSComponentViewerBox name="SwitchLabel">
+const renderAnimatedSwitch = () => (
+  <DSComponentViewerBox name="AnimatedSwitch, dismissed in favor of the native one">
     <SwitchLabel label="This is a test" />
     <VSpacer size={16} />
     <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />

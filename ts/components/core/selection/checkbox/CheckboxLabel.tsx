@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: IOColors.bluegreyDark,
+    flexShrink: 1,
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
@@ -72,14 +73,16 @@ export const CheckboxLabel = ({
         opacity: disabled ? DISABLED_OPACITY : 1
       }}
     >
-      <View style={[IOStyles.row, { alignItems: "flex-start" }]}>
+      <View style={[IOStyles.row, { alignItems: "flex-start", width: "100%" }]}>
         <View pointerEvents="none">
           <AnimatedCheckbox checked={checked ?? toggleValue} />
         </View>
         <HSpacer size={8} />
         {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
         {isDesignSystemEnabled ? (
-          <NewH6 color={"black"}>{label}</NewH6>
+          <NewH6 color={"black"} style={{ flexShrink: 1 }}>
+            {label}
+          </NewH6>
         ) : (
           <Text style={styles.legacyTextValue}>{label}</Text>
         )}
