@@ -13,3 +13,4 @@ const IODefaultRadius: IORadiusScale = 8;
 Values used in the various components
 */
 export const IOAlertRadius: IORadiusScale = IODefaultRadius;
+export const IOBannerRadius: IORadiusScale = IODefaultRadius;
