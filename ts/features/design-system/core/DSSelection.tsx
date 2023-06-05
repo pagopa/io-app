@@ -225,7 +225,7 @@ const NativeSwitchShowroom = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="Switch">
+    <DSComponentViewerBox name="NativeSwitch">
       <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
     </DSComponentViewerBox>
   );
