@@ -13,6 +13,7 @@ import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
+import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -42,6 +43,11 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_IDP_LOGIN}
       component={IdpLoginScreen}
+    />
+
+    <Stack.Screen
+      name={ROUTES.AUTHENTICATION_AUTH_SESSION}
+      component={AuthSessionPage}
     />
 
     <Stack.Screen
