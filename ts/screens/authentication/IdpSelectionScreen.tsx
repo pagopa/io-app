@@ -1,8 +1,8 @@
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
+import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import AdviceComponent from "../../components/AdviceComponent";
@@ -34,6 +34,8 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
+import { nativeLoginSelector } from "../../store/reducers/nativeLogin";
+import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -80,12 +82,28 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       >
     >();
 
+  const isNativeLoginFeatureFlagEnabled = useSelector(
+    isNativeLoginEnabledSelector
+  );
+
+  const isNativeLoginEnabled = () =>
+    (Platform.OS !== "ios" ||
+      (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
+    props.nativeLoginFeature.enabled &&
+    isNativeLoginFeatureFlagEnabled;
+
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_LOGIN
-    });
+    if (isNativeLoginEnabled()) {
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_AUTH_SESSION
+      });
+    } else {
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_IDP_LOGIN
+      });
+    }
   };
 
   const evokeLoginScreenCounter = () => {
@@ -182,7 +200,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => ({
   idps: idpsSelector(state),
   isIdpsLoading: isLoading(idpsStateSelector(state)),
-  assistanceToolConfig: assistanceToolConfigSelector(state)
+  assistanceToolConfig: assistanceToolConfigSelector(state),
+  nativeLoginFeature: nativeLoginSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
