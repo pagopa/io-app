@@ -2473,43 +2473,51 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
     </View>
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "borderRadius": 50,
-            "justifyContent": "center",
-            "paddingHorizontal": 20,
-            "paddingVertical": 2.5,
-          },
-          false,
-          Object {
-            "backgroundColor": "#00C5CA",
-          },
-        ]
+        Object {
+          "alignSelf": "flex-start",
+        }
       }
     >
-      <Text
+      <View
         style={
           Array [
             Object {
-              "alignSelf": "center",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-            Object {
-              "fontSize": 14,
-              "lineHeight": 20,
+              "alignItems": "center",
+              "borderRadius": 50,
+              "justifyContent": "center",
+              "paddingHorizontal": 20,
+              "paddingVertical": 2.5,
             },
             false,
             Object {
-              "color": "#17324D",
+              "backgroundColor": "#00C5CA",
             },
           ]
         }
       >
-        Paid
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "alignSelf": "center",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+              Object {
+                "fontSize": 14,
+                "lineHeight": 20,
+              },
+              false,
+              Object {
+                "color": "#17324D",
+              },
+            ]
+          }
+        >
+          Paid
+        </Text>
+      </View>
     </View>
   </View>
 </View>
@@ -2802,43 +2810,51 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
     </View>
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "borderRadius": 50,
-            "justifyContent": "center",
-            "paddingHorizontal": 20,
-            "paddingVertical": 2.5,
-          },
-          false,
-          Object {
-            "backgroundColor": "#00C5CA",
-          },
-        ]
+        Object {
+          "alignSelf": "flex-start",
+        }
       }
     >
-      <Text
+      <View
         style={
           Array [
             Object {
-              "alignSelf": "center",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-            Object {
-              "fontSize": 14,
-              "lineHeight": 20,
+              "alignItems": "center",
+              "borderRadius": 50,
+              "justifyContent": "center",
+              "paddingHorizontal": 20,
+              "paddingVertical": 2.5,
             },
             false,
             Object {
-              "color": "#17324D",
+              "backgroundColor": "#00C5CA",
             },
           ]
         }
       >
-        Paid
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "alignSelf": "center",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+              Object {
+                "fontSize": 14,
+                "lineHeight": 20,
+              },
+              false,
+              Object {
+                "color": "#17324D",
+              },
+            ]
+          }
+        >
+          Paid
+        </Text>
+      </View>
     </View>
   </View>
 </View>
