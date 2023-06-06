@@ -191,6 +191,9 @@ export const IconButton = ({
       accessibilityRole={"button"}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
+      // Usability
+      // Add a touchable area around the button
+      hitSlop={8}
       // Test
       testID={testID}
     >

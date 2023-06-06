@@ -551,6 +551,10 @@ spid:
   subscription:
     line1: SPID is the digital identity to access online services of the Public Administration.
     line2: Insert your email address to enable it.
+  pending_login:
+    title: Accesso in corso
+    details: Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!
+    button: Torna alla lista
 authentication:
   landing:
     accessibility:

@@ -3,7 +3,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMessageOpening } from "../../components/messages/hooks/useMessageOpening";
+import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import { upsertMessageStatusAttributes } from "../../store/actions/messages";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
