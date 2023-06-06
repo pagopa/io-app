@@ -174,7 +174,10 @@ const render = (state: TestLoginState) => {
     ...globalState,
     features: {
       ...globalState.features,
-      testLogin: state
+      loginFeatures: {
+        ...globalState.features.loginFeatures,
+        testLogin: state
+      }
     }
   };
   const store = createStore(appReducer, testLoginState as any);
