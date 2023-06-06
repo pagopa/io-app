@@ -122,7 +122,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "0", message: "" } });
 
       mockIDPayClient.getInitiativeData.mockImplementation(() => response);
 
@@ -178,7 +178,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "0", message: "" } });
 
       mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -201,7 +201,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should return none if response status code == 404", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 404, value: { code: 0, message: "" } });
+        E.right({ status: 404, value: { code: "0", message: "" } });
 
       mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -290,7 +290,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 204", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "0", message: "" } });
 
       mockIDPayClient.onboardingCitizen.mockImplementation(() => response);
 
@@ -350,7 +350,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 200 or 202", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "0", message: "" } });
 
       mockIDPayClient.checkPrerequisites.mockImplementation(() => response);
 
@@ -451,7 +451,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 202", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: "0", message: "" } });
 
       mockIDPayClient.consentOnboarding.mockImplementation(() => response);
 

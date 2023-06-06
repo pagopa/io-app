@@ -18,7 +18,7 @@ const mockResponseSuccess: InitiativeDTO = {
 };
 
 const mockFailure: ErrorDTO = {
-  code: 0,
+  code: "404",
   message: "message"
 };
 const mockToken = "mock";
