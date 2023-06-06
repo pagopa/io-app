@@ -554,6 +554,10 @@ spid:
       SPID è l'identità digitale per accedere ai servizi online della Pubblica
       Amministrazione Italiana.
     line2: Inserisci la tua email per attivarla.
+  pending_login:
+    title: Accesso in corso
+    details: Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!
+    button: Torna alla lista
 authentication:
   landing:
     accessibility:

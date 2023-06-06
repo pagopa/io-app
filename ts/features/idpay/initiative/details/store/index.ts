@@ -208,4 +208,12 @@ export const idPayBeneficiaryDetailsSelector = createSelector(
   initiative => initiative.beneficiaryDetails
 );
 
+export const idPayInitiativeTypeSelector = createSelector(
+  idpayInitiativeDetailsSelector,
+  details =>
+    pot.getOrElse(
+      pot.map(details, details => details.initiativeRewardType),
+      undefined
+    )
+);
 export default reducer;

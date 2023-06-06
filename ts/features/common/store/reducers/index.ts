@@ -14,13 +14,22 @@ import {
   testLoginReducer,
   TestLoginState
 } from "../../../../store/reducers/testLogin";
+import {
+  nativeLoginReducer,
+  NativeLoginState
+} from "../../../../store/reducers/nativeLogin";
+
+type LoginFeaturesState = {
+  testLogin: TestLoginState;
+  nativeLogin: NativeLoginState;
+};
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
   pn: PnState;
   fci: FciState;
   idPay: IDPayState;
-  testLogin: TestLoginState;
+  loginFeatures: LoginFeaturesState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -30,7 +39,10 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,
-  testLogin: testLoginReducer
+  loginFeatures: combineReducers<LoginFeaturesState, Action>({
+    testLogin: testLoginReducer,
+    nativeLogin: nativeLoginReducer
+  })
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

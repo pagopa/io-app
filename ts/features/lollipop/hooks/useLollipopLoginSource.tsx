@@ -19,7 +19,7 @@ import {
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { getLollipopHeaders, handleRegenerateKey } from "..";
+import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -113,7 +113,7 @@ export const useLollipopLoginSource = (
             key =>
               setWebviewSource({
                 uri: loginUri,
-                headers: getLollipopHeaders(
+                headers: getLollipopLoginHeaders(
                   key,
                   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
                 )

@@ -41,6 +41,7 @@ interface OwnProps {
   searchType?: SearchType;
   backButtonTestID?: string;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  hideHelpButton?: boolean;
 }
 
 export type Props = PropsWithChildren<
@@ -60,6 +61,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       customGoBack,
       customRightIcon,
       dark,
+      hideHelpButton,
       faqCategories,
       goBack,
       headerBackgroundColor,
@@ -110,8 +112,13 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       }
     };
 
-    const canShowHelpButton =
-      canShowHelp && (contextualHelp || contextualHelpMarkdown);
+    const canShowHelpButton = () => {
+      if (hideHelpButton) {
+        return false;
+      } else {
+        return canShowHelp && (contextualHelp || contextualHelpMarkdown);
+      }
+    };
 
     return (
       <Container>
@@ -128,7 +135,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           goBack={goBack}
           headerTitle={headerTitle}
           backgroundColor={headerBackgroundColor}
-          onShowHelp={canShowHelpButton ? onShowHelp() : undefined}
+          onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
           isSearchAvailable={isSearchAvailable}
           body={headerBody}
           appLogo={appLogo}
