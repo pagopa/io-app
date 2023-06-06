@@ -1,6 +1,7 @@
 import React from "react";
 import { IOColors } from "../variables/IOColors";
 
+import { IOPictogramSizeScale } from "./Pictogram";
 // Added these verbose names to avoid chaos and misunderstandings
 // when using `Quick File Search…`
 import SectionPictogramMessages from "./svg/SectionPictogramMessages";
@@ -26,7 +27,7 @@ export type IOSectionPictograms = keyof typeof IOSectionPictograms;
 type IOSectionPictogramsProps = {
   name: IOSectionPictograms;
   color?: IOColors;
-  size?: number | "100%";
+  size?: IOPictogramSizeScale | "100%";
 };
 
 const SectionPictogram = ({
