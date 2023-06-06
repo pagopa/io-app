@@ -8,6 +8,7 @@ export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
   [ROUTES.AUTHENTICATION_CIE]: undefined;
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: undefined;
+  [ROUTES.AUTHENTICATION_AUTH_SESSION]: undefined;
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;
   [ROUTES.MARKDOWN]: undefined;
   // For expired cie screen
