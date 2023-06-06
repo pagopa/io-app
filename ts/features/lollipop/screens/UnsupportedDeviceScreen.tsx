@@ -3,7 +3,7 @@ import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import Pictogram from "../../../components/core/pictograms/Pictogram";
+import { Pictogram } from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
