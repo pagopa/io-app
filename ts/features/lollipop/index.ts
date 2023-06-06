@@ -10,6 +10,8 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../utils/analytics";
 import { AppDispatch } from "../../App";
+import { getAppVersion } from "../../utils/appVersion";
+import { isLocalEnv } from "../../utils/environment";
 import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
 import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 import { toCryptoError } from "./utils/crypto";
@@ -107,12 +109,13 @@ export const taskRegenerateKey = (keyTag: string) =>
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
   );
 
-export const getLollipopHeaders = (
+export const getLollipopLoginHeaders = (
   publicKey: PublicKey,
   hashAlgorithm: string
 ) => ({
   "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
     "base64"
   ),
-  "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm
+  "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
+  "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined
 });

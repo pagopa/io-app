@@ -21,7 +21,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
   IOBottomSheetModal,
-  useIOBottomSheetModal
+  useLegacyIOBottomSheetModal
 } from "../../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
@@ -120,7 +120,7 @@ const useTimelineDetailsBottomSheet = (
     </SafeAreaView>
   );
 
-  const modal = useIOBottomSheetModal(
+  const modal = useLegacyIOBottomSheetModal(
     <View onLayout={handleContentOnLayout}>{getModalContent()}</View>,
     titleComponent,
     snapPoint,
@@ -166,7 +166,7 @@ const ErrorComponent = () => (
   <View
     style={{ paddingTop: 16, justifyContent: "center", alignItems: "center" }}
   >
-    <Pictogram name="attention" size={100} />
+    <Pictogram name="attention" size={72} />
     <VSpacer size={16} />
     <H3>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H3>
   </View>

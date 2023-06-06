@@ -7,7 +7,7 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -73,7 +73,7 @@ export const useChangeActivationConfirmationBottomSheet = (
 ) => {
   const { cta } = getText(newVal ? "Activation" : "Deactivation");
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <BpdChangeActivationConfirmationScreen
       onCancel={() => dismiss()}
       onConfirm={() => {

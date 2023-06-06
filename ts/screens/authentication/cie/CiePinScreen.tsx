@@ -39,8 +39,9 @@ import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
+import { pinPukHelpUrl } from "../../../config";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -61,8 +62,6 @@ const styles = StyleSheet.create({
 });
 
 const CIE_PIN_LENGTH = 8;
-const FORGOT_PIN_PAGE_URL =
-  "https://www.cartaidentita.interno.gov.it/cittadini/smarrimento-pin-e-puk/";
 
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
@@ -70,7 +69,7 @@ const getContextualHelp = () => ({
     <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
   )
 });
-const onOpenForgotPinPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
+const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
@@ -91,7 +90,7 @@ const CiePinScreen: React.FC<Props> = props => {
     }
   }, [pin]);
 
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <View>
       <Markdown avoidTextSelection>
         {I18n.t("bottomSheets.ciePin.content")}
