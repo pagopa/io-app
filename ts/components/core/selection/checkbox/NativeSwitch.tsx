@@ -15,7 +15,7 @@ export const NativeSwitch = ({ onValueChange, value }: OwnProps) => {
       trackColor={{
         false: isDesignSystemEnabled
           ? IOColors[IOSwitchVisualParams.bgColorOffState]
-          : IOColors.greyLight,
+          : IOColors.greyUltraLight,
         true: isDesignSystemEnabled
           ? IOColors[IOSwitchVisualParams.bgColorOnState]
           : IOColors.blue
@@ -24,7 +24,7 @@ export const NativeSwitch = ({ onValueChange, value }: OwnProps) => {
       ios_backgroundColor={
         isDesignSystemEnabled
           ? IOColors[IOSwitchVisualParams.bgColorOffState]
-          : IOColors.greyLight
+          : IOColors.greyUltraLight
       }
       onValueChange={onValueChange}
       value={value}

@@ -77,7 +77,12 @@ export const SwitchListItem = ({
       ]}
       pointerEvents={disabled ? "none" : "auto"}
     >
-      <View style={IOSelectionListItemStyles.listItemInner}>
+      <View
+        style={[
+          IOSelectionListItemStyles.listItemInner,
+          { alignItems: "center" }
+        ]}
+      >
         <View style={{ flexShrink: 1 }}>
           <View style={[IOStyles.row, { flexShrink: 1 }]}>
             {icon && (
@@ -116,7 +121,7 @@ export const SwitchListItem = ({
         </View>
 
         <HSpacer size={8} />
-        <View style={{ flexShrink: 0 }}>
+        <View style={{ flexShrink: 0, alignSelf: "flex-start" }}>
           <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
         </View>
       </View>
