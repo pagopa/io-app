@@ -28,7 +28,12 @@ const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
     />
     <FooterStackButton
       buttons={[
-        confirmButtonProps(props.onConfirm, I18n.t("bonus.cgn.cta.goToDetail"))
+        confirmButtonProps(
+          props.onConfirm,
+          I18n.t("bonus.cgn.cta.goToDetail"),
+          undefined,
+          "cgnConfirmButtonTestId"
+        )
       ]}
     />
   </SafeAreaView>

@@ -93,6 +93,7 @@ export const MainTabNavigator = () => {
           component={WalletHomeScreen}
           options={{
             title: I18n.t("global.navigator.wallet"),
+            tabBarTestID: "walletTabId",
             tabBarIcon: ({ color }) => <WalletTabIcon color={color} />
           }}
         />
@@ -101,6 +102,7 @@ export const MainTabNavigator = () => {
           component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),
+            tabBarTestID: "servicesTabId",
             tabBarIcon: ({ color }) => <ServiceTabIcon color={color} />
           }}
         />

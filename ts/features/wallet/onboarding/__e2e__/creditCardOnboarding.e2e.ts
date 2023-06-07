@@ -10,12 +10,12 @@ describe("Credit Card onboarding", () => {
 
   describe("when the user inserts all the required valid data", () => {
     it("should add successfully the credit card to the wallet", async () => {
-      await waitFor(element(by.text(I18n.t("global.navigator.wallet"))))
+      await waitFor(element(by.id("walletTabId")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
 
       // Footer, Wallet icon
-      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
+      await element(by.id("walletTabId")).tap();
 
       await waitFor(
         element(by.text(I18n.t("wallet.newPaymentMethod.add").toUpperCase()))

@@ -39,9 +39,7 @@ describe("Payment", () => {
             .withTimeout(e2eWaitRenderTimeout);
           await backButton2.tap();
 
-          const walletButton = element(
-            by.text(I18n.t("global.navigator.wallet"))
-          );
+          const walletButton = element(by.id("walletTabId"));
           await waitFor(walletButton)
             .toBeVisible()
             .withTimeout(e2eWaitRenderTimeout);
@@ -94,7 +92,7 @@ describe("Payment", () => {
 
   describe("When the user want to pay using the manual insertion", () => {
     it("Should allow the user to complete a payment", async () => {
-      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
+      await element(by.id("walletTabId")).tap();
       await element(by.text(I18n.t("wallet.payNotice"))).tap();
 
       await element(by.text(I18n.t("wallet.QRtoPay.setManually"))).tap();
