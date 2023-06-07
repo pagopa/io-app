@@ -503,12 +503,6 @@ const renderListItemInfo = () => (
       />
       <ListItemInfo
         label="Label"
-        value={"Value"}
-        accessibilityLabel="Empty just for testing purposes"
-      />
-
-      <ListItemInfo
-        label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
       />
