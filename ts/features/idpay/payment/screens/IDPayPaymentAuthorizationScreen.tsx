@@ -1,4 +1,7 @@
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -8,6 +11,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { IDPayPaymentParamsList } from "../navigation/navigator";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
   selectIsAuthorizing,
@@ -15,9 +19,32 @@ import {
   selectTransactionData
 } from "../xstate/selectors";
 
+type IDPayPaymentAuthorizationScreenRouteParams = {
+  trxCode?: string;
+};
+
+type IDPayPaymentAuthorizationRouteProps = RouteProp<
+  IDPayPaymentParamsList,
+  "IDPAY_PAYMENT_AUTHORIZATION"
+>;
+
 const IDPayPaymentAuthorizationScreen = () => {
+  const route = useRoute<IDPayPaymentAuthorizationRouteProps>();
+
   const machine = usePaymentMachineService();
   const transactionData = useSelector(machine, selectTransactionData);
+
+  const { trxCode } = route.params;
+
+  React.useEffect(() => {
+    pipe(
+      trxCode,
+      O.fromNullable,
+      O.map(code =>
+        machine.send({ type: "START_AUTHORIZATION", trxCode: code })
+      )
+    );
+  }, [trxCode, machine]);
 
   // Loading state for screen content
   const isLoading = useSelector(machine, selectIsPreAuthorizing);
@@ -66,4 +93,5 @@ const IDPayPaymentAuthorizationScreen = () => {
   );
 };
 
+export type { IDPayPaymentAuthorizationScreenRouteParams };
 export { IDPayPaymentAuthorizationScreen };

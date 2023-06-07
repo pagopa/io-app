@@ -7,7 +7,10 @@ import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { IDPayPaymentCodeScanScreen } from "../screens/IDPayPaymentCodeScanScreen";
 import { IDPayPaymentCodeInputScreen } from "../screens/IDPayPaymentCodeInputScreen";
-import { IDPayPaymentAuthorizationScreen } from "../screens/IDPayPaymentAuthorizationScreen";
+import {
+  IDPayPaymentAuthorizationScreen,
+  IDPayPaymentAuthorizationScreenRouteParams
+} from "../screens/IDPayPaymentAuthorizationScreen";
 import { IDPayPaymentResultScreen } from "../screens/IDPayPaymentResultScreen";
 import { IDPayPaymentMachineProvider } from "../xstate/provider";
 
@@ -22,7 +25,7 @@ export const IDPayPaymentRoutes = {
 export type IDPayPaymentParamsList = {
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT]: undefined;
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: undefined;
+  [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: IDPayPaymentAuthorizationScreenRouteParams;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT]: undefined;
 };
 
