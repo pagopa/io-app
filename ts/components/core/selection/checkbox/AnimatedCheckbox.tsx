@@ -171,16 +171,14 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
       />
       {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       {isChecked && (
-        <View>
-          <AnimatedCheckmark
-            progress={checkmarkAnimationProgress}
-            d={checkMarkPath}
-            stroke={IOColors.white}
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </View>
+        <AnimatedCheckmark
+          progress={checkmarkAnimationProgress}
+          d={checkMarkPath}
+          stroke={IOColors.white}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       )}
     </Pressable>
   );

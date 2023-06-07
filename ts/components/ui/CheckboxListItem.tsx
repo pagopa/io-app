@@ -145,12 +145,16 @@ export const CheckboxListItem = ({
       onTouchEnd={onPressOut}
       testID="AnimatedCheckbox"
       disabled={disabled}
-      style={{
-        opacity: disabled ? DISABLED_OPACITY : 1
-      }}
     >
       <Animated.View
-        style={[IOSelectionItemStyles.listItem, animatedBackgroundStyle]}
+        style={[
+          IOSelectionItemStyles.listItem,
+          animatedBackgroundStyle,
+          { opacity: disabled ? DISABLED_OPACITY : 1 }
+        ]}
+        // This is required to avoid opacity
+        // inheritance on Android
+        needsOffscreenAlphaCompositing={true}
       >
         <Animated.View style={animatedScaleStyle}>
           <View style={IOSelectionItemStyles.listItemInner}>
