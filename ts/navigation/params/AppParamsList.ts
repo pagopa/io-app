@@ -4,27 +4,22 @@ import {
   RouteProp
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
+import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
   CgnEYCAActivationParamsList
 } from "../../features/bonus/cgn/navigation/params";
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
-import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
-import ROUTES from "../routes";
-import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
-import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
-import FIMS_ROUTES from "../../features/fims/navigation/routes";
-import { FimsParamsList } from "../../features/fims/navigation/params";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
-import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FciParamsList } from "../../features/fci/navigation/params";
+import { FCI_ROUTES } from "../../features/fci/navigation/routes";
+import { FimsParamsList } from "../../features/fims/navigation/params";
+import FIMS_ROUTES from "../../features/fims/navigation/routes";
 import {
-  IDPayOnboardingParamsList,
-  IDPayOnboardingRoutes
-} from "../../features/idpay/onboarding/navigation/navigator";
+  IDPayPaymentParamsList,
+  IDPayPaymentRoutes
+} from "../../features/idpay/payment/navigation/navigator";
 import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
@@ -34,10 +29,19 @@ import {
   IDPayDetailsRoutes
 } from "../../features/idpay/initiative/details/navigation";
 import {
+  IDPayOnboardingParamsList,
+  IDPayOnboardingRoutes
+} from "../../features/idpay/onboarding/navigation/navigator";
+import {
   IDPayUnsubscriptionNavigatorParams,
   IDPayUnsubscriptionParamsList,
   IDPayUnsubscriptionRoutes
 } from "../../features/idpay/unsubscription/navigation/navigator";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
+import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
+import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
+import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -77,6 +81,7 @@ export type AppParamsList = {
   [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
     | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
     | IDPayUnsubscriptionNavigatorParams;
+  [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IDPayPaymentParamsList>;
 };
 
 /**
