@@ -1,6 +1,8 @@
 import * as React from "react";
-import { ComponentProps, useEffect, useState } from "react";
+import { ComponentProps, useCallback, useEffect, useState } from "react";
 import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
   BottomSheetModal,
   BottomSheetScrollView,
   useBottomSheetModal
@@ -146,6 +148,19 @@ export const useIOBottomSheetModal = ({
     setBSOpened();
   };
 
+  // // Add opacity fade effect to backdrop
+  const BackdropElement = useCallback(
+    (backdropProps: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...backdropProps}
+        opacity={0.2}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    []
+  );
+
   useEffect(() => {
     isScreenReaderEnabled()
       .then(sre => setIsScreenReaderEnabled(sre))
@@ -166,7 +181,7 @@ export const useIOBottomSheetModal = ({
       snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
       handleComponent={_ => bottomSheetProps.config.handleComponent}
-      backdropComponent={bottomSheetProps.config.backdropComponent}
+      backdropComponent={BackdropElement}
       enableDismissOnClose={true}
       accessible={false}
       // set this attribute to an empty string to avoid the default announcement from the library
