@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - feature/E2Efix
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
