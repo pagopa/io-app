@@ -4,7 +4,8 @@ import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import Animated, {
   Extrapolate,
@@ -20,7 +21,11 @@ import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOBannerRadius } from "../core/variables/IOShapes";
-import { IOBannerSpacing } from "../core/variables/IOSpacing";
+import {
+  IOBannerBigSpacing,
+  IOBannerSmallHSpacing,
+  IOBannerSmallVSpacing
+} from "../core/variables/IOSpacing";
 import ButtonLink from "../ui/ButtonLink";
 import {
   IOPictogramsBleed,
@@ -41,18 +46,19 @@ const sizePictogramBig: IOPictogramSizeScale = 80;
 const sizePictogramSmall: IOPictogramSizeScale = 64;
 const closeButtonDistanceFromEdge: number = 4;
 const closeButtonOpacity = 0.6;
-const IOBannerPadding = IOBannerSpacing;
+const sizeBigPadding = IOBannerBigSpacing;
+const sizeSmallHPadding = IOBannerSmallHSpacing;
+const sizeSmallVPadding = IOBannerSmallVSpacing;
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "flex-start",
     alignContent: "center",
-    borderRadius: IOBannerRadius,
-    padding: IOBannerPadding
+    borderRadius: IOBannerRadius
   },
   bleedPictogram: {
-    marginRight: -IOBannerPadding
+    marginRight: -sizeBigPadding
   },
   closeIconButton: {
     position: "absolute",
@@ -60,6 +66,15 @@ const styles = StyleSheet.create({
     top: closeButtonDistanceFromEdge,
     opacity: closeButtonOpacity
   }
+});
+
+const dynamicContainerStyles = (
+  variant: BaseBannerProps["variant"],
+  color: BaseBannerProps["color"]
+): ViewStyle => ({
+  backgroundColor: IOColors[mapBackgroundColor[color]],
+  paddingVertical: variant === "big" ? sizeBigPadding : sizeSmallVPadding,
+  paddingHorizontal: variant === "big" ? sizeBigPadding : sizeSmallHPadding
 });
 
 /* Component Types */
@@ -247,7 +262,7 @@ export const Banner = ({
       <Animated.View
         style={[
           styles.container,
-          { backgroundColor: IOColors[mapBackgroundColor[color]] },
+          dynamicContainerStyles(variant, color),
           pressedAnimationStyle
         ]}
       >
@@ -260,10 +275,7 @@ export const Banner = ({
     <View
       ref={viewRef}
       testID={testID}
-      style={[
-        styles.container,
-        { backgroundColor: IOColors[mapBackgroundColor[color]] }
-      ]}
+      style={[styles.container, dynamicContainerStyles(variant, color)]}
       // A11y related props
       accessible={false}
       accessibilityHint={accessibilityHint}

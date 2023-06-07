@@ -276,6 +276,28 @@ const renderBanner = () => {
               action="Dona anche tu"
               onPress={onLinkPress}
             />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="small"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              action="Dona anche tu"
+              onPress={onLinkPress}
+              pictogramName="donation"
+            />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              variant="small"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              pictogramName="donation"
+            />
           </DSComponentViewerBox>
         </React.Fragment>
       ))}
