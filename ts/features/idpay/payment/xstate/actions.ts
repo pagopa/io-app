@@ -9,7 +9,8 @@ const createActionsImplementation = (
 ) => {
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
+      params: {}
     });
   };
 
