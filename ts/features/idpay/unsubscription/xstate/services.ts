@@ -67,7 +67,7 @@ const createServicesImplementation = (
         () => Promise.reject(undefined),
         flow(
           E.map(({ status }) =>
-            status !== 200
+            status !== 204
               ? Promise.reject(undefined)
               : Promise.resolve(undefined)
           ),

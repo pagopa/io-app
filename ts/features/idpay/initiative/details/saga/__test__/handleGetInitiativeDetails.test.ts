@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 import {
   InitiativeDTO,
   StatusEnum
@@ -9,6 +8,7 @@ import {
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 
 const mockResponseSuccess: InitiativeDTO = {
   initiativeId: "123",
@@ -18,7 +18,7 @@ const mockResponseSuccess: InitiativeDTO = {
 };
 
 const mockFailure: ErrorDTO = {
-  code: 0,
+  code: "403",
   message: "message"
 };
 const mockToken = "mock";
