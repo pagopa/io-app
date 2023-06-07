@@ -21,7 +21,10 @@ import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/Produ
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
-import { OperationTypeEnum } from "../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  OperationTypeEnum,
+  StatusEnum
+} from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -258,7 +261,7 @@ export const DSListItems = () => (
               amount: 100,
               accrued: 50,
               circuitType: "MasterCard",
-              status: ""
+              status: StatusEnum.AUTHORIZED
             }}
           />
         </DSComponentViewerBox>
