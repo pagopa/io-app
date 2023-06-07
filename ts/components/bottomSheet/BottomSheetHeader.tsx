@@ -4,25 +4,24 @@ import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { H3 } from "../core/typography/H3";
-import { IOStyles } from "../core/variables/IOStyles";
+import { IOLayoutCostants, IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { Icon } from "../core/icons";
+import { NewH4 } from "../core/typography/NewH4";
 
 const styles = StyleSheet.create({
-  row: {
+  bottomSheetHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    ...IOStyles.horizontalContentPadding,
-    paddingTop: 24,
-    backgroundColor: IOColors.white,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16
+    paddingHorizontal: IOLayoutCostants.appMarginDefault,
+    paddingTop: IOLayoutCostants.appMarginDefault,
+    backgroundColor: IOColors.white
   },
   modalClose: {
     paddingRight: 0,
+    paddingVertical: 0,
     justifyContent: "flex-end"
   }
 });
@@ -43,7 +42,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   }, [headerRef]);
 
   return (
-    <View style={styles.row} ref={headerRef}>
+    <View style={styles.bottomSheetHeader} ref={headerRef}>
       {React.isValidElement(title) ? (
         title
       ) : (
@@ -53,7 +52,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
           accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}
         >
-          <H3>{title}</H3>
+          <NewH4>{title}</NewH4>
         </View>
       )}
       <ButtonDefaultOpacity

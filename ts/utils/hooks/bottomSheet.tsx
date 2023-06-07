@@ -5,7 +5,13 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { View, Modal, Platform, LayoutChangeEvent } from "react-native";
+import {
+  View,
+  Modal,
+  Platform,
+  StyleSheet,
+  LayoutChangeEvent
+} from "react-native";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -20,12 +26,22 @@ import {
 import { isScreenReaderEnabled } from "../accessibility";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
+import { IOBottomSheetHeaderRadius } from "../../components/core/variables/IOShapes";
 
 type Props = {
   children: React.ReactNode;
   footer?: React.ReactNode;
 } & TestID;
 
+const styles = StyleSheet.create({
+  bottomSheet: {
+    borderTopRightRadius: IOBottomSheetHeaderRadius,
+    borderTopLeftRadius: IOBottomSheetHeaderRadius,
+    // Don't delete the overflow property
+    // oterwise the above borderRadius won't work
+    overflow: "hidden"
+  }
+});
 /**
  * Build the base content of a BottomSheet including content padding and a ScrollView
  */
@@ -138,6 +154,7 @@ export const useIOBottomSheetModal = ({
 
   const bottomSheet = (
     <BottomSheetModal
+      style={styles.bottomSheet}
       footerComponent={(_: BottomSheetFooterProps) =>
         footer !== undefined ? (
           <>
@@ -217,7 +234,9 @@ export const useIOBottomSheetAutoresizableModal = (
   return useIOBottomSheetModal({
     component: (
       <View
-        style={{ paddingBottom: insets.bottom + bottomPadding }}
+        style={{
+          paddingBottom: insets.bottom + bottomPadding
+        }}
         onLayout={handleContentOnLayout}
       >
         {component}
