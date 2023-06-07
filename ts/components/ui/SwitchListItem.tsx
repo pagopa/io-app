@@ -76,6 +76,9 @@ export const SwitchListItem = ({
         }
       ]}
       pointerEvents={disabled ? "none" : "auto"}
+      // This is required to avoid opacity
+      // inheritance on Android
+      needsOffscreenAlphaCompositing={true}
     >
       <View
         style={[

@@ -1,11 +1,14 @@
 import React from "react";
-import { Switch, SwitchProps } from "react-native";
+import { Platform, Switch, SwitchProps } from "react-native";
 import { IOColors } from "../../variables/IOColors";
 import { IOSwitchVisualParams } from "../../variables/IOStyles";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 type OwnProps = Pick<SwitchProps, "onValueChange" | "value">;
+
+const bgLegacyTrackColorAndroid =
+  Platform.OS === "android" ? IOColors["grey-300"] : IOColors.greyUltraLight;
 
 export const NativeSwitch = ({ onValueChange, value }: OwnProps) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -15,7 +18,7 @@ export const NativeSwitch = ({ onValueChange, value }: OwnProps) => {
       trackColor={{
         false: isDesignSystemEnabled
           ? IOColors[IOSwitchVisualParams.bgColorOffState]
-          : IOColors.greyUltraLight,
+          : bgLegacyTrackColorAndroid,
         true: isDesignSystemEnabled
           ? IOColors[IOSwitchVisualParams.bgColorOnState]
           : IOColors.blue
@@ -24,7 +27,7 @@ export const NativeSwitch = ({ onValueChange, value }: OwnProps) => {
       ios_backgroundColor={
         isDesignSystemEnabled
           ? IOColors[IOSwitchVisualParams.bgColorOffState]
-          : IOColors.greyUltraLight
+          : bgLegacyTrackColorAndroid
       }
       onValueChange={onValueChange}
       value={value}

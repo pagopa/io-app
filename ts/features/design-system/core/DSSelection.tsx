@@ -226,7 +226,9 @@ const NativeSwitchShowroom = () => {
 
   return (
     <DSComponentViewerBox name="NativeSwitch">
-      <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
+      <View style={{ alignSelf: "flex-start" }}>
+        <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
+      </View>
     </DSComponentViewerBox>
   );
 };
