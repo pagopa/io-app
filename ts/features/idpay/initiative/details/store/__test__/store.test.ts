@@ -10,10 +10,13 @@ import {
 } from "..";
 import {
   InitiativeDTO,
-  StatusEnum
+  StatusEnum as InitativeStatusEnum
 } from "../../../../../../../definitions/idpay/InitiativeDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  StatusEnum,
+  OperationTypeEnum as TransactionOperationType
+} from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -22,7 +25,7 @@ import { idpayInitiativeGet, idpayTimelinePageGet } from "../actions";
 
 const mockResponseSuccess: InitiativeDTO = {
   initiativeId: "123",
-  status: StatusEnum.REFUNDABLE,
+  status: InitativeStatusEnum.REFUNDABLE,
   endDate: new Date(),
   nInstr: 123
 };
@@ -102,7 +105,7 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "CREDIT_CARD",
-      status: ""
+      status: StatusEnum.AUTHORIZED
     }
   ],
   pageNo: 1,
