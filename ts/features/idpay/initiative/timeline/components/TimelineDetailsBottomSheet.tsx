@@ -55,7 +55,7 @@ const useTimelineDetailsBottomSheet = (
   const isError = pot.isError(detailsPot);
 
   const handleContentOnLayout = (event: LayoutChangeEvent) => {
-    const bottomPadding = 190;
+    const bottomPadding = 200;
     const { height } = event.nativeEvent.layout;
     setSnapPoint(bottomPadding + height);
   };
