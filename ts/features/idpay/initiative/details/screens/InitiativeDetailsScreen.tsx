@@ -79,9 +79,8 @@ const InitiativeDetailsScreen = () => {
   };
 
   const navigateToPaymentAuthorization = () => {
-    // TODO navigation to payment authorization, will be added in another PR
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN
     });
   };
 
