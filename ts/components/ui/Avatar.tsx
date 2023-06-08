@@ -6,24 +6,39 @@ import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { MultiImage } from "./MultiImage";
 
 type Avatar = {
+  shape: "circle" | "square";
+  size: "small" | "medium";
   logoUri: React.ComponentProps<typeof MultiImage>["source"];
 };
 
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
-const internalSpace: number = 6;
+const internalSpaceDefaultSize: number = 6;
+const internalSpaceLargeSize: number = 9;
+const radiusDefaultSize: number = 8;
+
+const dimensionsMap = {
+  small: {
+    size: IOVisualCostants.avatarSizeSmall,
+    internalSpace: internalSpaceDefaultSize,
+    radius: radiusDefaultSize
+  },
+  medium: {
+    size: IOVisualCostants.avatarSizeMedium,
+    internalSpace: internalSpaceLargeSize,
+    radius: radiusDefaultSize
+  }
+};
+
+const getAvatarCircleShape = (size: Avatar["size"]) =>
+  dimensionsMap[size].size / 2;
 
 const styles = StyleSheet.create({
   avatarWrapper: {
     overflow: "hidden",
-    padding: internalSpace,
     resizeMode: "contain",
     borderColor: avatarBorderLightMode,
     borderWidth: 1,
-    backgroundColor: IOColors.white,
-    height: IOVisualCostants.avatarSizeDefault,
-    width: IOVisualCostants.avatarSizeDefault,
-    // Circle shape
-    borderRadius: IOVisualCostants.avatarSizeDefault / 2
+    backgroundColor: IOColors.white
   },
   avatarImage: {
     height: "100%",
@@ -31,8 +46,21 @@ const styles = StyleSheet.create({
   }
 });
 
-const Avatar = ({ logoUri }: Avatar) => (
-  <View style={styles.avatarWrapper}>
+const Avatar = ({ logoUri, shape, size }: Avatar) => (
+  <View
+    style={[
+      styles.avatarWrapper,
+      {
+        height: dimensionsMap[size].size,
+        width: dimensionsMap[size].size,
+        borderRadius:
+          shape === "circle"
+            ? getAvatarCircleShape(size)
+            : dimensionsMap[size].radius,
+        padding: dimensionsMap[size].internalSpace
+      }
+    ]}
+  >
     <MultiImage style={styles.avatarImage} source={logoUri} />
   </View>
 );

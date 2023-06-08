@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import {
   DSLogoPaymentViewerBox,
   logoItemGutter
@@ -17,7 +17,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { useIOTheme } from "../../../components/core/variables/IOColors";
 import Avatar from "../../../components/ui/Avatar";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const styles = StyleSheet.create({
@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginLeft: (logoItemGutter / 2) * -1,
     marginRight: (logoItemGutter / 2) * -1
+  },
+  horizontalScroll: {
+    marginLeft: -IOVisualCostants.appMarginDefault,
+    marginRight: -IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   }
 });
 
@@ -102,23 +107,74 @@ const organizationsURIs = [
 ];
 
 const renderAvatar = () => (
-  <DSComponentViewerBox name={`Avatar, default size`}>
-    <View style={IOStyles.row}>
-      {organizationsURIs.map(({ imageSource }, i) => (
-        <>
-          <Avatar
-            key={i}
-            logoUri={[
-              {
-                uri: imageSource
-              }
-            ]}
-          />
-          {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
-        </>
-      ))}
-    </View>
-  </DSComponentViewerBox>
+  <>
+    <DSComponentViewerBox name={`Avatar, small size, circle shape`}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.horizontalScroll}
+      >
+        {organizationsURIs.map(({ imageSource }, i) => (
+          <React.Fragment key={i}>
+            <Avatar
+              shape="circle"
+              size="small"
+              logoUri={[
+                {
+                  uri: imageSource
+                }
+              ]}
+            />
+            {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`Avatar, small size, square shape`}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.horizontalScroll}
+      >
+        {organizationsURIs.map(({ imageSource }, i) => (
+          <React.Fragment key={i}>
+            <Avatar
+              shape="square"
+              size="small"
+              logoUri={[
+                {
+                  uri: imageSource
+                }
+              ]}
+            />
+            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`Avatar, medium size, square shape`}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={styles.horizontalScroll}
+      >
+        {organizationsURIs.map(({ imageSource }, i) => (
+          <React.Fragment key={i}>
+            <Avatar
+              shape="square"
+              size="medium"
+              logoUri={[
+                {
+                  uri: imageSource
+                }
+              ]}
+            />
+            {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </DSComponentViewerBox>
+  </>
 );
 
 const renderPaymentLogosSmall = () => (

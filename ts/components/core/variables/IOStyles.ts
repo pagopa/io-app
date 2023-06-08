@@ -11,12 +11,14 @@ import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
   // Dimensions
-  avatarSizeDefault: number;
+  avatarSizeSmall: number;
+  avatarSizeMedium: number;
 }
 
 export const IOVisualCostants: IOVisualCostants = {
   appMarginDefault: 24,
-  avatarSizeDefault: 44
+  avatarSizeSmall: 44,
+  avatarSizeMedium: 66
 };
 
 // TODO: in a first iteration, to avoid overlaps,
