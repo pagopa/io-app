@@ -137,7 +137,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         </Body>
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
