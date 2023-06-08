@@ -8,7 +8,7 @@ import { handleGetIDPayWallet } from "../handleGetIDPayWallet";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 
 const mockedWallet: WalletDTO = { initiativeList: [] };
-const mockedError: ErrorDTO = { code: "0", message: "message" };
+const mockedError: ErrorDTO = { code: "204", message: "message" };
 const mockToken = "mock";
 const mockLanguage = PreferredLanguageEnum.it_IT;
 

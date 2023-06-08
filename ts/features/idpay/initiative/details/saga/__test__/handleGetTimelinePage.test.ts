@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
 import {
   OperationTypeEnum,
@@ -10,6 +9,7 @@ import {
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 
 const mockResponseSuccess: TimelineDTO = {
   // mock TimelineDTO

@@ -2,8 +2,8 @@ import { pot } from "@pagopa/ts-commons";
 import { createStore } from "redux";
 import { idpayTimelineDetailsSelector } from "..";
 import {
-  StatusEnum,
-  TransactionDetailDTO
+  TransactionDetailDTO,
+  StatusEnum
 } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/TransactionDetailDTO";
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
