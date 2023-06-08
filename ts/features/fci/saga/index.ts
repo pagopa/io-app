@@ -11,6 +11,7 @@ import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import {
+  identificationPinReset,
   identificationRequest,
   identificationSuccess
 } from "../../../store/actions/identification";
@@ -207,7 +208,9 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       onCancel: () => undefined
     })
   );
-  const res = yield* take(identificationSuccess);
+
+  const res = yield* take([identificationSuccess, identificationPinReset]);
+
   if (res.type === "IDENTIFICATION_SUCCESS") {
     const potQtspClauses: FciQtspClausesState = yield* select(
       fciQtspClausesMetadataSelector
@@ -247,6 +250,10 @@ function* watchFciSigningRequestSaga(): SagaIterator {
         screen: FCI_ROUTES.TYP
       })
     );
+  }
+
+  if (res.type === "IDENTIFICATION_PIN_RESET") {
+    yield* put(fciClearStateRequest());
   }
 }
 
