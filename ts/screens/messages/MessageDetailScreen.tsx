@@ -27,7 +27,7 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
-import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
 import { isNoticePaid } from "../../store/reducers/entities/payments";
 import {
@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export type MessageDetailScreenPaginatedNavigationParams = {
+export type MessageDetailScreenNavigationParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
 };
 
 type OwnProps = IOStackNavigationRouteProps<
   MessagesParamsList,
-  "MESSAGE_DETAIL_PAGINATED"
+  "MESSAGE_DETAIL"
 >;
 
 type Props = OwnProps &
@@ -156,7 +156,7 @@ const MessageDetailScreen = ({
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.route.params.messageId;
   const serviceId = ownProps.route.params.serviceId;
-  const message = pot.toUndefined(getMessageById(state, messageId));
+  const message = pot.toUndefined(getPaginatedMessageById(state, messageId));
   const messageDetails = getDetailsByMessageId(state, messageId);
   const goBack = () => ownProps.navigation.goBack();
   const service = pipe(
