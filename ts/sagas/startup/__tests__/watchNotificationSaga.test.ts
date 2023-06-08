@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../navigation/NavigationService";
-import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../../store/actions/notifications";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import {
@@ -30,7 +30,7 @@ describe("watchNotificationSaga", () => {
       .isDone();
 
     expect(spy).toHaveBeenCalledWith(
-      navigateToPaginatedMessageRouterAction({
+      navigateToMessageRouterAction({
         messageId: mockedPendingMessageState.id as UIMessageId,
         fromNotification: true
       })
