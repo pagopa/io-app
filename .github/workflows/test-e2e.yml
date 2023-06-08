@@ -67,3 +67,9 @@ jobs:
         with:
           name: detox-artifacts
           path: /tmp/e2e_artifacts/detox/
+      - id: upload-artifacts-dev-server
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2
+        if: always()
+        with:
+          name: dev-server-artifacts
+          path: /tmp/io-dev-api-server.log
