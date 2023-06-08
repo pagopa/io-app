@@ -154,6 +154,13 @@ exports[`PspRadioItem match snapshot 1`] = `
         420,
       ]
     }
+    style={
+      Object {
+        "borderTopLeftRadius": 24,
+        "borderTopRightRadius": 24,
+        "overflow": "hidden",
+      }
+    }
     visible={true}
   >
     <RCTScrollView
