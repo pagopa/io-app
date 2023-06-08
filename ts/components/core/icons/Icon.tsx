@@ -123,6 +123,7 @@ import IconCategJobOffers from "./svg/IconCategJobOffers";
 import IconCategShopping from "./svg/IconCategShopping";
 import IconCategSustainability from "./svg/IconCategSustainability";
 import IconProductIOApp from "./svg/IconProductIOApp";
+import IconProductIOAppBlueBg from "./svg/IconProductIOAppBlueBg";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
@@ -270,7 +271,8 @@ export const IOIcons = {
   categShopping: IconCategShopping,
   categSustainability: IconCategSustainability,
   productIOApp: IconProductIOApp,
-  productPagoPA: IconProductPagoPA /* io-pagopa */
+  productPagoPA: IconProductPagoPA /* io-pagopa */,
+  productIOAppBlueBg: IconProductIOAppBlueBg
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
@@ -456,11 +458,12 @@ export const IOCategoryIcons = {
 export type IOCategoryIcons = keyof typeof IOCategoryIcons;
 
 /* Product Logos */
-const { productIOApp, productPagoPA } = IOIcons;
+const { productIOApp, productPagoPA, productIOAppBlueBg } = IOIcons;
 
 export const IOProductIcons = {
   productIOApp,
-  productPagoPA
+  productPagoPA,
+  productIOAppBlueBg
 } as const;
 
 export type IOProductIcons = keyof typeof IOProductIcons;
