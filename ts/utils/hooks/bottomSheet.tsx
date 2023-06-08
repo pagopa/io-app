@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ComponentProps, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -17,7 +17,6 @@ import {
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
@@ -65,9 +64,6 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
 export type BottomSheetModalProps = {
   content: React.ReactNode;
   config: {
-    backdropComponent: ComponentProps<
-      typeof BottomSheetModal
-    >["backdropComponent"];
     handleComponent: React.ReactElement;
   };
 };
@@ -100,7 +96,6 @@ export const bottomSheetContent = (
   return {
     content: bottomSheetBody,
     config: {
-      backdropComponent: () => BlurredBackgroundComponent(onClose),
       handleComponent: header
     }
   };
