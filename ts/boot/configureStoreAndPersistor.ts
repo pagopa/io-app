@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import _ from "lodash";
+import _, { merge } from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -31,7 +31,6 @@ import {
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
-import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
 import {
   authenticationPersistConfig,
   createRootReducer
@@ -82,7 +81,13 @@ const migrations: MigrationManifest = {
   // Version 2
   // Adds messagesIdsByServiceId
   "2": (state: PersistedState) =>
-    addMessagesIdsByServiceId(state as PersistedGlobalState),
+    merge({}, state, {
+      entities: {
+        messages: {
+          idsByServiceId: {} // this has been removed after moving to paginated messages
+        }
+      }
+    }),
 
   // Version 3
   // we changed the entities of organizations
