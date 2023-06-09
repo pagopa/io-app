@@ -260,7 +260,7 @@ interface IOSelectionItemVisualParams {
 
 export const IOSelectionItemVisualParams: IOSelectionItemVisualParams = {
   paddingVertical: 16,
-  paddingHorizontal: IOLayoutCostants.appMarginDefault,
+  paddingHorizontal: IOVisualCostants.appMarginDefault,
   iconMargin: 8,
   iconSize: 24
 };
