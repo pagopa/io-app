@@ -31,7 +31,6 @@ import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
-import { sessionExpired } from "../store/actions/authentication";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
@@ -63,6 +62,7 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
+import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -73,7 +73,7 @@ export function* loadProfile(
   SagaCallReturnType<typeof getProfile>
 > {
   try {
-    const response = yield* call(getProfile, {});
+    const response = yield* withRefreshApiCall(getProfile({}));
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));
@@ -87,11 +87,6 @@ export function* loadProfile(
         profileLoadSuccess(response.right.value as InitializedProfile)
       );
       return O.some(response.right.value);
-    }
-    if (response.right.status === 401) {
-      // in case we got an expired session while loading the profile, we reset
-      // the session
-      yield* put(sessionExpired());
     }
     throw response
       ? Error(`response status ${response.right.status}`)
@@ -161,10 +156,12 @@ function* createOrUpdateProfileSaga(
         version: 0
       };
   try {
-    const response: SagaCallReturnType<typeof createOrUpdateProfile> =
-      yield* call(createOrUpdateProfile, {
+    const response = yield* withRefreshApiCall(
+      createOrUpdateProfile({
         body: newProfile
-      });
+      }),
+      I18n.t("profile.errors.upsert")
+    );
 
     if (E.isLeft(response)) {
       throw new Error(readablePrivacyReport(response.left));
@@ -176,12 +173,6 @@ function* createOrUpdateProfileSaga(
       // so we force profile reloading (see https://www.pivotaltracker.com/n/projects/2048617/stories/171994417)
       yield* put(profileLoadRequest());
       throw new Error(response.right.value.title);
-    }
-
-    if (response.right.status === 401) {
-      // on 401, expire the current session and restart the authentication flow
-      yield* put(sessionExpired());
-      throw new Error(I18n.t("profile.errors.upsert"));
     }
 
     if (response.right.status !== 200) {
@@ -281,18 +272,13 @@ function* startEmailValidationProcessSaga(
   SagaCallReturnType<typeof startEmailValidationProcess>
 > {
   try {
-    const response = yield* call(startEmailValidationProcess, {});
+    const response = yield* withRefreshApiCall(startEmailValidationProcess({}));
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));
     }
     if (response.right.status === 202) {
       yield* put(startEmailValidation.success());
-    }
-    if (response.right.status === 401) {
-      // in case we got an expired session while loading the profile, we reset
-      // the session
-      yield* put(sessionExpired());
     }
     throw response
       ? Error(`response status ${response.right.status}`)

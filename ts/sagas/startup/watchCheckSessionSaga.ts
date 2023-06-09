@@ -9,12 +9,12 @@ import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
   loadSupportToken,
-  sessionExpired,
   sessionInformationLoadSuccess
 } from "../../store/actions/authentication";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError } from "../../utils/errors";
+import { handleSessionExpiredSaga } from "../../features/fastLogin/saga/utils";
 
 // load the support token useful for user assistance
 function* handleLoadSupportToken(
@@ -77,7 +77,7 @@ export function* checkSessionResult(
   action: ReturnType<typeof checkCurrentSession["success"]>
 ) {
   if (!action.payload.isSessionValid) {
-    yield* put(sessionExpired());
+    yield* call(handleSessionExpiredSaga);
   }
 }
 

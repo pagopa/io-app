@@ -7,6 +7,7 @@ import {
 } from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
 import { identificationRequest } from "../../../store/actions/identification";
+import { startApplicationInitialization } from "../../../store/actions/application";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -34,5 +35,7 @@ function* doRefreshTokenSaga() {
   // FIXME: This is a mock, we should call the backend to refresh the token
   const newToken = "FOOBEERBAR" as SessionToken;
   yield* put(refreshSessionToken.success(newToken));
+  // Reinit all backend clients to use the new token
+  yield* put(startApplicationInitialization());
   return newToken;
 }

@@ -1,6 +1,5 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
 import { BackendClient } from "../../api/backend";
 import { reloadAllMessages as reloadAllMessagesAction } from "../../store/actions/messages";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
@@ -8,7 +7,6 @@ import { toUIMessage } from "../../store/reducers/entities/messages/transformers
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { isTestEnv } from "../../utils/environment";
 import { getError } from "../../utils/errors";
-
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<typeof reloadAllMessagesAction["request"]>;
@@ -37,7 +35,6 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
           archived: filter.getArchived
         }
       );
-
       const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
         response,
         ({ items, next, prev }: PaginatedPublicMessagesCollection) =>

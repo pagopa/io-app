@@ -1,4 +1,4 @@
-import { call, takeEvery, put } from "typed-redux-saga/macro";
+import { takeEvery, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
 import { convertUnknownToError } from "../../utils/errors";
@@ -6,6 +6,7 @@ import { BackendClient } from "../../api/backend";
 import { loadMessageById } from "../../store/actions/messages";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<typeof loadMessageById["request"]>;
@@ -22,10 +23,12 @@ function* handleLoadMessageById(
   const id = action.payload.id;
 
   try {
-    const response = yield* call(getMessage, {
-      id,
-      public_message: true
-    });
+    const response = yield* withRefreshApiCall(
+      getMessage({
+        id,
+        public_message: true
+      })
+    );
     const nextAction = handleResponse(
       response,
       (message: CreatedMessageWithContentAndAttachments) =>

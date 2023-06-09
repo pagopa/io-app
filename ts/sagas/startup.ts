@@ -43,7 +43,10 @@ import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
-import { startApplicationInitialization } from "../store/actions/application";
+import {
+  applicationInitialized,
+  startApplicationInitialization
+} from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
@@ -247,6 +250,7 @@ export function* initializeApplicationSaga(): Generator<
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
 
+  console.log("========= Session token: ", sessionToken);
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
@@ -261,6 +265,7 @@ export function* initializeApplicationSaga(): Generator<
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
+    // FIXME: handle isFastLogin Logic.
     yield* put(sessionExpired());
     return;
   }
@@ -626,6 +631,9 @@ export function* initializeApplicationSaga(): Generator<
       })
     );
   }
+
+  console.log("Application initialized");
+  yield* put(applicationInitialized());
 }
 
 /**

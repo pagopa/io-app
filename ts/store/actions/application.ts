@@ -12,6 +12,9 @@ import {
 export const startApplicationInitialization = createAction(
   "START_APPLICATION_INITIALIZATION"
 );
+export const applicationInitialized = createAction(
+  "APPLICATION_INITIALIZED_ACTION"
+);
 
 export const applicationChangeState = createStandardAction(
   "APP_STATE_CHANGE_ACTION"
