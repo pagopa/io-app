@@ -32,7 +32,7 @@ export type TestLoginState =
   | TestLoginFailedState;
 
 export const testLoginSelector = (state: GlobalState): TestLoginState =>
-  state.features.testLogin;
+  state.features.loginFeatures.testLogin;
 
 export const testLoginReducer = (
   state: TestLoginState = { kind: "idle" },

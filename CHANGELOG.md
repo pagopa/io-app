@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.35.0-rc.0](https://github.com/pagopa/io-app/compare/2.34.0-rc.2...2.35.0-rc.0) (2023-06-06)
+
+
+### Features
+
+* [[IOBP-49](https://pagopa.atlassian.net/browse/IOBP-49)] Discount initiatives unsubscription ([#4670](https://github.com/pagopa/io-app/issues/4670)) ([64d86ae](https://github.com/pagopa/io-app/commit/64d86ae8b28fe3812de47ce8938664785e5f892d))
+* [[IOCOM-253](https://pagopa.atlassian.net/browse/IOCOM-253),[IOCOM-259](https://pagopa.atlassian.net/browse/IOCOM-259)] Refactor `lollipopFetch` to extract and export the signature creation ([#4659](https://github.com/pagopa/io-app/issues/4659)) ([8558a0a](https://github.com/pagopa/io-app/commit/8558a0aef706465ebbff42dfdf6325d153f42e7c))
+* [[IOCOM-253](https://pagopa.atlassian.net/browse/IOCOM-253),[IOCOM-261](https://pagopa.atlassian.net/browse/IOCOM-261)] Lollipop signature on attachment download endpoint ([#4668](https://github.com/pagopa/io-app/issues/4668)) ([b76f4bf](https://github.com/pagopa/io-app/commit/b76f4bf9bf31228914d2304894cf955100d926c5))
+* [[IOCOM-257](https://pagopa.atlassian.net/browse/IOCOM-257)] Added lollipop headers to third-party endpoints ([#4662](https://github.com/pagopa/io-app/issues/4662)) ([221a403](https://github.com/pagopa/io-app/commit/221a40324c28f952a891ed97aef003bf5aab248a))
+* [[IOPID-251](https://pagopa.atlassian.net/browse/IOPID-251)] New pin policy ([#4655](https://github.com/pagopa/io-app/issues/4655)) ([4b95f94](https://github.com/pagopa/io-app/commit/4b95f94db54be1c6f375c7ea3c8583b8cc4a29df)), closes [/github.com/pagopa/io-app/pull/4655/files#diff-8ff3154db08bb871f25bd90b86f2f0326669fd6e6df5ba5ce5857002c3e30ce1](https://github.com/pagopa//github.com/pagopa/io-app/pull/4655/files/issues/diff-8ff3154db08bb871f25bd90b86f2f0326669fd6e6df5ba5ce5857002c3e30ce1) [/github.com/pagopa/io-app/pull/4655/files#diff-72667aa8b163df337e6c8e23a0b77eb8f5e77e84905591c99330b78721ef4793](https://github.com/pagopa//github.com/pagopa/io-app/pull/4655/files/issues/diff-72667aa8b163df337e6c8e23a0b77eb8f5e77e84905591c99330b78721ef4793)
+* [[IOPLT-6](https://pagopa.atlassian.net/browse/IOPLT-6)] Extend bottom-sheet creator ([#4631](https://github.com/pagopa/io-app/issues/4631)) ([151aaff](https://github.com/pagopa/io-app/commit/151aaff12b42296245a1e26936487966dd1f9078))
+
+
+### Bug Fixes
+
+* [[IABT-1417](https://pagopa.atlassian.net/browse/IABT-1417)] Native Login ([#4601](https://github.com/pagopa/io-app/issues/4601)) ([50b8b3e](https://github.com/pagopa/io-app/commit/50b8b3e8e2a4b6f615507445c9d145b7be461c98))
+* [[IOAPPFD0-109](https://pagopa.atlassian.net/browse/IOAPPFD0-109)] Fix UI regression of the `Paid` badge in the message list ([#4665](https://github.com/pagopa/io-app/issues/4665)) ([c8e6a33](https://github.com/pagopa/io-app/commit/c8e6a33c3deb008bbb21be0c0c63072637d632f5))
+* [[IOBP-69](https://pagopa.atlassian.net/browse/IOBP-69)] Fix long IDPay initiatives names in wallet cards ([#4671](https://github.com/pagopa/io-app/issues/4671)) ([50c68fd](https://github.com/pagopa/io-app/commit/50c68fd4d46f209c7aaffefe3607855c4594f27c))
+* [[IOCOM-251](https://pagopa.atlassian.net/browse/IOCOM-251)] Fixing loading state of message precondition on Android ([#4652](https://github.com/pagopa/io-app/issues/4652)) ([c7a2b4b](https://github.com/pagopa/io-app/commit/c7a2b4ba22556b01871f35b0bf52b6b7871b0c94))
+* **Firma con IO:** [[SFEQS-1638](https://pagopa.atlassian.net/browse/SFEQS-1638)] Fix json parse error unmanaged ([#4583](https://github.com/pagopa/io-app/issues/4583)) ([f8918b4](https://github.com/pagopa/io-app/commit/f8918b40228f48e70065e967723d79183c828d89))
+
+
+### Chores
+
+* [[IOAPPFD0-98](https://pagopa.atlassian.net/browse/IOAPPFD0-98)] Add the new `Banner` component ([#4607](https://github.com/pagopa/io-app/issues/4607)) ([d9a5670](https://github.com/pagopa/io-app/commit/d9a567056ece1a2a6d3bdf7857f59ca076ae6774))
+* **Firma con IO:** [[SFEQS-1706](https://pagopa.atlassian.net/browse/SFEQS-1706)] Refactor ErrorComponent to use pictograms ([#4666](https://github.com/pagopa/io-app/issues/4666)) ([77014f5](https://github.com/pagopa/io-app/commit/77014f5e924eac4f15fab3d3129b26cec5f75b8c))
+* [[IOAPPFD0-106](https://pagopa.atlassian.net/browse/IOAPPFD0-106)] Add the new `emptyArchive` and `umbrellaNew` pictograms ([#4660](https://github.com/pagopa/io-app/issues/4660)) ([7b1e33b](https://github.com/pagopa/io-app/commit/7b1e33bd7d67672f279ad0789650a9a724913e5e))
+* [[IOAPPFD0-107](https://pagopa.atlassian.net/browse/IOAPPFD0-107)] Update main app grid with new side margin ([#4661](https://github.com/pagopa/io-app/issues/4661)) ([770992c](https://github.com/pagopa/io-app/commit/770992ce399020320060968d93da8518f77d3552))
+* [[IOAPPFD0-99](https://pagopa.atlassian.net/browse/IOAPPFD0-99)] Make the entire `Alert` pressable when `action` is set ([#4616](https://github.com/pagopa/io-app/issues/4616)) ([1c5b07c](https://github.com/pagopa/io-app/commit/1c5b07c09790555d20b243a543d4cc0b8f9cd5e4))
+
 ## [2.34.0-rc.2](https://github.com/pagopa/io-app/compare/2.34.0-rc.1...2.34.0-rc.2) (2023-05-29)
 
 

@@ -124,7 +124,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -849,7 +849,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -1546,6 +1546,13 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                                 />
                                               </RNSVGGroup>
                                             </RNSVGSvgView>
+                                            <View
+                                              style={
+                                                Object {
+                                                  "width": 4,
+                                                }
+                                              }
+                                            />
                                             <Text
                                               style={
                                                 Array [
@@ -1716,7 +1723,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -2413,6 +2420,13 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                                 />
                                               </RNSVGGroup>
                                             </RNSVGSvgView>
+                                            <View
+                                              style={
+                                                Object {
+                                                  "width": 4,
+                                                }
+                                              }
+                                            />
                                             <Text
                                               style={
                                                 Array [
@@ -2583,7 +2597,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -3280,6 +3294,13 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                                 />
                                               </RNSVGGroup>
                                             </RNSVGSvgView>
+                                            <View
+                                              style={
+                                                Object {
+                                                  "width": 4,
+                                                }
+                                              }
+                                            />
                                             <Text
                                               style={
                                                 Array [

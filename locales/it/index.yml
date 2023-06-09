@@ -554,6 +554,10 @@ spid:
       SPID è l'identità digitale per accedere ai servizi online della Pubblica
       Amministrazione Italiana.
     line2: Inserisci la tua email per attivarla.
+  pending_login:
+    title: Accesso in corso
+    details: Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!
+    button: Torna alla lista
 authentication:
   landing:
     accessibility:
@@ -3361,6 +3365,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
+              QRCODE_TRANSACTION: Pagamento Online
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3401,6 +3406,20 @@ idpay:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
+      discount:
+        labels:
+          AUTHORIZED: In corso
+          CANCELLED: Annullata
+          REWARDED: Eseguita
+        details:
+          alerts:
+            AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
+            CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+          labels:
+            status: Stato
+            totalAmount: Importo totale
+            idpayAmount: Importo transazione ID Pay
+            transactionID: ID transazione
       title: 
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione
@@ -3615,6 +3634,13 @@ idpay:
       title: C’è un problema sui nostri sistemi
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
+  payment:
+    qrCode:
+      manual:
+        title: Cosa devi pagare?
+        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        input: Codice Transazione
+        button: Continua
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
