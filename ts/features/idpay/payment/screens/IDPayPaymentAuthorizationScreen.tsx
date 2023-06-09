@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import Placeholder from "rn-placeholder";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { Divider } from "../../../../components/core/Divider";
@@ -20,6 +19,7 @@ import ListItemInfo from "../../../../components/ui/ListItemInfo";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { Skeleton } from "../../common/components/Skeleton";
 import { formatNumberCurrency } from "../../common/utils/strings";
 import { IDPayPaymentParamsList } from "../navigation/navigator";
 import { usePaymentMachineService } from "../xstate/provider";
@@ -71,13 +71,14 @@ const IDPayPaymentAuthorizationScreen = () => {
 
   const renderContent = () => {
     if (isLoading) {
-      return <TransactionDataSkeleton />;
+      return <AuthorizationScreenSkeleton />;
     }
     if (transactionData !== undefined) {
-      return <ExistingTransactionDataContent data={transactionData} />;
+      return <AuthorizationScreenContent data={transactionData} />;
     }
-    // TODO:: error page, will be added in IOBP-6
-    return <></>;
+    // TODO:: correct navigation will be added with error mapping
+    machine.send("CANCEL_AUTHORIZATION");
+    return null;
   };
 
   return (
@@ -114,7 +115,7 @@ const IDPayPaymentAuthorizationScreen = () => {
   );
 };
 
-const ExistingTransactionDataContent = ({
+const AuthorizationScreenContent = ({
   data
 }: {
   data: NonNullable<AuthPaymentResponseDTO>;
@@ -158,19 +159,19 @@ const ExistingTransactionDataContent = ({
       <ListItemInfo
         label={I18n.t("idpay.payment.authorization.amount")}
         value={amountCents}
-        accessibilityLabel=" "
+        accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
       />
       <Divider />
       <ListItemInfo
         label={I18n.t("idpay.payment.authorization.businessName")}
         value={businessName}
-        accessibilityLabel=" "
+        accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
       />
       <Divider />
       <ListItemInfo
         label={I18n.t("idpay.payment.authorization.dateTime")}
         value={date}
-        accessibilityLabel=" "
+        accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
       />
 
       <VSpacer size={24} />
@@ -196,51 +197,51 @@ const ExistingTransactionDataContent = ({
       <ListItemInfo
         label={I18n.t("idpay.payment.authorization.initiativeName")}
         value={initiativeName}
-        accessibilityLabel=" "
+        accessibilityLabel={I18n.t(
+          "idpay.payment.authorization.initiativeName"
+        )}
       />
       <Divider />
       <ListItemInfo
         label={I18n.t("idpay.payment.authorization.availableAmount")}
         value={"-"}
-        accessibilityLabel=" "
+        accessibilityLabel={I18n.t(
+          "idpay.payment.authorization.availableAmount"
+        )}
       />
     </>
   );
 };
 
-const SmallPlaceHolder = () => (
-  <Placeholder.Box animate="fade" height={16} width={100} radius={8} />
-);
-const BigPlaceHolder = () => (
-  <Placeholder.Box animate="fade" height={29} width={100} />
-);
-const TransactionDataSkeleton = () => (
+const SmallSkeleton = () => <Skeleton width={178} height={16} radius={8} />;
+
+const AuthorizationScreenSkeleton = () => (
   <>
     <Divider />
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-      <BigPlaceHolder />
-      <BigPlaceHolder />
+      <Skeleton width={82} height={29} />
+      <Skeleton width={130} height={29} />
     </View>
 
     <VSpacer size={16} />
     <Divider />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.amount")}
-      value={<SmallPlaceHolder />}
-      accessibilityLabel=" "
+      value={<SmallSkeleton />}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
     />
     <Divider />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.businessName")}
-      value={<SmallPlaceHolder />}
-      accessibilityLabel=" "
+      value={<SmallSkeleton />}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
     />
     <Divider />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.dateTime")}
-      value={<SmallPlaceHolder />}
-      accessibilityLabel=" "
+      value={<SmallSkeleton />}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
 
     <VSpacer size={24} />
@@ -260,14 +261,14 @@ const TransactionDataSkeleton = () => (
 
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.initiativeName")}
-      value={<SmallPlaceHolder />}
-      accessibilityLabel=" "
+      value={<SmallSkeleton />}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.initiativeName")}
     />
     <Divider />
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.availableAmount")}
-      value={<SmallPlaceHolder />}
-      accessibilityLabel=" "
+      value={<SmallSkeleton />}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.availableAmount")}
     />
   </>
 );
