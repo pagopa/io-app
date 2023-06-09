@@ -124,7 +124,7 @@ exports[`the \`CtaBar\` component when neither \`paymentData\` nor \`dueDate\` a
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>

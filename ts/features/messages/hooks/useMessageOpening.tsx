@@ -16,7 +16,7 @@ import {
   clearMessagePrecondition
 } from "../../../store/actions/messages";
 import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import MessageMarkdown from "../../../components/messages/MessageDetail/MessageMarkdown";
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import { Pictogram } from "../../../components/core/pictograms";
@@ -54,7 +54,7 @@ type MessagePreconditionFooterProps = {
 
 const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
   const message = useIOSelector(state =>
-    getMessageById(state, props.messageId)
+    getPaginatedMessageById(state, props.messageId)
   );
 
   const handleCancelPress = () => {
@@ -225,7 +225,7 @@ export const useMessageOpening = () => {
   const navigate = useCallback(
     (message: UIMessage) => {
       navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-        screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+        screen: ROUTES.MESSAGE_ROUTER,
         params: {
           messageId: message.id,
           fromNotification: false
