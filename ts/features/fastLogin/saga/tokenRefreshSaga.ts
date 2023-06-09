@@ -8,6 +8,8 @@ import {
 import { SessionToken } from "../../../types/SessionToken";
 import { identificationRequest } from "../../../store/actions/identification";
 import { startApplicationInitialization } from "../../../store/actions/application";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -27,6 +29,7 @@ function* handleRefreshSessionToken(
     yield* doRefreshTokenSaga();
   } else {
     // Lock the app
+    NavigationService.navigate(ROUTES.MESSAGES_HOME);
     yield* put(identificationRequest());
   }
 }

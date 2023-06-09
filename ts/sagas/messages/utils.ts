@@ -27,7 +27,7 @@ export function handleResponse<T>(
   response: E.Either<Array<ValidationError>, ResponseType<T>>,
   onSuccess: (payload: T) => Action,
   onFailure: (e: Error) => Action
-): Action {
+): Action | undefined {
   return pipe(
     response,
     E.fromNullable(new Error("Response is undefined")),
@@ -40,6 +40,10 @@ export function handleResponse<T>(
       data => {
         if (data.status === 200) {
           return onSuccess(data.value);
+        }
+
+        if (data.status === 401) {
+          return undefined;
         }
 
         if (data.status === 500) {

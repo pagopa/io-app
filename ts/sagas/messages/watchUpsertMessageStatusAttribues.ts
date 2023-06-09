@@ -81,7 +81,9 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
           })
       );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (error) {
       yield* put(
         upsertMessageStatusAttributes.failure({

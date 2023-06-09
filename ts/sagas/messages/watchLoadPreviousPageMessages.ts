@@ -50,7 +50,9 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
           })
       );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (e) {
       yield* put(
         loadPreviousPageMessagesAction.failure({

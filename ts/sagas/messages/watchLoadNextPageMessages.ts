@@ -49,7 +49,9 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
           loadNextPageMessagesAction.failure({ error: getError(error), filter })
       );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (e) {
       yield* put(
         loadNextPageMessagesAction.failure({

@@ -36,7 +36,9 @@ function* handleLoadMessageById(
         loadMessageById.success(toUIMessage(message)),
       error => loadMessageById.failure({ id, error })
     );
-    yield* put(nextAction);
+    if (nextAction) {
+      yield* put(nextAction);
+    }
   } catch (e) {
     yield* put(
       loadMessageById.failure({ id, error: convertUnknownToError(e) })

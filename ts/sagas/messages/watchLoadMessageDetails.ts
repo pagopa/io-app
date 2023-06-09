@@ -47,7 +47,9 @@ function tryLoadMessageDetails(getMessage: LocalBeClient) {
             })
         );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (error) {
       yield* put(
         loadMessageDetails.failure({
