@@ -31,6 +31,7 @@ const IDPayPaymentCodeScanScreen = () => {
         <BarcodeCamera
           onBarcodeScanned={onBarcodeScanned}
           marker={<CameraMarker />}
+          fullHeight={true}
         />
       </View>
       <SafeAreaView style={styles.navigationContainer}>
