@@ -2,7 +2,10 @@ import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { ValidationError } from "io-ts";
-import { sessionExpired } from "../../store/actions/authentication";
+import {
+  refreshSessionToken,
+  sessionExpired
+} from "../../store/actions/authentication";
 import { Action } from "../../store/actions/types";
 import { readablePrivacyReport } from "../../utils/reporters";
 
@@ -45,6 +48,11 @@ export function handleResponse<T>(
 
         if (data.status === 401) {
           return sessionExpired();
+        }
+
+        // FIXME: remove on behalf of 401
+        if (data.status === 400) {
+          return refreshSessionToken.request();
         }
 
         if (data.status === 500) {

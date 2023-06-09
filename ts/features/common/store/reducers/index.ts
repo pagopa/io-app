@@ -15,6 +15,10 @@ import {
   TestLoginState
 } from "../../../../store/reducers/testLogin";
 import {
+  fastLoginReducer,
+  FastLoginState
+} from "../../../fastLogin/store/reducers";
+import {
   nativeLoginReducer,
   NativeLoginState
 } from "../../../nativeLogin/store/reducers";
@@ -22,6 +26,7 @@ import {
 type LoginFeaturesState = {
   testLogin: TestLoginState;
   nativeLogin: NativeLoginState;
+  fastLogin: FastLoginState;
 };
 
 export type FeaturesState = {
@@ -41,7 +46,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   idPay: idPayReducer,
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
-    nativeLogin: nativeLoginReducer
+    nativeLogin: nativeLoginReducer,
+    fastLogin: fastLoginReducer
   })
 });
 

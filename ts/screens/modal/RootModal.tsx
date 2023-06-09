@@ -8,7 +8,9 @@ import UnsupportedDeviceScreen from "../../features/lollipop/screens/Unsupported
 import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
+import { isFastLoginUserInteractionNeededSelector } from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
+import AskUserToContinueScreen from "../../features/fastLogin/screens/AskUserToContinueScreen";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -22,6 +24,10 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - IdentificationModal -> the default case. It renders itself only if an identification action is required
  */
 const RootModal: React.FunctionComponent<Props> = (props: Props) => {
+  if (props.isFastLoginUserInteractionNeeded) {
+    return <AskUserToContinueScreen />;
+  }
+
   if (!props.isDeviceSupported) {
     return <UnsupportedDeviceScreen />;
   }
@@ -44,7 +50,9 @@ const mapStateToProps = (state: GlobalState) => ({
   isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
   isAppSupported: isAppSupportedSelector(state),
   versionInfo: versionInfoDataSelector(state),
-  isDeviceSupported: isDeviceSupportedSelector(state)
+  isDeviceSupported: isDeviceSupportedSelector(state),
+  isFastLoginUserInteractionNeeded:
+    isFastLoginUserInteractionNeededSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);
