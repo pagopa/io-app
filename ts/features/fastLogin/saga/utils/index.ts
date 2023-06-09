@@ -7,17 +7,25 @@ import {
   refreshSessionToken,
   sessionExpired
 } from "../../../../store/actions/authentication";
+import { Action } from "../../../../store/actions/types";
+import { retriableAction } from "../../actions";
 
-export function* withRefreshApiCall<R>(
+export function* withRefreshApiCall<R, A extends Action>(
   f: Promise<t.Validation<IResponseType<401, any> | R>>,
-  errorMessage: string = "Session expired"
+  action?: A | undefined,
+  errorMessage?: string
 ) {
   const response = yield* call(() => f);
   // BEWARE: we can cast to any only because we know for sure that f will
   // always return a Promise<IResponseType<A, B>>
   if (E.isRight(response) && (response.right as any).status === 401) {
+    if (action) {
+      yield* put(retriableAction({ actionToRetry: action }));
+    }
     yield* call(handleSessionExpiredSaga);
-    throw new Error(errorMessage);
+    if (!action) {
+      throw new Error(errorMessage ?? "UNKNOWN");
+    }
   }
   return response;
 }

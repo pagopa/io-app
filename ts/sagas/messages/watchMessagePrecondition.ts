@@ -28,7 +28,8 @@ function* workerMessagePrecondition(
     const result = yield* withRefreshApiCall(
       getThirdPartyMessagePrecondition({
         id: messageId
-      })
+      }),
+      action
     );
 
     if (E.isRight(result)) {

@@ -67,7 +67,8 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
     try {
       const body = validatePayload(action.payload);
       const response = yield* withRefreshApiCall(
-        putMessage({ id: action.payload.message.id, body })
+        putMessage({ id: action.payload.message.id, body }),
+        action
       );
 
       const nextAction = handleResponse<unknown>(

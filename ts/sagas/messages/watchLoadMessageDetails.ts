@@ -34,7 +34,7 @@ function tryLoadMessageDetails(getMessage: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessage>> {
     const id = action.payload.id;
     try {
-      const response = yield* withRefreshApiCall(getMessage({ id }));
+      const response = yield* withRefreshApiCall(getMessage({ id }), action);
       const nextAction =
         handleResponse<CreatedMessageWithContentAndAttachments>(
           response,

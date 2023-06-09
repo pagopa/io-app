@@ -27,7 +27,8 @@ function* handleLoadMessageById(
       getMessage({
         id,
         public_message: true
-      })
+      }),
+      action
     );
     const nextAction = handleResponse(
       response,

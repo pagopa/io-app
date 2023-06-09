@@ -24,7 +24,8 @@ function* getThirdPartyMessage(
   const id = action.payload;
   try {
     const result = yield* withRefreshApiCall(
-      client.getThirdPartyMessage()({ id })
+      client.getThirdPartyMessage()({ id }),
+      action
     );
     if (E.isLeft(result)) {
       yield* put(

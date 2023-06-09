@@ -34,7 +34,8 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
           page_size: pageSize,
           maximum_id: cursor,
           archived: filter.getArchived
-        })
+        }),
+        action
       );
       const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
         response,

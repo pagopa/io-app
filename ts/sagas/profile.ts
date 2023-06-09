@@ -160,6 +160,7 @@ function* createOrUpdateProfileSaga(
       createOrUpdateProfile({
         body: newProfile
       }),
+      undefined,
       I18n.t("profile.errors.upsert")
     );
 
