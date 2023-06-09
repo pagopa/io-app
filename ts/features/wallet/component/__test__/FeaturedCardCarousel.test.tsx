@@ -353,7 +353,7 @@ describe("FeaturedCardCarousel", () => {
 const getComponent = (mockStore: MockStoreEnhanced<GlobalState>) =>
   renderScreenFakeNavRedux<GlobalState>(
     () => <FeaturedCardCarousel />,
-    ROUTES.MESSAGE_DETAIL_PAGINATED,
+    ROUTES.MESSAGE_DETAIL,
     {},
     mockStore
   );

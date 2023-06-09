@@ -14,7 +14,7 @@ import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeade
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
 import {
-  IOLayoutCostants,
+  IOVisualCostants,
   IOStyles
 } from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
@@ -36,7 +36,7 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
   <BottomSheetScrollView
     style={{
       flex: 1,
-      paddingHorizontal: IOLayoutCostants.appMarginDefault
+      paddingHorizontal: IOVisualCostants.appMarginDefault
     }}
     testID={testID}
   >

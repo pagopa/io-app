@@ -26,13 +26,13 @@ import {
 } from "../../store/actions/messages";
 import {
   navigateBack,
-  navigateToPaginatedMessageDetailScreenAction
+  navigateToMessageDetailScreenAction
 } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { useIOSelector } from "../../store/hooks";
 import { isPnEnabledSelector } from "../../store/reducers/backendStatus";
 import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
-import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
   UIMessageDetails,
@@ -45,14 +45,14 @@ import { isStrictSome } from "../../utils/pot";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/entities/messages/allPaginated";
 import { trackPNPushOpened } from "../../features/pn/analytics";
 
-export type MessageRouterScreenPaginatedNavigationParams = {
+export type MessageRouterScreenNavigationParams = {
   messageId: UIMessageId;
   fromNotification: boolean;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
   MessagesParamsList,
-  "MESSAGE_ROUTER_PAGINATED"
+  "MESSAGE_ROUTER"
 >;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -90,7 +90,7 @@ const navigateToScreenHandler =
     } else {
       navigateBack();
       dispatch(
-        navigateToPaginatedMessageDetailScreenAction({
+        navigateToMessageDetailScreenAction({
           messageId: message.id,
           serviceId: message.serviceId
         })
@@ -241,7 +241,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
   const messageId = ownProps.route.params.messageId;
   const fromNotification = ownProps.route.params.fromNotification;
-  const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
+  const maybeMessage = pot.toUndefined(
+    getPaginatedMessageById(state, messageId)
+  );
   const isServiceAvailable = pipe(
     maybeMessage?.serviceId,
     O.fromNullable,
