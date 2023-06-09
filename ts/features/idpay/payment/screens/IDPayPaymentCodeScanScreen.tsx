@@ -1,20 +1,53 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import CameraScanOverlaySVG from "../../../../../img/camera-scan-overlay.svg";
+import {
+  BarcodeCamera,
+  ScannedBarcode
+} from "../../../../components/BarcodeCamera";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { BaseHeader } from "../../../../components/screens/BaseHeader";
 import IconButton from "../../../../components/ui/IconButton";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { IDPayPaymentRoutes } from "../navigation/navigator";
+import I18n from "../../../../i18n";
 
 const IDPayPaymentCodeScanScreen = () => {
+  const onBarcodeScanned = (barcode: ScannedBarcode) => {
+    alert(`trxCode: ${barcode.value}`);
+  };
+
+  return (
+    <View style={styles.screen}>
+      <View style={styles.cameraContainer}>
+        <BarcodeCamera
+          onBarcodeScanned={onBarcodeScanned}
+          marker={<CameraMarker />}
+        />
+      </View>
+      <SafeAreaView style={styles.navigationContainer}>
+        <TabNavigation />
+      </SafeAreaView>
+      <LinearGradient
+        colors={["#03134480", "#03134400"]}
+        style={styles.headerContainer}
+      >
+        {/* TODO eplace with the new header from the Design System 2.0  */}
+        <CustomHeader />
+      </LinearGradient>
+    </View>
+  );
+};
+
+const CustomHeader = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const customGoBack = (
@@ -23,51 +56,58 @@ const IDPayPaymentCodeScanScreen = () => {
       onPress={() => {
         navigation.goBack();
       }}
-      accessibilityLabel="ciao"
+      accessibilityLabel={I18n.t("global.buttons.close")}
       color="contrast"
     />
   );
 
-  const headerContent = (
+  return (
     <BaseHeader customGoBack={customGoBack} backgroundColor={"transparent"} />
   );
+};
+
+const CameraMarker = () => (
+  <View style={styles.cameraMarker}>
+    <CameraScanOverlaySVG width={230} height={230} />
+  </View>
+);
+
+const TabNavigation = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const navigateToCodeInputScreen = () =>
+    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    });
+
+  const showUploadModal = () => {
+    // TODO QRCode upload will be handled in another PR
+    alert("TODO 😄");
+  };
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.cameraContainer}></View>
-      <SafeAreaView style={styles.navigation}>
-        <ContentWrapper>
-          <View style={styles.navigationTabs}>
-            <View style={[styles.tab, styles.tabActive]}>
-              <LabelSmall color="grey-850" weight="Regular">
-                Inquadra
-              </LabelSmall>
-            </View>
-            <View style={styles.tab}>
-              <LabelSmall color="white" weight="Regular">
-                Carica
-              </LabelSmall>
-            </View>
-            <View style={styles.tab}>
-              <LabelSmall color="white" weight="Regular">
-                Digita
-              </LabelSmall>
-            </View>
-          </View>
-        </ContentWrapper>
-      </SafeAreaView>
-      <View style={styles.header}>
-        <LinearGradient
-          colors={["#03134480", "#03134400"]}
-          style={IOStyles.flex}
+    <ContentWrapper>
+      <View style={styles.navigationTabs}>
+        <View style={[styles.tab, styles.tabActive]}>
+          <LabelSmall color="grey-850" weight="Regular">
+            {I18n.t("idpay.payment.qrCode.scan.tabs.scan")}
+          </LabelSmall>
+        </View>
+        <TouchableOpacity style={styles.tab} onPress={showUploadModal}>
+          <LabelSmall color="white" weight="Regular">
+            {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
+          </LabelSmall>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tab}
+          onPress={navigateToCodeInputScreen}
         >
-          {headerContent}
-        </LinearGradient>
+          <LabelSmall color="white" weight="Regular">
+            {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
+          </LabelSmall>
+        </TouchableOpacity>
       </View>
-      <View style={styles.overlay}>
-        <CameraScanOverlaySVG width={230} height={230} />
-      </View>
-    </View>
+    </ContentWrapper>
   );
 };
 
@@ -76,25 +116,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: IOColors["blueIO-850"]
   },
-  header: {
+  headerContainer: {
+    flex: 1,
     position: "absolute",
     width: "100%",
     height: 160
   },
-  overlay: {
-    position: "absolute",
-    width: "100%",
-    height: "95%",
-    alignItems: "center",
-    justifyContent: "center"
-  },
   cameraContainer: {
+    backgroundColor: IOColors["blueIO-50"],
     flex: 1,
     flexGrow: 1,
-    backgroundColor: IOColors["blueIO-50"],
-    borderRadius: 24
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden"
   },
-  navigation: {
+  cameraMarker: {
+    width: "100%",
+    height: "105%",
+    justifyContent: "center"
+  },
+  navigationContainer: {
     backgroundColor: IOColors["blueIO-850"],
     margin: 8
   },

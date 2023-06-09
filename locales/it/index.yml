@@ -3623,6 +3623,11 @@ idpay:
         subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
         input: Codice Transazione
         button: Continua
+      scan:
+        tabs:
+          scan: Inquadra
+          upload: Carica
+          input: Digita
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
