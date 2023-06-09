@@ -8,12 +8,17 @@ import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
  * A collection of default styles used within IO App.
  */
 
-interface IOLayoutCostants {
+interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
+  // Dimensions
+  avatarSizeSmall: number;
+  avatarSizeMedium: number;
 }
 
-export const IOLayoutCostants: IOLayoutCostants = {
-  appMarginDefault: 24
+export const IOVisualCostants: IOVisualCostants = {
+  appMarginDefault: 24,
+  avatarSizeSmall: 44,
+  avatarSizeMedium: 66
 };
 
 // TODO: in a first iteration, to avoid overlaps,
@@ -222,7 +227,7 @@ interface IOListItemVisualParams {
 
 export const IOListItemVisualParams: IOListItemVisualParams = {
   paddingVertical: 12,
-  paddingHorizontal: IOLayoutCostants.appMarginDefault,
+  paddingHorizontal: IOVisualCostants.appMarginDefault,
   iconMargin: 16,
   iconSize: 24,
   chevronSize: 24
