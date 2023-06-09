@@ -250,7 +250,6 @@ export function* initializeApplicationSaga(): Generator<
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
 
-  console.log("========= Session token: ", sessionToken);
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
@@ -632,7 +631,6 @@ export function* initializeApplicationSaga(): Generator<
     );
   }
 
-  console.log("Application initialized");
   yield* put(applicationInitialized());
 }
 
