@@ -10,7 +10,7 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import {
-  IOLayoutCostants,
+  IOVisualCostants,
   IOStyles
 } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -93,7 +93,7 @@ const IDPayPaymentCodeInputScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  wrapper: { flex: 1, marginHorizontal: IOLayoutCostants.appMarginDefault }
+  wrapper: { flex: 1, marginHorizontal: IOVisualCostants.appMarginDefault }
 });
 
 export { IDPayPaymentCodeInputScreen };
