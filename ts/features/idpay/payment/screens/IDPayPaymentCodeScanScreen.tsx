@@ -11,14 +11,13 @@ import {
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { BaseHeader } from "../../../../components/screens/BaseHeader";
 import IconButton from "../../../../components/ui/IconButton";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
-import I18n from "../../../../i18n";
 
 const IDPayPaymentCodeScanScreen = () => {
   const onBarcodeScanned = (barcode: ScannedBarcode) => {
@@ -48,22 +47,49 @@ const IDPayPaymentCodeScanScreen = () => {
   );
 };
 
+/**
+ * TODO Must be replaced with the new header from the Design System 2.0
+ */
 const CustomHeader = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const customGoBack = (
-    <IconButton
-      icon="close"
-      onPress={() => {
-        navigation.goBack();
-      }}
-      accessibilityLabel={I18n.t("global.buttons.close")}
-      color="contrast"
-    />
-  );
+  const handleTorchlightPress = () => {
+    alert("☀️");
+  };
+
+  const handleBackNavigation = () => {
+    navigation.goBack();
+  };
 
   return (
-    <BaseHeader customGoBack={customGoBack} backgroundColor={"transparent"} />
+    <SafeAreaView style={{ marginHorizontal: 8 }}>
+      <View
+        style={{
+          paddingVertical: 16,
+          paddingHorizontal: 24,
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-between"
+        }}
+      >
+        <View>
+          <IconButton
+            icon="close"
+            onPress={handleBackNavigation}
+            accessibilityLabel={I18n.t("global.buttons.close")}
+            color="contrast"
+          />
+        </View>
+        <View>
+          <IconButton
+            icon="light"
+            onPress={handleTorchlightPress}
+            accessibilityLabel={I18n.t("global.buttons.close")}
+            color="contrast"
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -134,7 +160,7 @@ const styles = StyleSheet.create({
   },
   cameraMarker: {
     width: "100%",
-    height: "105%",
+    height: "110%",
     justifyContent: "center"
   },
   navigationContainer: {
@@ -142,10 +168,11 @@ const styles = StyleSheet.create({
     margin: 8
   },
   navigationTabs: {
-    paddingVertical: 32,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    paddingBottom: 16,
+    paddingTop: 32
   },
   tab: {
     width: 100,
