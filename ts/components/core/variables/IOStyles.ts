@@ -241,7 +241,6 @@ export const IOListItemStyles = StyleSheet.create({
     marginLeft: -IOListItemVisualParams.paddingHorizontal
   },
   listItemInner: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
