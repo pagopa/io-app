@@ -17,7 +17,7 @@ import {
 import {
   nativeLoginReducer,
   NativeLoginState
-} from "../../../../store/reducers/nativeLogin";
+} from "../../../nativeLogin/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
