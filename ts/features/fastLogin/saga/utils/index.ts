@@ -2,6 +2,7 @@ import { call, select, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
+import { SagaIterator } from "redux-saga";
 import { isFastLoginEnabledSelector } from "../../store/selectors";
 import {
   refreshSessionToken,
@@ -14,7 +15,7 @@ export function* withRefreshApiCall<R, A extends Action>(
   f: Promise<t.Validation<IResponseType<401, any> | R>>,
   action?: A | undefined,
   errorMessage?: string
-) {
+): SagaIterator<t.Validation<IResponseType<401, any> | R>> {
   const response = yield* call(() => f);
   // BEWARE: we can cast to any only because we know for sure that f will
   // always return a Promise<IResponseType<A, B>>

@@ -1,4 +1,4 @@
-import { put, takeLatest } from "typed-redux-saga/macro";
+import { put, takeLatest, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -34,7 +34,11 @@ function tryLoadMessageDetails(getMessage: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessage>> {
     const id = action.payload.id;
     try {
-      const response = yield* withRefreshApiCall(getMessage({ id }), action);
+      const response = (yield* call(
+        withRefreshApiCall,
+        getMessage({ id }),
+        action
+      )) as unknown as SagaCallReturnType<typeof getMessage>;
       const nextAction =
         handleResponse<CreatedMessageWithContentAndAttachments>(
           response,

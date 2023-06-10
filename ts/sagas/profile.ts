@@ -73,7 +73,10 @@ export function* loadProfile(
   SagaCallReturnType<typeof getProfile>
 > {
   try {
-    const response = yield* withRefreshApiCall(getProfile({}));
+    const response = (yield* call(
+      withRefreshApiCall,
+      getProfile({})
+    )) as unknown as SagaCallReturnType<typeof getProfile>;
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));
@@ -156,13 +159,14 @@ function* createOrUpdateProfileSaga(
         version: 0
       };
   try {
-    const response = yield* withRefreshApiCall(
+    const response = (yield* call(
+      withRefreshApiCall,
       createOrUpdateProfile({
         body: newProfile
       }),
       undefined,
       I18n.t("profile.errors.upsert")
-    );
+    )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
       throw new Error(readablePrivacyReport(response.left));
@@ -178,7 +182,7 @@ function* createOrUpdateProfileSaga(
 
     if (response.right.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw new Error(response.right.value.title);
+      throw new Error(response.right.value?.title ?? "NO TITLE");
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield* put(
@@ -273,7 +277,10 @@ function* startEmailValidationProcessSaga(
   SagaCallReturnType<typeof startEmailValidationProcess>
 > {
   try {
-    const response = yield* withRefreshApiCall(startEmailValidationProcess({}));
+    const response = (yield* call(
+      withRefreshApiCall,
+      startEmailValidationProcess({})
+    )) as unknown as SagaCallReturnType<typeof startEmailValidationProcess>;
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));

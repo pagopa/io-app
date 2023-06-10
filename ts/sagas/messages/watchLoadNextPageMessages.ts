@@ -1,4 +1,4 @@
-import { put, takeLatest } from "typed-redux-saga/macro";
+import { put, takeLatest, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { BackendClient } from "../../api/backend";
@@ -28,7 +28,8 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
     const { filter, pageSize, cursor } = action.payload;
     try {
-      const response = yield* withRefreshApiCall(
+      const response = (yield* call(
+        withRefreshApiCall,
         getMessages({
           enrich_result_data: true,
           page_size: pageSize,
@@ -36,7 +37,7 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
           archived: filter.getArchived
         }),
         action
-      );
+      )) as unknown as SagaCallReturnType<typeof getMessages>;
       const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
         response,
         ({ items, next }: PaginatedPublicMessagesCollection) =>

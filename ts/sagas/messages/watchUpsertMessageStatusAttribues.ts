@@ -1,4 +1,4 @@
-import { put, takeEvery } from "typed-redux-saga/macro";
+import { put, takeEvery, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
@@ -66,10 +66,11 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof putMessage>> {
     try {
       const body = validatePayload(action.payload);
-      const response = yield* withRefreshApiCall(
+      const response = (yield* call(
+        withRefreshApiCall,
         putMessage({ id: action.payload.message.id, body }),
         action
-      );
+      )) as unknown as SagaCallReturnType<typeof putMessage>;
 
       const nextAction = handleResponse<unknown>(
         response,
