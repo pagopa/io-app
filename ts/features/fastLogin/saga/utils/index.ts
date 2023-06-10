@@ -8,7 +8,7 @@ import {
   sessionExpired
 } from "../../../../store/actions/authentication";
 import { Action } from "../../../../store/actions/types";
-import { retriableAction } from "../../actions";
+import { savePendingAction } from "../../actions";
 
 export function* withRefreshApiCall<R, A extends Action>(
   f: Promise<t.Validation<IResponseType<401, any> | R>>,
@@ -20,7 +20,7 @@ export function* withRefreshApiCall<R, A extends Action>(
   // always return a Promise<IResponseType<A, B>>
   if (E.isRight(response) && (response.right as any).status === 401) {
     if (action) {
-      yield* put(retriableAction({ actionToRetry: action }));
+      yield* put(savePendingAction({ pendingAction: action }));
     }
     yield* call(handleSessionExpiredSaga);
     if (!action) {

@@ -1,10 +1,11 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Action } from "../../../store/actions/types";
 
-type RetriableActionPayload = { actionToRetry: Action };
-export const retriableAction =
-  createStandardAction("RETRIABLE_ACTION")<RetriableActionPayload>();
+type PendingActionPayload = { pendingAction: Action };
+export const savePendingAction = createStandardAction(
+  "SAVE_PENDING_ACTION"
+)<PendingActionPayload>();
 
-type RetriableActionType = typeof retriableAction;
+type PendingActionType = typeof savePendingAction;
 
-export type FastLoginActions = ActionType<RetriableActionType>;
+export type FastLoginActions = ActionType<PendingActionType>;
