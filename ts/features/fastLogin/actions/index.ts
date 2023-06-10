@@ -6,6 +6,10 @@ export const savePendingAction = createStandardAction(
   "SAVE_PENDING_ACTION"
 )<PendingActionPayload>();
 
-type PendingActionType = typeof savePendingAction;
+export const clearPendingAction = createStandardAction(
+  "CLEAR_PENDING_ACTION"
+)<void>();
 
-export type FastLoginActions = ActionType<PendingActionType>;
+type PendingActionTypes = typeof savePendingAction | typeof clearPendingAction;
+
+export type FastLoginActions = ActionType<PendingActionTypes>;
