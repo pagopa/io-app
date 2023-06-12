@@ -52,6 +52,7 @@ const IDPayPaymentCodeInputScreen = () => {
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.payment.qrCode.manual.subtitle")}</Body>
           <VSpacer size={40} />
+          {/* FIXME replace with the new input field from the Design System 2.0  */}
           <LabelledItem
             isValid={isInputValid}
             accessibilityLabel={I18n.t("idpay.payment.qrCode.manual.input")}

@@ -40,16 +40,13 @@ const IDPayPaymentCodeScanScreen = () => {
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
-        {/* TODO eplace with the new header from the Design System 2.0  */}
+        {/* FIXME replace with the new header from the Design System 2.0  */}
         <CustomHeader />
       </LinearGradient>
     </View>
   );
 };
 
-/**
- * TODO Must be replaced with the new header from the Design System 2.0
- */
 const CustomHeader = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
