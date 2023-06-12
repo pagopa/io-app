@@ -348,13 +348,15 @@ const migrations: MigrationManifest = {
   // Removes `isExperimentalFeaturesEnabled` property from persistedPreferences,
   // since is it not used anymore in the bottom bar logic
   "23": (state: PersistedState) => {
-    const persistedPreferences = (state as PersistedGlobalState).persistedPreferences;
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
     return {
       ...state,
       persistedPreferences: {
         ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
       }
-    };}
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
