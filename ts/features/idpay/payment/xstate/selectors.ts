@@ -3,6 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { LOADING_TAG } from "../../../../utils/xstate";
+import { PaymentFailureEnum } from "./failure";
 import { IDPayPaymentMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayPaymentMachineType>;
@@ -21,6 +22,17 @@ export const selectIsAuthorizing = (state: StateWithContext) =>
 
 export const selectIsFailure = (state: StateWithContext) =>
   state.matches("AUTHORIZATION_FAILURE");
+
+export const selectFailureType = createSelector(
+  selectIsFailure,
+  (state: StateWithContext) => pipe(state.context.failure, O.toUndefined),
+  (isFailure, failure) => {
+    if (isFailure) {
+      return failure ?? PaymentFailureEnum.GENERIC;
+    }
+    return undefined;
+  }
+);
 
 export const selectTransactionData = (state: StateWithContext) =>
   pipe(state.context.transactionData, O.toUndefined);
