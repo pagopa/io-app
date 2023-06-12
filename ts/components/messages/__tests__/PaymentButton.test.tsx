@@ -92,7 +92,7 @@ const testPaymentButton = (
         organizationFiscalCode={"46545" as OrganizationFiscalCode}
       />
     ),
-    ROUTES.MESSAGE_DETAIL_PAGINATED,
+    ROUTES.MESSAGE_DETAIL,
     {},
     finalStore
   );
