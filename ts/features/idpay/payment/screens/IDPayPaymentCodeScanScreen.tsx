@@ -49,10 +49,6 @@ const IDPayPaymentCodeScanScreen = () => {
 const CustomHeader = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const handleTorchlightPress = () => {
-    alert("☀️");
-  };
-
   const handleBackNavigation = () => {
     navigation.goBack();
   };
@@ -72,14 +68,6 @@ const CustomHeader = () => {
           <IconButton
             icon="close"
             onPress={handleBackNavigation}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-            color="contrast"
-          />
-        </View>
-        <View>
-          <IconButton
-            icon="light"
-            onPress={handleTorchlightPress}
             accessibilityLabel={I18n.t("global.buttons.close")}
             color="contrast"
           />
