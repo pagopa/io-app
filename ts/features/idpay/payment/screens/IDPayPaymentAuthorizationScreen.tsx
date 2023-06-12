@@ -17,10 +17,12 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemInfo from "../../../../components/ui/ListItemInfo";
 import I18n from "../../../../i18n";
-import { format } from "../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../common/components/Skeleton";
-import { formatNumberCurrency } from "../../common/utils/strings";
+import {
+  formatDateOrDefault,
+  formatNumberCurrency
+} from "../../common/utils/strings";
 import { IDPayPaymentParamsList } from "../navigation/navigator";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
@@ -137,14 +139,7 @@ const AuthorizationScreenContent = ({
   );
   const businessName = getValueOrDash(data.businessName);
   const initiativeName = getValueOrDash(data.initiativeName);
-  const date = pipe(
-    data.trxDate,
-    O.fromNullable,
-    O.fold(
-      () => "-",
-      date => format(new Date(date), "D MMMM YYYY, HH:mm")
-    )
-  );
+  const date = formatDateOrDefault(data.trxDate);
   return (
     <>
       <Divider />
