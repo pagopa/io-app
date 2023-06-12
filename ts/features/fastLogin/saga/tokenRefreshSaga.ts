@@ -39,6 +39,6 @@ function* doRefreshTokenSaga() {
   const newToken = "FOOBEERBAR" as SessionToken;
   yield* put(refreshSessionToken.success(newToken));
   // Reinit all backend clients to use the new token
-  yield* put(startApplicationInitialization());
+  yield* put(startApplicationInitialization({ handleSessionExpiration: true }));
   return newToken;
 }

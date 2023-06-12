@@ -165,11 +165,12 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  * Handles the application startup and the main application logic loop
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
-export function* initializeApplicationSaga(): Generator<
-  ReduxSagaEffect,
-  void,
-  any
-> {
+export function* initializeApplicationSaga(
+  action?: ActionType<typeof startApplicationInitialization>
+): Generator<ReduxSagaEffect, void, any> {
+  const handleSessionExpiration = !!(
+    action?.payload && action.payload.handleSessionExpiration
+  );
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -213,7 +214,9 @@ export function* initializeApplicationSaga(): Generator<
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
-  yield* put(resetProfileState());
+  if (!handleSessionExpiration) {
+    yield* put(resetProfileState());
+  }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.

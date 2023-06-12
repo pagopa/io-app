@@ -8,10 +8,12 @@ import {
 /**
  * Action types and action creator related to the Application.
  */
-
-export const startApplicationInitialization = createAction(
+type ApplicationInitializationPayload = {
+  handleSessionExpiration?: boolean;
+} | void;
+export const startApplicationInitialization = createStandardAction(
   "START_APPLICATION_INITIALIZATION"
-);
+)<ApplicationInitializationPayload>();
 export const applicationInitialized = createAction(
   "APPLICATION_INITIALIZED_ACTION"
 );
