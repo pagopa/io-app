@@ -24,6 +24,10 @@ import { DSAlert } from "../core/DSAlert";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSBottomSheet } from "../core/DSBottomSheet";
+import { DSSafeArea } from "../core/DSSafeArea";
+import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
+import { DSEdgeToEdgeScreen } from "../core/DSEdgeToEdgeScreen";
+
 import {
   IOThemeContext,
   IOThemes
@@ -139,6 +143,20 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
           component={DSBottomSheet}
+        />
+
+        {/* DEBUG */}
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
+          component={DSSafeArea}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
+          component={DSSafeAreaCentered}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_SCREEN.route}
+          component={DSEdgeToEdgeScreen}
         />
 
         {/* LEGACY */}
