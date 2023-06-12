@@ -57,7 +57,7 @@ const useTimelineDetailsBottomSheet = (
   const isError = pot.isError(detailsPot);
 
   const handleContentOnLayout = (event: LayoutChangeEvent) => {
-    const bottomPadding = 190;
+    const bottomPadding = 160;
     const { height } = event.nativeEvent.layout;
     setSnapPoint(bottomPadding + height);
   };
@@ -125,7 +125,7 @@ const useTimelineDetailsBottomSheet = (
           onPress={() => modal.dismiss()}
           fullWidth={true}
         />
-        <VSpacer size={32} />
+        <VSpacer size={16} />
       </ContentWrapper>
     </SafeAreaView>
   );

@@ -3,7 +3,13 @@ import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -152,7 +158,9 @@ const InitiativeDetailsBaseScreenComponent = (
         {renderContent()}
       </ScrollView>
       {props.footer && (
-        <View style={[IOStyles.footer, styles.footer]}>{props.footer}</View>
+        <View style={[IOStyles.footer, styles.footer]}>
+          <SafeAreaView>{props.footer}</SafeAreaView>
+        </View>
       )}
     </BaseScreenComponent>
   );
