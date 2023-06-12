@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
-import CameraScanOverlaySVG from "../../../../../img/camera-scan-overlay.svg";
+import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
 import {
   BarcodeCamera,
   ScannedBarcode
@@ -40,6 +40,7 @@ const IDPayPaymentCodeScanScreen = () => {
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
+        <StatusBar barStyle={"dark-content"} />
         {/* FIXME replace with the new header from the Design System 2.0  */}
         <CustomHeader />
       </LinearGradient>
@@ -91,8 +92,8 @@ const CustomHeader = () => {
 };
 
 const CameraMarker = () => (
-  <View style={styles.cameraMarker}>
-    <CameraScanOverlaySVG width={230} height={230} />
+  <View style={styles.cameraMarkerContainer}>
+    <CameraScanMarkerSVG width={230} height={230} />
   </View>
 );
 
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     overflow: "hidden"
   },
-  cameraMarker: {
+  cameraMarkerContainer: {
     width: "100%",
     height: "110%",
     justifyContent: "center"
