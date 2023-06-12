@@ -26,7 +26,7 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
-import { DSEdgeToEdgeScreen } from "../core/DSEdgeToEdgeScreen";
+import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 
 import {
   IOThemeContext,
@@ -155,8 +155,8 @@ export const DesignSystemNavigator = () => {
           component={DSSafeAreaCentered}
         />
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_SCREEN.route}
-          component={DSEdgeToEdgeScreen}
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
+          component={DSEdgeToEdgeArea}
         />
 
         {/* LEGACY */}

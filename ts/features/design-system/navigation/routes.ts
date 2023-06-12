@@ -31,9 +31,9 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_SAFE_AREA_CENTERED",
       title: "Native safe area (centered)"
     },
-    EDGE_TO_EDGE_SCREEN: {
-      route: "DS_EDGE_TO_EDGE_SCREEN",
-      title: "Edge to edge screen"
+    EDGE_TO_EDGE_AREA: {
+      route: "DS_EDGE_TO_EDGE_AREA",
+      title: "Edge to edge area"
     }
   },
   LEGACY: {

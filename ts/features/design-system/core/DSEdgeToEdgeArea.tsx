@@ -15,7 +15,7 @@ import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 const bottomBarHeight: number = 70;
 const topBarHeight: number = 55;
 
-export const DSEdgeToEdgeScreen = () => {
+export const DSEdgeToEdgeArea = () => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -78,7 +78,7 @@ export const DSEdgeToEdgeScreen = () => {
         >
           <View
             style={{
-              backgroundColor: hexToRgba(IOColors.black, 0.75),
+              backgroundColor: IOColors.black,
               height: bottomBarHeight,
               width: "100%",
               alignItems: "center",
