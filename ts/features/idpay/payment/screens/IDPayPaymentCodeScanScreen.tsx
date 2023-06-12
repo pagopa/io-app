@@ -33,14 +33,12 @@ const IDPayPaymentCodeScanScreen = () => {
           fullHeight={true}
         />
       </View>
-      <SafeAreaView style={styles.navigationContainer}>
-        <TabNavigation />
-      </SafeAreaView>
+      <TabNavigation />
       <LinearGradient
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
-        <StatusBar barStyle={"dark-content"} />
+        <StatusBar barStyle={"light-content"} />
         {/* FIXME replace with the new header from the Design System 2.0  */}
         <CustomHeader />
       </LinearGradient>
@@ -111,28 +109,30 @@ const TabNavigation = () => {
   };
 
   return (
-    <ContentWrapper>
-      <View style={styles.navigationTabs}>
-        <View style={[styles.tab, styles.tabActive]}>
-          <LabelSmall color="grey-850" weight="Regular">
-            {I18n.t("idpay.payment.qrCode.scan.tabs.scan")}
-          </LabelSmall>
+    <SafeAreaView style={styles.navigationContainer}>
+      <ContentWrapper>
+        <View style={styles.navigationTabs}>
+          <View style={[styles.tab, styles.tabActive]}>
+            <LabelSmall color="grey-850" weight="Regular">
+              {I18n.t("idpay.payment.qrCode.scan.tabs.scan")}
+            </LabelSmall>
+          </View>
+          <TouchableOpacity style={styles.tab} onPress={showUploadModal}>
+            <LabelSmall color="white" weight="Regular">
+              {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
+            </LabelSmall>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.tab}
+            onPress={navigateToCodeInputScreen}
+          >
+            <LabelSmall color="white" weight="Regular">
+              {I18n.t("idpay.payment.qrCode.scan.tabs.input")}
+            </LabelSmall>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.tab} onPress={showUploadModal}>
-          <LabelSmall color="white" weight="Regular">
-            {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
-          </LabelSmall>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.tab}
-          onPress={navigateToCodeInputScreen}
-        >
-          <LabelSmall color="white" weight="Regular">
-            {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
-          </LabelSmall>
-        </TouchableOpacity>
-      </View>
-    </ContentWrapper>
+      </ContentWrapper>
+    </SafeAreaView>
   );
 };
 
