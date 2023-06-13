@@ -122,12 +122,6 @@ const AuthorizationScreenContent = ({
 }: {
   data: NonNullable<AuthPaymentResponseDTO>;
 }) => {
-  const getValueOrDash = (value: string | undefined) =>
-    pipe(
-      value,
-      O.fromNullable,
-      O.getOrElse(() => "-")
-    );
   const amountCents = formatNumberCurrency(data.amountCents / 100);
   const reward = pipe(
     data.reward,
@@ -137,8 +131,8 @@ const AuthorizationScreenContent = ({
       data => formatNumberCurrency(data / 100)
     )
   );
-  const businessName = getValueOrDash(data.businessName);
-  const initiativeName = getValueOrDash(data.initiativeName);
+  const businessName = data.businessName || "-";
+  const initiativeName = data.initiativeName || "-";
   const date = formatDateOrDefault(data.trxDate);
   return (
     <>
@@ -246,6 +240,7 @@ const AuthorizationScreenSkeleton = () => (
       <H3
         color="bluegrey"
         style={{
+          // see previous comment
           paddingTop: 4
         }}
       >
