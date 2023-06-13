@@ -73,6 +73,11 @@ import {
 } from "../utils/api";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
+import {
+  GetNonceT,
+  NonceResponse,
+  getFastLoginNonceDecoder
+} from "../features/fastLogin/backend/mockedFunctionsAndTypes";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -375,8 +380,19 @@ export function BackendClient(
     query: () => ({}),
     response_decoder: getSupportTokenDefaultDecoder()
   };
+
+  const getFastLoginNonceT: GetNonceT = {
+    method: "post",
+    url: () => `/api/v1/fast-login/generate-nonce`,
+    query: _ => ({}),
+    body: body => JSON.stringify(body),
+    headers: ApiHeaderJson,
+    response_decoder: getFastLoginNonceDecoder(NonceResponse)
+  };
+
   const withBearerToken = withToken(token);
   return {
+    getNonce: createFetchRequestForApi(getFastLoginNonceT, options),
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
     getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
     getServicePreference: withBearerToken(
