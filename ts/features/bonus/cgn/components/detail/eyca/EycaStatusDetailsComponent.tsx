@@ -11,7 +11,6 @@ import { H5 } from "../../../../../../components/core/typography/H5";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
-import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import {
   HSpacer,
   VSpacer
@@ -116,6 +115,9 @@ const EycaStatusDetailsComponent = (props: Props) => {
             showToast(I18n.t("bonus.cgn.generic.linkError"))
           )
         }
+        // onPress={() =>
+        //   clipboardSetStringWithFeedback(props.eycaCard.card_number)
+        // }
       >
         <Label color={"blue"}>
           {I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")}
