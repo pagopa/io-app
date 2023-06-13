@@ -1,4 +1,6 @@
 import { useSelector } from "@xstate/react";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { default as React } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
@@ -13,60 +15,62 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { PaymentFailure, PaymentFailureEnum } from "../xstate/failure";
 import { usePaymentMachineService } from "../xstate/provider";
-import { selectFailureType } from "../xstate/selectors";
+import { selectFailureOption } from "../xstate/selectors";
+
+type FailureContent = {
+  title: string;
+  subtitle?: string;
+  icon: IOPictograms;
+};
+type PaymentResultsType = PaymentFailure | "SUCCESS";
+const results: Record<PaymentResultsType, FailureContent> = {
+  [PaymentFailureEnum.CANCELLED]: {
+    title: I18n.t("idpay.payment.result.failure.CANCELLED.title"),
+    icon: "unrecognized"
+  },
+  [PaymentFailureEnum.GENERIC]: {
+    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
+    icon: "umbrella"
+  },
+  ["SUCCESS"]: {
+    title: I18n.t("idpay.payment.result.success.title"),
+    subtitle: I18n.t("idpay.payment.result.success.body"),
+    icon: "completed"
+  }
+};
 
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
-  const possibleFailureType = useSelector(machine, selectFailureType);
+  const failureOption = useSelector(machine, selectFailureOption);
 
   const handleClose = () => {
     machine.send("EXIT");
   };
 
-  type FailureContent = {
-    title: string;
-    subtitle?: string;
-    icon: IOPictograms;
-  };
-
-  type PaymentResults = PaymentFailure | "SUCCESS";
-  const results: Record<PaymentResults, FailureContent> = {
-    [PaymentFailureEnum.CANCELLED]: {
-      title: I18n.t("idpay.payment.result.failure.CANCELLED.title"),
-      icon: "unrecognized"
-    },
-    [PaymentFailureEnum.GENERIC]: {
-      title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-      subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
-      icon: "umbrella"
-    },
-    ["SUCCESS"]: {
-      title: I18n.t("idpay.payment.result.success.title"),
-      subtitle: I18n.t("idpay.payment.result.success.body"),
-      icon: "completed"
-    }
-  };
-
-  const renderContent = (resultType: PaymentResults) => (
-    <View style={resultScreenStyles.resultScreenContainer}>
+  const renderContent = (resultType: PaymentResultsType) => (
+    <View style={styles.resultScreenContainer}>
       <Pictogram name={results[resultType].icon} size={120} />
       <VSpacer size={24} />
-      <NewH4 style={resultScreenStyles.justifyTextCenter}>
+      <NewH4 style={styles.justifyTextCenter}>
         {results[resultType].title}
       </NewH4>
       <VSpacer size={16} />
       {results[resultType].subtitle && (
-        <Body style={resultScreenStyles.justifyTextCenter}>
+        <Body style={styles.justifyTextCenter}>
           {results[resultType].subtitle}
         </Body>
       )}
     </View>
   );
 
-  const content =
-    possibleFailureType !== undefined // also checks for failure state to be true
-      ? renderContent(possibleFailureType)
-      : renderContent("SUCCESS");
+  const content = pipe(
+    failureOption,
+    O.fold(
+      () => renderContent("SUCCESS"),
+      failure => renderContent(failure)
+    )
+  );
 
   return (
     <SafeAreaView style={IOStyles.flex}>
@@ -82,7 +86,7 @@ const IDPayPaymentResultScreen = () => {
     </SafeAreaView>
   );
 };
-const resultScreenStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   resultScreenContainer: {
     flex: 1,
     justifyContent: "center",
