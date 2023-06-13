@@ -16,12 +16,14 @@ exports[`Test InitiativeBonusCounter component should render a InitiativeBonusCo
     fontStyle={
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 14,
+          "lineHeight": 21,
         },
         Object {
           "color": "#17324D",
