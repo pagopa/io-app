@@ -128,13 +128,11 @@ export const fciSignaturesListRequest = createAsyncAction(
 export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
-  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE",
-  "FCI_DOCUMENT_SIGNATURE_FIELDS_CANCEL"
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
 )<
   { uri: string; attrs: SignatureFieldAttrType },
   Partial<FciDocumentSignatureFieldsState>,
-  Error,
-  void
+  Error
 >();
 
 export type FciActions =

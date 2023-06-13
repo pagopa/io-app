@@ -34,10 +34,6 @@ export function* handleDrawSignatureBox(
       );
       yield* put(
         fciDocumentSignatureFields.success({
-          rawDocument: {
-            document: O.some(cachedDoc),
-            uri: O.some(action.payload.uri)
-          },
           drawnDocument: pot.some(res)
         })
       );

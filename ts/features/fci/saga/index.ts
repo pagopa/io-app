@@ -136,20 +136,7 @@ export function* watchFciSaga(
     bearerToken
   );
 
-  // yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
-  yield* takeLatest(fciDocumentSignatureFields.request, watchFieldDrawingSaga);
-}
-
-/**
- * This saga orchestrate the signature field drawing process.
- */
-export function* watchFieldDrawingSaga(
-  action: ActionType<typeof fciDocumentSignatureFields.request>
-) {
-  yield* race({
-    fetch: call(handleDrawSignatureBox, action),
-    cancel: take(fciDocumentSignatureFields.cancel)
-  });
+  yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
 }
 
 /**
