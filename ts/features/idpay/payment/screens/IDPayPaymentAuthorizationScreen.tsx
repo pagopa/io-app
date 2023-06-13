@@ -202,7 +202,7 @@ const AuthorizationScreenContent = ({
   );
 };
 
-const SmallSkeleton = () => <Skeleton width={178} height={16} radius={8} />;
+const SmallSkeleton = () => <Skeleton width={178} height={24} radius={8} />;
 
 const AuthorizationScreenSkeleton = () => (
   <>
