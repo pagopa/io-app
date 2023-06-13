@@ -19,7 +19,10 @@ export const isFastLoginEnabledSelector = createSelector(
     )
 );
 
-export const isFastLoginUserInteractionNeededSelector = createSelector(
-  (state: GlobalState) => state,
-  state => state.features.loginFeatures.fastLogin.userInteractionNeeded
-);
+export const isFastLoginUserInteractionNeededForSessionExpiredSelector =
+  createSelector(
+    (state: GlobalState) => state,
+    state =>
+      state.features.loginFeatures.fastLogin
+        .userInteractionForSessionExpiredNeeded
+  );

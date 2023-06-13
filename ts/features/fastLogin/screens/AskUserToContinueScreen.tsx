@@ -1,8 +1,16 @@
 import I18n from "i18n-js";
 import * as React from "react";
-import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
-import { useDispatch } from "react-redux";
-import { Pictogram } from "../../../components/core/pictograms/Pictogram";
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Modal,
+  GestureResponderEvent
+} from "react-native";
+import {
+  IOPictograms,
+  Pictogram
+} from "../../../components/core/pictograms/Pictogram";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
@@ -30,55 +38,86 @@ const styles = StyleSheet.create({
   }
 });
 
+type ButtonStyle = "solid" | "outline";
+type ButtonStylesProps = {
+  submitButtonStyle: ButtonStyle;
+  exitButtonStyle?: ButtonStyle;
+};
+const DefaultButtonStylesProps: ButtonStylesProps = {
+  submitButtonStyle: "solid",
+  exitButtonStyle: "outline"
+};
+
+type Props = {
+  title: string;
+  subtitle: string;
+  pictogramName: IOPictograms;
+  onSubmit: () => void;
+  onExit?: () => void;
+  onTimerExpired?: () => void;
+  ButtonStylesProps?: ButtonStylesProps;
+};
+
 // This component doesn't need a BaseHeaderComponent.
 // It Represents a blocking error screen that you can only escape with the rendered button(s).
 // A new template is coming soon: https://pagopa.atlassian.net/browse/IOAPPFD0-71
-const AskUserToContinueScreen = () => {
+const AskUserToContinueScreen = (props: Props) => {
   useAvoidHardwareBackButton();
-  const dispatch = useDispatch();
+
+  const { submitButtonStyle, exitButtonStyle } =
+    props.ButtonStylesProps || DefaultButtonStylesProps;
+
+  const exitButtonProps = {
+    fullWidth: true,
+    onPress: (_: GestureResponderEvent) =>
+      props.onExit ? props.onExit() : undefined,
+    label: I18n.t("global.buttons.exit"),
+    accessibilityLabel: I18n.t("global.buttons.exit")
+  };
+
+  const submitButtonProps = {
+    fullWidth: true,
+    onPress: (_: GestureResponderEvent) => props.onSubmit(),
+    label: I18n.t("global.buttons.continue"),
+    accessibilityLabel: I18n.t("global.buttons.continue")
+  };
 
   return (
     <Modal>
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.errorContainer}>
-          <Pictogram name={"attention"} size={120} />
+          <Pictogram name={props.pictogramName} size={120} />
           <VSpacer size={16} />
-          <H3 style={styles.title}>
-            {I18n.t("fastLogin.userInteraction.continueNavigation.title")}
-          </H3>
+          <H3 style={styles.title}>{props.title}</H3>
           <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>
-            {I18n.t("fastLogin.userInteraction.continueNavigation.subtitle")}
-          </Body>
+          <Body style={{ textAlign: "center" }}>{props.subtitle}</Body>
           <VSpacer size={16} />
-          <CountDown
-            totalSeconds={120}
-            actionToDispatchWhenExpired={askUserToRefreshSessionToken.success(
-              "no"
-            )}
-          />
+          {props.onTimerExpired && (
+            <CountDown
+              totalSeconds={120}
+              actionToDispatchWhenExpired={askUserToRefreshSessionToken.success(
+                "no"
+              )}
+            />
+          )}
         </View>
         <View style={styles.buttonContainer}>
-          <View style={IOStyles.flex}>
-            <ButtonOutline
-              fullWidth
-              onPress={() => {
-                dispatch(askUserToRefreshSessionToken.success("no"));
-              }}
-              label={I18n.t("global.buttons.exit")}
-              accessibilityLabel={I18n.t("global.buttons.exit")}
-            />
-          </View>
+          {props.onExit && (
+            <View style={IOStyles.flex}>
+              {exitButtonStyle === "outline" ? (
+                <ButtonOutline {...exitButtonProps} />
+              ) : (
+                <ButtonSolid {...exitButtonProps} />
+              )}
+            </View>
+          )}
           <HSpacer size={16} />
           <View style={IOStyles.flex}>
-            <ButtonSolid
-              fullWidth
-              onPress={() => {
-                dispatch(askUserToRefreshSessionToken.success("yes"));
-              }}
-              label={I18n.t("global.buttons.continue")}
-              accessibilityLabel={I18n.t("global.buttons.continue")}
-            />
+            {submitButtonStyle === "solid" ? (
+              <ButtonSolid {...submitButtonProps} />
+            ) : (
+              <ButtonOutline {...submitButtonProps} />
+            )}
           </View>
         </View>
       </SafeAreaView>

@@ -22,8 +22,7 @@ export type FastLoginUserInteractionChoice =
   | FastLoginUserInteractionChoiceNone;
 
 export type FastLoginState = {
-  userInteractionNeeded: boolean;
-  userInteractionLatestChoice: FastLoginUserInteractionChoice;
+  userInteractionForSessionExpiredNeeded: boolean;
   pendingActions: Array<Action>;
 };
 
@@ -38,8 +37,7 @@ export const fastLoginPendingActionsSelector = createSelector(
 );
 
 const FastLoginInitialState: FastLoginState = {
-  userInteractionNeeded: false,
-  userInteractionLatestChoice: { type: "none" },
+  userInteractionForSessionExpiredNeeded: false,
   pendingActions: []
 };
 
@@ -65,19 +63,12 @@ export const fastLoginReducer = (
     case getType(askUserToRefreshSessionToken.request):
       return {
         ...state,
-        userInteractionNeeded: true
+        userInteractionForSessionExpiredNeeded: true
       };
     case getType(askUserToRefreshSessionToken.success):
-      const choiseAction = action as ReturnType<
-        typeof askUserToRefreshSessionToken.success
-      >;
       return {
         ...state,
-        userInteractionLatestChoice: {
-          type: choiseAction.payload === "yes" ? "accepted" : "declined",
-          timestamp: Date.now()
-        },
-        userInteractionNeeded: false
+        userInteractionForSessionExpiredNeeded: false
       };
     default:
       return state;

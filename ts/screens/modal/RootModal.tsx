@@ -1,5 +1,6 @@
+import I18n from "i18n-js";
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import {
   isAppSupportedSelector,
   versionInfoDataSelector
@@ -8,9 +9,10 @@ import UnsupportedDeviceScreen from "../../features/lollipop/screens/Unsupported
 import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
-import { isFastLoginUserInteractionNeededSelector } from "../../features/fastLogin/store/selectors";
+import { isFastLoginUserInteractionNeededForSessionExpiredSelector } from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
 import AskUserToContinueScreen from "../../features/fastLogin/screens/AskUserToContinueScreen";
+import { askUserToRefreshSessionToken } from "../../store/actions/authentication";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -24,8 +26,26 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - IdentificationModal -> the default case. It renders itself only if an identification action is required
  */
 const RootModal: React.FunctionComponent<Props> = (props: Props) => {
+  const dispatch = useDispatch();
+
   if (props.isFastLoginUserInteractionNeeded) {
-    return <AskUserToContinueScreen />;
+    return (
+      <AskUserToContinueScreen
+        pictogramName="timeout"
+        title={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
+        )}
+        subtitle={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.continueNavigation.subtitle"
+        )}
+        onSubmit={() => {
+          dispatch(askUserToRefreshSessionToken.success("yes"));
+        }}
+        ButtonStylesProps={{
+          submitButtonStyle: "outline"
+        }}
+      />
+    );
   }
 
   if (!props.isDeviceSupported) {
@@ -52,7 +72,7 @@ const mapStateToProps = (state: GlobalState) => ({
   versionInfo: versionInfoDataSelector(state),
   isDeviceSupported: isDeviceSupportedSelector(state),
   isFastLoginUserInteractionNeeded:
-    isFastLoginUserInteractionNeededSelector(state)
+    isFastLoginUserInteractionNeededForSessionExpiredSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);

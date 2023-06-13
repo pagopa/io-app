@@ -3645,7 +3645,8 @@ unsupportedDevice:
   cta:
     faq: "Come mai?"
 fastLogin:
-  userInteraction: 
-    continueNavigation: 
-      title: "Ci sei ancora?"
-      subtitle: "Vuoi continuare la navigazione?"
+  userInteraction:
+    sessionExpired: 
+      continueNavigation: 
+        title: "Sessione scaduta"
+        subtitle: "Per motivi di sicurezza le sessioni scadono dopo alcuni minuti ed è necessario effettuare di nuovo l’accesso."
