@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.35.0-rc.1](https://github.com/pagopa/io-app/compare/2.35.0-rc.0...2.35.0-rc.1) (2023-06-13)
+
+
+### Features
+
+* [[IOBP-30](https://pagopa.atlassian.net/browse/IOBP-30)] Add manual code input for IDPay payment authorization ([#4664](https://github.com/pagopa/io-app/issues/4664)) ([f100bbb](https://github.com/pagopa/io-app/commit/f100bbb28fb0a939a7fee16376b69b894e240e35))
+* [[IOBP-54](https://pagopa.atlassian.net/browse/IOBP-54),[IOBP-55](https://pagopa.atlassian.net/browse/IOBP-55)] Add discount-type transactions in timeline ([#4658](https://github.com/pagopa/io-app/issues/4658)) ([d5489f1](https://github.com/pagopa/io-app/commit/d5489f1d78809198371771dc1dd3a3282dadf516))
+* [[IOBP-61](https://pagopa.atlassian.net/browse/IOBP-61)] IDPay QR Code payment scaffolding ([#4654](https://github.com/pagopa/io-app/issues/4654)) ([4a1397e](https://github.com/pagopa/io-app/commit/4a1397e4258009fa374c3f81442ee6a68fec6afb))
+* [[IOBP-67](https://pagopa.atlassian.net/browse/IOBP-67)] Add IDPay payment authorization deep link handling ([#4669](https://github.com/pagopa/io-app/issues/4669)) ([dd6d4bd](https://github.com/pagopa/io-app/commit/dd6d4bd3dc38e65a32d6348746e88b588d35c4bc))
+* [[IOCOM-140](https://pagopa.atlassian.net/browse/IOCOM-140)] Remove "paginated" in messages naming convention ([#4674](https://github.com/pagopa/io-app/issues/4674)) ([6cbbf4c](https://github.com/pagopa/io-app/commit/6cbbf4c80c82020e8e1e3f6fcfaf1bd16413a581))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1568](https://pagopa.atlassian.net/browse/SFEQS-1568)] Clear FCI state when user reset pin during signing flow ([#4677](https://github.com/pagopa/io-app/issues/4677)) ([b32aeb9](https://github.com/pagopa/io-app/commit/b32aeb97817182974f3b1ce3ec35211c17c36fce))
+* **Firma con IO:** [[SFEQS-1665](https://pagopa.atlassian.net/browse/SFEQS-1665)] Update accessibilityLabel ([#4675](https://github.com/pagopa/io-app/issues/4675)) ([96663c3](https://github.com/pagopa/io-app/commit/96663c3404b71c662825daa3ecc2e6954fccf106))
+* [[IOAPPFD0-113](https://pagopa.atlassian.net/browse/IOAPPFD0-113)] Removal of detrimental style from ListItem ([#4678](https://github.com/pagopa/io-app/issues/4678)) ([943665e](https://github.com/pagopa/io-app/commit/943665e9d01b7189e584acf8ac3f080e39898854))
+
+
+### Chores
+
+* [[IOAPPFD0-102](https://pagopa.atlassian.net/browse/IOAPPFD0-102)] Add new `AnimatedCheckbox`, `CheckboxLabel` and `CheckboxListItem` components ([#4650](https://github.com/pagopa/io-app/issues/4650)) ([6210aa5](https://github.com/pagopa/io-app/commit/6210aa58fd832e79065be2e97deede74ad3f7b5b))
+* [[IOAPPFD0-108](https://pagopa.atlassian.net/browse/IOAPPFD0-108)] Add the new `Avatar` component ([#4667](https://github.com/pagopa/io-app/issues/4667)) ([916fb45](https://github.com/pagopa/io-app/commit/916fb45bb94aff98b1128da3156d13190c018375))
+* remove deep links that do not work from README.md ([#4685](https://github.com/pagopa/io-app/issues/4685)) ([47a1cff](https://github.com/pagopa/io-app/commit/47a1cff10d4ff801988f75fc77f7e94d3142e3db))
+
 ## [2.35.0-rc.0](https://github.com/pagopa/io-app/compare/2.34.0-rc.2...2.35.0-rc.0) (2023-06-06)
 
 

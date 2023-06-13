@@ -354,12 +354,14 @@ Array [
     fontStyle={
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 14,
+          "lineHeight": 21,
         },
         Object {
           "color": "#475A6D",
