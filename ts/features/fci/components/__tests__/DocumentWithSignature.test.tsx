@@ -21,6 +21,7 @@ type Props = {
   attrs: SignatureFieldAttrType;
   currentDoc: number;
   onClose: () => void;
+  onError: () => void;
 };
 
 describe("Test DocumentWithSignature", () => {
@@ -31,7 +32,8 @@ describe("Test DocumentWithSignature", () => {
     const props: Props = {
       attrs: { unique_name: "Signature1" as NonEmptyString },
       currentDoc: 0,
-      onClose: jest.fn()
+      onClose: jest.fn(),
+      onError: jest.fn()
     };
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
@@ -48,7 +50,8 @@ describe("Test DocumentWithSignature", () => {
     const props = {
       attrs: { unique_name: "Signature1" as NonEmptyString },
       currentDoc: 0,
-      onClose: jest.fn()
+      onClose: jest.fn(),
+      onError: jest.fn()
     };
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
@@ -64,10 +67,12 @@ describe("Test DocumentWithSignature", () => {
   });
   it("with all props the close button should be render correctly", () => {
     const onPress = jest.fn();
+    const onError = jest.fn();
     const props = {
       attrs: { unique_name: "Signature1" as NonEmptyString },
       currentDoc: 0,
-      onClose: onPress
+      onClose: onPress,
+      onError
     };
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
