@@ -55,8 +55,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
 
   const isFormValid =
-    isValidPinNumber(pin) &&
-    isValidPinNumber(pinConfirmation) &&
+    (isValidPinNumber(pin) || (isDevEnv && pin.length === pinLength)) &&
     pinConfirmation === pin;
 
   const handlePinBlur = React.useCallback(() => {
