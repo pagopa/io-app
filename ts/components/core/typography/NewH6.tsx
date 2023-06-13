@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOTheme } from "../variables/IOColors";
+import { IOTheme, IOThemeLight } from "../variables/IOColors";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { ExternalTypographyProps, TypographyProps } from "./common";
@@ -15,13 +15,13 @@ type OwnProps = ExternalTypographyProps<
 
 /* Common typographic styles */
 export const h6FontSize = 16;
-export const h6LineHeight = 20;
+export const h6LineHeight = 24;
+export const h6DefaultColor: AllowedColors = IOThemeLight["textBody-default"];
 /* Legacy typographic styles */
 const h6LegacyFontName: IOFontFamily = "TitilliumWeb";
 const h6LegacyDefaultWeight: AllowedWeight = "SemiBold";
 /* New typographic styles */
 const h6FontName: IOFontFamily = "ReadexPro";
-const h6DefaultColor: AllowedColors = "black";
 const h6DefaultWeight: AllowedWeight = "Regular";
 
 /**
