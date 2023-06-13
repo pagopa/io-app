@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import {
   View,
@@ -7,6 +6,7 @@ import {
   Modal,
   GestureResponderEvent
 } from "react-native";
+import I18n from "../../../i18n";
 import {
   IOPictograms,
   Pictogram
@@ -20,7 +20,7 @@ import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackB
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import CountDown from "../components/CountDown";
-import { BottomSheetHeader } from "../../../components/bottomSheet/BottomSheetHeader";
+import ModalHeader from "../components/ModalHeader";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -87,9 +87,7 @@ const AskUserToContinueScreen = (props: Props) => {
   return (
     <Modal>
       <SafeAreaView style={IOStyles.flex}>
-        {props.onExit && (
-          <BottomSheetHeader title={undefined} onClose={props.onExit} />
-        )}
+        {props.onExit && <ModalHeader onClose={props.onExit} />}
         <View style={styles.mainContainer}>
           <Pictogram name={props.pictogramName} size={120} />
           <VSpacer size={16} />
