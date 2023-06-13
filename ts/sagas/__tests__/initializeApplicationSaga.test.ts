@@ -39,6 +39,7 @@ import {
 } from "../../features/lollipop/store/reducers/lollipop";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -146,6 +147,8 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
+      .select(isFastLoginEnabledSelector)
+      .next(false)
       .put(sessionExpired());
   });
 
