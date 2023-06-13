@@ -4,7 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
@@ -46,6 +46,7 @@ const IDPayPaymentCodeInputScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <StatusBar barStyle={"dark-content"} translucent={false} />
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.wrapper}>
           <H1>{I18n.t("idpay.payment.qrCode.manual.title")}</H1>

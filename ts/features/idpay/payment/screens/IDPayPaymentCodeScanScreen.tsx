@@ -3,6 +3,7 @@ import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
 import {
   BarcodeCamera,
@@ -51,6 +52,7 @@ const IDPayPaymentCodeScanScreen = () => {
 };
 
 const CustomHeader = () => {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const handleBackNavigation = () => {
@@ -58,7 +60,7 @@ const CustomHeader = () => {
   };
 
   return (
-    <SafeAreaView style={{ marginHorizontal: 8 }}>
+    <SafeAreaView style={{ marginHorizontal: 8, marginTop: insets.top }}>
       <View
         style={{
           paddingVertical: 16,
@@ -162,8 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: 16,
-    paddingTop: 32
+    paddingVertical: 24
   },
   tab: {
     width: 100,
