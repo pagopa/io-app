@@ -12,6 +12,7 @@ import customVariables from "../../../../theme/variables";
 type QRCodeCameraConfiguration = {
   marker?: React.ReactNode;
   fullHeight?: boolean;
+  onQrCodeScanned?: (content: string) => void;
 };
 
 type QRCodeCamera = {
@@ -26,10 +27,12 @@ const DEFAULT_CONFIGURATION: QRCodeCameraConfiguration = {};
 const useQRCodeCamera = (
   config: QRCodeCameraConfiguration = DEFAULT_CONFIGURATION
 ): QRCodeCamera => {
+  const { marker, fullHeight, onQrCodeScanned } = config;
+
   const devices = useCameraDevices();
   const [cameraPermissionStatus, setCameraPermissionStatus] =
     React.useState<CameraPermissionStatus>("not-determined");
-  const [frameProcessor] = useScanBarcodes([BarcodeFormat.QR_CODE], {
+  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
     checkInverted: true
   });
 
@@ -41,20 +44,26 @@ const useQRCodeCamera = (
 
   const requestCameraPermission = async () => {
     const permissions = await Camera.requestCameraPermission();
-
     setCameraPermissionStatus(permissions);
   };
 
   const openCameraSettings = async () => {
     await Linking.openSettings();
-    await requestCameraPermission();
+    const permissions = await Camera.getCameraPermissionStatus();
+    setCameraPermissionStatus(permissions);
   };
+
+  React.useEffect(() => {
+    if (barcodes.length !== 0) {
+      onQrCodeScanned?.(barcodes[0].content.data.toString());
+    }
+  }, [barcodes, onQrCodeScanned]);
 
   const cameraComponent = (
     <View
       style={[
         styles.cameraContainer,
-        config.fullHeight && styles.fullHeightCameraContainer
+        fullHeight && styles.fullHeightCameraContainer
       ]}
     >
       {devices.back && (
@@ -68,9 +77,7 @@ const useQRCodeCamera = (
         />
       )}
 
-      {config.marker && (
-        <View style={{ alignSelf: "center" }}>{config.marker}</View>
-      )}
+      {marker && <View style={{ alignSelf: "center" }}>{marker}</View>}
     </View>
   );
 

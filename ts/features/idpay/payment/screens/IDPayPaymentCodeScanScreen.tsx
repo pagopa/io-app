@@ -5,7 +5,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
-import { ScannedBarcode } from "../../../../components/BarcodeCamera";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../components/core/pictograms";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -23,8 +22,8 @@ import { useQRCodeCamera } from "../components/QRCodeCamera";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
-  const onBarcodeScanned = (barcode: ScannedBarcode) => {
-    alert(`trxCode: ${barcode.value}`);
+  const onQrCodeScanned = (barcode: string) => {
+    alert(`trxCode: ${barcode}`);
   };
 
   const {
@@ -34,8 +33,14 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useQRCodeCamera({
     fullHeight: true,
-    marker: <CameraMarker />
+    marker: <CameraMarker />,
+    onQrCodeScanned
   });
+
+  const openAppSetting = React.useCallback(async () => {
+    // Open the custom settings if the app has one
+    await openCameraSettings();
+  }, [openCameraSettings]);
 
   const renderCameraView = () => {
     if (cameraPermissionStatus === "authorized") {
@@ -47,23 +52,28 @@ const IDPayPaymentCodeScanScreen = () => {
         <View style={styles.permissionView}>
           <Pictogram name="cameraRequest" />
           <VSpacer size={24} />
-          <H3 color="white">Ci serve il tuo permesso</H3>
+          <H3 color="white">
+            {I18n.t("idpay.payment.qrCode.scan.permissions.undefined.title")}
+          </H3>
           <VSpacer size={8} />
           <LabelSmall
             weight="Regular"
             color="white"
             style={{ textAlign: "center" }}
           >
-            Consenti l’accesso per inquadrare codici QR con la fotocamera del
-            tuo dispositivo.
+            {I18n.t("idpay.payment.qrCode.scan.permissions.undefined.label")}
           </LabelSmall>
           <VSpacer size={32} />
           <ButtonSolid
-            label="Consenti l’accesso"
-            accessibilityLabel="Consenti l’accesso"
+            label={I18n.t(
+              "idpay.payment.qrCode.scan.permissions.undefined.action"
+            )}
+            accessibilityLabel={I18n.t(
+              "idpay.payment.qrCode.scan.permissions.undefined.action"
+            )}
             onPress={requestCameraPermission}
             color="contrast"
-            fullWidth
+            fullWidth={true}
           />
         </View>
       );
@@ -73,8 +83,8 @@ const IDPayPaymentCodeScanScreen = () => {
       <View style={styles.permissionView}>
         <Pictogram name="cameraRequest" />
         <VSpacer size={24} />
-        <H3 color="white" style={{ textAlign: "center" }}>
-          Non hai dato il permesso di usare la fotocamera
+        <H3 color="white">
+          {I18n.t("idpay.payment.qrCode.scan.permissions.denied.title")}
         </H3>
         <VSpacer size={8} />
         <LabelSmall
@@ -82,15 +92,17 @@ const IDPayPaymentCodeScanScreen = () => {
           color="white"
           style={{ textAlign: "center" }}
         >
-          Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+          {I18n.t("idpay.payment.qrCode.scan.permissions.denied.label")}
         </LabelSmall>
         <VSpacer size={32} />
         <ButtonSolid
-          label="Apri impostazioni"
-          accessibilityLabel="Apri impostazioni"
-          onPress={openCameraSettings}
+          label={I18n.t("idpay.payment.qrCode.scan.permissions.denied.action")}
+          accessibilityLabel={I18n.t(
+            "idpay.payment.qrCode.scan.permissions.denied.action"
+          )}
+          onPress={openAppSetting}
           color="contrast"
-          fullWidth
+          fullWidth={true}
         />
       </View>
     );
@@ -217,7 +229,7 @@ const styles = StyleSheet.create({
   },
   cameraMarkerContainer: {
     width: "100%",
-    height: "110%",
+    height: "105%",
     justifyContent: "center"
   },
   navigationContainer: {

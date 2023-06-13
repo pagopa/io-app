@@ -3643,6 +3643,15 @@ idpay:
           scan: Inquadra
           upload: Carica
           input: Digita
+        permissions:
+          undefined: 
+            title: Ci serve il tuo permesso
+            label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+            action: Consenti l’accesso
+          denied:
+            title: Non hai dato il permesso di usare la fotocamera
+            label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+            action: Apri impostazioni
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
