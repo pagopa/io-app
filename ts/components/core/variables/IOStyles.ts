@@ -288,7 +288,7 @@ interface IOSelectionListItemVisualParams {
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
   {
     paddingVertical: 16,
-    paddingHorizontal: IOLayoutCostants.appMarginDefault,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
     iconMargin: 8,
     iconSize: 24,
     descriptionMargin: 4
@@ -301,7 +301,6 @@ export const IOSelectionListItemStyles = StyleSheet.create({
     marginHorizontal: -IOListItemVisualParams.paddingHorizontal
   },
   listItemInner: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between"
