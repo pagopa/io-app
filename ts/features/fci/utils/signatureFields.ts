@@ -4,12 +4,19 @@ import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import * as N from "fp-ts/number";
 import { contramap } from "fp-ts/lib/Ord";
+import { PDFDocument, rgb } from "pdf-lib";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 import { TranslationKeys } from "../../../../locales/locales";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
+import { DrawnDocument } from "../store/reducers/fciDocumentSignatureFields";
+import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
+import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
+import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
+import { savePath } from "../saga/networking/handleDownloadDocument";
 
 const clausesEnumValues = {
   [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
@@ -150,3 +157,139 @@ export const getSignatureFieldsLength = (doc: DocumentDetailView) =>
     O.map(_ => _.length),
     O.getOrElse(() => 0)
   );
+
+/**
+ * Adds a base 64 PDF uri scheme to a base64 string representation of a PDF.
+ * @param r the base64 string representation of a PDF
+ * @returns r prexied by the uri scheme.
+ */
+const addBase64PdfUriScheme = (r: string) => `data:application/pdf;base64,${r}`;
+
+/**
+ * Parses a PDF from filesystem as a base64 string with the prefixed uri scheme.
+ * @param uri the uri of the PDF.
+ * @returns a base64 string representation of the PDF at uri.
+ */
+export const parsePdfAsBase64 = async (uri: string) => {
+  const parsed = await ReactNativeBlobUtil.fs.readFile(
+    `${savePath(uri)}`,
+    "base64"
+  );
+  return addBase64PdfUriScheme(parsed);
+};
+
+/**
+ * Converts a PDFDocument instance to a base64 string representation with the prefixed URI scheme.
+ * @param parsedPdf the PDFDocument instance
+ * @returns a base64 string repreesntation with the prefixed URI scheme.
+ */
+const savePdfDocumentoAsBase64 = async (parsedPdf: PDFDocument) => {
+  const res = await parsedPdf.saveAsBase64();
+  return addBase64PdfUriScheme(res);
+};
+
+/**
+ * Get the pdf url from documents,
+ * download it as base64 string and
+ * load the pdf as pdf-lib object
+ * to draw a rect over the signature field
+ * @param uniqueName the of the signature field
+ * @param bytes the pdf representation.
+ * @returns a promise of an output document with the drawn box and the field page.
+ */
+const drawRectangleOverSignatureFieldById = async (
+  bytes: string,
+  uniqueName: string
+): Promise<DrawnDocument> => {
+  const parsedPdf = await PDFDocument.load(addBase64PdfUriScheme(bytes));
+  const pageRef = parsedPdf.findPageForAnnotationRef(
+    parsedPdf.getForm().getSignature(uniqueName).ref
+  );
+  if (pageRef) {
+    const page = parsedPdf.getPages().indexOf(pageRef);
+    // The signature field is extracted by its unique_name.
+    // Using low-level acrofield (acrobat field) it is possible
+    // to obtain the elements of the signature field such as the
+    // box that contains it. Once the box is obtained, its
+    // coordinates are used to draw a rectangle on the related page.
+    const signature = parsedPdf.getForm().getSignature(uniqueName);
+    const [widget] = signature.acroField.getWidgets();
+    const rect = widget.getRectangle();
+    parsedPdf.getPage(page).drawRectangle({
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height,
+      color: rgb(0, 0.77, 0.79),
+      opacity: 0.5,
+      borderOpacity: 0.75
+    });
+    return {
+      document: await savePdfDocumentoAsBase64(parsedPdf),
+      page
+    };
+  } else {
+    throw new Error(); // TO:DO refactor with fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
+  }
+};
+
+/**
+ * Get the pdf url from documents,
+ * download it as base64 string and
+ * load the pdf as pdf-lib object
+ * to draw a rect over the signature field
+ * giving a set of coordinates
+ * @param attrs the signature field attrs containing the coords
+ * @param bytes the pdf representation.
+ * @returns a promise of an output document with the drawn box and the field page.
+ */
+const drawRectangleOverSignatureFieldByCoordinates = async (
+  bytes: string,
+  attrs: SignatureFieldToBeCreatedAttrs
+): Promise<DrawnDocument> => {
+  const parsedPdf = await PDFDocument.load(addBase64PdfUriScheme(bytes));
+  const page = attrs.page;
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  // setSignaturePage(page.valueOf() + 1);
+  // The signature box is drawn using the coordinates of the signature field.
+  parsedPdf.getPage(page).drawRectangle({
+    x: attrs.bottom_left.x ?? 0,
+    y: attrs.bottom_left.y ?? 0,
+    height: Math.abs((attrs.top_right.y ?? 0) - (attrs.bottom_left.y ?? 0)),
+    width: Math.abs((attrs.top_right.x ?? 0) - (attrs.bottom_left.x ?? 0)),
+    color: rgb(0, 0.77, 0.79),
+    opacity: 0.5,
+    borderOpacity: 0.75
+  });
+  return {
+    document: await savePdfDocumentoAsBase64(parsedPdf),
+    page
+  };
+};
+
+/**
+ * Draws a box on a signature field.
+ * @param bytes the pdf bytes representation.
+ * @param attrs the signature field attributes.
+ * @returns a promise of an output document with the drawn box and the field page.
+ */
+export const drawSignatureField = async (
+  bytes: string,
+  attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs
+) => {
+  if (hasUniqueName(attrs)) {
+    return await drawRectangleOverSignatureFieldById(bytes, attrs.unique_name);
+  } else {
+    return await drawRectangleOverSignatureFieldByCoordinates(bytes, attrs);
+  }
+};
+
+/**
+ * Checks if the signature field attribute has a unique name or not (coords)
+ * @param f the signature field attributes
+ * @returns true if the signature field has a unique name, false otherwise.
+ */
+export const hasUniqueName = (
+  f: SignatureFieldAttrType
+): f is ExistingSignatureFieldAttrs =>
+  (f as ExistingSignatureFieldAttrs).unique_name !== undefined;

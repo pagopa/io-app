@@ -120,10 +120,15 @@ const FciSignatureFieldsScreen = (
         attrs={signatureField.attrs}
         currentDoc={currentDoc}
         onClose={hideModal}
-        onError={() => setIsError(true)}
+        onError={() => onError()}
         testID={"FciDocumentWithSignatureTestID"}
       />
     );
+  };
+
+  const onError = () => {
+    setIsError(true);
+    hideModal();
   };
 
   const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>

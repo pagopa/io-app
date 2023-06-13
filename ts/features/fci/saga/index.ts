@@ -3,7 +3,14 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { SagaIterator } from "redux-saga";
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
-import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
+import {
+  call,
+  takeLatest,
+  put,
+  select,
+  take,
+  race
+} from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
@@ -34,7 +41,8 @@ import {
   fciEndRequest,
   fciClearAllFiles,
   fciMetadataRequest,
-  fciSignaturesListRequest
+  fciSignaturesListRequest,
+  fciDocumentSignatureFields
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -54,6 +62,7 @@ import {
 import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
+import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
 
 /**
  * Handle the FCI Signature requests
@@ -126,6 +135,21 @@ export function* watchFciSaga(
     fciGeneratedClient.getSignatureRequests,
     bearerToken
   );
+
+  // yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
+  yield* takeLatest(fciDocumentSignatureFields.request, watchFieldDrawingSaga);
+}
+
+/**
+ * This saga orchestrate the signature field drawing process.
+ */
+export function* watchFieldDrawingSaga(
+  action: ActionType<typeof fciDocumentSignatureFields.request>
+) {
+  yield* race({
+    fetch: call(handleDrawSignatureBox, action),
+    cancel: take(fciDocumentSignatureFields.cancel)
+  });
 }
 
 /**

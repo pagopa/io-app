@@ -21,6 +21,9 @@ import fciMetadataReducer, { FciMetadataRequestState } from "./fciMetadata";
 import fciSignaturesListRequestReducer, {
   FciSignaturesListRequestState
 } from "./fciSignaturesList";
+import fciSignatureFieldDrawingReducer, {
+  FciDocumentSignatureFieldsState
+} from "./fciDocumentSignatureFields";
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;
@@ -28,6 +31,7 @@ export type FciState = {
   qstpFilledDocument: FciQtspFilledDocumentState;
   signature: FciSignatureState;
   documentSignatures: FciDocumentSignaturesState;
+  documentSignaturesFields: FciDocumentSignatureFieldsState;
   documentPreview: FciDownloadPreviewState;
   pollFilledDocument: FciPollFilledDocumentState;
   metadata: FciMetadataRequestState;
@@ -40,6 +44,7 @@ const fciReducer = combineReducers<FciState, Action>({
   qstpFilledDocument: fciLoadQtspFilledDocumentReducer,
   signature: fciSignatureReducer,
   documentSignatures: fciDocumentSignaturesReducer,
+  documentSignaturesFields: fciSignatureFieldDrawingReducer,
   documentPreview: fciDownloadPreviewReducer,
   pollFilledDocument: fciPollFilledDocumentReducer,
   metadata: fciMetadataReducer,

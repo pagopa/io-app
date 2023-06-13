@@ -166,6 +166,7 @@ const FciDocumentsScreen = () => {
       source={{
         uri: `${downloadPath}`
       }}
+      page={2}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
       }}
