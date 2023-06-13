@@ -23,7 +23,7 @@ import fciSignaturesListRequestReducer, {
 } from "./fciSignaturesList";
 import fciSignatureFieldDrawingReducer, {
   FciDocumentSignatureFieldsState
-} from "./fciDocumentSignatureFields";
+} from "./fciSignatureFieldDrawing";
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;

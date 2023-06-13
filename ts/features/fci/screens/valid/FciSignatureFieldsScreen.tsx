@@ -126,6 +126,9 @@ const FciSignatureFieldsScreen = (
     );
   };
 
+  /**
+   * Callback which sets the isError state to true and hides the modal.
+   */
   const onError = () => {
     setIsError(true);
     hideModal();

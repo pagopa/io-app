@@ -13,7 +13,7 @@ import { SignatureRequestDetailView } from "../../../../../definitions/fci/Signa
 import { NetworkError } from "../../../../utils/errors";
 import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
-import { FciDocumentSignatureFieldsState } from "../reducers/fciDocumentSignatureFields";
+import { FciDocumentSignatureFieldsState } from "../reducers/fciSignatureFieldDrawing";
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 
 /**

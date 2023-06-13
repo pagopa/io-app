@@ -20,7 +20,7 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../components/core/typography/H5";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
-import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciDocumentSignatureFields";
+import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
@@ -58,6 +58,9 @@ const DocumentWithSignature = (props: Props) => {
     title: I18n.t("features.fci.documents.footer.backToSignFieldsList")
   };
 
+  /**
+   * Dispatches the request to draw the signature field on the pdf.
+   */
   useOnFirstRender(() => {
     dispatch(
       fciDocumentSignatureFields.request({
@@ -67,6 +70,10 @@ const DocumentWithSignature = (props: Props) => {
     );
   });
 
+  /**
+   * Points the pdf to the given page by using its ref.
+   * @param page the page to point the pdf to
+   */
   const pointToPage = (page: number) =>
     pipe(
       pdfRef.current,
@@ -74,6 +81,9 @@ const DocumentWithSignature = (props: Props) => {
       O.map(_ => _.setPage(page))
     );
 
+  /**
+   * Renders the pdf with the signature field drawn on it.
+   */
   const RenderPdf = React.useCallback(
     ({ document, page }: { document: string; page: number }) => (
       <Pdf
@@ -98,6 +108,10 @@ const DocumentWithSignature = (props: Props) => {
     [props.onError]
   );
 
+  /**
+   * Callback to be used when the user presses the previous button.
+   * It decrements the current page and points the pdf to the new page.
+   */
   const onPrevious = () => {
     pipe(
       currentPage,
@@ -110,6 +124,10 @@ const DocumentWithSignature = (props: Props) => {
     );
   };
 
+  /**
+   * Callback to be used when the user presses the next button.
+   * It increments the current page and points the pdf to the new page.
+   */
   const onNext = () => {
     pipe(
       currentPage,
@@ -122,16 +140,24 @@ const DocumentWithSignature = (props: Props) => {
     );
   };
 
+  /**
+   * Renders the loading spinner.
+   * @returns a loading spinner overlay
+   */
   const LoadingView = () => <LoadingSpinnerOverlay isLoading={true} />;
 
   /**
-   * Renders a error view with a 'retry' button.
+   * Callback to be used when the pdf cannot be loaded or the signature field cannot be drawn.
+   * It returns an empty fragment and calls the `onError` callback.
    */
   const ErrorView = React.useCallback(() => {
     props.onError();
     return <></>;
   }, [props]);
 
+  /**
+   * Renders the pdf, a loading view or an error view depending on the state of the pot.
+   */
   const RenderMask = React.useCallback(
     () =>
       pot.fold(

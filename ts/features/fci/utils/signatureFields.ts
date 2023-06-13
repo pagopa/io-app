@@ -12,7 +12,7 @@ import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 import { TranslationKeys } from "../../../../locales/locales";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
-import { DrawnDocument } from "../store/reducers/fciDocumentSignatureFields";
+import { DrawnDocument } from "../store/reducers/fciSignatureFieldDrawing";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
@@ -127,7 +127,7 @@ export const orderSignatureFields = (
 
 /**
  * Given a list of documents to sign and an array of Clauses types
- * it returns the number of clauses
+ * it returns the number of clauses.
  * @param documentsToSign the list of documents to sign
  * @returns the number of OPTIONAL clauses
  */
@@ -145,7 +145,7 @@ export const getClausesCountByTypes = (
   );
 
 /**
- * Get the number of signature fields
+ * Get the number of signature fields.
  * @param doc the document detail view
  * @returns the number of signature fields
  */
@@ -161,14 +161,14 @@ export const getSignatureFieldsLength = (doc: DocumentDetailView) =>
 /**
  * Adds a base 64 PDF uri scheme to a base64 string representation of a PDF.
  * @param r the base64 string representation of a PDF
- * @returns r prexied by the uri scheme.
+ * @returns r prexied by the uri scheme
  */
 const addBase64PdfUriScheme = (r: string) => `data:application/pdf;base64,${r}`;
 
 /**
  * Parses a PDF from filesystem as a base64 string with the prefixed uri scheme.
- * @param uri the uri of the PDF.
- * @returns a base64 string representation of the PDF at uri.
+ * @param uri the uri of the PDF
+ * @returns a base64 string representation of the PDF at uri
  */
 export const parsePdfAsBase64 = async (uri: string) => {
   const parsed = await ReactNativeBlobUtil.fs.readFile(
@@ -181,7 +181,7 @@ export const parsePdfAsBase64 = async (uri: string) => {
 /**
  * Converts a PDFDocument instance to a base64 string representation with the prefixed URI scheme.
  * @param parsedPdf the PDFDocument instance
- * @returns a base64 string repreesntation with the prefixed URI scheme.
+ * @returns a base64 string repreesntation with the prefixed URI scheme
  */
 const savePdfDocumentoAsBase64 = async (parsedPdf: PDFDocument) => {
   const res = await parsedPdf.saveAsBase64();
@@ -189,13 +189,10 @@ const savePdfDocumentoAsBase64 = async (parsedPdf: PDFDocument) => {
 };
 
 /**
- * Get the pdf url from documents,
- * download it as base64 string and
- * load the pdf as pdf-lib object
- * to draw a rect over the signature field
+ * Get the pdf url from documents, download it as base64 string and load the pdf as pdf-lib object to draw a rect over the signature field.
  * @param uniqueName the of the signature field
- * @param bytes the pdf representation.
- * @returns a promise of an output document with the drawn box and the field page.
+ * @param bytes the pdf representation
+ * @returns a promise of an output document with the drawn box and the field page
  */
 const drawRectangleOverSignatureFieldById = async (
   bytes: string,
@@ -240,8 +237,8 @@ const drawRectangleOverSignatureFieldById = async (
  * to draw a rect over the signature field
  * giving a set of coordinates
  * @param attrs the signature field attrs containing the coords
- * @param bytes the pdf representation.
- * @returns a promise of an output document with the drawn box and the field page.
+ * @param bytes the pdf representation
+ * @returns a promise of an output document with the drawn box and the field page
  */
 const drawRectangleOverSignatureFieldByCoordinates = async (
   bytes: string,
@@ -249,9 +246,6 @@ const drawRectangleOverSignatureFieldByCoordinates = async (
 ): Promise<DrawnDocument> => {
   const parsedPdf = await PDFDocument.load(addBase64PdfUriScheme(bytes));
   const page = attrs.page;
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  // setSignaturePage(page.valueOf() + 1);
-  // The signature box is drawn using the coordinates of the signature field.
   parsedPdf.getPage(page).drawRectangle({
     x: attrs.bottom_left.x ?? 0,
     y: attrs.bottom_left.y ?? 0,
@@ -269,9 +263,9 @@ const drawRectangleOverSignatureFieldByCoordinates = async (
 
 /**
  * Draws a box on a signature field.
- * @param bytes the pdf bytes representation.
- * @param attrs the signature field attributes.
- * @returns a promise of an output document with the drawn box and the field page.
+ * @param bytes the pdf bytes representation
+ * @param attrs the signature field attributes
+ * @returns a promise of an output document with the drawn box and the field page
  */
 export const drawSignatureField = async (
   bytes: string,
@@ -287,7 +281,7 @@ export const drawSignatureField = async (
 /**
  * Checks if the signature field attribute has a unique name or not (coords)
  * @param f the signature field attributes
- * @returns true if the signature field has a unique name, false otherwise.
+ * @returns true if the signature field has a unique name, false otherwise
  */
 export const hasUniqueName = (
   f: SignatureFieldAttrType
