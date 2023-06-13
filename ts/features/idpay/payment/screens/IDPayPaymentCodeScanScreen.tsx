@@ -38,7 +38,11 @@ const IDPayPaymentCodeScanScreen = () => {
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
-        <StatusBar barStyle={"light-content"} />
+        <StatusBar
+          barStyle={"light-content"}
+          backgroundColor={"transparent"}
+          translucent={true}
+        />
         {/* FIXME replace with the new header from the Design System 2.0  */}
         <CustomHeader />
       </LinearGradient>
@@ -139,7 +143,8 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["blueIO-50"],
     flex: 1,
     flexGrow: 1,
-    borderRadius: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden"

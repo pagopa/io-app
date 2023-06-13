@@ -5,7 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import React from "react";
-import { LayoutChangeEvent, SafeAreaView, View } from "react-native";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
@@ -26,9 +27,9 @@ import {
 } from "../../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
+import { TimelineDiscountTransactionDetailsComponent } from "./TimelineDiscountTransactionDetailsComponent";
 import { TimelineRefundDetailsComponent } from "./TimelineRefundDetailsComponent";
 import { TimelineTransactionDetailsComponent } from "./TimelineTransactionDetailsComponent";
-import { TimelineDiscountTransactionDetailsComponent } from "./TimelineDiscountTransactionDetailsComponent";
 
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
@@ -52,12 +53,13 @@ const useTimelineDetailsBottomSheet = (
 ): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
+  const insets = useSafeAreaInsets();
   const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
   const isLoading = pot.isLoading(detailsPot);
   const isError = pot.isError(detailsPot);
 
   const handleContentOnLayout = (event: LayoutChangeEvent) => {
-    const bottomPadding = 160;
+    const bottomPadding = 150 + insets.bottom;
     const { height } = event.nativeEvent.layout;
     setSnapPoint(bottomPadding + height);
   };
@@ -115,9 +117,8 @@ const useTimelineDetailsBottomSheet = (
   };
 
   const modalFooter = (
-    <SafeAreaView>
-      <ContentWrapper>
-        <VSpacer size={32} />
+    <ContentWrapper>
+      <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
         <ButtonOutline
           label={I18n.t("global.buttons.close")}
           accessibilityLabel={I18n.t("global.buttons.close")}
@@ -125,9 +126,8 @@ const useTimelineDetailsBottomSheet = (
           onPress={() => modal.dismiss()}
           fullWidth={true}
         />
-        <VSpacer size={16} />
-      </ContentWrapper>
-    </SafeAreaView>
+      </View>
+    </ContentWrapper>
   );
 
   const modal = useLegacyIOBottomSheetModal(
@@ -181,6 +181,12 @@ const ErrorComponent = () => (
     <H3>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H3>
   </View>
 );
+
+const styles = StyleSheet.create({
+  footer: {
+    paddingVertical: 16
+  }
+});
 
 export { useTimelineDetailsBottomSheet };
 export type { TimelineDetailsBottomSheetModal };
