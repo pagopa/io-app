@@ -65,10 +65,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.black
   },
 
-  fullHeightCameraContainer: {
-    height: "100%"
-  },
-
   camera: {
     position: "absolute",
     width: "100%",
@@ -133,7 +129,6 @@ type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
   marker?: React.ReactNode;
-  fullHeight?: boolean;
 };
 
 /**
@@ -261,12 +256,7 @@ export const BarcodeCamera = (props: Props) => {
   }
 
   return (
-    <View
-      style={[
-        styles.cameraContainer,
-        props.fullHeight && styles.fullHeightCameraContainer
-      ]}
-    >
+    <View style={styles.cameraContainer}>
       {device && (
         <Camera
           style={styles.camera}
