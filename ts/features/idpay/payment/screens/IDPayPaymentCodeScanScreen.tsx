@@ -5,19 +5,21 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
-import {
-  BarcodeCamera,
-  ScannedBarcode
-} from "../../../../components/BarcodeCamera";
+import { ScannedBarcode } from "../../../../components/BarcodeCamera";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
+import { Pictogram } from "../../../../components/core/pictograms";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { H3 } from "../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import IconButton from "../../../../components/ui/IconButton";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useQRCodeCamera } from "../components/QRCodeCamera";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
@@ -25,15 +27,78 @@ const IDPayPaymentCodeScanScreen = () => {
     alert(`trxCode: ${barcode.value}`);
   };
 
-  return (
-    <View style={styles.screen}>
-      <View style={styles.cameraContainer}>
-        <BarcodeCamera
-          onBarcodeScanned={onBarcodeScanned}
-          marker={<CameraMarker />}
-          fullHeight={true}
+  const {
+    cameraComponent,
+    cameraPermissionStatus,
+    requestCameraPermission,
+    openCameraSettings
+  } = useQRCodeCamera({
+    fullHeight: true,
+    marker: <CameraMarker />
+  });
+
+  const renderCameraView = () => {
+    if (cameraPermissionStatus === "authorized") {
+      return cameraComponent;
+    }
+
+    if (cameraPermissionStatus === "not-determined") {
+      return (
+        <View style={styles.permissionView}>
+          <Pictogram name="cameraRequest" />
+          <VSpacer size={24} />
+          <H3 color="white">Ci serve il tuo permesso</H3>
+          <VSpacer size={8} />
+          <LabelSmall
+            weight="Regular"
+            color="white"
+            style={{ textAlign: "center" }}
+          >
+            Consenti l’accesso per inquadrare codici QR con la fotocamera del
+            tuo dispositivo.
+          </LabelSmall>
+          <VSpacer size={32} />
+          <ButtonSolid
+            label="Consenti l’accesso"
+            accessibilityLabel="Consenti l’accesso"
+            onPress={requestCameraPermission}
+            color="contrast"
+            fullWidth
+          />
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.permissionView}>
+        <Pictogram name="cameraRequest" />
+        <VSpacer size={24} />
+        <H3 color="white" style={{ textAlign: "center" }}>
+          Non hai dato il permesso di usare la fotocamera
+        </H3>
+        <VSpacer size={8} />
+        <LabelSmall
+          weight="Regular"
+          color="white"
+          style={{ textAlign: "center" }}
+        >
+          Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+        </LabelSmall>
+        <VSpacer size={32} />
+        <ButtonSolid
+          label="Apri impostazioni"
+          accessibilityLabel="Apri impostazioni"
+          onPress={openCameraSettings}
+          color="contrast"
+          fullWidth
         />
       </View>
+    );
+  };
+
+  return (
+    <View style={styles.screen}>
+      <View style={styles.cameraContainer}>{renderCameraView()}</View>
       <TabNavigation />
       <LinearGradient
         colors={["#03134480", "#03134400"]}
@@ -142,7 +207,6 @@ const styles = StyleSheet.create({
     height: 160
   },
   cameraContainer: {
-    backgroundColor: IOColors["blueIO-50"],
     flex: 1,
     flexGrow: 1,
     borderBottomLeftRadius: 24,
@@ -174,6 +238,10 @@ const styles = StyleSheet.create({
   tabActive: {
     backgroundColor: IOColors.white,
     borderRadius: 85
+  },
+  permissionView: {
+    marginHorizontal: 32,
+    alignItems: "center"
   }
 });
 
