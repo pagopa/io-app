@@ -1,9 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, FlatList } from "react-native";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
 import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { isValidPinNumber } from "../features/fastLogin/utils/pinPolicy";
+import { isDevEnv } from "../utils/environment";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
 import { IOColors } from "./core/variables/IOColors";
@@ -13,6 +15,7 @@ import { Body } from "./core/typography/Body";
 import { LabelledItem } from "./LabelledItem";
 import { IOStyles } from "./core/variables/IOStyles";
 import { LabelSmall } from "./core/typography/LabelSmall";
+import { VSpacer } from "./core/spacer/Spacer";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
@@ -21,6 +24,9 @@ export type Props = {
 const styles = StyleSheet.create({
   flex: {
     flex: 1
+  },
+  bulletList: {
+    marginLeft: 10
   }
 });
 
@@ -40,14 +46,17 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   const [isPinConfirmationDirty, setIsPinConfirmationDirty] =
     React.useState(false);
 
-  const isPinValid = !isPinDirty || pin.length === pinLength;
+  const isPinValid =
+    !isPinDirty || isValidPinNumber(pin) || (isDevEnv && pin.length === 6);
 
   const isPinConfirmationValid =
-    !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
+    !isPinConfirmationDirty ||
+    (isValidPinNumber(pinConfirmation) && pinConfirmation === pin) ||
+    (isDevEnv && pinConfirmation === pin);
 
   const isFormValid =
-    pin.length === pinLength &&
-    pinConfirmation.length === pinLength &&
+    isValidPinNumber(pin) &&
+    isValidPinNumber(pinConfirmation) &&
     pinConfirmation === pin;
 
   const handlePinBlur = React.useCallback(() => {
@@ -85,7 +94,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   const pinFieldA11yLabel = React.useMemo(
     () =>
       `${I18n.t("onboarding.pin.pinLabel")}${
-        !isPinValid ? ", " + I18n.t("onboarding.pin.errors.length") : ""
+        !isPinValid ? ", " + I18n.t("onboarding.pin.errors.invalid") : ""
       }`,
     [isPinValid]
   );
@@ -100,6 +109,15 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     [isPinConfirmationValid]
   );
 
+  const bulletList = (items: Array<string>) => (
+    <FlatList
+      data={items}
+      renderItem={({ item }) => (
+        <Body style={styles.bulletList}>{`\u2022 ${item}`}</Body>
+      )}
+    />
+  );
+
   return (
     <View style={styles.flex}>
       <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
@@ -112,6 +130,13 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         <View style={{ marginTop: 10 }} />
 
         <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
+        <VSpacer />
+
+        <Body>{I18n.t("onboarding.pin.policy.headerTitle")}</Body>
+        {bulletList([
+          I18n.t("onboarding.pin.policy.first"),
+          I18n.t("onboarding.pin.policy.second")
+        ])}
 
         <View style={{ position: "relative", marginTop: 30 }}>
           <LabelledItem
@@ -142,7 +167,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               importantForAccessibility="no-hide-descendants"
             >
               <LabelSmall weight="Regular" color="red">
-                {I18n.t("onboarding.pin.errors.length")}
+                {I18n.t("onboarding.pin.errors.invalid")}
               </LabelSmall>
             </View>
           )}
