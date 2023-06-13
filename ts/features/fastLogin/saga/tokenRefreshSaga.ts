@@ -6,7 +6,11 @@ import {
   refreshSessionToken
 } from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
-import { identificationRequest } from "../../../store/actions/identification";
+import {
+  identificationFailure,
+  identificationRequest,
+  identificationSuccess
+} from "../../../store/actions/identification";
 import { startApplicationInitialization } from "../../../store/actions/application";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
@@ -26,7 +30,11 @@ function* handleRefreshSessionToken(
     typeof askUserToRefreshSessionToken.success
   >;
   if (typedAction.payload === "yes") {
-    yield* doRefreshTokenSaga();
+    yield* put(identificationRequest(true, false));
+    const result = yield* take([identificationSuccess, identificationFailure]);
+    if (result.type === getType(identificationSuccess)) {
+      yield* doRefreshTokenSaga();
+    }
   } else {
     // Lock the app
     NavigationService.navigate(ROUTES.MESSAGES_HOME);

@@ -418,7 +418,7 @@ export function* initializeApplicationSaga(
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
-  if (hasPreviousSessionAndPin) {
+  if (hasPreviousSessionAndPin && !handleSessionExpiration) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
