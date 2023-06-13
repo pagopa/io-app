@@ -47,12 +47,12 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     React.useState(false);
 
   const isPinValid =
-    !isPinDirty || isValidPinNumber(pin) || (isDevEnv && pin.length === 6);
+    !isPinDirty ||
+    isValidPinNumber(pin) ||
+    (isDevEnv && pin.length === pinLength);
 
   const isPinConfirmationValid =
-    !isPinConfirmationDirty ||
-    (isValidPinNumber(pinConfirmation) && pinConfirmation === pin) ||
-    (isDevEnv && pinConfirmation === pin);
+    !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
 
   const isFormValid =
     isValidPinNumber(pin) &&
