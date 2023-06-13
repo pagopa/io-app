@@ -870,12 +870,14 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#0E0F13",
@@ -961,12 +963,14 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                       fontStyle={
                                                         Object {
                                                           "fontSize": 12,
+                                                          "lineHeight": 18,
                                                         }
                                                       }
                                                       style={
                                                         Array [
                                                           Object {
                                                             "fontSize": 12,
+                                                            "lineHeight": 18,
                                                           },
                                                           Object {
                                                             "color": "#17324D",
@@ -999,6 +1003,7 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 14,
+                                                  "lineHeight": 21,
                                                 }
                                               }
                                               style={
@@ -1010,6 +1015,7 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                   },
                                                   Object {
                                                     "fontSize": 14,
+                                                    "lineHeight": 21,
                                                   },
                                                   Object {
                                                     "color": "#475A6D",
