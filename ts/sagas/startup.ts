@@ -97,6 +97,7 @@ import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
+import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -267,8 +268,12 @@ export function* initializeApplicationSaga(
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
-    // FIXME: handle isFastLogin Logic.
-    yield* put(sessionExpired());
+    const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+    if (!isFastLoginEnabled) {
+      yield* put(sessionExpired());
+    } else {
+      // FIXME: handle isFastLogin Logic. https://pagopa.atlassian.net/browse/IOPID-315
+    }
     return;
   }
 
