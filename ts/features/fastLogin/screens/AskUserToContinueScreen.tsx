@@ -19,11 +19,11 @@ import themeVariables from "../../../theme/variables";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
-import { askUserToRefreshSessionToken } from "../../../store/actions/authentication";
 import CountDown from "../components/CountDown";
+import { BottomSheetHeader } from "../../../components/bottomSheet/BottomSheetHeader";
 
 const styles = StyleSheet.create({
-  errorContainer: {
+  mainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -48,6 +48,8 @@ const DefaultButtonStylesProps: ButtonStylesProps = {
   exitButtonStyle: "outline"
 };
 
+const DEFAULT_TIMER_DURATION = 60;
+
 type Props = {
   title: string;
   subtitle: string;
@@ -55,6 +57,7 @@ type Props = {
   onSubmit: () => void;
   onExit?: () => void;
   onTimerExpired?: () => void;
+  timerDuration?: number;
   ButtonStylesProps?: ButtonStylesProps;
 };
 
@@ -69,8 +72,7 @@ const AskUserToContinueScreen = (props: Props) => {
 
   const exitButtonProps = {
     fullWidth: true,
-    onPress: (_: GestureResponderEvent) =>
-      props.onExit ? props.onExit() : undefined,
+    onPress: (_: GestureResponderEvent) => props.onExit && props.onExit(),
     label: I18n.t("global.buttons.exit"),
     accessibilityLabel: I18n.t("global.buttons.exit")
   };
@@ -85,7 +87,10 @@ const AskUserToContinueScreen = (props: Props) => {
   return (
     <Modal>
       <SafeAreaView style={IOStyles.flex}>
-        <View style={styles.errorContainer}>
+        {props.onExit && (
+          <BottomSheetHeader title={undefined} onClose={props.onExit} />
+        )}
+        <View style={styles.mainContainer}>
           <Pictogram name={props.pictogramName} size={120} />
           <VSpacer size={16} />
           <H3 style={styles.title}>{props.title}</H3>
@@ -94,24 +99,24 @@ const AskUserToContinueScreen = (props: Props) => {
           <VSpacer size={16} />
           {props.onTimerExpired && (
             <CountDown
-              totalSeconds={120}
-              actionToDispatchWhenExpired={askUserToRefreshSessionToken.success(
-                "no"
-              )}
+              totalSeconds={props.timerDuration ?? DEFAULT_TIMER_DURATION}
+              onExpiration={props.onTimerExpired}
             />
           )}
         </View>
         <View style={styles.buttonContainer}>
           {props.onExit && (
-            <View style={IOStyles.flex}>
-              {exitButtonStyle === "outline" ? (
-                <ButtonOutline {...exitButtonProps} />
-              ) : (
-                <ButtonSolid {...exitButtonProps} />
-              )}
-            </View>
+            <>
+              <View style={IOStyles.flex}>
+                {exitButtonStyle === "outline" ? (
+                  <ButtonOutline {...exitButtonProps} />
+                ) : (
+                  <ButtonSolid {...exitButtonProps} />
+                )}
+              </View>
+              <HSpacer size={16} />
+            </>
           )}
-          <HSpacer size={16} />
           <View style={IOStyles.flex}>
             {submitButtonStyle === "solid" ? (
               <ButtonSolid {...submitButtonProps} />

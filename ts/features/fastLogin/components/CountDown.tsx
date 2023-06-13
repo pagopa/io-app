@@ -1,11 +1,10 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { Action } from "typesafe-actions";
 import { H3 } from "../../../components/core/typography/H3";
 
 type Props = {
   totalSeconds: number; // in seconds
-  actionToDispatchWhenExpired: Action;
+  onExpiration: () => void;
 };
 
 const formattedTime = (time: number) => {
@@ -18,7 +17,7 @@ const formattedTime = (time: number) => {
 };
 
 const ConuntDown = (props: Props) => {
-  const { totalSeconds: totalTime, actionToDispatchWhenExpired } = props;
+  const { totalSeconds: totalTime, onExpiration } = props;
   const [remainingTime, setRemainingTime] = React.useState(totalTime);
 
   const dispatch = useDispatch();
@@ -37,9 +36,9 @@ const ConuntDown = (props: Props) => {
 
   React.useEffect(() => {
     if (remainingTime === 0) {
-      dispatch(actionToDispatchWhenExpired);
+      onExpiration();
     }
-  }, [actionToDispatchWhenExpired, dispatch, remainingTime]);
+  }, [dispatch, onExpiration, remainingTime]);
 
   return (
     <>
