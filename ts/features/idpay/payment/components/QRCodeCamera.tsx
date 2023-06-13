@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Linking, StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import {
   Camera,
   CameraPermissionStatus,
@@ -7,7 +7,6 @@ import {
 } from "react-native-vision-camera";
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import customVariables from "../../../../theme/variables";
 
 type QRCodeCameraConfiguration = {
   marker?: React.ReactNode;
@@ -90,30 +89,12 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: IOColors.black
   },
-
   camera: {
     position: "absolute",
     width: "100%",
     height: "100%"
-  },
-
-  notAuthorizedContainer: {
-    padding: customVariables.contentPadding,
-    flex: 1,
-    alignItems: "center",
-    alignSelf: "stretch",
-    marginBottom: 14
-  },
-
-  notAuthorizedText: {
-    marginBottom: 25
-  },
-
-  notAuthorizedBtn: {
-    flex: 1,
-    alignSelf: "stretch"
   }
 });
 
-export type { QRCodeCamera };
 export { useQRCodeCamera };
+export type { QRCodeCamera };
