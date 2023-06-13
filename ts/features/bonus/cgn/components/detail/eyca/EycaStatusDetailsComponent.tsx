@@ -19,6 +19,9 @@ import {
 import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../../components/core/IOBadge";
+import { openWebUrl } from "../../../../../../utils/url";
+import { EYCA_DISCOUNTS_URL } from "../../../utils/constants";
+import { showToast } from "../../../../../../utils/showToast";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -109,10 +112,14 @@ const EycaStatusDetailsComponent = (props: Props) => {
         bordered
         style={{ width: "100%" }}
         onPress={() =>
-          clipboardSetStringWithFeedback(props.eycaCard.card_number)
+          openWebUrl(EYCA_DISCOUNTS_URL, () =>
+            showToast(I18n.t("bonus.cgn.generic.linkError"))
+          )
         }
       >
-        <Label color={"blue"}>{I18n.t("bonus.cgn.detail.cta.eyca.copy")}</Label>
+        <Label color={"blue"}>
+          {I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")}
+        </Label>
       </ButtonDefaultOpacity>
     </>
   );
