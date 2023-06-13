@@ -32,8 +32,6 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
-import { NativeLoginConfig } from "../../../definitions/content/NativeLoginConfig";
-import { FastLoginConfig } from "../../../definitions/content/FastLoginConfig";
 import { Action } from "../actions/types";
 import { Config } from "../../../definitions/content/Config";
 import { GlobalState } from "./types";
@@ -241,15 +239,18 @@ export const isLollipopEnabledSelector = createSelector(
     )
 );
 
-type KeysWithMinAppVersion<T> = {
-  [K in keyof T]: T[K] extends { min_app_version?: any } ? K : never;
-}[keyof T];
+type KeysWithMinAppVersion<T> = Extract<
+  keyof T,
+  {
+    [K in keyof T]: T[K] extends { min_app_version?: any } | undefined
+      ? K
+      : never;
+  }[keyof T]
+>;
 
 export const isPropertyWithMinAppVersionEnabled = (
   localFlag: boolean,
-  configPropertyName: KeysWithMinAppVersion<
-    Config & { nativeLogin: NativeLoginConfig; fastLogin: FastLoginConfig }
-  >,
+  configPropertyName: KeysWithMinAppVersion<Config>,
   backendStatus: O.Option<BackendStatus>
 ): boolean =>
   localFlag &&
