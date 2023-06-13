@@ -66,12 +66,14 @@ exports[`Test InitiativeStatusLabel component should render a InitiativeStatusLa
     fontStyle={
       Object {
         "fontSize": 12,
+        "lineHeight": 18,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 12,
+          "lineHeight": 18,
         },
         Object {
           "color": "#17324D",

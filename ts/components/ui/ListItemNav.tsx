@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   textValue: {
     fontSize: 18,
     lineHeight: 24,
+    color: IOColors.bluegreyDark,
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
@@ -140,11 +141,7 @@ export const ListItemNav = ({
           <View style={IOStyles.flex}>
             {/* Let developer using a custom component (e.g: skeleton) */}
             {typeof value === "string" ? (
-              <Text
-                style={[styles.textValue, { color: IOColors.bluegreyDark }]}
-              >
-                {value}
-              </Text>
+              <Text style={styles.textValue}>{value}</Text>
             ) : (
               { value }
             )}
