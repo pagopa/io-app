@@ -11,7 +11,6 @@ import customVariables from "../../../../theme/variables";
 
 type QRCodeCameraConfiguration = {
   marker?: React.ReactNode;
-  fullHeight?: boolean;
   onQrCodeScanned?: (content: string) => void;
 };
 
@@ -27,7 +26,7 @@ const DEFAULT_CONFIGURATION: QRCodeCameraConfiguration = {};
 const useQRCodeCamera = (
   config: QRCodeCameraConfiguration = DEFAULT_CONFIGURATION
 ): QRCodeCamera => {
-  const { marker, fullHeight, onQrCodeScanned } = config;
+  const { marker, onQrCodeScanned } = config;
 
   const devices = useCameraDevices();
   const [cameraPermissionStatus, setCameraPermissionStatus] =
@@ -60,12 +59,7 @@ const useQRCodeCamera = (
   }, [barcodes, onQrCodeScanned]);
 
   const cameraComponent = (
-    <View
-      style={[
-        styles.cameraContainer,
-        fullHeight && styles.fullHeightCameraContainer
-      ]}
-    >
+    <View style={styles.cameraContainer}>
       {devices.back && (
         <Camera
           style={styles.camera}
@@ -89,18 +83,12 @@ const useQRCodeCamera = (
   };
 };
 
-const screenWidth = Dimensions.get("screen").width;
-
 const styles = StyleSheet.create({
   cameraContainer: {
     position: "relative",
     width: "100%",
-    height: screenWidth,
+    height: "100%",
     backgroundColor: IOColors.black
-  },
-
-  fullHeightCameraContainer: {
-    height: "100%"
   },
 
   camera: {

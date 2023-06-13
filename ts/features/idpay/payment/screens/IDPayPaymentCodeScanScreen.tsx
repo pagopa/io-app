@@ -32,7 +32,6 @@ const IDPayPaymentCodeScanScreen = () => {
     requestCameraPermission,
     openCameraSettings
   } = useQRCodeCamera({
-    fullHeight: true,
     marker: <CameraMarker />,
     onQrCodeScanned
   });
