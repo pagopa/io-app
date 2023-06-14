@@ -18,14 +18,11 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { openWebUrl } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/BarcodeScanner";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
-  const onBarcodeScanned = (barcode: IOBarcode) => {
-    alert(`trxCode: ${barcode.value}`);
-  };
-
   const {
     cameraComponent,
     cameraPermissionStatus,
@@ -33,7 +30,7 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useIOBarcodeScanner({
     marker: <CameraMarker />,
-    onBarcodeScanned,
+    onBarcodeScanned: (barcode: IOBarcode) => openWebUrl(barcode.value),
     formats: ["QR_CODE"]
   });
 

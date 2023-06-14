@@ -121,12 +121,16 @@ export const retrieveNextBarcode = (
       (barcodes, nextBarcode) => {
         const ioBarcodeFormat = convertToIOBarcodeFormat(nextBarcode.format);
 
-        if (ioBarcodeFormat && !barcodes[ioBarcodeFormat]) {
+        if (
+          ioBarcodeFormat &&
+          !barcodes[ioBarcodeFormat] &&
+          nextBarcode.displayValue
+        ) {
           return {
             ...barcodes,
-            ioBarcodeFormat: {
+            [ioBarcodeFormat]: {
               format: ioBarcodeFormat,
-              value: nextBarcode.content.data.toString()
+              value: nextBarcode.displayValue
             }
           };
         }
