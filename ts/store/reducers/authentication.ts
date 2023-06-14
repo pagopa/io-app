@@ -133,6 +133,14 @@ export function isSessionExpired(
 }
 
 // Selectors
+export const authenticationStateSelector = (
+  state: GlobalState
+): AuthenticationState => state.authentication;
+
+export const loggedOutWithIdpAuthSelector = createSelector(
+  authenticationStateSelector,
+  authState => (isLoggedOutWithIdp(authState) ? authState : undefined)
+);
 
 export const isLogoutRequested = (state: GlobalState) =>
   state.authentication.kind === "LogoutRequested";
@@ -194,10 +202,10 @@ export const tokenFromNameSelector = (
 export const isLoggedInWithTestIdpSelector = (state: GlobalState) =>
   isLoggedIn(state.authentication) && state.authentication.idp.isTestIdp;
 
-export const selectedIdentityProviderSelector = (state: GlobalState) =>
-  isLoggedOutWithIdp(state.authentication)
-    ? state.authentication.idp
-    : undefined;
+export const selectedIdentityProviderSelector = createSelector(
+  authenticationStateSelector,
+  authState => (isLoggedOutWithIdp(authState) ? authState.idp : undefined)
+);
 
 function matchWithIdp<I>(
   state: AuthenticationState,

@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { SagaIterator } from "redux-saga";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import {
+  identificationPinReset,
   identificationRequest,
   identificationSuccess
 } from "../../../store/actions/identification";
@@ -130,6 +131,15 @@ export function* watchFciSaga(
   );
 
   yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
+  
+  yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
+}
+
+/**
+ * Handle the identification pin reset to clear fci state
+ */
+function* watchIdentificationPinResetSaga(): SagaIterator {
+  yield* put(fciClearStateRequest());
 }
 
 /**
@@ -211,8 +221,10 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       onCancel: () => undefined
     })
   );
+
   const res = yield* take(identificationSuccess);
-  if (res.type === "IDENTIFICATION_SUCCESS") {
+
+  if (isActionOf(identificationSuccess, res)) {
     const potQtspClauses: FciQtspClausesState = yield* select(
       fciQtspClausesMetadataSelector
     );

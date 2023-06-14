@@ -1,22 +1,28 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOTheme, IOThemeLight } from "../variables/IOColors";
+import { useIOSelector } from "../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-// when the weight is bold, only these color are allowed
-type AllowedColors = IOTheme["textBody-default"];
-type AllowedWeight = Extract<IOFontWeight, "Regular">;
+type AllowedColors = IOTheme["textBody-default"] | "blueIO-850";
+type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 >;
 
-const fontName: IOFontFamily = "ReadexPro";
+/* Common typographic styles */
 export const h6FontSize = 16;
-export const h6LineHeight = 20;
+export const h6LineHeight = 24;
 export const h6DefaultColor: AllowedColors = IOThemeLight["textBody-default"];
-export const h6DefaultWeight: AllowedWeight = "Regular";
+/* Legacy typographic styles */
+const h6LegacyFontName: IOFontFamily = "TitilliumWeb";
+const h6LegacyDefaultWeight: AllowedWeight = "SemiBold";
+/* New typographic styles */
+const h6FontName: IOFontFamily = "ReadexPro";
+const h6DefaultWeight: AllowedWeight = "Regular";
 
 /**
  * Typography component to render `H4` text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -24,11 +30,16 @@ export const h6DefaultWeight: AllowedWeight = "Regular";
  * @param props
  * @constructor
  */
-export const NewH6: React.FunctionComponent<OwnProps> = props =>
-  useTypographyFactory<AllowedWeight, AllowedColors>({
+export const NewH6: React.FunctionComponent<OwnProps> = props => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
+  return useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    defaultWeight: h6DefaultWeight,
+    defaultWeight: isDesignSystemEnabled
+      ? h6DefaultWeight
+      : h6LegacyDefaultWeight,
     defaultColor: h6DefaultColor,
-    font: fontName,
+    font: isDesignSystemEnabled ? h6FontName : h6LegacyFontName,
     fontStyle: { fontSize: h6FontSize, lineHeight: h6LineHeight }
   });
+};
