@@ -23,6 +23,24 @@ import { IOBarcode, useIOBarcodeScanner } from "../components/BarcodeScanner";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
+  const navigation = useNavigation();
+
+  const [isFocused, setIsFocused] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const blurUnsubscribe = navigation.addListener("blur", () =>
+      setIsFocused(false)
+    );
+    const focusUnsubscribe = navigation.addListener("focus", () =>
+      setIsFocused(true)
+    );
+
+    return () => {
+      blurUnsubscribe();
+      focusUnsubscribe();
+    };
+  }, [navigation]);
+
   const {
     cameraComponent,
     cameraPermissionStatus,
@@ -31,7 +49,8 @@ const IDPayPaymentCodeScanScreen = () => {
   } = useIOBarcodeScanner({
     marker: <CameraMarker />,
     onBarcodeScanned: (barcode: IOBarcode) => openWebUrl(barcode.value),
-    formats: ["QR_CODE"]
+    formats: ["QR_CODE"],
+    disabled: !isFocused
   });
 
   const openAppSetting = React.useCallback(async () => {
