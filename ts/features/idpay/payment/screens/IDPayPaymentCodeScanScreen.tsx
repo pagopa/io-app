@@ -18,12 +18,12 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useQRCodeCamera } from "../components/QRCodeCamera";
+import { IOBarcode, useIOBarcodeScanner } from "../components/BarcodeScanner";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
-  const onQrCodeScanned = (barcode: string) => {
-    alert(`trxCode: ${barcode}`);
+  const onBarcodeScanned = (barcode: IOBarcode) => {
+    alert(`trxCode: ${barcode.value}`);
   };
 
   const {
@@ -31,9 +31,10 @@ const IDPayPaymentCodeScanScreen = () => {
     cameraPermissionStatus,
     requestCameraPermission,
     openCameraSettings
-  } = useQRCodeCamera({
+  } = useIOBarcodeScanner({
     marker: <CameraMarker />,
-    onQrCodeScanned
+    onBarcodeScanned,
+    formats: ["QR_CODE"]
   });
 
   const openAppSetting = React.useCallback(async () => {
