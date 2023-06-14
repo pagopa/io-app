@@ -1,9 +1,6 @@
 import { AppStateStatus } from "react-native";
-import {
-  ActionType,
-  createAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
+import { ActionPattern } from "typed-redux-saga/macro";
 
 /**
  * Action types and action creator related to the Application.
@@ -14,9 +11,13 @@ type ApplicationInitializationPayload = {
 export const startApplicationInitialization = createStandardAction(
   "START_APPLICATION_INITIALIZATION"
 )<ApplicationInitializationPayload>();
-export const applicationInitialized = createAction(
+
+type ApplicationInitializedPayload = {
+  actionsToWaitFor: Array<ActionPattern>;
+};
+export const applicationInitialized = createStandardAction(
   "APPLICATION_INITIALIZED_ACTION"
-);
+)<ApplicationInitializedPayload>();
 
 export const applicationChangeState = createStandardAction(
   "APP_STATE_CHANGE_ACTION"

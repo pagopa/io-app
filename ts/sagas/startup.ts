@@ -639,7 +639,7 @@ export function* initializeApplicationSaga(
     );
   }
 
-  yield* put(applicationInitialized());
+  yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }
 
 /**
