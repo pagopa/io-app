@@ -147,12 +147,16 @@ export const RadioListItem = ({
       onTouchEnd={onPressOut}
       testID={testID}
       disabled={disabled}
-      style={{
-        opacity: disabled ? DISABLED_OPACITY : 1
-      }}
     >
       <Animated.View
-        style={[IOSelectionListItemStyles.listItem, animatedBackgroundStyle]}
+        style={[
+          IOSelectionListItemStyles.listItem,
+          animatedBackgroundStyle,
+          { opacity: disabled ? DISABLED_OPACITY : 1 }
+        ]}
+        // This is required to avoid opacity
+        // inheritance on Android
+        needsOffscreenAlphaCompositing={true}
       >
         <Animated.View style={animatedScaleStyle}>
           <View style={IOSelectionListItemStyles.listItemInner}>
