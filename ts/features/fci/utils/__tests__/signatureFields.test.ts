@@ -11,7 +11,8 @@ import {
   getRequiredSignatureFields,
   getSectionListData,
   getSignatureFieldsLength,
-  orderSignatureFields
+  orderSignatureFields,
+  parsePdfAsBase64
 } from "../signatureFields";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 
@@ -98,6 +99,14 @@ const reqAndOptSignatureFields = [
     attrs: emptyAttrs
   }
 ];
+
+jest.mock("react-native-blob-util", () => ({
+  fs: {
+    readFile: jest
+      .fn()
+      .mockImplementation(() => Promise.resolve("base64-encoded-pdf-bytes"))
+  }
+}));
 
 describe("Test signatureFields utils", () => {
   describe("Test clausesByType", () => {
@@ -312,6 +321,17 @@ describe("Test signatureFields utils", () => {
         }
       };
       expect(getSignatureFieldsLength(doc)).toStrictEqual(0);
+    });
+  });
+
+  describe("Test parsePdfAsBase64", () => {
+    const uri = "/path/pdf.pdf";
+
+    it("should parse a pdf file as base64", async () => {
+      const result = await parsePdfAsBase64(uri);
+      expect(result).toBe(
+        "data:application/pdf;base64,base64-encoded-pdf-bytes"
+      );
     });
   });
 });
