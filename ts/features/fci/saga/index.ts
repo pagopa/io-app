@@ -3,14 +3,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { SagaIterator } from "redux-saga";
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
-import {
-  call,
-  takeLatest,
-  put,
-  select,
-  take,
-  race
-} from "typed-redux-saga/macro";
+import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
