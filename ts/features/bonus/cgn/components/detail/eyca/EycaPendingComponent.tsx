@@ -10,7 +10,7 @@ import { showToast } from "../../../../../../utils/showToast";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
-import { EYCA_DISCOUNTS_URL } from "../../../utils/constants";
+import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
 
 type Props = {
   openBottomSheet: () => void;
@@ -50,7 +50,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
       bordered
       style={{ width: "100%" }}
       onPress={() =>
-        openWebUrl(EYCA_DISCOUNTS_URL, () =>
+        openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
           showToast(I18n.t("bonus.cgn.generic.linkError"))
         )
       }
