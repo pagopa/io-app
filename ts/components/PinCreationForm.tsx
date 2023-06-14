@@ -16,6 +16,7 @@ import { LabelledItem } from "./LabelledItem";
 import { IOStyles } from "./core/variables/IOStyles";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { VSpacer } from "./core/spacer/Spacer";
+import ButtonOutline from "./ui/ButtonOutline";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
@@ -46,17 +47,12 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   const [isPinConfirmationDirty, setIsPinConfirmationDirty] =
     React.useState(false);
 
-  const isPinValid =
-    !isPinDirty ||
-    isValidPinNumber(pin) ||
-    (isDevEnv && pin.length === pinLength);
+  const isPinValid = !isPinDirty || isValidPinNumber(pin);
 
   const isPinConfirmationValid =
     !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
 
-  const isFormValid =
-    (isValidPinNumber(pin) || (isDevEnv && pin.length === pinLength)) &&
-    pinConfirmation === pin;
+  const isFormValid = isValidPinNumber(pin) && pinConfirmation === pin;
 
   const handlePinBlur = React.useCallback(() => {
     setIsPinDirty(true);
@@ -116,6 +112,11 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
       )}
     />
   );
+
+  const insertValidPin = () => {
+    setPin("162534");
+    setPinConfirmation("162534");
+  };
 
   return (
     <View style={styles.flex}>
@@ -217,6 +218,16 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
           </InfoBox>
         </View>
       </ScrollView>
+
+      {isDevEnv && (
+        <View style={{ alignSelf: "center" }}>
+          <ButtonOutline
+            label={"Enter Pin: 162534"}
+            accessibilityLabel=""
+            onPress={insertValidPin}
+          />
+        </View>
+      )}
 
       <FooterWithButtons
         type="SingleButton"

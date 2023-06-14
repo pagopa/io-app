@@ -15,6 +15,7 @@ import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { Link } from "../core/typography/Link";
 import { IOStyles } from "../core/variables/IOStyles";
+import { isDevEnv } from "../../utils/environment";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 
@@ -275,6 +276,13 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
+  enterDefaultPin = () => {
+    if (!isDevEnv) {
+      return;
+    }
+    this.handleChangeText("162534");
+  };
+
   private handlePinDigit = (digit: string) =>
     this.handleChangeText(
       `${this.state.value}${digit}`.substr(0, this.state.pinLength)
@@ -347,6 +355,19 @@ class Pinpad extends React.PureComponent<Props, State> {
             isDisabled={this.state.isDisabled}
           />
         </ShakeAnimation>
+
+        {isDevEnv && (
+          <View>
+            <VSpacer size={16} />
+            <Link
+              onPress={() => this.enterDefaultPin()}
+              weight="Bold"
+              color="white"
+            >
+              {"Enter default pin"}
+            </Link>
+          </View>
+        )}
         {this.props.onCancel && (
           <React.Fragment>
             <VSpacer size={24} />

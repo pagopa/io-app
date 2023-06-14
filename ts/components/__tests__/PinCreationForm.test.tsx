@@ -46,10 +46,11 @@ describe("PinCreationForm component", () => {
 
     fireEvent.changeText(targetFieldInput, "123456");
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() => {
       expect(
         component.queryByText(I18n.t("onboarding.pin.errors.invalid"))
-      ).toBeFalsy();
+      ).toBeTruthy();
     });
   });
 
