@@ -139,8 +139,6 @@ const InitiativeDetailsBaseScreenComponent = (
     );
   };
 
-  const safeAreaInsets = useSafeAreaInsets();
-
   return (
     <BaseScreenComponent
       goBack={true}
