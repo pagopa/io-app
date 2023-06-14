@@ -254,20 +254,17 @@ const InitiativeDetailsScreen = () => {
           switch (rewardType) {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return (
-                <>
-                  <ButtonSolid
-                    label={I18n.t(
-                      "idpay.initiative.discountDetails.authorizeButton"
-                    )}
-                    accessibilityLabel={I18n.t(
-                      "idpay.initiative.discountDetails.authorizeButton"
-                    )}
-                    icon="qrCode"
-                    onPress={navigateToPaymentAuthorization}
-                    fullWidth={true}
-                  />
-                  <VSpacer size={32} />
-                </>
+                <ButtonSolid
+                  label={I18n.t(
+                    "idpay.initiative.discountDetails.authorizeButton"
+                  )}
+                  accessibilityLabel={I18n.t(
+                    "idpay.initiative.discountDetails.authorizeButton"
+                  )}
+                  icon="qrCode"
+                  onPress={navigateToPaymentAuthorization}
+                  fullWidth={true}
+                />
               );
 
             case InitiativeRewardTypeEnum.REFUND:
