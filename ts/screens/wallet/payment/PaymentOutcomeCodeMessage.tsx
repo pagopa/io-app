@@ -1,13 +1,17 @@
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
+import { Banner } from "../../../components/Banner";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -35,13 +39,38 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const successBody = (emailAddress: string) => (
-  <Label weight={"Regular"} color={"bluegrey"} style={{ textAlign: "center" }}>
-    {I18n.t("wallet.outcomeMessage.payment.success.description1")}
-    <Label weight={"Bold"} color={"bluegrey"}>{`\n${emailAddress}\n`}</Label>
-    {I18n.t("wallet.outcomeMessage.payment.success.description2")}
-  </Label>
-);
+const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
+  const handleBannerPress = () =>
+    openAuthenticationSession("https://www.google.com", "");
+  const viewRef = React.useRef<View>(null);
+  return (
+    <View>
+      <Label
+        weight={"Regular"}
+        color={"bluegrey"}
+        style={{ textAlign: "center" }}
+      >
+        {I18n.t("wallet.outcomeMessage.payment.success.description1")}
+        <Label
+          weight={"Bold"}
+          color={"bluegrey"}
+        >{`\n${emailAddress}\n`}</Label>
+        {I18n.t("wallet.outcomeMessage.payment.success.description2")}
+      </Label>
+      <VSpacer size={16} />
+      <Banner
+        color="neutral"
+        pictogramName="donation"
+        variant="big"
+        viewRef={viewRef}
+        title="SURVEY"
+        content="MAKE SURVEY"
+        action="GO TO SURVEY"
+        onPress={handleBannerPress}
+      ></Banner>
+    </View>
+  );
+};
 
 const successComponent = (emailAddress: string, amount?: string) => (
   <InfoScreenComponent
@@ -51,7 +80,7 @@ const successComponent = (emailAddress: string, amount?: string) => (
         ? I18n.t("payment.paidConfirm", { amount })
         : I18n.t("wallet.outcomeMessage.payment.success.title")
     }
-    body={successBody(emailAddress)}
+    body={<SuccessBody emailAddress={emailAddress} />}
   />
 );
 
