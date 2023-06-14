@@ -142,6 +142,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    deny: "Deny"
     share: Share
     delete: Delete
     cancel: Cancel
@@ -3610,6 +3611,15 @@ idpay:
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
   payment:
+    authorization:
+      header: "Confermi l’operazione?"
+      toAuth: Da autorizzare
+      amount: Importo del bene
+      businessName: Richiesto da
+      dateTime: Data e Ora
+      infoDivider: "Informazioni sull’iniziativa"
+      initiativeName: Iniziativa
+      availableAmount: Credito disponibile
     result:
       success:
         title: Operazione autorizzata con successo!
