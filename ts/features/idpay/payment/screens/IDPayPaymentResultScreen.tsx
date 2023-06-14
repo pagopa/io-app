@@ -22,8 +22,8 @@ type FailureContent = {
   subtitle?: string;
   icon: IOPictograms;
 };
-type PaymentResultsType = PaymentFailure | "SUCCESS";
-const results: Record<PaymentResultsType, FailureContent> = {
+type PaymentResultType = PaymentFailure | "SUCCESS";
+const results: Record<PaymentResultType, FailureContent> = {
   [PaymentFailureEnum.CANCELLED]: {
     title: I18n.t("idpay.payment.result.failure.CANCELLED.title"),
     icon: "unrecognized"
@@ -48,7 +48,7 @@ const IDPayPaymentResultScreen = () => {
     machine.send("EXIT");
   };
 
-  const renderContent = (resultType: PaymentResultsType) => (
+  const renderContent = (resultType: PaymentResultType) => (
     <View style={styles.resultScreenContainer}>
       <Pictogram name={results[resultType].icon} size={120} />
       <VSpacer size={24} />
