@@ -3,8 +3,14 @@ import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
-import { Label } from "../../../components/core/typography/Label";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { H2 } from "../../../components/core/typography/H2";
+import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
+import { Divider } from "../../../components/core/Divider";
+import { H4 } from "../../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
   content: {
@@ -19,12 +25,24 @@ const styles = StyleSheet.create({
 
 export const DSSelection = () => (
   <DesignSystemScreen title={"Selection"}>
-    <Label>{"<CheckBox />"}</Label>
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Checkbox
+    </H2>
+    {/* CheckboxLabel */}
+    {renderCheckboxLabel()}
+    {/* CheckboxListItem */}
+    {renderCheckboxListItem()}
+
+    {/* Legacy components */}
+    <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
+      Legacy components
+    </H2>
+    <H4>{"<CheckBox />"}</H4>
     <View style={styles.content}>
       <CheckBox />
       <CheckBox checked={true} />
     </View>
-    <Label>{"<RemoteSwitch />"}</Label>
+    <H4>{"<RemoteSwitch />"}</H4>
     <View style={styles.content}>
       <RemoteSwitch value={pot.none} />
       <RemoteSwitch
@@ -35,6 +53,98 @@ export const DSSelection = () => (
       <RemoteSwitch value={pot.someUpdating(false, true)} />
       <RemoteSwitch value={pot.some(false)} />
       <RemoteSwitch value={pot.someUpdating(true, false)} />
+      <VSpacer size={48} />
     </View>
   </DesignSystemScreen>
+);
+
+const renderCheckboxLabel = () => (
+  <>
+    <DSComponentViewerBox name="CheckboxLabel">
+      <CheckboxLabel label="This is a test" />
+      <VSpacer size={16} />
+      <CheckboxLabel label="This is a test with a very loooong looooooong loooooooong text" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="CheckboxLabel (disabled)">
+      <CheckboxLabel disabled checked={true} label="This is a test" />
+      <VSpacer size={16} />
+      <CheckboxLabel disabled label="This is a test" />
+    </DSComponentViewerBox>
+  </>
+);
+
+const renderCheckboxListItem = () => (
+  <>
+    <DSComponentViewerBox name="CheckboxListItem">
+      <CheckboxListItem
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        icon="coggle"
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        value="Usa configurazione rapida"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        value="Let's try with a loooong loooooong looooooong title"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        icon="bonus"
+        value="Let's try with a loooong loooooong looooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        icon="coggle"
+        value="Usa configurazione rapida"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
+        }
+        accessibilityLabel={""}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="CheckBoxListItem (disabled)">
+      <CheckboxListItem
+        disabled
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        disabled
+        icon="coggle"
+        value="Usa configurazione rapida"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
+        }
+        accessibilityLabel={""}
+      />
+      <Divider />
+      <CheckboxListItem
+        disabled
+        checked={true}
+        icon="coggle"
+        value="Usa configurazione rapida"
+        accessibilityLabel={""}
+      />
+    </DSComponentViewerBox>
+  </>
 );
