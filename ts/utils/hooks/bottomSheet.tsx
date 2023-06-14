@@ -215,7 +215,14 @@ export const useIOBottomSheetAutoresizableModal = (
   );
 
   return useIOBottomSheetModal({
-    component: <View onLayout={handleContentOnLayout}>{component}</View>,
+    component: (
+      <View
+        style={{ paddingBottom: insets.bottom }}
+        onLayout={handleContentOnLayout}
+      >
+        {component}
+      </View>
+    ),
     title,
     snapPoint: [snapPoint],
     footer,

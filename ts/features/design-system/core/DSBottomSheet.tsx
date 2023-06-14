@@ -90,7 +90,7 @@ export const DSBottomSheet = () => {
         </ContentWrapper>
       )
     },
-    100
+    80
   );
 
   // Static bottom sheet hook
