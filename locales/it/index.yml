@@ -3655,7 +3655,7 @@ idpay:
     qrCode:
       manual:
         title: Cosa devi pagare?
-        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        subtitle: Inserisci il codice alfnumerico di 8 caratteri riportato sotto al codice QR.
         input: Codice Transazione
         button: Continua
 unsupportedDevice:  
