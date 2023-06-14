@@ -508,19 +508,10 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://main/messages</td>
         </tr>
         <tr>
-            <td>ioit://main/wallet</td>
-        </tr>
-        <tr>
             <td>ioit://main/services</td>
         </tr>
         <tr>
             <td>ioit://main/profile</td>
-        </tr>
-    </table>
-    <h3>messages</h3>
-    <table>
-        <tr>
-            <td>ioit://messages</td>
         </tr>
     </table>
     <h3>wallet</h3>
@@ -534,29 +525,11 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
         <tr>
             <td>ioit://wallet/card-onboarding-attempts</td>
         <tr>
-        <tr>
-            <td>ioit://wallet/bpd-iban-update</td>
-        <tr>
-        <tr>
-            <td>ioit://wallet/bpd-opt-in</td>
-        <tr>
-        <tr>
-            <td>ioit://wallet/bpd-opt-in/choice</td>
-        <tr>
     </table>
     <h3>services</h3>
     <table>
         <tr>
-            <td>ioit://services</td>
-        </tr>
-        <tr>
-            <td>ioit://services/service-detail</td>
-        </tr>
-        <tr>
-            <td>ioit://services/webview</td>
-        </tr>
-        <tr>
-            <td>ioit://services/sv-generation/check-status</td>
+            <td>ioit://services/service-detail?serviceId=:id</td>
         </tr>
     </table>
     <h3>profile</h3>
@@ -574,49 +547,16 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://profile/privacy-main</td>
         </tr>
     </table>
-    <h3>cgn</h3>
-    <table>
-        <tr>
-            <td>ioit://cgn-details/detail</td>
-        </tr>
-        <tr>
-            <td>ioit://cgn-details/categories</td>
-        </tr>
-        <tr>
-            <td>ioit://cgn-details/categories-merchant/:category</td>
-        </tr>
-    </table>
     <h3>fci</h3>
     <table>
         <tr>
-            <td>ioit://fci/main</td>
+            <td>ioit://fci/main?signatureRequestId=:id</td>
         </tr>
         <tr>
             <td>ioit://fci/signature-requests</td>
         </tr>
         <tr>
             <td>ioit://cgn-details/categories-merchant/:category</td>
-        </tr>
-    </table>
-    <h3>idpay</h3>
-    <table>
-        <tr>
-            <td>ioit://idpay/onboarding/:serviceId</td>
-        </tr>
-        <tr>
-            <td>ioit://idpay/initiative/:initiativeId</td>
-        </tr>
-    </table>
-    <h3>miscs</h3>
-    <table>
-        <tr>
-            <td>ioit://uadonations-webview</td>
-        </tr>
-        <tr>
-            <td>ioit://fims/webview</td>
-        </tr>
-        <tr>
-            <td>ioit://cgn-activation</td>
         </tr>
     </table>
 </details>

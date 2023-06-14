@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24,
     color: IOColors.bluegreyDark,
+    flexShrink: 1,
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
@@ -146,12 +147,16 @@ export const RadioListItem = ({
       onTouchEnd={onPressOut}
       testID={testID}
       disabled={disabled}
-      style={{
-        opacity: disabled ? DISABLED_OPACITY : 1
-      }}
     >
       <Animated.View
-        style={[IOSelectionListItemStyles.listItem, animatedBackgroundStyle]}
+        style={[
+          IOSelectionListItemStyles.listItem,
+          animatedBackgroundStyle,
+          { opacity: disabled ? DISABLED_OPACITY : 1 }
+        ]}
+        // This is required to avoid opacity
+        // inheritance on Android
+        needsOffscreenAlphaCompositing={true}
       >
         <Animated.View style={animatedScaleStyle}>
           <View style={IOSelectionListItemStyles.listItemInner}>
@@ -171,7 +176,9 @@ export const RadioListItem = ({
               )}
               {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
               {isDesignSystemEnabled ? (
-                <NewH6 color={"black"}>{value}</NewH6>
+                <NewH6 color={"black"} style={{ flexShrink: 1 }}>
+                  {value}
+                </NewH6>
               ) : (
                 <Text style={styles.legacyTextValue}>{value}</Text>
               )}

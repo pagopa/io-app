@@ -49,7 +49,7 @@ import { previousInstallationDataDeleteSuccess } from "../store/actions/installa
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
-  navigateToPaginatedMessageRouterAction,
+  navigateToMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
@@ -620,7 +620,7 @@ export function* initializeApplicationSaga(): Generator<
     yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
     NavigationService.dispatchNavigationAction(
-      navigateToPaginatedMessageRouterAction({
+      navigateToMessageRouterAction({
         messageId: messageId as UIMessageId,
         fromNotification: true
       })

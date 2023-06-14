@@ -72,9 +72,17 @@ export const CheckboxLabel = ({
         alignSelf: "flex-start",
         opacity: disabled ? DISABLED_OPACITY : 1
       }}
+      // This is required to avoid opacity
+      // inheritance on Android
+      needsOffscreenAlphaCompositing={true}
     >
-      <View style={[IOStyles.row, { alignItems: "flex-start", width: "100%" }]}>
-        <View pointerEvents="none">
+      <View style={[IOStyles.row, { alignItems: "center", width: "100%" }]}>
+        <View
+          pointerEvents="none"
+          style={{
+            alignSelf: "flex-start"
+          }}
+        >
           <AnimatedCheckbox checked={checked ?? toggleValue} />
         </View>
         <HSpacer size={8} />

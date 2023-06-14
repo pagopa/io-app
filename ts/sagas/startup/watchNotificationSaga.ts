@@ -1,7 +1,7 @@
 import { AppStateStatus } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
-import { navigateToPaginatedMessageRouterAction } from "../../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
 import { pendingMessageStateSelector } from "../../store/reducers/notifications/pendingMessage";
 import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
@@ -38,7 +38,7 @@ export function* watchNotificationSaga(
 
       // Navigate to message details screen
       NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
+        navigateToMessageRouterAction({
           messageId: messageId as UIMessageId,
           fromNotification: true
         })
