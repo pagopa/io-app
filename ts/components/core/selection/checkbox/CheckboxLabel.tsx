@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: IOColors.bluegreyDark,
+    flexShrink: 1,
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
@@ -75,7 +76,7 @@ export const CheckboxLabel = ({
       // inheritance on Android
       needsOffscreenAlphaCompositing={true}
     >
-      <View style={[IOStyles.row, { alignItems: "center" }]}>
+      <View style={[IOStyles.row, { alignItems: "center", width: "100%" }]}>
         <View
           pointerEvents="none"
           style={{
@@ -87,7 +88,9 @@ export const CheckboxLabel = ({
         <HSpacer size={8} />
         {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
         {isDesignSystemEnabled ? (
-          <NewH6 color={"black"}>{label}</NewH6>
+          <NewH6 color={"black"} style={{ flexShrink: 1 }}>
+            {label}
+          </NewH6>
         ) : (
           <Text style={styles.legacyTextValue}>{label}</Text>
         )}

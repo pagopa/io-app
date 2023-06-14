@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
+import { useState } from "react";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -11,6 +12,10 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { Divider } from "../../../components/core/Divider";
 import { H4 } from "../../../components/core/typography/H4";
+import {
+  NewRadioItem,
+  RadioGroup
+} from "../../../components/core/selection/RadioGroup";
 
 const styles = StyleSheet.create({
   content: {
@@ -32,6 +37,12 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
+
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Radio
+    </H2>
+    {/* RadioListItem */}
+    <RadioListItemsShowroom />
 
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
@@ -96,7 +107,7 @@ const renderCheckboxListItem = () => (
       />
       <Divider />
       <CheckboxListItem
-        value="Let's try with a loooong loooooong looooooong title"
+        value="Questa è un'altra prova ancora più lunga per andare su due righe"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
@@ -140,7 +151,7 @@ const renderCheckboxListItem = () => (
       <Divider />
       <CheckboxListItem
         disabled
-        checked={true}
+        selected={true}
         icon="coggle"
         value="Usa configurazione rapida"
         accessibilityLabel={""}
@@ -148,3 +159,49 @@ const renderCheckboxListItem = () => (
     </DSComponentViewerBox>
   </>
 );
+
+// RADIO ITEMS
+
+const mockRadioItems = (): ReadonlyArray<NewRadioItem<string>> => [
+  {
+    icon: "coggle",
+    value: "Let's try with a basic title",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
+    id: "example-1"
+  },
+  {
+    value: "Let's try with a basic title",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
+    id: "example-2"
+  },
+  {
+    value: "Let's try with a very looong loooooong title instead",
+    id: "example-3"
+  },
+  {
+    value: "Let's try with a disabled item",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
+    id: "example-disabled",
+    disabled: true
+  }
+];
+
+const RadioListItemsShowroom = () => {
+  const [selectedItem, setSelectedItem] = useState<string | undefined>(
+    "example-1"
+  );
+
+  return (
+    <DSComponentViewerBox name="RadioListItem">
+      <RadioGroup<string>
+        key="check_income"
+        items={mockRadioItems()}
+        selectedItem={selectedItem}
+        onPress={setSelectedItem}
+      />
+    </DSComponentViewerBox>
+  );
+};
