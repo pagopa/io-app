@@ -3,7 +3,8 @@ import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -13,6 +14,7 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
+import themeVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../../common/components/Skeleton";
 import { BonusCounter, InitiativeBonusCounter } from "./InitiativeBonusCounter";
@@ -31,6 +33,8 @@ type Props =
 const InitiativeDetailsBaseScreenComponent = (
   props: React.PropsWithChildren<BaseProps & Props>
 ) => {
+  const safeAreaInsets = useSafeAreaInsets();
+
   const renderContent = () => {
     if (props.isLoading) {
       return (
@@ -145,6 +149,10 @@ const InitiativeDetailsBaseScreenComponent = (
         onPress: props.onHeaderDetailsPress
       }}
     >
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={IOColors["blueIO-50"]}
+      />
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         scrollIndicatorInsets={{ right: 1 }}
@@ -152,7 +160,17 @@ const InitiativeDetailsBaseScreenComponent = (
         {renderContent()}
       </ScrollView>
       {props.footer && (
-        <View style={[IOStyles.footer, styles.footer]}>{props.footer}</View>
+        <View
+          style={[
+            IOStyles.footer,
+            {
+              paddingBottom:
+                safeAreaInsets.bottom + themeVariables.footerPaddingBottom
+            }
+          ]}
+        >
+          {props.footer}
+        </View>
       )}
     </BaseScreenComponent>
   );
@@ -194,9 +212,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     padding: 16
-  },
-  footer: {
-    paddingBottom: 20
   }
 });
 
