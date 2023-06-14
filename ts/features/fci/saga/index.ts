@@ -131,7 +131,7 @@ export function* watchFciSaga(
   );
 
   yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
-  
+
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 }
 
