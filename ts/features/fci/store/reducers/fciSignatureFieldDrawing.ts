@@ -25,7 +25,7 @@ export type RawDocument = {
 /**
  * The state of the fci document signature fields.
  */
-export type FciDocumentSignatureFieldsState = {
+export type FciSignatureFieldDrawingState = {
   rawDocument: RawDocument;
   drawnDocument: pot.Pot<DrawnDocument, Error>;
 };
@@ -33,15 +33,15 @@ export type FciDocumentSignatureFieldsState = {
 /**
  * The initial state of the fci document signature fields.
  */
-const emptyState: FciDocumentSignatureFieldsState = {
+const emptyState: FciSignatureFieldDrawingState = {
   rawDocument: { document: O.none, uri: O.none },
   drawnDocument: pot.none
 };
 
 const fciSignatureFieldDrawingReducer = (
-  state: FciDocumentSignatureFieldsState = emptyState,
+  state: FciSignatureFieldDrawingState = emptyState,
   action: Action
-): FciDocumentSignatureFieldsState => {
+): FciSignatureFieldDrawingState => {
   switch (action.type) {
     case getType(fciDocumentSignatureFields.request):
       return {
@@ -70,7 +70,7 @@ export default fciSignatureFieldDrawingReducer;
  * @returns the fci document signature fields state
  */
 export const fciSignatureFieldDrawingSelector = (state: GlobalState) =>
-  state.features.fci.documentSignaturesFields;
+  state.features.fci.signatureFieldDrawing;
 
 /**
  * Selector of the raw document signature fields uri.
@@ -79,7 +79,7 @@ export const fciSignatureFieldDrawingSelector = (state: GlobalState) =>
  */
 export const fciSignatureFieldDrawingRawUriSelector = (state: GlobalState) =>
   pipe(
-    state.features.fci.documentSignaturesFields.rawDocument.uri,
+    state.features.fci.signatureFieldDrawing.rawDocument.uri,
     O.getOrElse(() => "")
   );
 
@@ -92,6 +92,6 @@ export const fciSignatureFieldDrawingRawDocumentSelector = (
   state: GlobalState
 ) =>
   pipe(
-    state.features.fci.documentSignaturesFields.rawDocument.document,
+    state.features.fci.signatureFieldDrawing.rawDocument.document,
     O.getOrElse(() => "")
   );

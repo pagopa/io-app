@@ -13,7 +13,7 @@ import { SignatureRequestDetailView } from "../../../../../definitions/fci/Signa
 import { NetworkError } from "../../../../utils/errors";
 import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
-import { FciDocumentSignatureFieldsState } from "../reducers/fciSignatureFieldDrawing";
+import { FciSignatureFieldDrawingState } from "../reducers/fciSignatureFieldDrawing";
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 
 /**
@@ -131,7 +131,7 @@ export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
 )<
   { uri: string; attrs: SignatureFieldAttrType },
-  Partial<FciDocumentSignatureFieldsState>,
+  Partial<FciSignatureFieldDrawingState>,
   Error
 >();
 
