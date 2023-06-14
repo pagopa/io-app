@@ -1,6 +1,7 @@
 import { AppStateStatus } from "react-native";
+// eslint-disable-next-line @jambit/typed-redux-saga/use-typed-effects
+import { ActionPattern } from "redux-saga/effects";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ActionPattern } from "typed-redux-saga/macro";
 
 /**
  * Action types and action creator related to the Application.
