@@ -824,7 +824,7 @@ onboarding:
       invalid: The code is not valid
       match: The code doesn’t match
     policy:
-      headerTitle: "Per security reasons, the code must not contain:"
+      headerTitle: "For security reasons, the code must not contain:"
       first: repeated numbers (e.g. 000000)
       second: a number sequence (e.g. 123456 or 654321)
   alert:
