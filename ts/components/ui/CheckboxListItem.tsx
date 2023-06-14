@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 24,
     color: IOColors.bluegreyDark,
+    flexShrink: 1,
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
@@ -174,7 +175,9 @@ export const CheckboxListItem = ({
               )}
               {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
               {isDesignSystemEnabled ? (
-                <NewH6 color={"black"}>{value}</NewH6>
+                <NewH6 color={"black"} style={{ flexShrink: 1 }}>
+                  {value}
+                </NewH6>
               ) : (
                 <Text style={styles.legacyTextValue}>{value}</Text>
               )}
