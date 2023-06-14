@@ -2707,7 +2707,7 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the benefits
+        buyers: Discover the CGN benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number

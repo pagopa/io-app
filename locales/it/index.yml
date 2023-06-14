@@ -2731,7 +2731,7 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Scopri le agevolazioni
+        buyers: Vedi le agevolazioni CGN
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA

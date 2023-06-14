@@ -11,6 +11,7 @@ import { H5 } from "../../../../../../components/core/typography/H5";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
+import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import {
   HSpacer,
   VSpacer
@@ -21,6 +22,8 @@ import { IOBadge } from "../../../../../../components/core/IOBadge";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_DISCOUNTS_URL } from "../../../utils/constants";
 import { showToast } from "../../../../../../utils/showToast";
+import IconButton from "../../../../../../components/ui/IconButton";
+import { IOSpacingScale } from "../../../../../../components/core/variables/IOSpacing";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -30,6 +33,9 @@ type Props = {
 const styles = StyleSheet.create({
   spaced: {
     justifyContent: "space-between"
+  },
+  cardNumber: {
+    paddingEnd: IOSpacingScale[1]
   }
 });
 
@@ -86,13 +92,22 @@ const EycaStatusDetailsComponent = (props: Props) => {
         {badgeByStatus()}
       </View>
       <VSpacer size={16} />
-      <View style={[IOStyles.row, styles.spaced]}>
+      <View style={IOStyles.row}>
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.eycaNumber")}
         </H5>
-        <Monospace testID={"eyca-card-number"}>
-          {props.eycaCard.card_number}
-        </Monospace>
+        <View style={IOStyles.row}>
+          <Monospace style={styles.cardNumber} testID={"eyca-card-number"}>
+            {props.eycaCard.card_number}
+          </Monospace>
+          <IconButton
+            icon="copy"
+            onPress={() =>
+              clipboardSetStringWithFeedback(props.eycaCard.card_number)
+            }
+            accessibilityLabel={I18n.t("bonus.cgn.detail.cta.eyca.copy")}
+          />
+        </View>
       </View>
       <VSpacer size={8} />
       <View style={[IOStyles.row, styles.spaced]}>
@@ -115,9 +130,6 @@ const EycaStatusDetailsComponent = (props: Props) => {
             showToast(I18n.t("bonus.cgn.generic.linkError"))
           )
         }
-        // onPress={() =>
-        //   clipboardSetStringWithFeedback(props.eycaCard.card_number)
-        // }
       >
         <Label color={"blue"}>
           {I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")}
