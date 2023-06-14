@@ -100,7 +100,7 @@ const IDPayPaymentAuthorizationScreen = () => {
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={{
-            title: I18n.t("global.buttons.cancel"),
+            title: I18n.t("global.buttons.deny"),
             bordered: true,
             onPress: handleCancel,
             disabled: isUpserting

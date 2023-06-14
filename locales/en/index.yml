@@ -142,6 +142,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    deny: "Deny"
     share: Share
     delete: Delete
     cancel: Cancel
