@@ -93,7 +93,7 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
         title={convertLocalCalendarName(item.title)}
         hideIcon={!isDefaultCalendar}
         iconSize={12}
-        iconName={isDefaultCalendar ? "legCompleted" : undefined}
+        iconName={isDefaultCalendar ? "completed" : undefined}
         onPress={() =>
           isDefaultCalendar && this.props.onCalendarRemove
             ? this.props.onCalendarRemove()

@@ -551,6 +551,10 @@ spid:
   subscription:
     line1: SPID is the digital identity to access online services of the Public Administration.
     line2: Insert your email address to enable it.
+  pending_login:
+    title: Accesso in corso
+    details: Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!
+    button: Torna alla lista
 authentication:
   landing:
     accessibility:
@@ -991,7 +995,6 @@ wallet:
       bancomat: "{{bankName}} BANCOMAT"
       coBadge: "{{brand}} Card, {{bankName}}"
       bancomatPay: "{{bankName}} BANCOMATPay"
-      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
       cta: "View method details"
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
@@ -1152,41 +1155,6 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
-    privative:
-      headerTitle: "Add supermarket card"
-      choosePrivativeIssuer:
-        loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose the card brand"
-        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
-        koDisabled:
-          title: "This supermarket doesn't offer this feature yet"
-          body: "We are working to allow you to add your card soon."
-        koUnavailable:
-          title: "We're unable to contact the server"
-          body: "We are working to solve the problem."
-      addPrivativeCardNumber:
-        title: "Insert card number"
-        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
-        disclaimer:
-          text1: "By continuing you accept the"
-          text2: "information on the processing of personal data"
-      search:
-        loading: "We are verifying your card\n\nPlease wait"
-        koTimeout:
-          title: "It is currently impossible to verify your card"
-          body: "Please try again"
-        koNotFound:
-          title: "There is an issue with this card"
-          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
-          cta:
-            modifyCardNumber: "Change card number"
-        koServiceError:
-          title: "We're unable to retrieve your card"
-          body: "Please try again later."
-      add:
-        screenTitle: "Do you want to add this card?"
-        loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1423,9 +1391,6 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
-    loyalty:
-      name: Supermarket Loyalty Card
-      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card used to pay in stores
@@ -3373,6 +3338,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
+              QRCODE_TRANSACTION: Pagamento Online
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3395,6 +3361,7 @@ idpay:
       infoModal:
         title: "Regole dell'iniziativa"
         button: "Ok, ho capito"
+      spentUntilNow: Speso finora
       summary: Riepilogo
       status: Stato iniziativa
       endDate: Scadenza
@@ -3413,6 +3380,20 @@ idpay:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
+      discount:
+        labels:
+          AUTHORIZED: In corso
+          CANCELLED: Annullata
+          REWARDED: Eseguita
+        details:
+          alerts:
+            AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
+            CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+          labels:
+            status: Stato
+            totalAmount: Importo totale
+            idpayAmount: Importo transazione ID Pay
+            transactionID: ID transazione
       title: 
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione
@@ -3627,6 +3608,13 @@ idpay:
       title: C’è un problema sui nostri sistemi
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
+  payment:
+    qrCode:
+      manual:
+        title: Cosa devi pagare?
+        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        input: Codice Transazione
+        button: Continua
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

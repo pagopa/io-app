@@ -101,7 +101,7 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
             <>
               <VSpacer size={4} />
               <View style={{ alignSelf: "center" }}>
-                <Icon name="legHourglass" size={24} color="blue" />
+                <Icon name="hourglass" size={24} color="blue" />
               </View>
               <VSpacer size={4} />
             </>

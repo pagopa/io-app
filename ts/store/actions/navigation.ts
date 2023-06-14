@@ -3,8 +3,8 @@ import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/cr
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/MessageDetailScreen";
-import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/MessageRouterScreen";
+import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
+import { MessageRouterScreenNavigationParams } from "../../screens/messages/MessageRouterScreen";
 import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
@@ -27,7 +27,6 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
-  PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 
@@ -158,22 +157,22 @@ export const navigateToEmailInsertScreen = () => {
 /**
  * Open the Message Detail screen supporting the new UIMessage type.
  */
-export const navigateToPaginatedMessageDetailScreenAction = (
-  params: MessageDetailScreenPaginatedNavigationParams
+export const navigateToMessageDetailScreenAction = (
+  params: MessageDetailScreenNavigationParams
 ) =>
   CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_DETAIL_PAGINATED,
+    screen: ROUTES.MESSAGE_DETAIL,
     params
   });
 
 /**
  * Open the Message Detail Router supporting the new UIMessage type.
  */
-export const navigateToPaginatedMessageRouterAction = (
-  params: MessageRouterScreenPaginatedNavigationParams
+export const navigateToMessageRouterAction = (
+  params: MessageRouterScreenNavigationParams
 ) =>
   CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+    screen: ROUTES.MESSAGE_ROUTER,
     params
   });
 
@@ -422,19 +421,6 @@ export const navigateToCobadgeDetailScreen = (
     CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_COBADGE_DETAIL,
       params: { cobadge }
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToPrivativeDetailScreen = (
-  privative: PrivativePaymentMethod
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_PRIVATIVE_DETAIL,
-      params: { privative }
     })
   );
 

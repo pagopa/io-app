@@ -54,15 +54,11 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       Clause title 1
     </Text>
     <View
+      accessibilityLabel="Field not selected"
       accessibilityRole="checkbox"
       accessibilityState={
         Object {
           "selected": false,
-        }
-      }
-      accessibilityValue={
-        Object {
-          "text": "Field not selected",
         }
       }
       accessible={true}
@@ -88,11 +84,11 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         accessibilityLabel=""
         accessible={false}
         align="xMidYMid"
-        bbHeight={22}
-        bbWidth={22}
+        bbHeight={24}
+        bbWidth={24}
         color={4279710285}
         focusable={false}
-        height={22}
+        height={24}
         importantForAccessibility="no-hide-descendants"
         meetOrSlice={0}
         minX={0}
@@ -108,8 +104,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             },
             Object {
               "flex": 0,
-              "height": 22,
-              "width": 22,
+              "height": 24,
+              "width": 24,
             },
           ]
         }
@@ -117,7 +113,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         tintColor={4279710285}
         vbHeight={22}
         vbWidth={22}
-        width={22}
+        width={24}
       >
         <RNSVGGroup>
           <RNSVGPath

@@ -41,6 +41,7 @@ import { withLightModalContext } from "../../../helpers/withLightModalContext";
 import SelectCalendarModal from "../../../SelectCalendarModal";
 import { LightModalContextInterface } from "../../../ui/LightModal";
 import { Icon } from "../../../core/icons";
+import { HSpacer } from "../../../core/spacer/Spacer";
 
 type OwnProps = {
   message: CreatedMessageWithContentAndAttachments;
@@ -340,9 +341,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         : "messages.cta.reminder"
     );
     const { small, disabled, medium } = this.props;
-    const iconName = this.state.isEventInDeviceCalendar
-      ? "legCompleted"
-      : "legAdd";
+    const iconName = this.state.isEventInDeviceCalendar ? "completed" : "add";
     return (
       <ButtonDefaultOpacity
         disabled={disabled}
@@ -355,6 +354,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         {/* This condition doesn't make sense. We should replace it using
         a different component (e.g. ButtonOutline) */}
         <Icon name={iconName} color={disabled ? "white" : "blue"} />
+        <HSpacer size={4} />
         <NBButtonText style={styles.marginTop1}>{reminderText}</NBButtonText>
       </ButtonDefaultOpacity>
     );

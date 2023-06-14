@@ -31,6 +31,7 @@ import { makeFontStyleObject } from "../core/fonts";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
+import { VSpacer } from "../core/spacer/Spacer";
 
 export type ListItemNav = WithTestID<{
   value: string | React.ReactNode;
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
   textValue: {
     fontSize: 18,
     lineHeight: 24,
+    color: IOColors.bluegreyDark,
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
@@ -115,6 +117,7 @@ export const ListItemNav = ({
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessible={true}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="button"
@@ -138,20 +141,20 @@ export const ListItemNav = ({
           <View style={IOStyles.flex}>
             {/* Let developer using a custom component (e.g: skeleton) */}
             {typeof value === "string" ? (
-              <Text
-                style={[styles.textValue, { color: IOColors.bluegreyDark }]}
-              >
-                {value}
-              </Text>
+              <Text style={styles.textValue}>{value}</Text>
             ) : (
               { value }
             )}
-            {description &&
-              (typeof description === "string" ? (
-                <Body weight="Regular">{description}</Body>
-              ) : (
-                { description }
-              ))}
+            {description && (
+              <>
+                <VSpacer size={4} />
+                {typeof description === "string" ? (
+                  <Body weight="Regular">{description}</Body>
+                ) : (
+                  { description }
+                )}
+              </>
+            )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
@@ -171,6 +174,7 @@ export const ListItemNav = ({
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessible={true}
       accessibilityLabel={accessibilityLabel}
       accessibilityRole="button"
@@ -194,9 +198,12 @@ export const ListItemNav = ({
           <View style={IOStyles.flex}>
             <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
             {description && (
-              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
-                {description}
-              </LabelSmall>
+              <>
+                <VSpacer size={4} />
+                <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+                  {description}
+                </LabelSmall>
+              </>
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>

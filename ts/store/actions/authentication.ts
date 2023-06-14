@@ -71,6 +71,10 @@ export const resetAuthenticationState = createStandardAction(
   "RESET_AUTHENTICATION_STATE"
 )();
 
+export const disableNativeAuthentication = createStandardAction(
+  "DISABLE_NATIVE_AUTHENTICATION"
+)();
+
 export const checkCurrentSession = createAsyncAction(
   "CHECK_CURRENT_SESSION_REQUEST",
   "CHECK_CURRENT_SESSION_SUCCESS",
@@ -103,4 +107,5 @@ export type AuthenticationActions =
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>
-  | ActionType<typeof loadSupportToken>;
+  | ActionType<typeof loadSupportToken>
+  | ActionType<typeof disableNativeAuthentication>;

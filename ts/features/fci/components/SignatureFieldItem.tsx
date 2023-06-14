@@ -47,11 +47,11 @@ const SignatureFieldItem = (props: Props) => {
         </H4>
         <TouchableDefaultOpacity
           accessibilityRole={"checkbox"}
-          accessibilityValue={{
-            text: checked
+          accessibilityLabel={
+            checked
               ? I18n.t("features.fci.signatureFields.accessibility.selected")
               : I18n.t("features.fci.signatureFields.accessibility.unselected")
-          }}
+          }
           accessibilityState={{ selected: checked }}
           testID={"SignatureFieldItemButtonTestID"}
           onPress={() => {
@@ -70,7 +70,7 @@ const SignatureFieldItem = (props: Props) => {
                 ? "grey"
                 : "bluegreyDark"
             }
-            size={22}
+            size={24}
           />
         </TouchableDefaultOpacity>
       </View>

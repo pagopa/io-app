@@ -6,6 +6,7 @@ import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
 import { Icon } from "../../../components/core/icons/Icon";
+import I18n from "../../../i18n";
 import LinkedText from "./LinkedText";
 
 type Props = {
@@ -48,7 +49,12 @@ const QtspClauseListItem = (props: Props) => {
       </View>
       <View style={IOStyles.horizontalContentPadding} />
       <TouchableDefaultOpacity
-        accessibilityRole={"radio"}
+        accessibilityLabel={
+          checked
+            ? I18n.t("features.fci.signatureFields.accessibility.selected")
+            : I18n.t("features.fci.signatureFields.accessibility.unselected")
+        }
+        accessibilityRole={"checkbox"}
         testID={"QtspClauseListItemButtonTestID"}
         onPress={() => {
           onChange(!checked);
@@ -60,7 +66,7 @@ const QtspClauseListItem = (props: Props) => {
             testID="QtspClauseListItemCheckboxTestID"
             name={checked ? "legCheckOn" : "legCheckOff"}
             color={checked ? "blue" : "bluegreyDark"}
-            size={22}
+            size={24}
           />
         </View>
       </TouchableDefaultOpacity>

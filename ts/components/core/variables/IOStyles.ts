@@ -2,18 +2,23 @@ import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 import { IOIconSizeScale } from "../icons";
 import { IOColors } from "./IOColors";
-import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
+import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 
 /**
  * A collection of default styles used within IO App.
  */
 
-interface IOLayoutCostants {
+interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
+  // Dimensions
+  avatarSizeSmall: number;
+  avatarSizeMedium: number;
 }
 
-export const IOLayoutCostants: IOLayoutCostants = {
-  appMarginDefault: 24
+export const IOVisualCostants: IOVisualCostants = {
+  appMarginDefault: 24,
+  avatarSizeSmall: 44,
+  avatarSizeMedium: 66
 };
 
 // TODO: in a first iteration, to avoid overlaps,
@@ -222,7 +227,7 @@ interface IOListItemVisualParams {
 
 export const IOListItemVisualParams: IOListItemVisualParams = {
   paddingVertical: 12,
-  paddingHorizontal: IOLayoutCostants.appMarginDefault,
+  paddingHorizontal: IOVisualCostants.appMarginDefault,
   iconMargin: 16,
   iconSize: 24,
   chevronSize: 24
@@ -232,13 +237,72 @@ export const IOListItemStyles = StyleSheet.create({
   listItem: {
     paddingVertical: IOListItemVisualParams.paddingVertical,
     paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
-    marginRight: -IOListItemVisualParams.paddingHorizontal,
-    marginLeft: -IOListItemVisualParams.paddingHorizontal
+    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
   },
   listItemInner: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between"
+  }
+});
+
+/**
+ * SELECTION ITEM STYLES
+ */
+
+interface IOSelectionTickVisualParams {
+  size: IOIconSizeScale;
+  borderWidth: number;
+  borderColorOffState: IOColors;
+  bgColorOnState: IOColors;
+  tickColor: IOColors;
+}
+
+interface IOSelectionTickLegacyVisualParams {
+  borderColorOffState: IOColors;
+  bgColorOnState: IOColors;
+}
+
+export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
+  size: 24,
+  borderWidth: 2,
+  borderColorOffState: "grey-650",
+  bgColorOnState: "blueIO-500",
+  tickColor: "white"
+};
+
+export const IOSelectionTickLegacyVisualParams: IOSelectionTickLegacyVisualParams =
+  {
+    borderColorOffState: "bluegrey",
+    bgColorOnState: "blue"
+  };
+
+interface IOSelectionListItemVisualParams {
+  paddingVertical: IOSpacingScale;
+  paddingHorizontal: IOAppMargin;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  descriptionMargin: IOSpacer;
+}
+
+export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
+  {
+    paddingVertical: 16,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    iconMargin: 8,
+    iconSize: 24,
+    descriptionMargin: 4
+  };
+
+export const IOSelectionListItemStyles = StyleSheet.create({
+  listItem: {
+    paddingVertical: IOListItemVisualParams.paddingVertical,
+    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
+    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
+  },
+  listItemInner: {
+    flexDirection: "row",
+    alignItems: "flex-start",
     justifyContent: "space-between"
   }
 });

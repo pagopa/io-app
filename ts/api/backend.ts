@@ -15,6 +15,7 @@ import {
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
+import { v4 as uuid } from "uuid";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
   AbortUserDataProcessingT,
@@ -71,6 +72,7 @@ import {
   withBearerToken as withToken
 } from "../utils/api";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
+import { lollipopFetch } from "../features/lollipop/utils/fetch";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -229,7 +231,7 @@ export function BackendClient(
     response_decoder: getUserMessageDefaultDecoder()
   };
 
-  const getThirdPartyMessage: GetThirdPartyMessageT = {
+  const getThirdPartyMessageT: GetThirdPartyMessageT = {
     method: "get",
     url: ({ id }) => `/api/v1/third-party-messages/${id}`,
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
@@ -390,12 +392,20 @@ export function BackendClient(
       createFetchRequestForApi(getMessagesT, options)
     ),
     getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
-    getThirdPartyMessage: withBearerToken(
-      createFetchRequestForApi(getThirdPartyMessage, options)
-    ),
-    getThirdPartyMessagePrecondition: withBearerToken(
-      createFetchRequestForApi(getThirdPartyMessagePreconditionT, options)
-    ),
+    getThirdPartyMessage: () =>
+      withBearerToken(
+        createFetchRequestForApi(getThirdPartyMessageT, {
+          ...options,
+          fetchApi: lollipopFetch({ nonce: uuid() }, _keyInfo)
+        })
+      ),
+    getThirdPartyMessagePrecondition: () =>
+      withBearerToken(
+        createFetchRequestForApi(getThirdPartyMessagePreconditionT, {
+          ...options,
+          fetchApi: lollipopFetch({ nonce: uuid() }, _keyInfo)
+        })
+      ),
     upsertMessageStatusAttributes: withBearerToken(
       createFetchRequestForApi(upsertMessageStatusAttributesT, options)
     ),
@@ -453,3 +463,5 @@ export function BackendClient(
     )
   };
 }
+
+export type BackendClient = ReturnType<typeof BackendClient>;

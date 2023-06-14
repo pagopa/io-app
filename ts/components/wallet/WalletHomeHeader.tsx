@@ -8,7 +8,7 @@ import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { HSpacer } from "../core/spacer/Spacer";
 import { H1 } from "../core/typography/H1";
@@ -66,7 +66,7 @@ const WalletHomeHeader = (props: Props) => {
     }
   ];
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <FlatList
       data={navigationListItems}
       keyExtractor={item => item.title}
@@ -132,7 +132,7 @@ const WalletHomeHeader = (props: Props) => {
         accessibilityLabel={I18n.t("wallet.accessibility.addElement")}
         accessibilityRole="button"
       >
-        <Icon name="legAdd" color="white" size={20} />
+        <Icon name="add" color="white" size={20} />
         <HSpacer size={8} />
         <H4 color={"white"}>
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}

@@ -30,10 +30,14 @@ import PictogramTeaBreak from "./svg/PictogramTeaBreak";
 import PictogramSms from "./svg/PictogramSms";
 import PictogramInbox from "./svg/PictogramInbox";
 import PictogramBeerMug from "./svg/PictogramBeerMug";
-import PictogramIBANCard from "./svg/IBANCard";
+import PictogramIBANCard from "./svg/PictogramIBANCard";
 import PictogramFollowMessage from "./svg/PictogramFollowMessage";
 import PictogramManual from "./svg/PictogramManual";
 import PictogramSetup from "./svg/PictogramSetup";
+import PictogramDonation from "./svg/PictogramDonation";
+import PictogramAttention from "./svg/PictogramAttention";
+import PictogramEmptyArchive from "./svg/PictogramEmptyArchive";
+import PictogramUmbrellaNew from "./svg/PictogramUmbrellaNew";
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
@@ -67,23 +71,28 @@ export const IOPictograms = {
   ibanCard: PictogramIBANCard,
   followMessage: PictogramFollowMessage,
   manual: PictogramManual,
-  setup: PictogramSetup
+  setup: PictogramSetup,
+  donation: PictogramDonation,
+  attention: PictogramAttention,
+  emptyArchive: PictogramEmptyArchive,
+  umbrellaNew: PictogramUmbrellaNew
 };
 
 export type IOPictograms = keyof typeof IOPictograms;
+export type IOPictogramSizeScale = 48 | 64 | 72 | 80 | 120 | 240;
 
 type IOPictogramsProps = {
   name: IOPictograms;
   color?: IOColors;
-  size?: number | "100%";
+  size?: IOPictogramSizeScale | "100%";
 };
 
 export type SVGPictogramProps = {
-  size: number | "100%";
+  size: IOPictogramSizeScale | "100%";
   color: ColorValue;
 };
 
-const Pictogram = ({
+export const Pictogram = ({
   name,
   color = "aqua",
   size = 120,
@@ -93,4 +102,17 @@ const Pictogram = ({
   return <PictogramElement {...props} size={size} color={IOColors[color]} />;
 };
 
-export default Pictogram;
+/*
+░░░ VARIOUS SETS ░░░
+*/
+
+/* Bleed pictograms
+    Used in the <Banner /> component
+*/
+const { donation } = IOPictograms;
+
+const IOPictogramsBleed = {
+  donation
+} as const;
+
+export type IOPictogramsBleed = keyof typeof IOPictogramsBleed;

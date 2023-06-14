@@ -6,6 +6,7 @@ import { OperationTypeEnum as TransactionOperationType } from "../../../../../..
 import { appReducer } from "../../../../../../store/reducers";
 import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
 import { idpayTimelineDetailsGet } from "../../store/actions";
+import { StatusEnum } from "../../../../../../../definitions/idpay/TransactionDetailDTO";
 
 const mockResponseSuccess: OperationDTO = {
   operationType: TransactionOperationType.TRANSACTION,
@@ -19,7 +20,8 @@ const mockResponseSuccess: OperationDTO = {
   operationId: "1",
   accrued: 100.0,
   idTrxAcquirer: "1",
-  idTrxIssuer: "1"
+  idTrxIssuer: "1",
+  status: StatusEnum.AUTHORIZED
 };
 const mockToken = "mock";
 const mockLanguage = PreferredLanguageEnum.it_IT;

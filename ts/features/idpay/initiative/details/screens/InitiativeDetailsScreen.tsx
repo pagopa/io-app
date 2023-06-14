@@ -38,6 +38,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import { IDPayPaymentRoutes } from "../../../payment/navigation/navigator";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -79,7 +80,9 @@ const InitiativeDetailsScreen = () => {
 
   const navigateToPaymentAuthorization = () => {
     // TODO navigation to payment authorization, will be added in another PR
-    alert("TBD");
+    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    });
   };
 
   useFocusEffect(
@@ -263,7 +266,7 @@ const InitiativeDetailsScreen = () => {
                     onPress={navigateToPaymentAuthorization}
                     fullWidth={true}
                   />
-                  <VSpacer size={16} />
+                  <VSpacer size={32} />
                 </>
               );
 

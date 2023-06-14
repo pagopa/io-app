@@ -1,12 +1,15 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
-import { OperationTypeEnum } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
+import {
+  OperationTypeEnum,
+  StatusEnum
+} from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 
 const mockResponseSuccess: TimelineDTO = {
   // mock TimelineDTO
@@ -21,7 +24,8 @@ const mockResponseSuccess: TimelineDTO = {
       amount: 100,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
-      circuitType: "MASTERCARD"
+      circuitType: "MASTERCARD",
+      status: StatusEnum.AUTHORIZED
     }
   ],
   pageNo: 0,
@@ -30,7 +34,7 @@ const mockResponseSuccess: TimelineDTO = {
   totalPages: 1
 };
 const mockFailure: ErrorDTO = {
-  code: 0,
+  code: "404",
   message: "message"
 };
 const mockToken = "mock";

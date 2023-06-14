@@ -14,7 +14,7 @@ import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
-import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { getError } from "../../utils/errors";
 import {
   trackPNNotificationLoadError,
@@ -23,12 +23,12 @@ import {
 import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
 
 function* getThirdPartyMessage(
-  client: ReturnType<typeof BackendClient>,
+  client: BackendClient,
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const id = action.payload;
   try {
-    const result = yield* call(client.getThirdPartyMessage, { id });
+    const result = yield* call(client.getThirdPartyMessage(), { id });
     if (E.isLeft(result)) {
       yield* put(
         loadThirdPartyMessage.failure({
@@ -59,7 +59,9 @@ function* trackSuccess(
   const messageFromApi = action.payload.content;
   const messageId = messageFromApi.id;
 
-  const message = pot.toUndefined(yield* select(getMessageById, messageId));
+  const message = pot.toUndefined(
+    yield* select(getPaginatedMessageById, messageId)
+  );
 
   if (message?.category.tag === "PN") {
     const pnMessageOption = toPNMessage(messageFromApi);
@@ -81,7 +83,9 @@ function* trackFailure(
   action: ActionType<typeof loadThirdPartyMessage.failure>
 ) {
   const messageId = action.payload.id;
-  const message = pot.toUndefined(yield* select(getMessageById, messageId));
+  const message = pot.toUndefined(
+    yield* select(getPaginatedMessageById, messageId)
+  );
 
   if (message?.category.tag === "PN") {
     const errorCode = action.payload.error.message;
@@ -90,7 +94,7 @@ function* trackFailure(
 }
 
 export function* watchThirdPartyMessageSaga(
-  client: ReturnType<typeof BackendClient>
+  client: BackendClient
 ): SagaIterator {
   yield* takeLatest(
     getType(loadThirdPartyMessage.request),

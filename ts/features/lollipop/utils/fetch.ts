@@ -2,8 +2,8 @@ import URLParse from "url-parse";
 import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { pipe } from "fp-ts/lib/function";
 import * as A from "fp-ts/lib/Array";
-import * as TE from "fp-ts/TaskEither";
-import * as O from "fp-ts/Option";
+import * as TE from "fp-ts/lib/TaskEither";
+import * as O from "fp-ts/lib/Option";
 
 import {
   LollipopConfig,
@@ -33,116 +33,108 @@ export const lollipopFetch = (
   const retriableFetch = toRetriableFetch();
   return retriableFetch(
     async (input: RequestInfo | URL, init?: RequestInit) => {
-      const requestAndKeyInfo = toRequestAndKeyInfoForLPFetch(
-        keyInfo,
-        input,
-        init
-      );
-      if (requestAndKeyInfo) {
-        // eslint-disable-next-line functional/no-let
-        let newInit = requestAndKeyInfo.init;
-        const { body, bodyString, inputUrl, method, originalUrl } =
-          extractHttpRequestComponents(
-            requestAndKeyInfo.input,
-            requestAndKeyInfo.init
-          );
-        if (body) {
-          newInit = addHeader(
-            newInit,
-            "Content-Digest",
-            generateDigestHeader(bodyString)
-          );
-        }
-
-        const signatureConfigForgeInput: SignatureConfigForgeInput = {
-          publicKey: requestAndKeyInfo.publicKey,
-          keyTag: requestAndKeyInfo.keyTag,
+      try {
+        const lollipopInit = await lollipopRequestInit(
           lollipopConfig,
-          method,
-          inputUrl
-        };
-
-        const signatureParams: Array<string> = [
-          ...(lollipopConfig.signBody
-            ? ["Content-Digest", "Content-Type"]
-            : []),
-          "x-pagopa-lollipop-original-method",
-          "x-pagopa-lollipop-original-url"
-        ];
-
-        const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
-          signatureConfigForgeInput,
           keyInfo,
-          signatureParams
+          input,
+          init
         );
-
-        newInit = addHeader(
-          newInit,
-          "x-pagopa-lollipop-original-method",
-          method
-        );
-        newInit = addHeader(
-          newInit,
-          "x-pagopa-lollipop-original-url",
-          originalUrl
-        );
-        const newInitHeaders =
-          (newInit.headers as Record<string, string>) ?? {};
-        const {
-          signatureBase: mainSignatureBase,
-          signatureInput: mainSignatureInput
-        } = generateSignatureBase(newInitHeaders, mainSignatureConfig, 1);
-
-        const customContentToSignInput: CutsomContentToSignInput = {
-          customContentToSign: lollipopConfig.customContentToSign,
-          keyInfo,
-          keyTag: requestAndKeyInfo.keyTag,
-          signatureConfigForgeInput
-        };
-
-        try {
-          const mainSignValue = await sign(
-            mainSignatureBase,
-            requestAndKeyInfo.keyTag
-          );
-          const customSignResult = await chainSignPromises(
-            customContentToSignPromises(customContentToSignInput)
-          );
-          // Add custom headers
-          customSignResult.forEach(
-            v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
-          );
-          // Prepare custom signature inputs array
-          const customSignatureInputs = customSignResult.map(
-            v => v.signatureInput
-          );
-          // Prepare custom signature array
-          const customSignatures = customSignResult.map(v => v.signature);
-          // Setup signature array
-          const signatures = [
-            toSignatureHeaderValue(mainSignValue),
-            ...customSignatures
-          ];
-          // Setup signature input array
-          const signatureInputs = [
-            mainSignatureInput,
-            ...customSignatureInputs
-          ];
-          // Add all to their corresponding headers
-          newInit = addHeader(newInit, "signature", signatures.join(","));
-          newInit = addHeader(
-            newInit,
-            "signature-input",
-            signatureInputs.join(",")
-          );
-          return await timeoutFetch(input, newInit);
-        } catch {
-          return await timeoutFetch(input, init);
-        }
+        return await timeoutFetch(input, lollipopInit);
+      } catch {
+        // We are not interested in tracking the error but
+        // to simply fallback to the standard timeout fetch
       }
-      return timeoutFetch(input, init);
+      return await timeoutFetch(input, init);
     }
   );
+};
+
+export const lollipopRequestInit = async (
+  lollipopConfig: LollipopConfig,
+  keyInfo: KeyInfo,
+  input: RequestInfo | URL,
+  init?: RequestInit
+) => {
+  const requestAndKeyInfo = toRequestAndKeyInfoForLPFetch(keyInfo, input, init);
+  if (!requestAndKeyInfo) {
+    throw Error(
+      "Bad input parameters, unable to compose RequestAndKeyInfoForLPFetch"
+    );
+  }
+  // eslint-disable-next-line functional/no-let
+  let newInit = requestAndKeyInfo.init;
+  const { body, bodyString, inputUrl, method, originalUrl } =
+    extractHttpRequestComponents(
+      requestAndKeyInfo.input,
+      requestAndKeyInfo.init
+    );
+  if (body) {
+    newInit = addHeader(
+      newInit,
+      "Content-Digest",
+      generateDigestHeader(bodyString)
+    );
+  }
+
+  const signatureConfigForgeInput: SignatureConfigForgeInput = {
+    publicKey: requestAndKeyInfo.publicKey,
+    keyTag: requestAndKeyInfo.keyTag,
+    lollipopConfig,
+    method,
+    inputUrl
+  };
+
+  const signatureParams: Array<string> = [
+    ...(lollipopConfig.signBody ? ["Content-Digest", "Content-Type"] : []),
+    "x-pagopa-lollipop-original-method",
+    "x-pagopa-lollipop-original-url"
+  ];
+
+  const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
+    signatureConfigForgeInput,
+    keyInfo,
+    signatureParams
+  );
+
+  newInit = addHeader(newInit, "x-pagopa-lollipop-original-method", method);
+  newInit = addHeader(newInit, "x-pagopa-lollipop-original-url", originalUrl);
+  const newInitHeaders = (newInit.headers as Record<string, string>) ?? {};
+  const {
+    signatureBase: mainSignatureBase,
+    signatureInput: mainSignatureInput
+  } = generateSignatureBase(newInitHeaders, mainSignatureConfig, 1);
+
+  const customContentToSignInput: CutsomContentToSignInput = {
+    customContentToSign: lollipopConfig.customContentToSign,
+    keyInfo,
+    keyTag: requestAndKeyInfo.keyTag,
+    signatureConfigForgeInput
+  };
+
+  const mainSignValue = await sign(mainSignatureBase, requestAndKeyInfo.keyTag);
+  const customSignResult = await chainSignPromises(
+    customContentToSignPromises(customContentToSignInput)
+  );
+  // Add custom headers
+  customSignResult.forEach(
+    v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
+  );
+  // Prepare custom signature inputs array
+  const customSignatureInputs = customSignResult.map(v => v.signatureInput);
+  // Prepare custom signature array
+  const customSignatures = customSignResult.map(v => v.signature);
+  // Setup signature array
+  const signatures = [
+    toSignatureHeaderValue(mainSignValue),
+    ...customSignatures
+  ];
+  // Setup signature input array
+  const signatureInputs = [mainSignatureInput, ...customSignatureInputs];
+  // Add all to their corresponding headers
+  newInit = addHeader(newInit, "signature", signatures.join(","));
+  newInit = addHeader(newInit, "signature-input", signatureInputs.join(","));
+  return newInit;
 };
 
 export const customContentSignatureBases = (

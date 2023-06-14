@@ -9,7 +9,7 @@ import {
   errorButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
 const ConfirmOptOut = (): React.ReactElement => (
   <View>
@@ -21,7 +21,7 @@ const ConfirmOptOut = (): React.ReactElement => (
 );
 
 export const useConfirmOptOutBottomSheet = (onConfirm: () => void) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <ConfirmOptOut />,
     I18n.t("profile.main.privacy.shareData.alert.title"),
     350,

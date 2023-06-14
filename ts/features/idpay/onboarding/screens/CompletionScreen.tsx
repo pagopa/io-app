@@ -41,7 +41,7 @@ const CompletionScreen = () => {
   return (
     <SafeAreaView style={IOStyles.flex}>
       <View style={styles.container}>
-        <Pictogram name="completed" size={100} />
+        <Pictogram name="completed" size={120} />
         <VSpacer size={16} />
         <H3> {I18n.t("idpay.onboarding.success.requestSent.title")}</H3>
         <VSpacer size={16} />

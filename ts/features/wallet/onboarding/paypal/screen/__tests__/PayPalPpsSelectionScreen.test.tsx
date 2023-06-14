@@ -19,7 +19,7 @@ jest.mock("../../../../../../utils/hooks/bottomSheet", () => {
     __esModule: true,
     BottomSheetScrollView: react.ScrollView,
     TouchableWithoutFeedback: react.TouchableWithoutFeedback,
-    useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet })
+    useLegacyIOBottomSheetModal: () => ({ present: mockPresentBottomSheet })
   };
 });
 
