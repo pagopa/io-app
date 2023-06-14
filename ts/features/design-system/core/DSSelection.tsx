@@ -40,11 +40,13 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
+
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Radio
     </H2>
     {/* RadioListItem */}
     <RadioListItemsShowroom />
+
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
     </H2>
