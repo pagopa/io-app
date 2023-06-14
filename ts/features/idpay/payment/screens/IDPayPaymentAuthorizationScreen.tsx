@@ -108,7 +108,7 @@ const IDPayPaymentAuthorizationScreen = () => {
           rightButton={{
             title: isUpserting ? "" : I18n.t("global.buttons.confirm"),
             onPress: handleConfirm,
-            isLoading: isUpserting || isLoading,
+            isLoading: isUpserting,
             disabled: isUpserting || isLoading
           }}
         />
