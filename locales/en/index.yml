@@ -403,7 +403,7 @@ profile:
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "You can change this choice anytime in Profile > Preferences"
+          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
           cta:
             shareData: "Share data"
             dontShareData: "Don’t share data"
@@ -1821,21 +1821,21 @@ services:
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
-      title: "How do you want to configure services on IO?"
-      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
+      title: "Chi può scriverti?"
+      body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
       quickConfig:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
         body:
-          text1: "Only the services which have something important to tell you will contact you."
+          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
         body:
-          text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
+          text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."

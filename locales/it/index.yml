@@ -403,7 +403,7 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
           cta:
             shareData: "Condividi dati"
             dontShareData: "Non condividere dati"
@@ -1844,21 +1844,21 @@ services:
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
-      title: "Come vuoi configurare i servizi su IO?"
-      body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio."
+      title: "Chi può scriverti?"
+      body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
       quickConfig:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
         body:
-          text1: "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
+          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
       manualConfig:
         value: "Configurazione manuale"
         label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
         body:
-          text1: "Nessun servizio potrà contattarti. Per ricevere messaggi dovrai configurarli uno a uno."
+          text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:
           title: "Se confermi, non riceverai alcun messaggio"
           body: "Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio."
