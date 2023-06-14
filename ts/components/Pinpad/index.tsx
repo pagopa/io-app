@@ -357,14 +357,14 @@ class Pinpad extends React.PureComponent<Props, State> {
         </ShakeAnimation>
 
         {isDevEnv && (
-          <View>
+          <View style={IOStyles.alignCenter}>
             <VSpacer size={16} />
             <Link
               onPress={() => this.enterDefaultPin()}
               weight="Bold"
               color="white"
             >
-              {"Enter default pin"}
+              {"Enter default pin (DevEnv Only)"}
             </Link>
           </View>
         )}

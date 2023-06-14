@@ -222,7 +222,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
       {isDevEnv && (
         <View style={{ alignSelf: "center" }}>
           <ButtonOutline
-            label={"Enter Pin: 162534"}
+            label={"Enter Pin: 162534 (DevEnv Only)"}
             accessibilityLabel=""
             onPress={insertValidPin}
           />
