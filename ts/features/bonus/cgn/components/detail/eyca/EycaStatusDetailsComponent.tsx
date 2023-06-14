@@ -92,7 +92,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         {badgeByStatus()}
       </View>
       <VSpacer size={16} />
-      <View style={IOStyles.row}>
+      <View style={[IOStyles.row, styles.spaced]}>
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.eycaNumber")}
         </H5>
