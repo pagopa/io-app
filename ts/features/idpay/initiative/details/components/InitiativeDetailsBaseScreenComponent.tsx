@@ -33,6 +33,8 @@ type Props =
 const InitiativeDetailsBaseScreenComponent = (
   props: React.PropsWithChildren<BaseProps & Props>
 ) => {
+  const safeAreaInsets = useSafeAreaInsets();
+
   const renderContent = () => {
     if (props.isLoading) {
       return (
