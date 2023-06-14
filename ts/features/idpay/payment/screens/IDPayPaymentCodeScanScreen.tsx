@@ -1,6 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Vibration,
+  View
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -21,6 +27,7 @@ import {
 import { openWebUrl } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/BarcodeScanner";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { VIBRATION_BARCODE_SCANNED_DURATION } from "../../../../theme/variables";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation();
@@ -41,6 +48,13 @@ const IDPayPaymentCodeScanScreen = () => {
     };
   }, [navigation]);
 
+  const handleBarcodeScanner = (barcode: IOBarcode) => {
+    // Execute an haptic feedback
+    Vibration.vibrate(VIBRATION_BARCODE_SCANNED_DURATION);
+
+    openWebUrl(barcode.value);
+  };
+
   const {
     cameraComponent,
     cameraPermissionStatus,
@@ -48,7 +62,7 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useIOBarcodeScanner({
     marker: <CameraMarker />,
-    onBarcodeScanned: (barcode: IOBarcode) => openWebUrl(barcode.value),
+    onBarcodeScanned: handleBarcodeScanner,
     formats: ["QR_CODE"],
     disabled: !isFocused
   });
