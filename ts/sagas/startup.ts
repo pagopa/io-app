@@ -430,6 +430,8 @@ export function* initializeApplicationSaga(
       yield* put(startApplicationInitialization());
       return;
     }
+
+    // FIXME: handle isFastLogin Logic. https://pagopa.atlassian.net/browse/IOPID-315
   }
 
   // Ask to accept ToS if there is a new available version
