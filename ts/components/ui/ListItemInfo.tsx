@@ -73,7 +73,7 @@ export const ListItemInfo = ({
           {typeof label === "string" ? (
             <Body weight="Regular">{label}</Body>
           ) : (
-            { label }
+            label
           )}
           {typeof value === "string" ? (
             <Text
@@ -83,7 +83,7 @@ export const ListItemInfo = ({
               {value}
             </Text>
           ) : (
-            { value }
+            value
           )}
         </View>
         {action && (

@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 22;
+const CURRENT_REDUX_STORE_VERSION = 23;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -343,6 +343,19 @@ const migrations: MigrationManifest = {
       };
     }
     return state;
+  },
+  // Version 23
+  // Removes `isExperimentalFeaturesEnabled` property from persistedPreferences,
+  // since is it not used anymore in the bottom bar logic
+  "23": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
+      }
+    };
   }
 };
 
