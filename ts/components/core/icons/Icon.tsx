@@ -60,7 +60,7 @@ import IconEdit from "./svg/IconEdit";
 import IconBattery from "./svg/IconBattery";
 import IconTrashcan from "./svg/IconTrashcan";
 import IconCalendar from "./svg/IconCalendar";
-import IconProfileExperiment from "./svg/IconProfileExperiment";
+import IconLightbulb from "./svg/IconLightbulb";
 import IconMagicWand from "./svg/IconMagicWand";
 import IconProfile from "./svg/IconProfile";
 import IconProfileFilled from "./svg/IconProfileFilled";
@@ -124,6 +124,7 @@ import IconCategJobOffers from "./svg/IconCategJobOffers";
 import IconCategShopping from "./svg/IconCategShopping";
 import IconCategSustainability from "./svg/IconCategSustainability";
 import IconProductIOApp from "./svg/IconProductIOApp";
+import IconProductIOAppBlueBg from "./svg/IconProductIOAppBlueBg";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
@@ -133,7 +134,10 @@ import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
-import IconIoAppBlueBackground from "./svg/IconIoAppBlueBackground";
+import IconNavMessagesFocused from "./svg/IconNavMessagesFocused";
+import IconNavWalletFocused from "./svg/IconNavWalletFocused";
+import IconNavServicesFocused from "./svg/IconNavServicesFocused";
+import IconNavProfileFocused from "./svg/IconNavProfileFocused";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -208,7 +212,7 @@ export const IOIcons = {
   profile: IconProfile,
   profileFilled: IconProfileFilled,
   profileAlt: IconProfileAlt /* io-titolare */,
-  profileExperiment: IconProfileExperiment,
+  lightbulb: IconLightbulb,
   magicWand: IconMagicWand,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
@@ -242,10 +246,14 @@ export const IOIcons = {
   backiOS: IconBackiOS,
   backAndroid: IconBackAndroid,
   navMessages: IconNavMessages /* io-messaggi */,
+  navMessagesFocused: IconNavMessagesFocused,
   navWallet: IconNavWallet /* io-portafoglio */,
+  navWalletFocused: IconNavWalletFocused,
   navScan: IconNavScan,
   navServices: IconNavServices,
+  navServicesFocused: IconNavServicesFocused,
   navProfile: IconNavProfile,
+  navProfileFocused: IconNavProfileFocused,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
@@ -266,7 +274,7 @@ export const IOIcons = {
   categSustainability: IconCategSustainability,
   productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */,
-  productIOAppBlueBackground: IconIoAppBlueBackground
+  productIOAppBlueBg: IconProductIOAppBlueBg
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
@@ -382,14 +390,28 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 // export const IOIconsNew = {};
 
 /* Navigation */
-const { navMessages, navWallet, navScan, navServices, navProfile } = IOIcons;
+const {
+  navMessages,
+  navWallet,
+  navScan,
+  navServices,
+  navProfile,
+  navMessagesFocused,
+  navWalletFocused,
+  navServicesFocused,
+  navProfileFocused
+} = IOIcons;
 
 export const IONavIcons = {
   navMessages,
   navWallet,
   navScan,
   navServices,
-  navProfile
+  navProfile,
+  navMessagesFocused,
+  navWalletFocused,
+  navServicesFocused,
+  navProfileFocused
 } as const;
 
 export type IONavIcons = keyof typeof IONavIcons;
@@ -438,11 +460,12 @@ export const IOCategoryIcons = {
 export type IOCategoryIcons = keyof typeof IOCategoryIcons;
 
 /* Product Logos */
-const { productIOApp, productPagoPA } = IOIcons;
+const { productIOApp, productPagoPA, productIOAppBlueBg } = IOIcons;
 
 export const IOProductIcons = {
   productIOApp,
-  productPagoPA
+  productPagoPA,
+  productIOAppBlueBg
 } as const;
 
 export type IOProductIcons = keyof typeof IOProductIcons;
