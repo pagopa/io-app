@@ -73,7 +73,7 @@ describe("MessagesHomeScreen", () => {
           );
           fireEvent(component.getByText(message.title), "onPress");
           expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
-            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+            screen: ROUTES.MESSAGE_ROUTER,
             params: {
               messageId: message.id,
               fromNotification: false

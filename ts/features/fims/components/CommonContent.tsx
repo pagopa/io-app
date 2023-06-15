@@ -16,7 +16,7 @@ const CommonContent = ({ close, children }: Props) => (
       <Body />
       <Right>
         <ButtonDefaultOpacity onPress={close} transparent={true}>
-          <Icon name="close" />
+          <Icon name="closeLarge" />
         </ButtonDefaultOpacity>
       </Right>
     </AppHeader>

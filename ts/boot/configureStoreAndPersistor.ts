@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import _ from "lodash";
+import _, { merge } from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -31,7 +31,6 @@ import {
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
-import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
 import {
   authenticationPersistConfig,
   createRootReducer
@@ -54,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 22;
+const CURRENT_REDUX_STORE_VERSION = 23;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -82,7 +81,13 @@ const migrations: MigrationManifest = {
   // Version 2
   // Adds messagesIdsByServiceId
   "2": (state: PersistedState) =>
-    addMessagesIdsByServiceId(state as PersistedGlobalState),
+    merge({}, state, {
+      entities: {
+        messages: {
+          idsByServiceId: {} // this has been removed after moving to paginated messages
+        }
+      }
+    }),
 
   // Version 3
   // we changed the entities of organizations
@@ -338,6 +343,19 @@ const migrations: MigrationManifest = {
       };
     }
     return state;
+  },
+  // Version 23
+  // Removes `isExperimentalFeaturesEnabled` property from persistedPreferences,
+  // since is it not used anymore in the bottom bar logic
+  "23": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
+      }
+    };
   }
 };
 

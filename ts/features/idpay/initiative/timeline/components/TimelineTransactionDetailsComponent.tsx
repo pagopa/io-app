@@ -49,7 +49,6 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
 
   return (
     <View style={IOStyles.flex}>
-      <VSpacer size={8} />
       {reversalAlertComponent}
       <View style={styles.detailRow}>
         <Body>

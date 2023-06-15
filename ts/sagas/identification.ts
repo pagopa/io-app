@@ -15,7 +15,7 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToPaginatedMessageRouterAction } from "../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   paymentDeletePayment,
@@ -172,7 +172,7 @@ function* startAndHandleIdentificationResult(
 
       // Navigate to message router screen
       NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
+        navigateToMessageRouterAction({
           messageId: messageId as UIMessageId,
           fromNotification: true
         })

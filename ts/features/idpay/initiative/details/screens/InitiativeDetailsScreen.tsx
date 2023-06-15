@@ -38,6 +38,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import { IDPayPaymentRoutes } from "../../../payment/navigation/navigator";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -79,7 +80,9 @@ const InitiativeDetailsScreen = () => {
 
   const navigateToPaymentAuthorization = () => {
     // TODO navigation to payment authorization, will be added in another PR
-    alert("TBD");
+    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    });
   };
 
   useFocusEffect(
@@ -251,20 +254,17 @@ const InitiativeDetailsScreen = () => {
           switch (rewardType) {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return (
-                <>
-                  <ButtonSolid
-                    label={I18n.t(
-                      "idpay.initiative.discountDetails.authorizeButton"
-                    )}
-                    accessibilityLabel={I18n.t(
-                      "idpay.initiative.discountDetails.authorizeButton"
-                    )}
-                    icon="qrCode"
-                    onPress={navigateToPaymentAuthorization}
-                    fullWidth={true}
-                  />
-                  <VSpacer size={16} />
-                </>
+                <ButtonSolid
+                  label={I18n.t(
+                    "idpay.initiative.discountDetails.authorizeButton"
+                  )}
+                  accessibilityLabel={I18n.t(
+                    "idpay.initiative.discountDetails.authorizeButton"
+                  )}
+                  icon="qrCode"
+                  onPress={navigateToPaymentAuthorization}
+                  fullWidth={true}
+                />
               );
 
             case InitiativeRewardTypeEnum.REFUND:
