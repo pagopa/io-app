@@ -48,6 +48,9 @@ const mapVariants: Record<NonNullable<Tag["variant"]>, VariantProps> = {
   }
 };
 
+const IOTagIconMargin: IOSpacingScale = 6;
+const IOTagIconSize: IOIconSizeScale = 16;
+
 const styles = StyleSheet.create({
   tag: {
     alignSelf: "flex-start",
@@ -60,10 +63,15 @@ const styles = StyleSheet.create({
       }
     }),
     borderWidth: 1,
+    backgroundColor: IOColors.white,
     borderColor: IOColors["grey-100"],
     borderRadius: IOTagRadius,
     paddingHorizontal: IOTagHSpacing,
     paddingVertical: IOTagVSpacing
+  },
+  iconWrapper: {
+    marginEnd: IOTagIconMargin,
+    flexShrink: 1
   },
   label: {
     fontSize: 12,
@@ -71,26 +79,24 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     textTransform: "uppercase",
     color: IOColors["grey-700"],
+    flexShrink: 1,
     ...makeFontStyleObject("Regular", false, "ReadexPro")
   }
 });
-
-const IOTagIconMargin: IOSpacingScale = 6;
-const IOTagIconSize: IOIconSizeScale = 16;
 
 /**
  * Tag component, used mainly for message list and details
  */
 export const Tag = ({ text, variant, testID }: Tag) => (
   <View testID={testID} style={styles.tag}>
-    <View style={{ marginEnd: IOTagIconMargin }}>
+    <View style={styles.iconWrapper}>
       <Icon
         name={mapVariants[variant].iconName}
         color={mapVariants[variant].iconColor}
         size={IOTagIconSize}
       />
     </View>
-    <Text numberOfLines={1} style={styles.label}>
+    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.label}>
       {text}
     </Text>
   </View>

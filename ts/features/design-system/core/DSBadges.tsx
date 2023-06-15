@@ -10,6 +10,8 @@ import CustomBadge from "../../../components/ui/CustomBadge";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { Tag } from "../../../components/core/Tag";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { IOTagRadius } from "../../../components/core/variables/IOShapes";
 
 const styles = StyleSheet.create({
   fakeNavItem: {
@@ -129,16 +131,30 @@ const renderIOBadge = () => (
 
 const renderTag = () => (
   <View>
-    <Tag text={"Entro il 30 mag"} variant="warning" />
-    <VSpacer size={8} />
-    <Tag text={"Completato"} variant="success" />
-    <VSpacer size={8} />
-    <Tag text={"Scaduto"} variant="error" />
-    <VSpacer size={8} />
-    <View style={IOStyles.row}>
-      <Tag text={"Certificato"} variant="qrCode" />
-      <HSpacer size={8} />
-      <Tag text={"Valore legale"} variant="legalMessage" />
-    </View>
+    <DSComponentViewerBox name={"Tag, different variants"}>
+      <Tag text={"Entro il 30 mag"} variant="warning" />
+      <VSpacer size={8} />
+      <Tag text={"Completato"} variant="success" />
+      <VSpacer size={8} />
+      <Tag text={"Scaduto"} variant="error" />
+      <VSpacer size={8} />
+      <View style={IOStyles.row}>
+        <Tag text={"Certificato"} variant="qrCode" />
+        <HSpacer size={8} />
+        <Tag text={"Valore legale"} variant="legalMessage" />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag, stress test"}>
+      <View
+        style={{
+          backgroundColor: IOColors["error-100"],
+          padding: 8,
+          width: "60%",
+          borderRadius: IOTagRadius + 8
+        }}
+      >
+        <Tag text={"Looooooooong string"} variant="error" />
+      </View>
+    </DSComponentViewerBox>
   </View>
 );
