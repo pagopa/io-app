@@ -244,9 +244,7 @@ export const useIOBottomSheetAutoresizableModal = (
   return useIOBottomSheetModal({
     component: (
       <View
-        style={{
-          paddingBottom: insets.bottom + bottomPadding
-        }}
+        style={{ paddingBottom: insets.bottom }}
         onLayout={handleContentOnLayout}
       >
         {component}
