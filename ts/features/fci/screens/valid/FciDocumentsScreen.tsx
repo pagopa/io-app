@@ -173,6 +173,7 @@ const FciDocumentsScreen = () => {
         setCurrentPage(page);
       }}
       enablePaging
+      enableAnnotationRendering={false}
       style={styles.pdf}
     />
   );
