@@ -3,6 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
@@ -58,16 +59,26 @@ const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
         {I18n.t("wallet.outcomeMessage.payment.success.description2")}
       </Label>
       <VSpacer size={16} />
-      <Banner
-        color="neutral"
-        pictogramName="donation"
-        variant="big"
-        viewRef={viewRef}
-        title="SURVEY"
-        content="MAKE SURVEY"
-        action="GO TO SURVEY"
-        onPress={handleBannerPress}
-      ></Banner>
+      <View
+        style={{
+          // required to make the banner the correct width
+          // since the InfoScreen component is reused in a lot of screens,
+          // updating that would be a breaking change
+          width: widthPercentageToDP("100%"),
+          paddingHorizontal: 32
+        }}
+      >
+        <Banner
+          color="neutral"
+          pictogramName="feedback"
+          variant="big"
+          viewRef={viewRef}
+          title="SURVEY"
+          content="MAKE SURVEY"
+          action="GO TO SURVEY"
+          onPress={handleBannerPress}
+        />
+      </View>
     </View>
   );
 };

@@ -38,6 +38,7 @@ import PictogramDonation from "./svg/PictogramDonation";
 import PictogramAttention from "./svg/PictogramAttention";
 import PictogramEmptyArchive from "./svg/PictogramEmptyArchive";
 import PictogramUmbrellaNew from "./svg/PictogramUmbrellaNew";
+import PictogramFeedback from "./svg/PictogramFeedback";
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
@@ -75,7 +76,8 @@ export const IOPictograms = {
   donation: PictogramDonation,
   attention: PictogramAttention,
   emptyArchive: PictogramEmptyArchive,
-  umbrellaNew: PictogramUmbrellaNew
+  umbrellaNew: PictogramUmbrellaNew,
+  feedback: PictogramFeedback
 };
 
 export type IOPictograms = keyof typeof IOPictograms;
@@ -109,10 +111,11 @@ export const Pictogram = ({
 /* Bleed pictograms
     Used in the <Banner /> component
 */
-const { donation } = IOPictograms;
+const { donation, feedback } = IOPictograms;
 
 const IOPictogramsBleed = {
-  donation
+  donation,
+  feedback
 } as const;
 
 export type IOPictogramsBleed = keyof typeof IOPictogramsBleed;
