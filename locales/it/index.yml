@@ -3654,8 +3654,8 @@ idpay:
           title: L’operazione è stata annullata
     qrCode:
       manual:
-        title: Cosa devi pagare?
-        subtitle: Inserisci il codice alfnumerico di 8 caratteri riportato sotto al codice QR.
+        title: Autorizza una transazione
+        subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
         input: Codice Transazione
         button: Continua
 unsupportedDevice:  
