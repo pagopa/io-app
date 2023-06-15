@@ -18,7 +18,6 @@ import {
   IOStyles
 } from "../core/variables/IOStyles";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import { IOIcons, Icon } from "../core/icons";
@@ -26,15 +25,16 @@ import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";
+import { AnimatedRadio } from "../core/selection/checkbox/AnimatedRadio";
+import { WithTestID } from "../../types/WithTestID";
 
-type Props = {
+type Props = WithTestID<{
   value: string;
   description?: string;
   icon?: IOIcons;
-  selected?: boolean;
-  // dispatch the new value after the checkbox changes state
+  selected: boolean;
   onValueChange?: (newValue: boolean) => void;
-};
+}>;
 
 const DISABLED_OPACITY = 0.5;
 
@@ -65,13 +65,14 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const CheckboxListItem = ({
+export const RadioListItem = ({
   value,
   description,
   icon,
   selected,
   disabled,
-  onValueChange
+  onValueChange,
+  testID
 }: OwnProps) => {
   // Experimental Design System
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -130,7 +131,7 @@ export const CheckboxListItem = ({
     };
   });
 
-  const toggleCheckbox = () => {
+  const toggleRadioItem = () => {
     ReactNativeHapticFeedback.trigger("impactLight");
     setToggleValue(!toggleValue);
     if (onValueChange !== undefined) {
@@ -140,11 +141,11 @@ export const CheckboxListItem = ({
 
   return (
     <Pressable
-      onPress={toggleCheckbox}
+      onPress={toggleRadioItem}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      testID="AnimatedCheckbox"
+      testID={testID}
       disabled={disabled}
     >
       <Animated.View
@@ -185,7 +186,7 @@ export const CheckboxListItem = ({
             </View>
             <HSpacer size={8} />
             <View pointerEvents="none">
-              <AnimatedCheckbox checked={selected ?? toggleValue} />
+              <AnimatedRadio checked={selected ?? toggleValue} />
             </View>
           </View>
           {description && (
