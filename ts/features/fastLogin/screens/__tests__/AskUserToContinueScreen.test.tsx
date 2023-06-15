@@ -22,7 +22,7 @@ const defaultProps = {
   onClose: jest.fn(),
   onExit: jest.fn(),
   onTimerExpired: jest.fn(),
-  timerDuration: 10
+  timerDurationInSeconds: 10
 };
 
 describe("AskUserToContinueScreen component", () => {

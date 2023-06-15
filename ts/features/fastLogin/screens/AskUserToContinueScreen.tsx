@@ -58,7 +58,7 @@ export type Props = {
   onExit?: () => void;
   onClose?: () => void;
   onTimerExpired?: () => void;
-  timerDuration?: number;
+  timerDurationInSeconds?: number;
   ButtonStylesProps?: ButtonStylesProps;
 };
 
@@ -101,7 +101,9 @@ const AskUserToContinueScreen = (props: Props) => {
           {props.onTimerExpired && (
             <CountDown
               testID={"countdown-timer"}
-              totalSeconds={props.timerDuration ?? DEFAULT_TIMER_DURATION}
+              totalSeconds={
+                props.timerDurationInSeconds ?? DEFAULT_TIMER_DURATION
+              }
               onExpiration={props.onTimerExpired}
             />
           )}
