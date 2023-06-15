@@ -78,7 +78,6 @@ const TimelineRefundDetailsComponent = (props: Props) => {
 
   return (
     <>
-      <VSpacer size={8} />
       {rejectedAlertComponent}
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.iban")}</Body>

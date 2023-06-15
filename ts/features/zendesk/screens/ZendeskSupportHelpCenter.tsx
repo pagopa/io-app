@@ -222,7 +222,7 @@ const ZendeskSupportHelpCenter = () => {
       showChat={false}
       customGoBack={<View />}
       customRightIcon={{
-        iconName: "close",
+        iconName: "closeLarge",
         onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}

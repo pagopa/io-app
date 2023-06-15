@@ -14,7 +14,7 @@ import ListItemNav from "../../../components/ui/ListItemNav";
 import { Body } from "../../../components/core/typography/Body";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
-
+        
 export const DSBottomSheet = () => {
   const handlePressDismiss = () => {
     dismissStaticBottomSheet();
@@ -23,12 +23,16 @@ export const DSBottomSheet = () => {
   };
 
   const DimissBottomSheetItem = () => (
-    <ListItemNav
-      value="Dismiss"
-      description="This is a item that will close the bottom sheet"
-      accessibilityLabel="Dismiss"
-      onPress={handlePressDismiss}
-    />
+    <>
+      <VSpacer size={24} />
+      <ButtonSolid
+        fullWidth
+        label="Dismiss"
+        accessibilityLabel="Dismiss"
+        onPress={handlePressDismiss}
+        color="primary"
+      />
+    </>
   );
 
   const BottomSheetContentBody = () => (
