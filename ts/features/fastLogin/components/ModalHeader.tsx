@@ -41,7 +41,7 @@ const ModalHeader = ({ onClose, testID }: ModalHeaderProps) => (
       accessibilityRole={"button"}
       accessibilityLabel={I18n.t("global.buttons.close")}
     >
-      <Icon name="close" color="bluegreyDark" size={24} />
+      <Icon name="closeLarge" color="bluegreyDark" size={24} />
     </ButtonDefaultOpacity>
   </View>
 );
