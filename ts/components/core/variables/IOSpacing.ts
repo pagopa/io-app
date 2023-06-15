@@ -5,7 +5,7 @@ should use a value defined in the following scale.
 */
 
 export const IOSpacingScale = [
-  4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72
+  4, 6, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72
 ] as const;
 
 export type IOSpacingScale = typeof IOSpacingScale[number];
@@ -26,3 +26,7 @@ export const IOAlertSpacing: ReadonlyArray<IOAlertSpacing> = [16, 24] as const;
 // Values used in the `<Banner>` component
 export type IOBannerSpacing = Extract<IOSpacingScale, 16>;
 export const IOBannerSpacing: IOBannerSpacing = 16 as const;
+// Values used in the `<Tag>` component
+export type IOTagSpacing = Extract<IOSpacingScale, 6 | 8>;
+export const IOTagHSpacing: IOTagSpacing = 8 as const;
+export const IOTagVSpacing: IOTagSpacing = 6 as const;
