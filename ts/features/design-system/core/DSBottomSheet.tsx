@@ -14,7 +14,7 @@ import ListItemNav from "../../../components/ui/ListItemNav";
 import { Body } from "../../../components/core/typography/Body";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
-        
+
 export const DSBottomSheet = () => {
   const handlePressDismiss = () => {
     dismissStaticBottomSheet();
