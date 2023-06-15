@@ -5,6 +5,7 @@ import { Icon } from "../../../components/core/icons";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { WithTestID } from "../../../types/WithTestID";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -23,14 +24,15 @@ const styles = StyleSheet.create({
   }
 });
 
-type ModalHeaderProps = {
+type ModalHeaderProps = WithTestID<{
   onClose: () => void;
-};
+}>;
 
-const ModalHeader = ({ onClose }: ModalHeaderProps) => (
+const ModalHeader = ({ onClose, testID }: ModalHeaderProps) => (
   <View style={styles.mainContainer}>
     <View />
     <ButtonDefaultOpacity
+      testID={`${testID}-close-button`}
       style={styles.closeButton}
       onPressWithGestureHandler={true}
       onPress={onClose}

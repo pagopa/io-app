@@ -50,12 +50,13 @@ const DefaultButtonStylesProps: ButtonStylesProps = {
 
 const DEFAULT_TIMER_DURATION = 60;
 
-type Props = {
+export type Props = {
   title: string;
   subtitle: string;
   pictogramName: IOPictograms;
   onSubmit: () => void;
   onExit?: () => void;
+  onClose?: () => void;
   onTimerExpired?: () => void;
   timerDuration?: number;
   ButtonStylesProps?: ButtonStylesProps;
@@ -87,7 +88,9 @@ const AskUserToContinueScreen = (props: Props) => {
   return (
     <Modal>
       <SafeAreaView style={IOStyles.flex}>
-        {props.onExit && <ModalHeader onClose={props.onExit} />}
+        {props.onClose && (
+          <ModalHeader testID="header" onClose={props.onClose} />
+        )}
         <View style={styles.mainContainer}>
           <Pictogram name={props.pictogramName} size={120} />
           <VSpacer size={16} />
@@ -97,6 +100,7 @@ const AskUserToContinueScreen = (props: Props) => {
           <VSpacer size={16} />
           {props.onTimerExpired && (
             <CountDown
+              testID={"countdown-timer"}
               totalSeconds={props.timerDuration ?? DEFAULT_TIMER_DURATION}
               onExpiration={props.onTimerExpired}
             />

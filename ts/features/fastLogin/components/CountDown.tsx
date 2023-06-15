@@ -1,11 +1,12 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { H3 } from "../../../components/core/typography/H3";
+import { WithTestID } from "../../../types/WithTestID";
 
-type Props = {
+type Props = WithTestID<{
   totalSeconds: number; // in seconds
   onExpiration: () => void;
-};
+}>;
 
 const formattedTime = (time: number) => {
   const date = new Date(time * 1000);
@@ -42,7 +43,7 @@ const ConuntDown = (props: Props) => {
 
   return (
     <>
-      <H3>{`${formattedTime(remainingTime)}`}</H3>
+      <H3 testID={props.testID}>{`${formattedTime(remainingTime)}`}</H3>
     </>
   );
 };
