@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../i18n";
-import { IOLayoutCostants, IOStyles } from "../core/variables/IOStyles";
+import { IOVisualCostants, IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { NewH4 } from "../core/typography/NewH4";
@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: IOLayoutCostants.appMarginDefault,
-    paddingTop: IOLayoutCostants.appMarginDefault,
-    paddingBottom: IOLayoutCostants.appMarginDefault,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingTop: IOVisualCostants.appMarginDefault,
+    paddingBottom: IOVisualCostants.appMarginDefault,
     backgroundColor: IOColors.white
   }
 });

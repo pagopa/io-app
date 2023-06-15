@@ -142,6 +142,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
   buttons:
+    deny: "Nega"
     share: Condividi
     delete: Elimina
     cancel: Annulla
@@ -3362,6 +3363,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
+              QRCODE_TRANSACTION: Pagamento Online
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3402,6 +3404,20 @@ idpay:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
+      discount:
+        labels:
+          AUTHORIZED: In corso
+          CANCELLED: Annullata
+          REWARDED: Eseguita
+        details:
+          alerts:
+            AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
+            CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+          labels:
+            status: Stato
+            totalAmount: Importo totale
+            idpayAmount: Importo transazione ID Pay
+            transactionID: ID transazione
       title: 
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione
@@ -3617,10 +3633,29 @@ idpay:
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
   payment:
+    authorization:
+      header: "Confermi l’operazione?"
+      toAuth: Da autorizzare
+      amount: Importo del bene
+      businessName: Richiesto da
+      dateTime: Data e Ora
+      infoDivider: "Informazioni sull’iniziativa"
+      initiativeName: Iniziativa
+      availableAmount: Credito disponibile
+    result:
+      success:
+        title: Operazione autorizzata con successo!
+        body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      failure:
+        GENERIC:
+          title: Si è verificato un errore imprevisto
+          body: Non è stato addebitato alcun importo.
+        CANCELLED: 
+          title: L’operazione è stata annullata
     qrCode:
       manual:
-        title: Cosa devi pagare?
-        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        title: Autorizza una transazione
+        subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
         input: Codice Transazione
         button: Continua
 unsupportedDevice:  

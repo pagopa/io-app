@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import type { IOAppMargin } from "../variables/IOSpacing";
-import { IOLayoutCostants } from "../variables/IOStyles";
+import { IOVisualCostants } from "../variables/IOStyles";
 
 type IOContentWrapperProps = {
   margin?: IOAppMargin;
@@ -14,7 +14,7 @@ depending on the size value
 @param {IOContentWrapper} margin
  */
 export const ContentWrapper = ({
-  margin = IOLayoutCostants.appMarginDefault,
+  margin = IOVisualCostants.appMarginDefault,
   children
 }: IOContentWrapperProps) => (
   <View

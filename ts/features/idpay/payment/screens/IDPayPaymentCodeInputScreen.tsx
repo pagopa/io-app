@@ -10,7 +10,7 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import {
-  IOLayoutCostants,
+  IOVisualCostants,
   IOStyles
 } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -57,8 +57,8 @@ const IDPayPaymentCodeInputScreen = () => {
             accessibilityLabel={I18n.t("idpay.payment.qrCode.manual.input")}
             inputMaskProps={{
               type: "custom",
-              options: { mask: "99999999" },
-              keyboardType: "numeric",
+              options: { mask: "SSSSSSSS" },
+              keyboardType: "default",
               returnKeyType: "done",
               value: inputState.value,
               autoCapitalize: "none",
@@ -93,7 +93,7 @@ const IDPayPaymentCodeInputScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  wrapper: { flex: 1, marginHorizontal: IOLayoutCostants.appMarginDefault }
+  wrapper: { flex: 1, marginHorizontal: IOVisualCostants.appMarginDefault }
 });
 
 export { IDPayPaymentCodeInputScreen };
