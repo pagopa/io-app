@@ -86,6 +86,7 @@ const IDPayPaymentResultScreen = () => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   resultScreenContainer: {
     flex: 1,

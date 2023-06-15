@@ -106,7 +106,14 @@ const createIDPayPaymentMachine = () =>
           failure: O.some(PaymentFailureEnum.CANCELLED)
         }))
       },
-      guards: {}
+      guards: {
+        isTooManuRequestsFailure: ctx =>
+          pipe(
+            ctx.failure,
+            O.map(failure => failure === PaymentFailureEnum.TOO_MANY_REQUESTS),
+            O.getOrElse(() => false)
+          )
+      }
     }
   );
 

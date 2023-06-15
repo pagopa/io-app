@@ -48,6 +48,8 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
             switch (status) {
               case 200:
                 return Promise.resolve(value);
+              case 429:
+                return Promise.reject(PaymentFailureEnum.TOO_MANY_REQUESTS);
               default:
                 return Promise.reject(PaymentFailureEnum.GENERIC);
             }
@@ -91,6 +93,8 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
                 } else {
                   return Promise.reject(PaymentFailureEnum.GENERIC);
                 }
+              case 429:
+                return Promise.reject(PaymentFailureEnum.TOO_MANY_REQUESTS);
               default:
                 return Promise.reject(PaymentFailureEnum.GENERIC);
             }
