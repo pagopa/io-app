@@ -1,11 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { flow, pipe } from "fp-ts/lib/function";
-import {
-  AuthPaymentResponseDTO,
-  StatusEnum
-} from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
+import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
+import { CodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { IDPayClient } from "../../common/api/client";
 import { Context } from "./context";
 import { PaymentFailureEnum } from "./failure";
@@ -48,6 +46,11 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
             switch (status) {
               case 200:
                 return Promise.resolve(value);
+              case 403:
+                if (value.code === CodeEnum.PAYMENT_BUDGET_EXHAUSTED) {
+                  return Promise.reject(PaymentFailureEnum.BUDGET_EXHAUSTED);
+                }
+                return Promise.reject(PaymentFailureEnum.REJECTED);
               case 429:
                 return Promise.reject(PaymentFailureEnum.TOO_MANY_REQUESTS);
               default:
@@ -88,11 +91,14 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
           E.map(({ status, value }) => {
             switch (status) {
               case 200:
-                if (value.status === StatusEnum.AUTHORIZED) {
-                  return Promise.resolve(value);
-                } else {
-                  return Promise.reject(PaymentFailureEnum.GENERIC);
+                return Promise.resolve(value);
+              case 403:
+                if (value.code === CodeEnum.PAYMENT_BUDGET_EXHAUSTED) {
+                  return Promise.reject(PaymentFailureEnum.BUDGET_EXHAUSTED);
                 }
+                return Promise.reject(PaymentFailureEnum.REJECTED);
+              case 404:
+                return Promise.reject(PaymentFailureEnum.EXPIRED);
               case 429:
                 return Promise.reject(PaymentFailureEnum.TOO_MANY_REQUESTS);
               default:
