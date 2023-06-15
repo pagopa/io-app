@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path, G, Mask, Rect } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconIoApp = ({ size, style, ...props }: SVGIconProps) => (
+const IconProductIOAppBlueBg = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Rect width={size} height={size} fill="#0B3EE3" rx="4" />
     <Mask id="a" width={size} height={size} x="6" y="7">
@@ -19,4 +19,4 @@ const IconIoApp = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconIoApp;
+export default IconProductIOAppBlueBg;
