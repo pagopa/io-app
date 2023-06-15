@@ -44,7 +44,7 @@ describe("CGN", () => {
 
   describe("When the user want to start activation from bonus list", () => {
     it("Should complete activation", async () => {
-      await element(by.id("walletTabId")).tap();
+      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
       await element(by.id("walletAddNewPaymentMethodTestId")).tap();
       await element(by.id("bonusNameTestId")).tap();
       const cgnBonusItem = element(by.id(`AvailableBonusItem-${ID_CGN_TYPE}`));
@@ -58,7 +58,7 @@ describe("CGN", () => {
 
   describe("When the user want to start activation from card carousel", () => {
     it("Should complete activation", async () => {
-      await element(by.id("walletTabId")).tap();
+      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
       // TODO: This could be fail if we will add more e2e tests on the addition of a new payment method (just do a single swipe, not a scroll)
       await waitFor(element(by.id("walletPaymentMethodsTestId")))
         .toBeVisible()
@@ -71,7 +71,7 @@ describe("CGN", () => {
 
   describe("When the user want to start activation from service detail", () => {
     it("Should complete activation", async () => {
-      await element(by.id("servicesTabId")).tap();
+      await element(by.text(I18n.t("global.navigator.services"))).tap();
 
       await waitFor(element(by.id(SERVICES_LIST)))
         .toBeVisible()
