@@ -3642,6 +3642,7 @@ idpay:
       infoDivider: "Informazioni sull’iniziativa"
       initiativeName: Iniziativa
       availableAmount: Credito disponibile
+      error: C’è stato un errore, riprova
     result:
       success:
         title: Operazione autorizzata con successo!

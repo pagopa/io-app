@@ -51,8 +51,6 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
                   return Promise.reject(PaymentFailureEnum.BUDGET_EXHAUSTED);
                 }
                 return Promise.reject(PaymentFailureEnum.REJECTED);
-              case 429:
-                return Promise.reject(PaymentFailureEnum.TOO_MANY_REQUESTS);
               default:
                 return Promise.reject(PaymentFailureEnum.GENERIC);
             }
