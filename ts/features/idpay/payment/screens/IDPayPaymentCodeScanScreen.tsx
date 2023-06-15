@@ -35,16 +35,16 @@ const IDPayPaymentCodeScanScreen = () => {
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    const blurUnsubscribe = navigation.addListener("blur", () =>
+    const unsubscribeFromBlur = navigation.addListener("blur", () =>
       setIsFocused(false)
     );
-    const focusUnsubscribe = navigation.addListener("focus", () =>
+    const unsubscribeFromFocus = navigation.addListener("focus", () =>
       setIsFocused(true)
     );
 
     return () => {
-      blurUnsubscribe();
-      focusUnsubscribe();
+      unsubscribeFromBlur();
+      unsubscribeFromFocus();
     };
   }, [navigation]);
 

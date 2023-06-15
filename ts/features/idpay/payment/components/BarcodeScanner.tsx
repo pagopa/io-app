@@ -211,7 +211,7 @@ export const useIOBarcodeScanner = (
    * Component that renders camera and marker
    */
   const cameraComponent = (
-    <View style={styles.cameraContainer}>
+    <View style={styles.cameraContainer} testID="BarcodeScannerCameraTestID">
       {device && (
         <Camera
           style={styles.camera}
