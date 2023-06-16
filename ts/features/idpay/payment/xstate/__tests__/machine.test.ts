@@ -11,7 +11,6 @@ const T_TRANSACTION_DATA_DTO: AuthPaymentResponseDTO = {
   amountCents: 100,
   id: "",
   initiativeId: "",
-  rejectionReasons: [],
   status: StatusEnum.AUTHORIZED,
   trxCode: T_TRX_CODE
 };
@@ -37,6 +36,7 @@ describe("IDPay Payment machine", () => {
     const mockExitAuthorization = jest.fn();
     const mockNavigateToAuthorizationScreen = jest.fn();
     const mockNavigateToResultScreen = jest.fn();
+    const mockShowErrorToast = jest.fn();
 
     const machine = createIDPayPaymentMachine().withConfig({
       services: {
@@ -46,7 +46,8 @@ describe("IDPay Payment machine", () => {
       actions: {
         exitAuthorization: mockExitAuthorization,
         navigateToAuthorizationScreen: mockNavigateToAuthorizationScreen,
-        navigateToResultScreen: mockNavigateToResultScreen
+        navigateToResultScreen: mockNavigateToResultScreen,
+        showErrorToast: mockShowErrorToast
       }
     });
 
