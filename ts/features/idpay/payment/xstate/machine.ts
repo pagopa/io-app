@@ -67,10 +67,17 @@ const createIDPayPaymentMachine = () =>
             onDone: {
               target: "AUTHORIZATION_SUCCESS"
             },
-            onError: {
-              actions: "setFailure",
-              target: "AUTHORIZATION_FAILURE"
-            }
+            onError: [
+              {
+                actions: "setFailure",
+                cond: "isBlockingFailure",
+                target: "AUTHORIZATION_FAILURE"
+              },
+              {
+                actions: "showErrorToast",
+                target: "AWAITING_USER_CONFIRMATION"
+              }
+            ]
           }
         },
         AUTHORIZATION_SUCCESS: {
@@ -106,7 +113,19 @@ const createIDPayPaymentMachine = () =>
           failure: O.some(PaymentFailureEnum.CANCELLED)
         }))
       },
-      guards: {}
+      guards: {
+        // Guard that checks if the failure is blocking or not.
+        // Currently, the only non-blocking failure is `TOO_MANY_REQUESTS`
+        // which should display only an error toast
+        isBlockingFailure: ({ failure }) =>
+          pipe(
+            failure,
+            O.filter(
+              failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS
+            ),
+            O.isSome
+          )
+      }
     }
   );
 
