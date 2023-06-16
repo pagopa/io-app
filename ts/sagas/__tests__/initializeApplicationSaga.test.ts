@@ -33,14 +33,10 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
-  generateKeyInfo,
   generateLollipopKeySaga,
   getKeyInfo
 } from "../../features/lollipop/saga";
-import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../../features/lollipop/store/reducers/lollipop";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 
