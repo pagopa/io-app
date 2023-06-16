@@ -107,7 +107,7 @@ const createIDPayPaymentMachine = () =>
           transactionData: O.some(event.data)
         })),
         setFailure: assign((_, event) => ({
-          failure: pipe(O.of(event.data), O.filter(PaymentFailure.is))
+          failure: pipe(event.data, O.of, O.filter(PaymentFailure.is))
         })),
         cancelTransaction: assign(_ => ({
           failure: O.some(PaymentFailureEnum.CANCELLED)
@@ -117,13 +117,13 @@ const createIDPayPaymentMachine = () =>
         // Guard that checks if the failure is blocking or not.
         // Currently, the only non-blocking failure is `TOO_MANY_REQUESTS`
         // which should display only an error toast
-        isBlockingFailure: ({ failure }) =>
+        isBlockingFailure: (_, event) =>
           pipe(
-            failure,
-            O.filter(
-              failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS
-            ),
-            O.isSome
+            event.data,
+            O.of,
+            O.filter(PaymentFailure.is),
+            O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
+            O.getOrElse(() => false)
           )
       }
     }
