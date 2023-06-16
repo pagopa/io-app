@@ -3,27 +3,23 @@ import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../i18n";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { H3 } from "../core/typography/H3";
-import { IOStyles } from "../core/variables/IOStyles";
+import { IOVisualCostants, IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { Icon } from "../core/icons";
+import { NewH4 } from "../core/typography/NewH4";
+import IconButton from "../ui/IconButton";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 const styles = StyleSheet.create({
-  row: {
+  bottomSheetHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    ...IOStyles.horizontalContentPadding,
-    paddingTop: 24,
-    backgroundColor: IOColors.white,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16
-  },
-  modalClose: {
-    paddingRight: 0,
-    justifyContent: "flex-end"
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingTop: IOVisualCostants.appMarginDefault,
+    paddingBottom: IOVisualCostants.appMarginDefault,
+    backgroundColor: IOColors.white
   }
 });
 
@@ -36,6 +32,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   title,
   onClose
 }: Props) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const headerRef = React.createRef<View>();
 
   useEffect(() => {
@@ -43,7 +40,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
   }, [headerRef]);
 
   return (
-    <View style={styles.row} ref={headerRef}>
+    <View style={styles.bottomSheetHeader} ref={headerRef}>
       {React.isValidElement(title) ? (
         title
       ) : (
@@ -53,20 +50,27 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
           accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}
         >
-          <H3>{title}</H3>
+          <NewH4>{title}</NewH4>
         </View>
       )}
-      <ButtonDefaultOpacity
-        onPressWithGestureHandler={true}
-        style={styles.modalClose}
-        onPress={onClose}
-        transparent={true}
-        accessible={true}
-        accessibilityRole={"button"}
-        accessibilityLabel={I18n.t("global.buttons.close")}
-      >
-        <Icon name="close" color="grey" size={24} />
-      </ButtonDefaultOpacity>
+      {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
+      {isDesignSystemEnabled ? (
+        <IconButton
+          color="neutral"
+          onPress={onClose}
+          icon="closeMedium"
+          accessibilityLabel={I18n.t("global.buttons.close")}
+        />
+      ) : (
+        <View style={{ opacity: 0.5 }}>
+          <IconButton
+            color="neutral"
+            onPress={onClose}
+            icon="closeMedium"
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          />
+        </View>
+      )}
     </View>
   );
 };
