@@ -19,7 +19,7 @@ export const NonceResponse = t.interface({
   nonce: t.string
 });
 
-type NonceBaseResponseType<R> =
+export type NonceBaseResponseType<R> =
   | IResponseType<200, R>
   | IResponseType<404, ProblemJson>
   | IResponseType<500, ProblemJson>;
@@ -31,7 +31,7 @@ export type GetNonceT = IPostApiRequestType<
   NonceBaseResponseType<NonceResponse>
 >;
 
-type NonceResponse = t.TypeOf<typeof NonceResponse>;
+export type NonceResponse = t.TypeOf<typeof NonceResponse>;
 
 export function getFastLoginNonceDecoder<R, O = R>(
   type: t.Type<R, O>
@@ -51,9 +51,9 @@ export const FastLoginResponse = t.interface({
   token: t.string
 });
 
-type FastLoginResponse = t.TypeOf<typeof FastLoginResponse>;
+export type FastLoginResponse = t.TypeOf<typeof FastLoginResponse>;
 
-type FastLoginResponseType<R> =
+export type FastLoginResponseType<R> =
   | IResponseType<200, R>
   | IResponseType<401, undefined>
   | IResponseType<403, undefined>

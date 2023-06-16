@@ -102,6 +102,7 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
   loginUri: string,
   keyTag: string,
   isMixpanelEnabled: boolean | null,
+  isFastLogin: boolean,
   dispatch: AppDispatch
 ) =>
   pipe(
@@ -121,7 +122,8 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                 () => {
                   const headers = getLollipopLoginHeaders(
                     publicKey,
-                    DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                    DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+                    isFastLogin
                   );
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },
