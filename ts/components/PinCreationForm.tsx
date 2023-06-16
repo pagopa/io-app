@@ -6,6 +6,7 @@ import { PinString } from "../types/PinString";
 import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { isValidPinNumber } from "../features/fastLogin/utils/pinPolicy";
 import { isDevEnv } from "../utils/environment";
+import { defaultPin } from "../config";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
 import { IOColors } from "./core/variables/IOColors";
@@ -114,8 +115,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   );
 
   const insertValidPin = () => {
-    setPin("162534");
-    setPinConfirmation("162534");
+    setPin(defaultPin);
+    setPinConfirmation(defaultPin);
   };
 
   return (
@@ -222,7 +223,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
       {isDevEnv && (
         <View style={{ alignSelf: "center" }}>
           <ButtonOutline
-            label={"Enter Pin: 162534 (DevEnv Only)"}
+            label={`Enter Pin: ${defaultPin} (DevEnv Only)`}
             accessibilityLabel=""
             onPress={insertValidPin}
           />

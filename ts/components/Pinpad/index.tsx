@@ -16,6 +16,7 @@ import { Body } from "../core/typography/Body";
 import { Link } from "../core/typography/Link";
 import { IOStyles } from "../core/variables/IOStyles";
 import { isDevEnv } from "../../utils/environment";
+import { defaultPin } from "../../config";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 
@@ -280,7 +281,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     if (!isDevEnv) {
       return;
     }
-    this.handleChangeText("162534");
+    this.handleChangeText(defaultPin);
   };
 
   private handlePinDigit = (digit: string) =>
