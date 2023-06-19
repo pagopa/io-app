@@ -43,7 +43,8 @@ describe("IDPay Payment machine", () => {
     const machine = createIDPayPaymentMachine().withConfig({
       services: {
         preAuthorizePayment: mockPreAuthorizePayment,
-        authorizePayment: mockAuthorizePayment
+        authorizePayment: mockAuthorizePayment,
+        deletePayment: jest.fn()
       },
       actions: {
         exitAuthorization: mockExitAuthorization,
@@ -119,7 +120,8 @@ describe("IDPay Payment machine", () => {
     const machine = createIDPayPaymentMachine().withConfig({
       services: {
         preAuthorizePayment: mockPreAuthorizePayment,
-        authorizePayment: jest.fn()
+        authorizePayment: jest.fn(),
+        deletePayment: jest.fn()
       },
       actions: {
         exitAuthorization: mockExitAuthorization,
@@ -191,7 +193,8 @@ describe("IDPay Payment machine", () => {
     const machine = createIDPayPaymentMachine().withConfig({
       services: {
         preAuthorizePayment: mockPreAuthorizePayment,
-        authorizePayment: mockAuthorizePayment
+        authorizePayment: mockAuthorizePayment,
+        deletePayment: jest.fn()
       },
       actions: {
         exitAuthorization: mockExitAuthorization,
