@@ -1,12 +1,9 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Vibration,
-  View
-} from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import RNReactNativeHapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
@@ -17,7 +14,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { VIBRATION_BARCODE_SCANNED_DURATION } from "../../../../theme/variables";
 import { openWebUrl } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/BarcodeScanner";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
@@ -27,9 +23,7 @@ const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
 
   const handleBarcodeScanner = (barcode: IOBarcode) => {
-    // Execute an haptic feedback
-    Vibration.vibrate(VIBRATION_BARCODE_SCANNED_DURATION);
-
+    RNReactNativeHapticFeedback.trigger(HapticFeedbackTypes.impactMedium);
     openWebUrl(barcode.value);
   };
 
