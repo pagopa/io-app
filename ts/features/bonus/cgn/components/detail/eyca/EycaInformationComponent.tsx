@@ -8,8 +8,7 @@ import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpac
 import { Label } from "../../../../../../components/core/typography/Label";
 import { showToast } from "../../../../../../utils/showToast";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
-
-const EYCA_DISCOUNTS_URL = "https://www.eyca.org/discounts/it";
+import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
 
 /**
  * this component shows information about EYCA card. It is included within a bottom sheet
@@ -30,7 +29,7 @@ const EycaInformationComponent: React.FunctionComponent = () => {
             style={{ width: "100%" }}
             bordered
             onPress={() =>
-              openWebUrl(EYCA_DISCOUNTS_URL, () =>
+              openWebUrl(EYCA_WEBSITE_BASE_URL, () =>
                 showToast(I18n.t("bonus.cgn.generic.linkError"))
               )
             }

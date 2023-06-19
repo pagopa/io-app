@@ -146,6 +146,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
               setIsError(true);
             }}
             enablePaging
+            enableAnnotationRendering={false}
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>
