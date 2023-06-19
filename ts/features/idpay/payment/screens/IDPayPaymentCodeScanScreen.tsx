@@ -179,7 +179,7 @@ const CustomHeader = () => {
       >
         <View>
           <IconButton
-            icon="close"
+            icon="closeLarge"
             onPress={handleBackNavigation}
             accessibilityLabel={I18n.t("global.buttons.close")}
             color="contrast"
