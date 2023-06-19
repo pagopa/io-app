@@ -7,27 +7,21 @@ import {
   Vibration,
   View
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
-import { Pictogram } from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { H3 } from "../../../../components/core/typography/H3";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import IconButton from "../../../../components/ui/IconButton";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { VIBRATION_BARCODE_SCANNED_DURATION } from "../../../../theme/variables";
 import { openWebUrl } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/BarcodeScanner";
-import { IDPayPaymentRoutes } from "../navigation/navigator";
-import { VIBRATION_BARCODE_SCANNED_DURATION } from "../../../../theme/variables";
+import { BottomTabNavigation } from "../components/BottomTabNavigation";
+import { CameraPermissionView } from "../components/CameraPermissionView";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation();
@@ -61,7 +55,11 @@ const IDPayPaymentCodeScanScreen = () => {
     requestCameraPermission,
     openCameraSettings
   } = useIOBarcodeScanner({
-    marker: <CameraMarker />,
+    marker: (
+      <View style={styles.cameraMarkerContainer}>
+        <CameraScanMarkerSVG width={230} height={230} />
+      </View>
+    ),
     onBarcodeScanned: handleBarcodeScanner,
     formats: ["QR_CODE"],
     disabled: !isFocused
@@ -79,69 +77,43 @@ const IDPayPaymentCodeScanScreen = () => {
 
     if (cameraPermissionStatus === "not-determined") {
       return (
-        <View style={styles.permissionView}>
-          <Pictogram name="cameraRequest" />
-          <VSpacer size={24} />
-          <H3 color="white">
-            {I18n.t("idpay.payment.qrCode.scan.permissions.undefined.title")}
-          </H3>
-          <VSpacer size={8} />
-          <LabelSmall
-            weight="Regular"
-            color="white"
-            style={{ textAlign: "center" }}
-          >
-            {I18n.t("idpay.payment.qrCode.scan.permissions.undefined.label")}
-          </LabelSmall>
-          <VSpacer size={32} />
-          <ButtonSolid
-            label={I18n.t(
+        <CameraPermissionView
+          title={I18n.t(
+            "idpay.payment.qrCode.scan.permissions.undefined.title"
+          )}
+          body={I18n.t("idpay.payment.qrCode.scan.permissions.undefined.label")}
+          action={{
+            label: I18n.t(
               "idpay.payment.qrCode.scan.permissions.undefined.action"
-            )}
-            accessibilityLabel={I18n.t(
+            ),
+            accessibilityLabel: I18n.t(
               "idpay.payment.qrCode.scan.permissions.undefined.action"
-            )}
-            onPress={requestCameraPermission}
-            color="contrast"
-            fullWidth={true}
-          />
-        </View>
+            ),
+            onPress: requestCameraPermission
+          }}
+        />
       );
     }
 
     return (
-      <View style={styles.permissionView}>
-        <Pictogram name="cameraRequest" />
-        <VSpacer size={24} />
-        <H3 color="white">
-          {I18n.t("idpay.payment.qrCode.scan.permissions.denied.title")}
-        </H3>
-        <VSpacer size={8} />
-        <LabelSmall
-          weight="Regular"
-          color="white"
-          style={{ textAlign: "center" }}
-        >
-          {I18n.t("idpay.payment.qrCode.scan.permissions.denied.label")}
-        </LabelSmall>
-        <VSpacer size={32} />
-        <ButtonSolid
-          label={I18n.t("idpay.payment.qrCode.scan.permissions.denied.action")}
-          accessibilityLabel={I18n.t(
+      <CameraPermissionView
+        title={I18n.t("idpay.payment.qrCode.scan.permissions.denied.title")}
+        body={I18n.t("idpay.payment.qrCode.scan.permissions.denied.label")}
+        action={{
+          label: I18n.t("idpay.payment.qrCode.scan.permissions.denied.action"),
+          accessibilityLabel: I18n.t(
             "idpay.payment.qrCode.scan.permissions.denied.action"
-          )}
-          onPress={openAppSetting}
-          color="contrast"
-          fullWidth={true}
-        />
-      </View>
+          ),
+          onPress: openAppSetting
+        }}
+      />
     );
   };
 
   return (
     <View style={styles.screen}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
-      <TabNavigation />
+      <BottomTabNavigation />
       <LinearGradient
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
@@ -190,53 +162,6 @@ const CustomHeader = () => {
   );
 };
 
-const CameraMarker = () => (
-  <View style={styles.cameraMarkerContainer}>
-    <CameraScanMarkerSVG width={230} height={230} />
-  </View>
-);
-
-const TabNavigation = () => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-
-  const navigateToCodeInputScreen = () =>
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
-    });
-
-  const showUploadModal = () => {
-    // TODO QRCode upload will be handled in another PR
-    alert("TODO 😄");
-  };
-
-  return (
-    <SafeAreaView style={styles.navigationContainer}>
-      <ContentWrapper>
-        <View style={styles.navigationTabs}>
-          <View style={[styles.tab, styles.tabActive]}>
-            <LabelSmall color="grey-850" weight="Regular">
-              {I18n.t("idpay.payment.qrCode.scan.tabs.scan")}
-            </LabelSmall>
-          </View>
-          <TouchableOpacity style={styles.tab} onPress={showUploadModal}>
-            <LabelSmall color="white" weight="Regular">
-              {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
-            </LabelSmall>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.tab}
-            onPress={navigateToCodeInputScreen}
-          >
-            <LabelSmall color="white" weight="Regular">
-              {I18n.t("idpay.payment.qrCode.scan.tabs.input")}
-            </LabelSmall>
-          </TouchableOpacity>
-        </View>
-      </ContentWrapper>
-    </SafeAreaView>
-  );
-};
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -261,29 +186,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "105%",
     justifyContent: "center"
-  },
-  navigationContainer: {
-    backgroundColor: IOColors["blueIO-850"],
-    margin: 8
-  },
-  navigationTabs: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 24
-  },
-  tab: {
-    width: 100,
-    alignItems: "center",
-    paddingVertical: 8
-  },
-  tabActive: {
-    backgroundColor: IOColors.white,
-    borderRadius: 85
-  },
-  permissionView: {
-    marginHorizontal: 32,
-    alignItems: "center"
   }
 });
 
