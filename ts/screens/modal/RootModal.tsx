@@ -41,9 +41,6 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
         onSubmit={() => {
           dispatch(askUserToRefreshSessionToken.success("yes"));
         }}
-        ButtonStylesProps={{
-          submitButtonStyle: "outline"
-        }}
       />
     );
   }

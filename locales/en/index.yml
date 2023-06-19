@@ -3644,7 +3644,7 @@ unsupportedDevice:
     faq: "Learn more"
 fastLogin:
   userInteraction:
-      sessionExpired:  
-        continueNavigation: 
-          title: "Sessione scaduta"
-          subtitle: "Per motivi di sicurezza le sessioni scadono dopo alcuni minuti ed è necessario effettuare di nuovo l’accesso."
+    sessionExpired: 
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
