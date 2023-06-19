@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { Barcode, BarcodeFormat } from "vision-camera-code-scanner";
-import { retrieveNextBarcode, useIOBarcodeScanner } from "../BarcodeScanner";
+import { retrieveNextBarcode } from "../BarcodeScanner";
 
 describe("test retrieveNextBarcode function", () => {
   it("should return `null` because of an empty array as input", () => {
@@ -52,13 +52,5 @@ describe("test retrieveNextBarcode function", () => {
     const output = O.toUndefined(retrieveNextBarcode(input));
 
     expect(output?.format).toBe(BarcodeFormat.DATA_MATRIX);
-  });
-});
-
-jest.mock("react-native-vision-camera", () => ({}));
-
-describe("test useIOBarcodeScanner hook", () => {
-  it("", () => {
-    const test = useIOBarcodeScanner();
   });
 });
