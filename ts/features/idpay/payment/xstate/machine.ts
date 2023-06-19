@@ -54,7 +54,20 @@ const createIDPayPaymentMachine = () =>
               target: "AUTHORIZING"
             },
             CANCEL_AUTHORIZATION: {
-              actions: "cancelTransaction",
+              target: "CANCELLING"
+            }
+          }
+        },
+        CANCELLING: {
+          tags: [LOADING_TAG],
+          invoke: {
+            id: "deletePayment",
+            src: "deletePayment",
+            onDone: {
+              target: "AUTHORIZATION_CANCELLED"
+            },
+            onError: {
+              actions: "setFailure",
               target: "AUTHORIZATION_FAILURE"
             }
           }
@@ -88,6 +101,14 @@ const createIDPayPaymentMachine = () =>
             }
           }
         },
+        AUTHORIZATION_CANCELLED: {
+          entry: "navigateToResultScreen",
+          on: {
+            EXIT: {
+              actions: "exitAuthorization"
+            }
+          }
+        },
         AUTHORIZATION_FAILURE: {
           entry: "navigateToResultScreen",
           on: {
@@ -108,9 +129,6 @@ const createIDPayPaymentMachine = () =>
         })),
         setFailure: assign((_, event) => ({
           failure: pipe(event.data, O.of, O.filter(PaymentFailure.is))
-        })),
-        cancelTransaction: assign(_ => ({
-          failure: O.some(PaymentFailureEnum.CANCELLED)
         }))
       },
       guards: {

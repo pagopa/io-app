@@ -18,10 +18,12 @@ describe("Test IDPayPaymentResultScreen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
+
   it("should render the screen correctly", () => {
     const { component } = renderComponent();
     expect(component).toBeTruthy();
   });
+
   it("should render the success screen", () => {
     const { component } = renderComponent();
     expect(component).toBeTruthy();
@@ -31,18 +33,6 @@ describe("Test IDPayPaymentResultScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should render the CANCELLED failure screen", () => {
-    const { component } = renderComponent({
-      failure: O.some(PaymentFailureEnum.CANCELLED)
-    });
-    expect(component).toBeTruthy();
-
-    expect(
-      component.getByText(
-        I18n.t("idpay.payment.result.failure.CANCELLED.title")
-      )
-    ).toBeTruthy();
-  });
   it("should render the GENERIC failure screen", () => {
     const { component } = renderComponent({
       failure: O.some(PaymentFailureEnum.GENERIC)
@@ -100,7 +90,8 @@ const renderComponent = (context?: Partial<Context>) => {
     .withConfig({
       services: {
         preAuthorizePayment: jest.fn(),
-        authorizePayment: jest.fn()
+        authorizePayment: jest.fn(),
+        deletePayment: jest.fn()
       },
       actions: {
         exitAuthorization: jest.fn(),

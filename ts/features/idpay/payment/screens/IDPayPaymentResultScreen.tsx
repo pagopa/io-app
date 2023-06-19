@@ -15,28 +15,39 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { PaymentFailure, PaymentFailureEnum } from "../xstate/failure";
 import { usePaymentMachineService } from "../xstate/provider";
-import { selectFailureOption } from "../xstate/selectors";
+import { selectFailureOption, selectIsCancelled } from "../xstate/selectors";
 
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
 
   const failureOption = useSelector(machine, selectFailureOption);
+  const isCancelled = useSelector(machine, selectIsCancelled);
+  const isFailure = useSelector(machine, selectIsCancelled);
 
   const handleClose = () => {
     machine.send("EXIT");
   };
 
-  const content = pipe(
-    failureOption,
-    O.fold(
-      () => <SuccessScreenComponent />,
-      failure => <FailureScreenComponent failure={failure} />
-    )
-  );
+  const renderContent = () => {
+    if (isCancelled) {
+      return <CancelledScreenComponent />;
+    }
+
+    if (!isFailure) {
+      return <SuccessScreenComponent />;
+    }
+
+    return pipe(
+      failureOption,
+      O.chain(failure => O.fromNullable(failureScreenContent[failure])),
+      O.alt(() => O.some(genericErrorContent)),
+      O.map(props => <FailureScreenComponent key={props.title} {...props} />)
+    );
+  };
 
   return (
     <SafeAreaView style={IOStyles.flex}>
-      {content}
+      {renderContent()}
       <FooterWithButtons
         type="SingleButton"
         leftButton={{
@@ -63,26 +74,32 @@ const SuccessScreenComponent = () => (
   </View>
 );
 
-type FailureScreenContent = {
+const CancelledScreenComponent = () => (
+  <View style={styles.resultScreenContainer}>
+    <Pictogram name={"unrecognized"} size={120} />
+    <VSpacer size={24} />
+    <NewH4 style={styles.justifyTextCenter}>
+      {I18n.t("idpay.payment.result.cancelled.title")}
+    </NewH4>
+  </View>
+);
+
+type FailureScreenComponentProps = {
   title: string;
   subtitle?: string;
   icon: IOPictograms;
 };
 
-const genericErrorContent: FailureScreenContent = {
+const genericErrorContent: FailureScreenComponentProps = {
   title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
   subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
   icon: "umbrella"
 };
 
 const failureScreenContent: Partial<
-  Record<PaymentFailure, FailureScreenContent>
+  Record<PaymentFailure, FailureScreenComponentProps>
 > = {
   [PaymentFailureEnum.GENERIC]: genericErrorContent,
-  [PaymentFailureEnum.CANCELLED]: {
-    title: I18n.t("idpay.payment.result.failure.CANCELLED.title"),
-    icon: "unrecognized"
-  },
   [PaymentFailureEnum.REJECTED]: {
     title: I18n.t("idpay.payment.result.failure.REJECTED.title"),
     subtitle: I18n.t("idpay.payment.result.failure.REJECTED.body"),
@@ -100,28 +117,18 @@ const failureScreenContent: Partial<
   }
 };
 
-type FailureScreenComponentProps = {
-  failure: PaymentFailure;
-};
-
 const FailureScreenComponent = (props: FailureScreenComponentProps) => {
-  const { failure } = props;
-
-  const content: FailureScreenContent = pipe(
-    failureScreenContent[failure],
-    O.fromNullable,
-    O.getOrElse(() => genericErrorContent)
-  );
+  const { title, subtitle, icon } = props;
 
   return (
     <View style={styles.resultScreenContainer}>
-      <Pictogram name={content.icon} size={120} />
+      <Pictogram name={icon} size={120} />
       <VSpacer size={24} />
-      <NewH4 style={styles.justifyTextCenter}>{content.title}</NewH4>
-      {content.subtitle && (
+      <NewH4 style={styles.justifyTextCenter}>{title}</NewH4>
+      {subtitle && (
         <>
           <VSpacer size={16} />
-          <Body style={styles.justifyTextCenter}>{content.subtitle}</Body>
+          <Body style={styles.justifyTextCenter}>{subtitle}</Body>
         </>
       )}
     </View>
