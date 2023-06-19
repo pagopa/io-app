@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   SafeAreaView,
@@ -24,23 +24,7 @@ import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
 
 const IDPayPaymentCodeScanScreen = () => {
-  const navigation = useNavigation();
-
-  const [isFocused, setIsFocused] = React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    const unsubscribeFromBlur = navigation.addListener("blur", () =>
-      setIsFocused(false)
-    );
-    const unsubscribeFromFocus = navigation.addListener("focus", () =>
-      setIsFocused(true)
-    );
-
-    return () => {
-      unsubscribeFromBlur();
-      unsubscribeFromFocus();
-    };
-  }, [navigation]);
+  const isFocused = useIsFocused();
 
   const handleBarcodeScanner = (barcode: IOBarcode) => {
     // Execute an haptic feedback
