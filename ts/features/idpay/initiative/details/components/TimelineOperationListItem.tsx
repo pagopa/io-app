@@ -54,9 +54,7 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
       if (operation.channel === ChannelEnum.QRCODE) {
-        return (
-          <Icon name={"productIOAppBlueBackground"} color="bluegreyLight" />
-        );
+        return <Icon name={"productIOAppBlueBg"} color="bluegreyLight" />;
       }
 
       return getCardLogoComponent(operation.brand);

@@ -22,5 +22,8 @@ export const selectIsAuthorizing = (state: StateWithContext) =>
 export const selectIsFailure = (state: StateWithContext) =>
   state.matches("AUTHORIZATION_FAILURE");
 
+export const selectFailureOption = (state: StateWithContext) =>
+  state.context.failure;
+
 export const selectTransactionData = (state: StateWithContext) =>
   pipe(state.context.transactionData, O.toUndefined);
