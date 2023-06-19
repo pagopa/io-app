@@ -63,7 +63,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
               onPress={this.props.onCancel}
               transparent={true}
             >
-              <Icon name="close" color="black" />
+              <Icon name="closeLarge" color="black" />
             </ButtonDefaultOpacity>
           </Right>
         </AppHeader>

@@ -2732,12 +2732,13 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Scopri le agevolazioni
+        buyers: Vedi le agevolazioni CGN
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
-          pending: Scopri di più su EYCA
-          bottomSheet: Vedi le agevolazioni EYCA
+          pending: Vedi le agevolazioni EYCA
+          bottomSheet: Visita il sito di EYCA
+          showEycaDiscounts: Vedi le agevolazioni EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2754,7 +2755,7 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli operatori aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nUsando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
           revoked: Revocata
@@ -3664,8 +3665,8 @@ idpay:
           body: Non hai abbastanza soldi per autorizzare
     qrCode:
       manual:
-        title: Cosa devi pagare?
-        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        title: Autorizza una transazione
+        subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
         input: Codice Transazione
         button: Continua
 unsupportedDevice:  
