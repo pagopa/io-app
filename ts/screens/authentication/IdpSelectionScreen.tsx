@@ -1,11 +1,9 @@
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import AdviceComponent from "../../components/AdviceComponent";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -30,12 +28,14 @@ import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { H1 } from "../../components/core/typography/H1";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../store/reducers/nativeLogin";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
+import { Body } from "../../components/core/typography/Body";
+import ButtonOutline from "../../components/ui/ButtonOutline";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -52,12 +52,19 @@ const TAPS_TO_OPEN_TESTIDP = 5;
 
 const styles = StyleSheet.create({
   gridContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: IOColors.greyUltraLight
   },
-  footerAdviceContainer: {
+  footerContainer: {
+    shadowColor: IOColors.black,
+    shadowOffset: {
+      width: 0,
+      height: -2
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
     backgroundColor: IOColors.white,
-    paddingVertical: variables.spacerLargeHeight,
-    marginTop: variables.contentPadding
+    paddingVertical: variables.spacerLargeHeight
   }
 });
 
@@ -81,6 +88,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
         "AUTHENTICATION_IPD_SELECTION"
       >
     >();
+
+  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
 
   const isNativeLoginFeatureFlagEnabled = useSelector(
     isNativeLoginEnabledSelector
@@ -130,29 +139,15 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const headerComponent = () => <VSpacer size={24} />;
 
   const footerComponent = () => (
-    <View>
-      <VSpacer size={24} />
-      <View style={IOStyles.horizontalContentPadding}>
-        <ButtonDefaultOpacity
-          block={true}
-          light={true}
-          bordered={true}
-          onPress={navigation.goBack}
-        >
-          <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
-        </ButtonDefaultOpacity>
-      </View>
-      <View
-        style={[
-          styles.footerAdviceContainer,
-          IOStyles.horizontalContentPadding
-        ]}
-      >
-        <AdviceComponent
-          text={I18n.t("login.expiration_info")}
-          iconColor={"black"}
-        />
-      </View>
+    <View style={[styles.footerContainer, IOStyles.horizontalContentPadding]}>
+      <ButtonOutline
+        fullWidth
+        accessibilityLabel={I18n.t("global.buttons.cancel")}
+        label={I18n.t("global.buttons.cancel")}
+        onPress={navigation.goBack}
+      />
+
+      <VSpacer size={48} />
     </View>
   );
 
@@ -181,7 +176,13 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
               {I18n.t("authentication.idp_selection.contentTitle")}
             </H1>
           </Pressable>
-          <VSpacer size={24} />
+
+          <Body>
+            {isFastLoginFeatureFlagEnabled
+              ? I18n.t("login.expiration_info_FL")
+              : I18n.t("login.expiration_info")}
+          </Body>
+          <Body>{I18n.t("login.biometric_info")}</Body>
         </View>
 
         <View style={styles.gridContainer}>
@@ -189,9 +190,10 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
             idps={[...props.idps]}
             onIdpSelected={onIdpSelected}
             headerComponent={headerComponent}
-            footerComponent={footerComponent}
           />
         </View>
+
+        {footerComponent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );

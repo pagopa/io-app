@@ -251,7 +251,9 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
+  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
+  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
+  biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o usare il riconoscimento biometrico, se abilitato.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox

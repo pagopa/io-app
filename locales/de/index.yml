@@ -249,7 +249,9 @@ login:
   welcome:
     line1: "Willkommen in deiner"
     line2: "Digitalen Staatsbürgerschaft"
-  expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
+  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
+  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
+  biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o usare il riconoscimento biometrico, se abilitato.
 inbox:
   enableButton: "Posteingang aktivieren"
   disableButton: "Posteingang deaktivieren"
