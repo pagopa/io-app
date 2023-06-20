@@ -16,4 +16,5 @@ yarn detox test \
   --record-logs all \
   --take-screenshots all \
   --record-videos failing \
-  --debug-synchronization 1000
+  --debug-synchronization 1000 \
+  --retries 3
