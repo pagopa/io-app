@@ -1,4 +1,12 @@
-import { e2ePinChar, e2eWaitRenderTimeout } from "./config";
+import {
+  e2ePinChar1,
+  e2ePinChar2,
+  e2ePinChar3,
+  e2ePinChar4,
+  e2ePinChar5,
+  e2ePinChar6,
+  e2eWaitRenderTimeout
+} from "./config";
 
 const onboardingPinTitleId = "pin-creation-form-title";
 
@@ -43,12 +51,12 @@ export const loginWithSPID = async () => {
  * to insert the pin.
  */
 export const insertE2EPin = async () => {
-  await element(by.text(e2ePinChar)).tap();
-  await element(by.text(e2ePinChar)).tap();
-  await element(by.text(e2ePinChar)).tap();
-  await element(by.text(e2ePinChar)).tap();
-  await element(by.text(e2ePinChar)).tap();
-  await element(by.text(e2ePinChar)).tap();
+  await element(by.text(e2ePinChar1)).tap();
+  await element(by.text(e2ePinChar6)).tap();
+  await element(by.text(e2ePinChar2)).tap();
+  await element(by.text(e2ePinChar5)).tap();
+  await element(by.text(e2ePinChar3)).tap();
+  await element(by.text(e2ePinChar4)).tap();
 };
 
 /**
@@ -59,7 +67,12 @@ export const insertE2EPin = async () => {
  */
 export const createE2EPin = async () => {
   const pin =
-    e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar + e2ePinChar;
+    e2ePinChar1 +
+    e2ePinChar6 +
+    e2ePinChar2 +
+    e2ePinChar5 +
+    e2ePinChar3 +
+    e2ePinChar4;
   const wrongPin = "123456";
 
   const onboardingPingFieldInputId = "PinFieldInput";
