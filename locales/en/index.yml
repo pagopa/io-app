@@ -142,6 +142,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    deny: "Deny"
     share: Share
     delete: Delete
     cancel: Cancel
@@ -2711,12 +2712,13 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the benefits
+        buyers: Discover the CGN benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Find out more on EYCA
-          bottomSheet: Check EYCA discounts
+          pending: Check EYCA discounts
+          bottomSheet: Check the EYCA website
+          showEycaDiscounts: Check EYCA discounts
       tos:
         link: Information on the processing of personal data
       information:
@@ -2732,7 +2734,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating operators, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -3613,6 +3615,15 @@ idpay:
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
   payment:
+    authorization:
+      header: "Confermi l’operazione?"
+      toAuth: Da autorizzare
+      amount: Importo del bene
+      businessName: Richiesto da
+      dateTime: Data e Ora
+      infoDivider: "Informazioni sull’iniziativa"
+      initiativeName: Iniziativa
+      availableAmount: Credito disponibile
     result:
       success:
         title: Operazione autorizzata con successo!
@@ -3625,8 +3636,8 @@ idpay:
           title: L’operazione è stata annullata
     qrCode:
       manual:
-        title: Cosa devi pagare?
-        subtitle: Inserisci il codice numerico di 6 cifre riportato sotto al codice QR.
+        title: Authorize a transaction
+        subtitle: Enter the 8 characters shown below the QR code.
         input: Codice Transazione
         button: Continua
 unsupportedDevice:  
