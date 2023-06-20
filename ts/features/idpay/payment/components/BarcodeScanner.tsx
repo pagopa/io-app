@@ -26,11 +26,39 @@ const IOBarcodeFormats = {
 
 export type IOBarcodeFormat = keyof typeof IOBarcodeFormats;
 
+// Types of barcode that can be scanned. Each type comes with its own regex pattern
+// which is used to validate the barcode content
+const IOBarcodePatterns: { [type: string]: RegExp } = {
+  idpay: /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
+};
+
+export type IOBarcodeType = keyof typeof IOBarcodePatterns | "unknown";
+
 /**
- * Scanned barcode, it contains the information about the scanned content and its format
+ * Returns the type of a barcode. Fallbacks to "unknown" if no type is found
+ * @param value Barcode content
+ * @returns Barcode type {@see IOBarcodeType}
+ */
+export const getIOBarcodeType = (value: string | undefined): IOBarcodeType =>
+  pipe(
+    value,
+    O.fromNullable,
+    O.map(value => value.trim()),
+    O.map(value =>
+      Object.keys(IOBarcodePatterns).find(key =>
+        IOBarcodePatterns[key].test(value)
+      )
+    ),
+    O.chain(O.fromNullable),
+    O.getOrElse(() => "unknown")
+  );
+
+/**
+ * Scanned barcode, it contains the information about the scanned content, its format and its type
  */
 export type IOBarcode = {
   format: IOBarcodeFormat;
+  type: IOBarcodeType;
   value: string;
 };
 
@@ -121,16 +149,15 @@ export const retrieveNextBarcode = (
       (barcodes, nextBarcode) => {
         const ioBarcodeFormat = convertToIOBarcodeFormat(nextBarcode.format);
 
-        if (
-          ioBarcodeFormat &&
-          !barcodes[ioBarcodeFormat] &&
-          nextBarcode.displayValue
-        ) {
+        if (ioBarcodeFormat && !barcodes[ioBarcodeFormat]) {
+          const type = getIOBarcodeType(nextBarcode.displayValue);
+
           return {
             ...barcodes,
             [ioBarcodeFormat]: {
               format: ioBarcodeFormat,
-              value: nextBarcode.displayValue
+              value: nextBarcode.displayValue || "",
+              type
             }
           };
         }

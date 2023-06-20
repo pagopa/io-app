@@ -1,13 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { Barcode, BarcodeFormat } from "vision-camera-code-scanner";
-import { retrieveNextBarcode } from "../BarcodeScanner";
+import { getIOBarcodeType, retrieveNextBarcode } from "../BarcodeScanner";
 
 describe("test retrieveNextBarcode function", () => {
-  it("should return `null` because of an empty array as input", () => {
+  it("should return `O.none` because of an empty array as input", () => {
     const input: Array<Barcode> = [];
     const output = retrieveNextBarcode(input);
 
-    expect(output).toBeNull();
+    expect(output).toBe(O.none);
   });
 
   it("should return the Data Matrix barcode because it's the only one", () => {
@@ -17,7 +17,7 @@ describe("test retrieveNextBarcode function", () => {
 
     const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe(BarcodeFormat.DATA_MATRIX);
+    expect(output?.format).toBe("DATA_MATRIX");
   });
 
   it("should return the QR Code barcode because it's the only one", () => {
@@ -27,7 +27,7 @@ describe("test retrieveNextBarcode function", () => {
 
     const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe(BarcodeFormat.QR_CODE);
+    expect(output?.format).toBe("QR_CODE");
   });
   it("should return the QR Code barcode because it has the higher priority", () => {
     const input: Array<Barcode> = [
@@ -38,7 +38,7 @@ describe("test retrieveNextBarcode function", () => {
 
     const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe(BarcodeFormat.QR_CODE);
+    expect(output?.format).toBe("QR_CODE");
   });
 
   it("should return the Data Matrix barcode because it has the higher priority", () => {
@@ -51,6 +51,21 @@ describe("test retrieveNextBarcode function", () => {
 
     const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe(BarcodeFormat.DATA_MATRIX);
+    expect(output?.format).toBe("DATA_MATRIX");
+  });
+});
+
+describe("test getIOBarcodeType function", () => {
+  it("should return unknown if empty value", () => {
+    const input = "";
+    const output = getIOBarcodeType(input);
+
+    expect(output).toBe("unknown");
+  });
+  it("should return idpay", () => {
+    const input = "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg";
+    const output = getIOBarcodeType(input);
+
+    expect(output).toBe("idpay");
   });
 });
