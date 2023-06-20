@@ -74,7 +74,7 @@ const createIDPayPaymentMachine = () =>
                 target: "AUTHORIZATION_FAILURE"
               },
               {
-                actions: "showErrorToast",
+                actions: ["setFailure", "showErrorToast"],
                 target: "AWAITING_USER_CONFIRMATION"
               }
             ]
