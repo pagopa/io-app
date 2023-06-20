@@ -2,7 +2,7 @@ name: Run e2e tests
 on:
   push:
     branches:
-      - master
+      - bundle/it-wallet
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
