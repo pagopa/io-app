@@ -1,15 +1,15 @@
 name: Release new app version
 on:
   push:
-    tags: 
-      - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
+    branches: "bundle/it-wallet"
 jobs:
   run-static-checks:
      uses: ./.github/workflows/staticcheck.yaml
   release-android:
     needs: run-static-checks
-    environment: prod
+    environment: prod-it-wallet
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'release:')
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
@@ -48,6 +48,7 @@ jobs:
     needs: run-static-checks
     environment: prod
     runs-on: macos-12
+    if: contains(github.event.head_commit.message, 'release:')
     steps:
       - id: set-xcode-version
         run: sudo xcode-select -s '/Applications/Xcode_14.2.app/Contents/Developer'
@@ -90,18 +91,18 @@ jobs:
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: ${{secrets.ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD}}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-  notify-new-version:
-    environment: dev
-    runs-on: ubuntu-latest
-    needs:
-        - release-android
-        - release-ios
-    steps:
-      - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - id: setup-node
-        uses: ./.github/actions/setup-composite
-      - id: send-notification
-        run: 'yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
-        env: 
-          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+  #notify-new-version:
+  #  environment: dev
+  #  runs-on: ubuntu-latest
+  #  needs:
+  #      - release-android
+  #      - release-ios
+  #  steps:
+  #    - id: checkout
+  #      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+  #    - id: setup-node
+  #      uses: ./.github/actions/setup-composite
+  #    - id: send-notification
+  #      run: 'yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+  #      env: 
+  #        IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
