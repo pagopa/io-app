@@ -833,13 +833,17 @@ onboarding:
   pin:
     headerTitle: Configura IO
     title: Codice di sblocco
-    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
+    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app. Se supportato, puoi in seguito sostituirlo con l'uso del biometrico.
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco
     tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
     errors:
-      length: Il codice non ha 6 cifre
+      invalid: Il codice non è valido
       match: Il codice non coincide
+    policy:
+      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
+      first: ripetizioni di numeri (es. 000000)
+      second: numeri in sequenza (es. 123456 o 654321)
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -2732,12 +2736,13 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Scopri le agevolazioni
+        buyers: Vedi le agevolazioni CGN
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
-          pending: Scopri di più su EYCA
-          bottomSheet: Vedi le agevolazioni EYCA
+          pending: Vedi le agevolazioni EYCA
+          bottomSheet: Visita il sito di EYCA
+          showEycaDiscounts: Vedi le agevolazioni EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2754,7 +2759,7 @@ bonus:
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli operatori aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nUsando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
         badge:
           active: Attiva
           revoked: Revocata
