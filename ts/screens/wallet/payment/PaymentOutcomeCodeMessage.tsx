@@ -42,7 +42,10 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
   const handleBannerPress = () =>
-    openAuthenticationSession("https://www.google.com", "");
+    openAuthenticationSession(
+      "https://io.italia.it/diccilatua/ces-pagamento",
+      ""
+    );
   const viewRef = React.useRef<View>(null);
   return (
     <View>
@@ -73,9 +76,11 @@ const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
           pictogramName="feedback"
           variant="big"
           viewRef={viewRef}
-          title="SURVEY"
-          content="MAKE SURVEY"
-          action="GO TO SURVEY"
+          title={I18n.t("wallet.outcomeMessage.payment.success.banner.title")}
+          content={I18n.t(
+            "wallet.outcomeMessage.payment.success.banner.content"
+          )}
+          action={I18n.t("wallet.outcomeMessage.payment.success.banner.action")}
           onPress={handleBannerPress}
         />
       </View>
