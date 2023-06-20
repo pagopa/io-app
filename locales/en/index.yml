@@ -817,13 +817,17 @@ onboarding:
   pin:
     headerTitle: IO Settings
     title: Unlock code
-    subTitle: It's a six-digit code that you need to access IO and authorize certain in-app transations.
+    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations. If supported by your device, you can replace it with biometric authentication.
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
     tutorial: You can change the code at any time under Profile > Security
     errors:
-      length: The code must have six digits
+      invalid: The code is not valid
       match: The code doesn’t match
+    policy:
+      headerTitle: "For security reasons, the code must not contain:"
+      first: repeated numbers (e.g. 000000)
+      second: a number sequence (e.g. 123456 or 654321)
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
