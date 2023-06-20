@@ -251,3 +251,6 @@ export const idPayTestToken =
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
+
+// Default pin for dev mode
+export const defaultPin = "162534";
