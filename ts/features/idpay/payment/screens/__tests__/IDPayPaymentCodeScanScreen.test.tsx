@@ -84,8 +84,8 @@ describe("Test IDPayPaymentCodeScanScreen", () => {
 
     fireEvent(buttonComponent, "onPress");
 
-    expect(mockRequestCameraPermission).toHaveBeenCalledTimes(0);
-    expect(mockOpenCameraSettings).toHaveBeenCalledTimes(1);
+    expect(mockRequestCameraPermission).toHaveBeenCalledTimes(1);
+    expect(mockOpenCameraSettings).toHaveBeenCalledTimes(0);
   });
 
   it("should display the denied camera permissions view and let user grant permissions", () => {
