@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - feature/fixFailingCGNe2e
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
