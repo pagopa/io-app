@@ -1,3 +1,6 @@
+// FIX ME: remove this mocked Types when a new backend definition that includes the real ones is released.
+// Jira: https://pagopa.atlassian.net/browse/IOPID-264
+
 import * as t from "io-ts";
 import {
   composeResponseDecoders as compD,

@@ -1,3 +1,6 @@
+// FIX ME: remove this mocked clients when a new backend definition that includes the real ones is released.
+// Jira: https://pagopa.atlassian.net/browse/IOPID-264
+
 import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
 import { identity } from "fp-ts/lib/function";
 import {
