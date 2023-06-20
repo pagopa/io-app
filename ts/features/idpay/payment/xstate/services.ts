@@ -35,7 +35,7 @@ const mapFetchError = (error: unknown): PaymentFailure => {
   if (error === "max-retries") {
     return PaymentFailureEnum.TOO_MANY_REQUESTS;
   }
-  return PaymentFailureEnum.GENERIC as PaymentFailure;
+  return PaymentFailureEnum.GENERIC;
 };
 
 const createServicesImplementation = (client: IDPayClient, token: string) => {
