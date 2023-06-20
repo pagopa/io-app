@@ -375,7 +375,6 @@ export function BackendClient(
     query: () => ({}),
     response_decoder: getSupportTokenDefaultDecoder()
   };
-
   const withBearerToken = withToken(token);
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
