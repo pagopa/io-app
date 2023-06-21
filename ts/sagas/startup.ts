@@ -64,13 +64,9 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../features/lollipop/store/reducers/lollipop";
-import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
-  generateKeyInfo,
-  generateLollipopKeySaga
+  generateLollipopKeySaga,
+  getKeyInfo
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -97,6 +93,7 @@ import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
+import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
 import {
   startAndReturnIdentificationResult,
@@ -247,9 +244,8 @@ export function* initializeApplicationSaga(
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
+  const keyInfo = yield* call(getKeyInfo);
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
@@ -345,6 +341,8 @@ export function* initializeApplicationSaga(
       return;
     }
   }
+
+  const publicKey = yield* select(lollipopPublicKeySelector);
 
   yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
