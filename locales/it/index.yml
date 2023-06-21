@@ -3686,7 +3686,7 @@ idpay:
           denied:
             title: Non hai dato il permesso di usare la fotocamera
             label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
-            action: Apri impostazioni
+            action: Vai alle impostazioni
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"

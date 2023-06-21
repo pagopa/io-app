@@ -3652,18 +3652,18 @@ idpay:
         button: Continua
       scan:
         tabs:
-          scan: Inquadra
-          upload: Carica
-          input: Digita
+          scan: Scan
+          upload: Upload
+          input: Type
         permissions:
           undefined: 
-            title: Ci serve il tuo permesso
-            label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
-            action: Consenti l’accesso
+            title: We need your consent
+            label: Allow access to scan QR codes with your device camera.
+            action: Allow access
           denied:
-            title: Non hai dato il permesso di usare la fotocamera
-            label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
-            action: Apri impostazioni
+            title: You didn't give access to camera
+            label: Browse your device settings to allow camera access.
+            action: Go to settings
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
