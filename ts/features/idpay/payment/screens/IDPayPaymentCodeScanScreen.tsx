@@ -23,7 +23,7 @@ const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
 
   const handleBarcodeScanner = (barcode: IOBarcode) => {
-    if (barcode.type === "idpay") {
+    if (barcode.type === "IDPAY") {
       RNReactNativeHapticFeedback.trigger(HapticFeedbackTypes.impactMedium);
       openWebUrl(barcode.value);
     }

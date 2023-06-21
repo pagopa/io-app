@@ -60,12 +60,21 @@ describe("test getIOBarcodeType function", () => {
     const input = "";
     const output = getIOBarcodeType(input);
 
-    expect(output).toBe("unknown");
+    expect(output).toBe("UNKNOWN");
   });
-  it("should return idpay", () => {
-    const input = "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg";
-    const output = getIOBarcodeType(input);
 
-    expect(output).toBe("idpay");
+  describe("test IDPAY barcode type", () => {
+    it("should return IDPAY on valid QRCode content", () => {
+      const input = "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg";
+      const output = getIOBarcodeType(input);
+
+      expect(output).toBe("IDPAY");
+    });
+    it("should return UNKNOWN on invalid QR content", () => {
+      const input = "https://continua.io.pagopa.it/idpay/auth/pippo";
+      const output = getIOBarcodeType(input);
+
+      expect(output).toBe("UNKNOWN");
+    });
   });
 });

@@ -28,11 +28,11 @@ export type IOBarcodeFormat = keyof typeof IOBarcodeFormats;
 
 // Types of barcode that can be scanned. Each type comes with its own regex pattern
 // which is used to validate the barcode content
-const IOBarcodePatterns: { [type: string]: RegExp } = {
-  idpay: /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
-};
+const IOBarcodePatterns = {
+  IDPAY: /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
+} satisfies { [key: string]: RegExp };
 
-export type IOBarcodeType = keyof typeof IOBarcodePatterns | "unknown";
+export type IOBarcodeType = keyof typeof IOBarcodePatterns | "UNKNOWN";
 
 /**
  * Returns the type of a barcode. Fallbacks to "unknown" if no type is found
@@ -43,14 +43,10 @@ export const getIOBarcodeType = (value: string | undefined): IOBarcodeType =>
   pipe(
     value,
     O.fromNullable,
-    O.map(value => value.trim()),
-    O.map(value =>
-      Object.keys(IOBarcodePatterns).find(key =>
-        IOBarcodePatterns[key].test(value)
-      )
-    ),
+    O.map(value => Object.entries(IOBarcodePatterns).find(([_, pattern]) => pattern.test(value.trim()))),
     O.chain(O.fromNullable),
-    O.getOrElse(() => "unknown")
+    O.map(([type, _pattern]) => type as IOBarcodeType),
+    O.getOrElse<IOBarcodeType>(() => "UNKNOWN")
   );
 
 /**
