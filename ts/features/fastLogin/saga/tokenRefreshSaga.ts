@@ -33,7 +33,7 @@ export function* watchTokenRefreshSaga(): SagaIterator {
 
 type RequestStateType = {
   counter: number;
-  success: boolean;
+  status: "in-progress" | "success" | "max-retries" | "session-expired";
   error: string | undefined;
 };
 
@@ -45,11 +45,11 @@ function* doRefreshTokenSaga() {
   // eslint-disable-next-line functional/no-let
   const requestState: RequestStateType = {
     counter: 0,
-    success: false,
+    status: "in-progress",
     error: undefined
   };
 
-  while (requestState.counter < MAX_RETRYES && !requestState.success) {
+  while (requestState.status === "in-progress") {
     const nonceResponse: SagaCallReturnType<typeof performGetNonce> =
       yield* call(performGetNonce, nonceClient);
 
@@ -71,9 +71,10 @@ function* doRefreshTokenSaga() {
         yield* call(performFastLogin, fastLoginClient);
       if (E.isRight(tokenResponse) && tokenResponse.right.status === 200) {
         // eslint-disable-next-line functional/immutable-data
-        requestState.success = true;
+        requestState.status = "success";
 
-        // TODO: replace the token response type with the correct one.
+        // FIX ME: replace the token response type with the correct one.
+        // Jira: https://pagopa.atlassian.net/browse/IOPID-264
 
         const newToken = tokenResponse.right.value.token as SessionToken;
         yield* put(refreshSessionToken.success(newToken));
@@ -89,7 +90,12 @@ function* doRefreshTokenSaga() {
     }
   }
 
-  if (requestState.error) {
+  // TODO: differentiate between the two error types
+  // Jira: https://pagopa.atlassian.net/browse/IOPID-316
+  if (
+    requestState.status === "session-expired" ||
+    requestState.status === "max-retries"
+  ) {
     yield* put(refreshSessionToken.failure(new Error(requestState.error)));
     yield* put(sessionExpired());
   }
@@ -103,7 +109,7 @@ const handleRequestError = (
     | NonceBaseResponseType<NonceResponse>
   >
 ) => {
-  const errorDescription: ErrorDescription = pipe(
+  const errorDescription: FastLoginTokenRefreshError = pipe(
     response,
     E.fold(
       validationErrors => ({
@@ -115,19 +121,29 @@ const handleRequestError = (
       })
     )
   );
+
   // eslint-disable-next-line functional/immutable-data
   requestState.error = errorDescription.description;
 
-  if (errorDescription.status === 403 || errorDescription.status === 401) {
+  if (errorDescription.status === 403) {
     // eslint-disable-next-line functional/immutable-data
-    requestState.success = true;
+    requestState.status = "session-expired";
     return;
   }
+
+  if (requestState.counter === MAX_RETRYES - 1) {
+    // eslint-disable-next-line functional/immutable-data
+    requestState.status = "max-retries";
+    return;
+  }
+
+  // eslint-disable-next-line functional/immutable-data
+  requestState.status = "in-progress";
   // eslint-disable-next-line functional/immutable-data
   requestState.counter++;
 };
 
-type ErrorDescription = {
+type FastLoginTokenRefreshError = {
   status?: number;
   description: string;
 };
