@@ -833,13 +833,17 @@ onboarding:
   pin:
     headerTitle: Configura IO
     title: Codice di sblocco
-    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app.
+    subTitle: È un codice a 6 cifre che ti serve per accedere a IO e autorizzare alcune operazioni in app. Se supportato, puoi in seguito sostituirlo con l'uso del biometrico.
     pinLabel: Crea codice di sblocco
     pinConfirmationLabel: Ripeti codice di sblocco
     tutorial: Potrai modificare il codice in ogni momento in Profilo > Sicurezza
     errors:
-      length: Il codice non ha 6 cifre
+      invalid: Il codice non è valido
       match: Il codice non coincide
+    policy:
+      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
+      first: ripetizioni di numeri (es. 000000)
+      second: numeri in sequenza (es. 123456 o 654321)
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -3647,6 +3651,7 @@ idpay:
       infoDivider: "Informazioni sull’iniziativa"
       initiativeName: Iniziativa
       availableAmount: Credito disponibile
+      error: C’è stato un errore, riprova
     result:
       success:
         title: Operazione autorizzata con successo!
@@ -3657,6 +3662,15 @@ idpay:
           body: Non è stato addebitato alcun importo.
         CANCELLED: 
           title: L’operazione è stata annullata
+        REJECTED:
+          title: Autorizzazione negata
+          body: Testo TBD
+        EXPIRED:
+          title: La sessione è scaduta
+          body: Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+        BUDGET_EXHAUSTED:
+          title: Autorizzazione negata
+          body: Non hai abbastanza soldi per autorizzare
     qrCode:
       manual:
         title: Autorizza una transazione
