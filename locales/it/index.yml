@@ -370,7 +370,7 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Informativa e Condizioni d'uso
+        title: Informativa Privacy e Termini e condizioni d'uso
         description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
@@ -823,7 +823,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
-    accept: Accetta
+    accept: Accetta e continua
     error: Errore nel caricamento
     alert:
       title: Attenzione

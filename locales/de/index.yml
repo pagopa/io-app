@@ -365,7 +365,7 @@ profile:
             confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
           error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
-        title: "Datenschutz und Nutzungsbedingungen"
+        title: Informativa Privacy e Termini e condizioni d'uso
         description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
         header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
         updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
@@ -741,7 +741,7 @@ onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
     headerTitle: "IO einrichten"
-    accept: "Akzeptieren"
+    accept: Accetta e continua
     error: "Ladefehler"
     alert:
       title: "Achtung"

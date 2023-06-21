@@ -370,7 +370,7 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy & Terms
+        title: Informativa Privacy e Termini e condizioni d'uso
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
@@ -807,7 +807,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    accept: Accept
+    accept: Accetta e continua
     error: Loading error
     alert:
       title: Attention
