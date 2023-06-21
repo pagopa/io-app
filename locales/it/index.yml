@@ -3647,6 +3647,7 @@ idpay:
       infoDivider: "Informazioni sull’iniziativa"
       initiativeName: Iniziativa
       availableAmount: Credito disponibile
+      error: C’è stato un errore, riprova
     result:
       success:
         title: Operazione autorizzata con successo!
@@ -3657,6 +3658,15 @@ idpay:
           body: Non è stato addebitato alcun importo.
         CANCELLED: 
           title: L’operazione è stata annullata
+        REJECTED:
+          title: Autorizzazione negata
+          body: Testo TBD
+        EXPIRED:
+          title: La sessione è scaduta
+          body: Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+        BUDGET_EXHAUSTED:
+          title: Autorizzazione negata
+          body: Non hai abbastanza soldi per autorizzare
     qrCode:
       manual:
         title: Autorizza una transazione
