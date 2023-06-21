@@ -162,14 +162,14 @@ const DocumentWithSignature = (props: Props) => {
     () =>
       pot.fold(
         parsedDocuments.drawnDocument,
-        () => <LoadingView />, // foldNone:
-        () => <LoadingView />, // foldNoneLoading:
-        () => <LoadingView />, // foldNoneUpdating:
-        () => <ErrorView />, // foldNoneError:
-        some => <RenderPdf document={some.document} page={some.page} />, // foldSome:
-        () => <LoadingView />, // foldSomeLoading:
-        () => <LoadingView />, // foldSomeUpdating:
-        () => <ErrorView /> // foldSomeError:
+        () => <LoadingView />,
+        () => <LoadingView />,
+        () => <LoadingView />,
+        () => <ErrorView />,
+        some => <RenderPdf document={some.document} page={some.page} />,
+        () => <LoadingView />,
+        () => <LoadingView />,
+        () => <ErrorView />
       ),
     [ErrorView, RenderPdf, parsedDocuments.drawnDocument]
   );
