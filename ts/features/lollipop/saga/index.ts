@@ -10,7 +10,10 @@ import {
   getPublicKey,
   PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopRemovePublicKey,
@@ -184,6 +187,12 @@ function* generateCryptoKeyPair(keyTag: string) {
       yield* call(trackLollipopKeyGenerationFailure, message);
     }
   }
+}
+
+export function* getKeyInfo() {
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  return yield* call(generateKeyInfo, keyTag, publicKey);
 }
 
 export const generateKeyInfo = (

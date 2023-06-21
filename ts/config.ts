@@ -31,6 +31,9 @@ const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 // default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
+// default fast login max retries
+const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
+
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
@@ -215,6 +218,12 @@ export const pinPukHelpUrl: string = pipe(
     () =>
       "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk"
   )
+);
+
+export const fastLoginMaxRetries = pipe(
+  parseInt(Config.FAST_LOGIN_MAX_RETRIES, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FAST_LOGIN_MAX_RETRIES)
 );
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;

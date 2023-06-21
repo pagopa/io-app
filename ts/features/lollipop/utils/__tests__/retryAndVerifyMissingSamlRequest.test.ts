@@ -28,6 +28,7 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       "loginUri",
       "keyTag",
       false,
+      false,
       dispatch
     );
     expect(E.isLeft(result)).toBeTruthy();
