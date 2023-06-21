@@ -26,6 +26,7 @@ import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/o
 import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
+import { mixpanelTrack } from "../../../mixpanel";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -41,11 +42,16 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
-  const handleBannerPress = () =>
-    openAuthenticationSession(
+  const handleBannerPress = () => {
+    void mixpanelTrack("VOC_USER_EXIT", {
+      screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
+    });
+
+    return openAuthenticationSession(
       "https://io.italia.it/diccilatua/ces-pagamento",
       ""
     );
+  };
   const viewRef = React.useRef<View>(null);
   return (
     <View>
