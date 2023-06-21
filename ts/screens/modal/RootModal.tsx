@@ -41,6 +41,14 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
         onSubmit={() => {
           dispatch(askUserToRefreshSessionToken.success("yes"));
         }}
+        buttonStylesProps={{
+          submitButtonStyle: {
+            type: "solid",
+            title: I18n.t(
+              "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
+            )
+          }
+        }}
       />
     );
   }

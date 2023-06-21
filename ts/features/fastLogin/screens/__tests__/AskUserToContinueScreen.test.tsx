@@ -20,7 +20,7 @@ const defaultProps = {
   pictogramName: "timeout" as IOPictograms,
   onSubmit: jest.fn(),
   onClose: jest.fn(),
-  onExit: jest.fn(),
+  onCancel: jest.fn(),
   onTimerExpired: jest.fn(),
   timerDurationInSeconds: 10
 };
@@ -32,11 +32,11 @@ describe("AskUserToContinueScreen component", () => {
     expect(getByText(defaultProps.title)).toBeTruthy();
     expect(getByText(defaultProps.subtitle)).toBeTruthy();
     const continueButton = getByText("Continue");
-    const exitButton = getByText("Exit");
+    const cancelButton = getByText("Cancel");
     const headerCloseButton = getByTestId("header-close-button");
     const countdownTimer = getByText("00:10");
     expect(continueButton).toBeTruthy();
-    expect(exitButton).toBeTruthy();
+    expect(cancelButton).toBeTruthy();
     expect(headerCloseButton).toBeTruthy();
     expect(countdownTimer).toBeTruthy();
     expect(getByTestId("countdown-timer")).toBeTruthy();
@@ -49,14 +49,14 @@ describe("AskUserToContinueScreen component", () => {
     expect(defaultProps.onSubmit).toHaveBeenCalled();
   });
 
-  it("should call onExit when the exit button is pressed", () => {
+  it("should call onCancel when the exit button is pressed", () => {
     const { getByText } = renderComponent(defaultProps, store);
-    const button = getByText("Exit");
+    const button = getByText("Cancel");
     fireEvent.press(button);
-    expect(defaultProps.onExit).toHaveBeenCalled();
+    expect(defaultProps.onCancel).toHaveBeenCalled();
   });
 
-  it("should call onExit when the close button is pressed", () => {
+  it("should call onClose when the close button is pressed", () => {
     const { getByTestId } = renderComponent(defaultProps, store);
     const button = getByTestId("header-close-button");
     fireEvent.press(button);
@@ -65,10 +65,10 @@ describe("AskUserToContinueScreen component", () => {
 
   it("does not render exit button if onExit prop is not provided", () => {
     const { queryByText } = renderComponent(
-      _.omit(defaultProps, "onExit"),
+      _.omit(defaultProps, "onCancel"),
       store
     );
-    expect(queryByText("Exit")).toBeNull();
+    expect(queryByText("Cancel")).toBeNull();
   });
 
   it("does not render close button if onExit prop is not provided", () => {

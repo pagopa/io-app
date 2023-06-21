@@ -38,14 +38,20 @@ const styles = StyleSheet.create({
   }
 });
 
-type ButtonStyle = "solid" | "outline";
+type ButtonStyle = {
+  type: "solid" | "outline";
+  title: string;
+};
 type ButtonStylesProps = {
   submitButtonStyle: ButtonStyle;
-  exitButtonStyle?: ButtonStyle;
+  cancelButtonStyle?: ButtonStyle;
 };
 const DefaultButtonStylesProps: ButtonStylesProps = {
-  submitButtonStyle: "solid",
-  exitButtonStyle: "outline"
+  submitButtonStyle: {
+    type: "solid",
+    title: I18n.t("global.buttons.continue")
+  },
+  cancelButtonStyle: { type: "outline", title: I18n.t("global.buttons.cancel") }
 };
 
 const DEFAULT_TIMER_DURATION = 60;
@@ -55,11 +61,11 @@ export type Props = {
   subtitle: string;
   pictogramName: IOPictograms;
   onSubmit: () => void;
-  onExit?: () => void;
+  onCancel?: () => void;
   onClose?: () => void;
   onTimerExpired?: () => void;
   timerDurationInSeconds?: number;
-  ButtonStylesProps?: ButtonStylesProps;
+  buttonStylesProps?: ButtonStylesProps;
 };
 
 // This component doesn't need a BaseHeaderComponent.
@@ -68,21 +74,24 @@ export type Props = {
 const AskUserToContinueScreen = (props: Props) => {
   useAvoidHardwareBackButton();
 
-  const { submitButtonStyle, exitButtonStyle } =
-    props.ButtonStylesProps || DefaultButtonStylesProps;
+  const { submitButtonStyle, cancelButtonStyle } =
+    props.buttonStylesProps || DefaultButtonStylesProps;
 
-  const exitButtonProps = {
+  const cancelButtonTitle =
+    cancelButtonStyle?.title || I18n.t("global.buttons.exit");
+  const cancelButtonProps = {
     fullWidth: true,
-    onPress: (_: GestureResponderEvent) => props.onExit && props.onExit(),
-    label: I18n.t("global.buttons.exit"),
-    accessibilityLabel: I18n.t("global.buttons.exit")
+    onPress: (_: GestureResponderEvent) => props.onCancel && props.onCancel(),
+    label: cancelButtonTitle,
+    accessibilityLabel: cancelButtonTitle
   };
 
+  const submitButtonTitle = submitButtonStyle.title;
   const submitButtonProps = {
     fullWidth: true,
     onPress: (_: GestureResponderEvent) => props.onSubmit(),
-    label: I18n.t("global.buttons.continue"),
-    accessibilityLabel: I18n.t("global.buttons.continue")
+    label: submitButtonTitle,
+    accessibilityLabel: submitButtonTitle
   };
 
   return (
@@ -109,20 +118,20 @@ const AskUserToContinueScreen = (props: Props) => {
           )}
         </View>
         <View style={styles.buttonContainer}>
-          {props.onExit && (
+          {props.onCancel && (
             <>
               <View style={IOStyles.flex}>
-                {exitButtonStyle === "outline" ? (
-                  <ButtonOutline {...exitButtonProps} />
+                {cancelButtonStyle?.type === "outline" ? (
+                  <ButtonOutline {...cancelButtonProps} />
                 ) : (
-                  <ButtonSolid {...exitButtonProps} />
+                  <ButtonSolid {...cancelButtonProps} />
                 )}
               </View>
               <HSpacer size={16} />
             </>
           )}
           <View style={IOStyles.flex}>
-            {submitButtonStyle === "solid" ? (
+            {submitButtonStyle.type === "solid" ? (
               <ButtonSolid {...submitButtonProps} />
             ) : (
               <ButtonOutline {...submitButtonProps} />
