@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.36.0-rc.0](https://github.com/pagopa/io-app/compare/2.35.0-rc.1...2.36.0-rc.0) (2023-06-20)
+
+
+### Features
+
+* [[IOBP-6](https://pagopa.atlassian.net/browse/IOBP-6)] Addition of pre-error mapping IDPay post-auth screens ([#4682](https://github.com/pagopa/io-app/issues/4682)) ([34cba40](https://github.com/pagopa/io-app/commit/34cba408a45bbd80c32ed87971eb3d0f3ae47f86))
+* [[IOBP-70](https://pagopa.atlassian.net/browse/IOBP-70)] Addition of idpay payment auth page ([#4680](https://github.com/pagopa/io-app/issues/4680)) ([fd30bc0](https://github.com/pagopa/io-app/commit/fd30bc0d09861a1f4223ba440e3d995387a4c40f))
+* [[IOPID-311](https://pagopa.atlassian.net/browse/IOPID-311),[IOPID-312](https://pagopa.atlassian.net/browse/IOPID-312)] Pin policy ([#4688](https://github.com/pagopa/io-app/issues/4688)) ([17ef422](https://github.com/pagopa/io-app/commit/17ef422d66e25ba0e8624022fcd1292b25724f4c))
+* [[PE-413](https://pagopa.atlassian.net/browse/PE-413)] Add icon button to copy EYCA card number and change of EYCA refs website ([#4689](https://github.com/pagopa/io-app/issues/4689)) ([5efce78](https://github.com/pagopa/io-app/commit/5efce786887549d8aab3ca45913a81114cb44fb3))
+
+
+### Bug Fixes
+
+* [[IOBP-84](https://pagopa.atlassian.net/browse/IOBP-84)] Fix visual glitches on Android devices ([#4686](https://github.com/pagopa/io-app/issues/4686)) ([e97f2cf](https://github.com/pagopa/io-app/commit/e97f2cff1793001ad6ae5514d65f324c612fad1a)), closes [/github.com/pagopa/io-app/pull/4686/files#diff-be49b25519dc58654607509a01e652550612d663b69e725bc1755cd3af893e3](https://github.com/pagopa//github.com/pagopa/io-app/pull/4686/files/issues/diff-be49b25519dc58654607509a01e652550612d663b69e725bc1755cd3af893e3) [/github.com/pagopa/io-app/pull/4686/files#diff-a572623e06de55ed1f5b04ac7f6652a612c500ca7fd00b72dd24e0a42eb1ed30](https://github.com/pagopa//github.com/pagopa/io-app/pull/4686/files/issues/diff-a572623e06de55ed1f5b04ac7f6652a612c500ca7fd00b72dd24e0a42eb1ed30) [/github.com/pagopa/io-app/pull/4686/files#diff-f7ee97294ece37f95074427629a1371d562c1362a66ce188ad0a7a7f5a4ecd37](https://github.com/pagopa//github.com/pagopa/io-app/pull/4686/files/issues/diff-f7ee97294ece37f95074427629a1371d562c1362a66ce188ad0a7a7f5a4ecd37) [/github.com/pagopa/io-app/pull/4686/files#diff-9563abc84afa7963c9e7003f0a06e705c88a054a17493935ab917e899dd9d135](https://github.com/pagopa//github.com/pagopa/io-app/pull/4686/files/issues/diff-9563abc84afa7963c9e7003f0a06e705c88a054a17493935ab917e899dd9d135)
+* [[IOBP-87](https://pagopa.atlassian.net/browse/IOBP-87)] Fix IDPay transaction code format ([#4692](https://github.com/pagopa/io-app/issues/4692)) ([4ca792d](https://github.com/pagopa/io-app/commit/4ca792d9be4b8b73996bbea5e60bc314c5c7c33c))
+* [[IOPLT-24](https://pagopa.atlassian.net/browse/IOPLT-24)] Fixes wrong behaviour on padding with a footer ([#4691](https://github.com/pagopa/io-app/issues/4691)) ([1e8c4f2](https://github.com/pagopa/io-app/commit/1e8c4f23ca767094d99e1d57d3c2fbd77c4d374e))
+* **Firma con IO:** [[SFEQS-1258](https://pagopa.atlassian.net/browse/SFEQS-1258)] Disable PDF annotation  ([#4690](https://github.com/pagopa/io-app/issues/4690)) ([4651168](https://github.com/pagopa/io-app/commit/46511686758dbf48ceafe01fa5e99cab3861c5b4))
+
+
+### Chores
+
+* [[IOAPPFD0-104](https://pagopa.atlassian.net/browse/IOAPPFD0-104)] Add `RadioListItem` and `RadioGroup` components ([#4653](https://github.com/pagopa/io-app/issues/4653)) ([80a74ad](https://github.com/pagopa/io-app/commit/80a74adc4184e97047c8e58ab5617ec6c105d063))
+* [[IOAPPFD0-105](https://pagopa.atlassian.net/browse/IOAPPFD0-105)] Add the new `focused` state icons to the main navbar ([#4657](https://github.com/pagopa/io-app/issues/4657)) ([6e4f0e7](https://github.com/pagopa/io-app/commit/6e4f0e714a6a0b253a2ec3ebb2d5cd7f20da86b8))
+* [[IOAPPFD0-111](https://pagopa.atlassian.net/browse/IOAPPFD0-111)] Visual improvements to the bottom sheet ([#4676](https://github.com/pagopa/io-app/issues/4676)) ([0521d9e](https://github.com/pagopa/io-app/commit/0521d9eca4bf4f046a0a1588397b625341f0aae3))
+* Removes changelog content prior to 2.0.0 version ([bd52614](https://github.com/pagopa/io-app/commit/bd52614db7ff73c9f2954529b719e985c76c30e2))
+
 ## [2.35.0-rc.1](https://github.com/pagopa/io-app/compare/2.35.0-rc.0...2.35.0-rc.1) (2023-06-13)
 
 

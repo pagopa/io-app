@@ -20,6 +20,7 @@ import {
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -36,6 +37,7 @@ export const useLollipopLoginSource = (
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+  const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -115,7 +117,8 @@ export const useLollipopLoginSource = (
                 uri: loginUri,
                 headers: getLollipopLoginHeaders(
                   key,
-                  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+                  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+                  isFastLogin
                 )
               })
           )
