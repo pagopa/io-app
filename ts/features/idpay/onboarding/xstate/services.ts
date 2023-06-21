@@ -129,11 +129,16 @@ const createServicesImplementation = (
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         response => {
-          if (response.status === 204) {
-            return Promise.resolve(undefined);
+          switch (response.status) {
+            case 204:
+              return Promise.resolve(undefined);
+            case 403:
+              const prerequisitesError = response.value.details;
+              const failure = prerequisitesErrorToFailure[prerequisitesError];
+              return Promise.reject(failure);
+            default:
+              return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
-
-          return Promise.reject(OnboardingFailureEnum.GENERIC);
         }
       )
     );
