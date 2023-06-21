@@ -1,8 +1,8 @@
 name: Periodic Rebase
 
 on:
-  push:
-    branches: bundle/it-wallet
+  schedule:
+    - cron:  '0 0 * * *'
 
 jobs:
   rebase:
@@ -19,4 +19,4 @@ jobs:
           git config --global user.email "mario.perrotta@pagopa.it"
           git config --global user.name "hevelius"
           git fetch origin
-          git rebase origin/main
+          git rebase origin/master
