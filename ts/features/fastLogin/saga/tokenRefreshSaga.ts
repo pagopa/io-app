@@ -16,7 +16,7 @@ import {
   performFastLogin,
   performGetNonce
 } from "../backend";
-import { apiUrlPrefix } from "../../../config";
+import { apiUrlPrefix, fastLoginMaxRetries } from "../../../config";
 import { SagaCallReturnType } from "../../../types/utils";
 import { LollipopConfig } from "../../lollipop";
 import { getKeyInfo } from "../../lollipop/saga";
@@ -37,7 +37,7 @@ type RequestStateType = {
   error: string | undefined;
 };
 
-const MAX_RETRYES = 3;
+const MAX_RETRIES = fastLoginMaxRetries;
 
 function* doRefreshTokenSaga() {
   const nonceClient = createNonceClient(apiUrlPrefix);
@@ -131,7 +131,7 @@ const handleRequestError = (
     return;
   }
 
-  if (requestState.counter === MAX_RETRYES - 1) {
+  if (requestState.counter === MAX_RETRIES - 1) {
     // eslint-disable-next-line functional/immutable-data
     requestState.status = "max-retries";
     return;
