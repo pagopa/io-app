@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.35.0-rc.1",
+  "version": "2.36.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v10.13.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.25/definitions.yml",
