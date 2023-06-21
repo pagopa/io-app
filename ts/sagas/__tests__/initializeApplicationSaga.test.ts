@@ -180,7 +180,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(401) // checksession
       .next(true) // FastLogin FF
-      .put(refreshSessionToken.request());
+      .put(refreshSessionToken.request({ withUserInteraction: false }));
   });
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {

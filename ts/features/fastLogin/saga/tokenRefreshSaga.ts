@@ -43,6 +43,13 @@ export function* watchTokenRefreshSaga(): SagaIterator {
 function* handleRefreshSessionToken(
   _: ReturnType<typeof refreshSessionToken.request>
 ) {
+  const { withUserInteraction } = _.payload;
+
+  if (!withUserInteraction) {
+    yield* call(doRefreshTokenSaga);
+    return;
+  }
+
   yield* put(askUserToRefreshSessionToken.request());
   const userAnswerAction = yield* take(
     getType(askUserToRefreshSessionToken.success)
@@ -54,7 +61,7 @@ function* handleRefreshSessionToken(
     yield* put(identificationRequest(true, false));
     const result = yield* take([identificationSuccess, identificationFailure]);
     if (result.type === getType(identificationSuccess)) {
-      yield* doRefreshTokenSaga();
+      yield* call(doRefreshTokenSaga);
     }
   } else {
     // Lock the app
@@ -111,7 +118,9 @@ function* doRefreshTokenSaga() {
         const newToken = tokenResponse.right.value.token as SessionToken;
         yield* put(refreshSessionToken.success(newToken));
         // Reinit all backend clients to use the new token
-        yield* put(startApplicationInitialization());
+        yield* put(
+          startApplicationInitialization({ handleSessionExpiration: true })
+        );
       } else {
         yield* delay(1000);
         handleRequestError(requestState, tokenResponse);

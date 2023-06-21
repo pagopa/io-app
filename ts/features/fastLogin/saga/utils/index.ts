@@ -34,7 +34,7 @@ export function* withRefreshApiCall<R, A extends Action>(
 export function* handleSessionExpiredSaga() {
   const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
   if (isFastLoginEnabled) {
-    yield* put(refreshSessionToken.request());
+    yield* put(refreshSessionToken.request({ withUserInteraction: true }));
   } else {
     yield* put(sessionExpired());
   }

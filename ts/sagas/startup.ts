@@ -47,7 +47,10 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import { sessionExpired } from "../store/actions/authentication";
+import {
+  refreshSessionToken,
+  sessionExpired
+} from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -268,7 +271,7 @@ export function* initializeApplicationSaga(
     if (!isFastLoginEnabled) {
       yield* put(sessionExpired());
     } else {
-      // FIXME: handle isFastLogin Logic. https://pagopa.atlassian.net/browse/IOPID-315
+      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
     }
     return;
   }
@@ -429,7 +432,10 @@ export function* initializeApplicationSaga(
       return;
     }
 
-    // FIXME: handle isFastLogin Logic. https://pagopa.atlassian.net/browse/IOPID-315
+    const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+    if (isFastLoginEnabled) {
+      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+    }
   }
 
   // Ask to accept ToS if there is a new available version
