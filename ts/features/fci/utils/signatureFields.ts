@@ -226,7 +226,7 @@ const drawRectangleOverSignatureFieldById = async (
       page
     };
   } else {
-    throw new Error(); // TO:DO refactor with fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
+    throw new Error(); // TODO: refactor with fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
   }
 };
 
