@@ -161,17 +161,19 @@ const DocumentWithSignature = (props: Props) => {
   const RenderMask = React.useCallback(
     () =>
       pot.fold(
-        parsedDocuments.drawnDocument,
+        parsedDocuments,
         () => <LoadingView />,
         () => <LoadingView />,
         () => <LoadingView />,
         () => <ErrorView />,
-        some => <RenderPdf document={some.document} page={some.page} />,
+        some => (
+          <RenderPdf document={some.drawnBase64} page={some.signaturePage} />
+        ),
         () => <LoadingView />,
         () => <LoadingView />,
         () => <ErrorView />
       ),
-    [ErrorView, RenderPdf, parsedDocuments.drawnDocument]
+    [ErrorView, RenderPdf, parsedDocuments]
   );
 
   return (

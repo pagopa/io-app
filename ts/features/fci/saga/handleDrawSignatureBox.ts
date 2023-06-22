@@ -1,13 +1,9 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
-import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { parsePdfAsBase64, drawSignatureField } from "../utils/signatureFields";
-import {
-  fciSignatureFieldDrawingRawDocumentSelector,
-  fciSignatureFieldDrawingRawUriSelector
-} from "../store/reducers/fciSignatureFieldDrawing";
+import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { getError } from "../../../utils/errors";
 
@@ -22,19 +18,18 @@ export function* handleDrawSignatureBox(
   action: ActionType<typeof fciDocumentSignatureFields.request>
 ): SagaIterator {
   try {
-    const cachedUri = yield* select(fciSignatureFieldDrawingRawUriSelector);
-    if (cachedUri === action.payload.uri) {
-      const cachedDoc = yield* select(
-        fciSignatureFieldDrawingRawDocumentSelector
-      );
+    const state = yield* select(fciSignatureFieldDrawingSelector);
+    if (pot.isSome(state) && state.value.uri === action.payload.uri) {
       const res = yield* call(
         drawSignatureField,
-        cachedDoc,
+        state.value.rawBase64,
         action.payload.attrs
       );
       yield* put(
         fciDocumentSignatureFields.success({
-          drawnDocument: pot.some(res)
+          ...state.value,
+          drawnBase64: res.drawn,
+          signaturePage: res.signaturePage
         })
       );
     } else {
@@ -46,11 +41,10 @@ export function* handleDrawSignatureBox(
       );
       yield* put(
         fciDocumentSignatureFields.success({
-          rawDocument: {
-            document: O.some(parsedDoc),
-            uri: O.some(action.payload.uri)
-          },
-          drawnDocument: pot.some(res)
+          rawBase64: parsedDoc,
+          uri: action.payload.uri,
+          drawnBase64: res.drawn,
+          signaturePage: res.signaturePage
         })
       );
     }

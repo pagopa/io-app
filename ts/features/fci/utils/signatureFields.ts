@@ -12,7 +12,6 @@ import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 import { TranslationKeys } from "../../../../locales/locales";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
-import { DrawnDocument } from "../store/reducers/fciSignatureFieldDrawing";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
@@ -197,7 +196,7 @@ const savePdfDocumentoAsBase64 = async (parsedPdf: PDFDocument) => {
 const drawRectangleOverSignatureFieldById = async (
   bytes: string,
   uniqueName: string
-): Promise<DrawnDocument> => {
+) => {
   const parsedPdf = await PDFDocument.load(addBase64PdfUriScheme(bytes));
   const pageRef = parsedPdf.findPageForAnnotationRef(
     parsedPdf.getForm().getSignature(uniqueName).ref
@@ -221,12 +220,13 @@ const drawRectangleOverSignatureFieldById = async (
       opacity: 0.5,
       borderOpacity: 0.75
     });
+    const base64 = await savePdfDocumentoAsBase64(parsedPdf);
     return {
-      document: await savePdfDocumentoAsBase64(parsedPdf),
-      page
+      drawn: base64,
+      signaturePage: page
     };
   } else {
-    throw new Error(); // TODO: refactor with fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
+    throw new Error(); // TO:DO refactor with fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
   }
 };
 
@@ -243,7 +243,7 @@ const drawRectangleOverSignatureFieldById = async (
 const drawRectangleOverSignatureFieldByCoordinates = async (
   bytes: string,
   attrs: SignatureFieldToBeCreatedAttrs
-): Promise<DrawnDocument> => {
+) => {
   const parsedPdf = await PDFDocument.load(addBase64PdfUriScheme(bytes));
   const page = attrs.page;
   parsedPdf.getPage(page).drawRectangle({
@@ -255,9 +255,10 @@ const drawRectangleOverSignatureFieldByCoordinates = async (
     opacity: 0.5,
     borderOpacity: 0.75
   });
+  const base64 = await savePdfDocumentoAsBase64(parsedPdf);
   return {
-    document: await savePdfDocumentoAsBase64(parsedPdf),
-    page
+    drawn: base64,
+    signaturePage: page
   };
 };
 
