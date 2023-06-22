@@ -12,7 +12,6 @@ import {
   continueWithRootOrJailbreak,
   customEmailChannelSetEnabled,
   preferenceFingerprintIsEnabledSaveSuccess,
-  preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess,
@@ -32,7 +31,6 @@ export type PersistedPreferencesState = Readonly<{
   preferredLanguage?: Locales;
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
-  isExperimentalFeaturesEnabled: boolean;
   // TODO: create transformer for Option objects and use Option instead of pot
   //       https://www.pivotaltracker.com/story/show/170998374
   isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
@@ -49,7 +47,6 @@ export const initialPreferencesState: PersistedPreferencesState = {
   preferredLanguage: undefined,
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
-  isExperimentalFeaturesEnabled: false,
   isCustomEmailChannelEnabled: pot.none,
   continueWithRootOrJailbreak: false,
   isMixpanelEnabled: null,
@@ -96,13 +93,6 @@ export default function preferencesReducer(
     return {
       ...state,
       isPagoPATestEnabled: action.payload.isPagoPATestEnabled
-    };
-  }
-
-  if (isActionOf(preferencesExperimentalFeaturesSetEnabled, action)) {
-    return {
-      ...state,
-      isExperimentalFeaturesEnabled: action.payload
     };
   }
 

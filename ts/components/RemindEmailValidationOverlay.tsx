@@ -229,7 +229,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           accessible={true}
           accessibilityLabel={I18n.t("global.buttons.close")}
         >
-          <Icon name="close" color="white" />
+          <Icon name="closeLarge" color="white" />
         </TouchableDefaultOpacity>
       </View>
     </View>
@@ -270,7 +270,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
-      iconName: "close",
+      iconName: "closeLarge",
       onPress: this.props.navigateBack
     }
   };

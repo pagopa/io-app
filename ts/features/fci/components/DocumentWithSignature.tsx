@@ -80,7 +80,7 @@ const DocumentWithSignature = (props: Props) => {
       O.fromNullable,
       O.map(_ => _.setPage(page))
     );
-
+  
   /**
    * Renders the pdf with the signature field drawn on it.
    */
@@ -102,6 +102,7 @@ const DocumentWithSignature = (props: Props) => {
         onError={props.onError}
         onPressLink={constNull}
         enablePaging
+        enableAnnotationRendering={false}
         style={styles.pdf}
       />
     ),

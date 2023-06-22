@@ -154,7 +154,6 @@ Object {
     "kind": "PotNone",
   },
   "isDesignSystemEnabled": false,
-  "isExperimentalFeaturesEnabled": false,
   "isFingerprintEnabled": undefined,
   "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
