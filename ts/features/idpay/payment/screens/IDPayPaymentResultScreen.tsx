@@ -15,14 +15,18 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { PaymentFailure, PaymentFailureEnum } from "../xstate/failure";
 import { usePaymentMachineService } from "../xstate/provider";
-import { selectFailureOption, selectIsCancelled } from "../xstate/selectors";
+import {
+  selectFailureOption,
+  selectIsCancelled,
+  selectIsFailure
+} from "../xstate/selectors";
 
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
 
   const failureOption = useSelector(machine, selectFailureOption);
   const isCancelled = useSelector(machine, selectIsCancelled);
-  const isFailure = useSelector(machine, selectIsCancelled);
+  const isFailure = useSelector(machine, selectIsFailure);
 
   const handleClose = () => {
     machine.send("EXIT");
