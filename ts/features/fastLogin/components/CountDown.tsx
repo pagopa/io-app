@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { WithTestID } from "../../../types/WithTestID";
 
 type Props = WithTestID<{
-  totalSeconds: number; // in seconds
+  totalSeconds: number;
   onExpiration: () => void;
 }>;
 
@@ -20,8 +19,6 @@ const formattedTime = (time: number) => {
 const ConuntDown = (props: Props) => {
   const { totalSeconds: totalTime, onExpiration } = props;
   const [remainingTime, setRemainingTime] = React.useState(totalTime);
-
-  const dispatch = useDispatch();
 
   React.useEffect(() => {
     const intervalId = setInterval(() => {
@@ -39,7 +36,7 @@ const ConuntDown = (props: Props) => {
     if (remainingTime === 0) {
       onExpiration();
     }
-  }, [dispatch, onExpiration, remainingTime]);
+  }, [onExpiration, remainingTime]);
 
   return (
     <>
