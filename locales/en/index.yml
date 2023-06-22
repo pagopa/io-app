@@ -407,7 +407,7 @@ profile:
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
           cta:
-            shareData: "Share data"
+            shareData: "Condividi"
             dontShareData: "Don’t share data"
             dontShare: "Don’t share"
           confirmToast: "Preferences updated!"
@@ -513,18 +513,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Choose if you want to allow previews and receive reminders.
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
       titleExistingUser: Customize push notifications
       subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
-        title: Allow reminders
-        description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+        title: Consenti i promemoria
+        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
       preview:
-        title: Show previews
-        description: Include the sender and subject of the message in the push notification · 
+        title: Mostra un'anteprima
+        description: Include the sender and subject of the message in the push notification
         link: More info
         bottomSheet:
-          title: Show previews
+          title: Mostra un'anteprima
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
@@ -858,6 +858,11 @@ onboarding:
       reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
+      example:
+        firstExampleTitle: Ministeto dell'Interno
+        firstExampleDetail: Aggiornamenti sul tuo cambio di residenza
+        secondExampleTitle: Bonus Terme
+        secondExampleDetail: Hai ancora 7 giorni per richiedere il bonus!
     contextualHelpTitle: Push notifications
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:

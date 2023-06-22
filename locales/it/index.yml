@@ -407,7 +407,7 @@ profile:
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
           profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
           cta:
-            shareData: "Condividi dati"
+            shareData: "Condividi"
             dontShareData: "Non condividere dati"
             dontShare: "Non condividere"
           confirmToast: "Preferenze aggiornate!"
@@ -513,18 +513,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
       titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
-        title: Consenti promemoria
-        description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
+        title: Consenti i promemoria
+        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
       preview:
-        title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
+        title: Mostra un'anteprima
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio
         link: Più info
         bottomSheet:
-          title: Mostra anteprime
+          title: Mostra un'anteprima
           content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
@@ -874,6 +874,11 @@ onboarding:
       reminderOnPreviewOffMessage: Entra nell'app per pagarlo
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
       reminderOffPreviewOffMessage: Entra nell'app per leggerlo
+      example:
+        firstExampleTitle: Ministeto dell'Interno
+        firstExampleDetail: Aggiornamenti sul tuo cambio di residenza
+        secondExampleTitle: Bonus Terme
+        secondExampleDetail: Hai ancora 7 giorni per richiedere il bonus!
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:

@@ -400,7 +400,7 @@ profile:
             cta: "Datenschutzbestimmungen und Nutzungsbedingungen"
           profileSettings: "Du kannst diese Einstellung jederzeit unter Profil > Einstellungen ändern."
           cta:
-            shareData: "Daten freigeben"
+            shareData: "Condividi"
             dontShareData: "Daten nicht freigeben"
             dontShare: "Nicht freigeben"
           confirmToast: "Einstellungen aktualisiert!"
@@ -476,7 +476,7 @@ profile:
         not_selected: "Nicht ausgewählt"
       notifications:
         title: "Push-Benachrichtigungen"
-        subtitle: "Vorschau und Erinnerung zulassen"
+        subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
     empty:
       default: "Keine Präferenzen festgelegt"
     unavailable:
@@ -790,6 +790,11 @@ onboarding:
       reminderOnPreviewOffMessage: "Öffne die App um sie zu bezahlen"
       reminderOffPreviewOffTitle: "Du hast eine neue Mitteilung"
       reminderOffPreviewOffMessage: "Öffne die App um sie zu lesen"
+      example:
+        firstExampleTitle: Ministeto dell'Interno
+        firstExampleDetail: Aggiornamenti sul tuo cambio di residenza
+        secondExampleTitle: Bonus Terme
+        secondExampleDetail: Hai ancora 7 giorni per richiedere il bonus!
     contextualHelpTitle: "Push-Benachrichtigungen"
   infoConsent:
     headerTitle: "IO einrichten"
