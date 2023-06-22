@@ -67,6 +67,7 @@ import {
 import { useStore } from "react-redux";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { IdpData } from "../../../definitions/content/IdpData";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -153,6 +154,8 @@ export const AuthSessionPage = () => {
 
   // Memoized values/func --start--
   const state = useMemo(() => store.getState(), [store]);
+
+  const isFastLogin = useMemo(() => isFastLoginEnabledSelector(state), [state]);
 
   const selectedIdp = useMemo(
     () => selectedIdentityProviderSelector(state),
@@ -294,6 +297,7 @@ export const AuthSessionPage = () => {
           loginUri,
           maybeKeyTag.value,
           mixpanelEnabled,
+          isFastLogin,
           dispatch
         ),
       TE.fold(

@@ -6,7 +6,7 @@ import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPay
 import { CodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { IDPayClient } from "../../common/api/client";
 import { Context } from "./context";
-import { PaymentFailureEnum } from "./failure";
+import { PaymentFailure, PaymentFailureEnum } from "./failure";
 
 export type Services = {
   preAuthorizePayment: {
@@ -27,6 +27,17 @@ export const failureMap: Record<CodeEnum, PaymentFailureEnum> = {
   [CodeEnum.PAYMENT_TOO_MANY_REQUESTS]: PaymentFailureEnum.TOO_MANY_REQUESTS
 };
 
+/**
+ * This function maps errors from the fetch to the PaymentFailure type
+ * This helps to know if the error comes from a 429 status code
+ */
+const mapFetchError = (error: unknown): PaymentFailure => {
+  if (error === "max-retries") {
+    return PaymentFailureEnum.TOO_MANY_REQUESTS;
+  }
+  return PaymentFailureEnum.GENERIC;
+};
+
 const createServicesImplementation = (client: IDPayClient, token: string) => {
   const preAuthorizePayment = async (
     context: Context
@@ -38,7 +49,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
             bearerAuth: token,
             trxCode
           }),
-        () => PaymentFailureEnum.GENERIC
+        mapFetchError
       );
 
     const dataResponse = await pipe(
@@ -78,7 +89,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
             bearerAuth: token,
             trxCode
           }),
-        () => PaymentFailureEnum.GENERIC
+        mapFetchError
       );
 
     const dataResponse = await pipe(
@@ -118,7 +129,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
             bearerAuth: token,
             trxCode
           }),
-        () => PaymentFailureEnum.GENERIC
+        mapFetchError
       );
 
     const dataResponse = await pipe(

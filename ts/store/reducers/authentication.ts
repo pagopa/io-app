@@ -11,6 +11,7 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  refreshSessionToken,
   resetAuthenticationState,
   sessionExpired,
   sessionInformationLoadSuccess,
@@ -277,6 +278,16 @@ const reducer = (
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
       sessionToken: action.payload.token
+    };
+  }
+
+  if (isActionOf(refreshSessionToken.success, action) && isLoggedIn(state)) {
+    // Save the new SessionToken in the state
+    return {
+      ...state,
+      ...{
+        sessionToken: action.payload
+      }
     };
   }
 
