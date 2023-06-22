@@ -7,17 +7,23 @@ export type IOBarcodeFormat = "DATA_MATRIX" | "QR_CODE";
 // To extend the list, add a new type and a new pattern to IOBarcodePatterns
 type IOBarcodeTypeBase = "IDPAY";
 
-type IOBarcodePatternsType = {
-  [K in IOBarcodeTypeBase]: RegExp;
-};
-
-// Types of barcode that can be scanned. Each type comes with its own regex pattern
-// which is used to validate the barcode content
-const IOBarcodePatterns: IOBarcodePatternsType = {
-  IDPAY: /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
-};
-
 export type IOBarcodeType = IOBarcodeTypeBase | "UNKNOWN";
+
+// Function that checks if a string matches a barcode pattern
+type IOBarcodeMatcherFunction = (content: string) => boolean;
+
+type IOBarcodeMatchersType = {
+  [K in IOBarcodeTypeBase]: IOBarcodeMatcherFunction;
+};
+
+const matchIdPayBarcode: IOBarcodeMatcherFunction =
+  /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/g.test;
+
+// Types of barcode that can be scanned. Each type comes with its own matcher function
+// which is used to identify the barcode content
+const IOBarcodeMatchers: IOBarcodeMatchersType = {
+  IDPAY: matchIdPayBarcode
+};
 
 /**
  * Returns the type of a barcode. Fallbacks to "unknown" if no type is found
@@ -29,8 +35,8 @@ export const getIOBarcodeType = (value: string | undefined): IOBarcodeType =>
     value,
     O.fromNullable,
     O.map(value =>
-      Object.entries(IOBarcodePatterns).find(([_, pattern]) =>
-        pattern.test(value.trim())
+      Object.entries(IOBarcodeMatchers).find(([_, matchFn]) =>
+        matchFn(value.trim())
       )
     ),
     O.chain(O.fromNullable),
