@@ -1,3 +1,4 @@
+name: Static Check [IT-WALLET]
 on:
   - pull_request
   - workflow_call
