@@ -28,23 +28,21 @@ export function* handleDrawSignatureBox(
       yield* put(
         fciDocumentSignatureFields.success({
           ...state.value,
-          drawnBase64: res.drawn,
-          signaturePage: res.signaturePage
+          ...res
         })
       );
     } else {
-      const parsedDoc = yield* call(parsePdfAsBase64, action.payload.uri);
+      const rawBase64 = yield* call(parsePdfAsBase64, action.payload.uri);
       const res = yield* call(
         drawSignatureField,
-        parsedDoc,
+        rawBase64,
         action.payload.attrs
       );
       yield* put(
         fciDocumentSignatureFields.success({
-          rawBase64: parsedDoc,
+          rawBase64,
           uri: action.payload.uri,
-          drawnBase64: res.drawn,
-          signaturePage: res.signaturePage
+          ...res
         })
       );
     }

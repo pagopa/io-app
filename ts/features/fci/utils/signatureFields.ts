@@ -222,7 +222,7 @@ const drawRectangleOverSignatureFieldById = async (
     });
     const base64 = await savePdfDocumentoAsBase64(parsedPdf);
     return {
-      drawn: base64,
+      drawnBase64: base64,
       signaturePage: page
     };
   } else {
@@ -257,7 +257,7 @@ const drawRectangleOverSignatureFieldByCoordinates = async (
   });
   const base64 = await savePdfDocumentoAsBase64(parsedPdf);
   return {
-    drawn: base64,
+    drawnBase64: base64,
     signaturePage: page
   };
 };
