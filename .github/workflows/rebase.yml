@@ -2,7 +2,7 @@ name: Periodic Rebase [IT-WALLET]
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '30 * * * *'
 
 jobs:
   rebase:
