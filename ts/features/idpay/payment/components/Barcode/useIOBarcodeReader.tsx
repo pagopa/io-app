@@ -1,5 +1,5 @@
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
-import * as TO from "fp-ts/lib/TaskOption";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Alert, Linking } from "react-native";
@@ -9,10 +9,14 @@ import RNQRGenerator from "rn-qr-generator";
 import I18n from "../../../../../i18n";
 import { AsyncAlert } from "../../../../../utils/asyncAlert";
 import { isAndroid } from "../../../../../utils/platform";
-import { IOBarcode } from "./IOBarcode";
+import { IOBarcode, getIOBarcodeType } from "./IOBarcode";
+
+type IOBarcodeReader = {
+  showImagePicker: () => void;
+};
 
 type IOBarcodeReaderConfiguration = {
-  onInvalidQrCode: () => void;
+  onBarcodeError?: () => void;
   onBarcodeScanned?: (barcode: IOBarcode) => void;
 };
 
@@ -20,7 +24,9 @@ const imageLibraryOptions: ImageLibraryOptions = {
   mediaType: "photo"
 };
 
-const useIOBarcodeReader = (config: IOBarcodeReaderConfiguration) => {
+const useIOBarcodeReader = (
+  config: IOBarcodeReaderConfiguration
+): IOBarcodeReader => {
   /**
    * Opens the settings page to allow user to change the settings
    */
@@ -55,22 +61,33 @@ const useIOBarcodeReader = (config: IOBarcodeReaderConfiguration) => {
     pipe(
       response.assets,
       O.fromNullable,
-      O.chain(assets => A.head(assets)),
-      O.chain(asset => O.fromNullable(asset.uri)),
+      O.chain(A.head),
+      O.chain(({ uri }) => O.fromNullable(uri)),
       O.map(uri =>
         RNQRGenerator.detect({ uri })
-          .then(data => {
-            if (data.values.length === 0) {
-              config.onInvalidQrCode();
-              return;
-            }
-            config.onBarcodeScanned?.({
-              format: "QR_CODE",
-              value: data.values[0],
-              type: "IDPAY"
-            });
-          })
-          .catch(config.onInvalidQrCode)
+          .then(detectedData =>
+            pipe(
+              sequenceS(O.Monad)({
+                onBarcodeScanned: O.fromNullable(config.onBarcodeScanned),
+                value: pipe(
+                  detectedData.values,
+                  A.head,
+                  O.fromNullable,
+                  O.flatten
+                )
+              }),
+              O.map(({ onBarcodeScanned, value }) => {
+                const type = getIOBarcodeType(value);
+
+                onBarcodeScanned({
+                  format: "QR_CODE",
+                  value,
+                  type
+                });
+              })
+            )
+          )
+          .catch(config.onBarcodeError)
       )
     );
   };
