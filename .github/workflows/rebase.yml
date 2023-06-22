@@ -1,8 +1,8 @@
-name: Periodic Rebase
+name: Periodic Rebase [IT-WALLET]
 
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   rebase:
