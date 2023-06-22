@@ -17,7 +17,7 @@ jest.mock("../../components/BarcodeScanner", () => ({
 import {
   IOBarcodeScanner,
   useIOBarcodeScanner
-} from "../../components/Barcode/BarcodeScanner";
+} from "../../components/Barcode/useIOBarcodeScanner";
 
 const mockCameraComponent = <View testID="cameraComponentTestID" />;
 

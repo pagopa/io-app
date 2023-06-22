@@ -15,7 +15,7 @@ import {
 } from "vision-camera-code-scanner";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
-import { IOBarcode, IOBarcodeFormat, getIOBarcodeType } from "./Barcode";
+import { IOBarcode, IOBarcodeFormat, getIOBarcodeType } from "./IOBarcode";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;

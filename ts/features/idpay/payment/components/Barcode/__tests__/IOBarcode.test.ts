@@ -1,4 +1,4 @@
-import { getIOBarcodeType } from "../Barcode";
+import { getIOBarcodeType } from "../IOBarcode";
 
 describe("test getIOBarcodeType function", () => {
   it("should return unknown if empty value", () => {

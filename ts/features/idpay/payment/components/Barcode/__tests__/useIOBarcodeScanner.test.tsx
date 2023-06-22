@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { Barcode, BarcodeFormat } from "vision-camera-code-scanner";
-import { retrieveNextBarcode } from "../BarcodeScanner";
+import { retrieveNextBarcode } from "../useIOBarcodeScanner";
 
 describe("test retrieveNextBarcode function", () => {
   it("should return `O.none` because of an empty array as input", () => {
