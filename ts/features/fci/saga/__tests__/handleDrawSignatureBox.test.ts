@@ -1,7 +1,6 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as matchers from "redux-saga-test-plan/matchers";
-import * as O from "fp-ts/lib/Option";
 import { throwError } from "redux-saga-test-plan/providers";
 import { handleDrawSignatureBox } from "../handleDrawSignatureBox";
 import { fciDocumentSignatureFields } from "../../store/actions";
@@ -10,10 +9,7 @@ import {
   drawSignatureField,
   parsePdfAsBase64
 } from "../../utils/signatureFields";
-import {
-  fciSignatureFieldDrawingRawDocumentSelector,
-  fciSignatureFieldDrawingRawUriSelector
-} from "../../store/reducers/fciSignatureFieldDrawing";
+import { fciSignatureFieldDrawingSelector } from "../../store/reducers/fciSignatureFieldDrawing";
 
 jest.mock("react-native-blob-util", () => ({
   fs: {
@@ -24,10 +20,18 @@ jest.mock("react-native-blob-util", () => ({
 }));
 
 describe("handleDrawSignatureBox", () => {
-  const uri = "cachedUri";
-  const document = "cachedDocument";
-  const newUri = "newUri";
-  const page = 0;
+  const cachedState = {
+    rawBase64: "cachedRaw",
+    uri: "cachedUri",
+    drawnBase64: "cachedDrawn",
+    signaturePage: 0
+  };
+  const newState = {
+    rawBase64: "newRaw",
+    uri: "newUri",
+    drawnBase64: "newDrawn",
+    signaturePage: 1
+  };
   const attrs = {
     unique_name: "test"
   } as SignatureFieldAttrType;
@@ -35,20 +39,26 @@ describe("handleDrawSignatureBox", () => {
   it("should draw signature field on cached document if URI matches", async () => {
     await expectSaga(
       handleDrawSignatureBox,
-      fciDocumentSignatureFields.request({ uri, attrs })
+      fciDocumentSignatureFields.request({ uri: cachedState.uri, attrs })
     )
       .provide([
-        [matchers.select(fciSignatureFieldDrawingRawUriSelector), uri],
         [
-          matchers.select(fciSignatureFieldDrawingRawDocumentSelector),
-          document
+          matchers.select(fciSignatureFieldDrawingSelector),
+          pot.some(cachedState)
         ],
-        [matchers.call.fn(parsePdfAsBase64), document],
-        [matchers.call.fn(drawSignatureField), { document, page }]
+        [
+          matchers.call.fn(drawSignatureField),
+          {
+            drawnBase64: newState.drawnBase64,
+            signaturePage: newState.signaturePage
+          }
+        ]
       ])
       .put(
         fciDocumentSignatureFields.success({
-          drawnDocument: pot.some({ document, page })
+          ...cachedState,
+          drawnBase64: newState.drawnBase64,
+          signaturePage: newState.signaturePage
         })
       )
       .run();
@@ -57,25 +67,23 @@ describe("handleDrawSignatureBox", () => {
   it("should draw parse the document before drawing the signature field if URI doesn't match", async () => {
     await expectSaga(
       handleDrawSignatureBox,
-      fciDocumentSignatureFields.request({ uri: newUri, attrs })
+      fciDocumentSignatureFields.request({ uri: newState.uri, attrs })
     )
       .provide([
-        [matchers.select(fciSignatureFieldDrawingRawUriSelector), uri],
-        [matchers.call.fn(parsePdfAsBase64), document],
-        [matchers.call.fn(drawSignatureField), { document, page }]
+        [
+          matchers.select(fciSignatureFieldDrawingSelector),
+          pot.some(cachedState)
+        ],
+        [matchers.call.fn(parsePdfAsBase64), newState.rawBase64],
+        [
+          matchers.call.fn(drawSignatureField),
+          {
+            drawnBase64: newState.drawnBase64,
+            signaturePage: newState.signaturePage
+          }
+        ]
       ])
-      .put(
-        fciDocumentSignatureFields.success({
-          rawDocument: {
-            document: O.some(document),
-            uri: O.some(newUri)
-          },
-          drawnDocument: pot.some({
-            document,
-            page
-          })
-        })
-      )
+      .put(fciDocumentSignatureFields.success(newState))
       .run();
   });
 
@@ -83,10 +91,13 @@ describe("handleDrawSignatureBox", () => {
     const error = new Error("error");
     await expectSaga(
       handleDrawSignatureBox,
-      fciDocumentSignatureFields.request({ uri: newUri, attrs })
+      fciDocumentSignatureFields.request({ uri: newState.uri, attrs })
     )
       .provide([
-        [matchers.select(fciSignatureFieldDrawingRawUriSelector), uri],
+        [
+          matchers.select(fciSignatureFieldDrawingSelector),
+          pot.some(cachedState)
+        ],
         [matchers.call.fn(parsePdfAsBase64), throwError(error)]
       ])
       .put(fciDocumentSignatureFields.failure(error))
