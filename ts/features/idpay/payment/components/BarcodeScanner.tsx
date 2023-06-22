@@ -16,22 +16,27 @@ import {
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 
+export type IOBarcodeFormat = "DATA_MATRIX" | "QR_CODE";
+
+type IOBarcodeFormatsType = {
+  [K in IOBarcodeFormat]: BarcodeFormat;
+};
+
 /**
  * Maps internal formats to external library formats
+ * Necessary to work with the library {@link react-native-vision-camera}
  */
-const IOBarcodeFormats = {
+const IOBarcodeFormats: IOBarcodeFormatsType = {
   DATA_MATRIX: BarcodeFormat.DATA_MATRIX,
   QR_CODE: BarcodeFormat.QR_CODE
 };
 
-export type IOBarcodeFormat = keyof typeof IOBarcodeFormats;
-
-// Supported types of barcode that can be scanned
+// Supported types of barcode patterns that can be scanned
 // To extend the list, add a new type and a new pattern to IOBarcodePatterns
-export type IOBarcodeType = "IDPAY" | "UNKNOWN";
+type IOBarcodeTypeBase = "IDPAY";
 
 type IOBarcodePatternsType = {
-  [K in Exclude<IOBarcodeType, "UNKNOWN">]: RegExp;
+  [K in IOBarcodeTypeBase]: RegExp;
 };
 
 // Types of barcode that can be scanned. Each type comes with its own regex pattern
@@ -39,6 +44,8 @@ type IOBarcodePatternsType = {
 const IOBarcodePatterns: IOBarcodePatternsType = {
   IDPAY: /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
 };
+
+export type IOBarcodeType = IOBarcodeTypeBase | "UNKNOWN";
 
 /**
  * Returns the type of a barcode. Fallbacks to "unknown" if no type is found
