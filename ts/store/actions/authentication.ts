@@ -87,6 +87,12 @@ export const loadSupportToken = createAsyncAction(
   "LOAD_TOKEN_SUPPORT_FAILURE"
 )<void, SupportToken, Error>();
 
+export const refreshSessionToken = createAsyncAction(
+  "REFRESH_SESSION_TOKEN_REQUEST",
+  "REFRESH_SESSION_TOKEN_SUCCESS",
+  "REFRESH_SESSION_TOKEN_FAILURE"
+)<void, SessionToken, Error>();
+
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
@@ -108,4 +114,5 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>
   | ActionType<typeof loadSupportToken>
+  | ActionType<typeof refreshSessionToken>
   | ActionType<typeof disableNativeAuthentication>;
