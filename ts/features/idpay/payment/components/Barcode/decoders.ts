@@ -38,12 +38,18 @@ const decodeIdPayBarcode: IOBarcodeDecoderFunction = (data: string) =>
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content
+// To add a new barcode type, add a new entry to this object
+// Example:
+// export const IOBarcodeDecoders: IOBarcodeDecodersType = {
+//   IDPAY: decodeIdPayBarcode,
+//   MY_NEW_BARCODE_TYPE: decodeMyNewBarcodeType
+// };
 export const IOBarcodeDecoders: IOBarcodeDecodersType = {
   IDPAY: decodeIdPayBarcode
 };
 
 /**
- * Returns the type of a barcode. Fallbacks to "unknown" if no type is found
+ * Returns the type of a barcode. Fallbacks to "UNKNOWN" if no type is found
  * @param value Barcode content
  * @returns DecodedIOBarcode {@see DecodedIOBarcode}
  */
