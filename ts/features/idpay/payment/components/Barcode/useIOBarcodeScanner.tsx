@@ -15,7 +15,8 @@ import {
 } from "vision-camera-code-scanner";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
-import { IOBarcode, IOBarcodeFormat, getIOBarcodeType } from "./IOBarcode";
+import { decodeIOBarcode } from "./decoders";
+import { IOBarcode, IOBarcodeFormat } from ".";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -118,14 +119,13 @@ export const retrieveNextBarcode = (
         const ioBarcodeFormat = convertToIOBarcodeFormat(nextBarcode.format);
 
         if (ioBarcodeFormat && !barcodes[ioBarcodeFormat]) {
-          const type = getIOBarcodeType(nextBarcode.displayValue);
+          const decodedBarcode = decodeIOBarcode(nextBarcode.displayValue);
 
           return {
             ...barcodes,
             [ioBarcodeFormat]: {
               format: ioBarcodeFormat,
-              value: nextBarcode.displayValue || "",
-              type
+              ...decodedBarcode
             }
           };
         }
@@ -242,4 +242,3 @@ const styles = StyleSheet.create({
     height: "100%"
   }
 });
-export { getIOBarcodeType };
