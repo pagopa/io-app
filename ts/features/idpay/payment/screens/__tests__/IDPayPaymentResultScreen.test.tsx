@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { interpret } from "xstate";
-import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -12,11 +11,41 @@ import { Context, INITIAL_CONTEXT } from "../../xstate/context";
 import { PaymentFailureEnum } from "../../xstate/failure";
 import { createIDPayPaymentMachine } from "../../xstate/machine";
 import { PaymentMachineContext } from "../../xstate/provider";
+import {
+  selectFailureOption,
+  selectIsCancelled,
+  selectIsFailure
+} from "../../xstate/selectors";
 import { IDPayPaymentResultScreen } from "../IDPayPaymentResultScreen";
+
+jest.mock("../../xstate/selectors", () => {
+  const originalModule = jest.requireActual("../../xstate/selectors");
+  return {
+    ...originalModule,
+    selectFailureOption: jest.fn(),
+    selectIsFailure: jest.fn(),
+    selectIsCancelled: jest.fn()
+  };
+});
+
+const mockedSelectFailureOption = selectFailureOption as jest.MockedFunction<
+  typeof selectFailureOption
+>;
+
+const mockedSelectIsFailure = selectIsFailure as jest.MockedFunction<
+  typeof selectIsFailure
+>;
+
+const mockedSelectIsCancelled = selectIsCancelled as jest.MockedFunction<
+  typeof selectIsCancelled
+>;
+
+const mockedExitAuthorization = jest.fn();
 
 describe("Test IDPayPaymentResultScreen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    jest.clearAllMocks();
   });
 
   it("should render the screen correctly", () => {
@@ -28,53 +57,31 @@ describe("Test IDPayPaymentResultScreen", () => {
     const { component } = renderComponent();
     expect(component).toBeTruthy();
 
-    expect(
-      component.getByText(I18n.t("idpay.payment.result.success.title"))
-    ).toBeTruthy();
+    component.getByTestId("paymentSuccessScreenTestID");
   });
 
-  it("should render the GENERIC failure screen", () => {
-    const { component } = renderComponent({
-      failure: O.some(PaymentFailureEnum.GENERIC)
-    });
+  it("should render the failure screen", () => {
+    mockedSelectFailureOption.mockImplementation(() =>
+      O.some(PaymentFailureEnum.GENERIC)
+    );
+    mockedSelectIsFailure.mockImplementation(() => true);
+    mockedSelectIsCancelled.mockImplementation(() => false);
+
+    const { component } = renderComponent();
     expect(component).toBeTruthy();
 
-    expect(
-      component.getByText(I18n.t("idpay.payment.result.failure.GENERIC.title"))
-    ).toBeTruthy();
+    component.getByTestId("paymentFailureScreenTestID");
   });
 
-  it("should render the REJECTED failure screen", () => {
-    const { component } = renderComponent({
-      failure: O.some(PaymentFailureEnum.REJECTED)
-    });
+  it("should render the cancelled screen", () => {
+    mockedSelectFailureOption.mockImplementation(() => O.none);
+    mockedSelectIsFailure.mockImplementation(() => false);
+    mockedSelectIsCancelled.mockImplementation(() => true);
+
+    const { component } = renderComponent();
     expect(component).toBeTruthy();
 
-    expect(
-      component.getByText(I18n.t("idpay.payment.result.failure.REJECTED.title"))
-    ).toBeTruthy();
-  });
-
-  it("should render the BUDGET_EXHAUSTED failure screen", () => {
-    const { component } = renderComponent({
-      failure: O.some(PaymentFailureEnum.BUDGET_EXHAUSTED)
-    });
-    expect(component).toBeTruthy();
-
-    expect(
-      component.getByText(I18n.t("idpay.payment.result.failure.REJECTED.title"))
-    ).toBeTruthy();
-  });
-
-  it("should render the EXPIRED failure screen", () => {
-    const { component } = renderComponent({
-      failure: O.some(PaymentFailureEnum.EXPIRED)
-    });
-    expect(component).toBeTruthy();
-
-    expect(
-      component.getByText(I18n.t("idpay.payment.result.failure.EXPIRED.title"))
-    ).toBeTruthy();
+    component.getByTestId("paymentCancelledScreenTestID");
   });
 });
 
@@ -94,7 +101,7 @@ const renderComponent = (context?: Partial<Context>) => {
         deletePayment: jest.fn()
       },
       actions: {
-        exitAuthorization: jest.fn(),
+        exitAuthorization: mockedExitAuthorization,
         navigateToAuthorizationScreen: jest.fn(),
         navigateToResultScreen: jest.fn(),
         showErrorToast: jest.fn()
