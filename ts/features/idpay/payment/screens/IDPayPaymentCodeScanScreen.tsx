@@ -15,10 +15,9 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../utils/url";
-import { useIOBarcodeScanner } from "../components/Barcode/useIOBarcodeScanner";
+import { useIOBarcodeScanner, IOBarcode } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
-import { IOBarcode } from "../components/Barcode";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
