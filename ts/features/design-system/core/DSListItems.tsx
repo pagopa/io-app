@@ -36,6 +36,7 @@ import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
+import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -80,6 +81,14 @@ export const DSListItems = () => (
           ListItemAction
         </H2>
         {renderListItemAction()}
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemTransaction
+        </H2>
+        {renderListItemTransaction()}
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -545,3 +554,52 @@ const renderListItemInfo = () => (
     </View>
   </DSComponentViewerBox>
 );
+
+const renderListItemTransaction = () => {
+  const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+  const organizationLogoURI = {
+    imageSource: `${cdnPath}1199250158.png`,
+    name: "Comune di Milano"
+  };
+  return (
+    <DSComponentViewerBox name="ListItemTransaction">
+      <View>
+        <ListItemTransaction
+          title="TITOLO"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          isLoading={true}
+        />
+        <ListItemTransaction
+          title="TITOLO"
+          subtitle="subtitle"
+          leftPaymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
+          transactionStatus="failure"
+          transactionAmount="€ 1.000,00"
+        />
+        <ListItemTransaction
+          title="TITOLO"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          backgroundColor="grey-50"
+        />
+        <ListItemTransaction
+          title="TITOLO"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          leftPaymentLogoOrUrl={"mastercard"}
+        />
+        <ListItemTransaction
+          title="TITOLO"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          hasChevronRight={true}
+        />
+      </View>
+    </DSComponentViewerBox>
+  );
+};
