@@ -16,7 +16,7 @@ import {
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 import { decodeIOBarcode } from "./decoders";
-import { IOBarcode, IOBarcodeFormat } from ".";
+import { IOBarcode, IOBarcodeFormat } from "./types";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;

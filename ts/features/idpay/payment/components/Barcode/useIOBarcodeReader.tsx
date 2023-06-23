@@ -1,4 +1,3 @@
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -9,7 +8,8 @@ import RNQRGenerator from "rn-qr-generator";
 import I18n from "../../../../../i18n";
 import { AsyncAlert } from "../../../../../utils/asyncAlert";
 import { isAndroid } from "../../../../../utils/platform";
-import { IOBarcode, getIOBarcodeType } from "./IOBarcode";
+import { decodeIOBarcode } from "./decoders";
+import { IOBarcode } from "./types";
 
 type IOBarcodeReader = {
   showImagePicker: () => void;
@@ -17,7 +17,7 @@ type IOBarcodeReader = {
 
 type IOBarcodeReaderConfiguration = {
   onBarcodeError?: () => void;
-  onBarcodeScanned?: (barcode: IOBarcode) => void;
+  onBarcodeRead: (barcode: IOBarcode) => void;
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
@@ -67,22 +67,13 @@ const useIOBarcodeReader = (
         RNQRGenerator.detect({ uri })
           .then(detectedData =>
             pipe(
-              sequenceS(O.Monad)({
-                onBarcodeScanned: O.fromNullable(config.onBarcodeScanned),
-                value: pipe(
-                  detectedData.values,
-                  A.head,
-                  O.fromNullable,
-                  O.flatten
-                )
-              }),
-              O.map(({ onBarcodeScanned, value }) => {
-                const type = getIOBarcodeType(value);
-
-                onBarcodeScanned({
+              detectedData.values,
+              A.head,
+              O.map(decodeIOBarcode),
+              O.map(decodedBarcode => {
+                config.onBarcodeRead({
                   format: "QR_CODE",
-                  value,
-                  type
+                  ...decodedBarcode
                 });
               })
             )
