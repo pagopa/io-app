@@ -1,8 +1,9 @@
 name: Periodic Rebase [IT-WALLET]
 
 on:
-  schedule:
-    - cron: '30 * * * *'
+  push:
+    branches:
+      - bundle/it-wallet
 
 jobs:
   rebase:
