@@ -66,10 +66,17 @@ const createIDPayPaymentMachine = () =>
             onDone: {
               target: "AUTHORIZATION_CANCELLED"
             },
-            onError: {
-              actions: "setFailure",
-              target: "AUTHORIZATION_FAILURE"
-            }
+            onError: [
+              {
+                actions: "setFailure",
+                cond: "isBlockingFailure",
+                target: "AUTHORIZATION_FAILURE"
+              },
+              {
+                actions: ["setFailure", "showErrorToast"],
+                target: "AWAITING_USER_CONFIRMATION"
+              }
+            ]
           }
         },
         AUTHORIZING: {
