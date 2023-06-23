@@ -10,7 +10,7 @@ import { IDPayPaymentRoutes } from "../../navigation/navigator";
 import { IDPayPaymentCodeScanScreen } from "../IDPayPaymentCodeScanScreen";
 import I18n from "../../../../../i18n";
 
-jest.mock("../../components/BarcodeScanner", () => ({
+jest.mock("../../components/Barcode/useIOBarcodeScanner", () => ({
   useIOBarcodeScanner: jest.fn()
 }));
 

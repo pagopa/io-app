@@ -30,17 +30,19 @@ const IDPayPaymentCodeScanScreen = () => {
     }
   };
 
+  const cameraMarkerComponent = (
+    <View style={styles.cameraMarkerContainer}>
+      <CameraScanMarkerSVG width={230} height={230} />
+    </View>
+  );
+
   const {
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
     openCameraSettings
   } = useIOBarcodeScanner({
-    marker: (
-      <View style={styles.cameraMarkerContainer}>
-        <CameraScanMarkerSVG width={230} height={230} />
-      </View>
-    ),
+    marker: cameraMarkerComponent,
     onBarcodeScanned: handleBarcodeScanner,
     formats: ["QR_CODE"],
     disabled: !isFocused
