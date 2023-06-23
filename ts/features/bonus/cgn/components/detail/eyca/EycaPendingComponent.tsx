@@ -10,6 +10,7 @@ import { showToast } from "../../../../../../utils/showToast";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
+import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
 
 type Props = {
   openBottomSheet: () => void;
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
 });
 
 const ICON_SIZE = 24;
-const EYCA_URL = "https://www.eyca.org";
 
 // Component that informs the user that the EYCA card requested is still in progress
 const EycaStatusDetailsComponent = (props: Props) => (
@@ -50,7 +50,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
       bordered
       style={{ width: "100%" }}
       onPress={() =>
-        openWebUrl(EYCA_URL, () =>
+        openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
           showToast(I18n.t("bonus.cgn.generic.linkError"))
         )
       }

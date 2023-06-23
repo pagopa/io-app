@@ -80,7 +80,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={close} transparent={true}>
-            <Icon name="close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
@@ -104,7 +104,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={close} transparent={true}>
-            <Icon name="close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

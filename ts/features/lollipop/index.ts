@@ -111,11 +111,13 @@ export const taskRegenerateKey = (keyTag: string) =>
 
 export const getLollipopLoginHeaders = (
   publicKey: PublicKey,
-  hashAlgorithm: string
+  hashAlgorithm: string,
+  isFastLogin: boolean
 ) => ({
   "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
     "base64"
   ),
   "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
-  "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined
+  "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined,
+  "x-pagopa-login-type": isFastLogin ? "LV" : undefined
 });

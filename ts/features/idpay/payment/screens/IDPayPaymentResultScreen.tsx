@@ -17,58 +17,20 @@ import { PaymentFailure, PaymentFailureEnum } from "../xstate/failure";
 import { usePaymentMachineService } from "../xstate/provider";
 import { selectFailureOption } from "../xstate/selectors";
 
-type FailureContent = {
-  title: string;
-  subtitle?: string;
-  icon: IOPictograms;
-};
-type PaymentResultType = PaymentFailure | "SUCCESS";
-const results: Record<PaymentResultType, FailureContent> = {
-  [PaymentFailureEnum.CANCELLED]: {
-    title: I18n.t("idpay.payment.result.failure.CANCELLED.title"),
-    icon: "unrecognized"
-  },
-  [PaymentFailureEnum.GENERIC]: {
-    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
-    icon: "umbrella"
-  },
-  ["SUCCESS"]: {
-    title: I18n.t("idpay.payment.result.success.title"),
-    subtitle: I18n.t("idpay.payment.result.success.body"),
-    icon: "completed"
-  }
-};
-
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
+
   const failureOption = useSelector(machine, selectFailureOption);
 
   const handleClose = () => {
     machine.send("EXIT");
   };
 
-  const renderContent = (resultType: PaymentResultType) => (
-    <View style={styles.resultScreenContainer}>
-      <Pictogram name={results[resultType].icon} size={120} />
-      <VSpacer size={24} />
-      <NewH4 style={styles.justifyTextCenter}>
-        {results[resultType].title}
-      </NewH4>
-      <VSpacer size={16} />
-      {results[resultType].subtitle && (
-        <Body style={styles.justifyTextCenter}>
-          {results[resultType].subtitle}
-        </Body>
-      )}
-    </View>
-  );
-
   const content = pipe(
     failureOption,
     O.fold(
-      () => renderContent("SUCCESS"),
-      failure => renderContent(failure)
+      () => <SuccessScreenComponent />,
+      failure => <FailureScreenComponent failure={failure} />
     )
   );
 
@@ -86,6 +48,86 @@ const IDPayPaymentResultScreen = () => {
     </SafeAreaView>
   );
 };
+
+const SuccessScreenComponent = () => (
+  <View style={styles.resultScreenContainer}>
+    <Pictogram name={"completed"} size={120} />
+    <VSpacer size={24} />
+    <NewH4 style={styles.justifyTextCenter}>
+      {I18n.t("idpay.payment.result.success.title")}
+    </NewH4>
+    <VSpacer size={16} />
+    <Body style={styles.justifyTextCenter}>
+      {I18n.t("idpay.payment.result.success.body")}
+    </Body>
+  </View>
+);
+
+type FailureScreenContent = {
+  title: string;
+  subtitle?: string;
+  icon: IOPictograms;
+};
+
+const genericErrorContent: FailureScreenContent = {
+  title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
+  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
+  icon: "umbrella"
+};
+
+const failureScreenContent: Partial<
+  Record<PaymentFailure, FailureScreenContent>
+> = {
+  [PaymentFailureEnum.GENERIC]: genericErrorContent,
+  [PaymentFailureEnum.CANCELLED]: {
+    title: I18n.t("idpay.payment.result.failure.CANCELLED.title"),
+    icon: "unrecognized"
+  },
+  [PaymentFailureEnum.REJECTED]: {
+    title: I18n.t("idpay.payment.result.failure.REJECTED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.REJECTED.body"),
+    icon: "error"
+  },
+  [PaymentFailureEnum.EXPIRED]: {
+    title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body"),
+    icon: "timeout"
+  },
+  [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
+    title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.body"),
+    icon: "error"
+  }
+};
+
+type FailureScreenComponentProps = {
+  failure: PaymentFailure;
+};
+
+const FailureScreenComponent = (props: FailureScreenComponentProps) => {
+  const { failure } = props;
+
+  const content: FailureScreenContent = pipe(
+    failureScreenContent[failure],
+    O.fromNullable,
+    O.getOrElse(() => genericErrorContent)
+  );
+
+  return (
+    <View style={styles.resultScreenContainer}>
+      <Pictogram name={content.icon} size={120} />
+      <VSpacer size={24} />
+      <NewH4 style={styles.justifyTextCenter}>{content.title}</NewH4>
+      {content.subtitle && (
+        <>
+          <VSpacer size={16} />
+          <Body style={styles.justifyTextCenter}>{content.subtitle}</Body>
+        </>
+      )}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   resultScreenContainer: {
     flex: 1,
