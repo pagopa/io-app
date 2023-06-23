@@ -14,39 +14,57 @@ const notificationHeight = 72;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: IOColors.white,
-    justifyContent: "center",
+    // justifyContent: "flex-start",
     alignItems: "center",
     height: backgroundImageHeight
   },
   blue: {
     backgroundColor: IOColors.blue
   },
-  notification: {
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
+  overlayContainer: {
     position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    justifyContent: "flex-end"
+  },
+  overlay: {
+    width: "90%",
+    minHeight: notificationHeight,
     backgroundColor: IOColors.white,
-    left: customVariables.contentPadding,
-    right: customVariables.contentPadding,
     borderRadius: customVariables.borderRadiusBase,
-    padding: 16,
-    minHeight: notificationHeight
-  },
-  notificationWhiteBg: {
     borderWidth: 1,
-    borderColor: IOColors.bluegreyLight
-  },
-  box: {
-    flex: 1,
+    borderColor: IOColors.bluegreyLight,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "flex-start"
   },
-  info: {
-    flex: 1,
-    flexDirection: "column",
-    marginLeft: 16
+
+  previewNotificationMargin: {
+    bottom: 10
+  },
+
+  previewNotificationDoubleMargin: {
+    bottom: 20
+  },
+
+  overlayWhiteBg: {
+    backgroundColor: IOColors.white // Modify the background color for the white background style
+  },
+  overlayImage: {
+    width: 25,
+    height: 25,
+    marginRight: "5%",
+    marginLeft: "3%",
+    borderRadius: customVariables.borderRadiusBase
+  },
+
+  overlayText: {
+    flexDirection: "column"
   }
 });
 
@@ -108,29 +126,49 @@ export const NotificationsPreferencesPreview = ({
       ) : (
         <NotificationsBackgroundBlue />
       )}
-      <View
-        style={[
-          styles.notification,
-          isFirstOnboarding && styles.notificationWhiteBg
-        ]}
-        accessible={true}
-        accessibilityLabel={`${I18n.t(
-          "onboarding.notifications.preview.accessibilityLabelPrefix"
-        )} ${I18n.t(titleKey)} ${I18n.t(messageKey)}`}
-      >
+
+      <View style={styles.overlayContainer}>
         <View
-          style={styles.box}
-          importantForAccessibility="no-hide-descendants"
-          accessibilityElementsHidden={true}
+          style={[
+            styles.overlay,
+            isFirstOnboarding &&
+              styles.overlayWhiteBg &&
+              styles.previewNotificationMargin,
+            !isFirstOnboarding &&
+              styles.overlayWhiteBg &&
+              styles.previewNotificationDoubleMargin
+          ]}
         >
           <Image
             source={require("../../../../img/onboarding/notification_icon.png")}
+            style={styles.overlayImage}
           />
-          <View style={styles.info}>
+          <View style={styles.overlayText}>
             <H4 weight="SemiBold" color="bluegreyDark">
               {I18n.t(titleKey)}
             </H4>
-            <H5 weight={"Regular"} color={"bluegrey"}>
+            <H5 weight="Regular" color="bluegrey">
+              {I18n.t(messageKey)}
+            </H5>
+          </View>
+        </View>
+
+        <View
+          style={[
+            styles.overlay,
+            isFirstOnboarding && styles.overlayWhiteBg,
+            !isFirstOnboarding && styles.previewNotificationMargin
+          ]}
+        >
+          <Image
+            source={require("../../../../img/onboarding/notification_icon.png")}
+            style={styles.overlayImage}
+          />
+          <View style={styles.overlayText}>
+            <H4 weight="SemiBold" color="bluegreyDark">
+              {I18n.t(titleKey)}
+            </H4>
+            <H5 weight="Regular" color="bluegrey">
               {I18n.t(messageKey)}
             </H5>
           </View>
