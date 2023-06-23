@@ -80,7 +80,7 @@ import IconGallery from "./svg/IconGallery";
 import IconCancel from "./svg/IconCancel";
 import IconQuestion from "./svg/IconQuestion";
 import IconSearch from "./svg/IconSearch";
-import IconClose from "./svg/IconClose";
+import IconCloseLarge from "./svg/IconCloseLarge";
 import IconCloseSmall from "./svg/IconCloseSmall";
 import IconDocumentAttachment from "./svg/IconDocumentAttachment";
 import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
@@ -108,6 +108,10 @@ import IconNavWallet from "./svg/IconNavWallet";
 import IconNavScan from "./svg/IconNavScan";
 import IconNavServices from "./svg/IconNavServices";
 import IconNavProfile from "./svg/IconNavProfile";
+import IconNavMessagesFocused from "./svg/IconNavMessagesFocused";
+import IconNavWalletFocused from "./svg/IconNavWalletFocused";
+import IconNavServicesFocused from "./svg/IconNavServicesFocused";
+import IconNavProfileFocused from "./svg/IconNavProfileFocused";
 import IconBiomFingerprint from "./svg/IconBiomFingerprint";
 import IconBiomFaceID from "./svg/IconBiomFaceID";
 import IconCategCulture from "./svg/IconCategCulture";
@@ -133,10 +137,7 @@ import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
-import IconNavMessagesFocused from "./svg/IconNavMessagesFocused";
-import IconNavWalletFocused from "./svg/IconNavWalletFocused";
-import IconNavServicesFocused from "./svg/IconNavServicesFocused";
-import IconNavProfileFocused from "./svg/IconNavProfileFocused";
+import IconCloseMedium from "./svg/IconCloseMedium";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -235,7 +236,8 @@ export const IOIcons = {
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
   legChevronLeft: LegIconChevronLeft,
-  close: IconClose /* io-close */,
+  closeLarge: IconCloseLarge /* io-close */,
+  closeMedium: IconCloseMedium,
   closeSmall: IconCloseSmall,
   arrowBottom: IconArrowBottom,
   arrowLeft: IconArrowLeft,
