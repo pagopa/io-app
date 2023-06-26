@@ -3653,6 +3653,20 @@ idpay:
         subtitle: Enter the 8 characters shown below the QR code.
         input: Codice Transazione
         button: Continua
+      scan:
+        tabs:
+          scan: Scan
+          upload: Upload
+          input: Type
+        permissions:
+          undefined: 
+            title: We need your consent
+            label: Allow access to scan QR codes with your device camera.
+            action: Allow access
+          denied:
+            title: You didn't give access to camera
+            label: Browse your device settings to allow camera access.
+            action: Go to settings
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
