@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import {
@@ -45,14 +45,14 @@ const generateOptionBody = (
 ) => (
   <>
     {showBadge && (
-      <>
+      <View style={{ alignSelf: "flex-start" }}>
         <IOBadge
           variant="solid"
           color="blue"
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
         <VSpacer size={4} />
-      </>
+      </View>
     )}
     <H4>{title}</H4>
     <LabelSmall weight="Regular" color="bluegrey">

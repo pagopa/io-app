@@ -28,6 +28,7 @@ import { IDPayPaymentParamsList } from "../navigation/navigator";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
   selectIsAuthorizing,
+  selectIsCancelling,
   selectIsPreAuthorizing,
   selectTransactionData
 } from "../xstate/selectors";
@@ -62,7 +63,9 @@ const IDPayPaymentAuthorizationScreen = () => {
   // Loading state for screen content
   const isLoading = useSelector(machine, selectIsPreAuthorizing);
   // Loading state for "Confirm" button
-  const isUpserting = useSelector(machine, selectIsAuthorizing);
+  const isAuthorizing = useSelector(machine, selectIsAuthorizing);
+  const isCancelling = useSelector(machine, selectIsCancelling);
+  const isUpserting = isAuthorizing || isCancelling;
 
   const handleCancel = () => {
     machine.send("CANCEL_AUTHORIZATION");
@@ -96,15 +99,16 @@ const IDPayPaymentAuthorizationScreen = () => {
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={{
-            title: I18n.t("global.buttons.deny"),
+            title: isCancelling ? "" : I18n.t("global.buttons.deny"),
             bordered: true,
             onPress: handleCancel,
-            disabled: isUpserting
+            isLoading: isCancelling,
+            disabled: isUpserting || isLoading
           }}
           rightButton={{
-            title: isUpserting ? "" : I18n.t("global.buttons.confirm"),
+            title: isAuthorizing ? "" : I18n.t("global.buttons.confirm"),
             onPress: handleConfirm,
-            isLoading: isUpserting,
+            isLoading: isAuthorizing,
             disabled: isUpserting || isLoading
           }}
         />
