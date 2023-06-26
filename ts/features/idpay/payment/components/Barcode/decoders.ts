@@ -6,7 +6,9 @@ import { pipe } from "fp-ts/lib/function";
 // Discriminated barcode type
 // Represents the decoded content of a barcode that has been scanned
 // To add a new barcode type, add a new type here and add the decoder function to the IOBarcodeDecoders object
+//
 // Example:
+//
 // export type SupportedDecodedIOBarcode = {
 //    type: "IDPAY";
 //    authUrl: string;
@@ -22,13 +24,13 @@ type SupportedDecodedIOBarcode = {
 };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
-type IOBarcodeDecoderFunction = (data: string) => O.Option<DecodedIOBarcode>;
+type IOBarcodeDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
 
 type IOBarcodeDecodersType = {
-  [K in SupportedDecodedIOBarcode["type"]]: IOBarcodeDecoderFunction;
+  [K in SupportedDecodedIOBarcode["type"]]: IOBarcodeDecoderFn;
 };
 
-const decodeIdPayBarcode: IOBarcodeDecoderFunction = (data: string) =>
+const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
     data.match(
       /^https:\/\/continua\.io\.pagopa\.it\/idpay\/auth\/([a-zA-Z0-9]{8})$/
@@ -39,7 +41,9 @@ const decodeIdPayBarcode: IOBarcodeDecoderFunction = (data: string) =>
 
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
+//
 // Example:
+//
 // export const IOBarcodeDecoders: IOBarcodeDecodersType = {
 //   IDPAY: decodeIdPayBarcode,
 //   MY_NEW_BARCODE_TYPE: decodeMyNewBarcodeType
