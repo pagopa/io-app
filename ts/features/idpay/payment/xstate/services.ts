@@ -121,9 +121,50 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
     );
   };
 
+  const deletePayment = async (context: Context): Promise<undefined> => {
+    const deletePaymentTask = (trxCode: string) =>
+      TE.tryCatch(
+        async () =>
+          await client.deletePayment({
+            bearerAuth: token,
+            trxCode
+          }),
+        mapFetchError
+      );
+
+    const dataResponse = await pipe(
+      context.transactionData,
+      O.map(({ trxCode }) => trxCode),
+      TE.fromOption(() => PaymentFailureEnum.GENERIC),
+      TE.chain(deletePaymentTask)
+    )();
+
+    return pipe(
+      dataResponse,
+      E.fold(
+        failure => Promise.reject(failure),
+        flow(
+          // eslint-disable-next-line sonarjs/no-identical-functions
+          E.map(({ status, value }) => {
+            switch (status) {
+              case 200:
+                return Promise.resolve(value);
+              case 401:
+                return Promise.reject(PaymentFailureEnum.REJECTED);
+              default:
+                return Promise.reject(failureMap[value.code]);
+            }
+          }),
+          E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
+        )
+      )
+    );
+  };
+
   return {
     preAuthorizePayment,
-    authorizePayment
+    authorizePayment,
+    deletePayment
   };
 };
 
