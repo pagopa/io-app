@@ -1,4 +1,6 @@
 import { format } from "date-fns";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { ListItem } from "native-base";
 import React from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
@@ -93,9 +95,7 @@ const getDiscountInitiativeTransactionLabel = (
         />
       );
     case TransactionStatusEnum.REWARDED:
-      return (
-        <H4>{`-${formatNumberAmount(Math.abs(operation.amount), false)} €`}</H4>
-      );
+      return <H4>{`-${formatNumberAmount(Math.abs(operation.amount))} €`}</H4>;
   }
 };
 
@@ -105,18 +105,31 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
       if (operation.channel === ChannelEnum.QRCODE) {
         return getDiscountInitiativeTransactionLabel(operation);
       }
+
       return (
-        <H4>{`-${formatNumberAmount(
-          Math.abs(operation.accrued),
-          false
-        )} €`}</H4>
+        <H4>
+          {pipe(
+            operation.accrued,
+            O.fromNullable,
+            O.map(accrued => Math.abs(accrued)),
+            O.map(formatNumberAmount),
+            O.map(accrued => `-${accrued} €`),
+            O.getOrElse(() => "-")
+          )}
+        </H4>
       );
     case TransactionOperationTypeEnum.REVERSAL:
       return (
-        <H4>{`+${formatNumberAmount(
-          Math.abs(operation.accrued),
-          false
-        )} €`}</H4>
+        <H4>
+          {pipe(
+            operation.accrued,
+            O.fromNullable,
+            O.map(accrued => Math.abs(accrued)),
+            O.map(formatNumberAmount),
+            O.map(accrued => `+${accrued} €`),
+            O.getOrElse(() => "-")
+          )}
+        </H4>
       );
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
@@ -158,9 +171,9 @@ const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
   const generateOperationInvoiceText = () => {
     switch (operation.operationType) {
       case TransactionOperationTypeEnum.TRANSACTION:
-        return "· " + formatNumberAmount(operation.amount, true);
+        return `· € ${formatNumberAmount(operation.amount)}`;
       case TransactionOperationTypeEnum.REVERSAL:
-        return `· € -${operation.amount}`;
+        return `· € -${formatNumberAmount(operation.amount)}`;
       default:
         return "";
     }
