@@ -1,5 +1,14 @@
 import * as React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import { ImageURISource, Pressable, StyleSheet, View } from "react-native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
 import { WithTestID } from "../../types/WithTestID";
 import { IOBadge } from "../core/IOBadge";
@@ -8,7 +17,8 @@ import { IOLogoPaymentType, LogoPayment } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { IOColors, useIOTheme } from "../core/variables/IOColors";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
@@ -71,6 +81,9 @@ export const ListItemTransaction = ({
 }: ListItemTransaction) => {
   const theme = useIOTheme();
 
+  const { onPressIn, onPressOut, animatedScaleStyle, animatedBackgroundStyle } =
+    useDefaultSpringAnimation();
+
   const renderContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
@@ -127,19 +140,27 @@ export const ListItemTransaction = ({
     );
   };
   return (
-    <View
+    <Pressable
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+      accessibilityRole="button"
       style={[
         IOListItemStyles.listItem,
-        { backgroundColor: IOColors[backgroundColor] }
+        animatedBackgroundStyle
+        // { backgroundColor: IOColors[backgroundColor] }
       ]}
       testID={testID}
       accessible={true}
       accessibilityLabel={accessibilityLabel}
     >
-      <View style={IOListItemStyles.listItemInner}>
+      <Animated.View
+        style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
+      >
         {isLoading ? <SkeletonComponent /> : renderContent()}
-      </View>
-    </View>
+      </Animated.View>
+    </Pressable>
   );
 };
 
@@ -165,3 +186,58 @@ const Styles = StyleSheet.create({
     flexDirection: "row"
   }
 });
+
+const useDefaultSpringAnimation = () => {
+  const theme = useIOTheme();
+
+  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+
+  const mapBackgroundStates: Record<string, string> = {
+    default: hexToRgba(IOColors[theme["listItem-pressed"]], 0),
+    pressed: IOColors[theme["listItem-pressed"]]
+  };
+
+  // Scaling transformation applied when the button is pressed
+  const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
+
+  const progressPressed = useDerivedValue(() =>
+    withSpring(isPressed.value, IOSpringValues.button)
+  );
+
+  // Interpolate animation values from `isPressed` values
+  const animatedScaleStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      progressPressed.value,
+      [0, 1],
+      [1, animationScaleValue],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
+
+  const animatedBackgroundStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [mapBackgroundStates.default, mapBackgroundStates.pressed]
+    );
+
+    return {
+      backgroundColor
+    };
+  });
+
+  const onPressIn = React.useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 1;
+  }, [isPressed]);
+  const onPressOut = React.useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 0;
+  }, [isPressed]);
+
+  return { onPressIn, onPressOut, animatedScaleStyle, animatedBackgroundStyle };
+};
