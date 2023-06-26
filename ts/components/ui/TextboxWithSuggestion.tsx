@@ -66,7 +66,7 @@ const TextboxWithSuggestionModal = (props: ModalProps) => {
       <AppHeader>
         <Left>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Left>
         <Body style={{ alignItems: "center", marginRight: 32 }}>
