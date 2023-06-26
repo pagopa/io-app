@@ -3655,12 +3655,12 @@ idpay:
       success:
         title: Operazione autorizzata con successo!
         body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      cancelled:
+        title: L’operazione è stata annullata
       failure:
         GENERIC:
           title: Si è verificato un errore imprevisto
           body: Non è stato addebitato alcun importo.
-        CANCELLED: 
-          title: L’operazione è stata annullata
         REJECTED:
           title: Autorizzazione negata
           body: Testo TBD
