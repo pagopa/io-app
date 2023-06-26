@@ -25,6 +25,7 @@ type Props = {
   cardStyle?: ViewStyle;
   accessibilityLabel?: string;
   accessibilityHint?: string;
+  testId?: string;
 };
 
 const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
 });
 
 const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const { label, onPress, isNew, isError, cardStyle } = props;
+  const { label, onPress, isNew, isError, cardStyle, testId } = props;
   const rightLabel = () => {
     switch (props.status) {
       case undefined:
@@ -89,7 +90,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           <>
             <Icon name="add" size={20} color="white" />
             <HSpacer size={4} />
-            <Label color="white" weight="Bold">
+            <Label color="white" weight="Bold" testID={testId}>
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
             </Label>
           </>
@@ -102,12 +103,13 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             accessible={false}
             importantForAccessibility={"no-hide-descendants"}
             accessibilityElementsHidden={true}
+            testID={testId}
           />
         );
       case "refresh":
         return (
           <View style={[IOStyles.row, IOStyles.alignCenter]}>
-            <Label weight="Bold" color="white">
+            <Label weight="Bold" color="white" testID={testId}>
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
             </Label>
             <HSpacer size={8} />
@@ -117,7 +119,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "show":
         return (
           <View style={IOStyles.row}>
-            <Label color="white" weight="Bold">
+            <Label color="white" weight="Bold" testID={testId}>
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
             </Label>
             <HSpacer size={4} />
