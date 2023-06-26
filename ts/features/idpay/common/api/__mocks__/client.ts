@@ -19,5 +19,6 @@ export const mockIDPayClient = {
   unsubscribe: jest.fn(),
   getInitiativesWithInstrument: jest.fn(),
   putPreAuthPayment: jest.fn(),
-  putAuthPayment: jest.fn()
+  putAuthPayment: jest.fn(),
+  deletePayment: jest.fn()
 };
