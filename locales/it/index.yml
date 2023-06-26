@@ -3182,6 +3182,9 @@ features:
         wrongUser:
           title: Non puoi firmare questi documenti
           subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
+        cancelled:
+          title: La richiesta firma è stata annullata
+          subTitle: Per assistenza, scrivi a
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
@@ -3652,12 +3655,12 @@ idpay:
       success:
         title: Operazione autorizzata con successo!
         body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      cancelled:
+        title: L’operazione è stata annullata
       failure:
         GENERIC:
           title: Si è verificato un errore imprevisto
           body: Non è stato addebitato alcun importo.
-        CANCELLED: 
-          title: L’operazione è stata annullata
         REJECTED:
           title: Autorizzazione negata
           body: Testo TBD
@@ -3673,6 +3676,20 @@ idpay:
         subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
         input: Codice Transazione
         button: Continua
+      scan:
+        tabs:
+          scan: Inquadra
+          upload: Carica
+          input: Digita
+        permissions:
+          undefined: 
+            title: Ci serve il tuo permesso
+            label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+            action: Consenti l’accesso
+          denied:
+            title: Non hai dato il permesso di usare la fotocamera
+            label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+            action: Vai alle impostazioni
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
