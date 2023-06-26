@@ -89,7 +89,7 @@ const FimsWebviewScreen = () => {
     }
 
     const cookie: Cookie = {
-      name: "X-IO-Federation-Token",
+      name: "X-IO-FIMS-Token",
       value: maybeFIMSToken.value,
       domain: maybeParsedUrl.value.hostname,
       secure: !isLocalEnv,
