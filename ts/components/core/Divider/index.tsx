@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { IOColors, IOTheme, IOThemeContext } from "../variables/IOColors";
 
 type DividerOrientation = "vertical" | "horizontal";
