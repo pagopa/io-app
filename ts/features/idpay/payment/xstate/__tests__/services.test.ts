@@ -4,11 +4,14 @@ import {
   AuthPaymentResponseDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context, INITIAL_CONTEXT } from "../context";
 import { PaymentFailureEnum } from "../failure";
-import { createServicesImplementation } from "../services";
+import { createServicesImplementation, failureMap } from "../services";
+import {
+  CodeEnum,
+  TransactionErrorDTO
+} from "../../../../../../definitions/idpay/TransactionErrorDTO";
 
 const T_AUTH_TOKEN = "abc123";
 const T_TRX_CODE = "ABCD1234";
@@ -16,12 +19,21 @@ const T_TRANSACTION_DATA_DTO: AuthPaymentResponseDTO = {
   amountCents: 100,
   id: "",
   initiativeId: "",
-  rejectionReasons: [],
   status: StatusEnum.AUTHORIZED,
   trxCode: T_TRX_CODE
 };
 
 const T_CONTEXT: Context = INITIAL_CONTEXT;
+
+const possibleFailures: ReadonlyArray<{ status: number; code: CodeEnum }> = [
+  { status: 404, code: CodeEnum.PAYMENT_NOT_FOUND_EXPIRED },
+  { status: 403, code: CodeEnum.PAYMENT_USER_NOT_VALID },
+  { status: 400, code: CodeEnum.PAYMENT_STATUS_NOT_VALID },
+  { status: 403, code: CodeEnum.PAYMENT_BUDGET_EXHAUSTED },
+  { status: 403, code: CodeEnum.PAYMENT_GENERIC_REJECTED },
+  { status: 429, code: CodeEnum.PAYMENT_TOO_MANY_REQUESTS },
+  { status: 500, code: CodeEnum.PAYMENT_GENERIC_ERROR }
+];
 
 describe("IDPay Payment machine services", () => {
   const services = createServicesImplementation(mockIDPayClient, T_AUTH_TOKEN);
@@ -37,27 +49,6 @@ describe("IDPay Payment machine services", () => {
       ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
 
       expect(mockIDPayClient.putPreAuthPayment).not.toHaveBeenCalled();
-    });
-
-    it("should get a GENERIC failure if status codeis not 200", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 404, value: { code: "404", message: "" } });
-
-      mockIDPayClient.putPreAuthPayment.mockImplementation(() => response);
-
-      await expect(
-        services.preAuthorizePayment({
-          ...T_CONTEXT,
-          trxCode: O.some(T_TRX_CODE)
-        })
-      ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
-
-      expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          bearerAuth: T_AUTH_TOKEN,
-          trxCode: T_TRX_CODE
-        })
-      );
     });
 
     it("should pre authorize payment", async () => {
@@ -82,6 +73,34 @@ describe("IDPay Payment machine services", () => {
         })
       );
     });
+
+    possibleFailures.forEach(({ status, code }) => {
+      it(`should get a ${code} failure if status code is ${status}`, async () => {
+        const response: E.Either<
+          Error,
+          { status: number; value?: TransactionErrorDTO }
+        > = E.right({
+          status,
+          value: { code, message: "" }
+        });
+
+        mockIDPayClient.putPreAuthPayment.mockImplementation(() => response);
+
+        await expect(
+          services.preAuthorizePayment({
+            ...T_CONTEXT,
+            trxCode: O.some(T_TRX_CODE)
+          })
+        ).rejects.toStrictEqual(failureMap[code]);
+
+        expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
+          expect.objectContaining({
+            bearerAuth: T_AUTH_TOKEN,
+            trxCode: T_TRX_CODE
+          })
+        );
+      });
+    });
   });
 
   describe("authorizePayment", () => {
@@ -91,51 +110,6 @@ describe("IDPay Payment machine services", () => {
       );
 
       expect(mockIDPayClient.putAuthPayment).not.toHaveBeenCalled();
-    });
-
-    it("should fail if status code is not 200", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: "400", message: "" } });
-
-      mockIDPayClient.putAuthPayment.mockImplementation(() => response);
-
-      await expect(
-        services.authorizePayment({
-          ...T_CONTEXT,
-          transactionData: O.some(T_TRANSACTION_DATA_DTO)
-        })
-      ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
-
-      expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          bearerAuth: T_AUTH_TOKEN,
-          trxCode: T_TRX_CODE
-        })
-      );
-    });
-
-    it("should fail if status code is 200 and transaction is not AUTHORIZED", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: "400", message: "" } });
-
-      mockIDPayClient.putAuthPayment.mockImplementation(() => response);
-
-      await expect(
-        services.authorizePayment({
-          ...T_CONTEXT,
-          transactionData: O.some({
-            ...T_TRANSACTION_DATA_DTO,
-            status: StatusEnum.REJECTED
-          })
-        })
-      ).rejects.toStrictEqual(PaymentFailureEnum.GENERIC);
-
-      expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
-        expect.objectContaining({
-          bearerAuth: T_AUTH_TOKEN,
-          trxCode: T_TRX_CODE
-        })
-      );
     });
 
     it("should authorize payment", async () => {
@@ -159,6 +133,34 @@ describe("IDPay Payment machine services", () => {
           trxCode: T_TRX_CODE
         })
       );
+    });
+
+    possibleFailures.forEach(({ status, code }) => {
+      it(`should get a ${code} failure if status code is ${status}`, async () => {
+        const response: E.Either<
+          Error,
+          { status: number; value?: TransactionErrorDTO }
+        > = E.right({
+          status,
+          value: { code, message: "" }
+        });
+
+        mockIDPayClient.putAuthPayment.mockImplementation(() => response);
+
+        await expect(
+          services.authorizePayment({
+            ...T_CONTEXT,
+            transactionData: O.some(T_TRANSACTION_DATA_DTO)
+          })
+        ).rejects.toStrictEqual(failureMap[code]);
+
+        expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
+          expect.objectContaining({
+            bearerAuth: T_AUTH_TOKEN,
+            trxCode: T_TRX_CODE
+          })
+        );
+      });
     });
   });
 });

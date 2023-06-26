@@ -44,7 +44,10 @@ import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionExpired } from "../store/actions/authentication";
+import {
+  refreshSessionToken,
+  sessionExpired
+} from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -61,13 +64,9 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../features/lollipop/store/reducers/lollipop";
-import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
-  generateKeyInfo,
-  generateLollipopKeySaga
+  generateLollipopKeySaga,
+  getKeyInfo
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -94,6 +93,8 @@ import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
+import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
+import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -240,9 +241,8 @@ export function* initializeApplicationSaga(): Generator<
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
+  const keyInfo = yield* call(getKeyInfo);
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
@@ -261,7 +261,12 @@ export function* initializeApplicationSaga(): Generator<
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
-    yield* put(sessionExpired());
+    const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+    if (isFastLoginEnabled) {
+      yield* put(refreshSessionToken.request());
+    } else {
+      yield* put(sessionExpired());
+    }
     return;
   }
 
@@ -333,6 +338,8 @@ export function* initializeApplicationSaga(): Generator<
       return;
     }
   }
+
+  const publicKey = yield* select(lollipopPublicKeySelector);
 
   yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
