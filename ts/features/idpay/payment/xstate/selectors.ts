@@ -19,8 +19,14 @@ export const selectIsPreAuthorizing = (state: StateWithContext) =>
 export const selectIsAuthorizing = (state: StateWithContext) =>
   state.matches("AUTHORIZING");
 
+export const selectIsCancelling = (state: StateWithContext) =>
+  state.matches("CANCELLING");
+
 export const selectIsFailure = (state: StateWithContext) =>
   state.matches("AUTHORIZATION_FAILURE");
+
+export const selectIsCancelled = (state: StateWithContext) =>
+  state.matches("AUTHORIZATION_CANCELLED");
 
 export const selectFailureOption = (state: StateWithContext) =>
   state.context.failure;

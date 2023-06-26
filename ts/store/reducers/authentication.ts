@@ -156,6 +156,11 @@ export const sessionTokenSelector = (
     ? state.authentication.sessionToken
     : undefined;
 
+export const fimsTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.fimsToken
+    : undefined;
+
 /**
  * Return the authentication header required for IO Backend requests
  */

@@ -90,7 +90,9 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
     leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.back"))}
     rightButton={confirmButtonProps(
       onContinue,
-      I18n.t("wallet.newPaymentMethod.addButton")
+      I18n.t("wallet.newPaymentMethod.addButton"),
+      undefined,
+      "walletAddNewPaymentMethodTestId"
     )}
   />
 );
