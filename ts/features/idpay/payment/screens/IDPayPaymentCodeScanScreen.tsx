@@ -24,7 +24,10 @@ const IDPayPaymentCodeScanScreen = () => {
 
   const handleBarcodeScanner = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
-      RNReactNativeHapticFeedback.trigger(HapticFeedbackTypes.impactMedium);
+      RNReactNativeHapticFeedback.trigger("notificationSuccess", {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false
+      });
       openWebUrl(barcode.authUrl);
     }
   };
