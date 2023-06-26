@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.36.0-rc.1](https://github.com/pagopa/io-app/compare/2.36.0-rc.0...2.36.0-rc.1) (2023-06-22)
+
+
+### Features
+
+* [[IOPID-315](https://pagopa.atlassian.net/browse/IOPID-315)] LV at startup ([#4694](https://github.com/pagopa/io-app/issues/4694)) ([04aca14](https://github.com/pagopa/io-app/commit/04aca142092fc5ae89b6cb3e6489fc7ab5296fe2))
+
+
+### Bug Fixes
+
+* [[IOBP-58](https://pagopa.atlassian.net/browse/IOBP-58)] Fix onboarding failure screen ([#4697](https://github.com/pagopa/io-app/issues/4697)) ([7e4bdb7](https://github.com/pagopa/io-app/commit/7e4bdb7d15d7de7d23a1f1ec920657cd0abb601c))
+
+
+### Chores
+
+* [[IOBP-68](https://pagopa.atlassian.net/browse/IOBP-68)] IDPay transaction authorization failure screen ([#4695](https://github.com/pagopa/io-app/issues/4695)) ([f5f0e78](https://github.com/pagopa/io-app/commit/f5f0e7875cd07deb43e397bdac9eccf4f5b3b1f0))
+
 ## [2.36.0-rc.0](https://github.com/pagopa/io-app/compare/2.35.0-rc.1...2.36.0-rc.0) (2023-06-20)
 
 
