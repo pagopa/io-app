@@ -9,7 +9,6 @@ type DividerProps = {
 };
 
 const DEFAULT_BORDER_SIZE = 1;
-const DEFAULT_DIVIDER_SIZE = StyleSheet.hairlineWidth;
 
 // Co-authored by Fabio Bombardi
 // https://github.com/pagopa/io-app/pull/4478
@@ -22,7 +21,7 @@ const DividerStyle = (orientation: DividerOrientation, theme: IOTheme) => {
   const orientationStyle =
     orientation === "vertical"
       ? { width: DEFAULT_BORDER_SIZE }
-      : { height: DEFAULT_DIVIDER_SIZE };
+      : { height: DEFAULT_BORDER_SIZE };
 
   return { ...baseStyle, ...orientationStyle };
 };
