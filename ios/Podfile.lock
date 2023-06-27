@@ -377,7 +377,7 @@ PODS:
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
     - React-Core
-  - react-native-cookies (6.1.0):
+  - react-native-cookies (6.2.1):
     - React-Core
   - react-native-fingerprint-scanner (6.0.0):
     - React
@@ -952,7 +952,7 @@ SPEC CHECKSUMS:
   react-native-blob-util: a5d3561045ed98cfb2fb80cbbff600fae0e8edee
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
-  react-native-cookies: 7e14e823f32bd7c868134c7e207c89a46fa28f98
+  react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015

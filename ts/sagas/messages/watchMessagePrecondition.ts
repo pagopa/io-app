@@ -10,6 +10,8 @@ import {
   clearMessagePrecondition
 } from "../../store/actions/messages";
 import { isTestEnv } from "../../utils/environment";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../types/utils";
 
 export const testWorkerMessagePrecondition = isTestEnv
   ? workerMessagePrecondition
@@ -24,9 +26,15 @@ function* workerMessagePrecondition(
   const messageId = action.payload;
 
   try {
-    const result = yield* call(getThirdPartyMessagePrecondition, {
-      id: messageId
-    });
+    const result = (yield* call(
+      withRefreshApiCall,
+      getThirdPartyMessagePrecondition({
+        id: messageId
+      }),
+      action
+    )) as unknown as SagaCallReturnType<
+      typeof getThirdPartyMessagePrecondition
+    >;
 
     if (E.isRight(result)) {
       if (result.right.status === 200) {

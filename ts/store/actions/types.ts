@@ -26,6 +26,7 @@ import { PnActions } from "../../features/pn/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { IDPayActions } from "../../features/idpay/common/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
+import { FastLoginActions } from "../../features/fastLogin/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -102,7 +103,8 @@ export type Action =
   | StartupActions
   | FciActions
   | IDPayActions
-  | LollipopActions;
+  | LollipopActions
+  | FastLoginActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
