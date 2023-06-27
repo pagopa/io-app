@@ -9,6 +9,7 @@ import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducer
 import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
+import { itWalletEnabled } from "../../config";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -30,7 +31,7 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return <SystemOffModal />;
   }
   // if the app is out of date, force a screen to update it
-  if (!props.isAppSupported) {
+  if (!props.isAppSupported && !itWalletEnabled) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
       minVersioniOS: props.versionInfo?.min_app_version.ios,
       minVersionAndroid: props.versionInfo?.min_app_version.android
