@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.36.0-rc.2](https://github.com/pagopa/io-app/compare/2.36.0-rc.1...2.36.0-rc.2) (2023-06-27)
+
+
+### Features
+
+* [[IOBP-76](https://pagopa.atlassian.net/browse/IOBP-76)] Add IDPay transaction cancellation ([#4696](https://github.com/pagopa/io-app/issues/4696)) ([6051da0](https://github.com/pagopa/io-app/commit/6051da0be847c1518795f3597a33ee3ad920d6d5)), closes [/github.com/pagopa/io-app/pull/4696/files#diff-13523f24396fea11f6aa4e54f4550223619cc436304b69e0de32772019e1089](https://github.com/pagopa//github.com/pagopa/io-app/pull/4696/files/issues/diff-13523f24396fea11f6aa4e54f4550223619cc436304b69e0de32772019e1089) [/github.com/pagopa/io-app/pull/4696/files#diff-13a0efdb2dfe2a5ba04e61cae49a65059b02ec0790ea78f640cbd80b601d5580](https://github.com/pagopa//github.com/pagopa/io-app/pull/4696/files/issues/diff-13a0efdb2dfe2a5ba04e61cae49a65059b02ec0790ea78f640cbd80b601d5580)
+* [[IOBP-9](https://pagopa.atlassian.net/browse/IOBP-9)] Add IDPay transaction QRCode scan screen ([#4681](https://github.com/pagopa/io-app/issues/4681)) ([02280ca](https://github.com/pagopa/io-app/commit/02280ca0195d1fb8f2d2b775788eea87479358c0))
+* [[IOCOM-328](https://pagopa.atlassian.net/browse/IOCOM-328)] FIMS handling of iosso:// protocol ([#4700](https://github.com/pagopa/io-app/issues/4700)) ([ecbf852](https://github.com/pagopa/io-app/commit/ecbf8526914603cc96134ab7359319aa7fb76e95))
+* [[IOCOM-329](https://pagopa.atlassian.net/browse/IOCOM-329)] FIMS cookie ([#4701](https://github.com/pagopa/io-app/issues/4701)) ([c128461](https://github.com/pagopa/io-app/commit/c128461993c998152ce5bf0b9430f3bd57491cee))
+* [[IOCOM-330](https://pagopa.atlassian.net/browse/IOCOM-330)] Enable FIMS in production ([#4702](https://github.com/pagopa/io-app/issues/4702)) ([5e57fb0](https://github.com/pagopa/io-app/commit/5e57fb0ab629a75d4bd685ebfd102df177b996e5))
+* [[IOPID-317](https://pagopa.atlassian.net/browse/IOPID-317)] Fast login user interaction ([#4679](https://github.com/pagopa/io-app/issues/4679)) ([5cc274d](https://github.com/pagopa/io-app/commit/5cc274df09cd5e15989c181cdba3633c9f273c4a))
+* **Firma con IO:** [[SFEQS-1684](https://pagopa.atlassian.net/browse/SFEQS-1684)] Add cancelled FCI request screen ([#4663](https://github.com/pagopa/io-app/issues/4663)) ([fd6c39f](https://github.com/pagopa/io-app/commit/fd6c39f030f97c62f828c43d66852cb2283911bc))
+
+
+### Bug Fixes
+
+* [[IOAPPFD0-115](https://pagopa.atlassian.net/browse/IOAPPFD0-115)] Fix UI regression of `IOBadge` in payment capability screen ([#4684](https://github.com/pagopa/io-app/issues/4684)) ([c333e95](https://github.com/pagopa/io-app/commit/c333e950294e9c17b2da19fbebc53b76cd6d0b76))
+* [[IOCOM-326](https://pagopa.atlassian.net/browse/IOCOM-326)] PN copy changes ([#4709](https://github.com/pagopa/io-app/issues/4709)) ([d6635a3](https://github.com/pagopa/io-app/commit/d6635a390e3a0e618f5e70dcaefd955d88b9410f))
+* fix failing CGN E2E tests ([#4673](https://github.com/pagopa/io-app/issues/4673)) ([9d51d00](https://github.com/pagopa/io-app/commit/9d51d008330ee6eaafe6a39d4d8f3dc58143ab45))
+
+
+### Chores
+
+* [[IOBP-92](https://pagopa.atlassian.net/browse/IOBP-92)] Update IDPay API specifications ([#4707](https://github.com/pagopa/io-app/issues/4707)) ([a7c6f1d](https://github.com/pagopa/io-app/commit/a7c6f1d5eac4725b243ddccc2236190a9b3dab09))
+
 ## [2.36.0-rc.1](https://github.com/pagopa/io-app/compare/2.36.0-rc.0...2.36.0-rc.1) (2023-06-22)
 
 

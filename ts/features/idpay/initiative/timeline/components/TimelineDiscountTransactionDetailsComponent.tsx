@@ -64,6 +64,13 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
     O.toNullable
   );
 
+  const formattedAmount = pipe(
+    transaction.amount,
+    O.fromNullable,
+    O.map(amount => formatNumberAmount(amount, true)),
+    O.getOrElse(() => "-")
+  );
+
   return (
     <View style={IOStyles.flex}>
       <VSpacer size={8} />
@@ -74,9 +81,7 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
             "idpay.initiative.operationDetails.discount.details.labels.totalAmount"
           )}
         </Body>
-        <Body weight="SemiBold">
-          {formatNumberAmount(transaction.amount, true)}
-        </Body>
+        <Body weight="SemiBold">{formattedAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>

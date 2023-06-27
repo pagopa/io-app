@@ -10,6 +10,7 @@ import {
   successLoadMessageDetails
 } from "../../../__mocks__/message";
 import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 const tryLoadMessageDetails = testTryLoadMessageDetails!;
 
@@ -25,7 +26,12 @@ describe("tryReloadAllMessages", () => {
       const getMessage = jest.fn();
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
         .next()
-        .call(getMessage, getMessagesPayload)
+        .call(
+          withRefreshApiCall,
+          getMessage(getMessagesPayload),
+          action.request({ id })
+        )
+        // .call(getMessage, getMessagesPayload)
         .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadMessageDetails))
         .next()
@@ -38,7 +44,11 @@ describe("tryReloadAllMessages", () => {
       const getMessage = jest.fn();
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
         .next()
-        .call(getMessage, getMessagesPayload)
+        .call(
+          withRefreshApiCall,
+          getMessage(getMessagesPayload),
+          action.request({ id })
+        )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(action.failure({ id, error: Error("Backend error") }))
         .next()
@@ -48,17 +58,16 @@ describe("tryReloadAllMessages", () => {
 
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
-      const getMessage = () => {
+      const getMessage = jest.fn().mockImplementation(() => {
         throw new Error("I made a boo-boo, sir!");
-      };
+      });
+
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
-        .next()
-        .call(getMessage, getMessagesPayload)
         .next()
         .put(
           action.failure({
             id,
-            error: new Error("Response is undefined")
+            error: new Error("I made a boo-boo, sir!")
           })
         )
         .next()

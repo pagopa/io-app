@@ -39,6 +39,7 @@ import {
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -142,6 +143,7 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
+      .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
       .put(sessionExpired());
   });
@@ -178,7 +180,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(401) // checksession
       .next(true) // FastLogin FF
-      .put(refreshSessionToken.request());
+      .put(refreshSessionToken.request({ withUserInteraction: false }));
   });
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
