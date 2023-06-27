@@ -1,10 +1,12 @@
 import { SagaIterator } from "redux-saga";
-import { call, delay, put, takeLatest } from "typed-redux-saga/macro";
+import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ValidationError } from "io-ts";
+import { getType } from "typesafe-actions";
 import {
+  askUserToRefreshSessionToken,
   refreshSessionToken,
   sessionExpired
 } from "../../../store/actions/authentication";
@@ -26,9 +28,48 @@ import {
   NonceBaseResponseType,
   NonceResponse
 } from "../backend/mockedFunctionsAndTypes";
+import {
+  identificationFailure,
+  identificationRequest,
+  identificationSuccess
+} from "../../../store/actions/identification";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
-  yield* takeLatest(refreshSessionToken.request, doRefreshTokenSaga);
+  yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
+}
+
+function* handleRefreshSessionToken(
+  refreshSessionTokenRequestAction: ReturnType<
+    typeof refreshSessionToken.request
+  >
+) {
+  const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
+
+  if (!withUserInteraction) {
+    yield* call(doRefreshTokenSaga);
+    return;
+  }
+
+  yield* put(askUserToRefreshSessionToken.request());
+  const userAnswerAction = yield* take(
+    getType(askUserToRefreshSessionToken.success)
+  );
+  const typedAction = userAnswerAction as ReturnType<
+    typeof askUserToRefreshSessionToken.success
+  >;
+  if (typedAction.payload === "yes") {
+    yield* put(identificationRequest(true, false));
+    const result = yield* take([identificationSuccess, identificationFailure]);
+    if (result.type === getType(identificationSuccess)) {
+      yield* call(doRefreshTokenSaga);
+    }
+  } else {
+    // Lock the app
+    NavigationService.navigate(ROUTES.MESSAGES_HOME);
+    yield* put(identificationRequest());
+  }
 }
 
 type RequestStateType = {
@@ -79,7 +120,9 @@ function* doRefreshTokenSaga() {
         const newToken = tokenResponse.right.value.token as SessionToken;
         yield* put(refreshSessionToken.success(newToken));
         // Reinit all backend clients to use the new token
-        yield* put(startApplicationInitialization());
+        yield* put(
+          startApplicationInitialization({ handleSessionExpiration: true })
+        );
       } else {
         yield* delay(1000);
         handleRequestError(requestState, tokenResponse);
