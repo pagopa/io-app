@@ -40,23 +40,20 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
-
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Radio
     </H2>
     {/* RadioListItem */}
     <RadioListItemsShowroom />
-
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
     </H2>
     {/* Native Switch */}
     <NativeSwitchShowroom />
     {/* SwitchListItem */}
-    {renderSwitchListItem()}
+    <SwitchListItemShowroom />
     {/* SwitchLabel */}
     {renderAnimatedSwitch()}
-
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
       Legacy components
@@ -242,27 +239,49 @@ const NativeSwitchShowroom = () => {
   );
 };
 
-const renderSwitchListItem = () => (
+type SwitchListItemSampleProps = Pick<
+  React.ComponentProps<typeof SwitchListItem>,
+  "label" | "description" | "value"
+>;
+
+const SwitchListItemSample = ({
+  value,
+  label,
+  description
+}: SwitchListItemSampleProps) => {
+  const [isEnabled, setIsEnabled] = useState(value);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <SwitchListItem
+      label={label}
+      description={description}
+      value={isEnabled}
+      onSwitchValueChange={toggleSwitch}
+    />
+  );
+};
+
+const SwitchListItemShowroom = () => (
   <>
     <DSComponentViewerBox name="SwitchListItem">
-      <SwitchListItem label="Testo molto breve" value={true} />
+      <SwitchListItemSample label="Testo molto breve" value={true} />
       <Divider />
-      <SwitchListItem
+      <SwitchListItemSample
         label="Testo molto breve"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
       />
       <Divider />
-      <SwitchListItem
+      <SwitchListItemSample
         label="Questa è un'altra prova ancora più lunga per andare su due righe"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
       />
       <Divider />
-      <SwitchListItem
-        icon="bonus"
+      <SwitchListItemSample
         label="Let's try with a loooong loooooong looooooong title + icon"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."

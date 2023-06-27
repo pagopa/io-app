@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet, Text, Switch } from "react-native";
-import { useState } from "react";
 import { NewH6 } from "../core/typography/NewH6";
 import {
   IOSelectionListItemStyles,
@@ -18,10 +17,10 @@ import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
 
 type Props = {
   label: string;
-  description?: string;
-  icon?: IOIcons;
   // Dispatch the new value when the Switch changes state
   onSwitchValueChange?: (newValue: boolean) => void;
+  description?: string;
+  icon?: IOIcons;
 };
 
 const DISABLED_OPACITY = 0.5;
@@ -54,17 +53,8 @@ export const SwitchListItem = ({
   // Experimental Design System
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const [isEnabled, setToggleValue] = useState(value ?? false);
-
   // Theme
   const theme = useIOTheme();
-
-  const toggleSwitch = () => {
-    setToggleValue(previousState => !previousState);
-    if (onSwitchValueChange !== undefined) {
-      onSwitchValueChange(!isEnabled);
-    }
-  };
 
   return (
     <View
@@ -125,7 +115,7 @@ export const SwitchListItem = ({
 
         <HSpacer size={8} />
         <View style={{ flexShrink: 0, alignSelf: "flex-start" }}>
-          <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
+          <NativeSwitch value={value} onValueChange={onSwitchValueChange} />
         </View>
       </View>
     </View>
