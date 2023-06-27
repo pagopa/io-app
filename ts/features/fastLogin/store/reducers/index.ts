@@ -26,10 +26,8 @@ export type FastLoginState = {
   pendingActions: Array<Action>;
 };
 
-export const fastLoginSelector = createSelector(
-  (state: GlobalState) => state,
-  state => state.features.loginFeatures.fastLogin
-);
+export const fastLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin;
 
 export const fastLoginPendingActionsSelector = createSelector(
   fastLoginSelector,

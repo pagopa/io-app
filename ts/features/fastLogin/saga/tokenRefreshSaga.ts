@@ -41,9 +41,11 @@ export function* watchTokenRefreshSaga(): SagaIterator {
 }
 
 function* handleRefreshSessionToken(
-  _: ReturnType<typeof refreshSessionToken.request>
+  refreshSessionTokenRequestAction: ReturnType<
+    typeof refreshSessionToken.request
+  >
 ) {
-  const { withUserInteraction } = _.payload;
+  const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
 
   if (!withUserInteraction) {
     yield* call(doRefreshTokenSaga);

@@ -7,6 +7,7 @@ import { toUIMessage } from "../../store/reducers/entities/messages/transformers
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError, getError } from "../../utils/errors";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
@@ -29,12 +30,16 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
     const { filter, cursor, pageSize } = action.payload;
     try {
-      const response = yield* call(getMessages, {
-        enrich_result_data: true,
-        page_size: pageSize,
-        minimum_id: cursor,
-        archived: filter.getArchived
-      });
+      const response = (yield* call(
+        withRefreshApiCall,
+        getMessages({
+          enrich_result_data: true,
+          page_size: pageSize,
+          minimum_id: cursor,
+          archived: filter.getArchived
+        }),
+        action
+      )) as unknown as SagaCallReturnType<typeof getMessages>;
       const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
         response,
         ({ items, prev }: PaginatedPublicMessagesCollection) =>

@@ -182,7 +182,10 @@ function* createOrUpdateProfileSaga(
 
     if (response.right.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw new Error(response.right.value?.title ?? "NO TITLE");
+      throw new Error(
+        response.right.value?.title ??
+          `Profile upsert: received successful non-200 HTTP response with no "title" parameter in the body`
+      );
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield* put(

@@ -12,11 +12,11 @@ import { Action } from "../../../../store/actions/types";
 import { savePendingAction } from "../../actions";
 
 export function* withRefreshApiCall<R, A extends Action>(
-  f: Promise<t.Validation<IResponseType<401, any> | R>>,
+  apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
   action?: A | undefined,
   errorMessage?: string
 ): SagaIterator<t.Validation<IResponseType<401, any> | R>> {
-  const response = yield* call(() => f);
+  const response = yield* call(() => apiCall);
   // BEWARE: we can cast to any only because we know for sure that f will
   // always return a Promise<IResponseType<A, B>>
   if (E.isRight(response) && (response.right as any).status === 401) {
