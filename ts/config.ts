@@ -124,6 +124,9 @@ export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 
+// IT Wallet Feature Flag
+export const itWalletEnabled = Config.IT_WALLET_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
