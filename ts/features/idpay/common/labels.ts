@@ -37,7 +37,7 @@ const circuitTypeLabels: OperationTypeLabels = {
   "10": "PrivateCircuit"
 };
 
-export const getLabelForCircuitType = (circuitType?: string) =>
+export const getLabelForCircuitType = (circuitType: string | undefined) =>
   pipe(
     circuitType,
     O.fromNullable,

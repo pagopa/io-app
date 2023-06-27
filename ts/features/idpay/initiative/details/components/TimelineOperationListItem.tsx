@@ -41,30 +41,23 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
       return <Icon name={"ok"} />;
-
     case IbanOperationTypeEnum.ADD_IBAN:
       return <Icon name={"institution"} color="bluegreyLight" />;
-
     case RefundOperationTypeEnum.PAID_REFUND:
       return <Icon name="refund" color="bluegrey" />;
-
     case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case RefundOperationTypeEnum.REJECTED_REFUND:
       return <Icon name={"notice"} color="red" />;
-
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
       if (operation.channel === ChannelEnum.QRCODE) {
         return <Icon name={"productIOAppBlueBg"} color="bluegreyLight" />;
       }
-
       return getCardLogoComponent(operation.brand);
-
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
       return getCardLogoComponent(operation.brand);
-
     default:
       return null;
   }

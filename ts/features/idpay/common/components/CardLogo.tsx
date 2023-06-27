@@ -32,7 +32,7 @@ const isIOLogoPaymentType = (u: unknown): u is IOLogoPaymentType =>
   IOPaymentLogos[u as IOLogoPaymentType] !== undefined;
 
 export const getCardLogoComponent = (
-  brand?: string,
+  brand: string | undefined,
   size: IOIconSizeScale = 24
 ) =>
   pipe(
