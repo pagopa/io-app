@@ -14,6 +14,7 @@ import {
 } from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
 import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
+import { itWalletEnabled } from "../../config";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -52,6 +53,21 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return fastLoginModals;
   }
 
+  if (!props.isDeviceSupported) {
+    return <UnsupportedDeviceScreen />;
+  }
+  // avoid app usage if backend systems are OFF
+  if (props.isBackendServicesStatusOff) {
+    return <SystemOffModal />;
+  }
+  // if the app is out of date, force a screen to update it
+  if (!props.isAppSupported && !itWalletEnabled) {
+    void mixpanelTrack("UPDATE_APP_MODAL", {
+      minVersioniOS: props.versionInfo?.min_app_version.ios,
+      minVersionAndroid: props.versionInfo?.min_app_version.android
+    });
+    return <UpdateAppModal />;
+  }
   return <IdentificationModal />;
 };
 
