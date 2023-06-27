@@ -561,9 +561,6 @@ const renderListItemTransaction = () => {
     imageSource: `${cdnPath}1199250158.png`,
     name: "Comune di Milano"
   };
-  const pressHandler = () => {
-    alert("pressed 🥳");
-  };
   return (
     <DSComponentViewerBox name="ListItemTransaction">
       <View>
@@ -573,28 +570,28 @@ const renderListItemTransaction = () => {
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           isLoading={true}
-          onPress={pressHandler}
+          onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
           leftPaymentLogoOrUrl={"amex"}
           transactionStatus="failure"
-          onPress={pressHandler}
+          onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
           leftPaymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
           transactionStatus="pending"
-          onPress={pressHandler}
+          onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
-          onPress={pressHandler}
+          onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
@@ -602,7 +599,7 @@ const renderListItemTransaction = () => {
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           leftPaymentLogoOrUrl={"mastercard"}
-          onPress={pressHandler}
+          onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
@@ -610,7 +607,7 @@ const renderListItemTransaction = () => {
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           hasChevronRight={true}
-          onPress={pressHandler}
+          onPress={onButtonPress}
         />
         <ListItemTransaction
           title="This one is not clickable"
@@ -623,7 +620,7 @@ const renderListItemTransaction = () => {
           subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
           transactionAmount="€ 1.000,00"
           leftPaymentLogoOrUrl={"postepay"}
-          onPress={pressHandler}
+          onPress={onButtonPress}
           transactionStatus="success"
         />
       </View>
