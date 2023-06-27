@@ -104,7 +104,7 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
           {pipe(
             operation.accrued,
             O.fromNullable,
-            O.map(accrued => Math.abs(accrued)),
+            O.map(Math.abs),
             O.map(formatNumberAmount),
             O.map(accrued => `-${accrued} €`),
             O.getOrElse(() => "-")
