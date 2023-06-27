@@ -3,8 +3,6 @@ import * as t from "io-ts";
 
 export enum PaymentFailureEnum {
   GENERIC = "GENERIC",
-  // Transaction cancelled by the user
-  CANCELLED = "CANCELLED",
   // Transaction was rejected by the operator
   REJECTED = "REJECTED",
   // User session expired

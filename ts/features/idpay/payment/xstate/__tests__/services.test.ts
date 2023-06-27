@@ -163,4 +163,63 @@ describe("IDPay Payment machine services", () => {
       });
     });
   });
+
+  describe("deletePayment", () => {
+    it("should fail if transactionData is not in context", async () => {
+      await expect(services.authorizePayment(T_CONTEXT)).rejects.toStrictEqual(
+        PaymentFailureEnum.GENERIC
+      );
+
+      expect(mockIDPayClient.deletePayment).not.toHaveBeenCalled();
+    });
+
+    it("should delete payment", async () => {
+      const response: E.Either<Error, { status: number; value?: undefined }> =
+        E.right({ status: 200, value: undefined });
+
+      mockIDPayClient.deletePayment.mockImplementation(() => response);
+
+      await expect(
+        services.deletePayment({
+          ...T_CONTEXT,
+          transactionData: O.some(T_TRANSACTION_DATA_DTO)
+        })
+      ).resolves.toBeUndefined();
+
+      expect(mockIDPayClient.deletePayment).toHaveBeenCalledWith(
+        expect.objectContaining({
+          bearerAuth: T_AUTH_TOKEN,
+          trxCode: T_TRX_CODE
+        })
+      );
+    });
+
+    possibleFailures.forEach(({ status, code }) => {
+      it(`should get a ${code} failure if status code is ${status}`, async () => {
+        const response: E.Either<
+          Error,
+          { status: number; value?: TransactionErrorDTO }
+        > = E.right({
+          status,
+          value: { code, message: "" }
+        });
+
+        mockIDPayClient.deletePayment.mockImplementation(() => response);
+
+        await expect(
+          services.deletePayment({
+            ...T_CONTEXT,
+            transactionData: O.some(T_TRANSACTION_DATA_DTO)
+          })
+        ).rejects.toStrictEqual(failureMap[code]);
+
+        expect(mockIDPayClient.deletePayment).toHaveBeenCalledWith(
+          expect.objectContaining({
+            bearerAuth: T_AUTH_TOKEN,
+            trxCode: T_TRX_CODE
+          })
+        );
+      });
+    });
+  });
 });

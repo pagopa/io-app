@@ -98,10 +98,11 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
           description={I18n.t(
             "wallet.methods.card.pagoPaCapability.description"
           )}
-          rightElement={availabilityBadge(
-            paymentSupported,
-            props.paymentMethod
-          )}
+          rightElement={
+            <View style={{ alignSelf: "flex-start" }}>
+              {availabilityBadge(paymentSupported, props.paymentMethod)}
+            </View>
+          }
         />
       </TouchableDefaultOpacity>
     </>
