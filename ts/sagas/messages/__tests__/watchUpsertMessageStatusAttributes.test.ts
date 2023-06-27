@@ -9,6 +9,7 @@ import {
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
 import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 const tryUpsertMessageStatusAttributes = testTryUpsertMessageStatusAttributes!;
 
@@ -40,7 +41,11 @@ describe("tryUpsertMessageStatusAttributes", () => {
         action.request(actionPayload)
       )
         .next()
-        .call(putMessage, callPayload)
+        .call(
+          withRefreshApiCall,
+          putMessage(callPayload),
+          action.request(actionPayload)
+        )
         .next(E.right({ status: 200, value: {} }))
         .put(action.success(actionPayload))
         .next()
@@ -56,7 +61,11 @@ describe("tryUpsertMessageStatusAttributes", () => {
         action.request(actionPayload)
       )
         .next()
-        .call(putMessage, callPayload)
+        .call(
+          withRefreshApiCall,
+          putMessage(callPayload),
+          action.request(actionPayload)
+        )
         .next(
           E.right({
             status: 500,
@@ -84,11 +93,9 @@ describe("tryUpsertMessageStatusAttributes", () => {
         action.request(actionPayload)
       )
         .next()
-        .call(putMessage, callPayload)
-        .next()
         .put(
           action.failure({
-            error: new Error("Response is undefined"),
+            error: new Error("462e5dffdb46435995d545999bed6b11"),
             payload: actionPayload
           })
         )
