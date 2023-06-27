@@ -87,11 +87,21 @@ export const loadSupportToken = createAsyncAction(
   "LOAD_TOKEN_SUPPORT_FAILURE"
 )<void, SupportToken, Error>();
 
+type RefreshSessionTokenRequestPayload = {
+  withUserInteraction: boolean;
+};
 export const refreshSessionToken = createAsyncAction(
   "REFRESH_SESSION_TOKEN_REQUEST",
   "REFRESH_SESSION_TOKEN_SUCCESS",
   "REFRESH_SESSION_TOKEN_FAILURE"
-)<void, SessionToken, Error>();
+)<RefreshSessionTokenRequestPayload, SessionToken, Error>();
+
+type SessionTokenRefreshChoice = "yes" | "no";
+export const askUserToRefreshSessionToken = createAsyncAction(
+  "ASK_USER_TO_REFRESH_SESSION_TOKEN_REQUEST",
+  "ASK_USER_TO_REFRESH_SESSION_TOKEN_SUCCESS",
+  "ASK_USER_TO_REFRESH_SESSION_TOKEN_FAILURE"
+)<void, SessionTokenRefreshChoice, Error>();
 
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
@@ -115,4 +125,5 @@ export type AuthenticationActions =
   | ActionType<typeof resetAuthenticationState>
   | ActionType<typeof loadSupportToken>
   | ActionType<typeof refreshSessionToken>
+  | ActionType<typeof askUserToRefreshSessionToken>
   | ActionType<typeof disableNativeAuthentication>;

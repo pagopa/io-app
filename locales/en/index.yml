@@ -3676,3 +3676,11 @@ unsupportedDevice:
   subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
   cta:
     faq: "Learn more"
+fastLogin:
+  userInteraction:
+    sessionExpired: 
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
+        submitButtonTitle: "Continua la navigazione"
+        cancelButtonTitle: "Annulla"

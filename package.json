@@ -116,7 +116,7 @@
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-community/slider": "^3.0.3",
-    "@react-native-cookies/cookies": "^6.1.0",
+    "@react-native-cookies/cookies": "^6.2.1",
     "@react-native-picker/picker": "^2.4.1",
     "@react-navigation/bottom-tabs": "^5.11.15",
     "@react-navigation/compat": "^5.3.20",
