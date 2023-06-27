@@ -13,6 +13,7 @@ import { isFastLoginUserInteractionNeededForSessionExpiredSelector } from "../..
 import { GlobalState } from "../../store/reducers/types";
 import AskUserToContinueScreen from "../../features/fastLogin/screens/AskUserToContinueScreen";
 import { askUserToRefreshSessionToken } from "../../store/actions/authentication";
+import { itWalletEnabled } from "../../config";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -61,7 +62,7 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return <SystemOffModal />;
   }
   // if the app is out of date, force a screen to update it
-  if (!props.isAppSupported) {
+  if (!props.isAppSupported && !itWalletEnabled) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
       minVersioniOS: props.versionInfo?.min_app_version.ios,
       minVersionAndroid: props.versionInfo?.min_app_version.android
