@@ -14,7 +14,7 @@ import {
   IOSpringValues
 } from "../../core/variables/IOAnimations";
 
-export const useDefaultListItemSpringAnimation = () => {
+export const useListItemSpringAnimation = () => {
   const theme = useIOTheme();
 
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);

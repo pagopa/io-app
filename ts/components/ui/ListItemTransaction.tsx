@@ -4,6 +4,8 @@ import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../i18n";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { IOBadge } from "../core/IOBadge";
 import { Icon } from "../core/icons";
@@ -15,7 +17,8 @@ import { useIOTheme } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
-  IOStyles
+  IOStyles,
+  IOVisualCostants
 } from "../core/variables/IOStyles";
 import Avatar from "./Avatar";
 import {
@@ -28,7 +31,7 @@ export type ListItemTransaction = WithTestID<
   PressableBaseProps & {
     hasChevronRight?: boolean;
     isLoading?: boolean;
-    leftPaymentLogoOrUrl?: LogoNameOrUri;
+    paymentLogoOrUrl?: LogoNameOrUri;
     subtitle: string;
     title: string;
   } & (
@@ -56,7 +59,18 @@ const LeftComponent = ({ logoNameOrUrl }: LeftComponentProps) => {
   if (isImageUrI(logoNameOrUrl)) {
     return <Avatar shape="circle" size="small" logoUri={[logoNameOrUrl]} />;
   } else {
-    return <LogoPayment size={44} name={logoNameOrUrl} />;
+    return (
+      <View
+        style={{
+          width: IOVisualCostants.avatarSizeSmall,
+          height: IOVisualCostants.avatarSizeSmall,
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <LogoPayment name={logoNameOrUrl} />
+      </View>
+    );
   }
 };
 
@@ -64,7 +78,7 @@ export const ListItemTransaction = ({
   accessibilityLabel,
   hasChevronRight = false,
   isLoading = false,
-  leftPaymentLogoOrUrl,
+  paymentLogoOrUrl,
   onPress,
   subtitle,
   testID,
@@ -74,16 +88,18 @@ export const ListItemTransaction = ({
 }: ListItemTransaction) => {
   const theme = useIOTheme();
 
+  const isDSEnabled = useIOSelector(isDesignSystemEnabledSelector);
   if (isLoading) {
     return <SkeletonComponent />;
   }
 
+  const designSystemBlue = isDSEnabled ? "blue" : "blueIO-500";
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
         case "success":
           return (
-            <NewH6 color={hasChevronRight ? "blueIO-500" : "black"}>
+            <NewH6 color={hasChevronRight ? designSystemBlue : "black"}>
               {transactionAmount || "-"}
             </NewH6>
           );
@@ -111,9 +127,9 @@ export const ListItemTransaction = ({
 
     return (
       <>
-        {leftPaymentLogoOrUrl && (
+        {paymentLogoOrUrl && (
           <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-            <LeftComponent logoNameOrUrl={leftPaymentLogoOrUrl} />
+            <LeftComponent logoNameOrUrl={paymentLogoOrUrl} />
           </View>
         )}
         <View style={IOStyles.flex}>
@@ -128,7 +144,7 @@ export const ListItemTransaction = ({
           {hasChevronRight && (
             <Icon
               name="chevronRightListItem"
-              color="blue"
+              color={designSystemBlue}
               size={IOListItemVisualParams.chevronSize}
             />
           )}

@@ -575,14 +575,14 @@ const renderListItemTransaction = () => {
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
-          leftPaymentLogoOrUrl={"amex"}
+          paymentLogoOrUrl={"amex"}
           transactionStatus="failure"
           onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
-          leftPaymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
+          paymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
           transactionStatus="pending"
           onPress={onButtonPress}
         />
@@ -598,7 +598,7 @@ const renderListItemTransaction = () => {
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
-          leftPaymentLogoOrUrl={"mastercard"}
+          paymentLogoOrUrl={"mastercard"}
           onPress={onButtonPress}
         />
         <ListItemTransaction
@@ -613,13 +613,13 @@ const renderListItemTransaction = () => {
           title="This one is not clickable"
           subtitle="subtitle"
           transactionStatus="failure"
-          leftPaymentLogoOrUrl={"postepay"}
+          paymentLogoOrUrl={"postepay"}
         />
         <ListItemTransaction
           title="This one is clickable but has a very long title"
           subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
           transactionAmount="€ 1.000,00"
-          leftPaymentLogoOrUrl={"postepay"}
+          paymentLogoOrUrl={"postepay"}
           onPress={onButtonPress}
           transactionStatus="success"
         />
