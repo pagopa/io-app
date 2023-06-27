@@ -51,7 +51,8 @@ const projectToScope = new Map<string, string>([
   ["IAFIMS", "Federated Identity Management System"],
   ["AP", "Carta della cultura"],
   ["SFEQS", "Firma con IO"],
-  ["IODPAY", "IDPay"]
+  ["IODPAY", "IDPay"],
+  ["SIW", "IT Wallet"]
 ]);
 
 const cleanChangelogRegex =
