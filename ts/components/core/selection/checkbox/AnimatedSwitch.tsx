@@ -111,10 +111,8 @@ export const AnimatedSwitch = ({ checked, onPress, disabled }: OwnProps) => {
       onPress={onPress}
       style={styles.switchWrapper}
     >
-      {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following conditions */}
       <Animated.View style={[styles.switchBackground, animatedSwitchBg]} />
       <Animated.View style={[styles.switchCircle, animatedSwitchCircle]}>
-        {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
         <Animated.View style={animatedSwitchTick}>
           <AnimatedTick
             progress={tickAnimationProgress}
