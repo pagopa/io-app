@@ -59,6 +59,9 @@ global:
   badges:
     blocked: "Bloccato"
     onGoing: "In corso"
+    allCaps:
+      failed:  "FALLITA"
+      onGoing: "IN CORSO"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!

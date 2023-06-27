@@ -561,43 +561,70 @@ const renderListItemTransaction = () => {
     imageSource: `${cdnPath}1199250158.png`,
     name: "Comune di Milano"
   };
+  const pressHandler = () => {
+    alert("pressed 🥳");
+  };
   return (
     <DSComponentViewerBox name="ListItemTransaction">
       <View>
         <ListItemTransaction
-          title="TITOLO"
+          title="TITLE"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           isLoading={true}
+          onPress={pressHandler}
         />
         <ListItemTransaction
-          title="TITOLO"
+          title="TITLE"
+          subtitle="subtitle"
+          leftPaymentLogoOrUrl={"amex"}
+          transactionStatus="failure"
+          onPress={pressHandler}
+        />
+        <ListItemTransaction
+          title="TITLE"
           subtitle="subtitle"
           leftPaymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
-          transactionStatus="failure"
-          transactionAmount="€ 1.000,00"
+          transactionStatus="pending"
+          onPress={pressHandler}
         />
         <ListItemTransaction
-          title="TITOLO"
+          title="TITLE"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
-          backgroundColor="grey-50"
+          onPress={pressHandler}
         />
         <ListItemTransaction
-          title="TITOLO"
+          title="TITLE"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           leftPaymentLogoOrUrl={"mastercard"}
+          onPress={pressHandler}
         />
         <ListItemTransaction
-          title="TITOLO"
+          title="TITLE"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           hasChevronRight={true}
+          onPress={pressHandler}
+        />
+        <ListItemTransaction
+          title="This one is not clickable"
+          subtitle="subtitle"
+          transactionStatus="failure"
+          leftPaymentLogoOrUrl={"postepay"}
+        />
+        <ListItemTransaction
+          title="This one is clickable but has a very long title"
+          subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
+          transactionAmount="€ 1.000,00"
+          leftPaymentLogoOrUrl={"postepay"}
+          onPress={pressHandler}
+          transactionStatus="success"
         />
       </View>
     </DSComponentViewerBox>

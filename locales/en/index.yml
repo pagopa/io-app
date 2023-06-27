@@ -59,6 +59,9 @@ global:
   badges:
     blocked: "Blocked"
     onGoing: "Ongoing"
+    allCaps:
+      failed:  "FAILED"
+      onGoing: "ONGOING"
   password: Password
   username: Username
   unknown: unknown
