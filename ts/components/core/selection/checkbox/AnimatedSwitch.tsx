@@ -11,13 +11,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { IOColors } from "../../variables/IOColors";
 import { IOSpringValues } from "../../variables/IOAnimations";
-// import { useIOSelector } from "../../../../store/hooks";
-// import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { AnimatedTick } from "../AnimatedTick";
-import {
-  // IOSelectionTickLegacyVisualParams,
-  IOSwitchVisualParams
-} from "../../variables/IOStyles";
+import { IOSwitchVisualParams } from "../../variables/IOStyles";
 
 type Props = {
   checked?: boolean;
@@ -58,9 +53,6 @@ const styles = StyleSheet.create({
  * standard {@link CheckBox} or other composite components.
  */
 export const AnimatedSwitch = ({ checked, onPress, disabled }: OwnProps) => {
-  // const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  // const isChecked = checked ?? false;
-
   const squareAnimationProgress = useSharedValue(checked ? 1 : 0);
   const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
 
