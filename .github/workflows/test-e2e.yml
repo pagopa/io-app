@@ -1,4 +1,4 @@
-name: Run e2e tests [IT-WALLET]
+name: Run e2e tests
 on:
   push:
     branches:

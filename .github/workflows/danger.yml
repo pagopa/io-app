@@ -1,4 +1,4 @@
-name: Danger [IT-WALLET]
+name: Danger
 on:
   pull_request
 jobs:
