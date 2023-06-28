@@ -69,18 +69,18 @@ const styles = StyleSheet.create({
 });
 
 const dynamicContainerStyles = (
-  variant: BaseBannerProps["variant"],
+  size: BaseBannerProps["size"],
   color: BaseBannerProps["color"]
 ): ViewStyle => ({
   backgroundColor: IOColors[mapBackgroundColor[color]],
-  paddingVertical: variant === "big" ? sizeBigPadding : sizeSmallVPadding,
-  paddingHorizontal: variant === "big" ? sizeBigPadding : sizeSmallHPadding
+  paddingVertical: size === "big" ? sizeBigPadding : sizeSmallVPadding,
+  paddingHorizontal: size === "big" ? sizeBigPadding : sizeSmallHPadding
 });
 
 /* Component Types */
 
 type BaseBannerProps = WithTestID<{
-  variant: "big" | "small";
+  size: "big" | "small";
   color: "neutral" | "turquoise";
   pictogramName: IOPictogramsBleed;
   viewRef: React.RefObject<View>;
@@ -148,7 +148,7 @@ const mapBackgroundColor: Record<
 
 export const Banner = ({
   viewRef,
-  variant,
+  size,
   color,
   pictogramName,
   title,
@@ -230,7 +230,7 @@ export const Banner = ({
       <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
         <Pictogram
           name={pictogramName}
-          size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
+          size={size === "big" ? sizePictogramBig : sizePictogramSmall}
         />
       </View>
       {onClose && labelClose && (
@@ -262,7 +262,7 @@ export const Banner = ({
       <Animated.View
         style={[
           styles.container,
-          dynamicContainerStyles(variant, color),
+          dynamicContainerStyles(size, color),
           pressedAnimationStyle
         ]}
       >
@@ -275,7 +275,7 @@ export const Banner = ({
     <View
       ref={viewRef}
       testID={testID}
-      style={[styles.container, dynamicContainerStyles(variant, color)]}
+      style={[styles.container, dynamicContainerStyles(size, color)]}
       // A11y related props
       accessible={false}
       accessibilityHint={accessibilityHint}
