@@ -21,7 +21,7 @@ const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
   const openDeepLink = useOpenDeepLink();
 
-  const handleBarcodeScanned = async (barcode: IOBarcode) => {
+  const handleBarcodeScanned = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       RNReactNativeHapticFeedback.trigger("notificationSuccess", {
         enableVibrateFallback: true,
