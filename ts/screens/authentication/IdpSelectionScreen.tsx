@@ -34,7 +34,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
-import { nativeLoginSelector } from "../../store/reducers/nativeLogin";
+import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 
 type Props = ReturnType<typeof mapStateToProps> &

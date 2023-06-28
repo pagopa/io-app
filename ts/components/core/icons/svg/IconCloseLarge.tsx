@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconClose = ({ size, style, ...props }: SVGIconProps) => (
+const IconCloseLarge = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       fill-rule="evenodd"
@@ -13,4 +13,4 @@ const IconClose = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconClose;
+export default IconCloseLarge;

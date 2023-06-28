@@ -142,6 +142,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    deny: "Deny"
     share: Share
     delete: Delete
     cancel: Cancel
@@ -816,13 +817,17 @@ onboarding:
   pin:
     headerTitle: IO Settings
     title: Unlock code
-    subTitle: It's a six-digit code that you need to access IO and authorize certain in-app transations.
+    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations. If supported by your device, you can replace it with biometric authentication.
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
     tutorial: You can change the code at any time under Profile > Security
     errors:
-      length: The code must have six digits
+      invalid: The code is not valid
       match: The code doesn’t match
+    policy:
+      headerTitle: "For security reasons, the code must not contain:"
+      first: repeated numbers (e.g. 000000)
+      second: a number sequence (e.g. 123456 or 654321)
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -2707,12 +2712,13 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the benefits
+        buyers: Discover the CGN benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Find out more on EYCA
-          bottomSheet: Check EYCA discounts
+          pending: Check EYCA discounts
+          bottomSheet: Check the EYCA website
+          showEycaDiscounts: Check EYCA discounts
       tos:
         link: Information on the processing of personal data
       information:
@@ -2728,7 +2734,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating operators, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -3108,7 +3114,7 @@ features:
           PAID: Pagata
           ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
-          VIEWED: Perfezionata per visione
+          VIEWED: Avvenuto accesso
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
@@ -3146,6 +3152,9 @@ features:
         rejected:
           title: The signature failed
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
+        cancelled:
+          title: The signature request has been cancelled
+          subTitle: For further support, write to
         signing:
           title: The signature failed
           subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.
@@ -3338,6 +3347,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
+              QRCODE_TRANSACTION: Pagamento Online
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3379,6 +3389,20 @@ idpay:
         privacy: Preferenze & Privacy
         unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
+      discount:
+        labels:
+          AUTHORIZED: In corso
+          CANCELLED: Annullata
+          REWARDED: Eseguita
+        details:
+          alerts:
+            AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
+            CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+          labels:
+            status: Stato
+            totalAmount: Importo totale
+            idpayAmount: Importo transazione ID Pay
+            transactionID: ID transazione
       title: 
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione
@@ -3593,9 +3617,67 @@ idpay:
       title: C’è un problema sui nostri sistemi
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
+  payment:
+    authorization:
+      header: "Confermi l’operazione?"
+      toAuth: Da autorizzare
+      amount: Importo del bene
+      businessName: Richiesto da
+      dateTime: Data e Ora
+      infoDivider: "Informazioni sull’iniziativa"
+      initiativeName: Iniziativa
+      availableAmount: Credito disponibile
+      error: C’è stato un errore, riprova
+    result:
+      success:
+        title: Operazione autorizzata con successo!
+        body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      cancelled:
+        title: L’operazione è stata annullata
+      failure:
+        GENERIC:
+          title: Si è verificato un errore imprevisto
+          body: Non è stato addebitato alcun importo.
+        REJECTED:
+          title: Autorizzazione negata
+          body: Testo TBD
+        EXPIRED:
+          title: La sessione è scaduta
+          body: Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+        BUDGET_EXHAUSTED:
+          title: Autorizzazione negata
+          body: Non hai abbastanza soldi per autorizzare
+    qrCode:
+      manual:
+        title: Authorize a transaction
+        subtitle: Enter the 8 characters shown below the QR code.
+        input: Codice Transazione
+        button: Continua
+      scan:
+        tabs:
+          scan: Scan
+          upload: Upload
+          input: Type
+        permissions:
+          undefined: 
+            title: We need your consent
+            label: Allow access to scan QR codes with your device camera.
+            action: Allow access
+          denied:
+            title: You didn't give access to camera
+            label: Browse your device settings to allow camera access.
+            action: Go to settings
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
   subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
   cta:
     faq: "Learn more"
+fastLogin:
+  userInteraction:
+    sessionExpired: 
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
+        submitButtonTitle: "Continua la navigazione"
+        cancelButtonTitle: "Annulla"

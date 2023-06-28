@@ -5,7 +5,10 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { startApplicationInitialization } from "../../store/actions/application";
-import { sessionExpired } from "../../store/actions/authentication";
+import {
+  refreshSessionToken,
+  sessionExpired
+} from "../../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../store/actions/profile";
 import {
@@ -30,15 +33,13 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
-  generateKeyInfo,
-  generateLollipopKeySaga
+  generateLollipopKeySaga,
+  getKeyInfo
 } from "../../features/lollipop/saga";
-import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../../features/lollipop/store/reducers/lollipop";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -86,9 +87,7 @@ describe("initializeApplicationSaga", () => {
       .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .next(lollipopKeyTagSelector)
-      .next(lollipopPublicKeySelector)
-      .next(generateKeyInfo, O.none, O.none)
+      .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // checkSession
@@ -113,7 +112,7 @@ describe("initializeApplicationSaga", () => {
       .put(startApplicationInitialization());
   });
 
-  it("should dispatch sessionExpired if check session response is 401", () => {
+  it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(checkAppHistoryVersionSaga)
@@ -140,13 +139,48 @@ describe("initializeApplicationSaga", () => {
       .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .next(lollipopKeyTagSelector)
-      .next(lollipopPublicKeySelector)
-      .next(generateKeyInfo, O.none, O.none)
+      .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
+      .select(isFastLoginEnabledSelector)
+      .next(false) // FastLogin FF
       .put(sessionExpired());
+  });
+
+  it("should dispatch refreshTokenRequest if check session response is 401 & FastLogin enabled", () => {
+    testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .next()
+      .next()
+      .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
+      .next(pot.some(profile))
+      .put(resetProfileState())
+      .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(getKeyInfo)
+      .fork(watchSessionExpiredSaga)
+      .next()
+      .next(401) // checksession
+      .next(true) // FastLogin FF
+      .put(refreshSessionToken.request({ withUserInteraction: false }));
   });
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
@@ -176,9 +210,7 @@ describe("initializeApplicationSaga", () => {
       .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .next(lollipopKeyTagSelector)
-      .next(lollipopPublicKeySelector)
-      .next(generateKeyInfo, O.none, O.none)
+      .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
@@ -202,6 +234,7 @@ describe("initializeApplicationSaga", () => {
           walletToken: "wallet_token"
         })
       )
+      .next(lollipopPublicKeySelector)
       .next()
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()

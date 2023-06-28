@@ -1,7 +1,9 @@
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { showToast } from "../../../../utils/showToast";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const createActionsImplementation = (
@@ -9,7 +11,8 @@ const createActionsImplementation = (
 ) => {
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
+      params: {}
     });
   };
 
@@ -18,6 +21,9 @@ const createActionsImplementation = (
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT
     });
 
+  const showErrorToast = () =>
+    showToast(I18n.t("idpay.payment.authorization.error"), "danger", "top");
+
   const exitAuthorization = () => {
     navigation.pop();
   };
@@ -25,6 +31,7 @@ const createActionsImplementation = (
   return {
     navigateToAuthorizationScreen,
     navigateToResultScreen,
+    showErrorToast,
     exitAuthorization
   };
 };

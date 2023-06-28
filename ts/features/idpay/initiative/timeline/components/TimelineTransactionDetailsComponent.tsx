@@ -3,8 +3,8 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
-  OperationTypeEnum as TransactionTypeEnum,
-  TransactionDetailDTO
+  TransactionDetailDTO,
+  OperationTypeEnum as TransactionTypeEnum
 } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
@@ -47,9 +47,20 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
     O.toNullable
   );
 
+  const idTrxIssuer = transaction.idTrxIssuer || "";
+  const idTrxAcquirer = transaction.idTrxAcquirer || "";
+
+  const formattedAmount = pipe(
+    transaction.amount,
+    O.fromNullable,
+    O.map(amount => formatNumberAmount(amount, true)),
+    O.getOrElse(() => "-")
+  );
+
+  const formattedAccrued = formatNumberAmount(transaction.accrued, true);
+
   return (
     <View style={IOStyles.flex}>
-      <VSpacer size={8} />
       {reversalAlertComponent}
       <View style={styles.detailRow}>
         <Body>
@@ -69,9 +80,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
         <Body>
           {I18n.t("idpay.initiative.operationDetails.transaction.amountLabel")}
         </Body>
-        <Body weight="SemiBold">
-          {formatNumberAmount(transaction.amount, true)}
-        </Body>
+        <Body weight="SemiBold">{formattedAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>
@@ -79,9 +88,7 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
             "idpay.initiative.operationDetails.transaction.accruedAmountLabel"
           )}
         </Body>
-        <Body weight="SemiBold">
-          {formatNumberAmount(transaction.accrued, true)}
-        </Body>
+        <Body weight="SemiBold">{formattedAccrued}</Body>
       </View>
       <ItemSeparatorComponent noPadded={true} />
       <VSpacer size={24} />
@@ -117,10 +124,10 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
             ellipsizeMode="tail"
             style={IOStyles.flex}
           >
-            {transaction.idTrxAcquirer}
+            {idTrxAcquirer}
           </Body>
           <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={transaction.idTrxAcquirer} />
+          <CopyButtonComponent textToCopy={idTrxAcquirer} />
         </View>
       </View>
       <View style={styles.detailRow}>
@@ -135,10 +142,10 @@ const TimelineTransactionDetailsComponent = (props: Props) => {
             ellipsizeMode="tail"
             style={IOStyles.flex}
           >
-            {transaction.idTrxIssuer}
+            {idTrxIssuer}
           </Body>
           <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={transaction.idTrxIssuer} />
+          <CopyButtonComponent textToCopy={idTrxIssuer} />
         </View>
       </View>
     </View>

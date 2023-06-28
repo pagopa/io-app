@@ -176,7 +176,7 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
             component={IDPayPaymentNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
+            options={{ gestureEnabled: false }}
           />
         </>
       )}

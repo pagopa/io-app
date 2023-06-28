@@ -4,10 +4,12 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import React from "react";
-import { isGestureEnabled } from "../../../../utils/navigation";
-import { IDPayPaymentCodeScanScreen } from "../screens/IDPayPaymentCodeScanScreen";
+import {
+  IDPayPaymentAuthorizationScreen,
+  IDPayPaymentAuthorizationScreenRouteParams
+} from "../screens/IDPayPaymentAuthorizationScreen";
 import { IDPayPaymentCodeInputScreen } from "../screens/IDPayPaymentCodeInputScreen";
-import { IDPayPaymentAuthorizationScreen } from "../screens/IDPayPaymentAuthorizationScreen";
+import { IDPayPaymentCodeScanScreen } from "../screens/IDPayPaymentCodeScanScreen";
 import { IDPayPaymentResultScreen } from "../screens/IDPayPaymentResultScreen";
 import { IDPayPaymentMachineProvider } from "../xstate/provider";
 
@@ -22,7 +24,7 @@ export const IDPayPaymentRoutes = {
 export type IDPayPaymentParamsList = {
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT]: undefined;
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: undefined;
+  [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: IDPayPaymentAuthorizationScreenRouteParams;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT]: undefined;
 };
 
@@ -33,7 +35,7 @@ export const IDPayPaymentNavigator = () => (
     <Stack.Navigator
       initialRouteName={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
       headerMode={"none"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen
         name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}

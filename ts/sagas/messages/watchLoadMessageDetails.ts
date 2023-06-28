@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { put, takeLatest, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -8,7 +8,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { getError } from "../../utils/errors";
 import { toUIMessageDetails } from "../../store/reducers/entities/messages/transformers";
 import { isTestEnv } from "../../utils/environment";
-
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<typeof loadMessageDetails["request"]>;
@@ -34,10 +34,11 @@ function tryLoadMessageDetails(getMessage: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessage>> {
     const id = action.payload.id;
     try {
-      const response: SagaCallReturnType<typeof getMessage> = yield* call(
-        getMessage,
-        { id }
-      );
+      const response = (yield* call(
+        withRefreshApiCall,
+        getMessage({ id }),
+        action
+      )) as unknown as SagaCallReturnType<typeof getMessage>;
       const nextAction =
         handleResponse<CreatedMessageWithContentAndAttachments>(
           response,
@@ -50,7 +51,9 @@ function tryLoadMessageDetails(getMessage: LocalBeClient) {
             })
         );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (error) {
       yield* put(
         loadMessageDetails.failure({
