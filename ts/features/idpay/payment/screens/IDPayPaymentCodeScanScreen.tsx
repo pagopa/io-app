@@ -12,21 +12,22 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { openWebUrl } from "../../../../utils/url";
+import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
+  const openDeepLink = useOpenDeepLink();
 
-  const handleBarcodeScanned = (barcode: IOBarcode) => {
+  const handleBarcodeScanned = async (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       RNReactNativeHapticFeedback.trigger("notificationSuccess", {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false
       });
-      openWebUrl(barcode.authUrl);
+      openDeepLink(barcode.authUrl);
     }
   };
 
