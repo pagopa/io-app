@@ -84,19 +84,7 @@ const MessagesInbox = ({
           selectedMessageIds={O.toUndefined(selectedItems)}
           ListEmptyComponent={ListEmptyComponent}
           ListHeaderComponent={
-            itWalletEnabled ? (
-              <ItwActionBanner
-                title={I18n.t("features.itWallet.actionBanner.title")}
-                description={I18n.t(
-                  "features.itWallet.actionBanner.description"
-                )}
-                action={I18n.t("features.itWallet.actionBanner.action")}
-                onPress={() => null}
-                onClose={() => null}
-              />
-            ) : (
-              <UaDonationsBanner />
-            )
+            itWalletEnabled ? <ItwActionBanner /> : <UaDonationsBanner />
           }
         />
       </View>

@@ -2,15 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { Banner } from "../../../components/Banner";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { WithTestID } from "../../../types/WithTestID";
-
-type BaseProps = WithTestID<{
-  title: string;
-  description: string;
-  action?: string;
-  onPress?: () => void;
-  onClose?: () => void;
-}>;
+import I18n from "../../../i18n";
 
 /**
  * The base graphical component, take a text as input and dispatch onPress when pressed
@@ -18,7 +10,7 @@ type BaseProps = WithTestID<{
  * @param props
  * @constructor
  */
-export const ItwActionBanner = (props: BaseProps): React.ReactElement => {
+export const ItwActionBanner = (): React.ReactElement => {
   const viewRef = React.createRef<View>();
   return (
     <>
@@ -28,15 +20,15 @@ export const ItwActionBanner = (props: BaseProps): React.ReactElement => {
         viewRef={viewRef}
         color={"neutral"}
         variant="big"
-        title={props.title}
-        content={props.description}
+        title={I18n.t("features.itWallet.actionBanner.title")}
+        content={I18n.t("features.itWallet.actionBanner.description")}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         pictogramName={"setup"}
-        onClose={props.onClose}
-        action={props.action}
-        onPress={props.onPress}
+        action={I18n.t("features.itWallet.actionBanner.action")}
         labelClose="Nascondi questo banner"
+        onPress={() => null}
+        onClose={() => null}
       />
     </>
   );
