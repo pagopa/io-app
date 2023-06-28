@@ -34,7 +34,7 @@ const mockResponseSuccess: TimelineDTO = {
   totalPages: 1
 };
 const mockFailure: ErrorDTO = {
-  code: "404",
+  code: 404,
   message: "message"
 };
 const mockToken = "mock";

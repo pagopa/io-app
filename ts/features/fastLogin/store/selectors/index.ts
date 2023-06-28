@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
 import { fastLoginEnabled } from "../../../../config";
+import { GlobalState } from "../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "./../../../../store/reducers/backendStatus";
 
 /**
@@ -17,3 +18,8 @@ export const isFastLoginEnabledSelector = createSelector(
       backendStatus
     )
 );
+
+export const isFastLoginUserInteractionNeededForSessionExpiredSelector = (
+  state: GlobalState
+) =>
+  state.features.loginFeatures.fastLogin.userInteractionForSessionExpiredNeeded;

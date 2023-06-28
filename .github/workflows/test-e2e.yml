@@ -65,4 +65,4 @@ jobs:
         if: always()
         with:
           name: detox-artifacts
-          path: /tmp/e2e_artifacts/detox/
+          path: /tmp/e2e_artifacts/

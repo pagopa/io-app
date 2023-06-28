@@ -17,7 +17,9 @@ import {
 } from "../components/ui/Markdown/handlers/internalLink";
 import {
   deriveCustomHandledLink,
-  isIoInternalLink
+  isIoInternalLink,
+  isIoFIMSLink,
+  removeFIMSPrefixFromUrl
 } from "../components/ui/Markdown/handlers/link";
 import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { localeFallback } from "../i18n";
@@ -28,6 +30,8 @@ import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import ROUTES from "../navigation/routes";
 import { trackMessageCTAFrontMatterDecodingError } from "../features/messages/analytics";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import NavigationService from "../navigation/NavigationService";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -84,6 +88,14 @@ export const handleCtaAction = (
       return;
     }
     handleInternalLink(linkTo, `${convertedLink}`);
+  } else if (isIoFIMSLink(cta.action)) {
+    const url = removeFIMSPrefixFromUrl(cta.action);
+    NavigationService.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.WEBVIEW,
+      params: {
+        url
+      }
+    });
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (E.isRight(maybeHandledAction)) {
@@ -326,6 +338,15 @@ export const isCtaActionValid = (
       O.fromNullable,
       O.map(f => f(serviceMetadata)),
       O.getOrElse(() => true)
+    );
+  }
+  if (isIoFIMSLink(cta.action)) {
+    return pipe(
+      E.tryCatch(
+        () => new URL(cta.action),
+        () => false
+      ),
+      E.fold(identity, _ => true)
     );
   }
   // check if it is a custom action (it should be composed in a specific format)

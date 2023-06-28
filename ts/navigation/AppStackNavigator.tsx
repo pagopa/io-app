@@ -4,11 +4,11 @@ import {
   LinkingOptions,
   NavigationContainer
 } from "@react-navigation/native";
-import { View } from "react-native";
 import * as React from "react";
 import { useRef } from "react";
-import { IOColors } from "../components/core/variables/IOColors";
+import { View } from "react-native";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import { IOColors } from "../components/core/variables/IOColors";
 import {
   bpdEnabled,
   bpdOptInPaymentMethodsEnabled,
@@ -24,26 +24,25 @@ import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
+import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
   bpdRemoteConfigSelector,
   isCGNEnabledSelector,
-  isIdPayEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
-import { isTestEnv } from "../utils/environment";
-import { startApplicationInitialization } from "../store/actions/application";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import { isTestEnv } from "../utils/environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import NavigationService, { navigationRef } from "./NavigationService";
-import ROUTES from "./routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
+import ROUTES from "./routes";
 
 export const AppStackNavigator = (): React.ReactElement => {
   const dispatch = useIODispatch();
@@ -79,7 +78,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -143,7 +141,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...fciLinkingOptions,
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
-        ...(isIdPayEnabled ? idPayLinkingOptions : {}),
+        ...idPayLinkingOptions,
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
