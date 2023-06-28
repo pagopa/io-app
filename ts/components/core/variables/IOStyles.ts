@@ -258,6 +258,16 @@ interface IOSelectionTickVisualParams {
   tickColor: IOColors;
 }
 
+interface IOSwitchVisualParams {
+  width: number;
+  height: number;
+  bgColorOffState: IOColors;
+  bgColorOnState: IOColors;
+  tickColor: IOColors;
+  bgCircle: IOColors;
+  padding: number;
+}
+
 interface IOSelectionTickLegacyVisualParams {
   borderColorOffState: IOColors;
   bgColorOnState: IOColors;
@@ -269,6 +279,17 @@ export const IOSelectionTickVisualParams: IOSelectionTickVisualParams = {
   borderColorOffState: "grey-650",
   bgColorOnState: "blueIO-500",
   tickColor: "white"
+};
+
+export const IOSwitchVisualParams: IOSwitchVisualParams = {
+  width: 40,
+  height: 28,
+  bgColorOffState: "grey-700",
+  bgColorOnState: "blueIO-500",
+  tickColor: "blueIO-500",
+  bgCircle: "white",
+  // Space between the circle and the main shape
+  padding: 2
 };
 
 export const IOSelectionTickLegacyVisualParams: IOSelectionTickLegacyVisualParams =
