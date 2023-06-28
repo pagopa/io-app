@@ -167,19 +167,20 @@ describe("getRemoteLocale", () => {
     expect(getRemoteLocale()).toEqual("en");
   });
 
-  it("should return it if locale is a supported language but is not in MessageCTALocales", () => {
+  it("should return en if locale is a supported language but is not in MessageCTALocales", () => {
     setLocale("de" as Locales);
-    expect(getRemoteLocale()).toEqual("it");
+    expect(getRemoteLocale()).toEqual("en");
   });
 
-  it("should return it if locale is not a supported language and is not in MessageCTALocales", () => {
+  it("should return en if locale is not a supported language and is not in MessageCTALocales", () => {
     setLocale("xyz" as Locales);
-    expect(getRemoteLocale()).toEqual("it");
+    expect(getRemoteLocale()).toEqual("en");
   });
 });
 
 describe("getCTA", () => {
   it("should have 2 valid CTA", () => {
+    setLocale("it" as Locales);
     const maybeCTAs = getCTA(messageWithContent);
     test2CTA(
       maybeCTAs,
@@ -199,17 +200,17 @@ describe("getCTA", () => {
     );
   });
 
-  it("should return the italian CTA when the language is not supported", () => {
+  it("should return the english CTA when the language is not supported", () => {
     setLocale("fr" as Locales);
     const maybeCTAs = getCTA(messageWithContent);
     test2CTA(
       maybeCTAs,
-      "premi",
+      "go1",
       "ioit://PROFILE_MAIN",
-      "premi2",
+      "go2",
       "ioit://PROFILE_MAIN2"
     );
-    setLocale("it" as Locales); // restore default
+    setLocale("en" as Locales); // restore default
   });
 
   it("should not have valid CTA (action is malformed)", () => {
@@ -279,7 +280,7 @@ some noise`;
     if (O.isSome(maybeCTAs)) {
       const ctas = maybeCTAs.value;
       expect(ctas.cta_1).toBeDefined();
-      expect(ctas.cta_1.text).toEqual("Interno con params");
+      expect(ctas.cta_1.text).toEqual("Internal with params");
       expect(ctas.cta_1.action).toEqual(
         "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
       );
@@ -341,7 +342,7 @@ en:
     if (O.isSome(maybeCTA)) {
       const ctas = maybeCTA.value;
       expect(ctas.cta_1).toBeDefined();
-      expect(ctas.cta_1.text).toEqual("Interno con params");
+      expect(ctas.cta_1.text).toEqual("Internal with params");
       expect(ctas.cta_1.action).toEqual(
         "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
       );
