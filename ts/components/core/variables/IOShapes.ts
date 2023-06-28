@@ -15,3 +15,4 @@ Values used in the various components
 export const IOAlertRadius: IORadiusScale = IODefaultRadius;
 export const IOBannerRadius: IORadiusScale = IODefaultRadius;
 export const IOBottomSheetHeaderRadius: IORadiusScale = 24;
+export const IOBadgeRadius: IORadiusScale = 24;
