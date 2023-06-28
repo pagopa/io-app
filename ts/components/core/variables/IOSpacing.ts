@@ -23,6 +23,12 @@ export const IOAppMargin: ReadonlyArray<IOAppMargin> = [8, 16, 24, 32] as const;
 // Values used in the `<Alert>` component
 export type IOAlertSpacing = Extract<IOSpacingScale, 16 | 24>;
 export const IOAlertSpacing: ReadonlyArray<IOAlertSpacing> = [16, 24] as const;
+
 // Values used in the `<Banner>` component
 export type IOBannerSpacing = Extract<IOSpacingScale, 16>;
 export const IOBannerSpacing: IOBannerSpacing = 16 as const;
+
+// Values used in the `<Badge>` component
+export type IOBadgeSpacing = Extract<IOSpacingScale, 4 | 8>;
+export const IOBadgeHSpacing: IOBadgeSpacing = 8 as const;
+export const IOBadgeVSpacing: IOBadgeSpacing = 4 as const;
