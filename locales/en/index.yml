@@ -59,7 +59,7 @@ global:
   badges:
     blocked: "Blocked"
     onGoing: "Ongoing"
-    failed_f: "failed"
+    failed: "Failed"
   password: Password
   username: Username
   unknown: unknown
