@@ -110,7 +110,7 @@ export const ListItemTransaction = ({
               color="red"
               variant="solid"
               labelColor="bluegreyDark"
-              text={I18n.t("global.badges.allCaps.failed")}
+              text={I18n.t("global.badges.failed_f").toUpperCase()}
             />
           );
         case "pending":
@@ -119,7 +119,7 @@ export const ListItemTransaction = ({
               color="blue"
               variant="solid"
               labelColor="bluegreyDark"
-              text={I18n.t("global.badges.allCaps.onGoing")}
+              text={I18n.t("global.badges.onGoing").toUpperCase()}
             />
           );
       }
