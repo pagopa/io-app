@@ -267,7 +267,11 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             <View style={styles.paddedContent}>
               <FlatList
                 scrollEnabled={false}
-                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
+                data={availableBonusesList.filter(item =>
+                  item.id_type === ID_BPD_TYPE
+                    ? null
+                    : experimentalAndVisibleBonus
+                )}
                 renderItem={b => this.renderListItem(b, this.props.bpdConfig)}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
