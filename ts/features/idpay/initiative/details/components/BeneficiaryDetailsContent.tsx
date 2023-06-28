@@ -10,6 +10,7 @@ import {
   InitiativeRewardTypeEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
+import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -82,13 +83,30 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.getOrElse(() => "-")
   );
 
-  const rewardPercentageString = pipe(
-    beneficiaryDetails.refundRule?.accumulatedAmount?.refundThreshold,
-    O.fromNullable,
-    O.map(percentage => `${percentage}%`),
-    O.getOrElse(() => "-")
-  );
-
+  const getRewardTypeDependantString = () => {
+    if (
+      initiativeDetails.initiativeRewardType === InitiativeRewardTypeEnum.REFUND
+    ) {
+      return pipe(
+        beneficiaryDetails.refundRule?.accumulatedAmount?.refundThreshold,
+        O.fromNullable,
+        O.map(percentage => `${percentage}%`),
+        O.getOrElse(() => "-")
+      );
+    }
+    return pipe(
+      beneficiaryDetails.rewardRule?.rewardValue,
+      O.fromNullable,
+      O.fold(
+        () => "-",
+        value =>
+          beneficiaryDetails.rewardRule?.rewardValueType ===
+          RewardValueTypeEnum.PERCENTAGE
+            ? `${value}%`
+            : "-" // will be added once the ABSOLUTE reward type is supported
+      )
+    );
+  };
   const lastUpdateString = pipe(
     beneficiaryDetails.updateDate,
     O.fromNullable,
@@ -187,7 +205,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             label: I18n.t(
               "idpay.initiative.beneficiaryDetails.spendPercentage"
             ),
-            value: rewardPercentageString
+            value: getRewardTypeDependantString()
           }
         ]}
       />
