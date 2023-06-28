@@ -124,7 +124,7 @@ export function escapeStringRegexp(string: string) {
 }
 
 /**
- * Extract the path froma a given url if it matches one of the given prefixes
+ * Extract the path from a given url if it matches one of the given prefixes
  * @param prefixes  the prefixes to match
  * @param url the url to match
  * @returns the path if the url matches one of the prefixes, undefined otherwise
