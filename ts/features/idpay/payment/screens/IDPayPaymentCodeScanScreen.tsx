@@ -16,10 +16,12 @@ import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
+import { useFlashlight } from "../hooks/useFlashlight";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
   const openDeepLink = useOpenDeepLink();
+  const flashlight = useFlashlight();
 
   const handleBarcodeScanned = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
