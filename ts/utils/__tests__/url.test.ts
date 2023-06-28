@@ -87,4 +87,15 @@ describe("extractPathFromURL", () => {
       )
     ).toEqual(path);
   });
+
+  it("should return the path with query parameters", () => {
+    const url = "https://continua.io.pagopa.it/initiative/main?itemId=12345678";
+    const path = "/initiative/main?itemId=12345678";
+    expect(
+      extractPathFromURL(
+        [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+        url
+      )
+    ).toEqual(path);
+  });
 });
