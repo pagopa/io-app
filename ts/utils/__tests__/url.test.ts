@@ -1,4 +1,12 @@
-import { getResourceNameFromUrl, getUrlBasepath } from "../url";
+import {
+  IO_INTERNAL_LINK_PREFIX,
+  IO_UNIVERSAL_LINK_PREFIX
+} from "../navigation";
+import {
+  extractPathFromURL,
+  getResourceNameFromUrl,
+  getUrlBasepath
+} from "../url";
 
 describe("getResourceNameFromUrl", () => {
   const remoteHost = "https://somedomain.com/somepath/";
@@ -55,5 +63,28 @@ describe("getUrlBasepath", () => {
     suffixesToNotRemove.forEach(s => {
       expect(getUrlBasepath(base + s)).toEqual(base + s);
     });
+  });
+});
+
+describe("extractPathFromURL", () => {
+  it("should return undefined", () => {
+    const url = "https://www.google.com/it/hello";
+    expect(
+      extractPathFromURL(
+        [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+        url
+      )
+    ).toBeUndefined();
+  });
+
+  it("should return the path", () => {
+    const url = "https://continua.io.pagopa.it/idpay/auth/12345678";
+    const path = "/idpay/auth/12345678";
+    expect(
+      extractPathFromURL(
+        [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+        url
+      )
+    ).toEqual(path);
   });
 });
