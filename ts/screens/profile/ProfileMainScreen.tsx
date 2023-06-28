@@ -25,7 +25,6 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
-import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
@@ -65,6 +64,7 @@ import ListItemNav from "../../components/ui/ListItemNav";
 import { Divider } from "../../components/core/Divider";
 import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import ButtonSolid from "../../components/ui/ButtonSolid";
+import { SwitchListItem } from "../../components/ui/SwitchListItem";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -77,18 +77,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  developerSectionItem: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  developerSectionItemLeft: {
-    flex: 1
-  },
-  developerSectionItemRight: {
-    flex: 0
-  },
   noRightPadding: {
     paddingRight: 0
   }
@@ -151,17 +139,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     description?: string
   ) {
     return (
-      <ListItem style={styles.noRightPadding}>
-        <View style={styles.developerSectionItem}>
-          <View style={styles.developerSectionItemLeft}>
-            <Body>{title}</Body>
-            <Body>{description}</Body>
-          </View>
-          <View style={styles.developerSectionItemRight}>
-            <Switch value={switchValue} onValueChange={onSwitchValueChange} />
-          </View>
-        </View>
-      </ListItem>
+      <SwitchListItem
+        label={title}
+        description={description}
+        value={switchValue}
+        onSwitchValueChange={onSwitchValueChange}
+      />
     );
   }
 
@@ -415,27 +398,32 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           this.onPagoPAEnvironmentToggle,
           I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.pnEnvironment.pnEnv"),
           isPnTestEnabled,
           this.onPnEnvironmentToggle
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.debugMode"),
           isDebugModeEnabled,
           setDebugModeEnabled
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.idpay.idpayTest"),
           isIdPayTestEnabled,
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.designSystemEnvironment"),
           isDesignSystemEnabled,
           this.onDesignSystemToggle
         )}
+        <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
             {isDevEnv &&
