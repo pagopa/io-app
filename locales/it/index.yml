@@ -59,7 +59,7 @@ global:
   badges:
     blocked: "Bloccato"
     onGoing: "In corso"
-    failed_f:  "fallita"
+    failed:  "Fallita"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
