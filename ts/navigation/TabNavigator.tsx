@@ -133,8 +133,8 @@ export const MainTabNavigator = () => {
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navProfile"}
-                iconNameFocused={"navProfileFocused"}
+                iconName={"navPayment"}
+                iconNameFocused={"navPayment"}
                 color={color}
                 focused={focused}
               />
