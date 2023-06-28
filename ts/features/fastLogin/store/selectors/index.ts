@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { uniqWith, isEqual } from "lodash";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
 import { fastLoginEnabled } from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -19,7 +20,18 @@ export const isFastLoginEnabledSelector = createSelector(
     )
 );
 
+export const fastLoginSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin;
+
+export const fastLoginPendingActionsSelector = createSelector(
+  fastLoginSelector,
+  fastLoginState => uniqWith(fastLoginState.pendingActions, isEqual)
+);
+
 export const isFastLoginUserInteractionNeededForSessionExpiredSelector = (
   state: GlobalState
 ) =>
   state.features.loginFeatures.fastLogin.userInteractionForSessionExpiredNeeded;
+
+export const isTokenRefreshing = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.showLoading;

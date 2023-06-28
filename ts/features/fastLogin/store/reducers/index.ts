@@ -1,9 +1,11 @@
 import { Action, getType } from "typesafe-actions";
-import { createSelector } from "reselect";
-import { uniqWith, isEqual } from "lodash";
-import { GlobalState } from "../../../../store/reducers/types";
-import { askUserToRefreshSessionToken } from "../../../../store/actions/authentication";
-import { clearPendingAction, savePendingAction } from "../../actions";
+import {
+  askUserToRefreshSessionToken,
+  clearPendingAction,
+  hideRefreshTokenLoader,
+  savePendingAction,
+  showRefreshTokenLoader
+} from "../actions";
 
 type FastLoginUserInteractionChoiceNone = {
   type: "none";
@@ -23,19 +25,13 @@ export type FastLoginUserInteractionChoice =
 
 export type FastLoginState = {
   userInteractionForSessionExpiredNeeded: boolean;
+  showLoading: boolean;
   pendingActions: Array<Action>;
 };
 
-export const fastLoginSelector = (state: GlobalState) =>
-  state.features.loginFeatures.fastLogin;
-
-export const fastLoginPendingActionsSelector = createSelector(
-  fastLoginSelector,
-  fastLoginState => uniqWith(fastLoginState.pendingActions, isEqual)
-);
-
 const FastLoginInitialState: FastLoginState = {
   userInteractionForSessionExpiredNeeded: false,
+  showLoading: false,
   pendingActions: []
 };
 
@@ -67,6 +63,16 @@ export const fastLoginReducer = (
       return {
         ...state,
         userInteractionForSessionExpiredNeeded: false
+      };
+    case getType(showRefreshTokenLoader):
+      return {
+        ...state,
+        showLoading: true
+      };
+    case getType(hideRefreshTokenLoader):
+      return {
+        ...state,
+        showLoading: false
       };
     default:
       return state;

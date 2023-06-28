@@ -5,10 +5,7 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { startApplicationInitialization } from "../../store/actions/application";
-import {
-  refreshSessionToken,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { sessionExpired } from "../../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
 import { resetProfileState } from "../../store/actions/profile";
 import {
@@ -40,6 +37,7 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions";
 
 const aSessionToken = "a_session_token" as SessionToken;
 

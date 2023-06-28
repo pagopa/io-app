@@ -47,10 +47,7 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import {
-  refreshSessionToken,
-  sessionExpired
-} from "../store/actions/authentication";
+import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -98,6 +95,9 @@ import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
+import { backendStatusSelector } from "../store/reducers/backendStatus";
+import { refreshSessionToken } from "../features/fastLogin/store/actions";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -259,6 +259,14 @@ export function* initializeApplicationSaga(
     sessionToken,
     keyInfo
   );
+
+  // Since the backend.json is done in parallel with the startup saga,
+  // we need to synchronize the two tasks, to be sure to have loaded the remote FF
+  // before using them.
+  const backendStatus = yield* select(backendStatusSelector);
+  if (O.isNone(backendStatus)) {
+    yield* take(backendStatusLoadSuccess);
+  }
 
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =

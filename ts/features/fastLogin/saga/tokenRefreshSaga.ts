@@ -6,11 +6,7 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ValidationError } from "io-ts";
 import { getType } from "typesafe-actions";
 import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
-import {
-  askUserToRefreshSessionToken,
-  refreshSessionToken,
-  sessionExpired
-} from "../../../store/actions/authentication";
+import { sessionExpired } from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
 import { startApplicationInitialization } from "../../../store/actions/application";
 import {
@@ -35,6 +31,12 @@ import {
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { FastLoginT } from "../../../../definitions/fast_login/requestTypes";
+import {
+  askUserToRefreshSessionToken,
+  hideRefreshTokenLoader,
+  refreshSessionToken,
+  showRefreshTokenLoader
+} from "../store/actions";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -81,6 +83,7 @@ type RequestStateType = {
 const MAX_RETRIES = fastLoginMaxRetries;
 
 function* doRefreshTokenSaga() {
+  yield* put(showRefreshTokenLoader());
   const nonceClient = createNonceClient(apiUrlPrefix);
 
   // eslint-disable-next-line functional/no-let
@@ -91,46 +94,53 @@ function* doRefreshTokenSaga() {
   };
 
   while (requestState.status === "in-progress") {
-    const nonceResponse: SagaCallReturnType<typeof performGetNonce> =
-      yield* call(performGetNonce, nonceClient);
+    try {
+      const nonceResponse: SagaCallReturnType<typeof performGetNonce> =
+        yield* call(performGetNonce, nonceClient);
 
-    if (E.isRight(nonceResponse) && nonceResponse.right.status === 200) {
-      const nonce = nonceResponse.right.value.nonce;
-      const lollipopConfig: LollipopConfig = {
-        nonce
-      };
+      if (E.isRight(nonceResponse) && nonceResponse.right.status === 200) {
+        const nonce = nonceResponse.right.value.nonce;
+        const lollipopConfig: LollipopConfig = {
+          nonce
+        };
 
-      const keyInfo = yield* call(getKeyInfo);
+        const keyInfo = yield* call(getKeyInfo);
 
-      const fastLoginClient = createFastLoginClient(
-        apiUrlPrefix,
-        keyInfo,
-        lollipopConfig
-      );
-
-      const tokenResponse: SagaCallReturnType<typeof performFastLogin> =
-        yield* call(performFastLogin, fastLoginClient);
-      if (E.isRight(tokenResponse) && tokenResponse.right.status === 200) {
-        // eslint-disable-next-line functional/immutable-data
-        requestState.status = "success";
-
-        // FIX ME: replace the token response type with the correct one.
-        // Jira: https://pagopa.atlassian.net/browse/IOPID-264
-
-        const newToken = tokenResponse.right.value
-          .token as unknown as SessionToken;
-        yield* put(refreshSessionToken.success(newToken));
-        // Reinit all backend clients to use the new token
-        yield* put(
-          startApplicationInitialization({ handleSessionExpiration: true })
+        const fastLoginClient = createFastLoginClient(
+          apiUrlPrefix,
+          keyInfo,
+          lollipopConfig
         );
+
+        const tokenResponse: SagaCallReturnType<typeof performFastLogin> =
+          yield* call(performFastLogin, fastLoginClient);
+        if (E.isRight(tokenResponse) && tokenResponse.right.status === 200) {
+          // eslint-disable-next-line functional/immutable-data
+          requestState.status = "success";
+
+          // FIX ME: replace the token response type with the correct one.
+          // Jira: https://pagopa.atlassian.net/browse/IOPID-264
+
+          const newToken = tokenResponse.right.value
+            .token as unknown as SessionToken;
+          yield* put(refreshSessionToken.success(newToken));
+          yield* put(hideRefreshTokenLoader());
+          // console.log("refreshed token ✅");
+          // Reinit all backend clients to use the new token
+          yield* put(
+            startApplicationInitialization({ handleSessionExpiration: true })
+          );
+        } else {
+          yield* delay(1000);
+          handleRequestError(requestState, tokenResponse);
+        }
       } else {
         yield* delay(1000);
-        handleRequestError(requestState, tokenResponse);
+        handleRequestError(requestState, nonceResponse);
       }
-    } else {
+    } catch (e) {
       yield* delay(1000);
-      handleRequestError(requestState, nonceResponse);
+      // console.log("💥");
     }
   }
 
@@ -140,6 +150,7 @@ function* doRefreshTokenSaga() {
     requestState.status === "session-expired" ||
     requestState.status === "max-retries"
   ) {
+    yield* put(hideRefreshTokenLoader());
     yield* put(refreshSessionToken.failure(new Error(requestState.error)));
     yield* put(sessionExpired());
   }
