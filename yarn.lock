@@ -3969,6 +3969,11 @@
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#0c9a181d7823cfad215d040bc5596c2d83e1a3cd"
   integrity sha512-ZN4UbU4EM3C7XGt4zI6RqHEZS2+35EwOz9DPAD1lTTY3IpWMHAKYjryykvP35hFkSwrGMpT8nYuMFPEJRwDEJA==
 
+"@types/react-native-torch@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-torch/-/react-native-torch-1.1.0.tgz#3b24fe995b602eb7260b7e8721b59f87b61d69c2"
+  integrity sha512-GnMoDCbdnuDcbp7YLjV5SwF0X7W9sPNA1RDXegb9pb5+KeTb9EIeFKcyNa8LVXwI7eDMnetN1MrpLaFN33pYbw==
+
 "@types/react-native-vector-icons@^4.6.3":
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.4.tgz#83c2d88f0c2615a44b9059eb75c11f92702c1ee2"
@@ -14682,6 +14687,11 @@ react-native-tab-view@^2.x:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz#cae72c7084394bd328fac5fefb86cd966df37a86"
   integrity sha512-ac2DmT7+l13wzIFqtbfXn4wwfgtPoKzWjjZyrK1t+T8sdemuUvD4zIt+UImg03fu3s3VD8Wh/fBrIdcqQyZJWg==
+
+react-native-torch@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-torch/-/react-native-torch-1.2.0.tgz#e83303cc1be35f009d50728f775be1ff5d786203"
+  integrity sha512-xyk6DC/JL/P8ozGZt+qXvfzK3QugxJjjPWZRUZ7xIfhbHxX44Kw0Afc9gxk9LhVKrAKfwtjGUJgcx9/4FNMGvA==
 
 react-native-vector-icons@^7.0.0:
   version "7.0.0"
