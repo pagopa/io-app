@@ -22,6 +22,15 @@ export const useFlashlight = () => {
     []
   );
 
+  const turnOff = React.useCallback(() => {
+    if (isOn) {
+      Torch.switchState(false);
+    }
+  }, [isOn]);
+
+  // Make sure to turn off the flashlight on unmount
+  React.useEffect(() => turnOff, [turnOff]);
+
   /**
    * Toggles the flash light
    */
