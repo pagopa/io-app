@@ -175,6 +175,7 @@ global:
     documents: Documents
     profile: Profile
     services: Services
+    payments: Payments
   actions:
     retry: An error occurred, please retry
     search: Text to search

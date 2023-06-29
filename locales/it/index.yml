@@ -175,6 +175,7 @@ global:
     documents: Documenti
     profile: Profilo
     services: Servizi
+    payments: Pagamenti
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare

@@ -15,6 +15,8 @@ import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
+import { itWalletEnabled } from "../config";
+import GenericErrorComponent from "../components/screens/GenericErrorComponent";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
@@ -94,15 +96,53 @@ export const MainTabNavigator = () => {
             )
           }}
         />
+        {itWalletEnabled && (
+          <Tab.Screen
+            name={ROUTES.ITWALLET_HOME}
+            component={GenericErrorComponent} // TODO: SIW-222
+            options={{
+              title: I18n.t("global.navigator.wallet"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navWallet"}
+                  iconNameFocused={"navWalletFocused"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
+        {itWalletEnabled && (
+          <Tab.Screen
+            name={ROUTES.QR_CODE_SCAN}
+            component={GenericErrorComponent} // TODO: SIW-222
+            options={{
+              title: I18n.t("global.navigator.scan"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navScan"}
+                  iconNameFocused={"navScan"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
         <Tab.Screen
           name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
           options={{
-            title: I18n.t("global.navigator.wallet"),
+            title: itWalletEnabled
+              ? I18n.t("global.navigator.payments")
+              : I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={"navWallet"}
-                iconNameFocused={"navWalletFocused"}
+                iconName={itWalletEnabled ? "navPayment" : "navWallet"}
+                iconNameFocused={
+                  itWalletEnabled ? "navPayment" : "navWalletFocused"
+                }
                 color={color}
                 focused={focused}
               />
@@ -126,21 +166,24 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        <Tab.Screen
-          name={ROUTES.PROFILE_MAIN}
-          component={ProfileMainScreen}
-          options={{
-            title: I18n.t("global.navigator.profile"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                iconName={"navPayment"}
-                iconNameFocused={"navPayment"}
-                color={color}
-                focused={focused}
-              />
-            )
-          }}
-        />
+        {!itWalletEnabled && (
+          <Tab.Screen
+            name={ROUTES.PROFILE_MAIN}
+            component={ProfileMainScreen}
+            initialParams={{ hasBackButton: false }}
+            options={{
+              title: I18n.t("global.navigator.profile"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navProfile"}
+                  iconNameFocused={"navProfileFocused"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
       </Tab.Navigator>
     </LoadingSpinnerOverlay>
   );
