@@ -16,12 +16,11 @@ import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
-import { useFlashlight } from "../../../../utils/hooks/useFlashlight";
+import { FlashlightButton } from "../components/FlashlightButton";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
   const openDeepLink = useOpenDeepLink();
-  const flashlight = useFlashlight();
 
   const handleBarcodeScanned = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
@@ -142,6 +141,9 @@ const CustomHeader = () => {
             accessibilityLabel={I18n.t("global.buttons.close")}
             color="contrast"
           />
+        </View>
+        <View>
+          <FlashlightButton />
         </View>
       </View>
     </SafeAreaView>

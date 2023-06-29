@@ -402,6 +402,8 @@ PODS:
     - React
   - react-native-splash-screen (3.2.0):
     - React
+  - react-native-torch (1.2.0):
+    - React
   - react-native-view-shot (3.1.2):
     - React
   - react-native-webview (11.13.0):
@@ -649,6 +651,7 @@ DEPENDENCIES:
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-torch (from `../node_modules/react-native-torch`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -816,6 +819,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-torch:
+    :path: "../node_modules/react-native-torch"
   react-native-view-shot:
     :path: "../node_modules/react-native-view-shot"
   react-native-webview:
@@ -964,6 +969,7 @@ SPEC CHECKSUMS:
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
+  react-native-torch: 3f278a42607fb5b69f3e378d740ff0b128c859fd
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
   react-native-webview: 133a6a5149f963259646e710b4545c67ef35d7c9
   React-perflogger: f6f4b3c63629ead2e8a5a22eaedd06368c31617a
