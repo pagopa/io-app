@@ -48,6 +48,8 @@ import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
+import { ITW_ROUTES } from "../../features/it-wallet/navigation/routes";
+import { ItwParamsList } from "../../features/it-wallet/navigation/params";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -94,6 +96,8 @@ export type AppParamsList = {
   [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;
 
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
+
+  [ITW_ROUTES.MAIN]: NavigatorScreenParams<ItwParamsList>;
 };
 
 /**
