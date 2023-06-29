@@ -138,7 +138,6 @@ import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
 import IconCloseMedium from "./svg/IconCloseMedium";
-import IconNavPayment from "./svg/IconNavPayment";
 import IconMultiCoggles from "./svg/IconMultiCoggles";
 
 export const IOIcons = {
@@ -256,7 +255,7 @@ export const IOIcons = {
   navServicesFocused: IconNavServicesFocused,
   navProfile: IconNavProfile,
   navProfileFocused: IconNavProfileFocused,
-  navPayment: IconNavPayment,
+  navPayment: IconPSP,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
