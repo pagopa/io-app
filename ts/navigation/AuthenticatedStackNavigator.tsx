@@ -4,7 +4,7 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
-import { fimsEnabled } from "../config";
+import { fimsEnabled, itWalletEnabled } from "../config";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import {
@@ -51,6 +51,8 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
+import { ItwStackNavigator } from "../features/it-wallet/navigation/ItwStackNavigator";
+import { ITW_ROUTES } from "../features/it-wallet/navigation/routes";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -68,6 +70,7 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isItWalletEnabled = itWalletEnabled;
 
   return (
     <Stack.Navigator
@@ -179,6 +182,9 @@ const AuthenticatedStackNavigator = () => {
             options={{ gestureEnabled: false }}
           />
         </>
+      )}
+      {isItWalletEnabled && (
+        <Stack.Screen name={ITW_ROUTES.MAIN} component={ItwStackNavigator} />
       )}
     </Stack.Navigator>
   );
