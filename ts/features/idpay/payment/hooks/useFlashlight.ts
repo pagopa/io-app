@@ -1,18 +1,23 @@
 import React from "react";
 import { Platform } from "react-native";
 import Torch from "react-native-torch";
+import I18n from "../../../../i18n";
 
+/**
+ * Allows the usage of the flashlight on the back of the phone-
+ * On Android, it requires camera permissions.
+ */
 export const useFlashlight = () => {
   const [isOn, setIsOn] = React.useState(false);
 
   // If Android, we need camera permission to toggle the torch
-  const isCameraAllowed = React.useCallback(
+  const requestCameraPermission = React.useCallback(
     async () =>
       Platform.OS === "ios"
         ? true
         : await Torch.requestCameraPermission(
-            "Camera Permissions", // dialog title
-            "We require camera permissions to use the torch on the back of your phone." // dialog body
+            I18n.t("permissionRationale.flashlight.title"),
+            I18n.t("permissionRationale.flashlight.message")
           ),
     []
   );
@@ -20,13 +25,13 @@ export const useFlashlight = () => {
   /**
    * Toggles the flash light
    */
-  const toggle = React.useCallback(async () => {
-    const cameraAllowed = await isCameraAllowed();
-    if (cameraAllowed) {
+  const toggle = async () => {
+    const hasCameraPermission = await requestCameraPermission();
+    if (hasCameraPermission) {
       Torch.switchState(!isOn);
       setIsOn(!isOn);
     }
-  }, [isOn, setIsOn, isCameraAllowed]);
+  };
 
   return {
     isOn,

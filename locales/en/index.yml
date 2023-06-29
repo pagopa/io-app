@@ -233,6 +233,9 @@ permissionRationale:
   calendar:
     title: "Allow calendar access"
     message: "You’ll be able to add deadlines to your calendar and set a reminder."
+  flashlight:
+    title: "Allow camera access"
+    message: "We require camera permissions to use the torch on the back of your phone."
 startup:
   title: Initialization
   authentication: User authenticated
