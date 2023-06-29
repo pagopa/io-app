@@ -12,6 +12,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { Tag } from "../../../components/core/Tag";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { IOTagRadius } from "../../../components/core/variables/IOShapes";
+import { Badge } from "../../../components/core/Badge";
 
 const styles = StyleSheet.create({
   fakeNavItem: {
@@ -29,12 +30,21 @@ export const DSBadges = () => (
     {renderTag()}
 
     <VSpacer size={16} />
+
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Badge
+    </H2>
+    {renderBadge()}
+
+    <VSpacer size={16} />
+
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       IOBadge
     </H2>
     {renderIOBadge()}
 
     <VSpacer size={24} />
+
     <H4 weight="SemiBold" color="bluegreyDark">
       DiscountValueBox (CGN)
     </H4>
@@ -63,6 +73,49 @@ export const DSBadges = () => (
       </View>
     </View>
   </DesignSystemScreen>
+);
+
+const renderBadge = () => (
+  <>
+    <View style={IOStyles.row}>
+      <Badge text={"Default"} variant="default" />
+    </View>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
+      <Badge text={"Info"} variant="info" />
+      <HSpacer size={16} />
+      <Badge text={"Warning"} variant="warning" />
+      <HSpacer size={16} />
+      <Badge text={"Error"} variant="error" />
+      <HSpacer size={16} />
+      <Badge text={"Success"} variant="success" />
+    </View>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
+      <Badge text={"Purple"} variant="purple" />
+      <HSpacer size={16} />
+      <Badge text={"Light blue"} variant="lightBlue" />
+      <HSpacer size={16} />
+      <Badge text={"Blue"} variant="blue" />
+      <HSpacer size={16} />
+      <Badge text={"Turquoise"} variant="turquoise" />
+      <HSpacer size={16} />
+    </View>
+    <VSpacer size={16} />
+    <View
+      style={{
+        backgroundColor: IOColors.bluegrey,
+        padding: 16,
+        borderRadius: 8
+      }}
+    >
+      <View style={IOStyles.row}>
+        <Badge text={"Default"} variant="default" />
+        <HSpacer size={16} />
+        <Badge text={"Contrast"} variant="contrast" />
+      </View>
+    </View>
+  </>
 );
 
 const renderIOBadge = () => (
