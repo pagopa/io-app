@@ -28,7 +28,9 @@ export const useFlashlight = () => {
     }
   }, [isOn]);
 
-  // Make sure to turn off the flashlight on unmount
+  /**
+   * Make sure to turn off the flashlight on unmount
+   */
   React.useEffect(() => turnOff, [turnOff]);
 
   /**
