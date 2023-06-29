@@ -25,6 +25,7 @@ export const useFlashlight = () => {
   const turnOff = React.useCallback(() => {
     if (isOn) {
       Torch.switchState(false);
+      setIsOn(false);
     }
   }, [isOn]);
 
