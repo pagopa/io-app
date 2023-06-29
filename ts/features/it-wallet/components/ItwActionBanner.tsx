@@ -7,8 +7,6 @@ import I18n from "../../../i18n";
 /**
  * The base graphical component, take a text as input and dispatch onPress when pressed
  * include also a close button
- * @param props
- * @constructor
  */
 export const ItwActionBanner = (): React.ReactElement => {
   const viewRef = React.createRef<View>();
