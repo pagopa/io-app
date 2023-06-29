@@ -34,7 +34,8 @@ export const IOBadgeHSpacing: IOBadgeSpacing = 8 as const;
 export const IOBadgeVSpacing: IOBadgeSpacing = 4 as const;
 
 // Values used in the `<ListItemIDP>` component
-export type IOListItemIDPSpacing = Extract<IOSpacingScale, 16 | 24>;
+export type IOListItemIDPSpacing = Extract<IOSpacingScale, 8 | 16 | 24>;
 export const IOListItemIDPHSpacing: IOListItemIDPSpacing = 16 as const;
 export const IOListItemIDPVSpacing: IOListItemIDPSpacing = 16 as const;
 export const IOListItemIDPSavedVSpacing: IOListItemIDPSpacing = 24 as const;
+export const IOListItemLogoMargin: IOListItemIDPSpacing = 8 as const;

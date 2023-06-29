@@ -26,7 +26,8 @@ import { makeFontStyleObject } from "../core/fonts";
 import {
   IOListItemIDPVSpacing,
   IOListItemIDPHSpacing,
-  IOListItemIDPSavedVSpacing
+  IOListItemIDPSavedVSpacing,
+  IOListItemLogoMargin
 } from "../core/variables/IOSpacing";
 
 type ListItemIDP = WithTestID<{
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("Regular", false, "ReadexPro")
   },
   idpLogo: {
+    marginStart: IOListItemLogoMargin,
     width: 120,
     height: 30,
     resizeMode: "contain"

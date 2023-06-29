@@ -594,5 +594,18 @@ const renderListItemIDP = () => (
         />
       </View>
     </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemIDP, default variant, stress test">
+      <View>
+        <ListItemIDP
+          name={"This is a very loooooong IDP provider name"}
+          logo={mockIDPProviderItem.logo as ImageSourcePropType}
+          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+          onPress={() => {
+            Alert.alert("Action triggered");
+          }}
+          testID={`idp-${mockIDPProviderItem.id}-button`}
+        />
+      </View>
+    </DSComponentViewerBox>
   </>
 );
