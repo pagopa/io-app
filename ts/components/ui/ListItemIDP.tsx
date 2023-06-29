@@ -23,11 +23,17 @@ import { IOListItemIDPRadius } from "../core/variables/IOShapes";
 import { WithTestID } from "../../types/WithTestID";
 import { toAndroidCacheTimestamp } from "../../utils/dates";
 import { makeFontStyleObject } from "../core/fonts";
+import {
+  IOListItemIDPVSpacing,
+  IOListItemIDPHSpacing,
+  IOListItemIDPSavedVSpacing
+} from "../core/variables/IOSpacing";
 
 type ListItemIDP = WithTestID<{
   name: string;
   localLogo: ImageSourcePropType;
   logo: ImageSourcePropType;
+  saved?: boolean;
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
@@ -40,8 +46,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 16
+    paddingVertical: IOListItemIDPVSpacing,
+    paddingHorizontal: IOListItemIDPHSpacing
   },
   idpName: {
     color: IOColors["grey-700"],
@@ -69,6 +75,7 @@ export const ListItemIDP = ({
   name,
   localLogo,
   logo,
+  saved,
   onPress,
   testID
 }: ListItemIDP) => {
@@ -115,12 +122,19 @@ export const ListItemIDP = ({
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessible={true}
       accessibilityRole={"button"}
       accessibilityLabel={name}
       testID={testID}
     >
-      <Animated.View style={[styles.button, animatedStyle]}>
+      <Animated.View
+        style={[
+          styles.button,
+          saved && { paddingVertical: IOListItemIDPSavedVSpacing },
+          animatedStyle
+        ]}
+      >
         <Text style={styles.idpName}>{name}</Text>
         <Image source={urlLogoIDP} style={styles.idpLogo} />
       </Animated.View>

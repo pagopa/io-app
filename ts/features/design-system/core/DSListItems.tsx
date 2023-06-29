@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { Alert, View } from "react-native";
+import { Alert, ImageSourcePropType, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -36,6 +36,7 @@ import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
+import { ListItemIDP } from "../../../components/ui/ListItemIDP";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -80,6 +81,16 @@ export const DSListItems = () => (
           ListItemAction
         </H2>
         {renderListItemAction()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemIDP
+        </H2>
+        {renderListItemIDP()}
+
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -544,4 +555,44 @@ const renderListItemInfo = () => (
       />
     </View>
   </DSComponentViewerBox>
+);
+
+const mockIDPProviderItem = {
+  id: "posteid",
+  name: "Poste ID",
+  logo: "",
+  localLogo: require("../../../../img/spid-idp-posteid.png"),
+  profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
+};
+
+const renderListItemIDP = () => (
+  <>
+    <DSComponentViewerBox name="ListItemIDP, default variant">
+      <View>
+        <ListItemIDP
+          name={mockIDPProviderItem.name}
+          logo={mockIDPProviderItem.logo as ImageSourcePropType}
+          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+          onPress={() => {
+            Alert.alert("Action triggered");
+          }}
+          testID={`idp-${mockIDPProviderItem.id}-button`}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemIDP, saved variant">
+      <View>
+        <ListItemIDP
+          saved
+          name={mockIDPProviderItem.name}
+          logo={mockIDPProviderItem.logo as ImageSourcePropType}
+          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+          onPress={() => {
+            Alert.alert("Action triggered");
+          }}
+          testID={`idp-${mockIDPProviderItem.id}-button`}
+        />
+      </View>
+    </DSComponentViewerBox>
+  </>
 );
