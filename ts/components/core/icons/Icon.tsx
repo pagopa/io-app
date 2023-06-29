@@ -139,6 +139,7 @@ import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
 import IconCloseMedium from "./svg/IconCloseMedium";
 import IconNavPayment from "./svg/IconNavPayment";
+import IconMultiCoggles from "./svg/IconMultiCoggles";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -276,7 +277,8 @@ export const IOIcons = {
   categSustainability: IconCategSustainability,
   productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */,
-  productIOAppBlueBg: IconProductIOAppBlueBg
+  productIOAppBlueBg: IconProductIOAppBlueBg,
+  multiCoggles: IconMultiCoggles
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
