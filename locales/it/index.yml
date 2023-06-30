@@ -1605,6 +1605,10 @@ wallet:
         title: "La tua carta è stata aggiunta con successo!"
     payment:
       success:
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
         title: "Grazie, l’operazione è stata eseguita con successo!"
         description1: "Abbiamo inviato una ricevuta a"
         description2: "Puoi trovarla anche nel tuo Portafoglio."
