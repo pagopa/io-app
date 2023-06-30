@@ -4,7 +4,8 @@ import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import Animated, {
   Extrapolate,
@@ -20,7 +21,11 @@ import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOBannerRadius } from "../core/variables/IOShapes";
-import { IOBannerSpacing } from "../core/variables/IOSpacing";
+import {
+  IOBannerBigSpacing,
+  IOBannerSmallHSpacing,
+  IOBannerSmallVSpacing
+} from "../core/variables/IOSpacing";
 import ButtonLink from "../ui/ButtonLink";
 import {
   IOPictogramsBleed,
@@ -41,18 +46,19 @@ const sizePictogramBig: IOPictogramSizeScale = 80;
 const sizePictogramSmall: IOPictogramSizeScale = 64;
 const closeButtonDistanceFromEdge: number = 4;
 const closeButtonOpacity = 0.6;
-const IOBannerPadding = IOBannerSpacing;
+const sizeBigPadding = IOBannerBigSpacing;
+const sizeSmallHPadding = IOBannerSmallHSpacing;
+const sizeSmallVPadding = IOBannerSmallVSpacing;
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "flex-start",
     alignContent: "center",
-    borderRadius: IOBannerRadius,
-    padding: IOBannerPadding
+    borderRadius: IOBannerRadius
   },
   bleedPictogram: {
-    marginRight: -IOBannerPadding
+    marginRight: -sizeBigPadding
   },
   closeIconButton: {
     position: "absolute",
@@ -62,10 +68,19 @@ const styles = StyleSheet.create({
   }
 });
 
+const dynamicContainerStyles = (
+  size: BaseBannerProps["size"],
+  color: BaseBannerProps["color"]
+): ViewStyle => ({
+  backgroundColor: IOColors[mapBackgroundColor[color]],
+  paddingVertical: size === "big" ? sizeBigPadding : sizeSmallVPadding,
+  paddingHorizontal: size === "big" ? sizeBigPadding : sizeSmallHPadding
+});
+
 /* Component Types */
 
 type BaseBannerProps = WithTestID<{
-  variant: "big" | "small";
+  size: "big" | "small";
   color: "neutral" | "turquoise";
   pictogramName: IOPictogramsBleed;
   viewRef: React.RefObject<View>;
@@ -133,7 +148,7 @@ const mapBackgroundColor: Record<
 
 export const Banner = ({
   viewRef,
-  variant,
+  size,
   color,
   pictogramName,
   title,
@@ -215,7 +230,7 @@ export const Banner = ({
       <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
         <Pictogram
           name={pictogramName}
-          size={variant === "big" ? sizePictogramBig : sizePictogramSmall}
+          size={size === "big" ? sizePictogramBig : sizePictogramSmall}
         />
       </View>
       {onClose && labelClose && (
@@ -247,7 +262,7 @@ export const Banner = ({
       <Animated.View
         style={[
           styles.container,
-          { backgroundColor: IOColors[mapBackgroundColor[color]] },
+          dynamicContainerStyles(size, color),
           pressedAnimationStyle
         ]}
       >
@@ -260,10 +275,7 @@ export const Banner = ({
     <View
       ref={viewRef}
       testID={testID}
-      style={[
-        styles.container,
-        { backgroundColor: IOColors[mapBackgroundColor[color]] }
-      ]}
+      style={[styles.container, dynamicContainerStyles(size, color)]}
       // A11y related props
       accessible={false}
       accessibilityHint={accessibilityHint}
