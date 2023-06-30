@@ -92,6 +92,7 @@ import IconExternalLink from "./svg/IconExternalLink";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconCanceled from "./svg/IconCanceled";
 import IconErrorFilled from "./svg/IconErrorFilled";
+import IconLegalValue from "./svg/IconLegalValue";
 import IconChevronRight from "./svg/IconChevronRight";
 import IconChevronTop from "./svg/IconChevronTop";
 import IconChevronBottom from "./svg/IconChevronBottom";
@@ -201,6 +202,7 @@ export const IOIcons = {
   infoFilled: IconInfoFilled,
   canceled: IconCanceled,
   errorFilled: IconErrorFilled,
+  legalValue: IconLegalValue,
   refund: IconRefund,
   reload: IconReload,
   history: IconHistory,
