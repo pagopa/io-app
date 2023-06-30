@@ -52,7 +52,7 @@ function* handleRefreshSessionToken(
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
 
   if (!withUserInteraction) {
-    yield* call(doRefreshTokenSaga);
+    yield* call(doRefreshTokenSaga, refreshSessionTokenRequestAction);
     return;
   }
 
@@ -67,7 +67,7 @@ function* handleRefreshSessionToken(
     yield* put(identificationRequest(true, false));
     const result = yield* take([identificationSuccess, identificationFailure]);
     if (result.type === getType(identificationSuccess)) {
-      yield* call(doRefreshTokenSaga);
+      yield* call(doRefreshTokenSaga, refreshSessionTokenRequestAction);
     }
   } else {
     // Lock the app
@@ -84,9 +84,16 @@ type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
-function* doRefreshTokenSaga() {
+function* doRefreshTokenSaga(
+  refreshSessionTokenRequestAction: ReturnType<
+    typeof refreshSessionToken.request
+  >
+) {
   yield* put(showRefreshTokenLoader());
   const nonceClient = createNonceClient(apiUrlPrefix);
+
+  const { showIdentificationModalAtStartup } =
+    refreshSessionTokenRequestAction.payload;
 
   // eslint-disable-next-line functional/no-let
   const requestState: RequestStateType = {
@@ -119,17 +126,17 @@ function* doRefreshTokenSaga() {
         if (E.isRight(tokenResponse) && tokenResponse.right.status === 200) {
           // eslint-disable-next-line functional/immutable-data
           requestState.status = "success";
-
-          // FIX ME: replace the token response type with the correct one.
-          // Jira: https://pagopa.atlassian.net/browse/IOPID-264
-
+          // console.log("token refreshed ✅");
           const newToken = tokenResponse.right.value
             .token as unknown as SessionToken;
           yield* put(refreshSessionToken.success(newToken));
           yield* put(hideRefreshTokenLoader());
           // Reinit all backend clients to use the new token
           yield* put(
-            startApplicationInitialization({ handleSessionExpiration: true })
+            startApplicationInitialization({
+              handleSessionExpiration: true,
+              showIdentificationModalAtStartup
+            })
           );
         } else {
           yield* delay(1000);

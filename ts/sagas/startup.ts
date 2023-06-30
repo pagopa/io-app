@@ -172,6 +172,8 @@ export function* initializeApplicationSaga(
   const handleSessionExpiration = !!(
     action?.payload && action.payload.handleSessionExpiration
   );
+  const showIdentificationModal =
+    action?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -279,7 +281,12 @@ export function* initializeApplicationSaga(
     if (!isFastLoginEnabled) {
       yield* put(sessionExpired());
     } else {
-      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+      yield* put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: true
+        })
+      );
     }
     return;
   }
@@ -427,7 +434,7 @@ export function* initializeApplicationSaga(
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
-  if (hasPreviousSessionAndPin && !handleSessionExpiration) {
+  if (hasPreviousSessionAndPin && showIdentificationModal) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
@@ -442,7 +449,12 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+      yield* put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: false
+        })
+      );
     }
   }
 

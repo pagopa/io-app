@@ -38,6 +38,7 @@ import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions";
+import { backendStatusSelector } from "../../store/reducers/backendStatus";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -88,6 +89,8 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .next(200) // checkSession
       .next()
       .next()
@@ -140,6 +143,8 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .next(401) // checksession
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
@@ -176,9 +181,16 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .next(401) // checksession
       .next(true) // FastLogin FF
-      .put(refreshSessionToken.request({ withUserInteraction: false }));
+      .put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: true
+        })
+      );
   });
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
@@ -211,6 +223,8 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .next(200) // check session
       .next()
       .next()
