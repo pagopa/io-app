@@ -233,7 +233,7 @@ permissionRationale:
   calendar:
     title: "Consenti l’accesso al calendario"
     message: "Potrai aggiungere le scadenze al tuo calendario e impostare un promemoria."
-  flashlight:
+  torch:
     title: "Consenti l’accesso alla fotocamera"
     message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:

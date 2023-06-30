@@ -16,8 +16,8 @@ export const useTorch = () => {
       Platform.OS === "ios"
         ? true
         : await Torch.requestCameraPermission(
-            I18n.t("permissionRationale.flashlight.title"),
-            I18n.t("permissionRationale.flashlight.message")
+            I18n.t("permissionRationale.torch.title"),
+            I18n.t("permissionRationale.torch.message")
           ),
     []
   );
