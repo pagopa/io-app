@@ -70,6 +70,10 @@ export type IOBarcodeScanner = {
    * Opens the system settings screen to let user to change camera permission
    */
   openCameraSettings: () => Promise<void>;
+  /**
+   * Specifies if the device has a torch
+   */
+  hasTorch: boolean;
 };
 
 const DEFAULT_CONFIGURATION: IOBarcodeScannerConfiguration = {
@@ -227,7 +231,8 @@ export const useIOBarcodeScanner = (
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch: device?.hasTorch || false
   };
 };
 

@@ -16,7 +16,7 @@ import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
-import { FlashlightButton } from "../components/FlashlightButton";
+import { TorchButton } from "../components/TorchButton";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
@@ -42,7 +42,8 @@ const IDPayPaymentCodeScanScreen = () => {
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch
   } = useIOBarcodeScanner({
     marker: cameraMarkerComponent,
     onBarcodeScanned: handleBarcodeScanned,
@@ -109,13 +110,13 @@ const IDPayPaymentCodeScanScreen = () => {
           translucent={true}
         />
         {/* FIXME replace with the new header from the Design System 2.0  */}
-        <CustomHeader />
+        <CustomHeader hasTorch={hasTorch} />
       </LinearGradient>
     </View>
   );
 };
 
-const CustomHeader = () => {
+const CustomHeader = (props: { hasTorch: boolean }) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -142,9 +143,7 @@ const CustomHeader = () => {
             color="contrast"
           />
         </View>
-        <View>
-          <FlashlightButton />
-        </View>
+        <View>{props.hasTorch && <TorchButton />}</View>
       </View>
     </SafeAreaView>
   );

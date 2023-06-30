@@ -1,9 +1,9 @@
 import React from "react";
-import { useFlashlight } from "../../../../utils/hooks/useFlashlight";
+import { useTorch } from "../../../../utils/hooks/useTorch";
 import IconButton from "../../../../components/ui/IconButton";
 
-const FlashlightButton = () => {
-  const { isOn, toggle } = useFlashlight();
+const TorchButton = () => {
+  const { isOn, toggle } = useTorch();
 
   return (
     <IconButton
@@ -16,4 +16,4 @@ const FlashlightButton = () => {
   );
 };
 
-export { FlashlightButton };
+export { TorchButton };

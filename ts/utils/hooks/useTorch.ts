@@ -4,10 +4,10 @@ import Torch from "react-native-torch";
 import I18n from "../../i18n";
 
 /**
- * Allows the usage of the flashlight on the back of the phone-
+ * Allows the usage of the torch on the back of the phone-
  * On Android, it requires camera permissions.
  */
-export const useFlashlight = () => {
+export const useTorch = () => {
   const [isOn, setIsOn] = React.useState(false);
 
   // If Android, we need camera permission to toggle the torch
@@ -30,12 +30,12 @@ export const useFlashlight = () => {
   }, [isOn]);
 
   /**
-   * Make sure to turn off the flashlight on unmount
+   * Make sure to turn off the torch on unmount
    */
   React.useEffect(() => turnOff, [turnOff]);
 
   /**
-   * Toggles the flash light
+   * Toggles the torch
    */
   const toggle = async () => {
     const hasCameraPermission = await requestCameraPermission();
