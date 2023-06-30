@@ -13,7 +13,6 @@ import {
   Text
 } from "react-native";
 import { connect } from "react-redux";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -32,12 +31,15 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import { IOIcons, Icon } from "../core/icons/Icon";
 import { itWalletEnabled } from "../../config";
+import { H1 } from "../core/typography/H1";
 
 type HelpButtonProps = {
+  dark?: boolean;
   onShowHelp: () => void;
 };
 
 type ProfileButtonProps = {
+  dark?: boolean;
   onPress: () => void;
 };
 
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
+const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
   <ButtonDefaultOpacity
     hasFullHitSlop
     onPress={onShowHelp}
@@ -65,11 +67,11 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
     testID={"helpButton"}
   >
-    <IconFont name={"io-question"} />
+    <Icon name={"help"} color={dark ? "white" : "blueIO-450"} />
   </ButtonDefaultOpacity>
 );
 
-const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
+const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
   <ButtonDefaultOpacity
     hasFullHitSlop
     onPress={onPress}
@@ -79,7 +81,7 @@ const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
     accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
     testID={"helpButton"}
   >
-    <Icon name={"multiCoggles"} />
+    <Icon name={"coggle"} color={dark ? "white" : "blueIO-450"} />
   </ButtonDefaultOpacity>
 );
 
@@ -119,6 +121,7 @@ interface OwnProps {
   customGoBack?: React.ReactNode;
   titleColor?: IOColors;
   backButtonTestID?: string;
+  sectionTitle?: string;
 }
 
 type Props = OwnProps &
@@ -281,7 +284,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchAvailable,
       isProfileAvailable,
       showChat,
-      customRightIcon
+      customRightIcon,
+      dark
     } = this.props;
 
     return (
@@ -293,12 +297,15 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           />
         )}
 
-        {itWalletEnabled && isProfileAvailable && (
-          <ProfileButton onPress={isProfileAvailable.onProfileTap} />
+        {itWalletEnabled && isProfileAvailable && !isSearchEnabled && (
+          <ProfileButton
+            onPress={isProfileAvailable.onProfileTap}
+            dark={dark}
+          />
         )}
 
         {onShowHelp && !isSearchEnabled && (
-          <HelpButton onShowHelp={onShowHelp} />
+          <HelpButton onShowHelp={onShowHelp} dark={dark} />
         )}
 
         {customRightIcon && !isSearchEnabled && (
@@ -315,9 +322,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
-          <ButtonDefaultOpacity transparent={true} />
-        )}
+        {!customRightIcon &&
+          !isSearchAvailable &&
+          !onShowHelp &&
+          !showChat &&
+          !isProfileAvailable && <ButtonDefaultOpacity transparent={true} />}
 
         {pipe(
           this.props.accessibilityEvents,
@@ -348,33 +357,57 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderLeft = () => {
-    const { isSearchEnabled, appLogo, primary, dark, isPagoPATestEnabled } =
-      this.props;
-
+  private renderAppLogo = () => {
+    const { isPagoPATestEnabled, primary, dark } = this.props;
     const iconColor: IOColors = isPagoPATestEnabled
       ? "aqua"
       : primary || dark
       ? "white"
       : "blue";
-
     return (
-      !isSearchEnabled &&
-      (appLogo ? (
-        <Left>
-          <View
-            accessible={true}
-            accessibilityElementsHidden={true}
-            importantForAccessibility="no-hide-descendants"
-            style={{ marginLeft: 8 }}
-          >
-            <Icon name="productIOApp" color={iconColor} accessible={false} />
-          </View>
-        </Left>
-      ) : (
-        this.renderGoBack()
-      ))
+      <Left>
+        <View
+          accessible={true}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+          style={{ marginLeft: 8 }}
+        >
+          <Icon name="productIOApp" color={iconColor} accessible={false} />
+        </View>
+      </Left>
     );
+  };
+
+  private renderSectionTitle = () => {
+    const { sectionTitle, dark } = this.props;
+    return (
+      <Left>
+        <H1
+          accessible={true}
+          accessibilityRole="header"
+          testID={"screen-content-header-title"}
+          color={dark ? "white" : "black"}
+        >
+          {sectionTitle}
+        </H1>
+      </Left>
+    );
+  };
+
+  private renderLeft = () => {
+    const { isSearchEnabled, appLogo, sectionTitle } = this.props;
+
+    if (!isSearchEnabled) {
+      if (appLogo) {
+        return this.renderAppLogo();
+      } else if (sectionTitle) {
+        return this.renderSectionTitle();
+      } else {
+        return this.renderGoBack();
+      }
+    } else {
+      return null;
+    }
   };
 }
 

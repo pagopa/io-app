@@ -14,7 +14,6 @@ import { useMessageOpening } from "../../features/messages/hooks/useMessageOpeni
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
@@ -22,7 +21,7 @@ import SectionStatusComponent, {
   InnerSectionStatus
 } from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { unsupportedDeviceMoreInfoUrl } from "../../config";
+import { itWalletEnabled, unsupportedDeviceMoreInfoUrl } from "../../config";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
@@ -53,11 +52,12 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../utils/accessibility";
-import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 
 import ROUTES from "../../navigation/routes";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
+import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -163,14 +163,16 @@ const MessagesHomeScreen = ({
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["messages"]}
-      headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       isProfileAvailable={{
         enabled: true,
         onProfileTap: () =>
           navigation.getParent()?.navigate(ROUTES.PROFILE_NAVIGATOR)
       }}
-      appLogo={true}
+      sectionTitle={
+        itWalletEnabled ? I18n.t("messages.contentTitle") : undefined
+      }
+      appLogo={itWalletEnabled ? false : true}
     >
       <FocusAwareStatusBar
         barStyle={"dark-content"}
@@ -180,10 +182,12 @@ const MessagesHomeScreen = ({
       {isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
-          <ScreenContentHeader
-            title={I18n.t("messages.contentTitle")}
-            iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
-          />
+          {!itWalletEnabled && (
+            <ScreenContentHeader
+              title={I18n.t("messages.contentTitle")}
+              iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
+            />
+          )}
           {needsMigration ? (
             <MigratingMessage
               status={migrationStatus}
