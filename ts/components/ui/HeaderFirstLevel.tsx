@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { IOColors } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
 import { IOStyles, IOVisualCostants } from "../core/variables/IOStyles";
@@ -15,6 +15,18 @@ export type HeaderFirstLevel = WithTestID<{
   thirdAction?: React.ReactNode;
 }>;
 
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: IOColors.white,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    height: IOVisualCostants.headerFirstLevelHeight,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  }
+});
+
 export const HeaderFirstLevel = ({
   title,
   firstAction,
@@ -22,24 +34,16 @@ export const HeaderFirstLevel = ({
   thirdAction,
   testID
 }: HeaderFirstLevel) => (
-  <View
-    accessibilityRole="header"
-    testID={testID}
-    style={{
-      backgroundColor: IOColors.white,
-      paddingHorizontal: IOVisualCostants.appMarginDefault,
-      height: IOVisualCostants.headerFirstLevelHeight,
-      width: "100%",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between"
-    }}
-  >
-    <NewH3>{title}</NewH3>
-    <View style={IOStyles.row}>
+  <View accessibilityRole="header" testID={testID} style={styles.header}>
+    <NewH3 style={{ flexShrink: 1 }} numberOfLines={1}>
+      {title}
+    </NewH3>
+    <View style={[IOStyles.row, { flexShrink: 0 }]}>
       {firstAction}
       {secondAction && (
         <>
+          {/* Ideally with "gap" flex property
+          we can get rid of these ugly constructs */}
           <HSpacer size={16} />
           {secondAction}
         </>
