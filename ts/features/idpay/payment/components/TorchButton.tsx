@@ -1,5 +1,5 @@
 import React from "react";
-import { useTorch } from "../../../../utils/hooks/useTorch";
+import { useTorch } from "../../../../hooks/useTorch";
 import IconButton from "../../../../components/ui/IconButton";
 
 const TorchButton = () => {

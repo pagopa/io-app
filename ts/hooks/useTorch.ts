@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform } from "react-native";
 import Torch from "react-native-torch";
-import I18n from "../../i18n";
+import I18n from "../i18n";
 
 /**
  * Allows the usage of the torch on the back of the phone-
