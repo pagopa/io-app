@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
 
 /**
  * Official badge component
+@deprecated("Use the new Badge component instead")
  */
 export const IOBadge = ({
   text,
