@@ -35,6 +35,7 @@ export type ButtonLink = WithTestID<{
   color?: "primary";
   label: string;
   disabled?: boolean;
+  numberOfLines?: number;
   // Icons
   icon?: IOIcons;
   iconPosition?: "start" | "end";
@@ -109,6 +110,7 @@ export const ButtonLink = ({
   color = "primary",
   label,
   disabled = false,
+  numberOfLines = 1,
   icon,
   iconPosition = "start",
   onPress,
@@ -270,7 +272,7 @@ ButtonLink) => {
               : { color: mapColorStates[color]?.label?.default },
             !disabled && pressedColorLabelAnimationStyle
           ]}
-          numberOfLines={1}
+          numberOfLines={numberOfLines}
           ellipsizeMode="tail"
           /* A11y-related props:
           DON'T UNCOMMENT THEM */
