@@ -31,7 +31,7 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import { IOIcons, Icon } from "../core/icons/Icon";
 import { itWalletEnabled } from "../../config";
-import { H1 } from "../core/typography/H1";
+import { NewH3 } from "../../features/it-wallet/components/design/NewH3";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -382,14 +382,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     const { sectionTitle, dark } = this.props;
     return (
       <Left>
-        <H1
+        <NewH3
           accessible={true}
           accessibilityRole="header"
           testID={"screen-content-header-title"}
           color={dark ? "white" : "black"}
         >
           {sectionTitle}
-        </H1>
+        </NewH3>
       </Left>
     );
   };
