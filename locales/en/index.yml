@@ -3226,7 +3226,8 @@ features:
     actionBanner:
       title: "Novità IT Wallet"
       description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
-      action: "Attiva IT Wallet" 
+      action: "Attiva IT Wallet"
+      hideLabel: "Nascondi questo banner"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

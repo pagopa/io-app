@@ -24,7 +24,7 @@ export const ItwActionBanner = (): React.ReactElement => {
         // @ts-ignore
         pictogramName={"setup"}
         action={I18n.t("features.itWallet.actionBanner.action")}
-        labelClose="Nascondi questo banner"
+        labelClose={I18n.t("features.itWallet.actionBanner.hideLabel")}
         onPress={() => null}
         onClose={() => null}
       />
