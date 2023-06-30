@@ -47,7 +47,6 @@ import {
 } from "../store/actions";
 import { tokenRefreshSelector } from "../store/selectors";
 
-
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
 }
