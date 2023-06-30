@@ -119,9 +119,10 @@ function* createOrUpdateProfileSaga(
 
   const rawAppVersion = yield* call(getAppVersion);
 
-  const appVersion = pipe(
-    O.fromEither(AppVersion.decode(rawAppVersion)),
-    O.fold(
+const appVersion = pipe(
+    rawAppVersion,
+    AppVersion.decode,
+    E.fold(
       () => undefined,
       version => version
     )
