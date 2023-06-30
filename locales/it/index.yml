@@ -3244,7 +3244,14 @@ features:
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Firmato"
       notAvailable: "Non disponibile"
-      signingInProgress: "Firma in corso"        
+      signingInProgress: "Firma in corso"   
+  itWallet:
+    title: "IT Wallet"
+    actionBanner:
+      title: "Novità IT Wallet"
+      description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
+      action: "Attiva IT Wallet"
+      hideLabel: "Nascondi questo banner"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
