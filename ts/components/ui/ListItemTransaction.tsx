@@ -7,7 +7,7 @@ import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
-import { IOBadge } from "../core/IOBadge";
+import { Badge } from "../core/Badge";
 import { Icon } from "../core/icons";
 import { IOLogoPaymentType, LogoPayment } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
@@ -106,21 +106,11 @@ export const ListItemTransaction = ({
 
         case "failure":
           return (
-            <IOBadge
-              color="red"
-              variant="solid"
-              labelColor="bluegreyDark"
-              text={I18n.t("global.badges.failed_f").toUpperCase()}
-            />
+            <Badge variant="error" text={I18n.t("global.badges.failed")} />
           );
         case "pending":
           return (
-            <IOBadge
-              color="blue"
-              variant="solid"
-              labelColor="bluegreyDark"
-              text={I18n.t("global.badges.onGoing").toUpperCase()}
-            />
+            <Badge variant="info" text={I18n.t("global.badges.onGoing")} />
           );
       }
     };
@@ -186,7 +176,12 @@ const SkeletonComponent = () => (
   <View style={IOListItemStyles.listItem} accessible={false}>
     <View style={IOListItemStyles.listItemInner}>
       <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-        <Placeholder.Box animate="fade" height={44} width={44} radius={100} />
+        <Placeholder.Box
+          animate="fade"
+          height={IOVisualCostants.avatarSizeSmall}
+          width={IOVisualCostants.avatarSizeSmall}
+          radius={100}
+        />
       </View>
       <View style={IOStyles.flex}>
         <Placeholder.Box animate="fade" radius={8} width={62} height={16} />

@@ -71,7 +71,6 @@ const mapVariants: Record<NonNullable<Badge["variant"]>, VariantProps> = {
 
 const styles = StyleSheet.create({
   badge: {
-    alignSelf: "flex-start",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
