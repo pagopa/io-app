@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ValidationError } from "io-ts";
@@ -35,6 +36,7 @@ import {
   askUserToRefreshSessionToken,
   hideRefreshTokenLoader,
   refreshSessionToken,
+  refreshTokenTransientError,
   showRefreshTokenLoader
 } from "../store/actions";
 
@@ -125,7 +127,6 @@ function* doRefreshTokenSaga() {
             .token as unknown as SessionToken;
           yield* put(refreshSessionToken.success(newToken));
           yield* put(hideRefreshTokenLoader());
-          // console.log("refreshed token ✅");
           // Reinit all backend clients to use the new token
           yield* put(
             startApplicationInitialization({ handleSessionExpiration: true })
@@ -140,39 +141,48 @@ function* doRefreshTokenSaga() {
       }
     } catch (e) {
       yield* delay(1000);
-      // console.log("💥");
+      handleRequestError(requestState);
     }
   }
 
-  // TODO: differentiate between the two error types
-  // Jira: https://pagopa.atlassian.net/browse/IOPID-316
-  if (
-    requestState.status === "session-expired" ||
-    requestState.status === "max-retries"
-  ) {
+  if (requestState.status === "session-expired") {
     yield* put(hideRefreshTokenLoader());
     yield* put(refreshSessionToken.failure(new Error(requestState.error)));
     yield* put(sessionExpired());
+  }
+
+  if (requestState.status === "max-retries") {
+    yield* put(refreshTokenTransientError());
   }
 }
 
 const handleRequestError = (
   requestState: RequestStateType,
-  response: E.Either<
+  response?: E.Either<
     ReadonlyArray<ValidationError>,
     RequestResponseTypes<FastLoginT> | NonceBaseResponseType<NonceResponse>
   >
 ) => {
   const errorDescription: FastLoginTokenRefreshError = pipe(
     response,
-    E.fold(
-      validationErrors => ({
-        description: readableReport(validationErrors)
+    O.fromNullable,
+    O.fold(
+      () => ({
+        description: "max retries reached"
       }),
-      ({ status }) => ({
-        status,
-        description: `response status ${status}`
-      })
+      response =>
+        pipe(
+          response,
+          E.fold(
+            validationErrors => ({
+              description: readableReport(validationErrors)
+            }),
+            ({ status }) => ({
+              status,
+              description: `response status ${status}`
+            })
+          )
+        )
     )
   );
 

@@ -33,5 +33,5 @@ export const isFastLoginUserInteractionNeededForSessionExpiredSelector = (
 ) =>
   state.features.loginFeatures.fastLogin.userInteractionForSessionExpiredNeeded;
 
-export const isTokenRefreshing = (state: GlobalState) =>
-  state.features.loginFeatures.fastLogin.showLoading;
+export const tokenRefreshSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.tokenRefresh;

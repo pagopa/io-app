@@ -11,12 +11,13 @@ import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import {
   isFastLoginUserInteractionNeededForSessionExpiredSelector,
-  isTokenRefreshing
+  tokenRefreshSelector
 } from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
-import AskUserToContinueScreen from "../../features/fastLogin/screens/AskUserToContinueScreen";
+import AskUserInteractionScreen from "../../features/fastLogin/screens/AskUserInterarctionScreen";
 import LoadingScreenModal from "../../features/fastLogin/screens/RefreshTokenLoadingScreen";
 import { askUserToRefreshSessionToken } from "../../features/fastLogin/store/actions";
+import { openWebUrl } from "../../utils/url";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -48,13 +49,38 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return <UpdateAppModal />;
   }
 
-  if (props.isTokenRefreshing) {
+  if (props.tokenRefreshing.kind === "error") {
+    return (
+      <AskUserInteractionScreen
+        pictogramName="umbrella"
+        title={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.transientError.title"
+        )}
+        subtitle={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
+        )}
+        onSubmit={() => {
+          openWebUrl("https://io.italia.it/faq");
+        }}
+        buttonStylesProps={{
+          submitButtonStyle: {
+            type: "solid",
+            title: I18n.t(
+              "fastLogin.userInteraction.sessionExpired.transientError.submitButtonTitle"
+            )
+          }
+        }}
+      />
+    );
+  }
+
+  if (props.tokenRefreshing.kind === "in-progress") {
     return <LoadingScreenModal />;
   }
 
   if (props.isFastLoginUserInteractionNeeded) {
     return (
-      <AskUserToContinueScreen
+      <AskUserInteractionScreen
         pictogramName="timeout"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
@@ -87,7 +113,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isDeviceSupported: isDeviceSupportedSelector(state),
   isFastLoginUserInteractionNeeded:
     isFastLoginUserInteractionNeededForSessionExpiredSelector(state),
-  isTokenRefreshing: isTokenRefreshing(state)
+  tokenRefreshing: tokenRefreshSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);

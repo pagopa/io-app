@@ -23,6 +23,14 @@ export const hideRefreshTokenLoader = createStandardAction(
   "HIDE_REFRESHING_TOKEN_LOADER"
 )<void>();
 
+export const refreshTokenTransientError = createStandardAction(
+  "REFRESHING_TOKEN_TRANSIENT_ERROR"
+)<void>();
+
+export const clearTokenTransientError = createStandardAction(
+  "CLEAR_TOKEN_TRANSIENT_ERROR"
+)<void>();
+
 type RefreshSessionTokenRequestPayload = {
   withUserInteraction: boolean;
 };
