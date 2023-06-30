@@ -33,6 +33,7 @@ import { IOIcons, Icon } from "../core/icons/Icon";
 import { itWalletEnabled } from "../../config";
 import { NewH3 } from "../../features/it-wallet/components/design/NewH3";
 import IconButton from "../ui/IconButton";
+import IconFont from "../../components/ui/IconFont";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -57,27 +58,59 @@ const styles = StyleSheet.create({
 });
 
 const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
-  <IconButton
-    onPress={onShowHelp}
-    accessibilityLabel={I18n.t(
-      "global.accessibility.contextualHelp.open.label"
+  <>
+    {itWalletEnabled ? (
+      <View style={styles.rightButton}>
+        <IconButton
+          onPress={onShowHelp}
+          accessibilityLabel={I18n.t(
+            "global.accessibility.contextualHelp.open.label"
+          )}
+          accessibilityHint={I18n.t(
+            "global.accessibility.contextualHelp.open.hint"
+          )}
+          testID="helpButton"
+          color={dark ? "contrast" : "primary"}
+          icon={"help"}
+        />
+      </View>
+    ) : (
+      <ButtonDefaultOpacity
+        hasFullHitSlop
+        onPress={onShowHelp}
+        transparent={true}
+        accessibilityLabel={I18n.t(
+          "global.accessibility.contextualHelp.open.label"
+        )}
+        style={styles.rightButton}
+        accessibilityHint={I18n.t(
+          "global.accessibility.contextualHelp.open.hint"
+        )}
+        testID={"helpButton"}
+      >
+        <IconFont name={"io-question"} />
+      </ButtonDefaultOpacity>
     )}
-    accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
-    testID="helpButton"
-    color={dark ? "contrast" : "primary"}
-    icon={"help"}
-  />
+  </>
 );
 
 const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
-  <IconButton
-    onPress={onPress}
-    accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
-    accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
-    testID={"helpButton"}
-    icon={"coggle"}
-    color={dark ? "contrast" : "primary"}
-  />
+  <>
+    {itWalletEnabled ? (
+      <View style={styles.rightButton}>
+        <IconButton
+          onPress={onPress}
+          accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
+          accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
+          testID={"helpButton"}
+          icon={"coggle"}
+          color={dark ? "contrast" : "primary"}
+        />
+      </View>
+    ) : (
+      <></>
+    )}
+  </>
 );
 
 export type AccessibilityEvents = {
@@ -293,19 +326,15 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           />
         )}
 
-        {itWalletEnabled && isProfileAvailable && !isSearchEnabled && (
-          <View style={styles.rightButton}>
-            <ProfileButton
-              onPress={isProfileAvailable.onProfileTap}
-              dark={dark}
-            />
-          </View>
+        {isProfileAvailable && !isSearchEnabled && (
+          <ProfileButton
+            onPress={isProfileAvailable.onProfileTap}
+            dark={dark}
+          />
         )}
 
         {onShowHelp && !isSearchEnabled && (
-          <View style={styles.rightButton}>
-            <HelpButton onShowHelp={onShowHelp} dark={dark} />
-          </View>
+          <HelpButton onShowHelp={onShowHelp} dark={dark} />
         )}
 
         {customRightIcon && !isSearchEnabled && (
@@ -400,7 +429,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     if (!isSearchEnabled) {
       if (appLogo) {
         return this.renderAppLogo();
-      } else if (sectionTitle) {
+      } else if (sectionTitle && itWalletEnabled) {
         return this.renderSectionTitle();
       } else {
         return this.renderGoBack();

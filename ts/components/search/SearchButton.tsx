@@ -16,6 +16,9 @@ import { Dispatch } from "../../store/actions/types";
 import { LabelledItem } from "../LabelledItem";
 import { IOColors } from "../core/variables/IOColors";
 import IconButton from "../ui/IconButton";
+import { itWalletEnabled } from "../../config";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { Icon } from "../core/icons";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
@@ -65,13 +68,26 @@ class SearchButton extends React.Component<Props, State> {
             iconColor={this.props.color}
           />
         ) : (
-          <View style={this.props.buttonStyle}>
-            <IconButton
-              icon="search"
-              onPress={this.handleSearchPress}
-              accessibilityLabel={I18n.t("global.buttons.search")}
-            />
-          </View>
+          <>
+            {itWalletEnabled ? (
+              <View style={this.props.buttonStyle}>
+                <IconButton
+                  icon="search"
+                  onPress={this.handleSearchPress}
+                  accessibilityLabel={I18n.t("global.buttons.search")}
+                />
+              </View>
+            ) : (
+              <ButtonDefaultOpacity
+                hasFullHitSlop
+                onPress={this.handleSearchPress}
+                transparent={true}
+                accessibilityLabel={I18n.t("global.buttons.search")}
+              >
+                <Icon name="legSearch" color="black" />
+              </ButtonDefaultOpacity>
+            )}
+          </>
         )}
       </React.Fragment>
     );
