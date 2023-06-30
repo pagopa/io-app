@@ -49,7 +49,9 @@ const CgnContactItem: React.FC<CgnContactItemProps> = ({
 
   return (
     <View style={[IOStyles.rowSpaceBetween, styles.content]}>
-      <ButtonLink label={contact} numberOfLines={0} onPress={handleOnPress} />
+      <View style={IOStyles.flex}>
+        <ButtonLink label={contact} numberOfLines={0} onPress={handleOnPress} />
+      </View>
       <IconButton
         icon="copy"
         accessibilityLabel="copy"
