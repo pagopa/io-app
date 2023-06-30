@@ -41,7 +41,6 @@ import PictogramUmbrellaNew from "./svg/PictogramUmbrellaNew";
 import PictogramFeedback from "./svg/PictogramFeedback";
 import PictogramCameraRequest from "./svg/PictogramCameraRequest";
 
-
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
   abacus: PictogramAbacus,

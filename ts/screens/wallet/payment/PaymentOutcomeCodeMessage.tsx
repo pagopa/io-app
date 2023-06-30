@@ -80,7 +80,7 @@ const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
         <Banner
           color="neutral"
           pictogramName="feedback"
-          variant="big"
+          size="big"
           viewRef={viewRef}
           title={I18n.t("wallet.outcomeMessage.payment.success.banner.title")}
           content={I18n.t(
