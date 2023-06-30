@@ -1,9 +1,15 @@
+import { useLinkTo } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
-import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
+import { constNull, pipe } from "fp-ts/lib/function";
 import { Linking } from "react-native";
 import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
+import {
+  IO_INTERNAL_LINK_PREFIX,
+  IO_UNIVERSAL_LINK_PREFIX
+} from "./navigation";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
 
@@ -103,4 +109,69 @@ export const openAppStoreUrl = async (onError: () => void = constNull) => {
   } catch (e) {
     openWebUrl(webStoreURL, onError);
   }
+};
+
+/**
+ * Escape characters with special meaning either inside or outside character sets.
+ * Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+ */
+export function escapeStringRegexp(string: string) {
+  if (typeof string !== "string") {
+    throw new TypeError("Expected a string");
+  }
+
+  return string.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
+}
+
+/**
+ * Extract the path from a given url if it matches one of the given prefixes
+ * @param prefixes  the prefixes to match
+ * @param url the url to match
+ * @returns the path if the url matches one of the prefixes, undefined otherwise
+ */
+export function extractPathFromURL(
+  prefixes: ReadonlyArray<string>,
+  url: string
+): string | undefined {
+  for (const prefix of prefixes) {
+    const protocol = prefix.match(/^[^:]+:/)?.[0] ?? "";
+    const host = prefix
+      .replace(new RegExp(`^${escapeStringRegexp(protocol)}`), "")
+      .replace(/\/+/g, "/") // Replace multiple slash (//) with single ones
+      .replace(/^\//, ""); // Remove extra leading slash
+
+    const prefixRegex = new RegExp(
+      `^${escapeStringRegexp(protocol)}(/)*${host
+        .split(".")
+        .map(it => (it === "*" ? "[^/]+" : escapeStringRegexp(it)))
+        .join("\\.")}`
+    );
+
+    const normalizedURL = url.replace(/\/+/g, "/");
+
+    if (prefixRegex.test(normalizedURL)) {
+      return normalizedURL.replace(prefixRegex, "");
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * This hook handles deep links. It removes the prefix and navigates to the path using the linkTo function
+ * @returns a function that takes a url and navigates to the path
+ */
+export const useOpenDeepLink = () => {
+  const linkTo = useLinkTo();
+
+  return (url: string) =>
+    pipe(
+      extractPathFromURL(
+        [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+        url
+      ),
+      O.fromNullable,
+      O.map(path => (path.startsWith("/") ? path : "/" + path)),
+      O.map(linkTo)
+    );
 };

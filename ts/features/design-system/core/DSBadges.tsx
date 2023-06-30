@@ -9,6 +9,9 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CustomBadge from "../../../components/ui/CustomBadge";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { Tag } from "../../../components/core/Tag";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { IOTagRadius } from "../../../components/core/variables/IOShapes";
 import { Badge } from "../../../components/core/Badge";
 
 const styles = StyleSheet.create({
@@ -22,17 +25,25 @@ const styles = StyleSheet.create({
 export const DSBadges = () => (
   <DesignSystemScreen title={"Badge"}>
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Tag
+    </H2>
+    {renderTag()}
+
+    <VSpacer size={16} />
+
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Badge
     </H2>
     {renderBadge()}
 
     <VSpacer size={16} />
+
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       IOBadge
     </H2>
     {renderIOBadge()}
 
-    <VSpacer size={40} />
+    <VSpacer size={24} />
 
     <H4 weight="SemiBold" color="bluegreyDark">
       DiscountValueBox (CGN)
@@ -169,4 +180,34 @@ const renderIOBadge = () => (
       </View>
     </View>
   </>
+);
+
+const renderTag = () => (
+  <View>
+    <DSComponentViewerBox name={"Tag, different variants"}>
+      <Tag text={"Entro il 30 mag"} variant="warning" />
+      <VSpacer size={8} />
+      <Tag text={"Completato"} variant="success" />
+      <VSpacer size={8} />
+      <Tag text={"Scaduto"} variant="error" />
+      <VSpacer size={8} />
+      <View style={IOStyles.row}>
+        <Tag text={"Certificato"} variant="qrCode" />
+        <HSpacer size={8} />
+        <Tag text={"Valore legale"} variant="legalMessage" />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag, stress test"}>
+      <View
+        style={{
+          backgroundColor: IOColors["error-100"],
+          padding: 8,
+          width: "60%",
+          borderRadius: IOTagRadius + 8
+        }}
+      >
+        <Tag text={"Looooooooong string"} variant="error" />
+      </View>
+    </DSComponentViewerBox>
+  </View>
 );

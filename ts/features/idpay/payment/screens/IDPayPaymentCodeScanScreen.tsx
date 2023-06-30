@@ -12,7 +12,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { openWebUrl } from "../../../../utils/url";
+import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
@@ -22,6 +22,7 @@ import { useIOBarcodeReader } from "../components/Barcode/useIOBarcodeReader";
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const isFocused = useIsFocused();
+  const openDeepLink = useOpenDeepLink();
 
   const handleBarcode = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
@@ -29,7 +30,7 @@ const IDPayPaymentCodeScanScreen = () => {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false
       });
-      openWebUrl(barcode.authUrl);
+      openDeepLink(barcode.authUrl);
     }
   };
 
