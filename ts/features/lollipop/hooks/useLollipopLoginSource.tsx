@@ -127,6 +127,7 @@ export const useLollipopLoginSource = (
     )();
   }, [
     dispatch,
+    isFastLogin,
     loginUri,
     maybeKeyTag,
     maybePublicKey,

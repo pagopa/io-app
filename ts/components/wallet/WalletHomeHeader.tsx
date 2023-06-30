@@ -27,6 +27,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 type NavigationListItem = {
   title: string;
   subtitle: string;
+  testId?: string;
   onPress: () => void;
 };
 
@@ -62,6 +63,7 @@ const WalletHomeHeader = (props: Props) => {
     {
       title: I18n.t("wallet.methods.bonus.name"),
       subtitle: I18n.t("wallet.methods.bonus.description"),
+      testId: "bonusNameTestId",
       onPress: props.navigateToBonusList
     }
   ];
@@ -79,6 +81,7 @@ const WalletHomeHeader = (props: Props) => {
             }}
             style={styles.container}
             onPressWithGestureHandler={true}
+            testID={item.testId}
           >
             <View style={styles.flexColumn}>
               <View style={styles.row}>
@@ -134,7 +137,7 @@ const WalletHomeHeader = (props: Props) => {
       >
         <Icon name="add" color="white" size={20} />
         <HSpacer size={8} />
-        <H4 color={"white"}>
+        <H4 color={"white"} testID="walletAddNewPaymentMethodTestId">
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
         </H4>
       </TouchableDefaultOpacity>

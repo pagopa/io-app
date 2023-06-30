@@ -1,6 +1,5 @@
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { put, takeLatest, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
 import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { BackendClient } from "../../api/backend";
 import { loadNextPageMessages as loadNextPageMessagesAction } from "../../store/actions/messages";
@@ -8,7 +7,7 @@ import { toUIMessage } from "../../store/reducers/entities/messages/transformers
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError, getError } from "../../utils/errors";
-
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<typeof loadNextPageMessagesAction["request"]>;
@@ -29,16 +28,16 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getMessages>> {
     const { filter, pageSize, cursor } = action.payload;
     try {
-      const response: SagaCallReturnType<typeof getMessages> = yield* call(
-        getMessages,
-        {
+      const response = (yield* call(
+        withRefreshApiCall,
+        getMessages({
           enrich_result_data: true,
           page_size: pageSize,
           maximum_id: cursor,
           archived: filter.getArchived
-        }
-      );
-
+        }),
+        action
+      )) as unknown as SagaCallReturnType<typeof getMessages>;
       const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
         response,
         ({ items, next }: PaginatedPublicMessagesCollection) =>
@@ -51,7 +50,9 @@ function tryLoadNextPageMessages(getMessages: LocalBeClient) {
           loadNextPageMessagesAction.failure({ error: getError(error), filter })
       );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (e) {
       yield* put(
         loadNextPageMessagesAction.failure({

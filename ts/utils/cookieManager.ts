@@ -12,5 +12,3 @@ export const setCookie = (
 ) => {
   CookieManager.set(origin, cookie, true).then(onSuccess).catch(onError);
 };
-
-export type IOCookie = Cookie;

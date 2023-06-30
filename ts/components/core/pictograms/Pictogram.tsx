@@ -39,6 +39,8 @@ import PictogramAttention from "./svg/PictogramAttention";
 import PictogramEmptyArchive from "./svg/PictogramEmptyArchive";
 import PictogramUmbrellaNew from "./svg/PictogramUmbrellaNew";
 import PictogramFeedback from "./svg/PictogramFeedback";
+import PictogramCameraRequest from "./svg/PictogramCameraRequest";
+
 
 export const IOPictograms = {
   airBaloon: PictogramAirBaloon,
@@ -77,7 +79,8 @@ export const IOPictograms = {
   attention: PictogramAttention,
   emptyArchive: PictogramEmptyArchive,
   umbrellaNew: PictogramUmbrellaNew,
-  feedback: PictogramFeedback
+  feedback: PictogramFeedback,
+  cameraRequest: PictogramCameraRequest
 };
 
 export type IOPictograms = keyof typeof IOPictograms;

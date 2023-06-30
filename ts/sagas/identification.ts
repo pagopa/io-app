@@ -35,6 +35,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 import NavigationService from "../navigation/NavigationService";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -86,7 +87,10 @@ function* waitIdentificationResult(): Generator<
 
     case getType(identificationSuccess): {
       // if the identification has been successfully, check if the current session is still valid
-      yield* put(checkCurrentSession.request());
+      const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+      if (!isFastLoginEnabled) {
+        yield* put(checkCurrentSession.request());
+      }
       return IdentificationResult.success;
     }
 

@@ -76,6 +76,13 @@ const TimelineRefundDetailsComponent = (props: Props) => {
     O.toNullable
   );
 
+  const formattedAmount = pipe(
+    refund.amount,
+    O.fromNullable,
+    O.map(amount => formatNumberAmount(amount, true)),
+    O.getOrElse(() => "-")
+  );
+
   return (
     <>
       {rejectedAlertComponent}
@@ -85,7 +92,7 @@ const TimelineRefundDetailsComponent = (props: Props) => {
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refund.amount")}</Body>
-        <Body weight="SemiBold">{formatNumberAmount(refund.amount, true)}</Body>
+        <Body weight="SemiBold">{formattedAmount}</Body>
       </View>
       <View style={styles.detailRow}>
         <Body>

@@ -16,6 +16,9 @@ import {
   NewRadioItem,
   RadioGroup
 } from "../../../components/core/selection/RadioGroup";
+import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
+import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
+import { SwitchListItem } from "../../../components/ui/SwitchListItem";
 
 const styles = StyleSheet.create({
   content: {
@@ -37,13 +40,20 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
-
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Radio
     </H2>
     {/* RadioListItem */}
     <RadioListItemsShowroom />
-
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Switch
+    </H2>
+    {/* Native Switch */}
+    <NativeSwitchShowroom />
+    {/* SwitchListItem */}
+    <SwitchListItemShowroom />
+    {/* SwitchLabel */}
+    {renderAnimatedSwitch()}
     {/* Legacy components */}
     <H2 weight={"SemiBold"} style={{ marginBottom: 16, marginTop: 16 }}>
       Legacy components
@@ -74,7 +84,7 @@ const renderCheckboxLabel = () => (
     <DSComponentViewerBox name="CheckboxLabel">
       <CheckboxLabel label="This is a test" />
       <VSpacer size={16} />
-      <CheckboxLabel label="This is a test with a very loooong looooooong loooooooong text" />
+      <CheckboxLabel label="This is a test with a very loooong looooooooong loooooooong text" />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="CheckboxLabel (disabled)">
       <CheckboxLabel disabled checked={true} label="This is a test" />
@@ -205,3 +215,98 @@ const RadioListItemsShowroom = () => {
     </DSComponentViewerBox>
   );
 };
+
+// SWITCH
+
+const renderAnimatedSwitch = () => (
+  <DSComponentViewerBox name="AnimatedSwitch, dismissed in favor of the native one">
+    <SwitchLabel label="This is a test" />
+    <VSpacer size={16} />
+    <SwitchLabel label="This is a test with a very loooong looooooong loooooooong text" />
+  </DSComponentViewerBox>
+);
+
+const NativeSwitchShowroom = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <DSComponentViewerBox name="NativeSwitch">
+      <View style={{ alignSelf: "flex-start" }}>
+        <NativeSwitch value={isEnabled} onValueChange={toggleSwitch} />
+      </View>
+    </DSComponentViewerBox>
+  );
+};
+
+type SwitchListItemSampleProps = Pick<
+  React.ComponentProps<typeof SwitchListItem>,
+  "label" | "description" | "value"
+>;
+
+const SwitchListItemSample = ({
+  value,
+  label,
+  description
+}: SwitchListItemSampleProps) => {
+  const [isEnabled, setIsEnabled] = useState(value);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <SwitchListItem
+      label={label}
+      description={description}
+      value={isEnabled}
+      onSwitchValueChange={toggleSwitch}
+    />
+  );
+};
+
+const SwitchListItemShowroom = () => (
+  <>
+    <DSComponentViewerBox name="SwitchListItem">
+      <SwitchListItemSample label="Testo molto breve" value={true} />
+      <Divider />
+      <SwitchListItemSample
+        label="Testo molto breve"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <SwitchListItemSample
+        label="Questa è un'altra prova ancora più lunga per andare su due righe"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <SwitchListItemSample
+        label="Let's try with a loooong loooooong looooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="SwitchListItem, disabled">
+      <SwitchListItem disabled label="Testo molto breve" value={true} />
+      <Divider />
+      <SwitchListItem
+        disabled
+        label="Testo molto breve"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <SwitchListItem
+        disabled
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+    </DSComponentViewerBox>
+  </>
+);

@@ -3118,7 +3118,7 @@ features:
           PAID: Pagata
           ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
-          VIEWED: Perfezionata per visione
+          VIEWED: Avvenuto accesso
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
@@ -3156,6 +3156,9 @@ features:
         rejected:
           title: The signature failed
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
+        cancelled:
+          title: The signature request has been cancelled
+          subTitle: For further support, write to
         signing:
           title: The signature failed
           subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.
@@ -3633,12 +3636,12 @@ idpay:
       success:
         title: Operazione autorizzata con successo!
         body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      cancelled:
+        title: L’operazione è stata annullata
       failure:
         GENERIC:
           title: Si è verificato un errore imprevisto
           body: Non è stato addebitato alcun importo.
-        CANCELLED: 
-          title: L’operazione è stata annullata
         REJECTED:
           title: Autorizzazione negata
           body: Testo TBD
@@ -3654,9 +3657,31 @@ idpay:
         subtitle: Enter the 8 characters shown below the QR code.
         input: Codice Transazione
         button: Continua
+      scan:
+        tabs:
+          scan: Scan
+          upload: Upload
+          input: Type
+        permissions:
+          undefined: 
+            title: We need your consent
+            label: Allow access to scan QR codes with your device camera.
+            action: Allow access
+          denied:
+            title: You didn't give access to camera
+            label: Browse your device settings to allow camera access.
+            action: Go to settings
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
   subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
   cta:
     faq: "Learn more"
+fastLogin:
+  userInteraction:
+    sessionExpired: 
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
+        submitButtonTitle: "Continua la navigazione"
+        cancelButtonTitle: "Annulla"
