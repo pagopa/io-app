@@ -517,8 +517,8 @@ profile:
       titleExistingUser: Customize push notifications
       subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
-        title: Consenti i promemoria
-        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
+        title: Allow reminders
+        description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
         title: Mostra un'anteprima
         description: Include the sender and subject of the message in the push notification
@@ -858,15 +858,10 @@ onboarding:
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Summer camp registration is now open
-      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffTitle: Hai un avviso che scade domani
       reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
-      example:
-        firstExampleTitle: Ministeto dell'Interno
-        firstExampleDetail: Aggiornamenti sul tuo cambio di residenza
-        secondExampleTitle: Bonus Terme
-        secondExampleDetail: Hai ancora 7 giorni per richiedere il bonus!
     contextualHelpTitle: Push notifications
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:

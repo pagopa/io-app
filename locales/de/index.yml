@@ -790,15 +790,10 @@ onboarding:
       reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsaufforderung von ACI"
       reminderOffPreviewOnTitle: "Gemeinde Ipazia"
       reminderOffPreviewOnMessage: "Die Einschreibungen für die Sommerbetreuung sind offen"
-      reminderOnPreviewOffTitle: "Du hast eine fällige Zahlungsaufforderung"
+      reminderOnPreviewOffTitle: Hai un avviso che scade domani
       reminderOnPreviewOffMessage: "Öffne die App um sie zu bezahlen"
       reminderOffPreviewOffTitle: "Du hast eine neue Mitteilung"
       reminderOffPreviewOffMessage: "Öffne die App um sie zu lesen"
-      example:
-        firstExampleTitle: Ministeto dell'Interno
-        firstExampleDetail: Aggiornamenti sul tuo cambio di residenza
-        secondExampleTitle: Bonus Terme
-        secondExampleDetail: Hai ancora 7 giorni per richiedere il bonus!
     contextualHelpTitle: "Push-Benachrichtigungen"
   infoConsent:
     headerTitle: "IO einrichten"

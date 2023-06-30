@@ -518,7 +518,7 @@ profile:
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
         title: Consenti i promemoria
-        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
+        description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
         title: Mostra un'anteprima
         description: Includi nella notifica push il mittente e l’oggetto del messaggio
@@ -874,15 +874,10 @@ onboarding:
       reminderOnPreviewOnMessage: Entra nell’app e paga l’avviso emesso da ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Sono aperte le iscrizioni per il centro estivo
-      reminderOnPreviewOffTitle: Hai un avviso in scadenza
+      reminderOnPreviewOffTitle: Hai un avviso che scade domani
       reminderOnPreviewOffMessage: Entra nell'app per pagarlo
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
-      reminderOffPreviewOffMessage: Entra nell'app per leggerlo
-      example:
-        firstExampleTitle: Ministeto dell'Interno
-        firstExampleDetail: Aggiornamenti sul tuo cambio di residenza
-        secondExampleTitle: Bonus Terme
-        secondExampleDetail: Hai ancora 7 giorni per richiedere il bonus!
+      reminderOffPreviewOffMessage: Apri l'app per leggere il contenuto
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:

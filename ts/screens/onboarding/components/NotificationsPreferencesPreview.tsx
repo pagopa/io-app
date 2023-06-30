@@ -45,11 +45,7 @@ const styles = StyleSheet.create({
   },
 
   previewNotificationMargin: {
-    bottom: 10
-  },
-
-  previewNotificationDoubleMargin: {
-    bottom: 20
+    bottom: 60
   },
 
   overlayWhiteBg: {
@@ -131,33 +127,8 @@ export const NotificationsPreferencesPreview = ({
         <View
           style={[
             styles.overlay,
-            isFirstOnboarding &&
-              styles.overlayWhiteBg &&
-              styles.previewNotificationMargin,
-            !isFirstOnboarding &&
-              styles.overlayWhiteBg &&
-              styles.previewNotificationDoubleMargin
-          ]}
-        >
-          <Image
-            source={require("../../../../img/onboarding/notification_icon.png")}
-            style={styles.overlayImage}
-          />
-          <View style={styles.overlayText}>
-            <H4 weight="SemiBold" color="bluegreyDark">
-              {I18n.t(titleKey)}
-            </H4>
-            <H5 weight="Regular" color="bluegrey">
-              {I18n.t(messageKey)}
-            </H5>
-          </View>
-        </View>
-
-        <View
-          style={[
-            styles.overlay,
-            isFirstOnboarding && styles.overlayWhiteBg,
-            !isFirstOnboarding && styles.previewNotificationMargin
+            styles.previewNotificationMargin,
+            isFirstOnboarding && styles.overlayWhiteBg
           ]}
         >
           <Image
