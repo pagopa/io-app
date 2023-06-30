@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { StyleProp, View, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import {
   disableSearch,
@@ -12,10 +13,9 @@ import {
   updateSearchText
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { LabelledItem } from "../LabelledItem";
 import { IOColors } from "../core/variables/IOColors";
-import { Icon } from "../core/icons";
+import IconButton from "../ui/IconButton";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
@@ -26,6 +26,7 @@ interface OwnProps {
   searchType?: SearchType;
   // if this handler is defined it will be called in place of dispatching actions about search activation (see handleSearchPress)
   onSearchTap?: () => void;
+  buttonStyle?: StyleProp<ViewStyle>;
 }
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
@@ -64,14 +65,13 @@ class SearchButton extends React.Component<Props, State> {
             iconColor={this.props.color}
           />
         ) : (
-          <ButtonDefaultOpacity
-            hasFullHitSlop
-            onPress={this.handleSearchPress}
-            transparent={true}
-            accessibilityLabel={I18n.t("global.buttons.search")}
-          >
-            <Icon name="search" color="blueIO-450" />
-          </ButtonDefaultOpacity>
+          <View style={this.props.buttonStyle}>
+            <IconButton
+              icon="search"
+              onPress={this.handleSearchPress}
+              accessibilityLabel={I18n.t("global.buttons.search")}
+            />
+          </View>
         )}
       </React.Fragment>
     );

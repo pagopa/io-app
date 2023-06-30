@@ -32,6 +32,7 @@ import AppHeader from "../ui/AppHeader";
 import { IOIcons, Icon } from "../core/icons/Icon";
 import { itWalletEnabled } from "../../config";
 import { NewH3 } from "../../features/it-wallet/components/design/NewH3";
+import IconButton from "../ui/IconButton";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -50,39 +51,33 @@ const styles = StyleSheet.create({
   body: {
     alignItems: "center"
   },
-  helpButton: {
+  rightButton: {
     padding: 8
   }
 });
 
 const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
-  <ButtonDefaultOpacity
-    hasFullHitSlop
+  <IconButton
     onPress={onShowHelp}
-    transparent={true}
     accessibilityLabel={I18n.t(
       "global.accessibility.contextualHelp.open.label"
     )}
-    style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
-    testID={"helpButton"}
-  >
-    <Icon name={"help"} color={dark ? "white" : "blueIO-450"} />
-  </ButtonDefaultOpacity>
+    testID="helpButton"
+    color={dark ? "contrast" : "primary"}
+    icon={"help"}
+  />
 );
 
 const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
-  <ButtonDefaultOpacity
-    hasFullHitSlop
+  <IconButton
     onPress={onPress}
-    transparent={true}
     accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
-    style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
     testID={"helpButton"}
-  >
-    <Icon name={"coggle"} color={dark ? "white" : "blueIO-450"} />
-  </ButtonDefaultOpacity>
+    icon={"coggle"}
+    color={dark ? "contrast" : "primary"}
+  />
 );
 
 export type AccessibilityEvents = {
@@ -294,18 +289,23 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <SearchButton
             searchType={isSearchAvailable.searchType}
             onSearchTap={isSearchAvailable.onSearchTap}
+            buttonStyle={styles.rightButton}
           />
         )}
 
         {itWalletEnabled && isProfileAvailable && !isSearchEnabled && (
-          <ProfileButton
-            onPress={isProfileAvailable.onProfileTap}
-            dark={dark}
-          />
+          <View style={styles.rightButton}>
+            <ProfileButton
+              onPress={isProfileAvailable.onProfileTap}
+              dark={dark}
+            />
+          </View>
         )}
 
         {onShowHelp && !isSearchEnabled && (
-          <HelpButton onShowHelp={onShowHelp} dark={dark} />
+          <View style={styles.rightButton}>
+            <HelpButton onShowHelp={onShowHelp} dark={dark} />
+          </View>
         )}
 
         {customRightIcon && !isSearchEnabled && (

@@ -26,7 +26,7 @@ const h3DefaultColor: AllowedColors = "black";
 const h3DefaultWeight: AllowedWeight = "Regular";
 
 /**
- * Typography component to render `H2` text with font size {@link fontSize} and fontFamily {@link fontName}.
+ * Typography component to render `H3` text with font size {@link fontSize} and fontFamily {@link fontName}.
  * default values(if not defined) are weight: `Bold`, color: `bluegreyDark`
  * @param props
  * @constructor
