@@ -2713,6 +2713,7 @@ bonus:
         validity: Validità
         discountCode: Codice Sconto
         conditions: Condizioni
+        contacts: Contatti di assistenza
       cta:
         label: Vai al sito dell'operatore
         landingPage: Accedi all’agevolazione

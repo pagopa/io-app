@@ -2689,6 +2689,7 @@ bonus:
         validity: Validity
         discountCode: Discount code
         conditions: Conditions
+        contacts: Support contacts
       cta:
         label: Navigate to operator website
         landingPage: Get the benefit

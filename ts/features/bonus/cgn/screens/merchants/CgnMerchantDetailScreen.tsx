@@ -36,6 +36,7 @@ import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDisc
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { Icon } from "../../../../../components/core/icons/Icon";
+import CgnContactItem from "../../components/merchants/CgnContactItem";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -173,6 +174,12 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                       />
                     </>
                   )}
+                {/* {merchantDetail.value.phone && ( */}
+                {/* <> */}
+                <VSpacer size={16} />
+                <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2>
+                <CgnContactItem contact="https://www.sitonegozioconurllungo.it/assistenza" />
+                {/* )} */}
               </View>
             </ScrollView>
           </>
