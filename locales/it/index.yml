@@ -3331,6 +3331,14 @@ features:
     signatureFieldInfo:
       title: "Cosa sono le clausole vessatorie?"
       subTitle: "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."   
+      signingInProgress: "Firma in corso"   
+  itWallet:
+    title: "IT Wallet"
+    actionBanner:
+      title: "Novità IT Wallet"
+      description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
+      action: "Attiva IT Wallet"
+      hideLabel: "Nascondi questo banner"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

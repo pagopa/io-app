@@ -3307,6 +3307,14 @@ features:
     signatureFieldInfo:
       title: "What are restrictive clauses?"
       subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."   
+      signingInProgress: "Signature in progress"  
+  itWallet:
+    title: "IT Wallet"
+    actionBanner:
+      title: "Novità IT Wallet"
+      description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
+      action: "Attiva IT Wallet"
+      hideLabel: "Nascondi questo banner"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
