@@ -74,11 +74,9 @@ const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
     hasFullHitSlop
     onPress={onPress}
     transparent={true}
-    accessibilityLabel={I18n.t(
-      "global.accessibility.contextualHelp.open.label" // fix me
-    )}
+    accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
     style={styles.helpButton}
-    accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")} // fix me
+    accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
     testID={"helpButton"}
   >
     <Icon name={"multiCoggles"} />

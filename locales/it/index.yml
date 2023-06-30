@@ -91,6 +91,10 @@ global:
       open:
         label: Aiuto contestuale
         hint: Accedi alle informazioni sul contenuto della schermata corrente
+    profile:
+      open:
+        label: Profilo
+        hint: Accedi alle informazioni sul tuo profilo
     chat:
       description: "Messaggi assistenza IO"
       unread_singular: "{{messages}} nuovo messaggio"
