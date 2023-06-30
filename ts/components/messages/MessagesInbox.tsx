@@ -10,6 +10,8 @@ import { UaDonationsBanner } from "../../features/uaDonations/components/UaDonat
 import { useItemsSelection } from "../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../ListSelectionBar";
 import { IOStyles } from "../core/variables/IOStyles";
+import { ItwActionBanner } from "../../features/it-wallet/components/ItwActionBanner";
+import { itWalletEnabled } from "../../config";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
 
@@ -81,7 +83,9 @@ const MessagesInbox = ({
           onLongPressItem={onLongPressItem}
           selectedMessageIds={O.toUndefined(selectedItems)}
           ListEmptyComponent={ListEmptyComponent}
-          ListHeaderComponent={<UaDonationsBanner />}
+          ListHeaderComponent={
+            itWalletEnabled ? <ItwActionBanner /> : <UaDonationsBanner />
+          }
         />
       </View>
       {isSelecting && (
