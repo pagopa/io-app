@@ -10,6 +10,8 @@ import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
+  // Header
+  headerFirstLevelHeight: number;
   // Dimensions
   avatarSizeSmall: number;
   avatarSizeMedium: number;
@@ -17,6 +19,7 @@ interface IOVisualCostants {
 
 export const IOVisualCostants: IOVisualCostants = {
   appMarginDefault: 24,
+  headerFirstLevelHeight: 56,
   avatarSizeSmall: 44,
   avatarSizeMedium: 66
 };

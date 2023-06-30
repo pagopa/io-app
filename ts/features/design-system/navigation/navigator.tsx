@@ -32,6 +32,7 @@ import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -143,6 +144,12 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
           component={DSBottomSheet}
+        />
+
+        {/* DEBUG */}
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
+          component={DSHeaderFirstLevel}
         />
 
         {/* DEBUG */}
