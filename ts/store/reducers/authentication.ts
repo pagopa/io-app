@@ -11,6 +11,7 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  refreshSessionToken,
   resetAuthenticationState,
   sessionExpired,
   sessionInformationLoadSuccess,
@@ -155,6 +156,11 @@ export const sessionTokenSelector = (
     ? state.authentication.sessionToken
     : undefined;
 
+export const fimsTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.fimsToken
+    : undefined;
+
 /**
  * Return the authentication header required for IO Backend requests
  */
@@ -277,6 +283,16 @@ const reducer = (
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
       sessionToken: action.payload.token
+    };
+  }
+
+  if (isActionOf(refreshSessionToken.success, action) && isLoggedIn(state)) {
+    // Save the new SessionToken in the state
+    return {
+      ...state,
+      ...{
+        sessionToken: action.payload
+      }
     };
   }
 

@@ -3,6 +3,8 @@
  */
 import { all, call } from "typed-redux-saga/macro";
 import versionInfoSaga from "../common/versionInfo/saga/versionInfo";
+import { watchTokenRefreshSaga } from "../features/fastLogin/saga/tokenRefreshSaga";
+import { watchPendingActionsSaga } from "../features/fastLogin/saga/pendingActionsSaga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -23,6 +25,8 @@ export default function* root() {
     call(removePersistedStatesSaga),
     call(watchContentSaga),
     call(watchPaymentInitializeSaga),
-    call(watchBackToEntrypointPaymentSaga)
+    call(watchBackToEntrypointPaymentSaga),
+    call(watchTokenRefreshSaga),
+    call(watchPendingActionsSaga)
   ]);
 }

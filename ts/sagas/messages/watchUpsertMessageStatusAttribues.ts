@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "typed-redux-saga/macro";
+import { put, takeEvery, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
@@ -12,6 +12,7 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { getError } from "../../utils/errors";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
@@ -65,10 +66,11 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof putMessage>> {
     try {
       const body = validatePayload(action.payload);
-      const response: SagaCallReturnType<typeof putMessage> = yield* call(
-        putMessage,
-        { id: action.payload.message.id, body }
-      );
+      const response = (yield* call(
+        withRefreshApiCall,
+        putMessage({ id: action.payload.message.id, body }),
+        action
+      )) as unknown as SagaCallReturnType<typeof putMessage>;
 
       const nextAction = handleResponse<unknown>(
         response,
@@ -80,7 +82,9 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
           })
       );
 
-      yield* put(nextAction);
+      if (nextAction) {
+        yield* put(nextAction);
+      }
     } catch (error) {
       yield* put(
         upsertMessageStatusAttributes.failure({

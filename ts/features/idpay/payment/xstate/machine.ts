@@ -54,9 +54,29 @@ const createIDPayPaymentMachine = () =>
               target: "AUTHORIZING"
             },
             CANCEL_AUTHORIZATION: {
-              actions: "cancelTransaction",
-              target: "AUTHORIZATION_FAILURE"
+              target: "CANCELLING"
             }
+          }
+        },
+        CANCELLING: {
+          tags: [LOADING_TAG],
+          invoke: {
+            id: "deletePayment",
+            src: "deletePayment",
+            onDone: {
+              target: "AUTHORIZATION_CANCELLED"
+            },
+            onError: [
+              {
+                actions: "setFailure",
+                cond: "isBlockingFailure",
+                target: "AUTHORIZATION_FAILURE"
+              },
+              {
+                actions: ["setFailure", "showErrorToast"],
+                target: "AWAITING_USER_CONFIRMATION"
+              }
+            ]
           }
         },
         AUTHORIZING: {
@@ -67,13 +87,28 @@ const createIDPayPaymentMachine = () =>
             onDone: {
               target: "AUTHORIZATION_SUCCESS"
             },
-            onError: {
-              actions: "setFailure",
-              target: "AUTHORIZATION_FAILURE"
-            }
+            onError: [
+              {
+                actions: "setFailure",
+                cond: "isBlockingFailure",
+                target: "AUTHORIZATION_FAILURE"
+              },
+              {
+                actions: ["setFailure", "showErrorToast"],
+                target: "AWAITING_USER_CONFIRMATION"
+              }
+            ]
           }
         },
         AUTHORIZATION_SUCCESS: {
+          entry: "navigateToResultScreen",
+          on: {
+            EXIT: {
+              actions: "exitAuthorization"
+            }
+          }
+        },
+        AUTHORIZATION_CANCELLED: {
           entry: "navigateToResultScreen",
           on: {
             EXIT: {
@@ -100,13 +135,22 @@ const createIDPayPaymentMachine = () =>
           transactionData: O.some(event.data)
         })),
         setFailure: assign((_, event) => ({
-          failure: pipe(O.of(event.data), O.filter(PaymentFailure.is))
-        })),
-        cancelTransaction: assign(_ => ({
-          failure: O.some(PaymentFailureEnum.CANCELLED)
+          failure: pipe(event.data, O.of, O.filter(PaymentFailure.is))
         }))
       },
-      guards: {}
+      guards: {
+        // Guard that checks if the failure is blocking or not.
+        // Currently, the only non-blocking failure is `TOO_MANY_REQUESTS`
+        // which should display only an error toast
+        isBlockingFailure: (_, event) =>
+          pipe(
+            event.data,
+            O.of,
+            O.filter(PaymentFailure.is),
+            O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
+            O.getOrElse(() => false)
+          )
+      }
     }
   );
 

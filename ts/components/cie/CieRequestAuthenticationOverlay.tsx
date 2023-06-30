@@ -27,6 +27,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { trackSpidLoginError } from "../../utils/analytics";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -142,6 +143,7 @@ const CieWebView = (props: Props) => {
   const dispatch = useIODispatch();
 
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
 
   const webView = createRef<WebView>();
   const { onSuccess } = props;
@@ -229,6 +231,7 @@ const CieWebView = (props: Props) => {
           loginUri,
           maybeKeyTag.value,
           mixpanelEnabled,
+          isFastLogin,
           dispatch
         ),
       TE.fold(

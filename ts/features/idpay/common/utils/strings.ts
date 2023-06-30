@@ -6,6 +6,9 @@ import { format } from "../../../../utils/dates";
 export const formatNumberCurrency = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 
+export const formatNumberCurrencyCents = (cents: number) =>
+  formatNumberCurrency(cents / 100);
+
 export const formatNumberCurrencyOrDefault = (
   input: number | undefined,
   defaultValue: string = "-"
@@ -17,13 +20,23 @@ export const formatNumberCurrencyOrDefault = (
     O.getOrElse(() => defaultValue)
   );
 
+export const formatNumberCurrencyCentsOrDefault = (
+  input: number | undefined,
+  defaultValue: string = "-"
+) =>
+  pipe(
+    input,
+    O.fromNullable,
+    O.map(formatNumberCurrencyCents),
+    O.getOrElse(() => defaultValue)
+  );
+
 /**
  *   Takes a nullable date and formats it to a string.
  *   - Base default : '-'
  *   - Base format: 'D MMMM YYYY, HH:mm'
  *   - Uses date_fns as formatter
  */
-
 export const formatDateOrDefault = (
   input?: Date,
   defaultValue: string = "-",
@@ -32,8 +45,6 @@ export const formatDateOrDefault = (
   pipe(
     input,
     O.fromNullable,
-    O.fold(
-      () => defaultValue,
-      date => format(date, dateFormat)
-    )
+    O.map(date => format(date, dateFormat)),
+    O.getOrElse(() => defaultValue)
   );

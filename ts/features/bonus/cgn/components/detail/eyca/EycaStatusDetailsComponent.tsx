@@ -19,6 +19,11 @@ import {
 import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../../components/core/IOBadge";
+import { openWebUrl } from "../../../../../../utils/url";
+import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
+import { showToast } from "../../../../../../utils/showToast";
+import IconButton from "../../../../../../components/ui/IconButton";
+import { IOSpacingScale } from "../../../../../../components/core/variables/IOSpacing";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -28,6 +33,9 @@ type Props = {
 const styles = StyleSheet.create({
   spaced: {
     justifyContent: "space-between"
+  },
+  cardNumber: {
+    paddingEnd: IOSpacingScale[1]
   }
 });
 
@@ -88,9 +96,18 @@ const EycaStatusDetailsComponent = (props: Props) => {
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.eycaNumber")}
         </H5>
-        <Monospace testID={"eyca-card-number"}>
-          {props.eycaCard.card_number}
-        </Monospace>
+        <View style={IOStyles.row}>
+          <Monospace style={styles.cardNumber} testID={"eyca-card-number"}>
+            {props.eycaCard.card_number}
+          </Monospace>
+          <IconButton
+            icon="copy"
+            onPress={() =>
+              clipboardSetStringWithFeedback(props.eycaCard.card_number)
+            }
+            accessibilityLabel={I18n.t("bonus.cgn.detail.cta.eyca.copy")}
+          />
+        </View>
       </View>
       <VSpacer size={8} />
       <View style={[IOStyles.row, styles.spaced]}>
@@ -109,10 +126,14 @@ const EycaStatusDetailsComponent = (props: Props) => {
         bordered
         style={{ width: "100%" }}
         onPress={() =>
-          clipboardSetStringWithFeedback(props.eycaCard.card_number)
+          openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+            showToast(I18n.t("bonus.cgn.generic.linkError"))
+          )
         }
       >
-        <Label color={"blue"}>{I18n.t("bonus.cgn.detail.cta.eyca.copy")}</Label>
+        <Label color={"blue"}>
+          {I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")}
+        </Label>
       </ButtonDefaultOpacity>
     </>
   );

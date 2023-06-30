@@ -43,8 +43,14 @@ import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
-import { startApplicationInitialization } from "../store/actions/application";
-import { sessionExpired } from "../store/actions/authentication";
+import {
+  applicationInitialized,
+  startApplicationInitialization
+} from "../store/actions/application";
+import {
+  refreshSessionToken,
+  sessionExpired
+} from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -61,13 +67,9 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../features/lollipop/store/reducers/lollipop";
-import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
-  generateKeyInfo,
-  generateLollipopKeySaga
+  generateLollipopKeySaga,
+  getKeyInfo
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -94,6 +96,8 @@ import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
+import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
+import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -162,11 +166,12 @@ const warningWaitNavigatorTime = 2000 as Millisecond;
  * Handles the application startup and the main application logic loop
  */
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
-export function* initializeApplicationSaga(): Generator<
-  ReduxSagaEffect,
-  void,
-  any
-> {
+export function* initializeApplicationSaga(
+  action?: ActionType<typeof startApplicationInitialization>
+): Generator<ReduxSagaEffect, void, any> {
+  const handleSessionExpiration = !!(
+    action?.payload && action.payload.handleSessionExpiration
+  );
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -210,7 +215,9 @@ export function* initializeApplicationSaga(): Generator<
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
-  yield* put(resetProfileState());
+  if (!handleSessionExpiration) {
+    yield* put(resetProfileState());
+  }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
@@ -240,9 +247,8 @@ export function* initializeApplicationSaga(): Generator<
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
+  const keyInfo = yield* call(getKeyInfo);
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
@@ -261,7 +267,12 @@ export function* initializeApplicationSaga(): Generator<
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
-    yield* put(sessionExpired());
+    const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+    if (!isFastLoginEnabled) {
+      yield* put(sessionExpired());
+    } else {
+      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+    }
     return;
   }
 
@@ -333,6 +344,8 @@ export function* initializeApplicationSaga(): Generator<
       return;
     }
   }
+
+  const publicKey = yield* select(lollipopPublicKeySelector);
 
   yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -406,7 +419,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
-  if (hasPreviousSessionAndPin) {
+  if (hasPreviousSessionAndPin && !handleSessionExpiration) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
@@ -417,6 +430,11 @@ export function* initializeApplicationSaga(): Generator<
       // If we are here the user had chosen to reset the unlock code
       yield* put(startApplicationInitialization());
       return;
+    }
+
+    const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+    if (isFastLoginEnabled) {
+      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
     }
   }
 
@@ -626,6 +644,8 @@ export function* initializeApplicationSaga(): Generator<
       })
     );
   }
+
+  yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }
 
 /**

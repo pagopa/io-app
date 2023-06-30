@@ -21,12 +21,14 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../common/components/Skeleton";
 import {
   formatDateOrDefault,
-  formatNumberCurrency
+  formatNumberCurrencyCents,
+  formatNumberCurrencyCentsOrDefault
 } from "../../common/utils/strings";
 import { IDPayPaymentParamsList } from "../navigation/navigator";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
   selectIsAuthorizing,
+  selectIsCancelling,
   selectIsPreAuthorizing,
   selectTransactionData
 } from "../xstate/selectors";
@@ -61,7 +63,9 @@ const IDPayPaymentAuthorizationScreen = () => {
   // Loading state for screen content
   const isLoading = useSelector(machine, selectIsPreAuthorizing);
   // Loading state for "Confirm" button
-  const isUpserting = useSelector(machine, selectIsAuthorizing);
+  const isAuthorizing = useSelector(machine, selectIsAuthorizing);
+  const isCancelling = useSelector(machine, selectIsCancelling);
+  const isUpserting = isAuthorizing || isCancelling;
 
   const handleCancel = () => {
     machine.send("CANCEL_AUTHORIZATION");
@@ -72,15 +76,10 @@ const IDPayPaymentAuthorizationScreen = () => {
   };
 
   const renderContent = () => {
-    if (isLoading) {
-      return <AuthorizationScreenSkeleton />;
-    }
-    if (transactionData !== undefined) {
+    if (!isLoading && transactionData !== undefined) {
       return <AuthorizationScreenContent data={transactionData} />;
     }
-    // TODO:: correct navigation will be added with error mapping
-    machine.send("CANCEL_AUTHORIZATION");
-    return null;
+    return <AuthorizationScreenSkeleton />;
   };
 
   return (
@@ -100,15 +99,16 @@ const IDPayPaymentAuthorizationScreen = () => {
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={{
-            title: I18n.t("global.buttons.deny"),
+            title: isCancelling ? "" : I18n.t("global.buttons.deny"),
             bordered: true,
             onPress: handleCancel,
-            disabled: isUpserting
+            isLoading: isCancelling,
+            disabled: isUpserting || isLoading
           }}
           rightButton={{
-            title: isUpserting ? "" : I18n.t("global.buttons.confirm"),
+            title: isAuthorizing ? "" : I18n.t("global.buttons.confirm"),
             onPress: handleConfirm,
-            isLoading: isUpserting,
+            isLoading: isAuthorizing,
             disabled: isUpserting || isLoading
           }}
         />
@@ -120,99 +120,77 @@ const IDPayPaymentAuthorizationScreen = () => {
 const AuthorizationScreenContent = ({
   data
 }: {
-  data: NonNullable<AuthPaymentResponseDTO>;
-}) => {
-  const amountCents = formatNumberCurrency(data.amountCents / 100);
-  const reward = pipe(
-    data.reward,
-    O.fromNullable,
-    O.fold(
-      () => "-",
-      data => formatNumberCurrency(data / 100)
-    )
-  );
-  const businessName = data.businessName || "-";
-  const initiativeName = data.initiativeName || "-";
-  const date = formatDateOrDefault(data.trxDate);
-  return (
-    <>
-      <Divider />
-      <VSpacer size={16} />
-      <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-        <NewH6>{I18n.t("idpay.payment.authorization.toAuth")}</NewH6>
-        <H1>{reward}</H1>
-      </View>
+  data: AuthPaymentResponseDTO;
+}) => (
+  <>
+    <Divider />
+    <VSpacer size={16} />
+    <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+      <NewH6>{I18n.t("idpay.payment.authorization.toAuth")}</NewH6>
+      <H1>{formatNumberCurrencyCentsOrDefault(data.reward)}</H1>
+    </View>
+    <VSpacer size={16} />
+    <Divider />
+    <ListItemInfo
+      label={I18n.t("idpay.payment.authorization.amount")}
+      value={formatNumberCurrencyCents(data.amountCents)}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
+    />
+    <Divider />
+    <ListItemInfo
+      label={I18n.t("idpay.payment.authorization.businessName")}
+      value={data.businessName || "-"}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
+    />
+    <Divider />
+    <ListItemInfo
+      label={I18n.t("idpay.payment.authorization.dateTime")}
+      value={formatDateOrDefault(data.trxDate)}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
+    />
+    <VSpacer size={24} />
+    {/* TODO:: will be removed in favor of LIST_GROUP_HEADING in future updates */}
+    <View style={[IOStyles.row, IOStyles.alignCenter]}>
+      <Icon name="initiatives" size={24} color="bluegrey" />
+      <HSpacer size={16} />
+      <H3
+        color="bluegrey"
+        style={{
+          // this should not happen, but the current typography adds 4
+          // to paddingBottom because of line height
+          // so we add 4 to paddingTop to compensate, else the text would not be centered
+          // (this was temporarily approved by @dmnplb)
+          paddingTop: 4
+        }}
+      >
+        {I18n.t("idpay.payment.authorization.infoDivider")}
+      </H3>
+    </View>
+    <VSpacer size={16} />
 
-      <VSpacer size={16} />
-      <Divider />
-      <ListItemInfo
-        label={I18n.t("idpay.payment.authorization.amount")}
-        value={amountCents}
-        accessibilityLabel={I18n.t("idpay.payment.authorization.amount")}
-      />
-      <Divider />
-      <ListItemInfo
-        label={I18n.t("idpay.payment.authorization.businessName")}
-        value={businessName}
-        accessibilityLabel={I18n.t("idpay.payment.authorization.businessName")}
-      />
-      <Divider />
-      <ListItemInfo
-        label={I18n.t("idpay.payment.authorization.dateTime")}
-        value={date}
-        accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
-      />
-
-      <VSpacer size={24} />
-      {/* TODO:: will be removed in favor of LIST_GROUP_HEADING in future updates */}
-      <View style={[IOStyles.row, IOStyles.alignCenter]}>
-        <Icon name="initiatives" size={24} color="bluegrey" />
-        <HSpacer size={16} />
-        <H3
-          color="bluegrey"
-          style={{
-            // this should not happen, but the current typography adds 4
-            // to paddingBottom because of line height
-            // so we add 4 to paddingTop to compensate, else the text would not be centered
-            // (this was temporarily approved by @dmnplb)
-            paddingTop: 4
-          }}
-        >
-          {I18n.t("idpay.payment.authorization.infoDivider")}
-        </H3>
-      </View>
-      <VSpacer size={16} />
-
-      <ListItemInfo
-        label={I18n.t("idpay.payment.authorization.initiativeName")}
-        value={initiativeName}
-        accessibilityLabel={I18n.t(
-          "idpay.payment.authorization.initiativeName"
-        )}
-      />
-      <Divider />
-      <ListItemInfo
-        label={I18n.t("idpay.payment.authorization.availableAmount")}
-        value={"-"}
-        accessibilityLabel={I18n.t(
-          "idpay.payment.authorization.availableAmount"
-        )}
-      />
-    </>
-  );
-};
+    <ListItemInfo
+      label={I18n.t("idpay.payment.authorization.initiativeName")}
+      value={data.initiativeName || "-"}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.initiativeName")}
+    />
+    <Divider />
+    <ListItemInfo
+      label={I18n.t("idpay.payment.authorization.availableAmount")}
+      value={formatNumberCurrencyCentsOrDefault(data.residualBudget)}
+      accessibilityLabel={I18n.t("idpay.payment.authorization.availableAmount")}
+    />
+  </>
+);
 
 const SmallSkeleton = () => <Skeleton width={178} height={24} radius={8} />;
 
 const AuthorizationScreenSkeleton = () => (
   <>
-    <Divider />
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
       <Skeleton width={82} height={29} />
       <Skeleton width={130} height={29} />
     </View>
-
     <VSpacer size={16} />
     <Divider />
     <ListItemInfo
@@ -232,7 +210,6 @@ const AuthorizationScreenSkeleton = () => (
       value={<SmallSkeleton />}
       accessibilityLabel={I18n.t("idpay.payment.authorization.dateTime")}
     />
-
     <VSpacer size={24} />
     <View style={[IOStyles.row, IOStyles.alignCenter]}>
       <Icon name="initiatives" size={24} color="bluegrey" />
@@ -248,7 +225,6 @@ const AuthorizationScreenSkeleton = () => (
       </H3>
     </View>
     <VSpacer size={16} />
-
     <ListItemInfo
       label={I18n.t("idpay.payment.authorization.initiativeName")}
       value={<SmallSkeleton />}

@@ -61,7 +61,7 @@ const Fallback = () => {
   void mixpanelTrack("PAYMENT_STATUS_SWITCH_ID_NOT_IN_WALLET_LIST");
   return (
     <View style={{ paddingLeft: IOStyleVariables.switchWidth - 24 }}>
-      <Icon name="close" size={24} color="blue" />
+      <Icon name="closeLarge" size={24} color="blue" />
     </View>
   );
 };

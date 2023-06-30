@@ -757,8 +757,12 @@ onboarding:
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
     errors:
-      length: "Dein Code ist nicht 6 Ziffern lang"
+      invalid: Il codice non è valido
       match: "Der Code stimmt nicht überein"
+    policy:
+      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
+      first: ripetizioni di numeri (es. 000000)
+      second: numeri in sequenza (es. 123456 o 654321)
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"

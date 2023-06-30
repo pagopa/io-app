@@ -180,7 +180,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               title="Banner title"
               pictogramName="donation"
               action="Action text"
@@ -190,7 +190,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
@@ -200,7 +200,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
@@ -212,7 +212,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -223,7 +223,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -239,7 +239,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -252,7 +252,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="big"
+              size="big"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
@@ -267,7 +267,7 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="small"
+              size="small"
               title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
@@ -280,7 +280,19 @@ const renderBanner = () => {
             <Banner
               viewRef={viewRef}
               color={color}
-              variant="small"
+              size="small"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              action="Dona anche tu"
+              onPress={onLinkPress}
+              pictogramName="donation"
+            />
+            <VSpacer size={24} />
+            <Banner
+              viewRef={viewRef}
+              color={color}
+              size="small"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }

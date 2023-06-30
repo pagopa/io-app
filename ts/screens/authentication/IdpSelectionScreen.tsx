@@ -31,7 +31,7 @@ import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
-import { nativeLoginSelector } from "../../store/reducers/nativeLogin";
+import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { Body } from "../../components/core/typography/Body";
 import ButtonOutline from "../../components/ui/ButtonOutline";
