@@ -26,8 +26,8 @@ describe("getLocalePrimaryWithFallback", () => {
     ["it", "it"],
     ["en", "en"],
     ["fr", localeFallback.locale],
-    ["fr", "en"],
-    ["somethingstrange", "en"]
+    ["fr", "it"],
+    ["somethingstrange", "it"]
   ].forEach(t => {
     const [locale, expected] = t;
     it(`getLocalePrimaryWithFallback should return ${expected} if locale is ${locale}`, () => {

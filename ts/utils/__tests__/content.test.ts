@@ -142,7 +142,7 @@ describe("idpContextualHelpDataFromIdSelector", () => {
 
   it("should return fallback data if the set language is not rupported", async () => {
     setLocale("de" as Locales);
-    assertIdpValues("DESCRIPTION EN", "PHONE EN");
+    assertIdpValues("DESCRIPTION IT", "PHONE IT");
   });
 
   const assertIdpValues = (description: string, phone: string) => {
@@ -176,9 +176,9 @@ describe("screenContextualHelpDataSelector", () => {
     assertScreenValues("title EN", "**content EN**");
   });
 
-  it("should return data (english) if the current screen is present as key and the set language is not supported", async () => {
+  it("should return data (italian) if the current screen is present as key and the set language is not supported", async () => {
     setLocale("br" as Locales);
-    assertScreenValues("title EN", "**content EN**");
+    assertScreenValues("title IT", "**content IT**");
   });
 
   const assertScreenValues = (title: string, content: string) => {

@@ -10,7 +10,7 @@ import { BackendStatusMessage } from "../definitions/content/BackendStatusMessag
 export type LocalizedMessageKeys = keyof BackendStatusMessage;
 type FallBackLocale = {
   localizedMessageKey: LocalizedMessageKeys;
-  locale: "en";
+  locale: "it";
   localeEnum: PreferredLanguageEnum;
 };
 
@@ -33,9 +33,9 @@ export const localeToPreferredLanguageMapping = new Map<
 
 // define the locale fallback used in the whole app code
 export const localeFallback: FallBackLocale = {
-  localizedMessageKey: "en-EN",
-  locale: "en",
-  localeEnum: PreferredLanguageEnum.en_GB
+  localizedMessageKey: "it-IT",
+  locale: "it",
+  localeEnum: PreferredLanguageEnum.it_IT
 };
 
 // eslint-disable-next-line
