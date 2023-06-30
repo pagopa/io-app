@@ -1,5 +1,12 @@
 import { SagaIterator } from "redux-saga";
-import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
+import {
+  call,
+  delay,
+  put,
+  select,
+  take,
+  takeLatest
+} from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -34,11 +41,11 @@ import ROUTES from "../../../navigation/routes";
 import { FastLoginT } from "../../../../definitions/fast_login/requestTypes";
 import {
   askUserToRefreshSessionToken,
-  hideRefreshTokenLoader,
+  showRefreshTokenLoader,
   refreshSessionToken,
-  refreshTokenTransientError,
-  showRefreshTokenLoader
+  refreshTokenTransientError
 } from "../store/actions";
+import { tokenRefreshSelector } from "../store/selectors";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -49,6 +56,17 @@ function* handleRefreshSessionToken(
     typeof refreshSessionToken.request
   >
 ) {
+  // If we already made a successful refresh in the last 10 secs,
+  // we don't need to do it again
+  const lastRefreshTimestamp = yield* select(tokenRefreshSelector);
+  if (lastRefreshTimestamp.kind === "success") {
+    const now = Date.now();
+    const timeSinceLastRefresh = now - lastRefreshTimestamp.timestamp;
+    if (timeSinceLastRefresh < 10 * 1000) {
+      return;
+    }
+  }
+
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
 
   if (!withUserInteraction) {
@@ -130,7 +148,6 @@ function* doRefreshTokenSaga(
           const newToken = tokenResponse.right.value
             .token as unknown as SessionToken;
           yield* put(refreshSessionToken.success(newToken));
-          yield* put(hideRefreshTokenLoader());
           // Reinit all backend clients to use the new token
           yield* put(
             startApplicationInitialization({
@@ -153,7 +170,6 @@ function* doRefreshTokenSaga(
   }
 
   if (requestState.status === "session-expired") {
-    yield* put(hideRefreshTokenLoader());
     yield* put(refreshSessionToken.failure(new Error(requestState.error)));
     yield* put(sessionExpired());
   }

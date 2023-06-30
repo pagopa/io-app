@@ -49,7 +49,7 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return <UpdateAppModal />;
   }
 
-  if (props.tokenRefreshing.kind === "error") {
+  if (props.tokenRefreshing.kind === "transient-error") {
     return (
       <AskUserInteractionScreen
         pictogramName="umbrella"

@@ -3,7 +3,7 @@ import {
   askUserToRefreshSessionToken,
   clearPendingAction,
   clearTokenTransientError,
-  hideRefreshTokenLoader,
+  refreshSessionToken,
   refreshTokenTransientError,
   savePendingAction,
   showRefreshTokenLoader
@@ -34,12 +34,17 @@ type TokenRefreshProgressState = {
 type TokenRefreshErrorState = {
   kind: "error";
 };
+type TokenRefreshTransientErrorState = {
+  kind: "transient-error";
+};
 type TokenRefreshSuccessState = {
   kind: "success";
+  timestamp: number;
 };
 type TokenRefreshState =
   | TokenRefreshProgressState
   | TokenRefreshErrorState
+  | TokenRefreshTransientErrorState
   | TokenRefreshSuccessState
   | TokenRefreshIdleState;
 
@@ -51,7 +56,7 @@ export type FastLoginState = {
 
 const FastLoginInitialState: FastLoginState = {
   userInteractionForSessionExpiredNeeded: false,
-  tokenRefresh: { kind: "success" },
+  tokenRefresh: { kind: "idle" },
   pendingActions: []
 };
 
@@ -89,15 +94,20 @@ export const fastLoginReducer = (
         ...state,
         tokenRefresh: { kind: "in-progress" }
       };
-    case getType(hideRefreshTokenLoader):
+    case getType(refreshSessionToken.success):
       return {
         ...state,
-        tokenRefresh: { kind: "success" }
+        tokenRefresh: { kind: "success", timestamp: Date.now() }
+      };
+    case getType(refreshSessionToken.failure):
+      return {
+        ...state,
+        tokenRefresh: { kind: "error" }
       };
     case getType(refreshTokenTransientError):
       return {
         ...state,
-        tokenRefresh: { kind: "error" }
+        tokenRefresh: { kind: "transient-error" }
       };
     case getType(clearTokenTransientError):
       return {

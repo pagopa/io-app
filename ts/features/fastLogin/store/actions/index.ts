@@ -19,10 +19,6 @@ export const showRefreshTokenLoader = createStandardAction(
   "SHOW_REFRESHING_TOKEN_LOADER"
 )<void>();
 
-export const hideRefreshTokenLoader = createStandardAction(
-  "HIDE_REFRESHING_TOKEN_LOADER"
-)<void>();
-
 export const refreshTokenTransientError = createStandardAction(
   "REFRESHING_TOKEN_TRANSIENT_ERROR"
 )<void>();
