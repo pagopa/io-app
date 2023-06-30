@@ -1605,6 +1605,10 @@ wallet:
         title: "La tua carta è stata aggiunta con successo!"
     payment:
       success:
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
         title: "Grazie, l’operazione è stata eseguita con successo!"
         description1: "Abbiamo inviato una ricevuta a"
         description2: "Puoi trovarla anche nel tuo Portafoglio."
@@ -3138,7 +3142,7 @@ features:
           PAID: Pagata
           ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
-          VIEWED: Perfezionata per visione
+          VIEWED: Avvenuto accesso
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
@@ -3182,6 +3186,9 @@ features:
         wrongUser:
           title: Non puoi firmare questi documenti
           subTitle: La richiesta di firma non è associata al tuo Codice Fiscale.
+        cancelled:
+          title: La richiesta firma è stata annullata
+          subTitle: Per assistenza, scrivi a
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
@@ -3652,12 +3659,12 @@ idpay:
       success:
         title: Operazione autorizzata con successo!
         body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      cancelled:
+        title: L’operazione è stata annullata
       failure:
         GENERIC:
           title: Si è verificato un errore imprevisto
           body: Non è stato addebitato alcun importo.
-        CANCELLED: 
-          title: L’operazione è stata annullata
         REJECTED:
           title: Autorizzazione negata
           body: Testo TBD
@@ -3693,3 +3700,11 @@ unsupportedDevice:
   subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo." 
   cta:
     faq: "Come mai?"
+fastLogin:
+  userInteraction:
+    sessionExpired: 
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
+        submitButtonTitle: "Continua la navigazione"
+        cancelButtonTitle: "Annulla"

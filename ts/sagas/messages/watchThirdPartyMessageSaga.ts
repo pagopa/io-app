@@ -4,11 +4,11 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import {
-  call,
   put,
   select,
   takeEvery,
-  takeLatest
+  takeLatest,
+  call
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
@@ -21,14 +21,22 @@ import {
   trackPNNotificationLoadSuccess
 } from "../../features/pn/analytics";
 import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../types/utils";
 
 function* getThirdPartyMessage(
   client: BackendClient,
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const id = action.payload;
+  const getThirdPartyMessage = client.getThirdPartyMessage();
+
   try {
-    const result = yield* call(client.getThirdPartyMessage(), { id });
+    const result = (yield* call(
+      withRefreshApiCall,
+      getThirdPartyMessage({ id }),
+      action
+    )) as unknown as SagaCallReturnType<typeof getThirdPartyMessage>;
     if (E.isLeft(result)) {
       yield* put(
         loadThirdPartyMessage.failure({

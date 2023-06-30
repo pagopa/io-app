@@ -1,9 +1,7 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import RNReactNativeHapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
+import RNReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
@@ -15,16 +13,19 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../utils/url";
-import { useIOBarcodeScanner, IOBarcode } from "../components/Barcode";
+import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
 
-  const handleBarcodeScanner = (barcode: IOBarcode) => {
+  const handleBarcodeScanned = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
-      RNReactNativeHapticFeedback.trigger(HapticFeedbackTypes.impactMedium);
+      RNReactNativeHapticFeedback.trigger("notificationSuccess", {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false
+      });
       openWebUrl(barcode.authUrl);
     }
   };
@@ -42,7 +43,7 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useIOBarcodeScanner({
     marker: cameraMarkerComponent,
-    onBarcodeScanned: handleBarcodeScanner,
+    onBarcodeScanned: handleBarcodeScanned,
     formats: ["QR_CODE"],
     disabled: !isFocused
   });

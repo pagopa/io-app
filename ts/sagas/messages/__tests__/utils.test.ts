@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { ValidationError } from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 
-import { sessionExpired } from "../../../store/actions/authentication";
 import { handleResponse, ResponseType } from "../utils";
 import { reloadAllMessages } from "../../../store/actions/messages";
 import {
@@ -80,7 +79,7 @@ describe("`handleResponse` function", () => {
 
       it("should return `sessionExpired` action", () => {
         expect(handleResponse(success, jest.fn(), jest.fn())).toEqual(
-          sessionExpired()
+          undefined
         );
       });
     });

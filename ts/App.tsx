@@ -9,6 +9,7 @@ import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
+import { IOThemeContext, IOThemes } from "./components/core/variables/IOColors";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
@@ -20,16 +21,18 @@ export type AppDispatch = typeof store.dispatch;
  */
 export const App: React.FunctionComponent<never> = () => (
   <StyleProvider style={theme()}>
-    <Provider store={store}>
-      <PersistGate loading={undefined} persistor={persistor}>
-        <BottomSheetModalProvider>
-          <LightModalProvider>
-            <MenuProvider>
-              <RootContainer />
-            </MenuProvider>
-          </LightModalProvider>
-        </BottomSheetModalProvider>
-      </PersistGate>
-    </Provider>
+    <IOThemeContext.Provider value={IOThemes.light}>
+      <Provider store={store}>
+        <PersistGate loading={undefined} persistor={persistor}>
+          <BottomSheetModalProvider>
+            <LightModalProvider>
+              <MenuProvider>
+                <RootContainer />
+              </MenuProvider>
+            </LightModalProvider>
+          </BottomSheetModalProvider>
+        </PersistGate>
+      </Provider>
+    </IOThemeContext.Provider>
   </StyleProvider>
 );

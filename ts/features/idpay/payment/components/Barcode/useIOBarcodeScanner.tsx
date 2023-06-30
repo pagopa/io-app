@@ -16,7 +16,7 @@ import {
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 import { decodeIOBarcode } from "./decoders";
-import { IOBarcode, IOBarcodeFormat } from "./types";
+import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -77,6 +77,7 @@ const DEFAULT_CONFIGURATION: IOBarcodeScannerConfiguration = {
 };
 
 /**
+ * Utility functions to map external formats to internal formats
  * Converts {@link BarcodeFormat} to {@link IOBarcodeFormat}.
  * Returns null if no format is found
  */
@@ -88,6 +89,7 @@ const convertToIOBarcodeFormat = (
   );
 
 /**
+ * Utility functions to map internal formats to external formats
  * Converts {@link IOBarcodeFormat} to {@link BarcodeFormat}
  */
 const convertFromIOBarcodeFormat = (format: IOBarcodeFormat): BarcodeFormat =>

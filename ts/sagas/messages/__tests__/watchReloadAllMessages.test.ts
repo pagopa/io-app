@@ -10,6 +10,7 @@ import {
   successReloadMessagesPayload
 } from "../../../__mocks__/messages";
 import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 
@@ -30,7 +31,11 @@ describe("tryReloadAllMessages", () => {
         action.request(defaultRequestPayload)
       )
         .next()
-        .call(getMessages, getMessagesPayload)
+        .call(
+          withRefreshApiCall,
+          getMessages(getMessagesPayload),
+          action.request(defaultRequestPayload)
+        )
         .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successReloadMessagesPayload))
         .next()
@@ -46,7 +51,11 @@ describe("tryReloadAllMessages", () => {
         action.request(defaultRequestPayload)
       )
         .next()
-        .call(getMessages, getMessagesPayload)
+        .call(
+          withRefreshApiCall,
+          getMessages(getMessagesPayload),
+          action.request(defaultRequestPayload)
+        )
         .next(
           E.right({
             status: 500,
@@ -69,11 +78,9 @@ describe("tryReloadAllMessages", () => {
         action.request(defaultRequestPayload)
       )
         .next()
-        .call(getMessages, getMessagesPayload)
-        .next()
         .put(
           action.failure({
-            error: new Error("Response is undefined"),
+            error: new Error(defaultRequestError.error.message),
             filter: defaultRequestPayload.filter
           })
         )

@@ -31,7 +31,9 @@ const CgnAlreadyActiveScreen = (props: Props): React.ReactElement => (
       type="SingleButton"
       leftButton={confirmButtonProps(
         props.navigateToDetail,
-        I18n.t("bonus.cgn.cta.goToDetail")
+        I18n.t("bonus.cgn.cta.goToDetail"),
+        undefined,
+        "cgnConfirmButtonTestId"
       )}
     />
   </SafeAreaView>
