@@ -16,11 +16,14 @@ import { openWebUrl } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
+import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { useIOBarcodeReader } from "../components/Barcode/useIOBarcodeReader";
 
 const IDPayPaymentCodeScanScreen = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const isFocused = useIsFocused();
 
-  const handleBarcodeScanned = (barcode: IOBarcode) => {
+  const handleBarcode = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       RNReactNativeHapticFeedback.trigger("notificationSuccess", {
         enableVibrateFallback: true,
@@ -29,6 +32,11 @@ const IDPayPaymentCodeScanScreen = () => {
       openWebUrl(barcode.authUrl);
     }
   };
+
+  const navigateToCodeInputScreen = () =>
+    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    });
 
   const cameraMarkerComponent = (
     <View style={styles.cameraMarkerContainer}>
@@ -43,9 +51,13 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useIOBarcodeScanner({
     marker: cameraMarkerComponent,
-    onBarcodeScanned: handleBarcodeScanned,
+    onBarcodeScanned: handleBarcode,
     formats: ["QR_CODE"],
     disabled: !isFocused
+  });
+
+  const { showImagePicker } = useIOBarcodeReader({
+    onBarcodeRead: handleBarcode
   });
 
   const openAppSetting = React.useCallback(async () => {
@@ -96,7 +108,10 @@ const IDPayPaymentCodeScanScreen = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
-      <BottomTabNavigation />
+      <BottomTabNavigation
+        onUploadBarcodePressed={showImagePicker}
+        onNavigateToCodeInputScreenPressed={navigateToCodeInputScreen}
+      />
       <LinearGradient
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
