@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { SafeAreaView } from "react-native";
+import { KeyboardAvoidingView, SafeAreaView } from "react-native";
 import I18n from "../i18n";
 import {
   AppParamsList,
@@ -83,16 +83,23 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
   );
 
   return (
-    <BaseScreenComponent
-      goBack={handleGoBack}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["onboarding_pin", "unlock"]}
-      headerTitle={I18n.t("onboarding.pin.headerTitle")}
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={0}
+      behavior="padding"
+      style={{ flex: 1 }}
+      enabled
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <PinCreationForm onSubmit={handleSubmit} />
-      </SafeAreaView>
-    </BaseScreenComponent>
+      <BaseScreenComponent
+        goBack={handleGoBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_pin", "unlock"]}
+        headerTitle={I18n.t("onboarding.pin.headerTitle")}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <PinCreationForm onSubmit={handleSubmit} />
+        </SafeAreaView>
+      </BaseScreenComponent>
+    </KeyboardAvoidingView>
   );
 };
 
