@@ -1,6 +1,8 @@
+import { ProfileMainNavigationParams } from "../../screens/profile/ProfileMainScreen";
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {
+  [ROUTES.PROFILE_MAIN]: ProfileMainNavigationParams;
   [ROUTES.PROFILE_PRIVACY_MAIN]: undefined;
   [ROUTES.PROFILE_PRIVACY]: undefined;
   [ROUTES.PROFILE_PRIVACY_SHARE_DATA]: undefined;
