@@ -27,6 +27,7 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  itWalletEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   pnEnabled,
@@ -108,6 +109,7 @@ import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendStatusSelector } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
+import { watchItwSaga } from "../features/it-wallet/saga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -571,6 +573,11 @@ export function* initializeApplicationSaga(
   if (idPayTestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (itWalletEnabled) {
+    // Start watching for ITWallet actions
+    yield* fork(watchItwSaga);
   }
 
   // Load the user metadata
