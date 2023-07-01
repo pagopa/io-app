@@ -8,7 +8,9 @@ const ItwActivationDetailsScreen = () => (
     goBack={true}
     headerTitle={I18n.t("features.itWallet.title")}
     contextualHelp={emptyContextualHelp}
-  ></BaseScreenComponent>
+  >
+    {/* TODO: SIW-252 */}
+  </BaseScreenComponent>
 );
 
 export default ItwActivationDetailsScreen;
