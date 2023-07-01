@@ -1,2 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type ItwParamsList = {};
+import { ITW_ROUTES } from "./routes";
+
+export type ItwParamsList = {
+  [ITW_ROUTES.ACTIVATION.DETAILS]: undefined;
+};
