@@ -30,6 +30,7 @@ import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboa
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { isGestureEnabled } from "../utils/navigation";
+import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -40,10 +41,15 @@ const Stack = createStackNavigator<ProfileParamsList>();
  */
 const ProfileStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName={ROUTES.PROFILE_DATA}
+    initialRouteName={ROUTES.PROFILE_MAIN}
     headerMode={"none"}
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
+    <Stack.Screen
+      name={ROUTES.PROFILE_MAIN}
+      component={ProfileMainScreen}
+      initialParams={{ hasBackButton: true }}
+    />
     <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_PRIVACY_MAIN}
