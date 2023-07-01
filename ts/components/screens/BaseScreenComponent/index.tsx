@@ -68,6 +68,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       headerBody,
       headerTitle,
       isSearchAvailable,
+      isProfileAvailable,
       onAccessibilityNavigationHeaderFocus,
       primary,
       showChat,
@@ -137,6 +138,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           backgroundColor={headerBackgroundColor}
           onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
           isSearchAvailable={isSearchAvailable}
+          isProfileAvailable={isProfileAvailable}
           body={headerBody}
           appLogo={appLogo}
           customRightIcon={customRightIcon}
