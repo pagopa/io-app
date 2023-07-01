@@ -66,11 +66,16 @@ import { Divider } from "../../components/core/Divider";
 import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import ButtonSolid from "../../components/ui/ButtonSolid";
 
+export type ProfileMainNavigationParams = Readonly<{
+  hasBackButton: boolean;
+}>;
+
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  TabBarItemPressType;
+  TabBarItemPressType &
+  ProfileMainNavigationParams;
 
 type State = {
   tapsOnAppVersion: number;
@@ -525,6 +530,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   public render() {
     const { navigation } = this.props;
+    const { hasBackButton } = this.props.route.params;
 
     const showInformationModal = (
       title: TranslationKeys,
@@ -634,9 +640,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
           return c;
         }}
+        allowGoBack={hasBackButton}
         accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
-        appLogo={true}
+        appLogo={!hasBackButton}
         title={I18n.t("profile.main.title")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
