@@ -34,6 +34,7 @@ import { ContextualHelpPropsMarkdown } from "../components/screens/BaseScreenCom
 import I18n from "../i18n";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
+import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -54,10 +55,15 @@ const ProfileStackNavigator = () => {
   });
   return (
     <Stack.Navigator
-      initialRouteName={ROUTES.PROFILE_DATA}
+      initialRouteName={ROUTES.PROFILE_MAIN}
       headerMode={"screen"}
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
+      <Stack.Screen
+        name={ROUTES.PROFILE_MAIN}
+        component={ProfileMainScreen}
+        initialParams={{ hasBackButton: true }}
+      />
       <Stack.Screen
         options={{
           headerShown: false

@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOColors } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
@@ -42,6 +43,9 @@ import {
 } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
+
+import ROUTES from "../../navigation/routes";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -69,6 +73,9 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
+
+  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+  const navigation = useNavigation();
 
   useOnFirstRender(() => {
     if (needsMigration) {
@@ -124,6 +131,11 @@ const MessagesHomeScreen = ({
       faqCategories={["messages"]}
       headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
+      isProfileAvailable={{
+        enabled: true,
+        onProfileTap: () =>
+          navigation.getParent()?.navigate(ROUTES.PROFILE_NAVIGATOR)
+      }}
       appLogo={true}
     >
       <FocusAwareStatusBar

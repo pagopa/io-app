@@ -35,10 +35,15 @@ import { Body } from "../core/typography/Body";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
+import { itWalletEnabled } from "../../config";
 
 type HelpButtonProps = {
   dark?: boolean;
   onShowHelp: () => void;
+};
+
+type ProfileButtonProps = {
+  onPress: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -47,6 +52,9 @@ const styles = StyleSheet.create({
   },
   body: {
     alignItems: "center"
+  },
+  rightButton: {
+    padding: 8
   }
 });
 
@@ -67,6 +75,20 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
       icon={"help"}
     />
   </View>
+);
+
+const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
+  <ButtonDefaultOpacity
+    hasFullHitSlop
+    onPress={onPress}
+    transparent={true}
+    accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
+    style={styles.rightButton}
+    accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
+    testID={"helpButton"}
+  >
+    <Icon name={"multiCoggles"} />
+  </ButtonDefaultOpacity>
 );
 
 export type AccessibilityEvents = {
@@ -91,6 +113,10 @@ interface OwnProps {
     enabled: true;
     searchType?: SearchType;
     onSearchTap?: () => void;
+  };
+  isProfileAvailable?: {
+    enabled: true;
+    onProfileTap: () => void;
   };
   showChat?: boolean;
   customRightIcon?: {
@@ -261,6 +287,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
+      isProfileAvailable,
       showChat,
       customRightIcon,
       dark
@@ -285,6 +312,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             />
             {onShowHelp && <HSpacer size={ICON_BUTTON_MARGIN} />}
           </>
+        )}
+
+        {itWalletEnabled && isProfileAvailable && (
+          <ProfileButton onPress={isProfileAvailable.onProfileTap} />
+        )}
+
+        {onShowHelp && !isSearchEnabled && (
+          <HelpButton onShowHelp={onShowHelp} />
         )}
 
         {onShowHelp && !isSearchEnabled && (
