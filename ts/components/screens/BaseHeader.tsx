@@ -31,9 +31,14 @@ import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import { IOIcons, Icon } from "../core/icons/Icon";
+import { itWalletEnabled } from "../../config";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
+};
+
+type ProfileButtonProps = {
+  onPress: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -64,6 +69,20 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
   </ButtonDefaultOpacity>
 );
 
+const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
+  <ButtonDefaultOpacity
+    hasFullHitSlop
+    onPress={onPress}
+    transparent={true}
+    accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
+    style={styles.helpButton}
+    accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
+    testID={"helpButton"}
+  >
+    <Icon name={"multiCoggles"} />
+  </ButtonDefaultOpacity>
+);
+
 export type AccessibilityEvents = {
   avoidNavigationEventsUsage?: boolean; // if true NavigationEvents won't be included and the focus will be done on componentDidMount
   disableAccessibilityFocus?: boolean; // if true the setAccessibilityFocus is not triggered
@@ -86,6 +105,10 @@ interface OwnProps {
     enabled: true;
     searchType?: SearchType;
     onSearchTap?: () => void;
+  };
+  isProfileAvailable?: {
+    enabled: true;
+    onProfileTap: () => void;
   };
   showChat?: boolean;
   customRightIcon?: {
@@ -256,6 +279,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
+      isProfileAvailable,
       showChat,
       customRightIcon
     } = this.props;
@@ -267,6 +291,10 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             searchType={isSearchAvailable.searchType}
             onSearchTap={isSearchAvailable.onSearchTap}
           />
+        )}
+
+        {itWalletEnabled && isProfileAvailable && (
+          <ProfileButton onPress={isProfileAvailable.onProfileTap} />
         )}
 
         {onShowHelp && !isSearchEnabled && (

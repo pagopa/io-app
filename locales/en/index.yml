@@ -91,6 +91,10 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
+    profile:
+      open:
+        label: Profile
+        hint: Access information about your profile
     chat:
       description: "IO assistance messages"
       unread_singular: "{{message}} new message"
@@ -175,6 +179,7 @@ global:
     documents: Documents
     profile: Profile
     services: Services
+    payments: Payments
   actions:
     retry: An error occurred, please retry
     search: Text to search
