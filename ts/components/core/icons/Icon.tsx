@@ -139,6 +139,7 @@ import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
 import IconCloseMedium from "./svg/IconCloseMedium";
+import IconMultiCoggles from "./svg/IconMultiCoggles";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -256,6 +257,7 @@ export const IOIcons = {
   navServicesFocused: IconNavServicesFocused,
   navProfile: IconNavProfile,
   navProfileFocused: IconNavProfileFocused,
+  navPayment: IconPSP,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
@@ -276,7 +278,8 @@ export const IOIcons = {
   categSustainability: IconCategSustainability,
   productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */,
-  productIOAppBlueBg: IconProductIOAppBlueBg
+  productIOAppBlueBg: IconProductIOAppBlueBg,
+  multiCoggles: IconMultiCoggles
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
@@ -401,7 +404,8 @@ const {
   navMessagesFocused,
   navWalletFocused,
   navServicesFocused,
-  navProfileFocused
+  navProfileFocused,
+  navPayment
 } = IOIcons;
 
 export const IONavIcons = {
@@ -413,7 +417,8 @@ export const IONavIcons = {
   navMessagesFocused,
   navWalletFocused,
   navServicesFocused,
-  navProfileFocused
+  navProfileFocused,
+  navPayment
 } as const;
 
 export type IONavIcons = keyof typeof IONavIcons;
