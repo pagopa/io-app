@@ -113,20 +113,6 @@ const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
   </>
 );
 
-const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
-  <ButtonDefaultOpacity
-    hasFullHitSlop
-    onPress={onPress}
-    transparent={true}
-    accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
-    style={styles.helpButton}
-    accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
-    testID={"helpButton"}
-  >
-    <Icon name={"multiCoggles"} />
-  </ButtonDefaultOpacity>
-);
-
 export type AccessibilityEvents = {
   avoidNavigationEventsUsage?: boolean; // if true NavigationEvents won't be included and the focus will be done on componentDidMount
   disableAccessibilityFocus?: boolean; // if true the setAccessibilityFocus is not triggered
@@ -345,10 +331,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onPress={isProfileAvailable.onProfileTap}
             dark={dark}
           />
-        )}
-
-        {itWalletEnabled && isProfileAvailable && (
-          <ProfileButton onPress={isProfileAvailable.onProfileTap} />
         )}
 
         {onShowHelp && !isSearchEnabled && (
