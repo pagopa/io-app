@@ -27,6 +27,7 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  itWalletEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   pnEnabled,
@@ -98,6 +99,7 @@ import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import { watchItwSaga } from "../features/it-wallet/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -529,6 +531,11 @@ export function* initializeApplicationSaga(
   if (idPayTestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (itWalletEnabled) {
+    // Start watching for ITWallet actions
+    yield* fork(watchItwSaga);
   }
 
   // Load the user metadata

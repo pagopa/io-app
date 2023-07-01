@@ -3,6 +3,8 @@ import { View } from "react-native";
 import { Banner } from "../../../components/Banner";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import I18n from "../../../i18n";
+import { useIODispatch } from "../../../store/hooks";
+import { itwActivationStart } from "../store/actions";
 
 /**
  * The base graphical component, take a text as input and dispatch onPress when pressed
@@ -10,6 +12,7 @@ import I18n from "../../../i18n";
  */
 export const ItwActionBanner = (): React.ReactElement => {
   const viewRef = React.createRef<View>();
+  const dispatch = useIODispatch();
   return (
     <>
       <VSpacer size={24} />
@@ -25,7 +28,7 @@ export const ItwActionBanner = (): React.ReactElement => {
         pictogramName={"setup"}
         action={I18n.t("features.itWallet.actionBanner.action")}
         labelClose={I18n.t("features.itWallet.actionBanner.hideLabel")}
-        onPress={() => null}
+        onPress={() => dispatch(itwActivationStart())}
         onClose={() => null}
       />
     </>
