@@ -7,6 +7,7 @@ import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
+import { useNavigation } from "@react-navigation/native";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
@@ -56,6 +57,8 @@ import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
+
+import ROUTES from "../../navigation/routes";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -87,6 +90,7 @@ const MessagesHomeScreen = ({
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
 
   const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+  const navigation = useNavigation();
 
   useOnFirstRender(() => {
     if (needsMigration) {
@@ -164,6 +168,11 @@ const MessagesHomeScreen = ({
       faqCategories={["messages"]}
       headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
+      isProfileAvailable={{
+        enabled: true,
+        onProfileTap: () =>
+          navigation.getParent()?.navigate(ROUTES.PROFILE_NAVIGATOR)
+      }}
       appLogo={true}
     >
       {autoResizableBottomSheet}

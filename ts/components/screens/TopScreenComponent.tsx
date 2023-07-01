@@ -28,7 +28,8 @@ type BaseScreenComponentProps =
   | "contextualHelpMarkdown"
   | "headerBody"
   | "customGoBack"
-  | "isSearchAvailable";
+  | "isSearchAvailable"
+  | "isProfileAvailable";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
@@ -50,6 +51,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       contextualHelpMarkdown,
       headerBody,
       isSearchAvailable,
+      isProfileAvailable,
       customRightIcon,
       customGoBack,
       onAccessibilityNavigationHeaderFocus,
@@ -73,6 +75,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         faqCategories={faqCategories}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
+        isProfileAvailable={isProfileAvailable}
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
         accessibilityEvents={accessibilityEvents}
