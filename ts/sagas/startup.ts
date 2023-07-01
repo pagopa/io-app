@@ -27,6 +27,7 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  itWalletEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,
@@ -104,6 +105,7 @@ import {
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
+import { watchItwSaga } from "../features/it-wallet/saga";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -585,6 +587,11 @@ export function* initializeApplicationSaga(
 
   // Start watching for Wallet V3 actions
   yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
+
+  if (itWalletEnabled) {
+    // Start watching for ITWallet actions
+    yield* fork(watchItwSaga);
+  }
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
