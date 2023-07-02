@@ -69,7 +69,7 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
           accessibilityHint={I18n.t(
             "global.accessibility.contextualHelp.open.hint"
           )}
-          testID="helpButton"
+          testID={"helpButton"}
           color={dark ? "contrast" : "primary"}
           icon={"help"}
         />
