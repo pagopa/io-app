@@ -5,6 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ValidationError } from "io-ts";
 import { getType } from "typesafe-actions";
+import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
 import {
   askUserToRefreshSessionToken,
   refreshSessionToken,
@@ -23,8 +24,6 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { LollipopConfig } from "../../lollipop";
 import { getKeyInfo } from "../../lollipop/saga";
 import {
-  FastLoginResponse,
-  FastLoginResponseType,
   NonceBaseResponseType,
   NonceResponse
 } from "../backend/mockedFunctionsAndTypes";
@@ -35,6 +34,7 @@ import {
 } from "../../../store/actions/identification";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
+import { FastLoginT } from "../../../../definitions/fast_login/requestTypes";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -117,7 +117,8 @@ function* doRefreshTokenSaga() {
         // FIX ME: replace the token response type with the correct one.
         // Jira: https://pagopa.atlassian.net/browse/IOPID-264
 
-        const newToken = tokenResponse.right.value.token as SessionToken;
+        const newToken = tokenResponse.right.value
+          .token as unknown as SessionToken;
         yield* put(refreshSessionToken.success(newToken));
         // Reinit all backend clients to use the new token
         yield* put(
@@ -148,8 +149,7 @@ const handleRequestError = (
   requestState: RequestStateType,
   response: E.Either<
     ReadonlyArray<ValidationError>,
-    | FastLoginResponseType<FastLoginResponse>
-    | NonceBaseResponseType<NonceResponse>
+    RequestResponseTypes<FastLoginT> | NonceBaseResponseType<NonceResponse>
   >
 ) => {
   const errorDescription: FastLoginTokenRefreshError = pipe(

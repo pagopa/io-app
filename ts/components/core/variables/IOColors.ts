@@ -322,7 +322,6 @@ export const IOThemeDark: IOTheme = {
   "appBackground-secondary": "grey-850",
   "appBackground-tertiary": "grey-700",
   "interactiveElem-default": "blueIO-450",
-  "interactiveElem-pressed": "blueIO-600",
   "listItem-pressed": "grey-850",
   // Typography
   "textHeading-default": "grey-200",
