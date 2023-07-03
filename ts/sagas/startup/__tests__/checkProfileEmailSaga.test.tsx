@@ -14,6 +14,7 @@ import {
 import { appReducer } from "../../../store/reducers";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkAcknowledgedEmailSaga", () => {
   beforeEach(() => {
@@ -33,7 +34,9 @@ describe("checkAcknowledgedEmailSaga", () => {
   describe("when user is on his first onboarding and he has an email and it is validated", () => {
     const profileEmailValidatedFirstOnboarding = {
       ...mockedProfile,
-      version: 0
+      service_preferences_settings: {
+        mode: ServicesPreferencesModeEnum.LEGACY
+      }
     };
     it("should show email read screen", async () => {
       await expectSaga(

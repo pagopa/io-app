@@ -135,9 +135,10 @@ export const isServicesPreferenceModeSet = (
 export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   user.is_email_validated !== undefined && user.is_email_validated === true;
 
-// return true if the profile has version equals to 0
+// Returns true if the profile has service_preferences_settings set to Legacy.
+// A profile that has completed onboarding will have this value mandatory set to auto or manual
 export const isProfileFirstOnBoarding = (user: InitializedProfile): boolean =>
-  user.version === 0;
+  user.service_preferences_settings.mode === ServicesPreferencesModeEnum.LEGACY;
 
 // return true if the profile pot is some and its field is_email_validated exists and it's true
 export const isProfileEmailValidatedSelector = createSelector(
