@@ -1,13 +1,12 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Toast } from "native-base";
+import { List, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Alert, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -55,7 +54,6 @@ import {
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
@@ -65,6 +63,7 @@ import { Divider } from "../../components/core/Divider";
 import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import ButtonSolid from "../../components/ui/ButtonSolid";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
+import AppVersion from "../../components/AppVersion";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -75,12 +74,6 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 type State = {
   tapsOnAppVersion: number;
 };
-
-const styles = StyleSheet.create({
-  noRightPadding: {
-    paddingRight: 0
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -182,18 +175,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           />
         )}
       </View>
-    );
-  }
-
-  private versionListItem(title: string, onPress: () => void) {
-    return (
-      <ListItem style={styles.noRightPadding}>
-        <Pressable onPress={onPress}>
-          <Body numberOfLines={1} weight="SemiBold">
-            {title}
-          </Body>
-        </Pressable>
-      </ListItem>
     );
   }
 
@@ -597,10 +578,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             isLastItem={true}
           />
 
-          {this.versionListItem(
-            `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
-            this.onTapAppVersion
-          )}
+          {/* Show the app version + Enable debug mode */}
+          <AppVersion onPress={this.onTapAppVersion} />
 
           {/* Developers Section */}
           {(this.props.isDebugModeEnabled || isDevEnv) &&
