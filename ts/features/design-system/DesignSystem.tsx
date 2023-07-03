@@ -35,6 +35,9 @@ const DATA_ROUTES_FOUNDATION: RoutesProps = Object.values(
 const DATA_ROUTES_COMPONENTS: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.COMPONENTS
 );
+const DATA_ROUTES_DEBUG: RoutesProps = Object.values(
+  DESIGN_SYSTEM_ROUTES.DEBUG
+);
 const DATA_ROUTES_LEGACY: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.LEGACY
 );
@@ -47,6 +50,10 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   {
     title: "Components",
     data: DATA_ROUTES_COMPONENTS
+  },
+  {
+    title: "Debug",
+    data: DATA_ROUTES_DEBUG
   },
   {
     title: "Legacy",

@@ -20,6 +20,7 @@ import ROUTES from "../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
@@ -372,9 +373,13 @@ const commonSetup = ({
   const testProfile = {
     ...globalProfile,
     accepted_tos_version: acceptedToSVersion,
-    version: isProfileFirstOnBoarding ? 0 : 1,
     email: "john.smith@gmail.com",
-    is_email_validated: true
+    is_email_validated: true,
+    service_preferences_settings: {
+      mode: isProfileFirstOnBoarding
+        ? ServicesPreferencesModeEnum.LEGACY
+        : ServicesPreferencesModeEnum.AUTO
+    }
   };
   const testProfilePot =
     profilePotType === "someUpdating"
