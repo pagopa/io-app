@@ -1,10 +1,10 @@
 import debounce from "lodash/debounce";
 import * as React from "react";
 import { connect } from "react-redux";
-
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { IOColors, HSpacer } from "@pagopa/io-app-design-system";
+import { StyleProp, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import {
   disableSearch,
@@ -26,6 +26,7 @@ interface OwnProps {
   searchType?: SearchType;
   // if this handler is defined it will be called in place of dispatching actions about search activation (see handleSearchPress)
   onSearchTap?: () => void;
+  buttonStyle?: StyleProp<ViewStyle>;
 }
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
