@@ -83,12 +83,11 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   );
 
   const rewardPercentageString = pipe(
-    beneficiaryDetails.refundRule?.accumulatedAmount?.refundThreshold,
+    beneficiaryDetails.rewardRule?.rewardValue,
     O.fromNullable,
     O.map(percentage => `${percentage}%`),
     O.getOrElse(() => "-")
   );
-
   const lastUpdateString = pipe(
     beneficiaryDetails.updateDate,
     O.fromNullable,
