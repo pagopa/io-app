@@ -19,7 +19,12 @@ import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { isTestEnv } from "../../../../utils/environment";
-import { extractInternalPath } from "../../../../utils/navigation";
+import {
+  IO_FIMS_LINK_PREFIX,
+  IO_INTERNAL_LINK_PREFIX,
+  IO_UNIVERSAL_LINK_PREFIX
+} from "../../../../utils/navigation";
+import { extractPathFromURL } from "../../../../utils/url";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
@@ -102,22 +107,24 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
  */
 export function getInternalRoute(href: string): string {
   return pipe(
-    // Extracts the internal path from href, if any
-    extractInternalPath(href),
+    extractPathFromURL(
+      [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX, IO_FIMS_LINK_PREFIX],
+      href
+    ),
     O.fromNullable,
-    O.fold(
-      // If none, return the original href which means that the link is not internal
-      () => href,
-      // If some, check for backward compatibility and return the internal route associated
-      path =>
-        pipe(
-          O.of(path),
-          // Check if the path has the old format (uppercase path) and returns the associated route
-          O.map(path => allowedRoutes[path.toUpperCase()]),
-          // If none, return the initially extracted path as interal route
-          O.getOrElse(() => path)
+    O.map(extractedPath => {
+      const [path, params] = extractedPath.split("?");
+
+      return pipe(
+        allowedRoutes[path.toUpperCase()],
+        O.fromNullable,
+        O.map(path => path + (params ? "?" + params : "")),
+        O.getOrElse(() =>
+          extractedPath.startsWith("/") ? extractedPath : "/" + extractedPath
         )
-    )
+      );
+    }),
+    O.getOrElse(() => href)
   );
 }
 

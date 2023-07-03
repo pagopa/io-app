@@ -1,6 +1,10 @@
 import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { getInternalRoute, testableALLOWED_ROUTE_NAMES } from "../internalLink";
-import { IO_INTERNAL_LINK_PREFIX } from "../../../../../utils/navigation";
+import {
+  IO_FIMS_LINK_PREFIX,
+  IO_INTERNAL_LINK_PREFIX,
+  IO_UNIVERSAL_LINK_PREFIX
+} from "../../../../../utils/navigation";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(
@@ -25,6 +29,16 @@ describe("getInternalRoute", () => {
       Tuple2(
         IO_INTERNAL_LINK_PREFIX + validRoute + "?param1=&param2=value2",
         `${testableALLOWED_ROUTE_NAMES![validRoute]}?param1=&param2=value2`
+      ),
+      Tuple2(IO_FIMS_LINK_PREFIX + "just/a/test", "/just/a/test"),
+      Tuple2(IO_UNIVERSAL_LINK_PREFIX + "just/a/test", "/just/a/test"),
+      Tuple2(
+        IO_FIMS_LINK_PREFIX + "just/a/test?param1=&param2=value2",
+        "/just/a/test?param1=&param2=value2"
+      ),
+      Tuple2(
+        IO_UNIVERSAL_LINK_PREFIX + "just/a/test?param1=&param2=value2",
+        "/just/a/test?param1=&param2=value2"
       )
     ].forEach(tuple => {
       expect(getInternalRoute(tuple.e1)).toEqual(tuple.e2);
