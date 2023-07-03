@@ -12,10 +12,10 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
+import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
