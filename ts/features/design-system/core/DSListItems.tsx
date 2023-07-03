@@ -27,16 +27,17 @@ import {
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import ListItemNav from "../../../components/ui/ListItemNav";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
-import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import { Icon } from "../../../components/core/icons/Icon";
-import ListItemAction from "../../../components/ui/ListItemAction";
-import ListItemInfo from "../../../components/ui/ListItemInfo";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
+import ListItemNav from "../../../components/ui/ListItemNav";
+import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
+import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
+import ListItemAction from "../../../components/ui/ListItemAction";
+import ListItemInfo from "../../../components/ui/ListItemInfo";
 import { ListItemIDP } from "../../../components/ui/ListItemIDP";
+import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -91,6 +92,14 @@ export const DSListItems = () => (
         </H2>
         {renderListItemIDP()}
 
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          ListItemTransaction
+        </H2>
+        {renderListItemTransaction()}
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -609,3 +618,76 @@ const renderListItemIDP = () => (
     </DSComponentViewerBox>
   </>
 );
+
+const renderListItemTransaction = () => {
+  const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+  const organizationLogoURI = {
+    imageSource: `${cdnPath}1199250158.png`,
+    name: "Comune di Milano"
+  };
+  return (
+    <DSComponentViewerBox name="ListItemTransaction">
+      <View>
+        <ListItemTransaction
+          title="TITLE"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          isLoading={true}
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="TITLE"
+          subtitle="subtitle"
+          paymentLogoOrUrl={"amex"}
+          transactionStatus="failure"
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="TITLE"
+          subtitle="subtitle"
+          paymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
+          transactionStatus="pending"
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="TITLE"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="TITLE"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          paymentLogoOrUrl={"mastercard"}
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="TITLE"
+          subtitle="subtitle"
+          transactionStatus="success"
+          transactionAmount="€ 1.000,00"
+          hasChevronRight={true}
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="This one is not clickable"
+          subtitle="subtitle"
+          transactionStatus="failure"
+          paymentLogoOrUrl={"postepay"}
+        />
+        <ListItemTransaction
+          title="This one is clickable but has a very long title"
+          subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
+          transactionAmount="€ 1.000,00"
+          paymentLogoOrUrl={"postepay"}
+          onPress={onButtonPress}
+          transactionStatus="success"
+        />
+      </View>
+    </DSComponentViewerBox>
+  );
+};
