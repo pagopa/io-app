@@ -140,9 +140,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ]);
 
     if (bpdEnabled) {
-      const bpdHandler = bpdConfig?.program_active
-        ? this.props.startBpdOnboarding
-        : () => this.completedAlert(info.item[getRemoteLocale()].name);
+      const bpdHandler = () =>
+        this.completedAlert(info.item[getRemoteLocale()].name);
 
       handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
     }
@@ -267,11 +266,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             <View style={styles.paddedContent}>
               <FlatList
                 scrollEnabled={false}
-                data={availableBonusesList.filter(item =>
-                  item.id_type === ID_BPD_TYPE
-                    ? null
-                    : experimentalAndVisibleBonus
-                )}
+                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
                 renderItem={b => this.renderListItem(b, this.props.bpdConfig)}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
