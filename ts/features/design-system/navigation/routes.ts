@@ -14,7 +14,7 @@ const DESIGN_SYSTEM_ROUTES = {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },
     TEXT_FIELDS: { route: "DESIGN_SYSTEM_TEXT_FIELDS", title: "Text Fields" },
     LIST_ITEMS: { route: "DESIGN_SYSTEM_LIST_ITEMS", title: "List Items" },
-    BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badge" },
+    BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badges & Tags" },
     TOASTS: { route: "DESIGN_SYSTEM_TOASTS", title: "Toasts" },
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
@@ -23,6 +23,17 @@ const DESIGN_SYSTEM_ROUTES = {
     BOTTOM_SHEET: {
       route: "DESIGN_SYSTEM_BOTTOM_SHEET",
       title: "Bottom Sheet"
+    }
+  },
+  DEBUG: {
+    SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
+    SAFE_AREA_CENTERED: {
+      route: "DS_SAFE_AREA_CENTERED",
+      title: "Native safe area (centered)"
+    },
+    EDGE_TO_EDGE_AREA: {
+      route: "DS_EDGE_TO_EDGE_AREA",
+      title: "Edge to edge area"
     }
   },
   LEGACY: {
