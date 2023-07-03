@@ -34,6 +34,7 @@ import IconButton from "../ui/IconButton";
 import { HSpacer } from "../core/spacer/Spacer";
 import { IOSpacer } from "../core/variables/IOSpacing";
 import { itWalletEnabled } from "../../config";
+import { NewH3 } from "../../features/it-wallet/components/design/NewH3";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -41,6 +42,7 @@ type HelpButtonProps = {
 };
 
 type ProfileButtonProps = {
+  dark?: boolean;
   onPress: () => void;
 };
 
@@ -75,18 +77,23 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
   </View>
 );
 
-const ProfileButton: FC<ProfileButtonProps> = ({ onPress }) => (
-  <ButtonDefaultOpacity
-    hasFullHitSlop
-    onPress={onPress}
-    transparent={true}
-    accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
-    style={styles.rightButton}
-    accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
-    testID={"helpButton"}
-  >
-    <Icon name={"multiCoggles"} />
-  </ButtonDefaultOpacity>
+const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
+  <>
+    {itWalletEnabled ? (
+      <View style={styles.rightButton}>
+        <IconButton
+          onPress={onPress}
+          accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
+          accessibilityHint={I18n.t("global.accessibility.profile.open.hint")}
+          testID={"helpButton"}
+          icon={"coggle"}
+          color={dark ? "contrast" : "primary"}
+        />
+      </View>
+    ) : (
+      <></>
+    )}
+  </>
 );
 
 export type AccessibilityEvents = {
@@ -125,6 +132,7 @@ interface OwnProps {
   customGoBack?: React.ReactNode;
   titleColor?: IOColors;
   backButtonTestID?: string;
+  sectionTitle?: string;
 }
 
 type Props = OwnProps &
@@ -297,6 +305,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <SearchButton
             searchType={isSearchAvailable.searchType}
             onSearchTap={isSearchAvailable.onSearchTap}
+            buttonStyle={styles.rightButton}
           />
         )}
 
@@ -312,12 +321,15 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           </>
         )}
 
-        {itWalletEnabled && isProfileAvailable && (
-          <ProfileButton onPress={isProfileAvailable.onProfileTap} />
+        {itWalletEnabled && isProfileAvailable && !isSearchEnabled && (
+          <ProfileButton
+            onPress={isProfileAvailable.onProfileTap}
+            dark={dark}
+          />
         )}
 
         {onShowHelp && !isSearchEnabled && (
-          <HelpButton onShowHelp={onShowHelp} />
+          <HelpButton onShowHelp={onShowHelp} dark={dark} />
         )}
 
         {onShowHelp && !isSearchEnabled && (
@@ -325,9 +337,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
-        {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
-          <ButtonDefaultOpacity transparent={true} />
-        )}
+        {!customRightIcon &&
+          !isSearchAvailable &&
+          !onShowHelp &&
+          !showChat &&
+          !isProfileAvailable && <ButtonDefaultOpacity transparent={true} />}
 
         {pipe(
           this.props.accessibilityEvents,
@@ -372,6 +386,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           accessible={true}
           accessibilityElementsHidden={true}
           importantForAccessibility="no-hide-descendants"
+          style={{ marginLeft: 8 }}
         >
           <Icon name="productIOApp" color={iconColor} accessible={false} />
         </View>
@@ -379,12 +394,30 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     );
   };
 
+  private renderSectionTitle = () => {
+    const { sectionTitle, dark } = this.props;
+    return (
+      <Left>
+        <NewH3
+          accessible={true}
+          accessibilityRole="header"
+          testID={"screen-content-header-title"}
+          color={dark ? "white" : "black"}
+        >
+          {sectionTitle}
+        </NewH3>
+      </Left>
+    );
+  };
+
   private renderLeft = () => {
-    const { isSearchEnabled, appLogo } = this.props;
+    const { isSearchEnabled, appLogo, sectionTitle } = this.props;
 
     if (!isSearchEnabled) {
       if (appLogo) {
         return this.renderAppLogo();
+      } else if (sectionTitle && itWalletEnabled) {
+        return this.renderSectionTitle();
       } else {
         return this.renderGoBack();
       }

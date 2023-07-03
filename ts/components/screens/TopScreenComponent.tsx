@@ -29,7 +29,8 @@ type BaseScreenComponentProps =
   | "headerBody"
   | "customGoBack"
   | "isSearchAvailable"
-  | "isProfileAvailable";
+  | "isProfileAvailable"
+  | "sectionTitle";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
@@ -57,7 +58,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       onAccessibilityNavigationHeaderFocus,
       faqCategories,
       accessibilityEvents,
-      titleColor
+      titleColor,
+      sectionTitle
     } = this.props;
 
     return (
@@ -80,6 +82,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         customGoBack={customGoBack}
         accessibilityEvents={accessibilityEvents}
         titleColor={titleColor}
+        sectionTitle={sectionTitle}
       >
         {this.props.children}
       </BaseScreenComponent>
