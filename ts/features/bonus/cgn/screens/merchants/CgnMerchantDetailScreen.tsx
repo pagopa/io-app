@@ -15,7 +15,10 @@ import {
 import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import {
+  Merchant,
+  MerchantContacts
+} from "../../../../../../definitions/cgn/merchants/Merchant";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -174,12 +177,13 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                       />
                     </>
                   )}
-                {/* {merchantDetail.value.phone && ( */}
-                {/* <> */}
-                <VSpacer size={16} />
-                <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2>
-                <CgnContactItem contact="https://www.sitonegozioconurllungo.it/assistenza" />
-                {/* )} */}
+                {merchantDetail.value.contacts && (
+                  <>
+                    <VSpacer size={16} />
+                    <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2>
+                    <CgnContactItem contact={merchantDetail.value.contacts} />
+                  </>
+                )}
               </View>
             </ScrollView>
           </>

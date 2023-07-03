@@ -3,15 +3,19 @@ import { StyleSheet, Linking, View } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { isHttp, openWebUrl } from "../../../../../utils/url";
+import { openWebUrl } from "../../../../../utils/url";
 import { showToast } from "../../../../../utils/showToast";
 import I18n from "../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import IconButton from "../../../../../components/ui/IconButton";
-import ButtonLink from "../../../../../components/ui/ButtonLink";
+import { Link } from "../../../../../components/core/typography/Link";
+import {
+  MerchantContactTypeEnum,
+  MerchantContacts
+} from "../../../../../../definitions/cgn/merchants/Merchant";
 
 type CgnContactItemProps = {
-  contact: string;
+  contact: MerchantContacts;
 };
 
 const styles = StyleSheet.create({
@@ -21,41 +25,40 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Regex to check if a string is a valid phone number
+ * Renders a single merchant contact item with a copy button
+ * - If the contact is a website, it will open the url in the browser
+ * - If the contact is an email, it will open the email app
+ * - If the contact is a phone number, it will open the phone app
  */
-const isPhoneNumber = (phoneNumber: string) =>
-  phoneNumber.match(/^[0-9\-+]{9,15}$/);
-
-const isWebsite = (contact: string) => isHttp(contact);
-
-const isEmail = (contact: string) =>
-  contact.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
-
 const CgnContactItem: React.FC<CgnContactItemProps> = ({
   contact
 }: CgnContactItemProps) => {
   const handleOnPress = () => {
-    const normalizedContact = contact.trim();
-    if (isPhoneNumber(normalizedContact)) {
-      Linking.openURL(`tel:${normalizedContact}`).catch(constNull);
-    } else if (isEmail(normalizedContact)) {
-      Linking.openURL(`mailto:${normalizedContact}`).catch(constNull);
-    } else if (isWebsite(normalizedContact)) {
-      openWebUrl(normalizedContact, () =>
-        showToast(I18n.t("bonus.cgn.generic.linkError"))
-      );
+    switch (contact.type) {
+      case MerchantContactTypeEnum.EMAIL:
+        return Linking.openURL(`mailto:${contact}`).catch(constNull);
+      case MerchantContactTypeEnum.WEBSITE:
+        return openWebUrl(contact.text, () =>
+          showToast(I18n.t("bonus.cgn.generic.linkError"))
+        );
+      case MerchantContactTypeEnum.PHONE:
+        return Linking.openURL(`tel:${contact}`).catch(constNull);
+      default:
+        return showToast(I18n.t("bonus.cgn.generic.linkError"));
     }
   };
 
   return (
     <View style={[IOStyles.rowSpaceBetween, styles.content]}>
       <View style={IOStyles.flex}>
-        <ButtonLink label={contact} numberOfLines={0} onPress={handleOnPress} />
+        <Link numberOfLines={0} onPress={handleOnPress}>
+          {contact}
+        </Link>
       </View>
       <IconButton
         icon="copy"
         accessibilityLabel="copy"
-        onPress={() => clipboardSetStringWithFeedback(contact)}
+        onPress={() => clipboardSetStringWithFeedback(contact.text)}
       />
     </View>
   );
