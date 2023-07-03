@@ -16,4 +16,5 @@ export const IOAlertRadius: IORadiusScale = IODefaultRadius;
 export const IOBannerRadius: IORadiusScale = IODefaultRadius;
 export const IOTagRadius: IORadiusScale = 6;
 export const IOBottomSheetHeaderRadius: IORadiusScale = 24;
+export const IOListItemIDPRadius: IORadiusScale = IODefaultRadius;
 export const IOBadgeRadius: IORadiusScale = 24;
