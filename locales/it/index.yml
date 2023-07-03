@@ -1479,7 +1479,6 @@ wallet:
         fieldError: "Per continuare per favore correggi il campo {{field}}"
         missingFields: "Per continuare, compila tutti i campi"
   acceptedCards: Carte accettate
-  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
   missingDataText:
     body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.

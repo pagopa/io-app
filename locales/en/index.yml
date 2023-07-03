@@ -1462,7 +1462,6 @@ wallet:
         fieldError: "To continue, please fix the {{field}} field"
         missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
-  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
     body: If you can't find the security code, it's likely your card doesn't support online payments.
