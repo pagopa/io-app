@@ -1,4 +1,4 @@
-package it.pagopa.io.app;
+package it.pagopa.io.app.poc.itwallet;
 
 import android.content.pm.ActivityInfo;
 import android.os.Build;

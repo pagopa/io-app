@@ -1,4 +1,4 @@
-package it.pagopa.io.app.newarchitecture;
+package it.pagopa.io.app.poc.itwallet.newarchitecture;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import com.facebook.react.PackageList;
@@ -18,7 +18,7 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import it.pagopa.io.app.BuildConfig;
+import it.pagopa.io.app.poc.itwallet.BuildConfig;
 import it.pagopa.io.app.newarchitecture.components.MainComponentsRegistry;
 import it.pagopa.io.app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
