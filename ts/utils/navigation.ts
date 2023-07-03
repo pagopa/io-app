@@ -18,14 +18,15 @@ export const IO_UNIVERSAL_LINK_PREFIX = "https://continua.io.pagopa.it";
  * @param href deeplink to extract the internal route from
  * @returns the internal route if found, `none` otherwise
  */
-export function extractInternalPath(href: string): O.Option<string> {
+export function extractInternalPath(href: string): string | undefined {
   return pipe(
     extractPathFromURL(
       [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX, IO_FIMS_LINK_PREFIX],
       href
     ),
     O.fromNullable,
-    O.map(path => (path.startsWith("/") ? path : "/" + path))
+    O.map(path => (path.startsWith("/") ? path : "/" + path)),
+    O.toUndefined
   );
 }
 

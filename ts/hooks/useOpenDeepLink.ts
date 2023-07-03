@@ -10,5 +10,6 @@ import { extractInternalPath } from "../utils/navigation";
 export const useOpenDeepLink = () => {
   const linkTo = useLinkTo();
 
-  return (url: string) => pipe(extractInternalPath(url), O.map(linkTo));
+  return (url: string) =>
+    pipe(extractInternalPath(url), O.fromNullable, O.map(linkTo));
 };

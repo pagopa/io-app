@@ -104,6 +104,7 @@ export function getInternalRoute(href: string): string {
   return pipe(
     // Extracts the internal path from href, if any
     extractInternalPath(href),
+    O.fromNullable,
     O.fold(
       // If none, return the original href which means that the link is not internal
       () => href,
