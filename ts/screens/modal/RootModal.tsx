@@ -14,10 +14,10 @@ import { GlobalState } from "../../store/reducers/types";
 import AskUserToContinueScreen from "../../features/fastLogin/screens/AskUserToContinueScreen";
 import { askUserToRefreshSessionToken } from "../../store/actions/authentication";
 import { itWalletEnabled } from "../../config";
+import { isDevEnv, isTestEnv } from "../../utils/environment";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
-import { isDevEnv, isTestEnv } from "../../utils/environment";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
