@@ -1,9 +1,8 @@
 /**
  * An handler for application internal links
  */
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import URLParse from "url-parse";
+import { pipe } from "fp-ts/lib/function";
 import {
   bpdEnabled,
   fciEnabled,
@@ -20,10 +19,7 @@ import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { isTestEnv } from "../../../../utils/environment";
-import {
-  IO_INTERNAL_LINK_PREFIX,
-  IO_INTERNAL_LINK_PROTOCOL
-} from "../../../../utils/navigation";
+import { extractInternalPath } from "../../../../utils/navigation";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
@@ -98,28 +94,30 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
   ? allowedRoutes
   : undefined;
 
+/**
+ * Extracts the internal route from href. If it is defined and allowed (white listed)
+ * returns the internal route, otherwise returns the href
+ * @param href
+ * @returns
+ */
 export function getInternalRoute(href: string): string {
-  // NOTE: URL built-in class seems not to be implemented in Android
-  try {
-    const url = new URLParse(href, true);
-    if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
-      return pipe(
-        allowedRoutes[url.host.toUpperCase()],
-        O.fromNullable,
-        O.fold(
-          () => href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
-          internalUrl =>
-            href.replace(
-              `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
-              internalUrl
-            )
+  return pipe(
+    // Extracts the internal path from href, if any
+    extractInternalPath(href),
+    O.fold(
+      // If none, return the original href which means that the link is not internal
+      () => href,
+      // If some, check for backward compatibility and return the internal route associated
+      path =>
+        pipe(
+          O.of(path),
+          // Check if the path has the old format (uppercase path) and returns the associated route
+          O.map(path => allowedRoutes[path.toUpperCase()]),
+          // If none, return the initially extracted path as interal route
+          O.getOrElse(() => path)
         )
-      );
-    }
-    return href;
-  } catch (_) {
-    return href;
-  }
+    )
+  );
 }
 
 /**
