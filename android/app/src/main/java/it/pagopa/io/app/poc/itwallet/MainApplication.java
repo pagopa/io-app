@@ -1,11 +1,11 @@
-package it.pagopa.io.app;
+package it.pagopa.io.app.poc.itwallet;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import it.pagopa.io.app.newarchitecture.MainApplicationReactNativeHost;
+import it.pagopa.io.app.poc.itwallet.newarchitecture.MainApplicationReactNativeHost;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import com.reactnativecommunity.art.ARTPackage;
 import com.facebook.react.bridge.JSIModulePackage;
