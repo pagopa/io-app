@@ -4,7 +4,7 @@ import {
   IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
-} from "../../../../../utils/navigation";
+} from "../navigation";
 
 describe("getInternalRoute", () => {
   const allowedRoutes = Object.entries(testableALLOWED_ROUTE_NAMES!).map(

@@ -10,21 +10,21 @@ import {
   myPortalEnabled,
   svEnabled,
   uaDonationsEnabled
-} from "../../../../config";
-import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
-import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
-import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
-import { FCI_ROUTES } from "../../../../features/fci/navigation/routes";
-import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
-import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
-import ROUTES from "../../../../navigation/routes";
-import { isTestEnv } from "../../../../utils/environment";
+} from "../config";
+import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
+import ROUTES from "../navigation/routes";
+import { isTestEnv } from "./environment";
 import {
   IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
-} from "../../../../utils/navigation";
-import { extractPathFromURL } from "../../../../utils/url";
+} from "./navigation";
+import { extractPathFromURL } from "./url";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
