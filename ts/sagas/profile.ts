@@ -20,7 +20,6 @@ import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import { Locales } from "../../locales/locales";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
 import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
@@ -36,7 +35,6 @@ import {
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
-import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import {
   loadBonusBeforeRemoveAccount,
   profileLoadFailure,
@@ -49,7 +47,6 @@ import {
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
-import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { getAppVersion } from "../utils/appVersion";
@@ -58,7 +55,6 @@ import { convertUnknownToError } from "../utils/errors";
 import { deletePin } from "../utils/keychain";
 import {
   fromLocaleToPreferredLanguage,
-  fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
@@ -101,6 +97,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
@@ -121,7 +118,19 @@ function* createOrUpdateProfileSaga(
   const currentProfile = profileState.value;
 
   const rawAppVersion = yield* call(getAppVersion);
-  const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
+
+  const appVersion = pipe(
+    rawAppVersion,
+    AppVersion.decode,
+    E.fold(
+      () => undefined,
+      version => version
+    )
+  );
+
+  const preferred_languages = [
+    fromLocaleToPreferredLanguage(getLocalePrimaryWithFallback())
+  ];
 
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
@@ -136,10 +145,11 @@ function* createOrUpdateProfileSaga(
         is_email_enabled: currentProfile.is_email_enabled,
         version: currentProfile.version,
         email: currentProfile.email,
-        preferred_languages: currentProfile.preferred_languages,
+        preferred_languages:
+          currentProfile.preferred_languages ?? preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         accepted_tos_version: currentProfile.accepted_tos_version,
-        last_app_version: O.toUndefined(maybeAppVersion),
+        last_app_version: currentProfile.last_app_version ?? appVersion,
         push_notifications_content_type:
           currentProfile.push_notifications_content_type,
         reminder_status: currentProfile.reminder_status,
@@ -153,7 +163,7 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
-        last_app_version: O.toUndefined(maybeAppVersion),
+        last_app_version: currentProfile.last_app_version ?? appVersion,
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0
@@ -299,46 +309,6 @@ function* startEmailValidationProcessSaga(
   }
 }
 
-// check if the current device language matches the one saved in the profile
-function* checkPreferredLanguage(
-  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-): Generator<ReduxSagaEffect, any, O.Option<Locales>> {
-  // check if the preferred_languages is up to date
-  const preferredLanguages =
-    profileLoadSuccessAction.payload.preferred_languages;
-  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> =
-    yield* select(preferredLanguageSelector);
-  // deviceLocale could be the one stored or the one retrieved from the running device
-  const deviceLocale = pipe(
-    currentStoredLocale,
-    O.getOrElse(() => getLocalePrimaryWithFallback())
-  );
-  // if the preferred language isn't set, update it with the current device locale
-  if (!preferredLanguages || preferredLanguages.length === 0) {
-    yield* put(
-      profileUpsert.request({
-        preferred_languages: [fromLocaleToPreferredLanguage(deviceLocale)]
-      })
-    );
-  }
-  const currentLocale =
-    preferredLanguages && preferredLanguages.length > 0
-      ? fromPreferredLanguageToLocale(preferredLanguages[0])
-      : deviceLocale;
-  // if there is not value stored about preferred language or
-  // the stored value is different from one into the profile, update it
-  if (
-    O.isNone(currentStoredLocale) ||
-    currentStoredLocale.value !== currentLocale
-  ) {
-    yield* put(
-      preferredLanguageSaveSuccess({
-        preferredLanguage: currentLocale
-      })
-    );
-  }
-}
-
 function* handleLoadBonusBeforeRemoveAccount() {
   const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield* select(
     bpdEnabledSelector
@@ -438,12 +408,15 @@ function* checkLoadedProfile(
   // This saga will upsert the `last_app_version` value in the
   // profile only if it actually changed from the one stored in
   // the backend.
+
+  // If the tos has never been accepted or is not part of the upsert payload, do not run check
+  if (!profileLoadSuccessAction.payload.accepted_tos_version) {
+    return;
+  }
+
   yield* call(upsertAppVersionSaga);
 
-  yield* all([
-    call(checkPreferredLanguage, profileLoadSuccessAction),
-    call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
-  ]);
+  yield* all([call(checkStoreHashedFiscalCode, profileLoadSuccessAction)]);
 }
 
 // watch for some actions about profile
