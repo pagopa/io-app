@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="it.pagopa.io.app"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="it.pagopa.io.app.poc.itwallet"
   xmlns:tools="http://schemas.android.com/tools" android:installLocation="auto">
 
   <queries>
