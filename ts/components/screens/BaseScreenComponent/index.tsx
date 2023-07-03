@@ -72,7 +72,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       onAccessibilityNavigationHeaderFocus,
       primary,
       showChat,
-      titleColor
+      titleColor,
+      sectionTitle
     } = props;
 
     /**
@@ -144,6 +145,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           customRightIcon={customRightIcon}
           customGoBack={customGoBack}
           titleColor={titleColor}
+          sectionTitle={sectionTitle}
         />
         {children}
       </Container>
