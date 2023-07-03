@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: IOColors.white,
-    // justifyContent: "flex-start",
     alignItems: "center",
     height: backgroundImageHeight
   },
