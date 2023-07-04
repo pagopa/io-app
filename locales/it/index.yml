@@ -440,7 +440,7 @@ profile:
       idpayTest: Test IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
-    appVersion: Versione App
+    appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
