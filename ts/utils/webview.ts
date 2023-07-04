@@ -68,6 +68,14 @@ function showAlertBox(payload) {
   sendMessagesToRN(message);
 }
 
+function setTitle(payload) {
+  const message = {
+    type: "SET_TITLE",
+    ...payload
+  };
+  sendMessagesToRN(message);
+}
+
 function checkInjectionCompleted() {
   if(typeof onInjectionCompleted === 'function') {
     onInjectionCompleted();
