@@ -15,10 +15,7 @@ import {
 import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import {
-  Merchant,
-  MerchantContacts
-} from "../../../../../../definitions/cgn/merchants/Merchant";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -39,7 +36,9 @@ import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDisc
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { Icon } from "../../../../../components/core/icons/Icon";
-import CgnContactItem from "../../components/merchants/CgnContactItem";
+import CgnContactSection, {
+  MerchantContactTypeEnum
+} from "../../components/merchants/CgnContactSection";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -177,13 +176,19 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                       />
                     </>
                   )}
-                {merchantDetail.value.contacts && (
-                  <>
-                    <VSpacer size={16} />
-                    <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2>
-                    <CgnContactItem contact={merchantDetail.value.contacts} />
-                  </>
-                )}
+                {/* {merchantDetail.value.contacts && ( */}
+                <>
+                  <VSpacer size={16} />
+                  {/* <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2> */}
+                  {/* <CgnContactSection contact={merchantDetail.value.contacts} /> */}
+                  <CgnContactSection
+                    contact={{
+                      text: "test@test.it",
+                      type: MerchantContactTypeEnum.EMAIL
+                    }}
+                  />
+                </>
+                {/* )} */}
               </View>
             </ScrollView>
           </>
