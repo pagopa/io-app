@@ -6,6 +6,9 @@ import { Divider } from "../../../components/core/Divider";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 
+/**
+ * Components which renders a markdown with the TOS of the IT Wallet separated by a divider.
+ */
 const ItwTos = () => (
   <View style={IOStyles.horizontalContentPadding}>
     <VSpacer />
