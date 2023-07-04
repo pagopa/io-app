@@ -21,7 +21,6 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList, {
   IPaymentMethod
 } from "../../components/wallet/PaymentMethodsList";
-import { bpdEnabled } from "../../config";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { walletAddBPayStart } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import {
@@ -140,17 +139,6 @@ const getPaymentMethods = (
     onPress: props.startSatispayOnboarding,
     status: "notImplemented",
     section: "digital_payments"
-  },
-  {
-    name: I18n.t("wallet.methods.pagobancomat.name"),
-    description: I18n.t("wallet.methods.pagobancomat.description"),
-    icon: CreditCard,
-    onPress: props.startAddBancomat,
-    status:
-      bpdEnabled && !options.onlyPaymentMethodCanPay
-        ? "implemented"
-        : "notImplemented",
-    section: "bancomat"
   }
 ];
 
