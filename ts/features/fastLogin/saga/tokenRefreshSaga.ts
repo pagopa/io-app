@@ -144,7 +144,6 @@ function* doRefreshTokenSaga(
         if (E.isRight(tokenResponse) && tokenResponse.right.status === 200) {
           // eslint-disable-next-line functional/immutable-data
           requestState.status = "success";
-          // console.log("token refreshed ✅");
           const newToken = tokenResponse.right.value
             .token as unknown as SessionToken;
           yield* put(refreshSessionToken.success(newToken));
