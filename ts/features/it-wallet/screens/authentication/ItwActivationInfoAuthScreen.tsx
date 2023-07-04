@@ -34,7 +34,13 @@ const ItwActivationInfoAuthScreen = () => {
           <View style={IOStyles.horizontalContentPadding}>
             <H4 weight={"Regular"} color={"bluegrey"}>
               {"Non hai la CIE? "}
-              <Link onPress={() => openWebUrl(I18n.t("cie.booking_url"))}>
+              <Link
+                onPress={() =>
+                  openWebUrl(
+                    I18n.t("features.itWallet.infoAuthScreen.readMoreUrl")
+                  )
+                }
+              >
                 {"Scopri come ottenerla"}
               </Link>
             </H4>

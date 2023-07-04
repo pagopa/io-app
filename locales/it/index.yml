@@ -3275,7 +3275,8 @@ features:
       subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
       howAuth: "Dopo l’autenticazione potrai creare la tua Identità Digitale, grazie alla quale potrai accedere ai servizi online della Pubblica Amministrazione e richiedere altre credenziali digitali."
       confirm: "Continua con CIE + PIN"
-      footerBox: "Prima di continua, assicurati di avere con te la Carta d’Identità Elettronica (CIE) e ricordare il PIN [Per saperne di più]()"
+      footerBox: "Prima di continua, assicurati di avere con te la Carta d’Identità Elettronica (CIE) e ricordare il PIN [Per saperne di più](https://www.cartaidentita.interno.gov.it)"
+      readMoreUrl: "https://identitadigitale.gov.it/"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
