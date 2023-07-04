@@ -44,9 +44,13 @@ export type IOBarcodeScannerConfiguration = {
    */
   formats: Array<IOBarcodeFormat>;
   /**
-   * Scanned barcode handler
+   * Callback called when a barcode is successfully decoded
    */
-  onBarcodeScanned?: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  /**
+   * Callback called when a barcode is not successfully decoded
+   */
+  onBarcodeError: () => void;
   /**
    * Disables the barcode scanned
    */
@@ -70,10 +74,6 @@ export type IOBarcodeScanner = {
    * Opens the system settings screen to let user to change camera permission
    */
   openCameraSettings: () => Promise<void>;
-};
-
-const DEFAULT_CONFIGURATION: IOBarcodeScannerConfiguration = {
-  formats: ["DATA_MATRIX", "QR_CODE"]
 };
 
 /**
@@ -141,9 +141,10 @@ export const retrieveNextBarcode = (
   );
 
 export const useIOBarcodeScanner = (
-  config: IOBarcodeScannerConfiguration = DEFAULT_CONFIGURATION
+  config: IOBarcodeScannerConfiguration
 ): IOBarcodeScanner => {
-  const { marker, onBarcodeScanned, formats, disabled } = config;
+  const { marker, onBarcodeSuccess, onBarcodeError, formats, disabled } =
+    config;
 
   const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();
@@ -189,6 +190,10 @@ export const useIOBarcodeScanner = (
    * onBarcodeScanned trigger hook
    */
   React.useEffect(() => {
+    if (barcodes.length === 0) {
+      return;
+    }
+
     // This will fix a bug on lower-end devices
     // in which the latest frame would be scanned
     // multiple times due to races conditions during
@@ -197,12 +202,12 @@ export const useIOBarcodeScanner = (
       return;
     }
 
-    if (onBarcodeScanned === undefined) {
-      return;
-    }
-
-    pipe(retrieveNextBarcode(barcodes), O.map(onBarcodeScanned));
-  }, [prevDisabled, disabled, barcodes, onBarcodeScanned]);
+    pipe(
+      retrieveNextBarcode(barcodes),
+      O.map(onBarcodeSuccess),
+      O.getOrElse(onBarcodeError)
+    );
+  }, [prevDisabled, disabled, barcodes, onBarcodeSuccess, onBarcodeError]);
 
   /**
    * Component that renders camera and marker
