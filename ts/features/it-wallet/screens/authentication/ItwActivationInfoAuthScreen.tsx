@@ -10,6 +10,7 @@ import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import authInfoCie from "../../../../../img/features/it-wallet/auth-info-cie.png";
 import { Link } from "../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../utils/url";
 
 const ItwActivationInfoAuthScreen = () => {
   const continueButtonProps = {
@@ -33,7 +34,9 @@ const ItwActivationInfoAuthScreen = () => {
           <View style={IOStyles.horizontalContentPadding}>
             <H4 weight={"Regular"} color={"bluegrey"}>
               {"Non hai la CIE? "}
-              <Link onPress={() => undefined}>{"Scopri come ottenerla"}</Link>
+              <Link onPress={() => openWebUrl(I18n.t("cie.booking_url"))}>
+                {"Scopri come ottenerla"}
+              </Link>
             </H4>
 
             {/* Wallet cards image */}
