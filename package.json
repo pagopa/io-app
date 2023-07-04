@@ -162,6 +162,7 @@
     "react-native-config": "^1.4.5",
     "react-native-crypto": "^2.1.0",
     "react-native-device-info": "^10.3.0",
+    "react-native-document-picker": "^9.0.1",
     "react-native-exception-handler": "^2.10.8",
     "react-native-fingerprint-scanner": "^6.0.0",
     "react-native-flag-secure-android": "^1.0.3",
