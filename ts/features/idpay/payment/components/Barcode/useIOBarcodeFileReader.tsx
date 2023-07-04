@@ -22,7 +22,7 @@ import { AsyncAlert } from "../../../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { isAndroid } from "../../../../../utils/platform";
 import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
-import { IOBarcode, IOBarcodeFormat } from "./types";
+import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: RNQRCodeType;
