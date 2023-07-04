@@ -15,10 +15,7 @@ import {
   IOScaleValues,
   IOSpringValues
 } from "../../../../components/core/variables/IOAnimations";
-import {
-  IOButtonStyles,
-  IOIconButtonStyles
-} from "../../../../components/core/variables/IOStyles";
+import { IOButtonStyles } from "../../../../components/core/variables/IOStyles";
 
 export type BadgeButton = WithTestID<
   {
