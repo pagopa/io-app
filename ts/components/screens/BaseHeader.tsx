@@ -22,7 +22,7 @@ import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
+import { maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
@@ -90,7 +90,7 @@ interface OwnProps {
   customRightIcon?: {
     iconName: IOIcons;
     onPress: () => void;
-    accessibilityLabel?: string;
+    accessibilityLabel: string;
   };
   customGoBack?: React.ReactNode;
   titleColor?: IOColors;
@@ -274,16 +274,12 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {customRightIcon && !isSearchEnabled && (
-          <ButtonDefaultOpacity
+          <IconButton
+            icon={customRightIcon.iconName}
+            color="neutral"
             onPress={customRightIcon.onPress}
-            transparent={true}
-            accessible={customRightIcon.accessibilityLabel !== undefined}
             accessibilityLabel={customRightIcon.accessibilityLabel}
-          >
-            {!isStringNullyOrEmpty(customRightIcon.iconName) && (
-              <Icon name={customRightIcon.iconName} />
-            )}
-          </ButtonDefaultOpacity>
+          />
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
