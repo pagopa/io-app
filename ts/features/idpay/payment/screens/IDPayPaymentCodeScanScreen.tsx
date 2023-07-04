@@ -12,13 +12,14 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { openWebUrl } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
+import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 
 const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
+  const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeScanned = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
@@ -26,7 +27,7 @@ const IDPayPaymentCodeScanScreen = () => {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false
       });
-      openWebUrl(barcode.authUrl);
+      openDeepLink(barcode.authUrl);
     }
   };
 

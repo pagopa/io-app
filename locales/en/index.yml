@@ -440,7 +440,7 @@ profile:
       idpayTest: Test IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
-    appVersion: App Version
+    appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
