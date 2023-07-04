@@ -230,7 +230,6 @@ export const IOIcons = {
   cancel: IconCancel,
   help: IconQuestion,
   search: IconSearch /* io-search */,
-  legSearch: LegIconSearch,
   chevronRight: IconChevronRight,
   chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
