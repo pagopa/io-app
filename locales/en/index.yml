@@ -3238,6 +3238,14 @@ features:
       description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
       action: "Attiva IT Wallet"
       hideLabel: "Nascondi questo banner"
+    activationScreen:
+      title: "All your digital credentials on IO!"
+      subTitle: "IT Wallet is the new feature on IO that allows you to obtain your digital credentials (such as the EU Disability Card, driving license and health card, etc.) and access the online services of the Public Administration in total security."
+      howActivate: "How to activate it?"
+      howActivateDescription: "You can activate IT Wallet using your Electronic Identity Card (CIE) and its PIN. If you prefer, you can also use SPID or CieID."
+      tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]()."
+      cancel: "Not now"
+      confirm: "Activate IT Wallet"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
