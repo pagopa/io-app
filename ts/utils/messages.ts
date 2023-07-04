@@ -2,37 +2,34 @@
  * Generic utilities for messages
  */
 
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { Predicate } from "fp-ts/lib/Predicate";
+import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { identity, pipe } from "fp-ts/lib/function";
+import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
-import {
-  getInternalRoute,
-  handleInternalLink
-} from "../components/ui/Markdown/handlers/internalLink";
-import {
-  deriveCustomHandledLink,
-  isIoInternalLink,
-  isIoFIMSLink,
-  removeFIMSPrefixFromUrl
-} from "../components/ui/Markdown/handlers/link";
-import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
-import { localeFallback } from "../i18n";
-import { Locales } from "../../locales/locales";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import ROUTES from "../navigation/routes";
-import { trackMessageCTAFrontMatterDecodingError } from "../features/messages/analytics";
+import { Locales } from "../../locales/locales";
+import {
+  deriveCustomHandledLink,
+  isIoFIMSLink,
+  isIoInternalLink,
+  removeFIMSPrefixFromUrl
+} from "../components/ui/Markdown/handlers/link";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { trackMessageCTAFrontMatterDecodingError } from "../features/messages/analytics";
+import { localeFallback } from "../i18n";
 import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
+import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
+import { getInternalRoute, handleInternalLink } from "./internalLink";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
