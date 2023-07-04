@@ -132,7 +132,6 @@ import IconProductIOAppBlueBg from "./svg/IconProductIOAppBlueBg";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconSearch from "./svg/LegIconSearch";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
