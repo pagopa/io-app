@@ -1,9 +1,8 @@
 /**
  * An handler for application internal links
  */
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import URLParse from "url-parse";
+import { pipe } from "fp-ts/lib/function";
 import {
   bpdEnabled,
   fciEnabled,
@@ -11,19 +10,21 @@ import {
   myPortalEnabled,
   svEnabled,
   uaDonationsEnabled
-} from "../../../../config";
-import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
-import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
-import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
-import { FCI_ROUTES } from "../../../../features/fci/navigation/routes";
-import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
-import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
-import ROUTES from "../../../../navigation/routes";
-import { isTestEnv } from "../../../../utils/environment";
+} from "../config";
+import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
+import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
+import ROUTES from "../navigation/routes";
+import { isTestEnv } from "./environment";
 import {
+  IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
-  IO_INTERNAL_LINK_PROTOCOL
-} from "../../../../utils/navigation";
+  IO_UNIVERSAL_LINK_PREFIX
+} from "./navigation";
+import { extractPathFromURL } from "./url";
 
 /**
  * This handling is used to convert old CTAs and links to current internal linking config
@@ -98,28 +99,33 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
   ? allowedRoutes
   : undefined;
 
+/**
+ * Extracts the internal route from href. If it is defined and allowed (white listed)
+ * returns the internal route, otherwise returns the href
+ * @param href
+ * @returns
+ */
 export function getInternalRoute(href: string): string {
-  // NOTE: URL built-in class seems not to be implemented in Android
-  try {
-    const url = new URLParse(href, true);
-    if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
+  return pipe(
+    extractPathFromURL(
+      [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX, IO_FIMS_LINK_PREFIX],
+      href
+    ),
+    O.fromNullable,
+    O.map(extractedPath => {
+      const [path, params] = extractedPath.split("?");
+
       return pipe(
-        allowedRoutes[url.host.toUpperCase()],
+        allowedRoutes[path.toUpperCase()],
         O.fromNullable,
-        O.fold(
-          () => href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
-          internalUrl =>
-            href.replace(
-              `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
-              internalUrl
-            )
+        O.map(path => path + (params ? "?" + params : "")),
+        O.getOrElse(() =>
+          extractedPath.startsWith("/") ? extractedPath : "/" + extractedPath
         )
       );
-    }
-    return href;
-  } catch (_) {
-    return href;
-  }
+    }),
+    O.getOrElse(() => href)
+  );
 }
 
 /**
