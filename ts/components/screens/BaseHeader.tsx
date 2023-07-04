@@ -13,7 +13,6 @@ import {
   Text
 } from "react-native";
 import { connect } from "react-redux";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -31,8 +30,10 @@ import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import { IOIcons, Icon } from "../core/icons/Icon";
+import IconButton from "../ui/IconButton";
 
 type HelpButtonProps = {
+  dark?: boolean;
   onShowHelp: () => void;
 };
 
@@ -42,26 +43,24 @@ const styles = StyleSheet.create({
   },
   body: {
     alignItems: "center"
-  },
-  helpButton: {
-    padding: 8
   }
 });
 
-const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
-  <ButtonDefaultOpacity
-    hasFullHitSlop
-    onPress={onShowHelp}
-    transparent={true}
-    accessibilityLabel={I18n.t(
-      "global.accessibility.contextualHelp.open.label"
-    )}
-    style={styles.helpButton}
-    accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
-    testID={"helpButton"}
-  >
-    <IconFont name={"io-question"} />
-  </ButtonDefaultOpacity>
+const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
+  <View>
+    <IconButton
+      onPress={onShowHelp}
+      accessibilityLabel={I18n.t(
+        "global.accessibility.contextualHelp.open.label"
+      )}
+      accessibilityHint={I18n.t(
+        "global.accessibility.contextualHelp.open.hint"
+      )}
+      testID={"helpButton"}
+      color={dark ? "contrast" : "neutral"}
+      icon={"help"}
+    />
+  </View>
 );
 
 export type AccessibilityEvents = {
@@ -257,7 +256,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       onShowHelp,
       isSearchAvailable,
       showChat,
-      customRightIcon
+      customRightIcon,
+      dark
     } = this.props;
 
     return (
@@ -270,7 +270,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         )}
 
         {onShowHelp && !isSearchEnabled && (
-          <HelpButton onShowHelp={onShowHelp} />
+          <HelpButton onShowHelp={onShowHelp} dark={dark} />
         )}
 
         {customRightIcon && !isSearchEnabled && (
@@ -320,33 +320,39 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderLeft = () => {
-    const { isSearchEnabled, appLogo, primary, dark, isPagoPATestEnabled } =
-      this.props;
+  private renderAppLogo = () => {
+    const { isPagoPATestEnabled, primary, dark } = this.props;
 
     const iconColor: IOColors = isPagoPATestEnabled
       ? "aqua"
       : primary || dark
       ? "white"
       : "blue";
-
     return (
-      !isSearchEnabled &&
-      (appLogo ? (
-        <Left>
-          <View
-            accessible={true}
-            accessibilityElementsHidden={true}
-            importantForAccessibility="no-hide-descendants"
-            style={{ marginLeft: 8 }}
-          >
-            <Icon name="productIOApp" color={iconColor} accessible={false} />
-          </View>
-        </Left>
-      ) : (
-        this.renderGoBack()
-      ))
+      <Left>
+        <View
+          accessible={true}
+          accessibilityElementsHidden={true}
+          importantForAccessibility="no-hide-descendants"
+        >
+          <Icon name="productIOApp" color={iconColor} accessible={false} />
+        </View>
+      </Left>
     );
+  };
+
+  private renderLeft = () => {
+    const { isSearchEnabled, appLogo } = this.props;
+
+    if (!isSearchEnabled) {
+      if (appLogo) {
+        return this.renderAppLogo();
+      } else {
+        return this.renderGoBack();
+      }
+    } else {
+      return null;
+    }
   };
 }
 
