@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { useContext } from "react";
 import { Alert } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import {
@@ -12,7 +11,6 @@ import {
 import URLParse from "url-parse";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { LightModalContext } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import { WebviewMessage } from "../../../types/WebviewMessage";
 import { getRemoteLocale } from "../../../utils/messages";
@@ -22,8 +20,6 @@ import {
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../../../utils/webview";
-import ErrorContent from "./ErrorContent";
-import SuccessContent from "./SuccessContent";
 import WebviewErrorComponent from "./WebviewErrorComponent";
 
 type Props = {
@@ -40,7 +36,6 @@ const injectedJavascript = closeInjectedScript(
 const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
-  const { showModal, hideModal } = useContext(LightModalContext);
 
   const ref = React.createRef<WebView>();
 
@@ -91,39 +86,6 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
             case "CLOSE_MODAL":
               onWebviewClose();
               break;
-            case "START_LOAD":
-              setLoading(true);
-              break;
-            case "END_LOAD":
-              setLoading(false);
-              break;
-            case "SHOW_SUCCESS":
-              showModal(
-                <SuccessContent
-                  text={pipe(
-                    message[locale],
-                    O.fromNullable,
-                    O.getOrElse(() => message.en)
-                  )}
-                  close={() => {
-                    hideModal();
-                    onWebviewClose();
-                  }}
-                />
-              );
-              break;
-            case "SHOW_ERROR":
-              showModal(
-                <ErrorContent
-                  text={pipe(
-                    message[locale],
-                    O.fromNullable,
-                    O.getOrElse(() => message.en)
-                  )}
-                  close={hideModal}
-                />
-              );
-              break;
             case "SHOW_ALERT":
               const value = pipe(
                 message[locale],
@@ -131,6 +93,14 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
                 O.getOrElse(() => message.en)
               );
               Alert.alert(value.title, value.description);
+              break;
+            case "SHOW_TOAST":
+              const { text, type, position } = pipe(
+                message[locale],
+                O.fromNullable,
+                O.getOrElse(() => message.en)
+              );
+              showToast(text, type, position);
               break;
             case "SET_TITLE":
               const title = pipe(

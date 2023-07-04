@@ -22,6 +22,43 @@ export const AlertPayload = t.intersection(
   "AlertPayload"
 );
 
+export const ToastContentR = t.interface({
+  text: t.string
+});
+
+export const ToastContentO = t.partial({
+  type: t.union([
+    t.literal("danger"),
+    t.literal("success"),
+    t.literal("warning")
+  ]),
+  position: t.union([
+    t.literal("top"),
+    t.literal("bottom"),
+    t.literal("center")
+  ])
+});
+
+export const ToastContent = t.intersection(
+  [ToastContentR, ToastContentO],
+  "ToastContent"
+);
+
+export type ToastContent = t.TypeOf<typeof ToastContent>;
+
+const ToastPayloadR = t.interface({
+  type: t.literal("SHOW_TOAST"),
+  en: ToastContent
+});
+const ToastPayloadO = t.partial({
+  it: ToastContent
+});
+
+export const ToastPayload = t.intersection(
+  [ToastPayloadR, ToastPayloadO],
+  "ToastPayload"
+);
+
 const SuccessPayloadR = t.interface({
   type: t.union([t.literal("SHOW_SUCCESS"), t.literal("SHOW_ERROR")]),
   en: t.string
@@ -56,6 +93,7 @@ const EmptyPayloadMessage = t.interface({
 
 export const WebviewMessage = t.union([
   AlertPayload,
+  ToastPayload,
   TitlePayload,
   SuccessPayload,
   EmptyPayloadMessage

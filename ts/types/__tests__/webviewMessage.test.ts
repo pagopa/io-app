@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { AlertContent, WebviewMessage } from "../WebviewMessage";
+import { AlertContent, ToastContent, WebviewMessage } from "../WebviewMessage";
 
 const validCloseModal = {
   type: "CLOSE_MODAL"
@@ -146,6 +146,32 @@ const invalidSetTitle3 = {
   }
 };
 
+const validShowToast1 = {
+  type: "SHOW_TOAST",
+  it: {
+    text: "Test text"
+  },
+  en: {
+    text: "Test text"
+  }
+};
+
+const invalidShowToast1 = {
+  type: "SHOW_TOAST",
+  it: {
+    text: "Test text"
+  }
+};
+
+const invalidShowToast2 = {
+  type: "SHOW_TOAST",
+  en: "Test text"
+};
+
+const invalidShowToast3 = {
+  type: "SHOW_TOAST"
+};
+
 const localeEN = "en";
 
 const localeIT = "it";
@@ -265,5 +291,27 @@ describe("WebviewMessage", () => {
 
   it("Should NOT recognize a valid Message for Set Title event", () => {
     expect(E.isLeft(WebviewMessage.decode(invalidSetTitle3))).toBeTruthy();
+  });
+
+  it("Should recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(validShowToast1))).toBeTruthy();
+    expect(
+      E.isRight(ToastContent.decode(validShowToast1[localeEN]))
+    ).toBeTruthy();
+    expect(
+      E.isRight(ToastContent.decode(validShowToast1[localeIT]))
+    ).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(invalidShowToast1))).toBeFalsy();
+  });
+
+  it("Should NOT recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(invalidShowToast2))).toBeFalsy();
+  });
+
+  it("Should NOT recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(invalidShowToast3))).toBeFalsy();
   });
 });
