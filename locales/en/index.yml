@@ -3246,6 +3246,12 @@ features:
       tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]()."
       cancel: "Not now"
       confirm: "Activate IT Wallet"
+    infoAuthScreen:
+      title: "Log in with CIE + PIN and save your digital identity"
+      subTitle: "To activate IT Wallet you need to authenticate yourself using your Electronic Identity Card (CIE) + PIN."
+      howAuth: "After authentication, you will be able to create your Digital Identity, thanks to which you will be able to access the online services of the Public Administration and request other digital credentials."
+      confirm: "Continue with CIE + PIN"
+      footerBox: "Before continuing, make sure you have the Electronic Identity Card (CIE) with you and remember the PIN [Read more]()"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
