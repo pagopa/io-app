@@ -7,17 +7,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconButton from "../../../../components/ui/IconButton";
+import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useOpenDeepLink } from "../../../../utils/url";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
+import { useIOBarcodeReader } from "../components/Barcode/useIOBarcodeReader";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
-import { useIOBarcodeReader } from "../components/Barcode/useIOBarcodeReader";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

@@ -25,6 +25,17 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Bottom Sheet"
     }
   },
+  DEBUG: {
+    SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
+    SAFE_AREA_CENTERED: {
+      route: "DS_SAFE_AREA_CENTERED",
+      title: "Native safe area (centered)"
+    },
+    EDGE_TO_EDGE_AREA: {
+      route: "DS_EDGE_TO_EDGE_AREA",
+      title: "Edge to edge area"
+    }
+  },
   LEGACY: {
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
