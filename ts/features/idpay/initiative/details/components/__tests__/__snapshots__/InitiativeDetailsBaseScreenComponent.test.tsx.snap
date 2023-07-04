@@ -526,20 +526,16 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                     accessibilityRole="button"
                                                     accessibilityState={
                                                       Object {
-                                                        "disabled": undefined,
+                                                        "disabled": false,
                                                       }
                                                     }
                                                     accessible={true}
                                                     collapsable={false}
                                                     focusable={true}
-                                                    forwardedRef={[Function]}
-                                                    hitSlop={
-                                                      Object {
-                                                        "bottom": 4,
-                                                        "top": 4,
-                                                      }
-                                                    }
+                                                    hitSlop={8}
+                                                    onBlur={[Function]}
                                                     onClick={[Function]}
+                                                    onFocus={[Function]}
                                                     onResponderGrant={[Function]}
                                                     onResponderMove={[Function]}
                                                     onResponderRelease={[Function]}
@@ -548,85 +544,88 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                     onStartShouldSetResponder={[Function]}
                                                     style={
                                                       Object {
-                                                        "alignItems": "center",
-                                                        "alignSelf": null,
-                                                        "backgroundColor": "transparent",
-                                                        "borderBottomWidth": null,
-                                                        "borderColor": null,
-                                                        "borderLeftWidth": null,
-                                                        "borderRadius": 5,
-                                                        "borderRightWidth": null,
-                                                        "borderTopWidth": null,
-                                                        "borderWidth": undefined,
-                                                        "elevation": 0,
-                                                        "flexDirection": "row",
-                                                        "height": 45,
-                                                        "justifyContent": "space-between",
-                                                        "marginLeft": -3,
-                                                        "opacity": 1,
-                                                        "paddingBottom": 6,
-                                                        "paddingLeft": 4,
-                                                        "paddingRight": 6,
-                                                        "paddingTop": 6,
-                                                        "shadowColor": null,
-                                                        "shadowOffset": null,
-                                                        "shadowOpacity": null,
-                                                        "shadowRadius": null,
+                                                        "alignSelf": "flex-start",
                                                       }
                                                     }
                                                     testID="back-button"
                                                   >
-                                                    <RNSVGSvgView
-                                                      accessibilityElementsHidden={true}
-                                                      accessibilityLabel=""
-                                                      accessible={false}
-                                                      align="xMidYMid"
-                                                      bbHeight={24}
-                                                      bbWidth={24}
-                                                      color={4279111443}
-                                                      focusable={false}
-                                                      height={24}
-                                                      importantForAccessibility="no-hide-descendants"
-                                                      meetOrSlice={0}
-                                                      minX={0}
-                                                      minY={0}
+                                                    <View
                                                       style={
                                                         Array [
                                                           Object {
-                                                            "backgroundColor": "transparent",
-                                                            "borderWidth": 0,
-                                                          },
-                                                          Object {
-                                                            "color": "#0E0F13",
-                                                          },
-                                                          Object {
-                                                            "flex": 0,
                                                             "height": 24,
                                                             "width": 24,
                                                           },
+                                                          Object {
+                                                            "transform": Array [
+                                                              Object {
+                                                                "scale": undefined,
+                                                              },
+                                                            ],
+                                                          },
                                                         ]
                                                       }
-                                                      tintColor={4279111443}
-                                                      vbHeight={24}
-                                                      vbWidth={24}
-                                                      width={24}
                                                     >
-                                                      <RNSVGGroup>
-                                                        <RNSVGPath
-                                                          d="M9.675 4.293c-.401-.36-1.031-.388-1.467-.083l-.105.083-7.778 7a.928.928 0 0 0-.092 1.32l.092.094 7.778 7a1.2 1.2 0 0 0 1.572 0c.4-.36.43-.928.092-1.32l-.092-.094L2.683 12l6.992-6.293c.4-.36.43-.928.092-1.32l-.092-.094Z"
-                                                          fill={
-                                                            Array [
-                                                              2,
-                                                            ]
+                                                      <RNSVGSvgView
+                                                        accessibilityElementsHidden={true}
+                                                        accessibilityLabel=""
+                                                        accessible={false}
+                                                        align="xMidYMid"
+                                                        animatedProps={
+                                                          Object {
+                                                            "color": undefined,
                                                           }
-                                                          propList={
-                                                            Array [
-                                                              "fill",
-                                                            ]
-                                                          }
-                                                        />
-                                                      </RNSVGGroup>
-                                                    </RNSVGSvgView>
+                                                        }
+                                                        bbHeight={24}
+                                                        bbWidth={24}
+                                                        color={4279111443}
+                                                        focusable={false}
+                                                        height={24}
+                                                        importantForAccessibility="no-hide-descendants"
+                                                        meetOrSlice={0}
+                                                        minX={0}
+                                                        minY={0}
+                                                        style={
+                                                          Array [
+                                                            Object {
+                                                              "backgroundColor": "transparent",
+                                                              "borderWidth": 0,
+                                                            },
+                                                            Object {
+                                                              "color": "#0E0F13",
+                                                            },
+                                                            Object {
+                                                              "flex": 0,
+                                                              "height": 24,
+                                                              "width": 24,
+                                                            },
+                                                          ]
+                                                        }
+                                                        tintColor={4279111443}
+                                                        vbHeight={24}
+                                                        vbWidth={24}
+                                                        width={24}
+                                                      >
+                                                        <RNSVGGroup>
+                                                          <RNSVGPath
+                                                            clipRule={0}
+                                                            d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
+                                                            fill={
+                                                              Array [
+                                                                2,
+                                                              ]
+                                                            }
+                                                            fillRule={0}
+                                                            propList={
+                                                              Array [
+                                                                "fill",
+                                                                "fillRule",
+                                                              ]
+                                                            }
+                                                          />
+                                                        </RNSVGGroup>
+                                                      </RNSVGSvgView>
+                                                    </View>
                                                   </View>
                                                 </View>
                                                 <View
@@ -659,23 +658,20 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                   }
                                                 >
                                                   <View
+                                                    accessibilityLabel=""
                                                     accessibilityRole="button"
                                                     accessibilityState={
                                                       Object {
-                                                        "disabled": undefined,
+                                                        "disabled": false,
                                                       }
                                                     }
-                                                    accessible={false}
+                                                    accessible={true}
                                                     collapsable={false}
                                                     focusable={true}
-                                                    forwardedRef={[Function]}
-                                                    hitSlop={
-                                                      Object {
-                                                        "bottom": 4,
-                                                        "top": 4,
-                                                      }
-                                                    }
+                                                    hitSlop={8}
+                                                    onBlur={[Function]}
                                                     onClick={[Function]}
+                                                    onFocus={[Function]}
                                                     onResponderGrant={[Function]}
                                                     onResponderMove={[Function]}
                                                     onResponderRelease={[Function]}
@@ -684,87 +680,87 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                     onStartShouldSetResponder={[Function]}
                                                     style={
                                                       Object {
-                                                        "alignItems": "center",
-                                                        "alignSelf": null,
-                                                        "backgroundColor": "transparent",
-                                                        "borderBottomWidth": null,
-                                                        "borderColor": null,
-                                                        "borderLeftWidth": null,
-                                                        "borderRadius": 50,
-                                                        "borderRightWidth": null,
-                                                        "borderTopWidth": null,
-                                                        "borderWidth": undefined,
-                                                        "elevation": 0,
-                                                        "flexDirection": "row",
-                                                        "height": 45,
-                                                        "justifyContent": "space-between",
-                                                        "marginRight": -9,
-                                                        "opacity": 1,
-                                                        "paddingBottom": 6,
-                                                        "paddingLeft": 15,
-                                                        "paddingRight": 15,
-                                                        "paddingTop": 6,
-                                                        "shadowColor": null,
-                                                        "shadowOffset": null,
-                                                        "shadowOpacity": null,
-                                                        "shadowRadius": null,
+                                                        "alignSelf": "flex-start",
                                                       }
                                                     }
                                                   >
-                                                    <RNSVGSvgView
-                                                      accessibilityElementsHidden={true}
-                                                      accessibilityLabel=""
-                                                      accessible={false}
-                                                      align="xMidYMid"
-                                                      bbHeight={24}
-                                                      bbWidth={24}
-                                                      color={4282866285}
-                                                      focusable={false}
-                                                      height={24}
-                                                      importantForAccessibility="no-hide-descendants"
-                                                      meetOrSlice={0}
-                                                      minX={0}
-                                                      minY={0}
+                                                    <View
                                                       style={
                                                         Array [
                                                           Object {
-                                                            "backgroundColor": "transparent",
-                                                            "borderWidth": 0,
-                                                          },
-                                                          Object {
-                                                            "color": "#475A6D",
-                                                          },
-                                                          Object {
-                                                            "flex": 0,
                                                             "height": 24,
                                                             "width": 24,
                                                           },
+                                                          Object {
+                                                            "transform": Array [
+                                                              Object {
+                                                                "scale": undefined,
+                                                              },
+                                                            ],
+                                                          },
                                                         ]
                                                       }
-                                                      tintColor={4282866285}
-                                                      vbHeight={24}
-                                                      vbWidth={24}
-                                                      width={24}
                                                     >
-                                                      <RNSVGGroup>
-                                                        <RNSVGPath
-                                                          clipRule={0}
-                                                          d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
-                                                          fill={
-                                                            Array [
-                                                              2,
-                                                            ]
+                                                      <RNSVGSvgView
+                                                        accessibilityElementsHidden={true}
+                                                        accessibilityLabel=""
+                                                        accessible={false}
+                                                        align="xMidYMid"
+                                                        animatedProps={
+                                                          Object {
+                                                            "color": undefined,
                                                           }
-                                                          fillRule={0}
-                                                          propList={
-                                                            Array [
-                                                              "fill",
-                                                              "fillRule",
-                                                            ]
-                                                          }
-                                                        />
-                                                      </RNSVGGroup>
-                                                    </RNSVGSvgView>
+                                                        }
+                                                        bbHeight={24}
+                                                        bbWidth={24}
+                                                        color={4279111443}
+                                                        focusable={false}
+                                                        height={24}
+                                                        importantForAccessibility="no-hide-descendants"
+                                                        meetOrSlice={0}
+                                                        minX={0}
+                                                        minY={0}
+                                                        style={
+                                                          Array [
+                                                            Object {
+                                                              "backgroundColor": "transparent",
+                                                              "borderWidth": 0,
+                                                            },
+                                                            Object {
+                                                              "color": "#0E0F13",
+                                                            },
+                                                            Object {
+                                                              "flex": 0,
+                                                              "height": 24,
+                                                              "width": 24,
+                                                            },
+                                                          ]
+                                                        }
+                                                        tintColor={4279111443}
+                                                        vbHeight={24}
+                                                        vbWidth={24}
+                                                        width={24}
+                                                      >
+                                                        <RNSVGGroup>
+                                                          <RNSVGPath
+                                                            clipRule={0}
+                                                            d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281-4.50455c.8439 0 1.5281-.68415 1.5281-1.52809 0-.84394-.6842-1.52809-1.5281-1.52809-.844 0-1.5281.68415-1.5281 1.52809 0 .84394.6841 1.52809 1.5281 1.52809Zm0 1.94382h.0005c.5678 0 1.0281.46029 1.0281 1.02813v8.0045c0 .5678-.4603 1.0281-1.0281 1.0281h-.0005C11.4603 19.5 11 19.0397 11 18.4719v-8.0045c0-.56784.4603-1.02813 1.0281-1.02813Z"
+                                                            fill={
+                                                              Array [
+                                                                2,
+                                                              ]
+                                                            }
+                                                            fillRule={0}
+                                                            propList={
+                                                              Array [
+                                                                "fill",
+                                                                "fillRule",
+                                                              ]
+                                                            }
+                                                          />
+                                                        </RNSVGGroup>
+                                                      </RNSVGSvgView>
+                                                    </View>
                                                   </View>
                                                 </View>
                                               </View>
