@@ -14,7 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
-import { useIOBarcodeReader } from "../components/Barcode/useIOBarcodeReader";
+import { useIOBarcodeFileReader } from "../components/Barcode/useIOBarcodeFileReader";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
@@ -24,14 +24,20 @@ const IDPayPaymentCodeScanScreen = () => {
   const isFocused = useIsFocused();
   const openDeepLink = useOpenDeepLink();
 
-  const handleBarcode = (barcode: IOBarcode) => {
+  const handleBarcodeSuccess = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       RNReactNativeHapticFeedback.trigger("notificationSuccess", {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false
       });
       openDeepLink(barcode.authUrl);
+    } else {
+      alert("Inknown barcode :(");
     }
+  };
+
+  const handleBarcodeError = () => {
+    alert("Invalid barcode :(");
   };
 
   const navigateToCodeInputScreen = () =>
@@ -52,13 +58,15 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useIOBarcodeScanner({
     marker: cameraMarkerComponent,
-    onBarcodeScanned: handleBarcode,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError,
     formats: ["QR_CODE"],
     disabled: !isFocused
   });
 
-  const { showImagePicker } = useIOBarcodeReader({
-    onBarcodeRead: handleBarcode
+  const { showImagePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
   });
 
   const openAppSetting = React.useCallback(async () => {
@@ -125,6 +133,7 @@ const IDPayPaymentCodeScanScreen = () => {
         {/* FIXME replace with the new header from the Design System 2.0  */}
         <CustomHeader />
       </LinearGradient>
+      {filePickerBottomSheet}
     </View>
   );
 };
