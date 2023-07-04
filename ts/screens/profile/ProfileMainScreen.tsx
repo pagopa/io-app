@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { List, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
