@@ -35,7 +35,7 @@
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
     "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc --no-verify && yarn push-hint",
     "start-fix-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch --no-verify && yarn push-hint",
-    "start-release-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as minor --no-verify && yarn push-hint",
+    "start-release-cycle": "yarn pre-cycle && standard-version --message \"release(it-wallet): {{currentTag}}\" -t \"\" --prerelease rc --release-as minor --no-verify && yarn push-hint",
     "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major --no-verify && yarn push-hint",
     "attach": "react-native attach",
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
