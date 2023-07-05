@@ -1,12 +1,13 @@
-import { Body, List, ListItem } from "native-base";
+import { List, ListItem } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform, View } from "react-native";
 import I18n from "../../i18n";
-import { VSpacer } from "../core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import Markdown from "../ui/Markdown";
 import { IOIcons, Icon } from "../core/icons";
 import { IOColors } from "../core/variables/IOColors";
+import { Body } from "../core/typography/Body";
 
 type Props = {
   hasCieApiLevelSupport: boolean;
@@ -43,6 +44,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                   name={props.hasCieApiLevelSupport ? okIcon : koIcon}
                   color={props.hasCieApiLevelSupport ? okColor : koColor}
                 />
+                <HSpacer size={8} />
                 <Body>
                   {I18n.t(
                     "authentication.landing.cie_unsupported.os_version_unsupported"
@@ -57,6 +59,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                     color={props.hasCieNFCFeature ? okColor : koColor}
                   />
                 </View>
+                <HSpacer size={8} />
                 <Body>
                   {I18n.t(
                     "authentication.landing.cie_unsupported.nfc_incompatible"
