@@ -1846,7 +1846,7 @@ services:
         label: "only the services you enabled can contact you."
         title: "Configure manually"
         body:
-          text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
+          text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
