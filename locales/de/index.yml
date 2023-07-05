@@ -249,9 +249,7 @@ login:
   welcome:
     line1: "Willkommen in deiner"
     line2: "Digitalen Staatsbürgerschaft"
-  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
-  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
-  biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o usare il riconoscimento biometrico, se abilitato.
+  expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
 inbox:
   enableButton: "Posteingang aktivieren"
   disableButton: "Posteingang deaktivieren"
@@ -365,7 +363,7 @@ profile:
             confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
           error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
-        title: Informativa Privacy e Termini e condizioni d'uso
+        title: "Datenschutz und Nutzungsbedingungen"
         description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
         header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
         updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
@@ -400,7 +398,7 @@ profile:
             cta: "Datenschutzbestimmungen und Nutzungsbedingungen"
           profileSettings: "Du kannst diese Einstellung jederzeit unter Profil > Einstellungen ändern."
           cta:
-            shareData: "Condividi"
+            shareData: "Daten freigeben"
             dontShareData: "Daten nicht freigeben"
             dontShare: "Nicht freigeben"
           confirmToast: "Einstellungen aktualisiert!"
@@ -476,7 +474,7 @@ profile:
         not_selected: "Nicht ausgewählt"
       notifications:
         title: "Push-Benachrichtigungen"
-        subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+        subtitle: "Vorschau und Erinnerung zulassen"
     empty:
       default: "Keine Präferenzen festgelegt"
     unavailable:
@@ -741,7 +739,7 @@ onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
     headerTitle: "IO einrichten"
-    accept: Accetta e continua
+    accept: "Akzeptieren"
     error: "Ladefehler"
     alert:
       title: "Achtung"
@@ -790,7 +788,7 @@ onboarding:
       reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsaufforderung von ACI"
       reminderOffPreviewOnTitle: "Gemeinde Ipazia"
       reminderOffPreviewOnMessage: "Die Einschreibungen für die Sommerbetreuung sind offen"
-      reminderOnPreviewOffTitle: Hai un avviso che scade domani
+      reminderOnPreviewOffTitle: "Du hast eine fällige Zahlungsaufforderung"
       reminderOnPreviewOffMessage: "Öffne die App um sie zu bezahlen"
       reminderOffPreviewOffTitle: "Du hast eine neue Mitteilung"
       reminderOffPreviewOffMessage: "Öffne die App um sie zu lesen"
