@@ -1839,7 +1839,7 @@ services:
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
         body:
-          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
+          text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "Manual setup"
