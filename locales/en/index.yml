@@ -3239,10 +3239,10 @@ features:
       action: "Attiva IT Wallet"
       hideLabel: "Nascondi questo banner"
     innerActionBanner: 
-      title: "Novità credenziali digitali"
-      description: "Attiva IT Wallet e aggiungi le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.)"
-      action: "Attiva IT Wallet"
-      hideLabel: "Nascondi questo banner"
+      title: "Digital credential news"
+      description: "Enable IT Wallet and add your digital credentials (e.g. driving license, health insurance card, etc.)"
+      action: "Enable IT Wallet"
+      hideLabel: "Hide this banner"
     activationScreen:
       title: "All your digital credentials on IO!"
       subTitle: "IT Wallet is the new feature on IO that allows you to obtain your digital credentials (such as the EU Disability Card, driving license and health card, etc.) and access the online services of the Public Administration in total security."
