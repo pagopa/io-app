@@ -3,35 +3,36 @@ import * as React from "react";
 import { useColorScheme } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
-import { DSColors } from "../core/DSColors";
-import { DSTypography } from "../core/DSTypography";
-import { DSIcons } from "../core/DSIcons";
-import { DSButtons } from "../core/DSButtons";
-import { DSTextFields } from "../core/DSTextFields";
-import { DSBadges } from "../core/DSBadges";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
-import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
-import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
-import { DSPictograms } from "../core/DSPictograms";
-import { DSLogos } from "../core/DSLogos";
-import { DSToastNotifications } from "../core/DSToastNotifications";
-import { DSSelection } from "../core/DSSelection";
-import { DSAdvice } from "../core/DSAdvice";
 import { DSAccordion } from "../core/DSAccordion";
-import { DSListItems } from "../core/DSListItems";
-import { DSLayout } from "../core/DSLayout";
+import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
-import { DSLoaders } from "../core/DSLoaders";
-import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSBadges } from "../core/DSBadges";
 import { DSBottomSheet } from "../core/DSBottomSheet";
+import { DSButtons } from "../core/DSButtons";
+import { DSColors } from "../core/DSColors";
+import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSIcons } from "../core/DSIcons";
+import { DSLayout } from "../core/DSLayout";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
+import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
+import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
+import { DSListItems } from "../core/DSListItems";
+import { DSLoaders } from "../core/DSLoaders";
+import { DSLogos } from "../core/DSLogos";
+import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
-import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSSelection } from "../core/DSSelection";
+import { DSTextFields } from "../core/DSTextFields";
+import { DSToastNotifications } from "../core/DSToastNotifications";
+import { DSTypography } from "../core/DSTypography";
 
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
+import { DSCards } from "../core/DSCards";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -143,6 +144,10 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
           component={DSBottomSheet}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route}
+          component={DSCards}
         />
 
         {/* DEBUG */}
