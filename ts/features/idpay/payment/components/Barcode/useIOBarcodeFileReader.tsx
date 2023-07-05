@@ -24,15 +24,11 @@ import { isAndroid } from "../../../../../utils/platform";
 import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
 import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
 
-type IOBarcodeFormatsType = {
-  [K in IOBarcodeFormat]: RNQRCodeType;
-};
-
 /**
  * Maps internal formats to external library formats
  * Necessary to work with the library {@link rn-qr-generator}
  */
-const IOBarcodeFormats: IOBarcodeFormatsType = {
+const IOBarcodeFormats: { [K in IOBarcodeFormat]: RNQRCodeType } = {
   DATA_MATRIX: "DataMatrix",
   QR_CODE: "QRCode"
 };
@@ -101,7 +97,7 @@ const useIOBarcodeFileReader = (
    * If successful, calls {@link onBarcodeSuccess} callback.
    * If unsuccessful, calls {@link onBarcodeError} callback.
    */
-  const qrCodeFromImageTask = (imageUri: string) =>
+  const imageDecodingTask = (imageUri: string) =>
     pipe(
       TE.tryCatch(
         () => RNQRGenerator.detect({ uri: imageUri }),
@@ -111,7 +107,7 @@ const useIOBarcodeFileReader = (
         const barcodeFormat = convertToIOBarcodeFormat(data.type);
 
         if (!barcodeFormat) {
-          // Formats not supported
+          // Format not supported
           return onBarcodeError();
         }
 
@@ -161,7 +157,7 @@ const useIOBarcodeFileReader = (
       O.chain(A.head),
       O.map(({ uri }) => uri),
       O.chain(O.fromNullable),
-      O.map(imageUri => qrCodeFromImageTask(imageUri)())
+      O.map(imageUri => imageDecodingTask(imageUri)())
     );
   };
 

@@ -63,7 +63,7 @@ export type IOBarcodeScanner = {
    */
   cameraComponent: React.ReactNode;
   /**
-   * Camera permission statuse
+   * Camera permission status
    */
   cameraPermissionStatus: CameraPermissionStatus;
   /**
