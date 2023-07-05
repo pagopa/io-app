@@ -514,7 +514,7 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      subtitle: Choose how to receive messages and reminders.
       titleExistingUser: Customize push notifications
       subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
