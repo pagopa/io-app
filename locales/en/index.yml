@@ -859,7 +859,7 @@ onboarding:
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Summer camp registration is now open
-      reminderOnPreviewOffTitle: Hai un avviso che scade domani
+      reminderOnPreviewOffTitle: You have a notice due tomorrow
       reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
