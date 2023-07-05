@@ -10,7 +10,8 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { H4 } from "../../../components/core/typography/H4";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import ItwTos from "../components/ItwTos";
+import ItwFooterInfoBox from "../components/ItwFooterInfoBox";
+import { ITW_ROUTES } from "../navigation/routes";
 
 const ItwActivationDetailsScreen = () => {
   const navigation = useNavigation();
@@ -25,7 +26,7 @@ const ItwActivationDetailsScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => undefined,
+    onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.INFO),
     title: I18n.t("features.itWallet.activationScreen.confirm")
   };
 
@@ -40,14 +41,15 @@ const ItwActivationDetailsScreen = () => {
           title={I18n.t("features.itWallet.activationScreen.title")}
           subtitle={I18n.t("features.itWallet.activationScreen.subTitle")}
         >
-          {/* Wallet cards image */}
-          <Image
-            source={walletCards}
-            resizeMode={"contain"}
-            style={{ width: "100%", height: 250 }}
-          />
-          {/* Info activation */}
           <View style={IOStyles.horizontalContentPadding}>
+            {/* Wallet cards image */}
+            <Image
+              source={walletCards}
+              resizeMode={"contain"}
+              style={{ width: "100%", height: 250 }}
+            />
+
+            {/* Info activation */}
             <H4 weight={"SemiBold"} color={"bluegreyDark"}>
               {I18n.t("features.itWallet.activationScreen.howActivate")}
             </H4>
@@ -58,8 +60,11 @@ const ItwActivationDetailsScreen = () => {
               )}
             </H4>
           </View>
+
           {/* Footer ToS and privacy link */}
-          <ItwTos />
+          <ItwFooterInfoBox
+            content={I18n.t("features.itWallet.activationScreen.tos")}
+          />
         </ScreenContent>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
