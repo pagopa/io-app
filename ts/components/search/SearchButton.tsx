@@ -16,6 +16,7 @@ import { LabelledItem } from "../LabelledItem";
 import { IOColors } from "../core/variables/IOColors";
 import IconButton from "../ui/IconButton";
 import { HSpacer } from "../core/spacer/Spacer";
+import { ICON_BUTTON_MARGIN } from "../screens/BaseHeader";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
@@ -71,7 +72,7 @@ class SearchButton extends React.Component<Props, State> {
               onPress={this.handleSearchPress}
               accessibilityLabel={I18n.t("global.buttons.search")}
             />
-            <HSpacer size={16} />
+            <HSpacer size={ICON_BUTTON_MARGIN} />
           </>
         )}
       </React.Fragment>

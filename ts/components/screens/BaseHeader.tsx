@@ -31,6 +31,8 @@ import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import { IOIcons, Icon } from "../core/icons/Icon";
 import IconButton from "../ui/IconButton";
+import { HSpacer } from "../core/spacer/Spacer";
+import { IOSpacer } from "../core/variables/IOSpacing";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -45,6 +47,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+export const ICON_BUTTON_MARGIN: IOSpacer = 16;
 
 const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
   <View>
@@ -269,17 +273,20 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           />
         )}
 
-        {onShowHelp && !isSearchEnabled && (
-          <HelpButton onShowHelp={onShowHelp} dark={dark} />
+        {customRightIcon && !isSearchEnabled && (
+          <>
+            <IconButton
+              icon={customRightIcon.iconName}
+              color="neutral"
+              onPress={customRightIcon.onPress}
+              accessibilityLabel={customRightIcon.accessibilityLabel}
+            />
+            {onShowHelp && <HSpacer size={ICON_BUTTON_MARGIN} />}
+          </>
         )}
 
-        {customRightIcon && !isSearchEnabled && (
-          <IconButton
-            icon={customRightIcon.iconName}
-            color="neutral"
-            onPress={customRightIcon.onPress}
-            accessibilityLabel={customRightIcon.accessibilityLabel}
-          />
+        {onShowHelp && !isSearchEnabled && (
+          <HelpButton onShowHelp={onShowHelp} dark={dark} />
         )}
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
