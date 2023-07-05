@@ -60,9 +60,9 @@ type IOBarcodeFileReader = {
    */
   filePickerBottomSheet: React.ReactElement;
   /**
-   * Shows the {@link filePickerBottomSheet} bottom sheet components
+   * Shows the {@link filePickerBottomSheet} bottom sheet component
    */
-  showFilePickerModal: () => void;
+  showFilePicker: () => void;
 };
 
 type IOBarcodeFileReaderConfiguration = {
@@ -239,7 +239,7 @@ const useIOBarcodeFileReader = (
     showImagePicker,
     showDocumentPicker,
     filePickerBottomSheet: filePickerModal.bottomSheet,
-    showFilePickerModal: filePickerModal.present
+    showFilePicker: filePickerModal.present
   };
 };
 
