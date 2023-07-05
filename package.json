@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "0.0.0-rc.0",
+  "version": "0.1.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v12.4.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v12.4.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.25/definitions.yml",
@@ -34,9 +34,9 @@
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
     "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc --no-verify && yarn push-hint",
-    "start-fix-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch --no-verify && yarn push-hint",
-    "start-release-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as minor --no-verify && yarn push-hint",
-    "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major --no-verify && yarn push-hint",
+    "start-fix-cycle": "yarn pre-cycle && standard-version --message \"release(it-wallet): {{currentTag}}\" -t \"\" --prerelease rc --release-as patch --no-verify && yarn push-hint",
+    "start-release-cycle": "yarn pre-cycle && standard-version --message \"release(it-wallet): {{currentTag}}\" -t \"\" --prerelease rc --release-as minor --no-verify && yarn push-hint",
+    "start-breaking-cycle": "yarn pre-cycle && standard-version --message \"release(it-wallet): {{currentTag}}\" -t \"\" --prerelease rc --release-as major --no-verify && yarn push-hint",
     "attach": "react-native attach",
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test:ci": "jest --ci --maxWorkers=2 --silent",
@@ -332,6 +332,9 @@
   "standard-version": {
     "scripts": {
       "postchangelog": "node scripts/changelog/add_pivotal_stories.js"
+    },
+    "skip": {
+      "tag": true
     }
   }
 }

@@ -4,10 +4,10 @@ on:
     branches: "bundle/it-wallet"
 jobs:
   run-static-checks:
-     if: contains(github.event.head_commit.message, 'release:')
+     if: contains(github.event.head_commit.message, 'release(it-wallet):')
      uses: ./.github/workflows/staticcheck.yaml
   release-android:
-    if: contains(github.event.head_commit.message, 'release:')
+    if: contains(github.event.head_commit.message, 'release(it-wallet):')
     needs: run-static-checks
     environment: prod-it-wallet
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
   release-ios:
-    if: contains(github.event.head_commit.message, 'release:')
+    if: contains(github.event.head_commit.message, 'release(it-wallet):')
     needs: run-static-checks
     environment: prod
     runs-on: macos-12
