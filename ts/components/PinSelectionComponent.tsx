@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext } from "react";
-import { KeyboardAvoidingView, SafeAreaView } from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView } from "react-native";
 import I18n from "../i18n";
 import {
   AppParamsList,
@@ -22,6 +22,7 @@ import BaseScreenComponent, {
 } from "./screens/BaseScreenComponent";
 import { AlertModal } from "./ui/AlertModal";
 import { LightModalContext } from "./ui/LightModal";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = Pick<IOStackNavigationRouteProps<AppParamsList>, "navigation"> & {
   isOnboarding: boolean;
@@ -82,25 +83,36 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
     [assistanceTool, dispatch, navigation, showRestartModal, isOnboarding]
   );
 
-  return (
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={0}
-      behavior="padding"
-      style={{ flex: 1 }}
-      enabled
+  const pinSelectionView = () => (
+    <BaseScreenComponent
+      goBack={handleGoBack}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["onboarding_pin", "unlock"]}
+      headerTitle={I18n.t("onboarding.pin.headerTitle")}
     >
-      <BaseScreenComponent
-        goBack={handleGoBack}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["onboarding_pin", "unlock"]}
-        headerTitle={I18n.t("onboarding.pin.headerTitle")}
-      >
-        <SafeAreaView style={{ flex: 1 }}>
-          <PinCreationForm onSubmit={handleSubmit} />
-        </SafeAreaView>
-      </BaseScreenComponent>
-    </KeyboardAvoidingView>
+      <SafeAreaView style={IOStyles.flex}>
+        <PinCreationForm onSubmit={handleSubmit} />
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
+
+  // The following code block represents the render function.
+  // If iOS, add KeyboardAvoidingView to allow footer to follow keyboard,
+  // for any other case (even error in platform recognition), just show pin selection view
+  if (Platform.OS === "ios") {
+    return (
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={0}
+        behavior="padding"
+        style={IOStyles.flex}
+        enabled
+      >
+        {pinSelectionView()}
+      </KeyboardAvoidingView>
+    );
+  } else {
+    return pinSelectionView();
+  }
 };
 
 export default PinSelectionComponent;
