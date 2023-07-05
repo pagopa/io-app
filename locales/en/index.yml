@@ -252,9 +252,9 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
-  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
-  biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o usare il riconoscimento biometrico, se abilitato.
+  expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
+  expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
+  biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -371,7 +371,7 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Informativa Privacy e Termini e condizioni d'uso
+        title: Privacy Policy and Terms of Service
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
@@ -406,9 +406,9 @@ profile:
           additionalInformation:
             description: "For more information, please read "
             cta: "the Privacy Policy and Terms and Conditions"
-          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
+          profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
-            shareData: "Condividi"
+            shareData: "Share"
             dontShareData: "Don’t share data"
             dontShare: "Don’t share"
           confirmToast: "Preferences updated!"
