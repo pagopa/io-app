@@ -183,8 +183,7 @@ const CieWebView = (props: Props) => {
     ) {
       // avoid redirect and follow the 'happy path'
       if (webView.current !== null) {
-        const authUrl = url.replace("nextUrl=", "OpenApp?nextUrl=");
-        setInternalState(state => generateFoundAuthUrlState(authUrl, state));
+        setInternalState(state => generateFoundAuthUrlState(url, state));
       }
       return false;
     }
