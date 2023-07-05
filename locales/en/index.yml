@@ -525,7 +525,7 @@ profile:
         description: Include the sender and subject of the message in the push notification
         link: More info
         bottomSheet:
-          title: Mostra un'anteprima
+          title: Show a preview
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
