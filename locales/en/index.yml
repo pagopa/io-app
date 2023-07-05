@@ -1833,7 +1833,7 @@ services:
       choiceLabel: "You chose the"
       unavailable: "Not defined"
       title: "Who can contact you?"
-      body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
+      body: "IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message."
       quickConfig:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
