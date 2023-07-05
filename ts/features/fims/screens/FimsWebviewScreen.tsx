@@ -2,7 +2,6 @@ import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { useCallback, useMemo } from "react";
 import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
 import { Cookie } from "@react-native-cookies/cookies";
@@ -15,6 +14,10 @@ import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 import { ioClearCookie, setCookie } from "../../../utils/cookieManager";
 import FimsWebView from "../components/FimsWebView";
 import { isLocalEnv } from "../../../utils/environment";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
 
 export type FimsWebviewScreenNavigationParams = Readonly<{
   url: string;
@@ -23,14 +26,14 @@ export type FimsWebviewScreenNavigationParams = Readonly<{
 const FimsWebviewScreen = () => {
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const route =
     useRoute<Route<"FIMS_WEBVIEW", FimsWebviewScreenNavigationParams>>();
 
   const maybeFIMSToken = O.fromNullable(useIOSelector(fimsTokenSelector));
   const maybeFimsDomain = O.fromNullable(useIOSelector(fimsDomainSelector));
 
-  const goBackAndResetInternalNavigationInfo = useCallback(() => {
+  const goBackAndResetInternalNavigationInfo = React.useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
@@ -70,9 +73,10 @@ const FimsWebviewScreen = () => {
     const maybeParsedUrl = pipe(
       maybeFimsDomain,
       O.chain(domain => {
-        const parsed = new URLParse(domain as string, true);
-        return parsed.protocol && (isLocalEnv || parsed.protocol === "https:")
-          ? O.some(parsed)
+        const parsedUrl = new URLParse(domain, true);
+        return parsedUrl.protocol &&
+          (isLocalEnv || parsedUrl.protocol === "https:")
+          ? O.some(parsedUrl)
           : O.none;
       })
     );
@@ -111,14 +115,21 @@ const FimsWebviewScreen = () => {
     navigation
   ]);
 
-  const showWebview = useMemo(
+  const showWebview = React.useMemo(
     () => !cookieError && isCookieAvailable,
     [cookieError, isCookieAvailable]
   );
+
   return (
-    <BaseScreenComponent goBack={handleGoBack}>
+    <BaseScreenComponent
+      customGoBack={<View />}
+      customRightIcon={{
+        iconName: "closeMedium",
+        onPress: handleGoBack
+      }}
+    >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+        <View style={IOStyles.flex}>
           {showWebview && O.isSome(maybeFIMSToken) && (
             <FimsWebView
               onWebviewClose={handleGoBack}
@@ -131,4 +142,5 @@ const FimsWebviewScreen = () => {
     </BaseScreenComponent>
   );
 };
+
 export default FimsWebviewScreen;
