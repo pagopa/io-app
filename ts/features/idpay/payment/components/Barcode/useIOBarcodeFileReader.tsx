@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Alert, Linking } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -21,8 +21,9 @@ import I18n from "../../../../../i18n";
 import { AsyncAlert } from "../../../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { isAndroid } from "../../../../../utils/platform";
-import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
 import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
+import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
+import { extractImagesDataFromPDF } from "./pdfUtils";
 
 /**
  * Maps internal formats to external library formats
@@ -82,9 +83,15 @@ const imageLibraryOptions: ImageLibraryOptions = {
 
 const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
   presentationStyle: "fullScreen",
-  copyTo: "cachesDirectory",
   mode: "open",
   type: [types.pdf]
+};
+
+const getPlatformSpecificUri = (uri: string): string => {
+  if (Platform.OS === "ios") {
+    return decodeURIComponent(uri.replace("file://", ""));
+  }
+  return uri;
 };
 
 const useIOBarcodeFileReader = (
@@ -93,9 +100,7 @@ const useIOBarcodeFileReader = (
   const { onBarcodeSuccess, onBarcodeError } = config;
 
   /**
-   * Handles the image Barcode decoding.
-   * If successful, calls {@link onBarcodeSuccess} callback.
-   * If unsuccessful, calls {@link onBarcodeError} callback.
+   * Handles the Barcode decoding from an image URI
    */
   const imageDecodingTask = (imageUri: string) =>
     pipe(
@@ -183,9 +188,24 @@ const useIOBarcodeFileReader = (
   /**
    * Handles the Barcode decoding from a PDF document
    */
-  const onDocumentSelected = (response: DocumentPickerResponse) => {
-    if (response.type === "application/pdf") {
+  const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
+    if (type === "application/pdf") {
       alert("TODO :)");
+
+      const platformSpecificUri = getPlatformSpecificUri(uri);
+      await extractImagesDataFromPDF(platformSpecificUri);
+
+      /* 
+      console.log("imagesData", imagesData.length);
+
+      const barcodes = await Promise.all(
+        imagesData.map(imageData => RNQRGenerator.detect({ base64: imageData }))
+      ); 
+
+      console.log("barcodes", barcodes);
+      */
+    } else {
+      onBarcodeError();
     }
   };
 

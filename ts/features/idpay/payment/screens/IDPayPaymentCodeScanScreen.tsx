@@ -64,7 +64,7 @@ const IDPayPaymentCodeScanScreen = () => {
     disabled: !isFocused
   });
 
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+  const { showImagePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
     onBarcodeSuccess: handleBarcodeSuccess,
     onBarcodeError: handleBarcodeError
   });
@@ -118,7 +118,7 @@ const IDPayPaymentCodeScanScreen = () => {
     <View style={styles.screen}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
       <BottomTabNavigation
-        onUploadBarcodePressed={showFilePicker}
+        onUploadBarcodePressed={showImagePicker}
         onNavigateToCodeInputScreenPressed={navigateToCodeInputScreen}
       />
       <LinearGradient
