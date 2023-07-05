@@ -1,10 +1,9 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
 import { WithTestID } from "../../types/WithTestID";
 import { formatDateAsLocal } from "../../utils/dates";
-import { IOIconSizeScale, Icon } from "../core/icons";
+import { Icon } from "../core/icons";
 import { IOLogoPaymentType, LogoPayment } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
@@ -12,6 +11,8 @@ import { NewH6 } from "../core/typography/NewH6";
 import { IOColors } from "../core/variables/IOColors";
 import { IOBannerRadius } from "../core/variables/IOShapes";
 import { IOStyles } from "../core/variables/IOStyles";
+import { LogoPaymentOrDefaultIcon } from "./baseComponents/LogoPaymentOrDefaultIcon";
+import { useListItemSpringAnimation } from "./hooks/useListItemSpringAnimation";
 
 const smallCardStyles = StyleSheet.create({
   cardContainer: {
@@ -22,7 +23,6 @@ const smallCardStyles = StyleSheet.create({
     width: 145,
     flexBasis: 145,
     flexGrow: 0,
-    // backgroundColor: IOColors["grey-100"],
     borderRadius: IOBannerRadius,
     padding: 16
   },
@@ -46,21 +46,12 @@ const bigCardStyles = StyleSheet.create({
     padding: 24
   },
   bottomRow: {
-    // flex: 1,
     height: 48,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   }
-  // topRow: {
-  //   // flex: 1,
-  //   // height: 48,
-  //   width: "100%",
-  //   flexDirection: "row",
-  //   alignItems: "flex-end",
-  //   justifyContent: "space-between"
-  // }
 });
 
 type PAYMENT_METHOD_CARD_TYPES = {
@@ -104,53 +95,78 @@ type BigPaymentCardProps = GeneralPaymentCardProps &
 type SmallPaymentCardProps = GeneralPaymentCardProps & {
   isError?: boolean;
 };
-type GeneralPaymentCardProps = {
+type GeneralPaymentCardProps = WithTestID<{
   hpan: string;
   cardIcon?: IOLogoPaymentType;
-};
+}>;
 export type PaymentCardProps = WithTestID<
-  | ({
-      size: "big";
-    } & BigPaymentCardProps)
-  | ({
-      size: "small";
-    } & SmallPaymentCardProps)
+  {
+    onCardPress?: () => void;
+    accessibilityLabel?: string;
+  } & (
+    | ({
+        size: "big";
+      } & BigPaymentCardProps)
+    | ({
+        size: "small";
+      } & SmallPaymentCardProps)
+  )
 >;
 
 export const PaymentCard = (props: PaymentCardProps) => {
-  // const { onPressIn, onPressOut, animatedScaleStyle } =
-  //   useListItemSpringAnimation();
-  const { size } = props;
-  if (size === "small") {
-    return <SmallPaymentCard {...props} />;
-  }
-  return <BigPaymentCard {...props} />;
+  const { size, onCardPress, testID, accessibilityLabel } = props;
+
+  const Content = () =>
+    size === "small" ? (
+      <SmallPaymentCard {...props} />
+    ) : (
+      <BigPaymentCard {...props} />
+    );
+
+  return onCardPress !== undefined ? (
+    <PressableBase
+      testID={`${testID}-pressable`}
+      accessibilityLabel={accessibilityLabel}
+      onCardPress={onCardPress}
+    >
+      <Content />
+    </PressableBase>
+  ) : (
+    <Content />
+  );
 };
 
 const SmallPaymentCard = ({
   isError,
   hpan,
-  cardIcon
+  cardIcon,
+  testID
 }: SmallPaymentCardProps) => {
+  const textColor = isError ? "error-850" : "grey-700";
   const containerStyle = {
     ...smallCardStyles.cardContainer,
     backgroundColor: isError ? IOColors["error-100"] : IOColors["grey-100"]
   };
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} testID={testID}>
       <View style={smallCardStyles.logoRow}>
-        <LogoPaymentOrDefaultIcon cardIcon={cardIcon} size={24} />
+        <LogoPaymentOrDefaultIcon
+          cardIcon={cardIcon}
+          size={24}
+          fallbackIconColor={textColor}
+        />
+
         {isError && <Icon name="errorFilled" size={18} color="error-850" />}
       </View>
       <VSpacer size={8} />
-      <NewH6>•••• {hpan}</NewH6>
+      <NewH6 color={textColor}>•••• {hpan}</NewH6>
     </View>
   );
 };
 
 const BigPaymentCard = (props: BigPaymentCardProps) => (
-  <View style={bigCardStyles.cardContainer}>
+  <View testID={props.testID} style={bigCardStyles.cardContainer}>
     <BigPaymentCardTopSection {...props} />
     <VSpacer size={8} />
     <BigPaymentCardBottomSection {...props} />
@@ -228,20 +244,28 @@ const BigPaymentCardTopSection = (props: BigPaymentCardProps) => {
       );
   }
 };
-
-const LogoPaymentOrDefaultIcon = ({
-  cardIcon,
-  size
-}: {
-  cardIcon?: IOLogoPaymentType;
-  size: IOIconSizeScale;
-}) =>
-  pipe(
-    cardIcon,
-    O.fromNullable,
-    O.fold(
-      // would be a cleaner solution to create an io-ts type and decode
-      () => <Icon name="creditCard" size={size} color="grey-700" />,
-      icon => <LogoPayment name={icon} size={size} />
-    )
+const PressableBase = (
+  props: React.PropsWithChildren<
+    WithTestID<{
+      onCardPress: () => void;
+      accessibilityLabel?: string;
+    }>
+  >
+) => {
+  const { onPressIn, onPressOut, animatedScaleStyle } =
+    useListItemSpringAnimation();
+  const { onCardPress, testID, accessibilityLabel, children } = props;
+  return (
+    <Pressable
+      onPress={onCardPress}
+      testID={testID}
+      accessible={true}
+      accessibilityLabel={accessibilityLabel}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
+    >
+      <Animated.View style={animatedScaleStyle}>{children}</Animated.View>
+    </Pressable>
   );
+};

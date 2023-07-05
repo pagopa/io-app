@@ -10,8 +10,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    // width: "100%",
-    // justifySelf: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between"
@@ -22,14 +20,8 @@ const onPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
-const onClose = () => {
-  Alert.alert("Alert", "Component dismissed");
-};
-
 export const DSCards = () => (
   <DesignSystemScreen title={"Cards"}>
-    {/* {renderBanner()} */}
-
     <DSComponentViewerBox name="size=small">
       <View style={styles.content}>
         <PaymentCard hpan="9999" isError={false} size="small" />
@@ -39,17 +31,24 @@ export const DSCards = () => (
           hpan="9999"
           isError={false}
           size="small"
+          onCardPress={onPress}
         />
       </View>
       <VSpacer size={16} />
       <View style={styles.content}>
-        <PaymentCard hpan="9999" isError={true} size="small" />
+        <PaymentCard
+          hpan="9999"
+          isError={true}
+          size="small"
+          onCardPress={onPress}
+        />
         <HSpacer size={16} />
         <PaymentCard
           cardIcon="mastercard"
           hpan="9999"
           isError={true}
           size="small"
+          onCardPress={onPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -61,6 +60,7 @@ export const DSCards = () => (
         size="big"
         cardIcon="mastercard"
         expirationDate={new Date()}
+        onCardPress={onPress}
       />
       <VSpacer size={16} />
       <PaymentCard
