@@ -808,7 +808,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    accept: Accetta e continua
+    accept: Accept and continue
     error: Loading error
     alert:
       title: Attention
