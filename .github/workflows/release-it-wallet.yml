@@ -35,7 +35,6 @@ jobs:
           ./scripts/android-release.sh ./android/app
           yarn bundle:android-release
           cd android && bundle exec fastlane alpha
-          bundle exec fastlane promote_internal_to_alpha
         shell: bash
         env:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
