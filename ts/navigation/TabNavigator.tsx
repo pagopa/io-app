@@ -17,6 +17,7 @@ import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPrefer
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { itWalletEnabled } from "../config";
 import NotAvailableScreen from "../features/it-wallet/screens/NotAvailableScreen";
+import ItwHomeScreen from "../features/it-wallet/screens/ItwHomeScreen";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
@@ -99,7 +100,7 @@ export const MainTabNavigator = () => {
         {itWalletEnabled && (
           <Tab.Screen
             name={ROUTES.ITWALLET_HOME}
-            component={NotAvailableScreen} // TODO: SIW-222
+            component={ItwHomeScreen}
             options={{
               title: I18n.t("global.navigator.wallet"),
               tabBarIcon: ({ color, focused }) => (
