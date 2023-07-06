@@ -21,6 +21,7 @@ export const AlertPayload = t.intersection(
   [AlertPayloadR, AlertPayloadO],
   "AlertPayload"
 );
+export type AlertPayload = t.TypeOf<typeof AlertPayload>;
 
 const SuccessPayloadR = t.interface({
   type: t.union([t.literal("SHOW_SUCCESS"), t.literal("SHOW_ERROR")]),
@@ -45,6 +46,7 @@ export const TitlePayload = t.intersection(
   [TitlePayloadR, TitlePayloadO],
   "TitlePayload"
 );
+export type TitlePayload = t.TypeOf<typeof TitlePayload>;
 
 const EmptyPayloadMessage = t.interface({
   type: t.union([

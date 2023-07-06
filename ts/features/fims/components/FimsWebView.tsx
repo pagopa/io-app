@@ -14,7 +14,12 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { LightModalContext } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
-import { WebviewMessage } from "../../../types/WebviewMessage";
+import {
+  AlertContent,
+  AlertPayload,
+  TitlePayload,
+  WebviewMessage
+} from "../../../types/WebviewMessage";
 import { getRemoteLocale } from "../../../utils/messages";
 import { showToast } from "../../../utils/showToast";
 import {
@@ -25,6 +30,10 @@ import {
 import ErrorContent from "./ErrorContent";
 import SuccessContent from "./SuccessContent";
 import WebviewErrorComponent from "./WebviewErrorComponent";
+
+type ContentOf<T extends AlertPayload | TitlePayload> = T extends AlertPayload
+  ? AlertContent
+  : string;
 
 type Props = {
   uri: string;
@@ -71,6 +80,19 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
       ref.current.reload();
     }
   };
+
+  const getMessageContent = React.useCallback(
+    <T extends AlertPayload | TitlePayload>(message: T): ContentOf<T> => {
+      const locale = getRemoteLocale();
+
+      return pipe(
+        message[locale],
+        O.fromNullable,
+        O.getOrElse(() => message.en)
+      ) as ContentOf<T>;
+    },
+    []
+  );
 
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
     if (!event.nativeEvent.url.startsWith(urlParsed.origin)) {
@@ -125,19 +147,11 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
               );
               break;
             case "SHOW_ALERT":
-              const value = pipe(
-                message[locale],
-                O.fromNullable,
-                O.getOrElse(() => message.en)
-              );
+              const value = getMessageContent<AlertPayload>(message);
               Alert.alert(value.title, value.description);
               break;
             case "SET_TITLE":
-              const title = pipe(
-                message[locale],
-                O.fromNullable,
-                O.getOrElse(() => message.en)
-              );
+              const title = getMessageContent<TitlePayload>(message);
               onTitle(title);
               break;
           }
