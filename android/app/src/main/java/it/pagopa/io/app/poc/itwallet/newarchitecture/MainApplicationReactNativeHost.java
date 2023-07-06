@@ -19,8 +19,8 @@ import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
 import it.pagopa.io.app.poc.itwallet.BuildConfig;
-import it.pagopa.io.app.newarchitecture.components.MainComponentsRegistry;
-import it.pagopa.io.app.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import it.pagopa.io.app.poc.itwallet.newarchitecture.components.MainComponentsRegistry;
+import it.pagopa.io.app.poc.itwallet.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 /**
