@@ -23,7 +23,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/b
 import { isAndroid } from "../../../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
 import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
-import { extractImagesDataFromPDF } from "./pdfUtils";
+import { getImagesFromPDFFile } from "./pdfUtils";
 
 /**
  * Maps internal formats to external library formats
@@ -68,6 +68,10 @@ type IOBarcodeFileReader = {
 
 type IOBarcodeFileReaderConfiguration = {
   /**
+   * Accepted formats of codes to be scanned
+   */
+  formats: Array<IOBarcodeFormat>;
+  /**
    * Callback called when a barcode is successfully decoded
    */
   onBarcodeSuccess: (barcode: IOBarcode) => void;
@@ -108,19 +112,19 @@ const useIOBarcodeFileReader = (
         () => RNQRGenerator.detect({ uri: imageUri }),
         () => onBarcodeError()
       ),
-      TE.map(data => {
-        const barcodeFormat = convertToIOBarcodeFormat(data.type);
+      TE.map(result => {
+        const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
 
-        if (!barcodeFormat) {
+        if (!(ioBarcodeFormat && config.formats.includes(ioBarcodeFormat))) {
           // Format not supported
           return onBarcodeError();
         }
 
         pipe(
-          A.head(data.values),
+          A.head(result.values),
           O.map(decodeIOBarcode),
           O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
-            format: barcodeFormat,
+            format: ioBarcodeFormat,
             ...decodedBarcode
           })),
           O.map(onBarcodeSuccess),
@@ -190,21 +194,40 @@ const useIOBarcodeFileReader = (
    */
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type === "application/pdf") {
-      alert("TODO :)");
-
       const platformSpecificUri = getPlatformSpecificUri(uri);
-      await extractImagesDataFromPDF(platformSpecificUri);
+      const imagesData = await getImagesFromPDFFile(platformSpecificUri);
 
-      /* 
-      console.log("imagesData", imagesData.length);
-
-      const barcodes = await Promise.all(
+      const scanResults = await Promise.all(
         imagesData.map(imageData => RNQRGenerator.detect({ base64: imageData }))
-      ); 
+      );
 
-      console.log("barcodes", barcodes);
-      */
+      const values = scanResults.reduce((acc, result) => {
+        const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
+
+        if (!(ioBarcodeFormat && config.formats.includes(ioBarcodeFormat))) {
+          // Format not supported
+          return acc;
+        }
+
+        return pipe(
+          A.head(result.values),
+          O.map(decodeIOBarcode),
+          O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
+            format: ioBarcodeFormat,
+            ...decodedBarcode
+          })),
+          O.map(barcode => [...acc, barcode]),
+          O.getOrElse(() => acc)
+        );
+      }, [] as Array<IOBarcode>);
+
+      pipe(
+        A.head(values),
+        O.map(onBarcodeSuccess),
+        O.getOrElse(onBarcodeError)
+      );
     } else {
+      // If the file is not a PDF document, show an error
       onBarcodeError();
     }
   };
