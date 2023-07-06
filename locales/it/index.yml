@@ -3262,6 +3262,11 @@ features:
       description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
       action: "Attiva IT Wallet"
       hideLabel: "Nascondi questo banner"
+    innerActionBanner: 
+      title: "Novità credenziali digitali"
+      description: "Attiva IT Wallet e aggiungi le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.)"
+      action: "Attiva IT Wallet"
+      hideLabel: "Nascondi questo banner"
     activationScreen:
       title: "Tutte le tue credenziali digitali su IO!"
       subTitle: "IT Wallet è la nuova funzionalità su IO che ti permette di ottenere le tue credenziali digitali (come l’EU Disability Card, la Licenza di guida e la Tessera Sanitaria, ecc) e di accedere ai servizi online della Pubblica Amministrazione in totale sicurezza."
@@ -3270,6 +3275,12 @@ features:
       tos: "Proseguendo accetti i [Termini e condizioni d’uso]() del servizio e confermi di avere letto l’[Informativa Privacy]()."
       cancel: "Non ora"
       confirm: "Attiva IT Wallet"
+    homeScreen:
+      categories: 
+        any: "Tutto"
+        personal: "Personali"
+        cgn: "Carta giovani"
+        payments: "Metodi di pagamento"
     infoAuthScreen:
       title: "Accedi con CIE + PIN e salva la tua identità digitale"
       subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
