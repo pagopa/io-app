@@ -21,7 +21,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
@@ -458,8 +457,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
+const mapDispatchToProps = (_: Dispatch, props: OwnProps) => ({
   navigateBack: () => navigateBack(),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -9,7 +8,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 
 export type BancomatDetailScreenNavigationParams = Readonly<{
@@ -17,8 +15,7 @@ export type BancomatDetailScreenNavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
 }>;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   IOStackNavigationRouteProps<WalletParamsList, "WALLET_BANCOMAT_DETAIL">;
 
 const bancomatScreenContent = (bancomat: BancomatPaymentMethod) => (
@@ -45,17 +42,6 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     />
   );
 };
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  addCoBadge: (abi: string) =>
-    navigateToOnboardingCoBadgeChooseTypeStartScreen({
-      abi,
-      legacyAddCreditCardBack: 1
-    })
-});
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BancomatDetailScreen);
+export default connect(mapStateToProps)(BancomatDetailScreen);

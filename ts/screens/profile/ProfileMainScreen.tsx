@@ -349,8 +349,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               <>
                 <Divider />
                 <ListItemNav
-                  value={"IDPay Onboarding Playground"}
-                  accessibilityLabel="IDPay Onboarding Playground"
+                  value={"IDPay Playground"}
+                  accessibilityLabel="IDPay Playground"
                   onPress={() =>
                     navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                       screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
