@@ -3710,7 +3710,7 @@ fastLogin:
         submitButtonTitle: "Continua la navigazione"
         cancelButtonTitle: "Annulla"
       transientError:
-        title: "C’è un problema temporaneo con il server"
+        title: "Non siamo riusciti ad autenticarti"
         subtitle: "Chiudi l'app e riprova tra qualche minuto."
         submitButtonTitle: "Vai alle FAQ"
 
