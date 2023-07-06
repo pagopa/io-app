@@ -95,12 +95,12 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
               Alert.alert(value.title, value.description);
               break;
             case "SHOW_TOAST":
-              const { text, type, position } = pipe(
+              const { text, type } = pipe(
                 message[locale],
                 O.fromNullable,
                 O.getOrElse(() => message.en)
               );
-              showToast(text, type, position);
+              showToast(text, type);
               break;
             case "SET_TITLE":
               const title = pipe(

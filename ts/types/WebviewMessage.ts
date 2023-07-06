@@ -31,11 +31,6 @@ export const ToastContentO = t.partial({
     t.literal("danger"),
     t.literal("success"),
     t.literal("warning")
-  ]),
-  position: t.union([
-    t.literal("top"),
-    t.literal("bottom"),
-    t.literal("center")
   ])
 });
 
