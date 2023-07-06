@@ -3352,7 +3352,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: Pagamento Online
+              QRCODE_TRANSACTION: "Pagamento"
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
