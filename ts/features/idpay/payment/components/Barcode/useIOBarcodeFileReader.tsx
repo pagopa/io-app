@@ -193,15 +193,21 @@ const useIOBarcodeFileReader = (
    * Handles the Barcode decoding from a PDF document
    */
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
-    if (type === "application/pdf") {
-      const platformSpecificUri = getPlatformSpecificUri(uri);
-      const imagesData = await getImagesFromPDFFile(platformSpecificUri);
+    if (type !== "application/pdf") {
+      // If the file is not a PDF document, show an error
+      onBarcodeError();
+    }
 
-      const scanResults = await Promise.all(
-        imagesData.map(imageData => RNQRGenerator.detect({ base64: imageData }))
-      );
+    const platformSpecificUri = getPlatformSpecificUri(uri);
+    const imagesData = await getImagesFromPDFFile(platformSpecificUri);
 
-      const values = scanResults.reduce((acc, result) => {
+    const scanResults = await Promise.all(
+      imagesData.map(imageData => RNQRGenerator.detect({ base64: imageData }))
+    );
+
+    pipe(
+      scanResults,
+      A.reduce([] as Array<IOBarcode>, (acc, result) => {
         const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
 
         if (!(ioBarcodeFormat && config.formats.includes(ioBarcodeFormat))) {
@@ -219,17 +225,11 @@ const useIOBarcodeFileReader = (
           O.map(barcode => [...acc, barcode]),
           O.getOrElse(() => acc)
         );
-      }, [] as Array<IOBarcode>);
-
-      pipe(
-        A.head(values),
-        O.map(onBarcodeSuccess),
-        O.getOrElse(onBarcodeError)
-      );
-    } else {
-      // If the file is not a PDF document, show an error
-      onBarcodeError();
-    }
+      }),
+      A.head, // Since there is not disambiguation between multiple barcodes, we just take the first valid one
+      O.map(onBarcodeSuccess),
+      O.getOrElse(onBarcodeError)
+    );
   };
 
   /**

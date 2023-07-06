@@ -4,7 +4,6 @@ import base64js from "base64-js";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import pako from "pako";
 import {
   PDFDocument,
   PDFName,
@@ -14,6 +13,15 @@ import {
 } from "pdf-lib";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
+/**
+ * Represents an embedded image in a PDF document
+ * @property width image width in pixels
+ * @property height image height in pixels
+ * @property data image data as a Uint8Array
+ * @property type image type (png or jpg)
+ * @property bitsPerComponent number of bits per component
+ * @property isGreyScale true if the image is in grayscale, false otherwise
+ */
 type EmbeddedImageData = {
   width: number;
   height: number;
@@ -37,23 +45,22 @@ const pdfObjectAsNumber = (object: PDFObject | undefined): number => {
  */
 const getEmbeddedImagesFromPDFDocument = (
   document: PDFDocument
-): ReadonlyArray<EmbeddedImageData> => {
-  const objects = document.context.enumerateIndirectObjects();
+): ReadonlyArray<EmbeddedImageData> =>
+  pipe(
+    document.context.enumerateIndirectObjects(),
+    A.reduce([] as ReadonlyArray<EmbeddedImageData>, (images, object) => {
+      if (!(object instanceof PDFRawStream)) {
+        return images;
+      }
 
-  return objects.reduce((acc, [_ref, object]) => {
-    if (!(object instanceof PDFRawStream)) {
-      return acc;
-    }
+      const { dict, contents } = object;
 
-    const { dict } = object;
+      const subtype = dict.get(PDFName.of("Subtype"));
 
-    const subtype = dict.get(PDFName.of("Subtype"));
+      if (subtype !== PDFName.of("Image")) {
+        return images;
+      }
 
-    if (subtype !== PDFName.of("Image")) {
-      return acc;
-    }
-
-    try {
       const colorSpace = dict.get(PDFName.of("ColorSpace"));
       const width = dict.get(PDFName.of("Width"));
       const height = dict.get(PDFName.of("Height"));
@@ -65,35 +72,34 @@ const getEmbeddedImagesFromPDFDocument = (
       const embeddedImage: EmbeddedImageData = {
         width: pdfObjectAsNumber(width),
         height: pdfObjectAsNumber(height),
-        data: type === "jpg" ? object.contents : pako.inflate(object.contents),
+        data: contents,
         type,
         bitsPerComponent: pdfObjectAsNumber(bitsPerComponent),
         isGreyScale: isGrayscale
       };
 
-      return [...acc, embeddedImage];
-    } catch {
-      return acc;
-    }
-  }, [] as ReadonlyArray<EmbeddedImageData>);
-};
+      return [...images, embeddedImage];
+    })
+  );
 
+/**
+ * Convert an {@link EmbeddedImageData} to a base64 string.
+ * @param image {@link EmbeddedImageData} to convert
+ * @returns a base64 string of the image
+ */
 const embeddedImageToBase64String = (
   image: EmbeddedImageData
 ): string | undefined => {
-  if (image.type === "jpg") {
-    // JPEG images can be directly converted to base64 strings
-    return base64js.fromByteArray(image.data);
+  switch (image.type) {
+    case "jpg":
+      // JPEG images can be directly converted to base64 strings
+      return base64js.fromByteArray(image.data);
+    case "png":
+      // TODO PNG images needs a bit of work to be converted to base64 strings
+      // PNG comes with a DEFLATE compression, so we need to decompress it first
+      // Maybe this could help https://github.com/Hopding/pdf-lib/issues/83
+      return undefined;
   }
-
-  if (image.type === "png") {
-    // TODO PNG images needs a bit of work to be converted to base64 strings
-    // First we need to decompress the image data (pako.inflate)
-    // Maybe this could help https://github.com/Hopding/pdf-lib/issues/83
-    return undefined;
-  }
-
-  return undefined;
 };
 
 /**
