@@ -66,12 +66,16 @@ type CardDataType =
     };
 
 export type SmallPaymentCardProps = WithTestID<
-  {
-    isError?: boolean;
-    onCardPress?: () => void;
-    accessibilityLabel?: string;
-    isLoading?: boolean;
-  } & CardDataType
+  | {
+      isLoading: true;
+      accessibilityLabel?: string;
+    }
+  | ({
+      isError?: boolean;
+      onCardPress?: () => void;
+      accessibilityLabel?: string;
+      isLoading?: false;
+    } & CardDataType)
 >;
 export const PaymentCardSmall = (props: SmallPaymentCardProps) => {
   if (props.isLoading) {

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import { WithTestID } from "../../../../types/WithTestID";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
@@ -43,50 +44,98 @@ type PAYMENT_METHOD_CARD_TYPES = {
 // bancomatPay also has a phone number
 // the rendering of the circuit logo is handled by the component
 
-type BigPaymentCardProps = WithTestID<{
-  accessibilityLabel?: string;
-}> &
-  (
-    | {
-        cardType: PAYMENT_METHOD_CARD_TYPES["PAYPAL"];
-        holderEmail: string;
-      }
-    | {
-        cardType: PAYMENT_METHOD_CARD_TYPES["BANCOMATPAY"];
-        phoneNumber: string;
-        expirationDate: Date;
-        holderName: string;
-      }
-    | {
-        cardType: PAYMENT_METHOD_CARD_TYPES["PAGOBANCOMAT"];
-        expirationDate: Date;
-        abiCode: string;
-        holderName: string;
-      }
-    | {
-        cardType: PAYMENT_METHOD_CARD_TYPES["COBADGE"];
-        expirationDate: Date;
-        abiCode: string;
-        holderName: string;
-        cardIcon?: IOLogoPaymentType;
-      }
-    | {
-        cardType: PAYMENT_METHOD_CARD_TYPES["CREDIT"];
-        expirationDate: Date;
-        holderName: string;
-        hpan: string;
-        cardIcon?: IOLogoPaymentType;
-      }
+export type PaymentCardBigProps = WithTestID<
+  | { isLoading: true; accessibilityLabel?: string }
+  | ({
+      isLoading?: false;
+      accessibilityLabel?: string;
+    } & PaymentCardStandardProps)
+>;
+
+type PaymentCardStandardProps =
+  | {
+      cardType: PAYMENT_METHOD_CARD_TYPES["PAYPAL"];
+      holderEmail: string;
+    }
+  | {
+      cardType: PAYMENT_METHOD_CARD_TYPES["BANCOMATPAY"];
+      phoneNumber: string;
+      expirationDate: Date;
+      holderName: string;
+    }
+  | {
+      cardType: PAYMENT_METHOD_CARD_TYPES["PAGOBANCOMAT"];
+      expirationDate: Date;
+      abiCode: string;
+      holderName: string;
+    }
+  | {
+      cardType: PAYMENT_METHOD_CARD_TYPES["COBADGE"];
+      expirationDate: Date;
+      abiCode: string;
+      holderName: string;
+      cardIcon?: IOLogoPaymentType;
+    }
+  | {
+      cardType: PAYMENT_METHOD_CARD_TYPES["CREDIT"];
+      expirationDate: Date;
+      holderName: string;
+      hpan: string;
+      cardIcon?: IOLogoPaymentType;
+    };
+export const PaymentCardBig = (props: PaymentCardBigProps) => {
+  if (props.isLoading) {
+    return <CardSkeleton testID={props.testID} />;
+  }
+  return (
+    <View testID={props.testID} style={styles.cardContainer}>
+      <BigPaymentCardTopSection {...props} />
+      <VSpacer size={8} />
+      <BigPaymentCardBottomSection {...props} />
+    </View>
   );
-export const PaymentCardBig = (props: BigPaymentCardProps) => (
-  <View testID={props.testID} style={styles.cardContainer}>
-    <BigPaymentCardTopSection {...props} />
-    <VSpacer size={8} />
-    <BigPaymentCardBottomSection {...props} />
+};
+
+const CardSkeleton = ({ testID }: { testID?: string }) => (
+  <View testID={`skeleton-${testID}`} style={styles.cardContainer}>
+    <View>
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={164}
+        height={24}
+      />
+      <VSpacer size={16} />
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={117}
+        height={16}
+      />
+    </View>
+    <View>
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={97}
+        height={16}
+      />
+      <VSpacer size={4} />
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={164}
+        height={24}
+      />
+    </View>
   </View>
 );
 
-const BigPaymentCardBottomSection = (props: BigPaymentCardProps) => {
+const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
   switch (props.cardType) {
     case "PAYPAL":
       return <NewH6>{props.holderEmail}</NewH6>;
@@ -116,7 +165,7 @@ const BigPaymentCardBottomSection = (props: BigPaymentCardProps) => {
   }
 };
 
-const BigPaymentCardTopSection = (props: BigPaymentCardProps) => {
+const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
   switch (props.cardType) {
     case "PAYPAL":
       return <NewH6>PAYPAL</NewH6>;

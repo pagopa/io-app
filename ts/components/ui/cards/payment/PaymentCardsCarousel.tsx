@@ -4,7 +4,7 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { HSpacer } from "../../../core/spacer/Spacer";
 import { PaymentCardSmall, SmallPaymentCardProps } from "./PaymentCardSmall";
 
-type PaymentCardsCarouselProps = WithTestID<{
+export type PaymentCardsCarouselProps = WithTestID<{
   cards: Array<SmallPaymentCardProps>;
 }>;
 

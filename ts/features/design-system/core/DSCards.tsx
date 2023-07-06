@@ -86,20 +86,11 @@ export const DSCards = () => (
       </View>
       <VSpacer size={16} />
       <View style={styles.content}>
-        <PaymentCardSmall
-          cardType={"CREDIT"}
-          hpan="9999"
-          isError={true}
-          onCardPress={onPress}
-          isLoading={true}
-        />
+        <PaymentCardSmall isLoading={true} />
+
         <HSpacer size={16} />
-        <PaymentCardSmall
-          cardType={"BANCOMATPAY"}
-          isError={true}
-          onCardPress={onPress}
-          isLoading={true}
-        />
+
+        <PaymentCardSmall isLoading={true} />
       </View>
     </DSComponentViewerBox>
     <DSComponentViewerBox
@@ -140,6 +131,8 @@ export const DSCards = () => (
         holderName="Mario Rossi"
         phoneNumber="+39 1234567890"
       />
+      <VSpacer size={16} />
+      <PaymentCardBig isLoading={true} />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="PaymentCardsCarousel">
       <PaymentCardsCarousel {...cardsDataForCarousel} />
