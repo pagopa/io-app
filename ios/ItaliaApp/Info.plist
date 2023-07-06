@@ -1,146 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>IT Wallet</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>0.0.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>ioit</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>ioit</string>
-			</array>
-		</dict>
-	</array>
-	<key>CFBundleVersion</key>
-	<string>0</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>http</string>
-		<string>https</string>
-	</array>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
-	<key>NFCReaderUsageDescription</key>
-	<string>NFC tag to read NDEF messages into the application</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>The app needs NSAppleMusicUsageDescription permission</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>The app needs NSBluetoothAlwaysUsageDescription permission</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>You’ll be able to read QR codes and pay pagoPA notices.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>IO needs access to your contacts to let you add them in calendar events</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Enable Face ID for a faster identification.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>The app needs NSLocationAlwaysUsageDescription permission</string>
-	<key>NSLocationUsageDescription</key>
-	<string>The app needs NSLocationUsageDescription permission</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The app needs NSLocationWhenInUseUsageDescription permission</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>IO needs access to the microphone in case you want to leave a voice note</string>
-	<key>NSMotionUsageDescription</key>
-	<string>The app needs NSMotionUsageDescription permission</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>You’ll be able to save bonuses, certificates and upload screenshots or payment notices.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>The app needs NSSpeechRecognitionUsageDescription permission</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>TitilliumWeb-Black.ttf</string>
-		<string>TitilliumWeb-Bold.ttf</string>
-		<string>TitilliumWeb-BoldItalic.ttf</string>
-		<string>TitilliumWeb-ExtraLight.ttf</string>
-		<string>TitilliumWeb-ExtraLightItalic.ttf</string>
-		<string>TitilliumWeb-Italic.ttf</string>
-		<string>TitilliumWeb-Light.ttf</string>
-		<string>TitilliumWeb-LightItalic.ttf</string>
-		<string>TitilliumWeb-Regular.ttf</string>
-		<string>TitilliumWeb-SemiBold.ttf</string>
-		<string>TitilliumWeb-SemiBoldItalic.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>RobotoMono-Bold.ttf</string>
-		<string>RobotoMono-BoldItalic.ttf</string>
-		<string>RobotoMono-Light.ttf</string>
-		<string>RobotoMono-LightItalic.ttf</string>
-		<string>RobotoMono-Regular.ttf</string>
-		<string>RobotoMono-RegularItalic.ttf</string>
-		<string>ReadexPro-Regular.ttf</string>
-		<string>io-icon-font.ttf</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
-	<key>UIFileSharingEnabled</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-	<array>
-		<string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
-		<string>A0000000308000000009816001</string>
-		<string>A00000000039</string>
-		<string>A0000002471001</string>
-		<string>00000000000000</string>
-	</array>
-	<key>method</key>
-	<string>app-store</string>
-	<key>UIStatusBarStyle</key>
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>IT Wallet</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>ioit</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>ioit</string>
+        </array>
+      </dict>
+    </array>
+    <key>CFBundleVersion</key>
+    <string>0</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>http</string>
+      <string>https</string>
+    </array>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>NFCReaderUsageDescription</key>
+    <string>NFC tag to read NDEF messages into the application</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>localhost</key>
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>
+      </dict>
+    </dict>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>The app needs NSAppleMusicUsageDescription permission</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>The app needs NSBluetoothAlwaysUsageDescription permission</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>IO needs access to your contacts to let you add them in calendar events</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>Enable Face ID for a faster identification.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>The app needs NSLocationAlwaysUsageDescription permission</string>
+    <key>NSLocationUsageDescription</key>
+    <string>The app needs NSLocationUsageDescription permission</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The app needs NSLocationWhenInUseUsageDescription permission</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>IO needs access to the microphone in case you want to leave a voice note</string>
+    <key>NSMotionUsageDescription</key>
+    <string>The app needs NSMotionUsageDescription permission</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>You’ll be able to save bonuses, certificates and upload screenshots or payment notices.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
+    <key>UIAppFonts</key>
+    <array>
+      <string>TitilliumWeb-Black.ttf</string>
+      <string>TitilliumWeb-Bold.ttf</string>
+      <string>TitilliumWeb-BoldItalic.ttf</string>
+      <string>TitilliumWeb-ExtraLight.ttf</string>
+      <string>TitilliumWeb-ExtraLightItalic.ttf</string>
+      <string>TitilliumWeb-Italic.ttf</string>
+      <string>TitilliumWeb-Light.ttf</string>
+      <string>TitilliumWeb-LightItalic.ttf</string>
+      <string>TitilliumWeb-Regular.ttf</string>
+      <string>TitilliumWeb-SemiBold.ttf</string>
+      <string>TitilliumWeb-SemiBoldItalic.ttf</string>
+      <string>Ionicons.ttf</string>
+      <string>RobotoMono-Bold.ttf</string>
+      <string>RobotoMono-BoldItalic.ttf</string>
+      <string>RobotoMono-Light.ttf</string>
+      <string>RobotoMono-LightItalic.ttf</string>
+      <string>RobotoMono-Regular.ttf</string>
+      <string>RobotoMono-RegularItalic.ttf</string>
+      <string>ReadexPro-Regular.ttf</string>
+      <string>io-icon-font.ttf</string>
+    </array>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>UIFileSharingEnabled</key>
+    <true/>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+      <string>armv7</string>
+    </array>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+    <array>
+      <string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
+      <string>A0000000308000000009816001</string>
+      <string>A00000000039</string>
+      <string>A0000002471001</string>
+      <string>00000000000000</string>
+    </array>
+    <key>method</key>
+    <string>app-store</string>
+    <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleLightContent</string>
-</dict>
+  </dict>
 </plist>
