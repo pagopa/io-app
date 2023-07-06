@@ -83,7 +83,7 @@
 -dontwarn com.kevinejohn.RNMixpanel.**
 
 # React Native Config must referencing to BuildConfig
--keep class it.pagopa.io.app.BuildConfig { *; }
+-keep class it.pagopa.io.app.poc.itwallet.BuildConfig { *; }
 
 # React-native svg
 -keep public class com.horcrux.svg.** {*;}
