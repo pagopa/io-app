@@ -1,4 +1,4 @@
-package it.pagopa.io.app.newarchitecture.modules;
+package it.pagopa.io.app.poc.itwallet.newarchitecture.modules;
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactPackageTurboModuleManagerDelegate;
