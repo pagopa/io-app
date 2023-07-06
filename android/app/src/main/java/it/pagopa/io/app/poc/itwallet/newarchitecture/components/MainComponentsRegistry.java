@@ -1,4 +1,4 @@
-package it.pagopa.io.app.newarchitecture.components;
+package it.pagopa.io.app.poc.itwallet.newarchitecture.components;
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
 import com.facebook.react.fabric.ComponentFactory;
