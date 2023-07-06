@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { right } from "fp-ts/lib/EitherT";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
