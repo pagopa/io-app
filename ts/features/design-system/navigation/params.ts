@@ -27,3 +27,8 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route]: undefined;
 };
+
+export type DesignSystemModalParamsList = {
+  [DESIGN_SYSTEM_ROUTES.MAIN]: undefined;
+  [DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route]: undefined;
+};

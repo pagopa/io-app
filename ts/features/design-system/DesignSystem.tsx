@@ -1,6 +1,9 @@
 import { SectionList, View } from "react-native";
 import * as React from "react";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import {
@@ -96,27 +99,29 @@ export const DesignSystem = (props: Props) => {
   const renderDSSectionFooter = () => <VSpacer size={40} />;
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.designSystem")}
+    // <BaseScreenComponent
+    //   goBack={true}
+    //   headerTitle={I18n.t("profile.main.designSystem")}
+    // >
+    <View
+      style={{
+        backgroundColor: IOColors[theme["appBackground-primary"]]
+      }}
     >
-      <View
-        style={{
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          paddingBottom: 120
-        }}
-      >
-        <SectionList
-          keyExtractor={(item, index) => `${item.route}-${index}`}
-          stickySectionHeadersEnabled={false}
-          contentContainerStyle={IOStyles.horizontalContentPadding}
-          renderSectionHeader={renderDSSection}
-          renderSectionFooter={renderDSSectionFooter}
-          renderItem={renderDSNavItem}
-          ItemSeparatorComponent={() => <Divider />}
-          sections={DESIGN_SYSTEM_SECTION_DATA}
-        />
-      </View>
-    </BaseScreenComponent>
+      <SectionList
+        keyExtractor={(item, index) => `${item.route}-${index}`}
+        stickySectionHeadersEnabled={false}
+        contentContainerStyle={[
+          IOStyles.horizontalContentPadding,
+          { paddingTop: IOVisualCostants.appMarginDefault }
+        ]}
+        renderSectionHeader={renderDSSection}
+        renderSectionFooter={renderDSSectionFooter}
+        renderItem={renderDSNavItem}
+        ItemSeparatorComponent={() => <Divider />}
+        sections={DESIGN_SYSTEM_SECTION_DATA}
+      />
+    </View>
+    // </BaseScreenComponent>
   );
 };

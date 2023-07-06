@@ -34,7 +34,7 @@ export const IOStyles = StyleSheet.create({
     alignItems: "center"
   },
   horizontalContentPadding: {
-    paddingHorizontal: themeVariables.contentPadding
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   },
   row: {
     flexDirection: "row"

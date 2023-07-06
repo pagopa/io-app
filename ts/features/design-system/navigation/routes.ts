@@ -34,6 +34,10 @@ const DESIGN_SYSTEM_ROUTES = {
     EDGE_TO_EDGE_AREA: {
       route: "DS_EDGE_TO_EDGE_AREA",
       title: "Edge to edge area"
+    },
+    FULL_SCREEN_MODAL: {
+      route: "DS_FULLSCR_MODAL",
+      title: "Full screen modal"
     }
   },
   LEGACY: {
