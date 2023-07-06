@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { right } from "fp-ts/lib/EitherT";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
@@ -71,6 +72,12 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
     O.getOrElse(() => "-")
   );
 
+  const businessName = pipe(
+    transaction.businessName,
+    O.fromNullable,
+    O.getOrElse(() => "-")
+  );
+
   return (
     <View style={IOStyles.flex}>
       <VSpacer size={8} />
@@ -99,6 +106,21 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
         {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
       </H4>
       <VSpacer size={4} />
+      <View style={styles.detailRow}>
+        <Body>
+          {I18n.t(
+            "idpay.initiative.operationDetails.discount.details.labels.business"
+          )}
+        </Body>
+        <HSpacer size={16} />
+        <Body
+          weight="SemiBold"
+          numberOfLines={2}
+          style={{ flex: 1, textAlign: "right" }}
+        >
+          {businessName}
+        </Body>
+      </View>
       <View style={styles.detailRow}>
         <Body>
           {I18n.t(
@@ -147,6 +169,7 @@ const styles = StyleSheet.create({
   detailRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 8
   }
 });
