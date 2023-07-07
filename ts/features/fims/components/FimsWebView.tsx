@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { useContext } from "react";
 import { Alert } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import {
@@ -12,12 +11,13 @@ import {
 import URLParse from "url-parse";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { LightModalContext } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import {
   AlertContent,
   AlertPayload,
   TitlePayload,
+  ToastContent,
+  ToastPayload,
   WebviewMessage
 } from "../../../types/WebviewMessage";
 import { getRemoteLocale } from "../../../utils/messages";
@@ -27,13 +27,14 @@ import {
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../../../utils/webview";
-import ErrorContent from "./ErrorContent";
-import SuccessContent from "./SuccessContent";
 import WebviewErrorComponent from "./WebviewErrorComponent";
 
-type ContentOf<T extends AlertPayload | TitlePayload> = T extends AlertPayload
-  ? AlertContent
-  : string;
+type ContentOf<T extends AlertPayload | TitlePayload | ToastPayload> =
+  T extends AlertPayload
+    ? AlertContent
+    : T extends TitlePayload
+    ? string
+    : ToastContent;
 
 type Props = {
   uri: string;
@@ -49,7 +50,6 @@ const injectedJavascript = closeInjectedScript(
 const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
-  const { showModal, hideModal } = useContext(LightModalContext);
 
   const ref = React.createRef<WebView>();
 
@@ -82,7 +82,9 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
   };
 
   const getMessageContent = React.useCallback(
-    <T extends AlertPayload | TitlePayload>(message: T): ContentOf<T> => {
+    <T extends AlertPayload | TitlePayload | ToastPayload>(
+      message: T
+    ): ContentOf<T> => {
       const locale = getRemoteLocale();
 
       return pipe(
@@ -107,48 +109,17 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
           showToast(I18n.t("webView.error.convertMessage"));
         },
         message => {
-          const locale = getRemoteLocale();
-
           switch (message.type) {
             case "CLOSE_MODAL":
               onWebviewClose();
               break;
-            case "START_LOAD":
-              setLoading(true);
-              break;
-            case "END_LOAD":
-              setLoading(false);
-              break;
-            case "SHOW_SUCCESS":
-              showModal(
-                <SuccessContent
-                  text={pipe(
-                    message[locale],
-                    O.fromNullable,
-                    O.getOrElse(() => message.en)
-                  )}
-                  close={() => {
-                    hideModal();
-                    onWebviewClose();
-                  }}
-                />
-              );
-              break;
-            case "SHOW_ERROR":
-              showModal(
-                <ErrorContent
-                  text={pipe(
-                    message[locale],
-                    O.fromNullable,
-                    O.getOrElse(() => message.en)
-                  )}
-                  close={hideModal}
-                />
-              );
-              break;
             case "SHOW_ALERT":
               const value = getMessageContent<AlertPayload>(message);
               Alert.alert(value.title, value.description);
+              break;
+            case "SHOW_TOAST":
+              const { text, type } = getMessageContent<ToastPayload>(message);
+              showToast(text, type);
               break;
             case "SET_TITLE":
               const title = getMessageContent<TitlePayload>(message);
