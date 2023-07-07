@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise */
-/* eslint-disable functional/no-let */
 import base64js from "base64-js";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
@@ -28,7 +26,8 @@ type EmbeddedImageData = {
   data: Uint8Array;
   type: "png" | "jpg";
   bitsPerComponent: number;
-  isGreyScale: boolean;
+  isGrayscale: boolean;
+  isAlphaLayer: boolean;
 };
 
 const pdfObjectAsNumber = (object: PDFObject | undefined): number => {
@@ -61,6 +60,7 @@ const getEmbeddedImagesFromPDFDocument = (
         return images;
       }
 
+      const smaskRef = dict.get(PDFName.of("SMask"));
       const colorSpace = dict.get(PDFName.of("ColorSpace"));
       const width = dict.get(PDFName.of("Width"));
       const height = dict.get(PDFName.of("Height"));
@@ -75,7 +75,8 @@ const getEmbeddedImagesFromPDFDocument = (
         data: contents,
         type,
         bitsPerComponent: pdfObjectAsNumber(bitsPerComponent),
-        isGreyScale: isGrayscale
+        isGrayscale,
+        isAlphaLayer: type === "png" && smaskRef !== undefined
       };
 
       return [...images, embeddedImage];
@@ -90,16 +91,16 @@ const getEmbeddedImagesFromPDFDocument = (
 const embeddedImageToBase64String = (
   image: EmbeddedImageData
 ): string | undefined => {
-  switch (image.type) {
-    case "jpg":
-      // JPEG images can be directly converted to base64 strings
-      return base64js.fromByteArray(image.data);
-    case "png":
-      // TODO PNG images needs a bit of work to be converted to base64 strings
-      // PNG comes with a DEFLATE compression, so we need to decompress it first
-      // Maybe this could help https://github.com/Hopding/pdf-lib/issues/83
-      return undefined;
+  if (image.type === "jpg") {
+    // JPEG images can be directly converted to base64 strings
+    return base64js.fromByteArray(image.data);
   }
+
+  // FIXME PNG images needs a bit of work to be converted to base64 strings
+  // PNG comes with a DEFLATE compression, so we need to decompress it first
+  // Maybe this could help https://github.com/Hopding/pdf-lib/issues/83
+
+  return undefined;
 };
 
 /**
