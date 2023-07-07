@@ -26,7 +26,6 @@ export type AlertPayload = t.TypeOf<typeof AlertPayload>;
 export const ToastContentR = t.interface({
   text: t.string
 });
-
 export const ToastContentO = t.partial({
   type: t.union([
     t.literal("danger"),
@@ -39,7 +38,6 @@ export const ToastContent = t.intersection(
   [ToastContentR, ToastContentO],
   "ToastContent"
 );
-
 export type ToastContent = t.TypeOf<typeof ToastContent>;
 
 const ToastPayloadR = t.interface({
@@ -54,6 +52,7 @@ export const ToastPayload = t.intersection(
   [ToastPayloadR, ToastPayloadO],
   "ToastPayload"
 );
+export type ToastPayload = t.TypeOf<typeof ToastPayload>;
 
 const SuccessPayloadR = t.interface({
   type: t.union([t.literal("SHOW_SUCCESS"), t.literal("SHOW_ERROR")]),
@@ -62,6 +61,7 @@ const SuccessPayloadR = t.interface({
 const SuccessPayloadO = t.partial({
   it: t.string
 });
+
 export const SuccessPayload = t.intersection(
   [SuccessPayloadR, SuccessPayloadO],
   "SuccessPayload"
@@ -74,6 +74,7 @@ const TitlePayloadR = t.interface({
 const TitlePayloadO = t.partial({
   it: t.string
 });
+
 export const TitlePayload = t.intersection(
   [TitlePayloadR, TitlePayloadO],
   "TitlePayload"

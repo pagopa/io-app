@@ -16,6 +16,8 @@ import {
   AlertContent,
   AlertPayload,
   TitlePayload,
+  ToastContent,
+  ToastPayload,
   WebviewMessage
 } from "../../../types/WebviewMessage";
 import { getRemoteLocale } from "../../../utils/messages";
@@ -27,9 +29,12 @@ import {
 } from "../../../utils/webview";
 import WebviewErrorComponent from "./WebviewErrorComponent";
 
-type ContentOf<T extends AlertPayload | TitlePayload> = T extends AlertPayload
-  ? AlertContent
-  : string;
+type ContentOf<T extends AlertPayload | TitlePayload | ToastPayload> =
+  T extends AlertPayload
+    ? AlertContent
+    : T extends TitlePayload
+    ? string
+    : ToastContent;
 
 type Props = {
   uri: string;
@@ -77,7 +82,9 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
   };
 
   const getMessageContent = React.useCallback(
-    <T extends AlertPayload | TitlePayload>(message: T): ContentOf<T> => {
+    <T extends AlertPayload | TitlePayload | ToastPayload>(
+      message: T
+    ): ContentOf<T> => {
       const locale = getRemoteLocale();
 
       return pipe(
@@ -102,8 +109,6 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
           showToast(I18n.t("webView.error.convertMessage"));
         },
         message => {
-          const locale = getRemoteLocale();
-
           switch (message.type) {
             case "CLOSE_MODAL":
               onWebviewClose();
@@ -113,11 +118,7 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
               Alert.alert(value.title, value.description);
               break;
             case "SHOW_TOAST":
-              const { text, type } = pipe(
-                message[locale],
-                O.fromNullable,
-                O.getOrElse(() => message.en)
-              );
+              const { text, type } = getMessageContent<ToastPayload>(message);
               showToast(text, type);
               break;
             case "SET_TITLE":
