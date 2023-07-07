@@ -18,8 +18,6 @@ import AskUserInteractionScreen from "../../features/fastLogin/screens/AskUserIn
 import LoadingScreenModal from "../../features/fastLogin/screens/RefreshTokenLoadingScreen";
 import { askUserToRefreshSessionToken } from "../../features/fastLogin/store/actions";
 import { openWebUrl } from "../../utils/url";
-import { itWalletEnabled } from "../../config";
-import { isDevEnv, isTestEnv } from "../../utils/environment";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -116,7 +114,7 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   }
   // if the app is out of date, force a screen to update it
 
-  if (!props.isAppSupported && !((itWalletEnabled || isDevEnv) && !isTestEnv)) {
+  if (!props.isAppSupported) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
       minVersioniOS: props.versionInfo?.min_app_version.ios,
       minVersionAndroid: props.versionInfo?.min_app_version.android
