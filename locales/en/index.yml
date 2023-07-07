@@ -444,6 +444,12 @@ profile:
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
+    addCard:
+      titleSection: Add test card
+      warning: 
+        title: Warning
+        message: To add a new test card, you must enable the pagoPA test environment from the settings.
+        closeButton: Close
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -3672,12 +3678,6 @@ idpay:
             title: You didn't give access to camera
             label: Browse your device settings to allow camera access.
             action: Go to settings
-  playground:
-    addCard:
-      warning: 
-        title: Warning
-        message: To add a new test card, you must enable the pagoPA test environment from the settings.
-        closeButton: Close
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

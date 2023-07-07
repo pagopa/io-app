@@ -444,6 +444,12 @@ profile:
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
+    addCard:
+      titleSection: Aggiungi carta di test
+      warning: 
+        title: Attenzione
+        message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
+        closeButton: Chiudi
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -3695,12 +3701,6 @@ idpay:
             title: Non hai dato il permesso di usare la fotocamera
             label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
             action: Vai alle impostazioni
-  playground:
-    addCard:
-      warning: 
-        title: Attenzione
-        message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
-        closeButton: Chiudi
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"

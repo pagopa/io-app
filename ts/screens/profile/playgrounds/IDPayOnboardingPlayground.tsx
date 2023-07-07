@@ -1,9 +1,8 @@
 /* eslint-disable sonarjs/no-identical-functions */
 import { useNavigation } from "@react-navigation/native";
 import { ListItem as NBListItem } from "native-base";
-import { useDispatch } from "react-redux";
 import React from "react";
-import { Alert, Button, ScrollView, View } from "react-native";
+import { Button, ScrollView, View } from "react-native";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
@@ -18,16 +17,10 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
-import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { walletAddCoBadgeStart } from "../../../features/wallet/onboarding/cobadge/store/actions";
-import I18n from "../../../i18n";
 
 const IDPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [serviceId, setServiceId] = React.useState<string | undefined>();
-  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-  const dispatch = useDispatch();
 
   const navigateToIDPayOnboarding = (serviceId: string) => {
     navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
@@ -42,24 +35,6 @@ const IDPayOnboardingPlayground = () => {
     if (serviceId !== undefined && serviceId !== "") {
       navigateToIDPayOnboarding(serviceId);
     }
-  };
-
-  const handleAddNewTestCard = () => {
-    if (!isPagoPATestEnabled) {
-      Alert.alert(
-        I18n.t("idpay.playground.addCard.warning.title"),
-        I18n.t("idpay.playground.addCard.warning.message"),
-        [
-          {
-            text: I18n.t("idpay.playground.addCard.warning.closeButton"),
-            style: "cancel"
-          }
-        ],
-        { cancelable: false }
-      );
-      return;
-    }
-    dispatch(walletAddCoBadgeStart(undefined));
   };
 
   return (
@@ -77,8 +52,6 @@ const IDPayOnboardingPlayground = () => {
         />
         <VSpacer size={16} />
         <Button onPress={handleServiceSubmit} title="Start onboarding" />
-        <VSpacer size={4} />
-        <Button onPress={handleAddNewTestCard} title="Aggiungi carta di test" />
         <VSpacer size={24} />
         <H2>Iniziative di test</H2>
         <Body>Iniziative disponibili tramite io-dev-server</Body>
