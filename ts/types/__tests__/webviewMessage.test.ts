@@ -117,6 +117,35 @@ const invalidShowAlert3 = {
   type: "SHOW_ALERT"
 };
 
+const validSetTitle1 = {
+  type: "SET_TITLE",
+  en: "test",
+  it: "test"
+};
+
+const validSetTitle2 = {
+  type: "SET_TITLE",
+  en: "test"
+};
+
+const invalidSetTitle1 = {
+  type: "SET_TITLE"
+};
+
+const invalidSetTitle2 = {
+  type: "SET_TITLE",
+  en: {
+    title: "Test title"
+  }
+};
+
+const invalidSetTitle3 = {
+  type: "SET_TITLE",
+  it: {
+    title: "Test title"
+  }
+};
+
 const localeEN = "en";
 
 const localeIT = "it";
@@ -213,5 +242,28 @@ describe("WebviewMessage", () => {
 
   it("Should NOT recognize a valid Message for Show Alert event", () => {
     expect(E.isRight(WebviewMessage.decode(invalidShowAlert3))).toBeFalsy();
+  });
+
+  it("Should recognize a valid Message for Set Title event", () => {
+    expect(E.isRight(WebviewMessage.decode(validSetTitle1))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validSetTitle1[localeEN]))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validSetTitle1[localeIT]))).toBeTruthy();
+  });
+
+  it("Should recognize a valid Message for Set Title event", () => {
+    expect(E.isRight(WebviewMessage.decode(validSetTitle2))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validSetTitle2[localeEN]))).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Set Title event", () => {
+    expect(E.isLeft(WebviewMessage.decode(invalidSetTitle1))).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Set Title event", () => {
+    expect(E.isLeft(WebviewMessage.decode(invalidSetTitle2))).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Set Title event", () => {
+    expect(E.isLeft(WebviewMessage.decode(invalidSetTitle3))).toBeTruthy();
   });
 });
