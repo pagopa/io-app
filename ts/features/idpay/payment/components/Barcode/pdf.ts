@@ -48,7 +48,7 @@ const getEmbeddedImagesFromPDFDocument = (
 ): ReadonlyArray<EmbeddedImageData> =>
   pipe(
     document.context.enumerateIndirectObjects(),
-    A.reduce([] as ReadonlyArray<EmbeddedImageData>, (images, object) => {
+    A.reduce([] as ReadonlyArray<EmbeddedImageData>, (images, [_, object]) => {
       if (!(object instanceof PDFRawStream)) {
         return images;
       }
