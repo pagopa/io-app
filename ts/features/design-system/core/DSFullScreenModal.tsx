@@ -22,7 +22,12 @@ export const DSFullScreenModal = () => {
         backgroundColor: IOColors.white
       }}
     >
-      <ScrollView style={{ backgroundColor: IOColors.white }}>
+      <ScrollView
+        contentContainerStyle={{
+          backgroundColor: IOColors.white,
+          paddingVertical: IOVisualCostants.appMarginDefault
+        }}
+      >
         {/* This extra View is required because ScrollView
           doesn't manage properly the padding values set directly */}
         <ContentWrapper>

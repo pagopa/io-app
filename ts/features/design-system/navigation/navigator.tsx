@@ -1,10 +1,13 @@
 import {
+  StackNavigationOptions,
   TransitionPresets,
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
 import { View, useColorScheme } from "react-native";
+import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSColors } from "../core/DSColors";
@@ -45,6 +48,49 @@ import DESIGN_SYSTEM_ROUTES from "./routes";
 const Stack = createStackNavigator<DesignSystemParamsList>();
 const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
 
+// BackButton managed through React Navigation
+const RNNBackButton = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
+      <IconButton
+        icon="backiOS"
+        color="neutral"
+        onPress={() => {
+          navigation.goBack();
+        }}
+        accessibilityLabel={""}
+      />
+    </View>
+  );
+};
+
+const RNNCloseButton = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
+      <IconButton
+        icon="closeMedium"
+        color="neutral"
+        onPress={() => {
+          navigation.goBack();
+        }}
+        accessibilityLabel={""}
+      />
+    </View>
+  );
+};
+
+const customModalHeaderConf: StackNavigationOptions = {
+  headerLeft: () => null,
+  headerTitle: () => null,
+  headerRight: RNNCloseButton,
+  headerStyle: { height: IOVisualCostants.headerHeight },
+  headerStatusBarHeight: 0
+};
+
 export const DesignSystemNavigator = () => {
   const colorScheme = useColorScheme();
 
@@ -76,22 +122,7 @@ export const DesignSystemNavigator = () => {
         <ModalStack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
           component={DSFullScreenModal}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
-                <IconButton
-                  icon="backiOS"
-                  color="neutral"
-                  onPress={() => {
-                    navigation.pop();
-                  }}
-                  accessibilityLabel={""}
-                />
-              </View>
-            ),
-            headerStyle: { height: 56 },
-            headerStatusBarHeight: 0
-          })}
+          options={customModalHeaderConf}
         />
       </ModalStack.Navigator>
     </IOThemeContext.Provider>
@@ -101,6 +132,18 @@ export const DesignSystemNavigator = () => {
 const DesignSystemMainStack = () => {
   const insets = useSafeAreaInsets();
 
+  const customHeaderConf: StackNavigationOptions = useMemo(
+    () => ({
+      headerTitleStyle: {
+        ...makeFontStyleObject("Regular", false, "ReadexPro"),
+        fontSize: 14
+      },
+      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
+      headerLeft: RNNBackButton
+    }),
+    [insets]
+  );
+
   return (
     <Stack.Navigator
       initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
@@ -109,38 +152,26 @@ const DesignSystemMainStack = () => {
       <ModalStack.Screen
         name={DESIGN_SYSTEM_ROUTES.MAIN.route}
         component={DesignSystem}
-        options={({ navigation }) => ({
-          headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title,
-          headerTitleStyle: {
-            ...makeFontStyleObject("Regular", false, "ReadexPro"),
-            fontSize: 14
-          },
-          headerStyle: { height: insets.top + 56 },
-          headerLeft: () => (
-            <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
-              <IconButton
-                icon="backiOS"
-                color="neutral"
-                onPress={() => {
-                  navigation.pop();
-                }}
-                accessibilityLabel={""}
-              />
-            </View>
-          )
-        })}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
         component={DSColors}
-        options={{ headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title }}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
         component={DSTypography}
         options={{
+          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
         }}
       />
@@ -148,82 +179,146 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
         component={DSLayout}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
         component={DSIcons}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
         component={DSPictograms}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
         component={DSLogos}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
         component={DSLoaders}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
         component={DSHapticFeedback}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.title
+        }}
       />
 
       {/* COMPONENTS */}
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
         component={DSButtons}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
         component={DSSelection}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
         component={DSTextFields}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
         component={DSBadges}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
         component={DSListItems}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
         component={DSToastNotifications}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
         component={DSAccordion}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route}
         component={DSAlert}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
         component={DSAdvice}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.title
+        }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
         component={DSBottomSheet}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
+        }}
       />
 
       {/* DEBUG */}
@@ -247,14 +342,26 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
         component={DSLegacyPictograms}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
+        }}
       />
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
         component={DSLegacyButtons}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
+        }}
       />
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
         component={DSLegacyIllustrations}
+        options={{
+          ...customHeaderConf,
+          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.title
+        }}
       />
     </Stack.Navigator>
   );
