@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.37.0-rc.1](https://github.com/pagopa/io-app/compare/2.37.0-rc.0...2.37.0-rc.1) (2023-07-05)
+
+
+### Bug Fixes
+
+* [[IOPID-377](https://pagopa.atlassian.net/browse/IOPID-377)] iOS crash while reading CIE with NFC ([#4746](https://github.com/pagopa/io-app/issues/4746)) ([a843ac4](https://github.com/pagopa/io-app/commit/a843ac43bf6e4622790a5e90e39a6483e04da5a5))
+
 ## [2.37.0-rc.0](https://github.com/pagopa/io-app/compare/2.36.0-rc.2...2.37.0-rc.0) (2023-07-04)
 
 
