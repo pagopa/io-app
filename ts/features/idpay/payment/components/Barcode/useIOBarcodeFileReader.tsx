@@ -23,7 +23,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/b
 import { isAndroid } from "../../../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
 import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
-import { getImagesFromPDFFile } from "./pdfUtils";
+import { getImagesFromPDFFile } from "./pdf";
 
 /**
  * Maps internal formats to external library formats
