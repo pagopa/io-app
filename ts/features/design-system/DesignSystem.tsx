@@ -4,8 +4,6 @@ import {
   IOStyles,
   IOVisualCostants
 } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import I18n from "../../i18n";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -99,29 +97,21 @@ export const DesignSystem = (props: Props) => {
   const renderDSSectionFooter = () => <VSpacer size={40} />;
 
   return (
-    // <BaseScreenComponent
-    //   goBack={true}
-    //   headerTitle={I18n.t("profile.main.designSystem")}
-    // >
-    <View
-      style={{
-        backgroundColor: IOColors[theme["appBackground-primary"]]
-      }}
-    >
-      <SectionList
-        keyExtractor={(item, index) => `${item.route}-${index}`}
-        stickySectionHeadersEnabled={false}
-        contentContainerStyle={[
-          IOStyles.horizontalContentPadding,
-          { paddingTop: IOVisualCostants.appMarginDefault }
-        ]}
-        renderSectionHeader={renderDSSection}
-        renderSectionFooter={renderDSSectionFooter}
-        renderItem={renderDSNavItem}
-        ItemSeparatorComponent={() => <Divider />}
-        sections={DESIGN_SYSTEM_SECTION_DATA}
-      />
-    </View>
-    // </BaseScreenComponent>
+    <SectionList
+      keyExtractor={(item, index) => `${item.route}-${index}`}
+      stickySectionHeadersEnabled={false}
+      contentContainerStyle={[
+        IOStyles.horizontalContentPadding,
+        {
+          paddingTop: IOVisualCostants.appMarginDefault,
+          backgroundColor: IOColors[theme["appBackground-primary"]]
+        }
+      ]}
+      renderSectionHeader={renderDSSection}
+      renderSectionFooter={renderDSSectionFooter}
+      renderItem={renderDSNavItem}
+      ItemSeparatorComponent={() => <Divider />}
+      sections={DESIGN_SYSTEM_SECTION_DATA}
+    />
   );
 };
