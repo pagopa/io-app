@@ -440,7 +440,7 @@ profile:
       idpayTest: Test IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
-    appVersion: Versione App
+    appVersion: Versione
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
@@ -3377,7 +3377,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: Pagamento Online
+              QRCODE_TRANSACTION: "Pagamento"
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3428,6 +3428,7 @@ idpay:
             AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
             CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
           labels:
+            business: Esercente
             status: Stato
             totalAmount: Importo totale
             idpayAmount: Importo transazione ID Pay

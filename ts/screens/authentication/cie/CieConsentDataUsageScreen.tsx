@@ -167,7 +167,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           androidMicrophoneAccessDisabled={true}
           textZoom={100}
           originWhitelist={originSchemasWhiteList}
-          source={{ uri: this.cieAuthorizationUri }}
+          source={{ uri: decodeURIComponent(this.cieAuthorizationUri) }}
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           renderLoading={() => loaderComponent}

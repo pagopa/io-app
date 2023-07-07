@@ -21,6 +21,7 @@ export const AlertPayload = t.intersection(
   [AlertPayloadR, AlertPayloadO],
   "AlertPayload"
 );
+export type AlertPayload = t.TypeOf<typeof AlertPayload>;
 
 const SuccessPayloadR = t.interface({
   type: t.union([t.literal("SHOW_SUCCESS"), t.literal("SHOW_ERROR")]),
@@ -34,6 +35,19 @@ export const SuccessPayload = t.intersection(
   "SuccessPayload"
 );
 
+const TitlePayloadR = t.interface({
+  type: t.literal("SET_TITLE"),
+  en: t.string
+});
+const TitlePayloadO = t.partial({
+  it: t.string
+});
+export const TitlePayload = t.intersection(
+  [TitlePayloadR, TitlePayloadO],
+  "TitlePayload"
+);
+export type TitlePayload = t.TypeOf<typeof TitlePayload>;
+
 const EmptyPayloadMessage = t.interface({
   type: t.union([
     t.literal("CLOSE_MODAL"),
@@ -44,6 +58,7 @@ const EmptyPayloadMessage = t.interface({
 
 export const WebviewMessage = t.union([
   AlertPayload,
+  TitlePayload,
   SuccessPayload,
   EmptyPayloadMessage
 ]);
