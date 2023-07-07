@@ -68,6 +68,14 @@ function showAlertBox(payload) {
   sendMessagesToRN(message);
 }
 
+function showToast(payload) {
+  const message = {
+    type: "SHOW_TOAST",
+    ...payload
+  };
+  sendMessagesToRN(message);
+}
+
 function setTitle(payload) {
   const message = {
     type: "SET_TITLE",
