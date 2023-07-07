@@ -1,7 +1,6 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import RNReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
@@ -26,10 +25,6 @@ const IDPayPaymentCodeScanScreen = () => {
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
-      RNReactNativeHapticFeedback.trigger("notificationSuccess", {
-        enableVibrateFallback: true,
-        ignoreAndroidSystemSettings: false
-      });
       openDeepLink(barcode.authUrl);
     } else {
       alert("Inknown barcode :(");
