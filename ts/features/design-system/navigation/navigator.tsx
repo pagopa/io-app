@@ -31,14 +31,14 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
-
 import {
-  IOColors,
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
 import IconButton from "../../../components/ui/IconButton";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
+import { DSFullScreenModal } from "../core/DSFullScreenModal";
+import { makeFontStyleObject } from "../../../components/core/fonts";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -69,15 +69,13 @@ export const DesignSystemNavigator = () => {
         }}
       >
         <ModalStack.Screen
-          name={DESIGN_SYSTEM_ROUTES.MAIN}
+          name={DESIGN_SYSTEM_ROUTES.MAIN.route}
           component={DesignSystemMainStack}
-          options={{
-            headerShown: false
-          }}
+          options={{ headerShown: false }}
         />
         <ModalStack.Screen
           name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
-          component={DSEdgeToEdgeArea}
+          component={DSFullScreenModal}
           options={({ navigation }) => ({
             headerLeft: () => (
               <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
@@ -91,7 +89,7 @@ export const DesignSystemNavigator = () => {
                 />
               </View>
             ),
-            headerStyle: { height: 56, backgroundColor: IOColors["blue-50"] },
+            headerStyle: { height: 56 },
             headerStatusBarHeight: 0
           })}
         />
@@ -105,13 +103,18 @@ const DesignSystemMainStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN}
-      headerMode="float"
+      initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
+      headerMode="screen"
     >
-      <Stack.Screen
-        name={DESIGN_SYSTEM_ROUTES.MAIN}
+      <ModalStack.Screen
+        name={DESIGN_SYSTEM_ROUTES.MAIN.route}
         component={DesignSystem}
         options={({ navigation }) => ({
+          headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title,
+          headerTitleStyle: {
+            ...makeFontStyleObject("Regular", false, "ReadexPro"),
+            fontSize: 14
+          },
           headerStyle: { height: insets.top + 56 },
           headerLeft: () => (
             <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
@@ -131,11 +134,15 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
         component={DSColors}
+        options={{ headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title }}
       />
 
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
         component={DSTypography}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
+        }}
       />
 
       <Stack.Screen
@@ -223,14 +230,17 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
         component={DSSafeArea}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
         component={DSSafeAreaCentered}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
+        options={{ headerShown: false }}
       />
 
       {/* LEGACY */}

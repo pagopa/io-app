@@ -1,7 +1,7 @@
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
 export type DesignSystemParamsList = {
-  [DESIGN_SYSTEM_ROUTES.MAIN]: undefined;
+  [DESIGN_SYSTEM_ROUTES.MAIN.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route]: undefined;
@@ -29,6 +29,6 @@ export type DesignSystemParamsList = {
 };
 
 export type DesignSystemModalParamsList = {
-  [DESIGN_SYSTEM_ROUTES.MAIN]: undefined;
+  [DESIGN_SYSTEM_ROUTES.MAIN.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route]: undefined;
 };

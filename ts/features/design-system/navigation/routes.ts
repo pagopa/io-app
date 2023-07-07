@@ -1,5 +1,5 @@
 const DESIGN_SYSTEM_ROUTES = {
-  MAIN: "DESIGN_SYSTEM_MAIN",
+  MAIN: { route: "DESIGN_SYSTEM_MAIN", title: "Design System" },
   FOUNDATION: {
     COLOR: { route: "DESIGN_SYSTEM_COLOR", title: "Colors" },
     TYPOGRAPHY: { route: "DESIGN_SYSTEM_TYPOGRAPHY", title: "Typography" },
