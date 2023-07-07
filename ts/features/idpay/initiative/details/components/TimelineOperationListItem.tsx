@@ -30,6 +30,15 @@ import { getCardLogoComponent } from "../../../common/components/CardLogo";
 
 const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
 
+const formatAbsNumberAmountOrDefault = (amount: number | undefined) =>
+  pipe(
+    amount,
+    O.fromNullable,
+    O.map(Math.abs),
+    O.map(formatNumberAmount),
+    O.getOrElse(() => "-")
+  );
+
 type TimelineOperationListItemProps = {
   operation: OperationListDTO;
   onPress?: () => void;
@@ -88,7 +97,9 @@ const getDiscountInitiativeTransactionLabel = (
         />
       );
     case TransactionStatusEnum.REWARDED:
-      return <H4>{`-${formatNumberAmount(Math.abs(operation.amount))} €`}</H4>;
+      return (
+        <H4>{`-${formatAbsNumberAmountOrDefault(operation.amount)} €`}</H4>
+      );
   }
 };
 
@@ -100,34 +111,16 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
       }
 
       return (
-        <H4>
-          {pipe(
-            operation.accrued,
-            O.fromNullable,
-            O.map(Math.abs),
-            O.map(formatNumberAmount),
-            O.map(accrued => `-${accrued} €`),
-            O.getOrElse(() => "-")
-          )}
-        </H4>
+        <H4>{`-${formatAbsNumberAmountOrDefault(operation.accrued)} €`}</H4>
       );
     case TransactionOperationTypeEnum.REVERSAL:
       return (
-        <H4>
-          {pipe(
-            operation.accrued,
-            O.fromNullable,
-            O.map(Math.abs),
-            O.map(formatNumberAmount),
-            O.map(accrued => `+${accrued} €`),
-            O.getOrElse(() => "-")
-          )}
-        </H4>
+        <H4>{`+${formatAbsNumberAmountOrDefault(operation.accrued)} €`}</H4>
       );
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
         <H4 color="greenLight">
-          {`${formatNumberAmount(operation.amount, false)} €`}
+          {`${formatAbsNumberAmountOrDefault(operation.amount)} €`}
         </H4>
       );
     default:
@@ -135,53 +128,8 @@ const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
   }
 };
 
-const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
-  const operationTitle = () => {
-    switch (operation.operationType) {
-      case TransactionOperationTypeEnum.TRANSACTION:
-        if (operation.channel === ChannelEnum.QRCODE) {
-          return I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.QRCODE_TRANSACTION"
-          );
-        }
-
-        return I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
-        );
-
-      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-        return I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
-          { maskedPan: operation.maskedPan }
-        );
-
-      default:
-        return I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
-        );
-    }
-  };
-  const generateOperationInvoiceText = () => {
-    switch (operation.operationType) {
-      case TransactionOperationTypeEnum.TRANSACTION:
-        return `· € ${formatNumberAmount(operation.amount)}`;
-      case TransactionOperationTypeEnum.REVERSAL:
-        return `· € -${formatNumberAmount(operation.amount)}`;
-      default:
-        return "";
-    }
-  };
-  return {
-    operationTitle: operationTitle(),
-    bonusInvoiceText: generateOperationInvoiceText()
-  };
-};
-
 const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
   const { operation, onPress } = props;
-
-  const { operationTitle, bonusInvoiceText } =
-    generateTimelineOperationListItemText(operation);
 
   const isQrCodeTransaction =
     operation.operationType === TransactionOperationTypeEnum.TRANSACTION &&
@@ -193,6 +141,38 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
   const labelStyle: ViewStyle = isCancelledQrCodeTransaction
     ? { opacity: 0.6 }
     : {};
+
+  const getOperationTitle = () => {
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        if (operation.channel === ChannelEnum.QRCODE) {
+          if (operation.businessName) {
+            return operation.businessName;
+          }
+          return I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.QRCODE_TRANSACTION"
+          );
+        }
+        return I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION`
+        );
+      default:
+        return I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
+        );
+    }
+  };
+
+  const getOperationAmount = () => {
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        return ` · € ${formatAbsNumberAmountOrDefault(operation.amount)}`;
+      case TransactionOperationTypeEnum.REVERSAL:
+        return ` · € -${formatAbsNumberAmountOrDefault(operation.amount)}`;
+      default:
+        return "";
+    }
+  };
 
   return (
     <ListItem
@@ -208,15 +188,18 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
       <OperationIcon operation={operation} />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
-        <H4 style={labelStyle}>{operationTitle}</H4>
+        <H4 style={labelStyle} numberOfLines={1} ellipsizeMode="tail">
+          {getOperationTitle()}
+        </H4>
         <LabelSmall style={labelStyle} weight="Regular" color="bluegrey">
           {`${formatDateAsShortFormat(
             operation.operationDate
           )}, ${getHourAndMinuteFromDate(
             operation.operationDate
-          )} ${bonusInvoiceText}`}
+          )}${getOperationAmount()}`}
         </LabelSmall>
       </View>
+      <HSpacer size={16} />
       <OperationAmountOrLabel operation={operation} />
     </ListItem>
   );
