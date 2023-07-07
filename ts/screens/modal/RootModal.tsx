@@ -64,7 +64,7 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   }
   // if the app is out of date, force a screen to update it
 
-  if (!props.isAppSupported && !((itWalletEnabled || isDevEnv) && !isTestEnv)) {
+  if (!props.isAppSupported) {
     void mixpanelTrack("UPDATE_APP_MODAL", {
       minVersioniOS: props.versionInfo?.min_app_version.ios,
       minVersionAndroid: props.versionInfo?.min_app_version.android
