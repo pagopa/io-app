@@ -24,6 +24,7 @@ export type FimsWebviewScreenNavigationParams = Readonly<{
 }>;
 
 const FimsWebviewScreen = () => {
+  const [title, setTitle] = React.useState<string>();
   const [isCookieAvailable, setIsCookieAvailable] = React.useState(false);
   const [cookieError, setCookieError] = React.useState(false);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -122,6 +123,7 @@ const FimsWebviewScreen = () => {
 
   return (
     <BaseScreenComponent
+      headerTitle={title}
       customGoBack={<View />}
       customRightIcon={{
         iconName: "closeMedium",
@@ -133,6 +135,7 @@ const FimsWebviewScreen = () => {
         <View style={IOStyles.flex}>
           {showWebview && O.isSome(maybeFIMSToken) && (
             <FimsWebView
+              onTitle={setTitle}
               onWebviewClose={handleGoBack}
               uri={route.params.url}
               fimsDomain={O.toUndefined(maybeFimsDomain)}
