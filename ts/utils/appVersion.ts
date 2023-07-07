@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver, { SemVer } from "semver";
 import { pipe } from "fp-ts/lib/function";
+import { itWalletEnabled } from "../config";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 
@@ -43,6 +44,10 @@ export const isVersionSupported = (
 ): boolean => {
   const minVersion = validateFormat(minAppVersion);
   const currentAppVersion = validateFormat(appVersion);
+
+  if (itWalletEnabled) {
+    return true;
+  }
 
   // If the validation of one of the two versions fails, we cannot say anything ad we continue to support the version
   if (
