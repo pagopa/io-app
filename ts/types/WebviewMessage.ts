@@ -21,6 +21,7 @@ export const AlertPayload = t.intersection(
   [AlertPayloadR, AlertPayloadO],
   "AlertPayload"
 );
+export type AlertPayload = t.TypeOf<typeof AlertPayload>;
 
 export const ToastContentR = t.interface({
   text: t.string
@@ -77,6 +78,7 @@ export const TitlePayload = t.intersection(
   [TitlePayloadR, TitlePayloadO],
   "TitlePayload"
 );
+export type TitlePayload = t.TypeOf<typeof TitlePayload>;
 
 const EmptyPayloadMessage = t.interface({
   type: t.union([
