@@ -394,6 +394,8 @@ PODS:
     - React
   - react-native-pdf (6.4.0):
     - React-Core
+  - react-native-pdf-thumbnail (1.2.1):
+    - React-Core
   - react-native-render-html (6.3.1):
     - React-Core
   - react-native-safe-area-context (3.3.2):
@@ -647,6 +649,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
+  - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
@@ -811,6 +814,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mixpanel"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
+  react-native-pdf-thumbnail:
+    :path: "../node_modules/react-native-pdf-thumbnail"
   react-native-render-html:
     :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
@@ -965,6 +970,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
+  react-native-pdf-thumbnail: 65d349b78029c3fe95e13ebec835987d5ccc4ca9
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
