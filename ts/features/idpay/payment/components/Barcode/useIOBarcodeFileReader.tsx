@@ -12,8 +12,12 @@ import DocumentPicker, {
 } from "react-native-document-picker";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
+import PdfThumbnail, { ThumbnailResult } from "react-native-pdf-thumbnail";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RNQRGenerator, { CodeType as RNQRCodeType } from "rn-qr-generator";
+import RNQRGenerator, {
+  QRCodeScanResult,
+  CodeType as RNQRCodeType
+} from "rn-qr-generator";
 import { Divider } from "../../../../../components/core/Divider";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../../../components/ui/ListItemNav";
@@ -23,7 +27,6 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/b
 import { isAndroid } from "../../../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
 import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
-import { getImagesFromPDFFile } from "./pdf";
 
 /**
  * Maps internal formats to external library formats
@@ -98,50 +101,73 @@ const getPlatformSpecificUri = (uri: string): string => {
   return uri;
 };
 
+/**
+ * Creates a TaskEither that detects the QR code from an image URI
+ * @param imageUri
+ * @returns
+ */
+const qrCodeDetectionTask = (
+  imageUri: string
+): TE.TaskEither<Error, QRCodeScanResult> =>
+  TE.tryCatch(() => RNQRGenerator.detect({ uri: imageUri }), E.toError);
+
+/**
+ * Creates a TaskEither that generates all the images from a PDF document
+ * @param pdfUri
+ * @returns
+ */
+const imageGenerationTask = (
+  pdfUri: string
+): TE.TaskEither<Error, Array<ThumbnailResult>> =>
+  TE.tryCatch(() => PdfThumbnail.generateAllPages(pdfUri, 200), E.toError);
+
+/**
+ * Creates a TaskEither that decodes a barcodes from an image URI
+ * @param imageUri
+ * @param acceptedFormats The accepted formats of the barcodes
+ * @returns
+ */
+const imageDecodingTask = (
+  imageUri: string,
+  acceptedFormats: Array<IOBarcodeFormat>
+): TE.TaskEither<Error, IOBarcode> =>
+  pipe(
+    qrCodeDetectionTask(imageUri),
+    TE.chain(result => {
+      const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
+      if (!(ioBarcodeFormat && acceptedFormats.includes(ioBarcodeFormat))) {
+        // Format not supported
+        return TE.left(new Error("Format not supported"));
+      }
+      return TE.right([result, ioBarcodeFormat] as const);
+    }),
+    TE.chain(([result, format]) =>
+      pipe(
+        A.head(result.values),
+        O.map(decodeIOBarcode),
+        O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
+          format,
+          ...decodedBarcode
+        })),
+        TE.fromOption(() => new Error("No barcode found"))
+      )
+    )
+  );
+
 const useIOBarcodeFileReader = (
   config: IOBarcodeFileReaderConfiguration
 ): IOBarcodeFileReader => {
   const { onBarcodeSuccess, onBarcodeError } = config;
 
   /**
-   * Handles the Barcode decoding from an image URI
-   */
-  const imageDecodingTask = (imageUri: string) =>
-    pipe(
-      TE.tryCatch(
-        () => RNQRGenerator.detect({ uri: imageUri }),
-        () => onBarcodeError()
-      ),
-      TE.map(result => {
-        const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
-
-        if (!(ioBarcodeFormat && config.formats.includes(ioBarcodeFormat))) {
-          // Format not supported
-          return onBarcodeError();
-        }
-
-        pipe(
-          A.head(result.values),
-          O.map(decodeIOBarcode),
-          O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
-            format: ioBarcodeFormat,
-            ...decodedBarcode
-          })),
-          O.map(onBarcodeSuccess),
-          O.getOrElse(onBarcodeError)
-        );
-      })
-    );
-
-  /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
-  const onImageSelected = (response: ImagePicker.ImagePickerResponse) => {
+  const onImageSelected = async (response: ImagePicker.ImagePickerResponse) => {
     if (response.didCancel) {
       return;
     }
 
-    if (response.errorCode === "permission") {
+    if (response.errorCode) {
       Alert.alert(
         I18n.t("wallet.QRtoPay.settingsAlert.title"),
         I18n.t("wallet.QRtoPay.settingsAlert.message"),
@@ -160,14 +186,17 @@ const useIOBarcodeFileReader = (
       return;
     }
 
-    pipe(
+    await pipe(
       response.assets,
       O.fromNullable,
       O.chain(A.head),
       O.map(({ uri }) => uri),
       O.chain(O.fromNullable),
-      O.map(imageUri => imageDecodingTask(imageUri)())
-    );
+      TE.fromOption(() => new Error("No image selected")),
+      TE.chain(uri => imageDecodingTask(uri, config.formats)),
+      TE.mapLeft(onBarcodeError),
+      TE.map(onBarcodeSuccess)
+    )();
   };
 
   const showImagePicker = async () => {
@@ -195,41 +224,25 @@ const useIOBarcodeFileReader = (
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
-      onBarcodeError();
+      return onBarcodeError();
     }
 
     const platformSpecificUri = getPlatformSpecificUri(uri);
-    const imagesData = await getImagesFromPDFFile(platformSpecificUri);
 
-    const scanResults = await Promise.all(
-      imagesData.map(imageData => RNQRGenerator.detect({ base64: imageData }))
-    );
-
-    pipe(
-      scanResults,
-      A.reduce([] as Array<IOBarcode>, (acc, result) => {
-        const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
-
-        if (!(ioBarcodeFormat && config.formats.includes(ioBarcodeFormat))) {
-          // Format not supported
-          return acc;
-        }
-
-        return pipe(
-          A.head(result.values),
-          O.map(decodeIOBarcode),
-          O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
-            format: ioBarcodeFormat,
-            ...decodedBarcode
-          })),
-          O.map(barcode => [...acc, barcode]),
-          O.getOrElse(() => acc)
-        );
-      }),
-      A.head, // Since there is not disambiguation between multiple barcodes, we just take the first valid one
-      O.map(onBarcodeSuccess),
-      O.getOrElse(onBarcodeError)
-    );
+    await pipe(
+      imageGenerationTask(platformSpecificUri),
+      TE.map(A.map(({ uri }) => imageDecodingTask(uri, config.formats)())),
+      TE.mapLeft(onBarcodeError),
+      TE.map(async decodingTasks =>
+        pipe(
+          await Promise.all(decodingTasks),
+          A.filterMap(T => (E.isLeft(T) ? O.none : O.some(T.right))),
+          A.head,
+          O.map(onBarcodeSuccess),
+          O.getOrElse(onBarcodeError)
+        )
+      )
+    )();
   };
 
   /**

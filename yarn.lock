@@ -14573,6 +14573,11 @@ react-native-modal-datetime-picker@^10.2.0:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-pdf-thumbnail@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-pdf-thumbnail/-/react-native-pdf-thumbnail-1.2.1.tgz#edf4e13a43098a0004503b2e617f0866f6d4d5a4"
+  integrity sha512-MuEKMYRbLj8oxnhe247Ze1yI3tH4u24gLzQ0g8VxdZ47/9sUL7RPlv4Br+2IWX8kcX6/VerP/Mxfh1D61ri+Hw==
+
 react-native-pdf@^6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/react-native-pdf/-/react-native-pdf-6.4.0.tgz#e3aa583e3a2ccce0838dcc0ac5a29987774eea4f"

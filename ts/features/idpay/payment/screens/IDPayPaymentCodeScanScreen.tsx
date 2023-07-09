@@ -27,7 +27,7 @@ const IDPayPaymentCodeScanScreen = () => {
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
     } else {
-      alert("Inknown barcode :(");
+      alert("Unknown barcode :(");
     }
   };
 
@@ -60,7 +60,7 @@ const IDPayPaymentCodeScanScreen = () => {
   });
 
   const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
-    formats: ["QR_CODE"],
+    formats: ["QR_CODE", "DATA_MATRIX"],
     onBarcodeSuccess: handleBarcodeSuccess,
     onBarcodeError: handleBarcodeError
   });
