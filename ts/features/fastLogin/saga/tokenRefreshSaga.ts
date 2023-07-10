@@ -82,7 +82,7 @@ function* handleRefreshSessionToken(
     typeof askUserToRefreshSessionToken.success
   >;
   if (typedAction.payload === "yes") {
-    yield* put(identificationRequest(true, false));
+    yield* put(identificationRequest());
     const result = yield* take([identificationSuccess, identificationFailure]);
     if (result.type === getType(identificationSuccess)) {
       yield* call(doRefreshTokenSaga, refreshSessionTokenRequestAction);

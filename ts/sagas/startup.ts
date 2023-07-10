@@ -78,7 +78,6 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
@@ -98,10 +97,7 @@ import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selector
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendStatusSelector } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
-import {
-  startAndReturnIdentificationResult,
-  watchIdentification
-} from "./identification";
+import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
@@ -415,9 +411,6 @@ export function* initializeApplicationSaga(
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
-  // eslint-disable-next-line functional/no-let
-  let storedPin: PinString;
-
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
@@ -468,18 +461,9 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
-  if (hasPreviousSessionAndPin) {
-    // We have to retrieve the pin here and not on the previous if-condition (same guard)
-    // otherwise the typescript compiler will complain of an unassigned variable later on
-    storedPin = maybeStoredPin.value;
-  } else {
-    // TODO If the session was not valid, the code would have stopped before
-    // reaching this point. Consider refactoring even more by removing the check
-    // on the session (IOAPPCIT-10 https://pagopa.atlassian.net/browse/IOAPPCIT-10)
-    storedPin = yield* call(checkConfiguredPinSaga);
-
+  if (!hasPreviousSessionAndPin) {
+    yield* call(checkConfiguredPinSaga);
     yield* call(checkAcknowledgedFingerprintSaga);
-
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
@@ -638,8 +622,6 @@ export function* initializeApplicationSaga(
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
-
-  yield* fork(watchIdentification, storedPin);
 
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
