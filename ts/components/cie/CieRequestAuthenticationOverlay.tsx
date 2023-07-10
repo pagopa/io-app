@@ -14,6 +14,7 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import CookieManager from "@react-native-cookies/cookies";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -225,14 +226,23 @@ const CieWebView = (props: Props) => {
 
   if (O.isSome(maybeKeyTag) && requestInfo.requestState === "LOADING") {
     void pipe(
-      () =>
-        regenerateKeyGetRedirectsAndVerifySaml(
-          loginUri,
-          maybeKeyTag.value,
-          mixpanelEnabled,
-          isFastLogin,
-          dispatch
-        ),
+      TE.tryCatch(
+        () =>
+          Platform.OS === "android"
+            ? CookieManager.removeSessionCookies()
+            : Promise.resolve(true),
+        () => new Error("Error clearing cookies")
+      ),
+      TE.chain(
+        _ => () =>
+          regenerateKeyGetRedirectsAndVerifySaml(
+            loginUri,
+            maybeKeyTag.value,
+            mixpanelEnabled,
+            isFastLogin,
+            dispatch
+          )
+      ),
       TE.fold(
         e => T.of(handleOnError(e)),
         url =>

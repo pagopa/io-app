@@ -446,6 +446,12 @@ profile:
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
+    addCard:
+      titleSection: Add test card
+      warning: 
+        title: Warning
+        message: To add a new test card, you must enable the pagoPA test environment from the settings.
+        closeButton: Close
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -1464,7 +1470,6 @@ wallet:
         fieldError: "To continue, please fix the {{field}} field"
         missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
-  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
     body: If you can't find the security code, it's likely your card doesn't support online payments.
