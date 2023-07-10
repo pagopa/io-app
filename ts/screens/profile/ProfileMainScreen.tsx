@@ -1,13 +1,12 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Toast } from "native-base";
+import { List, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -25,7 +24,6 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
-import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
@@ -56,7 +54,6 @@ import {
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
@@ -65,6 +62,9 @@ import ListItemNav from "../../components/ui/ListItemNav";
 import { Divider } from "../../components/core/Divider";
 import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import ButtonSolid from "../../components/ui/ButtonSolid";
+import { SwitchListItem } from "../../components/ui/SwitchListItem";
+import AppVersion from "../../components/AppVersion";
+import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -75,24 +75,6 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 type State = {
   tapsOnAppVersion: number;
 };
-
-const styles = StyleSheet.create({
-  developerSectionItem: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  developerSectionItemLeft: {
-    flex: 1
-  },
-  developerSectionItemRight: {
-    flex: 0
-  },
-  noRightPadding: {
-    paddingRight: 0
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -151,17 +133,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     description?: string
   ) {
     return (
-      <ListItem style={styles.noRightPadding}>
-        <View style={styles.developerSectionItem}>
-          <View style={styles.developerSectionItemLeft}>
-            <Body>{title}</Body>
-            <Body>{description}</Body>
-          </View>
-          <View style={styles.developerSectionItemRight}>
-            <Switch value={switchValue} onValueChange={onSwitchValueChange} />
-          </View>
-        </View>
-      </ListItem>
+      <SwitchListItem
+        label={title}
+        description={description}
+        value={switchValue}
+        onSwitchValueChange={onSwitchValueChange}
+      />
     );
   }
 
@@ -199,18 +176,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           />
         )}
       </View>
-    );
-  }
-
-  private versionListItem(title: string, onPress: () => void) {
-    return (
-      <ListItem style={styles.noRightPadding}>
-        <Pressable onPress={onPress}>
-          <Body numberOfLines={1} weight="SemiBold">
-            {title}
-          </Body>
-        </Pressable>
-      </ListItem>
     );
   }
 
@@ -277,6 +242,24 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   private onDesignSystemToggle = (enabled: boolean) => {
     this.props.setDesignSystemEnabled(enabled);
+  };
+
+  private onAddTestCard = () => {
+    if (!this.props.isPagoPATestEnabled) {
+      Alert.alert(
+        I18n.t("profile.main.addCard.warning.title"),
+        I18n.t("profile.main.addCard.warning.message"),
+        [
+          {
+            text: I18n.t("profile.main.addCard.warning.closeButton"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+    this.props.startAddTestCard();
   };
 
   private idResetTap?: number;
@@ -409,33 +392,45 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           }
         />
         <Divider />
+        {/* Add Test Card CTA */}
+        <ListItemNav
+          value={I18n.t("profile.main.addCard.titleSection")}
+          accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
+          onPress={this.onAddTestCard}
+        />
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
           isPagoPATestEnabled,
           this.onPagoPAEnvironmentToggle,
           I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.pnEnvironment.pnEnv"),
           isPnTestEnabled,
           this.onPnEnvironmentToggle
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.debugMode"),
           isDebugModeEnabled,
           setDebugModeEnabled
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.idpay.idpayTest"),
           isIdPayTestEnabled,
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.designSystemEnvironment"),
           isDesignSystemEnabled,
           this.onDesignSystemToggle
         )}
+        <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
             {isDevEnv &&
@@ -609,10 +604,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             isLastItem={true}
           />
 
-          {this.versionListItem(
-            `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
-            this.onTapAppVersion
-          )}
+          {/* Show the app version + Enable debug mode */}
+          <AppVersion onPress={this.onTapAppVersion} />
 
           {/* Developers Section */}
           {(this.props.isDebugModeEnabled || isDevEnv) &&
@@ -692,7 +685,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
   setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }))
+    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled })),
+  startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
 });
 
 export default connect(

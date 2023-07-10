@@ -59,6 +59,7 @@ global:
   badges:
     blocked: "Blocked"
     onGoing: "Ongoing"
+    failed: "Failed"
   password: Password
   username: Username
   unknown: unknown
@@ -439,10 +440,16 @@ profile:
       idpayTest: Test IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
-    appVersion: App Version
+    appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
+    addCard:
+      titleSection: Add test card
+      warning: 
+        title: Warning
+        message: To add a new test card, you must enable the pagoPA test environment from the settings.
+        closeButton: Close
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -1461,7 +1468,6 @@ wallet:
         fieldError: "To continue, please fix the {{field}} field"
         missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
-  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
     body: If you can't find the security code, it's likely your card doesn't support online payments.
@@ -1587,6 +1593,10 @@ wallet:
         title: "Your card has been successfully added!"
     payment:
       success:
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
         title: "Thank you for your payment!"
         description1: "We sent a receipt to"
         description2: "You can also find it in your Wallet."
@@ -3347,7 +3357,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: Pagamento Online
+              QRCODE_TRANSACTION: "Pagamento"
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3399,6 +3409,7 @@ idpay:
             AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
             CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
           labels:
+            business: Esercente
             status: Stato
             totalAmount: Importo totale
             idpayAmount: Importo transazione ID Pay
