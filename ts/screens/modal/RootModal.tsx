@@ -60,6 +60,8 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
           "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
         )}
         onSubmit={() => {
+          // FIXME: update this URL once available
+          // https://pagopa.atlassian.net/browse/IOPID-393
           openWebUrl("https://io.italia.it/faq");
         }}
         buttonStylesProps={{
