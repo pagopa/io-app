@@ -3,7 +3,7 @@ import { Action } from "../../../../store/actions/types";
 import itwRequirements, { ItwRequirementsState } from "./itwRequirements";
 
 export type ItWalletState = {
-  itwRequirements: ItwRequirementsState;
+  requirements: ItwRequirementsState;
 };
 
 const itwReducer = combineReducers<ItWalletState, Action>({
