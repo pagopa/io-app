@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: IOColors.white,
     paddingHorizontal: IOVisualCostants.appMarginDefault,
-    height: IOVisualCostants.headerFirstLevelHeight,
+    height: IOVisualCostants.headerHeight,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
