@@ -224,19 +224,20 @@ const useIOBarcodeFileReader = (
 
     await pipe(
       imageGenerationTask(uri),
-      TE.map(async images =>
-        images.reduce(
+      TE.map(
+        A.reduce(
+          Promise.resolve([] as Array<IOBarcode>),
           async (barcodes, { uri }) =>
             pipe(
-              await imageDecodingTask(uri, config.formats)(),
-              E.map(async barcode => [...(await barcodes), barcode]),
-              E.getOrElse(() => barcodes)
-            ),
-          Promise.resolve([] as Array<IOBarcode>)
+              imageDecodingTask(uri, config.formats),
+              TE.map(async barcode => [...(await barcodes), barcode]),
+              TE.getOrElse(() => T.of(barcodes))
+            )()
         )
       ),
+      // FIXME Currently, we only support one barcode per PDF document
+      // Extract the first barcode if any barcode is found
       TE.map(async barcodes =>
-        // FIXME Currently, we only support one barcode per PDF document
         pipe(
           await barcodes,
           A.head,
