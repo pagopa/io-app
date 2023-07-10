@@ -2,9 +2,9 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import { flow, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Alert, Linking, Platform } from "react-native";
+import { Alert, Linking } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -94,13 +94,6 @@ const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
   type: [types.pdf]
 };
 
-const getPlatformSpecificUri = (uri: string): string => {
-  if (Platform.OS === "ios") {
-    return decodeURIComponent(uri.replace("file://", ""));
-  }
-  return uri;
-};
-
 /**
  * Creates a TaskEither that detects the QR code from an image URI
  * @param imageUri
@@ -119,7 +112,7 @@ const qrCodeDetectionTask = (
 const imageGenerationTask = (
   pdfUri: string
 ): TE.TaskEither<Error, Array<ThumbnailResult>> =>
-  TE.tryCatch(() => PdfThumbnail.generateAllPages(pdfUri, 200), E.toError);
+  TE.tryCatch(() => PdfThumbnail.generateAllPages(pdfUri, 100), E.toError);
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
@@ -228,22 +221,47 @@ const useIOBarcodeFileReader = (
       return onBarcodeError();
     }
 
-    const platformSpecificUri = getPlatformSpecificUri(uri);
+    const images = await imageGenerationTask(uri)();
 
-    await pipe(
-      imageGenerationTask(platformSpecificUri),
-      TE.map(
-        flow(
-          A.map(({ uri }) => imageDecodingTask(uri, config.formats)),
-          A.sequence(TE.Monad)
+    const barcodes = await pipe(
+      images,
+      E.map(async images =>
+        images.reduce(
+          async (barcodes, { uri }) =>
+            pipe(
+              await imageDecodingTask(uri, config.formats)(),
+              E.map(async barcode => [...(await barcodes), barcode]),
+              E.getOrElse(() => barcodes)
+            ),
+          Promise.resolve([] as Array<IOBarcode>)
         )
       ),
-      TE.flatten,
-      TE.map(A.head), // FIXME currently we only support one barcode result
-      TE.chain(TE.fromOption(() => new Error("No barcode found"))),
-      TE.map(onBarcodeSuccess),
-      TE.mapLeft(onBarcodeError)
-    )();
+      E.getOrElse(() => Promise.resolve([] as Array<IOBarcode>))
+    );
+
+    const test = await pipe(
+      images,
+      E.map(async images =>
+        images.reduce(
+          async (barcodes, { uri }) =>
+            pipe(
+              await imageDecodingTask(uri, config.formats)(),
+              E.map(async barcode => [...(await barcodes), barcode]),
+              E.getOrElse(() => barcodes)
+            ),
+          Promise.resolve([] as Array<IOBarcode>)
+        )
+      ),
+      E.getOrElse(() => Promise.resolve([] as Array<IOBarcode>))
+    );
+
+    // At this time, we only support one barcode per PDF document
+    pipe(
+      barcodes,
+      A.head,
+      O.map(onBarcodeSuccess),
+      O.getOrElse(onBarcodeError)
+    );
   };
 
   /**
