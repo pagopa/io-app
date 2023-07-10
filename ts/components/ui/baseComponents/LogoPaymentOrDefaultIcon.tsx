@@ -5,15 +5,25 @@ import { IOIconSizeScale, Icon } from "../../core/icons";
 import { IOLogoPaymentType, LogoPayment } from "../../core/logos";
 import { IOColors } from "../../core/variables/IOColors";
 
-export const LogoPaymentOrDefaultIcon = ({
-  cardIcon,
-  size,
-  fallbackIconColor = "grey-700"
-}: {
+export type LogoPaymentOrDefaultIconProps = {
   cardIcon?: IOLogoPaymentType;
   fallbackIconColor?: IOColors;
-  size: IOIconSizeScale;
-}) =>
+  size?: IOIconSizeScale;
+};
+/**
+ * This component renders either
+ * - a LogoPayment component
+ * - a default credit card icon
+ * @param cardIcon: IOLogoPaymentType icon
+ * @param size: the size of the icon (standard is 24)
+ * @param fallbackIconColor: default icon color (standard is grey-700)
+ * @returns a LogoPayment component if the cardIcon is supported, a default credit card icon otherwise
+ */
+export const LogoPaymentOrDefaultIcon = ({
+  cardIcon,
+  size = 24,
+  fallbackIconColor = "grey-700"
+}: LogoPaymentOrDefaultIconProps) =>
   pipe(
     cardIcon,
     O.fromNullable,
