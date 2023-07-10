@@ -1,8 +1,9 @@
 import * as React from "react";
 import { ScrollView, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 
 type Props = {
   title: string;
@@ -10,17 +11,17 @@ type Props = {
   noMargin?: boolean;
 };
 
-export const DesignSystemScreen = ({
-  title,
-  children,
-  noMargin = false
-}: Props) => (
-  <BaseScreenComponent goBack={true} headerTitle={title}>
+export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
+  const insets = useSafeAreaInsets();
+
+  return (
     <IOThemeContext.Consumer>
       {theme => (
         <ScrollView
-          style={{
-            backgroundColor: theme["appBackground-primary"]
+          contentContainerStyle={{
+            backgroundColor: theme["appBackground-primary"],
+            paddingTop: IOVisualCostants.appMarginDefault,
+            paddingBottom: insets.bottom + IOVisualCostants.appMarginDefault
           }}
         >
           {noMargin ? (
@@ -31,5 +32,5 @@ export const DesignSystemScreen = ({
         </ScrollView>
       )}
     </IOThemeContext.Consumer>
-  </BaseScreenComponent>
-);
+  );
+};

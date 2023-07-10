@@ -302,7 +302,6 @@ export const DSColors = () => (
     {Object.entries(IOColorsLegacy).map(([name, colorValue]) => (
       <ColorBox key={name} name={name} color={colorValue} />
     ))}
-    <VSpacer size={40} />
   </DesignSystemScreen>
 );
 
