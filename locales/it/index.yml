@@ -3715,3 +3715,8 @@ fastLogin:
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
         submitButtonTitle: "Continua la navigazione"
         cancelButtonTitle: "Annulla"
+      transientError:
+        title: "Non siamo riusciti ad autenticarti"
+        subtitle: "Chiudi l'app e riprova tra qualche minuto."
+        submitButtonTitle: "Vai alle FAQ"
+
