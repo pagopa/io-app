@@ -65,7 +65,7 @@ type CardDataType =
       cardIcon?: IOLogoPaymentType;
     };
 
-export type SmallPaymentCardProps = WithTestID<
+export type PaymentCardSmallProps = WithTestID<
   | {
       isLoading: true;
       accessibilityLabel?: string;
@@ -77,7 +77,7 @@ export type SmallPaymentCardProps = WithTestID<
       isLoading?: false;
     } & CardDataType)
 >;
-export const PaymentCardSmall = (props: SmallPaymentCardProps) => {
+export const PaymentCardSmall = (props: PaymentCardSmallProps) => {
   if (props.isLoading) {
     return <CardSmallSkeleton testID={props.testID} />;
   }
@@ -132,7 +132,7 @@ export const PaymentCardSmall = (props: SmallPaymentCardProps) => {
 const CardSmallSkeleton = ({ testID }: { testID?: string }) => (
   <View
     style={[styles.cardContainer, { backgroundColor: IOColors["grey-100"] }]}
-    testID={`skeleton-${testID}`}
+    testID={`${testID}-skeleton`}
   >
     <Placeholder.Box
       color={IOColors["grey-200"]}

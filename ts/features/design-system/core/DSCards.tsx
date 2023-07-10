@@ -26,6 +26,9 @@ const onPress = () => {
 const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
+      isLoading: true
+    },
+    {
       cardType: "CREDIT",
       hpan: "9999",
       isError: false,
@@ -72,9 +75,10 @@ export const DSCards = () => (
       <VSpacer size={16} />
       <View style={styles.content}>
         <PaymentCardSmall
-          cardType={"CREDIT"}
-          hpan="9999"
+          cardType={"COBADGE"}
           isError={true}
+          providerName="A very very long name for a provider"
+          cardIcon="maestro"
           onCardPress={onPress}
         />
         <HSpacer size={16} />
@@ -108,7 +112,7 @@ export const DSCards = () => (
       <PaymentCardBig
         cardType={"PAGOBANCOMAT"}
         expirationDate={new Date()}
-        holderName="Mario Rossi"
+        holderName="A very very very long citizen name"
         abiCode="12345"
       />
       <VSpacer size={16} />

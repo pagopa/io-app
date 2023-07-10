@@ -11,6 +11,7 @@ import { IOColors } from "../../../core/variables/IOColors";
 import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentOrDefaultIcon } from "../../baseComponents/LogoPaymentOrDefaultIcon";
+import I18n from "../../../../i18n";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -97,7 +98,7 @@ export const PaymentCardBig = (props: PaymentCardBigProps) => {
 };
 
 const CardSkeleton = ({ testID }: { testID?: string }) => (
-  <View testID={`skeleton-${testID}`} style={styles.cardContainer}>
+  <View testID={`${testID}-skeleton`} style={styles.cardContainer}>
     <View>
       <Placeholder.Box
         color={IOColors["grey-200"]}
@@ -135,30 +136,35 @@ const CardSkeleton = ({ testID }: { testID?: string }) => (
   </View>
 );
 
+const BottomSectionText = (props: { string: string }) => (
+  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+    {props.string}
+  </NewH6>
+);
 const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
   switch (props.cardType) {
     case "PAYPAL":
-      return <NewH6>{props.holderEmail}</NewH6>;
+      return <BottomSectionText string={props.holderEmail} />;
     case "BANCOMATPAY":
       return (
         <View style={IOStyles.column}>
           <LabelSmall color="grey-650" weight="Regular">
             {props.phoneNumber}
           </LabelSmall>
-          <NewH6>{props.holderName}</NewH6>
+          <BottomSectionText string={props.holderName} />
         </View>
       );
     case "PAGOBANCOMAT":
       return (
         <View style={styles.bottomRow}>
-          <NewH6>{props.holderName}</NewH6>
+          <BottomSectionText string={props.holderName} />
           <LogoPayment name={"pagoBancomat"} size={48} />
         </View>
       );
     default:
       return (
         <View style={styles.bottomRow}>
-          <NewH6>{props.holderName}</NewH6>
+          <BottomSectionText string={props.holderName} />
           <LogoPaymentOrDefaultIcon cardIcon={props.cardIcon} size={48} />
         </View>
       );
@@ -176,7 +182,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
           <NewH6>{props.cardType}</NewH6>
 
           <LabelSmall color="grey-650" weight="Regular">
-            {`VALID UNTIL ${formatDateAsLocal(props.expirationDate, true)}`}
+            {I18n.t("wallet.creditCard.validUntil", {
+              expDate: formatDateAsLocal(props.expirationDate, true)
+            })}
           </LabelSmall>
         </View>
       );
@@ -188,7 +196,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
           </NewH6>
 
           <LabelSmall color="grey-650" weight="Regular">
-            {`VALID UNTIL ${formatDateAsLocal(props.expirationDate, true)}`}
+            {I18n.t("wallet.creditCard.validUntil", {
+              expDate: formatDateAsLocal(props.expirationDate, true)
+            })}
           </LabelSmall>
         </View>
       );
@@ -200,7 +210,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
           </NewH6>
 
           <LabelSmall color="grey-650" weight="Regular">
-            {`VALID UNTIL ${formatDateAsLocal(props.expirationDate, true)}`}
+            {I18n.t("wallet.creditCard.validUntil", {
+              expDate: formatDateAsLocal(props.expirationDate, true)
+            })}
           </LabelSmall>
         </View>
       );

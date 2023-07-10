@@ -2,10 +2,10 @@ import * as React from "react";
 import { FlatList } from "react-native-gesture-handler";
 import { WithTestID } from "../../../../types/WithTestID";
 import { HSpacer } from "../../../core/spacer/Spacer";
-import { PaymentCardSmall, SmallPaymentCardProps } from "./PaymentCardSmall";
+import { PaymentCardSmall, PaymentCardSmallProps } from "./PaymentCardSmall";
 
 export type PaymentCardsCarouselProps = WithTestID<{
-  cards: Array<SmallPaymentCardProps>;
+  cards: Array<PaymentCardSmallProps>;
 }>;
 
 export const PaymentCardsCarousel = ({

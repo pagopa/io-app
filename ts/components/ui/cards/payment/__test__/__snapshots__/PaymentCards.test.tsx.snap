@@ -1,0 +1,2342 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentCardBig component matches snapshot for loading 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "zIndex": 1,
+        }
+      }
+    >
+      <View
+        accessibilityElementsHidden={false}
+        importantForAccessibility="auto"
+        onLayout={[Function]}
+        pointerEvents="box-none"
+        style={null}
+      >
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 1,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "backgroundColor": "rgb(255, 255, 255)",
+                "borderBottomColor": "rgb(216, 216, 216)",
+                "flex": 1,
+                "shadowColor": "rgb(216, 216, 216)",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.85,
+                "shadowRadius": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "height": 64,
+              "maxHeight": undefined,
+              "minHeight": undefined,
+              "opacity": undefined,
+              "transform": undefined,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              Object {
+                "height": 20,
+              }
+            }
+          />
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "marginHorizontal": 16,
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                accessibilityRole="header"
+                aria-level="1"
+                collapsable={false}
+                numberOfLines={1}
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "color": "rgb(28, 28, 30)",
+                    "fontSize": 17,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                WALLET_HOME
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        />
+        <View
+          accessibilityElementsHidden={false}
+          closing={false}
+          gestureVelocityImpact={0.3}
+          importantForAccessibility="auto"
+          onClose={[Function]}
+          onGestureBegin={[Function]}
+          onGestureCanceled={[Function]}
+          onGestureEnd={[Function]}
+          onOpen={[Function]}
+          onTransition={[Function]}
+          pointerEvents="box-none"
+          style={
+            Array [
+              Object {
+                "overflow": undefined,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          transitionSpec={
+            Object {
+              "close": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+              "open": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            needsOffscreenAlphaCompositing={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              forwardedRef={[Function]}
+              onGestureHandlerEvent={[Function]}
+              onGestureHandlerStateChange={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="none"
+                style={
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 1,
+                      "width": -1,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 5,
+                    "top": 0,
+                    "width": 3,
+                  }
+                }
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "overflow": "hidden",
+                    },
+                    Array [
+                      Object {
+                        "backgroundColor": "#FFFFFF",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "flexDirection": "column-reverse",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        onLayout={[Function]}
+                        style={
+                          Object {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          pointerEvents="box-none"
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                          />
+                          <View
+                            accessibilityElementsHidden={false}
+                            closing={false}
+                            gestureVelocityImpact={0.3}
+                            importantForAccessibility="auto"
+                            onClose={[Function]}
+                            onGestureBegin={[Function]}
+                            onGestureCanceled={[Function]}
+                            onGestureEnd={[Function]}
+                            onOpen={[Function]}
+                            onTransition={[Function]}
+                            pointerEvents="box-none"
+                            style={
+                              Array [
+                                Object {
+                                  "overflow": undefined,
+                                },
+                                Object {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                              ]
+                            }
+                            transitionSpec={
+                              Object {
+                                "close": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                                "open": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              needsOffscreenAlphaCompositing={false}
+                              pointerEvents="box-none"
+                              style={
+                                Object {
+                                  "flex": 1,
+                                }
+                              }
+                            >
+                              <View
+                                collapsable={false}
+                                forwardedRef={[Function]}
+                                onGestureHandlerEvent={[Function]}
+                                onGestureHandlerStateChange={[Function]}
+                                style={
+                                  Object {
+                                    "flex": 1,
+                                    "transform": Array [
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                    ],
+                                  }
+                                }
+                              >
+                                <View
+                                  collapsable={false}
+                                  pointerEvents="none"
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#FFFFFF",
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "shadowColor": "#000",
+                                      "shadowOffset": Object {
+                                        "height": 1,
+                                        "width": -1,
+                                      },
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                      "top": 0,
+                                      "width": 3,
+                                    }
+                                  }
+                                />
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "flex": 1,
+                                        "overflow": "hidden",
+                                      },
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "#FFFFFF",
+                                        },
+                                        undefined,
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "flexDirection": "column-reverse",
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "flex": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignContent": "space-between",
+                                            "alignItems": "flex-start",
+                                            "backgroundColor": "#E8EBF1",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "height": 207,
+                                            "justifyContent": "space-between",
+                                            "padding": 24,
+                                          }
+                                        }
+                                        testID="undefined-skeleton"
+                                      >
+                                        <View>
+                                          <View
+                                            collapsable={false}
+                                            style={
+                                              Object {
+                                                "opacity": 0.5,
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              color="#D2D6E3"
+                                              height={24}
+                                              radius={8}
+                                              style={
+                                                Object {
+                                                  "backgroundColor": "#D2D6E3",
+                                                  "borderRadius": 8,
+                                                  "height": 24,
+                                                  "width": 164,
+                                                }
+                                              }
+                                              width={164}
+                                            />
+                                          </View>
+                                          <View
+                                            style={
+                                              Object {
+                                                "height": 16,
+                                              }
+                                            }
+                                          />
+                                          <View
+                                            collapsable={false}
+                                            style={
+                                              Object {
+                                                "opacity": 0.5,
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              color="#D2D6E3"
+                                              height={16}
+                                              radius={8}
+                                              style={
+                                                Object {
+                                                  "backgroundColor": "#D2D6E3",
+                                                  "borderRadius": 8,
+                                                  "height": 16,
+                                                  "width": 117,
+                                                }
+                                              }
+                                              width={117}
+                                            />
+                                          </View>
+                                        </View>
+                                        <View>
+                                          <View
+                                            collapsable={false}
+                                            style={
+                                              Object {
+                                                "opacity": 0.5,
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              color="#D2D6E3"
+                                              height={16}
+                                              radius={8}
+                                              style={
+                                                Object {
+                                                  "backgroundColor": "#D2D6E3",
+                                                  "borderRadius": 8,
+                                                  "height": 16,
+                                                  "width": 97,
+                                                }
+                                              }
+                                              width={97}
+                                            />
+                                          </View>
+                                          <View
+                                            style={
+                                              Object {
+                                                "height": 4,
+                                              }
+                                            }
+                                          />
+                                          <View
+                                            collapsable={false}
+                                            style={
+                                              Object {
+                                                "opacity": 0.5,
+                                              }
+                                            }
+                                          >
+                                            <View
+                                              color="#D2D6E3"
+                                              height={24}
+                                              radius={8}
+                                              style={
+                                                Object {
+                                                  "backgroundColor": "#D2D6E3",
+                                                  "borderRadius": 8,
+                                                  "height": 24,
+                                                  "width": 164,
+                                                }
+                                              }
+                                              width={164}
+                                            />
+                                          </View>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "zIndex": 1,
+        }
+      }
+    >
+      <View
+        accessibilityElementsHidden={false}
+        importantForAccessibility="auto"
+        onLayout={[Function]}
+        pointerEvents="box-none"
+        style={null}
+      >
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 1,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "backgroundColor": "rgb(255, 255, 255)",
+                "borderBottomColor": "rgb(216, 216, 216)",
+                "flex": 1,
+                "shadowColor": "rgb(216, 216, 216)",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.85,
+                "shadowRadius": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "height": 64,
+              "maxHeight": undefined,
+              "minHeight": undefined,
+              "opacity": undefined,
+              "transform": undefined,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              Object {
+                "height": 20,
+              }
+            }
+          />
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "marginHorizontal": 16,
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                accessibilityRole="header"
+                aria-level="1"
+                collapsable={false}
+                numberOfLines={1}
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "color": "rgb(28, 28, 30)",
+                    "fontSize": 17,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                WALLET_HOME
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        />
+        <View
+          accessibilityElementsHidden={false}
+          closing={false}
+          gestureVelocityImpact={0.3}
+          importantForAccessibility="auto"
+          onClose={[Function]}
+          onGestureBegin={[Function]}
+          onGestureCanceled={[Function]}
+          onGestureEnd={[Function]}
+          onOpen={[Function]}
+          onTransition={[Function]}
+          pointerEvents="box-none"
+          style={
+            Array [
+              Object {
+                "overflow": undefined,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          transitionSpec={
+            Object {
+              "close": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+              "open": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            needsOffscreenAlphaCompositing={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              forwardedRef={[Function]}
+              onGestureHandlerEvent={[Function]}
+              onGestureHandlerStateChange={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="none"
+                style={
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 1,
+                      "width": -1,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 5,
+                    "top": 0,
+                    "width": 3,
+                  }
+                }
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "overflow": "hidden",
+                    },
+                    Array [
+                      Object {
+                        "backgroundColor": "#FFFFFF",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "flexDirection": "column-reverse",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        onLayout={[Function]}
+                        style={
+                          Object {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          pointerEvents="box-none"
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                          />
+                          <View
+                            accessibilityElementsHidden={false}
+                            closing={false}
+                            gestureVelocityImpact={0.3}
+                            importantForAccessibility="auto"
+                            onClose={[Function]}
+                            onGestureBegin={[Function]}
+                            onGestureCanceled={[Function]}
+                            onGestureEnd={[Function]}
+                            onOpen={[Function]}
+                            onTransition={[Function]}
+                            pointerEvents="box-none"
+                            style={
+                              Array [
+                                Object {
+                                  "overflow": undefined,
+                                },
+                                Object {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                              ]
+                            }
+                            transitionSpec={
+                              Object {
+                                "close": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                                "open": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              needsOffscreenAlphaCompositing={false}
+                              pointerEvents="box-none"
+                              style={
+                                Object {
+                                  "flex": 1,
+                                }
+                              }
+                            >
+                              <View
+                                collapsable={false}
+                                forwardedRef={[Function]}
+                                onGestureHandlerEvent={[Function]}
+                                onGestureHandlerStateChange={[Function]}
+                                style={
+                                  Object {
+                                    "flex": 1,
+                                    "transform": Array [
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                    ],
+                                  }
+                                }
+                              >
+                                <View
+                                  collapsable={false}
+                                  pointerEvents="none"
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#FFFFFF",
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "shadowColor": "#000",
+                                      "shadowOffset": Object {
+                                        "height": 1,
+                                        "width": -1,
+                                      },
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                      "top": 0,
+                                      "width": 3,
+                                    }
+                                  }
+                                />
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "flex": 1,
+                                        "overflow": "hidden",
+                                      },
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "#FFFFFF",
+                                        },
+                                        undefined,
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "flexDirection": "column-reverse",
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "flex": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignContent": "space-between",
+                                            "alignItems": "flex-start",
+                                            "backgroundColor": "#E8EBF1",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "height": 207,
+                                            "justifyContent": "space-between",
+                                            "padding": 24,
+                                          }
+                                        }
+                                      >
+                                        <Text
+                                          color="black"
+                                          defaultColor="black"
+                                          defaultWeight="SemiBold"
+                                          font="TitilliumWeb"
+                                          fontStyle={
+                                            Object {
+                                              "fontSize": 16,
+                                              "lineHeight": 24,
+                                            }
+                                          }
+                                          style={
+                                            Array [
+                                              Object {
+                                                "fontSize": 16,
+                                                "lineHeight": 24,
+                                              },
+                                              Object {
+                                                "color": "#0E0F13",
+                                                "fontFamily": "Titillium Web",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                            ]
+                                          }
+                                          weight="SemiBold"
+                                        >
+                                          PAYPAL
+                                        </Text>
+                                        <View
+                                          style={
+                                            Object {
+                                              "height": 8,
+                                            }
+                                          }
+                                        />
+                                        <Text
+                                          color="black"
+                                          defaultColor="black"
+                                          defaultWeight="SemiBold"
+                                          ellipsizeMode="tail"
+                                          font="TitilliumWeb"
+                                          fontStyle={
+                                            Object {
+                                              "fontSize": 16,
+                                              "lineHeight": 24,
+                                            }
+                                          }
+                                          numberOfLines={1}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "width": "75%",
+                                              },
+                                              Object {
+                                                "fontSize": 16,
+                                                "lineHeight": 24,
+                                              },
+                                              Object {
+                                                "color": "#0E0F13",
+                                                "fontFamily": "Titillium Web",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                            ]
+                                          }
+                                          weight="SemiBold"
+                                        >
+                                          someEmail@test.com
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`PaymentCardSmall component matches snapshot for loading 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "zIndex": 1,
+        }
+      }
+    >
+      <View
+        accessibilityElementsHidden={false}
+        importantForAccessibility="auto"
+        onLayout={[Function]}
+        pointerEvents="box-none"
+        style={null}
+      >
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 1,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "backgroundColor": "rgb(255, 255, 255)",
+                "borderBottomColor": "rgb(216, 216, 216)",
+                "flex": 1,
+                "shadowColor": "rgb(216, 216, 216)",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.85,
+                "shadowRadius": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "height": 64,
+              "maxHeight": undefined,
+              "minHeight": undefined,
+              "opacity": undefined,
+              "transform": undefined,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              Object {
+                "height": 20,
+              }
+            }
+          />
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "marginHorizontal": 16,
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                accessibilityRole="header"
+                aria-level="1"
+                collapsable={false}
+                numberOfLines={1}
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "color": "rgb(28, 28, 30)",
+                    "fontSize": 17,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                WALLET_HOME
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        />
+        <View
+          accessibilityElementsHidden={false}
+          closing={false}
+          gestureVelocityImpact={0.3}
+          importantForAccessibility="auto"
+          onClose={[Function]}
+          onGestureBegin={[Function]}
+          onGestureCanceled={[Function]}
+          onGestureEnd={[Function]}
+          onOpen={[Function]}
+          onTransition={[Function]}
+          pointerEvents="box-none"
+          style={
+            Array [
+              Object {
+                "overflow": undefined,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          transitionSpec={
+            Object {
+              "close": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+              "open": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            needsOffscreenAlphaCompositing={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              forwardedRef={[Function]}
+              onGestureHandlerEvent={[Function]}
+              onGestureHandlerStateChange={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="none"
+                style={
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 1,
+                      "width": -1,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 5,
+                    "top": 0,
+                    "width": 3,
+                  }
+                }
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "overflow": "hidden",
+                    },
+                    Array [
+                      Object {
+                        "backgroundColor": "#FFFFFF",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "flexDirection": "column-reverse",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        onLayout={[Function]}
+                        style={
+                          Object {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          pointerEvents="box-none"
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                          />
+                          <View
+                            accessibilityElementsHidden={false}
+                            closing={false}
+                            gestureVelocityImpact={0.3}
+                            importantForAccessibility="auto"
+                            onClose={[Function]}
+                            onGestureBegin={[Function]}
+                            onGestureCanceled={[Function]}
+                            onGestureEnd={[Function]}
+                            onOpen={[Function]}
+                            onTransition={[Function]}
+                            pointerEvents="box-none"
+                            style={
+                              Array [
+                                Object {
+                                  "overflow": undefined,
+                                },
+                                Object {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                              ]
+                            }
+                            transitionSpec={
+                              Object {
+                                "close": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                                "open": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              needsOffscreenAlphaCompositing={false}
+                              pointerEvents="box-none"
+                              style={
+                                Object {
+                                  "flex": 1,
+                                }
+                              }
+                            >
+                              <View
+                                collapsable={false}
+                                forwardedRef={[Function]}
+                                onGestureHandlerEvent={[Function]}
+                                onGestureHandlerStateChange={[Function]}
+                                style={
+                                  Object {
+                                    "flex": 1,
+                                    "transform": Array [
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                    ],
+                                  }
+                                }
+                              >
+                                <View
+                                  collapsable={false}
+                                  pointerEvents="none"
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#FFFFFF",
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "shadowColor": "#000",
+                                      "shadowOffset": Object {
+                                        "height": 1,
+                                        "width": -1,
+                                      },
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                      "top": 0,
+                                      "width": 3,
+                                    }
+                                  }
+                                />
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "flex": 1,
+                                        "overflow": "hidden",
+                                      },
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "#FFFFFF",
+                                        },
+                                        undefined,
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "flexDirection": "column-reverse",
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "flex": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Array [
+                                            Object {
+                                              "alignContent": "center",
+                                              "alignItems": "flex-start",
+                                              "borderRadius": 8,
+                                              "flex": 1,
+                                              "flexBasis": 160,
+                                              "flexGrow": 0,
+                                              "justifyContent": "center",
+                                              "padding": 16,
+                                              "width": 160,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#E8EBF1",
+                                            },
+                                          ]
+                                        }
+                                        testID="undefined-skeleton"
+                                      >
+                                        <View
+                                          collapsable={false}
+                                          style={
+                                            Object {
+                                              "opacity": 0.5,
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            color="#D2D6E3"
+                                            height={24}
+                                            radius={8}
+                                            style={
+                                              Object {
+                                                "backgroundColor": "#D2D6E3",
+                                                "borderRadius": 8,
+                                                "height": 24,
+                                                "width": 24,
+                                              }
+                                            }
+                                            width={24}
+                                          />
+                                        </View>
+                                        <View
+                                          style={
+                                            Object {
+                                              "height": 8,
+                                            }
+                                          }
+                                        />
+                                        <View
+                                          collapsable={false}
+                                          style={
+                                            Object {
+                                              "opacity": 0.5,
+                                            }
+                                          }
+                                        >
+                                          <View
+                                            color="#D2D6E3"
+                                            height={16}
+                                            radius={8}
+                                            style={
+                                              Object {
+                                                "backgroundColor": "#D2D6E3",
+                                                "borderRadius": 8,
+                                                "height": 16,
+                                                "width": 125,
+                                              }
+                                            }
+                                            width={125}
+                                          />
+                                        </View>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`PaymentCardSmall component matches snapshot for paypal 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "zIndex": 1,
+        }
+      }
+    >
+      <View
+        accessibilityElementsHidden={false}
+        importantForAccessibility="auto"
+        onLayout={[Function]}
+        pointerEvents="box-none"
+        style={null}
+      >
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 1,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "backgroundColor": "rgb(255, 255, 255)",
+                "borderBottomColor": "rgb(216, 216, 216)",
+                "flex": 1,
+                "shadowColor": "rgb(216, 216, 216)",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.85,
+                "shadowRadius": 0,
+              }
+            }
+          />
+        </View>
+        <View
+          collapsable={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "height": 64,
+              "maxHeight": undefined,
+              "minHeight": undefined,
+              "opacity": undefined,
+              "transform": undefined,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              Object {
+                "height": 20,
+              }
+            }
+          />
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "marginHorizontal": 16,
+                  "opacity": 1,
+                }
+              }
+            >
+              <Text
+                accessibilityRole="header"
+                aria-level="1"
+                collapsable={false}
+                numberOfLines={1}
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "color": "rgb(28, 28, 30)",
+                    "fontSize": 17,
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                WALLET_HOME
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        />
+        <View
+          accessibilityElementsHidden={false}
+          closing={false}
+          gestureVelocityImpact={0.3}
+          importantForAccessibility="auto"
+          onClose={[Function]}
+          onGestureBegin={[Function]}
+          onGestureCanceled={[Function]}
+          onGestureEnd={[Function]}
+          onOpen={[Function]}
+          onTransition={[Function]}
+          pointerEvents="box-none"
+          style={
+            Array [
+              Object {
+                "overflow": undefined,
+              },
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
+          }
+          transitionSpec={
+            Object {
+              "close": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+              "open": Object {
+                "animation": "spring",
+                "config": Object {
+                  "damping": 500,
+                  "mass": 3,
+                  "overshootClamping": true,
+                  "restDisplacementThreshold": 10,
+                  "restSpeedThreshold": 10,
+                  "stiffness": 1000,
+                },
+              },
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            needsOffscreenAlphaCompositing={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              forwardedRef={[Function]}
+              onGestureHandlerEvent={[Function]}
+              onGestureHandlerStateChange={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="none"
+                style={
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "shadowColor": "#000",
+                    "shadowOffset": Object {
+                      "height": 1,
+                      "width": -1,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 5,
+                    "top": 0,
+                    "width": 3,
+                  }
+                }
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "flex": 1,
+                      "overflow": "hidden",
+                    },
+                    Array [
+                      Object {
+                        "backgroundColor": "#FFFFFF",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                      "flexDirection": "column-reverse",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        onLayout={[Function]}
+                        style={
+                          Object {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          pointerEvents="box-none"
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                          />
+                          <View
+                            accessibilityElementsHidden={false}
+                            closing={false}
+                            gestureVelocityImpact={0.3}
+                            importantForAccessibility="auto"
+                            onClose={[Function]}
+                            onGestureBegin={[Function]}
+                            onGestureCanceled={[Function]}
+                            onGestureEnd={[Function]}
+                            onOpen={[Function]}
+                            onTransition={[Function]}
+                            pointerEvents="box-none"
+                            style={
+                              Array [
+                                Object {
+                                  "overflow": undefined,
+                                },
+                                Object {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                              ]
+                            }
+                            transitionSpec={
+                              Object {
+                                "close": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                                "open": Object {
+                                  "animation": "spring",
+                                  "config": Object {
+                                    "damping": 500,
+                                    "mass": 3,
+                                    "overshootClamping": true,
+                                    "restDisplacementThreshold": 10,
+                                    "restSpeedThreshold": 10,
+                                    "stiffness": 1000,
+                                  },
+                                },
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              needsOffscreenAlphaCompositing={false}
+                              pointerEvents="box-none"
+                              style={
+                                Object {
+                                  "flex": 1,
+                                }
+                              }
+                            >
+                              <View
+                                collapsable={false}
+                                forwardedRef={[Function]}
+                                onGestureHandlerEvent={[Function]}
+                                onGestureHandlerStateChange={[Function]}
+                                style={
+                                  Object {
+                                    "flex": 1,
+                                    "transform": Array [
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                      Object {
+                                        "translateX": 0,
+                                      },
+                                    ],
+                                  }
+                                }
+                              >
+                                <View
+                                  collapsable={false}
+                                  pointerEvents="none"
+                                  style={
+                                    Object {
+                                      "backgroundColor": "#FFFFFF",
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "shadowColor": "#000",
+                                      "shadowOffset": Object {
+                                        "height": 1,
+                                        "width": -1,
+                                      },
+                                      "shadowOpacity": 0.3,
+                                      "shadowRadius": 5,
+                                      "top": 0,
+                                      "width": 3,
+                                    }
+                                  }
+                                />
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "flex": 1,
+                                        "overflow": "hidden",
+                                      },
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "#FFFFFF",
+                                        },
+                                        undefined,
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "flexDirection": "column-reverse",
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        Object {
+                                          "flex": 1,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "alignContent": "center",
+                                            "alignItems": "flex-start",
+                                            "backgroundColor": "#E8EBF1",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "flexBasis": 160,
+                                            "flexGrow": 0,
+                                            "justifyContent": "center",
+                                            "padding": 16,
+                                            "width": 160,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Object {
+                                              "alignItems": "center",
+                                              "flex": 1,
+                                              "flexDirection": "row",
+                                              "justifyContent": "space-between",
+                                              "width": "100%",
+                                            }
+                                          }
+                                        >
+                                          <RNSVGSvgView
+                                            align="xMidYMid"
+                                            bbHeight={24}
+                                            bbWidth={24}
+                                            focusable={false}
+                                            height={24}
+                                            meetOrSlice={0}
+                                            minX={0}
+                                            minY={0}
+                                            style={
+                                              Array [
+                                                Object {
+                                                  "backgroundColor": "transparent",
+                                                  "borderWidth": 0,
+                                                },
+                                                Object {
+                                                  "flex": 0,
+                                                  "height": 24,
+                                                  "width": 24,
+                                                },
+                                              ]
+                                            }
+                                            vbHeight={24}
+                                            vbWidth={24}
+                                            width={24}
+                                          >
+                                            <RNSVGGroup>
+                                              <RNSVGPath
+                                                d="M19.22 7.336c.26-1.634 0-2.746-.894-3.752C17.341 2.476 15.564 2 13.291 2H6.689a.952.952 0 0 0-.614.225.932.932 0 0 0-.319.564L3.007 20.023a.554.554 0 0 0 .323.596.572.572 0 0 0 .237.052h4.075l-.281 1.764a.484.484 0 0 0 .279.52.5.5 0 0 0 .206.046h3.435a.832.832 0 0 0 .532-.197.815.815 0 0 0 .278-.49l.035-.172.646-4.057.042-.229a.816.816 0 0 1 .28-.491.833.833 0 0 1 .536-.195h.513c3.328 0 5.934-1.336 6.695-5.203.318-1.616.154-2.963-.687-3.912a3.25 3.25 0 0 0-.94-.717"
+                                                fill={4278230238}
+                                                propList={
+                                                  Array [
+                                                    "fill",
+                                                  ]
+                                                }
+                                              />
+                                              <RNSVGPath
+                                                d="M19.22 7.336c.26-1.634 0-2.746-.894-3.752C17.341 2.476 15.564 2 13.291 2H6.689a.952.952 0 0 0-.614.225.932.932 0 0 0-.319.564L3.007 20.023a.554.554 0 0 0 .323.596.572.572 0 0 0 .237.052h4.075l1.024-6.418-.031.201a.927.927 0 0 1 .315-.563.946.946 0 0 1 .61-.225h1.937c3.805 0 6.783-1.529 7.653-5.95.025-.13.047-.257.067-.381"
+                                                fill={4278264169}
+                                                propList={
+                                                  Array [
+                                                    "fill",
+                                                  ]
+                                                }
+                                              />
+                                              <RNSVGPath
+                                                d="M9.765 7.358a.812.812 0 0 1 .463-.61.826.826 0 0 1 .356-.08h5.175c.571-.004 1.142.037 1.706.123a7.014 7.014 0 0 1 .847.186l.196.06c.246.08.485.18.715.299.259-1.634 0-2.746-.895-3.752C17.344 2.476 15.567 2 13.293 2H6.689a.952.952 0 0 0-.614.225.932.932 0 0 0-.319.564L3.007 20.023a.554.554 0 0 0 .323.596.572.572 0 0 0 .237.052h4.075l1.024-6.418 1.1-6.895Z"
+                                                fill={4278202503}
+                                                propList={
+                                                  Array [
+                                                    "fill",
+                                                  ]
+                                                }
+                                              />
+                                            </RNSVGGroup>
+                                          </RNSVGSvgView>
+                                        </View>
+                                        <View
+                                          style={
+                                            Object {
+                                              "height": 8,
+                                            }
+                                          }
+                                        />
+                                        <Text
+                                          color="grey-700"
+                                          defaultColor="black"
+                                          defaultWeight="SemiBold"
+                                          ellipsizeMode="tail"
+                                          font="TitilliumWeb"
+                                          fontStyle={
+                                            Object {
+                                              "fontSize": 16,
+                                              "lineHeight": 24,
+                                            }
+                                          }
+                                          numberOfLines={1}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "fontSize": 16,
+                                                "lineHeight": 24,
+                                              },
+                                              Object {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillium Web",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "400",
+                                              },
+                                            ]
+                                          }
+                                          weight="Regular"
+                                        >
+                                          PayPal
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;

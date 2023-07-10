@@ -985,6 +985,7 @@ wallet:
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
     details:
       header: Dettaglio Metodo
+    validUntil: Valida fino al {{expDate}}
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:
