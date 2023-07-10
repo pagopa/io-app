@@ -3,7 +3,7 @@
  * These errors are a superset of HTTP errors with custom error codes.
  */
 export type ItWalletError = {
-  code: string;
+  code: ItWalletErrorTypes;
   message?: string;
 };
 
@@ -18,9 +18,6 @@ export type ItWalletMappedError = {
 /**
  * Requirements error codes
  */
-export const NFC_NOT_SUPPORTED = "NFC_NOT_SUPPORTED";
-
-/**
- * Exports all error codes as a string literal union type.
- */
-export type ItWalletErrorCodes = typeof NFC_NOT_SUPPORTED;
+export enum ItWalletErrorTypes {
+  NFC_NOT_SUPPORTED = "NFC_NOT_SUPPORTED"
+}

@@ -8,6 +8,7 @@ import {
 } from "../../../store/reducers/cie";
 import { idpSelector } from "../../../store/reducers/authentication";
 import { itwRequirementsRequest } from "../store/actions";
+import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 
 /*
  * This saga handles the requirements check for the IT Wallet activation.
@@ -28,7 +29,11 @@ export function* handleRequirementsRequest(): SagaIterator {
     ) {
       yield* put(itwRequirementsRequest.success(true));
     } else {
-      yield* put(itwRequirementsRequest.failure({ code: "NFC_NOT_SUPPORTED" }));
+      yield* put(
+        itwRequirementsRequest.failure({
+          code: ItWalletErrorTypes.NFC_NOT_SUPPORTED
+        })
+      );
     }
   }
 }
