@@ -148,12 +148,12 @@ const DesignSystemMainStack = () => {
     <Stack.Navigator
       initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
       headerMode="screen"
+      screenOptions={customHeaderConf}
     >
       <ModalStack.Screen
         name={DESIGN_SYSTEM_ROUTES.MAIN.route}
         component={DesignSystem}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title
         }}
       />
@@ -162,7 +162,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
         component={DSColors}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title
         }}
       />
@@ -171,7 +170,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
         component={DSTypography}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
         }}
       />
@@ -180,7 +178,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
         component={DSLayout}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.title
         }}
       />
@@ -189,7 +186,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
         component={DSIcons}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.title
         }}
       />
@@ -198,7 +194,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
         component={DSPictograms}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.title
         }}
       />
@@ -207,7 +202,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
         component={DSLogos}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.title
         }}
       />
@@ -216,7 +210,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
         component={DSLoaders}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.title
         }}
       />
@@ -225,7 +218,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
         component={DSHapticFeedback}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.title
         }}
       />
@@ -235,7 +227,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
         component={DSButtons}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.title
         }}
       />
@@ -244,7 +235,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
         component={DSSelection}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.title
         }}
       />
@@ -253,7 +243,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
         component={DSTextFields}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.title
         }}
       />
@@ -262,7 +251,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
         component={DSBadges}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.title
         }}
       />
@@ -271,7 +259,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
         component={DSListItems}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.title
         }}
       />
@@ -280,7 +267,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
         component={DSToastNotifications}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.title
         }}
       />
@@ -289,7 +275,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
         component={DSAccordion}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.title
         }}
       />
@@ -298,7 +283,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route}
         component={DSAlert}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.title
         }}
       />
@@ -307,7 +291,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
         component={DSAdvice}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.title
         }}
       />
@@ -316,7 +299,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
         component={DSBottomSheet}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
         }}
       />
@@ -343,7 +325,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
         component={DSLegacyPictograms}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
         }}
       />
@@ -351,7 +332,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
         component={DSLegacyButtons}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
         }}
       />
@@ -359,7 +339,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
         component={DSLegacyIllustrations}
         options={{
-          ...customHeaderConf,
           headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.title
         }}
       />
