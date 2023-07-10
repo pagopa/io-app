@@ -33,11 +33,11 @@ const reducer = (
 };
 
 /**
- * Selects the itwRequirements state.
+ * Selects the requirements state.
  * @param state the global state
- * @returns the itwRequirements state
+ * @returns the requirements state
  */
 export const itwRequirementsSelector = (state: GlobalState) =>
-  state.features.itWallet.itwRequirements;
+  state.features.itWallet.requirements;
 
 export default reducer;

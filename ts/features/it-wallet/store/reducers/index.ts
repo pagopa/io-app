@@ -7,7 +7,7 @@ export type ItWalletState = {
 };
 
 const itwReducer = combineReducers<ItWalletState, Action>({
-  itwRequirements
+  requirements: itwRequirements
 });
 
 export default itwReducer;
