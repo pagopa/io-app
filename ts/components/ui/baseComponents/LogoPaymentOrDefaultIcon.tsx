@@ -29,6 +29,7 @@ export const LogoPaymentOrDefaultIcon = ({
     O.fromNullable,
     O.fold(
       // would be a cleaner solution to create an io-ts type and decode
+      // but it's not worth the effort for now
       () => <Icon name="creditCard" size={size} color={fallbackIconColor} />,
       icon => <LogoPayment name={icon} size={size} />
     )
