@@ -2,7 +2,7 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Alert, Linking, Platform } from "react-native";
 import DocumentPicker, {
@@ -133,14 +133,15 @@ const imageDecodingTask = (
 ): TE.TaskEither<Error, IOBarcode> =>
   pipe(
     qrCodeDetectionTask(imageUri),
-    TE.chain(result => {
-      const ioBarcodeFormat = convertToIOBarcodeFormat(result.type);
-      if (!(ioBarcodeFormat && acceptedFormats.includes(ioBarcodeFormat))) {
-        // Format not supported
-        return TE.left(new Error("Format not supported"));
-      }
-      return TE.right([result, ioBarcodeFormat] as const);
-    }),
+    TE.chain(result =>
+      pipe(
+        convertToIOBarcodeFormat(result.type),
+        O.fromNullable,
+        O.filter(format => acceptedFormats.includes(format)),
+        O.map(format => [result, format] as const),
+        TE.fromOption(() => new Error("Format not supported"))
+      )
+    ),
     TE.chain(([result, format]) =>
       pipe(
         A.head(result.values),
@@ -231,17 +232,17 @@ const useIOBarcodeFileReader = (
 
     await pipe(
       imageGenerationTask(platformSpecificUri),
-      TE.map(A.map(({ uri }) => imageDecodingTask(uri, config.formats)())),
-      TE.mapLeft(onBarcodeError),
-      TE.map(async decodingTasks =>
-        pipe(
-          await Promise.all(decodingTasks),
-          A.filterMap(T => (E.isLeft(T) ? O.none : O.some(T.right))),
-          A.head,
-          O.map(onBarcodeSuccess),
-          O.getOrElse(onBarcodeError)
+      TE.map(
+        flow(
+          A.map(({ uri }) => imageDecodingTask(uri, config.formats)),
+          A.sequence(TE.Monad)
         )
-      )
+      ),
+      TE.flatten,
+      TE.map(A.head), // FIXME currently we only support one barcode result
+      TE.chain(TE.fromOption(() => new Error("No barcode found"))),
+      TE.map(onBarcodeSuccess),
+      TE.mapLeft(onBarcodeError)
     )();
   };
 
