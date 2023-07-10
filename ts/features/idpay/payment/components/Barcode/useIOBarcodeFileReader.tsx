@@ -2,6 +2,7 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
+import * as T from "fp-ts/lib/Task";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Alert, Linking } from "react-native";
@@ -221,11 +222,9 @@ const useIOBarcodeFileReader = (
       return onBarcodeError();
     }
 
-    const images = await imageGenerationTask(uri)();
-
-    const barcodes = await pipe(
-      images,
-      E.map(async images =>
+    await pipe(
+      imageGenerationTask(uri),
+      TE.map(async images =>
         images.reduce(
           async (barcodes, { uri }) =>
             pipe(
@@ -236,16 +235,16 @@ const useIOBarcodeFileReader = (
           Promise.resolve([] as Array<IOBarcode>)
         )
       ),
-      E.getOrElse(() => Promise.resolve([] as Array<IOBarcode>))
-    );
-
-    // At this time, we only support one barcode per PDF document
-    pipe(
-      barcodes,
-      A.head,
-      O.map(onBarcodeSuccess),
-      O.getOrElse(onBarcodeError)
-    );
+      TE.map(async barcodes =>
+        // FIXME Currently, we only support one barcode per PDF document
+        pipe(
+          await barcodes,
+          A.head,
+          O.map(onBarcodeSuccess),
+          O.getOrElse(onBarcodeError)
+        )
+      )
+    )();
   };
 
   /**
