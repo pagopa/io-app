@@ -239,22 +239,6 @@ const useIOBarcodeFileReader = (
       E.getOrElse(() => Promise.resolve([] as Array<IOBarcode>))
     );
 
-    const test = await pipe(
-      images,
-      E.map(async images =>
-        images.reduce(
-          async (barcodes, { uri }) =>
-            pipe(
-              await imageDecodingTask(uri, config.formats)(),
-              E.map(async barcode => [...(await barcodes), barcode]),
-              E.getOrElse(() => barcodes)
-            ),
-          Promise.resolve([] as Array<IOBarcode>)
-        )
-      ),
-      E.getOrElse(() => Promise.resolve([] as Array<IOBarcode>))
-    );
-
     // At this time, we only support one barcode per PDF document
     pipe(
       barcodes,
