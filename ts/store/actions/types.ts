@@ -28,6 +28,7 @@ import { LollipopActions } from "../../features/lollipop/store/actions/lollipop"
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { WalletV3Actions } from "../../features/walletV3/common/store/actions";
+import { ItWalletActions } from "../../features/it-wallet/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -106,7 +107,8 @@ export type Action =
   | LollipopActions
   | FastLoginActions
   | WhatsNewActions
-  | WalletV3Actions;
+  | WalletV3Actions
+  | ItWalletActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
