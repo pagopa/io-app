@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
-import ItwActivationDetailsScreen from "../screens/ItwActivationDetailsScreen";
-import ItwActivationInfoAuthScreen from "../screens/authentication/ItwActivationInfoAuthScreen";
+import ItwActivationDetailsScreen from "../screens/discovery/ItwActivationDetailsScreen";
+import ItwActivationInfoAuthScreen from "../screens/issuing/ItwActivationInfoAuthScreen";
 import { ItwParamsList } from "./params";
 import { ITW_ROUTES } from "./routes";
 

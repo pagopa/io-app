@@ -22,6 +22,7 @@ import {
   whatsNewPersistor,
   WhatsNewState
 } from "../../../whatsnew/store/reducers";
+import itwReducer, { ItWalletState } from "../../../it-wallet/store/reducers";
 
 import {
   cieLoginReducer,
@@ -51,6 +52,7 @@ export type FeaturesState = {
   whatsNew: WhatsNewState & PersistPartial;
   loginFeatures: LoginFeaturesState;
   wallet: WalletV3State;
+  itWallet: ItWalletState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -67,7 +69,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginReducer
-  })
+  }),
+  itWallet: itwReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
