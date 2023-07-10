@@ -1,6 +1,6 @@
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
+import * as O from "fp-ts/lib/Option";
 import { startApplicationInitialization } from "../store/actions/application";
 import {
   checkCurrentSession,
@@ -32,7 +32,7 @@ import { paymentsCurrentStateSelector } from "../store/reducers/payments/current
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { deletePin } from "../utils/keychain";
+import { deletePin, getPin } from "../utils/keychain";
 import NavigationService from "../navigation/NavigationService";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
@@ -140,12 +140,15 @@ export function* startAndReturnIdentificationResult(
 
 // Started by redux action
 function* startAndHandleIdentificationResult(
-  pin: PinString,
   identificationRequestAction: ActionType<typeof identificationRequest>
 ) {
+  const pin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
+  if (O.isNone(pin)) {
+    return;
+  }
   yield* put(
     identificationStart(
-      pin,
+      pin.value,
       identificationRequestAction.payload.canResetPin,
       identificationRequestAction.payload.isValidatingTask,
       identificationRequestAction.payload.identificationGenericData,
@@ -185,13 +188,10 @@ function* startAndHandleIdentificationResult(
   }
 }
 
-export function* watchIdentification(
-  pin: PinString
-): IterableIterator<ReduxSagaEffect> {
+export function* watchIdentification(): IterableIterator<ReduxSagaEffect> {
   // Watch for identification request
   yield* takeLatest(
     getType(identificationRequest),
-    startAndHandleIdentificationResult,
-    pin
+    startAndHandleIdentificationResult
   );
 }
