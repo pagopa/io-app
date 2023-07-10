@@ -84,13 +84,13 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
-      .select(backendStatusSelector)
-      .next(O.some({}))
       .next(200) // checkSession
       .next()
       .next()
@@ -138,13 +138,13 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
-      .select(backendStatusSelector)
-      .next(O.some({}))
       .next(401) // checksession
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
@@ -176,13 +176,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
-      .select(backendStatusSelector)
-      .next(O.some({}))
+
       .next(401) // checksession
       .next(true) // FastLogin FF
       .put(
@@ -218,13 +219,13 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
-      .select(backendStatusSelector)
-      .next(O.some({}))
       .next(200) // check session
       .next()
       .next()

@@ -236,6 +236,14 @@ export function* initializeApplicationSaga(
     return;
   }
 
+  // Since the backend.json is done in parallel with the startup saga,
+  // we need to synchronize the two tasks, to be sure to have loaded the remote FF
+  // before using them.
+  const backendStatus = yield* select(backendStatusSelector);
+  if (O.isNone(backendStatus)) {
+    yield* take(backendStatusLoadSuccess);
+  }
+
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
@@ -261,14 +269,6 @@ export function* initializeApplicationSaga(
     sessionToken,
     keyInfo
   );
-
-  // Since the backend.json is done in parallel with the startup saga,
-  // we need to synchronize the two tasks, to be sure to have loaded the remote FF
-  // before using them.
-  const backendStatus = yield* select(backendStatusSelector);
-  if (O.isNone(backendStatus)) {
-    yield* take(backendStatusLoadSuccess);
-  }
 
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
