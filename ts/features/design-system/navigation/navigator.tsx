@@ -4,7 +4,7 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { View, useColorScheme } from "react-native";
+import { Platform, View, useColorScheme } from "react-native";
 import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -108,11 +108,15 @@ export const DesignSystemNavigator = () => {
       <ModalStack.Navigator
         mode="modal"
         headerMode="screen"
-        screenOptions={{
-          gestureEnabled: isGestureEnabled,
-          cardOverlayEnabled: true,
-          ...TransitionPresets.ModalPresentationIOS
-        }}
+        screenOptions={
+          Platform.OS === "ios"
+            ? {
+                gestureEnabled: isGestureEnabled,
+                cardOverlayEnabled: true,
+                ...TransitionPresets.ModalPresentationIOS
+              }
+            : {}
+        }
       >
         <ModalStack.Screen
           name={DESIGN_SYSTEM_ROUTES.MAIN.route}
@@ -138,6 +142,7 @@ const DesignSystemMainStack = () => {
         ...makeFontStyleObject("Regular", false, "ReadexPro"),
         fontSize: 14
       },
+      headerTitleAlign: "center",
       headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
       headerLeft: RNNBackButton
     }),
