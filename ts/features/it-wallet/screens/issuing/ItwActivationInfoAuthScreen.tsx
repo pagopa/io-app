@@ -65,6 +65,9 @@ const ItwActivationInfoAuthScreen = () => {
     );
   };
 
+  /**
+   * Containts the content of the screen when the requirements are satisfied.
+   */
   const ContentView = () => {
     const continueButtonProps = {
       block: true,

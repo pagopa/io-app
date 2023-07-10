@@ -10,7 +10,8 @@ import { idpSelector } from "../../../store/reducers/authentication";
 import { itwRequirementsRequest } from "../store/actions";
 
 /*
- * A saga to post signature data.
+ * This saga handles the requirements check for the IT Wallet activation.
+ * Currently it checks if the user logged in with CIE or if the device has NFC support.
  */
 export function* handleRequirementsRequest(): SagaIterator {
   const state = yield* select();
