@@ -181,7 +181,7 @@ const DesignSystemMainStack = () => {
         component={DSLayout}
         options={{
           ...customHeaderConf,
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
+          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.title
         }}
       />
 
