@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.38.0-rc.1](https://github.com/pagopa/io-app/compare/2.38.0-rc.0...2.38.0-rc.1) (2023-07-08)
+
+
+### Bug Fixes
+
+* [[IOPID-389](https://pagopa.atlassian.net/browse/IOPID-389)] Clear session cookies at CIE login start on Android ([#4755](https://github.com/pagopa/io-app/issues/4755)) ([893c773](https://github.com/pagopa/io-app/commit/893c773931fb7b3abc0f0e93b0c1745f3d6cf92f))
+
+## [2.38.0-rc.0](https://github.com/pagopa/io-app/compare/2.37.0-rc.1...2.38.0-rc.0) (2023-07-07)
+
+
+### Features
+
+* [[IOCOM-345](https://pagopa.atlassian.net/browse/IOCOM-345)] Updated header for FIMS screen ([#4742](https://github.com/pagopa/io-app/issues/4742)) ([389f45a](https://github.com/pagopa/io-app/commit/389f45a785fefb32c44728f8fd25b1bf4264fd8a)), closes [/github.com/pagopa/io-dev-api-server/blob/e3ac6784acecbb5ad80a44dfc7777f80946dcab5/src/payloads/backend.ts#L45](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/e3ac6784acecbb5ad80a44dfc7777f80946dcab5/src/payloads/backend.ts/issues/L45)
+* [[IOCOM-346](https://pagopa.atlassian.net/browse/IOCOM-346)] Handling of setTitle event emitted by the FIMS WebView ([#4744](https://github.com/pagopa/io-app/issues/4744)) ([09f8aa6](https://github.com/pagopa/io-app/commit/09f8aa66a14e53cda45f180a2f435874cd8bafd2))
+* [[IOCOM-347](https://pagopa.atlassian.net/browse/IOCOM-347)] Handling of events emitted by the FIMS WebView ([#4749](https://github.com/pagopa/io-app/issues/4749)) ([26e575b](https://github.com/pagopa/io-app/commit/26e575b5bc1d3effab554d7803731a3db9ccef9f))
+
+
+### Bug Fixes
+
+* [[IOPID-388](https://pagopa.atlassian.net/browse/IOPID-388)] Shared data security info URL is broken ([#4754](https://github.com/pagopa/io-app/issues/4754)) ([2800106](https://github.com/pagopa/io-app/commit/2800106f472173b5ddc3228c2b7563bd2c485ef0))
+
+
+### Chores
+
+* [[IOAPPFD0-123](https://pagopa.atlassian.net/browse/IOAPPFD0-123)] Update payment logos ([#4751](https://github.com/pagopa/io-app/issues/4751)) ([d484bb9](https://github.com/pagopa/io-app/commit/d484bb963d797eb2c2253dbbbbbbcaf33f4cd9d8))
+* [[IOBP-101](https://pagopa.atlassian.net/browse/IOBP-101)] Remove co-badge cards entry points ([#4743](https://github.com/pagopa/io-app/issues/4743)) ([0a53027](https://github.com/pagopa/io-app/commit/0a53027060e67d836d7c3bc1bed720fb149459d8))
+* [[IOBP-106](https://pagopa.atlassian.net/browse/IOBP-106)] Add business name in IDPay transaction item ([#4752](https://github.com/pagopa/io-app/issues/4752)) ([aafb650](https://github.com/pagopa/io-app/commit/aafb65078b191ef0bd7c597a57959dedba18661c))
+
 ## [2.37.0-rc.1](https://github.com/pagopa/io-app/compare/2.37.0-rc.0...2.37.0-rc.1) (2023-07-05)
 
 
