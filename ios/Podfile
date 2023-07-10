@@ -44,6 +44,13 @@ target 'ItaliaApp' do
       	# Beware that after this modification you need Rosetta to run the app 
       	# on the simulator.
         config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+
+        case target.name
+          # This is needed to patch deployment target for react-native-pdf-thumbnail library
+          when 'react-native-pdf-thumbnail'
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+        end
+
       end
     end
   end
