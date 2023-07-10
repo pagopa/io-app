@@ -3288,6 +3288,15 @@ features:
       confirm: "Continua con CIE + PIN"
       footerBox: "Prima di continua, assicurati di avere con te la Carta d’Identità Elettronica (CIE) e ricordare il PIN [Per saperne di più](https://www.cartaidentita.interno.gov.it)"
       readMoreUrl: "https://identitadigitale.gov.it/"
+      errors:
+        nfc:
+          title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
+          body: Per proseguire è necessaria la funzione NFC del dispositivo."
+    generic:
+      error:
+        title: "C'è un problema sui nostri sistemi"
+        body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
+      close: "Chiudi"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
