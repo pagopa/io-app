@@ -13,9 +13,6 @@ import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { Body } from "../../components/core/typography/Body";
-import { Label } from "../../components/core/typography/Label";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -24,7 +21,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
@@ -37,7 +33,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-import { useLegacyIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
@@ -87,10 +82,6 @@ const styles = StyleSheet.create({
   verticalSpacing: {
     width: 16,
     flex: 0
-  },
-  button: {
-    width: "100%",
-    borderColor: IOColors.blue
   },
   whiteBg: {
     backgroundColor: IOColors.white
@@ -238,28 +229,6 @@ const AddCardScreen: React.FC<Props> = props => {
 
   const isCardExpirationDateValid = O.toUndefined(
     maybeCreditCardValidOrExpired(creditCard)
-  );
-
-  const inPayment = props.route.params.inPayment;
-
-  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
-    <>
-      <Body>{I18n.t("wallet.missingDataText.body")}</Body>
-      <VSpacer size={24} />
-      <ButtonDefaultOpacity
-        style={styles.button}
-        bordered={true}
-        onPress={() => {
-          dismiss();
-          props.startAddCobadgeWorkflow();
-        }}
-        onPressWithGestureHandler={true}
-      >
-        <Label>{I18n.t("wallet.missingDataText.cta")}</Label>
-      </ButtonDefaultOpacity>
-    </>,
-    I18n.t("wallet.missingDataCTA"),
-    300
   );
 
   const detectedBrand: SupportedBrand = CreditCardDetector.validate(
@@ -459,18 +428,6 @@ const AddCardScreen: React.FC<Props> = props => {
               </Col>
             </Grid>
 
-            {!O.isSome(inPayment) && (
-              <>
-                <VSpacer size={16} />
-                <Link
-                  accessibilityRole="link"
-                  accessibilityLabel={I18n.t("wallet.missingDataCTA")}
-                  onPress={present}
-                >
-                  {I18n.t("wallet.missingDataCTA")}
-                </Link>
-              </>
-            )}
             <VSpacer size={16} />
 
             <Link
@@ -493,7 +450,6 @@ const AddCardScreen: React.FC<Props> = props => {
             O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
           )}
         />
-        {bottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -501,8 +457,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
+const mapDispatchToProps = (_: Dispatch, props: OwnProps) => ({
   navigateBack: () => navigateBack(),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({
