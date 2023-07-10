@@ -159,6 +159,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             isValid={isPinValid ? undefined : false}
             overrideBorderColor={isPinValid ? undefined : IOColors.red}
             testID="PinField"
+            inputAccessoryViewID="" // hide keyboard toolbar
           />
 
           {!isPinValid && (
@@ -196,6 +197,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               isPinConfirmationValid ? undefined : IOColors.red
             }
             testID="PinConfirmationField"
+            inputAccessoryViewID="" // hide keyboard toolbar
           />
 
           {!isPinConfirmationValid && (

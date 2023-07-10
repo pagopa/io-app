@@ -253,6 +253,8 @@ login:
     line1: welcome in your
     line2: Digital Citizenship
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
+  expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
+  biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -369,7 +371,7 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy & Terms
+        title: Privacy Policy and Terms of Service
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
@@ -406,7 +408,7 @@ profile:
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
-            shareData: "Share data"
+            shareData: "Share"
             dontShareData: "Don’t share data"
             dontShare: "Don’t share"
           confirmToast: "Preferences updated!"
@@ -518,18 +520,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Choose if you want to allow previews and receive reminders.
+      subtitle: Choose how to receive messages and reminders.
       titleExistingUser: Customize push notifications
       subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
-        title: Show previews
-        description: Include the sender and subject of the message in the push notification · 
+        title: Show a preview
+        description: Include the sender and subject of the message in the push notification
         link: More info
         bottomSheet:
-          title: Show previews
+          title: Show a preview
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
@@ -812,7 +814,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    accept: Accept
+    accept: Accept and continue
     error: Loading error
     alert:
       title: Attention
@@ -863,7 +865,7 @@ onboarding:
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Summer camp registration is now open
-      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffTitle: You have a notice due tomorrow
       reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
@@ -1835,21 +1837,21 @@ services:
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
-      title: "How do you want to configure services on IO?"
-      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
+      title: "Who can contact you?"
+      body: "IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message."
       quickConfig:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
         body:
-          text1: "Only the services which have something important to tell you will contact you."
+          text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
         body:
-          text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
+          text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
