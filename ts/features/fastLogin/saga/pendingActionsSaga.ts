@@ -1,8 +1,8 @@
 import { SagaIterator } from "redux-saga";
 import { put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { applicationInitialized } from "../../../store/actions/application";
-import { fastLoginPendingActionsSelector } from "../store/reducers";
 import { clearPendingAction } from "../store/actions";
+import { fastLoginPendingActionsSelector } from "../store/selectors";
 
 export function* watchPendingActionsSaga(): SagaIterator {
   yield* takeLatest(applicationInitialized, handleApplicationInitialized);

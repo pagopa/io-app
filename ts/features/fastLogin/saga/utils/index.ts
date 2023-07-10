@@ -4,12 +4,9 @@ import * as t from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
 import { isFastLoginEnabledSelector } from "../../store/selectors";
-import {
-  refreshSessionToken,
-  sessionExpired
-} from "../../../../store/actions/authentication";
+import { sessionExpired } from "../../../../store/actions/authentication";
 import { Action } from "../../../../store/actions/types";
-import { savePendingAction } from "../../store/actions";
+import { refreshSessionToken, savePendingAction } from "../../store/actions";
 
 export function* withRefreshApiCall<R, A extends Action>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
@@ -34,7 +31,12 @@ export function* withRefreshApiCall<R, A extends Action>(
 export function* handleSessionExpiredSaga() {
   const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
   if (isFastLoginEnabled) {
-    yield* put(refreshSessionToken.request({ withUserInteraction: true }));
+    yield* put(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false
+      })
+    );
   } else {
     yield* put(sessionExpired());
   }

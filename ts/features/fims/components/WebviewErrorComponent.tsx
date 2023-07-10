@@ -6,6 +6,7 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body as BodyText } from "../../../components/core/typography/Body";
 import brokenLinkImage from "../../../../img/broken-link.png";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -33,7 +34,7 @@ type Props = {
 };
 
 const WebviewErrorComponent = ({ onWebviewClose, handleReload }: Props) => (
-  <View style={styles.errorContainer}>
+  <View style={[styles.errorContainer, IOStyles.horizontalContentPadding]}>
     <VSpacer size={40} />
     <VSpacer size={40} />
     <Image source={brokenLinkImage} resizeMode="contain" />

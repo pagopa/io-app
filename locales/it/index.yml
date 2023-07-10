@@ -253,6 +253,8 @@ login:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
   expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
+  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
+  biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -369,7 +371,7 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Informativa e Condizioni d'uso
+        title: Informativa Privacy e Termini e condizioni d'uso
         description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
@@ -404,9 +406,9 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
           cta:
-            shareData: "Condividi dati"
+            shareData: "Condividi"
             dontShareData: "Non condividere dati"
             dontShare: "Non condividere"
           confirmToast: "Preferenze aggiornate!"
@@ -444,6 +446,12 @@ profile:
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
+    addCard:
+      titleSection: Aggiungi carta di test
+      warning: 
+        title: Attenzione
+        message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
+        closeButton: Chiudi
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -512,18 +520,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria.
       titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
-        title: Consenti promemoria
+        title: Consenti i promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
-        title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
+        title: Mostra un'anteprima
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio
         link: Più info
         bottomSheet:
-          title: Mostra anteprime
+          title: Mostra un'anteprima
           content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
@@ -822,7 +830,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
-    accept: Accetta
+    accept: Accetta e continua
     error: Errore nel caricamento
     alert:
       title: Attenzione
@@ -873,10 +881,10 @@ onboarding:
       reminderOnPreviewOnMessage: Entra nell’app e paga l’avviso emesso da ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Sono aperte le iscrizioni per il centro estivo
-      reminderOnPreviewOffTitle: Hai un avviso in scadenza
+      reminderOnPreviewOffTitle: Hai un avviso che scade domani
       reminderOnPreviewOffMessage: Entra nell'app per pagarlo
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
-      reminderOffPreviewOffMessage: Entra nell'app per leggerlo
+      reminderOffPreviewOffMessage: Apri l'app per leggere il contenuto
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
@@ -1479,7 +1487,6 @@ wallet:
         fieldError: "Per continuare per favore correggi il campo {{field}}"
         missingFields: "Per continuare, compila tutti i campi"
   acceptedCards: Carte accettate
-  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
   missingDataText:
     body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.
@@ -1853,21 +1860,21 @@ services:
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
-      title: "Come vuoi configurare i servizi su IO?"
-      body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio."
+      title: "Chi può scriverti?"
+      body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
       quickConfig:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
         body:
-          text1: "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
+          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
       manualConfig:
         value: "Configurazione manuale"
         label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
         body:
-          text1: "Nessun servizio potrà contattarti. Per ricevere messaggi dovrai configurarli uno a uno."
+          text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:
           title: "Se confermi, non riceverai alcun messaggio"
           body: "Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio."
@@ -3376,7 +3383,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: Pagamento Online
+              QRCODE_TRANSACTION: "Pagamento"
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3427,6 +3434,7 @@ idpay:
             AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
             CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
           labels:
+            business: Esercente
             status: Stato
             totalAmount: Importo totale
             idpayAmount: Importo transazione ID Pay
@@ -3709,6 +3717,10 @@ fastLogin:
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
         submitButtonTitle: "Continua la navigazione"
         cancelButtonTitle: "Annulla"
+      transientError:
+        title: "Non siamo riusciti ad autenticarti"
+        subtitle: "Chiudi l'app e riprova tra qualche minuto."
+        submitButtonTitle: "Vai alle FAQ"
   whatsNew:
     title: Abbiamo migliorato l’accesso a IO!
     subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.

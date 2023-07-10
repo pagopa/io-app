@@ -1,9 +1,13 @@
 import { Action, getType } from "typesafe-actions";
-import { createSelector } from "reselect";
-import { uniqWith, isEqual } from "lodash";
-import { GlobalState } from "../../../../store/reducers/types";
-import { askUserToRefreshSessionToken } from "../../../../store/actions/authentication";
-import { clearPendingAction, savePendingAction } from "../actions";
+import {
+  askUserToRefreshSessionToken,
+  clearPendingAction,
+  clearTokenTransientError,
+  refreshSessionToken,
+  refreshTokenTransientError,
+  savePendingAction,
+  showRefreshTokenLoader
+} from "../actions";
 
 type FastLoginUserInteractionChoiceNone = {
   type: "none";
@@ -21,21 +25,38 @@ export type FastLoginUserInteractionChoice =
   | FastLoginUserInteractionChoiceDecline
   | FastLoginUserInteractionChoiceNone;
 
+type TokenRefreshIdleState = {
+  kind: "idle";
+};
+type TokenRefreshProgressState = {
+  kind: "in-progress";
+};
+type TokenRefreshErrorState = {
+  kind: "error";
+};
+type TokenRefreshTransientErrorState = {
+  kind: "transient-error";
+};
+type TokenRefreshSuccessState = {
+  kind: "success";
+  timestamp: number;
+};
+type TokenRefreshState =
+  | TokenRefreshProgressState
+  | TokenRefreshErrorState
+  | TokenRefreshTransientErrorState
+  | TokenRefreshSuccessState
+  | TokenRefreshIdleState;
+
 export type FastLoginState = {
   userInteractionForSessionExpiredNeeded: boolean;
+  tokenRefresh: TokenRefreshState;
   pendingActions: Array<Action>;
 };
 
-export const fastLoginSelector = (state: GlobalState) =>
-  state.features.loginFeatures.fastLogin;
-
-export const fastLoginPendingActionsSelector = createSelector(
-  fastLoginSelector,
-  fastLoginState => uniqWith(fastLoginState.pendingActions, isEqual)
-);
-
 const FastLoginInitialState: FastLoginState = {
   userInteractionForSessionExpiredNeeded: false,
+  tokenRefresh: { kind: "idle" },
   pendingActions: []
 };
 
@@ -67,6 +88,31 @@ export const fastLoginReducer = (
       return {
         ...state,
         userInteractionForSessionExpiredNeeded: false
+      };
+    case getType(showRefreshTokenLoader):
+      return {
+        ...state,
+        tokenRefresh: { kind: "in-progress" }
+      };
+    case getType(refreshSessionToken.success):
+      return {
+        ...state,
+        tokenRefresh: { kind: "success", timestamp: Date.now() }
+      };
+    case getType(refreshSessionToken.failure):
+      return {
+        ...state,
+        tokenRefresh: { kind: "error" }
+      };
+    case getType(refreshTokenTransientError):
+      return {
+        ...state,
+        tokenRefresh: { kind: "transient-error" }
+      };
+    case getType(clearTokenTransientError):
+      return {
+        ...state,
+        tokenRefresh: { kind: "idle" }
       };
     default:
       return state;
