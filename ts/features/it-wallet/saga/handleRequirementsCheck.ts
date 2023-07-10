@@ -14,13 +14,12 @@ import { itwRequirementsRequest } from "../store/actions";
  * Currently it checks if the user logged in with CIE or if the device has NFC support.
  */
 export function* handleRequirementsRequest(): SagaIterator {
-  const state = yield* select();
-  const idp = yield* call(idpSelector, state);
+  const idp = yield* select(idpSelector);
   if (isSome(idp) && idp.value.name === "cie") {
     yield* put(itwRequirementsRequest.success(true));
   } else {
-    const hasNFCFeature = yield* call(hasNFCFeatureSelector, state);
-    const hasApiLevelSupport = yield* call(hasApiLevelSupportSelector, state);
+    const hasNFCFeature = yield* select(hasNFCFeatureSelector);
+    const hasApiLevelSupport = yield* select(hasApiLevelSupportSelector);
     if (
       pot.isSome(hasNFCFeature) &&
       pot.isSome(hasApiLevelSupport) &&
