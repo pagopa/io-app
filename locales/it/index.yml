@@ -444,6 +444,12 @@ profile:
     backendVersion: Versione Backend
     debugMode: Modalità debug
     designSystem: Design System
+    addCard:
+      titleSection: Aggiungi carta di test
+      warning: 
+        title: Attenzione
+        message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
+        closeButton: Chiudi
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -1480,7 +1486,6 @@ wallet:
         fieldError: "Per continuare per favore correggi il campo {{field}}"
         missingFields: "Per continuare, compila tutti i campi"
   acceptedCards: Carte accettate
-  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
   missingDataText:
     body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online.
@@ -3377,7 +3382,7 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: Pagamento Online
+              QRCODE_TRANSACTION: "Pagamento"
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
@@ -3428,6 +3433,7 @@ idpay:
             AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
             CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
           labels:
+            business: Esercente
             status: Stato
             totalAmount: Importo totale
             idpayAmount: Importo transazione ID Pay
