@@ -1,12 +1,18 @@
 import { takeLatest, call } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 import { CommonActions } from "@react-navigation/native";
-import { itwActivationStart } from "../store/actions";
+import { itwActivationStart, itwRequirementsRequest } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
+import { handleRequirementsRequest } from "./handleRequirementsCheck";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(itwActivationStart, watchItwActivationStart);
+
+  /**
+   * Handles requirements check for activation.
+   */
+  yield* takeLatest(itwRequirementsRequest.request, handleRequirementsRequest);
 }
 
 function* watchItwActivationStart(): SagaIterator {
