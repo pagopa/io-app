@@ -64,6 +64,7 @@ import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import ButtonSolid from "../../components/ui/ButtonSolid";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
+import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -243,6 +244,24 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.setDesignSystemEnabled(enabled);
   };
 
+  private onAddTestCard = () => {
+    if (!this.props.isPagoPATestEnabled) {
+      Alert.alert(
+        I18n.t("profile.main.addCard.warning.title"),
+        I18n.t("profile.main.addCard.warning.message"),
+        [
+          {
+            text: I18n.t("profile.main.addCard.warning.closeButton"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+    this.props.startAddTestCard();
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -371,6 +390,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               screen: ROUTES.DESIGN_SYSTEM
             })
           }
+        />
+        <Divider />
+        {/* Add Test Card CTA */}
+        <ListItemNav
+          value={I18n.t("profile.main.addCard.titleSection")}
+          accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
+          onPress={this.onAddTestCard}
         />
         <Divider />
         {this.developerListItem(
@@ -659,7 +685,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
   setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }))
+    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled })),
+  startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
 });
 
 export default connect(
