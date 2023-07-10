@@ -12,7 +12,8 @@ import {
   Alert,
   BackHandler,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../i18n";
@@ -57,6 +58,7 @@ import {
   IOPictograms,
   IOPictogramSizeScale
 } from "./core/pictograms/Pictogram";
+import IconButton from "./ui/IconButton";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -258,20 +260,19 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     );
 
   private customOnboardingGoBack = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
       onPress={this.handleOnboardingGoBack}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <Icon name="legChevronLeft" />
-    </TouchableDefaultOpacity>
+    />
   );
 
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
       iconName: "closeLarge",
-      onPress: this.props.navigateBack
+      onPress: this.props.navigateBack,
+      accessibilityLabel: I18n.t("global.buttons.close")
     }
   };
 
