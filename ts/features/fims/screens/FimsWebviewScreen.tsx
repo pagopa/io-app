@@ -129,7 +129,8 @@ const FimsWebviewScreen = () => {
       customGoBack={<View />}
       customRightIcon={{
         iconName: "closeMedium",
-        onPress: handleGoBack
+        onPress: handleGoBack,
+        accessibilityLabel: I18n.t("global.buttons.close")
       }}
     >
       <SafeAreaView style={IOStyles.flex}>
