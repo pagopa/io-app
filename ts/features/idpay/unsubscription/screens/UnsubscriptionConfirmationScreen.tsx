@@ -3,7 +3,6 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
@@ -12,7 +11,6 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -24,6 +22,7 @@ import {
   selectInitiativeName,
   selectUnsubscriptionChecks
 } from "../xstate/selectors";
+import IconButton from "../../../../components/ui/IconButton";
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
@@ -45,14 +44,12 @@ const UnsubscriptionConfirmationScreen = () => {
   };
 
   const closeButton = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon="closeLarge"
+      color="neutral"
       onPress={handleClosePress}
-      accessible={true}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <IconFont name={"io-close"} style={{ color: IOColors.bluegrey }} />
-    </TouchableDefaultOpacity>
+      accessibilityLabel={I18n.t("global.buttons.close")}
+    />
   );
 
   const confirmModal = useLegacyIOBottomSheetModal(
