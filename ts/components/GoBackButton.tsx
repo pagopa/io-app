@@ -1,10 +1,9 @@
 import { CommonActions } from "@react-navigation/native";
 import * as React from "react";
-import { BackHandler, NativeEventSubscription } from "react-native";
+import { BackHandler, NativeEventSubscription, Platform } from "react-native";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Icon } from "./core/icons";
+import IconButton from "./ui/IconButton";
 
 interface OwnProps {
   [k: string]: any;
@@ -56,12 +55,12 @@ class GoBackButton extends React.PureComponent<Props> {
     };
 
     return (
-      <ButtonDefaultOpacity
+      <IconButton
         {...buttonProps}
+        color={white ? "contrast" : "neutral"}
+        icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
         accessibilityLabel={I18n.t("global.buttons.back")}
-      >
-        <Icon name="legChevronLeft" color={white ? "white" : "black"} />
-      </ButtonDefaultOpacity>
+      />
     );
   }
 }
