@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
