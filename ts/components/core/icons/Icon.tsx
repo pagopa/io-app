@@ -132,8 +132,6 @@ import IconProductIOAppBlueBg from "./svg/IconProductIOAppBlueBg";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconSearch from "./svg/LegIconSearch";
-import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
@@ -229,15 +227,13 @@ export const IOIcons = {
   gallery: IconGallery,
   externalLink: IconExternalLink,
   cancel: IconCancel,
-  help: IconQuestion /* io-question */,
+  help: IconQuestion,
   search: IconSearch /* io-search */,
-  legSearch: LegIconSearch,
   chevronRight: IconChevronRight,
   chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
-  legChevronLeft: LegIconChevronLeft,
   closeLarge: IconCloseLarge /* io-close */,
   closeMedium: IconCloseMedium,
   closeSmall: IconCloseSmall,

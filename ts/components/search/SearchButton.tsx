@@ -12,10 +12,11 @@ import {
   updateSearchText
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { LabelledItem } from "../LabelledItem";
 import { IOColors } from "../core/variables/IOColors";
-import { Icon } from "../core/icons";
+import IconButton from "../ui/IconButton";
+import { HSpacer } from "../core/spacer/Spacer";
+import { ICON_BUTTON_MARGIN } from "../screens/BaseHeader";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
@@ -64,14 +65,15 @@ class SearchButton extends React.Component<Props, State> {
             iconColor={this.props.color}
           />
         ) : (
-          <ButtonDefaultOpacity
-            hasFullHitSlop
-            onPress={this.handleSearchPress}
-            transparent={true}
-            accessibilityLabel={I18n.t("global.buttons.search")}
-          >
-            <Icon name="legSearch" color="black" />
-          </ButtonDefaultOpacity>
+          <>
+            <IconButton
+              color="neutral"
+              icon="search"
+              onPress={this.handleSearchPress}
+              accessibilityLabel={I18n.t("global.buttons.search")}
+            />
+            <HSpacer size={ICON_BUTTON_MARGIN} />
+          </>
         )}
       </React.Fragment>
     );

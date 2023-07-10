@@ -4,6 +4,7 @@ import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOVisualCostants } from "../../components/core/variables/IOStyles";
 
 declare module "native-base" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -34,7 +35,6 @@ export default (): Theme => ({
       height: (variables.iconSizeBase * 5) / 3
     },
     padding: 0,
-    minWidth: 40,
     flex: 0
   },
 
@@ -128,8 +128,7 @@ export default (): Theme => ({
       ? variables.appHeaderHeight + 18
       : variables.appHeaderHeight,
   borderBottomWidth: variables.headerBorderBottomWidth,
-  paddingLeft: variables.titleHeaderPaddingLeft,
-  paddingRight: variables.appHeaderPaddingHorizontal,
+  paddingHorizontal: IOVisualCostants.appMarginDefault,
   /* iOS */
   // shadowOpacity: 0,
   shadowOffset: {
