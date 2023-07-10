@@ -22,6 +22,10 @@ import {
   nativeLoginReducer,
   NativeLoginState
 } from "../../../nativeLogin/store/reducers";
+import {
+  whatsNewPersistor,
+  WhatsNewState
+} from "../../../whatsnew/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -34,6 +38,7 @@ export type FeaturesState = {
   pn: PnState;
   fci: FciState;
   idPay: IDPayState;
+  whatsNew: WhatsNewState & PersistPartial;
   loginFeatures: LoginFeaturesState;
 };
 
@@ -44,6 +49,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,
+  whatsNew: whatsNewPersistor,
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,

@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import { uniqWith, isEqual } from "lodash";
 import { GlobalState } from "../../../../store/reducers/types";
 import { askUserToRefreshSessionToken } from "../../../../store/actions/authentication";
-import { clearPendingAction, savePendingAction } from "../../actions";
+import { clearPendingAction, savePendingAction } from "../actions";
 
 type FastLoginUserInteractionChoiceNone = {
   type: "none";

@@ -9,7 +9,7 @@ import {
   sessionExpired
 } from "../../../../store/actions/authentication";
 import { Action } from "../../../../store/actions/types";
-import { savePendingAction } from "../../actions";
+import { savePendingAction } from "../../store/actions";
 
 export function* withRefreshApiCall<R, A extends Action>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,

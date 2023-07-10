@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { Action } from "../../../store/actions/types";
+import { Action } from "../../../../store/actions/types";
 
 type PendingActionPayload = { pendingAction: Action };
 export const savePendingAction = createStandardAction(
