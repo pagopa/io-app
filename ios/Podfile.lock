@@ -970,7 +970,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
-  react-native-pdf-thumbnail: 65d349b78029c3fe95e13ebec835987d5ccc4ca9
+  react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-screen-brightness: 9eefe6db96a5d757e63cdfce8e48d7c9039f2af2
@@ -1030,6 +1030,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 918a6ad04c9861d32ba83015a97bac1b05c3696b
+PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
 
 COCOAPODS: 1.12.0
