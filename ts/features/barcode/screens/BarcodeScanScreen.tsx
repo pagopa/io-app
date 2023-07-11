@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
+import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -39,8 +40,8 @@ const BarcodeScanScreen = () => {
   const filePickerModalComponent = (
     <SafeAreaView>
       <ListItemNav
-        value="Autorizza una transazione"
-        accessibilityLabel="Autorizza una transazione"
+        value={I18n.t("barcodeScan.manual.authorize")}
+        accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}
         onPress={handleIdPayPaymentCodeInput}
         icon="gallery"
       />

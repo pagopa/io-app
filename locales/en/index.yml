@@ -3692,3 +3692,9 @@ fastLogin:
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
         submitButtonTitle: "Continua la navigazione"
         cancelButtonTitle: "Annulla"
+barcodeScan: 
+  upload:
+    image: Carica un'immagine
+    file: Carica un file
+  manual:
+    authorize: Autorizza una transazione

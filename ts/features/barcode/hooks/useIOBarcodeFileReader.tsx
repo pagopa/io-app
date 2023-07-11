@@ -267,8 +267,8 @@ const useIOBarcodeFileReader = (
   const filePickerModalComponent = (
     <SafeAreaView>
       <ListItemNav
-        value="Carica un'immagine"
-        accessibilityLabel="Carica un'immagine"
+        value={I18n.t("barcodeScan.upload.image")}
+        accessibilityLabel={I18n.t("barcodeScan.upload.image")}
         onPress={async () => {
           filePickerModal.dismiss();
           await showImagePicker();
@@ -277,8 +277,8 @@ const useIOBarcodeFileReader = (
       />
       <Divider />
       <ListItemNav
-        value="Carica un file"
-        accessibilityLabel="Carica un file"
+        value={I18n.t("barcodeScan.upload.file")}
+        accessibilityLabel={I18n.t("barcodeScan.upload.file")}
         onPress={async () => {
           filePickerModal.dismiss();
           await showDocumentPicker();
