@@ -4,6 +4,7 @@ import {
   createAsyncAction
 } from "typesafe-actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItwCieAuthenticationActions } from "./cie";
 
 /**
  * Start ITW activation
@@ -26,4 +27,5 @@ export const itwRequirementsRequest = createAsyncAction(
  */
 export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
-  | ActionType<typeof itwRequirementsRequest>;
+  | ActionType<typeof itwRequirementsRequest>
+  | ItwCieAuthenticationActions;

@@ -3268,6 +3268,11 @@ features:
         nfc:
           title: "Your device does not support NFC which is required to enable IT Wallet"
           body: "To proceed, the NFC function of the device is required."
+    issuing:
+      infoConsent:
+        footer:
+          cancel: "Cancel"
+          confirm: "Authorize"
     generic:
       error:
         title: "There's a problem on our systems"
