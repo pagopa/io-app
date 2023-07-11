@@ -15,6 +15,7 @@ import IconButton from "../../../../components/ui/IconButton";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
+  enableAnnotationRendering?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -28,6 +29,8 @@ export const FciDocumentPreviewScreen = (
 ): React.ReactElement => {
   const [isError, setIsError] = React.useState(false);
   const documentUrl = props.route.params.documentUrl ?? "";
+  const enableAnnotationRendering =
+    props.route.params.enableAnnotationRendering;
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
   const dispatch = useIODispatch();
 
@@ -66,6 +69,7 @@ export const FciDocumentPreviewScreen = (
       >
         {S.isEmpty(documentUrl) === false && (
           <DocumentViewer
+            enableAnnotationRendering={enableAnnotationRendering}
             documentUrl={documentUrl}
             onError={() => setIsError(true)}
           />
