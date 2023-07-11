@@ -309,7 +309,7 @@ export const IOThemeLight: IOTheme = {
   "cardBorder-default": "grey-100",
   "icon-default": "grey-650",
   // Layout
-  "divider-default": "grey-100",
+  "divider-default": "grey-200",
   // Status
   errorIcon: "error-500",
   errorText: "error-850"

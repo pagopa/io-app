@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { IOColors, IOTheme, IOThemeContext } from "../variables/IOColors";
 
 type DividerOrientation = "vertical" | "horizontal";
@@ -8,7 +8,7 @@ type DividerProps = {
   orientation: DividerOrientation;
 };
 
-const DEFAULT_BORDER_SIZE = 1;
+const DEFAULT_BORDER_SIZE = StyleSheet.hairlineWidth;
 
 // Co-authored by Fabio Bombardi
 // https://github.com/pagopa/io-app/pull/4478
