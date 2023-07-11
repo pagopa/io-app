@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { WithTestID } from "../../../../types/WithTestID";
 import { formatDateAsLocal } from "../../../../utils/dates";
@@ -12,6 +12,8 @@ import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentOrDefaultIcon } from "../../baseComponents/LogoPaymentOrDefaultIcon";
 import I18n from "../../../../i18n";
+import paypalLogoImage from "../../../../../img/wallet/payment-methods/paypal-logo.png";
+import BpayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -30,6 +32,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
+  },
+  paypalLogoExt: {
+    width: 132,
+    height: 33,
+    resizeMode: "contain"
   }
 });
 
@@ -172,9 +179,11 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
 };
 
 const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
+  const getCdnPath = (abi: string) =>
+    `https://assets.cdn.io.italia.it/logos/abi/${abi}.png`;
   switch (props.cardType) {
     case "PAYPAL":
-      return <NewH6>PAYPAL</NewH6>;
+      return <Image source={paypalLogoImage} style={styles.paypalLogoExt} />;
     case "PAGOBANCOMAT":
     case "COBADGE":
       return (
@@ -205,10 +214,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "BANCOMATPAY":
       return (
         <View style={IOStyles.flex}>
-          <NewH6 style={{ textTransform: "capitalize" }}>
-            {props.cardType}
-          </NewH6>
-
+          <BpayLogo width={133} height={33} />
           <LabelSmall color="grey-650" weight="Regular">
             {I18n.t("wallet.creditCard.validUntil", {
               expDate: formatDateAsLocal(props.expirationDate, true)
