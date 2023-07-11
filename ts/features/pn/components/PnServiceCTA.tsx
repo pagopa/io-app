@@ -17,7 +17,6 @@ import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import {
-  trackPNServiceCTAFired,
   trackPNServiceStatusChangedError,
   trackPNServiceStatusChangedSuccess
 } from "../analytics";
@@ -59,7 +58,6 @@ const ActivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
-      trackPNServiceCTAFired();
       props.dispatch(pnActivationUpsert.request(true));
     }}
   >
@@ -72,7 +70,6 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
-      trackPNServiceCTAFired();
       props.dispatch(pnActivationUpsert.request(false));
     }}
     style={{

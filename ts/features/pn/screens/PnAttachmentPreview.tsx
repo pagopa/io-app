@@ -9,12 +9,7 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
 import { useIOSelector } from "../../../store/hooks";
 import { pnMessageAttachmentSelector } from "../store/reducers";
-import {
-  trackPNAttachmentOpen,
-  trackPNAttachmentPreviewStatus,
-  trackPNAttachmentSave,
-  trackPNAttachmentShare
-} from "../analytics";
+import { trackPNAttachmentSave, trackPNAttachmentShare } from "../analytics";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -54,10 +49,7 @@ export const PnAttachmentPreview = (
     <MessageAttachmentPreview
       messageId={messageId}
       attachment={pnMessageAttachmentOption.value}
-      onPDFError={() => trackPNAttachmentPreviewStatus("error")}
-      onLoadComplete={() => () => trackPNAttachmentPreviewStatus("displayed")}
       onShare={() => trackPNAttachmentShare()}
-      onOpen={() => trackPNAttachmentOpen()}
       onDownload={() => trackPNAttachmentSave()}
     />
   ) : (
