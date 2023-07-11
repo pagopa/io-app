@@ -13,16 +13,37 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
+import { useIODispatch } from "../../../store/hooks";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import {
+  navigateToPaymentManualDataInsertion,
+  navigateToPaymentTransactionSummaryScreen
+} from "../../../store/actions/navigation";
+import ROUTES from "../../../navigation/routes";
+import { Divider } from "../../../components/core/Divider";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
-    if (barcode.type === "IDPAY") {
-      openDeepLink(barcode.authUrl);
-    } else {
-      handleBarcodeError();
+    switch (barcode.type) {
+      case "IDPAY":
+        openDeepLink(barcode.authUrl);
+        break;
+      case "PAGOPA":
+        dispatch(paymentInitializeState());
+
+        navigateToPaymentTransactionSummaryScreen({
+          rptId: barcode.rptId,
+          initialAmount: barcode.amount,
+          paymentStartOrigin: "qrcode_scan"
+        });
+        break;
+      default:
+        handleBarcodeError();
+        break;
     }
   };
 
@@ -37,8 +58,23 @@ const BarcodeScanScreen = () => {
     });
   };
 
+  const handlePagoPACodeInput = () => {
+    manualInputModal.dismiss();
+    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
+      params: {}
+    });
+  };
+
   const filePickerModalComponent = (
     <SafeAreaView>
+      <ListItemNav
+        value={I18n.t("barcodeScan.manual.notice")}
+        accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
+        onPress={handlePagoPACodeInput}
+        icon="gallery"
+      />
+      <Divider />
       <ListItemNav
         value={I18n.t("barcodeScan.manual.authorize")}
         accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}

@@ -3698,3 +3698,4 @@ barcodeScan:
     file: Carica un file
   manual:
     authorize: Autorizza una transazione
+    notice: Paga un avviso pagoPA
