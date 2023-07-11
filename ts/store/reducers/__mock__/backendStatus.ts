@@ -290,7 +290,8 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     pn: {
       enabled: false,
-      frontend_url: ""
+      frontend_url: "",
+      optInServiceId: ""
     },
     payments: {}
   }
@@ -373,7 +374,8 @@ export const baseBackendConfig: Config = {
   },
   pn: {
     enabled: false,
-    frontend_url: ""
+    frontend_url: "",
+    optInServiceId: ""
   },
   payments: {}
 };
