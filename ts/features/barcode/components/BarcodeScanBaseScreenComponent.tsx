@@ -42,10 +42,6 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
     props;
   const isFocused = useIsFocused();
 
-  const handleBackNavigation = () => {
-    navigation.goBack();
-  };
-
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const {
@@ -69,7 +65,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   const customGoBack = (
     <IconButton
       icon="closeLarge"
-      onPress={handleBackNavigation}
+      onPress={navigation.goBack}
       accessibilityLabel={I18n.t("global.buttons.close")}
       color="contrast"
     />
