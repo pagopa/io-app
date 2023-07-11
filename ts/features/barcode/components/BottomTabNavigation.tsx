@@ -1,10 +1,10 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import I18n from "../../../../i18n";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import I18n from "../../../i18n";
 
 type Props = {
   onUploadBarcodePressed: () => void;

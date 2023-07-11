@@ -13,10 +13,11 @@ import {
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { usePrevious } from "../../../../../utils/hooks/usePrevious";
-import { decodeIOBarcode } from "./decoders";
-import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
+import { decodeIOBarcode } from "../types/decoders";
+import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { BarcodeCameraMarker } from "../components/BarcodeCameraMarker";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -35,10 +36,6 @@ const IOBarcodeFormats: IOBarcodeFormatsType = {
  * {@link useIOBarcodeScanner} configuration
  */
 export type IOBarcodeScannerConfiguration = {
-  /**
-   * Marker component used as camera overlay
-   */
-  marker?: React.ReactNode;
   /**
    * Accepted formats of codes to be scanned
    */
@@ -143,8 +140,7 @@ export const retrieveNextBarcode = (
 export const useIOBarcodeScanner = (
   config: IOBarcodeScannerConfiguration
 ): IOBarcodeScanner => {
-  const { marker, onBarcodeSuccess, onBarcodeError, formats, disabled } =
-    config;
+  const { onBarcodeSuccess, onBarcodeError, formats, disabled } = config;
 
   const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();
@@ -224,7 +220,9 @@ export const useIOBarcodeScanner = (
           isActive={!disabled}
         />
       )}
-      {marker && <View style={{ alignSelf: "center" }}>{marker}</View>}
+      <View style={{ alignSelf: "center" }}>
+        <BarcodeCameraMarker />
+      </View>
     </View>
   );
 

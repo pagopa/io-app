@@ -1,8 +1,8 @@
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
 import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Alert, Linking } from "react-native";
@@ -19,15 +19,15 @@ import RNQRGenerator, {
   QRCodeScanResult,
   CodeType as RNQRCodeType
 } from "rn-qr-generator";
-import { Divider } from "../../../../../components/core/Divider";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import ListItemNav from "../../../../../components/ui/ListItemNav";
-import I18n from "../../../../../i18n";
-import { AsyncAlert } from "../../../../../utils/asyncAlert";
-import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
-import { isAndroid } from "../../../../../utils/platform";
-import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
-import { DecodedIOBarcode, decodeIOBarcode } from "./decoders";
+import { Divider } from "../../../components/core/Divider";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
+import ListItemNav from "../../../components/ui/ListItemNav";
+import I18n from "../../../i18n";
+import { AsyncAlert } from "../../../utils/asyncAlert";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import * as Platform from "../../../utils/platform";
+import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { DecodedIOBarcode, decodeIOBarcode } from "../types/decoders";
 
 /**
  * Maps internal formats to external library formats
@@ -197,7 +197,7 @@ const useIOBarcodeFileReader = (
   const showImagePicker = async () => {
     // on Android we have to show a prominent disclosure on how we use READ_EXTERNAL_STORAGE permission
     // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-08
-    if (isAndroid) {
+    if (Platform.isAndroid) {
       await AsyncAlert(
         I18n.t("wallet.QRtoPay.readStorageDisclosure.title"),
         I18n.t("wallet.QRtoPay.readStorageDisclosure.message"),
