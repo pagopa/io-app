@@ -5,11 +5,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { itwRequirementsRequest } from "../../store/actions";
 import { handleRequirementsRequest } from "../handleRequirementsCheck";
 import { idpSelector } from "../../../../store/reducers/authentication";
+import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
 import {
   hasApiLevelSupportSelector,
   hasNFCFeatureSelector
-} from "../../../../store/reducers/cie";
-import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
+} from "../../store/reducers/cie";
 
 describe("handleRequirementsCheck", () => {
   it("should return true if an user logged in with CIE", async () => {
