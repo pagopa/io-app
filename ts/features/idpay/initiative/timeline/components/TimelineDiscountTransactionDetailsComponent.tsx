@@ -44,19 +44,6 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
               <VSpacer size={16} />
             </>
           );
-        case TransactionStatusEnum.AUTHORIZED:
-          return (
-            <>
-              <Alert
-                viewRef={alertViewRef}
-                variant="info"
-                content={I18n.t(
-                  "idpay.initiative.operationDetails.discount.details.alerts.AUTHORIZED"
-                )}
-              />
-              <VSpacer size={16} />
-            </>
-          );
         default:
           return null;
       }
