@@ -25,6 +25,9 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Bottom Sheet"
     }
   },
+  HEADERS: {
+    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" }
+  },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
     SAFE_AREA_CENTERED: {
