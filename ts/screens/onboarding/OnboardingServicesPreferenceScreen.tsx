@@ -44,11 +44,7 @@ const OnboardingServicesPreferenceScreen = (
 ): React.ReactElement => {
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
-  const mode =
-    !isFirstOnboarding &&
-    props.profileServicePreferenceMode === ServicesPreferencesModeEnum.LEGACY
-      ? ServicesPreferencesModeEnum.AUTO
-      : props.profileServicePreferenceMode;
+  const mode = props.profileServicePreferenceMode;
   const [modeSelected, setModeSelected] = React.useState<
     ServicesPreferencesModeEnum | undefined
   >(mode);

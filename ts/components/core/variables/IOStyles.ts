@@ -10,6 +10,8 @@ import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
+  // Header
+  headerHeight: number;
   // Dimensions
   avatarSizeSmall: number;
   avatarSizeMedium: number;
@@ -17,6 +19,7 @@ interface IOVisualCostants {
 
 export const IOVisualCostants: IOVisualCostants = {
   appMarginDefault: 24,
+  headerHeight: 56,
   avatarSizeSmall: 44,
   avatarSizeMedium: 66
 };
@@ -34,7 +37,7 @@ export const IOStyles = StyleSheet.create({
     alignItems: "center"
   },
   horizontalContentPadding: {
-    paddingHorizontal: themeVariables.contentPadding
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   },
   row: {
     flexDirection: "row"
