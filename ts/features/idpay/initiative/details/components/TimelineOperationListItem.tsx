@@ -86,17 +86,8 @@ const getDiscountInitiativeTransactionLabel = (
           )}
         />
       );
-    case TransactionStatusEnum.AUTHORIZED:
-      return (
-        <IOBadge
-          color="blue"
-          variant="solid"
-          text={I18n.t(
-            "idpay.initiative.operationDetails.discount.labels.AUTHORIZED"
-          )}
-        />
-      );
     case TransactionStatusEnum.REWARDED:
+    case TransactionStatusEnum.AUTHORIZED:
       return (
         <H4>{`-${formatAbsNumberAmountOrDefault(operation.amount)} €`}</H4>
       );
