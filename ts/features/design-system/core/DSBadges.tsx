@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 export const DSBadges = () => (
   <DesignSystemScreen title={"Badge"}>
-    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+    <H2 weight={"Bold"} style={{ marginBottom: 16 }}>
       Tag
     </H2>
     {renderTag()}

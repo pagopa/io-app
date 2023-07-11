@@ -47,10 +47,7 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import {
-  refreshSessionToken,
-  sessionExpired
-} from "../store/actions/authentication";
+import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -81,7 +78,6 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
@@ -98,10 +94,10 @@ import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
 import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
-import {
-  startAndReturnIdentificationResult,
-  watchIdentification
-} from "./identification";
+import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
+import { backendStatusSelector } from "../store/reducers/backendStatus";
+import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
@@ -172,6 +168,8 @@ export function* initializeApplicationSaga(
   const handleSessionExpiration = !!(
     action?.payload && action.payload.handleSessionExpiration
   );
+  const showIdentificationModal =
+    action?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -234,6 +232,14 @@ export function* initializeApplicationSaga(
     return;
   }
 
+  // Since the backend.json is done in parallel with the startup saga,
+  // we need to synchronize the two tasks, to be sure to have loaded the remote FF
+  // before using them.
+  const backendStatus = yield* select(backendStatusSelector);
+  if (O.isNone(backendStatus)) {
+    yield* take(backendStatusLoadSuccess);
+  }
+
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
@@ -271,7 +277,12 @@ export function* initializeApplicationSaga(
     if (!isFastLoginEnabled) {
       yield* put(sessionExpired());
     } else {
-      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+      yield* put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: true
+        })
+      );
     }
     return;
   }
@@ -400,9 +411,6 @@ export function* initializeApplicationSaga(
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
-  // eslint-disable-next-line functional/no-let
-  let storedPin: PinString;
-
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
@@ -419,7 +427,7 @@ export function* initializeApplicationSaga(
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
-  if (hasPreviousSessionAndPin && !handleSessionExpiration) {
+  if (hasPreviousSessionAndPin && showIdentificationModal) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
@@ -434,7 +442,12 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+      yield* put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: false
+        })
+      );
     }
   }
 
@@ -448,18 +461,9 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
-  if (hasPreviousSessionAndPin) {
-    // We have to retrieve the pin here and not on the previous if-condition (same guard)
-    // otherwise the typescript compiler will complain of an unassigned variable later on
-    storedPin = maybeStoredPin.value;
-  } else {
-    // TODO If the session was not valid, the code would have stopped before
-    // reaching this point. Consider refactoring even more by removing the check
-    // on the session (IOAPPCIT-10 https://pagopa.atlassian.net/browse/IOAPPCIT-10)
-    storedPin = yield* call(checkConfiguredPinSaga);
-
+  if (!hasPreviousSessionAndPin) {
+    yield* call(checkConfiguredPinSaga);
     yield* call(checkAcknowledgedFingerprintSaga);
-
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
@@ -618,8 +622,6 @@ export function* initializeApplicationSaga(
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
-
-  yield* fork(watchIdentification, storedPin);
 
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
