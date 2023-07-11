@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-pdf-thumbnail/react-native-pdf-thumbnail.podspec b/node_modules/react-native-pdf-thumbnail/react-native-pdf-thumbnail.podspec
+index 360866d..341c785 100644
+--- a/node_modules/react-native-pdf-thumbnail/react-native-pdf-thumbnail.podspec
++++ b/node_modules/react-native-pdf-thumbnail/react-native-pdf-thumbnail.podspec
+@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
+   s.license      = package["license"]
+   s.authors      = package["author"]
+ 
+-  s.platforms    = { :ios => "10.0" }
++  s.platforms    = { :ios => "11.0" }
+   s.source       = { :git => "https://github.com/songsterq/react-native-pdf-thumbnail.git", :tag => "#{s.version}" }
+ 
+   s.source_files = "ios/**/*.{h,m,mm,swift}"
