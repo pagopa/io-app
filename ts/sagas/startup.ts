@@ -97,6 +97,7 @@ import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selector
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendStatusSelector } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -477,6 +478,10 @@ export function* initializeApplicationSaga(
     // Show the thank-you screen for the onboarding
     yield* call(completeOnboardingSaga);
   }
+
+  // At the end of the onboarding checks, we enable the whatsnew check so that it is done
+  // only once you get to the messages screen (manual whatsnew management still remains after the tos)
+  yield* put(enableWhatsNewCheck());
 
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);

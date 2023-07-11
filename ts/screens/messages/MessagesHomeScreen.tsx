@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -56,6 +56,8 @@ import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 
+import { useWhatsNew } from "../../features/whatsnew";
+import { isWhatsNewCheckEnabledSelector } from "../../features/whatsnew/store/reducers";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -86,11 +88,24 @@ const MessagesHomeScreen = ({
 
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
 
+  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+
+  const isWhatsNewCheckEnabled = useSelector(isWhatsNewCheckEnabledSelector);
+
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
+
+  useEffect(() => {
+    // Since the message component is rendered together with onboarding (or tos), it sometimes executes this function
+    // before landing on MessagesHome.
+    // isWhatsNewCheckEnabled prevents the function from running
+    if (isWhatsNewCheckEnabled) {
+      checkToShowWhatsNew();
+    }
+  }, [checkToShowWhatsNew, isWhatsNewCheckEnabled]);
 
   useEffect(() => {
     if (!latestMessageOperation) {
@@ -120,7 +135,6 @@ const MessagesHomeScreen = ({
   const { present, bottomSheet } = useMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
     isLollipopEnabled && O.isNone(publicKeyOption);
@@ -163,6 +177,7 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
+      {autoResizableBottomSheet}
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}

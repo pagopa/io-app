@@ -5,18 +5,26 @@ import * as O from "fp-ts/lib/Option";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { disableWhatsNew } from "../actions";
+import {
+  disableWhatsNew,
+  enableWhatsNewCheck,
+  whatsNewDisplayed
+} from "../actions";
 import { ACTIVE_VERSION } from "../..";
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;
+  whatsNewCheckEnabled: boolean;
+  isWhatsNewDisplayed: boolean;
 };
 
 export const whatsNewInitialState: WhatsNewState = {
-  lastVisualizedVersion: undefined
+  lastVisualizedVersion: undefined,
+  whatsNewCheckEnabled: false,
+  isWhatsNewDisplayed: false
 };
 
-export const isActiveVersionVisualizedwhatsNewSelector = (
+export const isActiveVersionVisualizedWhatsNewSelector = (
   state: GlobalState
 ): boolean =>
   pipe(
@@ -28,6 +36,12 @@ export const isActiveVersionVisualizedwhatsNewSelector = (
     )
   );
 
+export const isWhatsNewCheckEnabledSelector = (state: GlobalState): boolean =>
+  state.features.whatsNew.whatsNewCheckEnabled;
+
+export const isWhatsNewDisplayedSelector = (state: GlobalState): boolean =>
+  state.features.whatsNew.isWhatsNewDisplayed;
+
 export const whatsNewReducer = (
   state: WhatsNewState = whatsNewInitialState,
   action: Action
@@ -35,7 +49,19 @@ export const whatsNewReducer = (
   switch (action.type) {
     case getType(disableWhatsNew):
       return {
-        lastVisualizedVersion: action.payload.whatsNewVersion
+        lastVisualizedVersion: action.payload.whatsNewVersion,
+        whatsNewCheckEnabled: false,
+        isWhatsNewDisplayed: false
+      };
+    case getType(enableWhatsNewCheck):
+      return {
+        ...state,
+        whatsNewCheckEnabled: true
+      };
+    case getType(whatsNewDisplayed):
+      return {
+        ...state,
+        isWhatsNewDisplayed: true
       };
   }
   return state;
@@ -46,7 +72,8 @@ const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
 const persistConfig: PersistConfig = {
   key: "whatsNew",
   storage: AsyncStorage,
-  version: CURRENT_REDUX_FEATURES_STORE_VERSION
+  version: CURRENT_REDUX_FEATURES_STORE_VERSION,
+  whitelist: ["lastVisualizedVersion"]
 };
 
 export const whatsNewPersistor = persistReducer<WhatsNewState, Action>(
