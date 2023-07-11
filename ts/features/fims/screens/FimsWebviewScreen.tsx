@@ -9,7 +9,7 @@ import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { fimsTokenSelector } from "../../../store/reducers/authentication";
 import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
-import { clearCookie, setCookie } from "../../../utils/cookieManager";
+import { removeSessionCoookies, setCookie } from "../../../utils/cookieManager";
 import FimsWebView from "../components/FimsWebView";
 import { isLocalEnv } from "../../../utils/environment";
 import {
@@ -47,17 +47,13 @@ const FimsWebviewScreen = () => {
     navigation.goBack();
   }, [navigation]);
 
+  // This will be called upon component unmounting
   const clearCookieCallback = React.useCallback(() => {
-    if (parsedUrlOpt) {
-      clearCookie(parsedUrlOpt.hostname, fimsCookieName, () =>
-        setCookieError(true)
-      );
-    }
-  }, [parsedUrlOpt]);
+    removeSessionCoookies(() => setCookieError(true));
+  }, []);
 
   const handleGoBack = () => {
     goBackAndResetInternalNavigationInfo();
-    clearCookieCallback();
   };
 
   React.useEffect(() => {
@@ -108,6 +104,8 @@ const FimsWebviewScreen = () => {
       () => setCookieError(true)
     );
 
+    // By returning the callback, we make sure that
+    // the cookie is removed upon component unmounting
     return clearCookieCallback;
   }, [
     clearCookieCallback,

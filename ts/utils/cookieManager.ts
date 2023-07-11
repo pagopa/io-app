@@ -1,10 +1,10 @@
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 
-export const ioClearCookie = (cb: () => void) =>
+export const clearAllCookie = (cb: () => void) =>
   void CookieManager.clearAll().catch(cb);
 
-export const clearCookie = (url: string, name: string, cb?: () => void) =>
-  void CookieManager.clearByName(url, name).catch(_ => cb?.());
+export const removeSessionCoookies = (cb?: () => void) =>
+  void CookieManager.removeSessionCookies().catch(_ => cb?.());
 
 export const setCookie = (
   origin: string,
