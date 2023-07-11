@@ -4,7 +4,7 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { Platform, View, useColorScheme } from "react-native";
+import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -39,11 +39,13 @@ import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSCards } from "../core/DSCards";
 import IconButton from "../../../components/ui/IconButton";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { makeFontStyleObject } from "../../../components/core/fonts";
+import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -84,6 +86,30 @@ const RNNCloseButton = () => {
     </View>
   );
 };
+
+const HeaderFirstLevelComponent = () => (
+  <HeaderFirstLevel
+    title="Portafoglio"
+    firstAction={
+      <IconButton
+        accessibilityLabel="Tap to trigger test alert"
+        icon="coggle"
+        onPress={() => {
+          Alert.alert("Settings");
+        }}
+      />
+    }
+    secondAction={
+      <IconButton
+        accessibilityLabel="Tap to trigger test alert"
+        icon="help"
+        onPress={() => {
+          Alert.alert("Assistance");
+        }}
+      />
+    }
+  />
+);
 
 const customModalHeaderConf: StackNavigationOptions = {
   headerLeft: () => null,
@@ -311,6 +337,15 @@ const DesignSystemMainStack = () => {
         component={DSBottomSheet}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
+        }}
+      />
+
+      {/* HEADERS */}
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
+        component={DSHeaderFirstLevel}
+        options={{
+          header: HeaderFirstLevelComponent
         }}
       />
 
