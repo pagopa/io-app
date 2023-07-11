@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView } from "react-native";
+import { Divider } from "../../../components/core/Divider";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
@@ -9,18 +10,14 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
+import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
-import { useIODispatch } from "../../../store/hooks";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import {
-  navigateToPaymentManualDataInsertion,
-  navigateToPaymentTransactionSummaryScreen
-} from "../../../store/actions/navigation";
-import ROUTES from "../../../navigation/routes";
-import { Divider } from "../../../components/core/Divider";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -28,6 +25,10 @@ const BarcodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
+    if (barcode.type === "UNKNOWN") {
+      return handleBarcodeError();
+    }
+
     switch (barcode.type) {
       case "IDPAY":
         openDeepLink(barcode.authUrl);
@@ -40,9 +41,6 @@ const BarcodeScanScreen = () => {
           initialAmount: barcode.amount,
           paymentStartOrigin: "qrcode_scan"
         });
-        break;
-      default:
-        handleBarcodeError();
         break;
     }
   };
