@@ -1,6 +1,13 @@
+import {
+  AmountInEuroCents,
+  PaymentNoticeQrCodeFromString,
+  RptId,
+  rptIdFromPaymentNoticeQrCode
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 
 // Discriminated barcode type
@@ -9,19 +16,32 @@ import { pipe } from "fp-ts/lib/function";
 //
 // Example:
 //
-// export type SupportedDecodedIOBarcode = {
-//    type: "IDPAY";
-//    authUrl: string;
-//    trxCode: string;
-// } | {
-//   type: "MY_NEW_BARCODE_TYPE";
-//   content: string;
-// };
-type SupportedDecodedIOBarcode = {
-  type: "IDPAY";
-  authUrl: string;
-  trxCode: string;
-};
+// type SupportedDecodedIOBarcode =
+//  | {
+//      type: "IDPAY";
+//      authUrl: string;
+//      trxCode: string;
+//    }
+//  | {
+//      type: "PAGOPA";
+//      rptId: RptId;
+//      amount: AmountInEuroCents;
+//    }
+//  | {                                 <--
+//      type: "MY_NEW_BARCODE_TYPE";    <-- New barcode type
+//      content: string;                <--
+//    };                                <--
+type SupportedDecodedIOBarcode =
+  | {
+      type: "IDPAY";
+      authUrl: string;
+      trxCode: string;
+    }
+  | {
+      type: "PAGOPA";
+      rptId: RptId;
+      amount: AmountInEuroCents;
+    };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
 type IOBarcodeDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
@@ -39,6 +59,21 @@ const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
     O.map(m => ({ type: "IDPAY", authUrl: m[0], trxCode: m[1] }))
   );
 
+const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
+  pipe(
+    PaymentNoticeQrCodeFromString.decode(data),
+    E.chain(paymentNotice =>
+      pipe(
+        rptIdFromPaymentNoticeQrCode(paymentNotice),
+        E.map(
+          rptId =>
+            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount } as const)
+        )
+      )
+    ),
+    O.fromEither
+  );
+
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
 //
@@ -46,10 +81,12 @@ const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
 //
 // export const IOBarcodeDecoders: IOBarcodeDecodersType = {
 //   IDPAY: decodeIdPayBarcode,
+//   PAGOPA: decodePagoPABarcode,
 //   MY_NEW_BARCODE_TYPE: decodeMyNewBarcodeType
 // };
 export const IOBarcodeDecoders: IOBarcodeDecodersType = {
-  IDPAY: decodeIdPayBarcode
+  IDPAY: decodeIdPayBarcode,
+  PAGOPA: decodePagoPABarcode
 };
 
 /**
