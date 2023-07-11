@@ -60,7 +60,7 @@ const IDPayPaymentCodeScanScreen = () => {
   });
 
   const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
-    formats: ["QR_CODE", "DATA_MATRIX"],
+    formats: ["QR_CODE"],
     onBarcodeSuccess: handleBarcodeSuccess,
     onBarcodeError: handleBarcodeError
   });
