@@ -26,21 +26,18 @@ export const DSEdgeToEdgeArea = () => {
       }}
     >
       <SafeAreaView style={{ flex: 1 }} edges={["left", "right"]}>
-        <ScrollView style={{ backgroundColor: IOColors.white }}>
-          {/* This extra View is required because ScrollView
-          doesn't manage properly the padding values set directly */}
-          <View
-            style={{
-              paddingTop: insets.top + topBarHeight,
-              paddingBottom: insets.bottom + bottomBarHeight
-            }}
-          >
-            <H2>Start</H2>
-            {[...Array(50)].map((_el, i) => (
-              <Body key={`body-${i}`}>Repeated text</Body>
-            ))}
-            <H2>End</H2>
-          </View>
+        <ScrollView
+          contentContainerStyle={{
+            paddingTop: insets.top + topBarHeight,
+            paddingBottom: insets.bottom + bottomBarHeight,
+            backgroundColor: IOColors.white
+          }}
+        >
+          <H2>Start</H2>
+          {[...Array(50)].map((_el, i) => (
+            <Body key={`body-${i}`}>Repeated text</Body>
+          ))}
+          <H2>End</H2>
         </ScrollView>
         {/* TOP BAR: Start */}
         <View
