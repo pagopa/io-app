@@ -5,6 +5,7 @@ import {
 import * as React from "react";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
+import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import {
@@ -99,6 +100,12 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
         component={ProfileStackNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.BARCODE_SCAN}
+        component={BarcodeScanScreen}
+        options={{ gestureEnabled: false }}
       />
 
       {cgnEnabled && (
