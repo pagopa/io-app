@@ -4,6 +4,7 @@ import { CommonActions } from "@react-navigation/native";
 import { itwActivationStart, itwRequirementsRequest } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
+import { authenticationSaga } from "./authenticationSaga";
 import { handleRequirementsRequest } from "./handleRequirementsCheck";
 
 export function* watchItwSaga(): SagaIterator {
@@ -22,4 +23,5 @@ function* watchItwActivationStart(): SagaIterator {
       screen: ITW_ROUTES.ACTIVATION.DETAILS
     })
   );
+  yield* call(authenticationSaga);
 }
