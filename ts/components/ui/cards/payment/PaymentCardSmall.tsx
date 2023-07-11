@@ -9,8 +9,8 @@ import { VSpacer } from "../../../core/spacer/Spacer";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { IOBannerRadius } from "../../../core/variables/IOShapes";
-import { LogoPaymentOrDefaultIcon } from "../../baseComponents/LogoPaymentOrDefaultIcon";
-import { useBaseSpringAnimation } from "../../hooks/useBaseSpringAnimation";
+import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
+import { useInteractiveSpringAnimation } from "../../utils/hooks/useBaseSpringAnimation";
 
 const getRenderData = (
   props: CardDataType
@@ -161,7 +161,7 @@ const PressableBase = (
   >
 ) => {
   const { onPressIn, onPressOut, animatedScaleStyle } =
-    useBaseSpringAnimation();
+    useInteractiveSpringAnimation();
   const { onCardPress, testID, accessibilityLabel, children } = props;
   return (
     <Pressable
@@ -178,14 +178,15 @@ const PressableBase = (
   );
 };
 
+export const PAYMENT_CARD_SMALL_WIDTH = 160;
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     alignItems: "flex-start",
     alignContent: "center",
     justifyContent: "center",
-    width: 160,
-    flexBasis: 160,
+    width: PAYMENT_CARD_SMALL_WIDTH,
+    flexBasis: PAYMENT_CARD_SMALL_WIDTH,
     flexGrow: 0,
     borderRadius: IOBannerRadius,
     padding: 16

@@ -8,13 +8,55 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { IOColors, hexToRgba, useIOTheme } from "../../core/variables/IOColors";
 import {
   IOScaleValues,
   IOSpringValues
-} from "../../core/variables/IOAnimations";
+} from "../../../core/variables/IOAnimations";
+import {
+  IOColors,
+  hexToRgba,
+  useIOTheme
+} from "../../../core/variables/IOColors";
 
-export const useBaseSpringAnimation = () => {
+export const useInteractiveSpringAnimation = (
+  springValue = IOSpringValues.button
+) => {
+  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+
+  // Scaling transformation applied when the button is pressed
+  const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
+
+  const progressPressed = useDerivedValue(() =>
+    withSpring(isPressed.value, springValue)
+  );
+
+  // Interpolate animation values from `isPressed` values
+  const animatedScaleStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      progressPressed.value,
+      [0, 1],
+      [1, animationScaleValue],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
+
+  const onPressIn = React.useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 1;
+  }, [isPressed]);
+  const onPressOut = React.useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 0;
+  }, [isPressed]);
+
+  return { onPressIn, onPressOut, animatedScaleStyle };
+};
+
+export const useListItemBaseSpringAnimation = () => {
   const theme = useIOTheme();
 
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
@@ -32,6 +74,7 @@ export const useBaseSpringAnimation = () => {
   );
 
   // Interpolate animation values from `isPressed` values
+  // eslint-disable-next-line sonarjs/no-identical-functions
   const animatedScaleStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       progressPressed.value,

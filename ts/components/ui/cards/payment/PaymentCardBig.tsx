@@ -10,7 +10,7 @@ import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { IOStyles } from "../../../core/variables/IOStyles";
-import { LogoPaymentOrDefaultIcon } from "../../baseComponents/LogoPaymentOrDefaultIcon";
+import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
 import I18n from "../../../../i18n";
 
 const styles = StyleSheet.create({

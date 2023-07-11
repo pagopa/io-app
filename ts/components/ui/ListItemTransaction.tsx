@@ -24,7 +24,7 @@ import Avatar from "./Avatar";
 import {
   PressableBaseProps,
   PressableListItemBase
-} from "./baseComponents/PressableListItemBase";
+} from "./utils/baseComponents/PressableListItemBase";
 
 type LogoNameOrUri = IOLogoPaymentType | ImageURISource;
 export type ListItemTransaction = WithTestID<
