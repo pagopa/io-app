@@ -36,6 +36,9 @@ const DATA_ROUTES_FOUNDATION: RoutesProps = Object.values(
 const DATA_ROUTES_COMPONENTS: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.COMPONENTS
 );
+const DATA_ROUTES_HEADERS: RoutesProps = Object.values(
+  DESIGN_SYSTEM_ROUTES.HEADERS
+);
 const DATA_ROUTES_DEBUG: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.DEBUG
 );
@@ -51,6 +54,10 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   {
     title: "Components",
     data: DATA_ROUTES_COMPONENTS
+  },
+  {
+    title: "Headers",
+    data: DATA_ROUTES_HEADERS
   },
   {
     title: "Debug",
