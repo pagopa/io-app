@@ -4,6 +4,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { buildEventProperties } from "../../../utils/analytics";
 
 export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
   void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
@@ -12,9 +13,12 @@ export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
 }
 
 export function trackMessageNotificationTap(messageId: NonEmptyString) {
-  void mixpanelTrack("NOTIFICATIONS_MESSAGE_TAP", {
-    messageId
-  });
+  void mixpanelTrack(
+    "NOTIFICATIONS_MESSAGE_TAP",
+    buildEventProperties("UX", "action", {
+      messageId
+    })
+  );
 }
 
 export function trackMessageNotificationParsingFailure(errors: t.Errors) {

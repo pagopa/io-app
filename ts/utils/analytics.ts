@@ -22,6 +22,16 @@ export const noAnalyticsRoutes = new Set<string>(
   )
 );
 
+export const buildEventProperties = (
+  eventCategory: "KO" | "TECH" | "UX",
+  eventType: "action" | "control" | "exit" | "micro_action" | "screen_view",
+  customProperties: Record<string, unknown> = {}
+) => ({
+  event_category: eventCategory,
+  event_type: eventType,
+  ...customProperties
+});
+
 // Notifications related events
 
 export function trackNotificationInstallationTokenNotChanged() {

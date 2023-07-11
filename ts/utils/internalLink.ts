@@ -1,6 +1,7 @@
 /**
  * An handler for application internal links
  */
+import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import {
@@ -22,6 +23,7 @@ import { isTestEnv } from "./environment";
 import {
   IO_FIMS_LINK_PREFIX,
   IO_INTERNAL_LINK_PREFIX,
+  IO_INTERNAL_LINK_PROTOCOL,
   IO_UNIVERSAL_LINK_PREFIX
 } from "./navigation";
 import { extractPathFromURL } from "./url";
@@ -94,6 +96,27 @@ const allowedRoutes = {
   ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
   ...(fciEnabled ? fciRoutesToNavigationLink : {})
 };
+
+export const isServiceDetailNavigationLink = (
+  internalOrUniversalLink: string
+) =>
+  pipe(internalOrUniversalLink.toUpperCase(), upperInternalOrUniversalLink =>
+    pipe(
+      [
+        `${IO_INTERNAL_LINK_PROTOCOL}//services/service-detail`,
+        `${IO_UNIVERSAL_LINK_PREFIX}/services/service-detail`
+      ],
+      A.map((allowedInternalOrUniversalLink: string) =>
+        allowedInternalOrUniversalLink.toUpperCase()
+      ),
+      A.some(
+        upperAllowedInternalOrUniversalLink =>
+          upperInternalOrUniversalLink.indexOf(
+            upperAllowedInternalOrUniversalLink
+          ) === 0
+      )
+    )
+  );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
   ? allowedRoutes

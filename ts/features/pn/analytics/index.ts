@@ -10,6 +10,13 @@ import {
   PNMessage
 } from "../../pn/store/types/types";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { buildEventProperties } from "../../../utils/analytics";
+
+export const trackPNOptInMessageOpened = () =>
+  void mixpanelTrack(
+    "PN_OPTIN_MESSAGE_OPENED",
+    buildEventProperties("UX", "screen_view")
+  );
 
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");

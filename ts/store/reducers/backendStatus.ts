@@ -380,7 +380,8 @@ export const PnConfigSelector = createSelector(
       O.map(bs => bs.config.pn),
       O.getOrElseW(() => ({
         enabled: false,
-        frontend_url: ""
+        frontend_url: "",
+        optInServiceId: ""
       }))
     )
 );
