@@ -71,6 +71,7 @@ type CommonProp = Readonly<{
   isValid?: boolean;
   label?: string;
   onPress?: () => void;
+  inputAccessoryViewID?: string;
 }>;
 
 export type Props = WithTestID<CommonProp>;
@@ -213,6 +214,7 @@ export const LabelledItem: React.FC<Props> = ({
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               testID={`${props.testID}InputMask`}
+              inputAccessoryViewID={props.inputAccessoryViewID}
             />
           )}
 
@@ -234,6 +236,7 @@ export const LabelledItem: React.FC<Props> = ({
               testID={`${props.testID}Input`}
               disabled={props.inputProps?.disabled}
               placeholderTextColor={placeholderTextColor}
+              inputAccessoryViewID={props.inputAccessoryViewID}
             />
           )}
 

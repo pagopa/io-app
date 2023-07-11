@@ -14,8 +14,8 @@ import {
 export const DSSafeArea = () => (
   <View style={IOStyles.flex}>
     <SafeAreaView style={{ flex: 1, backgroundColor: IOColors["error-100"] }}>
-      <ScrollView>
-        <View style={{ flex: 1, backgroundColor: IOColors.white }}>
+      <ScrollView contentContainerStyle={{ backgroundColor: IOColors.white }}>
+        <View style={{ flex: 1 }}>
           <H2>Start</H2>
           {[...Array(50)].map((_el, i) => (
             <Body key={`body-${i}`}>Repeated text</Body>

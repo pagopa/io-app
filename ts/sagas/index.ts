@@ -15,9 +15,11 @@ import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
 } from "./wallet";
+import { watchIdentification } from "./identification";
 
 export default function* root() {
   yield* all([
+    call(watchIdentification),
     call(startupSaga),
     call(backendStatusSaga),
     call(versionInfoSaga),
