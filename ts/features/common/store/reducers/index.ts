@@ -22,6 +22,7 @@ import {
   nativeLoginReducer,
   NativeLoginState
 } from "../../../nativeLogin/store/reducers";
+import itwReducer, { ItwState } from "../../../it-wallet/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -35,6 +36,7 @@ export type FeaturesState = {
   fci: FciState;
   idPay: IDPayState;
   loginFeatures: LoginFeaturesState;
+  itw: ItwState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -48,7 +50,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer
-  })
+  }),
+  itw: itwReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

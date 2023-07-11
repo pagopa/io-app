@@ -3264,6 +3264,11 @@ features:
       confirm: "Continue with CIE + PIN"
       footerBox: "Before continuing, make sure you have the Electronic Identity Card (CIE) with you and remember the PIN [Read more](https://www.cartaidentita.interno.gov.it)"
       readMoreUrl: "https://identitadigitale.gov.it/"
+    issuing:
+      infoConsent:
+        footer:
+          cancel: "Cancel"
+          confirm: "Authorize"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

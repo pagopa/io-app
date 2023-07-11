@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Image, View, SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -11,12 +12,14 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import authInfoCie from "../../../../../img/features/it-wallet/auth-info-cie.png";
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 const ItwActivationInfoAuthScreen = () => {
+  const navigation = useNavigation();
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => undefined,
+    onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
     title: I18n.t("features.itWallet.infoAuthScreen.confirm")
   };
 

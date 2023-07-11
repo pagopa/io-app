@@ -3288,6 +3288,11 @@ features:
       confirm: "Continua con CIE + PIN"
       footerBox: "Prima di continua, assicurati di avere con te la Carta d’Identità Elettronica (CIE) e ricordare il PIN [Per saperne di più](https://www.cartaidentita.interno.gov.it)"
       readMoreUrl: "https://identitadigitale.gov.it/"
+    issuing:
+      infoConsent:
+        footer:
+          cancel: "Annulla"
+          confirm: "Autorizza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

@@ -4,6 +4,7 @@ import { CommonActions } from "@react-navigation/native";
 import { itwActivationStart } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
+import { authenticationSaga } from "./authenticationSaga";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(itwActivationStart, watchItwActivationStart);
@@ -16,4 +17,5 @@ function* watchItwActivationStart(): SagaIterator {
       screen: ITW_ROUTES.ACTIVATION.DETAILS
     })
   );
+  yield* call(authenticationSaga);
 }
