@@ -16,10 +16,7 @@ export function* authenticationSaga(): Generator<
   // Watch for login by CIE
   const watchCieAuthentication = yield* fork(watchCieAuthenticationSaga);
 
-  // Reset the navigation stack and navigate to the authentication screen
-  // yield* call(resetToAuthenticationRoute);
-
-  // Wait until the user has successfully logged in with SPID
+  // Wait until the user has successfully authenticated with CIE
   // FIXME: show an error on LOGIN_FAILED?
   const action = yield* take(loginSuccess);
 

@@ -169,16 +169,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
       // This JS code is used to remove the buttons from the page
       // to avoid new session token creation
       const jsCode = `
-      // Get all buttons on the page
-      var buttons = document.getElementsByTagName('button');
-
-      // Convert the HTMLCollection to an array
-      var buttonArray = Array.from(buttons);
-
       // Iterate over the array and remove each button
-      buttonArray.forEach(function(button) {
-        button.remove();
-      });
+      Array.from( document.getElementsByTagName('button')).forEach(button => button.remove());
       `;
       return (
         <WebView
