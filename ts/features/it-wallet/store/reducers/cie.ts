@@ -96,16 +96,16 @@ export default function itwCieReducer(
 
 // Selectors
 export const hasNFCFeatureSelector = (state: GlobalState) =>
-  state.features.itw.itwActivation.hasNFCFeature;
+  state.features.itWallet.activation.hasNFCFeature;
 
 export const hasApiLevelSupportSelector = (state: GlobalState) =>
-  state.features.itw.itwActivation.hasApiLevelSupport;
+  state.features.itWallet.activation.hasApiLevelSupport;
 
 export const isCieSupportedSelector = (state: GlobalState) =>
-  state.features.itw.itwActivation.isCieSupported;
+  state.features.itWallet.activation.isCieSupported;
 
 export const isNfcEnabledSelector = (state: GlobalState) =>
-  state.features.itw.itwActivation.isNfcEnabled;
+  state.features.itWallet.activation.isNfcEnabled;
 
 export const readingEventSelector = (state: GlobalState) =>
-  state.features.itw.itwActivation.readingEvent;
+  state.features.itWallet.activation.readingEvent;

@@ -1,6 +1,6 @@
-import { CieCardReaderScreenNavigationParams } from "../screens/authentication/cie/CieCardReaderScreen";
-import { CieConsentDataUsageScreenNavigationParams } from "../screens/authentication/cie/CieConsentDataUsageScreen";
-import { CieWrongCiePinScreenNavigationParams } from "../screens/authentication/cie/CieWrongCiePinScreen";
+import { CieCardReaderScreenNavigationParams } from "../screens/issuing/cie/CieCardReaderScreen";
+import { CieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/CieConsentDataUsageScreen";
+import { CieWrongCiePinScreenNavigationParams } from "../screens/issuing/cie/CieWrongCiePinScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {

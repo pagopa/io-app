@@ -1,13 +1,13 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
-import ItwActivationDetailsScreen from "../screens/ItwActivationDetailsScreen";
-import ItwActivationInfoAuthScreen from "../screens/authentication/ItwActivationInfoAuthScreen";
-import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
-import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
-import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
-import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
-import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
+import CiePinScreen from "../screens/issuing/cie/CiePinScreen";
+import CieCardReaderScreen from "../screens/issuing/cie/CieCardReaderScreen";
+import CieConsentDataUsageScreen from "../screens/issuing/cie/CieConsentDataUsageScreen";
+import CieExpiredOrInvalidScreen from "../screens/issuing/cie/CieExpiredOrInvalidScreen";
+import CieWrongCiePinScreen from "../screens/issuing/cie/CieWrongCiePinScreen";
+import ItwActivationDetailsScreen from "../screens/discovery/ItwActivationDetailsScreen";
+import ItwActivationInfoAuthScreen from "../screens/issuing/ItwActivationInfoAuthScreen";
 import { ItwParamsList } from "./params";
 import { ITW_ROUTES } from "./routes";
 
