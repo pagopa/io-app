@@ -83,6 +83,7 @@ export type AppParamsList = {
   [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
     | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
     | IDPayUnsubscriptionNavigatorParams;
+  [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IDPayPaymentParamsList>;
 };
 

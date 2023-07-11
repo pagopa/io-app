@@ -34,6 +34,7 @@ import {
   IDPayPaymentNavigator,
   IDPayPaymentRoutes
 } from "../features/idpay/payment/navigation/navigator";
+import { IDPayPaymentCodeScanScreen } from "../features/idpay/payment/screens/IDPayPaymentCodeScanScreen";
 import {
   IDPayUnsubscriptionNavigator,
   IDPayUnsubscriptionRoutes
@@ -179,6 +180,18 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
+          />
+          {/* 
+            This screen is outside the main payment navigator to enable the slide from bottom animation.
+            FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator
+          */}
+          <Stack.Screen
+            name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+            component={IDPayPaymentCodeScanScreen}
+            options={{
+              ...TransitionPresets.ModalSlideFromBottomIOS,
+              gestureEnabled: isGestureEnabled
+            }}
           />
           <Stack.Screen
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}

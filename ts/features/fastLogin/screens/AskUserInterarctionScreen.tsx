@@ -68,10 +68,7 @@ export type Props = {
   buttonStylesProps?: ButtonStylesProps;
 };
 
-// This component doesn't need a BaseHeaderComponent.
-// It Represents a blocking error screen that you can only escape with the rendered button(s).
-// A new template is coming soon: https://pagopa.atlassian.net/browse/IOAPPFD0-71
-const AskUserToContinueScreen = (props: Props) => {
+const AskUserInteractionScreen = (props: Props) => {
   useAvoidHardwareBackButton();
 
   const { submitButtonStyle, cancelButtonStyle } =
@@ -142,4 +139,4 @@ const AskUserToContinueScreen = (props: Props) => {
     </Modal>
   );
 };
-export default AskUserToContinueScreen;
+export default AskUserInteractionScreen;
