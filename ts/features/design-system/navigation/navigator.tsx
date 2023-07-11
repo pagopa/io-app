@@ -171,7 +171,9 @@ const DesignSystemMainStack = () => {
         fontSize: 14
       },
       headerTitleAlign: "center",
-      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
+      headerStyle: {
+        height: Number(insets.top) + Number(IOVisualCostants.headerHeight)
+      },
       headerLeft: RNNBackButton
     }),
     [insets]
@@ -299,6 +301,9 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route}
         component={DSCards}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.title
+        }}
       />
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}

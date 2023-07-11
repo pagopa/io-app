@@ -39,6 +39,7 @@ export const PaymentCardsCarousel = ({
     style={style.list}
     renderItem={({ item }) => <PaymentCardSmall {...item} />}
     getItemLayout={(_, index) => generateCardsLayout(cards.length)(index)}
+    ListFooterComponent={() => <HSpacer size={48} />}
     showsHorizontalScrollIndicator={false}
     keyExtractor={(_, index) => index.toString()}
   />
