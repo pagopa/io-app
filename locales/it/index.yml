@@ -3301,7 +3301,12 @@ features:
       errors:
         nfc:
           title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
-          body: "Per proseguire è necessaria la funzione NFC del dispositivo." 
+          body: "Per proseguire è necessaria la funzione NFC del dispositivo."
+    issuing:
+      infoConsent:
+        footer:
+          cancel: "Annulla"
+          confirm: "Autorizza"
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
