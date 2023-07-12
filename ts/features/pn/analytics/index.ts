@@ -22,18 +22,6 @@ export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
 }
 
-export function trackPNAttachmentOpen() {
-  void mixpanelTrack("PN_ATTACHMENT_OPEN");
-}
-
-export function trackPNAttachmentPreviewStatus(
-  previewStatus: "displayed" | "error"
-) {
-  void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
-    previewStatus
-  });
-}
-
 export function trackPNAttachmentSave() {
   void mixpanelTrack("PN_ATTACHMENT_SAVE");
 }
@@ -105,10 +93,6 @@ export function trackPNPaymentInfoPayable() {
 
 export function trackPNPushOpened() {
   void mixpanelTrack("PN_PUSH_OPENED");
-}
-
-export function trackPNServiceCTAFired() {
-  void mixpanelTrack("PN_SERVICE_CTAFIRED");
 }
 
 export function trackPNServiceStatusChangedError(isServiceActive?: boolean) {
