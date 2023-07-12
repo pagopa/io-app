@@ -1,35 +1,47 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import RNReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CameraScanMarkerSVG from "../../../../../img/camera-scan-marker.svg";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconButton from "../../../../components/ui/IconButton";
+import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IOBarcode, useIOBarcodeScanner } from "../components/Barcode";
+import { useIOBarcodeFileReader } from "../components/Barcode/useIOBarcodeFileReader";
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
-import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
+import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { showToast } from "../../../../utils/showToast";
 
 const IDPayPaymentCodeScanScreen = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const isFocused = useIsFocused();
   const openDeepLink = useOpenDeepLink();
 
-  const handleBarcodeScanned = (barcode: IOBarcode) => {
+  const handleBarcodeSuccess = (barcode: IOBarcode) => {
+    if (barcode.type === "UNKNOWN") {
+      return handleBarcodeError();
+    }
+
     if (barcode.type === "IDPAY") {
-      RNReactNativeHapticFeedback.trigger("notificationSuccess", {
-        enableVibrateFallback: true,
-        ignoreAndroidSystemSettings: false
-      });
       openDeepLink(barcode.authUrl);
     }
   };
+
+  const handleBarcodeError = () => {
+    showToast(I18n.t("idpay.payment.qrCode.scan.error"), "danger", "top");
+  };
+
+  const navigateToCodeInputScreen = () =>
+    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
+      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
+    });
 
   const cameraMarkerComponent = (
     <View style={styles.cameraMarkerContainer}>
@@ -44,9 +56,16 @@ const IDPayPaymentCodeScanScreen = () => {
     openCameraSettings
   } = useIOBarcodeScanner({
     marker: cameraMarkerComponent,
-    onBarcodeScanned: handleBarcodeScanned,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError,
     formats: ["QR_CODE"],
     disabled: !isFocused
+  });
+
+  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+    formats: ["QR_CODE"],
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
   });
 
   const openAppSetting = React.useCallback(async () => {
@@ -97,7 +116,10 @@ const IDPayPaymentCodeScanScreen = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
-      <BottomTabNavigation />
+      <BottomTabNavigation
+        onUploadBarcodePressed={showFilePicker}
+        onNavigateToCodeInputScreenPressed={navigateToCodeInputScreen}
+      />
       <LinearGradient
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
@@ -110,6 +132,7 @@ const IDPayPaymentCodeScanScreen = () => {
         {/* FIXME replace with the new header from the Design System 2.0  */}
         <CustomHeader />
       </LinearGradient>
+      {filePickerBottomSheet}
     </View>
   );
 };
