@@ -1,10 +1,7 @@
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ListItem } from "native-base";
 import React from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
-import Placeholder from "rn-placeholder";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
@@ -17,16 +14,14 @@ import {
   OperationTypeEnum as TransactionOperationTypeEnum,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../../definitions/idpay/TransactionOperationDTO";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { Icon } from "../../../../../components/core/icons";
-import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { getCardLogoComponent } from "../../../common/components/CardLogo";
+import {
+  ListItemTransaction,
+  ListItemTransactionStatus
+} from "../../../../../components/ui/ListItemTransaction";
+import { localeDateFormat } from "../../../../../utils/locale";
 
 const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
 
@@ -44,9 +39,7 @@ type TimelineOperationListItemProps = {
   onPress?: () => void;
 };
 
-type OperationComponentProps = { operation: OperationListDTO };
-
-const OperationIcon = ({ operation }: OperationComponentProps) => {
+const getPaymentLogoIcon = (operation: OperationListDTO) => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
       return <Icon name={"ok"} />;
@@ -63,59 +56,37 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
       if (operation.channel === ChannelEnum.QRCODE) {
         return <Icon name={"productIOAppBlueBg"} color="bluegreyLight" />;
       }
-      return getCardLogoComponent(operation.brand);
+      return operation.brand;
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
-      return getCardLogoComponent(operation.brand);
+      return operation.brand;
     default:
-      return null;
+      return "amex";
   }
 };
 
-const getDiscountInitiativeTransactionLabel = (
+const getDiscountInitiativeTransactionStatus = (
   operation: TransactionOperationDTO
-) => {
+): ListItemTransactionStatus => {
   switch (operation.status) {
     case TransactionStatusEnum.CANCELLED:
-      return (
-        <IOBadge
-          color="red"
-          variant="solid"
-          text={I18n.t(
-            "idpay.initiative.operationDetails.discount.labels.CANCELLED"
-          )}
-        />
-      );
+      return "cancelled";
     case TransactionStatusEnum.REWARDED:
     case TransactionStatusEnum.AUTHORIZED:
-      return (
-        <H4>{`-${formatAbsNumberAmountOrDefault(operation.amount)} €`}</H4>
-      );
+      return "success";
   }
 };
 
-const OperationAmountOrLabel = ({ operation }: OperationComponentProps) => {
+const getTransactionAmountLabel = (operation: OperationListDTO) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
-      if (operation.channel === ChannelEnum.QRCODE) {
-        return getDiscountInitiativeTransactionLabel(operation);
-      }
-
-      return (
-        <H4>{`-${formatAbsNumberAmountOrDefault(operation.accrued)} €`}</H4>
-      );
+      return `-${formatAbsNumberAmountOrDefault(operation.accrued)} €`;
     case TransactionOperationTypeEnum.REVERSAL:
-      return (
-        <H4>{`+${formatAbsNumberAmountOrDefault(operation.accrued)} €`}</H4>
-      );
+      return `+${formatAbsNumberAmountOrDefault(operation.accrued)} €`;
     case RefundOperationTypeEnum.PAID_REFUND:
-      return (
-        <H4 color="greenLight">
-          {`${formatAbsNumberAmountOrDefault(operation.amount)} €`}
-        </H4>
-      );
+      return `${formatAbsNumberAmountOrDefault(operation.amount)} €`;
     default:
-      return null;
+      return "";
   }
 };
 
@@ -128,10 +99,6 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
 
   const isCancelledQrCodeTransaction =
     isQrCodeTransaction && operation.status === TransactionStatusEnum.CANCELLED;
-
-  const labelStyle: ViewStyle = isCancelledQrCodeTransaction
-    ? { opacity: 0.6 }
-    : {};
 
   const getOperationTitle = () => {
     switch (operation.operationType) {
@@ -165,70 +132,45 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
     }
   };
 
+  const getOperationStatus = (): ListItemTransactionStatus => {
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        if (operation.channel === ChannelEnum.QRCODE) {
+          return getDiscountInitiativeTransactionStatus(operation);
+        }
+        return "success";
+      case TransactionOperationTypeEnum.REVERSAL:
+        return "success";
+      case RefundOperationTypeEnum.PAID_REFUND:
+        return "refunded";
+      default:
+        return "success";
+    }
+  };
   return (
-    <ListItem
-      style={[
-        IOStyles.flex,
-        IOStyles.row,
-        styles.alignCenter,
-        styles.sidePadding,
-        styles.spaceBetween
-      ]}
+    <ListItemTransaction
+      title={getOperationTitle()}
+      subtitle={`${localeDateFormat(
+        operation.operationDate,
+        I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
+      )}, ${getHourAndMinuteFromDate(
+        operation.operationDate
+      )}${getOperationAmount()}`}
+      paymentLogoIcon={getPaymentLogoIcon(operation)}
+      transactionStatus={getOperationStatus()}
+      transactionAmount={getTransactionAmountLabel(operation)}
       onPress={onPress}
-    >
-      <OperationIcon operation={operation} />
-      <HSpacer size={16} />
-      <View style={IOStyles.flex}>
-        <H4 style={labelStyle} numberOfLines={1} ellipsizeMode="tail">
-          {getOperationTitle()}
-        </H4>
-        <LabelSmall style={labelStyle} weight="Regular" color="bluegrey">
-          {`${formatDateAsShortFormat(
-            operation.operationDate
-          )}, ${getHourAndMinuteFromDate(
-            operation.operationDate
-          )}${getOperationAmount()}`}
-        </LabelSmall>
-      </View>
-      <HSpacer size={16} />
-      <OperationAmountOrLabel operation={operation} />
-    </ListItem>
+    />
   );
 };
 
 const TimelineOperationListItemSkeleton = () => (
-  <ListItem
-    style={[
-      IOStyles.flex,
-      IOStyles.row,
-      styles.alignCenter,
-      styles.sidePadding,
-      styles.spaceBetween
-    ]}
-  >
-    <Placeholder.Box animate="fade" width={24} height={16} radius={4} />
-    <HSpacer size={16} />
-    <View style={IOStyles.flex}>
-      <Placeholder.Box animate="fade" width={132} height={18} radius={4} />
-      <VSpacer size={8} />
-      <Placeholder.Box animate="fade" width={132} height={16} radius={4} />
-    </View>
-    <Placeholder.Box animate="fade" width={64} height={16} radius={4} />
-  </ListItem>
+  <ListItemTransaction
+    subtitle="..."
+    title="..."
+    transactionStatus="pending"
+    isLoading
+  />
 );
-
-const styles = StyleSheet.create({
-  alignCenter: {
-    alignItems: "center"
-  },
-  spaceBetween: {
-    justifyContent: "space-between"
-  },
-  sidePadding: {
-    paddingLeft: 8,
-    // required since ListItem has a default paddingRight
-    paddingRight: 0
-  }
-});
 
 export { TimelineOperationListItem, TimelineOperationListItemSkeleton };
