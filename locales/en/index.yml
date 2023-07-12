@@ -3700,28 +3700,28 @@ fastLogin:
         subtitle: "Close the app and try again in a few minutes."
         submitButtonTitle: "Go to FAQs"
   whatsNew:
-    title: Abbiamo migliorato l’accesso a IO!
-    subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
+    title: Logging into IO just got easier!
+    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face. 
     changes:
       first:
-        title: Più semplice
-        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
+        title: Easier
+        description: log in with just your unlock code, fingerprint or face.
       second:
-        title: Più veloce
-        description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
+        title: Faster
+        description: use your SPID or CIE only once a year or in case you log out.
       third:
-        title: Più sicura
-        description: ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
+        title: Safer
+        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 securityTips:
-  title: Consigli di sicurezza
+  title: Safety tips
   biometric:
-    first: Usa il biometrico solo per identificare te. 
+    first: Use fingerprint or face recognition only to identify yourself.
   ioEsco:
     urlString: ioesco.io.italia.it
     lostDevice:
-      if: Se
-      lose: perdi
-      sentence: il dispositivo, esci da IO da
-    compromisedCredentials: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+      if: If
+      lose: you lose
+      sentence: your device, log out from IO through
+    compromisedCredentials: If you think your SPID or CIE credentials might be compromised, block access to your IO account through
 whatsNew:
-  title: Cosa cambia?
+  title: What's changed?
