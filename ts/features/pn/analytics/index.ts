@@ -48,6 +48,12 @@ export const trackPNServiceStartActivation = () =>
     buildEventProperties("UX", "action")
   );
 
+export const trackPNPushSettings = () =>
+  void mixpanelTrack(
+    "PN_PUSH_SETTINGS",
+    buildEventProperties("UX", "micro_action")
+  );
+
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
