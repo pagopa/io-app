@@ -17,6 +17,7 @@ import { useIOBarcodeFileReader } from "../components/Barcode/useIOBarcodeFileRe
 import { BottomTabNavigation } from "../components/BottomTabNavigation";
 import { CameraPermissionView } from "../components/CameraPermissionView";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { showToast } from "../../../../utils/showToast";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -24,15 +25,17 @@ const IDPayPaymentCodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
+    if (barcode.type === "UNKNOWN") {
+      return handleBarcodeError();
+    }
+
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
-    } else {
-      alert("Unknown barcode :(");
     }
   };
 
   const handleBarcodeError = () => {
-    alert("Invalid barcode :(");
+    showToast(I18n.t("idpay.payment.qrCode.scan.error"), "danger", "top");
   };
 
   const navigateToCodeInputScreen = () =>
