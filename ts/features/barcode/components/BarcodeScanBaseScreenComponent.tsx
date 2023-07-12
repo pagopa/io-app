@@ -1,12 +1,18 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  View
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import I18n from "../../../i18n";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import IconButton from "../../../components/ui/IconButton";
+import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -42,7 +48,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   const { formats, onBarcodeSuccess, onBarcodeError, onManualInputPressed } =
     props;
   const isFocused = useIsFocused();
-
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const {
@@ -123,18 +129,25 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
-        {/* FIXME: replace with new header */}
-        <BaseHeader
-          backgroundColor={"transparent"}
-          goBack={true}
-          customGoBack={customGoBack}
-        />
-        {/* This overrides BaseHeader status bar configuration */}
-        <StatusBar
-          barStyle={"light-content"}
-          backgroundColor={"transparent"}
-          translucent={true}
-        />
+        <SafeAreaView
+          style={{
+            // Apparently, on Android, with translucent status bar SafeAreaView doesn't work as expected
+            paddingTop: Platform.OS === "android" ? insets.top : 0
+          }}
+        >
+          {/* FIXME: replace with new header */}
+          <BaseHeader
+            backgroundColor={"transparent"}
+            goBack={true}
+            customGoBack={customGoBack}
+          />
+          {/* This overrides BaseHeader status bar configuration */}
+          <StatusBar
+            barStyle={"light-content"}
+            backgroundColor={"transparent"}
+            translucent={true}
+          />
+        </SafeAreaView>
       </LinearGradient>
       {filePickerBottomSheet}
     </View>
