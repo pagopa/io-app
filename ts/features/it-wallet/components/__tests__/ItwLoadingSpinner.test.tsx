@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import LoadingSpinner from "../ItwLoadingSpinner";
+import ItwLoadingSpinner from "../ItwLoadingSpinner";
 
 type Props = {
   color: string;
@@ -8,7 +8,7 @@ type Props = {
   captionSubtitle?: string;
 };
 
-describe("Test LoadingSpinner animated indicator", () => {
+describe("Test ItwLoadingSpinner animated indicator", () => {
   it("should render a Loading Spinner Container correctly", () => {
     const props = {
       color: "#ABC"
@@ -50,7 +50,7 @@ describe("Test LoadingSpinner animated indicator", () => {
 
 const renderComponent = ({ color, captionTitle, captionSubtitle }: Props) =>
   render(
-    <LoadingSpinner
+    <ItwLoadingSpinner
       color={color}
       captionTitle={captionTitle}
       captionSubtitle={captionSubtitle}
