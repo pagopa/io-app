@@ -13,6 +13,12 @@ export function getNotificationStatusInfo(status: NotificationStatus) {
   });
 }
 
+export type PNOptInMessageInfo = {
+  isPNOptInMessage: boolean;
+  cta1HasServiceNavigationLink: boolean;
+  cta2HasServiceNavigationLink: boolean;
+};
+
 export const isPNOptInMessage = (
   maybeCtas: O.Option<CTAS>,
   service: UIService | undefined,
@@ -33,12 +39,30 @@ export const isPNOptInMessage = (
     O.chain(_ =>
       pipe(
         maybeCtas,
+        O.map(ctas => ({
+          cta1HasServiceNavigationLink: isServiceDetailNavigationLink(
+            ctas.cta_1.action
+          ),
+          cta2HasServiceNavigationLink:
+            !!ctas.cta_2 && isServiceDetailNavigationLink(ctas.cta_2.action)
+        })),
         O.map(
-          ctas =>
-            isServiceDetailNavigationLink(ctas.cta_1.action) ||
-            (!!ctas.cta_2 && isServiceDetailNavigationLink(ctas.cta_2.action))
+          ctaNavigationLinkInfo =>
+            ({
+              isPNOptInMessage:
+                ctaNavigationLinkInfo.cta1HasServiceNavigationLink ||
+                ctaNavigationLinkInfo.cta2HasServiceNavigationLink,
+              ...ctaNavigationLinkInfo
+            } as PNOptInMessageInfo)
         )
       )
     ),
-    O.getOrElse(() => false)
+    O.getOrElse(
+      () =>
+        ({
+          isPNOptInMessage: false,
+          cta1HasServiceNavigationLink: false,
+          cta2HasServiceNavigationLink: false
+        } as PNOptInMessageInfo)
+    )
   );

@@ -18,6 +18,12 @@ export const trackPNOptInMessageOpened = () =>
     buildEventProperties("UX", "screen_view")
   );
 
+export const trackPNOptInMessageAccepted = () =>
+  void mixpanelTrack(
+    "PN_OPTIN_MESSAGE_ACCEPTED",
+    buildEventProperties("UX", "action")
+  );
+
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
 }
