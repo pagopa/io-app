@@ -2,26 +2,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-
-// Discriminated barcode type
-// Represents the decoded content of a barcode that has been scanned
-// To add a new barcode type, add a new type here and add the decoder function to the IOBarcodeDecoders object
-//
-// Example:
-//
-// export type DecodedIOBarcode = {
-//    type: "IDPAY";
-//    authUrl: string;
-//    trxCode: string;
-// } | {
-//   type: "MY_NEW_BARCODE_TYPE";
-//   content: string;
-// };
-export type DecodedIOBarcode = {
-  type: "IDPAY";
-  authUrl: string;
-  trxCode: string;
-};
+import { DecodedIOBarcode } from "./IOBarcode";
 
 // Barcode decoder function which is used to determine the type and content of a barcode
 type IOBarcodeDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;

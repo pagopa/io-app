@@ -37,9 +37,9 @@ const IOBarcodeFormats: IOBarcodeFormatsType = {
  */
 export type IOBarcodeScannerConfiguration = {
   /**
-   * Accepted formats of codes to be scanned
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
    */
-  formats: Array<IOBarcodeFormat>;
+  formats?: Array<IOBarcodeFormat>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -142,7 +142,9 @@ export const retrieveNextBarcode = (
 export const useIOBarcodeScanner = (
   config: IOBarcodeScannerConfiguration
 ): IOBarcodeScanner => {
-  const { onBarcodeSuccess, onBarcodeError, formats, disabled } = config;
+  const { onBarcodeSuccess, onBarcodeError, disabled } = config;
+
+  const formats = config.formats || ["QR_CODE", "DATA_MATRIX"];
 
   const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();

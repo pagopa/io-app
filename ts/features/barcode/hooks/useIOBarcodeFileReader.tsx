@@ -26,8 +26,12 @@ import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
-import { DecodedIOBarcode, decodeIOBarcode } from "../types/decoders";
+import {
+  DecodedIOBarcode,
+  IOBarcode,
+  IOBarcodeFormat
+} from "../types/IOBarcode";
+import { decodeIOBarcode } from "../types/decoders";
 
 /**
  * Maps internal formats to external library formats
@@ -72,9 +76,9 @@ type IOBarcodeFileReader = {
 
 type IOBarcodeFileReaderConfiguration = {
   /**
-   * Accepted formats of codes to be scanned
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
    */
-  formats: Array<IOBarcodeFormat>;
+  formats?: Array<IOBarcodeFormat>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -123,7 +127,7 @@ const imageGenerationTask = (
  */
 const imageDecodingTask = (
   imageUri: string,
-  acceptedFormats: Array<IOBarcodeFormat>
+  acceptedFormats?: Array<IOBarcodeFormat>
 ): TE.TaskEither<Error, IOBarcode> =>
   pipe(
     qrCodeDetectionTask(imageUri),
@@ -131,7 +135,7 @@ const imageDecodingTask = (
       pipe(
         convertToIOBarcodeFormat(result.type),
         O.fromNullable,
-        O.filter(format => acceptedFormats.includes(format)),
+        O.filter(format => acceptedFormats?.includes(format) ?? true),
         O.map(format => [result, format] as const),
         TE.fromOption(() => new Error("Format not supported"))
       )
