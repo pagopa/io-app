@@ -46,7 +46,7 @@ const startRotationAnimation = (
   ).start();
 };
 
-const LoadingSpinner = ({
+const ItwLoadingSpinner = ({
   captionTitle,
   captionSubtitle,
   color,
@@ -97,4 +97,4 @@ const LoadingSpinner = ({
   );
 };
 
-export default LoadingSpinner;
+export default ItwLoadingSpinner;

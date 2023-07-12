@@ -6,7 +6,7 @@ import {
   IOColors,
   hexToRgba
 } from "../../../components/core/variables/IOColors";
-import LoadingSpinner from "./LoadingSpinner";
+import ItwLoadingSpinner from "./ItwLoadingSpinner";
 
 const styles = StyleSheet.create({
   main: {
@@ -29,7 +29,7 @@ type Props = Readonly<{
 /**
  * A Component to display and overlay animated spinner conditionally
  */
-const LoadingSpinnerOverlay: React.FunctionComponent<Props> = (
+const ItwLoadingSpinnerOverlay: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const {
@@ -46,7 +46,7 @@ const LoadingSpinnerOverlay: React.FunctionComponent<Props> = (
       foreground={
         isLoading && (
           <View style={styles.main}>
-            <LoadingSpinner
+            <ItwLoadingSpinner
               color={IOColors.blue}
               captionTitle={captionTitle}
               captionSubtitle={captionSubtitle}
@@ -60,4 +60,4 @@ const LoadingSpinnerOverlay: React.FunctionComponent<Props> = (
   );
 };
 
-export default LoadingSpinnerOverlay;
+export default ItwLoadingSpinnerOverlay;

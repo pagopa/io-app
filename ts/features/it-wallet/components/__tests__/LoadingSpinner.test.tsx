@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../ItwLoadingSpinner";
 
 type Props = {
   color: string;
