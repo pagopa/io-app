@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, ImageStyle, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { WithTestID } from "../../../../types/WithTestID";
 import { formatDateAsLocal } from "../../../../utils/dates";
@@ -14,31 +14,142 @@ import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPayment
 import I18n from "../../../../i18n";
 import paypalLogoImage from "../../../../../img/wallet/payment-methods/paypal-logo.png";
 import BpayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
+import { BankLogoOrSkeleton } from "../../utils/baseComponents/BankLogoOrLoadingSkeleton";
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    flex: 1,
-    alignItems: "flex-start",
-    alignContent: "space-between",
-    justifyContent: "space-between",
-    height: 207,
-    borderRadius: IOBannerRadius,
-    backgroundColor: IOColors["grey-100"],
-    padding: 24
-  },
-  bottomRow: {
-    height: 48,
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  paypalLogoExt: {
-    width: 132,
-    height: 33,
-    resizeMode: "contain"
+export const PaymentCardBig = (props: PaymentCardBigProps) => {
+  if (props.isLoading) {
+    return <CardSkeleton testID={props.testID} />;
   }
-});
+  return (
+    <View testID={props.testID} style={styles.cardContainer}>
+      <BigPaymentCardTopSection {...props} />
+      <VSpacer size={8} />
+      <BigPaymentCardBottomSection {...props} />
+    </View>
+  );
+};
+// ------------- core
+const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
+  switch (props.cardType) {
+    case "PAYPAL":
+      return <BottomSectionText string={props.holderEmail} />;
+    case "BANCOMATPAY":
+      return (
+        <View style={IOStyles.column}>
+          <LabelSmall color="grey-650" weight="Regular">
+            {props.phoneNumber}
+          </LabelSmall>
+          <BottomSectionText string={props.holderName} />
+        </View>
+      );
+    case "PAGOBANCOMAT":
+      return (
+        <View style={styles.bottomRow}>
+          <BottomSectionText string={props.holderName} />
+          <LogoPayment name={"pagoBancomat"} size={48} />
+        </View>
+      );
+    default:
+      return (
+        <View style={styles.bottomRow}>
+          <BottomSectionText string={props.holderName} />
+          <LogoPaymentOrDefaultIcon cardIcon={props.cardIcon} size={48} />
+        </View>
+      );
+  }
+};
+const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
+  switch (props.cardType) {
+    case "PAYPAL":
+      return <Image source={paypalLogoImage} style={styles.paypalLogo} />;
+    case "PAGOBANCOMAT":
+    case "COBADGE":
+      return (
+        <View style={IOStyles.flex}>
+          <BankLogoOrSkeleton
+            dimensions={{ width: BANK_LOGO_WIDTH, height: LOGO_HEIGHT }}
+            abiCode={props.abiCode}
+          />
+          <ExpDateComponent expDate={props.expirationDate} />
+        </View>
+      );
+    case "CREDIT":
+      return (
+        <View style={IOStyles.flex}>
+          <NewH6 style={{ textTransform: "capitalize" }}>
+            {`${props.cardIcon} •••• ${props.hpan}`}
+          </NewH6>
+          <ExpDateComponent expDate={props.expirationDate} />
+        </View>
+      );
+    case "BANCOMATPAY":
+      return (
+        <View style={IOStyles.flex}>
+          <BpayLogo width={133} height={33} />
+          <ExpDateComponent expDate={props.expirationDate} />
+        </View>
+      );
+  }
+};
+
+// ------------- utils
+const BottomSectionText = (props: { string: string }) => (
+  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+    {props.string}
+  </NewH6>
+);
+const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
+  <>
+    <VSpacer size={8} />
+    <LabelSmall color="grey-650" weight="Regular">
+      {I18n.t("wallet.creditCard.validUntil", {
+        expDate: formatDateAsLocal(expDate, true)
+      })}
+    </LabelSmall>
+  </>
+);
+
+// ------------- skeleton
+const CardSkeleton = ({ testID }: { testID?: string }) => (
+  <View testID={`${testID}-skeleton`} style={styles.cardContainer}>
+    <View>
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={164}
+        height={24}
+      />
+      <VSpacer size={16} />
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={117}
+        height={16}
+      />
+    </View>
+    <View>
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={97}
+        height={16}
+      />
+      <VSpacer size={4} />
+      <Placeholder.Box
+        color={IOColors["grey-200"]}
+        animate="fade"
+        radius={8}
+        width={164}
+        height={24}
+      />
+    </View>
+  </View>
+);
+
+// ------------- styles + types
 
 type PAYMENT_METHOD_CARD_TYPES = {
   CREDIT: "CREDIT";
@@ -91,136 +202,30 @@ type PaymentCardStandardProps =
       hpan: string;
       cardIcon?: IOLogoPaymentType;
     };
-export const PaymentCardBig = (props: PaymentCardBigProps) => {
-  if (props.isLoading) {
-    return <CardSkeleton testID={props.testID} />;
+
+const LOGO_HEIGHT = 32;
+const BANK_LOGO_WIDTH = 213;
+const styles = StyleSheet.create({
+  cardContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+    alignContent: "space-between",
+    justifyContent: "space-between",
+    height: 207,
+    borderRadius: IOBannerRadius,
+    backgroundColor: IOColors["grey-100"],
+    padding: 24
+  },
+  bottomRow: {
+    height: 48,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  paypalLogo: {
+    width: 114,
+    height: LOGO_HEIGHT,
+    resizeMode: "contain"
   }
-  return (
-    <View testID={props.testID} style={styles.cardContainer}>
-      <BigPaymentCardTopSection {...props} />
-      <VSpacer size={8} />
-      <BigPaymentCardBottomSection {...props} />
-    </View>
-  );
-};
-
-const CardSkeleton = ({ testID }: { testID?: string }) => (
-  <View testID={`${testID}-skeleton`} style={styles.cardContainer}>
-    <View>
-      <Placeholder.Box
-        color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={164}
-        height={24}
-      />
-      <VSpacer size={16} />
-      <Placeholder.Box
-        color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={117}
-        height={16}
-      />
-    </View>
-    <View>
-      <Placeholder.Box
-        color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={97}
-        height={16}
-      />
-      <VSpacer size={4} />
-      <Placeholder.Box
-        color={IOColors["grey-200"]}
-        animate="fade"
-        radius={8}
-        width={164}
-        height={24}
-      />
-    </View>
-  </View>
-);
-
-const BottomSectionText = (props: { string: string }) => (
-  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
-    {props.string}
-  </NewH6>
-);
-const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
-  switch (props.cardType) {
-    case "PAYPAL":
-      return <BottomSectionText string={props.holderEmail} />;
-    case "BANCOMATPAY":
-      return (
-        <View style={IOStyles.column}>
-          <LabelSmall color="grey-650" weight="Regular">
-            {props.phoneNumber}
-          </LabelSmall>
-          <BottomSectionText string={props.holderName} />
-        </View>
-      );
-    case "PAGOBANCOMAT":
-      return (
-        <View style={styles.bottomRow}>
-          <BottomSectionText string={props.holderName} />
-          <LogoPayment name={"pagoBancomat"} size={48} />
-        </View>
-      );
-    default:
-      return (
-        <View style={styles.bottomRow}>
-          <BottomSectionText string={props.holderName} />
-          <LogoPaymentOrDefaultIcon cardIcon={props.cardIcon} size={48} />
-        </View>
-      );
-  }
-};
-
-const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
-  const getCdnPath = (abi: string) =>
-    `https://assets.cdn.io.italia.it/logos/abi/${abi}.png`;
-  switch (props.cardType) {
-    case "PAYPAL":
-      return <Image source={paypalLogoImage} style={styles.paypalLogoExt} />;
-    case "PAGOBANCOMAT":
-    case "COBADGE":
-      return (
-        <View style={IOStyles.flex}>
-          <NewH6>{props.cardType}</NewH6>
-
-          <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("wallet.creditCard.validUntil", {
-              expDate: formatDateAsLocal(props.expirationDate, true)
-            })}
-          </LabelSmall>
-        </View>
-      );
-    case "CREDIT":
-      return (
-        <View style={IOStyles.flex}>
-          <NewH6 style={{ textTransform: "capitalize" }}>
-            {`${props.cardIcon} ${props.hpan}`}
-          </NewH6>
-
-          <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("wallet.creditCard.validUntil", {
-              expDate: formatDateAsLocal(props.expirationDate, true)
-            })}
-          </LabelSmall>
-        </View>
-      );
-    case "BANCOMATPAY":
-      return (
-        <View style={IOStyles.flex}>
-          <BpayLogo width={133} height={33} />
-          <LabelSmall color="grey-650" weight="Regular">
-            {I18n.t("wallet.creditCard.validUntil", {
-              expDate: formatDateAsLocal(props.expirationDate, true)
-            })}
-          </LabelSmall>
-        </View>
-      );
-  }
-};
+});
