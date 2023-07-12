@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 

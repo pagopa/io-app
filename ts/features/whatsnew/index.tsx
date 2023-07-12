@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
+import I18n from "i18n-js";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { useIODispatch } from "../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { isFastLoginEnabledSelector } from "../fastLogin/store/selectors";
 import { disableWhatsNew, whatsNewDisplayed } from "./store/actions";
 import { FastLoginWhatsNewBody } from "./screen/FastLoginWhatsNew";
 import {
@@ -13,7 +15,7 @@ import {
 // To add a new 'what's new', increase the "ACTIVE_VERSION" constant by 1
 // and push a new element into the whatsNewVersions array
 
-export const ACTIVE_VERSION = 4;
+export const ACTIVE_VERSION = 0;
 
 export const useWhatsNew = () => {
   const dispatch = useIODispatch();
@@ -24,6 +26,8 @@ export const useWhatsNew = () => {
   const isFirstOnBoarding = useSelector(isProfileFirstOnBoardingSelector);
   // This prevents the function displaying whatsnew from being executed again, in case of a rerender.
   const isVisualized = useSelector(isWhatsNewDisplayedSelector);
+
+  const isFastLoginEnabled = useSelector(isFastLoginEnabledSelector);
 
   const {
     present: presentWhatsNewBottomSheet,
@@ -46,7 +50,11 @@ export const useWhatsNew = () => {
   useOnFirstRender(() => {
     // Since during first onbaording two screens using this hook are mounted,
     // isActiveVersionAlreadyVisualized prevents the action from being dispatched twice
-    if (isFirstOnBoarding && !isActiveVersionAlreadyVisualized) {
+    if (
+      isFastLoginEnabled &&
+      isFirstOnBoarding &&
+      !isActiveVersionAlreadyVisualized
+    ) {
       dispatch(
         disableWhatsNew({
           whatsNewVersion: ACTIVE_VERSION
@@ -56,7 +64,11 @@ export const useWhatsNew = () => {
   });
 
   const checkToShowWhatsNew = () => {
-    if (!isActiveVersionAlreadyVisualized && !isVisualized) {
+    if (
+      isFastLoginEnabled &&
+      !isActiveVersionAlreadyVisualized &&
+      !isVisualized
+    ) {
       presentWhatsNewBottomSheet();
       dispatch(whatsNewDisplayed());
     }
@@ -76,31 +88,6 @@ const whatsNewVersions: Array<WhatsNew> = [];
 // eslint-disable-next-line functional/immutable-data
 whatsNewVersions.push({
   version: 0,
-  title: "Test Prova",
-  body: FastLoginWhatsNewBody
-});
-
-// eslint-disable-next-line functional/immutable-data
-whatsNewVersions.push({
-  version: 1,
-  title: "Test Prova",
-  body: FastLoginWhatsNewBody
-});
-// eslint-disable-next-line functional/immutable-data
-whatsNewVersions.push({
-  version: 2,
-  title: "Test Prova",
-  body: FastLoginWhatsNewBody
-});
-// eslint-disable-next-line functional/immutable-data
-whatsNewVersions.push({
-  version: 3,
-  title: "Test Prova",
-  body: FastLoginWhatsNewBody
-});
-// eslint-disable-next-line functional/immutable-data
-whatsNewVersions.push({
-  version: 4,
-  title: "Test Prova",
+  title: I18n.t("fastLogin.whatsNew.title"),
   body: FastLoginWhatsNewBody
 });

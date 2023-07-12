@@ -3727,7 +3727,7 @@ fastLogin:
     changes:
       first:
         title: Più semplice
-        description: accedi inserendo solo con il codice di sblocco dell’app o con il biometrico.
+        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
       second:
         title: Più veloce
         description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
@@ -3735,9 +3735,15 @@ fastLogin:
         title: Più sicura
         description: ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
 securityTips:
+  title: Consigli di sicurezza
   biometric:
     first: Usa il biometrico solo per identificare te. 
   ioEsco:
     urlString: ioesco.io.italia.it
-    lostDevice: Se perdi il dispositivo, esci da IO da
+    lostDevice:
+      if: Se
+      lose: perdi
+      sentence: il dispositivo, esci da IO da
     compromisedCredentials: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+whatsNew:
+  title: Cosa cambia?

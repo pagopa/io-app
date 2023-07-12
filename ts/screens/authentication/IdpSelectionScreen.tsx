@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: -2
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.1,
     shadowRadius: 20,
     backgroundColor: IOColors.white,
     paddingVertical: variables.spacerLargeHeight
