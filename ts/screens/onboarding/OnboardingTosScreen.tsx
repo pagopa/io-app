@@ -25,7 +25,7 @@ import {
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 import { H1 } from "../../components/core/typography/H1";
-import { useWhatsNew } from "../../features/whatsnew";
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 
 const styles = StyleSheet.create({
   titlePadding: {

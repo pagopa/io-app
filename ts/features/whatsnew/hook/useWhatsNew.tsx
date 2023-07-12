@@ -1,22 +1,17 @@
 import { useSelector } from "react-redux";
-import I18n from "i18n-js";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
-import { useIODispatch } from "../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { isFastLoginEnabledSelector } from "../fastLogin/store/selectors";
-import { disableWhatsNew, whatsNewDisplayed } from "./store/actions";
-import { FastLoginWhatsNewBody } from "./screen/FastLoginWhatsNew";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { useIODispatch } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { disableWhatsNew, whatsNewDisplayed } from "../store/actions";
+
 import {
   isActiveVersionVisualizedWhatsNewSelector,
   isWhatsNewCheckEnabledSelector,
   isWhatsNewDisplayedSelector
-} from "./store/reducers";
-
-// To add a new 'what's new', increase the "ACTIVE_VERSION" constant by 1
-// and push a new element into the whatsNewVersions array
-
-export const ACTIVE_VERSION = 0;
+} from "../store/reducers";
+import { ACTIVE_VERSION, whatsNewVersions } from "../version";
 
 export const useWhatsNew = () => {
   const dispatch = useIODispatch();
@@ -88,18 +83,3 @@ export const useWhatsNew = () => {
 
   return { checkToShowWhatsNew, autoResizableBottomSheet };
 };
-
-type WhatsNew = {
-  version: number;
-  title: string;
-  body: JSX.Element;
-};
-
-const whatsNewVersions: Array<WhatsNew> = [];
-
-// eslint-disable-next-line functional/immutable-data
-whatsNewVersions.push({
-  version: 0,
-  title: I18n.t("fastLogin.whatsNew.title"),
-  body: FastLoginWhatsNewBody
-});

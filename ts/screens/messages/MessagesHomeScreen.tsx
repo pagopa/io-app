@@ -55,8 +55,7 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-
-import { useWhatsNew } from "../../features/whatsnew";
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &

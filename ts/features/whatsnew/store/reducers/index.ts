@@ -10,7 +10,7 @@ import {
   enableWhatsNewCheck,
   whatsNewDisplayed
 } from "../actions";
-import { ACTIVE_VERSION } from "../..";
+import { ACTIVE_VERSION } from "../../version";
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;
@@ -67,6 +67,7 @@ export const whatsNewReducer = (
   return state;
 };
 
+// TODO: lastVisualizedVersion will be saved in user profile. Jira ticket: IOPID-424
 const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
 
 const persistConfig: PersistConfig = {
