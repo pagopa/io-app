@@ -26,11 +26,7 @@ import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
-import {
-  DecodedIOBarcode,
-  IOBarcode,
-  IOBarcodeFormat
-} from "../types/IOBarcode";
+import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 
 /**
@@ -144,7 +140,7 @@ const imageDecodingTask = (
       pipe(
         A.head(result.values),
         O.chain(decodeIOBarcode),
-        O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
+        O.map(decodedBarcode => ({
           format,
           ...decodedBarcode
         })),

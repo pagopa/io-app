@@ -56,7 +56,6 @@ const BarcodeScanScreen = () => {
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        formats={["QR_CODE", "DATA_MATRIX"]}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}

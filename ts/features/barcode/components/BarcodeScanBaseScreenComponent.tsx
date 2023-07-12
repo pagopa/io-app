@@ -19,9 +19,9 @@ import { CameraPermissionView } from "./CameraPermissionView";
 
 type Props = {
   /**
-   * Accepted formats of barcodes
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
    */
-  formats: Array<IOBarcodeFormat>;
+  formats?: Array<IOBarcodeFormat>;
   /**
    * Callback called when a barcode is successfully decoded
    */
