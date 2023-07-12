@@ -37,7 +37,7 @@ const BarcodeScanScreen = () => {
     });
   };
 
-  const filePickerModalComponent = (
+  const manualInputModalComponent = (
     <SafeAreaView>
       <ListItemNav
         value={I18n.t("barcodeScan.manual.authorize")}
@@ -50,7 +50,7 @@ const BarcodeScanScreen = () => {
   );
 
   const manualInputModal = useIOBottomSheetAutoresizableModal({
-    component: filePickerModalComponent,
+    component: manualInputModalComponent,
     title: ""
   });
 
