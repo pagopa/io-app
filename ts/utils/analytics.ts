@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import {
   WebViewErrorEvent,
@@ -21,6 +23,15 @@ export const noAnalyticsRoutes = new Set<string>(
     euCovidCertificateEnabled ? Object.values(EUCOVIDCERT_ROUTES) : []
   )
 );
+
+export const booleanToYesNo = (value: boolean): "yes" | "no" =>
+  pipe(
+    value,
+    B.fold(
+      () => "no",
+      () => "yes"
+    )
+  );
 
 export const buildEventProperties = (
   eventCategory: "KO" | "TECH" | "UX",

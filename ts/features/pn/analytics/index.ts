@@ -10,7 +10,7 @@ import {
   PNMessage
 } from "../../pn/store/types/types";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { buildEventProperties } from "../../../utils/analytics";
+import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
 
 export const trackPNOptInMessageOpened = () =>
   void mixpanelTrack(
@@ -163,5 +163,18 @@ export function trackPNTimelineExternal() {
   void mixpanelTrack(
     "PN_TIMELINE_EXTERNAL",
     buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNUxSuccess(
+  containsPayment: boolean,
+  firstTimeOpening: boolean
+) {
+  void mixpanelTrack(
+    "PN_UX_SUCCESS",
+    buildEventProperties("UX", "screen_view", {
+      contains_payment: booleanToYesNo(containsPayment),
+      first_time_opening: booleanToYesNo(firstTimeOpening)
+    })
   );
 }

@@ -38,7 +38,8 @@ import {
   trackPNAttachmentOpening,
   trackPNPaymentInfoError,
   trackPNPaymentInfoPaid,
-  trackPNPaymentInfoPayable
+  trackPNPaymentInfoPayable,
+  trackPNUxSuccess
 } from "../analytics";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
+  isRead: boolean;
   messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
@@ -130,6 +132,7 @@ export const PnMessageDetails = (props: Props) => {
     if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
       return;
     }
+    trackPNUxSuccess(!!payment, props.isRead);
 
     if (isPaid) {
       trackPNPaymentInfoPaid();
