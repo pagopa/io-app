@@ -3668,6 +3668,7 @@ idpay:
         input: Codice Transazione
         button: Continua
       scan:
+        error: IO non riconosce questo codice
         tabs:
           scan: Scan
           upload: Upload
