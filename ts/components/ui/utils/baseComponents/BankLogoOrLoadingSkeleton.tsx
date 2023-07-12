@@ -1,8 +1,8 @@
 import * as React from "react";
-import { View, Image } from "react-native";
+import { Image } from "react-native";
 import Placeholder from "rn-placeholder";
-import { getBankLogosCdnUri } from "../helperFunctions/payment/strings";
 import { IOColors } from "../../../core/variables/IOColors";
+import { getBankLogosCdnUri } from "../helperFunctions/payment/strings";
 type BankLogoOrSkeletonProps = {
   abiCode: string;
   dimensions: { height: number; width: number };
@@ -16,39 +16,49 @@ type BankLogoOrSkeletonProps = {
  * @param dimensions - height and width of the image and placeholder
  * @param placeHolderColor - color of the placeholder
  */
-
 export const BankLogoOrSkeleton = ({
   abiCode,
   dimensions,
   placeHolderColor = "grey-200"
 }: BankLogoOrSkeletonProps) => {
-  const [isLoading, setIsLoading] = React.useState<boolean | undefined>(
-    undefined
-  );
+  const [imageUrl, setImageUrl] = React.useState<string>("");
   const { width, height } = dimensions;
-  return (
-    <>
-      <Image
-        source={{ uri: getBankLogosCdnUri(abiCode) }}
-        style={{
-          height,
-          width,
-          resizeMode: "contain"
-        }}
-        onLoadStart={() => setIsLoading(true)}
-        onLoad={() => setIsLoading(false)}
-      />
-      {isLoading && (
-        <View style={{ marginTop: -height }}>
-          <Placeholder.Box
-            color={IOColors[placeHolderColor]}
-            animate="fade"
-            radius={8}
-            height={33}
-            width={213}
-          />
-        </View>
-      )}
-    </>
+  React.useEffect(() => {
+    // we pre-fetch the image to avoid having to render both items
+    // at the same time, which looks like a untidy hack
+    fetchBlob(getBankLogosCdnUri(abiCode))
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        setImageUrl(url);
+      })
+      .catch(_ => null);
+  }, [abiCode]);
+
+  return imageUrl !== "" ? (
+    <Image
+      source={{ uri: imageUrl }}
+      style={{
+        height,
+        width,
+        resizeMode: "contain"
+      }}
+    />
+  ) : (
+    <Placeholder.Box
+      color={IOColors[placeHolderColor]}
+      animate="fade"
+      radius={8}
+      height={height}
+      width={width}
+    />
   );
 };
+async function fetchBlob(url: string) {
+  const response = await fetch(url);
+  if (response.status === 200) {
+    return response.blob();
+  } else {
+    throw new Error();
+    // error is caught and irrelevant
+  }
+}

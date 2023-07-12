@@ -132,6 +132,14 @@ export const DSCards = () => (
       />
       <VSpacer size={16} />
       <PaymentCardBig
+        cardType={"COBADGE"}
+        holderName="Mario Rossi"
+        abiCode="08508"
+        expirationDate={new Date()}
+        cardIcon="visa"
+      />
+      <VSpacer size={16} />
+      <PaymentCardBig
         cardType={"BANCOMATPAY"}
         expirationDate={new Date()}
         holderName="Mario Rossi"

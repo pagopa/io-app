@@ -17,8 +17,12 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { useIOTheme } from "../../../components/core/variables/IOColors";
 import Avatar from "../../../components/ui/Avatar";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../../components/core/variables/IOStyles";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { BankLogoOrSkeleton } from "../../../components/ui/utils/baseComponents/BankLogoOrLoadingSkeleton";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -69,6 +73,60 @@ export const DSLogos = () => {
         Payment Networks (Big)
       </H2>
       {renderPaymentLogosBig()}
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 12 }}
+      >
+        BankLogoOrLoadingSkeleton
+      </H2>
+      <View
+        style={[
+          IOStyles.row,
+          {
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center"
+          }
+        ]}
+      >
+        <BankLogoOrSkeleton
+          abiCode="NOT_VALID"
+          dimensions={{ height: 33, width: 150 }}
+        />
+        <BankLogoOrSkeleton
+          abiCode="08509"
+          dimensions={{ height: 33, width: 150 }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View
+        style={[
+          IOStyles.row,
+          {
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center"
+          }
+        ]}
+      >
+        <BankLogoOrSkeleton
+          abiCode="03124"
+          dimensions={{ height: 33, width: 150 }}
+        />
+        <BankLogoOrSkeleton
+          abiCode="NOT_VALID"
+          dimensions={{ height: 33, width: 150 }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 12 }}
+      >
+        PayPalLogoBig
+      </H2>
     </DesignSystemScreen>
   );
 };
