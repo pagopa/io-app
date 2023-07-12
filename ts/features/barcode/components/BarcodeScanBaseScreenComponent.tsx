@@ -84,16 +84,12 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
     if (cameraPermissionStatus === "not-determined") {
       return (
         <CameraPermissionView
-          title={I18n.t(
-            "idpay.payment.qrCode.scan.permissions.undefined.title"
-          )}
-          body={I18n.t("idpay.payment.qrCode.scan.permissions.undefined.label")}
+          title={I18n.t("barcodeScan.permissions.undefined.title")}
+          body={I18n.t("barcodeScan.permissions.undefined.label")}
           action={{
-            label: I18n.t(
-              "idpay.payment.qrCode.scan.permissions.undefined.action"
-            ),
+            label: I18n.t("barcodeScan.permissions.undefined.action"),
             accessibilityLabel: I18n.t(
-              "idpay.payment.qrCode.scan.permissions.undefined.action"
+              "barcodeScan.permissions.undefined.action"
             ),
             onPress: requestCameraPermission
           }}
@@ -103,13 +99,11 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
 
     return (
       <CameraPermissionView
-        title={I18n.t("idpay.payment.qrCode.scan.permissions.denied.title")}
-        body={I18n.t("idpay.payment.qrCode.scan.permissions.denied.label")}
+        title={I18n.t("barcodeScan.permissions.denied.title")}
+        body={I18n.t("barcodeScan.permissions.denied.label")}
         action={{
-          label: I18n.t("idpay.payment.qrCode.scan.permissions.denied.action"),
-          accessibilityLabel: I18n.t(
-            "idpay.payment.qrCode.scan.permissions.denied.action"
-          ),
+          label: I18n.t("barcodeScan.permissions.denied.action"),
+          accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
           onPress: openAppSetting
         }}
       />

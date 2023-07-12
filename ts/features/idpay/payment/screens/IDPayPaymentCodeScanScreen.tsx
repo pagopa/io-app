@@ -25,7 +25,7 @@ const IDPayPaymentCodeScanScreen = () => {
   };
 
   const handleBarcodeError = () => {
-    showToast(I18n.t("idpay.payment.qrCode.scan.error"), "danger", "top");
+    showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 
   const navigateToCodeInputScreen = () =>
