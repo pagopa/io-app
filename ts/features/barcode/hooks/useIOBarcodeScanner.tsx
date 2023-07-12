@@ -118,15 +118,17 @@ export const retrieveNextBarcode = (
         const ioBarcodeFormat = convertToIOBarcodeFormat(nextBarcode.format);
 
         if (ioBarcodeFormat && !barcodes[ioBarcodeFormat]) {
-          const decodedBarcode = decodeIOBarcode(nextBarcode.displayValue);
-
-          return {
-            ...barcodes,
-            [ioBarcodeFormat]: {
-              format: ioBarcodeFormat,
-              ...decodedBarcode
-            }
-          };
+          return pipe(
+            decodeIOBarcode(nextBarcode.displayValue),
+            O.map(decodedBarcode => ({
+              ...barcodes,
+              [ioBarcodeFormat]: {
+                format: ioBarcodeFormat,
+                ...decodedBarcode
+              }
+            })),
+            O.getOrElse(() => barcodes)
+          );
         }
 
         return barcodes;

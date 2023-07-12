@@ -139,7 +139,7 @@ const imageDecodingTask = (
     TE.chain(([result, format]) =>
       pipe(
         A.head(result.values),
-        O.map(decodeIOBarcode),
+        O.chain(decodeIOBarcode),
         O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
           format,
           ...decodedBarcode

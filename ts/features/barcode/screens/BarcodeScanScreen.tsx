@@ -13,6 +13,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
+import { showToast } from "../../../utils/showToast";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -21,13 +22,11 @@ const BarcodeScanScreen = () => {
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
-    } else {
-      handleBarcodeError();
     }
   };
 
   const handleBarcodeError = () => {
-    alert("Invalid barcode :(");
+    showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 
   const handleIdPayPaymentCodeInput = () => {

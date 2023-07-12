@@ -15,10 +15,6 @@ const IDPayPaymentCodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
-    if (barcode.type === "UNKNOWN") {
-      return handleBarcodeError();
-    }
-
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
     }
