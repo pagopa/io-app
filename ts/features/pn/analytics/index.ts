@@ -24,6 +24,18 @@ export const trackPNOptInMessageAccepted = () =>
     buildEventProperties("UX", "action")
   );
 
+export const trackPNServiceDeactivated = () => 
+void mixpanelTrack(
+  "PN_SERVICE_DEACTIVATED",
+  buildEventProperties("UX", "screen_view")
+);
+
+export const trackPNServiceActivated = () => 
+void mixpanelTrack(
+  "PN_SERVICE_ACTIVATED",
+  buildEventProperties("UX", "screen_view")
+);
+
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
