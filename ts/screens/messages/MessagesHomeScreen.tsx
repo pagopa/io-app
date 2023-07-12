@@ -57,7 +57,6 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 
 import { useWhatsNew } from "../../features/whatsnew";
-import { isWhatsNewCheckEnabledSelector } from "../../features/whatsnew/store/reducers";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
