@@ -3723,4 +3723,29 @@ fastLogin:
         title: "Non siamo riusciti ad autenticarti"
         subtitle: "Chiudi l'app e riprova tra qualche minuto."
         submitButtonTitle: "Vai alle FAQ"
-
+  whatsNew:
+    title: Abbiamo migliorato l’accesso a IO!
+    subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
+    changes:
+      first:
+        title: Più semplice
+        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
+      second:
+        title: Più veloce
+        description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
+      third:
+        title: Più sicura
+        description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
+securityTips:
+  title: Consigli di sicurezza
+  biometric:
+    first: Usa il biometrico solo per identificare te. 
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: Se
+      lose: perdi
+      sentence: il dispositivo, esci da IO da
+    compromisedCredentials: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+whatsNew:
+  title: Cosa cambia?
