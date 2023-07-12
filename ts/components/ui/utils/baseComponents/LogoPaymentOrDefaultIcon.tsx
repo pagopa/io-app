@@ -1,9 +1,9 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { IOIconSizeScale, Icon } from "../../core/icons";
-import { IOLogoPaymentType, LogoPayment } from "../../core/logos";
-import { IOColors } from "../../core/variables/IOColors";
+import { IOIconSizeScale, Icon } from "../../../core/icons";
+import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
+import { IOColors } from "../../../core/variables/IOColors";
 
 export type LogoPaymentOrDefaultIconProps = {
   cardIcon?: IOLogoPaymentType;

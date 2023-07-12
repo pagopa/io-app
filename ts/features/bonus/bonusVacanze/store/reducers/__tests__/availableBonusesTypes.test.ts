@@ -40,7 +40,7 @@ const mockBonus: BonusAvailable = {
 };
 
 describe("availableBonusesTypes with FF enabled", () => {
-  it("should return 2 bonuses available", () => {
+  it("should return 1 bonus available", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
@@ -54,7 +54,7 @@ describe("availableBonusesTypes with FF enabled", () => {
       supportedAvailableBonusSelector.resultFunc(
         pot.some([...availableBonuses])
       ).length
-    ).toBe(2);
+    ).toBe(1);
   });
 
   it("should return 2 bonuses available if an experimental bonus with no FF is available", () => {
@@ -77,10 +77,10 @@ describe("availableBonusesTypes with FF enabled", () => {
     ];
     expect(
       supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
-    ).toBe(3);
+    ).toBe(2);
   });
 
-  it("should return 3 bonuses available if an experimental bonus with no FF is available", () => {
+  it("should return 2 bonuses available if an experimental bonus with no FF is available", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
@@ -100,10 +100,10 @@ describe("availableBonusesTypes with FF enabled", () => {
     ];
     expect(
       supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
-    ).toBe(3);
+    ).toBe(2);
   });
 
-  it("should return 2 bonuses available if an hidden bonus is available", () => {
+  it("should return 1 bonus available if an hidden bonus is available", () => {
     const bonuses: BonusesAvailable = [
       ...availableBonuses,
       {
@@ -113,10 +113,10 @@ describe("availableBonusesTypes with FF enabled", () => {
     ];
     expect(
       supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
-    ).toBe(2);
+    ).toBe(1);
   });
 
-  it("should return the experimental bonus where the FF is ON", () => {
+  it("should return no bonuses if only disabled ones are passed", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
@@ -136,8 +136,7 @@ describe("availableBonusesTypes with FF enabled", () => {
     const result = supportedAvailableBonusSelector.resultFunc(
       pot.some(bonuses)
     );
-    expect(result.length).toBe(1);
-    expect(result).toEqual([bonuses[2]]);
+    expect(result.length).toBe(0);
   });
 
   it("should return the experimental bonus where the FF is ON", () => {
@@ -177,8 +176,8 @@ describe("availableBonusesTypes with FF enabled", () => {
     const result = supportedAvailableBonusSelector.resultFunc(
       pot.some(bonuses)
     );
-    expect(result.length).toBe(2);
-    expect(result).toEqual([bonuses[1], bonuses[2]]);
+    expect(result.length).toBe(1);
+    expect(result).toEqual([bonuses[2]]);
   });
 });
 
