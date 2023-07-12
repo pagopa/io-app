@@ -14,9 +14,10 @@ export type StickyGradientBottomActions = WithTestID<{
 }>;
 
 const HEADER_BG_COLOR: IOColors = "white";
+const GRADIENT_AREA_HEIGHT: number = 144;
 
 const styles = StyleSheet.create({
-  headerInner: {
+  buttonContainer: {
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flex: 1,
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
 });
 
 export const StickyGradientBottomActions = ({
-  firstAction,
-  secondAction,
+  // firstAction,
+  // secondAction,
   testID
 }: StickyGradientBottomActions) => {
   const insets = useSafeAreaInsets();
@@ -34,25 +35,32 @@ export const StickyGradientBottomActions = ({
   return (
     <View
       style={{
+        width: "100%",
         position: "absolute",
         bottom: 0,
-        width: "100%",
-        height: 150,
+        height: GRADIENT_AREA_HEIGHT,
         // Check if iPhone bottom handle is present. If not, add a
         // default margin to avoid Button attached to the
         // bottom without margin
         paddingBottom:
           insets.bottom === 0
             ? IOVisualCostants.appMarginDefault
-            : insets.bottom,
-        backgroundColor: hexToRgba(IOColors[HEADER_BG_COLOR], 0.7),
-        borderTopColor: IOColors["error-500"],
-        borderTopWidth: 1
+            : insets.bottom
       }}
-      accessibilityRole="header"
       testID={testID}
+      pointerEvents="box-none"
     >
-      <View style={styles.headerInner}>
+      <View
+        style={{
+          height: GRADIENT_AREA_HEIGHT,
+          ...StyleSheet.absoluteFillObject,
+          backgroundColor: hexToRgba(IOColors[HEADER_BG_COLOR], 0.7),
+          borderTopColor: IOColors["error-500"],
+          borderTopWidth: 1
+        }}
+        pointerEvents="none"
+      />
+      <View style={styles.buttonContainer} pointerEvents="box-none">
         <ButtonSolid
           fullWidth
           label="Fixed component"

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, GestureResponderEvent, ScrollView, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets
