@@ -2,8 +2,7 @@ name: Run e2e tests
 on:
   push:
     branches:
-      # FIXE: remove this line before merging
-      - e2e-fix-it
+      - master
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
