@@ -5,12 +5,23 @@ import { Barcode, BarcodeFormat } from "vision-camera-code-scanner";
 import { retrieveNextBarcode } from "../useIOBarcodeScanner";
 import { BarcodeFailure } from "../../types/failure";
 
+jest.mock("../../types/decoders", () => ({
+  decodeIOBarcode: jest.fn()
+}));
+
+import { DecodedIOBarcode, decodeIOBarcode } from "../../types/decoders";
+
+(decodeIOBarcode as jest.Mock).mockImplementation(
+  (): O.Option<DecodedIOBarcode> =>
+    O.some({ type: "IDPAY", authUrl: "", trxCode: "" })
+);
+
 describe("test retrieveNextBarcode function", () => {
   it("should return `O.none` because of an empty array as input", () => {
     const input: Array<Barcode> = [];
     const output = retrieveNextBarcode(input);
 
-    expect(output).toBe(E.left<BarcodeFailure>("BARCODE_NOT_FOUND"));
+    expect(output).toStrictEqual(E.left<BarcodeFailure>("BARCODE_NOT_FOUND"));
   });
 
   it("should return the Data Matrix barcode because it's the only one", () => {
