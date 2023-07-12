@@ -207,8 +207,12 @@ export function trackPNPushOpened() {
 export function trackPNTimelineExternal() {
   void mixpanelTrack(
     "PN_TIMELINE_EXTERNAL",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "exit")
   );
+}
+
+export function trackPNShowTimeline() {
+  void mixpanelTrack("PN_SHOW_TIMELINE", buildEventProperties("UX", "action"));
 }
 
 export function trackPNUxSuccess(

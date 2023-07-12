@@ -39,6 +39,7 @@ import {
   trackPNPaymentInfoError,
   trackPNPaymentInfoPaid,
   trackPNPaymentInfoPayable,
+  trackPNShowTimeline,
   trackPNUxSuccess
 } from "../analytics";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -219,9 +220,10 @@ export const PnMessageDetails = ({
           </H5>
           <PnMessageTimeline
             message={message}
-            onExpand={() =>
-              scrollViewRef.current?.scrollToEnd({ animated: true })
-            }
+            onExpand={() => {
+              trackPNShowTimeline();
+              scrollViewRef.current?.scrollToEnd({ animated: true });
+            }}
           />
           {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
         </PnMessageDetailsSection>
