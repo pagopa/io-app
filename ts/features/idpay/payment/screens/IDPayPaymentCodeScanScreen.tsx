@@ -1,11 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
+import { showToast } from "../../../../utils/showToast";
+import {
+  BarcodeFailure,
+  BarcodeScanBaseScreenComponent,
+  IOBarcode
+} from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
@@ -15,13 +21,11 @@ const IDPayPaymentCodeScanScreen = () => {
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
-    } else {
-      alert("Unknown barcode :(");
     }
   };
 
-  const handleBarcodeError = () => {
-    alert("Invalid barcode :(");
+  const handleBarcodeError = (_: BarcodeFailure) => {
+    showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 
   const navigateToCodeInputScreen = () =>

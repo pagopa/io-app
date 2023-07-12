@@ -18,6 +18,8 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
+import { showToast } from "../../../utils/showToast";
+import { BarcodeFailure } from "../types/failure";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -25,10 +27,6 @@ const BarcodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
-    if (barcode.type === "UNKNOWN") {
-      return handleBarcodeError();
-    }
-
     switch (barcode.type) {
       case "IDPAY":
         openDeepLink(barcode.authUrl);
@@ -45,8 +43,8 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const handleBarcodeError = () => {
-    alert("Invalid barcode :(");
+  const handleBarcodeError = (_: BarcodeFailure) => {
+    showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 
   const handleIdPayPaymentCodeInput = () => {
@@ -64,7 +62,7 @@ const BarcodeScanScreen = () => {
     });
   };
 
-  const filePickerModalComponent = (
+  const manualInputModalComponent = (
     <SafeAreaView>
       <ListItemNav
         value={I18n.t("barcodeScan.manual.notice")}
@@ -84,14 +82,13 @@ const BarcodeScanScreen = () => {
   );
 
   const manualInputModal = useIOBottomSheetAutoresizableModal({
-    component: filePickerModalComponent,
+    component: manualInputModalComponent,
     title: ""
   });
 
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        formats={["QR_CODE", "DATA_MATRIX"]}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}

@@ -3683,26 +3683,11 @@ idpay:
         BUDGET_EXHAUSTED:
           title: Autorizzazione negata
           body: Non hai abbastanza soldi per autorizzare
-    qrCode:
-      manual:
-        title: Autorizza una transazione
-        subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
-        input: Codice Transazione
-        button: Continua
-      scan:
-        tabs:
-          scan: Inquadra
-          upload: Carica
-          input: Digita
-        permissions:
-          undefined: 
-            title: Ci serve il tuo permesso
-            label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
-            action: Consenti l’accesso
-          denied:
-            title: Non hai dato il permesso di usare la fotocamera
-            label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
-            action: Vai alle impostazioni
+    manualInput:
+      title: Autorizza una transazione
+      subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
+      input: Codice Transazione
+      button: Continua
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
@@ -3722,9 +3707,23 @@ fastLogin:
         subtitle: "Chiudi l'app e riprova tra qualche minuto."
         submitButtonTitle: "Vai alle FAQ"
 barcodeScan: 
+  error: IO non riconosce questo codice
+  tabs:
+    scan: Inquadra
+    upload: Carica
+    input: Digita
   upload:
     image: Carica un'immagine
     file: Carica un file
   manual:
     authorize: Autorizza una transazione
     notice: Paga un avviso pagoPA
+  permissions:
+    undefined: 
+      title: Ci serve il tuo permesso
+      label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+      action: Consenti l’accesso
+    denied:
+      title: Non hai dato il permesso di usare la fotocamera
+      label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+      action: Vai alle impostazioni

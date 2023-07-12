@@ -27,7 +27,8 @@ import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
-import { DecodedIOBarcode, decodeIOBarcode } from "../types/decoders";
+import { decodeIOBarcode } from "../types/decoders";
+import { BarcodeFailure } from "../types/failure";
 
 /**
  * Maps internal formats to external library formats
@@ -72,9 +73,9 @@ type IOBarcodeFileReader = {
 
 type IOBarcodeFileReaderConfiguration = {
   /**
-   * Accepted formats of codes to be scanned
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
    */
-  formats: Array<IOBarcodeFormat>;
+  formats?: Array<IOBarcodeFormat>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -82,7 +83,7 @@ type IOBarcodeFileReaderConfiguration = {
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: () => void;
+  onBarcodeError: (failure: BarcodeFailure) => void;
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
@@ -102,8 +103,11 @@ const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
  */
 const qrCodeDetectionTask = (
   imageUri: string
-): TE.TaskEither<Error, QRCodeScanResult> =>
-  TE.tryCatch(() => RNQRGenerator.detect({ uri: imageUri }), E.toError);
+): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
+  TE.tryCatch(
+    () => RNQRGenerator.detect({ uri: imageUri }),
+    () => "UNEXPECTED"
+  );
 
 /**
  * Creates a TaskEither that generates all the images from a PDF document
@@ -112,8 +116,11 @@ const qrCodeDetectionTask = (
  */
 const imageGenerationTask = (
   pdfUri: string
-): TE.TaskEither<Error, Array<ThumbnailResult>> =>
-  TE.tryCatch(() => PdfThumbnail.generateAllPages(pdfUri, 100), E.toError);
+): TE.TaskEither<BarcodeFailure, Array<ThumbnailResult>> =>
+  TE.tryCatch(
+    () => PdfThumbnail.generateAllPages(pdfUri, 100),
+    () => "UNEXPECTED"
+  );
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
@@ -123,28 +130,35 @@ const imageGenerationTask = (
  */
 const imageDecodingTask = (
   imageUri: string,
-  acceptedFormats: Array<IOBarcodeFormat>
-): TE.TaskEither<Error, IOBarcode> =>
+  acceptedFormats?: Array<IOBarcodeFormat>
+): TE.TaskEither<BarcodeFailure, IOBarcode> =>
   pipe(
     qrCodeDetectionTask(imageUri),
     TE.chain(result =>
       pipe(
+        A.head(result.values),
+        TE.fromOption<BarcodeFailure>(() => "BARCODE_NOT_FOUND"),
+        TE.map(() => result)
+      )
+    ),
+    TE.chain(result =>
+      pipe(
         convertToIOBarcodeFormat(result.type),
         O.fromNullable,
-        O.filter(format => acceptedFormats.includes(format)),
+        O.filter(format => acceptedFormats?.includes(format) ?? true),
         O.map(format => [result, format] as const),
-        TE.fromOption(() => new Error("Format not supported"))
+        TE.fromOption<BarcodeFailure>(() => "UNSUPPORTED_FORMAT")
       )
     ),
     TE.chain(([result, format]) =>
       pipe(
         A.head(result.values),
-        O.map(decodeIOBarcode),
-        O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
+        O.chain(decodeIOBarcode),
+        O.map(decodedBarcode => ({
           format,
           ...decodedBarcode
         })),
-        TE.fromOption(() => new Error("No barcode found"))
+        TE.fromOption<BarcodeFailure>(() => "UNKNOWN_CONTENT")
       )
     )
   );
@@ -187,7 +201,7 @@ const useIOBarcodeFileReader = (
       O.chain(A.head),
       O.map(({ uri }) => uri),
       O.chain(O.fromNullable),
-      TE.fromOption(() => new Error("No image selected")),
+      TE.fromOption<BarcodeFailure>(() => "INVALID_INPUT"),
       TE.chain(uri => imageDecodingTask(uri, config.formats)),
       TE.mapLeft(onBarcodeError),
       TE.map(onBarcodeSuccess)
@@ -219,7 +233,7 @@ const useIOBarcodeFileReader = (
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
-      return onBarcodeError();
+      return onBarcodeError("INVALID_INPUT");
     }
 
     await pipe(
@@ -242,7 +256,7 @@ const useIOBarcodeFileReader = (
           await barcodes,
           A.head,
           O.map(onBarcodeSuccess),
-          O.getOrElse(onBarcodeError)
+          O.getOrElse(() => onBarcodeError("BARCODE_NOT_FOUND"))
         )
       )
     )();
