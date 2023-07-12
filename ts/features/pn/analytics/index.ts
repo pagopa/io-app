@@ -1,16 +1,17 @@
 import { pipe } from "fp-ts/lib/function";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { mixpanelTrack } from "../../../mixpanel";
 import { TransactionSummaryErrorContent } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
-import { PnActivationState } from "../../pn/store/reducers/activation";
 import {
   NotificationStatusHistoryElement,
   PNMessage
 } from "../../pn/store/types/types";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+
+const pnServiceActivationStatusBoolToString = (activated?: boolean) =>
+  activated ? "activated" : "deactivated";
 
 export const trackPNOptInMessageOpened = () =>
   void mixpanelTrack(
@@ -58,6 +59,22 @@ export const trackPNOptInMessageCTADisplaySuccess = () =>
   void mixpanelTrack(
     "PN_OPTIN_MESSAGE_CTA_DISPLAY_SUCCESS",
     buildEventProperties("TECH", "control")
+  );
+
+export const trackPNServiceStatusChangeSuccess = (activated?: boolean) =>
+  void mixpanelTrack(
+    "PN_SERVICE_STATUS_CHANGE_SUCCESS",
+    buildEventProperties("TECH", undefined, {
+      NEW_STATUS: pnServiceActivationStatusBoolToString(activated)
+    })
+  );
+
+export const trackPNServiceStatusChangeError = (currentStatus?: boolean) =>
+  void mixpanelTrack(
+    "PN_SERVICE_STATUS_CHANGE_ERROR",
+    buildEventProperties("KO", undefined, {
+      CURRENT_STATUS: pnServiceActivationStatusBoolToString(currentStatus)
+    })
   );
 
 export function trackPNAttachmentDownloadFailure() {
@@ -185,20 +202,6 @@ export function trackPNPaymentInfoPayable() {
 
 export function trackPNPushOpened() {
   void mixpanelTrack("PN_PUSH_OPENED");
-}
-
-export function trackPNServiceStatusChangedError(isServiceActive?: boolean) {
-  void mixpanelTrack("PN_SERVICE_STATUSCHANGE_ERROR", {
-    currentStatus: isServiceActive
-  });
-}
-
-export function trackPNServiceStatusChangedSuccess(
-  serviceActivation: PnActivationState
-) {
-  void mixpanelTrack("PN_SERVICE_STATUSCHANGE_SUCCESS", {
-    newStatus: pot.toUndefined(serviceActivation)
-  });
 }
 
 export function trackPNTimelineExternal() {
