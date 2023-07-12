@@ -34,14 +34,15 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSStickyGradientBottom } from "../core/DSStickyGradientBottom";
+import { DSFullScreenModal } from "../core/DSFullScreenModal";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
-import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import IconButton from "../../../components/ui/IconButton";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
-import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
@@ -358,6 +359,14 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
         options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_GRADIENT_BOTTOM.route}
+        component={DSStickyGradientBottom}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_GRADIENT_BOTTOM.title
+        }}
       />
 
       {/* LEGACY */}
