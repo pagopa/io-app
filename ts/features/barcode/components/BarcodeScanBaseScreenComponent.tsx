@@ -113,6 +113,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
+      {/* FIXME: replace with bottom bar component when it's ready */}
       <BottomTabNavigation
         onUploadBarcodePressed={showFilePicker}
         onNavigateToCodeInputScreenPressed={onManualInputPressed}
@@ -121,6 +122,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
+        {/* FIXME: replace with new header */}
         <BaseHeader
           backgroundColor={"transparent"}
           goBack={true}
