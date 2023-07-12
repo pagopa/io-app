@@ -23,9 +23,9 @@ import { HSpacer } from "../../../core/spacer/Spacer";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import ExtractedCTABar from "../../../cta/ExtractedCTABar";
 import { isPNOptInMessage } from "../../../../features/pn/utils";
+import { trackPNOptInMessageOpened } from "../../../../features/pn/analytics";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
-import { trackPNOptInMessageOpened } from "../../../../features/pn/analytics";
 
 type Props = {
   isPaid: boolean;
