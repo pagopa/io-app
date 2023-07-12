@@ -90,22 +90,13 @@ const MessagesHomeScreen = ({
 
   const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
 
-  const isWhatsNewCheckEnabled = useSelector(isWhatsNewCheckEnabledSelector);
-
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
 
-  useEffect(() => {
-    // Since the message component is rendered together with onboarding (or tos), it sometimes executes this function
-    // before landing on MessagesHome.
-    // isWhatsNewCheckEnabled prevents the function from running
-    if (isWhatsNewCheckEnabled) {
-      checkToShowWhatsNew();
-    }
-  }, [checkToShowWhatsNew, isWhatsNewCheckEnabled]);
+  checkToShowWhatsNew();
 
   useEffect(() => {
     if (!latestMessageOperation) {

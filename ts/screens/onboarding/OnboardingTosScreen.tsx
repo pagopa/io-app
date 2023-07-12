@@ -150,7 +150,7 @@ const OnboardingTosScreen = () => {
             shouldRenderFooter={!isLoading}
             onExit={handleGoBack}
             onAcceptTos={() => {
-              checkToShowWhatsNew();
+              checkToShowWhatsNew(true);
               dispatch(tosAccepted(tosVersion));
             }}
           />

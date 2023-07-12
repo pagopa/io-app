@@ -9,6 +9,7 @@ import { disableWhatsNew, whatsNewDisplayed } from "./store/actions";
 import { FastLoginWhatsNewBody } from "./screen/FastLoginWhatsNew";
 import {
   isActiveVersionVisualizedWhatsNewSelector,
+  isWhatsNewCheckEnabledSelector,
   isWhatsNewDisplayedSelector
 } from "./store/reducers";
 
@@ -28,6 +29,8 @@ export const useWhatsNew = () => {
   const isVisualized = useSelector(isWhatsNewDisplayedSelector);
 
   const isFastLoginEnabled = useSelector(isFastLoginEnabledSelector);
+
+  const isWhatsNewCheckEnabled = useSelector(isWhatsNewCheckEnabledSelector);
 
   const {
     present: presentWhatsNewBottomSheet,
@@ -63,7 +66,16 @@ export const useWhatsNew = () => {
     }
   });
 
-  const checkToShowWhatsNew = () => {
+  // Since the message component is rendered together with onboarding (or tos), it sometimes executes this function
+  // before landing on MessagesHome.
+  // isWhatsNewCheckEnabled prevents the function from running
+  const checkToShowWhatsNew = (skipCheck: boolean = false) => {
+    if (skipCheck || isWhatsNewCheckEnabled) {
+      showWhatsNew();
+    }
+  };
+
+  const showWhatsNew = () => {
     if (
       isFastLoginEnabled &&
       !isActiveVersionAlreadyVisualized &&
