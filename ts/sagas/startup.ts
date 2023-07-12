@@ -462,8 +462,9 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
+  yield* call(checkConfiguredPinSaga);
+
   if (!hasPreviousSessionAndPin) {
-    yield* call(checkConfiguredPinSaga);
     yield* call(checkAcknowledgedFingerprintSaga);
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
