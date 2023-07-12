@@ -201,7 +201,7 @@ export function trackPNPaymentInfoPayable() {
 }
 
 export function trackPNPushOpened() {
-  void mixpanelTrack("PN_PUSH_OPENED");
+  void mixpanelTrack("PN_PUSH_OPENED", buildEventProperties("UX", "action"));
 }
 
 export function trackPNTimelineExternal() {
