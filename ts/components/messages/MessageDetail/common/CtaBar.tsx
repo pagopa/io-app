@@ -98,18 +98,17 @@ const CtaBar = ({
     serviceMetadata,
     service?.id as ServiceId
   );
+  const state = store.getState();
+  const isPNOptInMessageInfo = isPNOptInMessage(maybeCtas, service, state);
+  const isPNOptIn = isPNOptInMessageInfo.isPNOptInMessage;
 
   useEffect(() => {
-    if (shoulCheckForPNOptInMessage.current) {
-      const state = store.getState();
-      const isPN = isPNOptInMessage(maybeCtas, service, state);
-      if (isPN) {
-        // eslint-disable-next-line functional/immutable-data
-        shoulCheckForPNOptInMessage.current = false;
-        trackPNOptInMessageOpened();
-      }
+    if (shoulCheckForPNOptInMessage.current && isPNOptIn) {
+      // eslint-disable-next-line functional/immutable-data
+      shoulCheckForPNOptInMessage.current = false;
+      trackPNOptInMessageOpened();
     }
-  }, [maybeCtas, service, shoulCheckForPNOptInMessage, store]);
+  }, [isPNOptIn, shoulCheckForPNOptInMessage]);
 
   // in case of medical prescription, we shouldn't render the CtaBar
   if (messageDetails.prescriptionData !== undefined) {
@@ -146,6 +145,7 @@ const CtaBar = ({
           dispatch={dispatch}
           serviceMetadata={serviceMetadata}
           service={service?.raw}
+          isPNOptInMessage={isPNOptInMessageInfo}
         />
       </View>
     </View>
