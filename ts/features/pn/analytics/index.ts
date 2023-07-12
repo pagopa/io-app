@@ -54,6 +54,12 @@ export const trackPNPushSettings = () =>
     buildEventProperties("UX", "micro_action")
   );
 
+export const trackPNOptInMessageCTADisplaySuccess = () =>
+  void mixpanelTrack(
+    "PN_OPTIN_MESSAGE_CTA_DISPLAY_SUCCESS",
+    buildEventProperties("TECH", "control")
+  );
+
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
