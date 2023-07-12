@@ -71,8 +71,11 @@ export const decodeIOBarcode = (value: string | undefined): DecodedIOBarcode =>
     O.map(A.compact),
     O.chain(A.head),
     O.getOrElse<DecodedIOBarcode>(() => ({
-      type: "UNKNOWN"
+      type: "UNKNOWN",
+      value
     }))
   );
 
-export type DecodedIOBarcode = SupportedDecodedIOBarcode | { type: "UNKNOWN" };
+export type DecodedIOBarcode =
+  | SupportedDecodedIOBarcode
+  | { type: "UNKNOWN"; value?: string };
