@@ -35,6 +35,7 @@ import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { getRptIdFromPayment } from "../utils/rptId";
 import {
+  trackPNAttachmentOpening,
   trackPNPaymentInfoError,
   trackPNPaymentInfoPaid,
   trackPNPaymentInfoPayable
@@ -109,6 +110,7 @@ export const PnMessageDetails = (props: Props) => {
   const messageId = props.messageId;
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
+      trackPNAttachmentOpening();
       navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
         attachmentId: attachment.id

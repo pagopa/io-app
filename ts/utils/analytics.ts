@@ -24,7 +24,13 @@ export const noAnalyticsRoutes = new Set<string>(
 
 export const buildEventProperties = (
   eventCategory: "KO" | "TECH" | "UX",
-  eventType: "action" | "control" | "exit" | "micro_action" | "screen_view",
+  eventType:
+    | "action"
+    | "control"
+    | "exit"
+    | "micro_action"
+    | "screen_view"
+    | undefined,
   customProperties: Record<string, unknown> = {}
 ) => ({
   event_category: eventCategory,

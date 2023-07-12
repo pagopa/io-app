@@ -19,15 +19,56 @@ export const trackPNOptInMessageOpened = () =>
   );
 
 export function trackPNAttachmentDownloadFailure() {
-  void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
+  void mixpanelTrack(
+    "PN_ATTACHMENT_DOWNLOAD_FAILURE",
+    buildEventProperties("TECH", undefined)
+  );
 }
 
 export function trackPNAttachmentSave() {
-  void mixpanelTrack("PN_ATTACHMENT_SAVE");
+  void mixpanelTrack(
+    "PN_ATTACHMENT_SAVE",
+    buildEventProperties("UX", "action")
+  );
 }
 
 export function trackPNAttachmentShare() {
-  void mixpanelTrack("PN_ATTACHMENT_SHARE");
+  void mixpanelTrack(
+    "PN_ATTACHMENT_SHARE",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNAttachmentSaveShare() {
+  void mixpanelTrack(
+    "PN_ATTACHMENT_SAVE_SHARE",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNAttachmentOpen() {
+  void mixpanelTrack(
+    "PN_ATTACHMENT_OPEN",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNAttachmentOpening() {
+  void mixpanelTrack(
+    "PN_ATTACHMENT_OPENING",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNAttachmentOpeningSuccess(
+  previewStatus: "displayer" | "error"
+) {
+  void mixpanelTrack(
+    "PN_ATTACHMENT_OPENING_SUCCESS",
+    buildEventProperties("UX", "screen_view", {
+      PREVIEW_STATUS: previewStatus
+    })
+  );
 }
 
 export function trackPNDisclaimerAccepted(
@@ -78,17 +119,26 @@ export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
 export function trackPNPaymentInfoError(
   paymentVerificationError: O.Some<TransactionSummaryErrorContent>
 ) {
-  void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
-    paymentStatus: O.toUndefined(paymentVerificationError)
-  });
+  void mixpanelTrack(
+    "PN_PAYMENT_INFO_ERROR",
+    buildEventProperties("TECH", undefined, {
+      PAYMENT_STATUS: O.toUndefined(paymentVerificationError)
+    })
+  );
 }
 
 export function trackPNPaymentInfoPaid() {
-  void mixpanelTrack("PN_PAYMENTINFO_PAID");
+  void mixpanelTrack(
+    "PN_PAYMENT_INFO_PAID",
+    buildEventProperties("TECH", undefined)
+  );
 }
 
 export function trackPNPaymentInfoPayable() {
-  void mixpanelTrack("PN_PAYMENTINFO_PAYABLE");
+  void mixpanelTrack(
+    "PN_PAYMENT_INFO_PAYABLE",
+    buildEventProperties("TECH", undefined)
+  );
 }
 
 export function trackPNPushOpened() {
@@ -110,5 +160,8 @@ export function trackPNServiceStatusChangedSuccess(
 }
 
 export function trackPNTimelineExternal() {
-  void mixpanelTrack("PN_TIMELINE_EXTERNAL");
+  void mixpanelTrack(
+    "PN_TIMELINE_EXTERNAL",
+    buildEventProperties("UX", "action")
+  );
 }
