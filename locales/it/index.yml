@@ -3734,7 +3734,7 @@ fastLogin:
         description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
       third:
         title: Più sicura
-        description: ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
+        description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 securityTips:
   title: Consigli di sicurezza
   biometric:
