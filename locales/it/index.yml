@@ -3293,10 +3293,15 @@ features:
           title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
           body: "Per proseguire è necessaria la funzione NFC del dispositivo."
     issuing:
+      title: "Attivazione IT Wallet"
       infoConsent:
         footer:
           cancel: "Annulla"
           confirm: "Autorizza"
+      typ:
+        title: "Fatto! il tuo IT Wallet è attivo su IO!"
+        content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
+        button: "Continua"
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
