@@ -1,5 +1,6 @@
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
@@ -18,6 +19,7 @@ import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { BarcodeCameraMarker } from "../components/BarcodeCameraMarker";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
+import { BarcodeFailure } from "../types/failure";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -47,7 +49,7 @@ export type IOBarcodeScannerConfiguration = {
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: () => void;
+  onBarcodeError: (failure: BarcodeFailure) => void;
   /**
    * Disables the barcode scanned
    */
@@ -109,7 +111,7 @@ const convertFromIOBarcodeFormat = (format: IOBarcodeFormat): BarcodeFormat =>
  */
 export const retrieveNextBarcode = (
   barcodes: Array<Barcode>
-): O.Option<IOBarcode> =>
+): E.Either<BarcodeFailure, IOBarcode> =>
   pipe(
     barcodes,
     A.reduce(
@@ -136,7 +138,8 @@ export const retrieveNextBarcode = (
     ),
     O.of,
     O.map(barcodes => barcodes.QR_CODE || barcodes.DATA_MATRIX || null),
-    O.chain(O.fromNullable)
+    O.chain(O.fromNullable),
+    E.fromOption(() => "BARCODE_NOT_FOUND")
   );
 
 export const useIOBarcodeScanner = (
@@ -204,8 +207,7 @@ export const useIOBarcodeScanner = (
 
     pipe(
       retrieveNextBarcode(barcodes),
-      O.map(onBarcodeSuccess),
-      O.getOrElse(onBarcodeError)
+      E.fold(onBarcodeError, onBarcodeSuccess)
     );
   }, [prevDisabled, disabled, barcodes, onBarcodeSuccess, onBarcodeError]);
 

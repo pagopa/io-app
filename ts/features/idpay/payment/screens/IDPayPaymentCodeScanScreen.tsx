@@ -7,7 +7,11 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { showToast } from "../../../../utils/showToast";
-import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
+import {
+  BarcodeFailure,
+  BarcodeScanBaseScreenComponent,
+  IOBarcode
+} from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
@@ -20,7 +24,7 @@ const IDPayPaymentCodeScanScreen = () => {
     }
   };
 
-  const handleBarcodeError = () => {
+  const handleBarcodeError = (_: BarcodeFailure) => {
     showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 

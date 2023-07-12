@@ -14,6 +14,7 @@ import {
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { BarcodeFailure } from "../types/failure";
 import { BottomTabNavigation } from "./BottomTabNavigation";
 import { CameraPermissionView } from "./CameraPermissionView";
 
@@ -29,7 +30,7 @@ type Props = {
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: () => void;
+  onBarcodeError: (failure: BarcodeFailure) => void;
   /**
    * Callback called when the manual input button is pressed
    * necessary to navigate to the manual input screen or show the manual input modal

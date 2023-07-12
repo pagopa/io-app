@@ -14,6 +14,7 @@ import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
 import { showToast } from "../../../utils/showToast";
+import { BarcodeFailure } from "../types/failure";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -25,7 +26,7 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const handleBarcodeError = () => {
+  const handleBarcodeError = (_: BarcodeFailure) => {
     showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 

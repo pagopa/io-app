@@ -134,7 +134,6 @@ const renderComponent = () => {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => (
         <BarcodeScanBaseScreenComponent
-          formats={["QR_CODE"]}
           onBarcodeSuccess={() => null}
           onBarcodeError={() => null}
           onManualInputPressed={() => null}
