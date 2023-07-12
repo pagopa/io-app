@@ -24,17 +24,29 @@ export const trackPNOptInMessageAccepted = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackPNServiceDeactivated = () => 
-void mixpanelTrack(
-  "PN_SERVICE_DEACTIVATED",
-  buildEventProperties("UX", "screen_view")
-);
+export const trackPNServiceDeactivated = () =>
+  void mixpanelTrack(
+    "PN_SERVICE_DEACTIVATED",
+    buildEventProperties("UX", "screen_view")
+  );
 
-export const trackPNServiceActivated = () => 
-void mixpanelTrack(
-  "PN_SERVICE_ACTIVATED",
-  buildEventProperties("UX", "screen_view")
-);
+export const trackPNServiceActivated = () =>
+  void mixpanelTrack(
+    "PN_SERVICE_ACTIVATED",
+    buildEventProperties("UX", "screen_view")
+  );
+
+export const trackPNServiceStartDeactivation = () =>
+  void mixpanelTrack(
+    "PN_SERVICE_START_DEACTIVATION",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackPNServiceStartActivation = () =>
+  void mixpanelTrack(
+    "PN_SERVICE_START_ACTIVATION",
+    buildEventProperties("UX", "action")
+  );
 
 export function trackPNAttachmentDownloadFailure() {
   void mixpanelTrack(

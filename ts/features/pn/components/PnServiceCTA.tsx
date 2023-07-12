@@ -21,6 +21,8 @@ import { loadServicePreference } from "../../../store/actions/services/servicePr
 import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,
+  trackPNServiceStartActivation,
+  trackPNServiceStartDeactivation,
   trackPNServiceStatusChangedError,
   trackPNServiceStatusChangedSuccess
 } from "../analytics";
@@ -62,6 +64,7 @@ const ActivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
+      trackPNServiceStartActivation();
       props.dispatch(pnActivationUpsert.request(true));
     }}
   >
@@ -74,6 +77,7 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
+      trackPNServiceStartDeactivation();
       props.dispatch(pnActivationUpsert.request(false));
     }}
     style={{
