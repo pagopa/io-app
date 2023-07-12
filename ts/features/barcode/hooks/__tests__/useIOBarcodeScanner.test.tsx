@@ -1,13 +1,16 @@
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Barcode, BarcodeFormat } from "vision-camera-code-scanner";
 import { retrieveNextBarcode } from "../useIOBarcodeScanner";
+import { BarcodeFailure } from "../../types/failure";
 
 describe("test retrieveNextBarcode function", () => {
   it("should return `O.none` because of an empty array as input", () => {
     const input: Array<Barcode> = [];
     const output = retrieveNextBarcode(input);
 
-    expect(output).toBe(O.none);
+    expect(output).toBe(E.left<BarcodeFailure>("BARCODE_NOT_FOUND"));
   });
 
   it("should return the Data Matrix barcode because it's the only one", () => {
@@ -15,7 +18,11 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.DATA_MATRIX } as Barcode
     ];
 
-    const output = O.toUndefined(retrieveNextBarcode(input));
+    const output = pipe(
+      retrieveNextBarcode(input),
+      O.fromEither,
+      O.toUndefined
+    );
 
     expect(output?.format).toBe("DATA_MATRIX");
   });
@@ -25,7 +32,11 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.QR_CODE } as Barcode
     ];
 
-    const output = O.toUndefined(retrieveNextBarcode(input));
+    const output = pipe(
+      retrieveNextBarcode(input),
+      O.fromEither,
+      O.toUndefined
+    );
 
     expect(output?.format).toBe("QR_CODE");
   });
@@ -36,7 +47,11 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.CODE_128 } as Barcode
     ];
 
-    const output = O.toUndefined(retrieveNextBarcode(input));
+    const output = pipe(
+      retrieveNextBarcode(input),
+      O.fromEither,
+      O.toUndefined
+    );
 
     expect(output?.format).toBe("QR_CODE");
   });
@@ -49,7 +64,11 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.CODE_128 } as Barcode
     ];
 
-    const output = O.toUndefined(retrieveNextBarcode(input));
+    const output = pipe(
+      retrieveNextBarcode(input),
+      O.fromEither,
+      O.toUndefined
+    );
 
     expect(output?.format).toBe("DATA_MATRIX");
   });
