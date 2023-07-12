@@ -1,27 +1,13 @@
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { Barcode, BarcodeFormat } from "vision-camera-code-scanner";
 import { retrieveNextBarcode } from "../useIOBarcodeScanner";
-import { BarcodeFailure } from "../../types/failure";
-
-jest.mock("../../types/decoders", () => ({
-  decodeIOBarcode: jest.fn()
-}));
-
-import { DecodedIOBarcode, decodeIOBarcode } from "../../types/decoders";
-
-(decodeIOBarcode as jest.Mock).mockImplementation(
-  (): O.Option<DecodedIOBarcode> =>
-    O.some({ type: "IDPAY", authUrl: "", trxCode: "" })
-);
 
 describe("test retrieveNextBarcode function", () => {
   it("should return `O.none` because of an empty array as input", () => {
     const input: Array<Barcode> = [];
     const output = retrieveNextBarcode(input);
 
-    expect(output).toStrictEqual(E.left<BarcodeFailure>("BARCODE_NOT_FOUND"));
+    expect(output).toStrictEqual(O.none);
   });
 
   it("should return the Data Matrix barcode because it's the only one", () => {
@@ -29,13 +15,9 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.DATA_MATRIX } as Barcode
     ];
 
-    const output = pipe(
-      retrieveNextBarcode(input),
-      O.fromEither,
-      O.toUndefined
-    );
+    const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe("DATA_MATRIX");
+    expect(output?.format).toBe(BarcodeFormat.DATA_MATRIX);
   });
 
   it("should return the QR Code barcode because it's the only one", () => {
@@ -43,13 +25,9 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.QR_CODE } as Barcode
     ];
 
-    const output = pipe(
-      retrieveNextBarcode(input),
-      O.fromEither,
-      O.toUndefined
-    );
+    const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe("QR_CODE");
+    expect(output?.format).toBe(BarcodeFormat.QR_CODE);
   });
   it("should return the QR Code barcode because it has the higher priority", () => {
     const input: Array<Barcode> = [
@@ -58,13 +36,9 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.CODE_128 } as Barcode
     ];
 
-    const output = pipe(
-      retrieveNextBarcode(input),
-      O.fromEither,
-      O.toUndefined
-    );
+    const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe("QR_CODE");
+    expect(output?.format).toBe(BarcodeFormat.QR_CODE);
   });
 
   it("should return the Data Matrix barcode because it has the higher priority", () => {
@@ -75,12 +49,8 @@ describe("test retrieveNextBarcode function", () => {
       { format: BarcodeFormat.CODE_128 } as Barcode
     ];
 
-    const output = pipe(
-      retrieveNextBarcode(input),
-      O.fromEither,
-      O.toUndefined
-    );
+    const output = O.toUndefined(retrieveNextBarcode(input));
 
-    expect(output?.format).toBe("DATA_MATRIX");
+    expect(output?.format).toBe(BarcodeFormat.DATA_MATRIX);
   });
 });
