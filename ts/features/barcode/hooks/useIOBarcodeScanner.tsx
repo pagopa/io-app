@@ -13,11 +13,11 @@ import {
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { decodeIOBarcode } from "../types/decoders";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { BarcodeCameraMarker } from "../components/BarcodeCameraMarker";
+import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { decodeIOBarcode } from "../types/decoders";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
