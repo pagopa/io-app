@@ -1,14 +1,16 @@
 import * as React from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, ViewStyle, StyleProp } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMemo } from "react";
 import LinearGradient from "react-native-linear-gradient";
+import Animated from "react-native-reanimated";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
 import { IOVisualCostants } from "../core/variables/IOStyles";
 import ButtonSolid from "./ButtonSolid";
 
 export type StickyGradientBottomActions = WithTestID<{
+  transitionAnimatedStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
   // Accepted components: ButtonSolid, ButtonLink
   // Don't use any components other than this, please.
   firstAction?: React.ReactNode;
@@ -30,6 +32,7 @@ const styles = StyleSheet.create({
 export const StickyGradientBottomActions = ({
   // firstAction,
   // secondAction,
+  transitionAnimatedStyle,
   testID
 }: StickyGradientBottomActions) => {
   const insets = useSafeAreaInsets();
@@ -55,12 +58,16 @@ export const StickyGradientBottomActions = ({
       testID={testID}
       pointerEvents="box-none"
     >
-      <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          borderTopColor: IOColors["error-500"],
-          borderTopWidth: 1
-        }}
+      <Animated.View
+        style={[
+          {
+            ...StyleSheet.absoluteFillObject,
+            borderTopColor: IOColors["error-500"],
+            backgroundColor: hexToRgba(IOColors["error-500"], 0.5),
+            borderTopWidth: 1
+          },
+          transitionAnimatedStyle
+        ]}
         pointerEvents="none"
       >
         <LinearGradient
@@ -72,7 +79,7 @@ export const StickyGradientBottomActions = ({
             IOColors[HEADER_BG_COLOR]
           ]}
         />
-      </View>
+      </Animated.View>
       <View style={styles.buttonContainer} pointerEvents="box-none">
         <ButtonSolid
           fullWidth
