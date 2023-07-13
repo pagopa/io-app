@@ -4,6 +4,7 @@ import {
   createAsyncAction
 } from "typesafe-actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { PidMockType } from "../../utils/mocks";
 
 /**
  * Start ITW activation
@@ -22,8 +23,18 @@ export const itwRequirementsRequest = createAsyncAction(
 )<void, true, ItWalletError>();
 
 /**
+ * Adds an ITW credential, currently only a mocked PID is supported.
+ */
+export const itwCredentialsAddPid = createAsyncAction(
+  "ITW_CREDENTIALS_ADD_PID",
+  "ITW_CREDENTIALS_ADD_PID_SUCCESS",
+  "ITW_REQUIREMENTS_ADD_PID_FAILURE"
+)<PidMockType, PidMockType, ItWalletError>();
+
+/**
  * Action types for the IT Wallet feature
  */
 export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
-  | ActionType<typeof itwRequirementsRequest>;
+  | ActionType<typeof itwRequirementsRequest>
+  | ActionType<typeof itwCredentialsAddPid>;

@@ -3292,6 +3292,37 @@ features:
         nfc:
           title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
           body: "Per proseguire è necessaria la funzione NFC del dispositivo." 
+    vcPreviewScreen: 
+      title: "Vuoi aggiungere questi dati all’IT Wallet?"
+      checkNotice: "Verifica che i seguenti dati siano corretti"
+      buttons:
+        add: "Sì, aggiungi"
+        notNow: "Non ora"
+      bottomSheet: 
+        title: "Annulla attivazione dell’IT Wallet"
+        body: "Vuoi annullare l’ottenimento dell’identità digitale e quindi l’attivazione dell’IT Wallet?"
+        buttons: 
+          back: "Torna indietro"
+          cancel: "Annulla attivazione"
+    verifiableCredentials:
+      type:
+        digitalCredential: "Identità Digitale"
+      claims:
+        name: "Nome"
+        surname: "Cognome"
+        fiscalCode: "Codice Fiscale"
+        birthDate: "Data di nascita"
+        expirationDate: "Scadenza"
+        securityLevel: "Livello di sicurezza"
+        issuedBy: "Credenziale emessa da"
+        info: "Ulteriori info su questi dati"
+        securityLevels: 
+          high: "Alto"
+          na: "Non disponibile"
+      unrecognizedData: 
+        title: "Non riconosci alcuni dati?"
+        body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
+        cta: "Chiedi informazioni o segnala errori"
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"
