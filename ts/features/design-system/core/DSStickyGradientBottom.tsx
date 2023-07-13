@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { Alert, View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+import Animated, { useAnimatedScrollHandler } from "react-native-reanimated";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { H2 } from "../../../components/core/typography/H2";
 import { Body } from "../../../components/core/typography/Body";
@@ -15,6 +16,14 @@ const bottomBarHeight: number = 80;
 
 export const DSStickyGradientBottom = () => {
   const insets = useSafeAreaInsets();
+  // const scrollOffset = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: event => {
+      // eslint-disable-next-line no-console
+      console.log(event.contentOffset.y);
+    }
+  });
 
   return (
     <View
@@ -24,7 +33,9 @@ export const DSStickyGradientBottom = () => {
       }}
     >
       <SafeAreaView style={{ flex: 1 }} edges={["left", "right"]}>
-        <ScrollView
+        <Animated.ScrollView
+          onScroll={scrollHandler}
+          scrollEventThrottle={16}
           contentContainerStyle={{
             paddingHorizontal: IOVisualCostants.appMarginDefault,
             paddingBottom: insets.bottom + bottomBarHeight,
@@ -44,7 +55,7 @@ export const DSStickyGradientBottom = () => {
             <Body key={`body-${i}`}>Repeated text</Body>
           ))}
           <H2>End</H2>
-        </ScrollView>
+        </Animated.ScrollView>
         <StickyGradientBottomActions />
       </SafeAreaView>
     </View>
