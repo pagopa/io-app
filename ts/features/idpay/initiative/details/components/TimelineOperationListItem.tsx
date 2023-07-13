@@ -95,6 +95,13 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
 
   const getOperationTitle = () => {
     switch (operation.operationType) {
+case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+        return I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT",
+          {
+            maskedPan: operation.maskedPan
+          }
+        );
       case TransactionOperationTypeEnum.TRANSACTION:
         if (operation.channel === ChannelEnum.QRCODE) {
           if (operation.businessName) {
