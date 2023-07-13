@@ -93,13 +93,6 @@ const getTransactionAmountLabel = (operation: OperationListDTO) => {
 const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
   const { operation, onPress } = props;
 
-  const isQrCodeTransaction =
-    operation.operationType === TransactionOperationTypeEnum.TRANSACTION &&
-    operation.channel === ChannelEnum.QRCODE;
-
-  const isCancelledQrCodeTransaction =
-    isQrCodeTransaction && operation.status === TransactionStatusEnum.CANCELLED;
-
   const getOperationTitle = () => {
     switch (operation.operationType) {
       case TransactionOperationTypeEnum.TRANSACTION:
