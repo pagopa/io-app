@@ -3,9 +3,7 @@
  */
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -23,18 +21,6 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
-
-class ScanQrCodeScreen_Old extends React.Component {
-  public render(): React.ReactNode {
-    return (
-      <BaseScreenComponent
-        headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet"]}
-      ></BaseScreenComponent>
-    );
-  }
-}
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
@@ -99,6 +85,8 @@ const ScanQrCodeScreen = () => {
       onBarcodeSuccess={handleBarcodeSuccess}
       onBarcodeError={handleBarcodeError}
       onManualInputPressed={handleManualInputPressed}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet"]}
     />
   );
 };

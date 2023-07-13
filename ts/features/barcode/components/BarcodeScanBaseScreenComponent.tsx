@@ -3,8 +3,13 @@ import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import IconButton from "../../../components/ui/IconButton";
 import I18n from "../../../i18n";
@@ -12,6 +17,16 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { currentRouteSelector } from "../../../store/reducers/navigation";
+import { FAQsCategoriesType } from "../../../utils/faq";
+import {
+  assistanceToolRemoteConfig,
+  resetCustomFields
+} from "../../../utils/supportAssistance";
+import { zendeskSupportStart } from "../../zendesk/store/actions";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
@@ -39,12 +54,68 @@ type Props = {
   onManualInputPressed: () => void;
 };
 
-const BarcodeScanBaseScreenComponent = (props: Props) => {
-  const { formats, onBarcodeSuccess, onBarcodeError, onManualInputPressed } =
-    props;
+type HelpProps = {
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  hideHelpButton?: boolean;
+};
+
+const BarcodeScanBaseScreenComponent = (props: Props & HelpProps) => {
+  const {
+    formats,
+    onBarcodeSuccess,
+    onBarcodeError,
+    onManualInputPressed,
+    contextualHelp,
+    contextualHelpMarkdown,
+    faqCategories,
+    hideHelpButton
+  } = props;
+
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const currentScreenName = useIOSelector(currentRouteSelector);
+
+  const dispatch = useIODispatch();
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const canShowHelp = useIOSelector(canShowHelpSelector);
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  const onShowHelp = (): (() => void) | undefined => {
+    switch (choosenTool) {
+      case ToolEnum.zendesk:
+        // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
+        return () => {
+          resetCustomFields();
+          dispatch(
+            zendeskSupportStart({
+              faqCategories,
+              contextualHelp,
+              contextualHelpMarkdown,
+              startingRoute: currentScreenName,
+              assistanceForPayment: false,
+              assistanceForCard: false,
+              assistanceForFci: false
+            })
+          );
+        };
+      case ToolEnum.instabug:
+      case ToolEnum.web:
+      case ToolEnum.none:
+        return undefined;
+    }
+  };
+
+  const canShowHelpButton = () => {
+    if (hideHelpButton || !canShowHelp) {
+      return false;
+    } else {
+      return contextualHelp || contextualHelpMarkdown;
+    }
+  };
 
   const {
     cameraComponent,
@@ -135,6 +206,8 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
             backgroundColor={"transparent"}
             goBack={true}
             customGoBack={customGoBack}
+            dark={true}
+            onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
           />
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar
