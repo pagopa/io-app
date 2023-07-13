@@ -60,6 +60,7 @@ global:
     blocked: "Bloccato"
     onGoing: "In corso"
     failed:  "Fallita"
+    cancelled: "Annullata"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -3688,24 +3689,6 @@ idpay:
       subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
       input: Codice Transazione
       button: Continua
-unsupportedDevice:  
-  warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
-  title: "Questo dispositivo non è più compatibile con IO"
-  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo." 
-  cta:
-    faq: "Come mai?"
-fastLogin:
-  userInteraction:
-    sessionExpired: 
-      continueNavigation: 
-        title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
-        cancelButtonTitle: "Annulla"
-      transientError:
-        title: "Non siamo riusciti ad autenticarti"
-        subtitle: "Chiudi l'app e riprova tra qualche minuto."
-        submitButtonTitle: "Vai alle FAQ"
 barcodeScan: 
   error: IO non riconosce questo codice
   tabs:
@@ -3727,3 +3710,47 @@ barcodeScan:
       title: Non hai dato il permesso di usare la fotocamera
       label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
       action: Vai alle impostazioni
+unsupportedDevice:  
+  warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  title: "Questo dispositivo non è più compatibile con IO"
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo." 
+  cta:
+    faq: "Come mai?"
+fastLogin:
+  userInteraction:
+    sessionExpired: 
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
+        submitButtonTitle: "Continua la navigazione"
+        cancelButtonTitle: "Annulla"
+      transientError:
+        title: "Non siamo riusciti ad autenticarti"
+        subtitle: "Chiudi l'app e riprova tra qualche minuto."
+        submitButtonTitle: "Vai alle FAQ"
+  whatsNew:
+    title: Abbiamo migliorato l’accesso a IO!
+    subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
+    changes:
+      first:
+        title: Più semplice
+        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
+      second:
+        title: Più veloce
+        description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
+      third:
+        title: Più sicura
+        description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
+securityTips:
+  title: Consigli di sicurezza
+  biometric:
+    first: Usa il biometrico solo per identificare te. 
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: Se
+      lose: perdi
+      sentence: il dispositivo, esci da IO da
+    compromisedCredentials: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+whatsNew:
+  title: Cosa cambia?
