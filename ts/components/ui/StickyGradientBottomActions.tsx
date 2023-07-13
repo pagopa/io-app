@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMemo } from "react";
+import LinearGradient from "react-native-linear-gradient";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
 import { IOVisualCostants } from "../core/variables/IOStyles";
@@ -56,14 +57,22 @@ export const StickyGradientBottomActions = ({
     >
       <View
         style={{
-          height: GRADIENT_AREA_HEIGHT + bottomMargin,
           ...StyleSheet.absoluteFillObject,
-          backgroundColor: hexToRgba(IOColors[HEADER_BG_COLOR], 0.7),
           borderTopColor: IOColors["error-500"],
           borderTopWidth: 1
         }}
         pointerEvents="none"
-      />
+      >
+        <LinearGradient
+          style={{ height: GRADIENT_AREA_HEIGHT + bottomMargin }}
+          // 100% opacity bg color fills at least 60% of the area
+          locations={[0, 0.4]}
+          colors={[
+            hexToRgba(IOColors[HEADER_BG_COLOR], 0),
+            IOColors[HEADER_BG_COLOR]
+          ]}
+        />
+      </View>
       <View style={styles.buttonContainer} pointerEvents="box-none">
         <ButtonSolid
           fullWidth

@@ -11,7 +11,7 @@ import StickyGradientBottomActions from "../../../components/ui/StickyGradientBo
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 
-const bottomBarHeight: number = 0;
+const bottomBarHeight: number = 80;
 
 export const DSStickyGradientBottom = () => {
   const insets = useSafeAreaInsets();
