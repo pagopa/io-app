@@ -61,7 +61,7 @@ const getPaymentLogoIcon = (operation: OperationListDTO) => {
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
       return operation.brand;
     default:
-      return "amex";
+      return null;
   }
 };
 
