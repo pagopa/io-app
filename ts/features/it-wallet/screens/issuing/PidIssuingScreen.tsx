@@ -1,11 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
+import { SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsAddPid } from "../../store/actions";
 import { PidMockType } from "../../utils/mocks";
 import { ItwCredentialsSelector } from "../../store/reducers/itwCredentials";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
+import ItwActionCompleted from "../../components/ItwActionCompleted";
+import I18n from "../../../../i18n";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import ROUTES from "../../../../navigation/routes";
 
 type PidIssuingScreenProps = {
   vc: PidMockType;
@@ -14,30 +23,68 @@ type PidIssuingScreenProps = {
 const PidIssuingScreen = ({ vc }: PidIssuingScreenProps) => {
   const dispatch = useIODispatch();
   const credentials = useIOSelector(ItwCredentialsSelector);
+  const navigation = useNavigation();
   useOnFirstRender(() => {
     dispatch(itwCredentialsAddPid.request(vc));
   });
 
+  const continueButtonProps = {
+    block: true,
+    primary: true,
+    onPress: () => navigation.navigate(ROUTES.MAIN),
+    title: "Continua"
+  };
+
   const LoadingScreen = () => (
     <ItwLoadingSpinnerOverlay
-      captionTitle="example"
+      captionTitle={I18n.t(
+        "features.itWallet.issuing.pidActivationScreen.loading.title"
+      )}
       isLoading
-      captionSubtitle="exampl2"
+      captionSubtitle={I18n.t(
+        "features.itWallet.issuing.pidActivationScreen.loading.subtitle"
+      )}
     >
       <></>
     </ItwLoadingSpinnerOverlay>
   );
 
-  return pot.fold(
-    credentials,
-    () => <LoadingScreen />,
-    () => <LoadingScreen />,
-    () => <LoadingScreen />,
-    _ => <></>,
-    _ => <></>,
-    () => <LoadingScreen />,
-    () => <LoadingScreen />,
-    (_, __) => <></>
+  const SuccessScreen = () => (
+    <>
+      <ItwActionCompleted
+        title={I18n.t("features.itWallet.issuing.typ.title")}
+        content={I18n.t("features.itWallet.issuing.typ.content")}
+      />
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={continueButtonProps}
+      />
+    </>
+  );
+
+  const RenderMask = () =>
+    pot.fold(
+      credentials,
+      () => <LoadingScreen />,
+      () => <LoadingScreen />,
+      () => <LoadingScreen />,
+      _ => <></>,
+      _ => <SuccessScreen />,
+      () => <LoadingScreen />,
+      () => <LoadingScreen />,
+      (_, __) => <></>
+    );
+
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("features.itWallet.issuing.title")}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView style={{ ...IOStyles.flex }}>
+        <RenderMask />
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
 

@@ -13,7 +13,7 @@ const ItwActivationTypScreen = (): React.ReactElement => {
   return (
     <SafeAreaView style={IOStyles.flex}>
       <BaseScreenComponent
-        headerTitle="Attivazione IT Wallet"
+        headerTitle={I18n.t("features.itWallet.issuing.title")}
         goBack={() => navigation.navigate(ROUTES.MAIN)}
       >
         <ItwActionCompleted

@@ -17,7 +17,7 @@ export const useItwAbortFlow = () => {
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
       <H4 color={"bluegreyDark"} weight={"Regular"}>
-        {I18n.t("features.itWallet.vcPreviewScreen.bottomSheet.body")}
+        {I18n.t("features.itWallet.issuing.pidPreviewScreen.bottomSheet.body")}
       </H4>
     </View>
   );
@@ -30,7 +30,7 @@ export const useItwAbortFlow = () => {
         bordered: true,
         onPress: () => dismiss(),
         title: I18n.t(
-          "features.itWallet.vcPreviewScreen.bottomSheet.buttons.back"
+          "features.itWallet.issuing.pidPreviewScreen.bottomSheet.buttons.back"
         )
       }}
       rightButton={{
@@ -39,13 +39,15 @@ export const useItwAbortFlow = () => {
           NavigationService.dispatchNavigationAction(
             CommonActions.navigate(ROUTES.MAIN)
           );
-        }, I18n.t("features.itWallet.vcPreviewScreen.bottomSheet.buttons.cancel")),
+        }, I18n.t("features.itWallet.issuing.pidPreviewScreen.bottomSheet.buttons.cancel")),
         onPressWithGestureHandler: true
       }}
     />
   );
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
-    title: I18n.t("features.itWallet.vcPreviewScreen.bottomSheet.title"),
+    title: I18n.t(
+      "features.itWallet.issuing.pidPreviewScreen.bottomSheet.title"
+    ),
     component: <BottomSheetBody />,
     snapPoint: [300],
     footer: <Footer />

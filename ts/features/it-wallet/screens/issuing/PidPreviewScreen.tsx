@@ -16,7 +16,7 @@ import ClaimsList from "../../components/ClaimsList";
 import { useItwAbortFlow } from "../../hooks/useItwAbortSignatureFlow";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-const VcPreviewScreen = () => {
+const PidPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
   const { present, bottomSheet } = useItwAbortFlow();
@@ -26,7 +26,7 @@ const VcPreviewScreen = () => {
     block: true,
     bordered: true,
     onPress: present,
-    title: I18n.t("features.itWallet.vcPreviewScreen.buttons.notNow")
+    title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.notNow")
   };
   const saveButtonProps = {
     block: true,
@@ -35,18 +35,18 @@ const VcPreviewScreen = () => {
       navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING, {
         pidMock
       }),
-    title: I18n.t("features.itWallet.vcPreviewScreen.buttons.add")
+    title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
   };
 
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("features.itWallet.title")}
+      headerTitle={I18n.t("features.itWallet.issuing.title")}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={{ ...IOStyles.flex }}>
         <ScreenContent
-          title={I18n.t("features.itWallet.vcPreviewScreen.title")}
+          title={I18n.t("features.itWallet.issuing.pidPreviewScreen.title")}
         >
           <VSpacer />
           <View style={IOStyles.horizontalContentPadding}>
@@ -56,7 +56,9 @@ const VcPreviewScreen = () => {
             />
             <VSpacer />
             <FeatureInfo
-              body={I18n.t("features.itWallet.vcPreviewScreen.checkNotice")}
+              body={I18n.t(
+                "features.itWallet.issuing.pidPreviewScreen.checkNotice"
+              )}
               iconName="notice"
             />
             <VSpacer />
@@ -76,4 +78,4 @@ const VcPreviewScreen = () => {
   );
 };
 
-export default VcPreviewScreen;
+export default PidPreviewScreen;
