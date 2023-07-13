@@ -55,7 +55,7 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -86,11 +86,15 @@ const MessagesHomeScreen = ({
 
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
 
+  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
+
+  checkToShowWhatsNew();
 
   useEffect(() => {
     if (!latestMessageOperation) {
@@ -120,7 +124,6 @@ const MessagesHomeScreen = ({
   const { present, bottomSheet } = useMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
     isLollipopEnabled && O.isNone(publicKeyOption);
@@ -163,6 +166,7 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
+      {autoResizableBottomSheet}
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}
