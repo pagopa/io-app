@@ -65,8 +65,8 @@ export const StickyGradientBottomActions = ({
       >
         <LinearGradient
           style={{ height: GRADIENT_AREA_HEIGHT + bottomMargin }}
-          // 100% opacity bg color fills at least 60% of the area
-          locations={[0, 0.4]}
+          // 100% opacity bg color fills at least 50% of the area
+          locations={[0, 0.5]}
           colors={[
             hexToRgba(IOColors[HEADER_BG_COLOR], 0),
             IOColors[HEADER_BG_COLOR]
