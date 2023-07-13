@@ -130,6 +130,11 @@ export const retrieveNextBarcode = (
     O.chain(O.fromNullable)
   );
 
+/**
+ * Delay for reactivating the QR scanner after a scan
+ */
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
+
 export const useIOBarcodeScanner = (
   config: IOBarcodeScannerConfiguration
 ): IOBarcodeScanner => {
@@ -143,6 +148,11 @@ export const useIOBarcodeScanner = (
   const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();
   const device = devices.back;
+
+  // This handles the resting state of the scanner after a scan
+  // It is necessary to avoid multiple scans of the same barcode
+  const scannerReactivateTimeoutHandler = React.useRef<number>();
+  const [isResting, setIsResting] = React.useState(false);
 
   const [cameraPermissionStatus, setCameraPermissionStatus] =
     React.useState<CameraPermissionStatus>("not-determined");
@@ -164,6 +174,16 @@ export const useIOBarcodeScanner = (
   }, []);
 
   /**
+   * Hook that clears the timeout handler on unmount
+   */
+  React.useEffect(
+    () => () => {
+      clearTimeout(scannerReactivateTimeoutHandler.current);
+    },
+    [scannerReactivateTimeoutHandler]
+  );
+
+  /**
    * Opens the system prompt to ask camera permission
    */
   const requestCameraPermission = async () => {
@@ -180,7 +200,11 @@ export const useIOBarcodeScanner = (
     setCameraPermissionStatus(permissions);
   };
 
-  const decodeDetectedBarcode = React.useCallback(
+  /**
+   * Handles the detected {@link Barcode} and converts it to {@link IOBarcode}
+   * Returns an Either with the {@link BarcodeFailure} or the {@link IOBarcode}
+   */
+  const handleDetectedBarcode = React.useCallback(
     (detectedBarcode: Barcode): E.Either<BarcodeFailure, IOBarcode> =>
       pipe(
         convertToIOBarcodeFormat(detectedBarcode.format),
@@ -204,6 +228,31 @@ export const useIOBarcodeScanner = (
   );
 
   /**
+   * Handles the scanned barcodes and calls the callbacks for the results
+   */
+  const handleScannedBarcodes = React.useCallback(
+    (barcodes: Array<Barcode>) =>
+      pipe(
+        retrieveNextBarcode(barcodes),
+        O.map(detectedBarcode => {
+          // After a scan (even if not successful) the decoding is disabled for a while
+          // to avoid multiple scans of the same barcode
+          setIsResting(true);
+          // eslint-disable-next-line functional/immutable-data
+          scannerReactivateTimeoutHandler.current = setTimeout(() => {
+            setIsResting(false);
+          }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
+
+          pipe(
+            handleDetectedBarcode(detectedBarcode),
+            E.fold(onBarcodeError, onBarcodeSuccess)
+          );
+        })
+      ),
+    [handleDetectedBarcode, onBarcodeSuccess, onBarcodeError]
+  );
+
+  /**
    * onBarcodeScanned trigger hook
    */
   React.useEffect(() => {
@@ -215,23 +264,13 @@ export const useIOBarcodeScanner = (
       return;
     }
 
-    pipe(
-      retrieveNextBarcode(barcodes),
-      O.map(detectedBarcode => {
-        pipe(
-          decodeDetectedBarcode(detectedBarcode),
-          E.fold(onBarcodeError, onBarcodeSuccess)
-        );
-      })
-    );
-  }, [
-    prevDisabled,
-    disabled,
-    barcodes,
-    decodeDetectedBarcode,
-    onBarcodeSuccess,
-    onBarcodeError
-  ]);
+    if (isResting) {
+      // Barcode scanner is momentarily disabled, skip
+      return;
+    }
+
+    handleScannedBarcodes(barcodes);
+  }, [prevDisabled, disabled, isResting, barcodes, handleScannedBarcodes]);
 
   /**
    * Component that renders camera and marker
