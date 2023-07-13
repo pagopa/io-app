@@ -31,7 +31,7 @@ import { pipe } from "fp-ts/lib/function";
 //      type: "MY_NEW_BARCODE_TYPE";    <-- New barcode type
 //      content: string;                <--
 //    };                                <--
-type DecodedIOBarcode =
+export type DecodedIOBarcode =
   | {
       type: "IDPAY";
       authUrl: string;
