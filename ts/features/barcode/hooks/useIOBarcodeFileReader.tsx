@@ -5,7 +5,7 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Alert, Linking } from "react-native";
+import { Alert, Linking, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -14,20 +14,20 @@ import DocumentPicker, {
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
 import PdfThumbnail, { ThumbnailResult } from "react-native-pdf-thumbnail";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RNQRGenerator, {
   QRCodeScanResult,
   CodeType as RNQRCodeType
 } from "rn-qr-generator";
 import { Divider } from "../../../components/core/Divider";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
-import { DecodedIOBarcode, decodeIOBarcode } from "../types/decoders";
+import { decodeIOBarcode } from "../types/decoders";
+import { BarcodeFailure } from "../types/failure";
 
 /**
  * Maps internal formats to external library formats
@@ -72,9 +72,9 @@ type IOBarcodeFileReader = {
 
 type IOBarcodeFileReaderConfiguration = {
   /**
-   * Accepted formats of codes to be scanned
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
    */
-  formats: Array<IOBarcodeFormat>;
+  formats?: Array<IOBarcodeFormat>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -82,7 +82,7 @@ type IOBarcodeFileReaderConfiguration = {
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: () => void;
+  onBarcodeError: (failure: BarcodeFailure) => void;
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
@@ -102,8 +102,11 @@ const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
  */
 const qrCodeDetectionTask = (
   imageUri: string
-): TE.TaskEither<Error, QRCodeScanResult> =>
-  TE.tryCatch(() => RNQRGenerator.detect({ uri: imageUri }), E.toError);
+): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
+  TE.tryCatch(
+    () => RNQRGenerator.detect({ uri: imageUri }),
+    () => "UNEXPECTED"
+  );
 
 /**
  * Creates a TaskEither that generates all the images from a PDF document
@@ -112,8 +115,11 @@ const qrCodeDetectionTask = (
  */
 const imageGenerationTask = (
   pdfUri: string
-): TE.TaskEither<Error, Array<ThumbnailResult>> =>
-  TE.tryCatch(() => PdfThumbnail.generateAllPages(pdfUri, 100), E.toError);
+): TE.TaskEither<BarcodeFailure, Array<ThumbnailResult>> =>
+  TE.tryCatch(
+    () => PdfThumbnail.generateAllPages(pdfUri, 100),
+    () => "UNEXPECTED"
+  );
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
@@ -123,28 +129,35 @@ const imageGenerationTask = (
  */
 const imageDecodingTask = (
   imageUri: string,
-  acceptedFormats: Array<IOBarcodeFormat>
-): TE.TaskEither<Error, IOBarcode> =>
+  acceptedFormats?: Array<IOBarcodeFormat>
+): TE.TaskEither<BarcodeFailure, IOBarcode> =>
   pipe(
     qrCodeDetectionTask(imageUri),
     TE.chain(result =>
       pipe(
+        A.head(result.values),
+        TE.fromOption<BarcodeFailure>(() => "BARCODE_NOT_FOUND"),
+        TE.map(() => result)
+      )
+    ),
+    TE.chain(result =>
+      pipe(
         convertToIOBarcodeFormat(result.type),
         O.fromNullable,
-        O.filter(format => acceptedFormats.includes(format)),
+        O.filter(format => acceptedFormats?.includes(format) ?? true),
         O.map(format => [result, format] as const),
-        TE.fromOption(() => new Error("Format not supported"))
+        TE.fromOption<BarcodeFailure>(() => "UNSUPPORTED_FORMAT")
       )
     ),
     TE.chain(([result, format]) =>
       pipe(
         A.head(result.values),
-        O.map(decodeIOBarcode),
-        O.map<DecodedIOBarcode, IOBarcode>(decodedBarcode => ({
+        O.chain(decodeIOBarcode),
+        O.map(decodedBarcode => ({
           format,
           ...decodedBarcode
         })),
-        TE.fromOption(() => new Error("No barcode found"))
+        TE.fromOption<BarcodeFailure>(() => "UNKNOWN_CONTENT")
       )
     )
   );
@@ -153,6 +166,7 @@ const useIOBarcodeFileReader = (
   config: IOBarcodeFileReaderConfiguration
 ): IOBarcodeFileReader => {
   const { onBarcodeSuccess, onBarcodeError } = config;
+  const insets = useSafeAreaInsets();
 
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
@@ -187,7 +201,7 @@ const useIOBarcodeFileReader = (
       O.chain(A.head),
       O.map(({ uri }) => uri),
       O.chain(O.fromNullable),
-      TE.fromOption(() => new Error("No image selected")),
+      TE.fromOption<BarcodeFailure>(() => "INVALID_INPUT"),
       TE.chain(uri => imageDecodingTask(uri, config.formats)),
       TE.mapLeft(onBarcodeError),
       TE.map(onBarcodeSuccess)
@@ -219,7 +233,7 @@ const useIOBarcodeFileReader = (
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
-      return onBarcodeError();
+      return onBarcodeError("INVALID_INPUT");
     }
 
     await pipe(
@@ -242,7 +256,7 @@ const useIOBarcodeFileReader = (
           await barcodes,
           A.head,
           O.map(onBarcodeSuccess),
-          O.getOrElse(onBarcodeError)
+          O.getOrElse(() => onBarcodeError("BARCODE_NOT_FOUND"))
         )
       )
     )();
@@ -265,7 +279,7 @@ const useIOBarcodeFileReader = (
    * Components that renders the bottom sheet with the options to select an image or a PDF document
    */
   const filePickerModalComponent = (
-    <SafeAreaView>
+    <View>
       <ListItemNav
         value={I18n.t("barcodeScan.upload.image")}
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
@@ -285,14 +299,17 @@ const useIOBarcodeFileReader = (
         }}
         icon="docAttach"
       />
-      <VSpacer size={16} />
-    </SafeAreaView>
+    </View>
   );
 
-  const filePickerModal = useIOBottomSheetAutoresizableModal({
-    component: filePickerModalComponent,
-    title: ""
-  });
+  const filePickerModal = useIOBottomSheetAutoresizableModal(
+    {
+      component: filePickerModalComponent,
+      title: ""
+    },
+    // FIXME: This is a workaround to avoid the bottom sheet to be hidden on Android
+    32 + (Platform.isAndroid ? insets.bottom : 0)
+  );
 
   return {
     showImagePicker,

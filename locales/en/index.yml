@@ -60,6 +60,7 @@ global:
     blocked: "Blocked"
     onGoing: "Ongoing"
     failed: "Failed"
+    cancelled: "Cancelled"
   password: Password
   username: Username
   unknown: unknown
@@ -3660,26 +3661,32 @@ idpay:
         BUDGET_EXHAUSTED:
           title: Autorizzazione negata
           body: Non hai abbastanza soldi per autorizzare
-    qrCode:
-      manual:
-        title: Authorize a transaction
-        subtitle: Enter the 8 characters shown below the QR code.
-        input: Codice Transazione
-        button: Continua
-      scan:
-        tabs:
-          scan: Scan
-          upload: Upload
-          input: Type
-        permissions:
-          undefined: 
-            title: We need your consent
-            label: Allow access to scan QR codes with your device camera.
-            action: Allow access
-          denied:
-            title: You didn't give access to camera
-            label: Browse your device settings to allow camera access.
-            action: Go to settings
+    manualInput:
+      title: Autorizza una transazione
+      subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
+      input: Codice Transazione
+      button: Continua
+barcodeScan: 
+  error: IO non riconosce questo codice
+  tabs:
+    scan: Inquadra
+    upload: Carica
+    input: Digita
+  upload:
+    image: Carica un'immagine
+    file: Carica un file
+  manual:
+    authorize: Autorizza una transazione
+    notice: Paga un avviso pagoPA
+  permissions:
+    undefined: 
+      title: Ci serve il tuo permesso
+      label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+      action: Consenti l’accesso
+    denied:
+      title: Non hai dato il permesso di usare la fotocamera
+      label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+      action: Vai alle impostazioni
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
@@ -3698,10 +3705,29 @@ fastLogin:
         title: "We couldn't authenticate you"
         subtitle: "Close the app and try again in a few minutes."
         submitButtonTitle: "Go to FAQs"
-barcodeScan: 
-  upload:
-    image: Carica un'immagine
-    file: Carica un file
-  manual:
-    authorize: Autorizza una transazione
-    notice: Paga un avviso pagoPA
+  whatsNew:
+    title: Logging into IO just got easier!
+    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face. 
+    changes:
+      first:
+        title: Easier
+        description: log in with just your unlock code, fingerprint or face.
+      second:
+        title: Faster
+        description: use your SPID or CIE only once a year or in case you log out.
+      third:
+        title: Safer
+        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
+securityTips:
+  title: Safety tips
+  biometric:
+    first: Use fingerprint or face recognition only to identify yourself.
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: If
+      lose: you lose
+      sentence: your device, log out from IO through
+    compromisedCredentials: If you think your SPID or CIE credentials might be compromised, block access to your IO account through
+whatsNew:
+  title: What's changed?

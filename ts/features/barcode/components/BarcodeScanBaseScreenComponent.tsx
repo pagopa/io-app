@@ -1,12 +1,18 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  View
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import I18n from "../../../i18n";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import IconButton from "../../../components/ui/IconButton";
+import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -14,14 +20,15 @@ import {
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { BarcodeFailure } from "../types/failure";
 import { BottomTabNavigation } from "./BottomTabNavigation";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type Props = {
   /**
-   * Accepted formats of barcodes
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
    */
-  formats: Array<IOBarcodeFormat>;
+  formats?: Array<IOBarcodeFormat>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -29,7 +36,7 @@ type Props = {
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: () => void;
+  onBarcodeError: (failure: BarcodeFailure) => void;
   /**
    * Callback called when the manual input button is pressed
    * necessary to navigate to the manual input screen or show the manual input modal
@@ -41,7 +48,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   const { formats, onBarcodeSuccess, onBarcodeError, onManualInputPressed } =
     props;
   const isFocused = useIsFocused();
-
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const {
@@ -84,16 +91,12 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
     if (cameraPermissionStatus === "not-determined") {
       return (
         <CameraPermissionView
-          title={I18n.t(
-            "idpay.payment.qrCode.scan.permissions.undefined.title"
-          )}
-          body={I18n.t("idpay.payment.qrCode.scan.permissions.undefined.label")}
+          title={I18n.t("barcodeScan.permissions.undefined.title")}
+          body={I18n.t("barcodeScan.permissions.undefined.label")}
           action={{
-            label: I18n.t(
-              "idpay.payment.qrCode.scan.permissions.undefined.action"
-            ),
+            label: I18n.t("barcodeScan.permissions.undefined.action"),
             accessibilityLabel: I18n.t(
-              "idpay.payment.qrCode.scan.permissions.undefined.action"
+              "barcodeScan.permissions.undefined.action"
             ),
             onPress: requestCameraPermission
           }}
@@ -103,13 +106,11 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
 
     return (
       <CameraPermissionView
-        title={I18n.t("idpay.payment.qrCode.scan.permissions.denied.title")}
-        body={I18n.t("idpay.payment.qrCode.scan.permissions.denied.label")}
+        title={I18n.t("barcodeScan.permissions.denied.title")}
+        body={I18n.t("barcodeScan.permissions.denied.label")}
         action={{
-          label: I18n.t("idpay.payment.qrCode.scan.permissions.denied.action"),
-          accessibilityLabel: I18n.t(
-            "idpay.payment.qrCode.scan.permissions.denied.action"
-          ),
+          label: I18n.t("barcodeScan.permissions.denied.action"),
+          accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
           onPress: openAppSetting
         }}
       />
@@ -119,6 +120,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
+      {/* FIXME: replace with bottom bar component when it's ready */}
       <BottomTabNavigation
         onUploadBarcodePressed={showFilePicker}
         onNavigateToCodeInputScreenPressed={onManualInputPressed}
@@ -127,17 +129,25 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
       >
-        <BaseHeader
-          backgroundColor={"transparent"}
-          goBack={true}
-          customGoBack={customGoBack}
-        />
-        {/* This overrides BaseHeader status bar configuration */}
-        <StatusBar
-          barStyle={"light-content"}
-          backgroundColor={"transparent"}
-          translucent={true}
-        />
+        <SafeAreaView
+          style={{
+            // Apparently, on Android, with translucent status bar SafeAreaView doesn't work as expected
+            paddingTop: Platform.OS === "android" ? insets.top : 0
+          }}
+        >
+          {/* FIXME: replace with new header */}
+          <BaseHeader
+            backgroundColor={"transparent"}
+            goBack={true}
+            customGoBack={customGoBack}
+          />
+          {/* This overrides BaseHeader status bar configuration */}
+          <StatusBar
+            barStyle={"light-content"}
+            backgroundColor={"transparent"}
+            translucent={true}
+          />
+        </SafeAreaView>
       </LinearGradient>
       {filePickerBottomSheet}
     </View>
