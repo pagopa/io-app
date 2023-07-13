@@ -60,6 +60,7 @@ global:
     blocked: "Blocked"
     onGoing: "Ongoing"
     failed: "Failed"
+    cancelled: "Cancelled"
   password: Password
   username: Username
   unknown: unknown

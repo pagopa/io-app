@@ -60,6 +60,7 @@ global:
     blocked: "Bloccato"
     onGoing: "In corso"
     failed:  "Fallita"
+    cancelled: "Annullata"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
