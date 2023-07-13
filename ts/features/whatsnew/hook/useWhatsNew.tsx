@@ -11,7 +11,7 @@ import {
   isWhatsNewCheckEnabledSelector,
   isWhatsNewDisplayedSelector
 } from "../store/reducers";
-import { ACTIVE_VERSION, whatsNewVersions } from "../version";
+import { ACTIVE_VERSION, whatsNewVersions } from "../versions";
 
 export const useWhatsNew = () => {
   const dispatch = useIODispatch();
