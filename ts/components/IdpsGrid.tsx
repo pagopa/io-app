@@ -116,6 +116,7 @@ const renderItem =
 
 const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
   <FlatList
+    scrollEnabled={false}
     bounces={false}
     data={props.idps}
     numColumns={2}

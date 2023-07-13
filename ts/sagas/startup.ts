@@ -57,7 +57,11 @@ import {
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  profileLoadSuccess,
+  resetProfileState
+} from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
@@ -453,6 +457,14 @@ export function* initializeApplicationSaga(
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
+
+  // After tos acceptance, we dispatch a load success to allow the execution of the check
+  // which save the hashed code tax code
+  const profile = yield* select(profileSelector);
+  if (pot.isSome(profile)) {
+    yield* put(profileLoadSuccess(profile.value));
+  }
+
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
