@@ -162,9 +162,11 @@ export const useIOBottomSheetModal = ({
       .catch(_ => setIsScreenReaderEnabled(false));
   }, []);
 
+  const inset = useSafeAreaInsets();
+
   const bottomSheet = (
     <BottomSheetModal
-      style={styles.bottomSheet}
+      style={[styles.bottomSheet, { marginTop: inset.top }]}
       footerComponent={(_: BottomSheetFooterProps) =>
         footer !== undefined ? (
           <>
@@ -244,7 +246,9 @@ export const useIOBottomSheetAutoresizableModal = (
   return useIOBottomSheetModal({
     component: (
       <View
-        style={{ paddingBottom: insets.bottom }}
+        style={{
+          paddingBottom: insets.bottom
+        }}
         onLayout={handleContentOnLayout}
       >
         {component}
