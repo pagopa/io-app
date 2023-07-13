@@ -29,7 +29,10 @@ import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { H1 } from "../../components/core/typography/H1";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
@@ -37,6 +40,7 @@ import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/s
 import { Body } from "../../components/core/typography/Body";
 import ButtonOutline from "../../components/ui/ButtonOutline";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -134,17 +138,22 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     }
   }, [counter, setSelectedIdp, navigation]);
 
-  const headerComponent = () => <VSpacer size={24} />;
+  const spacerComponent = () => <VSpacer size={24} />;
+
+  const spacerFooter: IOSpacingScale = 16;
 
   const footerComponent = () => (
     <View
       style={[
         styles.footerContainer,
         IOStyles.horizontalContentPadding,
-        { paddingBottom: inset.bottom }
+        {
+          // Avoid zero margin on iPhones with home button
+          paddingBottom: inset.bottom === 0 ? spacerFooter : inset.bottom
+        }
       ]}
     >
-      <VSpacer />
+      <VSpacer size={spacerFooter} />
       <ButtonOutline
         fullWidth
         accessibilityLabel={I18n.t("global.buttons.cancel")}
@@ -163,9 +172,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     >
       <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
         {/* Custom ScreenContentHeader with secret login */}
-        <ScrollView
-          style={{ height: "100%", borderColor: IOColors.blue, borderWidth: 1 }}
-        >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={IOStyles.horizontalContentPadding}>
             <VSpacer size={16} />
             <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
@@ -191,22 +198,13 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
           </View>
           <VSpacer />
 
-          <View
-            style={{
-              flex: 1,
-              paddingBottom: "100%",
-              borderColor: IOColors.yellow,
-              borderWidth: 2
-            }}
-          >
-            <IdpsGrid
-              idps={[...props.idps]}
-              onIdpSelected={onIdpSelected}
-              headerComponent={headerComponent}
-            />
-          </View>
+          <IdpsGrid
+            idps={[...props.idps]}
+            onIdpSelected={onIdpSelected}
+            spacerComponent={spacerComponent}
+          />
         </ScrollView>
-        {footerComponent}
+        {footerComponent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );

@@ -27,9 +27,8 @@ import { IOColors } from "./core/variables/IOColors";
 type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
-  footerComponent?: React.ReactNode;
   headerComponentStyle?: StyleProp<ViewStyle>;
-  headerComponent?: React.ReactNode;
+  spacerComponent?: React.ReactNode;
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
@@ -46,7 +45,8 @@ const GRID_GUTTER = 8;
  * than a padding to each item.
  */
 const styles = StyleSheet.create({
-  contentContainer: {
+  container: {
+    flexGrow: 1,
     backgroundColor: IOColors.greyUltraLight
   },
   columnStyle: {
@@ -125,9 +125,9 @@ const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
     renderItem={renderItem(props)}
     ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
     columnWrapperStyle={styles.columnStyle}
-    contentContainerStyle={styles.contentContainer}
-    ListHeaderComponent={props.headerComponent}
-    ListFooterComponent={props.footerComponent}
+    contentContainerStyle={styles.container}
+    ListHeaderComponent={props.spacerComponent}
+    ListFooterComponent={props.spacerComponent}
   />
 );
 
