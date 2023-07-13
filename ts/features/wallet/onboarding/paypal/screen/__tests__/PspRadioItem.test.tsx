@@ -5,6 +5,12 @@ import { PspRadioItem } from "../../components/PspRadioItem";
 import { privacyUrl } from "../../../../../../config";
 import { IOPayPalPsp } from "../../types";
 
+jest.mock("react-native-safe-area-context", () => ({
+  useSafeAreaInsets: jest
+    .fn()
+    .mockReturnValue({ top: 20, left: 0, right: 0, bottom: 0 })
+}));
+
 const payPalPsp: IOPayPalPsp = {
   id: "1",
   logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",

@@ -142,11 +142,16 @@ exports[`PspRadioItem match snapshot 1`] = `
       ]
     }
     style={
-      Object {
-        "borderTopLeftRadius": 24,
-        "borderTopRightRadius": 24,
-        "overflow": "hidden",
-      }
+      Array [
+        Object {
+          "borderTopLeftRadius": 24,
+          "borderTopRightRadius": 24,
+          "overflow": "hidden",
+        },
+        Object {
+          "marginTop": 20,
+        },
+      ]
     }
     visible={true}
   >

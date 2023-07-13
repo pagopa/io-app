@@ -29,10 +29,7 @@ import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { H1 } from "../../components/core/typography/H1";
-import {
-  IOStyles,
-  IOVisualCostants
-} from "../../components/core/variables/IOStyles";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
