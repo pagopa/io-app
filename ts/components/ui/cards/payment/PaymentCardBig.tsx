@@ -1,6 +1,7 @@
 import React from "react";
-import { Image, ImageStyle, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
@@ -10,11 +11,8 @@ import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { IOStyles } from "../../../core/variables/IOStyles";
+import { LogoPaymentHuge } from "../../LogoPaymentHuge";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
-import I18n from "../../../../i18n";
-import paypalLogoImage from "../../../../../img/wallet/payment-methods/paypal-logo.png";
-import BpayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
-import { BankLogoOrSkeleton } from "../../utils/baseComponents/BankLogoOrLoadingSkeleton";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {
@@ -61,12 +59,17 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
 const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
   switch (props.cardType) {
     case "PAYPAL":
-      return <Image source={paypalLogoImage} style={styles.paypalLogo} />;
+      return (
+        <LogoPaymentHuge
+          dimensions={{ width: PAYPAL_LOGO_WIDTH, height: LOGO_HEIGHT }}
+          icon="payPal"
+        />
+      );
     case "PAGOBANCOMAT":
     case "COBADGE":
       return (
         <View style={IOStyles.flex}>
-          <BankLogoOrSkeleton
+          <LogoPaymentHuge
             dimensions={{ width: BANK_LOGO_WIDTH, height: LOGO_HEIGHT }}
             abiCode={props.abiCode}
           />
@@ -85,7 +88,10 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "BANCOMATPAY":
       return (
         <View style={IOStyles.flex}>
-          <BpayLogo width={133} height={33} />
+          <LogoPaymentHuge
+            dimensions={{ width: BPAY_LOGO_WIDTH, height: LOGO_HEIGHT }}
+            icon="bpay"
+          />
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
@@ -197,6 +203,8 @@ type PaymentCardStandardProps =
 
 const LOGO_HEIGHT = 32;
 const BANK_LOGO_WIDTH = 213;
+const BPAY_LOGO_WIDTH = 170;
+const PAYPAL_LOGO_WIDTH = 114;
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
@@ -214,10 +222,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  paypalLogo: {
-    width: 114,
-    height: LOGO_HEIGHT,
-    resizeMode: "contain"
   }
 });
