@@ -28,17 +28,27 @@ const styles = StyleSheet.create({
 
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
 
+/**
+ * The base graphical component, take a title and a content as input
+ * and display a pictogram. This could be used for success or thank you page
+ */
 const ItwActionCompleted = (props: Props): React.ReactElement => (
-  <View style={styles.main}>
+  <View style={styles.main} testID={"ItwActionCompletedTestID"}>
     <Pictogram
       name={"completed"}
       size={VALIDATION_ILLUSTRATION_WIDTH}
       color="aqua"
     />
     <VSpacer size={48} />
-    <H2 style={styles.textAlignCenter}>{props.title}</H2>
+    <H2 style={styles.textAlignCenter} testID={"ItwActionCompletedTitleTestID"}>
+      {props.title}
+    </H2>
     <VSpacer size={24} />
-    <H4 weight="Regular" style={styles.textAlignCenter}>
+    <H4
+      weight="Regular"
+      style={styles.textAlignCenter}
+      testID={"ItwActionCompletedContentTestID"}
+    >
       {props.content}
     </H4>
   </View>
