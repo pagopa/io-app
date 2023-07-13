@@ -60,6 +60,7 @@ global:
     blocked: "Blocked"
     onGoing: "Ongoing"
     failed: "Failed"
+    cancelled: "Cancelled"
   password: Password
   username: Username
   unknown: unknown
@@ -3699,3 +3700,29 @@ fastLogin:
         title: "We couldn't authenticate you"
         subtitle: "Close the app and try again in a few minutes."
         submitButtonTitle: "Go to FAQs"
+  whatsNew:
+    title: Logging into IO just got easier!
+    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face. 
+    changes:
+      first:
+        title: Easier
+        description: log in with just your unlock code, fingerprint or face.
+      second:
+        title: Faster
+        description: use your SPID or CIE only once a year or in case you log out.
+      third:
+        title: Safer
+        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
+securityTips:
+  title: Safety tips
+  biometric:
+    first: Use fingerprint or face recognition only to identify yourself.
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: If
+      lose: you lose
+      sentence: your device, log out from IO through
+    compromisedCredentials: If you think your SPID or CIE credentials might be compromised, block access to your IO account through
+whatsNew:
+  title: What's changed?

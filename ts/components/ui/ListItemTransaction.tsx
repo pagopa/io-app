@@ -1,84 +1,99 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { ImageURISource, StyleSheet, View } from "react-native";
+import {
+  Image,
+  ImageURISource,
+  StyleSheet,
+  View,
+  ViewStyle
+} from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { Badge } from "../core/Badge";
-import { Icon } from "../core/icons";
-import { IOLogoPaymentType, LogoPayment } from "../core/logos";
+import { IOIconSizeScale, Icon } from "../core/icons";
+import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import { useIOTheme } from "../core/variables/IOColors";
+import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
+import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
-  IOStyles,
-  IOVisualCostants
+  IOStyles
 } from "../core/variables/IOStyles";
-import Avatar from "./Avatar";
 import {
   PressableBaseProps,
   PressableListItemBase
 } from "./baseComponents/PressableListItemBase";
 
-type LogoNameOrUri = IOLogoPaymentType | ImageURISource;
+export type ListItemTransactionStatus =
+  | "success"
+  | "failure"
+  | "pending"
+  | "cancelled"
+  | "refunded";
+
+type PaymentLogoIcon = IOLogoPaymentType | ImageURISource | React.ReactNode;
+
 export type ListItemTransaction = WithTestID<
   PressableBaseProps & {
     hasChevronRight?: boolean;
     isLoading?: boolean;
-    paymentLogoOrUrl?: LogoNameOrUri;
+    /**
+     * A logo that will be displayed on the left of the list item.
+     *
+     * Must be a {@link IOLogoPaymentType} or an {@link ImageURISource} or an {@link Icon}.
+     */
+    paymentLogoIcon?: PaymentLogoIcon;
     subtitle: string;
     title: string;
   } & (
       | {
-          transactionStatus: "success";
+          transactionStatus: "success" | "refunded";
           transactionAmount: string;
         }
       | {
-          transactionStatus: "failure" | "pending";
+          transactionStatus: "failure" | "pending" | "cancelled";
           transactionAmount?: string;
         }
     )
 >;
 
 type LeftComponentProps = {
-  logoNameOrUrl: LogoNameOrUri;
+  logoIcon: PaymentLogoIcon;
 };
 
-const isImageUrI = (
-  value: IOLogoPaymentType | ImageURISource
-): value is ImageURISource =>
-  typeof value === "object" && value.uri !== undefined;
+const IMAGE_LOGO_SIZE: IOIconSizeScale = 24;
 
-const LeftComponent = ({ logoNameOrUrl }: LeftComponentProps) => {
-  if (isImageUrI(logoNameOrUrl)) {
-    return <Avatar shape="circle" size="small" logoUri={[logoNameOrUrl]} />;
-  } else {
+const isImageUri = (value: PaymentLogoIcon): value is ImageURISource =>
+  typeof value === "object" && value !== null && "uri" in value;
+
+const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
+  if (isImageUri(logoIcon)) {
     return (
-      <View
-        style={{
-          width: IOVisualCostants.avatarSizeSmall,
-          height: IOVisualCostants.avatarSizeSmall,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <LogoPayment name={logoNameOrUrl} />
-      </View>
+      <Image
+        source={[logoIcon]}
+        style={{ width: IMAGE_LOGO_SIZE, height: IMAGE_LOGO_SIZE }}
+      />
     );
   }
+  if (React.isValidElement(logoIcon)) {
+    return <>{logoIcon}</>;
+  }
+  return getCardLogoComponent(logoIcon as IOLogoPaymentType);
 };
 
 export const ListItemTransaction = ({
   accessibilityLabel,
   hasChevronRight = false,
   isLoading = false,
-  paymentLogoOrUrl,
+  paymentLogoIcon,
   onPress,
   subtitle,
   testID,
@@ -100,13 +115,22 @@ export const ListItemTransaction = ({
         case "success":
           return (
             <NewH6 color={hasChevronRight ? designSystemBlue : "black"}>
-              {transactionAmount || "-"}
+              {transactionAmount || ""}
             </NewH6>
           );
-
+        case "refunded":
+          return (
+            <NewH6 color={hasChevronRight ? designSystemBlue : "greenLight"}>
+              {transactionAmount || ""}
+            </NewH6>
+          );
         case "failure":
           return (
             <Badge variant="error" text={I18n.t("global.badges.failed")} />
+          );
+        case "cancelled":
+          return (
+            <Badge variant="error" text={I18n.t("global.badges.cancelled")} />
           );
         case "pending":
           return (
@@ -115,16 +139,32 @@ export const ListItemTransaction = ({
       }
     };
 
+    const labelStyle: ViewStyle =
+      transactionStatus === "cancelled" || transactionStatus === "failure"
+        ? { opacity: 0.6 }
+        : {};
+
     return (
       <>
-        {paymentLogoOrUrl && (
-          <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-            <LeftComponent logoNameOrUrl={paymentLogoOrUrl} />
+        {paymentLogoIcon && (
+          <View
+            style={{
+              marginRight: IOListItemVisualParams.iconMargin,
+              marginLeft: IOListItemLogoMargin
+            }}
+          >
+            <LeftComponent logoIcon={paymentLogoIcon} />
           </View>
         )}
         <View style={IOStyles.flex}>
-          <NewH6 color={theme["textBody-default"]}>{title}</NewH6>
-          <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+          <NewH6 style={labelStyle} color={theme["textBody-default"]}>
+            {title}
+          </NewH6>
+          <LabelSmall
+            style={labelStyle}
+            weight="Regular"
+            color={theme["textBody-tertiary"]}
+          >
             {subtitle}
           </LabelSmall>
           <VSpacer size={4} />
@@ -175,11 +215,16 @@ export const ListItemTransaction = ({
 const SkeletonComponent = () => (
   <View style={IOListItemStyles.listItem} accessible={false}>
     <View style={IOListItemStyles.listItemInner}>
-      <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+      <View
+        style={{
+          marginRight: IOListItemVisualParams.iconMargin,
+          marginLeft: IOListItemLogoMargin
+        }}
+      >
         <Placeholder.Box
           animate="fade"
-          height={IOVisualCostants.avatarSizeSmall}
-          width={IOVisualCostants.avatarSizeSmall}
+          height={IMAGE_LOGO_SIZE}
+          width={IMAGE_LOGO_SIZE}
           radius={100}
         />
       </View>
