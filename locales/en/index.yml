@@ -3300,10 +3300,15 @@ features:
         body: "If there are errors in the data or if you want to better understand their meaning, you can contact the {{issuer}}."
         cta: "Ask for information or report errors"
     issuing:
+      title: "IT Wallet activation"
       infoConsent:
         footer:
           cancel: "Cancel"
           confirm: "Authorize"
+      typ:
+        title: "Done! your IT Wallet is active on IO!"
+        content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
+        button: "Continue"
     generic:
       error:
         title: "There's a problem on our systems"
