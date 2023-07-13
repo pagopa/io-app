@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -13,11 +14,13 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { getPidMock } from "../../utils/mocks";
 import ClaimsList from "../../components/ClaimsList";
 import { useItwAbortFlow } from "../../hooks/useItwAbortSignatureFlow";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 const VcPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
   const { present, bottomSheet } = useItwAbortFlow();
+  const navigation = useNavigation();
 
   const cancelButtonProps = {
     block: true,
@@ -28,7 +31,10 @@ const VcPreviewScreen = () => {
   const saveButtonProps = {
     block: true,
     primary: true,
-    onPress: () => null,
+    onPress: () =>
+      navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING, {
+        pidMock
+      }),
     title: I18n.t("features.itWallet.vcPreviewScreen.buttons.add")
   };
 

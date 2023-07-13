@@ -4,6 +4,7 @@ import { Action } from "../../../../store/actions/types";
 import { itwCredentialsAddPid } from "../actions";
 import { PidMockType } from "../../utils/mocks";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { GlobalState } from "../../../../store/reducers/types";
 
 type ItwCredentialsType = {
   activated: boolean;
@@ -39,5 +40,8 @@ const reducer = (
   }
   return state;
 };
+
+export const ItwCredentialsSelector = (state: GlobalState) =>
+  state.features.itWallet.credentials;
 
 export default reducer;
