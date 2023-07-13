@@ -34,6 +34,12 @@ import {
 } from "../../../../../store/reducers/__mock__/ranking";
 import BpdSummaryComponent from "../BpdSummaryComponent";
 
+jest.mock("react-native-safe-area-context", () => ({
+  useSafeAreaInsets: jest
+    .fn()
+    .mockReturnValue({ top: 20, left: 0, right: 0, bottom: 0 })
+}));
+
 describe("Bpd Summary Component graphical test for different states", () => {
   const mockStore = configureMockStore();
   MockDate.set("2020-11-04");
