@@ -21,7 +21,7 @@ import MessageMarkdown from "../../../components/messages/MessageDetail/MessageM
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import { Pictogram } from "../../../components/core/pictograms";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import I18n from "../../../i18n";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -30,9 +30,9 @@ import { H3 } from "../../../components/core/typography/H3";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import ROUTES from "../../../navigation/routes";
 import {
-  trackPNDisclaimerAccepted,
   trackPNDisclaimerRejected,
-  trackPNDisclaimerShowSuccess
+  trackPNDisclaimerShowSuccess,
+  trackUxConversion
 } from "../../pn/analytics";
 
 const BOTTOM_SHEET_HEIGHT = 500;
@@ -71,13 +71,9 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
       O.map(message => {
         pipe(
           message.category,
-          MessageCategoryPN.decode,
+          MessageCategory.decode,
           O.fromEither,
-          O.chainNullableK(category => category.original_receipt_date),
-          O.map(originalReceiptDate => {
-            const messageCreatedAt = message.createdAt;
-            trackPNDisclaimerAccepted(messageCreatedAt, originalReceiptDate);
-          })
+          O.map(category => trackUxConversion(category.tag))
         );
         props.navigationAction(message);
       })

@@ -130,17 +130,6 @@ export function trackPNAttachmentOpeningSuccess(
   );
 }
 
-export function trackPNDisclaimerAccepted(
-  messageCreatedAt: Date,
-  messageReceiptDate: Date
-) {
-  void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
-    eventTimestamp: new Date().toISOString(),
-    messageTimestamp: messageCreatedAt.toISOString(),
-    notificationTimestamp: messageReceiptDate.toISOString()
-  });
-}
-
 export function trackPNDisclaimerRejected() {
   void mixpanelTrack("PN_DISCLAIMER_REJECTED");
 }
@@ -225,5 +214,12 @@ export function trackPNUxSuccess(
       contains_payment: booleanToYesNo(containsPayment),
       first_time_opening: booleanToYesNo(firstTimeOpening)
     })
+  );
+}
+
+export function trackUxConversion(tag: string) {
+  void mixpanelTrack(
+    `${tag.toUpperCase()}_UX_CONVERSION`,
+    buildEventProperties("UX", "action")
   );
 }
