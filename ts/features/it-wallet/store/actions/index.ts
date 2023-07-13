@@ -5,6 +5,7 @@ import {
 } from "typesafe-actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { PidMockType } from "../../utils/mocks";
+import { ItwCieAuthenticationActions } from "./cie";
 
 /**
  * Start ITW activation
@@ -37,4 +38,5 @@ export const itwCredentialsAddPid = createAsyncAction(
 export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
   | ActionType<typeof itwRequirementsRequest>
-  | ActionType<typeof itwCredentialsAddPid>;
+  | ActionType<typeof itwCredentialsAddPid>
+  | ItwCieAuthenticationActions;

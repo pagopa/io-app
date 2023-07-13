@@ -3323,6 +3323,12 @@ features:
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
         cta: "Chiedi informazioni o segnala errori"
+          body: "Per proseguire è necessaria la funzione NFC del dispositivo."
+    issuing:
+      infoConsent:
+        footer:
+          cancel: "Annulla"
+          confirm: "Autorizza"
     generic:
       error:
         title: "C'è un problema sui nostri sistemi"

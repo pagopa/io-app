@@ -8,6 +8,7 @@ import {
 } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
+import { authenticationSaga } from "./authenticationSaga";
 import { handleRequirementsRequest } from "./handleRequirementsCheck";
 import { handleCredentialsAddPid } from "./handleCredentials";
 
@@ -32,4 +33,5 @@ function* watchItwActivationStart(): SagaIterator {
       screen: ITW_ROUTES.ACTIVATION.DETAILS
     })
   );
+  yield* call(authenticationSaga);
 }

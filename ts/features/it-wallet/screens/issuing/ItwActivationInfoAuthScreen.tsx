@@ -22,6 +22,7 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
 import { Pictogram } from "../../../../components/core/pictograms";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 const ItwActivationInfoAuthScreen = () => {
   const navigation = useNavigation();
@@ -72,7 +73,7 @@ const ItwActivationInfoAuthScreen = () => {
     const continueButtonProps = {
       block: true,
       primary: true,
-      onPress: () => undefined,
+      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (
