@@ -33,14 +33,6 @@ const styles = StyleSheet.create({
   }
 });
 
-type PAYMENT_METHOD_CARD_TYPES = {
-  CREDIT: "CREDIT";
-  PAGOBANCOMAT: "PAGOBANCOMAT";
-  PAYPAL: "PAYPAL";
-  COBADGE: "COBADGE";
-  BANCOMATPAY: "BANCOMATPAY";
-};
-
 // all cards have an expiration date except for paypal,
 // bancomatPay also has a phone number
 // the rendering of the circuit logo is handled by the component
@@ -55,30 +47,30 @@ export type PaymentCardBigProps = WithTestID<
 
 type PaymentCardStandardProps =
   | {
-      cardType: PAYMENT_METHOD_CARD_TYPES["PAYPAL"];
+      cardType: "PAYPAL";
       holderEmail: string;
     }
   | {
-      cardType: PAYMENT_METHOD_CARD_TYPES["BANCOMATPAY"];
+      cardType: "BANCOMATPAY";
       phoneNumber: string;
       expirationDate: Date;
       holderName: string;
     }
   | {
-      cardType: PAYMENT_METHOD_CARD_TYPES["PAGOBANCOMAT"];
+      cardType: "PAGOBANCOMAT";
       expirationDate: Date;
       abiCode: string;
       holderName: string;
     }
   | {
-      cardType: PAYMENT_METHOD_CARD_TYPES["COBADGE"];
+      cardType: "COBADGE";
       expirationDate: Date;
       abiCode: string;
       holderName: string;
       cardIcon?: IOLogoPaymentType;
     }
   | {
-      cardType: PAYMENT_METHOD_CARD_TYPES["CREDIT"];
+      cardType: "CREDIT";
       expirationDate: Date;
       holderName: string;
       hpan: string;
