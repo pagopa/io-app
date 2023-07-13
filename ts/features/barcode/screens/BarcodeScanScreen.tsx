@@ -15,13 +15,13 @@ import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
-import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import { IOBarcode } from "../types/IOBarcode";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
