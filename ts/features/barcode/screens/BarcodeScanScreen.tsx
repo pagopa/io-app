@@ -21,7 +21,6 @@ import { showToast } from "../../../utils/showToast";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -40,13 +39,16 @@ const BarcodeScanScreen = () => {
         navigateToPaymentTransactionSummaryScreen({
           rptId: barcode.rptId,
           initialAmount: barcode.amount,
-          paymentStartOrigin: "qrcode_scan"
+          paymentStartOrigin:
+            barcode.format === "QR_CODE"
+              ? "qrcode_scan"
+              : "poste_datamatrix_scan"
         });
         break;
     }
   };
 
-  const handleBarcodeError = (_: BarcodeFailure) => {
+  const handleBarcodeError = () => {
     showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 

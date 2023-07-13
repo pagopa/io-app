@@ -9,6 +9,7 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import { decodePosteDataMatrix } from "../../../utils/payment";
 
 // Discriminated barcode type
 // Represents the decoded content of a barcode that has been scanned
@@ -59,7 +60,7 @@ const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
     O.map(m => ({ type: "IDPAY", authUrl: m[0], trxCode: m[1] }))
   );
 
-const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
+const decodePagoPAQRCode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
     PaymentNoticeQrCodeFromString.decode(data),
     E.chain(paymentNotice =>
@@ -72,6 +73,20 @@ const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
       )
     ),
     O.fromEither
+  );
+
+const decodePagoPADataMatrix: IOBarcodeDecoderFn = (data: string) =>
+  pipe(
+    data,
+    decodePosteDataMatrix,
+    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 } as const))
+  );
+
+const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
+  pipe(
+    data,
+    decodePagoPAQRCode,
+    O.alt(() => decodePagoPADataMatrix(data))
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content

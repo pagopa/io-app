@@ -1,8 +1,7 @@
-import { sequenceS } from "fp-ts/lib/Apply";
+import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import * as R from "fp-ts/ReadonlyRecord";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
@@ -84,9 +83,11 @@ export type IOBarcodeScanner = {
  */
 const convertToIOBarcodeFormat = (
   format: BarcodeFormat
-): IOBarcodeFormat | undefined =>
-  (Object.keys(IOBarcodeFormats) as Array<IOBarcodeFormat>).find(
-    key => IOBarcodeFormats[key] === format
+): O.Option<IOBarcodeFormat> =>
+  pipe(
+    Object.entries(IOBarcodeFormats),
+    A.findFirst(([_, value]) => value === format),
+    O.map(([key, _]) => key as IOBarcodeFormat)
   );
 
 /**
@@ -179,6 +180,29 @@ export const useIOBarcodeScanner = (
     setCameraPermissionStatus(permissions);
   };
 
+  const decodeDetectedBarcode = React.useCallback(
+    (detectedBarcode: Barcode): E.Either<BarcodeFailure, IOBarcode> =>
+      pipe(
+        convertToIOBarcodeFormat(detectedBarcode.format),
+        O.filter(format => acceptedFormats?.includes(format) ?? true),
+        E.fromOption<BarcodeFailure>(() => ({
+          reason: "UNSUPPORTED_FORMAT"
+        })),
+        E.chain(format =>
+          pipe(
+            decodeIOBarcode(detectedBarcode.displayValue),
+            E.fromOption<BarcodeFailure>(() => ({
+              reason: "UNKNOWN_CONTENT",
+              content: detectedBarcode.displayValue,
+              format: format as IOBarcodeFormat
+            })),
+            E.map(barcode => ({ ...barcode, format }))
+          )
+        )
+      ),
+    [acceptedFormats]
+  );
+
   /**
    * onBarcodeScanned trigger hook
    */
@@ -193,36 +217,18 @@ export const useIOBarcodeScanner = (
 
     pipe(
       retrieveNextBarcode(barcodes),
-      O.map(detectedBarcode =>
+      O.map(detectedBarcode => {
         pipe(
-          sequenceS(E.Monad)({
-            decodedBarcode: pipe(
-              decodeIOBarcode(detectedBarcode.displayValue),
-              E.fromOption<BarcodeFailure>(() => "UNKNOWN_CONTENT")
-            ),
-            format: pipe(
-              convertToIOBarcodeFormat(detectedBarcode.format),
-              O.fromNullable,
-              O.filter(format => acceptedFormats?.includes(format) ?? true),
-              E.fromOption<BarcodeFailure>(() => "UNSUPPORTED_FORMAT")
-            )
-          }),
-          E.map(
-            ({ decodedBarcode, format }) =>
-              ({
-                ...decodedBarcode,
-                format
-              } as IOBarcode)
-          ),
+          decodeDetectedBarcode(detectedBarcode),
           E.fold(onBarcodeError, onBarcodeSuccess)
-        )
-      )
+        );
+      })
     );
   }, [
     prevDisabled,
     disabled,
     barcodes,
-    acceptedFormats,
+    decodeDetectedBarcode,
     onBarcodeSuccess,
     onBarcodeError
   ]);
