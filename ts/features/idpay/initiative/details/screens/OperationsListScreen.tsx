@@ -13,7 +13,6 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
-import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../../utils/showToast";
 import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
@@ -23,6 +22,7 @@ import {
 } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
+import { localeDateFormat } from "../../../../../utils/locale";
 export type OperationsListScreenParams = { initiativeId: string };
 
 type OperationsListScreenRouteProps = RouteProp<
@@ -84,7 +84,12 @@ export const OperationsListScreen = () => {
   const lastUpdateComponent = pipe(
     lastUpdate,
     O.fromNullable,
-    O.map(date => formatDateAsLocal(date, true)),
+    O.map(date =>
+      localeDateFormat(
+        date,
+        I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+      )
+    ),
     O.fold(
       () => (
         <Placeholder.Box animate="fade" height={18} width={70} radius={4} />
