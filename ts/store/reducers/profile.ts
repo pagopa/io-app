@@ -140,6 +140,16 @@ export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
 export const isProfileFirstOnBoarding = (user: InitializedProfile): boolean =>
   user.service_preferences_settings.mode === ServicesPreferencesModeEnum.LEGACY;
 
+// Same as above, but Selector
+export const isProfileFirstOnBoardingSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): boolean | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => isProfileFirstOnBoarding(p)),
+      undefined
+    )
+);
+
 // return true if the profile pot is some and its field is_email_validated exists and it's true
 export const isProfileEmailValidatedSelector = createSelector(
   profileSelector,

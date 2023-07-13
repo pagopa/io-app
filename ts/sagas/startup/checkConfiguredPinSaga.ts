@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { call, take } from "typed-redux-saga/macro";
+import { call, take, select } from "typed-redux-saga/macro";
 import { StackActions } from "@react-navigation/native";
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
@@ -9,6 +9,8 @@ import { ReduxSagaEffect } from "../../types/utils";
 
 import { getPin } from "../../utils/keychain";
 import NavigationService from "../../navigation/NavigationService";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { isValidPinNumber } from "../../features/fastLogin/utils/pinPolicy";
 
 export function* checkConfiguredPinSaga(): Generator<
   ReduxSagaEffect,
@@ -20,7 +22,14 @@ export function* checkConfiguredPinSaga(): Generator<
   const pinCode = yield* call(getPin);
 
   if (O.isSome(pinCode)) {
-    return pinCode.value;
+    const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+    if (isFastLoginEnabled) {
+      if (isValidPinNumber(pinCode.value)) {
+        return pinCode.value;
+      }
+    } else {
+      return pinCode.value;
+    }
   }
 
   // Go through the unlock code configuration screen

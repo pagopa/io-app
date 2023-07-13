@@ -12,12 +12,11 @@ import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
 import { useInteractiveSpringAnimation } from "../../utils/hooks/useBaseSpringAnimation";
 
-const getRenderData = (
-  props: CardDataType
-): {
+type RenderData = {
   iconName: IOLogoPaymentType | undefined;
   bottomText: string;
-} => {
+};
+const getRenderData = (props: CardDataType): RenderData => {
   switch (props.cardType) {
     case "CREDIT":
       return {
