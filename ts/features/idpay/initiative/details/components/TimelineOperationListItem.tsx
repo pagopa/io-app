@@ -95,7 +95,7 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
 
   const getOperationTitle = () => {
     switch (operation.operationType) {
-case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
         return I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT",
           {
