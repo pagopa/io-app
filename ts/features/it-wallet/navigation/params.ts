@@ -18,5 +18,4 @@ export type ItwParamsList = {
   [ITW_ROUTES.ACTIVATION
     .CIE_WRONG_PIN_SCREEN]: CieWrongCiePinScreenNavigationParams;
   [ITW_ROUTES.ACTIVATION.CIE_PIN_TEMP_LOCKED_SCREEN]: undefined;
-  [ITW_ROUTES.ACTIVATION.TYP]: undefined;
 };

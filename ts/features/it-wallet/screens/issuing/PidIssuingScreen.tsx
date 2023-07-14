@@ -59,8 +59,12 @@ const PidIssuingScreen = ({ route }: Props) => {
   const SuccessScreen = () => (
     <>
       <ItwActionCompleted
-        title={I18n.t("features.itWallet.issuing.typ.title")}
-        content={I18n.t("features.itWallet.issuing.typ.content")}
+        title={I18n.t(
+          "features.itWallet.issuing.pidActivationScreen.typ.title"
+        )}
+        content={I18n.t(
+          "features.itWallet.issuing.pidActivationScreen.typ.content"
+        )}
       />
       <FooterWithButtons
         type={"SingleButton"}
