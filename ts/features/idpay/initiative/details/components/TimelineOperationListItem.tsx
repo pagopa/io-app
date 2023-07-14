@@ -131,9 +131,9 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
   const getOperationAmount = () => {
     switch (operation.operationType) {
       case TransactionOperationTypeEnum.TRANSACTION:
-        return ` · € ${formatAbsNumberAmountOrDefault(operation.amount)}`;
+        return ` · ${formatAbsNumberAmountOrDefault(operation.amount)} €`;
       case TransactionOperationTypeEnum.REVERSAL:
-        return ` · € -${formatAbsNumberAmountOrDefault(operation.amount)}`;
+        return ` · -${formatAbsNumberAmountOrDefault(operation.amount)} €`;
       default:
         return "";
     }
