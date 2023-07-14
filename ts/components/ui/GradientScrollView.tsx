@@ -18,6 +18,7 @@ import GradientBottomActions from "./GradientBottomActions";
 
 export type GradientScrollView = WithTestID<{
   children: React.ReactNode;
+  excludeSafeAreaMargins?: boolean;
   // Accepted components: ButtonSolid, ButtonLink
   // Don't use any components other than this, please.
   primaryAction: React.ReactNode;
@@ -33,18 +34,23 @@ export const GradientScrollView = ({
   children,
   primaryAction,
   // secondAction,
+  // Don't include safe area insets
+  excludeSafeAreaMargins = true,
   testID
 }: GradientScrollView) => {
   const enableTransition = useSharedValue(1);
   const insets = useSafeAreaInsets();
 
-  // Check if iPhone bottom handle is present. If not, add a
-  // default margin to avoid Button attached to the
-  // bottom without margin
+  /* Check if the iPhone bottom handle is present.
+  If not, or if you don't need safe area insets,
+  add a default margin to prevent the button
+  from sticking to the bottom. */
   const bottomMargin: number = useMemo(
     () =>
-      insets.bottom === 0 ? IOVisualCostants.appMarginDefault : insets.bottom,
-    [insets]
+      insets.bottom === 0 || excludeSafeAreaMargins
+        ? IOVisualCostants.appMarginDefault
+        : insets.bottom,
+    [insets, excludeSafeAreaMargins]
   );
 
   /* Total height of "Actions + Gradient" area */

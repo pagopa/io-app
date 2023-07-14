@@ -1,11 +1,10 @@
 import * as React from "react";
-import { View, StyleSheet, Alert, ViewStyle, StyleProp } from "react-native";
+import { View, StyleSheet, ViewStyle, StyleProp } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
 import { IOVisualCostants } from "../core/variables/IOStyles";
-import ButtonSolid from "./ButtonSolid";
 
 export type GradientBottomActions = WithTestID<{
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
 
 export const GradientBottomActions = ({
   primaryAction,
-  secondaryAction,
+  // secondaryAction,
   bottomMargin,
   gradientAreaHeight,
   transitionAnimStyle,
