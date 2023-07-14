@@ -2,14 +2,14 @@ import * as React from "react";
 import { pot } from "@pagopa/ts-commons";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import { act, fireEvent } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import { Alert, AlertButton } from "react-native";
 import I18n from "i18n-js";
-import WebView from "react-native-webview";
-import {
-  WebViewErrorEvent,
-  WebViewNavigationEvent
-} from "react-native-webview/lib/WebViewTypes";
+// import WebView from "react-native-webview";
+// import {
+//   WebViewErrorEvent,
+//   WebViewNavigationEvent
+// } from "react-native-webview/lib/WebViewTypes";
 import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -18,7 +18,7 @@ import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import ROUTES from "../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import * as ToastUtils from "../../../utils/showToast";
+// import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 

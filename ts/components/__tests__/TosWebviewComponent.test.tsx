@@ -1,17 +1,17 @@
-import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import * as React from "react";
-import WebView from "react-native-webview";
+// import WebView from "react-native-webview";
 import renderer from "react-test-renderer";
-import * as O from "fp-ts/lib/Option";
-import {
-  WebViewErrorEvent,
-  WebViewMessageEvent,
-  WebViewNavigationEvent
-} from "react-native-webview/lib/WebViewTypes";
-import I18n from "i18n-js";
+// import * as O from "fp-ts/lib/Option";
+// import {
+//   WebViewErrorEvent,
+//   WebViewMessageEvent,
+//   WebViewNavigationEvent
+// } from "react-native-webview/lib/WebViewTypes";
+// import I18n from "i18n-js";
 import TosWebviewComponent from "../TosWebviewComponent";
-import * as urlUtils from "../../../ts/utils/url";
-import brokenLinkImage from "../../../img/broken-link.png";
+// import * as urlUtils from "../../../ts/utils/url";
+// import brokenLinkImage from "../../../img/broken-link.png";
 
 beforeAll(() => {
   jest.resetAllMocks();
