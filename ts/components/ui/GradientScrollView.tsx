@@ -35,7 +35,7 @@ export const GradientScrollView = ({
   primaryAction,
   // secondAction,
   // Don't include safe area insets
-  excludeSafeAreaMargins = true,
+  excludeSafeAreaMargins = false,
   testID
 }: GradientScrollView) => {
   const enableTransition = useSharedValue(1);
@@ -97,9 +97,11 @@ export const GradientScrollView = ({
       </Animated.ScrollView>
       <GradientBottomActions
         primaryAction={primaryAction}
-        bottomMargin={bottomMargin}
-        gradientAreaHeight={gradientAreaHeight}
         transitionAnimStyle={animatedOpacity}
+        dimensions={{
+          bottomMargin,
+          gradientAreaHeight
+        }}
       />
     </>
   );

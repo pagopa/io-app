@@ -8,13 +8,17 @@ import { IOVisualCostants } from "../core/variables/IOStyles";
 
 export type GradientBottomActions = WithTestID<{
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
-  bottomMargin: number;
-  gradientAreaHeight: number;
+  dimensions: GradientBottomActionsDimensions;
   // Accepted components: ButtonSolid, ButtonLink
   // Don't use any components other than this, please.
   primaryAction?: React.ReactNode;
   secondaryAction?: React.ReactNode;
 }>;
+
+type GradientBottomActionsDimensions = {
+  bottomMargin: number;
+  gradientAreaHeight: number;
+};
 
 // Background color should be app main background (both light and dark themes)
 const HEADER_BG_COLOR: IOColors = "white";
@@ -31,8 +35,7 @@ const styles = StyleSheet.create({
 export const GradientBottomActions = ({
   primaryAction,
   // secondaryAction,
-  bottomMargin,
-  gradientAreaHeight,
+  dimensions,
   transitionAnimStyle,
   testID
 }: GradientBottomActions) => (
@@ -41,8 +44,8 @@ export const GradientBottomActions = ({
       width: "100%",
       position: "absolute",
       bottom: 0,
-      height: gradientAreaHeight,
-      paddingBottom: bottomMargin
+      height: dimensions.gradientAreaHeight,
+      paddingBottom: dimensions.bottomMargin
     }}
     testID={testID}
     pointerEvents="box-none"
@@ -60,7 +63,7 @@ export const GradientBottomActions = ({
       pointerEvents="none"
     >
       <LinearGradient
-        style={{ height: gradientAreaHeight }}
+        style={{ height: dimensions.gradientAreaHeight }}
         // 100% opacity bg color fills at least 50% of the area
         locations={[0, 0.5]}
         colors={[
