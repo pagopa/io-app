@@ -9,6 +9,8 @@ import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScr
 import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
+import { useIOSelector } from "../../../store/hooks";
+import { ItwWalletActivatedSelector } from "../store/reducers/itwCredentials";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -19,6 +21,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation();
+  const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
@@ -57,12 +60,18 @@ const ItwHomeScreen = () => {
               />
             ))}
           </ScrollView>
-          <ItwActionBanner
-            title={I18n.t("features.itWallet.innerActionBanner.title")}
-            content={I18n.t("features.itWallet.innerActionBanner.description")}
-            action={I18n.t("features.itWallet.innerActionBanner.action")}
-            labelClose={I18n.t("features.itWallet.innerActionBanner.hideLabel")}
-          />
+          {!isWalletActive && (
+            <ItwActionBanner
+              title={I18n.t("features.itWallet.innerActionBanner.title")}
+              content={I18n.t(
+                "features.itWallet.innerActionBanner.description"
+              )}
+              action={I18n.t("features.itWallet.innerActionBanner.action")}
+              labelClose={I18n.t(
+                "features.itWallet.innerActionBanner.hideLabel"
+              )}
+            />
+          )}
         </View>
       </TopScreenComponent>
     </SafeAreaView>
