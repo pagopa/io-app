@@ -3298,6 +3298,13 @@ features:
         footer:
           cancel: "Annulla"
           confirm: "Autorizza"
+      loading:
+        title: "Sto caricando i dati dal Ministero dell’Interno"
+        subtitle: "Attendi qualche secondo"
+      typ:
+        title: "Fatto! il tuo IT Wallet è attivo su IO!"
+        content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
+        button: "Continua"
       pidPreviewScreen: 
         title: "Vuoi aggiungere questi dati all’IT Wallet?"
         checkNotice: "Verifica che i seguenti dati siano corretti"

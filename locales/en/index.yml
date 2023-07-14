@@ -3274,6 +3274,13 @@ features:
         footer:
           cancel: "Cancel"
           confirm: "Authorize"
+      loading:
+        title: "I am loading the data from the Ministry of the Interior"
+        subtitle: "Wait a few seconds"
+      typ:
+        title: "Done! your IT Wallet is active on IO!"
+        content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
+        button: "Continue"
       pidPreviewScreen: 
         title: "Do you want to add this data to the IT Wallet?"
         checkNotice: "Verify that the following data is correct."
