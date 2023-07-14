@@ -14,10 +14,7 @@ import DocumentPicker, {
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
 import PdfThumbnail, { ThumbnailResult } from "react-native-pdf-thumbnail";
-import {
-  SafeAreaView,
-  useSafeAreaInsets
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import RNQRGenerator, {
   QRCodeScanResult,
   CodeType as RNQRCodeType
@@ -156,7 +153,6 @@ const useIOBarcodeFileReader = (
   config: IOBarcodeFileReaderConfiguration
 ): IOBarcodeFileReader => {
   const { onBarcodeSuccess, onBarcodeError } = config;
-  const insets = useSafeAreaInsets();
 
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
@@ -293,13 +289,10 @@ const useIOBarcodeFileReader = (
     </SafeAreaView>
   );
 
-  const filePickerModal = useIOBottomSheetAutoresizableModal(
-    {
-      component: filePickerModalComponent,
-      title: ""
-    },
-    insets.bottom + 32
-  );
+  const filePickerModal = useIOBottomSheetAutoresizableModal({
+    component: filePickerModalComponent,
+    title: ""
+  });
 
   return {
     showImagePicker,
