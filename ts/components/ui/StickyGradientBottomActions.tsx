@@ -8,7 +8,7 @@ import { IOVisualCostants } from "../core/variables/IOStyles";
 import ButtonSolid from "./ButtonSolid";
 
 export type StickyGradientBottomActions = WithTestID<{
-  transitionAnimatedStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
+  transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
   bottomMargin: number;
   gradientAreaHeight: number;
   // Accepted components: ButtonSolid, ButtonLink
@@ -34,7 +34,7 @@ export const StickyGradientBottomActions = ({
   // secondAction,
   bottomMargin,
   gradientAreaHeight,
-  transitionAnimatedStyle,
+  transitionAnimStyle,
   testID
 }: StickyGradientBottomActions) => (
   <View
@@ -56,7 +56,7 @@ export const StickyGradientBottomActions = ({
           backgroundColor: hexToRgba(IOColors["error-500"], 0.5),
           borderTopWidth: 1
         },
-        transitionAnimatedStyle
+        transitionAnimStyle
       ]}
       pointerEvents="none"
     >

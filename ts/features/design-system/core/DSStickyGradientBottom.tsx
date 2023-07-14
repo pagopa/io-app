@@ -77,37 +77,34 @@ export const DSStickyGradientBottom = () => {
         backgroundColor: IOColors.white
       }}
     >
-      <SafeAreaView style={{ flex: 1 }} edges={["left", "right"]}>
-        <Animated.ScrollView
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-          contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault,
-            paddingBottom: actionsAreaHeight,
-            backgroundColor: IOColors.white
-          }}
-        >
-          <H2>Start</H2>
-          {[...Array(50)].map((_el, i) => (
-            <Body key={`body-${i}`}>Repeated text</Body>
-          ))}
-          <ButtonOutline
-            label="Test"
-            accessibilityLabel={""}
-            onPress={() => Alert.alert("Test button")}
-          />
-          {[...Array(2)].map((_el, i) => (
-            <Body key={`body-${i}`}>Repeated text</Body>
-          ))}
-          <H2>End</H2>
-        </Animated.ScrollView>
-
-        <StickyGradientBottomActions
-          bottomMargin={bottomMargin}
-          gradientAreaHeight={gradientAreaHeight}
-          transitionAnimatedStyle={animatedOpacity}
+      <Animated.ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          paddingBottom: actionsAreaHeight
+        }}
+      >
+        <H2>Start</H2>
+        {[...Array(50)].map((_el, i) => (
+          <Body key={`body-${i}`}>Repeated text</Body>
+        ))}
+        <ButtonOutline
+          label="Test"
+          accessibilityLabel={""}
+          onPress={() => Alert.alert("Test button")}
         />
-      </SafeAreaView>
+        {[...Array(2)].map((_el, i) => (
+          <Body key={`body-${i}`}>Repeated text</Body>
+        ))}
+        <H2>End</H2>
+      </Animated.ScrollView>
+
+      <StickyGradientBottomActions
+        bottomMargin={bottomMargin}
+        gradientAreaHeight={gradientAreaHeight}
+        transitionAnimStyle={animatedOpacity}
+      />
     </View>
   );
 };
