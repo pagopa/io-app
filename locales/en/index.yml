@@ -3299,10 +3299,18 @@ features:
           title: "Your device does not support NFC which is required to enable IT Wallet"
           body: "To proceed, the NFC function of the device is required."
     issuing:
+      title: "IT Wallet activation"
       infoConsent:
         footer:
           cancel: "Cancel"
           confirm: "Authorize"
+      loading:
+        title: "I am loading the data from the Ministry of the Interior"
+        subtitle: "Wait a few seconds"
+      typ:
+        title: "Done! your IT Wallet is active on IO!"
+        content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
+        button: "Continue"
     generic:
       error:
         title: "There's a problem on our systems"

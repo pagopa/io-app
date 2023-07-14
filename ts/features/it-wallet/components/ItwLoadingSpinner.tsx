@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { StyleSheet, View, ColorValue, Animated, Easing } from "react-native";
 import { WithTestID } from "../../../types/WithTestID";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { H2 } from "../../../components/core/typography/H2";
 
 type Props = WithTestID<{
   captionTitle?: string;
@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
     borderBottomColor: IOColors.white,
     borderWidth: 4,
     position: "absolute"
+  },
+  textAlignCenter: {
+    textAlign: "center"
   }
 });
 
@@ -88,9 +91,15 @@ const ItwLoadingSpinner = ({
         />
       </View>
       <VSpacer size={48} />
-      <H1 testID="LoadingSpinnerCaptionTitleID">{captionTitle}</H1>
+      <H2 style={styles.textAlignCenter} testID="LoadingSpinnerCaptionTitleID">
+        {captionTitle}
+      </H2>
       <VSpacer />
-      <H4 weight="Regular" testID="LoadingSpinnerCaptionSubTitleID">
+      <H4
+        weight="Regular"
+        style={styles.textAlignCenter}
+        testID="LoadingSpinnerCaptionSubTitleID"
+      >
         {captionSubtitle}
       </H4>
     </>
