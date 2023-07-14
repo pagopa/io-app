@@ -20,6 +20,7 @@ export const DSBottomSheet = () => {
     dismissStaticBottomSheet();
     dismissAutoresizableBottomSheet();
     dismissAutoresizableBottomSheetWithFooter();
+    dismissVeryLongAutoresizableBottomSheetWithFooter();
   };
 
   const DimissBottomSheetItem = () => (
@@ -60,7 +61,26 @@ export const DSBottomSheet = () => {
         ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua.
       </Body>
-      <DimissBottomSheetItem />
+    </>
+  );
+
+  const BottomSheetVeryLongContentBody = () => (
+    <>
+      {Array.from(Array(10).keys()).map((_, index) => (
+        <Body key={index}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor
+          sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+          amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Body>
+      ))}
     </>
   );
 
@@ -91,10 +111,11 @@ export const DSBottomSheet = () => {
             label={"Dismiss bottom sheet"}
             onPress={handlePressDismiss}
           />
+          <VSpacer size={16} />
         </ContentWrapper>
       )
     },
-    80
+    110
   );
 
   // Static bottom sheet hook
@@ -107,6 +128,30 @@ export const DSBottomSheet = () => {
     component: <BottomSheetContentBody />,
     snapPoint: [300]
   });
+
+  // Autoresizable bottom sheet hook with footer
+  const {
+    present: presentVeryLongAutoresizableBottomSheetWithFooter,
+    bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
+    dismiss: dismissVeryLongAutoresizableBottomSheetWithFooter
+  } = useIOBottomSheetAutoresizableModal(
+    {
+      title: "Autoresizable Bottom Sheet",
+      component: <BottomSheetVeryLongContentBody />,
+      footer: (
+        <ContentWrapper>
+          <ButtonSolid
+            fullWidth
+            accessibilityLabel="Tap to dismiss the bottom sheet"
+            label={"Dismiss bottom sheet"}
+            onPress={handlePressDismiss}
+          />
+          <VSpacer size={16} />
+        </ContentWrapper>
+      )
+    },
+    80
+  );
 
   return (
     <IOThemeContext.Consumer>
@@ -122,6 +167,12 @@ export const DSBottomSheet = () => {
             Available bottom sheets
           </H2>
           <ListItemNav
+            value="Static bottom sheet"
+            description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
+            accessibilityLabel="Static bottom sheet"
+            onPress={presentStaticBottomSheet}
+          />
+          <ListItemNav
             value="Autoresizable bottom sheet"
             description="This bottom sheet has a snap point that is calculated based on the content height"
             accessibilityLabel="Autoresizable bottom sheet"
@@ -134,15 +185,16 @@ export const DSBottomSheet = () => {
             onPress={presentAutoresizableBottomSheetWithFooter}
           />
           <ListItemNav
-            value="Static bottom sheet"
-            description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
+            value="Autoresizable bottom sheet with very long content and a footer"
+            description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long  and the modal should snap below the upper safe area limit"
             accessibilityLabel="Static bottom sheet"
-            onPress={presentStaticBottomSheet}
+            onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
           />
           <VSpacer size={24} />
           {staticBottomSheet}
           {autoResizableBottomSheet}
           {autoResizableBottomSheetWithFooter}
+          {veryLongAutoResizableBottomSheetWithFooter}
         </DesignSystemScreen>
       )}
     </IOThemeContext.Consumer>
