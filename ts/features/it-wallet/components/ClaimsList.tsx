@@ -20,7 +20,7 @@ type ClaimsListProps = {
 /**
  * This component renders the list of claims for a credential, currenly only PID is supported with a static generation.
  * TODO: This component will be refactored to support dynamic generation of claims with schema validation.
- * @param claims - contais the claim to be displayed.
+ * @param claims - contains the claim to be displayed.
  * @returns
  */
 const ClaimsList = ({ claims }: ClaimsListProps) => {
