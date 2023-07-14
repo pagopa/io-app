@@ -1,17 +1,112 @@
 import * as React from "react";
 import { Text as NBButtonText, Toast as NBToast } from "native-base";
-
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { H2 } from "../../../components/core/typography/H2";
+import {
+  IOToast,
+  ToastNotification
+} from "../../../components/ui/ToastNotification";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { showToast } from "../../../utils/showToast";
-import { H2 } from "../../../components/core/typography/H2";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { H3 } from "../../../components/core/typography/H3";
 
 export const DSToastNotifications = () => (
   <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
+    <H3 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Events
+    </H3>
+
+    <ButtonDefaultOpacity
+      bordered={true}
+      block={true}
+      onPress={() => {
+        IOToast.show("Hello!", "neutral", "checkTic");
+      }}
+    >
+      <NBButtonText>Neutral</NBButtonText>
+    </ButtonDefaultOpacity>
+
+    <VSpacer size={16} />
+
+    <ButtonDefaultOpacity
+      bordered={true}
+      block={true}
+      onPress={() => {
+        IOToast.error("Error");
+      }}
+    >
+      <NBButtonText>Error</NBButtonText>
+    </ButtonDefaultOpacity>
+
+    <VSpacer size={16} />
+
+    <ButtonDefaultOpacity
+      bordered={true}
+      block={true}
+      onPress={() => {
+        IOToast.info("Info");
+      }}
+    >
+      <NBButtonText>Info</NBButtonText>
+    </ButtonDefaultOpacity>
+
+    <VSpacer size={16} />
+
+    <ButtonDefaultOpacity
+      bordered={true}
+      block={true}
+      onPress={() => {
+        IOToast.success("Success");
+      }}
+    >
+      <NBButtonText>Success</NBButtonText>
+    </ButtonDefaultOpacity>
+
+    <VSpacer size={16} />
+
+    <ButtonDefaultOpacity
+      bordered={true}
+      block={true}
+      onPress={() => {
+        IOToast.warning("Warning");
+      }}
+    >
+      <NBButtonText>Warning</NBButtonText>
+    </ButtonDefaultOpacity>
+
+    <H3
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginTop: 32, marginBottom: 16 }}
+    >
+      Component
+    </H3>
+    <ToastNotification message="Copiato negli appunti!" icon="checkTic" />
+
+    <ToastNotification message="Copiato negli appunti!" />
+
+    <ToastNotification message="Error" icon="errorFilled" variant="error" />
+
+    <ToastNotification message="Info" icon="infoFilled" variant="info" />
+
+    <ToastNotification message="Success" icon="success" variant="success" />
+
+    <ToastNotification
+      message="Warning"
+      icon="warningFilled"
+      variant="warning"
+    />
+
+    <VSpacer size={40} />
+
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-      Type
+      Legacy toasts
     </H2>
+
+    <H3 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Type
+    </H3>
 
     <ButtonDefaultOpacity
       bordered={true}
@@ -61,13 +156,13 @@ export const DSToastNotifications = () => (
       <NBButtonText>Warning</NBButtonText>
     </ButtonDefaultOpacity>
 
-    <H2
+    <H3
       color={"bluegrey"}
       weight={"SemiBold"}
       style={{ marginTop: 24, marginBottom: 16 }}
     >
       Position
-    </H2>
+    </H3>
     <ButtonDefaultOpacity
       bordered={true}
       block={true}
@@ -102,13 +197,13 @@ export const DSToastNotifications = () => (
       <NBButtonText>Default · Bottom</NBButtonText>
     </ButtonDefaultOpacity>
 
-    <H2
+    <H3
       color={"bluegrey"}
       weight={"SemiBold"}
       style={{ marginTop: 24, marginBottom: 16 }}
     >
       Misc
-    </H2>
+    </H3>
 
     <ButtonDefaultOpacity
       bordered={true}
