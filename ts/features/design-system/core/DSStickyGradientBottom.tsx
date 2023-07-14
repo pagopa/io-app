@@ -41,7 +41,7 @@ export const DSStickyGradientBottom = () => {
     [insets]
   );
 
-  /* Height of "Actions + Gradient" area */
+  /* Total height of "Actions + Gradient" area */
   const gradientAreaHeight: number = useMemo(
     () => bottomMargin + buttonSolidHeight + GRADIENT_SAFE_AREA,
     [bottomMargin]
