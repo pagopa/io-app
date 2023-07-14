@@ -4,13 +4,14 @@ import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
-import variables from "../../theme/variables";
 import { GlobalState } from "../../store/reducers/types";
 import { idpsSelector, idpsStateSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
@@ -36,6 +37,7 @@ import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/s
 import { Body } from "../../components/core/typography/Body";
 import ButtonOutline from "../../components/ui/ButtonOutline";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -51,20 +53,15 @@ const TestIdp: SpidIdp = {
 const TAPS_TO_OPEN_TESTIDP = 5;
 
 const styles = StyleSheet.create({
-  gridContainer: {
-    flex: 1,
-    backgroundColor: IOColors.greyUltraLight
-  },
   footerContainer: {
     shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: -2
     },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.1,
     shadowRadius: 20,
-    backgroundColor: IOColors.white,
-    paddingVertical: variables.spacerLargeHeight
+    backgroundColor: IOColors.white
   }
 });
 
@@ -77,6 +74,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  const inset = useSafeAreaInsets();
+
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
@@ -136,18 +135,28 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     }
   }, [counter, setSelectedIdp, navigation]);
 
-  const headerComponent = () => <VSpacer size={24} />;
+  const spacerComponent = () => <VSpacer size={24} />;
+
+  const spacerFooter: IOSpacingScale = 16;
 
   const footerComponent = () => (
-    <View style={[styles.footerContainer, IOStyles.horizontalContentPadding]}>
+    <View
+      style={[
+        styles.footerContainer,
+        IOStyles.horizontalContentPadding,
+        {
+          // Avoid zero margin on iPhones with home button
+          paddingBottom: inset.bottom === 0 ? spacerFooter : inset.bottom
+        }
+      ]}
+    >
+      <VSpacer size={spacerFooter} />
       <ButtonOutline
         fullWidth
         accessibilityLabel={I18n.t("global.buttons.cancel")}
         label={I18n.t("global.buttons.cancel")}
         onPress={navigation.goBack}
       />
-
-      <VSpacer size={48} />
     </View>
   );
 
@@ -160,39 +169,38 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     >
       <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
         {/* Custom ScreenContentHeader with secret login */}
-        <View style={IOStyles.horizontalContentPadding}>
-          <VSpacer size={16} />
-          <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
-            {/* Add `accessible=false` 'cause it useful only
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={IOStyles.horizontalContentPadding}>
+            <VSpacer size={16} />
+            <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
+              {/* Add `accessible=false` 'cause it useful only
             for debug mode (stores reviewers).
             Original issue: https://www.pivotaltracker.com/story/show/172082895 */}
-            <H1
-              accessible={true}
-              accessibilityRole="header"
-              weight="Bold"
-              testID={"screen-content-header-title"}
-              color={"bluegreyDark"}
-            >
-              {I18n.t("authentication.idp_selection.contentTitle")}
-            </H1>
-          </Pressable>
+              <H1
+                accessible={true}
+                accessibilityRole="header"
+                weight="Bold"
+                testID={"screen-content-header-title"}
+                color={"bluegreyDark"}
+              >
+                {I18n.t("authentication.idp_selection.contentTitle")}
+              </H1>
+            </Pressable>
+            <Body>
+              {isFastLoginFeatureFlagEnabled
+                ? I18n.t("login.expiration_info_FL")
+                : I18n.t("login.expiration_info")}
+            </Body>
+            <Body>{I18n.t("login.biometric_info")}</Body>
+          </View>
+          <VSpacer />
 
-          <Body>
-            {isFastLoginFeatureFlagEnabled
-              ? I18n.t("login.expiration_info_FL")
-              : I18n.t("login.expiration_info")}
-          </Body>
-          <Body>{I18n.t("login.biometric_info")}</Body>
-        </View>
-
-        <View style={styles.gridContainer}>
           <IdpsGrid
             idps={[...props.idps]}
             onIdpSelected={onIdpSelected}
-            headerComponent={headerComponent}
+            spacerComponent={spacerComponent}
           />
-        </View>
-
+        </ScrollView>
         {footerComponent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>

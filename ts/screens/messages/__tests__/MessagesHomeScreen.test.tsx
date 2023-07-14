@@ -44,7 +44,10 @@ jest.mock("@react-navigation/native", () => {
 const mockPresentBottomSheet = jest.fn();
 
 jest.mock("../../../utils/hooks/bottomSheet", () => ({
-  useLegacyIOBottomSheetModal: () => ({ present: mockPresentBottomSheet })
+  useLegacyIOBottomSheetModal: () => ({ present: mockPresentBottomSheet }),
+  useIOBottomSheetAutoresizableModal: () => ({
+    present: mockPresentBottomSheet
+  })
 }));
 
 describe("MessagesHomeScreen", () => {
