@@ -18,7 +18,7 @@ import ROUTES from "../../../../navigation/routes";
 import { ItwParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 
-export type PidIssuingScreenProps = {
+export type PidActivationScreenProps = {
   vc: PidMockType;
 };
 
@@ -27,7 +27,7 @@ type Props = IOStackNavigationRouteProps<
   "ITW_ACTIVATION_PID_ISSUING"
 >;
 
-const PidIssuingScreen = ({ route }: Props) => {
+const PidActivationScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const wallet = useIOSelector(ItwWalletSelector);
   const navigation = useNavigation();
@@ -98,4 +98,4 @@ const PidIssuingScreen = ({ route }: Props) => {
   );
 };
 
-export default PidIssuingScreen;
+export default PidActivationScreen;

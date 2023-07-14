@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -15,12 +15,24 @@ import { getPidMock } from "../../utils/mocks";
 import ClaimsList from "../../components/ClaimsList";
 import { useItwAbortFlow } from "../../hooks/useItwAbortSignatureFlow";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 
 const PidPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
   const { present, bottomSheet } = useItwAbortFlow();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  /**
+   * Temporary timeout to simulate loading, will be removed in the future.
+   */
+  useOnFirstRender(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  });
 
   const cancelButtonProps = {
     block: true,
@@ -45,34 +57,44 @@ const PidPreviewScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={{ ...IOStyles.flex }}>
-        <ScreenContent
-          title={I18n.t("features.itWallet.issuing.pidPreviewScreen.title")}
+        <ItwLoadingSpinnerOverlay
+          isLoading={isLoading}
+          captionTitle={I18n.t(
+            "features.itWallet.issuing.pidPreviewScreen.loading.title"
+          )}
+          captionSubtitle={I18n.t(
+            "features.itWallet.issuing.pidPreviewScreen.loading.subtitle"
+          )}
         >
-          <VSpacer />
-          <View style={IOStyles.horizontalContentPadding}>
-            <PidCredential
-              name={`${pidMock.verified_claims.claims.given_name} ${pidMock.verified_claims.claims.family_name}`}
-              fiscalCode={pidMock.verified_claims.claims.tax_id_number}
-            />
+          <ScreenContent
+            title={I18n.t("features.itWallet.issuing.pidPreviewScreen.title")}
+          >
             <VSpacer />
-            <FeatureInfo
-              body={I18n.t(
-                "features.itWallet.issuing.pidPreviewScreen.checkNotice"
-              )}
-              iconName="notice"
-            />
-            <VSpacer />
-            <ClaimsList claims={pidMock} />
-            <VSpacer size={spacerSize} />
-          </View>
-        </ScreenContent>
+            <View style={IOStyles.horizontalContentPadding}>
+              <PidCredential
+                name={`${pidMock.verified_claims.claims.given_name} ${pidMock.verified_claims.claims.family_name}`}
+                fiscalCode={pidMock.verified_claims.claims.tax_id_number}
+              />
+              <VSpacer />
+              <FeatureInfo
+                body={I18n.t(
+                  "features.itWallet.issuing.pidPreviewScreen.checkNotice"
+                )}
+                iconName="notice"
+              />
+              <VSpacer />
+              <ClaimsList claims={pidMock} />
+              <VSpacer size={spacerSize} />
+            </View>
+          </ScreenContent>
 
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={saveButtonProps}
-        />
-        {bottomSheet}
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps}
+            rightButton={saveButtonProps}
+          />
+          {bottomSheet}
+        </ItwLoadingSpinnerOverlay>
       </SafeAreaView>
     </BaseScreenComponent>
   );
