@@ -28,8 +28,11 @@ import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import ROUTES from "../../../navigation/routes";
-import { trackPNDisclaimerRejected } from "../../pn/analytics";
-import { trackDisclaimerOpened, trackUxConversion } from "../analytics";
+import {
+  trackDisclaimerOpened,
+  trackNotificationRejected,
+  trackUxConversion
+} from "../analytics";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -48,27 +51,29 @@ type MessagePreconditionFooterProps = {
   navigationAction: (message: UIMessage) => void;
 };
 
+const foldMessage = (
+  message: pot.Pot<UIMessage, Error>,
+  callback: (message: UIMessage) => void
+) => pipe(message, pot.toOption, O.map(callback));
+
 const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
   const message = useIOSelector(state =>
     getPaginatedMessageById(state, props.messageId)
   );
 
   const handleCancelPress = () => {
-    trackPNDisclaimerRejected();
+    foldMessage(message, (foldedMessage: UIMessage) =>
+      trackNotificationRejected(foldedMessage.category.tag)
+    );
     props.onDismiss();
   };
 
   const handleContinuePress = () => {
+    foldMessage(message, (foldedMessage: UIMessage) => {
+      trackUxConversion(foldedMessage.category.tag);
+      props.navigationAction(foldedMessage);
+    });
     props.onDismiss();
-
-    pipe(
-      message,
-      pot.toOption,
-      O.map(message => {
-        trackUxConversion(message.category.tag);
-        props.navigationAction(message);
-      })
-    );
   };
 
   // if the markdown is not loaded yet

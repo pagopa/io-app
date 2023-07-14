@@ -115,3 +115,10 @@ export function trackDisclaimerLoadError(tag: MessageCategory["tag"]) {
     buildEventProperties("TECH", undefined)
   );
 }
+
+export function trackNotificationRejected(tag: MessageCategory["tag"]) {
+  void mixpanelTrack(
+    `${S.toUpperCase(tag)}_NOTIFICATION_REJECTED`,
+    buildEventProperties("UX", "exit")
+  );
+}

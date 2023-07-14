@@ -132,10 +132,6 @@ export function trackPNAttachmentOpeningSuccess(
   );
 }
 
-export function trackPNDisclaimerRejected() {
-  void mixpanelTrack("PN_DISCLAIMER_REJECTED");
-}
-
 export function trackPNNotificationLoadError(errorCode?: string) {
   const properties = errorCode ? { errorCode } : { jsonDecodeFailed: true };
   void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", properties);
