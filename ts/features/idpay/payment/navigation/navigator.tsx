@@ -44,6 +44,7 @@ export const IDPayPaymentNavigator = () => (
       <Stack.Screen
         name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
         component={IDPayPaymentCodeInputScreen}
+        options={{ gestureEnabled: true }}
       />
       <Stack.Screen
         name={IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}
