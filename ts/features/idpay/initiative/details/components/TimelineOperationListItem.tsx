@@ -42,21 +42,21 @@ type TimelineOperationListItemProps = {
 const getPaymentLogoIcon = (operation: OperationListDTO) => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
-      return <Icon name={"checkTic"} color="bluegreyLight" />;
+      return <Icon name={"checkTic"} color="grey-300" />;
     case IbanOperationTypeEnum.ADD_IBAN:
-      return <Icon name={"institution"} color="bluegreyLight" />;
+      return <Icon name={"institution"} color="grey-300" />;
     case RefundOperationTypeEnum.PAID_REFUND:
-      return <Icon name="refund" color="bluegrey" />;
-    case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
-    case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+      return <Icon name="refund" color="grey-300" />;
     case RefundOperationTypeEnum.REJECTED_REFUND:
-      return <Icon name={"notice"} color="red" />;
+      return <Icon name={"refund"} color="grey-300" />;
     case TransactionOperationTypeEnum.REVERSAL:
     case TransactionOperationTypeEnum.TRANSACTION:
       if (operation.channel === ChannelEnum.QRCODE) {
-        return <Icon name={"merchant"} color="bluegreyLight" />;
+        return <Icon name={"merchant"} color="grey-300" />;
       }
       return operation.brand;
+    case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+    case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
       return operation.brand;
@@ -70,7 +70,7 @@ const getDiscountInitiativeTransactionStatus = (
 ): ListItemTransactionStatus => {
   switch (operation.status) {
     case TransactionStatusEnum.CANCELLED:
-      return "cancelled";
+      return "failure";
     case TransactionStatusEnum.REWARDED:
     case TransactionStatusEnum.AUTHORIZED:
       return "success";
@@ -96,12 +96,19 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
   const getOperationTitle = () => {
     switch (operation.operationType) {
       case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+      case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT: {
+        if (operation.maskedPan) {
+          return I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT",
+            {
+              maskedPan: operation.maskedPan
+            }
+          );
+        }
         return I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT",
-          {
-            maskedPan: operation.maskedPan
-          }
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT_WITHOUT_MASKED_PAN"
         );
+      }
       case TransactionOperationTypeEnum.TRANSACTION:
         if (operation.channel === ChannelEnum.QRCODE) {
           if (operation.businessName) {
@@ -140,13 +147,18 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
         }
         return "success";
       case TransactionOperationTypeEnum.REVERSAL:
-        return "success";
+        return "reversal";
       case RefundOperationTypeEnum.PAID_REFUND:
         return "refunded";
+      case RefundOperationTypeEnum.REJECTED_REFUND:
+      case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+      case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+        return "failure";
       default:
         return "success";
     }
   };
+
   return (
     <ListItemTransaction
       title={getOperationTitle()}

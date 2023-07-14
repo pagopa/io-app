@@ -61,6 +61,7 @@ global:
     onGoing: "Ongoing"
     failed: "Failed"
     cancelled: "Cancelled"
+    reversal: "Reversal"
   password: Password
   username: Username
   unknown: unknown
@@ -3364,14 +3365,14 @@ idpay:
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION:  "Pagamento POS"
-              REVERSAL:  "Storno"
-              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
-              REJECTED_DELETE_INSTRUMENT: 
-                "Errore disattivazione metodo"
+              REVERSAL:  "Pagamento POS"
+              DELETE_INSTRUMENT:  "Disattivazione metodo"
+              REJECTED_ADD_INSTRUMENT:  "Attivazione metodo"
+              REJECTED_DELETE_INSTRUMENT: "Disattivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
-              REJECTED_REFUND:  "Errore rimboso"
+              REJECTED_REFUND:  "Rimborso sul tuo conto"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
     discountDetails:
