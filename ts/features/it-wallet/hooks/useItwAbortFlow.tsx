@@ -1,13 +1,12 @@
 import * as React from "react";
 import { View } from "react-native";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { H4 } from "../../../components/core/typography/H4";
-import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 
 /**
