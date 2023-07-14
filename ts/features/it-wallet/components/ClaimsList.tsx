@@ -1,5 +1,4 @@
 import React from "react";
-import { List } from "native-base";
 import { Linking } from "react-native";
 import { ISSUER_URL, PidMockType, mapAssuranceLevel } from "../utils/mocks";
 import ListItemComponent from "../../../components/screens/ListItemComponent";
@@ -34,67 +33,63 @@ const ClaimsList = ({ claims }: ClaimsListProps) => {
   );
   return (
     <>
-      <List>
-        <ListItemComponent
-          title={I18n.t("features.itWallet.verifiableCredentials.claims.name")}
-          subTitle={claims.verified_claims.claims.given_name}
-          hideIcon
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.surname"
-          )}
-          subTitle={claims.verified_claims.claims.family_name}
-          hideIcon
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.fiscalCode"
-          )}
-          subTitle={claims.verified_claims.claims.tax_id_number}
-          hideIcon
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.birthDate"
-          )}
-          subTitle={birthDate}
-          hideIcon
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.expirationDate"
-          )}
-          subTitle={expirationDate}
-          hideIcon
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.securityLevel"
-          )}
-          subTitle={mapAssuranceLevel(
-            claims.verified_claims.verification.assurance_level
-          )}
-          iconName={"info"}
-          onPress={() => null}
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.issuedBy"
-          )}
-          subTitle={
-            claims.verified_claims.verification.evidence[0].record.source
-              .organization_name
-          }
-          hideIcon
-        />
-        <ListItemComponent
-          title={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
-          subTitle={ISSUER_URL}
-          hideIcon
-          onPress={() => Linking.openURL(ISSUER_URL)}
-        />
-      </List>
+      <ListItemComponent
+        title={I18n.t("features.itWallet.verifiableCredentials.claims.name")}
+        subTitle={claims.verified_claims.claims.given_name}
+        hideIcon
+      />
+      <ListItemComponent
+        title={I18n.t("features.itWallet.verifiableCredentials.claims.surname")}
+        subTitle={claims.verified_claims.claims.family_name}
+        hideIcon
+      />
+      <ListItemComponent
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.claims.fiscalCode"
+        )}
+        subTitle={claims.verified_claims.claims.tax_id_number}
+        hideIcon
+      />
+      <ListItemComponent
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.claims.birthDate"
+        )}
+        subTitle={birthDate}
+        hideIcon
+      />
+      <ListItemComponent
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.claims.expirationDate"
+        )}
+        subTitle={expirationDate}
+        hideIcon
+      />
+      <ListItemComponent
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.claims.securityLevel"
+        )}
+        subTitle={mapAssuranceLevel(
+          claims.verified_claims.verification.assurance_level
+        )}
+        iconName={"info"}
+        onPress={() => null}
+      />
+      <ListItemComponent
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.claims.issuedBy"
+        )}
+        subTitle={
+          claims.verified_claims.verification.evidence[0].record.source
+            .organization_name
+        }
+        hideIcon
+      />
+      <ListItemComponent
+        title={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
+        subTitle={ISSUER_URL}
+        hideIcon
+        onPress={() => Linking.openURL(ISSUER_URL)}
+      />
       <VSpacer />
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>
         {I18n.t(
@@ -116,6 +111,7 @@ const ClaimsList = ({ claims }: ClaimsListProps) => {
         )}
         onPress={() => null}
       />
+      <VSpacer />
     </>
   );
 };
