@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -14,6 +14,7 @@ import ROUTES from "../../../navigation/routes";
  * A hook that returns a function to present the abort wallet activation flow bottom sheet
  */
 export const useItwAbortFlow = () => {
+  const navigation = useNavigation();
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
       <H4 color={"bluegreyDark"} weight={"Regular"}>
@@ -36,9 +37,7 @@ export const useItwAbortFlow = () => {
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
-          NavigationService.dispatchNavigationAction(
-            CommonActions.navigate(ROUTES.MAIN)
-          );
+          navigation.navigate(ROUTES.MAIN);
         }, I18n.t("features.itWallet.issuing.pidPreviewScreen.bottomSheet.buttons.cancel")),
         onPressWithGestureHandler: true
       }}
