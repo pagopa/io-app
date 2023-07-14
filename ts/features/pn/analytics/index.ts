@@ -134,10 +134,6 @@ export function trackPNDisclaimerRejected() {
   void mixpanelTrack("PN_DISCLAIMER_REJECTED");
 }
 
-export function trackPNDisclaimerShowSuccess() {
-  void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
-}
-
 export function trackPNNotificationLoadError(errorCode?: string) {
   const properties = errorCode ? { errorCode } : { jsonDecodeFailed: true };
   void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", properties);
@@ -214,12 +210,5 @@ export function trackPNUxSuccess(
       contains_payment: booleanToYesNo(containsPayment),
       first_time_opening: booleanToYesNo(firstTimeOpening)
     })
-  );
-}
-
-export function trackUxConversion(tag: string) {
-  void mixpanelTrack(
-    `${tag.toUpperCase()}_UX_CONVERSION`,
-    buildEventProperties("UX", "action")
   );
 }

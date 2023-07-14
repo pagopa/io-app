@@ -21,7 +21,6 @@ import MessageMarkdown from "../../../components/messages/MessageDetail/MessageM
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import { Pictogram } from "../../../components/core/pictograms";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import I18n from "../../../i18n";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -29,11 +28,8 @@ import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import ROUTES from "../../../navigation/routes";
-import {
-  trackPNDisclaimerRejected,
-  trackPNDisclaimerShowSuccess,
-  trackUxConversion
-} from "../../pn/analytics";
+import { trackPNDisclaimerRejected } from "../../pn/analytics";
+import { trackDisclaimerOpened, trackUxConversion } from "../analytics";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -69,12 +65,7 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
       message,
       pot.toOption,
       O.map(message => {
-        pipe(
-          message.category,
-          MessageCategory.decode,
-          O.fromEither,
-          O.map(category => trackUxConversion(category.tag))
-        );
+        trackUxConversion(message.category.tag);
         props.navigationAction(message);
       })
     );
@@ -260,8 +251,13 @@ export const useMessageOpening = () => {
 
   const present = (message: UIMessage) => {
     if (message.hasPrecondition) {
-      trackPNDisclaimerShowSuccess();
-      dispatch(getMessagePrecondition.request(message.id));
+      trackDisclaimerOpened(message.category.tag);
+      dispatch(
+        getMessagePrecondition.request({
+          id: message.id,
+          categoryTag: message.category.tag
+        })
+      );
       modal.present();
       return;
     }

@@ -1,6 +1,8 @@
 import * as t from "io-ts";
+import * as S from "fp-ts/lib/string";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -91,4 +93,25 @@ export function trackThirdPartyMessageAttachmentUserAction(
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION", {
     userAction
   });
+}
+
+export function trackDisclaimerOpened(tag: MessageCategory["tag"]) {
+  void mixpanelTrack(
+    `${S.toUpperCase(tag)}_DISCLAIMER_OPENED`,
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackUxConversion(tag: MessageCategory["tag"]) {
+  void mixpanelTrack(
+    `${S.toUpperCase(tag)}_UX_CONVERSION`,
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackDisclaimerLoadError(tag: MessageCategory["tag"]) {
+  void mixpanelTrack(
+    `${S.toUpperCase(tag)}_DISCLAIMER_LOAD_ERROR`,
+    buildEventProperties("TECH", undefined)
+  );
 }
