@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.0-rc.1](https://github.com/pagopa/io-app/compare/2.39.0-rc.0...2.39.0-rc.1) (2023-07-14)
+
+
+### Bug Fixes
+
+* [[IOBP-127](https://pagopa.atlassian.net/browse/IOBP-127)] Add swipe back gesture navigation in transaction code input screen ([#4787](https://github.com/pagopa/io-app/issues/4787)) ([69d50c3](https://github.com/pagopa/io-app/commit/69d50c374db50b73c799859c5348320eb3390cab)), closes [/github.com/pagopa/io-app/pull/4787/files#diff-db3bd7a286b3c1c1c1d256147d82387d23b714bafaba4d9ceba25a685bd2c27](https://github.com/pagopa//github.com/pagopa/io-app/pull/4787/files/issues/diff-db3bd7a286b3c1c1c1d256147d82387d23b714bafaba4d9ceba25a685bd2c27)
+* [[IOBP-128](https://pagopa.atlassian.net/browse/IOBP-128)] Fix bottom sheet padding regression ([#4784](https://github.com/pagopa/io-app/issues/4784)) ([ec10a12](https://github.com/pagopa/io-app/commit/ec10a12229b7e5217bc1240230afe445414d9f4f))
+
+
+### Chores
+
+* [[IOBP-123](https://pagopa.atlassian.net/browse/IOBP-123)] New list item transaction into IDPay timeline ([#4778](https://github.com/pagopa/io-app/issues/4778)) ([36ee59f](https://github.com/pagopa/io-app/commit/36ee59f0212ce87e240ba9b2cea4327fa3d08d64))
+* [[IOPID-417](https://pagopa.atlassian.net/browse/IOPID-417)] Enable FL production FF ([#4785](https://github.com/pagopa/io-app/issues/4785)) ([9b756b9](https://github.com/pagopa/io-app/commit/9b756b94faab419e59b32b97f6d26be0eb5de301))
+
 ## [2.39.0-rc.0](https://github.com/pagopa/io-app/compare/2.38.0-rc.1...2.39.0-rc.0) (2023-07-13)
 
 
