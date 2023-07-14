@@ -1,8 +1,8 @@
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
+import * as T from "fp-ts/lib/Task";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Alert, Linking } from "react-native";
