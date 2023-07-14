@@ -3405,7 +3405,7 @@ idpay:
     operationDetails:
       discount:
         labels:
-          AUTHORIZED: In corso
+          AUTHORIZED: Authorized
           CANCELLED: Annullata
           REWARDED: Eseguita
         details:

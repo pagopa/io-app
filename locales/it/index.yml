@@ -3429,7 +3429,7 @@ idpay:
     operationDetails:
       discount:
         labels:
-          AUTHORIZED: In corso
+          AUTHORIZED: Autorizzata
           CANCELLED: Annullata
           REWARDED: Eseguita
         details:
