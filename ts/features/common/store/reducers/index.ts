@@ -26,7 +26,9 @@ import {
   whatsNewPersistor,
   WhatsNewState
 } from "../../../whatsnew/store/reducers";
-import itwReducer, { ItWalletState } from "../../../it-wallet/store/reducers";
+import itwReducer, {
+  PersistedItWalletState
+} from "../../../it-wallet/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -41,7 +43,7 @@ export type FeaturesState = {
   idPay: IDPayState;
   whatsNew: WhatsNewState & PersistPartial;
   loginFeatures: LoginFeaturesState;
-  itWallet: ItWalletState;
+  itWallet: PersistedItWalletState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
