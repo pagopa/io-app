@@ -1,12 +1,3 @@
-/**
- * A component to show the profile fiscal code fac-simile.
- * It can be displayed as:
- * - Preview: it renders only the header of the fac-simile, rotated on the perspective direction
- * - Full: it renders the fac-simile in the horizontal position
- * - Landscape: it renders the fac-simile in the vertical position (rotated of 90 degrees)
- * The fac-simile back side can be rendered for both full and landscape modes,
- * and it includes the barcode of the fiscal code with the code 128 format
- */
 import * as React from "react";
 import {
   Text,
@@ -21,12 +12,15 @@ import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { IOColors } from "../../../components/core/variables/IOColors";
 
+/**
+ * Props for the component which consists of the name and fiscal code to be render on the card.
+ */
 type Props = {
   name: string;
   fiscalCode: string;
 };
 
-// fiscal card fac-simile dimensions: 546 x 870
+// pid card dimensions: 498 x 858
 const contentWidth =
   Dimensions.get("screen").width - 2 * customVariables.contentPadding;
 
@@ -85,6 +79,10 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Renders a card for the PID credential with the name and fiscal code of the owner.
+ * @param props - props of the screen containg name and fiscal code.
+ */
 const PidCredential = (props: Props) => {
   const renderItem = (content: string, fullStyle: StyleProp<ViewStyle>) => (
     <Text

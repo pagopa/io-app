@@ -18,21 +18,32 @@ import ROUTES from "../../../../navigation/routes";
 import { ItwParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 
+/**
+ * PidActivationScreen props which consists of the pid to be added to the wallet.
+ */
 export type PidActivationScreenProps = {
-  vc: PidMockType;
+  pid: PidMockType;
 };
 
+/**
+ * PidActivationScreen props for type checking the screen.
+ */
 type Props = IOStackNavigationRouteProps<
   ItwParamsList,
   "ITW_ACTIVATION_PID_ISSUING"
 >;
 
+/**
+ * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
+ * TODO: add an error screen when the PID is not added.
+ * @param route - route params containg the PID.
+ */
 const PidActivationScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const wallet = useIOSelector(ItwWalletSelector);
   const navigation = useNavigation();
   useOnFirstRender(() => {
-    dispatch(itwCredentialsAddPid.request(route.params.vc));
+    dispatch(itwCredentialsAddPid.request(route.params.pid));
   });
 
   const continueButtonProps = {

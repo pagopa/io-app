@@ -4,8 +4,8 @@ import { ActionType } from "typesafe-actions";
 import { itwCredentialsAddPid } from "../store/actions";
 
 /*
- * This saga handles the requirements check for the IT Wallet activation.
- * Currently it checks if the user logged in with CIE or if the device has NFC support.
+ * This saga handles adding new credentials to the wallet.
+ * Currenly it consists of a delay and then dispatches the success action, due to the credential being mocked.
  */
 export function* handleCredentialsAddPid(
   action: ActionType<typeof itwCredentialsAddPid.request>

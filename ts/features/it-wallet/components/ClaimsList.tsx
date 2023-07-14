@@ -9,10 +9,20 @@ import { H4 } from "../../../components/core/typography/H4";
 import { localeDateFormat } from "../../../utils/locale";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 
+/**
+ * ClaimsList component props definition.
+ * Contains the claims to be displayed, currenly only PID claims are supported.
+ */
 type ClaimsListProps = {
   claims: PidMockType;
 };
 
+/**
+ * This component renders the list of claims for a credential, currenly only PID is supported with a static generation.
+ * TODO: This component will be refactored to support dynamic generation of claims with schema validation.
+ * @param claims - contais the claim to be displayed.
+ * @returns
+ */
 const ClaimsList = ({ claims }: ClaimsListProps) => {
   const expirationDate = localeDateFormat(
     new Date(),

@@ -11,7 +11,7 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * A hook that returns a function to present the abort wallet activation flow bottom sheet
  */
 export const useItwAbortFlow = () => {
   const BottomSheetBody = () => (

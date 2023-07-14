@@ -13,11 +13,14 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { getPidMock } from "../../utils/mocks";
 import ClaimsList from "../../components/ClaimsList";
-import { useItwAbortFlow } from "../../hooks/useItwAbortSignatureFlow";
+import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 
+/**
+ * Renders a preview screen which displays a visual representation and the claims contained in the PID.
+ */
 const PidPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
