@@ -115,7 +115,7 @@ export const ListItemTransaction = ({
           );
         case "refunded":
           return (
-            <NewH6 color={hasChevronRight ? designSystemBlue : "greenLight"}>
+            <NewH6 color={hasChevronRight ? designSystemBlue : "success-700"}>
               {transactionAmount || ""}
             </NewH6>
           );

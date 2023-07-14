@@ -109,6 +109,20 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
           "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT_WITHOUT_MASKED_PAN"
         );
       }
+      case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
+      case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT: {
+        if (operation.maskedPan) {
+          return I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.DELETE_INSTRUMENT",
+            {
+              maskedPan: operation.maskedPan
+            }
+          );
+        }
+        return I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.DELETE_INSTRUMENT_WITHOUT_MASKED_PAN"
+        );
+      }
       case TransactionOperationTypeEnum.TRANSACTION:
         if (operation.channel === ChannelEnum.QRCODE) {
           if (operation.businessName) {

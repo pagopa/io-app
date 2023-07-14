@@ -23,6 +23,7 @@ import {
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { Divider } from "../../../../../components/core/Divider";
 export type OperationsListScreenParams = { initiativeId: string };
 
 type OperationsListScreenRouteProps = RouteProp<
@@ -118,6 +119,7 @@ export const OperationsListScreen = () => {
           onPress={() => showOperationDetailsBottomSheet(item)}
         />
       )}
+      ItemSeparatorComponent={() => <Divider />}
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.5}
       onRefresh={refresh}
