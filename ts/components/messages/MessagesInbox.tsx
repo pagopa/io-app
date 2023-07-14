@@ -13,7 +13,7 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { ItwActionBanner } from "../../features/it-wallet/components/ItwActionBanner";
 import { itWalletEnabled } from "../../config";
 import { useIOSelector } from "../../store/hooks";
-import { ItwCredentialsActivatedSelector } from "../../features/it-wallet/store/reducers/itwCredentials";
+import { ItwWalletActivatedSelector } from "../../features/it-wallet/store/reducers/itwCredentials";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
 
@@ -52,7 +52,7 @@ const MessagesInbox = ({
   const isSelecting = O.isSome(selectedItems);
   const selectedItemsCount = O.toUndefined(selectedItems)?.size ?? 0;
   const allItemsCount = messages.length;
-  const isWalletActive = useIOSelector(ItwCredentialsActivatedSelector);
+  const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
 
   const onPressItem = useCallback(
     (message: UIMessage) => {

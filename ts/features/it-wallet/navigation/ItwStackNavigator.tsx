@@ -22,7 +22,7 @@ export const ItwStackNavigator = () => (
   >
     <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.DETAILS}
-      component={PidPreviewScreen}
+      component={ItwActivationDetailsScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.INFO}

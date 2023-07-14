@@ -6,7 +6,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsAddPid } from "../../store/actions";
 import { PidMockType } from "../../utils/mocks";
-import { ItwCredentialsSelector } from "../../store/reducers/itwCredentials";
+import { ItwWalletSelector } from "../../store/reducers/itwCredentials";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
@@ -15,17 +15,24 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ROUTES from "../../../../navigation/routes";
+import { ItwParamsList } from "../../navigation/params";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 
-type PidIssuingScreenProps = {
+export type PidIssuingScreenProps = {
   vc: PidMockType;
 };
 
-const PidIssuingScreen = ({ vc }: PidIssuingScreenProps) => {
+type Props = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_ACTIVATION_PID_ISSUING"
+>;
+
+const PidIssuingScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const credentials = useIOSelector(ItwCredentialsSelector);
+  const wallet = useIOSelector(ItwWalletSelector);
   const navigation = useNavigation();
   useOnFirstRender(() => {
-    dispatch(itwCredentialsAddPid.request(vc));
+    dispatch(itwCredentialsAddPid.request(route.params.vc));
   });
 
   const continueButtonProps = {
@@ -64,20 +71,19 @@ const PidIssuingScreen = ({ vc }: PidIssuingScreenProps) => {
 
   const RenderMask = () =>
     pot.fold(
-      credentials,
+      wallet,
       () => <LoadingScreen />,
       () => <LoadingScreen />,
       () => <LoadingScreen />,
-      _ => <></>,
+      _ => <LoadingScreen />, // TODO: handle error case
       _ => <SuccessScreen />,
       () => <LoadingScreen />,
       () => <LoadingScreen />,
-      (_, __) => <></>
+      (_, __) => <LoadingScreen /> // TODO: handle error case
     );
 
   return (
     <BaseScreenComponent
-      goBack={true}
       headerTitle={I18n.t("features.itWallet.issuing.title")}
       contextualHelp={emptyContextualHelp}
     >

@@ -10,7 +10,7 @@ import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwCredentialsActivatedSelector } from "../store/reducers/itwCredentials";
+import { ItwWalletActivatedSelector } from "../store/reducers/itwCredentials";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -21,7 +21,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation();
-  const isWalletActive = useIOSelector(ItwCredentialsActivatedSelector);
+  const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),

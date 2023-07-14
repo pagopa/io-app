@@ -33,7 +33,7 @@ const PidPreviewScreen = () => {
     primary: true,
     onPress: () =>
       navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING, {
-        pidMock
+        vc: pidMock
       }),
     title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
   };
