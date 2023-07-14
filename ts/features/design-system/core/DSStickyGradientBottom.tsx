@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 import { Alert, View } from "react-native";
 import {
   SafeAreaView,
@@ -16,24 +17,46 @@ import { H2 } from "../../../components/core/typography/H2";
 import { Body } from "../../../components/core/typography/Body";
 import StickyGradientBottomActions from "../../../components/ui/StickyGradientBottomActions";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
+import {
+  IOVisualCostants,
+  buttonSolidHeight
+} from "../../../components/core/variables/IOStyles";
+import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 
-const bottomBarHeight: number = 80;
+// Extended gradient area above the actions
+export const GRADIENT_SAFE_AREA: IOSpacingScale = 80;
+// End content margin before the actions
+const contentEndMargin: IOSpacingScale = 32;
 
 export const DSStickyGradientBottom = () => {
   const enableTransition = useSharedValue(1);
   const insets = useSafeAreaInsets();
 
+  // Check if iPhone bottom handle is present. If not, add a
+  // default margin to avoid Button attached to the
+  // bottom without margin
+  const bottomMargin: number = useMemo(
+    () =>
+      insets.bottom === 0 ? IOVisualCostants.appMarginDefault : insets.bottom,
+    [insets]
+  );
+
+  /* Height of "Actions + Gradient" area */
+  const gradientAreaHeight: number = useMemo(
+    () => bottomMargin + buttonSolidHeight + GRADIENT_SAFE_AREA,
+    [bottomMargin]
+  );
+
+  /* Height of "Actions" area + Content end margin */
+  const actionsAreaHeight: number = useMemo(
+    () => bottomMargin + buttonSolidHeight + contentEndMargin,
+    [bottomMargin]
+  );
+
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
       const isEndReached =
         layoutMeasurement.height + contentOffset.y >= contentSize.height;
-
-      const scrollDifference =
-        layoutMeasurement.height + contentOffset.y - contentSize.height;
-
-      // eslint-disable-next-line no-console
-      console.log(`Difference: ${scrollDifference}, Reached? ${isEndReached}`);
 
       // eslint-disable-next-line functional/immutable-data
       enableTransition.value = isEndReached ? 0 : 1;
@@ -60,7 +83,7 @@ export const DSStickyGradientBottom = () => {
           scrollEventThrottle={16}
           contentContainerStyle={{
             paddingHorizontal: IOVisualCostants.appMarginDefault,
-            paddingBottom: insets.bottom + bottomBarHeight,
+            paddingBottom: actionsAreaHeight,
             backgroundColor: IOColors.white
           }}
         >
@@ -80,6 +103,8 @@ export const DSStickyGradientBottom = () => {
         </Animated.ScrollView>
 
         <StickyGradientBottomActions
+          bottomMargin={bottomMargin}
+          gradientAreaHeight={gradientAreaHeight}
           transitionAnimatedStyle={animatedOpacity}
         />
       </SafeAreaView>

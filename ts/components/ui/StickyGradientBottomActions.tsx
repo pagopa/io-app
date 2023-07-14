@@ -6,19 +6,25 @@ import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
-import { IOVisualCostants } from "../core/variables/IOStyles";
+import {
+  IOVisualCostants,
+  buttonSolidHeight
+} from "../core/variables/IOStyles";
+import { IOSpacingScale } from "../core/variables/IOSpacing";
 import ButtonSolid from "./ButtonSolid";
 
 export type StickyGradientBottomActions = WithTestID<{
   transitionAnimatedStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
+  bottomMargin: number;
+  gradientAreaHeight: number;
   // Accepted components: ButtonSolid, ButtonLink
   // Don't use any components other than this, please.
   firstAction?: React.ReactNode;
   secondAction?: React.ReactNode;
 }>;
 
+// Background color should be app main background (both light and dark themes)
 const HEADER_BG_COLOR: IOColors = "white";
-const GRADIENT_AREA_HEIGHT: number = 132;
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -32,27 +38,17 @@ const styles = StyleSheet.create({
 export const StickyGradientBottomActions = ({
   // firstAction,
   // secondAction,
+  bottomMargin,
+  gradientAreaHeight,
   transitionAnimatedStyle,
   testID
-}: StickyGradientBottomActions) => {
-  const insets = useSafeAreaInsets();
-
-  // Check if iPhone bottom handle is present. If not, add a
-  // default margin to avoid Button attached to the
-  // bottom without margin
-  const bottomMargin: number = useMemo(
-    () =>
-      insets.bottom === 0 ? IOVisualCostants.appMarginDefault : insets.bottom,
-    [insets]
-  );
-
-  return (
+}: StickyGradientBottomActions) => (
     <View
       style={{
         width: "100%",
         position: "absolute",
         bottom: 0,
-        height: GRADIENT_AREA_HEIGHT + bottomMargin,
+        height: gradientAreaHeight,
         paddingBottom: bottomMargin
       }}
       testID={testID}
@@ -71,7 +67,7 @@ export const StickyGradientBottomActions = ({
         pointerEvents="none"
       >
         <LinearGradient
-          style={{ height: GRADIENT_AREA_HEIGHT + bottomMargin }}
+          style={{ height: gradientAreaHeight }}
           // 100% opacity bg color fills at least 50% of the area
           locations={[0, 0.5]}
           colors={[
@@ -99,6 +95,5 @@ export const StickyGradientBottomActions = ({
       </View>
     </View>
   );
-};
 
 export default StickyGradientBottomActions;
