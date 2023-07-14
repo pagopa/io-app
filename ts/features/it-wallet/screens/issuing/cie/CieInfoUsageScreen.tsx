@@ -77,7 +77,7 @@ const CieInfoUsageScreen = () => {
                   )
                 }
               >
-                {"Guarda come fare"}
+                {I18n.t("features.itWallet.issuing.infoCie.readMoreText")}
               </Link>
             </H4>
 

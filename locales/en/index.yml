@@ -3282,6 +3282,7 @@ features:
         cancel: "Cancel"
         footerBox: "To help you, you can place the Card on a table and place your smartphone on top of it (screen facing up) and then press **Start**."
         readMoreUrl: "https://identitadigitale.gov.it/"
+        readMoreText: "See how to do it"
       loading:
         title: "I am loading the data from the Ministry of the Interior"
         subtitle: "Wait a few seconds"

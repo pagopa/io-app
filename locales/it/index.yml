@@ -3306,6 +3306,7 @@ features:
         cancel: "Annulla"
         footerBox: "Per aiutarti, puoi posizionare la Carta su un tavolo e appoggiarci sopra lo smartphone (con lo schermo rivolto verso l’alto) e poi premi **Inizia**."
         readMoreUrl: "https://identitadigitale.gov.it/"
+        readMoreText: "Guarda come fare"
       loading:
         title: "Sto caricando i dati dal Ministero dell’Interno"
         subtitle: "Attendi qualche secondo"
