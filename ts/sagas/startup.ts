@@ -57,7 +57,11 @@ import {
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  profileLoadSuccess,
+  resetProfileState
+} from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
@@ -97,6 +101,7 @@ import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selector
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendStatusSelector } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -453,6 +458,14 @@ export function* initializeApplicationSaga(
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
+
+  // After tos acceptance, we dispatch a load success to allow the execution of the check
+  // which save the hashed code tax code
+  const profile = yield* select(profileSelector);
+  if (pot.isSome(profile)) {
+    yield* put(profileLoadSuccess(profile.value));
+  }
+
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
@@ -461,8 +474,9 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
+  yield* call(checkConfiguredPinSaga);
+
   if (!hasPreviousSessionAndPin) {
-    yield* call(checkConfiguredPinSaga);
     yield* call(checkAcknowledgedFingerprintSaga);
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
@@ -477,6 +491,10 @@ export function* initializeApplicationSaga(
     // Show the thank-you screen for the onboarding
     yield* call(completeOnboardingSaga);
   }
+
+  // At the end of the onboarding checks, we enable the whatsnew check so that it is done
+  // only once you get to the messages screen (manual whatsnew management still remains after the tos)
+  yield* put(enableWhatsNewCheck());
 
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
