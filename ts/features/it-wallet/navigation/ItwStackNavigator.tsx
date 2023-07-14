@@ -51,6 +51,8 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.CIE_INFO_USAGE_SCREEN}
       component={CieInfoUsageScreen}
+    />
+    <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.TYP}
       component={ItwActivationTypScreen}
     />
