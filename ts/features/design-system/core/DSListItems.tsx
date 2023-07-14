@@ -622,7 +622,7 @@ const renderListItemIDP = () => (
 const renderListItemTransaction = () => {
   const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
   const organizationLogoURI = {
-    imageSource: `${cdnPath}1199250158.png`,
+    imageSource: `${cdnPath}82003830161.png`,
     name: "Comune di Milano"
   };
   return (
@@ -639,14 +639,14 @@ const renderListItemTransaction = () => {
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
-          paymentLogoOrUrl={"amex"}
+          paymentLogoIcon={"amex"}
           transactionStatus="failure"
           onPress={onButtonPress}
         />
         <ListItemTransaction
           title="TITLE"
           subtitle="subtitle"
-          paymentLogoOrUrl={{ uri: organizationLogoURI.imageSource }}
+          paymentLogoIcon={{ uri: organizationLogoURI.imageSource }}
           transactionStatus="pending"
           onPress={onButtonPress}
         />
@@ -662,7 +662,7 @@ const renderListItemTransaction = () => {
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
-          paymentLogoOrUrl={"mastercard"}
+          paymentLogoIcon={"mastercard"}
           onPress={onButtonPress}
         />
         <ListItemTransaction
@@ -677,15 +677,31 @@ const renderListItemTransaction = () => {
           title="This one is not clickable"
           subtitle="subtitle"
           transactionStatus="failure"
-          paymentLogoOrUrl={"postepay"}
+          paymentLogoIcon={"postepay"}
         />
         <ListItemTransaction
           title="This one is clickable but has a very long title"
           subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
           transactionAmount="€ 1.000,00"
-          paymentLogoOrUrl={"postepay"}
+          paymentLogoIcon={"postepay"}
           onPress={onButtonPress}
           transactionStatus="success"
+        />
+        <ListItemTransaction
+          title="Custom icon"
+          subtitle="This one has a custom icon on the left"
+          transactionStatus="success"
+          paymentLogoIcon={<Icon name="notice" color="red" />}
+          transactionAmount=""
+          onPress={onButtonPress}
+        />
+        <ListItemTransaction
+          title="Refunded transaction"
+          subtitle="This one has a custom icon and transaction amount with a green color"
+          transactionStatus="refunded"
+          paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+          transactionAmount="€ 100"
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
