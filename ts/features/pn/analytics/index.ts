@@ -49,10 +49,12 @@ export const trackPNServiceStartActivation = () =>
     buildEventProperties("UX", "action")
   );
 
-export const trackPNPushSettings = () =>
+export const trackPNPushSettings = (enabled: boolean) =>
   void mixpanelTrack(
     "PN_PUSH_SETTINGS",
-    buildEventProperties("UX", "micro_action")
+    buildEventProperties("UX", "micro_action", {
+      push_notification: enabled
+    })
   );
 
 export const trackPNOptInMessageCTADisplaySuccess = () =>

@@ -145,7 +145,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
                   O.filter(customSpecialFlow => customSpecialFlow === "pn"),
                   O.fold(
                     () => undefined,
-                    _ => trackPNPushSettings()
+                    _ => trackPNPushSettings(value)
                   )
                 );
                 onValueChange(value, "push");
