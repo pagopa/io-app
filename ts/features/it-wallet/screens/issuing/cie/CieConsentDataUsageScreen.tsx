@@ -209,7 +209,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           }}
           rightButton={{
             primary: true,
-            onPress: undefined,
+            onPress: () =>
+              this.props.navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW),
             title: I18n.t(
               "features.itWallet.issuing.infoConsent.footer.confirm"
             )

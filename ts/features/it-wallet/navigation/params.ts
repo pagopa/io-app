@@ -1,3 +1,4 @@
+import { PidActivationScreenProps } from "../screens/issuing/PidActivationScreen";
 import { CieCardReaderScreenNavigationParams } from "../screens/issuing/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/CieConsentDataUsageScreen";
 import { CieInfoUsageNavigationParams } from "../screens/issuing/cie/CieInfoUsageScreen";
@@ -7,6 +8,8 @@ import { ITW_ROUTES } from "./routes";
 export type ItwParamsList = {
   [ITW_ROUTES.ACTIVATION.DETAILS]: undefined;
   [ITW_ROUTES.ACTIVATION.INFO]: undefined;
+  [ITW_ROUTES.ACTIVATION.PID_PREVIEW]: undefined;
+  [ITW_ROUTES.ACTIVATION.PID_ISSUING]: PidActivationScreenProps;
   [ITW_ROUTES.ACTIVATION.CIE_EXPIRED_SCREEN]: undefined;
   [ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN]: undefined;
   [ITW_ROUTES.ACTIVATION
@@ -17,5 +20,4 @@ export type ItwParamsList = {
     .CIE_WRONG_PIN_SCREEN]: CieWrongCiePinScreenNavigationParams;
   [ITW_ROUTES.ACTIVATION.CIE_PIN_TEMP_LOCKED_SCREEN]: undefined;
   [ITW_ROUTES.ACTIVATION.CIE_INFO_USAGE_SCREEN]: CieInfoUsageNavigationParams;
-  [ITW_ROUTES.ACTIVATION.TYP]: undefined;
 };
