@@ -137,8 +137,13 @@ export function trackPNDisclaimerRejected() {
 }
 
 export function trackPNNotificationLoadError(errorCode?: string) {
-  const properties = errorCode ? { errorCode } : { jsonDecodeFailed: true };
-  void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", properties);
+  void mixpanelTrack(
+    "PN_NOTIFICATION_LOAD_ERROR",
+    buildEventProperties("KO", undefined, {
+      errorCode,
+      jsonDecodeFailed: errorCode ? false : true
+    })
+  );
 }
 
 export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
@@ -149,15 +154,18 @@ export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
     O.fold(
       () => undefined,
       (status: string) =>
-        void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
-          notificationLastStatus: status,
-          hasAttachments: pipe(
-            pnMessage.attachments as Array<UIAttachment>,
-            O.fromNullable,
-            O.map(A.isNonEmpty),
-            O.getOrElse(() => false)
-          )
-        })
+        void mixpanelTrack(
+          "PN_NOTIFICATION_LOAD_SUCCESS",
+          buildEventProperties("TECH", undefined, {
+            notificationLastStatus: status,
+            hasAttachments: pipe(
+              pnMessage.attachments as Array<UIAttachment>,
+              O.fromNullable,
+              O.map(A.isNonEmpty),
+              O.getOrElse(() => false)
+            )
+          })
+        )
     )
   );
 }
