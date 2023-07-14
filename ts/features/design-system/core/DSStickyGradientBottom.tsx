@@ -6,6 +6,7 @@ import { Body } from "../../../components/core/typography/Body";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import GradientScrollView from "../../../components/ui/GradientScrollView";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
+import ButtonLink from "../../../components/ui/ButtonLink";
 
 export const DSStickyGradientBottom = () => (
   <View
@@ -18,9 +19,16 @@ export const DSStickyGradientBottom = () => (
       primaryAction={
         <ButtonSolid
           fullWidth
-          label="Fixed component"
+          label="Primary action"
           accessibilityLabel={""}
-          onPress={() => Alert.alert("Button pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
+          onPress={() => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
+        />
+      }
+      secondaryAction={
+        <ButtonLink
+          label="Secondary action"
+          accessibilityLabel={""}
+          onPress={() => Alert.alert("Secondary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
         />
       }
     >

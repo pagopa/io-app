@@ -13,7 +13,7 @@ import {
   IOVisualCostants,
   buttonSolidHeight
 } from "../core/variables/IOStyles";
-import { IOSpacingScale } from "../core/variables/IOSpacing";
+import { IOSpacer, IOSpacingScale } from "../core/variables/IOSpacing";
 import GradientBottomActions from "./GradientBottomActions";
 
 export type GradientScrollView = WithTestID<{
@@ -29,16 +29,22 @@ export type GradientScrollView = WithTestID<{
 export const gradientSafeArea: IOSpacingScale = 80;
 // End content margin before the actions
 const contentEndMargin: IOSpacingScale = 32;
+// Margin between primary action and secondary one
+const spaceBetweenActions: IOSpacer = 24;
+// Estimated height of the secondary action
+const secondaryActionEstHeight: number = 20;
+// Extra bottom margin for iPhone bottom handle
+const extraSafeAreaMargin: IOSpacingScale = 8;
 
 export const GradientScrollView = ({
   children,
   primaryAction,
-  // secondAction,
+  secondaryAction,
   // Don't include safe area insets
   excludeSafeAreaMargins = false,
   testID
 }: GradientScrollView) => {
-  const enableTransition = useSharedValue(1);
+  const gradientOpacity = useSharedValue(1);
   const insets = useSafeAreaInsets();
 
   /* Check if the iPhone bottom handle is present.
@@ -53,16 +59,36 @@ export const GradientScrollView = ({
     [insets, excludeSafeAreaMargins]
   );
 
-  /* Total height of "Actions + Gradient" area */
-  const gradientAreaHeight: number = useMemo(
-    () => bottomMargin + buttonSolidHeight + gradientSafeArea,
-    [bottomMargin]
+  /* When the secondary action is visible, add extra margin
+to avoid little space from iPhone bottom handle */
+  const extraBottomMargin: number = useMemo(
+    () => (insets.bottom !== 0 ? extraSafeAreaMargin : 0),
+    [insets.bottom]
   );
 
-  /* Height of "Actions" area + Content end margin */
-  const actionsAreaHeight: number = useMemo(
-    () => bottomMargin + buttonSolidHeight + contentEndMargin,
-    [bottomMargin]
+  /* Total height of actions */
+  const actionsArea: number = useMemo(
+    () =>
+      primaryAction && secondaryAction
+        ? buttonSolidHeight +
+          spaceBetweenActions +
+          secondaryActionEstHeight +
+          extraBottomMargin
+        : buttonSolidHeight,
+    [extraBottomMargin, primaryAction, secondaryAction]
+  );
+
+  /* Total height of "Actions + Gradient" area */
+  const gradientAreaHeight: number = useMemo(
+    () => bottomMargin + actionsArea + gradientSafeArea,
+    [actionsArea, bottomMargin]
+  );
+
+  /* Height of the safe bottom area, applied to the ScrollView:
+  Actions + Content end margin */
+  const safeBottomAreaHeight: number = useMemo(
+    () => bottomMargin + actionsArea + contentEndMargin,
+    [actionsArea, bottomMargin]
   );
 
   const handleScroll = useAnimatedScrollHandler(
@@ -71,12 +97,12 @@ export const GradientScrollView = ({
         layoutMeasurement.height + contentOffset.y >= contentSize.height;
 
       // eslint-disable-next-line functional/immutable-data
-      enableTransition.value = isEndReached ? 0 : 1;
+      gradientOpacity.value = isEndReached ? 0 : 1;
     }
   );
 
-  const animatedOpacity = useAnimatedStyle(() => ({
-    opacity: withTiming(enableTransition.value, {
+  const opacityTransition = useAnimatedStyle(() => ({
+    opacity: withTiming(gradientOpacity.value, {
       duration: 300,
       easing: Easing.bezier(0.25, 0.1, 0.25, 1)
     })
@@ -90,17 +116,20 @@ export const GradientScrollView = ({
         scrollEventThrottle={16}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault,
-          paddingBottom: actionsAreaHeight
+          paddingBottom: safeBottomAreaHeight
         }}
       >
         {children}
       </Animated.ScrollView>
       <GradientBottomActions
         primaryAction={primaryAction}
-        transitionAnimStyle={animatedOpacity}
+        secondaryAction={secondaryAction}
+        transitionAnimStyle={opacityTransition}
         dimensions={{
           bottomMargin,
-          gradientAreaHeight
+          extraBottomMargin,
+          gradientAreaHeight,
+          spaceBetweenActions
         }}
       />
     </>

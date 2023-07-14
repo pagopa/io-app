@@ -5,6 +5,8 @@ import Animated from "react-native-reanimated";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
 import { IOVisualCostants } from "../core/variables/IOStyles";
+import { IOSpacer } from "../core/variables/IOSpacing";
+import { VSpacer } from "../core/spacer/Spacer";
 
 export type GradientBottomActions = WithTestID<{
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
@@ -17,7 +19,9 @@ export type GradientBottomActions = WithTestID<{
 
 type GradientBottomActionsDimensions = {
   bottomMargin: number;
+  extraBottomMargin: number;
   gradientAreaHeight: number;
+  spaceBetweenActions: IOSpacer;
 };
 
 // Background color should be app main background (both light and dark themes)
@@ -28,13 +32,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     width: "100%",
     flex: 1,
+    flexShrink: 0,
     justifyContent: "flex-end"
   }
 });
 
 export const GradientBottomActions = ({
   primaryAction,
-  // secondaryAction,
+  secondaryAction,
   dimensions,
   transitionAnimStyle,
   testID
@@ -74,15 +79,18 @@ export const GradientBottomActions = ({
     </Animated.View>
     <View style={styles.buttonContainer} pointerEvents="box-none">
       {primaryAction}
-      {/* <View style={[IOStyles.row, { flexShrink: 0 }]}>
-          {firstAction}
-          {secondAction && (
-            <>
-              <HSpacer size={16} />
-              {secondAction}
-            </>
-          )}
-        </View> */}
+
+      {secondaryAction && (
+        <View
+          style={{
+            alignSelf: "center",
+            marginBottom: dimensions.extraBottomMargin
+          }}
+        >
+          <VSpacer size={dimensions.spaceBetweenActions} />
+          {secondaryAction}
+        </View>
+      )}
     </View>
   </View>
 );
