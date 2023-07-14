@@ -139,7 +139,7 @@ const ItwActivationInfoAuthScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("features.itWallet.title")}
+      headerTitle={I18n.t("features.itWallet.issuing.title")}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>{RenderMask()}</SafeAreaView>
