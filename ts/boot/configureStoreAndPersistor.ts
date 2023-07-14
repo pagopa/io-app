@@ -53,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 23;
+const CURRENT_REDUX_STORE_VERSION = 24;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -356,7 +356,15 @@ const migrations: MigrationManifest = {
         ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
       }
     };
-  }
+  },
+  "24": (state: PersistedState) => ({
+    ...state,
+    features: {
+      itWallet: {
+        credentials: pot.none
+      }
+    }
+  })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
