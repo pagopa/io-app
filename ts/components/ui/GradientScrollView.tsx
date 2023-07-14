@@ -19,6 +19,7 @@ import GradientBottomActions from "./GradientBottomActions";
 export type GradientScrollView = WithTestID<{
   children: React.ReactNode;
   excludeSafeAreaMargins?: boolean;
+  debugMode?: boolean;
   // Accepted components: ButtonSolid, ButtonLink
   // Don't use any components other than this, please.
   primaryAction: React.ReactNode;
@@ -42,6 +43,7 @@ export const GradientScrollView = ({
   secondaryAction,
   // Don't include safe area insets
   excludeSafeAreaMargins = false,
+  debugMode = false,
   testID
 }: GradientScrollView) => {
   const gradientOpacity = useSharedValue(1);
@@ -122,6 +124,7 @@ to avoid little space from iPhone bottom handle */
         {children}
       </Animated.ScrollView>
       <GradientBottomActions
+        debugMode={debugMode}
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
         transitionAnimStyle={opacityTransition}

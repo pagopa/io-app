@@ -6,9 +6,8 @@ import { Body } from "../../../components/core/typography/Body";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import GradientScrollView from "../../../components/ui/GradientScrollView";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
-import ButtonLink from "../../../components/ui/ButtonLink";
 
-export const DSStickyGradientBottom = () => (
+export const DSGradientScroll = () => (
   <View
     style={{
       flexGrow: 1,
@@ -22,13 +21,6 @@ export const DSStickyGradientBottom = () => (
           label="Primary action"
           accessibilityLabel={""}
           onPress={() => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
-        />
-      }
-      secondaryAction={
-        <ButtonLink
-          label="Secondary action"
-          accessibilityLabel={""}
-          onPress={() => Alert.alert("Secondary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
         />
       }
     >

@@ -42,9 +42,9 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
     },
-    STICKY_GRADIENT_BOTTOM: {
-      route: "STICKY_GRADIENT_BOTTOM",
-      title: "Sticky gradient bottom actions"
+    GRADIENT_SCROLL: {
+      route: "GRADIENT_SCROLL",
+      title: "Gradient scroll + Actions"
     }
   },
   LEGACY: {

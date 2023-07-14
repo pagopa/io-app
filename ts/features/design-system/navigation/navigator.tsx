@@ -34,7 +34,7 @@ import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
-import { DSStickyGradientBottom } from "../core/DSStickyGradientBottom";
+import { DSGradientScroll } from "../core/DSGradientScroll";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import {
@@ -362,10 +362,10 @@ const DesignSystemMainStack = () => {
       />
 
       <Stack.Screen
-        name={DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_GRADIENT_BOTTOM.route}
-        component={DSStickyGradientBottom}
+        name={DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.route}
+        component={DSGradientScroll}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_GRADIENT_BOTTOM.title
+          headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.title
         }}
       />
 

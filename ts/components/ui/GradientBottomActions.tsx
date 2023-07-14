@@ -15,6 +15,8 @@ export type GradientBottomActions = WithTestID<{
   // Don't use any components other than this, please.
   primaryAction?: React.ReactNode;
   secondaryAction?: React.ReactNode;
+  // Debug mode
+  debugMode?: boolean;
 }>;
 
 type GradientBottomActionsDimensions = {
@@ -34,6 +36,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexShrink: 0,
     justifyContent: "flex-end"
+  },
+  gradientContainer: {
+    ...StyleSheet.absoluteFillObject
   }
 });
 
@@ -42,6 +47,7 @@ export const GradientBottomActions = ({
   secondaryAction,
   dimensions,
   transitionAnimStyle,
+  debugMode,
   testID
 }: GradientBottomActions) => (
   <View
@@ -57,11 +63,11 @@ export const GradientBottomActions = ({
   >
     <Animated.View
       style={[
-        {
-          ...StyleSheet.absoluteFillObject,
+        styles.gradientContainer,
+        debugMode && {
           borderTopColor: IOColors["error-500"],
-          backgroundColor: hexToRgba(IOColors["error-500"], 0.5),
-          borderTopWidth: 1
+          borderTopWidth: 1,
+          backgroundColor: hexToRgba(IOColors["error-500"], 0.5)
         },
         transitionAnimStyle
       ]}
