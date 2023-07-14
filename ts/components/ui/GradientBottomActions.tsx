@@ -7,14 +7,14 @@ import { WithTestID } from "../../types/WithTestID";
 import { IOVisualCostants } from "../core/variables/IOStyles";
 import ButtonSolid from "./ButtonSolid";
 
-export type StickyGradientBottomActions = WithTestID<{
+export type GradientBottomActions = WithTestID<{
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
   bottomMargin: number;
   gradientAreaHeight: number;
   // Accepted components: ButtonSolid, ButtonLink
   // Don't use any components other than this, please.
-  firstAction?: React.ReactNode;
-  secondAction?: React.ReactNode;
+  primaryAction?: React.ReactNode;
+  secondaryAction?: React.ReactNode;
 }>;
 
 // Background color should be app main background (both light and dark themes)
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export const StickyGradientBottomActions = ({
-  // firstAction,
-  // secondAction,
+export const GradientBottomActions = ({
+  primaryAction,
+  secondaryAction,
   bottomMargin,
   gradientAreaHeight,
   transitionAnimStyle,
   testID
-}: StickyGradientBottomActions) => (
+}: GradientBottomActions) => (
   <View
     style={{
       width: "100%",
@@ -71,12 +71,7 @@ export const StickyGradientBottomActions = ({
       />
     </Animated.View>
     <View style={styles.buttonContainer} pointerEvents="box-none">
-      <ButtonSolid
-        fullWidth
-        label="Fixed component"
-        accessibilityLabel={""}
-        onPress={() => Alert.alert("Button pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
-      />
+      {primaryAction}
       {/* <View style={[IOStyles.row, { flexShrink: 0 }]}>
           {firstAction}
           {secondAction && (
@@ -90,4 +85,4 @@ export const StickyGradientBottomActions = ({
   </View>
 );
 
-export default StickyGradientBottomActions;
+export default GradientBottomActions;
