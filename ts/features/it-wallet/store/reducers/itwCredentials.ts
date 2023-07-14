@@ -1,20 +1,19 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../store/actions/types";
 import { itwCredentialsAddPid } from "../actions";
 import { PidMockType } from "../../utils/mocks";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
 
-type ItwCredentialsType = {
+type ItwWalletType = {
   activated: boolean;
   vcs: Array<PidMockType>;
 };
 
-export type ItwCredentialsState = pot.Pot<ItwCredentialsType, ItWalletError>;
+export type ItwWalletState = pot.Pot<ItwWalletType, ItWalletError>;
 
-const emptyState: ItwCredentialsState = pot.none;
+const emptyState: ItwWalletState = pot.none;
 
 /**
  * This reducer handles the requirements check for the IT Wallet activation.
@@ -25,9 +24,9 @@ const emptyState: ItwCredentialsState = pot.none;
  * @returns the result state
  */
 const reducer = (
-  state: ItwCredentialsState = emptyState,
+  state: ItwWalletState = emptyState,
   action: Action
-): ItwCredentialsState => {
+): ItwWalletState => {
   switch (action.type) {
     case getType(itwCredentialsAddPid.request):
       return pot.toLoading(state);
@@ -42,12 +41,12 @@ const reducer = (
   return state;
 };
 
-export const ItwCredentialsSelector = (state: GlobalState) =>
-  state.features.itWallet.credentials;
+export const ItwWalletSelector = (state: GlobalState) =>
+  state.features.itWallet.wallet;
 
-export const ItwCredentialsActivatedSelector = (state: GlobalState) =>
+export const ItwWalletActivatedSelector = (state: GlobalState) =>
   pot.getOrElse(
-    pot.map(state.features.itWallet.credentials, creds => creds.activated),
+    pot.map(state.features.itWallet.wallet, w => w.activated),
     false
   );
 
