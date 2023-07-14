@@ -12,9 +12,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import authInfoCie from "../../../../../../img/features/it-wallet/auth-info-cie.png";
 import { Link } from "../../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../../utils/url";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { useIODispatch } from "../../../../../store/hooks";
-import { itwRequirementsRequest } from "../../../store/actions";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwParamsList } from "../../../navigation/params";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
@@ -33,13 +30,8 @@ const CieInfoUsageScreen = () => {
     >();
   const route = useRoute();
 
-  const dispatch = useIODispatch();
   const { ciePin, authorizationUri } =
     route.params as CieInfoUsageNavigationParams;
-
-  useOnFirstRender(() => {
-    dispatch(itwRequirementsRequest.request());
-  });
 
   /**
    * Containts the content of the screen.
