@@ -12,6 +12,8 @@ import ListSelectionBar from "../ListSelectionBar";
 import { IOStyles } from "../core/variables/IOStyles";
 import { ItwActionBanner } from "../../features/it-wallet/components/ItwActionBanner";
 import { itWalletEnabled } from "../../config";
+import { useIOSelector } from "../../store/hooks";
+import { ItwWalletActivatedSelector } from "../../features/it-wallet/store/reducers/itwCredentials";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
 
@@ -50,6 +52,7 @@ const MessagesInbox = ({
   const isSelecting = O.isSome(selectedItems);
   const selectedItemsCount = O.toUndefined(selectedItems)?.size ?? 0;
   const allItemsCount = messages.length;
+  const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
 
   const onPressItem = useCallback(
     (message: UIMessage) => {
@@ -84,7 +87,7 @@ const MessagesInbox = ({
           selectedMessageIds={O.toUndefined(selectedItems)}
           ListEmptyComponent={ListEmptyComponent}
           ListHeaderComponent={
-            itWalletEnabled ? (
+            itWalletEnabled && !isWalletActive ? (
               <ItwActionBanner
                 title={I18n.t("features.itWallet.actionBanner.title")}
                 content={I18n.t("features.itWallet.actionBanner.description")}

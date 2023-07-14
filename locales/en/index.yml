@@ -3359,13 +3359,48 @@ features:
         footer:
           cancel: "Cancel"
           confirm: "Authorize"
-      loading:
-        title: "I am loading the data from the Ministry of the Interior"
-        subtitle: "Wait a few seconds"
-      typ:
-        title: "Done! your IT Wallet is active on IO!"
-        content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
-        button: "Continue"
+      pidPreviewScreen: 
+        title: "Do you want to add this data to the IT Wallet?"
+        checkNotice: "Verify that the following data is correct."
+        buttons:
+          add: "Yes, add"
+          notNow: "Not now"
+        bottomSheet: 
+          title: "Cancel the IT Wallet activation"
+          body: "Do you want to cancel the obtaining of the digital identity and therefore the activation of the IT Wallet?"
+          buttons: 
+            back: "Go back"
+            cancel: "Cancel activation"
+        loading:
+          title: "I am loading the data from the Ministry of the Interior"
+          subtitle: "Wait a few seconds"
+      pidActivationScreen: 
+        loading: 
+          title: "I'm activating your IT Wallet"
+          subtitle: "Wait a few seconds"
+        typ:
+          title: "Done! your IT Wallet is active on IO!"
+          content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
+          button: "Continue"
+    verifiableCredentials:
+      type:
+        digitalCredential: "Digital Credential"
+      claims:
+        name: "Name"
+        surname: "Surname"
+        fiscalCode: "Fiscal Code"
+        birthDate: "Birth date"
+        expirationDate: "Expiration date"
+        securityLevel: "Security level"
+        issuedBy: "Credential issued by"
+        info: "Further information about this data"
+        securityLevels: 
+          high: "High"
+          na: "Not available"
+      unrecognizedData: 
+        title: "Not recognizing some data?"
+        body: "If there are errors in the data or if you want to better understand their meaning, you can contact the {{issuer}}."
+        cta: "Ask for information or report errors"
     generic:
       error:
         title: "There's a problem on our systems"
