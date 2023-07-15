@@ -1,15 +1,15 @@
-import * as React from "react";
 import { Text as NBButtonText, Toast as NBToast } from "native-base";
+import * as React from "react";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
 import {
   IOToast,
   ToastNotification
 } from "../../../components/ui/ToastNotification";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { showToast } from "../../../utils/showToast";
-import { H3 } from "../../../components/core/typography/H3";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSToastNotifications = () => (
   <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
@@ -82,9 +82,8 @@ export const DSToastNotifications = () => (
     >
       Component
     </H3>
-    <ToastNotification message="Copiato negli appunti!" icon="checkTic" />
 
-    <ToastNotification message="Copiato negli appunti!" />
+    <ToastNotification message="Neutral" icon="checkTic" />
 
     <ToastNotification message="Error" icon="errorFilled" variant="error" />
 

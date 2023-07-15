@@ -1,10 +1,12 @@
 import React from "react";
 import {
   DeviceEventEmitter,
+  FlatList,
   SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -108,13 +110,32 @@ const variantToHapticFeedback: Partial<
   warning: HapticFeedbackTypes.notificationWarning
 };
 
+type AnimatedToast = {
+  onClose?: () => void;
+} & Toast;
+
+const AnimatedToastNotification = (props: AnimatedToast) => (
+  <Animated.View
+    entering={SlideInUp.duration(300).easing(Easing.inOut(Easing.exp))}
+    exiting={SlideOutUp.duration(300).easing(Easing.inOut(Easing.exp))}
+  >
+    <Swipeable
+      containerStyle={{ overflow: "visible" }}
+      renderLeftActions={() => <View style={{ width: 100 }} />}
+      onSwipeableWillOpen={props.onClose}
+    >
+      <ToastNotification {...props} />
+    </Swipeable>
+  </Animated.View>
+);
+
 const ToastNotificationContainer = () => {
   const [toasts, setToasts] = React.useState<ReadonlyArray<UIToast>>([]);
 
   const handleToastEvent = (toast: Toast) => {
     const id = new Date().getTime();
 
-    setToasts(prevToasts => [...prevToasts, { ...toast, id }]);
+    setToasts(prevToasts => [{ ...toast, id }, ...prevToasts]);
     setTimeout(() => {
       setToasts(prevToasts => prevToasts.filter(t => t.id !== id));
     }, TOAST_DURATION_TIME);
@@ -125,10 +146,21 @@ const ToastNotificationContainer = () => {
     }
   };
 
+  const removeToastById = (id: number) => {
+    setToasts(prevToasts => prevToasts.filter(t => t.id !== id));
+  };
+
+  const removeToastAtIndex = (index: number) => {
+    setToasts(prevToasts => [
+      ...prevToasts.slice(0, index),
+      ...prevToasts.slice(index + 1)
+    ]);
+  };
+
   // If stack size exceed the maximum, remove the oldest toast
   React.useEffect(() => {
     if (toasts.length > MAX_TOAST_STACK_SIZE) {
-      setToasts(prevToasts => prevToasts.slice(1));
+      removeToastAtIndex(0);
     }
   }, [toasts]);
 
@@ -146,23 +178,21 @@ const ToastNotificationContainer = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container} pointerEvents="none">
-      <View style={styles.wrapper}>
-        {toasts
-          .map(({ id, ...toast }) => (
-            <Animated.View
-              key={id}
-              entering={SlideInUp.duration(300).easing(
-                Easing.inOut(Easing.exp)
-              )}
-              exiting={SlideOutUp.duration(300).easing(
-                Easing.inOut(Easing.exp)
-              )}
-            >
-              <ToastNotification {...toast} />
-            </Animated.View>
-          ))
-          .reverse()}
+    <SafeAreaView style={styles.container} pointerEvents="box-none">
+      <View>
+        <FlatList
+          scrollEnabled={false}
+          contentContainerStyle={styles.listContainer}
+          style={styles.list}
+          data={toasts}
+          renderItem={({ item }) => (
+            <AnimatedToastNotification
+              key={item.id}
+              {...item}
+              onClose={() => removeToastById(item.id)}
+            />
+          )}
+        />
       </View>
     </SafeAreaView>
   );
@@ -174,10 +204,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    top: 0
+    top: 0,
+    overflow: "visible"
   },
-  wrapper: {
+  listContainer: {
     padding: 24
+  },
+  list: {
+    overflow: "visible"
   },
   toast: {
     borderRadius: IOAlertRadius,
