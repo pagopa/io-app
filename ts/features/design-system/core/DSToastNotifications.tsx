@@ -84,13 +84,13 @@ export const DSToastNotifications = () => (
     </H3>
 
     <ToastNotification message="Neutral" icon="checkTic" />
-
+    <VSpacer size={8} />
     <ToastNotification message="Error" icon="errorFilled" variant="error" />
-
+    <VSpacer size={8} />
     <ToastNotification message="Info" icon="infoFilled" variant="info" />
-
+    <VSpacer size={8} />
     <ToastNotification message="Success" icon="success" variant="success" />
-
+    <VSpacer size={8} />
     <ToastNotification
       message="Warning"
       icon="warningFilled"
