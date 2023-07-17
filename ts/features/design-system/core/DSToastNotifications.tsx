@@ -85,7 +85,7 @@ export const DSToastNotifications = () => (
       Component
     </H3>
 
-    <ToastNotification message="Neutral" icon="checkTic" />
+    <ToastNotification message="Neutral" icon="checkTicBig" />
     <VSpacer size={8} />
     <ToastNotification message="Error" icon="errorFilled" variant="error" />
     <VSpacer size={8} />

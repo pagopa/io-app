@@ -38,7 +38,7 @@ import IconGiacenza from "./svg/IconGiacenza";
 import IconChat from "./svg/IconChat";
 import IconAgreement from "./svg/IconAgreement";
 import IconSave from "./svg/IconSave";
-import IconCompleted from "./svg/IconCompleted";
+import IconCheckTicBig from "./svg/IconCheckTicBig";
 import IconSuccess from "./svg/IconSuccess";
 import IconOk from "./svg/IconOk";
 import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
@@ -182,7 +182,6 @@ export const IOIcons = {
   docAttachPDF: IconDocumentAttachmentPDF,
   attachment: IconAttachment,
   add: IconAdd,
-  completed: IconCompleted,
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,
@@ -276,6 +275,7 @@ export const IOIcons = {
   productPagoPA: IconProductPagoPA /* io-pagopa */,
   productIOAppBlueBg: IconProductIOAppBlueBg,
   checkTic: IconCheckTic,
+  checkTicBig: IconCheckTicBig,
   merchant: IconMerchant
 } as const;
 
