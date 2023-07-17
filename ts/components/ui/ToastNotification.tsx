@@ -110,18 +110,6 @@ const TOAST_DURATION_TIME = 5000;
  */
 type UIToast = { id: number } & Toast;
 
-/**
- * Map a toast variant to a haptic feedback type
- */
-const variantToHapticFeedback: Partial<
-  Record<ToastVariant, HapticFeedbackTypes>
-> = {
-  error: HapticFeedbackTypes.notificationError,
-  info: HapticFeedbackTypes.impactMedium,
-  success: HapticFeedbackTypes.notificationSuccess,
-  warning: HapticFeedbackTypes.notificationWarning
-};
-
 type ToastNotificationStackItem = {
   onClose: () => void;
 } & Toast;
@@ -189,22 +177,31 @@ const ToastNotificationStackItem = (props: ToastNotificationStackItem) => {
 };
 
 /**
+ * Toast events payload
+ */
+type ToastEvent = {
+  message: string;
+  variant?: ToastVariant;
+  icon?: IOIcons;
+  hapticFeedback?: keyof typeof HapticFeedbackTypes;
+};
+
+/**
  * A container that will display the toast notifications received by the {@link TOAST_EVENT} event
  */
 const ToastNotificationContainer = () => {
   const [toasts, setToasts] = React.useState<ReadonlyArray<UIToast>>([]);
 
-  const handleToastEvent = ({ message, icon, variant = "neutral" }: Toast) => {
+  const handleToastEvent = (toast: ToastEvent) => {
     const id = new Date().getTime();
 
-    setToasts(prevToasts => [{ id, message, icon, variant }, ...prevToasts]);
+    setToasts(prevToasts => [{ id, ...toast }, ...prevToasts]);
     setTimeout(() => {
       setToasts(prevToasts => prevToasts.filter(t => t.id !== id));
     }, TOAST_DURATION_TIME);
 
-    const hapticFeedback = variantToHapticFeedback[variant];
-    if (hapticFeedback) {
-      ReactNativeHapticFeedback.trigger(hapticFeedback);
+    if (toast.hapticFeedback) {
+      ReactNativeHapticFeedback.trigger(toast.hapticFeedback);
     }
   };
 
@@ -279,51 +276,90 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Options to customize the toast notification
+ */
+type IOToastOptions = Omit<ToastEvent, "message">;
+
+/**
+ * A toast notification service that can be used to show toast notifications
+ */
 const IOToast = {
   /**
    * Show a toast notification with the given message, variant and icon
    * @param message The message to display
    * @param variant A {@link ToastVariant} of the toast that will determine its colors, defaults to "neutral"
    * @param icon An optional {@link IOIcons} to display on the right of the toast
+   *
+   * @example
+   *
+   * IOToast.show("This is a toast notification", "info", "infoFilled");
    */
-  show: (message: string, variant?: ToastVariant, icon?: IOIcons) => {
+  show: (message: string, options?: IOToastOptions) => {
     DeviceEventEmitter.emit(TOAST_EVENT, {
       message,
-      variant,
-      icon
+      ...options
     });
   },
   /**
    * Show an error toast notification with the given message and an error icon
    * @param message The message to display
+   *
+   * @example
+   *
+   * IOToast.error("This is an error toast notification");
    */
   error: (message: string) => {
-    IOToast.show(message, "error", "errorFilled");
-    ReactNativeHapticFeedback.trigger("notificationError");
+    IOToast.show(message, {
+      variant: "error",
+      icon: "errorFilled",
+      hapticFeedback: "notificationError"
+    });
   },
   /**
    * Show an info toast notification with the given message and an info icon
    * @param message The message to display
+   *
+   * @example
+   *
+   * IOToast.info("This is an info toast notification");
    */
   info: (message: string) => {
-    IOToast.show(message, "info", "infoFilled");
-    ReactNativeHapticFeedback.trigger("impactMedium");
+    IOToast.show(message, {
+      variant: "info",
+      icon: "infoFilled",
+      hapticFeedback: "impactMedium"
+    });
   },
   /**
    * Show a success toast notification with the given message and a check tick icon
    * @param message The message to display
+   *
+   * @example
+   *
+   * IOToast.success("This is a success toast notification");
    */
   success: (message: string) => {
-    IOToast.show(message, "success", "success");
-    ReactNativeHapticFeedback.trigger("notificationSuccess");
+    IOToast.show(message, {
+      variant: "success",
+      icon: "success",
+      hapticFeedback: "notificationSuccess"
+    });
   },
   /**
    * Show a warning toast notification with the given message and a warning sign icon
    * @param message The message to display
+   *
+   * @example
+   *
+   * IOToast.warning("This is a warning toast notification");
    */
   warning: (message: string) => {
-    IOToast.show(message, "warning", "warningFilled");
-    ReactNativeHapticFeedback.trigger("notificationWarning");
+    IOToast.show(message, {
+      variant: "warning",
+      icon: "warningFilled",
+      hapticFeedback: "notificationWarning"
+    });
   }
 };
 

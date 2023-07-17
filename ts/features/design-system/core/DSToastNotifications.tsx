@@ -21,7 +21,9 @@ export const DSToastNotifications = () => (
       bordered={true}
       block={true}
       onPress={() => {
-        IOToast.show("Hello!", "neutral", "checkTic");
+        IOToast.show("Hello!", {
+          icon: "checkTic"
+        });
       }}
     >
       <NBButtonText>Neutral</NBButtonText>
