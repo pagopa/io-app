@@ -79,9 +79,7 @@ const InitiativeDetailsScreen = () => {
   };
 
   const navigateToPaymentAuthorization = () => {
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
-      screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN
-    });
+    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
   };
 
   useFocusEffect(

@@ -49,14 +49,14 @@ const IDPayPaymentCodeInputScreen = () => {
       <StatusBar barStyle={"dark-content"} translucent={false} />
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.wrapper}>
-          <H1>{I18n.t("idpay.payment.qrCode.manual.title")}</H1>
+          <H1>{I18n.t("idpay.payment.manualInput.title")}</H1>
           <VSpacer size={16} />
-          <Body>{I18n.t("idpay.payment.qrCode.manual.subtitle")}</Body>
+          <Body>{I18n.t("idpay.payment.manualInput.subtitle")}</Body>
           <VSpacer size={40} />
           {/* FIXME replace with the new input field from the Design System 2.0  */}
           <LabelledItem
             isValid={isInputValid}
-            accessibilityLabel={I18n.t("idpay.payment.qrCode.manual.input")}
+            accessibilityLabel={I18n.t("idpay.payment.manualInput.input")}
             inputMaskProps={{
               type: "custom",
               options: { mask: "SSSSSSSS" },
@@ -64,7 +64,7 @@ const IDPayPaymentCodeInputScreen = () => {
               returnKeyType: "done",
               value: inputState.value,
               autoCapitalize: "none",
-              placeholder: I18n.t("idpay.payment.qrCode.manual.input"),
+              placeholder: I18n.t("idpay.payment.manualInput.input"),
               onChangeText: value => {
                 setInputState({
                   value,
@@ -82,8 +82,8 @@ const IDPayPaymentCodeInputScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: I18n.t("idpay.payment.qrCode.manual.button"),
-            accessibilityLabel: I18n.t("idpay.payment.qrCode.manual.button"),
+            title: I18n.t("idpay.payment.manualInput.button"),
+            accessibilityLabel: I18n.t("idpay.payment.manualInput.button"),
             disabled: !isInputValid,
             onPress: navigateToPaymentAuthorization,
             isLoading
