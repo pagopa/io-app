@@ -108,20 +108,20 @@ const TOAST_DURATION_TIME = 5000;
 /**
  * Toast type with an ID to be used as key in the list
  */
-type UIToast = { id: number } & Toast;
+type ToastNotificationStackItem = Toast & { id: number };
 
-type ToastNotificationStackItem = {
+type ToastNotificationStackItemProps = ToastNotificationStackItem & {
   onClose: () => void;
-} & Toast;
+};
 
-type ToastItemAnimationContext = {
+type ToastGestureEventContext = {
   translateX: number;
 };
 
 /**
  * A toast notification item that can be swiped to the right to dismiss it, with enter and exit animations
  */
-const ToastNotificationStackItem = (props: ToastNotificationStackItem) => {
+const ToastNotificationStackItem = (props: ToastNotificationStackItemProps) => {
   const translateX = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -134,7 +134,7 @@ const ToastNotificationStackItem = (props: ToastNotificationStackItem) => {
 
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
-    ToastItemAnimationContext
+    ToastGestureEventContext
   >({
     onStart: (_, context) => {
       // eslint-disable-next-line functional/immutable-data
@@ -187,7 +187,9 @@ type ToastEvent = Toast & {
  * A container that will display the toast notifications received by the {@link TOAST_EVENT} event
  */
 const ToastNotificationContainer = () => {
-  const [toasts, setToasts] = React.useState<ReadonlyArray<UIToast>>([]);
+  const [toasts, setToasts] = React.useState<
+    ReadonlyArray<ToastNotificationStackItem>
+  >([]);
 
   const handleToastEvent = (toast: ToastEvent) => {
     const id = new Date().getTime();
