@@ -35,9 +35,12 @@ import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { getRptIdFromPayment } from "../utils/rptId";
 import {
+  trackPNAttachmentOpening,
   trackPNPaymentInfoError,
   trackPNPaymentInfoPaid,
-  trackPNPaymentInfoPayable
+  trackPNPaymentInfoPayable,
+  trackPNShowTimeline,
+  trackPNUxSuccess
 } from "../analytics";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
@@ -53,12 +56,18 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
+  isRead: boolean;
   messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
 }>;
 
-export const PnMessageDetails = (props: Props) => {
+export const PnMessageDetails = ({
+  isRead,
+  message,
+  messageId,
+  service
+}: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
   const [shouldTrackMixpanel, setShouldTrackMixpanel] = useState(true);
 
@@ -68,7 +77,7 @@ export const PnMessageDetails = (props: Props) => {
   const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
 
   const payment = pipe(
-    props.message.recipients,
+    message.recipients,
     AR.findFirst(_ => _.taxId === currentFiscalCode),
     O.chainNullableK(_ => _.payment),
     O.getOrElseW(() => undefined)
@@ -106,9 +115,9 @@ export const PnMessageDetails = (props: Props) => {
     }
   }, [rptId, navigation]);
 
-  const messageId = props.messageId;
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
+      trackPNAttachmentOpening();
       navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
         attachmentId: attachment.id
@@ -128,6 +137,7 @@ export const PnMessageDetails = (props: Props) => {
     if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
       return;
     }
+    trackPNUxSuccess(!!payment, isRead);
 
     if (isPaid) {
       trackPNPaymentInfoPaid();
@@ -138,6 +148,8 @@ export const PnMessageDetails = (props: Props) => {
     }
     setShouldTrackMixpanel(false);
   }, [
+    isRead,
+    payment,
     firstLoadingRequest,
     isPaid,
     isVerifyingPayment,
@@ -154,17 +166,14 @@ export const PnMessageDetails = (props: Props) => {
         style={{ padding: customVariables.contentPadding }}
         ref={scrollViewRef}
       >
-        {props.service && <PnMessageDetailsHeader service={props.service} />}
-        <PnMessageDetailsContent
-          style={styles.content}
-          message={props.message}
-        />
-        {props.message.attachments && (
+        {service && <PnMessageDetailsHeader service={service} />}
+        <PnMessageDetailsContent style={styles.content} message={message} />
+        {message.attachments && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
             <MessageAttachments
-              attachments={props.message.attachments}
+              attachments={message.attachments}
               openPreview={openAttachment}
             />
           </PnMessageDetailsSection>
@@ -186,7 +195,7 @@ export const PnMessageDetails = (props: Props) => {
                     error={paymentVerificationError}
                     paymentNoticeNumber={payment.noticeCode}
                     organizationFiscalCode={payment.creditorTaxId}
-                    messageId={props.messageId}
+                    messageId={messageId}
                   />
                 )}
               </>
@@ -200,8 +209,8 @@ export const PnMessageDetails = (props: Props) => {
             axis="horizontal"
             title={I18n.t("features.pn.details.infoSection.iun")}
             hideSeparator={true}
-            subtitle={props.message.iun}
-            onPress={() => clipboardSetStringWithFeedback(props.message.iun)}
+            subtitle={message.iun}
+            onPress={() => clipboardSetStringWithFeedback(message.iun)}
           />
           <H5
             color="bluegrey"
@@ -210,10 +219,11 @@ export const PnMessageDetails = (props: Props) => {
             {I18n.t("features.pn.details.timeline.title")}
           </H5>
           <PnMessageTimeline
-            message={props.message}
-            onExpand={() =>
-              scrollViewRef.current?.scrollToEnd({ animated: true })
-            }
+            message={message}
+            onExpand={() => {
+              trackPNShowTimeline();
+              scrollViewRef.current?.scrollToEnd({ animated: true });
+            }}
           />
           {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
         </PnMessageDetailsSection>
