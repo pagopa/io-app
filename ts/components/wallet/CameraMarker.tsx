@@ -90,7 +90,7 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
         {(state === "VALID" || state === "INVALID") && (
           <View style={styles.iconContainer}>
             <Icon
-              name={state === "VALID" ? "completed" : "closeLarge"}
+              name={state === "VALID" ? "checkTicBig" : "closeLarge"}
               size={96}
               color={state === "VALID" ? "green" : "red"}
             />

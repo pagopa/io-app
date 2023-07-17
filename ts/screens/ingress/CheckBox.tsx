@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 export const IngressCheckBox = (props: Props) => (
   <View style={[styles.base, props.checked ? styles.checked : {}]}>
     {props.checked && (
-      <Icon name="completed" size={CHECKBOX_ICON_SIZE} color="white" />
+      <Icon name="checkTicBig" size={CHECKBOX_ICON_SIZE} color="white" />
     )}
   </View>
 );
