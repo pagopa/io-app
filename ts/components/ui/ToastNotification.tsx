@@ -179,10 +179,7 @@ const ToastNotificationStackItem = (props: ToastNotificationStackItem) => {
 /**
  * Toast events payload
  */
-type ToastEvent = {
-  message: string;
-  variant?: ToastVariant;
-  icon?: IOIcons;
+type ToastEvent = Toast & {
   hapticFeedback?: keyof typeof HapticFeedbackTypes;
 };
 
