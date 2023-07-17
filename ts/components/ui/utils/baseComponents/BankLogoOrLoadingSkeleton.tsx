@@ -2,7 +2,7 @@ import * as React from "react";
 import { Image } from "react-native";
 import Placeholder from "rn-placeholder";
 import { IOColors } from "../../../core/variables/IOColors";
-import { getBankLogosCdnUri } from "../helperFunctions/payment/strings";
+import { getBankLogosCdnUri } from "../strings";
 type BankLogoOrSkeletonProps = {
   abiCode: string;
   dimensions: { height: number; width: number };
