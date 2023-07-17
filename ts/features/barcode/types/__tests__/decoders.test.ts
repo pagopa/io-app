@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { decodeIOBarcode } from "../decoders";
 
 describe("test decodeIOBarcode function", () => {
@@ -5,22 +6,24 @@ describe("test decodeIOBarcode function", () => {
     const value = "";
     const output = decodeIOBarcode(value);
 
-    expect(output).toStrictEqual({ type: "UNKNOWN", value });
+    expect(output).toStrictEqual(O.none);
   });
 
   describe("test IDPAY barcode type", () => {
-    it("should return IDPAY on valid QRCode content", () => {
+    it("should return O.some on valid QRCode content", () => {
       const trxCode = "mkdb1yxg";
       const value = "https://continua.io.pagopa.it/idpay/auth/" + trxCode;
       const output = decodeIOBarcode(value);
 
-      expect(output).toStrictEqual({ type: "IDPAY", authUrl: value, trxCode });
+      expect(output).toStrictEqual(
+        O.some({ type: "IDPAY", authUrl: value, trxCode })
+      );
     });
-    it("should return UNKNOWN on invalid QR content", () => {
+    it("should return O.none on invalid QR content", () => {
       const value = "https://continua.io.pagopa.it/idpay/auth/pippo";
       const output = decodeIOBarcode(value);
 
-      expect(output).toStrictEqual({ type: "UNKNOWN", value });
+      expect(output).toStrictEqual(O.none);
     });
   });
 });

@@ -63,6 +63,8 @@ export type AppParamsList = {
   [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
 
+  [ROUTES.BARCODE_SCAN]: undefined;
+
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
   [CGN_ROUTES.EYCA.ACTIVATION
@@ -81,6 +83,7 @@ export type AppParamsList = {
   [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
     | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
     | IDPayUnsubscriptionNavigatorParams;
+  [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IDPayPaymentParamsList>;
 };
 
