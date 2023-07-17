@@ -1,16 +1,11 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View
-} from "react-native";
+import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import IconButton from "../../../components/ui/IconButton";
 import I18n from "../../../i18n";
 import {
@@ -26,7 +21,8 @@ import { CameraPermissionView } from "./CameraPermissionView";
 
 type Props = {
   /**
-   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
+   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
   formats?: Array<IOBarcodeFormat>;
   /**
@@ -142,7 +138,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
             customGoBack={customGoBack}
           />
           {/* This overrides BaseHeader status bar configuration */}
-          <StatusBar
+          <FocusAwareStatusBar
             barStyle={"light-content"}
             backgroundColor={"transparent"}
             translucent={true}

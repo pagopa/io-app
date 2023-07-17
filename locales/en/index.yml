@@ -61,6 +61,7 @@ global:
     onGoing: "Ongoing"
     failed: "Failed"
     cancelled: "Cancelled"
+    reversal: "Reversal"
   password: Password
   username: Username
   unknown: unknown
@@ -977,6 +978,7 @@ wallet:
       help: If you have encountered a problem entering this payment method, write for more information and details
     details:
       header: Method detail
+    validUntil: Valid until {{expDate}}
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
@@ -3364,14 +3366,14 @@ idpay:
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION:  "Pagamento POS"
-              REVERSAL:  "Storno"
-              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
-              REJECTED_DELETE_INSTRUMENT: 
-                "Errore disattivazione metodo"
+              REVERSAL:  "Pagamento POS"
+              DELETE_INSTRUMENT:  "Disattivazione metodo ···· {{maskedPan}}"
+              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN:  "Disattivazione metodo"
+              REJECTED_ADD_INSTRUMENT:  "Attivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
-              REJECTED_REFUND:  "Errore rimboso"
+              REJECTED_REFUND:  "Rimborso sul tuo conto"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
     discountDetails:
@@ -3404,7 +3406,7 @@ idpay:
     operationDetails:
       discount:
         labels:
-          AUTHORIZED: In corso
+          AUTHORIZED: Authorized
           CANCELLED: Annullata
           REWARDED: Eseguita
         details:

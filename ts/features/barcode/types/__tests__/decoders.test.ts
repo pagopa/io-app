@@ -27,19 +27,37 @@ describe("test decodeIOBarcode function", () => {
     });
   });
 
-  describe("test PAGOPA barcode type", () => {
+  describe("test PAGOPA QRCode barcode type", () => {
     it("should return PAGOPA on valid QRCode content", () => {
       const value = "PAGOPA|002|000000000000000000|01199250158|0000015000";
-      const output = decodeIOBarcode(value);
+      const output = O.toUndefined(decodeIOBarcode(value));
 
       expect(output).toHaveProperty("type", "PAGOPA");
       expect(output).toHaveProperty("amount", "0000015000");
     });
-    it("should return UNKNOWN on invalid QR content", () => {
+    it("should return UNKNOWN on invalid QRCode content", () => {
       const value = "PAGOPA|002|000000000000000000|01199250158";
       const output = decodeIOBarcode(value);
 
-      expect(output).toStrictEqual({ type: "UNKNOWN", value });
+      expect(output).toStrictEqual(O.none);
+    });
+  });
+
+  describe("test PAGOPA DataMatrix barcode type", () => {
+    it("should return PAGOPA on valid DataMatrix content", () => {
+      const value =
+        "codfase=NBPA;183007157000000000321200001630209310000000000138961P100085240950BSCMTT83A12L719RName Surname                           test                                                                                                                      A";
+      const output = O.toUndefined(decodeIOBarcode(value));
+
+      expect(output).toHaveProperty("type", "PAGOPA");
+      expect(output).toHaveProperty("amount", "0000000001");
+    });
+    it("should return UNKNOWN on invalid DataMatrix content", () => {
+      const value =
+        "codfase=NBPA;1830071A7000000000321200E01630209310000000000138961P100085240950BSCMTT83A12L719RName Surname                           test                                                                                                                      A";
+      const output = decodeIOBarcode(value);
+
+      expect(output).toStrictEqual(O.none);
     });
   });
 });

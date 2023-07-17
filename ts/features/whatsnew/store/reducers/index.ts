@@ -10,7 +10,7 @@ import {
   enableWhatsNewCheck,
   whatsNewDisplayed
 } from "../actions";
-import { ACTIVE_VERSION } from "../../version";
+import { ACTIVE_VERSION } from "../../versions";
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;

@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Divider } from "../../../components/core/Divider";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -14,20 +13,22 @@ import {
 import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import * as Platform from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
-  const insets = useSafeAreaInsets();
+
+  const { dataMatrixPosteEnabled } = useIOSelector(
+    barcodesScannerConfigSelector
+  );
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
     switch (barcode.type) {
@@ -40,13 +41,16 @@ const BarcodeScanScreen = () => {
         navigateToPaymentTransactionSummaryScreen({
           rptId: barcode.rptId,
           initialAmount: barcode.amount,
-          paymentStartOrigin: "qrcode_scan"
+          paymentStartOrigin:
+            barcode.format === "QR_CODE"
+              ? "qrcode_scan"
+              : "poste_datamatrix_scan"
         });
         break;
     }
   };
 
-  const handleBarcodeError = (_: BarcodeFailure) => {
+  const handleBarcodeError = () => {
     showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 
@@ -84,18 +88,17 @@ const BarcodeScanScreen = () => {
     </View>
   );
 
-  const manualInputModal = useIOBottomSheetAutoresizableModal(
-    {
-      component: manualInputModalComponent,
-      title: ""
-    },
-    // FIXME: This is a workaround to avoid the bottom sheet to be hidden on Android
-    32 + (Platform.isAndroid ? insets.bottom : 0)
-  );
+  const manualInputModal = useIOBottomSheetAutoresizableModal({
+    component: manualInputModalComponent,
+    title: ""
+  });
 
   return (
     <>
       <BarcodeScanBaseScreenComponent
+        formats={
+          dataMatrixPosteEnabled ? ["QR_CODE", "DATA_MATRIX"] : ["QR_CODE"]
+        }
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}
