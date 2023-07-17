@@ -9,6 +9,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
+import { Divider } from "../../../../../components/core/Divider";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -84,11 +85,13 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
     return (
       <>
         {timeline.slice(0, size).map(operation => (
-          <TimelineOperationListItem
-            key={operation.operationId}
-            operation={operation}
-            onPress={() => showOperationDetailsBottomSheet(operation)}
-          />
+          <View key={operation.operationId}>
+            <TimelineOperationListItem
+              operation={operation}
+              onPress={() => showOperationDetailsBottomSheet(operation)}
+            />
+            <Divider />
+          </View>
         ))}
       </>
     );

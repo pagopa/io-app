@@ -16,6 +16,12 @@ import {
   mockBpdState
 } from "./bpdSummaryComponent.test";
 
+jest.mock("react-native-safe-area-context", () => ({
+  useSafeAreaInsets: jest
+    .fn()
+    .mockReturnValue({ top: 20, left: 0, right: 0, bottom: 0 })
+}));
+
 describe("Ranking ready vs not ready", () => {
   const mockStore = configureMockStore();
 
