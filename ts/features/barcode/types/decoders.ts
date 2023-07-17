@@ -9,7 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 //
 // Example:
 //
-// export type SupportedDecodedIOBarcode = {
+// export type DecodedIOBarcode = {
 //    type: "IDPAY";
 //    authUrl: string;
 //    trxCode: string;
@@ -17,7 +17,7 @@ import { pipe } from "fp-ts/lib/function";
 //   type: "MY_NEW_BARCODE_TYPE";
 //   content: string;
 // };
-type SupportedDecodedIOBarcode = {
+export type DecodedIOBarcode = {
   type: "IDPAY";
   authUrl: string;
   trxCode: string;
@@ -27,7 +27,7 @@ type SupportedDecodedIOBarcode = {
 type IOBarcodeDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
 
 type IOBarcodeDecodersType = {
-  [K in SupportedDecodedIOBarcode["type"]]: IOBarcodeDecoderFn;
+  [K in DecodedIOBarcode["type"]]: IOBarcodeDecoderFn;
 };
 
 const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
@@ -57,7 +57,9 @@ export const IOBarcodeDecoders: IOBarcodeDecodersType = {
  * @param value Barcode content
  * @returns DecodedIOBarcode {@see DecodedIOBarcode}
  */
-export const decodeIOBarcode = (value: string | undefined): DecodedIOBarcode =>
+export const decodeIOBarcode = (
+  value: string | undefined
+): O.Option<DecodedIOBarcode> =>
   pipe(
     value,
     O.fromNullable,
@@ -69,13 +71,5 @@ export const decodeIOBarcode = (value: string | undefined): DecodedIOBarcode =>
       )
     ),
     O.map(A.compact),
-    O.chain(A.head),
-    O.getOrElse<DecodedIOBarcode>(() => ({
-      type: "UNKNOWN",
-      value
-    }))
+    O.chain(A.head)
   );
-
-export type DecodedIOBarcode =
-  | SupportedDecodedIOBarcode
-  | { type: "UNKNOWN"; value?: string };

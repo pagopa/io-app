@@ -5,6 +5,7 @@ import {
 import * as React from "react";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
+import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import {
@@ -33,6 +34,7 @@ import {
   IDPayPaymentNavigator,
   IDPayPaymentRoutes
 } from "../features/idpay/payment/navigation/navigator";
+import { IDPayPaymentCodeScanScreen } from "../features/idpay/payment/screens/IDPayPaymentCodeScanScreen";
 import {
   IDPayUnsubscriptionNavigator,
   IDPayUnsubscriptionRoutes
@@ -99,6 +101,12 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
         component={ProfileStackNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.BARCODE_SCAN}
+        component={BarcodeScanScreen}
+        options={{ gestureEnabled: false }}
       />
 
       {cgnEnabled && (
@@ -172,6 +180,18 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
+          />
+          {/* 
+            This screen is outside the main payment navigator to enable the slide from bottom animation.
+            FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator
+          */}
+          <Stack.Screen
+            name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+            component={IDPayPaymentCodeScanScreen}
+            options={{
+              ...TransitionPresets.ModalSlideFromBottomIOS,
+              gestureEnabled: isGestureEnabled
+            }}
           />
           <Stack.Screen
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}

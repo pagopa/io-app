@@ -238,10 +238,14 @@ export const useIOBottomSheetAutoresizableModal = (
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
 
-      setSnapPoint(insets.bottom + bottomPadding + height);
+      setSnapPoint(insets.bottom + insets.top + bottomPadding + height);
     },
     [insets, bottomPadding]
   );
+
+  const footerComponent = footer ? (
+    <View style={{ paddingBottom: insets.top }}>{footer}</View>
+  ) : undefined;
 
   return useIOBottomSheetModal({
     component: (
@@ -256,7 +260,7 @@ export const useIOBottomSheetAutoresizableModal = (
     ),
     title,
     snapPoint: [snapPoint],
-    footer,
+    footer: footerComponent,
     onDismiss
   });
 };
