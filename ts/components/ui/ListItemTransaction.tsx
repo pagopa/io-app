@@ -24,7 +24,7 @@ import {
 import {
   PressableBaseProps,
   PressableListItemBase
-} from "./baseComponents/PressableListItemBase";
+} from "./utils/baseComponents/PressableListItemBase";
 
 export type ListItemTransactionStatus =
   | "success"

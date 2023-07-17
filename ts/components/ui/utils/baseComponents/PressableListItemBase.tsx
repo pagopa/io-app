@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
-import { WithTestID } from "../../../types/WithTestID";
-import { IOListItemStyles } from "../../core/variables/IOStyles";
-import { useListItemSpringAnimation } from "../hooks/useListItemSpringAnimation";
+import { WithTestID } from "../../../../types/WithTestID";
+import { IOListItemStyles } from "../../../core/variables/IOStyles";
+import { useListItemBaseSpringAnimation } from "../hooks/useBaseSpringAnimation";
 
 export type PressableBaseProps = WithTestID<{
   accessibilityLabel?: string;
@@ -16,7 +16,7 @@ export const PressableListItemBase = ({
   children
 }: React.PropsWithChildren<PressableBaseProps>) => {
   const { onPressIn, onPressOut, animatedScaleStyle, animatedBackgroundStyle } =
-    useListItemSpringAnimation();
+    useListItemBaseSpringAnimation();
   return (
     <Pressable
       onPress={onPress}
