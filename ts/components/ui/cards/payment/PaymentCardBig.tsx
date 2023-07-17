@@ -9,7 +9,6 @@ import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
-import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentHuge } from "../../LogoPaymentHuge";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
@@ -212,7 +211,7 @@ const styles = StyleSheet.create({
     alignContent: "space-between",
     justifyContent: "space-between",
     height: 207,
-    borderRadius: IOBannerRadius,
+    borderRadius: 16,
     backgroundColor: IOColors["grey-100"],
     padding: 24
   },
