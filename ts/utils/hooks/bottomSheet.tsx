@@ -288,7 +288,7 @@ export const useLegacyIOBottomSheetModal = (
   return useIOBottomSheetModal({
     component,
     title,
-    snapPoint: [snapPoint],
+    snapPoint: [snapPoint + insets.top],
     footer: footer ? (
       <View style={{ paddingBottom: insets.top }}>{footer}</View>
     ) : undefined,
