@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
@@ -8,10 +9,8 @@ import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
-import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
-import I18n from "../../../../i18n";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
     alignContent: "space-between",
     justifyContent: "space-between",
     height: 207,
-    borderRadius: IOBannerRadius,
+    borderRadius: 16,
     backgroundColor: IOColors["grey-100"],
     padding: 24
   },

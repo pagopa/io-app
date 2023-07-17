@@ -8,7 +8,6 @@ import { IOLogoPaymentType } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
-import { IOBannerRadius } from "../../../core/variables/IOShapes";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
 import { useInteractiveSpringAnimation } from "../../utils/hooks/useBaseSpringAnimation";
 
@@ -187,7 +186,7 @@ const styles = StyleSheet.create({
     width: PAYMENT_CARD_SMALL_WIDTH,
     flexBasis: PAYMENT_CARD_SMALL_WIDTH,
     flexGrow: 0,
-    borderRadius: IOBannerRadius,
+    borderRadius: 8,
     padding: 16
   },
   logoRow: {
