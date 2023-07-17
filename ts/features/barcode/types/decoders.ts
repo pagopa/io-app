@@ -85,8 +85,8 @@ const decodePagoPADataMatrix: IOBarcodeDecoderFn = (data: string) =>
 const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
     data,
-    decodePagoPAQRCode,
-    O.alt(() => decodePagoPADataMatrix(data))
+    decodePagoPADataMatrix,
+    O.alt(() => decodePagoPAQRCode(data))
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content
