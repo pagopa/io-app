@@ -33,7 +33,7 @@ export const messagePreconditionReducer = (
   switch (action.type) {
     case getType(getMessagePrecondition.request):
       return {
-        messageId: O.some(action.payload),
+        messageId: O.some(action.payload.id),
         content: remoteLoading
       };
     case getType(getMessagePrecondition.success):
