@@ -95,8 +95,13 @@ to avoid little space from iPhone bottom handle */
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
+      /* We use Math.floor because decimals used on Android
+      devices never change the `isEndReached` boolean value.
+      We have more consistent behavior across platforms
+      if we round these calculations ¯\_(ツ)_/¯ */
       const isEndReached =
-        layoutMeasurement.height + contentOffset.y >= contentSize.height;
+        Math.floor(layoutMeasurement.height + contentOffset.y) >=
+        Math.floor(contentSize.height);
 
       // eslint-disable-next-line functional/immutable-data
       gradientOpacity.value = isEndReached ? 0 : 1;
