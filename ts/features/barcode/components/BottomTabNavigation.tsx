@@ -1,10 +1,10 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import I18n from "../../../../i18n";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import I18n from "../../../i18n";
 
 type Props = {
   onUploadBarcodePressed: () => void;
@@ -20,12 +20,12 @@ const BottomTabNavigation = (props: Props) => {
         <View style={styles.navigationTabs}>
           <View style={[styles.tab, styles.tabActive]}>
             <LabelSmall color="grey-850" weight="Regular">
-              {I18n.t("idpay.payment.qrCode.scan.tabs.scan")}
+              {I18n.t("barcodeScan.tabs.scan")}
             </LabelSmall>
           </View>
           <TouchableOpacity style={styles.tab} onPress={onUploadBarcodePressed}>
             <LabelSmall color="white" weight="Regular">
-              {I18n.t("idpay.payment.qrCode.scan.tabs.upload")}
+              {I18n.t("barcodeScan.tabs.upload")}
             </LabelSmall>
           </TouchableOpacity>
           <TouchableOpacity
@@ -33,7 +33,7 @@ const BottomTabNavigation = (props: Props) => {
             onPress={onNavigateToCodeInputScreenPressed}
           >
             <LabelSmall color="white" weight="Regular">
-              {I18n.t("idpay.payment.qrCode.scan.tabs.input")}
+              {I18n.t("barcodeScan.tabs.input")}
             </LabelSmall>
           </TouchableOpacity>
         </View>
