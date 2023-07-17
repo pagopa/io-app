@@ -80,6 +80,9 @@ const ToastNotification = ({ message, variant = "neutral", icon }: Toast) => {
           borderColor: IOColors[colors.stroke]
         }
       ]}
+      accessible={true}
+      accessibilityRole={"alert"}
+      accessibilityLabel={message}
     >
       <CTA color={colors.stroke} style={styles.content}>
         {message}
