@@ -14,7 +14,6 @@ import DocumentPicker, {
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
 import PdfThumbnail, { ThumbnailResult } from "react-native-pdf-thumbnail";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RNQRGenerator, {
   QRCodeScanResult,
   CodeType as RNQRCodeType
@@ -28,6 +27,7 @@ import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 /**
  * Maps internal formats to external library formats
@@ -166,7 +166,6 @@ const useIOBarcodeFileReader = (
   config: IOBarcodeFileReaderConfiguration
 ): IOBarcodeFileReader => {
   const { onBarcodeSuccess, onBarcodeError } = config;
-  const insets = useSafeAreaInsets();
 
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
@@ -299,17 +298,14 @@ const useIOBarcodeFileReader = (
         }}
         icon="docAttach"
       />
+      <VSpacer size={16} />
     </View>
   );
 
-  const filePickerModal = useIOBottomSheetAutoresizableModal(
-    {
-      component: filePickerModalComponent,
-      title: ""
-    },
-    // FIXME: This is a workaround to avoid the bottom sheet to be hidden on Android
-    32 + (Platform.isAndroid ? insets.bottom : 0)
-  );
+  const filePickerModal = useIOBottomSheetAutoresizableModal({
+    component: filePickerModalComponent,
+    title: ""
+  });
 
   return {
     showImagePicker,
