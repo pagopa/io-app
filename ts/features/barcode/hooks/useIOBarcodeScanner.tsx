@@ -1,8 +1,8 @@
+import * as R from "fp-ts/ReadonlyRecord";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import * as R from "fp-ts/ReadonlyRecord";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
@@ -18,7 +18,7 @@ import {
 } from "vision-camera-code-scanner";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { BarcodeCameraMarker } from "../components/BarcodeCameraMarker";
+import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
@@ -243,7 +243,7 @@ export const useIOBarcodeScanner = (
         />
       )}
       <View style={{ alignSelf: "center" }}>
-        <BarcodeCameraMarker />
+        <AnimatedCameraMarker state="IDLE" />
       </View>
     </View>
   );
