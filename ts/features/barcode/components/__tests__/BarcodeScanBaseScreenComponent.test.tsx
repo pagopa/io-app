@@ -1,23 +1,23 @@
+import { fireEvent } from "@testing-library/react-native";
 import React from "react";
 import { View } from "react-native";
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import { IDPayPaymentRoutes } from "../../navigation/navigator";
-import { IDPayPaymentCodeScanScreen } from "../IDPayPaymentCodeScanScreen";
-import I18n from "../../../../../i18n";
+import I18n from "../../../../i18n";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
 
-jest.mock("../../components/Barcode/useIOBarcodeScanner", () => ({
+jest.mock("../../hooks/useIOBarcodeScanner", () => ({
   useIOBarcodeScanner: jest.fn()
 }));
 
 import {
   IOBarcodeScanner,
   useIOBarcodeScanner
-} from "../../components/Barcode/useIOBarcodeScanner";
+} from "../../hooks/useIOBarcodeScanner";
+import { BarcodeScanBaseScreenComponent } from "../BarcodeScanBaseScreenComponent";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import ROUTES from "../../../../navigation/routes";
 
 const mockCameraComponent = <View testID="cameraComponentTestID" />;
 
@@ -30,7 +30,7 @@ const mockCameraComponent = <View testID="cameraComponentTestID" />;
   })
 );
 
-describe("Test IDPayPaymentCodeScanScreen", () => {
+describe("Test BarcodeScanBaseScreenComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -65,19 +65,15 @@ describe("Test IDPayPaymentCodeScanScreen", () => {
     expect(component.queryByTestId("cameraComponentTestID")).toBeFalsy();
 
     expect(
-      component.queryByText(
-        I18n.t("idpay.payment.qrCode.scan.permissions.undefined.title")
-      )
+      component.queryByText(I18n.t("barcodeScan.permissions.undefined.title"))
     ).toBeTruthy();
 
     expect(
-      component.queryByText(
-        I18n.t("idpay.payment.qrCode.scan.permissions.undefined.label")
-      )
+      component.queryByText(I18n.t("barcodeScan.permissions.undefined.label"))
     ).toBeTruthy();
 
     const buttonComponent = component.getByText(
-      I18n.t("idpay.payment.qrCode.scan.permissions.undefined.action")
+      I18n.t("barcodeScan.permissions.undefined.action")
     );
 
     expect(buttonComponent).toBeTruthy();
@@ -106,19 +102,15 @@ describe("Test IDPayPaymentCodeScanScreen", () => {
     expect(component.queryByTestId("cameraComponentTestID")).toBeFalsy();
 
     expect(
-      component.queryByText(
-        I18n.t("idpay.payment.qrCode.scan.permissions.denied.title")
-      )
+      component.queryByText(I18n.t("barcodeScan.permissions.denied.title"))
     ).toBeTruthy();
 
     expect(
-      component.queryByText(
-        I18n.t("idpay.payment.qrCode.scan.permissions.denied.label")
-      )
+      component.queryByText(I18n.t("barcodeScan.permissions.denied.label"))
     ).toBeTruthy();
 
     const buttonComponent = component.getByText(
-      I18n.t("idpay.payment.qrCode.scan.permissions.denied.action")
+      I18n.t("barcodeScan.permissions.denied.action")
     );
 
     expect(buttonComponent).toBeTruthy();
@@ -140,8 +132,14 @@ const renderComponent = () => {
 
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
-      () => <IDPayPaymentCodeScanScreen />,
-      IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN,
+      () => (
+        <BarcodeScanBaseScreenComponent
+          onBarcodeSuccess={() => null}
+          onBarcodeError={() => null}
+          onManualInputPressed={() => null}
+        />
+      ),
+      ROUTES.MAIN,
       {},
       store
     ),

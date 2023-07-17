@@ -1,0 +1,6 @@
+export type BarcodeFailure =
+  | "UNEXPECTED"
+  | "INVALID_INPUT"
+  | "BARCODE_NOT_FOUND"
+  | "UNKNOWN_CONTENT"
+  | "UNSUPPORTED_FORMAT";
