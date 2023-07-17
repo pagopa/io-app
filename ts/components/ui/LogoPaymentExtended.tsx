@@ -15,7 +15,7 @@ type LogoPaymentHugeProps = {
     }
 );
 
-export const LogoPaymentHuge = (props: LogoPaymentHugeProps) => {
+export const LogoPaymentExtended = (props: LogoPaymentHugeProps) => {
   const { height, width } = props.dimensions;
   if ("icon" in props) {
     switch (props.icon) {

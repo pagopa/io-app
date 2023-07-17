@@ -16,7 +16,7 @@ import {
   IOVisualCostants
 } from "../../../components/core/variables/IOStyles";
 import Avatar from "../../../components/ui/Avatar";
-import { LogoPaymentHuge } from "../../../components/ui/LogoPaymentHuge";
+import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {
   DSLogoPaymentViewerBox,
@@ -79,7 +79,7 @@ export const DSLogos = () => {
         weight={"SemiBold"}
         style={{ marginBottom: 12 }}
       >
-        LogoPaymentHuge
+        LogoPaymentExtended
       </H2>
       <NewH6>with ABI</NewH6>
       <View
@@ -92,11 +92,11 @@ export const DSLogos = () => {
           }
         ]}
       >
-        <LogoPaymentHuge
+        <LogoPaymentExtended
           abiCode="NOT_VALID"
           dimensions={{ height: 33, width: 150 }}
         />
-        <LogoPaymentHuge
+        <LogoPaymentExtended
           abiCode="08509"
           dimensions={{ height: 33, width: 150 }}
         />
@@ -112,11 +112,11 @@ export const DSLogos = () => {
           }
         ]}
       >
-        <LogoPaymentHuge
+        <LogoPaymentExtended
           abiCode="03124"
           dimensions={{ height: 33, width: 150 }}
         />
-        <LogoPaymentHuge
+        <LogoPaymentExtended
           abiCode="NOT_VALID"
           dimensions={{ height: 33, width: 150 }}
         />
@@ -124,13 +124,16 @@ export const DSLogos = () => {
       <VSpacer size={16} />
       <View style={IOStyles.alignCenter}>
         <NewH6 style={{ alignSelf: "flex-start" }}>icon = payPal</NewH6>
-        <LogoPaymentHuge
+        <LogoPaymentExtended
           icon="payPal"
           dimensions={{ height: 33, width: 150 }}
         />
         <NewH6 style={{ alignSelf: "flex-start" }}>icon = bpay</NewH6>
         <VSpacer size={16} />
-        <LogoPaymentHuge icon="bpay" dimensions={{ height: 33, width: 220 }} />
+        <LogoPaymentExtended
+          icon="bpay"
+          dimensions={{ height: 33, width: 220 }}
+        />
       </View>
     </DesignSystemScreen>
   );

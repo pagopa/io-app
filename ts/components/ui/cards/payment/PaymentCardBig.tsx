@@ -10,7 +10,7 @@ import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { IOStyles } from "../../../core/variables/IOStyles";
-import { LogoPaymentHuge } from "../../LogoPaymentHuge";
+import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
@@ -59,7 +59,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
   switch (props.cardType) {
     case "PAYPAL":
       return (
-        <LogoPaymentHuge
+        <LogoPaymentExtended
           dimensions={{ width: PAYPAL_LOGO_WIDTH, height: LOGO_HEIGHT }}
           icon="payPal"
         />
@@ -68,7 +68,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "COBADGE":
       return (
         <View style={IOStyles.flex}>
-          <LogoPaymentHuge
+          <LogoPaymentExtended
             dimensions={{ width: BANK_LOGO_WIDTH, height: LOGO_HEIGHT }}
             abiCode={props.abiCode}
           />
@@ -87,7 +87,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "BANCOMATPAY":
       return (
         <View style={IOStyles.flex}>
-          <LogoPaymentHuge
+          <LogoPaymentExtended
             dimensions={{ width: BPAY_LOGO_WIDTH, height: LOGO_HEIGHT }}
             icon="bpay"
           />
