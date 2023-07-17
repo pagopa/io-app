@@ -130,7 +130,7 @@ const InstrumentsEnrollmentScreen = () => {
     </Body>,
 
     I18n.t("idpay.configuration.instruments.enrollmentSheet.header"),
-    320,
+    270,
 
     <FooterWithButtons
       type="TwoButtonsInlineThird"
