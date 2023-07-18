@@ -16,6 +16,7 @@ import { Dispatch } from "../../store/actions/types";
 import { LabelledItem } from "../LabelledItem";
 import IconButton from "../ui/IconButton";
 import { ICON_BUTTON_MARGIN } from "../screens/BaseHeader";
+import { itWalletEnabled } from "../../config";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
@@ -67,7 +68,7 @@ class SearchButton extends React.Component<Props, State> {
         ) : (
           <>
             <IconButton
-              color="neutral"
+              color={itWalletEnabled ? "primary" : "neutral"}
               icon="search"
               onPress={this.handleSearchPress}
               accessibilityLabel={I18n.t("global.buttons.search")}
