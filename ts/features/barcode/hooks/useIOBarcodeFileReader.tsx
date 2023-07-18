@@ -19,6 +19,7 @@ import RNQRGenerator, {
   CodeType as RNQRCodeType
 } from "rn-qr-generator";
 import { Divider } from "../../../components/core/Divider";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
@@ -27,7 +28,6 @@ import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 /**
  * Maps internal formats to external library formats
@@ -45,9 +45,11 @@ const IOBarcodeFormats: { [K in IOBarcodeFormat]: RNQRCodeType } = {
  */
 const convertToIOBarcodeFormat = (
   format: RNQRCodeType
-): IOBarcodeFormat | undefined =>
-  (Object.keys(IOBarcodeFormats) as Array<IOBarcodeFormat>).find(
-    key => IOBarcodeFormats[key] === format
+): O.Option<IOBarcodeFormat> =>
+  pipe(
+    Object.entries(IOBarcodeFormats),
+    A.findFirst(([_, value]) => value === format),
+    O.map(([key, _]) => key as IOBarcodeFormat)
   );
 
 type IOBarcodeFileReader = {
@@ -72,7 +74,8 @@ type IOBarcodeFileReader = {
 
 type IOBarcodeFileReaderConfiguration = {
   /**
-   * Accepted barcoded formats that can be detected. Leave empty to accept all formats
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
+   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
   formats?: Array<IOBarcodeFormat>;
   /**
@@ -105,7 +108,7 @@ const qrCodeDetectionTask = (
 ): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
   TE.tryCatch(
     () => RNQRGenerator.detect({ uri: imageUri }),
-    () => "UNEXPECTED"
+    () => ({ reason: "UNEXPECTED" })
   );
 
 /**
@@ -118,7 +121,7 @@ const imageGenerationTask = (
 ): TE.TaskEither<BarcodeFailure, Array<ThumbnailResult>> =>
   TE.tryCatch(
     () => PdfThumbnail.generateAllPages(pdfUri, 100),
-    () => "UNEXPECTED"
+    () => ({ reason: "UNEXPECTED" })
   );
 
 /**
@@ -136,28 +139,40 @@ const imageDecodingTask = (
     TE.chain(result =>
       pipe(
         A.head(result.values),
-        TE.fromOption<BarcodeFailure>(() => "BARCODE_NOT_FOUND"),
+        TE.fromOption<BarcodeFailure>(() => ({ reason: "BARCODE_NOT_FOUND" })),
         TE.map(() => result)
       )
     ),
     TE.chain(result =>
       pipe(
         convertToIOBarcodeFormat(result.type),
-        O.fromNullable,
         O.filter(format => acceptedFormats?.includes(format) ?? true),
         O.map(format => [result, format] as const),
-        TE.fromOption<BarcodeFailure>(() => "UNSUPPORTED_FORMAT")
+        TE.fromOption<BarcodeFailure>(() => ({ reason: "UNSUPPORTED_FORMAT" }))
       )
     ),
     TE.chain(([result, format]) =>
       pipe(
+        // FIXME Currently, we only support one barcode per image
+        // Extract the first barcode if any barcode is found
         A.head(result.values),
-        O.chain(decodeIOBarcode),
-        O.map(decodedBarcode => ({
-          format,
-          ...decodedBarcode
-        })),
-        TE.fromOption<BarcodeFailure>(() => "UNKNOWN_CONTENT")
+        TE.fromOption<BarcodeFailure>(() => ({ reason: "BARCODE_NOT_FOUND" })),
+        TE.chain(content =>
+          pipe(
+            content,
+            O.of,
+            O.chain(decodeIOBarcode),
+            O.map(decodedBarcode => ({
+              format,
+              ...decodedBarcode
+            })),
+            TE.fromOption<BarcodeFailure>(() => ({
+              reason: "UNKNOWN_CONTENT",
+              format,
+              content
+            }))
+          )
+        )
       )
     )
   );
@@ -200,7 +215,7 @@ const useIOBarcodeFileReader = (
       O.chain(A.head),
       O.map(({ uri }) => uri),
       O.chain(O.fromNullable),
-      TE.fromOption<BarcodeFailure>(() => "INVALID_INPUT"),
+      TE.fromOption<BarcodeFailure>(() => ({ reason: "INVALID_FILE" })),
       TE.chain(uri => imageDecodingTask(uri, config.formats)),
       TE.mapLeft(onBarcodeError),
       TE.map(onBarcodeSuccess)
@@ -232,7 +247,7 @@ const useIOBarcodeFileReader = (
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
-      return onBarcodeError("INVALID_INPUT");
+      return onBarcodeError({ reason: "INVALID_FILE" });
     }
 
     await pipe(
@@ -255,7 +270,7 @@ const useIOBarcodeFileReader = (
           await barcodes,
           A.head,
           O.map(onBarcodeSuccess),
-          O.getOrElse(() => onBarcodeError("BARCODE_NOT_FOUND"))
+          O.getOrElse(() => onBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
         )
       )
     )();

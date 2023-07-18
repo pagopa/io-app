@@ -12,6 +12,7 @@ import {
 import { isTestEnv } from "../../utils/environment";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../types/utils";
+import { trackDisclaimerLoadError } from "../../features/messages/analytics";
 
 export const testWorkerMessagePrecondition = isTestEnv
   ? workerMessagePrecondition
@@ -23,14 +24,12 @@ function* workerMessagePrecondition(
   >,
   action: ActionType<typeof getMessagePrecondition.request>
 ) {
-  const messageId = action.payload;
+  const { id, categoryTag } = action.payload;
 
   try {
     const result = (yield* call(
       withRefreshApiCall,
-      getThirdPartyMessagePrecondition({
-        id: messageId
-      }),
+      getThirdPartyMessagePrecondition({ id }),
       action
     )) as unknown as SagaCallReturnType<
       typeof getThirdPartyMessagePrecondition
@@ -46,6 +45,7 @@ function* workerMessagePrecondition(
       throw Error(readableReport(result.left));
     }
   } catch (e) {
+    trackDisclaimerLoadError(categoryTag);
     yield* put(getMessagePrecondition.failure(convertUnknownToError(e)));
   }
 }
