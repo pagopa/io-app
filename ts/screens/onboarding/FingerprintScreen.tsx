@@ -1,7 +1,7 @@
-import { Content } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { connect } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Body } from "../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -16,6 +16,8 @@ import {
 } from "../../store/actions/onboarding";
 import { Dispatch } from "../../store/actions/types";
 import { BiometricsValidType } from "../../utils/biometrics";
+import { IOVisualCostants } from "../../components/core/variables/IOStyles";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 export type FingerprintScreenNavigationParams = Readonly<{
   biometryType: BiometricsValidType;
@@ -65,8 +67,16 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to show, if the fingerprint is supported by the device,
  * the instruction to enable the fingerprint/faceID usage
  */
-class FingerprintScreen extends React.PureComponent<Props> {
-  private handleGoBack = () =>
+const FingerprintScreen = ({
+  fingerprintAcknowledgeRequest,
+  abortOnboarding,
+  route
+}: Props) => {
+  const insets = useSafeAreaInsets();
+
+  const biometryType = route.params.biometryType;
+
+  const handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -78,44 +88,57 @@ class FingerprintScreen extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: this.props.abortOnboarding
+          onPress: abortOnboarding
         }
       ]
     );
 
-  public render() {
-    const biometryType = this.props.route.params.biometryType;
-
-    return (
-      <TopScreenComponent
-        goBack={this.handleGoBack}
-        headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["onboarding_fingerprint"]}
+  return (
+    <TopScreenComponent
+      goBack={handleGoBack}
+      headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["onboarding_fingerprint"]}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: IOVisualCostants.appMarginDefault
+        }}
       >
         <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
           iconFont={{ name: getBiometryIconName(biometryType) }}
         />
-        <Content>
+        <VSpacer size={24} />
+        <View
+          style={{
+            flexGrow: 1,
+            paddingHorizontal: IOVisualCostants.appMarginDefault
+          }}
+        >
           <Body>
             {I18n.t("onboarding.fingerprint.body.enrolledText", {
               biometryType: localizeBiometricsType(biometryType)
             })}
           </Body>
-        </Content>
+        </View>
+      </ScrollView>
+      {/* Waiting for a component that makes this wrapper
+      useless. FooterWithButtons currently uses
+      NativeBase buttons, instead of new ones */}
+      <View style={{ paddingBottom: insets.bottom }}>
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={{
             title: I18n.t("global.buttons.continue"),
             primary: true,
-            onPress: this.props.fingerprintAcknowledgeRequest
+            onPress: fingerprintAcknowledgeRequest
           }}
         />
-      </TopScreenComponent>
-    );
-  }
-}
+      </View>
+    </TopScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fingerprintAcknowledgeRequest: () =>

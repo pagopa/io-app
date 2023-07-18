@@ -1793,7 +1793,7 @@ messageDetails:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
 messagePDFPreview:
   title: "PDF Preview"
-  singleBtn: "Save, print, or share"
+  singleBtn: "Save or share"
   open: "Open"
   save: "Save"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
