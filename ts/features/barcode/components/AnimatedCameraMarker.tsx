@@ -5,15 +5,20 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
+  withSequence,
   withTiming
 } from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
 
+const ANIMATION_DURATION = 1500;
+
+type ScanState = "SCANNING" | "IDLE";
+
 type Props = {
   size?: number;
   cornerSize?: number;
-  state?: "SCANNING" | "IDLE";
+  state?: ScanState;
 };
 
 const defaultMarkerSize = 230;
@@ -40,13 +45,25 @@ const AnimatedCameraMarker = ({
     if (state === "SCANNING") {
       // eslint-disable-next-line functional/immutable-data
       translateY.value = withRepeat(
-        withTiming(lineSpan, {
-          duration: 1500,
-          easing: Easing.inOut(Easing.exp)
-        }),
+        withSequence(
+          withTiming(-lineSpan, {
+            duration: ANIMATION_DURATION,
+            easing: Easing.inOut(Easing.cubic)
+          }),
+          withTiming(lineSpan, {
+            duration: ANIMATION_DURATION,
+            easing: Easing.inOut(Easing.cubic)
+          })
+        ),
         -1,
         true
       );
+    } else {
+      // eslint-disable-next-line functional/immutable-data
+      translateY.value = withTiming(0, {
+        duration: ANIMATION_DURATION / 2,
+        easing: Easing.inOut(Easing.cubic)
+      });
     }
   }, [translateY, lineSpan, state]);
 

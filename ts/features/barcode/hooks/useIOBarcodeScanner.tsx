@@ -243,7 +243,7 @@ export const useIOBarcodeScanner = (
         />
       )}
       <View style={{ alignSelf: "center" }}>
-        <AnimatedCameraMarker state="IDLE" />
+        <AnimatedCameraMarker state="SCANNING" />
       </View>
     </View>
   );
