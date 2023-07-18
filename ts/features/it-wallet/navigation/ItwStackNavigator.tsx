@@ -10,6 +10,7 @@ import ItwActivationDetailsScreen from "../screens/discovery/ItwActivationDetail
 import ItwActivationInfoAuthScreen from "../screens/issuing/ItwActivationInfoAuthScreen";
 import PidPreviewScreen from "../screens/issuing/PidPreviewScreen";
 import PidActivationScreen from "../screens/issuing/PidActivationScreen";
+import ItwCredentialDetails from "../screens/ItwCredentialDetails";
 import { ItwParamsList } from "./params";
 import { ITW_ROUTES } from "./routes";
 
@@ -55,6 +56,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.CIE_WRONG_PIN_SCREEN}
       component={CieWrongCiePinScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.PRESENTATION.VC_DETAILS}
+      component={ItwCredentialDetails}
     />
   </Stack.Navigator>
 );

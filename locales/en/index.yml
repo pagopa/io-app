@@ -3275,10 +3275,10 @@ features:
       confirm: "Activate IT Wallet"
     homeScreen:
       categories: 
-        any: "Tutto"
-        personal: "Personali"
+        any: "Any"
+        personal: "Personal"
         cgn: "Carta giovani"
-        payments: "Metodi di pagamento"
+        payments: "Payments methods"
     infoAuthScreen:
       title: "Log in with CIE + PIN and save your digital identity"
       subTitle: "To activate IT Wallet you need to authenticate yourself using your Electronic Identity Card (CIE) + PIN."
@@ -3319,6 +3319,10 @@ features:
           title: "Done! your IT Wallet is active on IO!"
           content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
           button: "Continue"
+    presentation: 
+      credentialDetails: 
+        buttons: 
+          qrCode: "Show QR code"
     verifiableCredentials:
       type:
         digitalCredential: "Digital Credential"
