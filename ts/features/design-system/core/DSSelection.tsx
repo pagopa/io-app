@@ -292,6 +292,7 @@ const SwitchListItemShowroom = () => (
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
       />
+      <Divider />
       <SwitchListItemSample
         icon="coggle"
         label="Title + Icon + Action"
