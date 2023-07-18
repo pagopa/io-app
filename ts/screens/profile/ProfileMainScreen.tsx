@@ -437,8 +437,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             {isDevEnv &&
               isFastLoginEnabled &&
-              this.debugCopyListItem("FastLogin", `${isFastLoginEnabled}`, () =>
-                clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+              this.debugCopyListItem(
+                "Fast Login",
+                `${isFastLoginEnabled}`,
+                () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
               )}
 
             {isDevEnv &&
