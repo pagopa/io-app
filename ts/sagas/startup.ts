@@ -285,7 +285,8 @@ export function* initializeApplicationSaga(
       yield* put(
         refreshSessionToken.request({
           withUserInteraction: false,
-          showIdentificationModalAtStartup: true
+          showIdentificationModalAtStartup: true,
+          showLoader: false
         })
       );
     }
@@ -447,11 +448,11 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
       yield* put(
         refreshSessionToken.request({
           withUserInteraction: false,
-          showIdentificationModalAtStartup: false
+          showIdentificationModalAtStartup: false,
+          showLoader: true
         })
       );
       return;
