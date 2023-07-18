@@ -17,10 +17,7 @@ import {
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import { isTestEnv } from "../../../utils/environment";
-import {
-  trackPNAttachmentDownloadFailure,
-  trackPNAttachmentOpen
-} from "../../pn/analytics";
+import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 
 const taskCopyToMediaStore = (
@@ -174,9 +171,6 @@ export const useAttachmentDownload = (
   };
 
   const onAttachmentSelect = () => {
-    if (!isGenericAttachment) {
-      trackPNAttachmentOpen();
-    }
     void downloadAttachmentIfNeeded();
   };
 

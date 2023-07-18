@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
 import {
@@ -11,10 +13,12 @@ import { useIOSelector } from "../../../store/hooks";
 import { pnMessageAttachmentSelector } from "../store/reducers";
 import {
   trackPNAttachmentOpen,
-  trackPNAttachmentPreviewStatus,
+  trackPNAttachmentOpeningSuccess,
   trackPNAttachmentSave,
+  trackPNAttachmentSaveShare,
   trackPNAttachmentShare
 } from "../analytics";
+import { isIos } from "../../../utils/platform";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -54,11 +58,13 @@ export const PnAttachmentPreview = (
     <MessageAttachmentPreview
       messageId={messageId}
       attachment={pnMessageAttachmentOption.value}
-      onPDFError={() => trackPNAttachmentPreviewStatus("error")}
-      onLoadComplete={() => () => trackPNAttachmentPreviewStatus("displayed")}
-      onShare={() => trackPNAttachmentShare()}
-      onOpen={() => trackPNAttachmentOpen()}
-      onDownload={() => trackPNAttachmentSave()}
+      onOpen={trackPNAttachmentOpen}
+      onShare={() =>
+        pipe(isIos, B.fold(trackPNAttachmentShare, trackPNAttachmentSaveShare))
+      }
+      onDownload={trackPNAttachmentSave}
+      onLoadComplete={() => trackPNAttachmentOpeningSuccess("displayer")}
+      onPDFError={() => trackPNAttachmentOpeningSuccess("error")}
     />
   ) : (
     <></>

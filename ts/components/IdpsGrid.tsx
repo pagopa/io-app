@@ -27,9 +27,9 @@ import { IOColors } from "./core/variables/IOColors";
 type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
-  footerComponent?: React.ReactNode;
   headerComponentStyle?: StyleProp<ViewStyle>;
   headerComponent?: React.ReactNode;
+  footerComponent?: React.ReactNode;
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
@@ -46,7 +46,8 @@ const GRID_GUTTER = 8;
  * than a padding to each item.
  */
 const styles = StyleSheet.create({
-  contentContainer: {
+  container: {
+    flexGrow: 1,
     backgroundColor: IOColors.greyUltraLight
   },
   columnStyle: {
@@ -116,15 +117,17 @@ const renderItem =
 
 const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
   <FlatList
-    bounces={false}
+    scrollEnabled={true}
+    bounces={true}
     data={props.idps}
     numColumns={2}
     horizontal={false}
     keyExtractor={keyExtractor}
     renderItem={renderItem(props)}
-    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
+    contentContainerStyle={styles.container}
     columnWrapperStyle={styles.columnStyle}
-    contentContainerStyle={styles.contentContainer}
+    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
+    ListHeaderComponentStyle={{ backgroundColor: IOColors.white }}
     ListHeaderComponent={props.headerComponent}
     ListFooterComponent={props.footerComponent}
   />

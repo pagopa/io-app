@@ -162,9 +162,11 @@ export const useIOBottomSheetModal = ({
       .catch(_ => setIsScreenReaderEnabled(false));
   }, []);
 
+  const inset = useSafeAreaInsets();
+
   const bottomSheet = (
     <BottomSheetModal
-      style={styles.bottomSheet}
+      style={[styles.bottomSheet, { marginTop: inset.top }]}
       footerComponent={(_: BottomSheetFooterProps) =>
         footer !== undefined ? (
           <>
@@ -236,15 +238,21 @@ export const useIOBottomSheetAutoresizableModal = (
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
 
-      setSnapPoint(insets.bottom + bottomPadding + height);
+      setSnapPoint(insets.bottom + insets.top + bottomPadding + height);
     },
     [insets, bottomPadding]
   );
 
+  const footerComponent = footer ? (
+    <View style={{ paddingBottom: insets.top }}>{footer}</View>
+  ) : undefined;
+
   return useIOBottomSheetModal({
     component: (
       <View
-        style={{ paddingBottom: insets.bottom }}
+        style={{
+          paddingBottom: insets.bottom
+        }}
         onLayout={handleContentOnLayout}
       >
         {component}
@@ -252,7 +260,7 @@ export const useIOBottomSheetAutoresizableModal = (
     ),
     title,
     snapPoint: [snapPoint],
-    footer,
+    footer: footerComponent,
     onDismiss
   });
 };
@@ -274,11 +282,16 @@ export const useLegacyIOBottomSheetModal = (
   snapPoint: number,
   footer?: React.ReactElement,
   onDismiss?: () => void
-): IOBottomSheetModal =>
-  useIOBottomSheetModal({
+): IOBottomSheetModal => {
+  const insets = useSafeAreaInsets();
+
+  return useIOBottomSheetModal({
     component,
     title,
-    snapPoint: [snapPoint],
-    footer,
+    snapPoint: [snapPoint + insets.top],
+    footer: footer ? (
+      <View style={{ paddingBottom: insets.top }}>{footer}</View>
+    ) : undefined,
     onDismiss
   });
+};

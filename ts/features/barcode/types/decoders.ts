@@ -6,8 +6,8 @@ import {
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 
@@ -85,8 +85,8 @@ const decodePagoPADataMatrix: IOBarcodeDecoderFn = (data: string) =>
 const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
   pipe(
     data,
-    decodePagoPAQRCode,
-    O.alt(() => decodePagoPADataMatrix(data))
+    decodePagoPADataMatrix,
+    O.alt(() => decodePagoPAQRCode(data))
   );
 
 // Each type comes with its own decoded function which is used to identify the barcode content
