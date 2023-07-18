@@ -1,6 +1,6 @@
 import { AppStateStatus } from "react-native";
 import { Task } from "redux-saga";
-import { call, cancel, fork, put, takeEvery } from "typed-redux-saga/macro";
+import { call, cancel, fork, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
@@ -20,7 +20,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
   let lastState: AppStateStatus = "active";
   // eslint-disable-next-line
   let identificationBackgroundTimer: Task | undefined;
-  yield* takeEvery(
+  yield* takeLatest(
     getType(applicationChangeState),
     function* (action: ActionType<typeof applicationChangeState>) {
       // Listen for changes in application state
