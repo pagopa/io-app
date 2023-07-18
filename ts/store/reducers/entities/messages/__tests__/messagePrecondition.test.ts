@@ -6,6 +6,7 @@ import {
 } from "../../../../actions/messages";
 import { appReducer } from "../../..";
 import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
 import { applicationChangeState } from "../../../../actions/application";
 import {
   remoteError,
@@ -36,11 +37,16 @@ describe("messagePrecondition", () => {
   it("The messageId should be defined and the content should be remoteLoading if the getMessagePrecondition.request is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    const action = store.dispatch(getMessagePrecondition.request(message.id));
+    const action = store.dispatch(
+      getMessagePrecondition.request({
+        id: message.id,
+        categoryTag: TagEnumPN.PN
+      })
+    );
     expect(
       store.getState().entities.messages.messagePrecondition
     ).toStrictEqual({
-      messageId: O.some(action.payload),
+      messageId: O.some(action.payload.id),
       content: remoteLoading
     });
   });

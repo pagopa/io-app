@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
 import { cdcEnabled } from "../../../config";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
@@ -19,10 +18,8 @@ import { openAppStoreUrl } from "../../../utils/url";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import { Label } from "../../core/typography/Label";
 
-type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
-
 type Props = {
-  customSpecialFlow: CustomSpecialFlow;
+  customSpecialFlowOpt?: string;
   serviceId: ServiceId;
   activate?: boolean;
 };
@@ -39,7 +36,7 @@ const UpdateAppCTA = () => {
 };
 
 const SpecialServicesCTA = (props: Props) => {
-  const { customSpecialFlow } = props;
+  const { customSpecialFlowOpt } = props;
 
   const isCGNEnabled = useIOSelector(isCGNEnabledSelector);
   const cdcEnabledSelector = useIOSelector(isCdcEnabledSelector);
@@ -48,17 +45,14 @@ const SpecialServicesCTA = (props: Props) => {
 
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
-  const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
-    CustomSpecialFlow,
-    boolean
-  >([
-    ["cgn" as CustomSpecialFlow, isCGNEnabled],
-    ["cdc" as CustomSpecialFlow, isCdcEnabled],
-    ["pn" as CustomSpecialFlow, isPnEnabled]
+  const mapFlowFeatureFlag: Map<string, boolean> = new Map<string, boolean>([
+    ["cgn", isCGNEnabled],
+    ["cdc", isCdcEnabled],
+    ["pn", isPnEnabled]
   ]);
 
   return pipe(
-    customSpecialFlow,
+    customSpecialFlowOpt,
     O.fromNullable,
     O.fold(
       () => null,
