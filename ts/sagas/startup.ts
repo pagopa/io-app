@@ -97,7 +97,10 @@ import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
-import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import {
+  isFastLoginEnabledSelector,
+  tokenRefreshSelector
+} from "../features/fastLogin/store/selectors";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendStatusSelector } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
@@ -448,14 +451,21 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      yield* put(
-        refreshSessionToken.request({
-          withUserInteraction: false,
-          showIdentificationModalAtStartup: false,
-          showLoader: true
-        })
-      );
-      return;
+      // At application startup, the state of the refresh token is "idle".
+      // If we got a 401 in the above getSession with start a token refresh.
+      // If we succeed, we can continue with the application startup and
+      // we could skip this step.
+      const lastRefreshTimestamp = yield* select(tokenRefreshSelector);
+      if (lastRefreshTimestamp.kind !== "success") {
+        yield* put(
+          refreshSessionToken.request({
+            withUserInteraction: false,
+            showIdentificationModalAtStartup: false,
+            showLoader: true
+          })
+        );
+        return;
+      }
     }
   }
 
