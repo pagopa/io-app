@@ -55,7 +55,7 @@ const AnimatedCameraMarker = ({
           </View>
         </View>
         <Animated.View style={animatedLineStyle}>
-          <CameraMarkerLine width={size} height={size} />
+          <CameraMarkerLine width={size - 10} height={size} />
         </Animated.View>
       </View>
     </View>
