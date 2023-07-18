@@ -269,7 +269,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           <InfoScreenComponent
             title={I18n.t("authentication.landing.session_expired.title")}
             body={I18n.t("authentication.landing.session_expired.body", {
-              body: this.props.isFastLoginFeatureFlagEnabled ? "365" : "30"
+              days: this.props.isFastLoginFeatureFlagEnabled ? "365" : "30"
             })}
             image={renderInfoRasterImage(sessionExpiredImg)}
           />
