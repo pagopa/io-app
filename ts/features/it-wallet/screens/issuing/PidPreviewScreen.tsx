@@ -17,6 +17,8 @@ import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
+import { ItwParamsList } from "../../navigation/params";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
@@ -25,7 +27,7 @@ const PidPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
   const { present, bottomSheet } = useItwAbortFlow();
-  const navigation = useNavigation();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const [isLoading, setIsLoading] = useState(true);
 
   /**
@@ -48,7 +50,7 @@ const PidPreviewScreen = () => {
     primary: true,
     onPress: () =>
       navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING, {
-        vc: pidMock
+        pid: pidMock
       }),
     title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
   };

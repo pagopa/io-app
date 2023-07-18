@@ -3351,6 +3351,10 @@ features:
           title: "Fatto! il tuo IT Wallet è attivo su IO!"
           content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
           button: "Continua"
+    presentation: 
+      credentialDetails: 
+        buttons: 
+          qrCode: "Mostra QR code"
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"

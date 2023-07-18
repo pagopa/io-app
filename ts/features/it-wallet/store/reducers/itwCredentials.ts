@@ -41,13 +41,34 @@ const reducer = (
   return state;
 };
 
+/**
+ * Selects the itwallet state from the global state.
+ * @param state - the global state
+ * @returns the itwallet state.
+ */
 export const ItwWalletSelector = (state: GlobalState) =>
   state.features.itWallet.wallet;
 
+/**
+ * Selects the itwallet activated flag from the global state.
+ * @param state - the global state
+ * @returns the itwallet activated flag.
+ */
 export const ItwWalletActivatedSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(state.features.itWallet.wallet, w => w.activated),
     false
+  );
+
+/**
+ * Selects the itwallet vcs from the global state.
+ * @param state - the global state
+ * @returns the itwallet vcs flag.
+ */
+export const ItwWalletVcsSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(state.features.itWallet.wallet, w => w.vcs),
+    []
   );
 
 export default reducer;
