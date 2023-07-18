@@ -1,15 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming
-} from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
+import { useYSineWaveAnimation } from "../../../components/ui/utils/hooks/useYSineWaveAnimation";
 
 const ANIMATION_DURATION = 1500;
 
@@ -31,41 +25,11 @@ const AnimatedCameraMarker = ({
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
-  const translateY = useSharedValue(0);
-
-  const animatedLineStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateY: translateY.value
-      }
-    ]
-  }));
-
-  React.useEffect(() => {
-    if (state === "SCANNING") {
-      // eslint-disable-next-line functional/immutable-data
-      translateY.value = withRepeat(
-        withSequence(
-          withTiming(-lineSpan, {
-            duration: ANIMATION_DURATION,
-            easing: Easing.inOut(Easing.cubic)
-          }),
-          withTiming(lineSpan, {
-            duration: ANIMATION_DURATION,
-            easing: Easing.inOut(Easing.cubic)
-          })
-        ),
-        -1,
-        true
-      );
-    } else {
-      // eslint-disable-next-line functional/immutable-data
-      translateY.value = withTiming(0, {
-        duration: ANIMATION_DURATION / 2,
-        easing: Easing.inOut(Easing.cubic)
-      });
-    }
-  }, [translateY, lineSpan, state]);
+  const { animatedStyle: animatedLineStyle } = useYSineWaveAnimation({
+    enabled: state === "SCANNING",
+    span: lineSpan,
+    duration: ANIMATION_DURATION
+  });
 
   const drawMarkerCorner = (rotation: number, size: number) => (
     <CameraMarkerCorner
@@ -91,7 +55,7 @@ const AnimatedCameraMarker = ({
           </View>
         </View>
         <Animated.View style={animatedLineStyle}>
-          <CameraMarkerLine />
+          <CameraMarkerLine width={size} height={size} />
         </Animated.View>
       </View>
     </View>
@@ -106,7 +70,8 @@ const styles = StyleSheet.create({
   },
   marker: {
     overflow: "hidden",
-    borderRadius: 28
+    justifyContent: "center",
+    alignItems: "center"
   },
   corners: {
     width: "100%",
