@@ -10,7 +10,8 @@ import {
   IOProductIcons,
   // IOIconsNew,
   SVGIconProps,
-  IOIconSizeScale
+  IOIconSizeScale,
+  IOSystemIcons
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
@@ -39,7 +40,13 @@ const filterIconSet = (
   );
 
 const filteredIOIcons = filterIconSet(
-  { ...IONavIcons, ...IOCategoryIcons, ...IOProductIcons, ...IOBiometricIcons },
+  {
+    ...IONavIcons,
+    ...IOCategoryIcons,
+    ...IOProductIcons,
+    ...IOBiometricIcons,
+    ...IOSystemIcons
+  },
   IOIcons
 );
 
@@ -172,6 +179,29 @@ export const DSIcons = () => (
               image={
                 <Icon
                   name={iconItemName as IOProductIcons}
+                  color={theme["icon-default"]}
+                  size="100%"
+                />
+              }
+            />
+          ))}
+        </View>
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 12 }}
+        >
+          System
+        </H2>
+        <View style={styles.itemsWrapper}>
+          {Object.entries(IOSystemIcons).map(([iconItemName]) => (
+            <DSIconViewerBox
+              key={iconItemName}
+              name={iconItemName}
+              size="large"
+              image={
+                <Icon
+                  name={iconItemName as IOSystemIcons}
                   color={theme["icon-default"]}
                   size="100%"
                 />
