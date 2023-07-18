@@ -447,6 +447,7 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
+      yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
       yield* put(
         refreshSessionToken.request({
           withUserInteraction: false,
