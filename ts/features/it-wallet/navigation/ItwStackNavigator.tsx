@@ -8,6 +8,7 @@ import CieExpiredOrInvalidScreen from "../screens/issuing/cie/CieExpiredOrInvali
 import CieWrongCiePinScreen from "../screens/issuing/cie/CieWrongCiePinScreen";
 import ItwActivationDetailsScreen from "../screens/discovery/ItwActivationDetailsScreen";
 import ItwActivationInfoAuthScreen from "../screens/issuing/ItwActivationInfoAuthScreen";
+import CieInfoUsageScreen from "../screens/issuing/cie/CieInfoUsageScreen";
 import PidPreviewScreen from "../screens/issuing/PidPreviewScreen";
 import PidActivationScreen from "../screens/issuing/PidActivationScreen";
 import ItwCredentialDetails from "../screens/ItwCredentialDetails";
@@ -56,6 +57,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.CIE_WRONG_PIN_SCREEN}
       component={CieWrongCiePinScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.ACTIVATION.CIE_INFO_USAGE_SCREEN}
+      component={CieInfoUsageScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.VC_DETAILS}
