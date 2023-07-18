@@ -45,7 +45,7 @@ const CieInfoUsageScreen = () => {
         navigation.navigate(ROUTES.MAIN, {
           screen: ROUTES.MESSAGES_HOME
         }),
-      title: I18n.t("features.itWallet.activationScreen.cancel")
+      title: I18n.t("features.itWallet.issuing.infoCie.cancel")
     };
 
     const continueButtonProps = {
