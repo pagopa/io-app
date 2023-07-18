@@ -74,7 +74,10 @@ const FciQtspClausesScreen = () => {
     useFciAbortSignatureFlow();
 
   const openUrl = (url: string) => {
-    navigation.navigate(FCI_ROUTES.DOC_PREVIEW, { documentUrl: url });
+    navigation.navigate(FCI_ROUTES.DOC_PREVIEW, {
+      documentUrl: url,
+      enableAnnotationRendering: true
+    });
   };
 
   const LoadingComponent = () => (

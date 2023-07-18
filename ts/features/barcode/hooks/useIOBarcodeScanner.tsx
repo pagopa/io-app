@@ -1,4 +1,6 @@
+import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -13,10 +15,12 @@ import {
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { usePrevious } from "../../../../../utils/hooks/usePrevious";
-import { decodeIOBarcode } from "./decoders";
-import { IOBarcode, IOBarcodeFormat } from "./IOBarcode";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
+import { BarcodeCameraMarker } from "../components/BarcodeCameraMarker";
+import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { decodeIOBarcode } from "../types/decoders";
+import { BarcodeFailure } from "../types/failure";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -36,17 +40,18 @@ const IOBarcodeFormats: IOBarcodeFormatsType = {
  */
 export type IOBarcodeScannerConfiguration = {
   /**
-   * Marker component used as camera overlay
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
+   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
-  marker?: React.ReactNode;
+  formats?: Array<IOBarcodeFormat>;
   /**
-   * Accepted formats of codes to be scanned
+   * Callback called when a barcode is successfully decoded
    */
-  formats: Array<IOBarcodeFormat>;
+  onBarcodeSuccess: (barcode: IOBarcode) => void;
   /**
-   * Scanned barcode handler
+   * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeScanned?: (barcode: IOBarcode) => void;
+  onBarcodeError: (failure: BarcodeFailure) => void;
   /**
    * Disables the barcode scanned
    */
@@ -59,7 +64,7 @@ export type IOBarcodeScanner = {
    */
   cameraComponent: React.ReactNode;
   /**
-   * Camera permission statuse
+   * Camera permission status
    */
   cameraPermissionStatus: CameraPermissionStatus;
   /**
@@ -72,10 +77,6 @@ export type IOBarcodeScanner = {
   openCameraSettings: () => Promise<void>;
 };
 
-const DEFAULT_CONFIGURATION: IOBarcodeScannerConfiguration = {
-  formats: ["DATA_MATRIX", "QR_CODE"]
-};
-
 /**
  * Utility functions to map external formats to internal formats
  * Converts {@link BarcodeFormat} to {@link IOBarcodeFormat}.
@@ -83,9 +84,11 @@ const DEFAULT_CONFIGURATION: IOBarcodeScannerConfiguration = {
  */
 const convertToIOBarcodeFormat = (
   format: BarcodeFormat
-): IOBarcodeFormat | undefined =>
-  (Object.keys(IOBarcodeFormats) as Array<IOBarcodeFormat>).find(
-    key => IOBarcodeFormats[key] === format
+): O.Option<IOBarcodeFormat> =>
+  pipe(
+    Object.entries(IOBarcodeFormats),
+    A.findFirst(([_, value]) => value === format),
+    O.map(([key, _]) => key as IOBarcodeFormat)
   );
 
 /**
@@ -112,48 +115,51 @@ const convertFromIOBarcodeFormat = (format: IOBarcodeFormat): BarcodeFormat =>
  */
 export const retrieveNextBarcode = (
   barcodes: Array<Barcode>
-): O.Option<IOBarcode> =>
+): O.Option<Barcode> =>
   pipe(
     barcodes,
-    A.reduce(
-      {} as { [key in IOBarcodeFormat]?: IOBarcode },
-      (barcodes, nextBarcode) => {
-        const ioBarcodeFormat = convertToIOBarcodeFormat(nextBarcode.format);
-
-        if (ioBarcodeFormat && !barcodes[ioBarcodeFormat]) {
-          const decodedBarcode = decodeIOBarcode(nextBarcode.displayValue);
-
-          return {
-            ...barcodes,
-            [ioBarcodeFormat]: {
-              format: ioBarcodeFormat,
-              ...decodedBarcode
-            }
-          };
-        }
-
-        return barcodes;
-      }
+    A.reduce({} as { [key in BarcodeFormat]?: Barcode }, (acc, next) =>
+      pipe(acc, R.upsertAt(next.format.toString(), next))
     ),
     O.of,
-    O.map(barcodes => barcodes.QR_CODE || barcodes.DATA_MATRIX || null),
+    O.map(
+      barcodes =>
+        barcodes[BarcodeFormat.QR_CODE] ||
+        barcodes[BarcodeFormat.DATA_MATRIX] ||
+        null
+    ),
     O.chain(O.fromNullable)
   );
 
+/**
+ * Delay for reactivating the QR scanner after a scan
+ */
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
+
 export const useIOBarcodeScanner = (
-  config: IOBarcodeScannerConfiguration = DEFAULT_CONFIGURATION
+  config: IOBarcodeScannerConfiguration
 ): IOBarcodeScanner => {
-  const { marker, onBarcodeScanned, formats, disabled } = config;
+  const { onBarcodeSuccess, onBarcodeError, disabled, formats } = config;
+
+  const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
+    () => formats || ["QR_CODE", "DATA_MATRIX"],
+    [formats]
+  );
 
   const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();
   const device = devices.back;
 
+  // This handles the resting state of the scanner after a scan
+  // It is necessary to avoid multiple scans of the same barcode
+  const scannerReactivateTimeoutHandler = React.useRef<number>();
+  const [isResting, setIsResting] = React.useState(false);
+
   const [cameraPermissionStatus, setCameraPermissionStatus] =
     React.useState<CameraPermissionStatus>("not-determined");
 
   const [frameProcessor, barcodes] = useScanBarcodes(
-    pipe(formats, A.map(convertFromIOBarcodeFormat)),
+    pipe(acceptedFormats, A.map(convertFromIOBarcodeFormat)),
     {
       checkInverted: true
     }
@@ -167,6 +173,16 @@ export const useIOBarcodeScanner = (
       .then(setCameraPermissionStatus)
       .catch(() => setCameraPermissionStatus("not-determined"));
   }, []);
+
+  /**
+   * Hook that clears the timeout handler on unmount
+   */
+  React.useEffect(
+    () => () => {
+      clearTimeout(scannerReactivateTimeoutHandler.current);
+    },
+    [scannerReactivateTimeoutHandler]
+  );
 
   /**
    * Opens the system prompt to ask camera permission
@@ -186,6 +202,58 @@ export const useIOBarcodeScanner = (
   };
 
   /**
+   * Handles the detected {@link Barcode} and converts it to {@link IOBarcode}
+   * Returns an Either with the {@link BarcodeFailure} or the {@link IOBarcode}
+   */
+  const handleDetectedBarcode = React.useCallback(
+    (detectedBarcode: Barcode): E.Either<BarcodeFailure, IOBarcode> =>
+      pipe(
+        convertToIOBarcodeFormat(detectedBarcode.format),
+        O.filter(format => acceptedFormats?.includes(format) ?? true),
+        E.fromOption<BarcodeFailure>(() => ({
+          reason: "UNSUPPORTED_FORMAT"
+        })),
+        E.chain(format =>
+          pipe(
+            decodeIOBarcode(detectedBarcode.displayValue),
+            E.fromOption<BarcodeFailure>(() => ({
+              reason: "UNKNOWN_CONTENT",
+              content: detectedBarcode.displayValue,
+              format: format as IOBarcodeFormat
+            })),
+            E.map(barcode => ({ ...barcode, format }))
+          )
+        )
+      ),
+    [acceptedFormats]
+  );
+
+  /**
+   * Handles the scanned barcodes and calls the callbacks for the results
+   */
+  const handleScannedBarcodes = React.useCallback(
+    (barcodes: Array<Barcode>) =>
+      pipe(
+        retrieveNextBarcode(barcodes),
+        O.map(detectedBarcode => {
+          // After a scan (even if not successful) the decoding is disabled for a while
+          // to avoid multiple scans of the same barcode
+          setIsResting(true);
+          // eslint-disable-next-line functional/immutable-data
+          scannerReactivateTimeoutHandler.current = setTimeout(() => {
+            setIsResting(false);
+          }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
+
+          pipe(
+            handleDetectedBarcode(detectedBarcode),
+            E.fold(onBarcodeError, onBarcodeSuccess)
+          );
+        })
+      ),
+    [handleDetectedBarcode, onBarcodeSuccess, onBarcodeError]
+  );
+
+  /**
    * onBarcodeScanned trigger hook
    */
   React.useEffect(() => {
@@ -197,12 +265,13 @@ export const useIOBarcodeScanner = (
       return;
     }
 
-    if (onBarcodeScanned === undefined) {
+    if (isResting) {
+      // Barcode scanner is momentarily disabled, skip
       return;
     }
 
-    pipe(retrieveNextBarcode(barcodes), O.map(onBarcodeScanned));
-  }, [prevDisabled, disabled, barcodes, onBarcodeScanned]);
+    handleScannedBarcodes(barcodes);
+  }, [prevDisabled, disabled, isResting, barcodes, handleScannedBarcodes]);
 
   /**
    * Component that renders camera and marker
@@ -219,7 +288,9 @@ export const useIOBarcodeScanner = (
           isActive={!disabled}
         />
       )}
-      {marker && <View style={{ alignSelf: "center" }}>{marker}</View>}
+      <View style={{ alignSelf: "center" }}>
+        <BarcodeCameraMarker />
+      </View>
     </View>
   );
 

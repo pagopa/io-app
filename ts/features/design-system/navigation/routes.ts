@@ -20,10 +20,14 @@ const DESIGN_SYSTEM_ROUTES = {
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
     ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice & Banners" },
+    CARDS: { route: "DESIGN_SYSTEM_CARDS", title: "Cards" },
     BOTTOM_SHEET: {
       route: "DESIGN_SYSTEM_BOTTOM_SHEET",
       title: "Bottom Sheet"
     }
+  },
+  HEADERS: {
+    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" }
   },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },

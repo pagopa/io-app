@@ -9,7 +9,6 @@ import {
   IDPayPaymentAuthorizationScreenRouteParams
 } from "../screens/IDPayPaymentAuthorizationScreen";
 import { IDPayPaymentCodeInputScreen } from "../screens/IDPayPaymentCodeInputScreen";
-import { IDPayPaymentCodeScanScreen } from "../screens/IDPayPaymentCodeScanScreen";
 import { IDPayPaymentResultScreen } from "../screens/IDPayPaymentResultScreen";
 import { IDPayPaymentMachineProvider } from "../xstate/provider";
 
@@ -22,7 +21,6 @@ export const IDPayPaymentRoutes = {
 } as const;
 
 export type IDPayPaymentParamsList = {
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION]: IDPayPaymentAuthorizationScreenRouteParams;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_RESULT]: undefined;
@@ -33,17 +31,14 @@ const Stack = createStackNavigator<IDPayPaymentParamsList>();
 export const IDPayPaymentNavigator = () => (
   <IDPayPaymentMachineProvider>
     <Stack.Navigator
-      initialRouteName={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+      initialRouteName={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
       headerMode={"none"}
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen
-        name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
-        component={IDPayPaymentCodeScanScreen}
-      />
-      <Stack.Screen
         name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
         component={IDPayPaymentCodeInputScreen}
+        options={{ gestureEnabled: true }}
       />
       <Stack.Screen
         name={IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION}

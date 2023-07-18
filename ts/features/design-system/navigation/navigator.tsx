@@ -4,44 +4,48 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { Platform, View, useColorScheme } from "react-native";
+import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
-import { DSColors } from "../core/DSColors";
-import { DSTypography } from "../core/DSTypography";
-import { DSIcons } from "../core/DSIcons";
-import { DSButtons } from "../core/DSButtons";
-import { DSTextFields } from "../core/DSTextFields";
-import { DSBadges } from "../core/DSBadges";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
-import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
-import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
-import { DSPictograms } from "../core/DSPictograms";
-import { DSLogos } from "../core/DSLogos";
-import { DSToastNotifications } from "../core/DSToastNotifications";
-import { DSSelection } from "../core/DSSelection";
-import { DSAdvice } from "../core/DSAdvice";
 import { DSAccordion } from "../core/DSAccordion";
-import { DSListItems } from "../core/DSListItems";
-import { DSLayout } from "../core/DSLayout";
+import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
-import { DSLoaders } from "../core/DSLoaders";
-import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSBadges } from "../core/DSBadges";
 import { DSBottomSheet } from "../core/DSBottomSheet";
+import { DSButtons } from "../core/DSButtons";
+import { DSColors } from "../core/DSColors";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSIcons } from "../core/DSIcons";
+import { DSLayout } from "../core/DSLayout";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
+import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
+import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
+import { DSListItems } from "../core/DSListItems";
+import { DSLoaders } from "../core/DSLoaders";
+import { DSLogos } from "../core/DSLogos";
+import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
+import { DSSelection } from "../core/DSSelection";
+import { DSTextFields } from "../core/DSTextFields";
+import { DSToastNotifications } from "../core/DSToastNotifications";
+import { DSTypography } from "../core/DSTypography";
+
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
+import { DSCards } from "../core/DSCards";
 import IconButton from "../../../components/ui/IconButton";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { makeFontStyleObject } from "../../../components/core/fonts";
+import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -82,6 +86,30 @@ const RNNCloseButton = () => {
     </View>
   );
 };
+
+const HeaderFirstLevelComponent = () => (
+  <HeaderFirstLevel
+    title="Portafoglio"
+    firstAction={
+      <IconButton
+        accessibilityLabel="Tap to trigger test alert"
+        icon="coggle"
+        onPress={() => {
+          Alert.alert("Settings");
+        }}
+      />
+    }
+    secondAction={
+      <IconButton
+        accessibilityLabel="Tap to trigger test alert"
+        icon="help"
+        onPress={() => {
+          Alert.alert("Assistance");
+        }}
+      />
+    }
+  />
+);
 
 const customModalHeaderConf: StackNavigationOptions = {
   headerLeft: () => null,
@@ -143,7 +171,9 @@ const DesignSystemMainStack = () => {
         fontSize: 14
       },
       headerTitleAlign: "center",
-      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
+      headerStyle: {
+        height: Number(insets.top) + Number(IOVisualCostants.headerHeight)
+      },
       headerLeft: RNNBackButton
     }),
     [insets]
@@ -269,6 +299,13 @@ const DesignSystemMainStack = () => {
       />
 
       <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route}
+        component={DSCards}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.title
+        }}
+      />
+      <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
         component={DSToastNotifications}
         options={{
@@ -305,6 +342,15 @@ const DesignSystemMainStack = () => {
         component={DSBottomSheet}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
+        }}
+      />
+
+      {/* HEADERS */}
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
+        component={DSHeaderFirstLevel}
+        options={{
+          header: HeaderFirstLevelComponent
         }}
       />
 
