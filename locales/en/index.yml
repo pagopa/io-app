@@ -3359,6 +3359,18 @@ features:
         footer:
           cancel: "Cancel"
           confirm: "Authorize"
+      infoCie:
+        title: "Verify your Electronic Identity Card"
+        subTitle: "You will have to place the Card on the back of your device, at the bottom, and hold it still for a few seconds."
+        howAuth: "After authentication, you will be able to create your Digital Identity, thanks to which you will be able to access the online services of the Public Administration and request other digital credentials."
+        confirm: "Start"
+        cancel: "Cancel"
+        footerBox: "To help you, you can place the Card on a table and place your smartphone on top of it (screen facing up) and then press **Start**."
+        readMoreUrl: "https://identitadigitale.gov.it/"
+        readMoreText: "See how to do it"
+      loading:
+        title: "I am loading the data from the Ministry of the Interior"
+        subtitle: "Wait a few seconds"
       pidPreviewScreen: 
         title: "Do you want to add this data to the IT Wallet?"
         checkNotice: "Verify that the following data is correct."
