@@ -3,10 +3,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
+import { isImageUri } from "../../utils/url";
 import { Badge } from "../core/Badge";
 import { IOIconSizeScale, Icon } from "../core/icons";
 import { IOLogoPaymentType } from "../core/logos";
@@ -15,7 +17,6 @@ import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import { useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
-import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
@@ -65,9 +66,6 @@ type LeftComponentProps = {
 };
 
 const IMAGE_LOGO_SIZE: IOIconSizeScale = 24;
-
-const isImageUri = (value: PaymentLogoIcon): value is ImageURISource =>
-  typeof value === "object" && value !== null && "uri" in value;
 
 const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (isImageUri(logoIcon)) {
