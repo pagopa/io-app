@@ -86,6 +86,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   if (isLoggedInWithTestIdp) {
     return;
   }
+  return;
 
   const lollipopCheckResult = pipe(
     maybeSessionInformation,

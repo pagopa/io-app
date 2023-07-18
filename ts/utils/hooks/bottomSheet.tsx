@@ -70,7 +70,7 @@ export type BottomSheetModalProps = {
 
 export type IOBottomSheetModal = {
   present: () => void;
-  dismiss: () => void;
+  dismiss: (a: string) => void;
   bottomSheet: JSX.Element;
 };
 
@@ -85,7 +85,7 @@ export type IOBottomSheetModal = {
 export const bottomSheetContent = (
   content: React.ReactNode,
   title: string | React.ReactNode,
-  onClose: () => void
+  onClose: (source: string) => void
 ): BottomSheetModalProps => {
   const header = <BottomSheetHeader title={title} onClose={onClose} />;
 
@@ -115,7 +115,7 @@ type BottomSheetOptions = {
   title: string | React.ReactNode;
   snapPoint: NonEmptyArray<number | string>;
   footer?: React.ReactElement;
-  onDismiss?: () => void;
+  onDismiss?: (source: string) => void;
 };
 
 /**
@@ -130,13 +130,25 @@ export const useIOBottomSheetModal = ({
   footer,
   onDismiss
 }: BottomSheetOptions): IOBottomSheetModal => {
+  console.log(`=== bottomSheet render `);
+  const myRef = React.useRef<string>("");
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
-  const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
+  const setBSOpened = useHardwareBackButtonToDismiss(() => {
+    myRef.current = "BackButton";
+    dismissAll();
+  }); // TODO back button
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
-  const bottomSheetProps = bottomSheetContent(component, title, dismissAll);
+  const bottomSheetProps = bottomSheetContent(
+    component,
+    title,
+    (sourceFromX: string) => {
+      myRef.current = sourceFromX;
+      dismissAll();
+    }
+  );
 
   const present = () => {
     bottomSheetModalRef.current?.present();
@@ -151,6 +163,9 @@ export const useIOBottomSheetModal = ({
         opacity={0.2}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
+        /* onPress={() => {
+          myRef.current = "backdrop";
+        }} // TODO qui becchiamo il backdrop */
       />
     ),
     []
@@ -187,7 +202,7 @@ export const useIOBottomSheetModal = ({
         accessible: false
       }}
       importantForAccessibility={"yes"}
-      onDismiss={onDismiss}
+      onDismiss={() => onDismiss?.(myRef.current)} // TODO specificare che è stata la X
     >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
@@ -210,7 +225,15 @@ export const useIOBottomSheetModal = ({
       )}
     </BottomSheetModal>
   );
-  return { present, dismiss: dismissAll, bottomSheet };
+  return {
+    present,
+    dismiss: (externalSource: string) => {
+      // QUI LA SOURCE È VALORIZZATA DAI PULSANTI
+      myRef.current = externalSource;
+      dismissAll();
+    },
+    bottomSheet
+  };
 };
 
 const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
@@ -281,7 +304,7 @@ export const useLegacyIOBottomSheetModal = (
   title: string | React.ReactNode,
   snapPoint: number,
   footer?: React.ReactElement,
-  onDismiss?: () => void
+  onDismiss?: (source: string) => void
 ): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
 

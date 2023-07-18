@@ -401,10 +401,7 @@ export function BackendClient(
       ),
     getThirdPartyMessagePrecondition: () =>
       withBearerToken(
-        createFetchRequestForApi(getThirdPartyMessagePreconditionT, {
-          ...options,
-          fetchApi: lollipopFetch({ nonce: uuid() }, _keyInfo)
-        })
+        createFetchRequestForApi(getThirdPartyMessagePreconditionT, options)
       ),
     upsertMessageStatusAttributes: withBearerToken(
       createFetchRequestForApi(upsertMessageStatusAttributesT, options)

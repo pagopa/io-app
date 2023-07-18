@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 type Props = {
   title: string | React.ReactNode;
-  onClose: () => void;
+  onClose: (source: string) => void;
 };
 
 export const BottomSheetHeader: React.FunctionComponent<Props> = ({
@@ -57,7 +57,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
       {isDesignSystemEnabled ? (
         <IconButton
           color="neutral"
-          onPress={onClose}
+          onPress={() => onClose("X")}
           icon="closeMedium"
           accessibilityLabel={I18n.t("global.buttons.close")}
         />
@@ -65,7 +65,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
         <View style={{ opacity: 0.5 }}>
           <IconButton
             color="neutral"
-            onPress={onClose}
+            onPress={() => onClose("X")}
             icon="closeMedium"
             accessibilityLabel={I18n.t("global.buttons.close")}
           />

@@ -232,10 +232,10 @@ export function* initializeApplicationSaga(
   // This saga must retrieve the publicKey by its own,
   // since it must make sure to have the latest in-memory value
   // (as an example, during the authentication saga the key may have been regenerated multiple times)
-  const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
-  if (unsupportedDevice) {
-    return;
-  }
+  //const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
+  //if (unsupportedDevice) {
+    // return;
+ // }
 
   // Since the backend.json is done in parallel with the startup saga,
   // we need to synchronize the two tasks, to be sure to have loaded the remote FF

@@ -47,7 +47,7 @@ type MessagePreconditionContentProps = MessagePreconditionProps & {
 type MessagePreconditionFooterProps = {
   isContentLoadCompleted: boolean;
   messageId: string;
-  onDismiss: () => void;
+  onDismiss: (a: string) => void;
   navigationAction: (message: UIMessage) => void;
 };
 
@@ -65,7 +65,7 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
     foldMessage(message, (foldedMessage: UIMessage) =>
       trackNotificationRejected(foldedMessage.category.tag)
     );
-    props.onDismiss();
+    props.onDismiss("NegativeButton");
   };
 
   const handleContinuePress = () => {
@@ -73,7 +73,8 @@ const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
       trackUxConversion(foldedMessage.category.tag);
       props.navigationAction(foldedMessage);
     });
-    props.onDismiss();
+    console.log(`=== CONTINUE PUSHED`);
+    props.onDismiss("PositiveButton");
   };
 
   // if the markdown is not loaded yet
@@ -242,13 +243,14 @@ export const useMessageOpening = () => {
           <MessagePreconditionFooter
             isContentLoadCompleted={isContentLoadCompleted}
             messageId={messageId}
-            onDismiss={() => modal.dismiss()}
+            onDismiss={(a: string) => modal.dismiss(a)}
             navigationAction={navigate}
           />
         )
       )
     ),
-    () => {
+    (source: string) => {
+      console.log(`==== THE SOURCE IS (${source})`);
       setIsContentLoadCompleted(false);
       dispatch(clearMessagePrecondition());
     }
