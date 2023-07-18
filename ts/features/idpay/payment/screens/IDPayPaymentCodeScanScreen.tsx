@@ -7,11 +7,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { showToast } from "../../../../utils/showToast";
-import {
-  BarcodeFailure,
-  BarcodeScanBaseScreenComponent,
-  IOBarcode
-} from "../../../barcode";
+import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
@@ -21,10 +17,12 @@ const IDPayPaymentCodeScanScreen = () => {
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
+    } else {
+      handleBarcodeError();
     }
   };
 
-  const handleBarcodeError = (_: BarcodeFailure) => {
+  const handleBarcodeError = () => {
     showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 

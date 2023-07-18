@@ -138,7 +138,7 @@ exports[`PspRadioItem match snapshot 1`] = `
     importantForAccessibility="yes"
     snapPoints={
       Array [
-        420,
+        440,
       ]
     }
     style={

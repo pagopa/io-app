@@ -995,6 +995,7 @@ wallet:
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
     details:
       header: Dettaglio Metodo
+    validUntil: Valida fino al {{expDate}}
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:
@@ -1813,7 +1814,7 @@ messageDetails:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
 messagePDFPreview:
   title: "Anteprima PDF"
-  singleBtn: "Salva, stampa o condividi"
+  singleBtn: "Salva o condividi"
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
@@ -3702,6 +3703,7 @@ barcodeScan:
     file: Carica un file
   manual:
     authorize: Autorizza una transazione
+    notice: Paga un avviso pagoPA
   permissions:
     undefined: 
       title: Ci serve il tuo permesso
