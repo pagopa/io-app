@@ -104,7 +104,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const onboardingDateString = pipe(
     onboardingStatus.onboardingOkDate,
     O.fromNullable,
-    O.map(formatDate("DD MMM YYYY")),
+    O.map(formatDate("DD MMM YYYY, hh:mm")),
     O.getOrElse(() => "-")
   );
 
