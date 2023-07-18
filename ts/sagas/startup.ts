@@ -453,6 +453,7 @@ export function* initializeApplicationSaga(
           showIdentificationModalAtStartup: false
         })
       );
+      return;
     }
   }
 
