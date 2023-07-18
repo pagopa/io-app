@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import ROUTES from "../../../navigation/routes";
@@ -10,7 +10,13 @@ import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwWalletActivatedSelector } from "../store/reducers/itwCredentials";
+import {
+  ItwWalletActivatedSelector,
+  ItwWalletVcsSelector
+} from "../store/reducers/itwCredentials";
+import PidCredential from "../components/PidCredential";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { ITW_ROUTES } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -23,6 +29,7 @@ const ItwHomeScreen = () => {
   const navigation = useNavigation();
   const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
+  const pid = useIOSelector(ItwWalletVcsSelector);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
     I18n.t("features.itWallet.homeScreen.categories.personal"),
@@ -60,18 +67,42 @@ const ItwHomeScreen = () => {
               />
             ))}
           </ScrollView>
-          {!isWalletActive && (
-            <ItwActionBanner
-              title={I18n.t("features.itWallet.innerActionBanner.title")}
-              content={I18n.t(
-                "features.itWallet.innerActionBanner.description"
-              )}
-              action={I18n.t("features.itWallet.innerActionBanner.action")}
-              labelClose={I18n.t(
-                "features.itWallet.innerActionBanner.hideLabel"
-              )}
-            />
-          )}
+        </View>
+        <View
+          style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}
+        >
+          <ScrollView style={{ flex: 1 }}>
+            {!isWalletActive ? (
+              <ItwActionBanner
+                title={I18n.t("features.itWallet.innerActionBanner.title")}
+                content={I18n.t(
+                  "features.itWallet.innerActionBanner.description"
+                )}
+                action={I18n.t("features.itWallet.innerActionBanner.action")}
+                labelClose={I18n.t(
+                  "features.itWallet.innerActionBanner.hideLabel"
+                )}
+              />
+            ) : (selectedBadgeIdx === 0 || selectedBadgeIdx === 1) && pid ? (
+              <>
+                <VSpacer />
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate(ITW_ROUTES.MAIN, {
+                      screen: ITW_ROUTES.PRESENTATION.VC_DETAILS
+                    })
+                  }
+                >
+                  <PidCredential
+                    name={`${pid[0].verified_claims.claims.given_name} ${pid[0].verified_claims.claims.family_name}`}
+                    fiscalCode={pid[0].verified_claims.claims.tax_id_number}
+                  />
+                </Pressable>
+              </>
+            ) : (
+              <></>
+            )}
+          </ScrollView>
         </View>
       </TopScreenComponent>
     </SafeAreaView>

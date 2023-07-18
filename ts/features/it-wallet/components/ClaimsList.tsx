@@ -99,7 +99,12 @@ const ClaimsList = ({ claims }: ClaimsListProps) => {
       <VSpacer />
       <H4 weight={"Regular"} color={"bluegrey"}>
         {I18n.t(
-          "features.itWallet.verifiableCredentials.unrecognizedData.body"
+          "features.itWallet.verifiableCredentials.unrecognizedData.body",
+          {
+            issuer:
+              claims.verified_claims.verification.evidence[0].record.source
+                .organization_name
+          }
         )}
       </H4>
       <VSpacer />
