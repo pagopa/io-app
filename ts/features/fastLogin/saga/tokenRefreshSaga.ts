@@ -69,10 +69,12 @@ function* handleRefreshSessionToken(
     if (timeSinceLastRefresh < 10 * 1000) {
       const { showIdentificationModalAtStartup } =
         refreshSessionTokenRequestAction.payload;
-      startApplicationInitialization({
-        handleSessionExpiration: true,
-        showIdentificationModalAtStartup
-      });
+      yield* put(
+        startApplicationInitialization({
+          handleSessionExpiration: true,
+          showIdentificationModalAtStartup
+        })
+      );
       return;
     }
   }
