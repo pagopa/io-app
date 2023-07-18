@@ -4,7 +4,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { WithTestID } from "../../../../types/WithTestID";
 import { HSpacer } from "../../../core/spacer/Spacer";
 import { IOVisualCostants } from "../../../core/variables/IOStyles";
-import { generateFlatListItemLayout } from "../../utils/functions/generateFlatListItemLayout";
+import { generateFlatListItemLayout } from "../../utils/generateFlatListItemLayout";
 import {
   PAYMENT_CARD_SMALL_WIDTH,
   PaymentCardSmall,
