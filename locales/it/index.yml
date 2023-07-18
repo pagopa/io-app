@@ -1814,7 +1814,7 @@ messageDetails:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
 messagePDFPreview:
   title: "Anteprima PDF"
-  singleBtn: "Salva, stampa o condividi"
+  singleBtn: "Salva o condividi"
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
