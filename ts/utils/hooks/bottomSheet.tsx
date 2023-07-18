@@ -282,11 +282,16 @@ export const useLegacyIOBottomSheetModal = (
   snapPoint: number,
   footer?: React.ReactElement,
   onDismiss?: () => void
-): IOBottomSheetModal =>
-  useIOBottomSheetModal({
+): IOBottomSheetModal => {
+  const insets = useSafeAreaInsets();
+
+  return useIOBottomSheetModal({
     component,
     title,
-    snapPoint: [snapPoint],
-    footer,
+    snapPoint: [snapPoint + insets.top],
+    footer: footer ? (
+      <View style={{ paddingBottom: insets.top }}>{footer}</View>
+    ) : undefined,
     onDismiss
   });
+};
