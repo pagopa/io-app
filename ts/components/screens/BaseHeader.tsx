@@ -52,16 +52,13 @@ const styles = StyleSheet.create({
   },
   body: {
     alignItems: "center"
-  },
-  rightButton: {
-    padding: 8
   }
 });
 
 export const ICON_BUTTON_MARGIN: IOSpacer = 16;
 
 const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
-  <View>
+  <>
     <IconButton
       onPress={onShowHelp}
       accessibilityLabel={I18n.t(
@@ -71,16 +68,16 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp, dark }) => (
         "global.accessibility.contextualHelp.open.hint"
       )}
       testID={"helpButton"}
-      color={dark ? "contrast" : "neutral"}
+      color={dark ? "contrast" : itWalletEnabled ? "primary" : "neutral"}
       icon={"help"}
     />
-  </View>
+  </>
 );
 
 const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
   <>
     {itWalletEnabled ? (
-      <View style={styles.rightButton}>
+      <>
         <IconButton
           onPress={onPress}
           accessibilityLabel={I18n.t("global.accessibility.profile.open.label")}
@@ -89,7 +86,8 @@ const ProfileButton: FC<ProfileButtonProps> = ({ onPress, dark }) => (
           icon={"coggle"}
           color={dark ? "contrast" : "primary"}
         />
-      </View>
+        <HSpacer size={ICON_BUTTON_MARGIN} />
+      </>
     ) : (
       <></>
     )}
@@ -305,7 +303,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <SearchButton
             searchType={isSearchAvailable.searchType}
             onSearchTap={isSearchAvailable.onSearchTap}
-            buttonStyle={styles.rightButton}
           />
         )}
 
@@ -326,10 +323,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onPress={isProfileAvailable.onProfileTap}
             dark={dark}
           />
-        )}
-
-        {onShowHelp && !isSearchEnabled && (
-          <HelpButton onShowHelp={onShowHelp} dark={dark} />
         )}
 
         {onShowHelp && !isSearchEnabled && (
