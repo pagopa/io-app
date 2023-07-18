@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
-import { useYSineWaveAnimation } from "../../../components/ui/utils/hooks/useYSineWaveAnimation";
+import { useSineWaveAnimation } from "../../../components/ui/utils/hooks/useSineWaveAnimation";
 
 const ANIMATION_DURATION = 1500;
 
@@ -25,10 +25,11 @@ const AnimatedCameraMarker = ({
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
-  const { animatedStyle: animatedLineStyle } = useYSineWaveAnimation({
+  const { animatedStyle: animatedLineStyle } = useSineWaveAnimation({
     enabled: state === "SCANNING",
     span: lineSpan,
-    duration: ANIMATION_DURATION
+    duration: ANIMATION_DURATION,
+    axis: "y"
   });
 
   const drawMarkerCorner = (rotation: number, size: number) => (

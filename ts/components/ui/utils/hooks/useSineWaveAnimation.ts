@@ -10,35 +10,37 @@ import {
   withTiming
 } from "react-native-reanimated";
 
-type YSineWaveConfiguration = {
+type SineWaveConfiguration = {
   span: number;
   duration: number;
+  axis: "x" | "y";
   enabled?: boolean;
 };
 
-type YSineWaveAnimation = {
+type SineWaveAnimation = {
   animatedStyle: AnimatedStyleProp<ViewStyle>;
 };
 
-const useYSineWaveAnimation = ({
-  enabled,
+const useSineWaveAnimation = ({
   span,
-  duration
-}: YSineWaveConfiguration): YSineWaveAnimation => {
-  const translateY = useSharedValue(0);
+  duration,
+  axis,
+  enabled
+}: SineWaveConfiguration): SineWaveAnimation => {
+  const translate = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
-      {
-        translateY: translateY.value
-      }
+      axis === "x"
+        ? { translateX: translate.value }
+        : { translateY: translate.value }
     ]
   }));
 
   React.useEffect(() => {
     if (enabled) {
       // eslint-disable-next-line functional/immutable-data
-      translateY.value = withRepeat(
+      translate.value = withRepeat(
         withSequence(
           withTiming(-span, {
             duration,
@@ -54,14 +56,14 @@ const useYSineWaveAnimation = ({
       );
     } else {
       // eslint-disable-next-line functional/immutable-data
-      translateY.value = withTiming(0, {
+      translate.value = withTiming(0, {
         duration: duration / 2,
         easing: Easing.inOut(Easing.cubic)
       });
     }
-  }, [translateY, span, enabled, duration]);
+  }, [translate, span, enabled, duration]);
 
   return { animatedStyle };
 };
 
-export { useYSineWaveAnimation };
+export { useSineWaveAnimation };
