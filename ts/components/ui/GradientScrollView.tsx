@@ -64,8 +64,8 @@ export const GradientScrollView = ({
   /* When the secondary action is visible, add extra margin
 to avoid little space from iPhone bottom handle */
   const extraBottomMargin: number = useMemo(
-    () => (insets.bottom !== 0 ? extraSafeAreaMargin : 0),
-    [insets.bottom]
+    () => (secondaryAction && insets.bottom !== 0 ? extraSafeAreaMargin : 0),
+    [insets.bottom, secondaryAction]
   );
 
   /* Total height of actions */
@@ -93,6 +93,24 @@ to avoid little space from iPhone bottom handle */
     [actionsArea, bottomMargin]
   );
 
+  {
+    /* Safe background block. It's added because when
+    you swipe up quickly, the content below is visible
+    for about 100ms. Without this block, the content
+    appears glitchy. */
+  }
+
+  const safeBackgroundHeight = useMemo(
+    () =>
+      secondaryAction
+        ? spaceBetweenActions +
+          secondaryActionEstHeight +
+          extraBottomMargin +
+          bottomMargin
+        : bottomMargin,
+    [bottomMargin, extraBottomMargin, secondaryAction]
+  );
+
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
       /* We use Math.floor because decimals used on Android
@@ -110,8 +128,8 @@ to avoid little space from iPhone bottom handle */
 
   const opacityTransition = useAnimatedStyle(() => ({
     opacity: withTiming(gradientOpacity.value, {
-      duration: 300,
-      easing: Easing.bezier(0.25, 0.1, 0.25, 1)
+      duration: 200,
+      easing: Easing.ease
     })
   }));
 
@@ -137,7 +155,8 @@ to avoid little space from iPhone bottom handle */
           bottomMargin,
           extraBottomMargin,
           gradientAreaHeight,
-          spaceBetweenActions
+          spaceBetweenActions,
+          safeBackgroundHeight
         }}
       />
     </>
