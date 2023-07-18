@@ -29,7 +29,7 @@ const ItwHomeScreen = () => {
   const navigation = useNavigation();
   const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
-  const pid = useIOSelector(ItwWalletVcsSelector)[0].verified_claims.claims;
+  const pid = useIOSelector(ItwWalletVcsSelector);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
     I18n.t("features.itWallet.homeScreen.categories.personal"),
@@ -83,7 +83,7 @@ const ItwHomeScreen = () => {
                   "features.itWallet.innerActionBanner.hideLabel"
                 )}
               />
-            ) : selectedBadgeIdx === 0 || selectedBadgeIdx === 1 ? (
+            ) : (selectedBadgeIdx === 0 || selectedBadgeIdx === 1) && pid ? (
               <>
                 <VSpacer />
                 <Pressable
@@ -94,8 +94,8 @@ const ItwHomeScreen = () => {
                   }
                 >
                   <PidCredential
-                    name={`${pid.given_name} ${pid.family_name}`}
-                    fiscalCode={pid.tax_id_number}
+                    name={`${pid[0].verified_claims.claims.given_name} ${pid[0].verified_claims.claims.family_name}`}
+                    fiscalCode={pid[0].verified_claims.claims.tax_id_number}
                   />
                 </Pressable>
               </>
