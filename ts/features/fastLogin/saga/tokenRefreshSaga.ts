@@ -112,13 +112,11 @@ function* doRefreshTokenSaga(
     typeof refreshSessionToken.request
   >
 ) {
+  yield* put(showRefreshTokenLoader());
+  const nonceClient = createNonceClient(apiUrlPrefix);
+
   const { showIdentificationModalAtStartup } =
     refreshSessionTokenRequestAction.payload;
-
-  if (!showIdentificationModalAtStartup) {
-    yield* put(showRefreshTokenLoader());
-  }
-  const nonceClient = createNonceClient(apiUrlPrefix);
 
   // eslint-disable-next-line functional/no-let
   const requestState: RequestStateType = {
