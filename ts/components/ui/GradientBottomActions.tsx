@@ -24,6 +24,7 @@ type GradientBottomActionsDimensions = {
   extraBottomMargin: number;
   gradientAreaHeight: number;
   spaceBetweenActions: IOSpacer;
+  safeBackgroundHeight: number;
 };
 
 // Background color should be app main background (both light and dark themes)
@@ -39,6 +40,13 @@ const styles = StyleSheet.create({
   },
   gradientContainer: {
     ...StyleSheet.absoluteFillObject
+  },
+  safeBackgroundBlock: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: IOColors[HEADER_BG_COLOR]
   }
 });
 
@@ -83,6 +91,15 @@ export const GradientBottomActions = ({
         ]}
       />
     </Animated.View>
+
+    <View
+      style={[
+        styles.safeBackgroundBlock,
+        {
+          height: dimensions.safeBackgroundHeight
+        }
+      ]}
+    />
     <View style={styles.buttonContainer} pointerEvents="box-none">
       {primaryAction}
 
