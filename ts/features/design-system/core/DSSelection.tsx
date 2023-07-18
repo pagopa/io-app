@@ -241,21 +241,25 @@ const NativeSwitchShowroom = () => {
 
 type SwitchListItemSampleProps = Pick<
   React.ComponentProps<typeof SwitchListItem>,
-  "label" | "description" | "value"
+  "label" | "description" | "value" | "icon" | "action"
 >;
 
 const SwitchListItemSample = ({
   value,
   label,
-  description
+  description,
+  action,
+  icon
 }: SwitchListItemSampleProps) => {
   const [isEnabled, setIsEnabled] = useState(value);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
     <SwitchListItem
+      icon={icon}
       label={label}
       description={description}
+      action={action}
       value={isEnabled}
       onSwitchValueChange={toggleSwitch}
     />
@@ -282,10 +286,24 @@ const SwitchListItemShowroom = () => (
       />
       <Divider />
       <SwitchListItemSample
+        icon="coggle"
         label="Let's try with a loooong loooooong looooooong title + icon"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
+      />
+      <SwitchListItemSample
+        icon="coggle"
+        label="Title + Icon + Action"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        action={{
+          label: "Scopri di più",
+          onPress: () => {
+            Alert.alert("Link pressed");
+          }
+        }}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="SwitchListItem, disabled">
