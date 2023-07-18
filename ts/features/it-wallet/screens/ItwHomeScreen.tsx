@@ -72,7 +72,7 @@ const ItwHomeScreen = () => {
           style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}
         >
           <ScrollView style={{ flex: 1 }}>
-            {!isWalletActive && (
+            {!isWalletActive ? (
               <ItwActionBanner
                 title={I18n.t("features.itWallet.innerActionBanner.title")}
                 content={I18n.t(
@@ -83,25 +83,25 @@ const ItwHomeScreen = () => {
                   "features.itWallet.innerActionBanner.hideLabel"
                 )}
               />
+            ) : selectedBadgeIdx === 0 || selectedBadgeIdx === 1 ? (
+              <>
+                <VSpacer />
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate(ITW_ROUTES.MAIN, {
+                      screen: ITW_ROUTES.PRESENTATION.VC_DETAILS
+                    })
+                  }
+                >
+                  <PidCredential
+                    name={`${pid.given_name} ${pid.family_name}`}
+                    fiscalCode={pid.tax_id_number}
+                  />
+                </Pressable>
+              </>
+            ) : (
+              <></>
             )}
-            {isWalletActive &&
-              (selectedBadgeIdx === 0 || selectedBadgeIdx === 1) && (
-                <>
-                  <VSpacer />
-                  <Pressable
-                    onPress={() =>
-                      navigation.navigate(ITW_ROUTES.MAIN, {
-                        screen: ITW_ROUTES.PRESENTATION.VC_DETAILS
-                      })
-                    }
-                  >
-                    <PidCredential
-                      name={`${pid.given_name} ${pid.family_name}`}
-                      fiscalCode={pid.tax_id_number}
-                    />
-                  </Pressable>
-                </>
-              )}
           </ScrollView>
         </View>
       </TopScreenComponent>
