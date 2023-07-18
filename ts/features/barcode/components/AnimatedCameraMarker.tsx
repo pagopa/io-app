@@ -31,7 +31,7 @@ const AnimatedCameraMarker = ({
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
-  const translateY = useSharedValue(state === "IDLE" ? 0 : -lineSpan);
+  const translateY = useSharedValue(0);
 
   const animatedLineStyle = useAnimatedStyle(() => ({
     transform: [
