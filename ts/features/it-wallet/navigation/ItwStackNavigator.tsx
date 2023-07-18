@@ -11,6 +11,7 @@ import ItwActivationInfoAuthScreen from "../screens/issuing/ItwActivationInfoAut
 import CieInfoUsageScreen from "../screens/issuing/cie/CieInfoUsageScreen";
 import PidPreviewScreen from "../screens/issuing/PidPreviewScreen";
 import PidActivationScreen from "../screens/issuing/PidActivationScreen";
+import ItwCredentialDetails from "../screens/ItwCredentialDetails";
 import { ItwParamsList } from "./params";
 import { ITW_ROUTES } from "./routes";
 
@@ -60,6 +61,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.ACTIVATION.CIE_INFO_USAGE_SCREEN}
       component={CieInfoUsageScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.PRESENTATION.VC_DETAILS}
+      component={ItwCredentialDetails}
     />
   </Stack.Navigator>
 );
