@@ -198,7 +198,7 @@ export const DSIcons = () => (
             <DSIconViewerBox
               key={iconItemName}
               name={iconItemName}
-              size="large"
+              size="medium"
               image={
                 <Icon
                   name={iconItemName as IOSystemIcons}
