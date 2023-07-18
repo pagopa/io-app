@@ -1085,35 +1085,20 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                           }
                                         }
                                       >
-                                        <Text
-                                          color="black"
-                                          defaultColor="black"
-                                          defaultWeight="SemiBold"
-                                          font="TitilliumWeb"
-                                          fontStyle={
+                                        <Image
+                                          resizeMode="contain"
+                                          source={
                                             Object {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
+                                              "testUri": "../../../img/wallet/payment-methods/paypal-logo.png",
                                             }
                                           }
                                           style={
-                                            Array [
-                                              Object {
-                                                "fontSize": 16,
-                                                "lineHeight": 24,
-                                              },
-                                              Object {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                              },
-                                            ]
+                                            Object {
+                                              "height": 32,
+                                              "width": 114,
+                                            }
                                           }
-                                          weight="SemiBold"
-                                        >
-                                          PAYPAL
-                                        </Text>
+                                        />
                                         <View
                                           style={
                                             Object {

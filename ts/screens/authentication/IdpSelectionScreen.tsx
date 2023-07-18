@@ -4,7 +4,6 @@ import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -139,6 +138,39 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
 
   const spacerFooter: IOSpacingScale = 16;
 
+  const headerComponent = () => (
+    <>
+      <View style={IOStyles.horizontalContentPadding}>
+        <VSpacer size={16} />
+        {/* Secret login for App Store reviewers */}
+        <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
+          {/* Add `accessible=false` 'cause it useful only
+            for debug mode (stores reviewers).
+            Original issue: https://www.pivotaltracker.com/story/show/172082895 */}
+          <H1
+            accessible={true}
+            accessibilityRole="header"
+            weight="Bold"
+            testID={"screen-content-header-title"}
+            color={"bluegreyDark"}
+          >
+            {I18n.t("authentication.idp_selection.contentTitle")}
+          </H1>
+        </Pressable>
+        <Body>
+          {isFastLoginFeatureFlagEnabled
+            ? I18n.t("login.expiration_info_FL")
+            : I18n.t("login.expiration_info")}
+        </Body>
+        <Body>{I18n.t("login.biometric_info")}</Body>
+      </View>
+      <VSpacer />
+      <View style={{ backgroundColor: IOColors.greyUltraLight }}>
+        <VSpacer size={24} />
+      </View>
+    </>
+  );
+
   const footerComponent = () => (
     <View
       style={[
@@ -168,39 +200,12 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
-        {/* Custom ScreenContentHeader with secret login */}
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={IOStyles.horizontalContentPadding}>
-            <VSpacer size={16} />
-            <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
-              {/* Add `accessible=false` 'cause it useful only
-            for debug mode (stores reviewers).
-            Original issue: https://www.pivotaltracker.com/story/show/172082895 */}
-              <H1
-                accessible={true}
-                accessibilityRole="header"
-                weight="Bold"
-                testID={"screen-content-header-title"}
-                color={"bluegreyDark"}
-              >
-                {I18n.t("authentication.idp_selection.contentTitle")}
-              </H1>
-            </Pressable>
-            <Body>
-              {isFastLoginFeatureFlagEnabled
-                ? I18n.t("login.expiration_info_FL")
-                : I18n.t("login.expiration_info")}
-            </Body>
-            <Body>{I18n.t("login.biometric_info")}</Body>
-          </View>
-          <VSpacer />
-
-          <IdpsGrid
-            idps={[...props.idps]}
-            onIdpSelected={onIdpSelected}
-            spacerComponent={spacerComponent}
-          />
-        </ScrollView>
+        <IdpsGrid
+          idps={[...props.idps]}
+          onIdpSelected={onIdpSelected}
+          headerComponent={headerComponent}
+          footerComponent={spacerComponent}
+        />
         {footerComponent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
