@@ -67,6 +67,12 @@ function* handleRefreshSessionToken(
     const now = Date.now();
     const timeSinceLastRefresh = now - lastRefreshTimestamp.timestamp;
     if (timeSinceLastRefresh < 10 * 1000) {
+      const { showIdentificationModalAtStartup } =
+        refreshSessionTokenRequestAction.payload;
+      startApplicationInitialization({
+        handleSessionExpiration: true,
+        showIdentificationModalAtStartup
+      });
       return;
     }
   }
