@@ -452,11 +452,11 @@ export function* initializeApplicationSaga(
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
       // At application startup, the state of the refresh token is "idle".
-      // If we got a 401 in the above getSession with start a token refresh.
+      // If we got a 401 in the above getSession we start a token refresh.
       // If we succeed, we can continue with the application startup and
       // we could skip this step.
-      const lastRefreshTimestamp = yield* select(tokenRefreshSelector);
-      if (lastRefreshTimestamp.kind !== "success") {
+      const lastTokenRefreshState = yield* select(tokenRefreshSelector);
+      if (lastTokenRefreshState.kind !== "success") {
         yield* put(
           refreshSessionToken.request({
             withUserInteraction: false,
