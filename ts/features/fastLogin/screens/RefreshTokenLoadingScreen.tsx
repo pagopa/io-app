@@ -11,7 +11,7 @@ const RefreshTokenLoadingScreen = () => {
   return (
     <Modal>
       <LoadingSpinnerOverlay isLoading={true} loadingOpacity={1} />
-      {isDevEnv ? <Body>RefreshTokenLoadingScreen</Body> : null}
+      {isDevEnv && <Body>This is the RefreshTokenLoadingScreen</Body>}
     </Modal>
   );
 };
