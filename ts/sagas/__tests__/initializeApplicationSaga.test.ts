@@ -189,7 +189,8 @@ describe("initializeApplicationSaga", () => {
       .put(
         refreshSessionToken.request({
           withUserInteraction: false,
-          showIdentificationModalAtStartup: true
+          showIdentificationModalAtStartup: true,
+          showLoader: true
         })
       );
   });
