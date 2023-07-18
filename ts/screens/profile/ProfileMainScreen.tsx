@@ -65,6 +65,7 @@ import ButtonSolid from "../../components/ui/ButtonSolid";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -307,6 +308,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId,
       notificationToken,
       sessionToken,
+      isFastLoginEnabled,
       walletToken,
       setDebugModeEnabled,
       isIdPayTestEnabled,
@@ -433,6 +435,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
+            {isDevEnv &&
+              isFastLoginEnabled &&
+              this.debugCopyListItem("FastLogin", `${isFastLoginEnabled}`, () =>
+                clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+              )}
+
             {isDevEnv &&
               sessionToken &&
               this.debugCopyListItem("Session token", sessionToken, () =>
@@ -654,6 +662,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isFastLoginEnabled: isFastLoginEnabledSelector(state),
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,
