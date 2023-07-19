@@ -11,10 +11,11 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import IconButton from "../../../../components/ui/IconButton";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import {
@@ -22,7 +23,6 @@ import {
   selectInitiativeName,
   selectUnsubscriptionChecks
 } from "../xstate/selectors";
-import IconButton from "../../../../components/ui/IconButton";
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
@@ -52,35 +52,37 @@ const UnsubscriptionConfirmationScreen = () => {
     />
   );
 
-  const confirmModal = useLegacyIOBottomSheetModal(
-    <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>,
-
-    I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
-    250,
-
-    <FooterWithButtons
-      type="TwoButtonsInlineHalf"
-      leftButton={{
-        onPress: () => {
-          confirmModal.dismiss();
-          handleConfirmPress();
-        },
-        block: true,
-        bordered: true,
-        title: I18n.t("idpay.unsubscription.button.continue"),
-        danger: true,
-        labelColor: IOColors.red
-      }}
-      rightButton={{
-        onPress: () => {
-          confirmModal.dismiss();
-        },
-        block: true,
-        bordered: true,
-        title: I18n.t("global.buttons.cancel"),
-        labelColor: IOColors.blue
-      }}
-    />
+  const confirmModal = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
+      component: <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>,
+      footer: (
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          leftButton={{
+            onPress: () => {
+              confirmModal.dismiss();
+              handleConfirmPress();
+            },
+            block: true,
+            bordered: true,
+            title: I18n.t("idpay.unsubscription.button.continue"),
+            danger: true,
+            labelColor: IOColors.red
+          }}
+          rightButton={{
+            onPress: () => {
+              confirmModal.dismiss();
+            },
+            block: true,
+            bordered: true,
+            title: I18n.t("global.buttons.cancel"),
+            labelColor: IOColors.blue
+          }}
+        />
+      )
+    },
+    130
   );
 
   const body = (
