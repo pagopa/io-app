@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-rc.12](https://github.com/pagopa/io-app/compare/0.2.0-rc.11...0.2.0-rc.12) (2023-07-19)
+
+
+### Bug Fixes
+
+* package.json relase script ([87661bd](https://github.com/pagopa/io-app/commit/87661bd26fd5d2daca56a23fde8ad98c8f9b7ee6))
+
 ## [0.2.0-rc.11](https://github.com/pagopa/io-app/compare/2.39.0-rc.2...0.2.0-rc.11) (2023-07-19)
 
 
