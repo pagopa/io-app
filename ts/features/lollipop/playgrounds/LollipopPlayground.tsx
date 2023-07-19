@@ -53,9 +53,7 @@ const LollipopPlayground = () => {
                 {
                   keyTag,
                   publicKey,
-                  publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
-                    maybePublicKey
-                  )}`
+                  publicKeyThumbprint: toThumbprint(maybePublicKey)
                 },
                 { nonce: "aNonce", signBody }
               )
