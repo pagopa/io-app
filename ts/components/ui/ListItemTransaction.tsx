@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Image, ImageURISource, StyleSheet, View } from "react-native";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
@@ -22,6 +22,7 @@ import {
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
+import Avatar from "./Avatar";
 import {
   PressableBaseProps,
   PressableListItemBase
@@ -65,21 +66,17 @@ type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
 };
 
-const IMAGE_LOGO_SIZE: IOIconSizeScale = 24;
+const CARD_LOGO_SIZE: IOIconSizeScale = 24;
+const MUNICIPALITY_LOGO_SIZE = 44;
 
 const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (isImageUri(logoIcon)) {
-    return (
-      <Image
-        source={[logoIcon]}
-        style={{ width: IMAGE_LOGO_SIZE, height: IMAGE_LOGO_SIZE }}
-      />
-    );
+    return <Avatar logoUri={[logoIcon]} size="small" shape="circle" />;
   }
   if (React.isValidElement(logoIcon)) {
     return <>{logoIcon}</>;
   }
-  return getCardLogoComponent(logoIcon as IOLogoPaymentType);
+  return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
 };
 
 export const ListItemTransaction = ({
@@ -145,7 +142,9 @@ export const ListItemTransaction = ({
           <View
             style={{
               marginRight: IOListItemVisualParams.iconMargin,
-              marginLeft: IOListItemLogoMargin
+              marginLeft: IOListItemLogoMargin,
+              width: MUNICIPALITY_LOGO_SIZE,
+              alignItems: "center"
             }}
           >
             <LeftComponent logoIcon={paymentLogoIcon} />
@@ -212,8 +211,8 @@ const SkeletonComponent = () => (
       >
         <Placeholder.Box
           animate="fade"
-          height={IMAGE_LOGO_SIZE}
-          width={IMAGE_LOGO_SIZE}
+          height={MUNICIPALITY_LOGO_SIZE}
+          width={MUNICIPALITY_LOGO_SIZE}
           radius={100}
         />
       </View>

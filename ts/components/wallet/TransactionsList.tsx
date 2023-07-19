@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content, Text as NBButtonText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { formatNumberCurrencyCents } from "../../features/idpay/common/utils/strings";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -20,6 +21,7 @@ import { Icon } from "../core/icons";
 import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
 import { IOColors } from "../core/variables/IOColors";
+import { IOVisualCostants } from "../core/variables/IOStyles";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import { ListItemTransaction } from "../ui/ListItemTransaction";
@@ -34,12 +36,6 @@ type Props = Readonly<{
   ListEmptyComponent?: React.ReactElement;
 }>;
 const screenWidth = Dimensions.get("screen").width;
-
-const MunicipalityPlaceholder = () => (
-  <View style={styles.municipalityPlaceholder}>
-    <Icon color="grey-450" name="institution" size={"100%"} />
-  </View>
-);
 
 export const TransactionsList = (props: Props) => {
   const [isLoadingMore, setIsLoadingMore] = React.useState(false);
@@ -76,6 +72,11 @@ export const TransactionsList = (props: Props) => {
   }
 
   // ------------------ components + utils ------------------
+  const MunicipalityPlaceholder = () => (
+    <View style={styles.municipalityPlaceholder}>
+      <Icon color="grey-450" name="institution" size={"100%"} />
+    </View>
+  );
 
   const shouldShowFooterComponent = (
     ListEmptyComponent?: React.ReactElement
@@ -145,7 +146,7 @@ export const TransactionsList = (props: Props) => {
   return shouldShowFooterComponent(ListEmptyComponent) ? (
     ListEmptyComponent
   ) : (
-    <Content scrollEnabled={false} style={styles.whiteContent}>
+    <ScrollView scrollEnabled={false} style={styles.scrollView}>
       <View>
         <View style={styles.subHeaderContent}>
           <H3 weight={"SemiBold"} color={"bluegreyDark"}>
@@ -156,27 +157,30 @@ export const TransactionsList = (props: Props) => {
       {helpMessage}
       <FlatList
         scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         data={transactions}
         renderItem={renderTransaction}
-        ItemSeparatorComponent={() => (
-          <ItemSeparatorComponent noPadded={true} />
-        )}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent noPadded />}
         keyExtractor={item => item.id.toString()}
         ListFooterComponent={footerListComponent(transactions)}
       />
-    </Content>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  whiteContent: {
+  scrollView: {
+    paddingTop: variables.contentPadding,
     backgroundColor: IOColors.white,
     flex: 1
   },
   subHeaderContent: {
     flexDirection: "row",
     alignItems: "baseline",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    paddingHorizontal: variables.contentPadding
   },
   moreButton: {
     flex: 1,
@@ -187,12 +191,12 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white
   },
   municipalityPlaceholder: {
-    width: 24,
-    height: 24,
+    width: 44,
+    height: 44,
     borderRadius: 100,
     backgroundColor: IOColors["grey-100"],
     justifyContent: "center",
     alignItems: "center",
-    padding: 6
+    padding: 12
   }
 });
