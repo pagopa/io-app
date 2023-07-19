@@ -164,17 +164,17 @@ export const useIOBottomSheetModal = ({
 
   const inset = useSafeAreaInsets();
 
+  const footerComponent = footer ? (
+    <View style={{ paddingBottom: inset.top }}>
+      {footer}
+      <VSpacer size={16} />
+    </View>
+  ) : null;
+
   const bottomSheet = (
     <BottomSheetModal
       style={[styles.bottomSheet, { marginTop: inset.top }]}
-      footerComponent={(_: BottomSheetFooterProps) =>
-        footer !== undefined ? (
-          <>
-            {footer}
-            <VSpacer size={16} />
-          </>
-        ) : null
-      }
+      footerComponent={(_: BottomSheetFooterProps) => footerComponent}
       snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
       handleComponent={_ => bottomSheetProps.config.handleComponent}
@@ -243,10 +243,6 @@ export const useIOBottomSheetAutoresizableModal = (
     [insets, bottomPadding]
   );
 
-  const footerComponent = footer ? (
-    <View style={{ paddingBottom: insets.top }}>{footer}</View>
-  ) : undefined;
-
   return useIOBottomSheetModal({
     component: (
       <View
@@ -260,7 +256,7 @@ export const useIOBottomSheetAutoresizableModal = (
     ),
     title,
     snapPoint: [snapPoint],
-    footer: footerComponent,
+    footer,
     onDismiss
   });
 };

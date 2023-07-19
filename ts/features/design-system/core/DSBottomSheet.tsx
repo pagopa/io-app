@@ -19,6 +19,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 export const DSBottomSheet = () => {
   const handlePressDismiss = () => {
     dismissStaticBottomSheet();
+    dismissStaticBottomSheetWithFooter();
     dismissAutoresizableBottomSheet();
     dismissAutoresizableBottomSheetWithFooter();
     dismissVeryLongAutoresizableBottomSheetWithFooter();
@@ -26,27 +27,11 @@ export const DSBottomSheet = () => {
     dismissLegacyBottomSheetWithFooter();
   };
 
-  const DimissBottomSheetItem = () => (
-    <>
-      <VSpacer size={24} />
-      <ButtonSolid
-        fullWidth
-        label="Dismiss"
-        accessibilityLabel="Dismiss"
-        onPress={handlePressDismiss}
-        color="primary"
-      />
-    </>
-  );
-
   const BottomSheetContentBody = () => (
-    <>
-      <Body>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </Body>
-      <DimissBottomSheetItem />
-    </>
+    <Body>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </Body>
   );
 
   const BottomSheetLongContentBody = () => (
@@ -87,13 +72,6 @@ export const DSBottomSheet = () => {
     </>
   );
 
-  const LegacyBottomSheetContentBody = () => (
-    <Body>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-    </Body>
-  );
-
   // Autoresizable bottom sheet hook
   const {
     present: presentAutoresizableBottomSheet,
@@ -115,6 +93,7 @@ export const DSBottomSheet = () => {
       component: <BottomSheetLongContentBody />,
       footer: (
         <ContentWrapper>
+          <VSpacer size={16} />
           <ButtonSolid
             fullWidth
             accessibilityLabel="Tap to dismiss the bottom sheet"
@@ -139,6 +118,29 @@ export const DSBottomSheet = () => {
     snapPoint: [300]
   });
 
+  // Static bottom sheet hook with footer
+  const {
+    present: presentStaticBottomSheetWithFooter,
+    bottomSheet: staticBottomSheetWithFooter,
+    dismiss: dismissStaticBottomSheetWithFooter
+  } = useIOBottomSheetModal({
+    title: "Static Bottom Sheet",
+    component: <BottomSheetContentBody />,
+    snapPoint: [300],
+    footer: (
+      <ContentWrapper>
+        <VSpacer size={16} />
+        <ButtonSolid
+          fullWidth
+          accessibilityLabel="Tap to dismiss the bottom sheet"
+          label={"Dismiss bottom sheet"}
+          onPress={handlePressDismiss}
+        />
+        <VSpacer size={16} />
+      </ContentWrapper>
+    )
+  });
+
   // Autoresizable bottom sheet hook with footer
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
@@ -150,6 +152,7 @@ export const DSBottomSheet = () => {
       component: <BottomSheetVeryLongContentBody />,
       footer: (
         <ContentWrapper>
+          <VSpacer size={16} />
           <ButtonSolid
             fullWidth
             accessibilityLabel="Tap to dismiss the bottom sheet"
@@ -168,7 +171,7 @@ export const DSBottomSheet = () => {
     bottomSheet: legacyBottomSheet,
     dismiss: dismissLegacyBottomSheet
   } = useLegacyIOBottomSheetModal(
-    <LegacyBottomSheetContentBody />,
+    <BottomSheetContentBody />,
     "Legacy Bottom Sheet",
     250
   );
@@ -178,7 +181,7 @@ export const DSBottomSheet = () => {
     bottomSheet: legacyBottomSheetWithFooter,
     dismiss: dismissLegacyBottomSheetWithFooter
   } = useLegacyIOBottomSheetModal(
-    <LegacyBottomSheetContentBody />,
+    <BottomSheetContentBody />,
     "Legacy Bottom Sheet with footer",
     400,
     <ContentWrapper>
@@ -210,6 +213,12 @@ export const DSBottomSheet = () => {
             description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
             accessibilityLabel="Static bottom sheet"
             onPress={presentStaticBottomSheet}
+          />
+          <ListItemNav
+            value="Static bottom sheet with footer"
+            description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration with a footer"
+            accessibilityLabel="Static bottom sheet"
+            onPress={presentStaticBottomSheetWithFooter}
           />
           <ListItemNav
             value="Autoresizable bottom sheet"
@@ -249,6 +258,7 @@ export const DSBottomSheet = () => {
           />
           <VSpacer size={24} />
           {staticBottomSheet}
+          {staticBottomSheetWithFooter}
           {autoResizableBottomSheet}
           {autoResizableBottomSheetWithFooter}
           {veryLongAutoResizableBottomSheetWithFooter}
