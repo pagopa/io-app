@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import {
@@ -18,7 +18,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
@@ -100,10 +100,12 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useLegacyIOBottomSheetModal(
-      <Body>{locales.whatIsPspBody}</Body>,
-      locales.whatIsPspTitle,
-      280
+    useIOBottomSheetAutoresizableModal(
+      {
+        title: locales.whatIsPspTitle,
+        component: <Body>{locales.whatIsPspBody}</Body>
+      },
+      72
     );
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
