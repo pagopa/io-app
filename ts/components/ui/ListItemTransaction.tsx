@@ -13,7 +13,7 @@ import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { useIOTheme } from "../core/variables/IOColors";
+import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
 import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import {
@@ -97,13 +97,14 @@ export const ListItemTransaction = ({
   transactionStatus = "success"
 }: ListItemTransaction) => {
   const theme = useIOTheme();
-
   const isDSEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
   if (isLoading) {
     return <SkeletonComponent />;
   }
 
-  const designSystemBlue = isDSEnabled ? "blue" : "blueIO-500";
+  const designSystemBlue: IOColors = isDSEnabled ? "blue" : "blueIO-500";
+
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
@@ -158,7 +159,6 @@ export const ListItemTransaction = ({
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
-          <VSpacer size={4} />
         </View>
         <View style={Styles.rightSection}>
           <TransactionAmountOrBadgeComponent />
