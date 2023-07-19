@@ -27,7 +27,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
       title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
       footer: (
         <ContentWrapper>
-          <VSpacer size={16} />
+          <VSpacer size={24} />
           <ButtonSolid
             label={I18n.t(
               "idpay.initiative.beneficiaryDetails.infoModal.button"
@@ -38,7 +38,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
             )}
             fullWidth={true}
           />
-          <VSpacer size={32} />
+          <VSpacer size={24} />
         </ContentWrapper>
       )
     },
