@@ -147,7 +147,6 @@ export const ListItemNav = ({
             )}
             {description && (
               <>
-                <VSpacer size={4} />
                 {typeof description === "string" ? (
                   <Body weight="Regular">{description}</Body>
                 ) : (
@@ -198,12 +197,9 @@ export const ListItemNav = ({
           <View style={IOStyles.flex}>
             <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
             {description && (
-              <>
-                <VSpacer size={4} />
-                <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
-                  {description}
-                </LabelSmall>
-              </>
+              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+                {description}
+              </LabelSmall>
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>

@@ -141,12 +141,9 @@ export const ListItemNavAlert = ({
               {value}
             </Text>
             {description && (
-              <>
-                <VSpacer size={4} />
-                <Body weight="SemiBold" color={theme.errorText}>
-                  {description}
-                </Body>
-              </>
+              <Body weight="SemiBold" color={theme.errorText}>
+                {description}
+              </Body>
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
@@ -190,12 +187,9 @@ export const ListItemNavAlert = ({
           <View style={IOStyles.flex}>
             <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
             {description && (
-              <>
-                <VSpacer size={4} />
-                <LabelSmall weight="SemiBold" color={theme.errorText}>
-                  {description}
-                </LabelSmall>
-              </>
+              <LabelSmall weight="SemiBold" color={theme.errorText}>
+                {description}
+              </LabelSmall>
             )}
           </View>
           <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
