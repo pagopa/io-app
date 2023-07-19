@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, SafeAreaView } from "react-native";
+import { Text, View, SafeAreaView, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -26,22 +26,31 @@ export const DSSafeAreaCentered = () => {
           backgroundColor: IOColors["error-100"]
         }}
       >
-        <ScrollView
-          centerContent
-          contentInset={{ bottom: fixedBottomBarHeight }}
-          contentContainerStyle={{
-            backgroundColor: IOColors.white
-            // paddingBottom: fixedBottomBarHeight
-          }}
-        >
-          <View style={{ padding: IOVisualCostants.appMarginDefault }}>
-            <H2>Start</H2>
-            <VSpacer size={24} />
-            <Body>Single text</Body>
-            <VSpacer size={24} />
-            <H2>End</H2>
-          </View>
-        </ScrollView>
+        {/* This extra View is mandatory when you have a fixed
+        bottom component to get a consistent behavior
+        across platforms */}
+        <View style={{ flexGrow: 1, paddingBottom: fixedBottomBarHeight }}>
+          <ScrollView
+            centerContent
+            contentContainerStyle={[
+              { backgroundColor: IOColors.white },
+              /* Android fallback because `centerContent`
+              is only an iOS property */
+              Platform.OS === "android" && {
+                flexGrow: 1,
+                justifyContent: "center"
+              }
+            ]}
+          >
+            <View style={{ padding: IOVisualCostants.appMarginDefault }}>
+              <H2>Start</H2>
+              <VSpacer size={24} />
+              <Body>Single text</Body>
+              <VSpacer size={24} />
+              <H2>End</H2>
+            </View>
+          </ScrollView>
+        </View>
         {/* Fixed Component: Start */}
         <View
           style={{
