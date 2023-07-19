@@ -3342,6 +3342,13 @@ features:
         personal: "Personal"
         cgn: "Carta giovani"
         payments: "Payments methods"
+      reset: 
+        label: "Reset"
+        bottomSheet: 
+          title: "Do you want to reset IT Wallet?"
+          body: "By deactivating IT Wallet, you will lose your Digital Identity and return to the initial state. You can reactivate it later."
+          confirm: "Confirm reset"
+          cancel: "Cancel"
     infoAuthScreen:
       title: "Log in with CIE + PIN and save your digital identity"
       subTitle: "To activate IT Wallet you need to authenticate yourself using your Electronic Identity Card (CIE) + PIN."
