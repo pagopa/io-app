@@ -64,6 +64,8 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
   ]
 };
 
+// for testing reasons, abi codes can be found here:
+// https://www.comuniecitta.it/elenco-banche-per-codice-abi
 export const DSCards = () => (
   <DesignSystemScreen title={"Cards"}>
     <DSComponentViewerBox name="PaymentCardSmall">
@@ -113,7 +115,7 @@ export const DSCards = () => (
         cardType={"PAGOBANCOMAT"}
         expirationDate={new Date()}
         holderName="A very very very long citizen name"
-        abiCode="12345"
+        abiCode="03069"
       />
       <VSpacer size={16} />
       <PaymentCardBig
@@ -124,7 +126,15 @@ export const DSCards = () => (
       <PaymentCardBig
         cardType={"COBADGE"}
         holderName="Mario Rossi"
-        abiCode="12345"
+        abiCode="08509"
+        expirationDate={new Date()}
+        cardIcon="visa"
+      />
+      <VSpacer size={16} />
+      <PaymentCardBig
+        cardType={"COBADGE"}
+        holderName="Mario Rossi"
+        abiCode="08508"
         expirationDate={new Date()}
         cardIcon="visa"
       />
