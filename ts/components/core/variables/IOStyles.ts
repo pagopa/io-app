@@ -225,6 +225,7 @@ interface IOListItemVisualParams {
   paddingVertical: IOSpacingScale;
   paddingHorizontal: IOAppMargin;
   iconMargin: IOSpacingScale;
+  actionMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
   chevronSize: IOIconSizeScale;
 }
@@ -233,6 +234,7 @@ export const IOListItemVisualParams: IOListItemVisualParams = {
   paddingVertical: 12,
   paddingHorizontal: IOVisualCostants.appMarginDefault,
   iconMargin: 16,
+  actionMargin: 16,
   iconSize: 24,
   chevronSize: 24
 };
