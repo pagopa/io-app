@@ -307,6 +307,7 @@ interface IOSelectionListItemVisualParams {
   iconMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
   descriptionMargin: IOSpacer;
+  actionMargin: IOSpacer;
 }
 
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
@@ -315,7 +316,8 @@ export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     iconMargin: 8,
     iconSize: 24,
-    descriptionMargin: 4
+    descriptionMargin: 4,
+    actionMargin: 8
   };
 
 export const IOSelectionListItemStyles = StyleSheet.create({
