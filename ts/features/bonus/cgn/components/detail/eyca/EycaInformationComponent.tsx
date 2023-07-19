@@ -1,13 +1,13 @@
 import * as React from "react";
 import { View } from "react-native";
+import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { Label } from "../../../../../../components/core/typography/Label";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
-import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../../../utils/url";
-import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../../../components/core/typography/Label";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
 import { showToast } from "../../../../../../utils/showToast";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
 
 /**
@@ -46,8 +46,10 @@ const EycaInformationComponent: React.FunctionComponent = () => {
 };
 
 export const useEycaInformationBottomSheet = () =>
-  useLegacyIOBottomSheetModal(
-    <EycaInformationComponent />,
-    I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle"),
-    420
+  useIOBottomSheetAutoresizableModal(
+    {
+      component: <EycaInformationComponent />,
+      title: I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle")
+    },
+    48
   );
