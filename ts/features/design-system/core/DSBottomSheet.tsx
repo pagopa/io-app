@@ -1,7 +1,5 @@
 import * as React from "react";
-
-import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
-
+import { SafeAreaView } from "react-native";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
@@ -15,6 +13,7 @@ import {
   useLegacyIOBottomSheetModal
 } from "../../../utils/hooks/bottomSheet";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 export const DSBottomSheet = () => {
   const handlePressDismiss = () => {
@@ -23,6 +22,7 @@ export const DSBottomSheet = () => {
     dismissAutoresizableBottomSheet();
     dismissAutoresizableBottomSheetWithFooter();
     dismissVeryLongAutoresizableBottomSheetWithFooter();
+    dismissVeryLongAutoresizableBottomSheetWithFooterFullScreen();
     dismissLegacyBottomSheet();
     dismissLegacyBottomSheetWithFooter();
   };
@@ -167,6 +167,35 @@ export const DSBottomSheet = () => {
   );
 
   const {
+    present: presentVeryLongAutoresizableBottomSheetWithFooterFullScreen,
+    bottomSheet: veryLongAutoResizableBottomSheetWithFooterFullScreen,
+    dismiss: dismissVeryLongAutoresizableBottomSheetWithFooterFullScreen
+  } = useIOBottomSheetAutoresizableModal(
+    {
+      title: "Autoresizable Bottom Sheet, Full Screen",
+      component: (
+        <SafeAreaView>
+          <BottomSheetVeryLongContentBody />
+        </SafeAreaView>
+      ),
+      footer: (
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <ButtonSolid
+            fullWidth
+            accessibilityLabel="Tap to dismiss the bottom sheet"
+            label={"Dismiss bottom sheet"}
+            onPress={handlePressDismiss}
+          />
+          <VSpacer size={16} />
+        </ContentWrapper>
+      ),
+      fullScreen: true
+    },
+    80
+  );
+
+  const {
     present: presentLegacyBottomSheet,
     bottomSheet: legacyBottomSheet,
     dismiss: dismissLegacyBottomSheet
@@ -238,6 +267,14 @@ export const DSBottomSheet = () => {
             accessibilityLabel="Static bottom sheet"
             onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
           />
+          <ListItemNav
+            value="Autoresizable bottom sheet with very long content and a footer, full screen"
+            description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long and the modal takes the full screen"
+            accessibilityLabel="Static bottom sheet"
+            onPress={
+              presentVeryLongAutoresizableBottomSheetWithFooterFullScreen
+            }
+          />
           <H2
             color={theme["textHeading-default"]}
             weight={"SemiBold"}
@@ -262,6 +299,7 @@ export const DSBottomSheet = () => {
           {autoResizableBottomSheet}
           {autoResizableBottomSheetWithFooter}
           {veryLongAutoResizableBottomSheetWithFooter}
+          {veryLongAutoResizableBottomSheetWithFooterFullScreen}
           {legacyBottomSheet}
           {legacyBottomSheetWithFooter}
         </DesignSystemScreen>

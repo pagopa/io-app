@@ -151,6 +151,7 @@ const InstrumentsEnrollmentScreen = () => {
             },
             block: true,
             bordered: true,
+            labelColor: IOColors.blue,
             title: I18n.t(
               "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
             )
@@ -161,7 +162,7 @@ const InstrumentsEnrollmentScreen = () => {
         setStagedWalletId(undefined);
       }
     },
-    130
+    150
   );
 
   React.useEffect(() => {

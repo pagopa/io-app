@@ -1,5 +1,3 @@
-import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -7,27 +5,31 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
+import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
+import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
+import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
-  View,
+  Dimensions,
+  LayoutChangeEvent,
   Modal,
   Platform,
   StyleSheet,
-  LayoutChangeEvent
+  View
 } from "react-native";
-import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
-import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
+import { IOBottomSheetHeaderRadius } from "../../components/core/variables/IOShapes";
+import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
-import {
-  IOVisualCostants,
-  IOStyles
-} from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
-import { VSpacer } from "../../components/core/spacer/Spacer";
-import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
-import { IOBottomSheetHeaderRadius } from "../../components/core/variables/IOShapes";
+
+const screenHeight = Dimensions.get("window").height;
 
 type Props = {
   children: React.ReactNode;
@@ -115,6 +117,7 @@ type BottomSheetOptions = {
   title: string | React.ReactNode;
   snapPoint: NonEmptyArray<number | string>;
   footer?: React.ReactElement;
+  fullScreen?: boolean;
   onDismiss?: () => void;
 };
 
@@ -129,7 +132,8 @@ export const useIOBottomSheetModal = ({
   snapPoint,
   footer,
   onDismiss
-}: BottomSheetOptions): IOBottomSheetModal => {
+}: Omit<BottomSheetOptions, "fullScreen">): IOBottomSheetModal => {
+  const insets = useSafeAreaInsets();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
@@ -162,18 +166,13 @@ export const useIOBottomSheetModal = ({
       .catch(_ => setIsScreenReaderEnabled(false));
   }, []);
 
-  const inset = useSafeAreaInsets();
-
   const footerComponent = footer ? (
-    <View style={{ paddingBottom: inset.top }}>
-      {footer}
-      <VSpacer size={16} />
-    </View>
+    <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
   ) : null;
 
   const bottomSheet = (
     <BottomSheetModal
-      style={[styles.bottomSheet, { marginTop: inset.top }]}
+      style={styles.bottomSheet}
       footerComponent={(_: BottomSheetFooterProps) => footerComponent}
       snapPoints={[...snapPoint]}
       ref={bottomSheetModalRef}
@@ -195,15 +194,7 @@ export const useIOBottomSheetModal = ({
             {bottomSheetProps.config.handleComponent}
             {bottomSheetProps.content}
           </View>
-          <>
-            {footer !== undefined ? (
-              <>
-                {footer}
-                <VSpacer size={16} />
-              </>
-            ) : null}
-            <VSpacer size={16} />
-          </>
+          {footerComponent}
         </Modal>
       ) : (
         bottomSheetProps.content
@@ -226,7 +217,8 @@ export const useIOBottomSheetAutoresizableModal = (
     component,
     title,
     footer,
-    onDismiss
+    onDismiss,
+    fullScreen
   }: Omit<BottomSheetOptions, "snapPoint">,
   bottomPadding: number = DEFAULT_BOTTOM_PADDING
 ) => {
@@ -234,13 +226,17 @@ export const useIOBottomSheetAutoresizableModal = (
     DEFAULT_AUTORESIZABLE_SNAP_POINT
   );
   const insets = useSafeAreaInsets();
+
   const handleContentOnLayout = React.useCallback(
     (event: LayoutChangeEvent) => {
       const { height } = event.nativeEvent.layout;
+      const snapPoint = insets.bottom + bottomPadding + height;
 
-      setSnapPoint(insets.bottom + insets.top + bottomPadding + height);
+      setSnapPoint(
+        fullScreen ? snapPoint : Math.min(screenHeight - insets.top, snapPoint)
+      );
     },
-    [insets, bottomPadding]
+    [insets, fullScreen, bottomPadding]
   );
 
   return useIOBottomSheetModal({
@@ -285,9 +281,7 @@ export const useLegacyIOBottomSheetModal = (
     component,
     title,
     snapPoint: [snapPoint + insets.top],
-    footer: footer ? (
-      <View style={{ paddingBottom: insets.top }}>{footer}</View>
-    ) : undefined,
+    footer,
     onDismiss
   });
 };
