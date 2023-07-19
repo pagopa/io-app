@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, StyleSheet, Text, Switch } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Switch,
+  GestureResponderEvent
+} from "react-native";
 import { NewH6 } from "../core/typography/NewH6";
 import {
   IOSelectionListItemStyles,
@@ -14,6 +20,7 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";
 import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
+import { NewLink } from "../core/typography/NewLink";
 
 type Props = {
   label: string;
@@ -21,6 +28,12 @@ type Props = {
   onSwitchValueChange?: (newValue: boolean) => void;
   description?: string;
   icon?: IOIcons;
+  action?: SwitchAction;
+};
+
+type SwitchAction = {
+  label: string;
+  onPress: (event: GestureResponderEvent) => void;
 };
 
 const DISABLED_OPACITY = 0.5;
@@ -46,6 +59,7 @@ export const SwitchListItem = ({
   label,
   description,
   icon,
+  action,
   value,
   disabled,
   onSwitchValueChange
@@ -109,6 +123,14 @@ export const SwitchListItem = ({
               <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
                 {description}
               </LabelSmall>
+            </>
+          )}
+          {action && (
+            <>
+              <VSpacer size={IOSelectionListItemVisualParams.actionMargin} />
+              <NewLink fontSize="small" onPress={action.onPress}>
+                {action.label}
+              </NewLink>
             </>
           )}
         </View>
