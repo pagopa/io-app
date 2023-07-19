@@ -33,10 +33,18 @@ export const itwCredentialsAddPid = createAsyncAction(
 )<PidMockType, PidMockType, ItWalletError>();
 
 /**
+ * Resets the ITW state, deactivating it and deleting all credentials.
+ */
+export const itwCredentialsReset = createStandardAction(
+  "ITW_CREDENTIALS_RESET"
+)<void>();
+
+/**
  * Action types for the IT Wallet feature
  */
 export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
   | ActionType<typeof itwRequirementsRequest>
   | ActionType<typeof itwCredentialsAddPid>
+  | ActionType<typeof itwCredentialsReset>
   | ItwCieAuthenticationActions;
