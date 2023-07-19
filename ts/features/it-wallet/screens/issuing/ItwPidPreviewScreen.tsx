@@ -23,7 +23,7 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
-const PidPreviewScreen = () => {
+const ItwPidPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
   const { present, bottomSheet } = useItwAbortFlow();
@@ -106,4 +106,4 @@ const PidPreviewScreen = () => {
   );
 };
 
-export default PidPreviewScreen;
+export default ItwPidPreviewScreen;

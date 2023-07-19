@@ -13,11 +13,12 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ROUTES from "../../../../navigation/routes";
 import { ItwParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 /**
  * PidActivationScreen props which consists of the pid to be added to the wallet.
  */
-export type PidActivationScreenProps = {
+export type ItwPidActivationScreenProps = {
   pid: PidMockType;
 };
 
@@ -34,7 +35,7 @@ type Props = IOStackNavigationRouteProps<
  * TODO: add an error screen when the PID is not added.
  * @param route - route params containg the PID.
  */
-const PidActivationScreen = ({ route }: Props) => {
+const ItwPidActivationScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const wallet = useIOSelector(ItwWalletSelector);
   const navigation = useNavigation();
@@ -77,6 +78,7 @@ const PidActivationScreen = ({ route }: Props) => {
         type={"SingleButton"}
         leftButton={continueButtonProps}
       />
+      <VSpacer size={24} />
     </>
   );
 
@@ -96,4 +98,4 @@ const PidActivationScreen = ({ route }: Props) => {
   return <RenderMask />;
 };
 
-export default PidActivationScreen;
+export default ItwPidActivationScreen;
