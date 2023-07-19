@@ -15,7 +15,6 @@ import { makeFontStyleObject } from "../core/fonts";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
-import { VSpacer } from "../core/spacer/Spacer";
 
 export type ListItemInfo = WithTestID<{
   label: string;
