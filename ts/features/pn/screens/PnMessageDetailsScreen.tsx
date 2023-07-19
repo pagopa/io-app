@@ -27,9 +27,11 @@ import { cancelPreviousAttachmentDownload } from "../../../store/actions/message
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
   serviceId: ServiceId;
+  isRead: boolean;
 }>;
 
 const renderMessage = (
+  isRead: boolean,
   messageId: UIMessageId,
   messagePot: pot.Pot<O.Option<PNMessage>, Error>,
   service: ServicePublic | undefined,
@@ -44,6 +46,7 @@ const renderMessage = (
     messageOption =>
       O.isSome(messageOption) ? (
         <PnMessageDetails
+          isRead={isRead}
           messageId={messageId}
           message={messageOption.value}
           service={service}
@@ -60,8 +63,7 @@ const renderMessage = (
 export const PnMessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
-  const messageId = props.route.params.messageId;
-  const serviceId = props.route.params.serviceId;
+  const { messageId, serviceId, isRead } = props.route.params;
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
@@ -94,7 +96,7 @@ export const PnMessageDetailsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {renderMessage(messageId, message, service, loadContent)}
+        {renderMessage(isRead, messageId, message, service, loadContent)}
       </SafeAreaView>
     </BaseScreenComponent>
   );

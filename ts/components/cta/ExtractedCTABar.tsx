@@ -6,12 +6,15 @@ import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import { HSpacer } from "../core/spacer/Spacer";
+import { trackPNOptInMessageAccepted } from "../../features/pn/analytics";
+import { PNOptInMessageInfo } from "../../features/pn/utils";
 import { ExtractedCtaButton } from "./ExtractedCtaButton";
 
 type Props = {
   ctas: CTAS;
   xsmall: boolean;
   dispatch: Dispatch;
+  isPNOptInMessage?: PNOptInMessageInfo;
   // service and serviceMetadata could come from message or service detail
   // they could be useful to determine if a cta action is valid or not
   service?: ServicePublic;
@@ -22,9 +25,13 @@ const renderCtaButton = (
   { xsmall, service, serviceMetadata }: Props,
   linkTo: (path: string) => void,
   primary: boolean,
+  isPNOptInMessage: boolean,
   cta?: CTA
 ): React.ReactNode => {
   const handleCTAPress = (cta: CTA) => {
+    if (isPNOptInMessage) {
+      trackPNOptInMessageAccepted();
+    }
     handleCtaAction(cta, linkTo, service);
   };
 
@@ -53,11 +60,25 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
   const linkTo = useLinkTo();
 
   const cta2 = useMemo(
-    () => renderCtaButton(props, linkTo, false, ctas.cta_2),
+    () =>
+      renderCtaButton(
+        props,
+        linkTo,
+        false,
+        props.isPNOptInMessage?.cta1HasServiceNavigationLink ?? false,
+        ctas.cta_2
+      ),
     [ctas.cta_2, linkTo, props]
   );
   const cta1 = useMemo(
-    () => renderCtaButton(props, linkTo, true, ctas.cta_1),
+    () =>
+      renderCtaButton(
+        props,
+        linkTo,
+        true,
+        props.isPNOptInMessage?.cta2HasServiceNavigationLink ?? false,
+        ctas.cta_1
+      ),
     [ctas.cta_1, linkTo, props]
   );
 

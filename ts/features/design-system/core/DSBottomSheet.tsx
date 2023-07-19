@@ -2,18 +2,19 @@ import * as React from "react";
 
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
+import { IOThemeContext } from "../../../components/core/variables/IOColors";
+import ButtonSolid from "../../../components/ui/ButtonSolid";
+import ListItemNav from "../../../components/ui/ListItemNav";
 import {
   useIOBottomSheetAutoresizableModal,
-  useIOBottomSheetModal
+  useIOBottomSheetModal,
+  useLegacyIOBottomSheetModal
 } from "../../../utils/hooks/bottomSheet";
-import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import ListItemNav from "../../../components/ui/ListItemNav";
-import { Body } from "../../../components/core/typography/Body";
-import ButtonSolid from "../../../components/ui/ButtonSolid";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSBottomSheet = () => {
   const handlePressDismiss = () => {
@@ -21,6 +22,8 @@ export const DSBottomSheet = () => {
     dismissAutoresizableBottomSheet();
     dismissAutoresizableBottomSheetWithFooter();
     dismissVeryLongAutoresizableBottomSheetWithFooter();
+    dismissLegacyBottomSheet();
+    dismissLegacyBottomSheetWithFooter();
   };
 
   const DimissBottomSheetItem = () => (
@@ -82,6 +85,13 @@ export const DSBottomSheet = () => {
         </Body>
       ))}
     </>
+  );
+
+  const LegacyBottomSheetContentBody = () => (
+    <Body>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </Body>
   );
 
   // Autoresizable bottom sheet hook
@@ -153,6 +163,35 @@ export const DSBottomSheet = () => {
     80
   );
 
+  const {
+    present: presentLegacyBottomSheet,
+    bottomSheet: legacyBottomSheet,
+    dismiss: dismissLegacyBottomSheet
+  } = useLegacyIOBottomSheetModal(
+    <LegacyBottomSheetContentBody />,
+    "Legacy Bottom Sheet",
+    250
+  );
+
+  const {
+    present: presentLegacyBottomSheetWithFooter,
+    bottomSheet: legacyBottomSheetWithFooter,
+    dismiss: dismissLegacyBottomSheetWithFooter
+  } = useLegacyIOBottomSheetModal(
+    <LegacyBottomSheetContentBody />,
+    "Legacy Bottom Sheet with footer",
+    400,
+    <ContentWrapper>
+      <ButtonSolid
+        fullWidth
+        accessibilityLabel="Tap to dismiss the bottom sheet"
+        label={"Dismiss bottom sheet"}
+        onPress={handlePressDismiss}
+      />
+      <VSpacer size={16} />
+    </ContentWrapper>
+  );
+
   return (
     <IOThemeContext.Consumer>
       {theme => (
@@ -190,11 +229,31 @@ export const DSBottomSheet = () => {
             accessibilityLabel="Static bottom sheet"
             onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
           />
+          <H2
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16, marginTop: 16 }}
+          >
+            Legacy
+          </H2>
+
+          <ListItemNav
+            value="Legacy bottom sheet"
+            accessibilityLabel="Legacy bottom sheet"
+            onPress={presentLegacyBottomSheet}
+          />
+          <ListItemNav
+            value="Legacy bottom sheet with footer"
+            accessibilityLabel="Legacy bottom sheet with footer"
+            onPress={presentLegacyBottomSheetWithFooter}
+          />
           <VSpacer size={24} />
           {staticBottomSheet}
           {autoResizableBottomSheet}
           {autoResizableBottomSheetWithFooter}
           {veryLongAutoResizableBottomSheetWithFooter}
+          {legacyBottomSheet}
+          {legacyBottomSheetWithFooter}
         </DesignSystemScreen>
       )}
     </IOThemeContext.Consumer>

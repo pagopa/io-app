@@ -28,7 +28,8 @@ type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   headerComponentStyle?: StyleProp<ViewStyle>;
-  spacerComponent?: React.ReactNode;
+  headerComponent?: React.ReactNode;
+  footerComponent?: React.ReactNode;
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
@@ -116,18 +117,19 @@ const renderItem =
 
 const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
   <FlatList
-    scrollEnabled={false}
-    bounces={false}
+    scrollEnabled={true}
+    bounces={true}
     data={props.idps}
     numColumns={2}
     horizontal={false}
     keyExtractor={keyExtractor}
     renderItem={renderItem(props)}
-    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
-    columnWrapperStyle={styles.columnStyle}
     contentContainerStyle={styles.container}
-    ListHeaderComponent={props.spacerComponent}
-    ListFooterComponent={props.spacerComponent}
+    columnWrapperStyle={styles.columnStyle}
+    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
+    ListHeaderComponentStyle={{ backgroundColor: IOColors.white }}
+    ListHeaderComponent={props.headerComponent}
+    ListFooterComponent={props.footerComponent}
   />
 );
 

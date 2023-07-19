@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
+import { useStore } from "react-redux";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIODispatch } from "../../../../store/hooks";
@@ -21,6 +22,11 @@ import {
 import { HSpacer } from "../../../core/spacer/Spacer";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import ExtractedCTABar from "../../../cta/ExtractedCTABar";
+import { isPNOptInMessage } from "../../../../features/pn/utils";
+import {
+  trackPNOptInMessageCTADisplaySuccess,
+  trackPNOptInMessageOpened
+} from "../../../../features/pn/analytics";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
@@ -86,12 +92,33 @@ const CtaBar = ({
   serviceMetadata
 }: Props): React.ReactElement | null => {
   const dispatch = useIODispatch();
+  const shoulCheckForPNOptInMessage = useRef(true);
+  const store = useStore();
+
+  const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
+  const maybeCtas = getMessageCTA(
+    markdown,
+    serviceMetadata,
+    service?.id as ServiceId
+  );
+  const state = store.getState();
+  const isPNOptInMessageInfo = isPNOptInMessage(maybeCtas, service, state);
+  const isPNOptIn = isPNOptInMessageInfo.isPNOptInMessage;
+
+  useEffect(() => {
+    if (shoulCheckForPNOptInMessage.current && isPNOptIn) {
+      // eslint-disable-next-line functional/immutable-data
+      shoulCheckForPNOptInMessage.current = false;
+      trackPNOptInMessageOpened();
+      trackPNOptInMessageCTADisplaySuccess();
+    }
+  }, [isPNOptIn, shoulCheckForPNOptInMessage]);
+
   // in case of medical prescription, we shouldn't render the CtaBar
   if (messageDetails.prescriptionData !== undefined) {
     return null;
   }
   const expirationInfo = getPaymentExpirationInfo(messageDetails);
-  const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
 
   const paymentButton = renderPaymentButton(paymentData, messageDetails.id);
   const calendarButton = renderCalendarEventButton(
@@ -111,11 +138,7 @@ const CtaBar = ({
       </View>
     </View>
   );
-  const maybeCtas = getMessageCTA(
-    markdown,
-    serviceMetadata,
-    service?.id as ServiceId
-  );
+
   const footer2 = O.isSome(maybeCtas) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
@@ -126,6 +149,7 @@ const CtaBar = ({
           dispatch={dispatch}
           serviceMetadata={serviceMetadata}
           service={service?.raw}
+          isPNOptInMessage={isPNOptInMessageInfo}
         />
       </View>
     </View>
