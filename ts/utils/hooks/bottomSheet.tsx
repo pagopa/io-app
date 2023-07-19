@@ -205,7 +205,7 @@ export const useIOBottomSheetModal = ({
 };
 
 const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
-const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 24;
+const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 48;
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
  * @param bottomSheetOptions

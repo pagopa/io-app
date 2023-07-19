@@ -27,6 +27,19 @@ export const DSBottomSheet = () => {
     dismissLegacyBottomSheetWithFooter();
   };
 
+  const defaultFooter = (
+    <ContentWrapper>
+      <VSpacer size={16} />
+      <ButtonSolid
+        fullWidth
+        accessibilityLabel="Tap to dismiss the bottom sheet"
+        label={"Dismiss bottom sheet"}
+        onPress={handlePressDismiss}
+      />
+      <VSpacer size={16} />
+    </ContentWrapper>
+  );
+
   const BottomSheetContentBody = () => (
     <Body>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -35,21 +48,19 @@ export const DSBottomSheet = () => {
   );
 
   const BottomSheetLongContentBody = () => (
-    <>
-      <Body>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor
-        sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
-        ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua.
-      </Body>
-    </>
+    <Body>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit
+      amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur
+      adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+      do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum
+      dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+      incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet,
+      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua.
+    </Body>
   );
 
   const BottomSheetVeryLongContentBody = () => (
@@ -91,20 +102,9 @@ export const DSBottomSheet = () => {
     {
       title: "Autoresizable Bottom Sheet",
       component: <BottomSheetLongContentBody />,
-      footer: (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <ButtonSolid
-            fullWidth
-            accessibilityLabel="Tap to dismiss the bottom sheet"
-            label={"Dismiss bottom sheet"}
-            onPress={handlePressDismiss}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
-      )
+      footer: defaultFooter
     },
-    110
+    142
   );
 
   // Static bottom sheet hook
@@ -127,18 +127,7 @@ export const DSBottomSheet = () => {
     title: "Static Bottom Sheet",
     component: <BottomSheetContentBody />,
     snapPoint: [300],
-    footer: (
-      <ContentWrapper>
-        <VSpacer size={16} />
-        <ButtonSolid
-          fullWidth
-          accessibilityLabel="Tap to dismiss the bottom sheet"
-          label={"Dismiss bottom sheet"}
-          onPress={handlePressDismiss}
-        />
-        <VSpacer size={16} />
-      </ContentWrapper>
-    )
+    footer: defaultFooter
   });
 
   // Autoresizable bottom sheet hook with footer
@@ -150,18 +139,7 @@ export const DSBottomSheet = () => {
     {
       title: "Autoresizable Bottom Sheet",
       component: <BottomSheetVeryLongContentBody />,
-      footer: (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <ButtonSolid
-            fullWidth
-            accessibilityLabel="Tap to dismiss the bottom sheet"
-            label={"Dismiss bottom sheet"}
-            onPress={handlePressDismiss}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
-      )
+      footer: defaultFooter
     },
     80
   );
@@ -178,18 +156,7 @@ export const DSBottomSheet = () => {
           <BottomSheetVeryLongContentBody />
         </SafeAreaView>
       ),
-      footer: (
-        <ContentWrapper>
-          <VSpacer size={16} />
-          <ButtonSolid
-            fullWidth
-            accessibilityLabel="Tap to dismiss the bottom sheet"
-            label={"Dismiss bottom sheet"}
-            onPress={handlePressDismiss}
-          />
-          <VSpacer size={16} />
-        </ContentWrapper>
-      ),
+      footer: defaultFooter,
       fullScreen: true
     },
     80
@@ -220,7 +187,6 @@ export const DSBottomSheet = () => {
         label={"Dismiss bottom sheet"}
         onPress={handlePressDismiss}
       />
-      <VSpacer size={16} />
     </ContentWrapper>
   );
 
