@@ -137,7 +137,6 @@ import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotif
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
-import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import {
   checkSession,
   watchCheckSessionSaga
