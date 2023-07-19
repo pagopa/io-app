@@ -6,7 +6,6 @@ import NavigationService from "../../navigation/NavigationService";
 import { applicationChangeState } from "../../store/actions/application";
 import { identificationRequest } from "../../store/actions/identification";
 import { ReduxSagaEffect } from "../../types/utils";
-import { AppState, appStateSelector } from "../../store/reducers/appState";
 import {
   StartupStatusEnum,
   isStartupLoaded
@@ -21,7 +20,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
 
   // eslint-disable-next-line functional/no-let
-  let lastState: AppState = {
+  let lastState = {
     appState: "active",
     timestamp: 0
   };
@@ -32,25 +31,18 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
       // Listen for changes in application state
       const newApplicationState: AppStateStatus = action.payload;
 
-      const { appState, timestamp } = yield* select(appStateSelector);
       const startupState = yield* select(isStartupLoaded);
 
       if (startupState !== StartupStatusEnum.AUTHENTICATED) {
-        // The app is not authenticated, do nothing
+        // The app is not authenticated, or is starting do nothing
         // We don't want to ask for identification when the user is not authenticated
         return;
       }
 
-      if (timestamp === 0) {
-        // The app has just started, do nothing
-        // We don't want to ask for identification when the app has just started
-        return;
-      }
-
-      if (appState !== "active") {
+      if (newApplicationState !== "active") {
         lastState = {
-          appState,
-          timestamp
+          appState: newApplicationState,
+          timestamp: Date.now()
         };
         return;
       }
