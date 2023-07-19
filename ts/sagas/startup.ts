@@ -646,9 +646,6 @@ export function* initializeApplicationSaga(
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
 
-  // Watch for the app going to background/foreground
-  yield* fork(watchApplicationActivitySaga);
-
   // Watch for requests to logout
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.

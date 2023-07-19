@@ -13,10 +13,12 @@ import { GlobalState } from "./types";
 
 export type AppState = Readonly<{
   appState: AppStateStatus;
+  timestamp: number;
 }>;
 
 export const initialAppState: AppState = {
-  appState: "background"
+  appState: "background",
+  timestamp: 0
 };
 
 export const appStateSelector = (state: GlobalState): AppState =>
@@ -32,7 +34,8 @@ export default function appState(
   if (isActionOf(applicationChangeState, action)) {
     return {
       ...state,
-      appState: action.payload
+      appState: action.payload,
+      timestamp: Date.now()
     };
   }
   return state;
