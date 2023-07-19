@@ -3247,6 +3247,14 @@ features:
         personal: "Personali"
         cgn: "Carta giovani"
         payments: "Metodi di pagamento"
+      reset: 
+        label: "Resetta"
+        bottomSheet: 
+          title: "Vuoi resettare IT Wallet?"
+          body: "Perderai l’Identità Digitale e tornerai allo stato iniziale disattivando
+        IT Wallet. Potrai riattivarlo in un secondo momento."
+          confirm: "Conferma reset"
+          cancel: "Annulla"
     infoAuthScreen:
       title: "Accedi con CIE + PIN e salva la tua identità digitale"
       subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
