@@ -552,10 +552,10 @@ export function* initializeApplicationSaga(
   if (idPayTestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
-
-    // Start watching for Wallet V3 actions
-    yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
   }
+
+  // Start watching for Wallet V3 actions
+  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
