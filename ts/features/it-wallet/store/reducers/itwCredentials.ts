@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../store/actions/types";
-import { itwCredentialsAddPid } from "../actions";
+import { itwCredentialsAddPid, itwCredentialsReset } from "../actions";
 import { PidMockType } from "../../utils/mocks";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -37,6 +37,8 @@ const reducer = (
       });
     case getType(itwCredentialsAddPid.failure):
       return pot.toError(state, action.payload);
+    case getType(itwCredentialsReset):
+      return emptyState;
   }
   return state;
 };
