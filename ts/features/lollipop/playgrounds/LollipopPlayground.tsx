@@ -15,7 +15,6 @@ import {
   lollipopPublicKeySelector
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 import { apiUrlPrefix } from "../../../config";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
