@@ -40,6 +40,7 @@ const WalletOnboardingStartScreen = () => {
     });
   };
 
+  // If the onboarding process is completed (with a success or not), we display the result content feedback
   if (onboardingResult) {
     return (
       <OnboardingResultContent

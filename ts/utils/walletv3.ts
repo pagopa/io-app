@@ -27,8 +27,9 @@ export const getOutcomeStatus = (
 
 /**
  * Function to extract the onboarding result from the url of the webview
+ * It will return a {@link OnboardingError} if the url is not from the onboarding result page
  * @param url url to extract the onboarding result from
- * @returns an {@link OnboardingResult} or undefined if the url is not related to onboarding
+ * @returns an {@link OnboardingResult}
  */
 export const extractOnboardingResult = (url: string): OnboardingResult =>
   pipe(
