@@ -128,11 +128,7 @@ export const SwitchListItem = ({
           {action && (
             <>
               <VSpacer size={IOSelectionListItemVisualParams.actionMargin} />
-              <NewLink
-                fontSize="small"
-                color={theme["interactiveElem-default"]}
-                onPress={action.onPress}
-              >
+              <NewLink fontSize="small" onPress={action.onPress}>
                 {action.label}
               </NewLink>
             </>
