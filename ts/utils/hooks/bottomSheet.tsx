@@ -221,6 +221,9 @@ export const useIOBottomSheetAutoresizableModal = (
     onDismiss,
     fullScreen
   }: Omit<BottomSheetOptions, "snapPoint">,
+  // FIXME: currently the auto-resize logic measures the height of the content without
+  // including the footer, so we need to manually add its height as bottom padding.
+  // We should find a way to make the autoresizable bottom sheet work with the footer!
   bottomPadding: number = DEFAULT_BOTTOM_PADDING
 ) => {
   const [snapPoint, setSnapPoint] = React.useState<number>(
