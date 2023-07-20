@@ -23,7 +23,7 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
-const PidPreviewScreen = () => {
+const ItwPidPreviewScreen = () => {
   const spacerSize = 32;
   const pidMock = getPidMock();
   const { present, bottomSheet } = useItwAbortFlow();
@@ -56,21 +56,22 @@ const PidPreviewScreen = () => {
   };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.itWallet.issuing.title")}
-      contextualHelp={emptyContextualHelp}
+    <ItwLoadingSpinnerOverlay
+      isLoading={isLoading}
+      captionTitle={I18n.t(
+        "features.itWallet.issuing.pidPreviewScreen.loading.title"
+      )}
+      captionSubtitle={I18n.t(
+        "features.itWallet.issuing.pidPreviewScreen.loading.subtitle"
+      )}
     >
-      <SafeAreaView style={{ ...IOStyles.flex }}>
-        <ItwLoadingSpinnerOverlay
-          isLoading={isLoading}
-          captionTitle={I18n.t(
-            "features.itWallet.issuing.pidPreviewScreen.loading.title"
-          )}
-          captionSubtitle={I18n.t(
-            "features.itWallet.issuing.pidPreviewScreen.loading.subtitle"
-          )}
-        >
+      <BaseScreenComponent
+        goBack={false}
+        customGoBack={<View />}
+        headerTitle={I18n.t("features.itWallet.issuing.title")}
+        contextualHelp={emptyContextualHelp}
+      >
+        <SafeAreaView style={{ ...IOStyles.flex }}>
           <ScreenContent
             title={I18n.t("features.itWallet.issuing.pidPreviewScreen.title")}
           >
@@ -99,10 +100,10 @@ const PidPreviewScreen = () => {
             rightButton={saveButtonProps}
           />
           {bottomSheet}
-        </ItwLoadingSpinnerOverlay>
-      </SafeAreaView>
-    </BaseScreenComponent>
+        </SafeAreaView>
+      </BaseScreenComponent>
+    </ItwLoadingSpinnerOverlay>
   );
 };
 
-export default PidPreviewScreen;
+export default ItwPidPreviewScreen;
