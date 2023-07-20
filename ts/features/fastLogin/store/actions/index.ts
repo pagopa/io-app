@@ -30,6 +30,7 @@ export const clearTokenTransientError = createStandardAction(
 type RefreshSessionTokenRequestPayload = {
   withUserInteraction: boolean;
   showIdentificationModalAtStartup: boolean;
+  showLoader: boolean;
 };
 export const refreshSessionToken = createAsyncAction(
   "REFRESH_SESSION_TOKEN_REQUEST",

@@ -15,7 +15,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
@@ -42,6 +42,7 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 import { pinPukHelpUrl } from "../../../config";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -145,6 +146,8 @@ const CiePinScreen: React.FC<Props> = props => {
     setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
   }, [pinPadViewRef]);
 
+  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
+
   return (
     <TopScreenComponent
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
@@ -174,7 +177,11 @@ const CiePinScreen: React.FC<Props> = props => {
           />
           <VSpacer size={16} />
           <AdviceComponent
-            text={I18n.t("login.expiration_info")}
+            text={
+              isFastLoginFeatureFlagEnabled
+                ? I18n.t("login.expiration_info_FL")
+                : I18n.t("login.expiration_info")
+            }
             iconColor={"black"}
           />
         </View>
