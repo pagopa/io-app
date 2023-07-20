@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
-import { SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -10,18 +9,16 @@ import { ItwWalletSelector } from "../../store/reducers/itwCredentials";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ROUTES from "../../../../navigation/routes";
 import { ItwParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 /**
  * PidActivationScreen props which consists of the pid to be added to the wallet.
  */
-export type PidActivationScreenProps = {
+export type ItwPidActivationScreenProps = {
   pid: PidMockType;
 };
 
@@ -38,7 +35,7 @@ type Props = IOStackNavigationRouteProps<
  * TODO: add an error screen when the PID is not added.
  * @param route - route params containg the PID.
  */
-const PidActivationScreen = ({ route }: Props) => {
+const ItwPidActivationScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const wallet = useIOSelector(ItwWalletSelector);
   const navigation = useNavigation();
@@ -49,7 +46,7 @@ const PidActivationScreen = ({ route }: Props) => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => navigation.navigate(ROUTES.MAIN),
+    onPress: () => navigation.navigate(ROUTES.ITWALLET_HOME),
     title: "Continua"
   };
 
@@ -81,6 +78,7 @@ const PidActivationScreen = ({ route }: Props) => {
         type={"SingleButton"}
         leftButton={continueButtonProps}
       />
+      <VSpacer size={24} />
     </>
   );
 
@@ -97,16 +95,7 @@ const PidActivationScreen = ({ route }: Props) => {
       (_, __) => <LoadingScreen /> // TODO: handle error case
     );
 
-  return (
-    <BaseScreenComponent
-      headerTitle={I18n.t("features.itWallet.issuing.title")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={{ ...IOStyles.flex }}>
-        <RenderMask />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
+  return <RenderMask />;
 };
 
-export default PidActivationScreen;
+export default ItwPidActivationScreen;
