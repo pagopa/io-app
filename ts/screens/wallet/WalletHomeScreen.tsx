@@ -108,6 +108,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import ROUTES from "../../navigation/routes";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -524,6 +525,13 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         gradientHeader={true}
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
+        isProfileAvailable={{
+          enabled: true,
+          onProfileTap: () =>
+            this.props.navigation
+              .getParent()
+              ?.navigate(ROUTES.PROFILE_NAVIGATOR)
+        }}
       >
         <BpdOptInPaymentMethodsContainer />
         <>

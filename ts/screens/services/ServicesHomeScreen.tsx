@@ -100,6 +100,7 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
+import ROUTES from "../../navigation/routes";
 import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
@@ -359,6 +360,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
             faqCategories={["services"]}
+            isProfileAvailable={{
+              enabled: true,
+              onProfileTap: () =>
+                this.props.navigation
+                  .getParent()
+                  ?.navigate(ROUTES.PROFILE_NAVIGATOR)
+            }}
           >
             {this.renderErrorContent() ? (
               this.renderErrorContent()
