@@ -4,7 +4,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { TabItem } from "../../../components/ui/TabItem";
@@ -49,37 +49,41 @@ export const DSTabNavigation = () => {
 
         <View style={[styles.default, { borderRadius: 16, padding: 16 }]}>
           <DSComponentViewerBox name="Light">
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              onPress={handlePress}
-            />
-            <VSpacer size={8} />
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              icon={"starEmpty"}
-              iconSelected={"starFilled"}
-              onPress={handlePress}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                onPress={handlePress}
+              />
+              <HSpacer size={8} />
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                icon={"starEmpty"}
+                iconSelected={"starFilled"}
+                onPress={handlePress}
+              />
+            </View>
           </DSComponentViewerBox>
 
           <DSComponentViewerBox name="Light Selected" last={true}>
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              selected={true}
-              onPress={handlePress}
-            />
-            <VSpacer size={8} />
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              icon={"starEmpty"}
-              iconSelected={"starFilled"}
-              selected={true}
-              onPress={handlePress}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                selected={true}
+                onPress={handlePress}
+              />
+              <HSpacer size={8} />
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                icon={"starEmpty"}
+                iconSelected={"starFilled"}
+                selected={true}
+                onPress={handlePress}
+              />
+            </View>
           </DSComponentViewerBox>
         </View>
 
@@ -87,21 +91,23 @@ export const DSTabNavigation = () => {
 
         <View style={[styles.dark, { borderRadius: 16, padding: 16 }]}>
           <DSComponentViewerBox name="Dark" colorMode="dark">
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              color="dark"
-              onPress={handlePress}
-            />
-            <VSpacer size={8} />
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              icon={"starEmpty"}
-              iconSelected={"starFilled"}
-              color="dark"
-              onPress={handlePress}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                color="dark"
+                onPress={handlePress}
+              />
+              <HSpacer size={8} />
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                icon={"starEmpty"}
+                iconSelected={"starFilled"}
+                color="dark"
+                onPress={handlePress}
+              />
+            </View>
           </DSComponentViewerBox>
 
           <DSComponentViewerBox
@@ -109,23 +115,25 @@ export const DSTabNavigation = () => {
             colorMode="dark"
             last={true}
           >
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              color="dark"
-              selected={true}
-              onPress={handlePress}
-            />
-            <VSpacer size={8} />
-            <TabItem
-              label="Label tab"
-              accessibilityLabel="Label tab"
-              icon={"starEmpty"}
-              iconSelected={"starFilled"}
-              color="dark"
-              selected={true}
-              onPress={handlePress}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                color="dark"
+                selected={true}
+                onPress={handlePress}
+              />
+              <HSpacer size={8} />
+              <TabItem
+                label="Label tab"
+                accessibilityLabel="Label tab"
+                icon={"starEmpty"}
+                iconSelected={"starFilled"}
+                color="dark"
+                selected={true}
+                onPress={handlePress}
+              />
+            </View>
           </DSComponentViewerBox>
         </View>
 
