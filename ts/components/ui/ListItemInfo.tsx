@@ -15,7 +15,6 @@ import { makeFontStyleObject } from "../core/fonts";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { NewH6 } from "../core/typography/NewH6";
 import { Body } from "../core/typography/Body";
-import { VSpacer } from "../core/spacer/Spacer";
 
 export type ListItemInfo = WithTestID<{
   label: string;
@@ -87,7 +86,7 @@ export const ListItemInfo = ({
           )}
         </View>
         {action && (
-          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+          <View style={{ marginLeft: IOListItemVisualParams.actionMargin }}>
             {action}
           </View>
         )}
@@ -117,7 +116,6 @@ export const ListItemInfo = ({
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {label}
           </LabelSmall>
-          <VSpacer size={4} />
           <NewH6
             color={theme["textBody-default"]}
             numberOfLines={numberOfLines}
@@ -126,7 +124,7 @@ export const ListItemInfo = ({
           </NewH6>
         </View>
         {action && (
-          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+          <View style={{ marginLeft: IOListItemVisualParams.actionMargin }}>
             {action}
           </View>
         )}
