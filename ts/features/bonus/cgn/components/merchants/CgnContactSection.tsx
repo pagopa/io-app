@@ -5,59 +5,55 @@ import { constNull } from "fp-ts/lib/function";
 import { openWebUrl } from "../../../../../utils/url";
 import { showToast } from "../../../../../utils/showToast";
 import I18n from "../../../../../i18n";
-// import {
-//   MerchantContactTypeEnum,
-//   MerchantContacts
-// } from "../../../../../../definitions/cgn/merchants/Merchant";
 import ListItemAction from "../../../../../components/ui/ListItemAction";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { CGN_MERCHANT_CONTACT_ICONS } from "../../utils/constants";
+import {
+  SupportType,
+  SupportTypeEnum
+} from "../../../../../../definitions/cgn/merchants/SupportType";
 
 type CgnContactSectionProps = {
-  contact: { text: string; type: MerchantContactTypeEnum };
+  supportValue: string;
+  supportType: SupportType;
 };
 
-export enum MerchantContactTypeEnum {
-  EMAIL = "EMAIL",
-  WEBSITE = "WEBSITE",
-  PHONE = "PHONE"
-}
-
 /**
- * Renders a single merchant contact item with a copy button
- * - If the contact is a website, it will open the url in the browser
- * - If the contact is an email, it will open the email app
- * - If the contact is a phone number, it will open the phone app
+ * Renders a merchant support contact item with the following behaviour:
+ * - If the supportType is a website, it will open the url in the browser
+ * - If the supportType is an email, it will open the email app
+ * - If the supportType is a phone number, it will open the phone app
  */
-const CgnContactSection: React.FC<CgnContactSectionProps> = ({
-  contact
+const CgnContactSection = ({
+  supportType,
+  supportValue
 }: CgnContactSectionProps) => {
   const handleOnPress = () => {
-    switch (contact.type) {
-      case MerchantContactTypeEnum.EMAIL:
-        return Linking.openURL(`mailto:${contact}`).catch(constNull);
-      case MerchantContactTypeEnum.WEBSITE:
-        return openWebUrl(contact.text, () =>
+    switch (supportType) {
+      case SupportTypeEnum.EMAILADDRESS:
+        return Linking.openURL(`mailto:${supportValue}`).catch(constNull);
+      case SupportTypeEnum.WEBSITE:
+        return openWebUrl(supportValue, () =>
           showToast(I18n.t("bonus.cgn.generic.linkError"))
         );
-      case MerchantContactTypeEnum.PHONE:
-        return Linking.openURL(`tel:${contact}`).catch(constNull);
+      case SupportTypeEnum.PHONENUMBER:
+        return Linking.openURL(`tel:${supportValue}`).catch(constNull);
       default:
         return showToast(I18n.t("bonus.cgn.generic.linkError"));
     }
   };
 
   const contactIcon = React.useMemo(
-    () => CGN_MERCHANT_CONTACT_ICONS[contact.type],
-    [contact]
+    () => CGN_MERCHANT_CONTACT_ICONS[supportType],
+    [supportType]
   );
 
   return (
     <>
       <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2>
       <ListItemAction
-        accessibilityLabel={contact.text}
-        label={contact.text}
+        accessibilityLabel={supportValue}
+        label={supportValue}
         onPress={handleOnPress}
         variant="primary"
         icon={contactIcon}

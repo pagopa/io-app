@@ -36,9 +36,7 @@ import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDisc
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { Icon } from "../../../../../components/core/icons/Icon";
-import CgnContactSection, {
-  MerchantContactTypeEnum
-} from "../../components/merchants/CgnContactSection";
+import CgnContactSection from "../../components/merchants/CgnContactSection";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -176,19 +174,15 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                       />
                     </>
                   )}
-                {/* {merchantDetail.value.contacts && ( */}
-                <>
-                  <VSpacer size={16} />
-                  {/* <H2>{I18n.t("bonus.cgn.merchantDetail.title.contacts")}</H2> */}
-                  {/* <CgnContactSection contact={merchantDetail.value.contacts} /> */}
-                  <CgnContactSection
-                    contact={{
-                      text: "test@test.it",
-                      type: MerchantContactTypeEnum.EMAIL
-                    }}
-                  />
-                </>
-                {/* )} */}
+                {merchantDetail.value.supportValue && (
+                  <>
+                    <VSpacer size={16} />
+                    <CgnContactSection
+                      supportType={merchantDetail.value.supportType}
+                      supportValue={merchantDetail.value.supportValue}
+                    />
+                  </>
+                )}
               </View>
             </ScrollView>
           </>
