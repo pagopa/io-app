@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-rc.13](https://github.com/pagopa/io-app/compare/0.2.0-rc.12...0.2.0-rc.13) (2023-07-20)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-316](https://pagopa.atlassian.net/browse/SIW-316)] Refactor pid activation and preview screen ([#4811](https://github.com/pagopa/io-app/issues/4811)) ([23e7abc](https://github.com/pagopa/io-app/commit/23e7abcc7800c5c2f6ec0aaa5c822707b0198141))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-300](https://pagopa.atlassian.net/browse/SIW-300)] Add wallet reset ([#4813](https://github.com/pagopa/io-app/issues/4813)) ([1926162](https://github.com/pagopa/io-app/commit/19261629cfe4751d4af6007b3fb90133cbebba88))
+
 ## [0.2.0-rc.12](https://github.com/pagopa/io-app/compare/0.2.0-rc.11...0.2.0-rc.12) (2023-07-19)
 
 
