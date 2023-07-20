@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.0-rc.2](https://github.com/pagopa/io-app/compare/2.39.0-rc.1...2.39.0-rc.2) (2023-07-18)
+
+
+### Features
+
+* [[IOBP-119](https://pagopa.atlassian.net/browse/IOBP-119)] Add global barcode scan screen ([#4767](https://github.com/pagopa/io-app/issues/4767)) ([201d8b7](https://github.com/pagopa/io-app/commit/201d8b7341c0c5ee4555a6c2753338642d4cd3b4))
+* [[IOBP-120](https://pagopa.atlassian.net/browse/IOBP-120)] Add pagoPA notice decoding to global barcode scan screen ([#4769](https://github.com/pagopa/io-app/issues/4769)) ([fbd644f](https://github.com/pagopa/io-app/commit/fbd644f873854a1e467f8c3148adc55534606488))
+* [[IOCOM-270](https://pagopa.atlassian.net/browse/IOCOM-270)] FIMS cookie clearing when leaving the FIMS webview ([#4757](https://github.com/pagopa/io-app/issues/4757)) ([50a6342](https://github.com/pagopa/io-app/commit/50a63422b4498b170c012ac76da2916a59b96300))
+* [[IOCOM-363](https://pagopa.atlassian.net/browse/IOCOM-363)] Add Mixpanel PN events ([#4789](https://github.com/pagopa/io-app/issues/4789)) ([d559242](https://github.com/pagopa/io-app/commit/d559242a423f621ae7c78eb8abb150e1b484c2be))
+
+
+### Bug Fixes
+
+* [[IOCOM-358](https://pagopa.atlassian.net/browse/IOCOM-358)] IOS button label changed to 'Open or Share' on PDF preview ([#4797](https://github.com/pagopa/io-app/issues/4797)) ([eb7c603](https://github.com/pagopa/io-app/commit/eb7c603a5c8be78b3b132cb48133f8958627628d))
+* [[IOPID-473](https://pagopa.atlassian.net/browse/IOPID-473)] Fix CTA position in the `FingerprintScreen` component ([#4794](https://github.com/pagopa/io-app/issues/4794)) ([b5c9557](https://github.com/pagopa/io-app/commit/b5c9557305c3ee2999ffc0f6b313d0d3804e582f))
+* [[IOPID-485](https://pagopa.atlassian.net/browse/IOPID-485)] Fix nested `ScrollView` error in the `IdpSelectionScreen` ([#4796](https://github.com/pagopa/io-app/issues/4796)) ([49ec298](https://github.com/pagopa/io-app/commit/49ec298cebf7e9d4f2cacf2bd84978a40f0f7a75))
+* `useLegacyIOBottomSheetModal` bottom padding regression ([#4792](https://github.com/pagopa/io-app/issues/4792)) ([6b7faff](https://github.com/pagopa/io-app/commit/6b7faffd1dd9361c947620f283dc85347ee5b9b5))
+
+
+### Chores
+
+* [[IOBP-111](https://pagopa.atlassian.net/browse/IOBP-111),[IOBP-116](https://pagopa.atlassian.net/browse/IOBP-116)] Addition of LogoPaymentHuge and usage in new Cards components ([#4781](https://github.com/pagopa/io-app/issues/4781)) ([f06fa73](https://github.com/pagopa/io-app/commit/f06fa73654ff843fc78dea0ce5abf83fcf86df65))
+* **deps:** bump semver from 5.7.1 to 5.7.2 ([#4761](https://github.com/pagopa/io-app/issues/4761)) ([0f19842](https://github.com/pagopa/io-app/commit/0f19842419555d43725a16831a4cf71242847e93))
+* [[IOBP-110](https://pagopa.atlassian.net/browse/IOBP-110),[IOBP-114](https://pagopa.atlassian.net/browse/IOBP-114)] New wallet payment methods cards ([#4759](https://github.com/pagopa/io-app/issues/4759)) ([b6a33fe](https://github.com/pagopa/io-app/commit/b6a33fe89705f78b65cd45d39403694a7aa1937c))
+* [[IOPID-417](https://pagopa.atlassian.net/browse/IOPID-417)] Enable FL production FF" ([#4788](https://github.com/pagopa/io-app/issues/4788)) ([c78b072](https://github.com/pagopa/io-app/commit/c78b0725ec69cdc356b7d5b9d91f35056e7d0f09)), closes [pagopa/io-app#4785](https://github.com/pagopa/io-app/issues/4785)
+
 ## [2.39.0-rc.1](https://github.com/pagopa/io-app/compare/2.39.0-rc.0...2.39.0-rc.1) (2023-07-14)
 
 
