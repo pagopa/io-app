@@ -255,7 +255,7 @@ Array [
             }
             uppercase={false}
           >
-            Accept
+            Accept and continue
           </Text>
         </View>
       </View>

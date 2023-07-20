@@ -55,7 +55,7 @@ describe("Credit Card onboarding", () => {
       await element(by.id("securityCodeInputMask")).typeText("123");
 
       // Close the keyboard
-      await element(by.label("Done")).atIndex(0).tap();
+      await element(by.label("Fine")).atIndex(0).tap();
       await element(by.text(I18n.t("global.buttons.continue"))).tap();
 
       await waitFor(element(by.id("saveOrContinueButton")))

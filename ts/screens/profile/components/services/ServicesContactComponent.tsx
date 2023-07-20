@@ -77,7 +77,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             <H4>{item.title}</H4>
             <H5 weight={"Regular"}>
               {item.description1}
-              {item.description2 && <H5>{` ${item.description2}`}</H5>}
+              {item.description2 && <H5>{`\n${item.description2}`}</H5>}
             </H5>
           </View>
           <HSpacer size={24} />

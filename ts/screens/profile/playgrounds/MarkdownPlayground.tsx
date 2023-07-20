@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import React, { useCallback } from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
@@ -14,7 +13,7 @@ import Markdown from "../../../components/ui/Markdown";
 import { CTA } from "../../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
-  getCTA,
+  getMessageCTA,
   handleCtaAction
 } from "../../../utils/messages";
 import { maybeNotNullyString } from "../../../utils/strings";
@@ -41,12 +40,7 @@ const MarkdownPlayground = () => {
     [linkTo]
   );
 
-  const message: CreatedMessageWithContent = {
-    content: {
-      markdown: markdownText
-    }
-  } as CreatedMessageWithContent;
-  const maybeCTA = getCTA(message);
+  const maybeCTA = getMessageCTA(markdownText as MessageBodyMarkdown);
   const ctaMessage = O.isSome(maybeCTA)
     ? `${maybeCTA.value.cta_1 ? "2" : "1"} cta found!`
     : "no CTA found";

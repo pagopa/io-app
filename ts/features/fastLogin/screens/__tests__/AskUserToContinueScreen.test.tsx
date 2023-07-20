@@ -3,7 +3,7 @@ import { render, fireEvent, act } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
 import * as _ from "lodash";
-import AskUserToContinueScreen, { Props } from "../AskUserToContinueScreen";
+import AskUserInteractionScreen, { Props } from "../AskUserInterarctionScreen";
 import { IOPictograms } from "../../../../components/core/pictograms/Pictogram";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
@@ -25,7 +25,7 @@ const defaultProps = {
   timerDurationInSeconds: 10
 };
 
-describe("AskUserToContinueScreen component", () => {
+describe("AskUserInteractionScreen component", () => {
   it("should render properly", () => {
     const { getByText, getByTestId } = renderComponent(defaultProps, store);
 
@@ -101,6 +101,6 @@ describe("AskUserToContinueScreen component", () => {
 const renderComponent = (props: Props, store: Store<GlobalState>) =>
   render(
     <Provider store={store}>
-      <AskUserToContinueScreen {...props} />
+      <AskUserInteractionScreen {...props} />
     </Provider>
   );

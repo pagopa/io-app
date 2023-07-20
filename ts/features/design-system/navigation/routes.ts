@@ -1,5 +1,5 @@
 const DESIGN_SYSTEM_ROUTES = {
-  MAIN: "DESIGN_SYSTEM_MAIN",
+  MAIN: { route: "DESIGN_SYSTEM_MAIN", title: "Design System" },
   FOUNDATION: {
     COLOR: { route: "DESIGN_SYSTEM_COLOR", title: "Colors" },
     TYPOGRAPHY: { route: "DESIGN_SYSTEM_TYPOGRAPHY", title: "Typography" },
@@ -20,10 +20,14 @@ const DESIGN_SYSTEM_ROUTES = {
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
     ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice & Banners" },
+    CARDS: { route: "DESIGN_SYSTEM_CARDS", title: "Cards" },
     BOTTOM_SHEET: {
       route: "DESIGN_SYSTEM_BOTTOM_SHEET",
       title: "Bottom Sheet"
     }
+  },
+  HEADERS: {
+    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" }
   },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
@@ -34,6 +38,10 @@ const DESIGN_SYSTEM_ROUTES = {
     EDGE_TO_EDGE_AREA: {
       route: "DS_EDGE_TO_EDGE_AREA",
       title: "Edge to edge area"
+    },
+    FULL_SCREEN_MODAL: {
+      route: "DS_FULLSCR_MODAL",
+      title: "Full screen modal"
     }
   },
   LEGACY: {

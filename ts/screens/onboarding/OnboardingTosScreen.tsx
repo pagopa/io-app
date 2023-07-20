@@ -24,15 +24,19 @@ import {
 } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
+import { H1 } from "../../components/core/typography/H1";
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 
 const styles = StyleSheet.create({
+  titlePadding: {
+    paddingVertical: customVariables.spacingBase,
+    paddingHorizontal: customVariables.contentPadding
+  },
   alert: {
     backgroundColor: customVariables.toastColor,
     borderRadius: 4,
     marginTop: customVariables.spacerExtrasmallHeight,
     marginBottom: 0,
-    paddingVertical: customVariables.spacingBase,
-    paddingHorizontal: customVariables.contentPadding,
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "flex-start"
@@ -105,6 +109,8 @@ const OnboardingTosScreen = () => {
       ]
     );
 
+  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
       <BaseScreenComponent
@@ -114,8 +120,22 @@ const OnboardingTosScreen = () => {
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         <SafeAreaView style={styles.webViewContainer}>
+          <View style={styles.titlePadding}>
+            <H1
+              accessible={true}
+              accessibilityRole="header"
+              weight="Bold"
+              testID={"screen-content-header-title"}
+              color={"bluegreyDark"}
+            >
+              {I18n.t("profile.main.privacy.privacyPolicy.title")}
+            </H1>
+          </View>
           {!hasAcceptedCurrentTos && (
-            <View style={styles.alert} testID={"currentToSNotAcceptedView"}>
+            <View
+              style={[styles.alert, styles.titlePadding]}
+              testID={"currentToSNotAcceptedView"}
+            >
               <Body testID={"currentToSNotAcceptedText"}>
                 {hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
@@ -129,8 +149,12 @@ const OnboardingTosScreen = () => {
             webViewSource={{ uri: privacyUrl }}
             shouldRenderFooter={!isLoading}
             onExit={handleGoBack}
-            onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
+            onAcceptTos={() => {
+              checkToShowWhatsNew(true);
+              dispatch(tosAccepted(tosVersion));
+            }}
           />
+          {autoResizableBottomSheet}
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>

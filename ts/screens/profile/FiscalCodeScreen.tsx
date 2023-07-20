@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
@@ -29,7 +29,7 @@ import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { Icon } from "../../components/core/icons";
+import IconButton from "../../components/ui/IconButton";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
@@ -96,14 +96,12 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const customGoBack: ReactElement = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"contrast"}
       onPress={handleBackPress}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <Icon name="legChevronLeft" color="white" />
-    </TouchableDefaultOpacity>
+    />
   );
 
   return (
