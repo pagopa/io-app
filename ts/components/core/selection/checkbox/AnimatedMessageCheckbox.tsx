@@ -24,8 +24,7 @@ type Props = {
   checked?: boolean;
 };
 
-type AnimatedMessageCheckbox = Props &
-  Pick<PressableProps, "disabled" | "onPress">;
+type AnimatedMessageCheckbox = Props & Pick<PressableProps, "onPress">;
 
 const internalSpacing: IOSpacingScale = 4;
 
@@ -46,13 +45,12 @@ const styles = StyleSheet.create({
 });
 
 /**
- * An animated checkbox. This can be used to implement a
- * standard {@link CheckBox} or other composite components.
+ * Animated message checkbox used for the specific message
+ * list item (Select mode that enables related actions)
  */
 export const AnimatedMessageCheckbox = ({
   checked,
-  onPress,
-  disabled
+  onPress
 }: AnimatedMessageCheckbox) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isChecked = checked ?? true;
@@ -85,7 +83,6 @@ export const AnimatedMessageCheckbox = ({
 
   return (
     <Pressable
-      disabled={disabled}
       testID="AnimatedMessageCheckboxInput"
       onPress={onPress}
       style={styles.checkBoxWrapper}
