@@ -27,7 +27,8 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   HEADERS: {
-    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" }
+    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" },
+    SECOND_LEVEL: { route: "DS_HEADER_2LEVEL", title: "Second Level" }
   },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
