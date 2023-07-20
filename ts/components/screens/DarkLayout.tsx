@@ -18,8 +18,9 @@ import { FAQsCategoriesType } from "../../utils/faq";
 import { VSpacer } from "../core/spacer/Spacer";
 import { IOColors, getGradientColorValues } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
+import { ComponentProps } from "../../types/react";
 import AnimatedScreenContent from "./AnimatedScreenContent";
-import {
+import BaseScreenComponent, {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
@@ -52,7 +53,8 @@ type Props = Readonly<{
   referenceToContentScreen?: (
     c: ScreenContentRoot
   ) => ScreenContentRoot | React.LegacyRef<Content>;
-}>;
+}> &
+  Pick<ComponentProps<typeof BaseScreenComponent>, "isProfileAvailable">;
 
 const styles = StyleSheet.create({
   headerContents: {
@@ -115,6 +117,7 @@ export default class DarkLayout extends React.Component<Props> {
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         faqCategories={this.props.faqCategories}
         titleColor={"white"}
+        isProfileAvailable={this.props.isProfileAvailable}
       >
         <FocusAwareStatusBar
           backgroundColor={IOColors.bluegrey}
