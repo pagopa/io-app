@@ -13,23 +13,20 @@ export const useCgnDiscountDetailBottomSheet = (
   merchantType?: DiscountCodeType,
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
-    {
-      component: (
-        <CgnDiscountDetail
-          discount={discount}
-          merchantType={merchantType}
-          operatorName={operatorName}
-          onLandingCtaPress={(url: string, referer: string) => {
-            landingPageHandler?.(url, referer);
-            dismiss();
-          }}
-        />
-      ),
-      title: <CgnDiscountDetailHeader discount={discount} />
-    },
-    48
-  );
+  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
+    component: (
+      <CgnDiscountDetail
+        discount={discount}
+        merchantType={merchantType}
+        operatorName={operatorName}
+        onLandingCtaPress={(url: string, referer: string) => {
+          landingPageHandler?.(url, referer);
+          dismiss();
+        }}
+      />
+    ),
+    title: <CgnDiscountDetailHeader discount={discount} />
+  });
 
   return {
     dismiss,

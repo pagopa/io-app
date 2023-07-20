@@ -104,7 +104,7 @@ export const DSBottomSheet = () => {
       component: <BottomSheetLongContentBody />,
       footer: defaultFooter
     },
-    142
+    150
   );
 
   // Static bottom sheet hook
@@ -180,14 +180,7 @@ export const DSBottomSheet = () => {
     <BottomSheetContentBody />,
     "Legacy Bottom Sheet with footer",
     400,
-    <ContentWrapper>
-      <ButtonSolid
-        fullWidth
-        accessibilityLabel="Tap to dismiss the bottom sheet"
-        label={"Dismiss bottom sheet"}
-        onPress={handlePressDismiss}
-      />
-    </ContentWrapper>
+    defaultFooter
   );
 
   return (

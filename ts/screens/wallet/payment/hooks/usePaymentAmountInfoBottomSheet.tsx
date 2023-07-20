@@ -8,12 +8,12 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 export const usePaymentAmountInfoBottomSheet = () => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
     {
+      title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
       component: (
         <Body>
           {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
         </Body>
       ),
-      title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
       footer: (
         <FooterWithButtons
           type={"SingleButton"}
@@ -28,7 +28,7 @@ export const usePaymentAmountInfoBottomSheet = () => {
         />
       )
     },
-    130
+    150
   );
 
   return {

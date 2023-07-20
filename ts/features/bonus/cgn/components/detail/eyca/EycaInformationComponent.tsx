@@ -41,15 +41,13 @@ const EycaInformationComponent: React.FunctionComponent = () => {
           </ButtonDefaultOpacity>
         )}
       </View>
+      <VSpacer size={16} />
     </View>
   );
 };
 
 export const useEycaInformationBottomSheet = () =>
-  useIOBottomSheetAutoresizableModal(
-    {
-      component: <EycaInformationComponent />,
-      title: I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle")
-    },
-    48
-  );
+  useIOBottomSheetAutoresizableModal({
+    component: <EycaInformationComponent />,
+    title: I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle")
+  });

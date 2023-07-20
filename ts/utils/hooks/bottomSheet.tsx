@@ -205,7 +205,8 @@ export const useIOBottomSheetModal = ({
 };
 
 const DEFAULT_AUTORESIZABLE_SNAP_POINT = 1;
-const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 48;
+const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 72;
+
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, that autosizes to the height of its content
  * @param bottomSheetOptions
@@ -239,17 +240,12 @@ export const useIOBottomSheetAutoresizableModal = (
     [insets, fullScreen, bottomPadding]
   );
 
+  const contentComponent = (
+    <View onLayout={handleContentOnLayout}>{component}</View>
+  );
+
   return useIOBottomSheetModal({
-    component: (
-      <View
-        style={{
-          paddingBottom: insets.bottom
-        }}
-        onLayout={handleContentOnLayout}
-      >
-        {component}
-      </View>
-    ),
+    component: contentComponent,
     title,
     snapPoint: [snapPoint],
     footer,

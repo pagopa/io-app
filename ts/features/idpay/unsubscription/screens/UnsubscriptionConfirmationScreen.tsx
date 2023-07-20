@@ -1,6 +1,6 @@
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../components/core/ContentWrapper";
@@ -55,7 +55,12 @@ const UnsubscriptionConfirmationScreen = () => {
   const confirmModal = useIOBottomSheetAutoresizableModal(
     {
       title: I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
-      component: <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>,
+      component: (
+        <View>
+          <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>
+          <VSpacer size={16} />
+        </View>
+      ),
       footer: (
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
@@ -82,7 +87,7 @@ const UnsubscriptionConfirmationScreen = () => {
         />
       )
     },
-    130
+    150
   );
 
   const body = (

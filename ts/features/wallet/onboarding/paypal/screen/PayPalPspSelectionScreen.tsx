@@ -100,13 +100,15 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useIOBottomSheetAutoresizableModal(
-      {
-        title: locales.whatIsPspTitle,
-        component: <Body>{locales.whatIsPspBody}</Body>
-      },
-      72
-    );
+    useIOBottomSheetAutoresizableModal({
+      title: locales.whatIsPspTitle,
+      component: (
+        <View>
+          <Body>{locales.whatIsPspBody}</Body>
+          <VSpacer size={16} />
+        </View>
+      )
+    });
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();

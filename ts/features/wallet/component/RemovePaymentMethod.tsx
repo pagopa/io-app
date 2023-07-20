@@ -27,6 +27,7 @@ const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
     <PaymentMethodRepresentationComponent {...props.representation} />
     <VSpacer size={16} />
     <Body>{I18n.t("wallet.newRemove.body")}</Body>
+    <VSpacer size={16} />
   </View>
 );
 
@@ -66,7 +67,7 @@ export const useRemovePaymentMethodBottomSheet = (
         />
       )
     },
-    150
+    172
   );
 
   return { present, removePaymentMethodBottomSheet, dismiss };
