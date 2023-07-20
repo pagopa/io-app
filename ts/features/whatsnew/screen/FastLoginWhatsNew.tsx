@@ -5,8 +5,6 @@ import { Body } from "../../../components/core/typography/Body";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
-import { Link } from "../../../components/core/typography/Link";
-import { openWebUrl } from "../../../utils/url";
 import { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
 const STANDARD_SIZE_VSPACER: IOSpacer = 24;
@@ -50,33 +48,10 @@ export const FastLoginWhatsNewBody = (
     <Label color={"bluegrey"}>
       {`\u2022 ${I18n.t("securityTips.biometric.first")} `}
     </Label>
-    <VSpacer />
-    <Body>
-      <Body>{`\u2022 ${I18n.t("securityTips.ioEsco.lostDevice.if")} `}</Body>
-      <Label color={"bluegrey"}>
-        {`${I18n.t("securityTips.ioEsco.lostDevice.lose")} `}
-      </Label>
-      <Body>{`${I18n.t("securityTips.ioEsco.lostDevice.sentence")} `}</Body>
-
-      {
-        // FIX ME: Update url ticket: IOPID-419
-      }
-      <Link onPress={() => openWebUrl("")}>
-        {I18n.t("securityTips.ioEsco.urlString")}
-      </Link>
-    </Body>
-    <VSpacer />
-    <Body>
-      <Body>{`\u2022 ${I18n.t(
-        "securityTips.ioEsco.compromisedCredentials"
-      )} `}</Body>
-      {
-        // FIX ME: Update url ticket: IOPID-419
-      }
-      <Link onPress={() => openWebUrl("")}>
-        {I18n.t("securityTips.ioEsco.urlString")}
-      </Link>
-    </Body>
+    {
+      // FIX ME: Update url ticket: IOPID-419
+    }
+    <VSpacer size={SIZE_FROM_BOTTOM_VSPACER} />
     <VSpacer size={SIZE_FROM_BOTTOM_VSPACER} />
   </>
 );

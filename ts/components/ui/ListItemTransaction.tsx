@@ -1,13 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import {
-  Image,
-  ImageURISource,
-  StyleSheet,
-  View,
-  ViewStyle
-} from "react-native";
+import { Image, ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
@@ -19,7 +13,7 @@ import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { useIOTheme } from "../core/variables/IOColors";
+import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
 import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import {
@@ -30,14 +24,15 @@ import {
 import {
   PressableBaseProps,
   PressableListItemBase
-} from "./baseComponents/PressableListItemBase";
+} from "./utils/baseComponents/PressableListItemBase";
 
 export type ListItemTransactionStatus =
   | "success"
   | "failure"
   | "pending"
   | "cancelled"
-  | "refunded";
+  | "refunded"
+  | "reversal";
 
 type PaymentLogoIcon = IOLogoPaymentType | ImageURISource | React.ReactNode;
 
@@ -59,7 +54,7 @@ export type ListItemTransaction = WithTestID<
           transactionAmount: string;
         }
       | {
-          transactionStatus: "failure" | "pending" | "cancelled";
+          transactionStatus: "failure" | "pending" | "cancelled" | "reversal";
           transactionAmount?: string;
         }
     )
@@ -102,13 +97,14 @@ export const ListItemTransaction = ({
   transactionStatus = "success"
 }: ListItemTransaction) => {
   const theme = useIOTheme();
-
   const isDSEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
   if (isLoading) {
     return <SkeletonComponent />;
   }
 
-  const designSystemBlue = isDSEnabled ? "blue" : "blueIO-500";
+  const designSystemBlue: IOColors = isDSEnabled ? "blue" : "blueIO-500";
+
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
@@ -120,7 +116,7 @@ export const ListItemTransaction = ({
           );
         case "refunded":
           return (
-            <NewH6 color={hasChevronRight ? designSystemBlue : "greenLight"}>
+            <NewH6 color={hasChevronRight ? designSystemBlue : "success-700"}>
               {transactionAmount || ""}
             </NewH6>
           );
@@ -132,17 +128,19 @@ export const ListItemTransaction = ({
           return (
             <Badge variant="error" text={I18n.t("global.badges.cancelled")} />
           );
+        case "reversal":
+          return (
+            <Badge
+              variant="lightBlue"
+              text={I18n.t("global.badges.reversal")}
+            />
+          );
         case "pending":
           return (
             <Badge variant="info" text={I18n.t("global.badges.onGoing")} />
           );
       }
     };
-
-    const labelStyle: ViewStyle =
-      transactionStatus === "cancelled" || transactionStatus === "failure"
-        ? { opacity: 0.6 }
-        : {};
 
     return (
       <>
@@ -157,17 +155,10 @@ export const ListItemTransaction = ({
           </View>
         )}
         <View style={IOStyles.flex}>
-          <NewH6 style={labelStyle} color={theme["textBody-default"]}>
-            {title}
-          </NewH6>
-          <LabelSmall
-            style={labelStyle}
-            weight="Regular"
-            color={theme["textBody-tertiary"]}
-          >
+          <NewH6 color={theme["textBody-default"]}>{title}</NewH6>
+          <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
-          <VSpacer size={4} />
         </View>
         <View style={Styles.rightSection}>
           <TransactionAmountOrBadgeComponent />

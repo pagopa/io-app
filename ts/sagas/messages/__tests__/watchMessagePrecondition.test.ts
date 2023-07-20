@@ -5,11 +5,15 @@ import { getMessagePrecondition } from "../../../store/actions/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { testWorkerMessagePrecondition } from "../watchMessagePrecondition";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 const workerMessagePrecondition = testWorkerMessagePrecondition!;
 
-const id = "MSG001" as UIMessageId;
+const action = {
+  id: "MSG001" as UIMessageId,
+  categoryTag: TagEnumPN.PN
+};
 const mockResponseSuccess: ThirdPartyMessagePrecondition = {
   title: "-",
   markdown: "-"
@@ -24,13 +28,13 @@ describe("workerMessagePrecondition", () => {
     testSaga(
       workerMessagePrecondition,
       getThirdPartyMessagePrecondition,
-      getMessagePrecondition.request(id)
+      getMessagePrecondition.request(action)
     )
       .next()
       .call(
         withRefreshApiCall,
-        getThirdPartyMessagePrecondition({ id }),
-        getMessagePrecondition.request(id)
+        getThirdPartyMessagePrecondition(action),
+        getMessagePrecondition.request(action)
       )
       .next(E.right({ status: 200, value: mockResponseSuccess }))
       .put(getMessagePrecondition.success(mockResponseSuccess))
@@ -46,13 +50,13 @@ describe("workerMessagePrecondition", () => {
     testSaga(
       workerMessagePrecondition,
       getThirdPartyMessagePrecondition,
-      getMessagePrecondition.request(id)
+      getMessagePrecondition.request(action)
     )
       .next()
       .call(
         withRefreshApiCall,
-        getThirdPartyMessagePrecondition({ id }),
-        getMessagePrecondition.request(id)
+        getThirdPartyMessagePrecondition(action),
+        getMessagePrecondition.request(action)
       )
       .next(E.right({ status: 500, value: `response status ${500}` }))
       .put(getMessagePrecondition.failure(new Error(`response status ${500}`)))
@@ -68,7 +72,7 @@ describe("workerMessagePrecondition", () => {
     testSaga(
       workerMessagePrecondition,
       getThirdPartyMessagePrecondition,
-      getMessagePrecondition.request(id)
+      getMessagePrecondition.request(action)
     )
       .next()
       .next(E.left([]))
