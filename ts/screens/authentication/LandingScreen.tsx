@@ -60,6 +60,7 @@ import { Icon } from "../../components/core/icons";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { openWebUrl } from "../../utils/url";
 import { cieSpidMoreInfoUrl } from "../../config";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -248,6 +249,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.props.dispatchContinueWithRootOrJailbreak(continueWith);
   };
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   private renderLandingScreen = () => {
     const isCieSupported = this.isCieSupported();
     const secondButtonStyle = isCieSupported
@@ -266,7 +268,9 @@ class LandingScreen extends React.PureComponent<Props, State> {
         {this.state.isSessionExpired ? (
           <InfoScreenComponent
             title={I18n.t("authentication.landing.session_expired.title")}
-            body={I18n.t("authentication.landing.session_expired.body")}
+            body={I18n.t("authentication.landing.session_expired.body", {
+              days: this.props.isFastLoginFeatureFlagEnabled ? "365" : "30"
+            })}
             image={renderInfoRasterImage(sessionExpiredImg)}
           />
         ) : (
@@ -401,6 +405,7 @@ const mapStateToProps = (state: GlobalState) => {
   const hasApiLevelSupport = hasApiLevelSupportSelector(state);
   const hasNFCFeature = hasNFCFeatureSelector(state);
   return {
+    isFastLoginFeatureFlagEnabled: isFastLoginEnabledSelector(state),
     isSessionExpired: isSessionExpiredSelector(state),
     continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
