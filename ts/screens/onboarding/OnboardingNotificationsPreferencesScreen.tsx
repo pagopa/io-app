@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -10,7 +12,10 @@ import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H5 } from "../../components/core/typography/H5";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../components/core/variables/IOStyles";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -27,36 +32,21 @@ import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { showToast } from "../../utils/showToast";
+import { ContentWrapper } from "../../components/core/ContentWrapper";
+import { Divider } from "../../components/core/Divider";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
-  contentHeader: {
-    padding: customVariables.contentPadding,
-    paddingTop: 0
-  },
-  separator: {
-    backgroundColor: customVariables.itemSeparator,
-    height: StyleSheet.hairlineWidth
-  },
-  bottomSpacer: {
-    marginBottom: customVariables.spacerLargeHeight
-  },
-  blueBg: {
-    backgroundColor: IOColors.blue
-  },
   containerActions: {
     backgroundColor: IOColors.white,
-    borderRadius: 16,
-    height: "100%",
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
     paddingBottom: customVariables.contentPadding
   },
   containerActionsBlueBg: {
     paddingTop: customVariables.contentPadding
-  },
-  badge: {
-    padding: customVariables.contentPadding / 2
   }
 });
 
@@ -95,39 +85,47 @@ const loadingButtonProps = (): BlockButtonProps => ({
 });
 
 const CustomGoBack = memo(
-  ({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
-    <View style={styles.badge}>
-      {!isFirstOnboarding && (
-        <IOBadge
-          text={I18n.t("onboarding.notifications.badge")}
-          variant="solid"
-          color="aqua"
-        />
-      )}
-    </View>
-  )
+  ({ isFirstOnboarding }: { isFirstOnboarding: boolean }) =>
+    pipe(
+      isFirstOnboarding,
+      B.fold(
+        () => (
+          <IOBadge
+            text={I18n.t("onboarding.notifications.badge")}
+            variant="solid"
+            color="aqua"
+          />
+        ),
+        () => null
+      )
+    )
 );
 
 const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => {
-  const { title, subtitle } = isFirstOnboarding
-    ? {
-        title: I18n.t("profile.preferences.notifications.title"),
-        subtitle: I18n.t("profile.preferences.notifications.subtitle")
-      }
-    : {
+  const { title, subtitle } = pipe(
+    isFirstOnboarding,
+    B.fold(
+      () => ({
         title: I18n.t("profile.preferences.notifications.titleExistingUser"),
         subtitle: I18n.t(
           "profile.preferences.notifications.subtitleExistingUser"
         )
-      };
+      }),
+      () => ({
+        title: I18n.t("profile.preferences.notifications.title"),
+        subtitle: I18n.t("profile.preferences.notifications.subtitle")
+      })
+    )
+  );
 
   return (
-    <View style={styles.contentHeader}>
+    <ContentWrapper>
       <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>{title}</H1>
       <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
         {subtitle}
       </Body>
-    </View>
+      <VSpacer size={24} />
+    </ContentWrapper>
   );
 });
 
@@ -176,7 +174,12 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       primary={!isFirstOnboarding}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={!isFirstOnboarding && styles.blueBg}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            backgroundColor: !isFirstOnboarding ? IOColors.blue : IOColors.white
+          }}
+        >
           <Header isFirstOnboarding={isFirstOnboarding} />
           <NotificationsPreferencesPreview
             previewEnabled={previewEnabled}
@@ -189,7 +192,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
               !isFirstOnboarding && styles.containerActionsBlueBg
             ]}
           >
-            {isFirstOnboarding && <View style={styles.separator} />}
+            {isFirstOnboarding && <Divider />}
             <PreferencesListItem
               title={I18n.t("profile.preferences.notifications.preview.title")}
               description={`${I18n.t(
@@ -210,7 +213,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 />
               }
             />
-            <View style={styles.separator} />
+            <Divider />
             <PreferencesListItem
               title={I18n.t(
                 "profile.preferences.notifications.reminders.title"
@@ -227,7 +230,8 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 />
               }
             />
-            <View style={[styles.separator, styles.bottomSpacer]} />
+            <Divider />
+            <VSpacer size={24} />
             <InfoBox iconName="navProfile" iconColor="bluegrey">
               <H5 color={"bluegrey"} weight={"Regular"}>
                 {I18n.t(
