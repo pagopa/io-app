@@ -20,6 +20,7 @@ import {
 import DarkLayout from "../screens/DarkLayout";
 
 import { ScreenContentRoot } from "../screens/ScreenContent";
+import { ComponentProps } from "../../types/react";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -41,7 +42,8 @@ type Props = Readonly<{
   referenceToContentScreen?: (
     c: ScreenContentRoot
   ) => ScreenContentRoot | React.LegacyRef<Content>;
-}>;
+}> &
+  Pick<ComponentProps<typeof DarkLayout>, "isProfileAvailable">;
 
 export default class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
@@ -75,6 +77,7 @@ export default class WalletLayout extends React.Component<Props> {
         gradientHeader={this.props.gradientHeader}
         headerPaddingMin={this.props.headerPaddingMin}
         referenceToContentScreen={this.props.referenceToContentScreen}
+        isProfileAvailable={this.props.isProfileAvailable}
       >
         {this.props.children}
       </DarkLayout>
