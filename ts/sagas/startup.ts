@@ -87,7 +87,10 @@ import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
-import { differentProfileLoggedIn } from "../store/actions/crossSessions";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
@@ -476,6 +479,7 @@ export function* initializeApplicationSaga(
   const profile = yield* select(profileSelector);
   if (pot.isSome(profile)) {
     yield* put(profileLoadSuccess(profile.value));
+    yield* take(setProfileHashedFiscalCode);
   }
 
   // check if the user expressed preference about mixpanel, if not ask for it
