@@ -103,7 +103,8 @@ export const IOColors = asIOColors({
   orange: "#EA7614",
   red: "#C02927",
   green: "#005C3C",
-  greenLight: "#5CA85A"
+  greenLight: "#5CA85A",
+  transparent: "transparent"
 });
 
 export type IOColors = keyof typeof IOColors;
