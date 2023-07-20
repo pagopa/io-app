@@ -163,6 +163,7 @@ import {
   keychainError
 } from "./../store/storages/keychain";
 import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
+import { setLanguageFromProfileIfExists } from "./preferences";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -481,7 +482,7 @@ export function* initializeApplicationSaga(
     yield* put(profileLoadSuccess(profile.value));
     yield* take(setProfileHashedFiscalCode);
   }
-
+  yield* call(setLanguageFromProfileIfExists);
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
