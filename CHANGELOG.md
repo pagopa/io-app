@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-rc.14](https://github.com/pagopa/io-app/compare/0.2.0-rc.13...0.2.0-rc.14) (2023-07-20)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-319](https://pagopa.atlassian.net/browse/SIW-319)] Add profile button to main screens ([#4815](https://github.com/pagopa/io-app/issues/4815)) ([62227d3](https://github.com/pagopa/io-app/commit/62227d308b126e80486049126395b4f1ca2034f1))
+* **IT Wallet:** [[SIW-321](https://pagopa.atlassian.net/browse/SIW-321)] Fix conventional commit scope in release scripts ([#4816](https://github.com/pagopa/io-app/issues/4816)) ([5efbea4](https://github.com/pagopa/io-app/commit/5efbea49b66f01d0be47a15a65f74cac04705a3c))
+
 ## [0.2.0-rc.13](https://github.com/pagopa/io-app/compare/0.2.0-rc.12...0.2.0-rc.13) (2023-07-20)
 
 
