@@ -2720,7 +2720,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni
+        deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
