@@ -34,7 +34,8 @@ export function* handleSessionExpiredSaga() {
     yield* put(
       refreshSessionToken.request({
         withUserInteraction: true,
-        showIdentificationModalAtStartup: false
+        showIdentificationModalAtStartup: false,
+        showLoader: true
       })
     );
   } else {
