@@ -23,6 +23,7 @@ import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent
 import { Pictogram } from "../../../../components/core/pictograms";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const ItwActivationInfoAuthScreen = () => {
   const navigation = useNavigation();
@@ -114,6 +115,7 @@ const ItwActivationInfoAuthScreen = () => {
             content={I18n.t("features.itWallet.infoAuthScreen.footerBox")}
             infoIcon
           />
+          <VSpacer />
         </ScreenContent>
         <FooterWithButtons
           type={"SingleButton"}
