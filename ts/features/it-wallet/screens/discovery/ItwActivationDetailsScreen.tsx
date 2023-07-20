@@ -65,6 +65,7 @@ const ItwActivationDetailsScreen = () => {
           <ItwFooterInfoBox
             content={I18n.t("features.itWallet.activationScreen.tos")}
           />
+          <VSpacer />
         </ScreenContent>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
