@@ -80,8 +80,17 @@ import com.android.build.OutputFile
  * ]
  */
 
+// usage: ./gradlew assembleDebug -PbundleInDebug=true
+def bundleInDebugPropertyName = "bundleInDebug"
+def bundleDebug = false
+if (project.hasProperty(bundleInDebugPropertyName)) {
+    println bundleInDebugPropertyName + ': ' + bundleInDebug
+    bundleDebug = project.getProperty(bundleInDebugPropertyName)
+}
+ 
 project.ext.react = [
-  enableHermes: true
+  enableHermes: true,
+  bundleInDebug: bundleDebug
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
