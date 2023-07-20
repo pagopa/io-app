@@ -81,7 +81,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
     requestMerchantDetail(merchantID);
   }, [merchantID, requestMerchantDetail]);
 
-  const renderAddressesListItem = ({ item }: ListRenderItemInfo<Address>) => (
+  const renderAddressesListItem = (
+    item: Address,
+    isAllNationalAddress: boolean
+  ) => (
     <TouchableDefaultOpacity
       style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
       onPress={() => clipboardSetStringWithFeedback(item.full_address)}
@@ -89,9 +92,11 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       <H4 weight={"Regular"} style={IOStyles.flex}>
         {item.full_address}
       </H4>
-      <View style={styles.flexEnd}>
-        <Icon name="copy" size={COPY_ICON_SIZE} color="blue" />
-      </View>
+      {!isAllNationalAddress && (
+        <View style={styles.flexEnd}>
+          <Icon name="copy" size={COPY_ICON_SIZE} color="blue" />
+        </View>
+      )}
     </TouchableDefaultOpacity>
   );
 
@@ -168,7 +173,12 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                     <>
                       <FlatList
                         data={merchantDetail.value.addresses}
-                        renderItem={renderAddressesListItem}
+                        renderItem={({ item }) =>
+                          renderAddressesListItem(
+                            item,
+                            merchantDetail.value.allNationalAddresses
+                          )
+                        }
                         keyExtractor={(item: Address) => item.full_address}
                       />
                     </>
