@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-rc.15](https://github.com/pagopa/io-app/compare/2.39.0-rc.2...0.2.0-rc.15) (2023-07-20)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-182](https://pagopa.atlassian.net/browse/SIW-182)] Update app icon ([#4714](https://github.com/pagopa/io-app/issues/4714)) ([decbe64](https://github.com/pagopa/io-app/commit/decbe64dfa083634fb1ee1f7004f3bc6a95ce02f))
+* **IT Wallet:** [[SIW-206](https://pagopa.atlassian.net/browse/SIW-206),[SIW-217](https://pagopa.atlassian.net/browse/SIW-217)] Add new tab navigator ([#4724](https://github.com/pagopa/io-app/issues/4724)) ([c346840](https://github.com/pagopa/io-app/commit/c346840e957f8e0c3b9d48f84c65fb1224a28503))
+* **IT Wallet:** [[SIW-206](https://pagopa.atlassian.net/browse/SIW-206),[SIW-248](https://pagopa.atlassian.net/browse/SIW-248)] Refactor base header ([#4727](https://github.com/pagopa/io-app/issues/4727)) ([7d57c28](https://github.com/pagopa/io-app/commit/7d57c28a57769f5a0ecfbc5f8dc739d7e34ebc0a))
+* **IT Wallet:** [[SIW-209](https://pagopa.atlassian.net/browse/SIW-209),[SIW-255](https://pagopa.atlassian.net/browse/SIW-255)] Cie pid issuing ([#4764](https://github.com/pagopa/io-app/issues/4764)) ([d2917de](https://github.com/pagopa/io-app/commit/d2917def1c4f56560127f8d664388166402561c6))
+* **IT Wallet:** [[SIW-211](https://pagopa.atlassian.net/browse/SIW-211)] Add PID preview and addition ([#4786](https://github.com/pagopa/io-app/issues/4786)) ([6cd09b0](https://github.com/pagopa/io-app/commit/6cd09b0cbdaf66759ceb5a6d98759923d466c1d0))
+* **IT Wallet:** [[SIW-213](https://pagopa.atlassian.net/browse/SIW-213)] Add issuing thank you page screen ([#4775](https://github.com/pagopa/io-app/issues/4775)) ([e929e35](https://github.com/pagopa/io-app/commit/e929e3523a0d3ecb8d786f59868aa29e44e94261))
+* **IT Wallet:** [[SIW-214](https://pagopa.atlassian.net/browse/SIW-214)] Add PID to wallet ([#4790](https://github.com/pagopa/io-app/issues/4790)) ([d9cf845](https://github.com/pagopa/io-app/commit/d9cf84521e09feeaf43b46056812536ad06faa78))
+* **IT Wallet:** [[SIW-218](https://pagopa.atlassian.net/browse/SIW-218)] Add action banner sticky component ([#4721](https://github.com/pagopa/io-app/issues/4721)) ([2e96f6a](https://github.com/pagopa/io-app/commit/2e96f6a82d8095200730f4d80ac836b189e0bed0))
+* **IT Wallet:** [[SIW-221](https://pagopa.atlassian.net/browse/SIW-221)] Add home screen scaffold ([#4747](https://github.com/pagopa/io-app/issues/4747)) ([cc3d65e](https://github.com/pagopa/io-app/commit/cc3d65e3fa5ada90fdf6a6671a6f4d8979b22a41))
+* **IT Wallet:** [[SIW-222](https://pagopa.atlassian.net/browse/SIW-222)] ITW stack navigator initialization ([#4722](https://github.com/pagopa/io-app/issues/4722)) ([7aa8bab](https://github.com/pagopa/io-app/commit/7aa8bab2cf60b21c26378d03bd4ed919607bf521))
+* **IT Wallet:** [[SIW-226](https://pagopa.atlassian.net/browse/SIW-226)] Add NFC check in issuing flow ([#4760](https://github.com/pagopa/io-app/issues/4760)) ([a2a1c82](https://github.com/pagopa/io-app/commit/a2a1c824349019d60e20be7d575df8a9c7b36477))
+* **IT Wallet:** [[SIW-228](https://pagopa.atlassian.net/browse/SIW-228)] Add IT Wallet feat flag ([#4703](https://github.com/pagopa/io-app/issues/4703)) ([b4aca30](https://github.com/pagopa/io-app/commit/b4aca30a002da11db4a85d5dc5787a4b57d54552))
+* **IT Wallet:** [[SIW-239](https://pagopa.atlassian.net/browse/SIW-239)] Add danger it wallet project scope ([#4708](https://github.com/pagopa/io-app/issues/4708)) ([22c00c7](https://github.com/pagopa/io-app/commit/22c00c7a93851b64f62b3cb64624b338542d0aed))
+* **IT Wallet:** [[SIW-242](https://pagopa.atlassian.net/browse/SIW-242)] Disable min app version check if FF is enabled ([#4712](https://github.com/pagopa/io-app/issues/4712)) ([cef7e24](https://github.com/pagopa/io-app/commit/cef7e243c80dc56f0c32b759455c59c5279c57fa))
+* **IT Wallet:** [[SIW-243](https://pagopa.atlassian.net/browse/SIW-243)] Add it-wallet directories and placeholders ([#4717](https://github.com/pagopa/io-app/issues/4717)) ([307e9ba](https://github.com/pagopa/io-app/commit/307e9bad2dd43e06b9ce33887d3e62e8bff1cd4d))
+* **IT Wallet:** [[SIW-251](https://pagopa.atlassian.net/browse/SIW-251)] Init itw main saga and activation base screen ([#4735](https://github.com/pagopa/io-app/issues/4735)) ([46bbcbc](https://github.com/pagopa/io-app/commit/46bbcbcdd8219bc9e1d9a2cf57cca571258e6993))
+* **IT Wallet:** [[SIW-252](https://pagopa.atlassian.net/browse/SIW-252)] Add activation screen ([#4741](https://github.com/pagopa/io-app/issues/4741)) ([8e6dbbd](https://github.com/pagopa/io-app/commit/8e6dbbd0cc5b765452fea9ef8dd1fc52f7120daf))
+* **IT Wallet:** [[SIW-253](https://pagopa.atlassian.net/browse/SIW-253)] Fix Android build ([#4736](https://github.com/pagopa/io-app/issues/4736)) ([c9365cd](https://github.com/pagopa/io-app/commit/c9365cd6f0fd24a973fdc745bde9692775a49f79))
+* **IT Wallet:** [[SIW-258](https://pagopa.atlassian.net/browse/SIW-258)] Fix iOS build ([#4738](https://github.com/pagopa/io-app/issues/4738)) ([be6409e](https://github.com/pagopa/io-app/commit/be6409ea3d04332d9f7d57d16c2884b21a5aea6c))
+* **IT Wallet:** [[SIW-259](https://pagopa.atlassian.net/browse/SIW-259)] Remove min app version check while in dev mode ([#4739](https://github.com/pagopa/io-app/issues/4739)) ([cc3408f](https://github.com/pagopa/io-app/commit/cc3408f1096fdde4a0b7efb39994487275de053e))
+* **IT Wallet:** [[SIW-261](https://pagopa.atlassian.net/browse/SIW-261)] Add authentication info screen ([#4745](https://github.com/pagopa/io-app/issues/4745)) ([8dcda00](https://github.com/pagopa/io-app/commit/8dcda0001fad6e4a782cf586b425cf614021e8b8))
+* **IT Wallet:** [[SIW-268](https://pagopa.atlassian.net/browse/SIW-268)] Update applicationId to fix Android deployment ([#4750](https://github.com/pagopa/io-app/issues/4750)) ([9272be3](https://github.com/pagopa/io-app/commit/9272be33196d3ac14d751d2d4c1faefc37960506))
+* **IT Wallet:** [[SIW-281](https://pagopa.atlassian.net/browse/SIW-281)] Animated loading spinner overlay ([#4773](https://github.com/pagopa/io-app/issues/4773)) ([73c4ab6](https://github.com/pagopa/io-app/commit/73c4ab621e015cd13a4de0907d0cbf229b3f091b))
+* **IT Wallet:** [[SIW-289](https://pagopa.atlassian.net/browse/SIW-289)] Add cie info screen on activation flow ([#4783](https://github.com/pagopa/io-app/issues/4783)) ([cb9d80a](https://github.com/pagopa/io-app/commit/cb9d80a62a01b06a48a89ca7ba09542f3bf75ccb))
+* **IT Wallet:** [[SIW-319](https://pagopa.atlassian.net/browse/SIW-319)] Add profile button to main screens ([#4815](https://github.com/pagopa/io-app/issues/4815)) ([62227d3](https://github.com/pagopa/io-app/commit/62227d308b126e80486049126395b4f1ca2034f1))
+* **IT Wallet:** [[SIW-321](https://pagopa.atlassian.net/browse/SIW-321)] Fix conventional commit scope in release scripts ([#4816](https://github.com/pagopa/io-app/issues/4816)) ([5efbea4](https://github.com/pagopa/io-app/commit/5efbea49b66f01d0be47a15a65f74cac04705a3c))
+* [[SIW-234](https://pagopa.atlassian.net/browse/SIW-234)] Rename workflow files ([#4706](https://github.com/pagopa/io-app/issues/4706)) ([816d253](https://github.com/pagopa/io-app/commit/816d253e2e093fff9fdfbf44ffcd378d92f539dc))
+* periodic rebase ([31b065d](https://github.com/pagopa/io-app/commit/31b065d4a809e57832d1fbbfc403035a632d7693))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-316](https://pagopa.atlassian.net/browse/SIW-316)] Refactor pid activation and preview screen ([#4811](https://github.com/pagopa/io-app/issues/4811)) ([23e7abc](https://github.com/pagopa/io-app/commit/23e7abcc7800c5c2f6ec0aaa5c822707b0198141))
+* **IT Wallet:** [[SIW-322](https://pagopa.atlassian.net/browse/SIW-322)] Add vertical spacer in discovery screens ([#4820](https://github.com/pagopa/io-app/issues/4820)) ([29c767b](https://github.com/pagopa/io-app/commit/29c767bf6835a7d0feed2c3665197d7b6ffbf6db))
+* package.json relase script ([87661bd](https://github.com/pagopa/io-app/commit/87661bd26fd5d2daca56a23fde8ad98c8f9b7ee6))
+* rebase conflicts ([b337cf6](https://github.com/pagopa/io-app/commit/b337cf6bfe8016d7631a1cedf3c34b6e61fa6178))
+* update definitions ([5398404](https://github.com/pagopa/io-app/commit/5398404395acac63ff3c5f8a020321162c481f19))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-270](https://pagopa.atlassian.net/browse/SIW-270)] Bypass version supported ([#4753](https://github.com/pagopa/io-app/issues/4753)) ([41c7893](https://github.com/pagopa/io-app/commit/41c7893ecf1d00a7622983241c95184e9dcf4b6d))
+* **IT Wallet:** [[SIW-300](https://pagopa.atlassian.net/browse/SIW-300)] Add wallet reset ([#4813](https://github.com/pagopa/io-app/issues/4813)) ([1926162](https://github.com/pagopa/io-app/commit/19261629cfe4751d4af6007b3fb90133cbebba88))
+* **release:** 0.2.0-rc.11 ([13776af](https://github.com/pagopa/io-app/commit/13776af840b2477680cdedd2b655733c5d6f26ec))
+* change commit message release-cycle ([e7b406b](https://github.com/pagopa/io-app/commit/e7b406ba33661b4bb27ff3d2d8d5389044cc52e2))
+* change release-ios workflow env ([bf75302](https://github.com/pagopa/io-app/commit/bf7530237b13a8abc997ab01e03504b2f8d1dd30))
+* change release-rc commit message ([b2d962d](https://github.com/pagopa/io-app/commit/b2d962dd02f7062dd526c4d22794ce7cf9146291))
+* enable it wallet FF in prod ([53758c7](https://github.com/pagopa/io-app/commit/53758c79480fa9fd4352302ff42c1e3dd662e506))
+* init fastlane ios ([aa8e0fd](https://github.com/pagopa/io-app/commit/aa8e0fd1892acdc0ca1569510d63224d49e94dbc))
+* rebase cron update ([97b1df9](https://github.com/pagopa/io-app/commit/97b1df974551ec9ec64b4032ac967a1f937d68c3))
+* remove promote to alpha ([86f252f](https://github.com/pagopa/io-app/commit/86f252f024f316fefe41834553b42657dd801a5d))
+* remove rebase workflow ([73bb9d5](https://github.com/pagopa/io-app/commit/73bb9d5f199d455425bd9482794f6192ce52e9f7))
+* remove unused workflow ([b7f1ba1](https://github.com/pagopa/io-app/commit/b7f1ba1cf257e94a0d81bd70878f13ae40198c16))
+* skip tag creation standard-version ([7c7ef91](https://github.com/pagopa/io-app/commit/7c7ef91c637610f6f7d10eb52a2a8729e38b669e))
+* update Appfile ([8f3ad12](https://github.com/pagopa/io-app/commit/8f3ad12ed7d619a76f4b324d527fd9b00cb86e4b))
+* update cycle ([f38fdf3](https://github.com/pagopa/io-app/commit/f38fdf36a6ab5d3060de452d2a34130e4c2b74ed))
+* update gemfile for ios fastlane ([272fbe3](https://github.com/pagopa/io-app/commit/272fbe305dc3504c81e31360814edcade9a3dfb7))
+* update release workflow ([b986ff8](https://github.com/pagopa/io-app/commit/b986ff81240f77419415abf57563e4d7c80df851))
+* use it-wallet branch ([457b689](https://github.com/pagopa/io-app/commit/457b6893a1c8ba8e0d48e2cb37892e22b7d8d4e7))
+* use SSH certs url for fastlane ([69ac268](https://github.com/pagopa/io-app/commit/69ac2680c17eaec371677e6cae728ce4d6a7a021))
+* **release:** 0.2.0-rc.1 ([e3da8b8](https://github.com/pagopa/io-app/commit/e3da8b84b22ff3e368a3fca05a731b556f9afd70))
+
 ## [0.2.0-rc.14](https://github.com/pagopa/io-app/compare/0.2.0-rc.13...0.2.0-rc.14) (2023-07-20)
 
 
