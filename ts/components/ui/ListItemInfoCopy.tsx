@@ -195,7 +195,6 @@ export const ListItemInfoCopy = ({
             <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
               {label}
             </LabelSmall>
-            <VSpacer size={4} />
             {/* Let developer using a custom component (e.g: skeleton) */}
             {typeof value === "string" ? (
               <NewH6
