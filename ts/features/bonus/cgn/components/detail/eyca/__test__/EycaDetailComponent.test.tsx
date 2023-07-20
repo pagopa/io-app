@@ -28,6 +28,12 @@ const eycaCardPending: EycaCard = {
   status: PendingStatus.PENDING
 };
 
+jest.mock("react-native-safe-area-context", () => ({
+  useSafeAreaInsets: jest
+    .fn()
+    .mockReturnValue({ top: 20, left: 0, right: 0, bottom: 0 })
+}));
+
 describe("EycaDetailComponent", () => {
   jest.useFakeTimers();
   it("Should show EYCA Status component for an Active card", () => {

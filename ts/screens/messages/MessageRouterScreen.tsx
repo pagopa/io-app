@@ -84,7 +84,8 @@ const navigateToScreenHandler =
       dispatch(
         navigateToPnMessageDetailsScreen({
           messageId: message.id,
-          serviceId: message.serviceId
+          serviceId: message.serviceId,
+          isRead: message.isRead
         })
       );
     } else {

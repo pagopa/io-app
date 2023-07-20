@@ -58,6 +58,11 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
+type SpecialServiceWrapper = {
+  isSpecialService: boolean;
+  customSpecialFlowOpt?: string;
+};
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "serviceDetail.headerTitle",
   body: "serviceDetail.contextualHelpContent"
@@ -91,10 +96,16 @@ const ServiceDetailsScreen = (props: Props) => {
   // if markdown data is available, wait for it to be rendered
   const canRenderItems = isMarkdownAvailable ? isMarkdownLoaded : true;
 
+  const specialServiceInfoOpt = SpecialServiceMetadata.is(metadata)
+    ? ({
+        isSpecialService: true,
+        customSpecialFlowOpt: metadata.custom_special_flow
+      } as SpecialServiceWrapper)
+    : undefined;
+
   const maybeCTA = getServiceCTA(metadata);
   const showCTA =
-    (O.isSome(maybeCTA) || SpecialServiceMetadata.is(metadata)) &&
-    canRenderItems;
+    (O.isSome(maybeCTA) || !!specialServiceInfoOpt) && canRenderItems;
 
   return (
     <BaseScreenComponent
@@ -142,7 +153,10 @@ const ServiceDetailsScreen = (props: Props) => {
               <ContactPreferencesToggles
                 serviceId={service.service_id}
                 channels={service.available_notification_channels}
-                isSpecialService={SpecialServiceMetadata.is(metadata)}
+                isSpecialService={!!specialServiceInfoOpt}
+                customSpecialFlowOpt={
+                  specialServiceInfoOpt?.customSpecialFlowOpt
+                }
               />
               <VSpacer size={24} />
 
@@ -172,12 +186,14 @@ const ServiceDetailsScreen = (props: Props) => {
                 />
               </View>
             )}
-            {SpecialServiceMetadata.is(metadata) && (
+            {!!specialServiceInfoOpt && (
               <>
                 <VSpacer size={8} />
                 <SpecialServicesCTA
                   serviceId={props.serviceId}
-                  customSpecialFlow={metadata.custom_special_flow}
+                  customSpecialFlowOpt={
+                    specialServiceInfoOpt.customSpecialFlowOpt
+                  }
                   activate={props.activate}
                 />
               </>

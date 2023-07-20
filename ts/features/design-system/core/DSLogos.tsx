@@ -1,24 +1,29 @@
 import * as React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  IOLogoPaymentExtType,
+  IOLogoPaymentType,
+  IOPaymentExtLogos,
+  IOPaymentLogos,
+  LogoPayment,
+  LogoPaymentExt
+} from "../../../components/core/logos";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
+import { H2 } from "../../../components/core/typography/H2";
+import { useIOTheme } from "../../../components/core/variables/IOColors";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../../components/core/variables/IOStyles";
+import Avatar from "../../../components/ui/Avatar";
+import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {
   DSLogoPaymentViewerBox,
   logoItemGutter
 } from "../components/DSLogoPaymentViewerBox";
-import {
-  LogoPayment,
-  IOLogoPaymentType,
-  IOPaymentLogos,
-  LogoPaymentExt,
-  IOLogoPaymentExtType,
-  IOPaymentExtLogos
-} from "../../../components/core/logos";
-import { H2 } from "../../../components/core/typography/H2";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { useIOTheme } from "../../../components/core/variables/IOColors";
-import Avatar from "../../../components/ui/Avatar";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { NewH6 } from "../../../components/core/typography/NewH6";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -69,6 +74,67 @@ export const DSLogos = () => {
         Payment Networks (Big)
       </H2>
       {renderPaymentLogosBig()}
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 12 }}
+      >
+        LogoPaymentExtended
+      </H2>
+      <NewH6>with ABI</NewH6>
+      <View
+        style={[
+          IOStyles.row,
+          {
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center"
+          }
+        ]}
+      >
+        <LogoPaymentExtended
+          abiCode="NOT_VALID"
+          dimensions={{ height: 33, width: 150 }}
+        />
+        <LogoPaymentExtended
+          abiCode="08509"
+          dimensions={{ height: 33, width: 150 }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View
+        style={[
+          IOStyles.row,
+          {
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center"
+          }
+        ]}
+      >
+        <LogoPaymentExtended
+          abiCode="03124"
+          dimensions={{ height: 33, width: 150 }}
+        />
+        <LogoPaymentExtended
+          abiCode="NOT_VALID"
+          dimensions={{ height: 33, width: 150 }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View style={IOStyles.alignCenter}>
+        <NewH6 style={{ alignSelf: "flex-start" }}>icon = payPal</NewH6>
+        <LogoPaymentExtended
+          icon="payPal"
+          dimensions={{ height: 33, width: 150 }}
+        />
+        <NewH6 style={{ alignSelf: "flex-start" }}>icon = bpay</NewH6>
+        <VSpacer size={16} />
+        <LogoPaymentExtended
+          icon="bpay"
+          dimensions={{ height: 33, width: 220 }}
+        />
+      </View>
     </DesignSystemScreen>
   );
 };

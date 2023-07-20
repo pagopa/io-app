@@ -1377,7 +1377,6 @@ wallet:
         fieldError: "Um fortzufahren, korrigiere bitte das Feld {{field}}"
         missingFields: "Um fortzufahren, fülle bitte alle Felder aus"
   acceptedCards: "Akzeptierte Karten"
-  missingDataCTA: "Fehlen einige Daten?"
   openAcceptedCardsPageCTA: "Entdecke die akzeptierten Karten"
   missingDataText:
     body: "Wenn du den Sicherheitscode nicht findest, ist deine Karte möglicherweise nicht für Online-Zahlungen freigeschaltet."

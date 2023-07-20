@@ -60,6 +60,8 @@ global:
     blocked: "Blocked"
     onGoing: "Ongoing"
     failed: "Failed"
+    cancelled: "Cancelled"
+    reversal: "Reversal"
   password: Password
   username: Username
   unknown: unknown
@@ -253,6 +255,8 @@ login:
     line1: welcome in your
     line2: Digital Citizenship
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
+  expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
+  biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -369,7 +373,7 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy & Terms
+        title: Privacy Policy and Terms of Service
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
@@ -406,7 +410,7 @@ profile:
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
-            shareData: "Share data"
+            shareData: "Share"
             dontShareData: "Don’t share data"
             dontShare: "Don’t share"
           confirmToast: "Preferences updated!"
@@ -444,6 +448,12 @@ profile:
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
+    addCard:
+      titleSection: Add test card
+      warning: 
+        title: Warning
+        message: To add a new test card, you must enable the pagoPA test environment from the settings.
+        closeButton: Close
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -512,18 +522,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Choose if you want to allow previews and receive reminders.
+      subtitle: Choose how to receive messages and reminders.
       titleExistingUser: Customize push notifications
       subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
-        title: Show previews
-        description: Include the sender and subject of the message in the push notification · 
+        title: Show a preview
+        description: Include the sender and subject of the message in the push notification
         link: More info
         bottomSheet:
-          title: Show previews
+          title: Show a preview
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
@@ -806,7 +816,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    accept: Accept
+    accept: Accept and continue
     error: Loading error
     alert:
       title: Attention
@@ -857,7 +867,7 @@ onboarding:
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Summer camp registration is now open
-      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffTitle: You have a notice due tomorrow
       reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
@@ -968,6 +978,7 @@ wallet:
       help: If you have encountered a problem entering this payment method, write for more information and details
     details:
       header: Method detail
+    validUntil: Valid until {{expDate}}
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
@@ -1462,7 +1473,6 @@ wallet:
         fieldError: "To continue, please fix the {{field}} field"
         missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
-  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
     body: If you can't find the security code, it's likely your card doesn't support online payments.
@@ -1783,7 +1793,7 @@ messageDetails:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
 messagePDFPreview:
   title: "PDF Preview"
-  singleBtn: "Save, print, or share"
+  singleBtn: "Save or share"
   open: "Open"
   save: "Save"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
@@ -1830,21 +1840,21 @@ services:
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
-      title: "How do you want to configure services on IO?"
-      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
+      title: "Who can contact you?"
+      body: "IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message."
       quickConfig:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
         body:
-          text1: "Only the services which have something important to tell you will contact you."
+          text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
         body:
-          text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
+          text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
@@ -3357,14 +3367,14 @@ idpay:
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION:  "Pagamento POS"
-              REVERSAL:  "Storno"
-              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
-              REJECTED_DELETE_INSTRUMENT: 
-                "Errore disattivazione metodo"
+              REVERSAL:  "Pagamento POS"
+              DELETE_INSTRUMENT:  "Disattivazione metodo ···· {{maskedPan}}"
+              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN:  "Disattivazione metodo"
+              REJECTED_ADD_INSTRUMENT:  "Attivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
-              REJECTED_REFUND:  "Errore rimboso"
+              REJECTED_REFUND:  "Rimborso sul tuo conto"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
     discountDetails:
@@ -3397,7 +3407,7 @@ idpay:
     operationDetails:
       discount:
         labels:
-          AUTHORIZED: In corso
+          AUTHORIZED: Authorized
           CANCELLED: Annullata
           REWARDED: Eseguita
         details:
@@ -3654,26 +3664,32 @@ idpay:
         BUDGET_EXHAUSTED:
           title: Autorizzazione negata
           body: Non hai abbastanza soldi per autorizzare
-    qrCode:
-      manual:
-        title: Authorize a transaction
-        subtitle: Enter the 8 characters shown below the QR code.
-        input: Codice Transazione
-        button: Continua
-      scan:
-        tabs:
-          scan: Scan
-          upload: Upload
-          input: Type
-        permissions:
-          undefined: 
-            title: We need your consent
-            label: Allow access to scan QR codes with your device camera.
-            action: Allow access
-          denied:
-            title: You didn't give access to camera
-            label: Browse your device settings to allow camera access.
-            action: Go to settings
+    manualInput:
+      title: Autorizza una transazione
+      subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
+      input: Codice Transazione
+      button: Continua
+barcodeScan: 
+  error: IO non riconosce questo codice
+  tabs:
+    scan: Inquadra
+    upload: Carica
+    input: Digita
+  upload:
+    image: Carica un'immagine
+    file: Carica un file
+  manual:
+    authorize: Autorizza una transazione
+    notice: Paga un avviso pagoPA
+  permissions:
+    undefined: 
+      title: Ci serve il tuo permesso
+      label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+      action: Consenti l’accesso
+    denied:
+      title: Non hai dato il permesso di usare la fotocamera
+      label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+      action: Vai alle impostazioni
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
@@ -3688,3 +3704,33 @@ fastLogin:
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
         submitButtonTitle: "Continua la navigazione"
         cancelButtonTitle: "Annulla"
+      transientError:
+        title: "We couldn't authenticate you"
+        subtitle: "Close the app and try again in a few minutes."
+        submitButtonTitle: "Go to FAQs"
+  whatsNew:
+    title: Logging into IO just got easier!
+    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face. 
+    changes:
+      first:
+        title: Easier
+        description: log in with just your unlock code, fingerprint or face.
+      second:
+        title: Faster
+        description: use your SPID or CIE only once a year or in case you log out.
+      third:
+        title: Safer
+        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
+securityTips:
+  title: Safety tips
+  biometric:
+    first: Use fingerprint or face recognition only to identify yourself.
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: If
+      lose: you lose
+      sentence: your device, log out from IO through
+    compromisedCredentials: If you think your SPID or CIE credentials might be compromised, block access to your IO account through
+whatsNew:
+  title: What's changed?

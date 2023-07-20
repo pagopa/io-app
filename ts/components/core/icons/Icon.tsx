@@ -132,13 +132,18 @@ import IconProductIOAppBlueBg from "./svg/IconProductIOAppBlueBg";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconSearch from "./svg/LegIconSearch";
-import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
 import IconCloseMedium from "./svg/IconCloseMedium";
+import IconCheckTic from "./svg/IconCheckTic";
+import IconMerchant from "./svg/IconMerchant";
+import IconSystemSettingsAndroid from "./svg/IconSystemSettingsAndroid";
+import IconSystemSettingsiOS from "./svg/IconSystemSettingsiOS";
+import IconSystemToggleInstructions from "./svg/IconSystemToggleInstructions";
+import IconSystemAppsAndroid from "./svg/IconSystemAppsAndroid";
+import IconSystemNotificationsInstructions from "./svg/IconSystemNotificationsInstructions";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -229,15 +234,13 @@ export const IOIcons = {
   gallery: IconGallery,
   externalLink: IconExternalLink,
   cancel: IconCancel,
-  help: IconQuestion /* io-question */,
+  help: IconQuestion,
   search: IconSearch /* io-search */,
-  legSearch: LegIconSearch,
   chevronRight: IconChevronRight,
   chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
-  legChevronLeft: LegIconChevronLeft,
   closeLarge: IconCloseLarge /* io-close */,
   closeMedium: IconCloseMedium,
   closeSmall: IconCloseSmall,
@@ -276,7 +279,14 @@ export const IOIcons = {
   categSustainability: IconCategSustainability,
   productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */,
-  productIOAppBlueBg: IconProductIOAppBlueBg
+  productIOAppBlueBg: IconProductIOAppBlueBg,
+  checkTic: IconCheckTic,
+  merchant: IconMerchant,
+  systemSettingsAndroid: IconSystemSettingsAndroid,
+  systemSettingsiOS: IconSystemSettingsiOS,
+  systemToggleInstructions: IconSystemToggleInstructions,
+  systemAppsAndroid: IconSystemAppsAndroid,
+  systemNotificationsInstructions: IconSystemNotificationsInstructions
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
@@ -471,3 +481,22 @@ export const IOProductIcons = {
 } as const;
 
 export type IOProductIcons = keyof typeof IOProductIcons;
+
+/* System */
+const {
+  systemSettingsAndroid,
+  systemSettingsiOS,
+  systemToggleInstructions,
+  systemAppsAndroid,
+  systemNotificationsInstructions
+} = IOIcons;
+
+export const IOSystemIcons = {
+  systemSettingsAndroid,
+  systemSettingsiOS,
+  systemToggleInstructions,
+  systemAppsAndroid,
+  systemNotificationsInstructions
+} as const;
+
+export type IOSystemIcons = keyof typeof IOSystemIcons;

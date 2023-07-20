@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, SafeAreaView, SectionList } from "react-native";
+import { View, SafeAreaView, SectionList, Platform } from "react-native";
 import { useSelector } from "react-redux";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -22,7 +22,6 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { FCI_ROUTES } from "../../navigation/routes";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import {
@@ -42,7 +41,6 @@ import {
   orderSignatureFields
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../components/core/icons/Icon";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
@@ -51,6 +49,7 @@ import {
   trackFciShowSignatureFields,
   trackFciStartSignature
 } from "../../analytics";
+import IconButton from "../../../../components/ui/IconButton";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -222,14 +221,12 @@ const FciSignatureFieldsScreen = (
   };
 
   const customGoBack: React.ReactElement = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
       onPress={navigation.goBack}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <Icon name="legChevronLeft" color="bluegrey" />
-    </TouchableDefaultOpacity>
+    />
   );
 
   if (isError) {
