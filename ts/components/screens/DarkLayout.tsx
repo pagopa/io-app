@@ -21,7 +21,8 @@ import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { IOStyles } from "../core/variables/IOStyles";
-import {
+import { ComponentProps } from "../../types/react";
+import BaseScreenComponent, {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
@@ -52,7 +53,8 @@ type Props = Readonly<{
   referenceToContentScreen?: (
     c: ScreenContentRoot
   ) => ScreenContentRoot | React.LegacyRef<Content>;
-}>;
+}> &
+  Pick<ComponentProps<typeof BaseScreenComponent>, "isProfileAvailable">;
 
 const styles = StyleSheet.create({
   headerContents: {
@@ -115,6 +117,7 @@ export default class DarkLayout extends React.Component<Props> {
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         faqCategories={this.props.faqCategories}
         titleColor={"white"}
+        isProfileAvailable={this.props.isProfileAvailable}
       >
         <FocusAwareStatusBar
           backgroundColor={IOColors.bluegrey}
