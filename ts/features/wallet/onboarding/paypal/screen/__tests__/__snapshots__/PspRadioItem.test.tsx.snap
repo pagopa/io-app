@@ -161,11 +161,6 @@ exports[`PspRadioItem match snapshot 1`] = `
       <View>
         <View
           onLayout={[Function]}
-          style={
-            Object {
-              "paddingBottom": 0,
-            }
-          }
         >
           <View
             testID="PspInfoBottomSheetContentTestID"
@@ -536,6 +531,13 @@ exports[`PspRadioItem match snapshot 1`] = `
                 </View>
               </View>
             </View>
+            <View
+              style={
+                Object {
+                  "height": 16,
+                }
+              }
+            />
           </View>
         </View>
       </View>
