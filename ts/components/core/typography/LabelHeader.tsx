@@ -4,8 +4,13 @@ import { IOTheme, IOThemeLight } from "../variables/IOColors";
 import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 
-type AllowedColors = IOTheme["textBody-default"] | "blueIO-850";
-type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
+type AllowedColors =
+  | IOTheme["textBody-default"]
+  | "grey-650"
+  | "grey-850"
+  | "white"
+  | "black";
+type AllowedWeight = Extract<IOFontWeight, "Regular">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
