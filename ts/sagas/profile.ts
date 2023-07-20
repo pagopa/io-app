@@ -6,14 +6,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import {
-  all,
-  call,
-  put,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga/macro";
+import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { AppVersion } from "../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
@@ -416,7 +409,7 @@ function* checkLoadedProfile(
 
   yield* call(upsertAppVersionSaga);
 
-  yield* all([call(checkStoreHashedFiscalCode, profileLoadSuccessAction)]);
+  yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
 }
 
 // watch for some actions about profile
