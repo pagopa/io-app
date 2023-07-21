@@ -44,7 +44,7 @@ export function* setLanguageFromProfileIfExists(): Generator<
       preferredLanguages[0]
     );
 
-    // Updates persistedPrefernces only if currentStoredLocale is different from the remote value.
+    // Updates persistedPreferences only if currentStoredLocale is different from the remote value.
     if (
       O.isNone(currentStoredLocale) ||
       (O.isSome(currentStoredLocale) &&

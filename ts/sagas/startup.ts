@@ -482,7 +482,10 @@ export function* initializeApplicationSaga(
     yield* put(profileLoadSuccess(profile.value));
     yield* take(setProfileHashedFiscalCode);
   }
-  yield* call(setLanguageFromProfileIfExists);
+
+  if (!handleSessionExpiration) {
+    yield* call(setLanguageFromProfileIfExists);
+  }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
