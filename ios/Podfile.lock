@@ -107,6 +107,7 @@ PODS:
   - hermes-engine (0.69.9)
   - jail-monkey (2.3.2):
     - React
+  - JOSESwift (2.4.0)
   - libevent (2.1.12)
   - Mixpanel (3.6.5)
   - MLImage (1.0.0-beta2)
@@ -136,6 +137,9 @@ PODS:
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.2.1):
+    - React-Core
+  - pagopa-io-react-native-jwt (0.4.1):
+    - JOSESwift (~> 2.3)
     - React-Core
   - pagopa-io-react-native-login-utils (0.2.0):
     - React-Core
@@ -618,6 +622,7 @@ DEPENDENCIES:
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
+  - "pagopa-io-react-native-jwt (from `../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -711,6 +716,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
+    - JOSESwift
     - libevent
     - Mixpanel
     - MLImage
@@ -755,6 +761,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/jail-monkey"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
+  pagopa-io-react-native-jwt:
+    :path: "../node_modules/@pagopa/io-react-native-jwt"
   pagopa-io-react-native-login-utils:
     :path: "../node_modules/@pagopa/io-react-native-login-utils"
   RCT-Folly:
@@ -926,6 +934,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   hermes-engine: f648f65e30dd2ef478c08024259c881f0a1522bf
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
+  JOSESwift: 7ff178bb9173ff42c6e990929a9f2fa702a34f69
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mixpanel: de8296d8568806ab17bfced0f823c908b808e1e0
   MLImage: a454f9f8ecfd537783a12f9488f5be1a68820829
@@ -935,6 +944,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
+  pagopa-io-react-native-jwt: 9177d3fa2b593e2a03820aaef770e75bbf3ae844
   pagopa-io-react-native-login-utils: 929e584c817572ce7a3e41e0c6f96c7990bd314d
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
