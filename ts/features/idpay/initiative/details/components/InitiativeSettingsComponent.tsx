@@ -81,8 +81,21 @@ const InitiativeSettingsComponent = (props: Props) => {
           onPress: () => navigateToInstrumentsConfiguration(initiativeId),
           accessibilityLabel: ""
         };
-        return status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN ? (
-          <ListItemNavAlert {...listItemOptions} />
+        const areActionsRequired =
+          status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN ||
+          status === InitiativeStatusEnum.NOT_REFUNDABLE;
+        return areActionsRequired ? (
+          <ListItemNavAlert
+            {...listItemOptions}
+            description={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}
+            accessibilityLabel={`${
+              listItemOptions.accessibilityLabel
+            }, ${I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}`}
+          />
         ) : (
           <ListItemNav {...listItemOptions} />
         );
@@ -111,11 +124,25 @@ const InitiativeSettingsComponent = (props: Props) => {
           ),
           description: iban,
           onPress: () => navigateToIbanConfiguration(initiativeId),
-          accessibilityLabel: ""
+          accessibilityLabel: I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )
         };
-        return status ===
-          InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT ? (
-          <ListItemNavAlert {...listItemOptions} />
+        const areActionsRequired =
+          InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT ||
+          status === InitiativeStatusEnum.NOT_REFUNDABLE;
+        return areActionsRequired ? (
+          <ListItemNavAlert
+            {...listItemOptions}
+            description={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}
+            accessibilityLabel={`${
+              listItemOptions.accessibilityLabel
+            }, ${I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}`}
+          />
         ) : (
           <ListItemNav {...listItemOptions} />
         );
