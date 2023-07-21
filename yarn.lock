@@ -3158,10 +3158,25 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
+"@pagopa/io-react-native-jwt@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-jwt/-/io-react-native-jwt-0.4.1.tgz#02e277e8ea2c46257a9c8debafafef41713c04ce"
+  integrity sha512-jvyxF3ko3aJsLgHKoJNg/KGc1utq5WYtC85hPdG20GH5OiYuFCroFEFuN2G9wXfrOuwvYTHnpgaSpNO2ogGvaw==
+  dependencies:
+    abab "^2.0.6"
+
 "@pagopa/io-react-native-login-utils@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.0.tgz#4a9b55d84c6d77622e95de4511e4c422a862b27d"
   integrity sha512-mZ0Z7SAhWhbYIK/GvaeuecIyQPikj/D7pmejOrAiLA1KxIqO3UGH6p6LC2pZhN0JPHTcXbBiNHJRQtrqTHCfew==
+
+"@pagopa/io-react-native-wallet@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.1.0.tgz#bde73cec741b8b0dd89d708ea8200fd69a9d074d"
+  integrity sha512-oEyRziay0MDRHlqAmrOGnY960rb6icqSbQJ0zyiyntV0ewv+kKFxkTLW9DIvx0ouD5N9J3x7m5TZKgECXZ/Jzg==
+  dependencies:
+    react-native-uuid "^2.0.1"
+    zod "^3.21.4"
 
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"
@@ -4477,6 +4492,11 @@ abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
   integrity sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q==
+
+abab@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
+  integrity sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==
 
 abort-controller@^1.0.2:
   version "1.1.0"
@@ -14857,6 +14877,11 @@ react-native-tab-view@^2.x:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz#cae72c7084394bd328fac5fefb86cd966df37a86"
   integrity sha512-ac2DmT7+l13wzIFqtbfXn4wwfgtPoKzWjjZyrK1t+T8sdemuUvD4zIt+UImg03fu3s3VD8Wh/fBrIdcqQyZJWg==
 
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
+
 react-native-vector-icons@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.0.0.tgz#5b92ed363c867645daad48c559e1f99efcfbb813"
@@ -18131,6 +18156,11 @@ z-schema@^5.0.1:
     validator "^13.7.0"
   optionalDependencies:
     commander "^2.20.3"
+
+zod@^3.21.4:
+  version "3.21.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.21.4.tgz#10882231d992519f0a10b5dd58a38c9dabbb64db"
+  integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==
 
 zstd-codec@^0.1.2:
   version "0.1.2"
