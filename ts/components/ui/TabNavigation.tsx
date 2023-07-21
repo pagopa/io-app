@@ -39,33 +39,18 @@ const TabNavigation = ({
     onItemPress?.(index);
   };
 
-  const renderChildren = () => {
-    if (Array.isArray(children)) {
-      return children.map((item, index) => (
-        <View key={index} style={{ marginLeft: index === 0 ? 0 : 16 }}>
-          {React.cloneElement<TabItem>(item, {
-            key: index,
-            onPress: event => {
-              item.props.onPress?.(event);
-              handleItemPress(index);
-            },
-            selected: selectedIndex === index,
-            color,
-            accessibilityLabel: item.props.label,
-            accessibilityHint: item.props.label
-          })}
-        </View>
-      ));
-    }
-
-    return React.cloneElement<TabItem>(children, {
-      onPress: () => handleItemPress(0),
-      selected: true,
-      color,
-      accessibilityLabel: children.props.label,
-      accessibilityHint: children.props.label
-    });
-  };
+  const wrapChild = (child: React.ReactElement<TabItem>, index: number = 0) => (
+    <View key={index} style={{ marginLeft: index === 0 ? 0 : 16 }}>
+      {React.cloneElement<TabItem>(child, {
+        onPress: event => {
+          child.props.onPress?.(event);
+          handleItemPress(index);
+        },
+        selected: selectedIndex === index,
+        color
+      })}
+    </View>
+  );
 
   return (
     <ScrollView
@@ -79,7 +64,7 @@ const TabNavigation = ({
         }
       ]}
     >
-      {renderChildren()}
+      {Array.isArray(children) ? children.map(wrapChild) : wrapChild(children)}
     </ScrollView>
   );
 };
