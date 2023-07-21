@@ -175,9 +175,11 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
+          style={{
             backgroundColor: !isFirstOnboarding ? IOColors.blue : IOColors.white
+          }}
+          contentContainerStyle={{
+            flexGrow: 1
           }}
         >
           <Header isFirstOnboarding={isFirstOnboarding} />
@@ -240,6 +242,18 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
               </H5>
             </InfoBox>
           </View>
+          {/* This extra View has been added to avoid displaying the IOColors.blue
+          background when the ScrollView bounces  */}
+          <View
+            style={{
+              position: "absolute",
+              height: 400,
+              left: 0,
+              right: 0,
+              bottom: -400,
+              backgroundColor: IOColors.white
+            }}
+          />
         </ScrollView>
 
         {bottomSheet}
