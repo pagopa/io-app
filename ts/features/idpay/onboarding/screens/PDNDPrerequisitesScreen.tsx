@@ -20,7 +20,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const BOTTOM_SHEET_HEIGHT = 290;
-
 export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [authority, setAuthority] = React.useState<string | undefined>();
@@ -62,26 +60,37 @@ export const PDNDPrerequisitesScreen = () => {
     machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
   const goBackOnPress = () => machine.send({ type: "BACK" });
 
-  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
-    <Markdown>
-      {I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.body", {
-        provider: authority
-      })}
-    </Markdown>,
-    I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
-    BOTTOM_SHEET_HEIGHT,
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={{
-        onPress: () => dismiss(),
-        block: true,
-        bordered: false,
-        labelColor: IOColors.white,
-        title: I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-        )
-      }}
-    ></FooterWithButtons>
+  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t(
+        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
+      ),
+      component: (
+        <Markdown>
+          {I18n.t(
+            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+            {
+              provider: authority
+            }
+          )}
+        </Markdown>
+      ),
+      footer: (
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={{
+            onPress: () => dismiss(),
+            block: true,
+            bordered: false,
+            labelColor: IOColors.white,
+            title: I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+            )
+          }}
+        />
+      )
+    },
+    130
   );
 
   const pdndCriteria = useSelector(machine, pdndCriteriaSelector);
