@@ -134,3 +134,11 @@ Created on **01/12/2022**
 #### Reason:
 
 - This patch is going to add a missing prop to component definition, it can be removed once updating the library.
+
+### react-native-webview+11.26.1
+
+Updated on **13/07/2023**
+
+#### Reason:
+
+- This patch applies security fixes to avoid access on camera and microphone without user permission.
