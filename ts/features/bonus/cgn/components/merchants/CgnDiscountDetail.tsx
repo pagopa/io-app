@@ -183,6 +183,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             </Label>
           </ButtonDefaultOpacity>
         )}
+      <VSpacer size={16} />
     </View>
   );
 };
