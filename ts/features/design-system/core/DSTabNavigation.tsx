@@ -234,8 +234,9 @@ export const DSTabNavigation = () => {
         </ContentWrapper>
 
         <TabNavigation tabJustify="flex-start">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
+          <TabItem label="Carica" accessibilityLabel="Carica" />
+          <TabItem label="Digita" accessibilityLabel="Digita" />
         </TabNavigation>
 
         <VSpacer size={16} />
@@ -245,8 +246,9 @@ export const DSTabNavigation = () => {
         </ContentWrapper>
 
         <TabNavigation>
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
+          <TabItem label="Carica" accessibilityLabel="Carica" />
+          <TabItem label="Digita" accessibilityLabel="Digita" />
         </TabNavigation>
 
         <VSpacer size={16} />
@@ -256,8 +258,9 @@ export const DSTabNavigation = () => {
         </ContentWrapper>
 
         <TabNavigation tabJustify="flex-end">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
+          <TabItem label="Carica" accessibilityLabel="Carica" />
+          <TabItem label="Digita" accessibilityLabel="Digita" />
         </TabNavigation>
 
         <VSpacer size={16} />
@@ -267,8 +270,9 @@ export const DSTabNavigation = () => {
         </ContentWrapper>
 
         <TabNavigation tabJustify="space-evenly">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
+          <TabItem label="Carica" accessibilityLabel="Carica" />
+          <TabItem label="Digita" accessibilityLabel="Digita" />
         </TabNavigation>
       </View>
     </DesignSystemScreen>
