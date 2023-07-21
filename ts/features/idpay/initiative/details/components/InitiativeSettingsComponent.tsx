@@ -56,7 +56,9 @@ const InitiativeSettingsComponent = (props: Props) => {
           value={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
-          accessibilityLabel=""
+          accessibilityLabel={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )}
           description={<Skeleton width={100} height={21} />}
           onPress={() => null}
         />
@@ -79,7 +81,9 @@ const InitiativeSettingsComponent = (props: Props) => {
           ),
 
           onPress: () => navigateToInstrumentsConfiguration(initiativeId),
-          accessibilityLabel: ""
+          accessibilityLabel: I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )
         };
         const areActionsRequired =
           status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN ||
@@ -113,7 +117,9 @@ const InitiativeSettingsComponent = (props: Props) => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
           description={<Skeleton width={270} height={21} />}
-          accessibilityLabel=""
+          accessibilityLabel={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )}
           onPress={() => null}
         />
       ),
