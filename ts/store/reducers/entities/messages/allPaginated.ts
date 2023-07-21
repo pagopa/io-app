@@ -602,6 +602,11 @@ export const allArchiveMessagesSelector = createSelector(
     )
 );
 
+export const allMessagesSelector = createSelector(
+  [allInboxMessagesSelector, allArchiveMessagesSelector],
+  (inbox, archive) => inbox.concat(archive)
+);
+
 /**
  * True if the inbox state is loading and the last request is for a next page.
  * @param state

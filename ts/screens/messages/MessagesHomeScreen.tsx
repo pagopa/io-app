@@ -6,7 +6,6 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
-import { createSelector } from "reselect";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
@@ -35,8 +34,7 @@ import {
   sectionStatusSelector
 } from "../../store/reducers/backendStatus";
 import {
-  allArchiveMessagesSelector,
-  allInboxMessagesSelector,
+  allMessagesSelector,
   allPaginatedSelector
 } from "../../store/reducers/entities/messages/allPaginated";
 import {
@@ -225,10 +223,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
   searchText: searchTextSelector(state),
-  searchMessages: createSelector(
-    [allInboxMessagesSelector, allArchiveMessagesSelector],
-    (inbox, archive) => inbox.concat(archive)
-  )(state),
+  searchMessages: allMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration,
   latestMessageOperation: allPaginatedSelector(state).latestMessageOperation
