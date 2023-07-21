@@ -1,26 +1,28 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { Image, ImageURISource, StyleSheet, View } from "react-native";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
+import { isImageUri } from "../../utils/url";
 import { Badge } from "../core/Badge";
 import { IOIconSizeScale, Icon } from "../core/icons";
 import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { useIOTheme } from "../core/variables/IOColors";
+import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
-import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
+import Avatar from "./Avatar";
 import {
   PressableBaseProps,
   PressableListItemBase
@@ -64,24 +66,17 @@ type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
 };
 
-const IMAGE_LOGO_SIZE: IOIconSizeScale = 24;
-
-const isImageUri = (value: PaymentLogoIcon): value is ImageURISource =>
-  typeof value === "object" && value !== null && "uri" in value;
+const CARD_LOGO_SIZE: IOIconSizeScale = 24;
+const MUNICIPALITY_LOGO_SIZE = 44;
 
 const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (isImageUri(logoIcon)) {
-    return (
-      <Image
-        source={[logoIcon]}
-        style={{ width: IMAGE_LOGO_SIZE, height: IMAGE_LOGO_SIZE }}
-      />
-    );
+    return <Avatar logoUri={[logoIcon]} size="small" shape="circle" />;
   }
   if (React.isValidElement(logoIcon)) {
     return <>{logoIcon}</>;
   }
-  return getCardLogoComponent(logoIcon as IOLogoPaymentType);
+  return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
 };
 
 export const ListItemTransaction = ({
@@ -97,13 +92,14 @@ export const ListItemTransaction = ({
   transactionStatus = "success"
 }: ListItemTransaction) => {
   const theme = useIOTheme();
-
   const isDSEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
   if (isLoading) {
     return <SkeletonComponent />;
   }
 
-  const designSystemBlue = isDSEnabled ? "blue" : "blueIO-500";
+  const designSystemBlue: IOColors = isDSEnabled ? "blue" : "blueIO-500";
+
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
@@ -146,8 +142,9 @@ export const ListItemTransaction = ({
         {paymentLogoIcon && (
           <View
             style={{
-              marginRight: IOListItemVisualParams.iconMargin,
-              marginLeft: IOListItemLogoMargin
+              marginRight: IOListItemLogoMargin,
+              width: MUNICIPALITY_LOGO_SIZE,
+              alignItems: "center"
             }}
           >
             <LeftComponent logoIcon={paymentLogoIcon} />
@@ -158,7 +155,6 @@ export const ListItemTransaction = ({
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
-          <VSpacer size={4} />
         </View>
         <View style={Styles.rightSection}>
           <TransactionAmountOrBadgeComponent />
@@ -214,8 +210,8 @@ const SkeletonComponent = () => (
       >
         <Placeholder.Box
           animate="fade"
-          height={IMAGE_LOGO_SIZE}
-          width={IMAGE_LOGO_SIZE}
+          height={MUNICIPALITY_LOGO_SIZE}
+          width={MUNICIPALITY_LOGO_SIZE}
           radius={100}
         />
       </View>

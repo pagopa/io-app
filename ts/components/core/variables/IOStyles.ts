@@ -224,6 +224,7 @@ interface IOListItemVisualParams {
   paddingVertical: IOSpacingScale;
   paddingHorizontal: IOAppMargin;
   iconMargin: IOSpacingScale;
+  actionMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
   chevronSize: IOIconSizeScale;
 }
@@ -232,6 +233,7 @@ export const IOListItemVisualParams: IOListItemVisualParams = {
   paddingVertical: 12,
   paddingHorizontal: IOVisualCostants.appMarginDefault,
   iconMargin: 16,
+  actionMargin: 16,
   iconSize: 24,
   chevronSize: 24
 };
@@ -307,6 +309,7 @@ interface IOSelectionListItemVisualParams {
   iconMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
   descriptionMargin: IOSpacer;
+  actionMargin: IOSpacer;
 }
 
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
@@ -315,7 +318,8 @@ export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     iconMargin: 8,
     iconSize: 24,
-    descriptionMargin: 4
+    descriptionMargin: 4,
+    actionMargin: 8
   };
 
 export const IOSelectionListItemStyles = StyleSheet.create({

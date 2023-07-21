@@ -127,7 +127,7 @@ const useTimelineDetailsBottomSheet = (
       title: titleComponent,
       footer: modalFooter
     },
-    120
+    150
   );
 
   const present = (operation: OperationListDTO) =>

@@ -578,7 +578,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
+      body: Per ragioni di sicurezza, dopo {{days}} giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -1814,7 +1814,7 @@ messageDetails:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
 messagePDFPreview:
   title: "Anteprima PDF"
-  singleBtn: "Salva, stampa o condividi"
+  singleBtn: "Salva o condividi"
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
@@ -2689,11 +2689,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri le agevolazioni
+      screenTitle: Seleziona un operatore e scopri le agevolazioni e opportunità
       cta:
         filter: Filtra
       categoriesList:
-        title: Seleziona una categoria e scopri le agevolazioni
+        title: Seleziona una categoria e scopri le agevolazioni e opportunità
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2720,7 +2720,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni
+        deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
@@ -2730,8 +2730,8 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'operatore
-        landingPage: Accedi all’agevolazione
-        discountUrl: Vai all’agevolazione
+        landingPage: Accedi all’opportunità
+        discountUrl: Vai all'opportunità
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2751,13 +2751,13 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi le agevolazioni CGN
+        buyers: Vedi le opportunità CGN
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
-          pending: Vedi le agevolazioni EYCA
+          pending: Vedi le opportunità EYCA
           bottomSheet: Visita il sito di EYCA
-          showEycaDiscounts: Vedi le agevolazioni EYCA
+          showEycaDiscounts: Vedi le opportunità EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2765,9 +2765,9 @@ bonus:
         warning: "Attenzione! "
         revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
-      ownership: Chi può usufruire delle agevolazioni?
+      ownership: Chi può usare la carta?
       status:
-        title: Carta Giovani Nazionale
+        title: Carta Giovani Nazionale (CGN)
         eyca: Carta EYCA
         eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta

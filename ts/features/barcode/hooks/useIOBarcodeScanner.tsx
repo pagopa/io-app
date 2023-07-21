@@ -17,7 +17,7 @@ import {
 } from "vision-camera-code-scanner";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { BarcodeCameraMarker } from "../components/BarcodeCameraMarker";
+import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
@@ -289,7 +289,7 @@ export const useIOBarcodeScanner = (
         />
       )}
       <View style={{ alignSelf: "center" }}>
-        <BarcodeCameraMarker />
+        <AnimatedCameraMarker state={isResting ? "IDLE" : "SCANNING"} />
       </View>
     </View>
   );

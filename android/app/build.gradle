@@ -80,8 +80,17 @@ import com.android.build.OutputFile
  * ]
  */
 
+// usage: ./gradlew assembleDebug -PbundleInDebug=true
+def bundleInDebugPropertyName = "bundleInDebug"
+def bundleDebug = false
+if (project.hasProperty(bundleInDebugPropertyName)) {
+    println bundleInDebugPropertyName + ': ' + bundleInDebug
+    bundleDebug = project.getProperty(bundleInDebugPropertyName)
+}
+ 
 project.ext.react = [
-  enableHermes: true
+  enableHermes: true,
+  bundleInDebug: bundleDebug
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -135,8 +144,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154741
-        versionName "2.39.0.1"
+        versionCode 100154742
+        versionName "2.39.0.2"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.
