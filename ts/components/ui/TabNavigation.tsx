@@ -1,29 +1,67 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { FlexStyle, Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TabItem } from "./TabItem";
 
-type TabNavigationItem = Omit<
+export type TabNavigationItem = Omit<
   TabItem,
   "onPress" | "color" | "selected" | "accessibilityLabel" | "accessibilityHint"
 >;
 
+type TabNavigationChildren =
+  | React.ReactElement<TabItem>
+  | Array<React.ReactElement<TabItem>>;
+
 type TabNavigation = {
-  items: Array<TabNavigationItem>;
+  // Configuration
   color?: TabItem["color"];
-  onItemPress?: (item: TabNavigationItem, index: number) => void;
+  selectedIndex?: number;
+  tabJustify?: FlexStyle["justifyContent"];
+  // Events
+  onItemPress?: (index: number) => void;
+  // Tabs
+  children: TabNavigationChildren;
 };
 
 const TabNavigation = ({
-  items,
   color = "light",
-  onItemPress
+  selectedIndex: forceSelectedIndex,
+  tabJustify = "center",
+  onItemPress,
+  children
 }: TabNavigation) => {
-  const [selectedItem, setSelectedItem] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState(
+    forceSelectedIndex ?? 0
+  );
 
-  const handleItemPress = (item: TabNavigationItem, index: number) => {
-    setSelectedItem(index);
-    onItemPress?.(item, index);
+  const handleItemPress = (index: number) => {
+    setSelectedIndex(forceSelectedIndex ?? index);
+    onItemPress?.(index);
+  };
+
+  const renderChildren = () => {
+    if (Array.isArray(children)) {
+      return children.map((item, index) => (
+        <View key={index} style={{ marginLeft: index === 0 ? 0 : 16 }}>
+          {React.cloneElement<TabItem>(item, {
+            key: index,
+            onPress: () => handleItemPress(index),
+            selected: selectedIndex === index,
+            color,
+            accessibilityLabel: item.props.label,
+            accessibilityHint: item.props.label
+          })}
+        </View>
+      ));
+    }
+
+    return React.cloneElement<TabItem>(children, {
+      onPress: () => handleItemPress(0),
+      selected: true,
+      color,
+      accessibilityLabel: children.props.label,
+      accessibilityHint: children.props.label
+    });
   };
 
   return (
@@ -31,26 +69,26 @@ const TabNavigation = ({
       horizontal={true}
       centerContent={true}
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={[
+        styles.container,
+        /* Android fallback because `centerContent`
+        is only an iOS property */
+        Platform.OS === "android" && {
+          flexGrow: 1
+        },
+        {
+          justifyContent: tabJustify
+        }
+      ]}
     >
-      {items.map((item, index) => (
-        <View key={index} style={{ marginLeft: index === 0 ? 0 : 16 }}>
-          <TabItem
-            {...item}
-            accessibilityLabel={item.label}
-            accessibilityHint={item.label}
-            selected={selectedItem === index}
-            color={color}
-            onPress={() => handleItemPress(item, index)}
-          />
-        </View>
-      ))}
+      {renderChildren()}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: 16,
     paddingBottom: 24
@@ -58,4 +96,3 @@ const styles = StyleSheet.create({
 });
 
 export { TabNavigation };
-export type { TabNavigationItem };

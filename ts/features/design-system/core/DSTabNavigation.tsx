@@ -1,42 +1,25 @@
+/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable arrow-body-style */
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
+import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { TabItem } from "../../../components/ui/TabItem";
+import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import {
-  TabNavigation,
-  TabNavigationItem
-} from "../../../components/ui/TabNavigation";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 
 export const DSTabNavigation = () => {
   const handlePress = () => {
     alert("Pressed");
   };
-
-  const twoItems: Array<TabNavigationItem> = [
-    { label: "Label tab", icon: "starEmpty", iconSelected: "starFilled" },
-    { label: "Label tab", icon: "starEmpty", iconSelected: "starFilled" }
-  ];
-  const threeItems: Array<TabNavigationItem> = [
-    { label: "Inquadra" },
-    { label: "Carica" },
-    { label: "Digita" }
-  ];
-  const fiveItems: Array<TabNavigationItem> = [
-    { label: "Ricevuti", icon: "starEmpty", iconSelected: "starFilled" },
-    { label: "Archiviati", icon: "starEmpty", iconSelected: "starFilled" },
-    { label: "Preferiti", icon: "starEmpty", iconSelected: "starFilled" },
-    { label: "Altro", icon: "starEmpty", iconSelected: "starFilled" },
-    { label: "Altro", icon: "starEmpty", iconSelected: "starFilled" }
-  ];
 
   return (
     <DesignSystemScreen
@@ -46,7 +29,8 @@ export const DSTabNavigation = () => {
       <ContentWrapper>
         <H2>Tab Item</H2>
         <VSpacer size={24} />
-
+        <H3>Light</H3>
+        <VSpacer size={16} />
         <View style={[styles.default, { borderRadius: 16, padding: 16 }]}>
           <DSComponentViewerBox name="Light">
             <View style={{ flexDirection: "row" }}>
@@ -86,9 +70,9 @@ export const DSTabNavigation = () => {
             </View>
           </DSComponentViewerBox>
         </View>
-
         <VSpacer size={24} />
-
+        <H3>Dark</H3>
+        <VSpacer size={16} />
         <View style={[styles.dark, { borderRadius: 16, padding: 16 }]}>
           <DSComponentViewerBox name="Dark" colorMode="dark">
             <View style={{ flexDirection: "row" }}>
@@ -136,24 +120,156 @@ export const DSTabNavigation = () => {
             </View>
           </DSComponentViewerBox>
         </View>
-
         <VSpacer size={32} />
+      </ContentWrapper>
+      <ContentWrapper>
         <H2>Tab Navigation</H2>
         <VSpacer size={24} />
+        <H3>Light</H3>
+        <VSpacer size={16} />
+      </ContentWrapper>
+      <View style={[styles.default, { paddingVertical: 24 }]}>
+        <TabNavigation>
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+        <TabNavigation>
+          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
+          <TabItem label="Carica" accessibilityLabel="Carica" />
+          <TabItem label="Digita" accessibilityLabel="Digita" />
+        </TabNavigation>
+        <TabNavigation>
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+        </TabNavigation>
+      </View>
+
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <H3>Dark</H3>
+        <VSpacer size={16} />
+      </ContentWrapper>
+
+      <View style={[styles.dark, { paddingVertical: 24 }]}>
+        <TabNavigation color="dark">
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+        <TabNavigation color="dark">
+          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
+          <TabItem label="Carica" accessibilityLabel="Carica" />
+          <TabItem label="Digita" accessibilityLabel="Digita" />
+        </TabNavigation>
+        <TabNavigation color="dark">
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+        </TabNavigation>
+      </View>
+
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <H3>Alignment</H3>
+        <VSpacer size={16} />
       </ContentWrapper>
 
       <View style={[styles.default, { paddingVertical: 24 }]}>
-        <TabNavigation items={twoItems} />
-        <TabNavigation items={threeItems} />
-        <TabNavigation items={fiveItems} />
-      </View>
+        <ContentWrapper>
+          <Monospace>{`tabJustify="flex-start"`}</Monospace>
+        </ContentWrapper>
 
-      <VSpacer size={24} />
+        <TabNavigation tabJustify="flex-start">
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
 
-      <View style={[styles.dark, { paddingVertical: 24 }]}>
-        <TabNavigation items={twoItems} color="dark" />
-        <TabNavigation items={threeItems} color="dark" />
-        <TabNavigation items={fiveItems} color="dark" />
+        <VSpacer size={16} />
+
+        <ContentWrapper>
+          <Monospace>{`tabJustify="center" (default)`}</Monospace>
+        </ContentWrapper>
+
+        <TabNavigation>
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+
+        <VSpacer size={16} />
+
+        <ContentWrapper>
+          <Monospace>{`tabJustify="flex-end"`}</Monospace>
+        </ContentWrapper>
+
+        <TabNavigation tabJustify="flex-end">
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+
+        <VSpacer size={16} />
+
+        <ContentWrapper>
+          <Monospace>{`tabJustify="space-evenly"`}</Monospace>
+        </ContentWrapper>
+
+        <TabNavigation tabJustify="space-evenly">
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
       </View>
     </DesignSystemScreen>
   );

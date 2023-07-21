@@ -17,7 +17,7 @@ import { WithTestID } from "../../types/WithTestID";
 
 type ColorMode = "light" | "dark";
 
-type TabItem = WithTestID<{
+export type TabItem = WithTestID<{
   label: string;
   color?: ColorMode;
   selected?: boolean;
@@ -28,7 +28,7 @@ type TabItem = WithTestID<{
   accessibilityLabel: string;
   accessibilityHint?: string;
   // Events
-  onPress: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
 }>;
 
 type ColorStates = {
