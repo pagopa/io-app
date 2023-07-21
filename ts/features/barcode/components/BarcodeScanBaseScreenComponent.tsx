@@ -7,6 +7,8 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import IconButton from "../../../components/ui/IconButton";
+import { TabItem } from "../../../components/ui/TabItem";
+import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
@@ -16,7 +18,6 @@ import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
 import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import { BottomTabNavigation } from "./BottomTabNavigation";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type Props = {
@@ -114,13 +115,26 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   };
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
-      {/* FIXME: replace with bottom bar component when it's ready */}
-      <BottomTabNavigation
-        onUploadBarcodePressed={showFilePicker}
-        onNavigateToCodeInputScreenPressed={onManualInputPressed}
-      />
+      <View>
+        <TabNavigation tabJustify="space-evenly" selectedIndex={0} color="dark">
+          <TabItem
+            label={I18n.t("barcodeScan.tabs.scan")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
+          />
+          <TabItem
+            label={I18n.t("barcodeScan.tabs.upload")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.upload")}
+            onPress={showFilePicker}
+          />
+          <TabItem
+            label={I18n.t("barcodeScan.tabs.input")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.input")}
+            onPress={onManualInputPressed}
+          />
+        </TabNavigation>
+      </View>
       <LinearGradient
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
