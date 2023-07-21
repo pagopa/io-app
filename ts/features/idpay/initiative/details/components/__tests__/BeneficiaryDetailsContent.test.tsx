@@ -38,7 +38,7 @@ const mockDiscountActiveInitiative: BeneficiaryDetailsProps = {
     initiativeId: "a",
     status: InitiativeStatusEnum.REFUNDABLE,
     nInstr: 0,
-    endDate: new Date(),
+    endDate: new Date(2023, 1, 1),
     accrued: 0,
     amount: 0,
     refunded: 0,
@@ -49,8 +49,8 @@ const mockDiscountActiveInitiative: BeneficiaryDetailsProps = {
   beneficiaryDetails: {},
   onboardingStatus: {
     status: OnboardingStatusEnum.ONBOARDING_OK,
-    statusDate: new Date(),
-    onboardingOkDate: new Date()
+    statusDate: new Date(2023, 1, 1),
+    onboardingOkDate: new Date(2023, 1, 1)
   }
 };
 
@@ -62,8 +62,8 @@ const mockRefundActiveInitiative: BeneficiaryDetailsProps = {
   beneficiaryDetails: {},
   onboardingStatus: {
     status: OnboardingStatusEnum.ONBOARDING_OK,
-    statusDate: new Date(),
-    onboardingOkDate: new Date()
+    statusDate: new Date(2023, 1, 1),
+    onboardingOkDate: new Date(2023, 1, 1)
   }
 };
 
