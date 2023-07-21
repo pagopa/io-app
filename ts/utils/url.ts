@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { Linking } from "react-native";
+import { ImageURISource, Linking } from "react-native";
 import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
@@ -150,3 +150,11 @@ export function extractPathFromURL(
 
   return undefined;
 }
+/**
+ * type guard to check if a value is an ImageURISource
+ * @argument value the value to check, can be anything
+ * @returns boolean
+ */
+
+export const isImageUri = (value: unknown): value is ImageURISource =>
+  typeof value === "object" && value !== null && "uri" in value;
