@@ -31,14 +31,14 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
+        },
+        Object {
+          "backgroundColor": undefined,
         },
       ]
     }
@@ -168,14 +168,14 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "#FFFFFF",
-        },
-        Object {
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
+        },
+        Object {
+          "backgroundColor": "#FFFFFF",
         },
       ]
     }
@@ -305,14 +305,14 @@ exports[`TabItem should match the snapshot with default props 1`] = `
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
+        },
+        Object {
+          "backgroundColor": undefined,
         },
       ]
     }
@@ -381,14 +381,14 @@ exports[`TabItem should match the snapshot with icons 1`] = `
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
+        },
+        Object {
+          "backgroundColor": undefined,
         },
       ]
     }

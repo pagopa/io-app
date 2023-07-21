@@ -3,17 +3,18 @@ import { GestureResponderEvent, Pressable, StyleSheet } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
+  interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import { WithTestID } from "../../types/WithTestID";
 import { IOIcons, Icon } from "../core/icons";
 import { HSpacer } from "../core/spacer/Spacer";
 import { LabelHeader } from "../core/typography/LabelHeader";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { IOColors } from "../core/variables/IOColors";
-import { WithTestID } from "../../types/WithTestID";
 
 type ColorMode = "light" | "dark";
 
@@ -33,12 +34,15 @@ type TabItem = WithTestID<{
 
 type ColorStates = {
   default: {
-    background: IOColors;
+    background: string;
     foreground: IOColors;
   };
   selected: {
-    background: IOColors;
+    background: string;
     foreground: IOColors;
+  };
+  pressed: {
+    background: string;
   };
 };
 
@@ -49,8 +53,11 @@ const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
       foreground: "grey-650"
     },
     selected: {
-      background: "grey-50",
+      background: IOColors["grey-50"],
       foreground: "black"
+    },
+    pressed: {
+      background: IOColors["grey-450"]
     }
   },
   dark: {
@@ -59,8 +66,11 @@ const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
       foreground: "white"
     },
     selected: {
-      background: "white",
+      background: IOColors.white,
       foreground: "grey-850"
+    },
+    pressed: {
+      background: IOColors["grey-100"]
     }
   }
 };
@@ -103,6 +113,23 @@ const TabItem = ({
     };
   });
 
+  const pressedColorAnimationStyle = useAnimatedStyle(() => {
+    // Link color states to the pressed states
+
+    const backgroundColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapColorStates[color].default.background,
+        `${mapColorStates[color].pressed.background}1A`
+      ]
+    );
+
+    return {
+      backgroundColor
+    };
+  });
+
   const onPressIn = React.useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
     isPressed.value = 1;
@@ -130,8 +157,10 @@ const TabItem = ({
       <Animated.View
         style={[
           styles.container,
-          { backgroundColor: IOColors[colors.background] },
-          pressedAnimationStyle
+          pressedAnimationStyle,
+          selected
+            ? { backgroundColor: colors.background }
+            : pressedColorAnimationStyle
         ]}
       >
         {activeIcon && (
