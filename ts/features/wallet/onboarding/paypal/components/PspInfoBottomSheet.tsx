@@ -11,6 +11,7 @@ import { Label } from "../../../../../components/core/typography/Label";
 import { Link } from "../../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../../utils/url";
 import { Icon } from "../../../../../components/core/icons/Icon";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   rowContainer: {
@@ -99,5 +100,6 @@ export const PspInfoBottomSheetContent = (props: Props) => (
     {getItem(props).map((item, idx) => (
       <ItemLayout {...item} key={`info_row_${idx}`} />
     ))}
+    <VSpacer size={16} />
   </View>
 );
