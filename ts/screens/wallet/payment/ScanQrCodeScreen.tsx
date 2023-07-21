@@ -237,7 +237,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       mediaType: "photo"
     };
     // Open Image Library
-    ImagePicker.launchImageLibrary(options, response => {
+    void ImagePicker.launchImageLibrary(options, response => {
       // With the current settings the user is allowed to pick only one image
       const maybePickedImage = pipe(
         response.assets,

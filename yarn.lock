@@ -3134,6 +3134,11 @@
   dependencies:
     merge-options "^3.0.4"
 
+"@react-native-camera-roll/camera-roll@5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-5.6.1.tgz#0812b39bf27fcc44863f490b6e7af7a1ba55f464"
+  integrity sha512-wr7E90Xoew4pwfS5tGYkx3d7e+pBubPPYMI2uHQIq9/6bNIItXADmgDf3ghbId/G/gdX4qH/tyjlyF1kAci/Rw==
+
 "@react-native-clipboard/clipboard@^1.10.0":
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.10.0.tgz#605e784ed5435059c9b5db52b2d112f9fd09c409"
@@ -3147,11 +3152,6 @@
     art "^0.10.3"
     invariant "^2.2.4"
     prop-types "^15.7.2"
-
-"@react-native-community/cameraroll@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-4.0.0.tgz#97a4be5d01bc05c387c26599ffa559e1b425e415"
-  integrity sha512-ZqzWbNHklgq/sPUmlDgi/SvfbkIVKNYXhcDGRcabXRsX9aIyNEX2dk2fkCSJoKWqBF8uSUnVznonpTP3TlwdyQ==
 
 "@react-native-community/cli-clean@^8.0.4":
   version "8.0.4"
@@ -3761,9 +3761,9 @@
     "@types/node" "*"
 
 "@types/hammerjs@^2.0.36":
-  version "2.0.36"
-  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.36.tgz#17ce0a235e9ffbcdcdf5095646b374c2bf615a4c"
-  integrity sha512-7TUK/k2/QGpEAv/BCwSHlYu3NXZhQ9ZwBYpzr9tjlPIL2C5BeGhH3DmVavRx3ZNyELX5TLC91JTz/cen6AAtIQ==
+  version "2.0.41"
+  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.41.tgz#f6ecf57d1b12d2befcce00e928a6a097c22980aa"
+  integrity sha512-ewXv/ceBaJprikMcxCmWU1FKyMAQ2X7a9Gtmzw8fcg2kIePI1crERDM818W+XYrxqdBBOdlf2rm137bU+BltCA==
 
 "@types/hast@^2.0.0", "@types/hast@^2.3.2":
   version "2.3.4"
@@ -14420,10 +14420,10 @@ react-native-crypto@^2.1.0:
     public-encrypt "^4.0.0"
     randomfill "^1.0.3"
 
-react-native-device-info@^10.3.0:
-  version "10.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.3.0.tgz#6bab64d84d3415dd00cc446c73ec5e2e61fddbe7"
-  integrity sha512-/ziZN1sA1REbJTv5mQZ4tXggcTvSbct+u5kCaze8BmN//lbxcTvWsU6NQd4IihLt89VkbX+14IGc9sVApSxd/w==
+react-native-device-info@^10.8.0:
+  version "10.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.8.0.tgz#c331c94d65542f86bac197f223ee064c7e10a9ec"
+  integrity sha512-DE4/X82ZVhdcnR1Y21iTP46WSSJA/rHK3lmeqWfGGq1RKLwXTIdxmfbZZnYwryqJ+esrw2l4ND19qlgxDGby8A==
 
 react-native-document-picker@^9.0.1:
   version "9.0.1"
@@ -14480,10 +14480,10 @@ react-native-fs@^2.18.0:
     base-64 "^0.1.0"
     utf8 "^3.0.0"
 
-react-native-gesture-handler@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.1.1.tgz#1d417bc7b551ec76129ce09861b3a01622b4ef99"
-  integrity sha512-1+qMhsXKKWTPAFi2ZY8rEhP/4xIevWNb1zLU9MzJkr7tRIEW4G+ipxjLyCw+7hQeqeeIbyZ8kkTyHAUuwTrHDA==
+react-native-gesture-handler@^2.12.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.12.0.tgz#59ca9d97e4c71f70b9c258f14a1a081f4c689976"
+  integrity sha512-rr+XwVzXAVpY8co25ukvyI38fKCxTQjz7WajeZktl8qUPdh1twnSExgpT47DqDi4n+m+OiJPAnHfZOkqqAQMOg==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -14520,10 +14520,10 @@ react-native-image-pan-zoom@^2.1.11:
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
   integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
 
-react-native-image-picker@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.6.tgz#0dfa5bb83bcf6ff58635ebb9201a185c2271e8cc"
-  integrity sha512-Pp3UWKUADuMG1mz12m6dSO/R2KnvXVEd77bldrfTMFpz4PFc4iVKo+bHeS79It0mUBezfzDMgfesg/OPLSugvQ==
+react-native-image-picker@4.10.3:
+  version "4.10.3"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.10.3.tgz#cdc11d9836b4cfa57e658c0700201babf8fdca10"
+  integrity sha512-gLX8J6jCBkUt6jogpSdA7YyaGVLGYywRzMEwBciXshihpFZjc/cRlKymAVlu6Q7HMw0j3vrho6pI8ZGC5O/FGg==
 
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.1"
@@ -14714,10 +14714,10 @@ react-native-vision-camera@2.15.4:
   resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-2.15.4.tgz#821f0505fc8c63b87c1ae4697d2bb4f670333576"
   integrity sha512-SJXSWH1pu4V3Kj4UuX/vSgOxc9d5wb5+nHqBHd+5iUtVyVLEp0F6Jbbaha7tDoU+kUBwonhlwr2o8oV6NZ7Ibg==
 
-react-native-webview@^11.13.0:
-  version "11.13.0"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.13.0.tgz#a2eca0f87b2ae9bba0dd8144594aeff9947cc5d6"
-  integrity sha512-jjQAKWv8JzRmcn76fMe4lXD84AAeR7kn43kAmUe1GX312BMLaP+RbKlgpYAlNuOBXL0YirItGKDrpaD0bNROOA==
+react-native-webview@^11.26.1:
+  version "11.26.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.26.1.tgz#658c09ed5162dc170b361e48c2dd26c9712879da"
+  integrity sha512-hC7BkxOpf+z0UKhxFSFTPAM4shQzYmZHoELa6/8a/MspcjEP7ukYKpuSUTLDywQditT8yI9idfcKvfZDKQExGw==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
