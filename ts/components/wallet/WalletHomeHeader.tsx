@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { navigateToAvailableBonusScreen } from "../../features/bonus/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
@@ -8,18 +8,18 @@ import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import { useLegacyIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { HSpacer } from "../core/spacer/Spacer";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
+import { Icon } from "../core/icons";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
-import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import { Icon } from "../core/icons";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -68,45 +68,47 @@ const WalletHomeHeader = (props: Props) => {
     }
   ];
 
-  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
-    <FlatList
-      data={navigationListItems}
-      keyExtractor={item => item.title}
-      renderItem={({ item, index }) => (
-        <>
-          <ButtonDefaultOpacity
-            onPress={() => {
-              dismiss();
-              item.onPress();
-            }}
-            style={styles.container}
-            onPressWithGestureHandler={true}
-            testID={item.testId}
-          >
-            <View style={styles.flexColumn}>
-              <View style={styles.row}>
-                <View style={IOStyles.flex}>
-                  <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-                    {item.title}
-                  </H3>
-                  <H5 color={"bluegrey"} weight={"Regular"}>
-                    {item.subtitle}
-                  </H5>
+  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
+    component: (
+      <FlatList
+        data={navigationListItems}
+        keyExtractor={item => item.title}
+        renderItem={({ item, index }) => (
+          <>
+            <ButtonDefaultOpacity
+              onPress={() => {
+                dismiss();
+                item.onPress();
+              }}
+              style={styles.container}
+              onPressWithGestureHandler={true}
+              testID={item.testId}
+            >
+              <View style={styles.flexColumn}>
+                <View style={styles.row}>
+                  <View style={IOStyles.flex}>
+                    <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+                      {item.title}
+                    </H3>
+                    <H5 color={"bluegrey"} weight={"Regular"}>
+                      {item.subtitle}
+                    </H5>
+                  </View>
+                  <Icon name="chevronRightListItem" color="blue" size={24} />
                 </View>
-                <Icon name="chevronRightListItem" color="blue" size={24} />
               </View>
-            </View>
-          </ButtonDefaultOpacity>
+            </ButtonDefaultOpacity>
 
-          {index !== navigationListItems.length - 1 && (
-            <ItemSeparatorComponent noPadded />
-          )}
-        </>
-      )}
-    />,
-    I18n.t("global.buttons.add"),
-    315
-  );
+            {index !== navigationListItems.length - 1 && (
+              <ItemSeparatorComponent noPadded />
+            )}
+          </>
+        )}
+        ListFooterComponent={() => <VSpacer size={16} />}
+      />
+    ),
+    title: I18n.t("global.buttons.add")
+  });
 
   return (
     <View
