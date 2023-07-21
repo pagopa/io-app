@@ -31,12 +31,13 @@ const createActionsImplementation = (
   const exitAuthorization = (context: Context) => {
     pipe(
       context.transactionData,
-      O.map(({ initiativeId }) =>
-        navigation.replace(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      O.map(({ initiativeId }) => {
+        navigation.popToTop();
+        navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
           screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
           params: { initiativeId }
-        })
-      ),
+        });
+      }),
       O.getOrElse(() => navigation.pop())
     );
   };

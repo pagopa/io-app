@@ -249,6 +249,13 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       }
     }
   />
+  <View
+    style={
+      Object {
+        "height": 16,
+      }
+    }
+  />
 </View>
 `;
 
@@ -353,6 +360,13 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
       }
     }
   />
+  <View
+    style={
+      Object {
+        "height": 16,
+      }
+    }
+  />
 </View>
 `;
 
@@ -450,6 +464,13 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   >
     07/02/2022 - 20/02/2022
   </Text>
+  <View
+    style={
+      Object {
+        "height": 16,
+      }
+    }
+  />
   <View
     style={
       Object {
@@ -699,6 +720,13 @@ exports[`when rendering on match snapshot for static code 1`] = `
   >
     07/02/2022 - 20/02/2022
   </Text>
+  <View
+    style={
+      Object {
+        "height": 16,
+      }
+    }
+  />
   <View
     style={
       Object {
