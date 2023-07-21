@@ -1,5 +1,5 @@
 import React from "react";
-import { FlexStyle, Platform, StyleSheet, View } from "react-native";
+import { FlexStyle, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TabItem } from "./TabItem";
 
@@ -71,11 +71,6 @@ const TabNavigation = ({
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={[
         styles.container,
-        /* Android fallback because `centerContent`
-        is only an iOS property */
-        Platform.OS === "android" && {
-          flexGrow: 1
-        },
         {
           justifyContent: tabJustify
         }
