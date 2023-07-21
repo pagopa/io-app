@@ -45,7 +45,10 @@ const TabNavigation = ({
         <View key={index} style={{ marginLeft: index === 0 ? 0 : 16 }}>
           {React.cloneElement<TabItem>(item, {
             key: index,
-            onPress: () => handleItemPress(index),
+            onPress: event => {
+              item.props.onPress?.(event);
+              handleItemPress(index);
+            },
             selected: selectedIndex === index,
             color,
             accessibilityLabel: item.props.label,
