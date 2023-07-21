@@ -1,4 +1,4 @@
-import CameraRoll from "@react-native-community/cameraroll";
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { PermissionsAndroid, Platform } from "react-native";
@@ -32,7 +32,7 @@ export const share = (
  */
 export const isShareEnabled = () =>
   Platform.select({
-    android: Platform.Version >= 21,
+    android: (Platform.Version as number) >= 21,
     ios: true,
     default: false
   });
