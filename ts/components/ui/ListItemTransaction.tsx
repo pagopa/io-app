@@ -142,8 +142,7 @@ export const ListItemTransaction = ({
         {paymentLogoIcon && (
           <View
             style={{
-              marginRight: IOListItemVisualParams.iconMargin,
-              marginLeft: IOListItemLogoMargin,
+              marginRight: IOListItemLogoMargin,
               width: MUNICIPALITY_LOGO_SIZE,
               alignItems: "center"
             }}
