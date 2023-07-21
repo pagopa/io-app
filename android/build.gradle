@@ -4,7 +4,7 @@ buildscript {
     ext {
         firebaseVersion = "17.6.0"
         kotlin_version = "1.7.0"
-        buildToolsVersion = "33.0.0"
+        buildToolsVersion = "33.0.2"
         minSdkVersion = 23
         compileSdkVersion = 33
         targetSdkVersion = 33
