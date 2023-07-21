@@ -575,7 +575,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after 30 days from the last login with SPID or CIE, we ask you to sign in again to use IO.
+      body: For security reasons, after {{days}} days from the last login with SPID or CIE, we ask you to sign in again to use IO.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -2741,9 +2741,9 @@ bonus:
         warning: "Attention! "
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
-      ownership: Who can take advantage of benefits?
+      ownership: Who can use this card?
       status:
-        title: Carta Giovani Nazionale
+        title: Carta Giovani Nazionale (CGN)
         eyca: EYCA card
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
