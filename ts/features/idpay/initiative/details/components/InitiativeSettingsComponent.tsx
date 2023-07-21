@@ -17,6 +17,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { Skeleton } from "../../../common/components/Skeleton";
 
 type Props = {
   initiative?: InitiativeDTO;
@@ -56,6 +57,7 @@ const InitiativeSettingsComponent = (props: Props) => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
           accessibilityLabel=""
+          description={<Skeleton width={100} height={21} />}
           onPress={() => null}
         />
       ),
@@ -97,6 +99,7 @@ const InitiativeSettingsComponent = (props: Props) => {
           value={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
+          description={<Skeleton width={270} height={21} />}
           accessibilityLabel=""
           onPress={() => null}
         />
