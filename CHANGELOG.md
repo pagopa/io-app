@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.0-rc.3](https://github.com/pagopa/io-app/compare/2.39.0-rc.2...2.39.0-rc.3) (2023-07-21)
+
+
+### Features
+
+* [[IOBP-137](https://pagopa.atlassian.net/browse/IOBP-137)] Add barcode scan camera marker animation ([#4798](https://github.com/pagopa/io-app/issues/4798)) ([b915224](https://github.com/pagopa/io-app/commit/b9152244ba96f1e26220f903ba4ad226caada309))
+* [[IOCOM-383](https://pagopa.atlassian.net/browse/IOCOM-383)] Add system icons ([#4803](https://github.com/pagopa/io-app/issues/4803)) ([48ec8fe](https://github.com/pagopa/io-app/commit/48ec8fe98131bc8bac7d2433f5eeb27e2d249194))
+* [[IOPID-442](https://pagopa.atlassian.net/browse/IOPID-442),[IOPID-443](https://pagopa.atlassian.net/browse/IOPID-443),[IOPID-481](https://pagopa.atlassian.net/browse/IOPID-481),[IOPID-482](https://pagopa.atlassian.net/browse/IOPID-482),[IOPID-483](https://pagopa.atlassian.net/browse/IOPID-483),[IOPID-484](https://pagopa.atlassian.net/browse/IOPID-484)] FL follow up ([#4799](https://github.com/pagopa/io-app/issues/4799)) ([f6b7056](https://github.com/pagopa/io-app/commit/f6b7056fb81bcf66ff764cdfe69a3e64e02ca198))
+* [[IOPLT-46](https://pagopa.atlassian.net/browse/IOPLT-46)] Sets Android target sdk to 33 ([#4780](https://github.com/pagopa/io-app/issues/4780)) ([86438b2](https://github.com/pagopa/io-app/commit/86438b2b823847bc36c88bdb6645b81faad48236))
+
+
+### Bug Fixes
+
+* [[IOBP-134](https://pagopa.atlassian.net/browse/IOBP-134)] Add navigation to initiative details after IDPay transaction authorization ([#4793](https://github.com/pagopa/io-app/issues/4793)) ([2d0e773](https://github.com/pagopa/io-app/commit/2d0e77331a43f827315dddd2cda1867497e36c6c)), closes [1#diff-130a75c56f991ea3cc1e3857a98c902845fe2d9f1cc7fc10b17e98fd24769557](https://github.com/pagopa/1/issues/diff-130a75c56f991ea3cc1e3857a98c902845fe2d9f1cc7fc10b17e98fd24769557)
+* [[IOBP-145](https://pagopa.atlassian.net/browse/IOBP-145)] Fix navigation after IDPay transaction authorization ([#4826](https://github.com/pagopa/io-app/issues/4826)) ([cd612ab](https://github.com/pagopa/io-app/commit/cd612aba67b00a60138d6a1a0a4601866957545c))
+* [[IOPID-515](https://pagopa.atlassian.net/browse/IOPID-515)] Mixpanel opt-in not saved on slow devices ([#4812](https://github.com/pagopa/io-app/issues/4812)) ([7abccb1](https://github.com/pagopa/io-app/commit/7abccb1a4d8afc8179f22d433c72919c4ccec4bd))
+
+
+### Chores
+
+* [[IOAPPFD0-128](https://pagopa.atlassian.net/browse/IOAPPFD0-128)] Add `action` prop to the `SwitchListItem` ([#4801](https://github.com/pagopa/io-app/issues/4801)) ([155477c](https://github.com/pagopa/io-app/commit/155477c2cf6ee7ab2b89d49edff1e406df9ab69f))
+* [[IOAPPFD0-129](https://pagopa.atlassian.net/browse/IOAPPFD0-129)] Remove extra space from `ListItem…` components ([#4809](https://github.com/pagopa/io-app/issues/4809)) ([8e6841b](https://github.com/pagopa/io-app/commit/8e6841b802000da131653349fb5844c3a950184d))
+* [[IOBP-136](https://pagopa.atlassian.net/browse/IOBP-136)] Implementation of new lIst item in wallet transactions ([#4802](https://github.com/pagopa/io-app/issues/4802)) ([60ace46](https://github.com/pagopa/io-app/commit/60ace46b26f095d271a8985945890a9577587d17))
+* [[IOBP-138](https://pagopa.atlassian.net/browse/IOBP-138)] Replace legacy bottom sheets ([#4808](https://github.com/pagopa/io-app/issues/4808)) ([d6cf12a](https://github.com/pagopa/io-app/commit/d6cf12a453fbbc3317aad9ab8fa9fc684a1dba11))
+* [[IOPID-499](https://pagopa.atlassian.net/browse/IOPID-499)]  Change the keyId format in the Lollipop Playground to be compliant with the new spec ([#4806](https://github.com/pagopa/io-app/issues/4806)) ([860c919](https://github.com/pagopa/io-app/commit/860c9192f2161a0452b2d3c7df5eb7a86efff8bc))
+* [[PE-442](https://pagopa.atlassian.net/browse/PE-442)] Change CGN details text labels ([#4814](https://github.com/pagopa/io-app/issues/4814)) ([61cee63](https://github.com/pagopa/io-app/commit/61cee63eff386f97459cdf9f1839338c8deafcdb))
+* Add bundleInDebug gradle parameter ([#4804](https://github.com/pagopa/io-app/issues/4804)) ([8f53044](https://github.com/pagopa/io-app/commit/8f53044601a9eff5600c97fbd2825345971d54ab))
+
 ## [2.39.0-rc.2](https://github.com/pagopa/io-app/compare/2.39.0-rc.1...2.39.0-rc.2) (2023-07-18)
 
 
