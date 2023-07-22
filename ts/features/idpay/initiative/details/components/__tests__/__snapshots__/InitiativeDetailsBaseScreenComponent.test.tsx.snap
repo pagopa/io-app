@@ -225,6 +225,8 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={1}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -394,6 +396,8 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={2}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={

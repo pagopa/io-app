@@ -10,13 +10,13 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import { Icon } from "../../core/icons/Icon";
 import { VSpacer } from "../../core/spacer/Spacer";
 import { H4 } from "../../core/typography/H4";
 import { getCardIconFromBrandLogo } from "../card/Logo";
-import { Icon } from "../../core/icons/Icon";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -78,7 +78,6 @@ type PaymentMethodInformation = {
   description: string;
   bottomSheetTitle: string;
   bottomSheetBody: JSX.Element;
-  snapPoint?: number;
 };
 
 const extractInfoFromPaymentMethod = (
@@ -97,8 +96,7 @@ const extractInfoFromPaymentMethod = (
           nameSurname
         ),
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody(),
-        snapPoint: 360
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "Bancomat":
       return {
@@ -117,8 +115,7 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody(),
-        snapPoint: 360
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "Satispay":
       return {
@@ -134,8 +131,7 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.kind,
         description: getPaypalAccountEmail(paymentMethod.info),
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody(),
-        snapPoint: 360
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
   }
 };
@@ -143,23 +139,17 @@ const extractInfoFromPaymentMethod = (
 const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   props: Props
 ) => {
-  const {
-    logo,
-    title,
-    description,
-    bottomSheetTitle,
-    bottomSheetBody,
-    snapPoint
-  } = extractInfoFromPaymentMethod(
-    props.paymentMethod,
-    props.nameSurname ?? ""
+  const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
+    extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
+
+  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
+    {
+      component: bottomSheetBody,
+      title: bottomSheetTitle
+    },
+    32
   );
 
-  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
-    bottomSheetBody,
-    bottomSheetTitle,
-    snapPoint ?? 300
-  );
   return (
     <>
       {bottomSheet}
