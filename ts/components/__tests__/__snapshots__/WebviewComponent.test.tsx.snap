@@ -124,9 +124,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         mediaPlaybackRequiresUserAction={true}
         messagingEnabled={false}
         onContentProcessDidTerminate={[Function]}
-        onError={[Function]}
         onHttpError={[Function]}
-        onLoadEnd={[Function]}
         onLoadingError={[Function]}
         onLoadingFinish={[Function]}
         onLoadingProgress={[Function]}
@@ -152,6 +150,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
             },
           ]
         }
+        textInteractionEnabled={true}
         useSharedProcessPool={true}
       />
     </View>

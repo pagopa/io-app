@@ -4,7 +4,7 @@ import * as React from "react";
 import { MenuProvider } from "react-native-popup-menu";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
@@ -20,19 +20,21 @@ export type AppDispatch = typeof store.dispatch;
  * @constructor
  */
 export const App: React.FunctionComponent<never> = () => (
-  <StyleProvider style={theme()}>
-    <IOThemeContext.Provider value={IOThemes.light}>
-      <Provider store={store}>
-        <PersistGate loading={undefined} persistor={persistor}>
-          <BottomSheetModalProvider>
-            <LightModalProvider>
-              <MenuProvider>
-                <RootContainer />
-              </MenuProvider>
-            </LightModalProvider>
-          </BottomSheetModalProvider>
-        </PersistGate>
-      </Provider>
-    </IOThemeContext.Provider>
-  </StyleProvider>
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <StyleProvider style={theme()}>
+      <IOThemeContext.Provider value={IOThemes.light}>
+        <Provider store={store}>
+          <PersistGate loading={undefined} persistor={persistor}>
+            <BottomSheetModalProvider>
+              <LightModalProvider>
+                <MenuProvider>
+                  <RootContainer />
+                </MenuProvider>
+              </LightModalProvider>
+            </BottomSheetModalProvider>
+          </PersistGate>
+        </Provider>
+      </IOThemeContext.Provider>
+    </StyleProvider>
+  </GestureHandlerRootView>
 );
