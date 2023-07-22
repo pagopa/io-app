@@ -10,6 +10,18 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
+### react-native+0.69.9
+Created on **19/07/2023**
+
+#### Reason:
+- This patch is going to add a missing POST_NOTIFICATIONS permission (Android 13) (remove this patch after updating to version 71 of React Native).
+
+### @types/react-native+0.69.9
+Created on **19/07/2023**
+
+#### Reason:
+- Missing POST_NOTIFICATIONS permission type (remove this patch after updating to version 71 of React Native).
+
 ### @types/react-native+0.69.6
 Created on **30/08/2022**
 
