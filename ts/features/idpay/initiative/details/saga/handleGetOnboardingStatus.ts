@@ -12,12 +12,11 @@ import {
 } from "../store/actions";
 
 /**
- * Handle the remote call to retrieve the IDPay initiative details
- * @param getInitiativeDetails
+ * Handle the remote call to retrieve the IDPay initiative onboarding status
+ * @param onboardingStatus
  * @param action
  * @param initiativeId
  */
-
 export function* handleGetOnboardingStatus(
   onboardingStatus: IDPayClient["onboardingStatus"],
   token: string,
