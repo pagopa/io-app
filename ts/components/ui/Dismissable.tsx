@@ -1,30 +1,23 @@
 import React from "react";
 import { Dimensions } from "react-native";
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent
-} from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
   runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming
 } from "react-native-reanimated";
+import { WithTestID } from "../../types/WithTestID";
 
 const windowWidth = Dimensions.get("window").width;
 
-type DismissableGestureEventContext = {
-  translateX: number;
-};
-
-type Dismissable = {
+type Dismissable = WithTestID<{
   onDismiss?: () => void;
   dismissThreshold?: number;
   children: React.ReactNode;
-};
+}>;
 
 /**
  * Component that allows for a dismissable gesture, both left and right.
@@ -37,7 +30,8 @@ type Dismissable = {
 const Dismissable = ({
   onDismiss = () => undefined,
   dismissThreshold = windowWidth / 3,
-  children
+  children,
+  testID
 }: Dismissable) => {
   const translateX = useSharedValue(0);
 
@@ -49,19 +43,12 @@ const Dismissable = ({
     ]
   }));
 
-  const panGestureEvent = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    DismissableGestureEventContext
-  >({
-    onStart: (_, context) => {
+  const pan = Gesture.Pan()
+    .onUpdate(event => {
       // eslint-disable-next-line functional/immutable-data
-      context.translateX = translateX.value;
-    },
-    onActive: (event, context) => {
-      // eslint-disable-next-line functional/immutable-data
-      translateX.value = event.translationX + context.translateX;
-    },
-    onEnd: event => {
+      translateX.value = event.translationX;
+    })
+    .onEnd(event => {
       if (Math.abs(event.translationX) > dismissThreshold) {
         // eslint-disable-next-line functional/immutable-data
         translateX.value = withTiming(
@@ -76,13 +63,13 @@ const Dismissable = ({
         // eslint-disable-next-line functional/immutable-data
         translateX.value = withSpring(0, { mass: 0.5 });
       }
-    }
-  });
+    })
+    .withTestId(testID ?? "");
 
   return (
-    <PanGestureHandler onGestureEvent={panGestureEvent}>
+    <GestureDetector gesture={pan}>
       <Animated.View style={animatedStyle}>{children}</Animated.View>
-    </PanGestureHandler>
+    </GestureDetector>
   );
 };
 
