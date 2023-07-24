@@ -22,7 +22,7 @@ import { Dismissable } from "./Dismissable";
 
 type ToastVariant = "neutral" | "error" | "info" | "success" | "warning";
 
-type Toast = {
+export type Toast = {
   message: string;
   variant?: ToastVariant;
   icon?: IOIcons;
