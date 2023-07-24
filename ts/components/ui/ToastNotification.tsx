@@ -1,3 +1,4 @@
+import { throttle } from "lodash";
 import React from "react";
 import {
   DeviceEventEmitter,
@@ -139,7 +140,8 @@ const ToastNotificationContainer = () => {
     ReadonlyArray<ToastNotificationStackItem>
   >([]);
 
-  const handleToastEvent = (toast: ToastEvent) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleToastEvent = React.useCallback((toast: ToastEvent) => {
     const id = new Date().getTime();
 
     setToasts(prevToasts => [{ id, ...toast }, ...prevToasts]);
@@ -150,7 +152,7 @@ const ToastNotificationContainer = () => {
     if (toast.hapticFeedback) {
       ReactNativeHapticFeedback.trigger(toast.hapticFeedback);
     }
-  };
+  }, []);
 
   const removeToastById = (id: number) => {
     setToasts(prevToasts => prevToasts.filter(t => t.id !== id));
@@ -176,12 +178,12 @@ const ToastNotificationContainer = () => {
   React.useEffect(() => {
     const subscription = DeviceEventEmitter.addListener(
       TOAST_EVENT,
-      handleToastEvent
+      throttle(handleToastEvent, 500)
     );
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [handleToastEvent]);
 
   return (
     <SafeAreaView style={styles.container} pointerEvents="box-none">
@@ -301,13 +303,12 @@ const IOToast = {
    *
    * IOToast.warning("This is a warning toast notification");
    */
-  warning: (message: string) => {
+  warning: (message: string) =>
     IOToast.show(message, {
       variant: "warning",
       icon: "warningFilled",
       hapticFeedback: "notificationWarning"
-    });
-  }
+    })
 };
 
 export { IOToast, ToastNotification, ToastNotificationContainer };
