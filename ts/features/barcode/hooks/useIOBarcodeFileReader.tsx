@@ -238,7 +238,7 @@ const useIOBarcodeFileReader = (
       );
     }
 
-    ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
+    void ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
   };
 
   /**
