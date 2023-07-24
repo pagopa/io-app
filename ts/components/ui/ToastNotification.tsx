@@ -1,15 +1,10 @@
 import React from "react";
 import {
   DeviceEventEmitter,
-  Dimensions,
   SafeAreaView,
   StyleSheet,
   View
 } from "react-native";
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent
-} from "react-native-gesture-handler";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -17,20 +12,13 @@ import Animated, {
   Easing,
   SequencedTransition,
   SlideInUp,
-  SlideOutUp,
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming
+  SlideOutUp
 } from "react-native-reanimated";
 import { IOIcons, Icon } from "../core/icons";
 import { CTA } from "../core/typography/CTA";
 import { IOColors } from "../core/variables/IOColors";
 import { IOAlertRadius } from "../core/variables/IOShapes";
-
-const windowWidth = Dimensions.get("window").width;
+import { Dismissable } from "./Dismissable";
 
 type ToastVariant = "neutral" | "error" | "info" | "success" | "warning";
 
@@ -114,71 +102,27 @@ const TOAST_DURATION_TIME = 5000;
 type ToastNotificationStackItem = Toast & { id: number };
 
 type ToastNotificationStackItemProps = ToastNotificationStackItem & {
-  onClose: () => void;
-};
-
-type ToastGestureEventContext = {
-  translateX: number;
+  onDismiss: () => void;
 };
 
 /**
  * A toast notification item that can be swiped to the right to dismiss it, with enter and exit animations
  */
-const ToastNotificationStackItem = (props: ToastNotificationStackItemProps) => {
-  const translateX = useSharedValue(0);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: translateX.value
-      }
-    ]
-  }));
-
-  const panGestureEvent = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    ToastGestureEventContext
-  >({
-    onStart: (_, context) => {
-      // eslint-disable-next-line functional/immutable-data
-      context.translateX = translateX.value;
-    },
-    onActive: (event, context) => {
-      // eslint-disable-next-line functional/immutable-data
-      translateX.value = event.translationX + context.translateX;
-    },
-    onEnd: event => {
-      const dismissalThreshold = windowWidth / 3;
-      if (Math.abs(event.translationX) > dismissalThreshold) {
-        // eslint-disable-next-line functional/immutable-data
-        translateX.value = withTiming(
-          windowWidth * Math.sign(event.translationX),
-          {
-            duration: 300,
-            easing: Easing.inOut(Easing.exp)
-          },
-          runOnJS(props.onClose)
-        );
-      } else {
-        // eslint-disable-next-line functional/immutable-data
-        translateX.value = withSpring(0, { mass: 0.5 });
-      }
-    }
-  });
-
-  return (
-    <PanGestureHandler onGestureEvent={panGestureEvent}>
-      <Animated.View
-        entering={SlideInUp.duration(300).easing(Easing.inOut(Easing.exp))}
-        exiting={SlideOutUp.duration(300).easing(Easing.inOut(Easing.exp))}
-        layout={SequencedTransition.duration(300)}
-        style={[animatedStyle, { paddingBottom: 8 }]}
-      >
-        <ToastNotification {...props} />
-      </Animated.View>
-    </PanGestureHandler>
-  );
-};
+const ToastNotificationStackItem = ({
+  onDismiss,
+  ...props
+}: ToastNotificationStackItemProps) => (
+  <Animated.View
+    entering={SlideInUp.duration(300).easing(Easing.inOut(Easing.exp))}
+    exiting={SlideOutUp.duration(300).easing(Easing.inOut(Easing.exp))}
+    layout={SequencedTransition.duration(300)}
+    style={{ paddingBottom: 8 }}
+  >
+    <Dismissable onDismiss={onDismiss}>
+      <ToastNotification {...props} />
+    </Dismissable>
+  </Animated.View>
+);
 
 /**
  * Toast events payload
@@ -246,7 +190,7 @@ const ToastNotificationContainer = () => {
           <ToastNotificationStackItem
             key={toast.id}
             {...toast}
-            onClose={() => removeToastById(toast.id)}
+            onDismiss={() => removeToastById(toast.id)}
           />
         ))}
       </View>
