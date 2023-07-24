@@ -70,7 +70,7 @@ export const RawCheckBox: React.FunctionComponent<OwnProps> = props => {
             padding: INTERNAL_PADDING
           }}
         >
-          <Icon name="checkTicBig" size={tickSize} color={onColor} />
+          <Icon name="checkTickBig" size={tickSize} color={onColor} />
         </View>
       )}
     </TouchableDefaultOpacity>

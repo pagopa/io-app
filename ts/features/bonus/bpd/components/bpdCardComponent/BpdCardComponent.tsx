@@ -374,7 +374,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           </H5>
           <HSpacer size={8} />
           {isPeriodClosed && (
-            <Icon name="checkTicBig" size={20} color="white" />
+            <Icon name="checkTickBig" size={20} color="white" />
           )}
         </View>
         <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>

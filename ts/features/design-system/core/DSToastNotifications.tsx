@@ -22,7 +22,7 @@ export const DSToastNotifications = () => (
       block={true}
       onPress={() => {
         IOToast.show("Hello!", {
-          icon: "checkTic"
+          icon: "checkTick"
         });
       }}
     >
@@ -85,7 +85,7 @@ export const DSToastNotifications = () => (
       Component
     </H3>
 
-    <ToastNotification message="Neutral" icon="checkTicBig" />
+    <ToastNotification message="Neutral" icon="checkTickBig" />
     <VSpacer size={8} />
     <ToastNotification message="Error" icon="errorFilled" variant="error" />
     <VSpacer size={8} />

@@ -1353,7 +1353,7 @@ export const DSButtons = () => {
           small
           accessibilityLabel="Tap to trigger test alert"
           label={"Aggiunto"}
-          icon="checkTicBig"
+          icon="checkTickBig"
           onPress={onButtonPress}
         />
       </DSComponentViewerBox>
