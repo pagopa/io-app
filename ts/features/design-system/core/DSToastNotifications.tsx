@@ -4,12 +4,9 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
-import {
-  IOToast,
-  ToastNotification
-} from "../../../components/ui/ToastNotification";
 import { showToast } from "../../../utils/showToast";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { IOToast, ToastNotification } from "../../../components/Toast";
 
 export const DSToastNotifications = () => (
   <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
@@ -58,6 +55,15 @@ export const DSToastNotifications = () => (
       label="Warning"
       accessibilityLabel="Warning"
       onPress={() => IOToast.warning("Warning")}
+    />
+
+    <VSpacer size={16} />
+
+    <ButtonOutline
+      fullWidth={true}
+      label="Hide all"
+      accessibilityLabel="Hide all"
+      onPress={() => IOToast.hideAll()}
     />
 
     <H3

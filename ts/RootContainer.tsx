@@ -28,7 +28,6 @@ import { preferredLanguageSelector } from "./store/reducers/persistedPreferences
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
 import { isStringNullyOrEmpty } from "./utils/strings";
-import { ToastNotificationContainer } from "./components/ui/ToastNotification";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -111,7 +110,6 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         <RootModal />
         <LightModalRoot />
-        <ToastNotificationContainer />
       </Root>
     );
   }
