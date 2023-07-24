@@ -1,11 +1,11 @@
 /* eslint-disable sonarjs/no-identical-functions */
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable arrow-body-style */
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
@@ -15,11 +15,10 @@ import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
 
 export const DSTabNavigation = () => {
-  const handlePress = () => {
-    alert("Pressed");
-  };
+  const handlePress = () => {};
 
   return (
     <DesignSystemScreen
