@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Alert, View } from "react-native";
+import { useState } from "react";
+import { Alert, View, LayoutChangeEvent } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   useAnimatedScrollHandler,
@@ -15,11 +16,19 @@ import {
   IOColors,
   hexToRgba
 } from "../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSHeaderSecondLevel = () => {
+  const [titleHeight, setTitleHeight] = useState(0);
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const translationY = useSharedValue(0);
+  const scrollViewHeight = useSharedValue(0);
+
+  const getTitleHeight = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setTitleHeight(height);
+  };
 
   const scrollHandler = useAnimatedScrollHandler(event => {
     // eslint-disable-next-line functional/immutable-data
@@ -30,28 +39,11 @@ export const DSHeaderSecondLevel = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          scrollValue={translationY}
-          title={"Preferenze"}
-          firstAction={
-            <IconButton
-              icon="archive"
-              color="neutral"
-              onPress={() => {
-                Alert.alert("Archive");
-              }}
-              accessibilityLabel={""}
-            />
-          }
-          secondAction={
-            <IconButton
-              icon="starEmpty"
-              color="neutral"
-              onPress={() => {
-                Alert.alert("Star");
-              }}
-              accessibilityLabel={""}
-            />
-          }
+          scrollValues={{
+            contentOffsetY: translationY,
+            triggerOffset: titleHeight
+          }}
+          title={"Questo è un titolo lungo, ma lungo lungo davvero, eh!"}
           thirdAction={
             <IconButton
               icon="help"
@@ -65,7 +57,7 @@ export const DSHeaderSecondLevel = () => {
         />
       )
     });
-  }, [navigation, translationY]);
+  }, [navigation, titleHeight, translationY]);
 
   return (
     <Animated.ScrollView
@@ -75,19 +67,22 @@ export const DSHeaderSecondLevel = () => {
       }}
       onScroll={scrollHandler}
       scrollEventThrottle={16}
-      snapToInterval={50}
+      snapToOffsets={[0, titleHeight]}
+      snapToEnd={false}
       decelerationRate="fast"
       disableIntervalMomentum={false}
     >
       <View
+        onLayout={getTitleHeight}
         style={{
           backgroundColor: hexToRgba(IOColors["blueIO-100"], 0.5)
         }}
       >
-        <NewH3>Preferenze</NewH3>
+        <NewH3>Questo è un titolo lungo, ma lungo lungo davvero, eh!</NewH3>
       </View>
+      <VSpacer />
       {[...Array(50)].map((_el, i) => (
-        <Body key={`body-${i}`}>Repeated text</Body>
+        <Body key={`body-${i}`}>{`Repeated text ${i}`}</Body>
       ))}
     </Animated.ScrollView>
   );

@@ -16,7 +16,7 @@ import { makeFontStyleObject } from "../../components/core/fonts";
 import IconButton from "./IconButton";
 
 export type HeaderSecondLevel = WithTestID<{
-  scrollValue: Animated.SharedValue<number>;
+  scrollValues: ScrollValues;
   title: string;
   // Accepted components: IconButton
   // Don't use any components other than this, please.
@@ -25,9 +25,13 @@ export type HeaderSecondLevel = WithTestID<{
   thirdAction?: React.ReactNode;
 }>;
 
+type ScrollValues = {
+  contentOffsetY: Animated.SharedValue<number>;
+  triggerOffset: number;
+};
+
 const HEADER_BG_COLOR: IOColors = "white";
 const borderColorDisabled = hexToRgba(IOColors["grey-100"], 0);
-const scrollTriggerOffset: number = 50;
 
 const styles = StyleSheet.create({
   headerInner: {
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
 });
 
 export const HeaderSecondLevel = ({
-  scrollValue,
+  scrollValues,
   title,
   firstAction,
   secondAction,
@@ -55,14 +59,18 @@ export const HeaderSecondLevel = ({
 
   const headerWrapperAnimatedStyle = useAnimatedStyle(() => ({
     borderColor: interpolateColor(
-      scrollValue.value,
-      [0, scrollTriggerOffset],
+      scrollValues.contentOffsetY.value,
+      [0, scrollValues.triggerOffset],
       [borderColorDisabled, IOColors["grey-100"]]
     )
   }));
 
   const titleAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(scrollValue.value, [0, scrollTriggerOffset], [0, 1])
+    opacity: interpolate(
+      scrollValues.contentOffsetY.value,
+      [0, scrollValues.triggerOffset],
+      [0, 1]
+    )
   }));
 
   return (
@@ -84,12 +92,14 @@ export const HeaderSecondLevel = ({
         accessibilityLabel={I18n.t("global.buttons.back")}
       />
       <Animated.Text
+        numberOfLines={1}
         style={[
           {
             ...makeFontStyleObject("Regular", false, "ReadexPro"),
             fontSize: 14,
             textAlign: "center",
-            flexGrow: 1
+            flexGrow: 1,
+            flexShrink: 1
           },
           titleAnimatedStyle
         ]}
