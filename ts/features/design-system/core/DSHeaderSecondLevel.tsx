@@ -1,10 +1,8 @@
 import * as React from "react";
-import { ScrollView, View, Text } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets
-} from "react-native-safe-area-context";
+import { Alert, Platform, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
+  interpolate,
   interpolateColor,
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -16,8 +14,17 @@ import {
   IOColors,
   hexToRgba
 } from "../../../components/core/variables/IOColors";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../../components/core/variables/IOStyles";
+import { makeFontStyleObject } from "../../../components/core/fonts";
+import IconButton from "../../../components/ui/IconButton";
+import { NewH3 } from "../../../components/core/typography/NewH3";
+import { HSpacer } from "../../../components/core/spacer/Spacer";
 
 const borderColorDisabled = hexToRgba(IOColors["grey-100"], 0);
+const scrollTriggerOffset: number = 50;
 
 export const DSHeaderSecondLevel = () => {
   const insets = useSafeAreaInsets();
@@ -29,51 +36,111 @@ export const DSHeaderSecondLevel = () => {
     translationY.value = event.contentOffset.y;
   });
 
-  const aStyle = useAnimatedStyle(() => ({
-    // backgroundColor: interpolateColor(
-    //   translationY.value,
-    //   [0, 50],
-    //   ["white", "skyblue"],
-    //   "RGB"
-    // ),
+  const headerWrapperAnimatedStyle = useAnimatedStyle(() => ({
     borderColor: interpolateColor(
       translationY.value,
-      [0, 50],
+      [0, scrollTriggerOffset],
       [borderColorDisabled, IOColors["grey-100"]]
     )
+  }));
+
+  const titleAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(translationY.value, [0, scrollTriggerOffset], [0, 1])
   }));
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <Animated.View
+          accessibilityRole="header"
+          testID={"HeaderSecondLevel"}
           style={[
-            // eslint-disable-next-line react-native/no-color-literals
             {
-              paddingTop: 50,
-              padding: 15,
-              borderWidth: 1
+              height: IOVisualCostants.headerHeight,
+              marginTop: insets.top,
+              borderBottomWidth: 1,
+              paddingHorizontal: IOVisualCostants.appMarginDefault
             },
-            aStyle
+            headerWrapperAnimatedStyle
           ]}
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Testing</Text>
+          <View style={[IOStyles.row, IOStyles.alignCenter, { flexGrow: 1 }]}>
+            <IconButton
+              icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+              color="neutral"
+              onPress={() => {
+                navigation.goBack();
+              }}
+              accessibilityLabel={""}
+            />
+            <Animated.Text
+              style={[
+                {
+                  ...makeFontStyleObject("Regular", false, "ReadexPro"),
+                  fontSize: 14,
+                  textAlign: "center",
+                  flexGrow: 1
+                },
+                titleAnimatedStyle
+              ]}
+            >
+              Preferenze
+            </Animated.Text>
+            <View style={[IOStyles.row, { flexShrink: 0 }]}>
+              <IconButton
+                icon="info"
+                color="neutral"
+                onPress={() => {
+                  Alert.alert("Info");
+                }}
+                accessibilityLabel={""}
+              />
+
+              {/* SecondAction: Start */}
+              {/* Ideally, with the "gap" flex property,
+              we can get rid of these ugly constructs */}
+              <HSpacer size={16} />
+              <IconButton
+                icon="starEmpty"
+                color="neutral"
+                onPress={() => {
+                  Alert.alert("Star");
+                }}
+                accessibilityLabel={""}
+              />
+              {/* SecondAction: End */}
+
+              {/* ThirdAction: Start */}
+              {/* Same as above */}
+              <HSpacer size={16} />
+              <IconButton
+                icon="help"
+                color="neutral"
+                onPress={() => {
+                  Alert.alert("Contextual Help");
+                }}
+                accessibilityLabel={""}
+              />
+            </View>
+          </View>
         </Animated.View>
       )
     });
-  }, [aStyle, navigation]);
+  }, [headerWrapperAnimatedStyle, insets.top, navigation, titleAnimatedStyle]);
 
   return (
-    <View style={{}}>
-      <Animated.ScrollView
-        contentContainerStyle={{ paddingBottom: insets.bottom }}
-        onScroll={scrollHandler}
-        scrollEventThrottle={16}
-      >
-        {[...Array(50)].map((_el, i) => (
-          <Body key={`body-${i}`}>Repeated text</Body>
-        ))}
-      </Animated.ScrollView>
-    </View>
+    <Animated.ScrollView
+      contentContainerStyle={{
+        paddingBottom: insets.bottom,
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+    >
+      <NewH3>Preferenze</NewH3>
+      {[...Array(50)].map((_el, i) => (
+        <Body key={`body-${i}`}>Repeated text</Body>
+      ))}
+    </Animated.ScrollView>
   );
 };

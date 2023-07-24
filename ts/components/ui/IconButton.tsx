@@ -180,7 +180,6 @@ export const IconButton = ({
 
   return (
     <Pressable
-      style={IOButtonStyles.dimensionsDefault}
       disabled={disabled}
       // Events
       onPress={onPress}
