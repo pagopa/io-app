@@ -13,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
+import { IOIconButtonStyles } from "../core/variables/IOStyles";
 import { AnimatedIcon, IconClassComponent, IOIcons } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
