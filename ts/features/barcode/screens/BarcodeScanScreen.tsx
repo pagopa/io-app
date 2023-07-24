@@ -14,7 +14,10 @@ import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import {
+  barcodesScannerConfigSelector,
+  isIdPayEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { showToast } from "../../../utils/showToast";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
@@ -26,6 +29,8 @@ const BarcodeScanScreen = () => {
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
 
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
@@ -33,7 +38,11 @@ const BarcodeScanScreen = () => {
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
     switch (barcode.type) {
       case "IDPAY":
-        openDeepLink(barcode.authUrl);
+        if (isIdPayEnabled) {
+          openDeepLink(barcode.authUrl);
+        } else {
+          handleBarcodeError();
+        }
         break;
       case "PAGOPA":
         dispatch(paymentInitializeState());
