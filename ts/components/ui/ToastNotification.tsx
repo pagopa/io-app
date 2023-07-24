@@ -303,12 +303,13 @@ const IOToast = {
    *
    * IOToast.warning("This is a warning toast notification");
    */
-  warning: (message: string) =>
+  warning: (message: string) => {
     IOToast.show(message, {
       variant: "warning",
       icon: "warningFilled",
       hapticFeedback: "notificationWarning"
-    })
+    });
+  }
 };
 
 export { IOToast, ToastNotification, ToastNotificationContainer };
