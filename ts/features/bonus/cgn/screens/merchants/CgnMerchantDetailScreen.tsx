@@ -1,28 +1,30 @@
 import { Route, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import {
-  View,
   FlatList,
   Image,
   ListRenderItemInfo,
   SafeAreaView,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { Icon } from "../../../../../components/core/icons/Icon";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -35,7 +37,6 @@ import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import { Icon } from "../../../../../components/core/icons/Icon";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     flexGrow: 1,
-    paddingBottom: 48, // required to avoid janky end of scroll
     ...IOStyles.horizontalContentPadding
   },
   spaced: { justifyContent: "space-between" },
@@ -66,6 +66,7 @@ const EXTERNAL_LINK_ICON_SIZE = 20;
 const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
+  const insets = useSafeAreaInsets();
   const { merchantDetail, requestMerchantDetail } = props;
   const route =
     useRoute<
@@ -112,7 +113,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
     >
       {isReady(merchantDetail) ? (
         <ScrollView
-          contentContainerStyle={styles.scrollViewContainer}
+          contentContainerStyle={[
+            styles.scrollViewContainer,
+            { paddingBottom: insets.bottom }
+          ]}
           bounces={true}
         >
           <SafeAreaView style={IOStyles.flex}>
@@ -177,6 +181,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                   />
                 </>
               )}
+            <VSpacer size={24} />
           </SafeAreaView>
         </ScrollView>
       ) : (
