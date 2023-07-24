@@ -26,7 +26,9 @@ export const MAX_TOAST_STACK_SIZE = 3;
 export const TOAST_DURATION_TIME = 5000;
 
 /**
+ * This is the time in milliseconds between two toast notifications.
  * This will throttle the toast notifications to avoid displaying too many of them at the same time
+ * and causing visual glitches.
  */
 export const TOAST_THROTTLE_TIME = 500;
 
