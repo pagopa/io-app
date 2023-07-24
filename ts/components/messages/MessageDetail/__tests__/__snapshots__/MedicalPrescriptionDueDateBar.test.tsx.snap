@@ -225,6 +225,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={1}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -394,6 +396,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={2}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -950,6 +954,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={3}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -1119,6 +1125,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={4}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -1824,6 +1832,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={7}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -1993,6 +2003,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={8}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -2698,6 +2710,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={5}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -2867,6 +2881,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={6}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={

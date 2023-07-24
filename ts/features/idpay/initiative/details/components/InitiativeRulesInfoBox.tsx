@@ -5,7 +5,6 @@ import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
-import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -13,7 +12,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
-import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 
 type Props = {
   content: string;
@@ -22,22 +21,28 @@ type Props = {
 const InitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
 
-  const { bottomSheet, present, dismiss } = useLegacyIOBottomSheetModal(
-    <Markdown>{content}</Markdown>,
-    <H3>{I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title")}</H3>,
-    700,
-    <ContentWrapper>
-      <VSpacer size={16} />
-      <ButtonSolid
-        label={I18n.t("idpay.initiative.beneficiaryDetails.infoModal.button")}
-        onPress={() => dismiss()}
-        accessibilityLabel={I18n.t(
-          "idpay.initiative.beneficiaryDetails.infoModal.button"
-        )}
-        fullWidth={true}
-      />
-      <VSpacer size={32} />
-    </ContentWrapper>
+  const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
+    {
+      component: <Markdown>{content}</Markdown>,
+      title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
+      footer: (
+        <ContentWrapper>
+          <VSpacer size={24} />
+          <ButtonSolid
+            label={I18n.t(
+              "idpay.initiative.beneficiaryDetails.infoModal.button"
+            )}
+            onPress={() => dismiss()}
+            accessibilityLabel={I18n.t(
+              "idpay.initiative.beneficiaryDetails.infoModal.button"
+            )}
+            fullWidth={true}
+          />
+          <VSpacer size={24} />
+        </ContentWrapper>
+      )
+    },
+    130
   );
 
   return (
