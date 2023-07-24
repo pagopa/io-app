@@ -875,25 +875,25 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: IO Settings
-    title: Enable push notifications?
-    subTitle: "To receive push notifications from IO, enable them in the iOS Settings. Here's how:"
-    openSettings: Open settings
-    continue: Maybe later
+    title: Enable push notifications not to miss important messages!
+    subTitle: To do so, you'll have to edit the preferences in your device settings.
+    openSettings: Go to Settings
+    continue: Not now
     contextualHelpTitle: Push notifications
     contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
     instructions:
-      title: "Ecco come:"
+      title: "Here's how:"
       label: Step
       ios:
-        step1: Vai su "Impostazioni"
-        step2: Seleziona "Notifiche"
-        step3: Attiva "Consenti notifiche"
+        step1: Go to "Settings"
+        step2: Select "Notifications"
+        step3: Enable "Allow Notifications"
       android:
-        step1: Vai su "Impostazioni"
-        step2: Seleziona "Applicazioni"
-        step3: Seleziona "IO"
-        step4: Seleziona "Notifiche"
-        step5: Attiva le notifiche 
+        step1: Go to "Settings"
+        step2: Select "Applications"
+        step3: Select "IO"
+        step4: Select "Notifications"
+        step5: Enable notifications
 forms:
   validators:
     required: Required value
