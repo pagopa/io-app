@@ -105,10 +105,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       }
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        {isReady(merchantDetail) ? (
-          <>
-            <ScrollView style={IOStyles.flex} bounces={false}>
+      {isReady(merchantDetail) ? (
+        <>
+          <ScrollView style={IOStyles.flex} bounces={false}>
+            <SafeAreaView style={IOStyles.flex}>
               {merchantDetail.value.imageUrl && (
                 <View style={{ paddingHorizontal: 16 }}>
                   <Image
@@ -174,16 +174,18 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                     </>
                   )}
               </View>
-            </ScrollView>
-          </>
-        ) : (
+            </SafeAreaView>
+          </ScrollView>
+        </>
+      ) : (
+        <SafeAreaView style={IOStyles.flex}>
           <LoadingErrorComponent
             isLoading={isLoading(merchantDetail)}
             loadingCaption={I18n.t("global.remoteStates.loading")}
             onRetry={loadMerchantDetail}
           />
-        )}
-      </SafeAreaView>
+        </SafeAreaView>
+      )}
     </BaseScreenComponent>
   );
 };
