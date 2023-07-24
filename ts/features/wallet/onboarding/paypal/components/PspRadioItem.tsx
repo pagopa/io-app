@@ -1,17 +1,19 @@
 // component that represents the item in the radio list
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { View, Dimensions, Image, StyleSheet } from "react-native";
-import { H4 } from "../../../../../components/core/typography/H4";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
+import { Icon } from "../../../../../components/core/icons/Icon";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { H4 } from "../../../../../components/core/typography/H4";
+import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
-import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
 import { IOPayPalPsp } from "../types";
-import { Icon } from "../../../../../components/core/icons/Icon";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
 export const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
@@ -55,28 +57,39 @@ export const PspRadioItem = (
     psp.logoUrl
   );
 
-  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
-    <PspInfoBottomSheetContent
-      pspFee={psp.fee}
-      pspName={psp.name}
-      pspPrivacyUrl={psp.privacyUrl}
-    />,
-    I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
-      pspName: psp.name
-    }),
-    Math.min(420, Dimensions.get("window").height),
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={{
-        testID: "continueButtonId",
-        bordered: false,
-        onPressWithGestureHandler: true,
-        onPress: () => dismiss(),
-        title: I18n.t(
-          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
-        )
-      }}
-    />
+  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t(
+        "wallet.onboarding.paypal.selectPsp.infoBottomSheet.title",
+        {
+          pspName: psp.name
+        }
+      ),
+      component: (
+        <PspInfoBottomSheetContent
+          pspFee={psp.fee}
+          pspName={psp.name}
+          pspPrivacyUrl={psp.privacyUrl}
+        />
+      ),
+      footer: (
+        <ContentWrapper>
+          <ButtonSolid
+            testID="continueButtonId"
+            onPress={() => dismiss()}
+            label={I18n.t(
+              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+            )}
+            accessibilityLabel={I18n.t(
+              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle"
+            )}
+            fullWidth={true}
+          />
+          <VSpacer size={16} />
+        </ContentWrapper>
+      )
+    },
+    130
   );
 
   return (
