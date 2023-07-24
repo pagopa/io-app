@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   useAnimatedScrollHandler,
@@ -11,6 +11,10 @@ import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import IconButton from "../../../components/ui/IconButton";
 import { NewH3 } from "../../../components/core/typography/NewH3";
 import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../components/core/variables/IOColors";
 
 export const DSHeaderSecondLevel = () => {
   const insets = useSafeAreaInsets();
@@ -71,8 +75,17 @@ export const DSHeaderSecondLevel = () => {
       }}
       onScroll={scrollHandler}
       scrollEventThrottle={16}
+      snapToInterval={50}
+      decelerationRate="fast"
+      disableIntervalMomentum={false}
     >
-      <NewH3>Preferenze</NewH3>
+      <View
+        style={{
+          backgroundColor: hexToRgba(IOColors["blueIO-100"], 0.5)
+        }}
+      >
+        <NewH3>Preferenze</NewH3>
+      </View>
       {[...Array(50)].map((_el, i) => (
         <Body key={`body-${i}`}>Repeated text</Body>
       ))}
