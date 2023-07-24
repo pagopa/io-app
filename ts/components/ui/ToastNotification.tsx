@@ -148,10 +148,11 @@ const ToastNotificationStackItem = (props: ToastNotificationStackItemProps) => {
       translateX.value = event.translationX + context.translateX;
     },
     onEnd: event => {
-      if (event.translationX > windowWidth / 3) {
+      const dismissalThreshold = windowWidth / 3;
+      if (Math.abs(event.translationX) > dismissalThreshold) {
         // eslint-disable-next-line functional/immutable-data
         translateX.value = withTiming(
-          windowWidth,
+          windowWidth * Math.sign(event.translationX),
           {
             duration: 300,
             easing: Easing.inOut(Easing.exp)
