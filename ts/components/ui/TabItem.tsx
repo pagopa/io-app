@@ -22,6 +22,7 @@ export type TabItem = WithTestID<{
   label: string;
   color?: ColorMode;
   selected?: boolean;
+  fullWidth?: boolean;
   // Icons
   icon?: IOIcons;
   iconSelected?: IOIcons;
@@ -79,6 +80,7 @@ const TabItem = ({
   label,
   color = "light",
   selected = false,
+  fullWidth = false,
   accessibilityLabel,
   accessibilityHint,
   testID,
@@ -160,7 +162,8 @@ const TabItem = ({
           pressedAnimationStyle,
           selected
             ? { backgroundColor: colors.background }
-            : pressedColorAnimationStyle
+            : pressedColorAnimationStyle,
+          fullWidth && styles.fullWidth
         ]}
       >
         {activeIcon && (
@@ -179,11 +182,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 65,
+    justifyContent: "center",
     alignSelf: "flex-start"
+  },
+  fullWidth: {
+    alignSelf: "auto"
   }
 });
 

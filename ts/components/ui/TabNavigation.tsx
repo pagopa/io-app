@@ -1,6 +1,7 @@
 import React from "react";
 import { FlexStyle, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { flap } from "fp-ts/lib/Functor";
 import { TabItem } from "./TabItem";
 
 export type TabNavigationItem = Omit<
@@ -47,6 +48,7 @@ const TabNavigation = ({
           handleItemPress(index);
         },
         selected: selectedIndex === index,
+        fullWidth: true,
         color
       })}
     </View>
