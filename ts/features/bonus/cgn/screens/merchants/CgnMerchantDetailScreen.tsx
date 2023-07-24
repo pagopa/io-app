@@ -51,6 +51,11 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 12
   },
+  scrollViewContainer: {
+    flexGrow: 1,
+    paddingBottom: 48, // required to avoid janky end of scroll
+    ...IOStyles.horizontalContentPadding
+  },
   spaced: { justifyContent: "space-between" },
   flexEnd: { alignSelf: "flex-end" }
 });
@@ -106,73 +111,72 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       contextualHelp={emptyContextualHelp}
     >
       {isReady(merchantDetail) ? (
-        <ScrollView style={IOStyles.flex} bounces={false}>
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContainer}
+          bounces={true}
+        >
           <SafeAreaView style={IOStyles.flex}>
-            {merchantDetail.value.imageUrl && (
-              <View style={{ paddingHorizontal: 16 }}>
-                <Image
-                  source={{ uri: merchantDetail.value.imageUrl }}
-                  style={styles.merchantImage}
-                />
-              </View>
-            )}
-            <View style={IOStyles.horizontalContentPadding}>
-              <VSpacer size={24} />
-              <H1>{merchantDetail.value.name}</H1>
-              <VSpacer size={16} />
-              <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
-              <VSpacer size={8} />
-              <FlatList
-                data={merchantDetail.value.discounts}
-                renderItem={renderDiscountListItem}
-                keyExtractor={(item: Discount) => item.name}
+            {merchantDetail.value.imageUrl !== undefined && (
+              <Image
+                source={{ uri: merchantDetail.value.imageUrl }}
+                style={styles.merchantImage}
               />
-              <VSpacer size={8} />
-              <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
-              <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
-              <VSpacer size={16} />
-              <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-              {pipe(
-                merchantDetail.value.websiteUrl,
-                O.fromNullable,
-                O.fold(
-                  () => undefined,
-                  url => (
-                    <TouchableDefaultOpacity
-                      style={[
-                        IOStyles.row,
-                        styles.spaced,
-                        { paddingVertical: 10 }
-                      ]}
-                      onPress={() =>
-                        openWebUrl(url, () =>
-                          showToast(I18n.t("bonus.cgn.generic.linkError"))
-                        )
-                      }
-                    >
-                      <H4 weight={"Regular"} style={IOStyles.flex}>
-                        {url}
-                      </H4>
-                      <Icon
-                        name="externalLink"
-                        size={EXTERNAL_LINK_ICON_SIZE}
-                        color="blue"
-                      />
-                    </TouchableDefaultOpacity>
-                  )
-                )
-              )}
-              {merchantDetail.value.addresses &&
-                merchantDetail.value.addresses.length > 0 && (
-                  <>
-                    <FlatList
-                      data={merchantDetail.value.addresses}
-                      renderItem={renderAddressesListItem}
-                      keyExtractor={(item: Address) => item.full_address}
+            )}
+            <VSpacer size={24} />
+            <H1>{merchantDetail.value.name}</H1>
+            <VSpacer size={16} />
+            <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
+            <VSpacer size={8} />
+            <FlatList
+              data={merchantDetail.value.discounts}
+              renderItem={renderDiscountListItem}
+              keyExtractor={(item: Discount) => item.name}
+            />
+            <VSpacer size={8} />
+            <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
+            <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
+            <VSpacer size={16} />
+            <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
+            {pipe(
+              merchantDetail.value.websiteUrl,
+              O.fromNullable,
+              O.fold(
+                () => undefined,
+                url => (
+                  <TouchableDefaultOpacity
+                    style={[
+                      IOStyles.row,
+                      styles.spaced,
+                      { paddingVertical: 10 }
+                    ]}
+                    onPress={() =>
+                      openWebUrl(url, () =>
+                        showToast(I18n.t("bonus.cgn.generic.linkError"))
+                      )
+                    }
+                  >
+                    <H4 weight={"Regular"} style={IOStyles.flex}>
+                      {url}
+                    </H4>
+                    <Icon
+                      name="externalLink"
+                      size={EXTERNAL_LINK_ICON_SIZE}
+                      color="blue"
                     />
-                  </>
-                )}
-            </View>
+                  </TouchableDefaultOpacity>
+                )
+              )
+            )}
+            {merchantDetail.value.addresses &&
+              merchantDetail.value.addresses.length > 0 && (
+                <>
+                  <FlatList
+                    data={merchantDetail.value.addresses}
+                    renderItem={renderAddressesListItem}
+                    keyExtractor={(item: Address) => item.full_address}
+                  />
+                </>
+              )}
           </SafeAreaView>
         </ScrollView>
       ) : (
