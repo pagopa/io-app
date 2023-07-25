@@ -4,7 +4,10 @@ import Animated, {
   Extrapolate,
   interpolate,
   interpolateColor,
-  useAnimatedStyle
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
 import { WithTestID } from "../../types/WithTestID";
 import { IOIcons, Icon } from "../core/icons";
@@ -16,10 +19,11 @@ import { useSpringPressProgressValue } from "./utils/hooks/useSpringPressProgres
 
 type ColorMode = "light" | "dark";
 
-type TabItem = WithTestID<{
+export type TabItem = WithTestID<{
   label: string;
   color?: ColorMode;
   selected?: boolean;
+  fullWidth?: boolean;
   // Icons
   icon?: IOIcons;
   iconSelected?: IOIcons;
@@ -27,7 +31,7 @@ type TabItem = WithTestID<{
   accessibilityLabel: string;
   accessibilityHint?: string;
   // Events
-  onPress: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
 }>;
 
 type ColorStates = {
@@ -47,7 +51,7 @@ type ColorStates = {
 const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
   light: {
     default: {
-      background: "transparent",
+      background: "#ffffff00",
       foreground: "grey-650"
     },
     selected: {
@@ -60,7 +64,7 @@ const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
   },
   dark: {
     default: {
-      background: "transparent",
+      background: "#ffffff00",
       foreground: "white"
     },
     selected: {
@@ -77,6 +81,7 @@ const TabItem = ({
   label,
   color = "light",
   selected = false,
+  fullWidth = false,
   accessibilityLabel,
   accessibilityHint,
   testID,
@@ -90,10 +95,20 @@ const TabItem = ({
     onPressOut
   } = useSpringPressProgressValue(IOSpringValues.button);
 
-  const pressedColorAnimationStyle = useAnimatedStyle(() => {
-    // Link color states to the pressed states
+  const isSelected: Animated.SharedValue<number> = useSharedValue(0);
+  const progressSelected = useDerivedValue(() =>
+    withSpring(isSelected.value, IOSpringValues.button)
+  );
 
-    const backgroundColor = interpolateColor(
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isSelected.value = selected ? 1 : 0;
+  }, [isSelected, selected]);
+
+  // Interpolate animation values from `pressed` values
+  const animatedStyle = useAnimatedStyle(() => {
+    // Link color states to the pressed states
+    const pressedBackgroundColor = interpolateColor(
       progressPressed.value,
       [0, 1],
       [
@@ -102,14 +117,14 @@ const TabItem = ({
       ]
     );
 
-    return {
-      backgroundColor
-    };
-  });
-
-  // Interpolate animation values from `isPressed` values
-  const pressedScaleAnimationStyle = useAnimatedStyle(() => {
-    // Link color states to the pressed states
+    const selectedBackgroundColor = interpolateColor(
+      progressSelected.value,
+      [0, 1],
+      [
+        `${mapColorStates[color].pressed.background}1A`,
+        mapColorStates[color].selected.background
+      ]
+    );
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -120,6 +135,9 @@ const TabItem = ({
     );
 
     return {
+      backgroundColor: selected
+        ? selectedBackgroundColor
+        : pressedBackgroundColor,
       transform: [{ scale }]
     };
   });
@@ -140,13 +158,7 @@ const TabItem = ({
       accessible={true}
     >
       <Animated.View
-        style={[
-          styles.container,
-          pressedScaleAnimationStyle,
-          selected
-            ? { backgroundColor: colors.background }
-            : pressedColorAnimationStyle
-        ]}
+        style={[styles.container, animatedStyle, fullWidth && styles.fullWidth]}
       >
         {activeIcon && (
           <>
@@ -164,11 +176,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 65,
+    justifyContent: "center",
     alignSelf: "flex-start"
+  },
+  fullWidth: {
+    alignSelf: "auto"
   }
 });
 
