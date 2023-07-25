@@ -24,9 +24,9 @@ import { notificationsInfoScreenConsent } from "../../store/actions/notification
 import { checkNotificationPermissions } from "../../utils/notification";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import {
-  trackConflictingNotificationSettings,
-  trackOpenSystemNotificationSettings,
-  trackSkipSystemNotificationPermissions
+  trackNotificationsOptInOpenSettings,
+  trackNotificationsOptInReminderOnPermissionsOff,
+  trackNotificationsOptInSkipSystemPermissions
 } from "../../utils/analytics";
 import ListItemInfo from "../../components/ui/ListItemInfo";
 import { Divider } from "../../components/core/Divider";
@@ -161,12 +161,12 @@ const OnboardingNotificationsInfoScreenConsent = () => {
     // When this code executes, we know for sure that system notifications permissions are disabled,
     // otherwise the component would either have been skipped by the saga or it would have automatically
     // handled the given permission using the AppState listener (registered on the useEffect)
-    trackSkipSystemNotificationPermissions();
+    trackNotificationsOptInSkipSystemPermissions();
 
     if (pot.isSome(optInPreferencesPot)) {
       const optInPreferences = optInPreferencesPot.value;
       if (optInPreferences.preview || optInPreferences.reminder) {
-        trackConflictingNotificationSettings();
+        trackNotificationsOptInReminderOnPermissionsOff();
       }
     }
 
@@ -174,7 +174,7 @@ const OnboardingNotificationsInfoScreenConsent = () => {
   };
 
   const openSettings = () => {
-    trackOpenSystemNotificationSettings();
+    trackNotificationsOptInOpenSettings();
     openAppSettings();
   };
 
