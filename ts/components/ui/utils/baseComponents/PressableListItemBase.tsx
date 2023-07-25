@@ -3,7 +3,7 @@ import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 import { WithTestID } from "../../../../types/WithTestID";
 import { IOListItemStyles } from "../../../core/variables/IOStyles";
-import { useListItemBaseSpringAnimation } from "../hooks/useBaseSpringAnimation";
+import { useListItemBaseSpringAnimation } from "../hooks/useListItemBaseSpringAnimation";
 
 export type PressableBaseProps = WithTestID<{
   accessibilityLabel?: string;
