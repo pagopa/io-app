@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconCheckTic = ({ size, style, ...props }: SVGIconProps) => (
+const IconCheckTick = ({ size, style, ...props }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       fillRule="evenodd"
@@ -13,4 +13,4 @@ const IconCheckTic = ({ size, style, ...props }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconCheckTic;
+export default IconCheckTick;
