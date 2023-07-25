@@ -118,7 +118,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
       <View>
-        <TabNavigation tabJustify="space-evenly" selectedIndex={0} color="dark">
+        <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
             label={I18n.t("barcodeScan.tabs.scan")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
