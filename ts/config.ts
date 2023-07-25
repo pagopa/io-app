@@ -271,3 +271,12 @@ export const walletV3ApiUatBaseUrl = Config.WALLETV3_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";
+
+/**
+ * IT Wallet
+ */
+export const walletProviderUrl: string = pipe(
+  Config.IT_WALLET_WP_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://io-d-wallet-it.azurewebsites.net")
+);

@@ -2,12 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwRequirementsRequest } from "../actions";
+import { itwWiaRequest } from "../actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
-export type ItwRequirementsState = pot.Pot<true, ItWalletError>;
+export type ItwWIAState = pot.Pot<string, ItWalletError>;
 
-const emptyState: ItwRequirementsState = pot.none;
+const emptyState: ItwWIAState = pot.none;
 
 /**
  * This reducer handles the requirements check for the IT Wallet activation.
@@ -18,26 +18,26 @@ const emptyState: ItwRequirementsState = pot.none;
  * @returns the result state
  */
 const reducer = (
-  state: ItwRequirementsState = emptyState,
+  state: ItwWIAState = emptyState,
   action: Action
-): ItwRequirementsState => {
+): ItwWIAState => {
   switch (action.type) {
-    case getType(itwRequirementsRequest.request):
+    case getType(itwWiaRequest.request):
       return pot.toLoading(state);
-    case getType(itwRequirementsRequest.success):
+    case getType(itwWiaRequest.success):
       return pot.some(action.payload);
-    case getType(itwRequirementsRequest.failure):
+    case getType(itwWiaRequest.failure):
       return pot.toError(state, action.payload);
   }
   return state;
 };
 
 /**
- * Selects the requirements state.
+ * Selects the wallet instance attestation state.
  * @param state the global state
- * @returns the requirements state
+ * @returns the wallet instance attestation state
  */
-export const itwRequirementsSelector = (state: GlobalState) =>
-  state.features.itWallet.requirements;
+export const itwWiaSelector = (state: GlobalState) =>
+  state.features.itWallet.wia;
 
 export default reducer;
