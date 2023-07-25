@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
+import { IOToast } from "../../../components/Toast";
 import { Divider } from "../../../components/core/Divider";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -16,7 +17,6 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { showToast } from "../../../utils/showToast";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { IOBarcode } from "../types/IOBarcode";
@@ -51,7 +51,7 @@ const BarcodeScanScreen = () => {
   };
 
   const handleBarcodeError = () => {
-    showToast(I18n.t("barcodeScan.error"), "danger", "top");
+    IOToast.error(I18n.t("barcodeScan.error"));
   };
 
   const handleIdPayPaymentCodeInput = () => {
