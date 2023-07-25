@@ -10,7 +10,11 @@ import Animated, {
 import I18n from "i18n-js";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
-import { IOStyles, IOVisualCostants } from "../core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants,
+  iconBtnSizeSmall
+} from "../core/variables/IOStyles";
 import { HSpacer } from "../core/spacer/Spacer";
 import { makeFontStyleObject } from "../../components/core/fonts";
 import type { IOSpacer } from "../core/variables/IOSpacing";
@@ -108,7 +112,11 @@ export const HeaderSecondLevel = ({
         {title}
       </Animated.Text>
       <View style={[IOStyles.row, { flexShrink: 0 }]}>
-        {firstAction}
+        {firstAction ? (
+          firstAction
+        ) : (
+          <HSpacer size={iconBtnSizeSmall as IOSpacer} />
+        )}
         {secondAction && (
           <>
             {/* Ideally, with the "gap" flex property,
