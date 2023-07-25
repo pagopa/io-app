@@ -20,10 +20,10 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSHeaderSecondLevel = () => {
   const [titleHeight, setTitleHeight] = useState(0);
+  const translationY = useSharedValue(0);
+
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
-  const translationY = useSharedValue(0);
-  const scrollViewHeight = useSharedValue(0);
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
