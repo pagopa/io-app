@@ -98,24 +98,25 @@ const WalletOnboardingWebView = ({
           <RefreshIndicator />
         </View>
       )}
-      {!pot.isError(onboardingStartupResult) && (
-        <WebView
-          cacheEnabled={false}
-          androidCameraAccessDisabled
-          androidMicrophoneAccessDisabled
-          textZoom={100}
-          originWhitelist={originSchemasWhiteList}
-          source={{
-            uri: extractOnboardingWebViewUri(onboardingStartupResult)
-          }}
-          onError={handleWebViewError}
-          onHttpError={handleWebViewError}
-          javaScriptEnabled
-          onLoadEnd={() => setWebviewReady(true)}
-          onNavigationStateChange={handleNavigationStateChange}
-          // onShouldStartLoadWithRequest={handleShouldStartLoading}
-        />
-      )}
+      {!pot.isError(onboardingStartupResult) &&
+        !pot.isLoading(onboardingStartupResult) && (
+          <WebView
+            cacheEnabled={false}
+            androidCameraAccessDisabled
+            androidMicrophoneAccessDisabled
+            textZoom={100}
+            originWhitelist={originSchemasWhiteList}
+            source={{
+              uri: extractOnboardingWebViewUri(onboardingStartupResult)
+            }}
+            onError={handleWebViewError}
+            onHttpError={handleWebViewError}
+            javaScriptEnabled
+            onLoadEnd={() => setWebviewReady(true)}
+            onNavigationStateChange={handleNavigationStateChange}
+            // onShouldStartLoadWithRequest={handleShouldStartLoading}
+          />
+        )}
     </View>
   );
 };
