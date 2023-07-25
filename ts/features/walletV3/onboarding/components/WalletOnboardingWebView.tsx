@@ -14,12 +14,30 @@ import { originSchemasWhiteList } from "../../../../screens/authentication/origi
 import { RefreshIndicator } from "../../../../components/ui/RefreshIndicator";
 import { OnboardingOutcome } from "../types";
 import { extractOnboardingResult } from "../../../../utils/walletv3";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { walletStartOnboarding } from "../store/actions";
+import { walletOnboardingStartupSelector } from "../store";
+import { NetworkError } from "../../../../utils/errors";
+import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 
 type WalletOnboardingWebViewProps = {
   onSuccess: (outcome: OnboardingOutcome) => void;
   onFailure: (outcome: OnboardingOutcome) => void;
-  onError: (error: WebViewErrorEvent | WebViewHttpErrorEvent) => void;
+  onError: (
+    error: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
+  ) => void;
 };
+
+/**
+ * Function that extracts the uri to be loaded in the webview from the onboarding startup result pot
+ */
+const extractOnboardingWebViewUri = (
+  onboardingStartupResult: pot.Pot<WalletCreateResponse, NetworkError>
+) =>
+  pot.getOrElse(
+    pot.map(onboardingStartupResult, result => encodeURI(result.redirectUrl)),
+    ""
+  );
 
 /**
  * Component used to show the webview for the wallet onboarding flow
@@ -32,9 +50,25 @@ const WalletOnboardingWebView = ({
   onFailure,
   onError
 }: WalletOnboardingWebViewProps) => {
-  const [webviewStatus, setWebviewStatus] = React.useState<
-    pot.Pot<true, Error>
-  >(pot.noneLoading);
+  const [webviewReady, setWebviewReady] = React.useState<boolean>(false);
+  const onboardingStartupResult = useIOSelector(
+    walletOnboardingStartupSelector
+  );
+  const dispatch = useIODispatch();
+  const isLoading = pot.isLoading(onboardingStartupResult) || !webviewReady;
+
+  React.useEffect(() => {
+    dispatch(walletStartOnboarding.request());
+    return () => {
+      dispatch(walletStartOnboarding.cancel());
+    };
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    if (pot.isError(onboardingStartupResult)) {
+      onError(onboardingStartupResult.error);
+    }
+  }, [onboardingStartupResult, onError]);
 
   const handleNavigationStateChange = (event: WebViewNavigation) => {
     pipe(
@@ -51,7 +85,7 @@ const WalletOnboardingWebView = ({
     );
   };
 
-  const handleError = (
+  const handleWebViewError = (
     error: WebViewErrorEvent | WebViewHttpErrorEvent
   ): void => {
     onError(error);
@@ -59,27 +93,29 @@ const WalletOnboardingWebView = ({
 
   return (
     <View style={IOStyles.flex}>
-      {pot.isLoading(webviewStatus) && (
+      {isLoading && (
         <View style={styles.refreshIndicatorContainer}>
           <RefreshIndicator />
         </View>
       )}
-      <WebView
-        cacheEnabled={false}
-        androidCameraAccessDisabled
-        androidMicrophoneAccessDisabled
-        textZoom={100}
-        originWhitelist={originSchemasWhiteList}
-        source={{
-          uri: "http://localhost:3000/onboarding-wallet"
-        }}
-        onError={handleError}
-        onHttpError={handleError}
-        javaScriptEnabled
-        onLoadEnd={() => setWebviewStatus(pot.some(true))}
-        onNavigationStateChange={handleNavigationStateChange}
-        // onShouldStartLoadWithRequest={handleShouldStartLoading}
-      />
+      {!pot.isError(onboardingStartupResult) && (
+        <WebView
+          cacheEnabled={false}
+          androidCameraAccessDisabled
+          androidMicrophoneAccessDisabled
+          textZoom={100}
+          originWhitelist={originSchemasWhiteList}
+          source={{
+            uri: extractOnboardingWebViewUri(onboardingStartupResult)
+          }}
+          onError={handleWebViewError}
+          onHttpError={handleWebViewError}
+          javaScriptEnabled
+          onLoadEnd={() => setWebviewReady(true)}
+          onNavigationStateChange={handleNavigationStateChange}
+          // onShouldStartLoadWithRequest={handleShouldStartLoading}
+        />
+      )}
     </View>
   );
 };

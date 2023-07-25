@@ -3,17 +3,18 @@ import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { WalletOnboardingStartResponse } from "../types";
 import { NetworkError } from "../../../../utils/errors";
 import { GlobalState } from "../../../../store/reducers/types";
+import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+
 import { walletStartOnboarding } from "./actions";
 
 export type WalletOnboardingState = {
-  details: pot.Pot<WalletOnboardingStartResponse, NetworkError>;
+  result: pot.Pot<WalletCreateResponse, NetworkError>;
 };
 
 const INITIAL_STATE: WalletOnboardingState = {
-  details: pot.none
+  result: pot.none
 };
 
 const walletOnboardingReducer = (
@@ -25,17 +26,22 @@ const walletOnboardingReducer = (
     case getType(walletStartOnboarding.request):
       return {
         ...state,
-        details: pot.toLoading(pot.none)
+        result: pot.toLoading(pot.none)
       };
     case getType(walletStartOnboarding.success):
       return {
         ...state,
-        details: pot.some(action.payload)
+        result: pot.some(action.payload)
       };
     case getType(walletStartOnboarding.failure):
       return {
         ...state,
-        details: pot.toError(state.details, action.payload)
+        result: pot.toError(state.result, action.payload)
+      };
+    case getType(walletStartOnboarding.cancel):
+      return {
+        ...state,
+        result: pot.none
       };
   }
   return state;
@@ -46,7 +52,7 @@ const walletOnboardingSelector = (state: GlobalState) =>
 
 export const walletOnboardingStartupSelector = createSelector(
   walletOnboardingSelector,
-  onboarding => onboarding.details
+  onboarding => onboarding.result
 );
 
 export default walletOnboardingReducer;
