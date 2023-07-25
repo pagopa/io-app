@@ -103,18 +103,38 @@ export const ListItemTransaction = ({
 
   const designSystemBlue: IOColors = isDSEnabled ? "blue" : "blueIO-500";
 
+  /**
+   * This function is used to get the text that will be read by the screen reader
+   * with the correct minus symbol pronunciation.
+   */
+  const getAccessibleAmountText = (amount?: string) =>
+    pipe(
+      amount,
+      O.fromNullable,
+      O.map(amount =>
+        amount.replace("-", I18n.t("global.accessibility.minusSymbol"))
+      ),
+      O.getOrElseW(() => undefined)
+    );
+
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
         case "success":
           return (
-            <NewH6 color={hasChevronRight ? designSystemBlue : "black"}>
+            <NewH6
+              accessibilityLabel={getAccessibleAmountText(transactionAmount)}
+              color={hasChevronRight ? designSystemBlue : "black"}
+            >
               {transactionAmount || ""}
             </NewH6>
           );
         case "refunded":
           return (
-            <NewH6 color={hasChevronRight ? designSystemBlue : "success-700"}>
+            <NewH6
+              accessibilityLabel={getAccessibleAmountText(transactionAmount)}
+              color={hasChevronRight ? designSystemBlue : "success-700"}
+            >
               {transactionAmount || ""}
             </NewH6>
           );
