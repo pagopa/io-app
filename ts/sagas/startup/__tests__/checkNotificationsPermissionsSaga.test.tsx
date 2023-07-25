@@ -4,7 +4,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { notificationsInfoScreenConsent } from "../../../store/actions/notifications";
 import {
-  AuthorizationStatus,
   checkNotificationPermissions,
   requestNotificationPermissions
 } from "../../../utils/notification";
@@ -39,7 +38,7 @@ describe("checkNotificationsPermissionsSaga", () => {
       .call(checkNotificationPermissions)
       .next(false)
       .call(requestNotificationPermissions)
-      .next({ authorizationStatus: AuthorizationStatus.Authorized })
+      .next(true)
       .isDone();
   });
 
@@ -49,7 +48,7 @@ describe("checkNotificationsPermissionsSaga", () => {
       .call(checkNotificationPermissions)
       .next(false)
       .call(requestNotificationPermissions)
-      .next({ authorizationStatus: AuthorizationStatus.StatusDenied })
+      .next(false)
       .call(
         NavigationService.dispatchNavigationAction,
         CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -66,7 +65,7 @@ describe("checkNotificationsPermissionsSaga", () => {
       .call(checkNotificationPermissions)
       .next(false)
       .call(requestNotificationPermissions)
-      .next({ authorizationStatus: AuthorizationStatus.StatusDenied })
+      .next(false)
       .call(
         NavigationService.dispatchNavigationAction,
         CommonActions.navigate(ROUTES.ONBOARDING, {
