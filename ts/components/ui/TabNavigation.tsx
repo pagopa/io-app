@@ -1,7 +1,6 @@
 import React from "react";
 import { FlexStyle, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { flap } from "fp-ts/lib/Functor";
 import { TabItem } from "./TabItem";
 
 export type TabNavigationItem = Omit<
@@ -41,14 +40,21 @@ const TabNavigation = ({
   };
 
   const wrapChild = (child: React.ReactElement<TabItem>, index: number = 0) => (
-    <View key={index} style={{ marginLeft: index === 0 ? 0 : 16 }}>
+    <View
+      key={index}
+      style={[
+        styles.item,
+        {
+          marginEnd: index === React.Children.count(children) - 1 ? 0 : 8
+        }
+      ]}
+    >
       {React.cloneElement<TabItem>(child, {
         onPress: event => {
           child.props.onPress?.(event);
           handleItemPress(index);
         },
         selected: selectedIndex === index,
-        fullWidth: true,
         color
       })}
     </View>
@@ -76,7 +82,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: 16,
-    paddingBottom: 24
+    paddingBottom: 24,
+    alignContent: "space-between"
+  },
+  item: {
+    flexGrow: 0,
+    flexShrink: 1,
+    flexBasis: 100,
+    alignItems: "center"
   }
 });
 
