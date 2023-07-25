@@ -5,6 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 
 import { OnboardingOutcome } from "../types";
 import GenericErrorComponent from "../../../fci/components/GenericErrorComponent";
+import I18n from "../../../../i18n";
 
 type WalletOnboardingErrorProps = {
   onClose: () => void;
@@ -16,8 +17,8 @@ const getOutcomeMessage = (outcome?: OnboardingOutcome): string =>
     outcome,
     O.fromNullable,
     O.fold(
-      () => "C'è stato un errore generico durante l'aggiunta della carta",
-      outcome => `Outcome ricevuto: ${outcome}`
+      () => I18n.t("wallet.onboarding.generalError"),
+      outcome => `Outcome ricevuto: ${outcome}` // TODO: Replace with the desired message to be defined
     )
   );
 
@@ -33,7 +34,7 @@ const WalletOnboardingError = ({
   <GenericErrorComponent
     onPress={onClose}
     subTitle={getOutcomeMessage(outcome)}
-    title={"Errore durante l'aggiunta della carta"}
+    title={I18n.t("wallet.onboarding.failure")}
   />
 );
 

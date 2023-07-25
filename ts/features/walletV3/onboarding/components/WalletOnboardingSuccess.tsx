@@ -5,6 +5,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import SectionPictogram from "../../../../components/core/pictograms/SectionPictogram";
+import I18n from "../../../../i18n";
 
 type WalletOnboardingSuccessProps = {
   onContinue: () => void;
@@ -20,7 +21,7 @@ const WalletOnboardingSuccess = ({
   <SafeAreaView style={IOStyles.flex}>
     <InfoScreenComponent
       image={<SectionPictogram name="smile" size={120} color="blue" />}
-      title="La carta è stata aggiunta!"
+      title={I18n.t("wallet.onboarding.success.title")}
       body={<ContinueButton onPress={onContinue} />}
     />
   </SafeAreaView>
@@ -33,8 +34,8 @@ type ContinueButtonProps = {
 const ContinueButton = ({ onPress }: ContinueButtonProps) => (
   <View style={IOStyles.alignCenter}>
     <ButtonSolid
-      accessibilityLabel="Continua"
-      label="Continua"
+      accessibilityLabel={I18n.t("wallet.onboarding.success.continueButton")}
+      label={I18n.t("wallet.onboarding.success.continueButton")}
       onPress={onPress}
     />
   </View>

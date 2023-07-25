@@ -1174,6 +1174,11 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
+    generalError: "There was a generic error while adding the payment method"
+    success:
+      title: "Payment method added successfully!"
+      continueButton: "Continue"
+    failure: "Error while adding the card"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
