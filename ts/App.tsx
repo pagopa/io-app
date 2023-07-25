@@ -10,6 +10,7 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
 import { IOThemeContext, IOThemes } from "./components/core/variables/IOColors";
+import { ToastProvider } from "./components/Toast";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
@@ -23,17 +24,19 @@ export const App: React.FunctionComponent<never> = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <StyleProvider style={theme()}>
       <IOThemeContext.Provider value={IOThemes.light}>
-        <Provider store={store}>
-          <PersistGate loading={undefined} persistor={persistor}>
-            <BottomSheetModalProvider>
-              <LightModalProvider>
-                <MenuProvider>
-                  <RootContainer />
-                </MenuProvider>
-              </LightModalProvider>
-            </BottomSheetModalProvider>
-          </PersistGate>
-        </Provider>
+        <ToastProvider>
+          <Provider store={store}>
+            <PersistGate loading={undefined} persistor={persistor}>
+              <BottomSheetModalProvider>
+                <LightModalProvider>
+                  <MenuProvider>
+                    <RootContainer />
+                  </MenuProvider>
+                </LightModalProvider>
+              </BottomSheetModalProvider>
+            </PersistGate>
+          </Provider>
+        </ToastProvider>
       </IOThemeContext.Provider>
     </StyleProvider>
   </GestureHandlerRootView>
