@@ -63,4 +63,22 @@ describe("TabItem", () => {
       )
     ).toMatchSnapshot();
   });
+
+  it("should match the snapshot with full width", () => {
+    expect(
+      TestRenderer.create(
+        <TabItem
+          label="Label tab"
+          accessibilityLabel="Label tab"
+          accessibilityHint="Label tab"
+          onPress={() => undefined}
+          icon="starEmpty"
+          iconSelected="starFilled"
+          color="dark"
+          selected={true}
+          fullWidth={true}
+        />
+      )
+    ).toMatchSnapshot();
+  });
 });
