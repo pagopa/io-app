@@ -4,21 +4,21 @@ import { CommonActions } from "@react-navigation/native";
 import {
   itwActivationStart,
   itwCredentialsAddPid,
-  itwRequirementsRequest
+  itwWiaRequest
 } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
 import { authenticationSaga } from "./authenticationSaga";
-import { handleRequirementsRequest } from "./handleRequirementsCheck";
 import { handleCredentialsAddPid } from "./handleCredentials";
+import { handleWiaRequest } from "./handleWiaRequest";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(itwActivationStart, watchItwActivationStart);
 
   /**
-   * Handles requirements check for activation.
+   * Handles the wallet instance attestation issuing.
    */
-  yield* takeLatest(itwRequirementsRequest.request, handleRequirementsRequest);
+  yield* takeLatest(itwWiaRequest.request, handleWiaRequest);
 
   /**
    * Handles adding a PID to the ITW credentials.
