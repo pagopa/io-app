@@ -81,6 +81,7 @@ const CgnMerchantDetailScreen = () => {
     >
       {isReady(merchantDetail) ? (
         <ScrollView
+          scrollIndicatorInsets={{ right: 1 }}
           contentContainerStyle={[
             styles.scrollViewContainer,
             { paddingBottom: insets.bottom }
