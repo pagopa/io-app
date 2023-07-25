@@ -38,7 +38,6 @@ import IconGiacenza from "./svg/IconGiacenza";
 import IconChat from "./svg/IconChat";
 import IconAgreement from "./svg/IconAgreement";
 import IconSave from "./svg/IconSave";
-import IconCompleted from "./svg/IconCompleted";
 import IconSuccess from "./svg/IconSuccess";
 import IconOk from "./svg/IconOk";
 import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
@@ -137,7 +136,8 @@ import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
 import LegIconCheckOff from "./svg/LegIconCheckOff";
 import IconCloseMedium from "./svg/IconCloseMedium";
-import IconCheckTic from "./svg/IconCheckTic";
+import IconCheckTick from "./svg/IconCheckTick";
+import IconCheckTickBig from "./svg/IconCheckTickBig";
 import IconMerchant from "./svg/IconMerchant";
 import IconSystemSettingsAndroid from "./svg/IconSystemSettingsAndroid";
 import IconSystemSettingsiOS from "./svg/IconSystemSettingsiOS";
@@ -187,7 +187,6 @@ export const IOIcons = {
   docAttachPDF: IconDocumentAttachmentPDF,
   attachment: IconAttachment,
   add: IconAdd,
-  completed: IconCompleted,
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,
@@ -280,7 +279,8 @@ export const IOIcons = {
   productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */,
   productIOAppBlueBg: IconProductIOAppBlueBg,
-  checkTic: IconCheckTic,
+  checkTick: IconCheckTick,
+  checkTickBig: IconCheckTickBig,
   merchant: IconMerchant,
   systemSettingsAndroid: IconSystemSettingsAndroid,
   systemSettingsiOS: IconSystemSettingsiOS,
