@@ -15,13 +15,13 @@ export const itwActivationStart = createStandardAction(
 )<void>();
 
 /**
- * Start ITW requirements check
+ * Start ITW wallet instance attestation request.
  */
-export const itwRequirementsRequest = createAsyncAction(
+export const itwWiaRequest = createAsyncAction(
   "ITW_REQUIREMENTS_REQUEST",
   "ITW_REQUIREMENTS_SUCCESS",
   "ITW_REQUIREMENTS_FAILURE"
-)<void, true, ItWalletError>();
+)<void, string, ItWalletError>();
 
 /**
  * Adds an ITW credential, currently only a mocked PID is supported.
@@ -44,7 +44,7 @@ export const itwCredentialsReset = createStandardAction(
  */
 export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
-  | ActionType<typeof itwRequirementsRequest>
+  | ActionType<typeof itwWiaRequest>
   | ActionType<typeof itwCredentialsAddPid>
   | ActionType<typeof itwCredentialsReset>
   | ItwCieAuthenticationActions;
