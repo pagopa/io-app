@@ -50,7 +50,7 @@ type ColorStates = {
 const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
   light: {
     default: {
-      background: "transparent",
+      background: "#ffffff00",
       foreground: "grey-650"
     },
     selected: {
@@ -63,7 +63,7 @@ const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
   },
   dark: {
     default: {
-      background: "transparent",
+      background: "#ffffff00",
       foreground: "white"
     },
     selected: {
@@ -89,6 +89,7 @@ const TabItem = ({
   iconSelected
 }: TabItem) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+  const isSelected: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
@@ -96,6 +97,10 @@ const TabItem = ({
   // Using a spring-based animation for our interpolations
   const progressPressed = useDerivedValue(() =>
     withSpring(isPressed.value, IOSpringValues.button)
+  );
+
+  const progressSelected = useDerivedValue(() =>
+    withSpring(isSelected.value, IOSpringValues.button)
   );
 
   // Interpolate animation values from `isPressed` values
@@ -132,6 +137,23 @@ const TabItem = ({
     };
   });
 
+  const selectedColorAnimationStyle = useAnimatedStyle(() => {
+    // Link color states to the pressed states
+
+    const backgroundColor = interpolateColor(
+      progressSelected.value,
+      [0, 1],
+      [
+        mapColorStates[color].default.background,
+        mapColorStates[color].selected.background
+      ]
+    );
+
+    return {
+      backgroundColor
+    };
+  });
+
   const onPressIn = React.useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
     isPressed.value = 1;
@@ -144,6 +166,11 @@ const TabItem = ({
   const colors = mapColorStates[color][selected ? "selected" : "default"];
 
   const activeIcon = iconSelected ? (selected ? iconSelected : icon) : icon;
+
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isSelected.value = selected ? 1 : 0;
+  }, [isSelected, selected]);
 
   return (
     <Pressable
@@ -163,6 +190,7 @@ const TabItem = ({
           selected
             ? { backgroundColor: colors.background }
             : pressedColorAnimationStyle,
+          selectedColorAnimationStyle,
           fullWidth && styles.fullWidth
         ]}
       >
