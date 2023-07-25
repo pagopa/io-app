@@ -146,11 +146,6 @@ const TabItem = ({
 
   const activeIcon = iconSelected ? (selected ? iconSelected : icon) : icon;
 
-  React.useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isSelected.value = selected ? 1 : 0;
-  }, [isSelected, selected]);
-
   return (
     <Pressable
       accessibilityLabel={accessibilityLabel}
