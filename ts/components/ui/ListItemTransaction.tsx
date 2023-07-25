@@ -82,6 +82,20 @@ const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
 };
 
+/**
+ * This function is used to get the text that will be read by the screen reader
+ * with the correct minus symbol pronunciation.
+ */
+const getAccessibleAmountText = (amount?: string) =>
+  pipe(
+    amount,
+    O.fromNullable,
+    O.map(amount =>
+      amount.replace("-", I18n.t("global.accessibility.minusSymbol"))
+    ),
+    O.getOrElseW(() => undefined)
+  );
+
 export const ListItemTransaction = ({
   accessibilityLabel,
   hasChevronRight = false,
@@ -102,20 +116,6 @@ export const ListItemTransaction = ({
   }
 
   const designSystemBlue: IOColors = isDSEnabled ? "blue" : "blueIO-500";
-
-  /**
-   * This function is used to get the text that will be read by the screen reader
-   * with the correct minus symbol pronunciation.
-   */
-  const getAccessibleAmountText = (amount?: string) =>
-    pipe(
-      amount,
-      O.fromNullable,
-      O.map(amount =>
-        amount.replace("-", I18n.t("global.accessibility.minusSymbol"))
-      ),
-      O.getOrElseW(() => undefined)
-    );
 
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
