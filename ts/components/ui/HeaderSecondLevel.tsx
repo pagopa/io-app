@@ -13,6 +13,7 @@ import { WithTestID } from "../../types/WithTestID";
 import { IOStyles, IOVisualCostants } from "../core/variables/IOStyles";
 import { HSpacer } from "../core/spacer/Spacer";
 import { makeFontStyleObject } from "../../components/core/fonts";
+import type { IOSpacer } from "../core/variables/IOSpacing";
 import IconButton from "./IconButton";
 
 export type HeaderSecondLevel = WithTestID<{
@@ -32,6 +33,7 @@ type ScrollValues = {
 
 const HEADER_BG_COLOR: IOColors = "white";
 const borderColorDisabled = hexToRgba(IOColors["grey-100"], 0);
+const titleHorizontalMargin: IOSpacer = 16;
 
 const styles = StyleSheet.create({
   headerInner: {
@@ -43,6 +45,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
+  },
+  headerTitle: {
+    ...makeFontStyleObject("Regular", false, "ReadexPro"),
+    fontSize: 14,
+    textAlign: "center",
+    flexGrow: 1,
+    flexShrink: 1,
+    marginHorizontal: titleHorizontalMargin
   }
 });
 
@@ -93,16 +103,7 @@ export const HeaderSecondLevel = ({
       />
       <Animated.Text
         numberOfLines={1}
-        style={[
-          {
-            ...makeFontStyleObject("Regular", false, "ReadexPro"),
-            fontSize: 14,
-            textAlign: "center",
-            flexGrow: 1,
-            flexShrink: 1
-          },
-          titleAnimatedStyle
-        ]}
+        style={[styles.headerTitle, titleAnimatedStyle]}
       >
         {title}
       </Animated.Text>

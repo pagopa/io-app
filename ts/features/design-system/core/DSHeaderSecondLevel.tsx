@@ -12,10 +12,6 @@ import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import IconButton from "../../../components/ui/IconButton";
 import { NewH3 } from "../../../components/core/typography/NewH3";
 import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSHeaderSecondLevel = () => {
@@ -44,7 +40,7 @@ export const DSHeaderSecondLevel = () => {
             triggerOffset: titleHeight
           }}
           title={"Questo è un titolo lungo, ma lungo lungo davvero, eh!"}
-          thirdAction={
+          firstAction={
             <IconButton
               icon="help"
               color="neutral"
@@ -69,15 +65,9 @@ export const DSHeaderSecondLevel = () => {
       scrollEventThrottle={16}
       snapToOffsets={[0, titleHeight]}
       snapToEnd={false}
-      decelerationRate="fast"
-      disableIntervalMomentum={false}
+      decelerationRate="normal"
     >
-      <View
-        onLayout={getTitleHeight}
-        style={{
-          backgroundColor: hexToRgba(IOColors["blueIO-100"], 0.5)
-        }}
-      >
+      <View onLayout={getTitleHeight}>
         <NewH3>Questo è un titolo lungo, ma lungo lungo davvero, eh!</NewH3>
       </View>
       <VSpacer />
