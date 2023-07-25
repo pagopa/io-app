@@ -15,8 +15,8 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwRequirementsSelector } from "../../store/reducers/itwRequirements";
-import { itwRequirementsRequest } from "../../store/actions";
+import { itwWiaSelector } from "../../store/reducers/itwWia";
+import { itwWiaRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
@@ -28,10 +28,10 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 const ItwActivationInfoAuthScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const requirements = useIOSelector(itwRequirementsSelector);
+  const wia = useIOSelector(itwWiaSelector);
 
   useOnFirstRender(() => {
-    dispatch(itwRequirementsRequest.request());
+    dispatch(itwWiaRequest.request());
   });
 
   /**
@@ -127,7 +127,7 @@ const ItwActivationInfoAuthScreen = () => {
 
   const RenderMask = () =>
     pot.fold(
-      requirements,
+      wia,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
