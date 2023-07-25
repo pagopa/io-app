@@ -68,6 +68,9 @@ type LeftComponentProps = {
 
 const CARD_LOGO_SIZE: IOIconSizeScale = 24;
 const MUNICIPALITY_LOGO_SIZE = 44;
+// this is the <Avatar/>'s "small" size,
+// since it is bigger than the card logos, we use
+// it as a base size for homogeneous sizing via container size.
 
 const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (isImageUri(logoIcon)) {
