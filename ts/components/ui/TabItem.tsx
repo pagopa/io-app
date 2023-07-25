@@ -4,10 +4,7 @@ import Animated, {
   Extrapolate,
   interpolate,
   interpolateColor,
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-  withSpring
+  useAnimatedStyle
 } from "react-native-reanimated";
 import { WithTestID } from "../../types/WithTestID";
 import { IOIcons, Icon } from "../core/icons";
@@ -15,6 +12,7 @@ import { HSpacer } from "../core/spacer/Spacer";
 import { LabelHeader } from "../core/typography/LabelHeader";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { IOColors } from "../core/variables/IOColors";
+import { useSpringPressProgressValue } from "./utils/hooks/useSpringPressProgressValue";
 
 type ColorMode = "light" | "dark";
 
@@ -86,32 +84,11 @@ const TabItem = ({
   icon,
   iconSelected
 }: TabItem) => {
-  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
-
-  // Scaling transformation applied when the button is pressed
-  const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
-
-  // Using a spring-based animation for our interpolations
-  const progressPressed = useDerivedValue(() =>
-    withSpring(isPressed.value, IOSpringValues.button)
-  );
-
-  // Interpolate animation values from `isPressed` values
-  const pressedAnimationStyle = useAnimatedStyle(() => {
-    // Link color states to the pressed states
-
-    // Scale down button slightly when pressed
-    const scale = interpolate(
-      progressPressed.value,
-      [0, 1],
-      [1, animationScaleValue],
-      Extrapolate.CLAMP
-    );
-
-    return {
-      transform: [{ scale }]
-    };
-  });
+  const {
+    progress: progressPressed,
+    onPressIn,
+    onPressOut
+  } = useSpringPressProgressValue(IOSpringValues.button);
 
   const pressedColorAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
@@ -130,14 +107,22 @@ const TabItem = ({
     };
   });
 
-  const onPressIn = React.useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isPressed.value = 1;
-  }, [isPressed]);
-  const onPressOut = React.useCallback(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isPressed.value = 0;
-  }, [isPressed]);
+  // Interpolate animation values from `isPressed` values
+  const pressedScaleAnimationStyle = useAnimatedStyle(() => {
+    // Link color states to the pressed states
+
+    // Scale down button slightly when pressed
+    const scale = interpolate(
+      progressPressed.value,
+      [0, 1],
+      [1, IOScaleValues?.basicButton?.pressedState],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
 
   const colors = mapColorStates[color][selected ? "selected" : "default"];
 
@@ -157,7 +142,7 @@ const TabItem = ({
       <Animated.View
         style={[
           styles.container,
-          pressedAnimationStyle,
+          pressedScaleAnimationStyle,
           selected
             ? { backgroundColor: colors.background }
             : pressedColorAnimationStyle
