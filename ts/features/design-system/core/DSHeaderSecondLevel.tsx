@@ -72,7 +72,7 @@ export const DSHeaderSecondLevel = () => {
       </View>
       <VSpacer />
       {[...Array(50)].map((_el, i) => (
-        <Body key={`body-${i}`}>{`Repeated text ${i}`}</Body>
+        <Body key={`body-${i}`}>Repeated text</Body>
       ))}
     </Animated.ScrollView>
   );
