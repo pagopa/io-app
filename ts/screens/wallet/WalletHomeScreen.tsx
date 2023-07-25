@@ -3,20 +3,23 @@ import * as O from "fp-ts/lib/Option";
 import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
-  View,
   BackHandler,
   Image,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import SectionStatusComponent from "../../components/SectionStatus";
+import { Icon } from "../../components/core/icons";
 import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
   TabBarItemPressType,
@@ -27,14 +30,13 @@ import { withValidatedPagoPaVersion } from "../../components/helpers/withValidat
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
-import SectionStatusComponent from "../../components/SectionStatus";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { TransactionsList } from "../../components/wallet/TransactionsList";
+import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import SectionCardComponent, {
   SectionCardStatus
 } from "../../components/wallet/card/SectionCardComponent";
-import TransactionsList from "../../components/wallet/TransactionsList";
-import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
-import WalletLayout from "../../components/wallet/WalletLayout";
 import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
@@ -60,9 +62,9 @@ import {
 } from "../../features/bonus/cgn/store/reducers/details";
 import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
 import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
+import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -104,8 +106,6 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { Icon } from "../../components/core/icons";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -465,7 +465,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
-        amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
         helpMessage={renderHelpInfoBox ? this.renderHelpMessage() : undefined}
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}

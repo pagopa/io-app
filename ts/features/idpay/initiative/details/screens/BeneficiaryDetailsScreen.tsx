@@ -16,9 +16,13 @@ import {
 import { IDPayDetailsParamsList } from "../navigation";
 import {
   idPayBeneficiaryDetailsSelector,
+  idPayOnboardingStatusSelector,
   idpayInitiativeDetailsSelector
 } from "../store";
-import { idPayBeneficiaryDetailsGet } from "../store/actions";
+import {
+  idPayBeneficiaryDetailsGet,
+  idPayOnboardingStatusGet
+} from "../store/actions";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -39,15 +43,18 @@ const BeneficiaryDetailsScreen = () => {
 
   useOnFirstRender(() => {
     dispatch(idPayBeneficiaryDetailsGet.request({ initiativeId }));
+    dispatch(idPayOnboardingStatusGet.request({ initiativeId }));
   });
 
   const beneficiaryDetailsPot = useIOSelector(idPayBeneficiaryDetailsSelector);
   const initiativeDetailsPot = useIOSelector(idpayInitiativeDetailsSelector);
+  const idPayOnboardingStatusPot = useIOSelector(idPayOnboardingStatusSelector);
 
   const content = pipe(
     sequenceS(O.Monad)({
       initiativeDetails: pipe(initiativeDetailsPot, pot.toOption),
-      beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption)
+      beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption),
+      onboardingStatus: pipe(idPayOnboardingStatusPot, pot.toOption)
     }),
     O.fold(
       () => <BeneficiaryDetailsContentSkeleton />,

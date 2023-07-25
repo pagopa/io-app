@@ -1,11 +1,11 @@
 /* eslint-disable sonarjs/no-identical-functions */
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable arrow-body-style */
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
@@ -15,11 +15,10 @@ import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
 
 export const DSTabNavigation = () => {
-  const handlePress = () => {
-    alert("Pressed");
-  };
+  const handlePress = () => {};
 
   return (
     <DesignSystemScreen
@@ -134,9 +133,9 @@ export const DSTabNavigation = () => {
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation>
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation>
           <TabItem
@@ -184,9 +183,9 @@ export const DSTabNavigation = () => {
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation color="dark">
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation color="dark">
           <TabItem
@@ -224,51 +223,49 @@ export const DSTabNavigation = () => {
 
       <ContentWrapper>
         <VSpacer size={24} />
-        <H3>Alignment</H3>
+        <H3>Tab alignment</H3>
         <VSpacer size={16} />
       </ContentWrapper>
 
       <View style={[styles.default, { paddingVertical: 24 }]}>
         <ContentWrapper>
-          <Monospace>{`tabJustify="flex-start"`}</Monospace>
-        </ContentWrapper>
-
-        <TabNavigation tabJustify="flex-start">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-        </TabNavigation>
-
-        <VSpacer size={16} />
-
-        <ContentWrapper>
-          <Monospace>{`tabJustify="center" (default)`}</Monospace>
+          <Monospace>{`center (default)`}</Monospace>
         </ContentWrapper>
 
         <TabNavigation>
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
-        <VSpacer size={16} />
-
         <ContentWrapper>
-          <Monospace>{`tabJustify="flex-end"`}</Monospace>
+          <Monospace>{`start`}</Monospace>
         </ContentWrapper>
 
-        <TabNavigation tabJustify="flex-end">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabNavigation tabAlignment="start">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
-        <VSpacer size={16} />
-
         <ContentWrapper>
-          <Monospace>{`tabJustify="space-evenly"`}</Monospace>
+          <Monospace>{`end`}</Monospace>
         </ContentWrapper>
 
-        <TabNavigation tabJustify="space-evenly">
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
-          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabNavigation tabAlignment="end">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+        </TabNavigation>
+
+        <ContentWrapper>
+          <Monospace>{`stretch`}</Monospace>
+        </ContentWrapper>
+
+        <TabNavigation tabAlignment="stretch">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
       </View>
     </DesignSystemScreen>

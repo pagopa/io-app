@@ -8,6 +8,7 @@ import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock
 import nodeFetch from "node-fetch";
 import { NativeModules } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
+import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
 
 // eslint-disable-next-line functional/immutable-data
 NativeModules.RNGestureHandlerModule = {
@@ -25,6 +26,7 @@ jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("@react-native-cookies/cookies", jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
+jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
 
 /**
  * adds as for documentation suggestion
@@ -96,4 +98,4 @@ jest.mock("@gorhom/bottom-sheet", () => {
 
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
-jest.mock('react-native-pdf', () => jest.fn());
+jest.mock("react-native-pdf", () => jest.fn());

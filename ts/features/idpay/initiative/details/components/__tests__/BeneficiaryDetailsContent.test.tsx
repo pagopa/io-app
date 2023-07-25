@@ -2,13 +2,14 @@ import { render } from "@testing-library/react-native";
 import * as React from "react";
 import {
   InitiativeRewardTypeEnum,
-  StatusEnum
+  StatusEnum as InitiativeStatusEnum
 } from "../../../../../../../definitions/idpay/InitiativeDTO";
 import TypedI18n from "../../../../../../i18n";
 import {
   BeneficiaryDetailsContent,
   BeneficiaryDetailsProps
 } from "../BeneficiaryDetailsContent";
+import { StatusEnum as OnboardingStatusEnum } from "../../../../../../../definitions/idpay/OnboardingStatusDTO";
 
 const mockNavigation = jest.fn();
 
@@ -35,9 +36,9 @@ jest.mock("../../../../../../store/hooks", () => {
 const mockDiscountActiveInitiative: BeneficiaryDetailsProps = {
   initiativeDetails: {
     initiativeId: "a",
-    status: StatusEnum.REFUNDABLE,
+    status: InitiativeStatusEnum.REFUNDABLE,
     nInstr: 0,
-    endDate: new Date(),
+    endDate: new Date(2023, 1, 1),
     accrued: 0,
     amount: 0,
     refunded: 0,
@@ -45,7 +46,12 @@ const mockDiscountActiveInitiative: BeneficiaryDetailsProps = {
     initiativeName: "test",
     initiativeRewardType: InitiativeRewardTypeEnum.DISCOUNT
   },
-  beneficiaryDetails: {}
+  beneficiaryDetails: {},
+  onboardingStatus: {
+    status: OnboardingStatusEnum.ONBOARDING_OK,
+    statusDate: new Date(2023, 1, 1),
+    onboardingOkDate: new Date(2023, 1, 1)
+  }
 };
 
 const mockRefundActiveInitiative: BeneficiaryDetailsProps = {
@@ -53,7 +59,12 @@ const mockRefundActiveInitiative: BeneficiaryDetailsProps = {
     ...mockDiscountActiveInitiative.initiativeDetails,
     initiativeRewardType: InitiativeRewardTypeEnum.REFUND
   },
-  beneficiaryDetails: {}
+  beneficiaryDetails: {},
+  onboardingStatus: {
+    status: OnboardingStatusEnum.ONBOARDING_OK,
+    statusDate: new Date(2023, 1, 1),
+    onboardingOkDate: new Date(2023, 1, 1)
+  }
 };
 
 describe("Test BeneficiaryDetailsContent component", () => {

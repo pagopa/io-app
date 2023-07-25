@@ -26,20 +26,19 @@ exports[`TabItem should match the snapshot with dark color 1`] = `
           "alignSelf": "flex-start",
           "borderRadius": 65,
           "flexDirection": "row",
-          "justifyContent": "flex-start",
+          "justifyContent": "center",
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
+          "backgroundColor": undefined,
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
         },
+        false,
       ]
     }
   >
@@ -163,20 +162,19 @@ exports[`TabItem should match the snapshot with dark color and selected state 1`
           "alignSelf": "flex-start",
           "borderRadius": 65,
           "flexDirection": "row",
-          "justifyContent": "flex-start",
+          "justifyContent": "center",
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "#FFFFFF",
-        },
-        Object {
+          "backgroundColor": undefined,
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
         },
+        false,
       ]
     }
   >
@@ -300,20 +298,19 @@ exports[`TabItem should match the snapshot with default props 1`] = `
           "alignSelf": "flex-start",
           "borderRadius": 65,
           "flexDirection": "row",
-          "justifyContent": "flex-start",
+          "justifyContent": "center",
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
+          "backgroundColor": undefined,
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
         },
+        false,
       ]
     }
   >
@@ -336,6 +333,144 @@ exports[`TabItem should match the snapshot with default props 1`] = `
           },
           Object {
             "color": "#636B82",
+            "fontFamily": "Readex Pro",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Label tab
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`TabItem should match the snapshot with full width 1`] = `
+<View
+  accessibilityHint="Label tab"
+  accessibilityLabel="Label tab"
+  accessibilityRole="button"
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "alignSelf": "flex-start",
+          "borderRadius": 65,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        },
+        Object {
+          "backgroundColor": undefined,
+          "transform": Array [
+            Object {
+              "scale": undefined,
+            },
+          ],
+        },
+        Object {
+          "alignSelf": "auto",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={16}
+      bbWidth={16}
+      color={4281019960}
+      focusable={false}
+      height={16}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {
+            "color": "#2B2E38",
+          },
+          Object {
+            "flex": 0,
+            "height": 16,
+            "width": 16,
+          },
+        ]
+      }
+      tintColor={4281019960}
+      vbHeight={24}
+      vbWidth={24}
+      width={16}
+    >
+      <RNSVGGroup>
+        <RNSVGPath
+          clipRule={0}
+          d="M10.2576 2.04309c.7663-1.35075 2.7127-1.35075 3.479 0l2.7291 4.81004 5.4179 1.10907c1.5215.31145 2.1229 2.1625 1.0751 3.3088l-3.7313 4.0818.6194 5.4955c.174 1.5432-1.4006 2.6873-2.8146 2.0449l-5.0351-2.2873-5.03508 2.2873c-1.41396.6424-2.98857-.5017-2.81462-2.0449l.61945-5.4955-3.73131-4.0818C-.01228 10.1247.58918 8.27365 2.11063 7.9622l5.41793-1.10907 2.72904-4.81004Z"
+          fill={
+            Array [
+              2,
+            ]
+          }
+          fillRule={0}
+          propList={
+            Array [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+    <View
+      style={
+        Object {
+          "width": 4,
+        }
+      }
+    />
+    <Text
+      color="grey-850"
+      defaultColor="black"
+      defaultWeight="Regular"
+      font="ReadexPro"
+      fontStyle={
+        Object {
+          "fontSize": 14,
+          "lineHeight": 18,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 14,
+            "lineHeight": 18,
+          },
+          Object {
+            "color": "#2B2E38",
             "fontFamily": "Readex Pro",
             "fontStyle": "normal",
             "fontWeight": "400",
@@ -376,20 +511,19 @@ exports[`TabItem should match the snapshot with icons 1`] = `
           "alignSelf": "flex-start",
           "borderRadius": 65,
           "flexDirection": "row",
-          "justifyContent": "flex-start",
+          "justifyContent": "center",
           "paddingHorizontal": 16,
           "paddingVertical": 8,
         },
         Object {
-          "backgroundColor": "transparent",
-        },
-        Object {
+          "backgroundColor": undefined,
           "transform": Array [
             Object {
               "scale": undefined,
             },
           ],
         },
+        false,
       ]
     }
   >
