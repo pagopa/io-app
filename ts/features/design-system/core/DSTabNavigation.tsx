@@ -133,9 +133,9 @@ export const DSTabNavigation = () => {
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation>
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation>
           <TabItem
@@ -183,9 +183,9 @@ export const DSTabNavigation = () => {
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation color="dark">
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
         <TabNavigation color="dark">
           <TabItem
@@ -223,55 +223,49 @@ export const DSTabNavigation = () => {
 
       <ContentWrapper>
         <VSpacer size={24} />
-        <H3>Alignment</H3>
+        <H3>Tab alignment</H3>
         <VSpacer size={16} />
       </ContentWrapper>
 
       <View style={[styles.default, { paddingVertical: 24 }]}>
         <ContentWrapper>
-          <Monospace>{`tabJustify="flex-start"`}</Monospace>
-        </ContentWrapper>
-
-        <TabNavigation tabJustify="flex-start">
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
-        </TabNavigation>
-
-        <VSpacer size={16} />
-
-        <ContentWrapper>
-          <Monospace>{`tabJustify="center" (default)`}</Monospace>
+          <Monospace>{`center (default)`}</Monospace>
         </ContentWrapper>
 
         <TabNavigation>
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
-        <VSpacer size={16} />
-
         <ContentWrapper>
-          <Monospace>{`tabJustify="flex-end"`}</Monospace>
+          <Monospace>{`start`}</Monospace>
         </ContentWrapper>
 
-        <TabNavigation tabJustify="flex-end">
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+        <TabNavigation tabAlignment="start">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
-        <VSpacer size={16} />
-
         <ContentWrapper>
-          <Monospace>{`tabJustify="space-evenly"`}</Monospace>
+          <Monospace>{`end`}</Monospace>
         </ContentWrapper>
 
-        <TabNavigation tabJustify="space-evenly">
-          <TabItem label="Scansiona" accessibilityLabel="Scansiona" />
-          <TabItem label="Carica" accessibilityLabel="Carica" />
-          <TabItem label="Digita" accessibilityLabel="Digita" />
+        <TabNavigation tabAlignment="end">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+        </TabNavigation>
+
+        <ContentWrapper>
+          <Monospace>{`stretch`}</Monospace>
+        </ContentWrapper>
+
+        <TabNavigation tabAlignment="stretch">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
       </View>
     </DesignSystemScreen>

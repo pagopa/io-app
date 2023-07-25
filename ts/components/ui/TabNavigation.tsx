@@ -1,5 +1,5 @@
 import React from "react";
-import { FlexStyle, StyleSheet, View } from "react-native";
+import { FlexStyle, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TabItem } from "./TabItem";
 
@@ -12,24 +12,34 @@ type TabNavigationChildren =
   | React.ReactElement<TabItem>
   | Array<React.ReactElement<TabItem>>;
 
+type TabAlignment = "start" | "center" | "end" | "stretch";
+
 type TabNavigation = {
   // Configuration
   color?: TabItem["color"];
   selectedIndex?: number;
-  tabJustify?: FlexStyle["justifyContent"];
+  tabAlignment?: TabAlignment;
   // Events
   onItemPress?: (index: number) => void;
   // Tabs
   children: TabNavigationChildren;
 };
 
+const itemsJustify: Record<TabAlignment, FlexStyle["justifyContent"]> = {
+  start: "flex-start",
+  center: "center",
+  end: "flex-end",
+  stretch: "space-between"
+};
+
 const TabNavigation = ({
   color = "light",
   selectedIndex: forceSelectedIndex,
-  tabJustify = "center",
+  tabAlignment = "center",
   onItemPress,
   children
 }: TabNavigation) => {
+  const [itemMinWidth, setItemMinWidth] = React.useState<number>(0);
   const [selectedIndex, setSelectedIndex] = React.useState(
     forceSelectedIndex ?? 0
   );
@@ -39,6 +49,13 @@ const TabNavigation = ({
     onItemPress?.(index);
   };
 
+  const handleItemOnLayout = (event: LayoutChangeEvent) => {
+    const { width } = event.nativeEvent.layout;
+    setItemMinWidth(current => Math.max(current, width));
+  };
+
+  const stretchItems = tabAlignment === "stretch";
+
   const wrapChild = (child: React.ReactElement<TabItem>, index: number = 0) => (
     <View
       key={index}
@@ -46,8 +63,12 @@ const TabNavigation = ({
         styles.item,
         {
           marginEnd: index === React.Children.count(children) - 1 ? 0 : 8
+        },
+        stretchItems && {
+          minWidth: itemMinWidth
         }
       ]}
+      onLayout={handleItemOnLayout}
     >
       {React.cloneElement<TabItem>(child, {
         onPress: event => {
@@ -68,7 +89,7 @@ const TabNavigation = ({
       contentContainerStyle={[
         styles.container,
         {
-          justifyContent: tabJustify
+          justifyContent: itemsJustify[tabAlignment]
         }
       ]}
     >
@@ -82,8 +103,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: 16,
-    paddingBottom: 24,
-    alignContent: "space-between"
+    paddingBottom: 24
   },
   item: {
     flexGrow: 0,
