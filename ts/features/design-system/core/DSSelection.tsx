@@ -231,14 +231,10 @@ const AnimatedMessageCheckboxShowroom = () => {
   return (
     <>
       <DSComponentViewerBox name="AnimatedMessageCheckbox">
-        <View style={IOStyles.row}>
+        <View style={[IOStyles.row, IOStyles.alignCenter]}>
           <AnimatedMessageCheckbox checked={isEnabled} />
           <HSpacer size={24} />
-          <ButtonOutline
-            label={"Toggle"}
-            onPress={toggleSwitch}
-            accessibilityLabel={""}
-          />
+          <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
         </View>
       </DSComponentViewerBox>
     </>
