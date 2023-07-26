@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../components/core/variables/IOStyles";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { openAppSettings } from "../../utils/appSettings";
@@ -30,8 +31,10 @@ import {
 } from "../../utils/analytics";
 import ListItemInfo from "../../components/ui/ListItemInfo";
 import { Divider } from "../../components/core/Divider";
-import { ContentWrapper } from "../../components/core/ContentWrapper";
 import { H2 } from "../../components/core/typography/H2";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { H1 } from "../../components/core/typography/H1";
+import { Body } from "../../components/core/typography/Body";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.infoConsent.contextualHelpTitle",
@@ -134,8 +137,6 @@ const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
 
 const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
-  const insets = useSafeAreaInsets();
-
   const optInPreferencesPot = useSelector(profilePreferencesSelector);
 
   useEffect(() => {
@@ -178,13 +179,23 @@ const OnboardingNotificationsInfoScreenConsent = () => {
     openAppSettings();
   };
 
-  const keyExtractor = (_: ListItemInfo, index: number): string =>
-    `key-${index}`;
-
   const headerComponent = (
-    <H2 color={"bluegrey"} weight={"SemiBold"}>
-      {I18n.t("onboarding.infoConsent.instructions.title")}
-    </H2>
+    <View>
+      <VSpacer size={16} />
+      <H1
+        accessible={true}
+        accessibilityRole="header"
+        weight="Bold"
+        color={"bluegreyDark"}
+      >
+        {I18n.t("onboarding.infoConsent.title")}
+      </H1>
+      <Body>{I18n.t("onboarding.infoConsent.subTitle")}</Body>
+      <VSpacer size={24} />
+      <H2 color={"bluegrey"} weight={"SemiBold"}>
+        {I18n.t("onboarding.infoConsent.instructions.title")}
+      </H2>
+    </View>
   );
 
   const renderItem = ({ item, index }: ListRenderItemInfo<ListItemInfo>) => (
@@ -199,21 +210,15 @@ const OnboardingNotificationsInfoScreenConsent = () => {
       customGoBack={<View />}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScreenContent
-          title={I18n.t("onboarding.infoConsent.title")}
-          subtitle={I18n.t("onboarding.infoConsent.subTitle")}
-        >
-          <ContentWrapper>
-            <FlatList
-              data={instructions}
-              renderItem={renderItem}
-              keyExtractor={keyExtractor}
-              contentContainerStyle={{ paddingBottom: insets.bottom }}
-              ItemSeparatorComponent={() => <Divider />}
-              ListHeaderComponent={headerComponent}
-            />
-          </ContentWrapper>
-        </ScreenContent>
+        <FlatList
+          data={instructions}
+          renderItem={renderItem}
+          contentContainerStyle={{
+            marginHorizontal: IOVisualCostants.appMarginDefault
+          }}
+          ItemSeparatorComponent={() => <Divider />}
+          ListHeaderComponent={headerComponent}
+        />
         <FooterStackButton
           buttons={[
             settingsButtonProps(false, openSettings),
