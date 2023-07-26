@@ -117,7 +117,7 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
-      <View>
+      <View style={styles.navigationContainer}>
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
             label={I18n.t("barcodeScan.tabs.scan")}
@@ -183,6 +183,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden"
+  },
+  navigationContainer: {
+    paddingVertical: 16
   }
 });
 
