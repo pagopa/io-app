@@ -7,8 +7,8 @@ import {
   OnboardingOutcome,
   OnboardingResult,
   OnboardingStatus
-} from "../features/walletV3/onboarding/types";
-import { isStringNullyOrEmpty } from "./strings";
+} from "../types";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 
 // List of outcomes that are considered successful
 export const successOutcomes: ReadonlyArray<OnboardingOutcome> = ["0"];

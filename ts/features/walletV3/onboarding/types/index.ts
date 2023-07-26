@@ -1,5 +1,3 @@
-export type WalletOnboardingStartResponse = { id: number; redirectUrl: string };
-
 /**
  * All the possible outcomes of the onboarding process
  * 0: success

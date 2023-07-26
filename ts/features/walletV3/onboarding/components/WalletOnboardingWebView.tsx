@@ -13,12 +13,12 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { originSchemasWhiteList } from "../../../../screens/authentication/originSchemasWhiteList";
 import { RefreshIndicator } from "../../../../components/ui/RefreshIndicator";
 import { OnboardingOutcome } from "../types";
-import { extractOnboardingResult } from "../../../../utils/walletv3";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletStartOnboarding } from "../store/actions";
 import { walletOnboardingStartupSelector } from "../store";
 import { NetworkError } from "../../../../utils/errors";
 import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+import { extractOnboardingResult } from "../utils";
 
 type WalletOnboardingWebViewProps = {
   onSuccess: (outcome: OnboardingOutcome) => void;

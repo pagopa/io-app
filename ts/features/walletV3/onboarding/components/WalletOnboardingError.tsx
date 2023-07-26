@@ -4,8 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
 import { OnboardingOutcome } from "../types";
-import GenericErrorComponent from "../../../fci/components/GenericErrorComponent";
 import I18n from "../../../../i18n";
+import { GenericErrorComponent } from "../../common/components/GenericErrorComponent";
 
 type WalletOnboardingErrorProps = {
   onClose: () => void;
@@ -32,8 +32,9 @@ const WalletOnboardingError = ({
   outcome
 }: WalletOnboardingErrorProps) => (
   <GenericErrorComponent
-    onPress={onClose}
-    subTitle={getOutcomeMessage(outcome)}
+    onClose={onClose}
+    pictogram="error"
+    body={getOutcomeMessage(outcome)}
     title={I18n.t("wallet.onboarding.failure")}
   />
 );
