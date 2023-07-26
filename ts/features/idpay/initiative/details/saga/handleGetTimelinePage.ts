@@ -58,7 +58,9 @@ export function* handleGetTimelinePage(
           } else {
             return put(
               idpayTimelinePageGet.failure({
-                ...getGenericError(new Error(String(response.status)))
+                ...getGenericError(
+                  new Error(`response status code ${response.status}`)
+                )
               })
             );
           }
