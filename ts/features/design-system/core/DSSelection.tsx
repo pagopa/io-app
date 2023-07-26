@@ -19,7 +19,6 @@ import {
 import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
 import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
 import { SwitchListItem } from "../../../components/ui/SwitchListItem";
-import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
