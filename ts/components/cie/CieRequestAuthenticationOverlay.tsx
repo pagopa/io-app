@@ -29,6 +29,7 @@ import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { trackSpidLoginError } from "../../utils/analytics";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -44,11 +45,6 @@ const defaultUserAgent = Platform.select({
   ios: iOSUserAgent,
   default: undefined
 });
-
-// INFA PROD -> xx_servizicie
-// INFRA DEV -> xx_servizicie_test
-const CIE_IDP_ID = "xx_servizicie";
-const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
 
 /**
  * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
@@ -139,6 +135,13 @@ const CieWebView = (props: Props) => {
     requestState: "LOADING",
     nativeAttempts: 0
   });
+
+  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  // INFRA PROD -> xx_servizicie
+  // INFRA DEV -> xx_servizicie_test
+  // INFRA COLL -> xx_servizicie_coll
+  const CIE_IDP_ID = `xx_servizicie${useCieUat ? "_coll" : ""}`;
+  const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const dispatch = useIODispatch();
