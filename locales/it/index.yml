@@ -893,14 +893,25 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: Configura IO
-    title: Vuoi attivare le notifiche?
-    subTitle: "Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:"
-    instruction1: 1. Seleziona 'Notifiche'
-    instruction2: 2. Attiva 'Consenti Notifiche'
-    openSettings: Apri Impostazioni di iOS
+    title: Attiva le notifiche push per non perdere messaggi importanti!
+    subTitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    openSettings: Apri Impostazioni
     continue: Non ora
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
+    instructions:
+      title: "Ecco come:"
+      label: Step
+      ios:
+        step1: Vai su "Impostazioni"
+        step2: Seleziona "Notifiche"
+        step3: Attiva "Consenti notifiche"
+      android:
+        step1: Vai su "Impostazioni"
+        step2: Seleziona "Applicazioni"
+        step3: Seleziona "IO"
+        step4: Seleziona "Notifiche"
+        step5: Attiva le notifiche 
 forms:
   validators:
     required: Valore richiesto
