@@ -132,11 +132,17 @@ export const DSTabNavigation = () => {
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
+
+        <VSpacer size={24} />
+
         <TabNavigation>
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
+
+        <VSpacer size={24} />
+
         <TabNavigation>
           <TabItem
             label="Label tab"
@@ -182,11 +188,17 @@ export const DSTabNavigation = () => {
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
+
+        <VSpacer size={24} />
+
         <TabNavigation color="dark">
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
           <TabItem label="Label tab" accessibilityLabel="Label tab" />
         </TabNavigation>
+
+        <VSpacer size={24} />
+
         <TabNavigation color="dark">
           <TabItem
             label="Label tab"
@@ -232,15 +244,21 @@ export const DSTabNavigation = () => {
           <Monospace>{`center (default)`}</Monospace>
         </ContentWrapper>
 
+        <VSpacer size={16} />
+
         <TabNavigation>
           <TabItem label="Long label" accessibilityLabel="Long label" />
           <TabItem label="Label" accessibilityLabel="Label" />
           <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
+        <VSpacer size={24} />
+
         <ContentWrapper>
           <Monospace>{`start`}</Monospace>
         </ContentWrapper>
+
+        <VSpacer size={16} />
 
         <TabNavigation tabAlignment="start">
           <TabItem label="Long label" accessibilityLabel="Long label" />
@@ -248,9 +266,13 @@ export const DSTabNavigation = () => {
           <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
+        <VSpacer size={24} />
+
         <ContentWrapper>
           <Monospace>{`end`}</Monospace>
         </ContentWrapper>
+
+        <VSpacer size={16} />
 
         <TabNavigation tabAlignment="end">
           <TabItem label="Long label" accessibilityLabel="Long label" />
@@ -258,9 +280,13 @@ export const DSTabNavigation = () => {
           <TabItem label="Label" accessibilityLabel="Label" />
         </TabNavigation>
 
+        <VSpacer size={24} />
+
         <ContentWrapper>
           <Monospace>{`stretch`}</Monospace>
         </ContentWrapper>
+
+        <VSpacer size={16} />
 
         <TabNavigation tabAlignment="stretch">
           <TabItem label="Long label" accessibilityLabel="Long label" />

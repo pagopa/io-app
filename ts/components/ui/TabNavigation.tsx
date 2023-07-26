@@ -101,9 +101,7 @@ const TabNavigation = ({
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingHorizontal: 24,
-    paddingTop: 16,
-    paddingBottom: 24
+    paddingHorizontal: 24
   },
   item: {
     flexGrow: 0,
