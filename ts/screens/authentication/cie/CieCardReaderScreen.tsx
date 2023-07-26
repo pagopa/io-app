@@ -53,6 +53,8 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../utils/supportAssistance";
+import { isDevEnv } from "../../../utils/environment";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -384,7 +386,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  public async startCieAndroid() {
+  public async startCieAndroid(useCieUat: boolean) {
     cieManager
       .start()
       .then(async () => {
@@ -393,6 +395,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         cieManager.onSuccess(this.handleCieSuccess);
         await cieManager.setPin(this.ciePin);
         cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
+        cieManager.enableLog(isDevEnv);
+        cieManager.setCustomIdpUrl(
+          useCieUat
+            ? "https://collaudo.idserver.servizicie.interno.gov.it/idp/"
+            : null
+        );
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
       })
@@ -401,11 +409,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       });
   }
 
-  public async startCieiOS() {
+  public async startCieiOS(useCieUat: boolean) {
     cieManager.removeAllListeners();
     cieManager.onEvent(this.handleCieEvent);
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
+    cieManager.setCustomIdpUrl(
+      useCieUat
+        ? "https://collaudo.idserver.servizicie.interno.gov.it/idp/Authn/SSL/Login2"
+        : null
+    );
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
@@ -444,7 +457,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       ios: this.startCieiOS,
       default: this.startCieAndroid
     });
-    await startCie();
+    await startCie(this.props.isCieUatEnabled);
     const srEnabled = await isScreenReaderEnabled();
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
@@ -477,7 +490,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             title: I18n.t("global.buttons.cancel")
           }}
           rightButton={{
-            onPress: this.startCieiOS,
+            onPress: () => this.startCieiOS(this.props.isCieUatEnabled),
             title: I18n.t("authentication.cie.nfc.retry")
           }}
         />
@@ -515,7 +528,8 @@ const mapStateToProps = (state: GlobalState) => {
   const isEnabled = isNfcEnabledSelector(state);
   return {
     isNfcEnabled: pot.getOrElse(isEnabled, false),
-    assistanceToolConfig: assistanceToolConfigSelector(state)
+    assistanceToolConfig: assistanceToolConfigSelector(state),
+    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
   };
 };
 

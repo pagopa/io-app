@@ -61,6 +61,7 @@ import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { openWebUrl } from "../../utils/url";
 import { cieSpidMoreInfoUrl } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -144,6 +145,9 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
+  uatCie: {
+    backgroundColor: IOColors.red
+  },
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
     // TODO: Remove this half-disabled state.
@@ -175,6 +179,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
 
   private isCieSupported = () => this.props.isCieSupported;
+  private isCieUatEnabled = () => this.props.isCieUatEnabled;
 
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
@@ -252,6 +257,10 @@ class LandingScreen extends React.PureComponent<Props, State> {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   private renderLandingScreen = () => {
     const isCieSupported = this.isCieSupported();
+    const isCieUatEnabled = this.isCieUatEnabled();
+    const firstButtonStyle = isCieUatEnabled
+      ? styles.uatCie
+      : styles.fullOpacity;
     const secondButtonStyle = isCieSupported
       ? styles.fullOpacity
       : styles.noCie;
@@ -292,6 +301,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
             }
             accessibilityRole="button"
             accessible={true}
+            style={firstButtonStyle}
             accessibilityLabel={
               isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
@@ -410,7 +420,8 @@ const mapStateToProps = (state: GlobalState) => {
     continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
     hasCieApiLevelSupport: pot.getOrElse(hasApiLevelSupport, false),
-    hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false)
+    hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false),
+    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
   };
 };
 
