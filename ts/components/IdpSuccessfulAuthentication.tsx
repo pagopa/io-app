@@ -24,6 +24,6 @@ export const IdpSuccessfulAuthentication = () => (
       barStyle="light-content"
       backgroundColor={styles.container.backgroundColor}
     />
-    <Icon name="completed" color="white" size={ICON_SIZE} />
+    <Icon name="checkTickBig" color="white" size={ICON_SIZE} />
   </View>
 );
