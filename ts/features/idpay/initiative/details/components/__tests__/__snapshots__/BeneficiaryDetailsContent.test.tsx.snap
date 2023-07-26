@@ -111,8 +111,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -188,8 +188,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -265,8 +265,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -489,8 +489,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -566,8 +566,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -756,8 +756,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
