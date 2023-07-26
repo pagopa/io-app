@@ -17,6 +17,7 @@ import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
+import { getAccessibleAmountText } from "../../utils/accessibility";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
@@ -108,13 +109,19 @@ export const ListItemTransaction = ({
       switch (transactionStatus) {
         case "success":
           return (
-            <NewH6 color={hasChevronRight ? designSystemBlue : "black"}>
+            <NewH6
+              accessibilityLabel={getAccessibleAmountText(transactionAmount)}
+              color={hasChevronRight ? designSystemBlue : "black"}
+            >
               {transactionAmount || ""}
             </NewH6>
           );
         case "refunded":
           return (
-            <NewH6 color={hasChevronRight ? designSystemBlue : "success-700"}>
+            <NewH6
+              accessibilityLabel={getAccessibleAmountText(transactionAmount)}
+              color={hasChevronRight ? designSystemBlue : "success-700"}
+            >
               {transactionAmount || ""}
             </NewH6>
           );
