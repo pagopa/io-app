@@ -1,15 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../../common/api/client";
-import {
-  idPayOnboardingStatusGet,
-  IdPayOnboardingStatusGetPayloadType
-} from "../store/actions";
+import { idPayOnboardingStatusGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative onboarding status
@@ -19,17 +18,23 @@ import {
  */
 export function* handleGetOnboardingStatus(
   onboardingStatus: IDPayClient["onboardingStatus"],
-  token: string,
+  bpdToken: string,
   language: PreferredLanguageEnum,
-  payload: IdPayOnboardingStatusGetPayloadType
+  action: ActionType<typeof idPayOnboardingStatusGet["request"]>
 ) {
+  const onboardingStatusRequest = onboardingStatus({
+    bearerAuth: bpdToken,
+    "Accept-Language": language,
+    initiativeId: action.payload.initiativeId
+  });
+
   try {
-    const onboardingStatusResult: SagaCallReturnType<typeof onboardingStatus> =
-      yield* call(onboardingStatus, {
-        bearerAuth: token,
-        "Accept-Language": language,
-        initiativeId: payload.initiativeId
-      });
+    const onboardingStatusResult = (yield* call(
+      withRefreshApiCall,
+      onboardingStatusRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof onboardingStatus>;
+
     yield pipe(
       onboardingStatusResult,
       E.fold(

@@ -1,38 +1,42 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../../common/api/client";
-import {
-  IdpayTimelinePageGetPayloadType,
-  idpayTimelinePageGet
-} from "../store/actions";
+import { idpayTimelinePageGet } from "../store/actions";
 
 /**
- * Handle the remote call to retrieve the IDPay initiative details
- * @param getTimeline
- * @param action
- * @param initiativeId
+ * Handle the remote call to retrieve the IDPay initiative operations timeline page
+ * @param getTimeline BE API call
+ * @param bpdToken Auth token
+ * @param language Preferred language
+ * @param action Action to handle
  */
-
 export function* handleGetTimelinePage(
   getTimeline: IDPayClient["getTimeline"],
-  token: string,
+  bpdToken: string,
   language: PreferredLanguageEnum,
-  payload: IdpayTimelinePageGetPayloadType
+  action: ActionType<typeof idpayTimelinePageGet["request"]>
 ) {
+  const getTimelineRequest = getTimeline({
+    bearerAuth: bpdToken,
+    "Accept-Language": language,
+    initiativeId: action.payload.initiativeId,
+    page: action.payload.page,
+    size: action.payload.pageSize
+  });
+
   try {
-    const getTimelineResult: SagaCallReturnType<typeof getTimeline> =
-      yield* call(getTimeline, {
-        bearerAuth: token,
-        "Accept-Language": language,
-        initiativeId: payload.initiativeId,
-        page: payload.page,
-        size: payload.pageSize
-      });
+    const getTimelineResult = (yield* call(
+      withRefreshApiCall,
+      getTimelineRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof getTimeline>;
 
     yield pipe(
       getTimelineResult,
