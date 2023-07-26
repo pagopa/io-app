@@ -40,7 +40,7 @@ describe("idpayTimelinePageGet", () => {
   describe("when the response is successful", () => {
     it(`should put ${getType(
       idpayTimelinePageGet.success
-    )} with the initiative beneficiary details`, () => {
+    )} with the timeline and page number`, () => {
       const getTimeline = jest.fn();
       testSaga(
         handleGetTimelinePage,

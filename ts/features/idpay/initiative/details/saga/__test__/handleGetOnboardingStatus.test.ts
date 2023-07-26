@@ -21,7 +21,7 @@ describe("idPayOnboardingStatusGet", () => {
   describe("when the response is successful", () => {
     it(`should put ${getType(
       idPayOnboardingStatusGet.success
-    )} with the initiative beneficiary details`, () => {
+    )} with the onboarding status details`, () => {
       const onboardingStatus = jest.fn();
       testSaga(
         handleGetOnboardingStatus,
