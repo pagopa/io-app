@@ -17,6 +17,7 @@ import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
+import { getAccessibleAmountText } from "../../utils/accessibility";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
@@ -81,20 +82,6 @@ const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   }
   return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
 };
-
-/**
- * This function is used to get the text that will be read by the screen reader
- * with the correct minus symbol pronunciation.
- */
-const getAccessibleAmountText = (amount?: string) =>
-  pipe(
-    amount,
-    O.fromNullable,
-    O.map(amount =>
-      amount.replace("-", I18n.t("global.accessibility.minusSymbol"))
-    ),
-    O.getOrElseW(() => undefined)
-  );
 
 export const ListItemTransaction = ({
   accessibilityLabel,
