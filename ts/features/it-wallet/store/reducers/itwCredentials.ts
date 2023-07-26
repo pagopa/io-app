@@ -1,19 +1,19 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { Action } from "../../../../store/actions/types";
-import { itwCredentialsAddPid, itwCredentialsReset } from "../actions";
-import { PidMockType } from "../../utils/mocks";
+import { itwCredentialsAddPid } from "../actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
 
-type ItwWalletType = {
-  activated: boolean;
-  vcs: Array<PidMockType>;
+type ItwCredentialsType = {
+  pid: O.Option<PidResponse>;
 };
 
-export type ItwWalletState = pot.Pot<ItwWalletType, ItWalletError>;
+export type ItwAttestationsState = pot.Pot<ItwCredentialsType, ItWalletError>;
 
-const emptyState: ItwWalletState = pot.none;
+const emptyState: ItwAttestationsState = pot.none;
 
 /**
  * This reducer handles the requirements check for the IT Wallet activation.
@@ -24,21 +24,18 @@ const emptyState: ItwWalletState = pot.none;
  * @returns the result state
  */
 const reducer = (
-  state: ItwWalletState = emptyState,
+  state: ItwAttestationsState = emptyState,
   action: Action
-): ItwWalletState => {
+): ItwAttestationsState => {
   switch (action.type) {
     case getType(itwCredentialsAddPid.request):
       return pot.toLoading(state);
     case getType(itwCredentialsAddPid.success):
       return pot.some({
-        activated: true,
-        vcs: [action.payload]
+        pid: O.some(action.payload)
       });
     case getType(itwCredentialsAddPid.failure):
       return pot.toError(state, action.payload);
-    case getType(itwCredentialsReset):
-      return emptyState;
   }
   return state;
 };
@@ -48,29 +45,18 @@ const reducer = (
  * @param state - the global state
  * @returns the itwallet state.
  */
-export const ItwWalletSelector = (state: GlobalState) =>
-  state.features.itWallet.wallet;
-
-/**
- * Selects the itwallet activated flag from the global state.
- * @param state - the global state
- * @returns the itwallet activated flag.
- */
-export const ItwWalletActivatedSelector = (state: GlobalState) =>
-  pot.getOrElse(
-    pot.map(state.features.itWallet.wallet, w => w.activated),
-    false
-  );
+export const itwAttestationsSelector = (state: GlobalState) =>
+  state.features.itWallet.attestations;
 
 /**
  * Selects the itwallet vcs from the global state.
  * @param state - the global state
  * @returns the itwallet vcs flag.
  */
-export const ItwWalletVcsSelector = (state: GlobalState) =>
+export const ItwWalletPidSelector = (state: GlobalState) =>
   pot.getOrElse(
-    pot.map(state.features.itWallet.wallet, w => w.vcs),
-    []
+    pot.map(state.features.itWallet.attestations, w => w.pid),
+    O.none
   );
 
 export default reducer;

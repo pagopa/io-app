@@ -15,7 +15,7 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwWiaSelector } from "../../store/reducers/itwWia";
+import { itwWiaStateSelector } from "../../store/reducers/itwWia";
 import { itwWiaRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ItWalletError } from "../../utils/errors/itwErrors";
@@ -28,7 +28,7 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 const ItwActivationInfoAuthScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const wia = useIOSelector(itwWiaSelector);
+  const wia = useIOSelector(itwWiaStateSelector);
 
   useOnFirstRender(() => {
     dispatch(itwWiaRequest.request());
@@ -74,7 +74,7 @@ const ItwActivationInfoAuthScreen = () => {
     const continueButtonProps = {
       block: true,
       primary: true,
-      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
+      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING),
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (

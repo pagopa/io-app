@@ -3,8 +3,8 @@ import {
   createStandardAction,
   createAsyncAction
 } from "typesafe-actions";
+import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { ItWalletError } from "../../utils/errors/itwErrors";
-import { PidMockType } from "../../utils/mocks";
 import { ItwCieAuthenticationActions } from "./cie";
 
 /**
@@ -30,13 +30,18 @@ export const itwCredentialsAddPid = createAsyncAction(
   "ITW_CREDENTIALS_ADD_PID",
   "ITW_CREDENTIALS_ADD_PID_SUCCESS",
   "ITW_REQUIREMENTS_ADD_PID_FAILURE"
-)<PidMockType, PidMockType, ItWalletError>();
+)<void, PidResponse, ItWalletError>();
 
-/**
- * Resets the ITW state, deactivating it and deleting all credentials.
- */
-export const itwCredentialsReset = createStandardAction(
-  "ITW_CREDENTIALS_RESET"
+export const itwLifecycleOperational = createStandardAction(
+  "ITW_LIFECYCLE_OPERATIONAL"
+)<void>();
+
+export const itwLifecycleValid = createStandardAction(
+  "ITW_LIFECYCLE_VALID"
+)<void>();
+
+export const itwLifecycleDeactivated = createStandardAction(
+  "ITW_LIFECYCLE_DEACTIVATED"
 )<void>();
 
 /**
@@ -46,5 +51,7 @@ export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
   | ActionType<typeof itwWiaRequest>
   | ActionType<typeof itwCredentialsAddPid>
-  | ActionType<typeof itwCredentialsReset>
+  | ActionType<typeof itwLifecycleOperational>
+  | ActionType<typeof itwLifecycleValid>
+  | ActionType<typeof itwLifecycleDeactivated>
   | ItwCieAuthenticationActions;

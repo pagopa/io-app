@@ -9,15 +9,13 @@ import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIOSelector } from "../../../store/hooks";
-import {
-  ItwWalletActivatedSelector,
-  ItwWalletVcsSelector
-} from "../store/reducers/itwCredentials";
 import PidCredential from "../components/PidCredential";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { ITW_ROUTES } from "../navigation/routes";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
+import { getPidMock } from "../utils/mocks";
+import { itwLifecycleIsOperational } from "../store/reducers/itwLifecycle";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -28,9 +26,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation();
-  const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
+  const isItWalletOperational = useIOSelector(itwLifecycleIsOperational);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
-  const pid = useIOSelector(ItwWalletVcsSelector);
+  const pid = getPidMock();
   const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
@@ -77,7 +75,7 @@ const ItwHomeScreen = () => {
           flexGrow: 1
         }}
       >
-        {!isWalletActive ? (
+        {isItWalletOperational ? (
           <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
             <ItwActionBanner
               title={I18n.t("features.itWallet.innerActionBanner.title")}
@@ -100,10 +98,10 @@ const ItwHomeScreen = () => {
                 })
               }
             >
-              <PidCredential
+              {/* <PidCredential
                 name={`${pid[0].verified_claims.claims.given_name} ${pid[0].verified_claims.claims.family_name}`}
                 fiscalCode={pid[0].verified_claims.claims.tax_id_number}
-              />
+              /> */}
             </Pressable>
             <View
               style={{
@@ -127,5 +125,6 @@ const ItwHomeScreen = () => {
       </ScrollView>
     </TopScreenComponent>
   );
+  <></>;
 };
 export default ItwHomeScreen;

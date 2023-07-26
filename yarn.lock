@@ -3070,10 +3070,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.0.tgz#4a9b55d84c6d77622e95de4511e4c422a862b27d"
   integrity sha512-mZ0Z7SAhWhbYIK/GvaeuecIyQPikj/D7pmejOrAiLA1KxIqO3UGH6p6LC2pZhN0JPHTcXbBiNHJRQtrqTHCfew==
 
-"@pagopa/io-react-native-wallet@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.1.1.tgz#9e592ac60e31d27e246ac20c4ef653471eb35061"
-  integrity sha512-WPjKYf0GopMrswQUS2PdgxfYIrgNoWiXcYnUk/2MGMhxLT+aw0rLrw6SplvV4QHiSq/SJbAL3Th7A5D6OvUFXg==
+"@pagopa/io-react-native-wallet@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.2.0.tgz#45dad261701a16cae6e84094ccd81612d57ae543"
+  integrity sha512-tQdLeyS8JMzHMn31q6Kgf4AVCZ/fjyggVhzdHLV7TM3a/8HhiZuXftmDzpEnJWDHg/tvcJRGL63bHh5Zkkkx6Q==
   dependencies:
     react-native-uuid "^2.0.1"
     zod "^3.21.4"

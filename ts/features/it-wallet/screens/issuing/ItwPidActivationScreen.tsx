@@ -5,7 +5,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwCredentialsAddPid } from "../../store/actions";
 import { PidMockType } from "../../utils/mocks";
-import { ItwWalletSelector } from "../../store/reducers/itwCredentials";
+import { itwAttestationsSelector } from "../../store/reducers/itwCredentials";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
@@ -37,10 +37,10 @@ type Props = IOStackNavigationRouteProps<
  */
 const ItwPidActivationScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
-  const wallet = useIOSelector(ItwWalletSelector);
+  const wallet = useIOSelector(itwAttestationsSelector);
   const navigation = useNavigation();
   useOnFirstRender(() => {
-    dispatch(itwCredentialsAddPid.request(route.params.pid));
+    dispatch(itwCredentialsAddPid.request());
   });
 
   const continueButtonProps = {

@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwWiaRequest } from "../actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
-export type ItwWIAState = pot.Pot<string, ItWalletError>;
+export type ItwWIAState = pot.Pot<O.Option<string>, ItWalletError>;
 
 const emptyState: ItwWIAState = pot.none;
 
@@ -25,7 +26,7 @@ const reducer = (
     case getType(itwWiaRequest.request):
       return pot.toLoading(state);
     case getType(itwWiaRequest.success):
-      return pot.some(action.payload);
+      return pot.some(O.some(action.payload));
     case getType(itwWiaRequest.failure):
       return pot.toError(state, action.payload);
   }
@@ -37,7 +38,15 @@ const reducer = (
  * @param state the global state
  * @returns the wallet instance attestation state
  */
-export const itwWiaSelector = (state: GlobalState) =>
+export const itwWiaStateSelector = (state: GlobalState) =>
   state.features.itWallet.wia;
+
+/**
+ * Selects the wallet instance attestation state.
+ * @param state the global state
+ * @returns the wallet instance attestation state
+ */
+export const itwWiaSelector = (state: GlobalState) =>
+  pot.getOrElse(state.features.itWallet.wia, O.none);
 
 export default reducer;
