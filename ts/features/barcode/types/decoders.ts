@@ -10,6 +10,7 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { decodePosteDataMatrix } from "../../../utils/payment";
+import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
 // Represents the decoded content of a barcode that has been scanned
@@ -48,7 +49,7 @@ export type DecodedIOBarcode =
 type IOBarcodeDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
 
 type IOBarcodeDecodersType = {
-  [K in DecodedIOBarcode["type"]]: IOBarcodeDecoderFn;
+  [K in IOBarcodeType]: IOBarcodeDecoderFn;
 };
 
 const decodeIdPayBarcode: IOBarcodeDecoderFn = (data: string) =>
@@ -104,13 +105,22 @@ export const IOBarcodeDecoders: IOBarcodeDecodersType = {
   PAGOPA: decodePagoPABarcode
 };
 
+type DecodeOptions = {
+  /**
+   * List of barcode types to decode
+   * If not specified, all barcode types are decoded
+   */
+  barcodeTypes?: ReadonlyArray<IOBarcodeType>;
+};
+
 /**
  * Returns the type of a barcode. Fallbacks to "UNKNOWN" if no type is found
  * @param value Barcode content
  * @returns DecodedIOBarcode {@see DecodedIOBarcode}
  */
 export const decodeIOBarcode = (
-  value: string | undefined
+  value: string | undefined,
+  options?: DecodeOptions
 ): O.Option<DecodedIOBarcode> =>
   pipe(
     value,
@@ -118,9 +128,12 @@ export const decodeIOBarcode = (
     O.map(NonEmptyString.decode),
     O.chain(O.fromEither),
     O.map(value =>
-      Object.entries(IOBarcodeDecoders).map(([_, decode]) =>
-        decode(value.trim())
-      )
+      Object.entries(IOBarcodeDecoders)
+        .filter(
+          ([type]) =>
+            options?.barcodeTypes?.includes(type as IOBarcodeType) ?? true
+        )
+        .map(([_, decode]) => decode(value.trim()))
     ),
     O.map(A.compact),
     O.chain(A.head)
