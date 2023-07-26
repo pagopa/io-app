@@ -1,22 +1,27 @@
-import React, { memo, useEffect } from "react";
-import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import {
+  AppState,
+  FlatList,
+  SafeAreaView,
+  View,
+  Platform,
+  ListRenderItemInfo
+} from "react-native";
 import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import {
+  IOStyles,
+  IOVisualCostants
+} from "../../components/core/variables/IOStyles";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { openAppSettings } from "../../utils/appSettings";
 import { useIODispatch } from "../../store/hooks";
 import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
-import NotificationsIcon from "../../../img/onboarding/ios-notifications-icon.svg";
-import NotificationsToggleIcon from "../../../img/onboarding/ios-notifications-toggle-icon.svg";
-import customVariables from "../../theme/variables";
-import { H4 } from "../../components/core/typography/H4";
 import { checkNotificationPermissions } from "../../utils/notification";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import {
@@ -24,21 +29,12 @@ import {
   trackOpenSystemNotificationSettings,
   trackSkipSystemNotificationPermissions
 } from "../../utils/analytics";
-
-const styles = StyleSheet.create({
-  container: {
-    padding: customVariables.contentPadding
-  },
-  box: {
-    alignItems: "center"
-  },
-  info: {
-    marginLeft: 16
-  },
-  separator: {
-    height: 36
-  }
-});
+import ListItemInfo from "../../components/ui/ListItemInfo";
+import { Divider } from "../../components/core/Divider";
+import { H2 } from "../../components/core/typography/H2";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { H1 } from "../../components/core/typography/H1";
+import { Body } from "../../components/core/typography/Body";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.infoConsent.contextualHelpTitle",
@@ -53,7 +49,7 @@ const settingsButtonProps = (
   onPress,
   title: I18n.t("onboarding.infoConsent.openSettings"),
   isLoading,
-  bordered: true
+  primary: true
 });
 
 const continueButtonProps = (
@@ -64,26 +60,83 @@ const continueButtonProps = (
   onPress,
   title: I18n.t("onboarding.infoConsent.continue"),
   isLoading,
-  primary: true,
+  bordered: true,
   testID: "continue-btn"
 });
 
-const InstructionRow = memo(
-  ({ icon, title }: { icon: React.ReactNode; title: string }) => (
-    <View style={[IOStyles.flex, IOStyles.row, styles.box]}>
-      {icon}
-      <View style={[IOStyles.flex, IOStyles.column, styles.info]}>
-        <H4 weight="Regular" color="black">
-          {title}
-        </H4>
-      </View>
-    </View>
-  )
-);
+const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
+  ios: [
+    {
+      icon: "systemSettingsiOS",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.ios.step1"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.ios.step1"
+      )
+    },
+    {
+      icon: "systemNotificationsInstructions",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.ios.step2"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.ios.step2"
+      )
+    },
+    {
+      icon: "systemToggleInstructions",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.ios.step3"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.ios.step3"
+      )
+    }
+  ],
+  android: [
+    {
+      icon: "systemSettingsAndroid",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.android.step1"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.android.step1"
+      )
+    },
+    {
+      icon: "systemAppsAndroid",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.android.step2"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.android.step2"
+      )
+    },
+    {
+      icon: "productIOAppBlueBg",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.android.step3"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.android.step3"
+      )
+    },
+    {
+      icon: "systemNotificationsInstructions",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.android.step4"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.android.step4"
+      )
+    },
+    {
+      icon: "systemToggleInstructions",
+      label: I18n.t("onboarding.infoConsent.instructions.label"),
+      value: I18n.t("onboarding.infoConsent.instructions.android.step5"),
+      accessibilityLabel: I18n.t(
+        "onboarding.infoConsent.instructions.android.step5"
+      )
+    }
+  ]
+});
 
 const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
-
   const optInPreferencesPot = useSelector(profilePreferencesSelector);
 
   useEffect(() => {
@@ -126,6 +179,29 @@ const OnboardingNotificationsInfoScreenConsent = () => {
     openAppSettings();
   };
 
+  const headerComponent = (
+    <View>
+      <VSpacer size={16} />
+      <H1
+        accessible={true}
+        accessibilityRole="header"
+        weight="Bold"
+        color={"bluegreyDark"}
+      >
+        {I18n.t("onboarding.infoConsent.title")}
+      </H1>
+      <Body>{I18n.t("onboarding.infoConsent.subTitle")}</Body>
+      <VSpacer size={24} />
+      <H2 color={"bluegrey"} weight={"SemiBold"}>
+        {I18n.t("onboarding.infoConsent.instructions.title")}
+      </H2>
+    </View>
+  );
+
+  const renderItem = ({ item, index }: ListRenderItemInfo<ListItemInfo>) => (
+    <ListItemInfo {...item} label={`${item.label} ${index + 1}`} />
+  );
+
   return (
     <BaseScreenComponent
       headerTitle={I18n.t("onboarding.infoConsent.headerTitle")}
@@ -134,22 +210,15 @@ const OnboardingNotificationsInfoScreenConsent = () => {
       customGoBack={<View />}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScreenContent
-          title={I18n.t("onboarding.infoConsent.title")}
-          subtitle={I18n.t("onboarding.infoConsent.subTitle")}
-        >
-          <View style={styles.container}>
-            <InstructionRow
-              icon={<NotificationsIcon width={44} height={44} />}
-              title={I18n.t("onboarding.infoConsent.instruction1")}
-            />
-            <View style={styles.separator} />
-            <InstructionRow
-              icon={<NotificationsToggleIcon width={44} height={23} />}
-              title={I18n.t("onboarding.infoConsent.instruction2")}
-            />
-          </View>
-        </ScreenContent>
+        <FlatList
+          data={instructions}
+          renderItem={renderItem}
+          contentContainerStyle={{
+            marginHorizontal: IOVisualCostants.appMarginDefault
+          }}
+          ItemSeparatorComponent={() => <Divider />}
+          ListHeaderComponent={headerComponent}
+        />
         <FooterStackButton
           buttons={[
             settingsButtonProps(false, openSettings),

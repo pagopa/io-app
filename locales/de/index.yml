@@ -797,8 +797,6 @@ onboarding:
     headerTitle: "IO einrichten"
     title: "Möchtest du Push-Benachrichtigungen aktivieren?"
     subTitle: "Um Push-Benachrichtigungen von IO zu erhalten, musst du sie in den Einstellungen von iOS aktiveren. So geht's:"
-    instruction1: "1. Wähle “Benachrichtigungen”"
-    instruction2: "2. Aktiviere “Benachrichtigungen zulassen”"
     openSettings: "Öffne die Einstellungen von iOS"
     continue: "Jetzt nicht"
     contextualHelpTitle: "Push-Benachrichtigungen"
