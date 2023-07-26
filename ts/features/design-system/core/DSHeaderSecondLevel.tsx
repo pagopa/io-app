@@ -14,8 +14,13 @@ import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import IconButton from "../../../components/ui/IconButton";
 
+// This is defined as about the half of a default ListItem… component
+const defaultTriggerOffsetValue: number = 32;
+
 export const DSHeaderSecondLevel = () => {
-  const [titleHeight, setTitleHeight] = useState(0);
+  const [triggerOffsetValue, setTriggerOffsetValue] = useState(
+    defaultTriggerOffsetValue
+  );
   const translationY = useSharedValue(0);
 
   const insets = useSafeAreaInsets();
@@ -23,7 +28,7 @@ export const DSHeaderSecondLevel = () => {
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
-    setTitleHeight(height);
+    setTriggerOffsetValue(height);
   };
 
   const scrollHandler = useAnimatedScrollHandler(event => {
@@ -37,7 +42,7 @@ export const DSHeaderSecondLevel = () => {
         <HeaderSecondLevel
           scrollValues={{
             contentOffsetY: translationY,
-            triggerOffset: titleHeight
+            triggerOffset: triggerOffsetValue
           }}
           title={"Questo è un titolo lungo, ma lungo lungo davvero, eh!"}
           firstAction={
@@ -53,7 +58,7 @@ export const DSHeaderSecondLevel = () => {
         />
       )
     });
-  }, [navigation, titleHeight, translationY]);
+  }, [navigation, translationY, triggerOffsetValue]);
 
   return (
     <Animated.ScrollView
@@ -63,7 +68,7 @@ export const DSHeaderSecondLevel = () => {
       }}
       onScroll={scrollHandler}
       scrollEventThrottle={16}
-      snapToOffsets={[0, titleHeight]}
+      snapToOffsets={[0, triggerOffsetValue]}
       snapToEnd={false}
       decelerationRate="normal"
     >
