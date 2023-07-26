@@ -366,9 +366,6 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL.route}
         component={DSHeaderSecondLevel}
-        options={{
-          header: HeaderFirstLevelComponent
-        }}
       />
 
       <Stack.Screen

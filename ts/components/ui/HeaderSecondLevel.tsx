@@ -28,6 +28,8 @@ export type HeaderSecondLevel = WithTestID<{
   firstAction?: React.ReactNode;
   secondAction?: React.ReactNode;
   thirdAction?: React.ReactNode;
+  // Visual attributes
+  transparent?: boolean;
 }>;
 
 type ScrollValues = {
@@ -37,11 +39,11 @@ type ScrollValues = {
 
 const HEADER_BG_COLOR: IOColors = "white";
 const borderColorDisabled = hexToRgba(IOColors["grey-100"], 0);
+const headerTransparent = hexToRgba(IOColors[HEADER_BG_COLOR], 0);
 const titleHorizontalMargin: IOSpacer = 16;
 
 const styles = StyleSheet.create({
   headerInner: {
-    backgroundColor: IOColors[HEADER_BG_COLOR],
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     height: IOVisualCostants.headerHeight,
     borderBottomWidth: 1,
@@ -66,12 +68,20 @@ export const HeaderSecondLevel = ({
   firstAction,
   secondAction,
   thirdAction,
+  transparent = false,
   testID
 }: HeaderSecondLevel) => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   const headerWrapperAnimatedStyle = useAnimatedStyle(() => ({
+    backgroundColor: transparent
+      ? interpolateColor(
+          scrollValues.contentOffsetY.value,
+          [0, scrollValues.triggerOffset],
+          [headerTransparent, IOColors[HEADER_BG_COLOR]]
+        )
+      : undefined,
     borderColor: interpolateColor(
       scrollValues.contentOffsetY.value,
       [0, scrollValues.triggerOffset],
@@ -94,6 +104,9 @@ export const HeaderSecondLevel = ({
       style={[
         { marginTop: insets.top },
         styles.headerInner,
+        transparent
+          ? { borderBottomWidth: 0 }
+          : { backgroundColor: IOColors[HEADER_BG_COLOR] },
         headerWrapperAnimatedStyle
       ]}
     >
