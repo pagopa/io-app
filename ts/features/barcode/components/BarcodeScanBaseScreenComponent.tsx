@@ -14,7 +14,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { BottomTabNavigation } from "./BottomTabNavigation";
 import { CameraPermissionView } from "./CameraPermissionView";
@@ -24,7 +24,12 @@ type Props = {
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
-  formats?: Array<IOBarcodeFormat>;
+  barcodeFormats?: Array<IOBarcodeFormat>;
+  /**
+   * Accepted barcode types that can be detected. Leave empty to accept all types.
+   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   */
+  barcodeTypes?: Array<IOBarcodeType>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -40,9 +45,13 @@ type Props = {
   onManualInputPressed: () => void;
 };
 
-const BarcodeScanBaseScreenComponent = (props: Props) => {
-  const { formats, onBarcodeSuccess, onBarcodeError, onManualInputPressed } =
-    props;
+const BarcodeScanBaseScreenComponent = ({
+  barcodeFormats,
+  barcodeTypes,
+  onBarcodeError,
+  onBarcodeSuccess,
+  onManualInputPressed
+}: Props) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -55,12 +64,14 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   } = useIOBarcodeScanner({
     onBarcodeSuccess,
     onBarcodeError,
-    formats,
+    barcodeFormats,
+    barcodeTypes,
     disabled: !isFocused
   });
 
   const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
-    formats,
+    barcodeFormats,
+    barcodeTypes,
     onBarcodeSuccess,
     onBarcodeError
   });

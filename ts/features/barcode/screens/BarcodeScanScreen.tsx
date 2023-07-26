@@ -1,6 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
+import ReactNativeHapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
 import { IOToast } from "../../../components/Toast";
 import { Divider } from "../../../components/core/Divider";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -15,22 +18,32 @@ import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import {
+  barcodesScannerConfigSelector,
+  isIdPayEnabledSelector
+} from "../../../store/reducers/backendStatus";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
-import { IOBarcode } from "../types/IOBarcode";
+import {
+  IOBarcode,
+  IO_BARCODE_ALL_FORMATS,
+  IO_BARCODE_ALL_TYPES
+} from "../types/IOBarcode";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
+    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
     switch (barcode.type) {
       case "IDPAY":
         openDeepLink(barcode.authUrl);
@@ -93,12 +106,19 @@ const BarcodeScanScreen = () => {
     title: ""
   });
 
+  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(
+    format => !dataMatrixPosteEnabled && format === "DATA_MATRIX"
+  );
+
+  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(
+    type => !isIdPayEnabled && type === "IDPAY"
+  );
+
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        formats={
-          dataMatrixPosteEnabled ? ["QR_CODE", "DATA_MATRIX"] : ["QR_CODE"]
-        }
+        barcodeFormats={enabledFormats}
+        barcodeTypes={enabledTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}
