@@ -33,6 +33,7 @@ import { DSSelection } from "../core/DSSelection";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
+import { DSTabNavigation } from "../core/DSTabNavigation";
 
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSGradientScroll } from "../core/DSGradientScroll";
@@ -341,6 +342,14 @@ const DesignSystemMainStack = () => {
         component={DSBottomSheet}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.route}
+        component={DSTabNavigation}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title
         }}
       />
 
