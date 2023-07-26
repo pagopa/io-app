@@ -24,6 +24,10 @@ const DESIGN_SYSTEM_ROUTES = {
     BOTTOM_SHEET: {
       route: "DESIGN_SYSTEM_BOTTOM_SHEET",
       title: "Bottom Sheet"
+    },
+    TAB_NAVIGATION: {
+      route: "DESIGN_SYSTEM_TAB_NAVIGATION",
+      title: "Tab Navigation"
     }
   },
   HEADERS: {
