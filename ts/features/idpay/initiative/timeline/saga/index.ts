@@ -11,14 +11,14 @@ import { handleGetTimelineDetails } from "./handleGetTimelineDetails";
  */
 export function* watchIDPayTimelineSaga(
   idPayClient: IDPayClient,
-  bpdToken: string,
+  bearerAuth: string,
   preferredLanguage: PreferredLanguageEnum
 ): SagaIterator {
   yield* takeLatest(
     idpayTimelineDetailsGet.request,
     handleGetTimelineDetails,
     idPayClient.getTimelineDetail,
-    bpdToken,
+    bearerAuth,
     preferredLanguage
   );
 }

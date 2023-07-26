@@ -19,12 +19,12 @@ import { idpayInitiativeGet } from "../store/actions";
  */
 export function* handleGetInitiativeDetails(
   getInitiativeDetails: IDPayClient["getWalletDetail"],
-  bpdToken: string,
+  bearerAuth: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idpayInitiativeGet["request"]>
 ) {
   const getInitiativeDetailsRequest = getInitiativeDetails({
-    bearerAuth: bpdToken,
+    bearerAuth,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId
   });

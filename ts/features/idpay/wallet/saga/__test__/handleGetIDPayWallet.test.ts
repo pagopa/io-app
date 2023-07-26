@@ -4,7 +4,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { idPayWalletGet } from "../../store/actions";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
-import { handleGetIDPayWallet } from "../handleGetIDPayWallet";
+import { handleGetIDPayWallet } from "../handleGetWallet";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 
 const mockedWallet: WalletDTO = { initiativeList: [] };

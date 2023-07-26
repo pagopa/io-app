@@ -2,30 +2,34 @@ import * as E from "fp-ts/lib/Either";
 
 import { pipe } from "fp-ts/lib/function";
 import { call, delay, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { IDPayClient } from "../../common/api/client";
-import {
-  IdPayInitiativesFromInstrumentPayloadType,
-  idPayInitiativesFromInstrumentGet
-} from "../store/actions";
+import { idPayInitiativesFromInstrumentGet } from "../store/actions";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],
-  token: string,
+  bearerAuth: string,
   language: PreferredLanguageEnum,
-  payload: IdPayInitiativesFromInstrumentPayloadType
+  action: ActionType<typeof idPayInitiativesFromInstrumentGet["request"]>
 ) {
+  const getInitiativesWithInstrumentRequest = getInitiativesWithInstrument({
+    bearerAuth,
+    "Accept-Language": language,
+    idWallet: action.payload.idWallet
+  });
+
   try {
-    const getInitiativesWithInstrumentResult: SagaCallReturnType<
-      typeof getInitiativesWithInstrument
-    > = yield* call(getInitiativesWithInstrument, {
-      idWallet: payload.idWallet,
-      bearerAuth: token,
-      "Accept-Language": language
-    });
+    const getInitiativesWithInstrumentResult = (yield* call(
+      withRefreshApiCall,
+      getInitiativesWithInstrumentRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof getInitiativesWithInstrument>;
+
     yield* put(
       pipe(
         getInitiativesWithInstrumentResult,

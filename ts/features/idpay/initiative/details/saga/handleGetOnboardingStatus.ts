@@ -18,12 +18,12 @@ import { idPayOnboardingStatusGet } from "../store/actions";
  */
 export function* handleGetOnboardingStatus(
   onboardingStatus: IDPayClient["onboardingStatus"],
-  bpdToken: string,
+  bearerAuth: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idPayOnboardingStatusGet["request"]>
 ) {
   const onboardingStatusRequest = onboardingStatus({
-    bearerAuth: bpdToken,
+    bearerAuth,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId
   });

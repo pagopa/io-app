@@ -19,12 +19,12 @@ import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
  */
 export function* handleGetBeneficiaryDetails(
   getInitiativeBeneficiaryDetail: IDPayClient["getInitiativeBeneficiaryDetail"],
-  bpdToken: string,
+  bearerAuth: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idPayBeneficiaryDetailsGet["request"]>
 ) {
   const getInitiativeBeneficiaryRequest = getInitiativeBeneficiaryDetail({
-    bearerAuth: bpdToken,
+    bearerAuth,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId
   });

@@ -19,12 +19,12 @@ import { idpayTimelineDetailsGet } from "../store/actions";
  */
 export function* handleGetTimelineDetails(
   getTimelineDetail: IDPayClient["getTimelineDetail"],
-  bpdToken: string,
+  bearerAuth: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idpayTimelineDetailsGet["request"]>
 ) {
   const getTimelineDetailRequest = getTimelineDetail({
-    bearerAuth: bpdToken,
+    bearerAuth,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId,
     operationId: action.payload.operationId
