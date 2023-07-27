@@ -13,6 +13,7 @@ const CieLoginConfigScreenContent = () => {
   return (
     <>
       <CheckboxListItem
+        icon="warningFilled"
         selected={useCieUat}
         onValueChange={newValue => {
           if (newValue) {
@@ -22,6 +23,9 @@ const CieLoginConfigScreenContent = () => {
           }
         }}
         value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
+        description={
+          "Questa opzione serve agli sviluppatori, per testare la login con CIE."
+        }
         accessibilityLabel={""}
       />
       <Divider />
