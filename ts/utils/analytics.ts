@@ -58,41 +58,62 @@ export function trackNotificationInstallationTokenNotChanged() {
 export function trackNotificationsOptInPreviewStatus(
   contentType: PushNotificationsContentTypeEnum
 ) {
-  void mixpanelTrack("NOTIFICATIONS_OPTIN_PREVIEW_STATUS", {
-    enabled: contentType === PushNotificationsContentTypeEnum.FULL
-  });
+  void mixpanelTrack(
+    "NOTIFICATIONS_OPTIN_PREVIEW_STATUS",
+    buildEventProperties("UX", "action", {
+      enabled: contentType === PushNotificationsContentTypeEnum.FULL
+    })
+  );
 }
 
 export function trackNotificationsOptInReminderStatus(
   reminderStatus: ReminderStatusEnum
 ) {
-  void mixpanelTrack("NOTIFICATIONS_OPTIN_REMINDER_STATUS", {
-    enabled: reminderStatus === ReminderStatusEnum.ENABLED
-  });
+  void mixpanelTrack(
+    "NOTIFICATIONS_OPTIN_REMINDER_STATUS",
+    buildEventProperties("UX", "action", {
+      enabled: reminderStatus === ReminderStatusEnum.ENABLED
+    })
+  );
 }
 
-export function trackConflictingNotificationSettings() {
-  void mixpanelTrack("NOTIFICATIONS_OPTIN_REMINDER_ON_PERMISSIONS_OFF");
+export function trackNotificationsOptInReminderOnPermissionsOff() {
+  void mixpanelTrack(
+    "NOTIFICATIONS_OPTIN_REMINDER_ON_PERMISSIONS_OFF",
+    buildEventProperties("UX", "control")
+  );
 }
 
-export function trackOpenSystemNotificationSettings() {
-  void mixpanelTrack("NOTIFICATIONS_OPTIN_OPEN_SETTINGS");
+export function trackNotificationsOptInOpenSettings() {
+  void mixpanelTrack(
+    "NOTIFICATIONS_OPTIN_OPEN_SETTINGS",
+    buildEventProperties("UX", "action")
+  );
 }
 
-export function trackSkipSystemNotificationPermissions() {
-  void mixpanelTrack("NOTIFICATIONS_OPTIN_SKIP_SYSTEM_PERMISSIONS");
+export function trackNotificationsOptInSkipSystemPermissions() {
+  void mixpanelTrack(
+    "NOTIFICATIONS_OPTIN_SKIP_SYSTEM_PERMISSIONS",
+    buildEventProperties("UX", "action")
+  );
 }
 
 export function trackNotificationsPreferencesPreviewStatus(enabled: boolean) {
-  void mixpanelTrack("NOTIFICATIONS_PREFERENCES_PREVIEW_STATUS", {
-    enabled
-  });
+  void mixpanelTrack(
+    "NOTIFICATIONS_PREFERENCES_PREVIEW_STATUS",
+    buildEventProperties("UX", "action", {
+      enabled
+    })
+  );
 }
 
 export function trackNotificationsPreferencesReminderStatus(enabled: boolean) {
-  void mixpanelTrack("NOTIFICATIONS_PREFERENCES_REMINDER_STATUS", {
-    enabled
-  });
+  void mixpanelTrack(
+    "NOTIFICATIONS_PREFERENCES_REMINDER_STATUS",
+    buildEventProperties("UX", "action", {
+      enabled
+    })
+  );
 }
 
 // End of Notifications related events
