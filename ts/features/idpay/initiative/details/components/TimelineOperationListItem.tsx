@@ -42,7 +42,7 @@ type TimelineOperationListItemProps = {
 const getPaymentLogoIcon = (operation: OperationListDTO) => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
-      return <Icon name={"checkTic"} color="grey-300" />;
+      return <Icon name={"checkTick"} color="grey-300" />;
     case IbanOperationTypeEnum.ADD_IBAN:
       return <Icon name={"institution"} color="grey-300" />;
     case RefundOperationTypeEnum.PAID_REFUND:

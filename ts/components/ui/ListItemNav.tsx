@@ -142,14 +142,14 @@ export const ListItemNav = ({
             {typeof value === "string" ? (
               <Text style={styles.textValue}>{value}</Text>
             ) : (
-              { value }
+              value
             )}
             {description && (
               <>
                 {typeof description === "string" ? (
                   <Body weight="Regular">{description}</Body>
                 ) : (
-                  { description }
+                  description
                 )}
               </>
             )}

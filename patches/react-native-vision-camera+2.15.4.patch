@@ -1,0 +1,16 @@
+diff --git a/node_modules/react-native-vision-camera/android/build.gradle b/node_modules/react-native-vision-camera/android/build.gradle
+index 91e64d9..b603c98 100644
+--- a/node_modules/react-native-vision-camera/android/build.gradle
++++ b/node_modules/react-native-vision-camera/android/build.gradle
+@@ -290,9 +290,9 @@ dependencies {
+ 
+     if (REACT_NATIVE_VERSION < 71) {
+       //noinspection GradleDynamicVersion
+-      extractHeaders("com.facebook.fbjni:fbjni:+:headers")
++      extractHeaders("com.facebook.fbjni:fbjni:0.4.0:headers")
+       //noinspection GradleDynamicVersion
+-      extractJNI("com.facebook.fbjni:fbjni:+")
++      extractJNI("com.facebook.fbjni:fbjni:0.4.0")
+ 
+       def rnAarMatcher = "**/react-native/**/*${resolveBuildType()}.aar"
+       if (REACT_NATIVE_VERSION < 69) {
