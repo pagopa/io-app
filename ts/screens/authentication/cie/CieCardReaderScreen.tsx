@@ -415,6 +415,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     cieManager.onEvent(this.handleCieEvent);
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
+    cieManager.enableLog(isDevEnv);
     cieManager.setCustomIdpUrl(
       useCieUat
         ? "https://collaudo.idserver.servizicie.interno.gov.it/idp/Authn/SSL/Login2"
