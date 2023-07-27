@@ -6,7 +6,7 @@ import { idpSelector } from "../../../store/reducers/authentication";
 import { itwWiaRequest } from "../store/actions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { getWia } from "../utils/wia";
-import { isCIEAuthenticationSupported } from "../../../utils/cie";
+import { isCIEAuthenticationSupported } from "../utils/cie";
 
 /*
  * This saga handles the wallet instance attestation issuing.

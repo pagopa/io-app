@@ -6,7 +6,7 @@ import { handleWiaRequest } from "../handleWiaRequest";
 import { idpSelector } from "../../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
 import { getWia } from "../../utils/wia";
-import { isCIEAuthenticationSupported } from "../../../../utils/cie";
+import { isCIEAuthenticationSupported } from "../../utils/cie";
 
 describe("handleWiaRequest", () => {
   const wiaMock = "wia";

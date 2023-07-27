@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
+import { Route, useRoute } from "@react-navigation/core";
 import { useNavigation } from "@react-navigation/native";
+import { PidData } from "@pagopa/io-react-native-cie-pid";
 import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -20,12 +22,20 @@ import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay"
 import { ItwParamsList } from "../../navigation/params";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
+export type ItwPidPreviewScreenNavigationParams = {
+  pidData: PidData;
+};
+
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
 const ItwPidPreviewScreen = () => {
+  const route =
+    useRoute<
+      Route<"ITW_ACTIVATION_PID_PREVIEW", ItwPidPreviewScreenNavigationParams>
+    >();
   const spacerSize = 32;
-  const pidMock = getPidMock();
+  const pidMock = getPidMock(route.params.pidData);
   const { present, bottomSheet } = useItwAbortFlow();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const [isLoading, setIsLoading] = useState(true);
