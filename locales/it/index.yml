@@ -172,6 +172,7 @@ global:
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
+    copy: Copia
   navigator:
     messages: Messaggi
     wallet: Portafoglio
