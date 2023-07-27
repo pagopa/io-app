@@ -289,7 +289,7 @@ platform :ios do
       include_symbols: false
     )
 
-    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-lv\\\\. | sed -n '2 p' | tr -d '\n'")
+    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-fl\\\\. | sed -n '2 p' | tr -d '\n'")
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
