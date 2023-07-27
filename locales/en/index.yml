@@ -69,6 +69,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    minusSymbol: minus
     switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
@@ -171,6 +172,7 @@ global:
     findOutMore: "Find out more"
     details: "Details"
     choose: "Scegli"
+    copy: Copy
   navigator:
     messages: Messages
     wallet: Wallet

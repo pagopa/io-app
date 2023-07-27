@@ -69,6 +69,7 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
+    minusSymbol: meno
     reload: "Ricarica"
     switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
@@ -171,6 +172,7 @@ global:
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
+    copy: Copia
   navigator:
     messages: Messaggi
     wallet: Portafoglio
