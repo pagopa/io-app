@@ -55,6 +55,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { isDevEnv } from "../../../utils/environment";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -502,7 +503,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       <TopScreenComponent
         onAccessibilityNavigationHeaderFocus={this.handleOnHeaderFocus}
         goBack={true}
-        headerTitle={I18n.t("authentication.cie.card.headerTitle")}
+        headerTitle={withTrailingPoliceCarLightEmojii(
+          I18n.t("authentication.cie.card.headerTitle"),
+          this.props.isCieUatEnabled
+        )}
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>

@@ -126,6 +126,11 @@ function retryRequest(
   }));
 }
 
+export enum CieEntityIds {
+  PROD = "xx_servizicie",
+  DEV = "xx_servizicie_coll"
+}
+
 const CieWebView = (props: Props) => {
   const [internalState, setInternalState] = React.useState<InternalState>(
     generateResetState()
@@ -137,10 +142,7 @@ const CieWebView = (props: Props) => {
   });
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
-  // INFRA PROD -> xx_servizicie
-  // INFRA DEV -> xx_servizicie_test
-  // INFRA COLL -> xx_servizicie_coll
-  const CIE_IDP_ID = `xx_servizicie${useCieUat ? "_coll" : ""}`;
+  const CIE_IDP_ID = useCieUat ? CieEntityIds.DEV : CieEntityIds.PROD;
   const loginUri = getIdpLoginUri(CIE_IDP_ID, 3);
 
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);

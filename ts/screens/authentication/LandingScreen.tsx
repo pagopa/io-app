@@ -240,6 +240,14 @@ class LandingScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private navigateToCieUatSelectionScreen = () => {
+    if (this.isCieSupported()) {
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.CIE_LOGIN_CONFIG_SCREEN
+      });
+    }
+  };
+
   private navigateToSpidCieInformationRequest = () =>
     openWebUrl(cieSpidMoreInfoUrl);
 
@@ -298,6 +306,9 @@ class LandingScreen extends React.PureComponent<Props, State> {
               isCieSupported
                 ? this.navigateToCiePinScreen
                 : this.navigateToIdpSelection
+            }
+            onLongPress={() =>
+              isCieSupported ? this.navigateToCieUatSelectionScreen() : ""
             }
             accessibilityRole="button"
             accessible={true}
