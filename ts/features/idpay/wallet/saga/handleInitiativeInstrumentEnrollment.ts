@@ -14,12 +14,12 @@ import { idpayInitiativesInstrumentEnroll } from "../store/actions";
 
 export function* handleInitiativeInstrumentEnrollment(
   enrollInstrument: IDPayClient["enrollInstrument"],
-  bearerAuth: string,
+  bearerToken: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idpayInitiativesInstrumentEnroll["request"]>
 ) {
   const updateInstrumentStatusRequest = enrollInstrument({
-    bearerAuth,
+    bearerAuth: bearerToken,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId,
     idWallet: action.payload.idWallet

@@ -13,12 +13,12 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],
-  bearerAuth: string,
+  bearerToken: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idPayInitiativesFromInstrumentGet["request"]>
 ) {
   const getInitiativesWithInstrumentRequest = getInitiativesWithInstrument({
-    bearerAuth,
+    bearerAuth: bearerToken,
     "Accept-Language": language,
     idWallet: action.payload.idWallet
   });

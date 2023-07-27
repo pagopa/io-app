@@ -16,12 +16,12 @@ import { idPayWalletGet } from "../store/actions";
  */
 export function* handleGetIDPayWallet(
   getWallet: IDPayClient["getWallet"],
-  bearerAuth: string,
+  bearerToken: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idPayWalletGet["request"]>
 ) {
   const getWalletRequest = getWallet({
-    bearerAuth,
+    bearerAuth: bearerToken,
     "Accept-Language": language
   });
 

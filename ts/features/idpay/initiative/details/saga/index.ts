@@ -21,14 +21,14 @@ import { handleGetTimelinePage } from "./handleGetTimelinePage";
  */
 export function* watchIDPayInitiativeDetailsSaga(
   idPayClient: IDPayClient,
-  bearerAuth: string,
+  bearerToken: string,
   preferredLanguage: PreferredLanguageEnum
 ): SagaIterator {
   yield* takeLatest(
     idpayInitiativeGet.request,
     handleGetInitiativeDetails,
     idPayClient.getWalletDetail,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
@@ -36,7 +36,7 @@ export function* watchIDPayInitiativeDetailsSaga(
     idpayTimelinePageGet.request,
     handleGetTimelinePage,
     idPayClient.getTimeline,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
@@ -44,7 +44,7 @@ export function* watchIDPayInitiativeDetailsSaga(
     idPayBeneficiaryDetailsGet.request,
     handleGetBeneficiaryDetails,
     idPayClient.getInitiativeBeneficiaryDetail,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
@@ -52,7 +52,7 @@ export function* watchIDPayInitiativeDetailsSaga(
     idPayOnboardingStatusGet.request,
     handleGetOnboardingStatus,
     idPayClient.onboardingStatus,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 }

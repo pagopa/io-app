@@ -13,12 +13,12 @@ import { idpayInitiativesInstrumentDelete } from "../store/actions";
 
 export function* handleInitiativeInstrumentDelete(
   deleteInstrument: IDPayClient["deleteInstrument"],
-  bearerAuth: string,
+  bearerToken: string,
   language: PreferredLanguageEnum,
   action: ActionType<typeof idpayInitiativesInstrumentDelete["request"]>
 ) {
   const updateInstrumentStatusRequest = deleteInstrument({
-    bearerAuth,
+    bearerAuth: bearerToken,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId,
     instrumentId: action.payload.instrumentId

@@ -32,14 +32,14 @@ import { handleInitiativeInstrumentEnrollment } from "./handleInitiativeInstrume
  */
 export function* watchIDPayWalletSaga(
   idPayClient: IDPayClient,
-  bearerAuth: string,
+  bearerToken: string,
   preferredLanguage: PreferredLanguageEnum
 ): SagaIterator {
   yield* takeLatest(
     idPayWalletGet.request,
     handleGetIDPayWallet,
     idPayClient.getWallet,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
@@ -47,7 +47,7 @@ export function* watchIDPayWalletSaga(
     idPayInitiativesFromInstrumentGet.request,
     handleGetIDPayInitiativesFromInstrument,
     idPayClient.getInitiativesWithInstrument,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
@@ -55,7 +55,7 @@ export function* watchIDPayWalletSaga(
     idpayInitiativesInstrumentEnroll.request,
     handleInitiativeInstrumentEnrollment,
     idPayClient.enrollInstrument,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
@@ -63,7 +63,7 @@ export function* watchIDPayWalletSaga(
     idpayInitiativesInstrumentDelete.request,
     handleInitiativeInstrumentDelete,
     idPayClient.deleteInstrument,
-    bearerAuth,
+    bearerToken,
     preferredLanguage
   );
 
