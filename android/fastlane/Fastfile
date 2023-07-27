@@ -77,7 +77,7 @@ platform :android do
     )
 
     upload_to_play_store(
-      track: "beta - login veloce",
+      track: "FL",
       skip_upload_screenshots: true,
       skip_upload_images: true
     )
