@@ -27,6 +27,7 @@ import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import PinScreen from "../screens/profile/PinScreen";
+import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
@@ -108,6 +109,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
       component={IDPayOnboardingPlayground}
+    />
+    <Stack.Screen
+      name={ROUTES.WALLET_PLAYGROUND}
+      component={WalletPlayground}
     />
     <Stack.Screen
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
