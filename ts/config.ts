@@ -263,5 +263,8 @@ export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
 
+export const walletV3ApiBaseUrl = Config.WALLETV3_API_BASEURL;
+export const walletV3ApiUatBaseUrl = Config.WALLETV3_API_UAT_BASEURL;
+
 // Default pin for dev mode
 export const defaultPin = "162534";
