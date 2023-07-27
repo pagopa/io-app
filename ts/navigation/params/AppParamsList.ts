@@ -37,6 +37,10 @@ import {
   IDPayUnsubscriptionParamsList,
   IDPayUnsubscriptionRoutes
 } from "../../features/idpay/unsubscription/navigation/navigator";
+import {
+  WalletOnboardingParamsList,
+  WalletOnboardingRoutes
+} from "../../features/walletV3/onboarding/navigation/navigator";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -85,6 +89,8 @@ export type AppParamsList = {
     | IDPayUnsubscriptionNavigatorParams;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IDPayPaymentParamsList>;
+
+  [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
 };
 
 /**
