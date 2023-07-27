@@ -59,7 +59,7 @@ const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
       foreground: "black"
     },
     pressed: {
-      background: IOColors["grey-450"]
+      background: IOColors["grey-50"]
     }
   },
   dark: {
@@ -72,7 +72,7 @@ const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
       foreground: "grey-850"
     },
     pressed: {
-      background: IOColors["grey-100"]
+      background: IOColors.white
     }
   }
 };
@@ -93,11 +93,13 @@ const TabItem = ({
     progress: progressPressed,
     onPressIn,
     onPressOut
-  } = useSpringPressProgressValue(IOSpringValues.button);
+  } = useSpringPressProgressValue(IOSpringValues.selection);
+
+  const colors = mapColorStates[color][selected ? "selected" : "default"];
 
   const isSelected: Animated.SharedValue<number> = useSharedValue(0);
   const progressSelected = useDerivedValue(() =>
-    withSpring(isSelected.value, IOSpringValues.button)
+    withSpring(isSelected.value, IOSpringValues.selection)
   );
 
   React.useEffect(() => {
@@ -121,7 +123,7 @@ const TabItem = ({
       progressSelected.value,
       [0, 1],
       [
-        `${mapColorStates[color].pressed.background}1A`,
+        mapColorStates[color].pressed.background,
         mapColorStates[color].selected.background
       ]
     );
@@ -140,11 +142,9 @@ const TabItem = ({
         : pressedBackgroundColor,
       transform: [{ scale }]
     };
-  });
+  }, [progressPressed, progressSelected, selected]);
 
-  const colors = mapColorStates[color][selected ? "selected" : "default"];
-
-  const activeIcon = iconSelected ? (selected ? iconSelected : icon) : icon;
+  const activeIcon = selected ? iconSelected ?? icon : icon;
 
   return (
     <Pressable
