@@ -1,10 +1,11 @@
+import { H6 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOTheme, IOThemeLight } from "../variables/IOColors";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { ExternalTypographyProps, TypographyProps } from "./common";
+import { IOFontFamily, IOFontWeight } from "../fonts";
+import { IOTheme, IOThemeLight } from "../variables/IOColors";
 import { useTypographyFactory } from "./Factory";
+import { ExternalTypographyProps, TypographyProps } from "./common";
 
 type AllowedColors = IOTheme["textBody-default"] | "blueIO-850";
 type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
@@ -14,32 +15,32 @@ type OwnProps = ExternalTypographyProps<
 >;
 
 /* Common typographic styles */
-export const h6FontSize = 16;
-export const h6LineHeight = 24;
-export const h6DefaultColor: AllowedColors = IOThemeLight["textBody-default"];
+const h6FontSize = 16;
+const h6LineHeight = 24;
+const h6DefaultColor: AllowedColors = IOThemeLight["textBody-default"];
 /* Legacy typographic styles */
 const h6LegacyFontName: IOFontFamily = "TitilliumWeb";
 const h6LegacyDefaultWeight: AllowedWeight = "SemiBold";
-/* New typographic styles */
-const h6FontName: IOFontFamily = "ReadexPro";
-const h6DefaultWeight: AllowedWeight = "Regular";
 
 /**
- * Typography component to render `H4` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `Bold`, color: `bluegreyDark`
- * @param props
+ * Typography component to render H6 text. This component supports both design system enabled and legacy custom styles.
+ * When design system is enabled, it renders the text using the H6 component from `@pagopa/io-app-design-system`,
+ * respecting the design system's defined colors and styles.
+ * When design system is disabled, it falls back to a legacy custom style with options for custom font and font styles.
+ *
+ * @param {OwnProps} props - The props for the NewH6 component.
  * @constructor
  */
-export const NewH6: React.FunctionComponent<OwnProps> = props => {
+export const NewH6: React.FC<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  return useTypographyFactory<AllowedWeight, AllowedColors>({
+  const h6Component = useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    defaultWeight: isDesignSystemEnabled
-      ? h6DefaultWeight
-      : h6LegacyDefaultWeight,
+    defaultWeight: h6LegacyDefaultWeight,
     defaultColor: h6DefaultColor,
-    font: isDesignSystemEnabled ? h6FontName : h6LegacyFontName,
+    font: h6LegacyFontName,
     fontStyle: { fontSize: h6FontSize, lineHeight: h6LineHeight }
   });
+
+  return isDesignSystemEnabled ? <H6 {...props} /> : h6Component;
 };

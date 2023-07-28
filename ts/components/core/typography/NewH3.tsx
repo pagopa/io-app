@@ -1,10 +1,11 @@
+import { H3 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorsStatusForeground, IOTheme } from "../variables/IOColors";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { ExternalTypographyProps, TypographyProps } from "./common";
+import { IOFontFamily, IOFontWeight } from "../fonts";
+import { IOColorsStatusForeground, IOTheme } from "../variables/IOColors";
 import { useTypographyFactory } from "./Factory";
+import { ExternalTypographyProps, TypographyProps } from "./common";
 
 type AllowedColors = IOColorsStatusForeground | IOTheme["textHeading-default"];
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular">;
@@ -14,33 +15,32 @@ type OwnProps = ExternalTypographyProps<
 >;
 
 /* Common typographic styles */
-export const h3FontSize = 22;
-export const h3LineHeight = 33;
+const h3FontSize = 22;
+const h3LineHeight = 33;
 /* Legacy typographic styles */
 const h3LegacyFontName: IOFontFamily = "TitilliumWeb";
 const h3LegacyDefaultColor: AllowedColors = "bluegreyDark";
 const h3LegacyDefaultWeight: AllowedWeight = "Bold";
-/* New typographic styles */
-const h3FontName: IOFontFamily = "ReadexPro";
-const h3DefaultColor: AllowedColors = "black";
-const h3DefaultWeight: AllowedWeight = "Regular";
 
 /**
- * Typography component to render `H2` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `Bold`, color: `bluegreyDark`
- * @param props
+ * Typography component to render H3 text. This component supports both design system enabled and legacy custom styles.
+ * When design system is enabled, it renders the text using the H3 component from `@pagopa/io-app-design-system`,
+ * respecting the design system's defined colors and styles.
+ * When design system is disabled, it falls back to a legacy custom style with options for custom font and font styles.
+ *
+ * @param {OwnProps} props - The props for the NewH3 component.
  * @constructor
  */
-export const NewH3: React.FunctionComponent<OwnProps> = props => {
+export const NewH3: React.FC<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  return useTypographyFactory<AllowedWeight, AllowedColors>({
+  const h3Component = useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
-    defaultWeight: isDesignSystemEnabled
-      ? h3DefaultWeight
-      : h3LegacyDefaultWeight,
-    defaultColor: isDesignSystemEnabled ? h3DefaultColor : h3LegacyDefaultColor,
-    font: isDesignSystemEnabled ? h3FontName : h3LegacyFontName,
+    defaultWeight: h3LegacyDefaultWeight,
+    defaultColor: h3LegacyDefaultColor,
+    font: h3LegacyFontName,
     fontStyle: { fontSize: h3FontSize, lineHeight: h3LineHeight }
   });
+
+  return isDesignSystemEnabled ? <H3 {...props} /> : h3Component;
 };
