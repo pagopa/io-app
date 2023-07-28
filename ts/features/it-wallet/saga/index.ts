@@ -1,16 +1,14 @@
 import { takeLatest, call } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 import { CommonActions } from "@react-navigation/native";
-import {
-  itwActivationStart,
-  itwCredentialsAddPid,
-  itwWiaRequest
-} from "../store/actions";
+import { itwActivationStart, itwWiaRequest } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
+import { itwCredentialsAddPid, itwPid } from "../store/actions/credentials";
 import { authenticationSaga } from "./authenticationSaga";
-import { handleCredentialsAddPid } from "./handleCredentials";
-import { handleWiaRequest } from "./handleWiaRequest";
+import { handlePidRequest } from "./pid";
+import { handleWiaRequest } from "./wia";
+import { handleCredentialsAddPid } from "./credentials";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(itwActivationStart, watchItwActivationStart);
@@ -21,7 +19,12 @@ export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(itwWiaRequest.request, handleWiaRequest);
 
   /**
-   * Handles adding a PID to the ITW credentials.
+   * Handles a PID issuing request.
+   */
+  yield* takeLatest(itwPid.request, handlePidRequest);
+
+  /**
+   * Handles adding a PID to the wallet.
    */
   yield* takeLatest(itwCredentialsAddPid.request, handleCredentialsAddPid);
 }
