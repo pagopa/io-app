@@ -1,10 +1,12 @@
 import React from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
+import { Route, useRoute } from "@react-navigation/core";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { PidData } from "@pagopa/io-react-native-cie-pid";
 import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -29,10 +31,18 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { Pictogram } from "../../../../components/core/pictograms";
 
+export type ItwPidPreviewScreenNavigationParams = {
+  pidData: PidData;
+};
+
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
 const ItwPidPreviewScreen = () => {
+  const route =
+    useRoute<
+      Route<"ITW_ACTIVATION_PID_PREVIEW", ItwPidPreviewScreenNavigationParams>
+    >();
   const spacerSize = 32;
   const { present, bottomSheet } = useItwAbortFlow();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -43,7 +53,7 @@ const ItwPidPreviewScreen = () => {
    * Temporary timeout to simulate loading, will be removed in the future.
    */
   useOnFirstRender(() => {
-    dispatch(itwPid.request());
+    dispatch(itwPid.request(route.params.pidData));
   });
 
   /**

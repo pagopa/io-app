@@ -1,6 +1,7 @@
 import { thumbprint } from "@pagopa/io-react-native-jwt";
 import { PID } from "@pagopa/io-react-native-wallet";
 import { getPublicKey, sign } from "@pagopa/io-react-native-crypto";
+import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { walletPidProviderUrl, walletProviderUrl } from "../../../config";
 import { ITW_WIA_KEY_TAG } from "./wia";
 import { generateCryptoKey } from "./keychain";
@@ -15,7 +16,7 @@ export const ITW_PID_KEY_TAG = "ITW_PID_KEY_TAG";
  * @param instanceAttestation - the wallet instance attestation of the current wallet.
  * @returns a PID credential.
  */
-export const getPid = async (instanceAttestation: string) => {
+export const getPid = async (instanceAttestation: string, pidData: PidData) => {
   const walletInstancePublicKey = await getPublicKey(ITW_WIA_KEY_TAG);
   // clientId must be the Wallet Instance public key thumbprint
   const clientId = await thumbprint(walletInstancePublicKey);
@@ -60,10 +61,10 @@ export const getPid = async (instanceAttestation: string) => {
     nonceProofSignature,
     authToken.access_token,
     {
-      birthDate: "1978-12-30",
-      fiscalCode: "AAABBB00A00A000A",
-      name: "NAME",
-      surname: "SURNAME"
+      birthDate: pidData.birthDate,
+      fiscalCode: pidData.fiscalCode,
+      name: pidData.name,
+      surname: pidData.surname
     }
   );
 };
