@@ -1,10 +1,11 @@
+import { PidData } from "@pagopa/io-react-native-cie-pid";
 import I18n from "../../../i18n";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
 export type PidMockType = ReturnType<typeof getPidMock>;
 
-export const getPidMock = () => ({
+export const getPidMock = (pidData?: PidData) => ({
   verified_claims: {
     verification: {
       trust_framework: "eidas",
@@ -25,14 +26,14 @@ export const getPidMock = () => ({
     },
     claims: {
       unique_id: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      given_name: "Anna",
-      family_name: "Verdi",
-      birthdate: "1978-12-30",
+      given_name: pidData?.name ?? "Anna",
+      family_name: pidData?.surname ?? "Verdi",
+      birthdate: pidData?.birthDate ?? "1978-12-30",
       place_of_birth: {
         country: "IT",
         locality: "Rome"
       },
-      tax_id_number: "VRDBNC80A41H501X"
+      tax_id_number: pidData?.fiscalCode ?? "VRDBNC80A41H501X"
     }
   }
 });
