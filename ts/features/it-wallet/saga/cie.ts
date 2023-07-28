@@ -1,4 +1,4 @@
-import cieManager from "@pagopa/react-native-cie";
+import cieManager from "@pagopa/io-react-native-cie-pid";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
