@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, View } from "react-native";
+import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { PID } from "@pagopa/io-react-native-wallet";
+import * as O from "fp-ts/lib/Option";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
@@ -9,15 +12,14 @@ import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIOSelector } from "../../../store/hooks";
-import {
-  ItwWalletActivatedSelector,
-  ItwWalletVcsSelector
-} from "../store/reducers/itwCredentials";
-import PidCredential from "../components/PidCredential";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { ITW_ROUTES } from "../navigation/routes";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
+import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycle";
+import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentials";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import PidCredential from "../components/PidCredential";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -28,9 +30,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation();
-  const isWalletActive = useIOSelector(ItwWalletActivatedSelector);
+  const isItWalletOperational = useIOSelector(
+    itwLifecycleIsOperationalSelector
+  );
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
-  const pid = useIOSelector(ItwWalletVcsSelector);
+  const pid = useIOSelector(ItwCredentialsPidSelector);
+  const [decodedPid, setDecodedPid] = useState<VerifyResult>();
   const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
@@ -38,6 +43,16 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.cgn"),
     I18n.t("features.itWallet.homeScreen.categories.payments")
   ];
+
+  useOnFirstRender(() => {
+    if (O.isSome(pid)) {
+      try {
+        setDecodedPid(PID.SdJwt.decode(pid.value.credential));
+      } catch (err) {
+        setDecodedPid(undefined);
+      }
+    }
+  });
 
   return (
     <TopScreenComponent
@@ -77,7 +92,7 @@ const ItwHomeScreen = () => {
           flexGrow: 1
         }}
       >
-        {!isWalletActive ? (
+        {isItWalletOperational ? (
           <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
             <ItwActionBanner
               title={I18n.t("features.itWallet.innerActionBanner.title")}
@@ -101,8 +116,8 @@ const ItwHomeScreen = () => {
               }
             >
               <PidCredential
-                name={`${pid[0].verified_claims.claims.given_name} ${pid[0].verified_claims.claims.family_name}`}
-                fiscalCode={pid[0].verified_claims.claims.tax_id_number}
+                name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
+                fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
               />
             </Pressable>
             <View
@@ -127,5 +142,6 @@ const ItwHomeScreen = () => {
       </ScrollView>
     </TopScreenComponent>
   );
+  <></>;
 };
 export default ItwHomeScreen;
