@@ -343,7 +343,7 @@ export const AuthSessionPage = () => {
   } else if (O.isNone(maybeKeyTag)) {
     setRequestInfo({
       requestState: "ERROR",
-      errorType: ErrorType.LOGIN_ERROR, // VA AGGIUNTO UN CODICE DI ERRORE (anche dev server)??
+      errorType: ErrorType.LOGIN_ERROR,
       nativeAttempts: requestInfo.nativeAttempts
     });
     trackLollipopIdpLoginFailure(
