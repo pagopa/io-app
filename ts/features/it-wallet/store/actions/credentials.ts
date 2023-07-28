@@ -1,9 +1,5 @@
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
@@ -27,9 +23,11 @@ export const itwPid = createAsyncAction(
 /**
  * Action which adds the PID to the wallet.
  */
-export const itwCredentialsAddPid = createStandardAction(
-  "ITW_CREDENTIAL_ADD_PID"
-)<PidResponse>();
+export const itwCredentialsAddPid = createAsyncAction(
+  "ITW_CREDENTIAL_ADD_PID_REQUEST",
+  "ITW_CREDENTIAL_ADD_PID_SUCCESS",
+  "ITW_CREDENTIAL_ADD_PID_FAILURE"
+)<PidResponse, PidResponse, void>();
 
 /**
  * Type for credentials related actions.

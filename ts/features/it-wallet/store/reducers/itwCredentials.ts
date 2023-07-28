@@ -26,10 +26,19 @@ const reducer = (
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
-    case getType(itwCredentialsAddPid):
+    case getType(itwCredentialsAddPid.request):
+      return {
+        ...state
+      };
+    case getType(itwCredentialsAddPid.success):
       return {
         ...state,
         pid: O.some(action.payload)
+      };
+    case getType(itwCredentialsAddPid.failure):
+      return {
+        ...state,
+        pid: O.none
       };
   }
   return state;
