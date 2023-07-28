@@ -48,7 +48,7 @@ const ItwPidActivationScreen = () => {
     block: true,
     primary: true,
     onPress: () => navigation.navigate(ROUTES.ITWALLET_HOME),
-    title: "Continua" // why plain string?
+    title: I18n.t("global.buttons.continue")
   };
 
   const LoadingScreen = () => (
