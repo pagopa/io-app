@@ -4,6 +4,7 @@
  */
 import * as React from "react";
 import { Alert, BackHandler, NativeEventSubscription } from "react-native";
+import { PidData } from "@pagopa/io-react-native-cie-pid";
 import WebView from "react-native-webview";
 import {
   WebViewHttpErrorEvent,
@@ -27,6 +28,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
+  pidData: PidData;
 };
 
 type OwnProps = {
@@ -210,7 +212,12 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           rightButton={{
             primary: true,
             onPress: () =>
-              this.props.navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW),
+              this.props.navigation.navigate(
+                ITW_ROUTES.ACTIVATION.PID_PREVIEW,
+                {
+                  pidData: this.props.route.params.pidData
+                }
+              ),
             title: I18n.t(
               "features.itWallet.issuing.infoConsent.footer.confirm"
             )

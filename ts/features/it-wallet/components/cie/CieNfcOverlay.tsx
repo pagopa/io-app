@@ -6,7 +6,6 @@ import { Content } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import I18n from "../../../../i18n";
-import { openNFCSettings } from "../../../../utils/cie";
 import { ReduxProps } from "../../../../store/actions/types";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { ScreenContentHeader } from "../../../../components/screens/ScreenContentHeader";
@@ -15,6 +14,7 @@ import { Body } from "../../../../components/core/typography/Body";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/params";
+import { openNFCSettings } from "../../utils/cie";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,

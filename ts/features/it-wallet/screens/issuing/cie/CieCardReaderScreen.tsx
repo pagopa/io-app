@@ -3,7 +3,10 @@
  * TODO: isolate cie event listener as saga
  * TODO: when 100% is reached, the animation end
  */
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import cieManager, {
+  Event as CEvent,
+  CieData
+} from "@pagopa/io-react-native-cie-pid";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
@@ -358,7 +361,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
-  private handleCieSuccess = (cieConsentUri: string) => {
+  private handleCieSuccess = (cieData: string) => {
+    const cieDataParsed: CieData = JSON.parse(cieData);
+    const cieConsentUri = cieDataParsed.url;
+    const pidData = cieDataParsed.pidData;
     if (this.state.readingState === ReadingState.completed) {
       return;
     }
@@ -370,7 +376,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           this.props.navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ACTIVATION.CIE_CONSENT_DATA_USAGE,
             params: {
-              cieConsentUri
+              cieConsentUri,
+              pidData
             }
           });
           // if screen reader is enabled, give more time to read the success message
