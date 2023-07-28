@@ -277,3 +277,9 @@ export const walletProviderUrl: string = pipe(
   NonEmptyString.decode,
   E.getOrElse(() => "https://io-d-wallet-it.azurewebsites.net")
 );
+
+export const walletPidProviderUrl: string = pipe(
+  Config.IT_WALLET_PID_PROVIDER_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://api.eudi-wallet-it-pid-provider.it")
+);

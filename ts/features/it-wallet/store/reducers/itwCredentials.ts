@@ -1,76 +1,55 @@
 import { getType } from "typesafe-actions";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { Action } from "../../../../store/actions/types";
-import { itwCredentialsAddPid, itwCredentialsReset } from "../actions";
-import { PidMockType } from "../../utils/mocks";
-import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
+import { itwCredentialsAddPid } from "../actions/credentials";
 
-type ItwWalletType = {
-  activated: boolean;
-  vcs: Array<PidMockType>;
+type ItwCredentialsType = {
+  pid: O.Option<PidResponse>;
 };
 
-export type ItwWalletState = pot.Pot<ItwWalletType, ItWalletError>;
+export type ItwCredentialsState = ItwCredentialsType;
 
-const emptyState: ItwWalletState = pot.none;
+const emptyState: ItwCredentialsState = { pid: O.none };
 
 /**
- * This reducer handles the requirements check for the IT Wallet activation.
- * It manipulates a pot which maps to an error if the requirements are not met or to true if they are.
- * A saga is attached to the request action to check the requirements.
+ * This reducer handles the credentials state.
+ * Currently it only handles adding the PID to the wallet.
+ * A saga is attached to the itwCredentialsAddPid action which handles the PID issuing.
  * @param state the current state
  * @param action the dispatched action
  * @returns the result state
  */
 const reducer = (
-  state: ItwWalletState = emptyState,
+  state: ItwCredentialsState = emptyState,
   action: Action
-): ItwWalletState => {
+): ItwCredentialsState => {
   switch (action.type) {
     case getType(itwCredentialsAddPid.request):
-      return pot.toLoading(state);
+      return {
+        ...state
+      };
     case getType(itwCredentialsAddPid.success):
-      return pot.some({
-        activated: true,
-        vcs: [action.payload]
-      });
+      return {
+        ...state,
+        pid: O.some(action.payload)
+      };
     case getType(itwCredentialsAddPid.failure):
-      return pot.toError(state, action.payload);
-    case getType(itwCredentialsReset):
-      return emptyState;
+      return {
+        ...state,
+        pid: O.none
+      };
   }
   return state;
 };
 
 /**
- * Selects the itwallet state from the global state.
+ * Selects the PID stored in the wallet.
  * @param state - the global state
- * @returns the itwallet state.
+ * @returns the PID from the wallet.
  */
-export const ItwWalletSelector = (state: GlobalState) =>
-  state.features.itWallet.wallet;
-
-/**
- * Selects the itwallet activated flag from the global state.
- * @param state - the global state
- * @returns the itwallet activated flag.
- */
-export const ItwWalletActivatedSelector = (state: GlobalState) =>
-  pot.getOrElse(
-    pot.map(state.features.itWallet.wallet, w => w.activated),
-    false
-  );
-
-/**
- * Selects the itwallet vcs from the global state.
- * @param state - the global state
- * @returns the itwallet vcs flag.
- */
-export const ItwWalletVcsSelector = (state: GlobalState) =>
-  pot.getOrElse(
-    pot.map(state.features.itWallet.wallet, w => w.vcs),
-    []
-  );
+export const ItwCredentialsPidSelector = (state: GlobalState) =>
+  state.features.itWallet.credentials.pid;
 
 export default reducer;

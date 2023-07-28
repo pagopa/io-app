@@ -1,18 +1,19 @@
 import { SagaIterator } from "redux-saga";
-import { delay, put, take } from "typed-redux-saga/macro";
+import { put, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { CommonActions } from "@react-navigation/native";
-import { itwCredentialsAddPid } from "../store/actions";
+import { itwLifecycleValid } from "../store/actions";
 import {
   identificationRequest,
   identificationSuccess
 } from "../../../store/actions/identification";
-import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
+import I18n from "../../../i18n";
+import { itwCredentialsAddPid } from "../store/actions/credentials";
 
 /*
- * This saga handles adding new credentials to the wallet.
- * Currenly it consists of a delay and then dispatches the success action, due to the credential being mocked.
+ * This saga handles adding a PID to the wallet.
+ * As a side effect, it sets the lifecycle of the wallet to valid.
  */
 export function* handleCredentialsAddPid(
   action: ActionType<typeof itwCredentialsAddPid.request>
@@ -27,7 +28,7 @@ export function* handleCredentialsAddPid(
   const res = yield* take(identificationSuccess);
 
   if (isActionOf(identificationSuccess, res)) {
-    yield* delay(2000);
     yield* put(itwCredentialsAddPid.success(action.payload));
+    yield* put(itwLifecycleValid());
   }
 }
