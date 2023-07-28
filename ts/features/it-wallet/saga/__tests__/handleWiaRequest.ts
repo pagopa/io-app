@@ -2,7 +2,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import * as O from "fp-ts/lib/Option";
 import { itwWiaRequest } from "../../store/actions";
-import { handleWiaRequest } from "../handleWiaRequest";
+import { handleWiaRequest } from "../wia";
 import { idpSelector } from "../../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
 import { getWia } from "../../utils/wia";

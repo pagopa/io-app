@@ -4,7 +4,7 @@ import {
   createAsyncAction
 } from "typesafe-actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
-import { PidMockType } from "../../utils/mocks";
+import { itwCredentialsActions } from "./credentials";
 import { ItwCieAuthenticationActions } from "./cie";
 
 /**
@@ -24,19 +24,24 @@ export const itwWiaRequest = createAsyncAction(
 )<void, string, ItWalletError>();
 
 /**
- * Adds an ITW credential, currently only a mocked PID is supported.
+ * Actions which sets the wallet lifecycle status to operational.
  */
-export const itwCredentialsAddPid = createAsyncAction(
-  "ITW_CREDENTIALS_ADD_PID",
-  "ITW_CREDENTIALS_ADD_PID_SUCCESS",
-  "ITW_REQUIREMENTS_ADD_PID_FAILURE"
-)<PidMockType, PidMockType, ItWalletError>();
+export const itwLifecycleOperational = createStandardAction(
+  "ITW_LIFECYCLE_OPERATIONAL"
+)<void>();
 
 /**
- * Resets the ITW state, deactivating it and deleting all credentials.
+ * Actions which sets the wallet lifecycle status to valid.
  */
-export const itwCredentialsReset = createStandardAction(
-  "ITW_CREDENTIALS_RESET"
+export const itwLifecycleValid = createStandardAction(
+  "ITW_LIFECYCLE_VALID"
+)<void>();
+
+/**
+ * Actions which sets the wallet lifecycle status to deactivated.
+ */
+export const itwLifecycleDeactivated = createStandardAction(
+  "ITW_LIFECYCLE_DEACTIVATED"
 )<void>();
 
 /**
@@ -45,6 +50,8 @@ export const itwCredentialsReset = createStandardAction(
 export type ItWalletActions =
   | ActionType<typeof itwActivationStart>
   | ActionType<typeof itwWiaRequest>
-  | ActionType<typeof itwCredentialsAddPid>
-  | ActionType<typeof itwCredentialsReset>
+  | ActionType<typeof itwLifecycleOperational>
+  | ActionType<typeof itwLifecycleValid>
+  | ActionType<typeof itwLifecycleDeactivated>
+  | itwCredentialsActions
   | ItwCieAuthenticationActions;
