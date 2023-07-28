@@ -34,7 +34,7 @@ const h3LegacyDefaultWeight: AllowedWeight = "Bold";
 export const NewH3: React.FC<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const h3Component = useTypographyFactory<AllowedWeight, AllowedColors>({
+  const legacyH3Component = useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: h3LegacyDefaultWeight,
     defaultColor: h3LegacyDefaultColor,
@@ -42,5 +42,5 @@ export const NewH3: React.FC<OwnProps> = props => {
     fontStyle: { fontSize: h3FontSize, lineHeight: h3LineHeight }
   });
 
-  return isDesignSystemEnabled ? <H3 {...props} /> : h3Component;
+  return isDesignSystemEnabled ? <H3 {...props} /> : legacyH3Component;
 };

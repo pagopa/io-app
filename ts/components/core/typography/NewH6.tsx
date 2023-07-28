@@ -34,7 +34,7 @@ const h6LegacyDefaultWeight: AllowedWeight = "SemiBold";
 export const NewH6: React.FC<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const h6Component = useTypographyFactory<AllowedWeight, AllowedColors>({
+  const legacyH6Component = useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: h6LegacyDefaultWeight,
     defaultColor: h6DefaultColor,
@@ -42,5 +42,5 @@ export const NewH6: React.FC<OwnProps> = props => {
     fontStyle: { fontSize: h6FontSize, lineHeight: h6LineHeight }
   });
 
-  return isDesignSystemEnabled ? <H6 {...props} /> : h6Component;
+  return isDesignSystemEnabled ? <H6 {...props} /> : legacyH6Component;
 };

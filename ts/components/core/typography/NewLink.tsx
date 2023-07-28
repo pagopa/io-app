@@ -38,7 +38,10 @@ export const linkDefaultWeight: AllowedWeight = "Bold";
 export const NewLink: React.FunctionComponent<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const linkComponent = useTypographyFactory<AllowedWeight, AllowedColors>({
+  const legacyLinkComponent = useTypographyFactory<
+    AllowedWeight,
+    AllowedColors
+  >({
     accessibilityRole: props.onPress ? "link" : undefined,
     ...props,
     defaultWeight: linkLegacyDefaultWeight,
@@ -52,5 +55,5 @@ export const NewLink: React.FunctionComponent<OwnProps> = props => {
     }
   });
 
-  return isDesignSystemEnabled ? <Link {...props} /> : linkComponent;
+  return isDesignSystemEnabled ? <Link {...props} /> : legacyLinkComponent;
 };

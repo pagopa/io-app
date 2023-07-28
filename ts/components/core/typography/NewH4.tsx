@@ -34,7 +34,7 @@ const h2LegacyDefaultWeight: AllowedWeight = "SemiBold";
 export const NewH4: React.FC<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const h4Component = useTypographyFactory<AllowedWeight, AllowedColors>({
+  const legacyH4Component = useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: h2LegacyDefaultWeight,
     defaultColor: h2LegacyDefaultColor,
@@ -42,5 +42,5 @@ export const NewH4: React.FC<OwnProps> = props => {
     fontStyle: { fontSize: h2FontSize, lineHeight: h2LineHeight }
   });
 
-  return isDesignSystemEnabled ? <H4 {...props} /> : h4Component;
+  return isDesignSystemEnabled ? <H4 {...props} /> : legacyH4Component;
 };
