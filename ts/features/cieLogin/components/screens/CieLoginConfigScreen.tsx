@@ -14,6 +14,43 @@ import CiePinpad from "../../../../components/CiePinpad";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import CieLoginConfigScreenContent from "./CieLoginConfigScreenContent";
 
+type PinViewProps = {
+  pin: string;
+  setPin: (pin: string) => void;
+  onSubmit: (pin: string) => void;
+};
+const PinView = (props: PinViewProps) => (
+  <>
+    <CiePinpad
+      pin={props.pin}
+      pinLength={6}
+      onPinChanged={props.setPin}
+      InputAccessoryViewID="pinInputId"
+      onSubmit={props.onSubmit}
+    />
+    {Platform.OS === "ios" && (
+      <InputAccessoryView
+        backgroundColor={IOColors.greyUltraLight}
+        nativeID={"pinInputId"}
+      >
+        <View
+          style={[
+            IOStyles.flex,
+            IOStyles.horizontalContentPadding,
+            { justifyContent: "flex-end", flexDirection: "row" }
+          ]}
+        >
+          <Button
+            onPress={() => props.onSubmit(props.pin)}
+            title="Sblocca"
+            accessibilityLabel="Premi qui per sbloccare"
+          />
+        </View>
+      </InputAccessoryView>
+    )}
+  </>
+);
+
 const CieLoginConfigScreen = () => {
   const [locked, setLockec] = React.useState(true);
   const [pin, setPin] = React.useState("");
@@ -33,35 +70,7 @@ const CieLoginConfigScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         <ContentWrapper>
           {locked ? (
-            <>
-              <CiePinpad
-                pin={pin}
-                pinLength={6}
-                onPinChanged={setPin}
-                InputAccessoryViewID="pinInputId"
-                onSubmit={onSubmit}
-              />
-              {Platform.OS === "ios" && (
-                <InputAccessoryView
-                  backgroundColor={IOColors.greyUltraLight}
-                  nativeID={"pinInputId"}
-                >
-                  <View
-                    style={[
-                      IOStyles.flex,
-                      IOStyles.horizontalContentPadding,
-                      { justifyContent: "flex-end", flexDirection: "row" }
-                    ]}
-                  >
-                    <Button
-                      onPress={() => onSubmit(pin)}
-                      title="Sblocca"
-                      accessibilityLabel="Premi qui per sbloccare"
-                    />
-                  </View>
-                </InputAccessoryView>
-              )}
-            </>
+            <PinView pin={pin} setPin={setPin} onSubmit={onSubmit} />
           ) : (
             <ScrollView>
               <CieLoginConfigScreenContent />
