@@ -281,5 +281,5 @@ export const walletProviderUrl: string = pipe(
 export const walletPidProviderUrl: string = pipe(
   Config.IT_WALLET_PID_PROVIDER_URL,
   NonEmptyString.decode,
-  E.getOrElse(() => "https://api.wakala.it/it-pid-provider/")
+  E.getOrElse(() => "https://api.eudi-wallet-it-pid-provider.it")
 );
