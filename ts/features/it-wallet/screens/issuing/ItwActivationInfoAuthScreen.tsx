@@ -15,7 +15,7 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwWiaSelector } from "../../store/reducers/itwWia";
+import { itwWiaStateSelector } from "../../store/reducers/itwWia";
 import { itwWiaRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ItWalletError } from "../../utils/errors/itwErrors";
@@ -25,10 +25,13 @@ import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
+/**
+ * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
+ */
 const ItwActivationInfoAuthScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
-  const wia = useIOSelector(itwWiaSelector);
+  const wia = useIOSelector(itwWiaStateSelector);
 
   useOnFirstRender(() => {
     dispatch(itwWiaRequest.request());
