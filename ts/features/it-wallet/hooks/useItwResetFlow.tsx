@@ -6,7 +6,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { H4 } from "../../../components/core/typography/H4";
-import { itwCredentialsReset } from "../store/actions";
+import { itwLifecycleOperational } from "../store/actions";
 import { IOColors } from "../../../components/core/variables/IOColors";
 
 /**
@@ -32,7 +32,7 @@ export const useItwResetFlow = () => {
       }}
       rightButton={{
         onPress: () => {
-          dispatch(itwCredentialsReset());
+          dispatch(itwLifecycleOperational());
           dismiss();
         },
         primary: true,
