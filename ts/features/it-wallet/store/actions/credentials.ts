@@ -1,8 +1,7 @@
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import {
   ActionType,
-  createAsyncAction,
-  createStandardAction
+  createAsyncAction
 } from "typesafe-actions";
 import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { ItWalletError } from "../../utils/errors/itwErrors";
