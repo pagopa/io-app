@@ -77,7 +77,7 @@ const ItwActivationInfoAuthScreen = () => {
     const continueButtonProps = {
       block: true,
       primary: true,
-      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW),
+      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (
