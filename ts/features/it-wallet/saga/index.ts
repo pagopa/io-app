@@ -26,7 +26,7 @@ export function* watchItwSaga(): SagaIterator {
   /**
    * Handles adding a PID to the wallet.
    */
-  yield* takeLatest(itwCredentialsAddPid, handleCredentialsAddPid);
+  yield* takeLatest(itwCredentialsAddPid.request, handleCredentialsAddPid);
 }
 
 function* watchItwActivationStart(): SagaIterator {
