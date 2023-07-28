@@ -20,5 +20,7 @@ export type ItWalletMappedError = {
  */
 export enum ItWalletErrorTypes {
   NFC_NOT_SUPPORTED = "NFC_NOT_SUPPORTED",
-  WIA_ISSUING_ERROR = "WIA_ISSUING_ERROR" // not mapped yet
+  WIA_ISSUING_ERROR = "WIA_ISSUING_ERROR", // not mapped yet,
+  PID_ISSUING_ERROR = "PID_ISSUING_ERR", // not mapped yet
+  PID_DECODING_ERROR = "PID_DECODING_ERROR" // not mapped yet
 }
