@@ -159,7 +159,7 @@ export const withTrailingPoliceCarLightEmojii = (
   visible: boolean = true
 ) => {
   if (visible) {
-    return `${text} 🚨`;
+    return `${text} \u{1F6A8}`;
   } else {
     return text;
   }
