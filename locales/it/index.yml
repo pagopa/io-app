@@ -172,6 +172,7 @@ global:
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
+    copy: Copia
   navigator:
     messages: Messaggi
     wallet: Portafoglio
@@ -455,6 +456,8 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    walletPlayground:
+      titleSection: "New Wallet Playground"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -1201,6 +1204,11 @@ wallet:
           unknown:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+    generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
+    success:
+      title: "La carta è stata aggiunta!"
+      continueButton: "Continua"
+    failure: "Errore durante l'aggiunta della carta"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
