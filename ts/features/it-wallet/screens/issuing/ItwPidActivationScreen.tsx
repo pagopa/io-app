@@ -33,7 +33,7 @@ const ItwPidActivationScreen = () => {
       pid,
       O.fold(
         () => setIsError(true),
-        some => dispatch(itwCredentialsAddPid(some))
+        some => dispatch(itwCredentialsAddPid.request(some))
       )
     );
   });
