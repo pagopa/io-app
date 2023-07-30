@@ -758,7 +758,7 @@ onboarding:
       invalid: "Der Code ist ungültig"
       match: "Der Code stimmt nicht überein"
     policy:
-      headerTitle: "Aus Sicherheitsgründen darf der Code nicht enthalten:"
+      headerTitle: "Aus Sicherheitsgründen darf der Code folgendes nicht enthalten:"
       first: "Wiederholungen von Zahlen (z.B. 000000)"
       second: "fortlaufende Nummern (z.B. 123456 oder 654321)"
   alert:
