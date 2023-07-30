@@ -795,11 +795,24 @@ onboarding:
     contextualHelpTitle: "Push-Benachrichtigungen"
   infoConsent:
     headerTitle: "IO einrichten"
-    title: "Möchtest du Push-Benachrichtigungen aktivieren?"
-    subTitle: "Um Push-Benachrichtigungen von IO zu erhalten, musst du sie in den Einstellungen von iOS aktiveren. So geht's:"
-    openSettings: "Öffne die Einstellungen von iOS"
+    title: "Aktiviere Push-Benachrichtigungen, um keine wichtigen Nachrichten zu verpassen!"
+    subTitle: "Dazu musst du die Einstellungen in den Systemeinstellungen deines Geräts ändern."
+    openSettings: "Einstellungen aufrufen"
     continue: "Jetzt nicht"
     contextualHelpTitle: "Push-Benachrichtigungen"
+    instructions:
+      title: "So geht's:"
+      label: "Schritt"
+      ios:
+        step1: "Gehe zu “Einstellungen”"
+        step2: "Wähle “Benachrichtigungen”"
+        step3: "Aktiviere “Benachrichtigungen zulassen”"
+      android:
+        step1: "Gehe zu “Einstellungen”"
+        step2: "Wähle “Apps”"
+        step3: "Wähle “IO”"
+        step4: "Wähle “Benachrichtigungen”"
+        step5: "Aktiviere “Benachrichtigungen zulassen”"
 forms:
   validators:
     required: "Erforderlicher Wert"
