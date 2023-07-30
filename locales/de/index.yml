@@ -750,7 +750,7 @@ onboarding:
   pin:
     headerTitle: "IO einrichten"
     title: "Entsperrcode"
-    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige Operationen zu bestätigen."
+    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Operationen zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
@@ -758,9 +758,9 @@ onboarding:
       invalid: "Der Code ist ungültig"
       match: "Der Code stimmt nicht überein"
     policy:
-      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
-      first: ripetizioni di numeri (es. 000000)
-      second: numeri in sequenza (es. 123456 o 654321)
+      headerTitle: "Aus Sicherheitsgründen darf der Code nicht enthalten:"
+      first: "Wiederholungen von Zahlen (z.B. 000000)"
+      second: "fortlaufende Nummern (z.B. 123456 oder 654321)"
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
