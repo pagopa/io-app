@@ -169,7 +169,7 @@ global:
   navigator:
     messages: "Mitteilungen"
     wallet: "Konto"
-    scan: "Scan"
+    scan: "Scannen"
     documents: "Dokumente"
     profile: "Profil"
     services: "Dienste"
@@ -755,7 +755,7 @@ onboarding:
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
     errors:
-      invalid: Il codice non è valido
+      invalid: "Der Code ist ungültig"
       match: "Der Code stimmt nicht überein"
     policy:
       headerTitle: "Per sicurezza, il codice non dovrà contenere:"
