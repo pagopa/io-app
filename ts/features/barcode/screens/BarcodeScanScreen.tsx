@@ -37,8 +37,6 @@ const BarcodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
-  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
