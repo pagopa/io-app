@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, PixelRatio, Platform } from "react-native";
+import { PixelRatio, Platform, StyleSheet, Text, View } from "react-native";
 import { makeFontStyleObject } from "./fonts";
 import { IOColors } from "./variables/IOColors";
 
@@ -104,8 +104,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Official badge component
-@deprecated("Use the new Badge component instead")
+ * @deprecated Use the Badge component from the @pagopa/io-app-design-system library instead.
  */
 export const IOBadge = ({
   text,

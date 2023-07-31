@@ -1,18 +1,18 @@
+import { Badge } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { IOBadge } from "../../../components/core/IOBadge";
-import { VSpacer, HSpacer } from "../../../components/core/spacer/Spacer";
+import { Tag } from "../../../components/core/Tag";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOTagRadius } from "../../../components/core/variables/IOShapes";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CustomBadge from "../../../components/ui/CustomBadge";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { Tag } from "../../../components/core/Tag";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { IOTagRadius } from "../../../components/core/variables/IOShapes";
-import { Badge } from "../../../components/core/Badge";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   fakeNavItem: {
