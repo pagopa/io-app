@@ -14,6 +14,7 @@
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
 #import <react/config/ReactNativeConfig.h>
+#import <RNScreens/UIViewController+RNScreens.h> // react-native-screens (NativeStack)
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {

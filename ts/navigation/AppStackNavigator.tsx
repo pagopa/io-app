@@ -68,6 +68,7 @@ const IOTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    primary: IOColors.blue,
     background: IOColors.white
   }
 };
