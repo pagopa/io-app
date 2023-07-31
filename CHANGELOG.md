@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.0-rc.5](https://github.com/pagopa/io-app/compare/2.39.0-rc.4...2.39.0-rc.5) (2023-07-27)
+
+
+### Features
+
+* [[IOCOM-380](https://pagopa.atlassian.net/browse/IOCOM-380)] Update mixpanel opt-in events ([#4834](https://github.com/pagopa/io-app/issues/4834)) ([0a2c6dc](https://github.com/pagopa/io-app/commit/0a2c6dcb40696118f31fcfa52563d632653d6cc5))
+
+
+### Bug Fixes
+
+* [[IOBP-156](https://pagopa.atlassian.net/browse/IOBP-156)] Fix bug in initiative details screen ([#4843](https://github.com/pagopa/io-app/issues/4843)) ([e369195](https://github.com/pagopa/io-app/commit/e3691951cc2ce4adf6d63c7a152764b522f54766))
+* [[IOBP-98](https://pagopa.atlassian.net/browse/IOBP-98)] Add barcode scan result feedback ([#4840](https://github.com/pagopa/io-app/issues/4840)) ([36ed148](https://github.com/pagopa/io-app/commit/36ed1481c817297b5f2fb9832ad2b8bc5a0fcbee))
+
+
+### Chores
+
+* [[IOAPPFD0-125](https://pagopa.atlassian.net/browse/IOAPPFD0-125)] Fix `Divider` rendering issue on Android devices ([#4768](https://github.com/pagopa/io-app/issues/4768)) ([70618c3](https://github.com/pagopa/io-app/commit/70618c3b4c3453edfafcd8c595f71fcfb1378642))
+* [[IOBP-130](https://pagopa.atlassian.net/browse/IOBP-130)] A11y for transactions with negative amount ([#4839](https://github.com/pagopa/io-app/issues/4839)) ([650d914](https://github.com/pagopa/io-app/commit/650d914870bc8cbba0cbf45e3fdc2fb528be19d2))
+* [[IOBP-141](https://pagopa.atlassian.net/browse/IOBP-141)] Fix CGN_MERCHANT_DETAILS scrollView padding ([#4831](https://github.com/pagopa/io-app/issues/4831)) ([2582b97](https://github.com/pagopa/io-app/commit/2582b970fc6f10ed3977cb4438cfb4fcef89575b))
+* [[IOBP-144](https://pagopa.atlassian.net/browse/IOBP-144)] Add new `TabNavigation` component ([#4828](https://github.com/pagopa/io-app/issues/4828)) ([d001fb4](https://github.com/pagopa/io-app/commit/d001fb46ca2618aec5d11859330cda6792370e7d))
+* [[IOBP-97](https://pagopa.atlassian.net/browse/IOBP-97)] Add `TabNavigation` component to barcode scan screen ([#4841](https://github.com/pagopa/io-app/issues/4841)) ([0c6fc07](https://github.com/pagopa/io-app/commit/0c6fc07c3be215445e1b47a0eac74af0724c5a0d))
+* Add fast login deploy flow ([d3615d7](https://github.com/pagopa/io-app/commit/d3615d787d1f5493311dcea21567c870051ea6e8))
+* cange tag regexp ([7cf10f4](https://github.com/pagopa/io-app/commit/7cf10f4543be9b58b33ade1c2208edaba3e42aff))
+* Enable fast login local FF ([16be83a](https://github.com/pagopa/io-app/commit/16be83a193015b770ee3bcf88e613abbed1b8216))
+
+## [2.39.0-rc.4](https://github.com/pagopa/io-app/compare/2.39.0-rc.3...2.39.0-rc.4) (2023-07-26)
+
+
+### Features
+
+* [[IOCOM-375](https://pagopa.atlassian.net/browse/IOCOM-375)] Add `android.permission.POST_NOTIFICATIONS` permission ([#4807](https://github.com/pagopa/io-app/issues/4807)) ([1bdd571](https://github.com/pagopa/io-app/commit/1bdd571d62dd41f65f0e74f359cc1c4390289868))
+* [[IOCOM-377](https://pagopa.atlassian.net/browse/IOCOM-377)] Asking notification permission on Android 13 and higher ([#4825](https://github.com/pagopa/io-app/issues/4825)) ([54cbce5](https://github.com/pagopa/io-app/commit/54cbce5157d7284c75266f2fb17d17432f2dfcec))
+* [[IOCOM-378](https://pagopa.atlassian.net/browse/IOCOM-378)] Update of the instruction list in the `OnboardingNotificationsInfoScreenConsent` ([#4832](https://github.com/pagopa/io-app/issues/4832)) ([d5c457f](https://github.com/pagopa/io-app/commit/d5c457f0e52aae194bc8e36027ab11f19a13eb00))
+
+
+### Bug Fixes
+
+* [[IOPID-498](https://pagopa.atlassian.net/browse/IOPID-498)] Added function to set language on startup ([#4823](https://github.com/pagopa/io-app/issues/4823)) ([22351b4](https://github.com/pagopa/io-app/commit/22351b426ddcef76ae8394b3f37dfb1a8184abc7))
+
+
+### Chores
+
+* [[IOAPPFD0-127](https://pagopa.atlassian.net/browse/IOAPPFD0-127)] Add new toast notification component ([#4791](https://github.com/pagopa/io-app/issues/4791)) ([b225bf2](https://github.com/pagopa/io-app/commit/b225bf2daf404a4524ddc5fc284bfc1abf069a2f))
+* [[IOBP-140](https://pagopa.atlassian.net/browse/IOBP-140)] Fix fruition and onboarding status dates in IDPay initiative details screen ([#4800](https://github.com/pagopa/io-app/issues/4800)) ([df23045](https://github.com/pagopa/io-app/commit/df23045cce52fe59891049e4b890a9f3baf56b72))
+* [[IOBP-142](https://pagopa.atlassian.net/browse/IOBP-142)] Removal of NativeBase in InitiativeSettings ([#4827](https://github.com/pagopa/io-app/issues/4827)) ([2fccb55](https://github.com/pagopa/io-app/commit/2fccb55395abfd3cacf7e81862e6c1378cd7eb31))
+* [[IOBP-143](https://pagopa.atlassian.net/browse/IOBP-143)] Add new `TabItem` component ([#4822](https://github.com/pagopa/io-app/issues/4822)) ([a8f7008](https://github.com/pagopa/io-app/commit/a8f7008662ce0263283487b96e293e579b8bdbbc))
+* Fix react-native-vision-camera ([#4833](https://github.com/pagopa/io-app/issues/4833)) ([85bc6dc](https://github.com/pagopa/io-app/commit/85bc6dc103223fd7c863c6c77148a4df607e3fd4))
+* **deps:** bump aiohttp from 3.8.4 to 3.8.5 in /scripts/check_urls ([#4824](https://github.com/pagopa/io-app/issues/4824)) ([fa136e5](https://github.com/pagopa/io-app/commit/fa136e57e5127229b27e315e9a6f1fd0b3067dba))
+* **deps:** bump word-wrap from 1.2.3 to 1.2.5 ([#4830](https://github.com/pagopa/io-app/issues/4830)) ([a8b33cc](https://github.com/pagopa/io-app/commit/a8b33cc7be6385d81a02eae71751007c9c3177a7)), closes [jonschlinkert/word-wrap#24](https://github.com/jonschlinkert/word-wrap/issues/24) [jonschlinkert/word-wrap#41](https://github.com/jonschlinkert/word-wrap/issues/41) [jonschlinkert/word-wrap#33](https://github.com/jonschlinkert/word-wrap/issues/33) [jonschlinkert/word-wrap#42](https://github.com/jonschlinkert/word-wrap/issues/42) [jonschlinkert/word-wrap#24](https://github.com/jonschlinkert/word-wrap/issues/24) [jonschlinkert/word-wrap#41](https://github.com/jonschlinkert/word-wrap/issues/41) [jonschlinkert/word-wrap#33](https://github.com/jonschlinkert/word-wrap/issues/33) [#42](https://github.com/pagopa/io-app/issues/42) [#41](https://github.com/pagopa/io-app/issues/41)
+* [[IOPID-517](https://pagopa.atlassian.net/browse/IOPID-517)] Fix what's new persistence ([#4829](https://github.com/pagopa/io-app/issues/4829)) ([d67b37f](https://github.com/pagopa/io-app/commit/d67b37f4ad5748cf46d47bfc511ae76da36475d6))
+
 ## [2.39.0-rc.3](https://github.com/pagopa/io-app/compare/2.39.0-rc.2...2.39.0-rc.3) (2023-07-21)
 
 
