@@ -1704,6 +1704,31 @@ messageDetails:
   sendEmail: "Sende eine E-Mail"
   write: "Schreibe uns"
   id: "ID:"
+  attachments:
+    loading: "Laden des Dokuments..."
+    badFormat: "Das Format des Anhangs wird nicht unterstützt. Kontaktiere den Absender"
+    corruptedFile: "Der Anhang ist beschädigt und kann nicht geöffnet werden. Kontaktiere den Absender"
+    downloadFailed: "Der Anhang ist derzeit nicht verfügbar. Bitte versuche es erneut oder kontaktiere den Absender"
+    showPreview: "Vorschau anzeigen"
+    unavailable:
+      firstPart: "Die Anhänge sind nicht mehr verfügbar."
+      secondPart: "Kontaktiere den Absender"
+      thirdPart: " für weitere Informationen."
+    failing:
+      details: "Der Anhang konnte nicht heruntergeladen werden. Bitte versuche es erneut oder öffne eine Ticket"
+messagePDFPreview:
+  title: "PDF-Vorschau"
+  singleBtn: "Speichern oder freigeben"
+  open: "Öffnen"
+  save: "Speichern"
+  savedAtLocation: "Das Dokument {{name}} wurde im Ordner Download gespeichert."
+  errors:
+    previewing:
+      title: "Keine Vorschau verfügbar"
+      body: "Um das Dokument anzusehen, lade es herunter und öffne es mit einer PDF-App."
+    sharing: "Beim Freigeben des Dokuments ist ein Fehler aufgetreten."
+    opening: "Beim Öffnen des Dokuments ist ein Fehler aufgetreten. Möglicherweise hast du keine PDF-App installiert."
+    saving: "Beim Speichern des Dokuments ist ein Fehler aufgetreten."
 notifications:
   installation:
     errorTitle: "Push-Benachrichtigungen"
