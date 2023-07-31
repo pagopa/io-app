@@ -29,13 +29,14 @@ import { DSTypography } from "../core/DSTypography";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSGradientScroll } from "../core/DSGradientScroll";
+import { DSFullScreenModal } from "../core/DSFullScreenModal";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
+import { DSCards } from "../core/DSCards";
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
-import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
-import { DSCards } from "../core/DSCards";
-import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
@@ -287,6 +288,14 @@ const DesignSystemMainStack = () => (
       name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
       component={DSEdgeToEdgeArea}
       options={{ headerShown: false }}
+    />
+
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.route}
+      component={DSGradientScroll}
+      options={{
+        headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.title
+      }}
     />
 
     {/* LEGACY */}
