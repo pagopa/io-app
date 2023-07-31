@@ -135,7 +135,7 @@ const InitiativeSettingsComponent = (props: Props) => {
           )
         };
         const areActionsRequired =
-          InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT ||
+          status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT ||
           status === InitiativeStatusEnum.NOT_REFUNDABLE;
         return areActionsRequired ? (
           <ListItemNavAlert
