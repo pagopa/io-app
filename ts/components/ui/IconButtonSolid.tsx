@@ -10,10 +10,10 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
+import { AnimatedIcon, IOIcons } from "@pagopa/io-app-design-system";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
-import { AnimatedIcon, IOIcons } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";

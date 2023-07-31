@@ -14,7 +14,7 @@ import Animated, {
   interpolate,
   Extrapolate
 } from "react-native-reanimated";
-import { Icon, IOIcons } from "../core/icons";
+import { Icon, IOIcons } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";

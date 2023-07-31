@@ -9,8 +9,8 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import { IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
-import { IOIcons, Icon } from "../core/icons";
 import { HSpacer } from "../core/spacer/Spacer";
 import { LabelHeader } from "../core/typography/LabelHeader";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";

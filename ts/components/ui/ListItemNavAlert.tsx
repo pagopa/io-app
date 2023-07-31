@@ -16,7 +16,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import { Icon } from "../core/icons";
+import { Icon } from "@pagopa/io-app-design-system";
 import {
   IOListItemStyles,
   IOListItemVisualParams,

@@ -1,6 +1,6 @@
 import { ColorValue, View } from "react-native";
 import React from "react";
-import { AnimatedIcon, IONavIcons } from "../core/icons";
+import { AnimatedIcon, IONavIcons } from "@pagopa/io-app-design-system";
 import CustomBadge from "./CustomBadge";
 
 type TabIconComponent = {

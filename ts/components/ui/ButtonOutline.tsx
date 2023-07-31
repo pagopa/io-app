@@ -16,6 +16,12 @@ import Animated, {
   interpolateColor,
   useAnimatedProps
 } from "react-native-reanimated";
+import {
+  AnimatedIcon,
+  IOIconSizeScale,
+  IOIcons,
+  IconClassComponent
+} from "@pagopa/io-app-design-system";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import {
@@ -26,12 +32,6 @@ import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import {
-  AnimatedIcon,
-  IOIconSizeScale,
-  IOIcons,
-  IconClassComponent
-} from "../core/icons/Icon";
 import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonOutline = WithTestID<{

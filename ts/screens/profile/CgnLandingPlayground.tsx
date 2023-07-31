@@ -1,6 +1,7 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -9,7 +10,6 @@ import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Icon } from "../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },

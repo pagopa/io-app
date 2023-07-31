@@ -2,12 +2,12 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOIcons, Icon } from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
 import { VSpacer } from "./core/spacer/Spacer";
 import { H3 } from "./core/typography/H3";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import { IOColors } from "./core/variables/IOColors";
-import { IOIcons, Icon } from "./core/icons";
 
 type Props = Readonly<{
   itemTitle: string;

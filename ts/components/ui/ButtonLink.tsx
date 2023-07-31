@@ -16,17 +16,17 @@ import Animated, {
   interpolateColor,
   useAnimatedProps
 } from "react-native-reanimated";
-import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOButtonStyles } from "../core/variables/IOStyles";
-import { makeFontStyleObject } from "../core/fonts";
-import { WithTestID } from "../../types/WithTestID";
 import {
   AnimatedIcon,
   IOIconSizeScale,
   IOIcons,
   IconClassComponent
-} from "../core/icons/Icon";
+} from "@pagopa/io-app-design-system";
+import { IOColors } from "../core/variables/IOColors";
+import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
+import { IOButtonStyles } from "../core/variables/IOStyles";
+import { makeFontStyleObject } from "../core/fonts";
+import { WithTestID } from "../../types/WithTestID";
 import { HSpacer } from "../core/spacer/Spacer";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";

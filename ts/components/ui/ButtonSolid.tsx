@@ -15,6 +15,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
+import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
@@ -25,7 +26,6 @@ import {
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonSolid = WithTestID<{

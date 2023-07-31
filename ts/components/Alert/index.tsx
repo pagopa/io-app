@@ -14,6 +14,7 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
 import {
@@ -21,7 +22,6 @@ import {
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../core/variables/IOColors";
-import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
