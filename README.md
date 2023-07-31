@@ -156,6 +156,10 @@ Because different platforms have different types of Permissions below we have tw
       <td>DOWNLOAD_WITHOUT_NOTIFICATION</td>
       <td>Allows the app to download files in background without promping a notification.</td>
     </tr>
+    <tr>
+      <td>POST_NOTIFICATIONS</td>
+      <td>Allows the app to post notifications. Used for push notification.</td>
+    </tr>
   </table>                                     
 
 Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.

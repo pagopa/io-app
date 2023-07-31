@@ -9,7 +9,7 @@ import { VSpacer } from "../../../core/spacer/Spacer";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
-import { useInteractiveSpringAnimation } from "../../utils/hooks/useBaseSpringAnimation";
+import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
 
 type RenderData = {
   iconName: IOLogoPaymentType | undefined;
@@ -159,7 +159,7 @@ const PressableBase = (
   >
 ) => {
   const { onPressIn, onPressOut, animatedScaleStyle } =
-    useInteractiveSpringAnimation();
+    useSpringPressScaleAnimation();
   const { onCardPress, testID, accessibilityLabel, children } = props;
   return (
     <Pressable

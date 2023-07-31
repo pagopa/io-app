@@ -540,7 +540,7 @@ authentication:
         hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
       title: "Deine Sitzung ist abgelaufen"
-      body: "Aus Sicherheitsgründen bitten wir dich 30 Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
+      body: "Aus Sicherheitsgründen bitten wir dich {{days}} Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
     cie_unsupported:
       title: "Anmeldung mit CIE nicht möglich"
       os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
@@ -797,8 +797,6 @@ onboarding:
     headerTitle: "IO einrichten"
     title: "Möchtest du Push-Benachrichtigungen aktivieren?"
     subTitle: "Um Push-Benachrichtigungen von IO zu erhalten, musst du sie in den Einstellungen von iOS aktiveren. So geht's:"
-    instruction1: "1. Wähle “Benachrichtigungen”"
-    instruction2: "2. Aktiviere “Benachrichtigungen zulassen”"
     openSettings: "Öffne die Einstellungen von iOS"
     continue: "Jetzt nicht"
     contextualHelpTitle: "Push-Benachrichtigungen"

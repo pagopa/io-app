@@ -9,11 +9,14 @@ import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
   IdpayTimelinePageGetPayloadType,
-  idpayTimelinePageGet
+  idpayTimelinePageGet,
+  idPayOnboardingStatusGet,
+  IdPayOnboardingStatusGetPayloadType
 } from "../store/actions";
 import { handleGetBeneficiaryDetails } from "./handleGetBeneficiaryDetails";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
 import { handleGetTimelinePage } from "./handleGetTimelinePage";
+import { handleGetOnboardingStatus } from "./handleGetOnboardingStatus";
 
 /**
  * Handle IDPAY initiative requests
@@ -61,6 +64,20 @@ export function* watchIDPayInitiativeDetailsSaga(
       yield* call(
         handleGetBeneficiaryDetails,
         idPayClient.getInitiativeBeneficiaryDetail,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeLatest(
+    idPayOnboardingStatusGet.request,
+    function* (action: { payload: IdPayOnboardingStatusGetPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idPayOnboardingStatusGet.failure);
+      yield* call(
+        handleGetOnboardingStatus,
+        idPayClient.onboardingStatus,
         token,
         preferredLanguage,
         action.payload

@@ -111,8 +111,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -182,14 +182,14 @@ Array [
       }
       weight="SemiBold"
     >
-      -
+      01/02/2023
     </Text>
   </View>,
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -265,8 +265,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -489,8 +489,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -566,8 +566,8 @@ Array [
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,
@@ -750,14 +750,14 @@ Array [
       }
       weight="SemiBold"
     >
-      -
+      01 Feb 2023, 12:00
     </Text>
   </View>,
   <View
     style={
       Object {
-        "backgroundColor": "#E8EBF1",
-        "height": 1,
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
       }
     }
   />,

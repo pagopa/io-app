@@ -25,7 +25,7 @@ import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
 
@@ -77,7 +77,12 @@ type IOBarcodeFileReaderConfiguration = {
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
-  formats?: Array<IOBarcodeFormat>;
+  barcodeFormats?: Array<IOBarcodeFormat>;
+  /**
+   * Accepted barcode types that can be detected. Leave empty to accept all types.
+   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   */
+  barcodeTypes?: Array<IOBarcodeType>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -127,12 +132,14 @@ const imageGenerationTask = (
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
  * @param imageUri
- * @param acceptedFormats The accepted formats of the barcodes
+ * @param barcodeFormats The accepted formats of the barcodes
+ * @param acceptedTypes The accepted types of the barcodes
  * @returns
  */
 const imageDecodingTask = (
   imageUri: string,
-  acceptedFormats?: Array<IOBarcodeFormat>
+  barcodeFormats?: Array<IOBarcodeFormat>,
+  barcodeTypes?: Array<IOBarcodeType>
 ): TE.TaskEither<BarcodeFailure, IOBarcode> =>
   pipe(
     qrCodeDetectionTask(imageUri),
@@ -146,7 +153,7 @@ const imageDecodingTask = (
     TE.chain(result =>
       pipe(
         convertToIOBarcodeFormat(result.type),
-        O.filter(format => acceptedFormats?.includes(format) ?? true),
+        O.filter(format => barcodeFormats?.includes(format) ?? true),
         O.map(format => [result, format] as const),
         TE.fromOption<BarcodeFailure>(() => ({ reason: "UNSUPPORTED_FORMAT" }))
       )
@@ -159,9 +166,7 @@ const imageDecodingTask = (
         TE.fromOption<BarcodeFailure>(() => ({ reason: "BARCODE_NOT_FOUND" })),
         TE.chain(content =>
           pipe(
-            content,
-            O.of,
-            O.chain(decodeIOBarcode),
+            decodeIOBarcode(content, { barcodeTypes }),
             O.map(decodedBarcode => ({
               format,
               ...decodedBarcode
@@ -177,11 +182,12 @@ const imageDecodingTask = (
     )
   );
 
-const useIOBarcodeFileReader = (
-  config: IOBarcodeFileReaderConfiguration
-): IOBarcodeFileReader => {
-  const { onBarcodeSuccess, onBarcodeError } = config;
-
+const useIOBarcodeFileReader = ({
+  onBarcodeError,
+  onBarcodeSuccess,
+  barcodeFormats,
+  barcodeTypes
+}: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
@@ -216,7 +222,7 @@ const useIOBarcodeFileReader = (
       O.map(({ uri }) => uri),
       O.chain(O.fromNullable),
       TE.fromOption<BarcodeFailure>(() => ({ reason: "INVALID_FILE" })),
-      TE.chain(uri => imageDecodingTask(uri, config.formats)),
+      TE.chain(uri => imageDecodingTask(uri, barcodeFormats, barcodeTypes)),
       TE.mapLeft(onBarcodeError),
       TE.map(onBarcodeSuccess)
     )();
@@ -238,7 +244,7 @@ const useIOBarcodeFileReader = (
       );
     }
 
-    ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
+    void ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
   };
 
   /**
@@ -257,7 +263,7 @@ const useIOBarcodeFileReader = (
           Promise.resolve([] as Array<IOBarcode>),
           async (barcodes, { uri }) =>
             pipe(
-              imageDecodingTask(uri, config.formats),
+              imageDecodingTask(uri, barcodeFormats, barcodeTypes),
               TE.map(async barcode => [...(await barcodes), barcode]),
               TE.getOrElse(() => T.of(barcodes))
             )()

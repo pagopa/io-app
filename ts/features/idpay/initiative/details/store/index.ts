@@ -4,17 +4,19 @@ import { pipe } from "fp-ts/lib/function";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
+import { OnboardingStatusDTO } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   idPayBeneficiaryDetailsGet,
+  idPayOnboardingStatusGet,
   idpayInitiativeGet,
   idpayTimelinePageGet
 } from "./actions";
@@ -24,12 +26,14 @@ export type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
+  onboardingStatus: pot.Pot<OnboardingStatusDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
   beneficiaryDetails: pot.none,
+  onboardingStatus: pot.none,
   timeline: pot.none
 };
 
@@ -100,6 +104,21 @@ const reducer = (
           state.beneficiaryDetails,
           action.payload
         )
+      };
+    case getType(idPayOnboardingStatusGet.request):
+      return {
+        ...state,
+        onboardingStatus: pot.toLoading(pot.none)
+      };
+    case getType(idPayOnboardingStatusGet.success):
+      return {
+        ...state,
+        onboardingStatus: pot.some(action.payload)
+      };
+    case getType(idPayOnboardingStatusGet.failure):
+      return {
+        ...state,
+        onboardingStatus: pot.toError(state.onboardingStatus, action.payload)
       };
   }
   return state;
@@ -206,6 +225,11 @@ export const idpayTimelineIsLastPageSelector = createSelector(
 export const idPayBeneficiaryDetailsSelector = createSelector(
   idpayInitativeSelector,
   initiative => initiative.beneficiaryDetails
+);
+
+export const idPayOnboardingStatusSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.onboardingStatus
 );
 
 export const idPayInitiativeTypeSelector = createSelector(

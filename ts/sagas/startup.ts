@@ -40,6 +40,7 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
+import { watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -87,7 +88,10 @@ import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
-import { differentProfileLoggedIn } from "../store/actions/crossSessions";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
@@ -97,7 +101,10 @@ import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
-import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import {
+  isFastLoginEnabledSelector,
+  tokenRefreshSelector
+} from "../features/fastLogin/store/selectors";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendStatusSelector } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
@@ -134,7 +141,6 @@ import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotif
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
-import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import {
   checkSession,
   watchCheckSessionSaga
@@ -158,6 +164,7 @@ import {
   keychainError
 } from "./../store/storages/keychain";
 import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
+import { setLanguageFromProfileIfExists } from "./preferences";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -285,7 +292,8 @@ export function* initializeApplicationSaga(
       yield* put(
         refreshSessionToken.request({
           withUserInteraction: false,
-          showIdentificationModalAtStartup: true
+          showIdentificationModalAtStartup: true,
+          showLoader: false
         })
       );
     }
@@ -447,12 +455,21 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      yield* put(
-        refreshSessionToken.request({
-          withUserInteraction: false,
-          showIdentificationModalAtStartup: false
-        })
-      );
+      // At application startup, the state of the refresh token is "idle".
+      // If we got a 401 in the above getSession we start a token refresh.
+      // If we succeed, we can continue with the application startup and
+      // we could skip this step.
+      const lastTokenRefreshState = yield* select(tokenRefreshSelector);
+      if (lastTokenRefreshState.kind !== "success") {
+        yield* put(
+          refreshSessionToken.request({
+            withUserInteraction: false,
+            showIdentificationModalAtStartup: false,
+            showLoader: true
+          })
+        );
+        return;
+      }
     }
   }
 
@@ -464,8 +481,12 @@ export function* initializeApplicationSaga(
   const profile = yield* select(profileSelector);
   if (pot.isSome(profile)) {
     yield* put(profileLoadSuccess(profile.value));
+    yield* take(setProfileHashedFiscalCode);
   }
 
+  if (!handleSessionExpiration) {
+    yield* call(setLanguageFromProfileIfExists);
+  }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
@@ -553,6 +574,9 @@ export function* initializeApplicationSaga(
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
+  // Start watching for Wallet V3 actions
+  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
+
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
 
@@ -632,9 +656,6 @@ export function* initializeApplicationSaga(
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
-
-  // Watch for the app going to background/foreground
-  yield* fork(watchApplicationActivitySaga);
 
   // Watch for requests to logout
   // Since this saga is spawned and not forked

@@ -69,6 +69,7 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
+    minusSymbol: meno
     reload: "Ricarica"
     switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
@@ -171,6 +172,7 @@ global:
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
+    copy: Copia
   navigator:
     messages: Messaggi
     wallet: Portafoglio
@@ -454,6 +456,8 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    walletPlayground:
+      titleSection: "New Wallet Playground"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -578,7 +582,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
+      body: Per ragioni di sicurezza, dopo {{days}} giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -891,14 +895,25 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: Configura IO
-    title: Vuoi attivare le notifiche?
-    subTitle: "Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:"
-    instruction1: 1. Seleziona 'Notifiche'
-    instruction2: 2. Attiva 'Consenti Notifiche'
-    openSettings: Apri Impostazioni di iOS
+    title: Attiva le notifiche push per non perdere messaggi importanti!
+    subTitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    openSettings: Apri Impostazioni
     continue: Non ora
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
+    instructions:
+      title: "Ecco come:"
+      label: Step
+      ios:
+        step1: Vai su "Impostazioni"
+        step2: Seleziona "Notifiche"
+        step3: Attiva "Consenti notifiche"
+      android:
+        step1: Vai su "Impostazioni"
+        step2: Seleziona "Applicazioni"
+        step3: Seleziona "IO"
+        step4: Seleziona "Notifiche"
+        step5: Attiva le notifiche 
 forms:
   validators:
     required: Valore richiesto
@@ -1189,6 +1204,11 @@ wallet:
           unknown:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+    generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
+    success:
+      title: "La carta è stata aggiunta!"
+      continueButton: "Continua"
+    failure: "Errore durante l'aggiunta della carta"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -2689,11 +2709,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri le agevolazioni
+      screenTitle: Seleziona un operatore e scopri le agevolazioni e opportunità
       cta:
         filter: Filtra
       categoriesList:
-        title: Seleziona una categoria e scopri le agevolazioni
+        title: Seleziona una categoria e scopri le agevolazioni e opportunità
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2720,7 +2740,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni
+        deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
@@ -2730,8 +2750,8 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'operatore
-        landingPage: Accedi all’agevolazione
-        discountUrl: Vai all’agevolazione
+        landingPage: Accedi all’opportunità
+        discountUrl: Vai all'opportunità
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2751,13 +2771,13 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi le agevolazioni CGN
+        buyers: Vedi le opportunità CGN
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
-          pending: Vedi le agevolazioni EYCA
+          pending: Vedi le opportunità EYCA
           bottomSheet: Visita il sito di EYCA
-          showEycaDiscounts: Vedi le agevolazioni EYCA
+          showEycaDiscounts: Vedi le opportunità EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2765,9 +2785,9 @@ bonus:
         warning: "Attenzione! "
         revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
-      ownership: Chi può usufruire delle agevolazioni?
+      ownership: Chi può usare la carta?
       status:
-        title: Carta Giovani Nazionale
+        title: Carta Giovani Nazionale (CGN)
         eyca: Carta EYCA
         eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta

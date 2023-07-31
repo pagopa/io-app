@@ -11,6 +11,10 @@ import {
   whatsNewDisplayed
 } from "../actions";
 import { ACTIVE_VERSION } from "../../versions";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../../store/actions/authentication";
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;
@@ -47,6 +51,9 @@ export const whatsNewReducer = (
   action: Action
 ): WhatsNewState => {
   switch (action.type) {
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
+      return whatsNewInitialState;
     case getType(disableWhatsNew):
       return {
         lastVisualizedVersion: action.payload.whatsNewVersion,

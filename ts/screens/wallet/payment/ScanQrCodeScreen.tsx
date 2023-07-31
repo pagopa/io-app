@@ -79,9 +79,10 @@ const ScanQrCodeScreen = () => {
 
   return (
     <BarcodeScanBaseScreenComponent
-      formats={
+      barcodeFormats={
         dataMatrixPosteEnabled ? ["QR_CODE", "DATA_MATRIX"] : ["QR_CODE"]
       }
+      barcodeTypes={["PAGOPA"]}
       onBarcodeSuccess={handleBarcodeSuccess}
       onBarcodeError={handleBarcodeError}
       onManualInputPressed={handleManualInputPressed}

@@ -1,12 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import ReactNativeHapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
+import { IOToast } from "../../../../components/Toast";
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { showToast } from "../../../../utils/showToast";
 import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -16,15 +19,15 @@ const IDPayPaymentCodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
+    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
-    } else {
-      handleBarcodeError();
     }
   };
 
   const handleBarcodeError = () => {
-    showToast(I18n.t("barcodeScan.error"), "danger", "top");
+    IOToast.error(I18n.t("barcodeScan.error"));
   };
 
   const navigateToCodeInputScreen = () =>
@@ -34,7 +37,8 @@ const IDPayPaymentCodeScanScreen = () => {
 
   return (
     <BarcodeScanBaseScreenComponent
-      formats={["QR_CODE"]}
+      barcodeFormats={["QR_CODE"]}
+      barcodeTypes={["IDPAY"]}
       onBarcodeSuccess={handleBarcodeSuccess}
       onBarcodeError={handleBarcodeError}
       onManualInputPressed={navigateToCodeInputScreen}
