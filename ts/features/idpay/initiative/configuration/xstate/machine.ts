@@ -1,5 +1,6 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { assign, createMachine, forwardTo } from "xstate";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
@@ -98,10 +99,16 @@ const createIDPayInitiativeConfigurationMachine = () =>
               target: "EVALUATING_INITIATIVE_CONFIGURATION",
               actions: "loadInitiativeSuccess"
             },
-            onError: {
-              target: "CONFIGURATION_FAILURE",
-              actions: "setFailure"
-            }
+            onError: [
+              {
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                target: "CONFIGURATION_FAILURE",
+                actions: "setFailure"
+              }
+            ]
           }
         },
 
@@ -179,6 +186,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   actions: "loadIbanListSuccess"
                 },
                 onError: [
+                  {
+                    cond: "isSessionExpired",
+                    target: "#ROOT.SESSION_EXPIRED"
+                  },
                   {
                     /**
                      * If configuration mode is "IBAN", the machine should set the received failure to the
@@ -305,10 +316,16 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED"
                 },
-                onError: {
-                  target: "DISPLAYING_IBAN_ONBOARDING_FORM",
-                  actions: ["setFailure", "showFailureToast"]
-                }
+                onError: [
+                  {
+                    cond: "isSessionExpired",
+                    target: "#ROOT.SESSION_EXPIRED"
+                  },
+                  {
+                    target: "DISPLAYING_IBAN_ONBOARDING_FORM",
+                    actions: ["setFailure", "showFailureToast"]
+                  }
+                ]
               }
             },
 
@@ -382,10 +399,16 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     actions: "enrollIbanSuccess"
                   }
                 ],
-                onError: {
-                  target: "DISPLAYING_IBAN_LIST",
-                  actions: ["setFailure", "showFailureToast"]
-                }
+                onError: [
+                  {
+                    cond: "isSessionExpired",
+                    target: "#ROOT.SESSION_EXPIRED"
+                  },
+                  {
+                    target: "DISPLAYING_IBAN_LIST",
+                    actions: ["setFailure", "showFailureToast"]
+                  }
+                ]
               }
             },
             /**
@@ -450,6 +473,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                         },
                         onError: [
                           {
+                            cond: "isSessionExpired",
+                            target: "#ROOT.SESSION_EXPIRED"
+                          },
+                          {
                             cond: "isInstrumentsOnlyMode",
                             target: "#ROOT.CONFIGURATION_FAILURE",
                             actions: "setFailure"
@@ -486,6 +513,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                           actions: "loadInitiativeInstrumentsSuccess"
                         },
                         onError: [
+                          {
+                            cond: "isSessionExpired",
+                            target: "#ROOT.SESSION_EXPIRED"
+                          },
                           {
                             cond: "isInstrumentsOnlyMode",
                             target: "#ROOT.CONFIGURATION_FAILURE",
@@ -667,10 +698,16 @@ const createIDPayInitiativeConfigurationMachine = () =>
                         "updateInstrumentStatuses"
                       ]
                     },
-                    onError: {
-                      target: "DISPLAYING",
-                      actions: ["setFailure", "showFailureToast"]
-                    }
+                    onError: [
+                      {
+                        cond: "isSessionExpired",
+                        target: "#ROOT.SESSION_EXPIRED"
+                      },
+                      {
+                        target: "DISPLAYING",
+                        actions: ["setFailure", "showFailureToast"]
+                      }
+                    ]
                   }
                 }
               }
@@ -763,6 +800,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
         CONFIGURATION_FAILURE: {
           type: "final",
           entry: ["showFailureToast", "exitConfiguration"]
+        },
+
+        SESSION_EXPIRED: {
+          type: "final",
+          entry: ["handleSessionExpired", "exitConfiguration"]
         }
       }
     },
@@ -928,6 +970,16 @@ const createIDPayInitiativeConfigurationMachine = () =>
         }))
       },
       guards: {
+        isSessionExpired: (_, event) =>
+          pipe(
+            event.data,
+            InitiativeFailure.decode,
+            O.fromEither,
+            O.filter(
+              failure => failure === InitiativeFailureType.SESSION_EXPIRED
+            ),
+            O.isSome
+          ),
         isInitiativeConfigurationNeeded: (context, _) =>
           p.getOrElse(
             p.map(

@@ -31,6 +31,7 @@ const createIDPayPaymentMachine = () =>
             }
           }
         },
+
         PRE_AUTHORIZING: {
           tags: [LOADING_TAG],
           entry: "navigateToAuthorizationScreen",
@@ -41,12 +42,19 @@ const createIDPayPaymentMachine = () =>
               actions: "setTransactionData",
               target: "AWAITING_USER_CONFIRMATION"
             },
-            onError: {
-              actions: "setFailure",
-              target: "AUTHORIZATION_FAILURE"
-            }
+            onError: [
+              {
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                actions: "setFailure",
+                target: "AUTHORIZATION_FAILURE"
+              }
+            ]
           }
         },
+
         AWAITING_USER_CONFIRMATION: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
@@ -58,6 +66,7 @@ const createIDPayPaymentMachine = () =>
             }
           }
         },
+
         CANCELLING: {
           tags: [LOADING_TAG],
           invoke: {
@@ -68,6 +77,10 @@ const createIDPayPaymentMachine = () =>
             },
             onError: [
               {
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
                 actions: "setFailure",
                 cond: "isBlockingFailure",
                 target: "AUTHORIZATION_FAILURE"
@@ -79,6 +92,7 @@ const createIDPayPaymentMachine = () =>
             ]
           }
         },
+
         AUTHORIZING: {
           tags: [LOADING_TAG],
           invoke: {
@@ -89,6 +103,10 @@ const createIDPayPaymentMachine = () =>
             },
             onError: [
               {
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
                 actions: "setFailure",
                 cond: "isBlockingFailure",
                 target: "AUTHORIZATION_FAILURE"
@@ -100,6 +118,7 @@ const createIDPayPaymentMachine = () =>
             ]
           }
         },
+
         AUTHORIZATION_SUCCESS: {
           entry: "navigateToResultScreen",
           on: {
@@ -108,6 +127,7 @@ const createIDPayPaymentMachine = () =>
             }
           }
         },
+
         AUTHORIZATION_CANCELLED: {
           entry: "navigateToResultScreen",
           on: {
@@ -116,6 +136,7 @@ const createIDPayPaymentMachine = () =>
             }
           }
         },
+
         AUTHORIZATION_FAILURE: {
           entry: "navigateToResultScreen",
           on: {
@@ -123,6 +144,10 @@ const createIDPayPaymentMachine = () =>
               actions: "exitAuthorization"
             }
           }
+        },
+
+        SESSION_EXPIRED: {
+          entry: ["handleSessionExpired", "exitAuthorization"]
         }
       }
     },
@@ -139,16 +164,26 @@ const createIDPayPaymentMachine = () =>
         }))
       },
       guards: {
+        isSessionExpired: (_, event) =>
+          pipe(
+            event.data,
+            PaymentFailure.decode,
+            O.fromEither,
+            O.filter(failure => failure === PaymentFailureEnum.SESSION_EXPIRED),
+            O.isSome
+          ),
         // Guard that checks if the failure is blocking or not.
         // Currently, the only non-blocking failure is `TOO_MANY_REQUESTS`
         // which should display only an error toast
         isBlockingFailure: (_, event) =>
           pipe(
             event.data,
-            O.of,
-            O.filter(PaymentFailure.is),
-            O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
-            O.getOrElse(() => false)
+            PaymentFailure.decode,
+            O.fromEither,
+            O.filter(
+              failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS
+            ),
+            O.isSome
           )
       }
     }

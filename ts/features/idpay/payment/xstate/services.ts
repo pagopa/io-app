@@ -68,7 +68,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 401:
-                return Promise.reject(PaymentFailureEnum.REJECTED);
+                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(failureMap[value.code]);
             }
@@ -110,7 +110,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 401:
-                return Promise.reject(PaymentFailureEnum.REJECTED);
+                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(failureMap[value.code]);
             }
@@ -150,7 +150,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 401:
-                return Promise.reject(PaymentFailureEnum.REJECTED);
+                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(failureMap[value.code]);
             }

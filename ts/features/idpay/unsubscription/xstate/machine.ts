@@ -1,8 +1,11 @@
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { assign, createMachine } from "xstate";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../xstate/utils";
 import { Context } from "./context";
 import { Events } from "./events";
+import { UnsubscriptionFailure, UnsubscriptionFailureEnum } from "./failure";
 import { Services } from "./services";
 
 type UnsubscriptionMachineParams = {
@@ -45,6 +48,7 @@ const createIDPayUnsubscriptionMachine = (
             }
           ]
         },
+
         LOADING_INITIATIVE_INFO: {
           tags: [LOADING_TAG],
           invoke: {
@@ -54,11 +58,18 @@ const createIDPayUnsubscriptionMachine = (
               actions: "loadInitiativeSuccess",
               target: "AWAITING_CONFIRMATION"
             },
-            onError: {
-              target: "UNSUBSCRIPTION_FAILURE"
-            }
+            onError: [
+              {
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                target: "UNSUBSCRIPTION_FAILURE"
+              }
+            ]
           }
         },
+
         AWAITING_CONFIRMATION: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
@@ -70,6 +81,7 @@ const createIDPayUnsubscriptionMachine = (
             }
           }
         },
+
         UNSUBSCRIBING: {
           tags: [LOADING_TAG],
           invoke: {
@@ -78,11 +90,18 @@ const createIDPayUnsubscriptionMachine = (
             onDone: {
               target: "UNSUBSCRIPTION_SUCCESS"
             },
-            onError: {
-              target: "UNSUBSCRIPTION_FAILURE"
-            }
+            onError: [
+              {
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                target: "UNSUBSCRIPTION_FAILURE"
+              }
+            ]
           }
         },
+
         UNSUBSCRIPTION_SUCCESS: {
           entry: "navigateToResultScreen",
           on: {
@@ -91,6 +110,7 @@ const createIDPayUnsubscriptionMachine = (
             }
           }
         },
+
         UNSUBSCRIPTION_FAILURE: {
           entry: "navigateToResultScreen",
           on: {
@@ -98,6 +118,10 @@ const createIDPayUnsubscriptionMachine = (
               actions: "exitUnsubscription"
             }
           }
+        },
+
+        SESSION_EXPIRED: {
+          entry: ["handleSessionExpired", "exitUnsubscription"]
         }
       }
     },
@@ -109,7 +133,17 @@ const createIDPayUnsubscriptionMachine = (
         }))
       },
       guards: {
-        hasMissingInitiativeInfo
+        hasMissingInitiativeInfo,
+        isSessionExpired: (_, event) =>
+          pipe(
+            event.data,
+            UnsubscriptionFailure.decode,
+            O.fromEither,
+            O.filter(
+              failure => failure === UnsubscriptionFailureEnum.SESSION_EXPIRED
+            ),
+            O.isSome
+          )
       }
     }
   );

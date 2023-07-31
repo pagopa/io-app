@@ -36,12 +36,16 @@ const createServicesImplementation = (
     const data: Promise<InitiativeDTO> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(InitiativeFailureType.INITIATIVE_ERROR),
-        _ => {
-          if (_.status !== 200) {
-            return Promise.reject(InitiativeFailureType.INITIATIVE_ERROR);
+        () => Promise.reject(InitiativeFailureType.INITIATIVE_ERROR),
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(value);
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(InitiativeFailureType.GENERIC);
           }
-          return Promise.resolve(_.value);
         }
       )
     );
@@ -58,21 +62,23 @@ const createServicesImplementation = (
     const data: Promise<IbanListDTO> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE),
-        _ => {
-          if (_.status !== 200) {
-            return Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE);
+        () => Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE),
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              const uniqueIbanList = value.ibanList.filter(
+                (iban, index, self) =>
+                  index === self.findIndex(t => t.iban === iban.iban)
+              );
+
+              return Promise.resolve({ ibanList: uniqueIbanList });
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(
+                InitiativeFailureType.IBAN_LIST_LOAD_FAILURE
+              );
           }
-
-          // Every time we enroll an iban to an initiative, BE register it as a new iban
-          // so we need to filter the list to avoid duplicates
-          // This workaround will be removed when BE will fix the issue
-          const uniqueIbanList = _.value.ibanList.filter(
-            (iban, index, self) =>
-              index === self.findIndex(t => t.iban === iban.iban)
-          );
-
-          return Promise.resolve({ ibanList: uniqueIbanList });
         }
       )
     );
@@ -80,7 +86,7 @@ const createServicesImplementation = (
     return data;
   };
 
-  const confirmIban = async (context: Context) => {
+  const confirmIban = async (context: Context): Promise<undefined> => {
     if (context.initiativeId === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
@@ -94,12 +100,18 @@ const createServicesImplementation = (
       return pipe(
         res,
         E.fold(
-          _ => Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE),
-          response => {
-            if (response.status !== 200) {
-              return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
+          () => Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE),
+          ({ status }) => {
+            switch (status) {
+              case 200:
+                return Promise.resolve(undefined);
+              case 401:
+                return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+              default:
+                return Promise.reject(
+                  InitiativeFailureType.IBAN_ENROLL_FAILURE
+                );
             }
-            return Promise.resolve();
           }
         )
       );
@@ -108,7 +120,7 @@ const createServicesImplementation = (
     }
   };
 
-  const enrollIban = async (context: Context) => {
+  const enrollIban = async (context: Context): Promise<undefined> => {
     if (context.initiativeId === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
@@ -117,25 +129,13 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    const response = await idPayClient.enrollIban({
-      initiativeId: context.initiativeId,
-      body: {
+    return confirmIban({
+      ...context,
+      ibanBody: {
         iban: context.selectedIban.iban,
         description: context.selectedIban.description
-      },
-      bearerAuth: bearerToken,
-      "Accept-Language": language
+      }
     });
-
-    if (E.isLeft(response)) {
-      return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
-    }
-
-    if (response.right.status !== 200) {
-      return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
-    }
-
-    return Promise.resolve(undefined);
   };
 
   const loadWalletInstruments = async () => {
@@ -146,23 +146,27 @@ const createServicesImplementation = (
     const data: Promise<ReadonlyArray<Wallet>> = pipe(
       response,
       E.fold(
-        _ =>
+        () =>
           Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE),
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(
-              InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-            );
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              const wallet = pipe(
+                value.data,
+                O.fromNullable,
+                O.map(_ => _.map(convertWalletV2toWalletV1)),
+                O.getOrElse(() => [] as ReadonlyArray<Wallet>)
+              );
+
+              return Promise.resolve(wallet);
+
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(
+                InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+              );
           }
-
-          const wallet = pipe(
-            response.value.data,
-            O.fromNullable,
-            O.map(_ => _.map(convertWalletV2toWalletV1)),
-            O.getOrElse(() => [] as ReadonlyArray<Wallet>)
-          );
-
-          return Promise.resolve(wallet);
         }
       )
     );
@@ -184,16 +188,19 @@ const createServicesImplementation = (
     const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
       response,
       E.fold(
-        _ =>
+        () =>
           Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE),
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(
-              InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-            );
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(value.instrumentList);
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(
+                InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+              );
           }
-
-          return Promise.resolve(response.value.instrumentList);
         }
       )
     );
@@ -216,16 +223,18 @@ const createServicesImplementation = (
     const data: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
-
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(
-              InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE
-            );
+        () => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
+        ({ status }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(undefined);
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(
+                InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE
+              );
           }
-
-          return Promise.resolve(undefined);
         }
       )
     );
@@ -251,16 +260,18 @@ const createServicesImplementation = (
     const data: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),
-
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(
-              InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
-            );
+        () => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),
+        ({ status }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(undefined);
+            case 401:
+              return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
+            default:
+              return Promise.reject(
+                InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+              );
           }
-
-          return Promise.resolve(undefined);
         }
       )
     );

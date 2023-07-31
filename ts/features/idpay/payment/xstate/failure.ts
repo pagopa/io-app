@@ -10,7 +10,9 @@ export enum PaymentFailureEnum {
   // User does not have enough budget
   BUDGET_EXHAUSTED = "BUDGET_EXHAUSTED",
   // 429 Too Many Requests
-  TOO_MANY_REQUESTS = "TOO_MANY_REQUESTS"
+  TOO_MANY_REQUESTS = "TOO_MANY_REQUESTS",
+  // 401
+  SESSION_EXPIRED = "SESSION_EXPIRED"
 }
 
 export type PaymentFailure = t.TypeOf<typeof PaymentFailure>;

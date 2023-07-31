@@ -12,7 +12,7 @@ import {
   WAITING_USER_INPUT_TAG
 } from "../../../../xstate/utils";
 import { Events } from "./events";
-import { OnboardingFailure } from "./failure";
+import { OnboardingFailure, OnboardingFailureEnum } from "./failure";
 import {
   getBoolRequiredCriteriaFromContext,
   getMultiRequiredCriteriaFromContext
@@ -140,8 +140,12 @@ const createIDPayOnboardingMachine = () =>
             ],
             onError: [
               {
-                target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "setFailure"
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                actions: "setFailure",
+                target: "DISPLAYING_ONBOARDING_FAILURE"
               }
             ]
           }
@@ -160,8 +164,12 @@ const createIDPayOnboardingMachine = () =>
             ],
             onError: [
               {
-                target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "setFailure"
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                actions: "setFailure",
+                target: "DISPLAYING_ONBOARDING_FAILURE"
               }
             ]
           }
@@ -188,8 +196,12 @@ const createIDPayOnboardingMachine = () =>
             ],
             onError: [
               {
-                target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "setFailure"
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                actions: "setFailure",
+                target: "DISPLAYING_ONBOARDING_FAILURE"
               }
             ]
           }
@@ -208,8 +220,12 @@ const createIDPayOnboardingMachine = () =>
             ],
             onError: [
               {
-                target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "setFailure"
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                actions: "setFailure",
+                target: "DISPLAYING_ONBOARDING_FAILURE"
               }
             ]
           }
@@ -368,9 +384,17 @@ const createIDPayOnboardingMachine = () =>
           invoke: {
             src: "acceptRequiredCriteria",
             id: "acceptRequiredCriteria",
-            onDone: [
+            onDone: {
+              target: "DISPLAYING_ONBOARDING_COMPLETED"
+            },
+            onError: [
               {
-                target: "DISPLAYING_ONBOARDING_COMPLETED"
+                cond: "isSessionExpired",
+                target: "SESSION_EXPIRED"
+              },
+              {
+                actions: "setFailure",
+                target: "DISPLAYING_ONBOARDING_FAILURE"
               }
             ]
           }
@@ -387,6 +411,10 @@ const createIDPayOnboardingMachine = () =>
               actions: "navigateToInitiativeMonitoringScreen"
             }
           }
+        },
+
+        SESSION_EXPIRED: {
+          entry: ["handleSessionExpired", "exitOnboarding"]
         }
       }
     },
@@ -437,6 +465,16 @@ const createIDPayOnboardingMachine = () =>
         }))
       },
       guards: {
+        isSessionExpired: (_, event) =>
+          pipe(
+            event.data,
+            OnboardingFailure.decode,
+            O.fromEither,
+            O.filter(
+              failure => failure === OnboardingFailureEnum.SESSION_EXPIRED
+            ),
+            O.isSome
+          ),
         hasPDNDRequiredCriteria,
         hasSelfRequiredCriteria,
         hasBoolRequiredCriteria,
@@ -452,5 +490,5 @@ type IDPayOnboardingMachineType = ReturnType<
   typeof createIDPayOnboardingMachine
 >;
 
-export type { IDPayOnboardingMachineType };
 export { createIDPayOnboardingMachine };
+export type { IDPayOnboardingMachineType };

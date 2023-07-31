@@ -1,21 +1,35 @@
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { IOToast } from "../../../../../components/Toast";
 import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
-import { showToast } from "../../../../../utils/showToast";
+import { useIODispatch } from "../../../../../store/hooks";
 import { guardedNavigationAction } from "../../../../../xstate/helpers/guardedNavigationAction";
+import { refreshSessionToken } from "../../../../fastLogin/store/actions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 import { Events } from "./events";
-import { InitiativeFailureType } from "./failure";
+import { InitiativeFailure, InitiativeFailureType } from "./failure";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
+  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   const navigateToConfigurationIntro = guardedNavigationAction(
     (context: Context) => {
       if (context.initiativeId === undefined) {
@@ -83,35 +97,38 @@ const createActionsImplementation = (
   };
 
   const showFailureToast = (context: Context) => {
-    if (context.failure === undefined) {
-      return;
-    }
-    showToast(
-      I18n.t(`idpay.configuration.failureStates.${context.failure}`),
-      "danger"
+    pipe(
+      context.failure,
+      InitiativeFailure.decode,
+      O.fromEither,
+      O.chain(failure => {
+        if (failure !== InitiativeFailureType.SESSION_EXPIRED) {
+          return O.some(I18n.t(`idpay.configuration.failureStates.${failure}`));
+        }
+        return O.none;
+      }),
+      O.map(IOToast.error)
     );
   };
 
   const showUpdateIbanToast = () => {
-    showToast(I18n.t(`idpay.configuration.iban.updateToast`), "success");
+    IOToast.success(I18n.t(`idpay.configuration.iban.updateToast`));
   };
 
   const showInstrumentFailureToast = (_: Context, event: Events) => {
     switch (event.type) {
       case "ENROLL_INSTRUMENT_FAILURE":
-        showToast(
+        IOToast.error(
           I18n.t(
             `idpay.configuration.failureStates.${InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE}`
-          ),
-          "danger"
+          )
         );
         break;
       case "DELETE_INSTRUMENT_FAILURE":
-        showToast(
+        IOToast.error(
           I18n.t(
             `idpay.configuration.failureStates.${InitiativeFailureType.INSTRUMENT_DELETE_FAILURE}`
-          ),
-          "danger"
+          )
         );
         break;
     }
@@ -122,6 +139,7 @@ const createActionsImplementation = (
   };
 
   return {
+    handleSessionExpired,
     navigateToConfigurationIntro,
     navigateToIbanLandingScreen,
     navigateToIbanOnboardingScreen,

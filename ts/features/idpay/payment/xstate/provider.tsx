@@ -13,7 +13,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { createIDPayClient } from "../../common/api/client";
@@ -32,6 +32,7 @@ type Props = {
 };
 
 const IDPayPaymentMachineProvider = (props: Props) => {
+  const dispatch = useIODispatch();
   const [machine] = useXStateMachine(createIDPayPaymentMachine);
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
@@ -51,7 +52,7 @@ const IDPayPaymentMachineProvider = (props: Props) => {
     isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
   );
 
-  const actions = createActionsImplementation(navigation);
+  const actions = createActionsImplementation(navigation, dispatch);
 
   const services = createServicesImplementation(IDPayPaymentClient, idPayToken);
 

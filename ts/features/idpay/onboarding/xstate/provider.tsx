@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import {
@@ -9,7 +9,6 @@ import {
   idPayApiUatBaseUrl,
   idPayTestToken
 } from "../../../../config";
-import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -24,6 +23,7 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
+import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import { createIDPayClient } from "../../common/api/client";
 import {
   IDPayOnboardingParamsList,
@@ -31,8 +31,8 @@ import {
 } from "../navigation/navigator";
 import { createActionsImplementation } from "./actions";
 import {
-  createIDPayOnboardingMachine,
-  IDPayOnboardingMachineType
+  IDPayOnboardingMachineType,
+  createIDPayOnboardingMachine
 } from "./machine";
 import { createServicesImplementation } from "./services";
 
@@ -80,7 +80,8 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const actions = createActionsImplementation(
     rootNavigation,
-    onboardingNavigation
+    onboardingNavigation,
+    dispatch
   );
 
   const machineService = useInterpret(machine, {
