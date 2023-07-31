@@ -59,6 +59,9 @@ global:
   badges:
     blocked: "Blockiert"
     onGoing: "In Bearbeitung"
+    failed:  "Fehlgeschlagen"
+    cancelled: "Abgebrochen"
+    reversal: "Stornierung"
   password: "Passwort"
   username: "Benutzername"
   disclaimer_beta: "Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!"
@@ -66,6 +69,7 @@ global:
   sectionStatus:
     moreInfo: "mehr Informationen"
   accessibility:
+    minusSymbol: "minus"
     reload: "Neu laden"
     switchLabel: "Zum Aktivieren auswählen"
     inputLabel: "{{header}}, Überschrift"
@@ -141,6 +145,7 @@ global:
   markdown:
     decodeError: "Die Nachricht kann nicht entschlüsselt werden"
   buttons:
+    deny: "Verweigern"
     share: "Teilen"
     delete: "Löschen"
     cancel: "Abbrechen"
@@ -166,6 +171,7 @@ global:
     findOutMore: "Mehr erfahren"
     details: "Details"
     choose: "Auswählen"
+    copy: "Kopieren"
   navigator:
     messages: "Mitteilungen"
     wallet: "Konto"
@@ -250,6 +256,8 @@ login:
     line1: "Willkommen in deiner"
     line2: "Digitalen Staatsbürgerschaft"
   expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
+  expiration_info_FL: "Aus Sicherheitsgründen wirst du einmal im Jahr aufgefordert, dich mittels SPID oder CIE zu authentifizieren."
+  biometric_info: "Um dich anzumelden, gib einfach den Entsperrungscode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
 inbox:
   enableButton: "Posteingang aktivieren"
   disableButton: "Posteingang deaktivieren"
@@ -532,6 +540,10 @@ spid:
   subscription:
     line1: "SPID ist die digitale Identität für den Zugang zu den Online-Diensten der italienischen öffentlichen Verwaltung."
     line2: "Gib deine E-Mail-Adresse ein, um sie zu aktivieren."
+  pending_login:
+    title: "Anmeldung in Arbeit"
+    details: "Wenn du die Sitzung im Browser geöffnet hast, fahre von dort aus fort. Andernfalls gehe zurück und starte eine neue Anmeldung!"
+    button: "Zurück zur Liste"
 authentication:
   landing:
     accessibility:
@@ -1096,6 +1108,11 @@ wallet:
           unknown:
             title: "Ich weiß es nicht"
             description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
+    generalError: "Beim Hinzufügen der Zahlungsmethode trat ein allgemeiner Fehler auf"
+    success:
+      title: "Die Karte wurde hinzugefügt!"
+      continueButton: "Weiter"
+    failure: "Fehler beim Hinzufügen einer Karte"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1509,6 +1526,10 @@ wallet:
         title: "Deine Karte wurde erfolgreich hinzugefügt!"
     payment:
       success:
+        banner:
+          title: "Kannst du uns sagen, wie es gelaufen ist?"
+          content: "Erzähle uns von deinen Erfahrungen mit der Bezahlung und hilf uns, uns zu verbessern."
+          action: "Weiter zur Umfrage"
         title: "Danke, die Transaktion war erfolgreich!"
         description1: "Wir senden eine Quittung an"
         description2: "Du kannst sie auch in deinem Konto finden."
@@ -1780,6 +1801,7 @@ services:
 serviceDetail:
   fiscalCode: "Steuernummer Körperschaft"
   fiscalCodeAccessibility: "Steuernummer Körperschaft"
+  fiscalCodeAccessibilityCopy: "Kopiere Steuernummer Körperschaft"
   contacts:
     title: "Dieser Dienst kann:"
   headerTitle: "Details zum Dienst"
