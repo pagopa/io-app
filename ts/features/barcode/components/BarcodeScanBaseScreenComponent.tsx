@@ -7,6 +7,8 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import IconButton from "../../../components/ui/IconButton";
+import { TabItem } from "../../../components/ui/TabItem";
+import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
@@ -14,9 +16,8 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import { BottomTabNavigation } from "./BottomTabNavigation";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type Props = {
@@ -24,7 +25,12 @@ type Props = {
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
-  formats?: Array<IOBarcodeFormat>;
+  barcodeFormats?: Array<IOBarcodeFormat>;
+  /**
+   * Accepted barcode types that can be detected. Leave empty to accept all types.
+   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   */
+  barcodeTypes?: Array<IOBarcodeType>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -40,9 +46,13 @@ type Props = {
   onManualInputPressed: () => void;
 };
 
-const BarcodeScanBaseScreenComponent = (props: Props) => {
-  const { formats, onBarcodeSuccess, onBarcodeError, onManualInputPressed } =
-    props;
+const BarcodeScanBaseScreenComponent = ({
+  barcodeFormats,
+  barcodeTypes,
+  onBarcodeError,
+  onBarcodeSuccess,
+  onManualInputPressed
+}: Props) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -55,12 +65,14 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   } = useIOBarcodeScanner({
     onBarcodeSuccess,
     onBarcodeError,
-    formats,
+    barcodeFormats,
+    barcodeTypes,
     disabled: !isFocused
   });
 
   const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
-    formats,
+    barcodeFormats,
+    barcodeTypes,
     onBarcodeSuccess,
     onBarcodeError
   });
@@ -114,13 +126,26 @@ const BarcodeScanBaseScreenComponent = (props: Props) => {
   };
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
-      {/* FIXME: replace with bottom bar component when it's ready */}
-      <BottomTabNavigation
-        onUploadBarcodePressed={showFilePicker}
-        onNavigateToCodeInputScreenPressed={onManualInputPressed}
-      />
+      <View style={styles.navigationContainer}>
+        <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
+          <TabItem
+            label={I18n.t("barcodeScan.tabs.scan")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
+          />
+          <TabItem
+            label={I18n.t("barcodeScan.tabs.upload")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.upload")}
+            onPress={showFilePicker}
+          />
+          <TabItem
+            label={I18n.t("barcodeScan.tabs.input")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.input")}
+            onPress={onManualInputPressed}
+          />
+        </TabNavigation>
+      </View>
       <LinearGradient
         colors={["#03134480", "#03134400"]}
         style={styles.headerContainer}
@@ -169,6 +194,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden"
+  },
+  navigationContainer: {
+    paddingVertical: 16
   }
 });
 

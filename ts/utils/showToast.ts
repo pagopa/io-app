@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * @deprecated Use IOToast instead
+ */
 export const showToast = (
   text: string,
   type: Type = "danger",

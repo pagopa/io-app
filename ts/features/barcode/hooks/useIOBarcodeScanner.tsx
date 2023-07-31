@@ -18,7 +18,7 @@ import {
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
-import { IOBarcode, IOBarcodeFormat } from "../types/IOBarcode";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
 
@@ -43,7 +43,12 @@ export type IOBarcodeScannerConfiguration = {
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
    */
-  formats?: Array<IOBarcodeFormat>;
+  barcodeFormats?: Array<IOBarcodeFormat>;
+  /**
+   * Accepted barcode types that can be detected. Leave empty to accept all types.
+   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   */
+  barcodeTypes?: Array<IOBarcodeType>;
   /**
    * Callback called when a barcode is successfully decoded
    */
@@ -136,14 +141,16 @@ export const retrieveNextBarcode = (
  */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
-export const useIOBarcodeScanner = (
-  config: IOBarcodeScannerConfiguration
-): IOBarcodeScanner => {
-  const { onBarcodeSuccess, onBarcodeError, disabled, formats } = config;
-
+export const useIOBarcodeScanner = ({
+  onBarcodeSuccess,
+  onBarcodeError,
+  disabled,
+  barcodeFormats,
+  barcodeTypes
+}: IOBarcodeScannerConfiguration): IOBarcodeScanner => {
   const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
-    () => formats || ["QR_CODE", "DATA_MATRIX"],
-    [formats]
+    () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
+    [barcodeFormats]
   );
 
   const prevDisabled = usePrevious(disabled);
@@ -215,7 +222,9 @@ export const useIOBarcodeScanner = (
         })),
         E.chain(format =>
           pipe(
-            decodeIOBarcode(detectedBarcode.displayValue),
+            decodeIOBarcode(detectedBarcode.displayValue, {
+              barcodeTypes
+            }),
             E.fromOption<BarcodeFailure>(() => ({
               reason: "UNKNOWN_CONTENT",
               content: detectedBarcode.displayValue,
@@ -225,7 +234,7 @@ export const useIOBarcodeScanner = (
           )
         )
       ),
-    [acceptedFormats]
+    [acceptedFormats, barcodeTypes]
   );
 
   /**
