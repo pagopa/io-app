@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import * as React from "react";
-import { IOIcons } from "../icons/Icon";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import { RadioListItem } from "../../ui/RadioListItem";
 import { Divider } from "../Divider";
 

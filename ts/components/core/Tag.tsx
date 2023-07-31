@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, Platform } from "react-native";
+import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "./fonts";
 import { IOColors } from "./variables/IOColors";
-import { IOIconSizeScale, IOIcons, Icon } from "./icons";
 import { IOTagRadius } from "./variables/IOShapes";
 import {
   IOSpacingScale,

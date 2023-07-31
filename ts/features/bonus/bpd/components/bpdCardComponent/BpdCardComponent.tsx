@@ -10,7 +10,7 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { Icon, IOIcons } from "@pagopa/io-app-design-system";
+import { Icon } from "@pagopa/io-app-design-system";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
 import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
