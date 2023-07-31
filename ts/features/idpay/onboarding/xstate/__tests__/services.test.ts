@@ -239,7 +239,7 @@ describe("IDPay Onboarding machine services", () => {
         const response: E.Either<
           Error,
           { status: number; value?: OnboardingStatusDTO }
-        > = E.right({ status: 200, value: { status } });
+        > = E.right({ status: 200, value: { status, statusDate: new Date() } });
 
         mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -264,7 +264,7 @@ describe("IDPay Onboarding machine services", () => {
         const response: E.Either<
           Error,
           { status: number; value?: OnboardingStatusDTO }
-        > = E.right({ status: 200, value: { status } });
+        > = E.right({ status: 200, value: { status, statusDate: new Date() } });
 
         mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 

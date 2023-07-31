@@ -1,136 +1,84 @@
-/**
- * This component displays a list of transactions
- */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content, Text as NBButtonText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
-  View,
   Dimensions,
   FlatList,
   ListRenderItemInfo,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { formatNumberCurrencyCents } from "../../features/idpay/common/utils/strings";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
-import {
-  dateToAccessibilityReadableFormat,
-  hoursAndMinutesToAccessibilityReadableFormat
-} from "../../utils/accessibility";
-import { formatDateAsLocal } from "../../utils/dates";
-import { cleanTransactionDescription } from "../../utils/payment";
-import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
 import { IOColors } from "../core/variables/IOColors";
-import DetailedlistItemComponent from "../DetailedlistItemComponent";
-import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { IOVisualCostants } from "../core/variables/IOStyles";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-
-type State = {
-  loadingMore: boolean;
-};
+import { ListItemTransaction } from "../ui/ListItemTransaction";
 
 type Props = Readonly<{
   title: string;
-  amount: string;
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   areMoreTransactionsAvailable: boolean;
   onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
   helpMessage?: React.ReactNode;
-  ListEmptyComponent?: React.ReactNode;
+  ListEmptyComponent?: React.ReactElement;
 }>;
 const screenWidth = Dimensions.get("screen").width;
-const styles = StyleSheet.create({
-  whiteContent: {
-    backgroundColor: IOColors.white,
-    flex: 1
-  },
-  subHeaderContent: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "space-between"
-  },
-  moreButton: {
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: IOColors.white
-  }
-});
 
-/**
- * Transactions List component
- */
+export const TransactionsList = (props: Props) => {
+  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
 
-export default class TransactionsList extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { loadingMore: false };
-  }
+  const {
+    ListEmptyComponent,
+    areMoreTransactionsAvailable,
+    onLoadMoreTransactions,
+    helpMessage
+  } = props;
 
-  public componentDidUpdate(prevProps: Props, prevState: State) {
-    // loading more transaction is complete (or we got an error), revert the state
+  React.useEffect(() => {
     if (
-      prevState.loadingMore &&
-      pot.isLoading(prevProps.transactions) &&
-      (pot.isSome(this.props.transactions) ||
-        pot.isError(this.props.transactions))
+      isLoadingMore &&
+      (pot.isSome(props.transactions) || pot.isError(props.transactions))
     ) {
-      this.setState({ loadingMore: false });
+      setIsLoadingMore(false);
     }
-  }
+  }, [props.transactions, isLoadingMore]);
 
-  private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
-    const item = info.item;
-    const paymentReason = cleanTransactionDescription(item.description);
-    const recipient = item.merchant;
+  const transactions: ReadonlyArray<Transaction> = pot.getOrElse(
+    props.transactions,
+    []
+  );
 
-    const amount = formatNumberCentsToAmount(item.amount.amount);
-    const datetime: string = `${formatDateAsLocal(
-      item.created,
-      true,
-      true
-    )} - ${item.created.toLocaleTimeString()}`;
+  // ------------------ loading guard ------------------
+  if (!isLoadingMore && pot.isLoading(props.transactions)) {
     return (
-      <DetailedlistItemComponent
-        isNew={false}
-        text11={recipient}
-        text12={amount}
-        text2={datetime}
-        text3={paymentReason}
-        onPressItem={() => this.props.navigateToTransactionDetails(item)}
-        accessible={true}
-        accessibilityRole={"button"}
-        accessibilityLabel={I18n.t(
-          "wallet.accessibility.transactionListItem.label",
-          {
-            payment: I18n.t(
-              "wallet.accessibility.transactionListItem.payment.read"
-            ),
-            merchant: recipient,
-            amount,
-            datetime: dateToAccessibilityReadableFormat(item.created),
-            hours: hoursAndMinutesToAccessibilityReadableFormat(item.created),
-            reason: paymentReason
-          }
-        )}
+      <BoxedRefreshIndicator
+        white={true}
+        caption={<Body>{I18n.t("wallet.transactionsLoadMessage")}</Body>}
       />
     );
-  };
+  }
 
-  /**
-   * 1 - if more transaction are available to load, show the load more button
-   * 2 - if all transactions are loaded, show end list component
-   */
-  private footerListComponent = (transactions: ReadonlyArray<Transaction>) => {
-    if (!this.props.areMoreTransactionsAvailable) {
+  // ------------------ components + utils ------------------
+  const shouldShowFooterComponent = (
+    ListEmptyComponent?: React.ReactElement
+  ): ListEmptyComponent is React.ReactElement =>
+    transactions.length === 0 &&
+    !areMoreTransactionsAvailable &&
+    ListEmptyComponent !== undefined;
+
+  const footerListComponent = (transactions: ReadonlyArray<Transaction>) => {
+    if (!areMoreTransactionsAvailable) {
       return transactions.length > 0 && <EdgeBorderComponent />;
     }
 
@@ -139,17 +87,16 @@ export default class TransactionsList extends React.Component<Props, State> {
         <ButtonDefaultOpacity
           style={styles.moreButton}
           bordered={true}
-          disabled={this.state.loadingMore}
+          disabled={isLoadingMore}
           onPress={() => {
-            this.setState({ loadingMore: true }, () =>
-              this.props.onLoadMoreTransactions()
-            );
+            setIsLoadingMore(true);
+            onLoadMoreTransactions();
           }}
         >
           <NBButtonText>
             {I18n.t(
               // change the button text if we are loading another slice of transactions
-              this.state.loadingMore
+              isLoadingMore
                 ? "wallet.transacionsLoadingMore"
                 : "wallet.transactionsLoadMore"
             )}
@@ -160,47 +107,73 @@ export default class TransactionsList extends React.Component<Props, State> {
     );
   };
 
-  public render(): React.ReactNode {
-    const { ListEmptyComponent } = this.props;
-    // first loading
-    if (!this.state.loadingMore && pot.isLoading(this.props.transactions)) {
-      return (
-        <BoxedRefreshIndicator
-          white={true}
-          caption={<Body>{I18n.t("wallet.transactionsLoadMessage")}</Body>}
-        />
-      );
-    }
-    const transactions: ReadonlyArray<Transaction> = pot.getOrElse(
-      this.props.transactions,
-      []
+  const renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
+    const item = info.item;
+    const recipient = item.merchant;
+
+    const amount = formatNumberCurrencyCents(item.amount.amount);
+    const datetime: string = format(item.created, "DD MMM YYYY, HH:mm");
+    return (
+      <ListItemTransaction
+        title={recipient}
+        subtitle={datetime}
+        onPress={() => props.navigateToTransactionDetails(item)}
+        transactionStatus="success"
+        transactionAmount={amount}
+      />
     );
-    return transactions.length === 0 &&
-      !this.props.areMoreTransactionsAvailable &&
-      ListEmptyComponent ? (
-      ListEmptyComponent
-    ) : (
-      <Content scrollEnabled={false} style={styles.whiteContent}>
-        <View>
-          <View style={styles.subHeaderContent}>
-            <H3 weight={"SemiBold"} color={"bluegreyDark"}>
-              {I18n.t("wallet.latestTransactions")}
-            </H3>
-            <Body>{I18n.t("wallet.amount")}</Body>
-          </View>
+  };
+
+  // ------------------ render ------------------
+  /**
+   * 1 - if more transaction are available to load, show the load more button
+   * 2 - if all transactions are loaded, show end list component
+   */
+  return shouldShowFooterComponent(ListEmptyComponent) ? (
+    ListEmptyComponent
+  ) : (
+    <ScrollView scrollEnabled={false} style={styles.scrollView}>
+      <View>
+        <View style={styles.subHeaderContent}>
+          <H3 weight={"SemiBold"} color={"bluegreyDark"}>
+            {I18n.t("wallet.latestTransactions")}
+          </H3>
         </View>
-        {this.props.helpMessage}
-        <FlatList
-          scrollEnabled={false}
-          data={transactions}
-          renderItem={this.renderTransaction}
-          ItemSeparatorComponent={() => (
-            <ItemSeparatorComponent noPadded={true} />
-          )}
-          keyExtractor={item => item.id.toString()}
-          ListFooterComponent={this.footerListComponent(transactions)}
-        />
-      </Content>
-    );
+      </View>
+      {helpMessage}
+      <FlatList
+        scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={transactions}
+        renderItem={renderTransaction}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent noPadded />}
+        keyExtractor={item => item.id.toString()}
+        ListFooterComponent={footerListComponent(transactions)}
+      />
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollView: {
+    paddingTop: variables.contentPadding,
+    backgroundColor: IOColors.white,
+    flex: 1
+  },
+  subHeaderContent: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    paddingHorizontal: variables.contentPadding
+  },
+  moreButton: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    width: screenWidth - variables.contentPadding * 2,
+    backgroundColor: IOColors.white
   }
-}
+});

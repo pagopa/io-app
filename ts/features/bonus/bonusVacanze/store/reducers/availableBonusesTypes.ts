@@ -10,6 +10,7 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   ID_BONUS_VACANZE_TYPE,
+  ID_BPD_TYPE,
   mapBonusIdFeatureFlag
 } from "../../utils/bonus";
 import { loadAvailableBonuses } from "../actions/bonusVacanze";
@@ -66,7 +67,11 @@ export const supportedAvailableBonusSelector = createSelector(
             O.fromNullable,
             O.getOrElse(() => false)
           );
-          return isFeatureFlagEnabled && experimentalAndVisibleBonus(b);
+          return (
+            b.id_type !== ID_BPD_TYPE &&
+            isFeatureFlagEnabled &&
+            experimentalAndVisibleBonus(b)
+          );
         })
       ),
       []

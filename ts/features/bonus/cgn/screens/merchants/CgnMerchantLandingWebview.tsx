@@ -1,6 +1,7 @@
 import { Route, useRoute } from "@react-navigation/core";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
+import I18n from "i18n-js";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import WebviewComponent from "../../../../../components/WebviewComponent";
@@ -37,7 +38,8 @@ const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
     <BaseScreenComponent
       customRightIcon={{
         iconName: "closeLarge",
-        onPress: () => props.navigation.goBack()
+        onPress: () => props.navigation.goBack(),
+        accessibilityLabel: I18n.t("global.buttons.close")
       }}
     >
       <SafeAreaView style={IOStyles.flex}>

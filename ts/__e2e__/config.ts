@@ -15,5 +15,7 @@ export const e2ePinChar6 = "6";
 type DetoxLaunchAppConfig = Parameters<typeof device.launchApp>[0];
 
 export const launchAppConfig: DetoxLaunchAppConfig = {
-  permissions: { notifications: "YES", camera: "YES", photos: "YES" }
+  permissions: { notifications: "YES", camera: "YES", photos: "YES" },
+  // enforce IT locale because that's how the API are configured
+  languageAndLocale: { language: "it_IT", locale: "it_IT" }
 };

@@ -59,7 +59,9 @@ global:
   badges:
     blocked: "Bloccato"
     onGoing: "In corso"
-    failed:  "Fallita"
+    failed:  "Fallito"
+    cancelled: "Annullata"
+    reversal: "Storno"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -67,6 +69,7 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
+    minusSymbol: meno
     reload: "Ricarica"
     switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
@@ -169,6 +172,7 @@ global:
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
+    copy: Copia
   navigator:
     messages: Messaggi
     wallet: Portafoglio
@@ -253,6 +257,8 @@ login:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
   expiration_info: Per ragioni di sicurezza, ti verrà richiesto di autenticarti nuovamente con CIE o SPID ogni 30 giorni.
+  expiration_info_FL: Per ragioni di sicurezza, ti verrà richiesto di autenticarti con SPID o CIE una volta all'anno.
+  biometric_info: Per accedere, ti basterà poi inserire il codice di sblocco o, se abilitati, usare l'impronta o il volto.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -369,7 +375,7 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Informativa e Condizioni d'uso
+        title: Informativa Privacy e Termini e condizioni d'uso
         description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
@@ -404,9 +410,9 @@ profile:
           additionalInformation:
             description: "Per maggiori informazioni, leggi "
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          profileSettings: "Potrai modificare questa scelta in ogni momento andando su Profilo > Preferenze"
           cta:
-            shareData: "Condividi dati"
+            shareData: "Condividi"
             dontShareData: "Non condividere dati"
             dontShare: "Non condividere"
           confirmToast: "Preferenze aggiornate!"
@@ -450,6 +456,8 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    walletPlayground:
+      titleSection: "New Wallet Playground"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -518,18 +526,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria.
       titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
-        title: Consenti promemoria
+        title: Consenti i promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
-        title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
+        title: Mostra un'anteprima
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio
         link: Più info
         bottomSheet:
-          title: Mostra anteprime
+          title: Mostra un'anteprima
           content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
@@ -574,7 +582,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
+      body: Per ragioni di sicurezza, dopo {{days}} giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -828,7 +836,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configura IO
-    accept: Accetta
+    accept: Accetta e continua
     error: Errore nel caricamento
     alert:
       title: Attenzione
@@ -879,22 +887,33 @@ onboarding:
       reminderOnPreviewOnMessage: Entra nell’app e paga l’avviso emesso da ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Sono aperte le iscrizioni per il centro estivo
-      reminderOnPreviewOffTitle: Hai un avviso in scadenza
+      reminderOnPreviewOffTitle: Hai un avviso che scade domani
       reminderOnPreviewOffMessage: Entra nell'app per pagarlo
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
-      reminderOffPreviewOffMessage: Entra nell'app per leggerlo
+      reminderOffPreviewOffMessage: Apri l'app per leggere il contenuto
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: Configura IO
-    title: Vuoi attivare le notifiche?
-    subTitle: "Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:"
-    instruction1: 1. Seleziona 'Notifiche'
-    instruction2: 2. Attiva 'Consenti Notifiche'
-    openSettings: Apri Impostazioni di iOS
+    title: Attiva le notifiche push per non perdere messaggi importanti!
+    subTitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    openSettings: Apri Impostazioni
     continue: Non ora
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
+    instructions:
+      title: "Ecco come:"
+      label: Step
+      ios:
+        step1: Vai su "Impostazioni"
+        step2: Seleziona "Notifiche"
+        step3: Attiva "Consenti notifiche"
+      android:
+        step1: Vai su "Impostazioni"
+        step2: Seleziona "Applicazioni"
+        step3: Seleziona "IO"
+        step4: Seleziona "Notifiche"
+        step5: Attiva le notifiche 
 forms:
   validators:
     required: Valore richiesto
@@ -991,6 +1010,7 @@ wallet:
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
     details:
       header: Dettaglio Metodo
+    validUntil: Valida fino al {{expDate}}
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:
@@ -1184,6 +1204,11 @@ wallet:
           unknown:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+    generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
+    success:
+      title: "La carta è stata aggiunta!"
+      continueButton: "Continua"
+    failure: "Errore durante l'aggiunta della carta"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1809,7 +1834,7 @@ messageDetails:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
 messagePDFPreview:
   title: "Anteprima PDF"
-  singleBtn: "Salva, stampa o condividi"
+  singleBtn: "Salva o condividi"
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
@@ -1858,21 +1883,21 @@ services:
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
-      title: "Come vuoi configurare i servizi su IO?"
-      body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio."
+      title: "Chi può scriverti?"
+      body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
       quickConfig:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
         body:
-          text1: "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
+          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
       manualConfig:
         value: "Configurazione manuale"
         label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
         body:
-          text1: "Nessun servizio potrà contattarti. Per ricevere messaggi dovrai configurarli uno a uno."
+          text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:
           title: "Se confermi, non riceverai alcun messaggio"
           body: "Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio."
@@ -2684,11 +2709,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri le agevolazioni
+      screenTitle: Seleziona un operatore e scopri le agevolazioni e opportunità
       cta:
         filter: Filtra
       categoriesList:
-        title: Seleziona una categoria e scopri le agevolazioni
+        title: Seleziona una categoria e scopri le agevolazioni e opportunità
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2715,7 +2740,7 @@ bonus:
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
-        deals: Agevolazioni
+        deals: Agevolazioni e opportunità
         description: Descrizione
         services: Servizi
         addresses: Indirizzi
@@ -2725,8 +2750,8 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'operatore
-        landingPage: Accedi all’agevolazione
-        discountUrl: Vai all’agevolazione
+        landingPage: Accedi all’opportunità
+        discountUrl: Vai all'opportunità
       categories:
         all: Tutti gli operatori
         counting: e altre {{count}}
@@ -2746,13 +2771,13 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Vedi le agevolazioni CGN
+        buyers: Vedi le opportunità CGN
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
-          pending: Vedi le agevolazioni EYCA
+          pending: Vedi le opportunità EYCA
           bottomSheet: Visita il sito di EYCA
-          showEycaDiscounts: Vedi le agevolazioni EYCA
+          showEycaDiscounts: Vedi le opportunità EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2760,9 +2785,9 @@ bonus:
         warning: "Attenzione! "
         revoked: "Questa carta è stata revocata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
-      ownership: Chi può usufruire delle agevolazioni?
+      ownership: Chi può usare la carta?
       status:
-        title: Carta Giovani Nazionale
+        title: Carta Giovani Nazionale (CGN)
         eyca: Carta EYCA
         eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta
@@ -3385,13 +3410,14 @@ idpay:
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION:  "Pagamento POS"
-              REVERSAL:  "Storno"
-              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
-              REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
+              REVERSAL:  "Pagamento POS"
+              DELETE_INSTRUMENT:  "Disattivazione metodo ···· {{maskedPan}}"
+              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN:  "Disattivazione metodo"
+              REJECTED_ADD_INSTRUMENT:  "Attivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
-              REJECTED_REFUND:  "Errore rimboso"
+              REJECTED_REFUND:  "Rimborso sul tuo conto"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
     discountDetails:
@@ -3424,7 +3450,7 @@ idpay:
     operationDetails:
       discount:
         labels:
-          AUTHORIZED: In corso
+          AUTHORIZED: Autorizzata
           CANCELLED: Annullata
           REWARDED: Eseguita
         details:
@@ -3681,26 +3707,32 @@ idpay:
         BUDGET_EXHAUSTED:
           title: Autorizzazione negata
           body: Non hai abbastanza soldi per autorizzare
-    qrCode:
-      manual:
-        title: Autorizza una transazione
-        subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
-        input: Codice Transazione
-        button: Continua
-      scan:
-        tabs:
-          scan: Inquadra
-          upload: Carica
-          input: Digita
-        permissions:
-          undefined: 
-            title: Ci serve il tuo permesso
-            label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
-            action: Consenti l’accesso
-          denied:
-            title: Non hai dato il permesso di usare la fotocamera
-            label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
-            action: Vai alle impostazioni
+    manualInput:
+      title: Autorizza una transazione
+      subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
+      input: Codice Transazione
+      button: Continua
+barcodeScan: 
+  error: IO non riconosce questo codice
+  tabs:
+    scan: Inquadra
+    upload: Carica
+    input: Digita
+  upload:
+    image: Carica un'immagine
+    file: Carica un file
+  manual:
+    authorize: Autorizza una transazione
+    notice: Paga un avviso pagoPA
+  permissions:
+    undefined: 
+      title: Ci serve il tuo permesso
+      label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+      action: Consenti l’accesso
+    denied:
+      title: Non hai dato il permesso di usare la fotocamera
+      label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+      action: Vai alle impostazioni
 unsupportedDevice:  
   warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
   title: "Questo dispositivo non è più compatibile con IO"
@@ -3715,3 +3747,33 @@ fastLogin:
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
         submitButtonTitle: "Continua la navigazione"
         cancelButtonTitle: "Annulla"
+      transientError:
+        title: "Non siamo riusciti ad autenticarti"
+        subtitle: "Chiudi l'app e riprova tra qualche minuto."
+        submitButtonTitle: "Vai alle FAQ"
+  whatsNew:
+    title: Abbiamo migliorato l’accesso a IO!
+    subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
+    changes:
+      first:
+        title: Più semplice
+        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
+      second:
+        title: Più veloce
+        description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
+      third:
+        title: Più sicura
+        description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
+securityTips:
+  title: Consigli di sicurezza
+  biometric:
+    first: Usa il biometrico solo per identificare te. 
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: Se
+      lose: perdi
+      sentence: il dispositivo, esci da IO da
+    compromisedCredentials: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+whatsNew:
+  title: Cosa cambia?

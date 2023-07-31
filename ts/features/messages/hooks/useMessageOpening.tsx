@@ -21,7 +21,6 @@ import MessageMarkdown from "../../../components/messages/MessageDetail/MessageM
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import { Pictogram } from "../../../components/core/pictograms";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
 import I18n from "../../../i18n";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -30,10 +29,10 @@ import { H3 } from "../../../components/core/typography/H3";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import ROUTES from "../../../navigation/routes";
 import {
-  trackPNDisclaimerAccepted,
-  trackPNDisclaimerRejected,
-  trackPNDisclaimerShowSuccess
-} from "../../pn/analytics";
+  trackDisclaimerOpened,
+  trackNotificationRejected,
+  trackUxConversion
+} from "../analytics";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -52,36 +51,29 @@ type MessagePreconditionFooterProps = {
   navigationAction: (message: UIMessage) => void;
 };
 
+const foldMessage = (
+  message: pot.Pot<UIMessage, Error>,
+  callback: (message: UIMessage) => void
+) => pipe(message, pot.toOption, O.map(callback));
+
 const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
   const message = useIOSelector(state =>
     getPaginatedMessageById(state, props.messageId)
   );
 
   const handleCancelPress = () => {
-    trackPNDisclaimerRejected();
+    foldMessage(message, (foldedMessage: UIMessage) =>
+      trackNotificationRejected(foldedMessage.category.tag)
+    );
     props.onDismiss();
   };
 
   const handleContinuePress = () => {
+    foldMessage(message, (foldedMessage: UIMessage) => {
+      trackUxConversion(foldedMessage.category.tag);
+      props.navigationAction(foldedMessage);
+    });
     props.onDismiss();
-
-    pipe(
-      message,
-      pot.toOption,
-      O.map(message => {
-        pipe(
-          message.category,
-          MessageCategoryPN.decode,
-          O.fromEither,
-          O.chainNullableK(category => category.original_receipt_date),
-          O.map(originalReceiptDate => {
-            const messageCreatedAt = message.createdAt;
-            trackPNDisclaimerAccepted(messageCreatedAt, originalReceiptDate);
-          })
-        );
-        props.navigationAction(message);
-      })
-    );
   };
 
   // if the markdown is not loaded yet
@@ -264,8 +256,13 @@ export const useMessageOpening = () => {
 
   const present = (message: UIMessage) => {
     if (message.hasPrecondition) {
-      trackPNDisclaimerShowSuccess();
-      dispatch(getMessagePrecondition.request(message.id));
+      trackDisclaimerOpened(message.category.tag);
+      dispatch(
+        getMessagePrecondition.request({
+          id: message.id,
+          categoryTag: message.category.tag
+        })
+      );
       modal.present();
       return;
     }

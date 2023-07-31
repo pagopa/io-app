@@ -169,7 +169,7 @@ global:
   navigator:
     messages: "Mitteilungen"
     wallet: "Konto"
-    scan: "Scan"
+    scan: "Scannen"
     documents: "Dokumente"
     profile: "Profil"
     services: "Dienste"
@@ -540,7 +540,7 @@ authentication:
         hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
       title: "Deine Sitzung ist abgelaufen"
-      body: "Aus Sicherheitsgründen bitten wir dich 30 Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
+      body: "Aus Sicherheitsgründen bitten wir dich {{days}} Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
     cie_unsupported:
       title: "Anmeldung mit CIE nicht möglich"
       os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
@@ -750,17 +750,17 @@ onboarding:
   pin:
     headerTitle: "IO einrichten"
     title: "Entsperrcode"
-    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige Operationen zu bestätigen."
+    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Operationen zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
     errors:
-      invalid: Il codice non è valido
+      invalid: "Der Code ist ungültig"
       match: "Der Code stimmt nicht überein"
     policy:
-      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
-      first: ripetizioni di numeri (es. 000000)
-      second: numeri in sequenza (es. 123456 o 654321)
+      headerTitle: "Aus Sicherheitsgründen darf der Code folgendes nicht enthalten:"
+      first: "Wiederholungen von Zahlen (z.B. 000000)"
+      second: "fortlaufende Nummern (z.B. 123456 oder 654321)"
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
@@ -795,13 +795,24 @@ onboarding:
     contextualHelpTitle: "Push-Benachrichtigungen"
   infoConsent:
     headerTitle: "IO einrichten"
-    title: "Möchtest du Push-Benachrichtigungen aktivieren?"
-    subTitle: "Um Push-Benachrichtigungen von IO zu erhalten, musst du sie in den Einstellungen von iOS aktiveren. So geht's:"
-    instruction1: "1. Wähle “Benachrichtigungen”"
-    instruction2: "2. Aktiviere “Benachrichtigungen zulassen”"
-    openSettings: "Öffne die Einstellungen von iOS"
+    title: "Aktiviere Push-Benachrichtigungen, um keine wichtigen Nachrichten zu verpassen!"
+    subTitle: "Dazu musst du die Einstellungen in den Systemeinstellungen deines Geräts ändern."
+    openSettings: "Einstellungen aufrufen"
     continue: "Jetzt nicht"
     contextualHelpTitle: "Push-Benachrichtigungen"
+    instructions:
+      title: "So geht's:"
+      label: "Schritt"
+      ios:
+        step1: "Gehe zu “Einstellungen”"
+        step2: "Wähle “Benachrichtigungen”"
+        step3: "Aktiviere “Benachrichtigungen zulassen”"
+      android:
+        step1: "Gehe zu “Einstellungen”"
+        step2: "Wähle “Apps”"
+        step3: "Wähle “IO”"
+        step4: "Wähle “Benachrichtigungen”"
+        step5: "Aktiviere “Benachrichtigungen zulassen”"
 forms:
   validators:
     required: "Erforderlicher Wert"

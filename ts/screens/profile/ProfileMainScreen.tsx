@@ -65,6 +65,7 @@ import ButtonSolid from "../../components/ui/ButtonSolid";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -307,6 +308,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId,
       notificationToken,
       sessionToken,
+      isFastLoginEnabled,
       walletToken,
       setDebugModeEnabled,
       isIdPayTestEnabled,
@@ -381,6 +383,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </>
         )}
         <Divider />
+        {/* New Wallet Playground */}
+        <ListItemNav
+          value={I18n.t("profile.main.walletPlayground.titleSection")}
+          accessibilityLabel={I18n.t(
+            "profile.main.walletPlayground.titleSection"
+          )}
+          onPress={() =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.WALLET_PLAYGROUND
+            })
+          }
+        />
+        <Divider />
         {/* Design System */}
         <ListItemNav
           value={I18n.t("profile.main.designSystem")}
@@ -433,6 +448,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
+            {isDevEnv &&
+              isFastLoginEnabled &&
+              this.debugCopyListItem(
+                "Fast Login",
+                `${isFastLoginEnabled}`,
+                () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+              )}
+
             {isDevEnv &&
               sessionToken &&
               this.debugCopyListItem("Session token", sessionToken, () =>
@@ -654,6 +677,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isFastLoginEnabled: isFastLoginEnabledSelector(state),
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,

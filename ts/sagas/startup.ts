@@ -40,6 +40,7 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
+import { watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -47,10 +48,7 @@ import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
-import {
-  refreshSessionToken,
-  sessionExpired
-} from "../store/actions/authentication";
+import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -60,7 +58,11 @@ import {
 } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  profileLoadSuccess,
+  resetProfileState
+} from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
@@ -81,13 +83,15 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
-import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
-import { differentProfileLoggedIn } from "../store/actions/crossSessions";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
@@ -97,11 +101,15 @@ import { StartupStatusEnum } from "../store/reducers/startup";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
-import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
 import {
-  startAndReturnIdentificationResult,
-  watchIdentification
-} from "./identification";
+  isFastLoginEnabledSelector,
+  tokenRefreshSelector
+} from "../features/fastLogin/store/selectors";
+import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
+import { backendStatusSelector } from "../store/reducers/backendStatus";
+import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
+import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
 import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
@@ -133,7 +141,6 @@ import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotif
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
-import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import {
   checkSession,
   watchCheckSessionSaga
@@ -157,6 +164,7 @@ import {
   keychainError
 } from "./../store/storages/keychain";
 import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
+import { setLanguageFromProfileIfExists } from "./preferences";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -172,6 +180,8 @@ export function* initializeApplicationSaga(
   const handleSessionExpiration = !!(
     action?.payload && action.payload.handleSessionExpiration
   );
+  const showIdentificationModal =
+    action?.payload?.showIdentificationModalAtStartup ?? true;
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -234,6 +244,14 @@ export function* initializeApplicationSaga(
     return;
   }
 
+  // Since the backend.json is done in parallel with the startup saga,
+  // we need to synchronize the two tasks, to be sure to have loaded the remote FF
+  // before using them.
+  const backendStatus = yield* select(backendStatusSelector);
+  if (O.isNone(backendStatus)) {
+    yield* take(backendStatusLoadSuccess);
+  }
+
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
@@ -271,7 +289,13 @@ export function* initializeApplicationSaga(
     if (!isFastLoginEnabled) {
       yield* put(sessionExpired());
     } else {
-      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+      yield* put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: true,
+          showLoader: false
+        })
+      );
     }
     return;
   }
@@ -400,9 +424,6 @@ export function* initializeApplicationSaga(
   // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
-  // eslint-disable-next-line functional/no-let
-  let storedPin: PinString;
-
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
@@ -419,7 +440,7 @@ export function* initializeApplicationSaga(
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
-  if (hasPreviousSessionAndPin && !handleSessionExpiration) {
+  if (hasPreviousSessionAndPin && showIdentificationModal) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
@@ -434,12 +455,38 @@ export function* initializeApplicationSaga(
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
-      yield* put(refreshSessionToken.request({ withUserInteraction: false }));
+      // At application startup, the state of the refresh token is "idle".
+      // If we got a 401 in the above getSession we start a token refresh.
+      // If we succeed, we can continue with the application startup and
+      // we could skip this step.
+      const lastTokenRefreshState = yield* select(tokenRefreshSelector);
+      if (lastTokenRefreshState.kind !== "success") {
+        yield* put(
+          refreshSessionToken.request({
+            withUserInteraction: false,
+            showIdentificationModalAtStartup: false,
+            showLoader: true
+          })
+        );
+        return;
+      }
     }
   }
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
+
+  // After tos acceptance, we dispatch a load success to allow the execution of the check
+  // which save the hashed code tax code
+  const profile = yield* select(profileSelector);
+  if (pot.isSome(profile)) {
+    yield* put(profileLoadSuccess(profile.value));
+    yield* take(setProfileHashedFiscalCode);
+  }
+
+  if (!handleSessionExpiration) {
+    yield* call(setLanguageFromProfileIfExists);
+  }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
@@ -448,18 +495,10 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
-  if (hasPreviousSessionAndPin) {
-    // We have to retrieve the pin here and not on the previous if-condition (same guard)
-    // otherwise the typescript compiler will complain of an unassigned variable later on
-    storedPin = maybeStoredPin.value;
-  } else {
-    // TODO If the session was not valid, the code would have stopped before
-    // reaching this point. Consider refactoring even more by removing the check
-    // on the session (IOAPPCIT-10 https://pagopa.atlassian.net/browse/IOAPPCIT-10)
-    storedPin = yield* call(checkConfiguredPinSaga);
+  yield* call(checkConfiguredPinSaga);
 
+  if (!hasPreviousSessionAndPin) {
     yield* call(checkAcknowledgedFingerprintSaga);
-
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
@@ -473,6 +512,10 @@ export function* initializeApplicationSaga(
     // Show the thank-you screen for the onboarding
     yield* call(completeOnboardingSaga);
   }
+
+  // At the end of the onboarding checks, we enable the whatsnew check so that it is done
+  // only once you get to the messages screen (manual whatsnew management still remains after the tos)
+  yield* put(enableWhatsNewCheck());
 
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
@@ -530,6 +573,9 @@ export function* initializeApplicationSaga(
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
+
+  // Start watching for Wallet V3 actions
+  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
@@ -611,15 +657,10 @@ export function* initializeApplicationSaga(
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
 
-  // Watch for the app going to background/foreground
-  yield* fork(watchApplicationActivitySaga);
-
   // Watch for requests to logout
   // Since this saga is spawned and not forked
   // it will handle its own cancelation logic.
   yield* spawn(watchLogoutSaga, backendClient.logout);
-
-  yield* fork(watchIdentification, storedPin);
 
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);

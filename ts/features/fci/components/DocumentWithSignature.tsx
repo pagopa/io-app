@@ -3,9 +3,8 @@ import Pdf from "react-native-pdf";
 import { Body, Container, Left, Right } from "native-base";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { SafeAreaView, StyleSheet } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import IconFont from "../../../components/ui/IconFont";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -16,12 +15,12 @@ import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignat
 import AppHeader from "../../../components/ui/AppHeader";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../components/core/typography/H5";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import IconButton from "../../../components/ui/IconButton";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
 export type SignatureFieldAttrType =
@@ -187,13 +186,13 @@ const DocumentWithSignature = (props: Props) => {
           </H5>
         </Body>
         <Right>
-          <ButtonDefaultOpacity
+          <IconButton
+            icon="closeLarge"
             onPress={props.onClose}
-            transparent={true}
+            color="neutral"
             testID="FciDocumentWithSignatureTopRightButtonTestID"
-          >
-            <IconFont name="io-close" />
-          </ButtonDefaultOpacity>
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          />
         </Right>
       </AppHeader>
       <DocumentsNavigationBar

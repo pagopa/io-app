@@ -11,7 +11,6 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
-  refreshSessionToken,
   resetAuthenticationState,
   sessionExpired,
   sessionInformationLoadSuccess,
@@ -27,6 +26,7 @@ import {
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 

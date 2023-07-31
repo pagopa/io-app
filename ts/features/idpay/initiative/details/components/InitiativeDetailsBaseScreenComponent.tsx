@@ -146,7 +146,10 @@ const InitiativeDetailsBaseScreenComponent = (
       contextualHelp={emptyContextualHelp}
       customRightIcon={{
         iconName: "info",
-        onPress: props.onHeaderDetailsPress
+        onPress: props.onHeaderDetailsPress,
+        // Leaving the value blank because there isn't a similar case
+        // in the entire app. It should be something like "View more info"
+        accessibilityLabel: ""
       }}
     >
       <StatusBar

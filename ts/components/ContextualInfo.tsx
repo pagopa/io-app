@@ -1,11 +1,11 @@
 import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
 import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
+import I18n from "i18n-js";
 import themeVariables from "../theme/variables";
 import AppHeader from "./ui/AppHeader";
 import { H1 } from "./core/typography/H1";
-import { Icon } from "./core/icons";
-import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
+import IconButton from "./ui/IconButton";
 
 type Props = Readonly<{
   title: string;
@@ -50,12 +50,13 @@ export default class ContextualInfo extends React.Component<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <TouchableDefaultOpacity
+            <IconButton
+              icon="closeLarge"
+              color="neutral"
               onPress={() => this.props.onClose()}
               testID="contextualInfo_closeButton"
-            >
-              <Icon name="closeLarge" color="bluegreyDark" />
-            </TouchableDefaultOpacity>
+              accessibilityLabel={I18n.t("global.buttons.close")}
+            />
           </Right>
         </AppHeader>
         <Content

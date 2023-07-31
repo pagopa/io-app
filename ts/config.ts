@@ -49,8 +49,6 @@ export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const debugRemotePushNotification =
-  Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
@@ -114,6 +112,10 @@ export const pnEnabled = Config.PN_ENABLED === "YES";
 
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
+
+// Fast Login Bypass getNonce
+export const fastLoginBypassGetNonce =
+  Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
 
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
@@ -260,6 +262,9 @@ export const idPayTestToken =
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
+
+export const walletV3ApiBaseUrl = Config.WALLETV3_API_BASEURL;
+export const walletV3ApiUatBaseUrl = Config.WALLETV3_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";

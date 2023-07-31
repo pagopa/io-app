@@ -1,5 +1,9 @@
 This file describes the reason for the patches applied.
 
+### react-native-vision-camera+2.15.4
+Created on **24/07/2023**
+FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
+
 ### react-native-device-info+8.3.3
 Created on **15/12/2021**
 
@@ -9,6 +13,18 @@ Created on **15/12/2021**
     - `getIpAddressSync`
     - `getMacAddress`
     - `getMacAddressSync`
+
+### react-native+0.69.9
+Created on **19/07/2023**
+
+#### Reason:
+- This patch is going to add a missing POST_NOTIFICATIONS permission (Android 13) (remove this patch after updating to version 71 of React Native).
+
+### @types/react-native+0.69.9
+Created on **19/07/2023**
+
+#### Reason:
+- Missing POST_NOTIFICATIONS permission type (remove this patch after updating to version 71 of React Native).
 
 ### @types/react-native+0.69.6
 Created on **30/08/2022**
@@ -134,3 +150,11 @@ Created on **01/12/2022**
 #### Reason:
 
 - This patch is going to add a missing prop to component definition, it can be removed once updating the library.
+
+### react-native-webview+11.26.1
+
+Updated on **13/07/2023**
+
+#### Reason:
+
+- This patch applies security fixes to avoid access on camera and microphone without user permission.
