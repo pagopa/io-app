@@ -52,14 +52,14 @@ const PinView = (props: PinViewProps) => (
 );
 
 const CieLoginConfigScreen = () => {
-  const [locked, setLockec] = React.useState(true);
+  const [locked, setLocked] = React.useState(true);
   const [pin, setPin] = React.useState("");
 
   const onSubmit = useCallback((pin: string) => {
     // constant day containig the current day in the format YYMMDD
     const day = new Date().toISOString().slice(2, 10).replace(/-/g, "");
     if (pin === day) {
-      setLockec(false);
+      setLocked(false);
     } else {
       setPin("");
     }
