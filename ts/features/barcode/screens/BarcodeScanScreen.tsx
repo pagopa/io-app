@@ -46,11 +46,7 @@ const BarcodeScanScreen = () => {
 
     switch (barcode.type) {
       case "IDPAY":
-        if (isIdPayEnabled) {
-          openDeepLink(barcode.authUrl);
-        } else {
-          handleBarcodeError();
-        }
+        openDeepLink(barcode.authUrl);
         break;
       case "PAGOPA":
         dispatch(paymentInitializeState());
