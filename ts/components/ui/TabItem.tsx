@@ -14,7 +14,7 @@ import { IOIcons, Icon } from "../core/icons";
 import { HSpacer } from "../core/spacer/Spacer";
 import { LabelHeader } from "../core/typography/LabelHeader";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { useSpringPressProgressValue } from "./utils/hooks/useSpringPressProgressValue";
 
 type ColorMode = "light" | "dark";
@@ -35,44 +35,38 @@ export type TabItem = WithTestID<{
 }>;
 
 type ColorStates = {
-  default: {
-    background: string;
-    foreground: IOColors;
+  background: {
+    default: string;
+    selected: string;
+    pressed: string;
   };
-  selected: {
-    background: string;
-    foreground: IOColors;
-  };
-  pressed: {
-    background: string;
+  foreground: {
+    default: IOColors;
+    selected: IOColors;
   };
 };
 
 const mapColorStates: Record<NonNullable<TabItem["color"]>, ColorStates> = {
   light: {
-    default: {
-      background: "#ffffff00",
-      foreground: "grey-650"
+    background: {
+      default: "#ffffff00",
+      selected: IOColors["grey-50"],
+      pressed: IOColors["grey-50"]
     },
-    selected: {
-      background: IOColors["grey-50"],
-      foreground: "black"
-    },
-    pressed: {
-      background: IOColors["grey-450"]
+    foreground: {
+      default: "grey-650",
+      selected: "black"
     }
   },
   dark: {
-    default: {
-      background: "#ffffff00",
-      foreground: "white"
+    background: {
+      default: "#ffffff00",
+      selected: IOColors.white,
+      pressed: IOColors.white
     },
-    selected: {
-      background: IOColors.white,
-      foreground: "grey-850"
-    },
-    pressed: {
-      background: IOColors["grey-100"]
+    foreground: {
+      default: "white",
+      selected: "grey-850"
     }
   }
 };
@@ -93,11 +87,19 @@ const TabItem = ({
     progress: progressPressed,
     onPressIn,
     onPressOut
-  } = useSpringPressProgressValue(IOSpringValues.button);
+  } = useSpringPressProgressValue(IOSpringValues.selection);
+
+  const colors = mapColorStates[color];
+  const foregroundColor = colors.foreground[selected ? "selected" : "default"];
+
+  const opaquePressedBackgroundColor = hexToRgba(
+    colors.background.pressed,
+    0.1
+  );
 
   const isSelected: Animated.SharedValue<number> = useSharedValue(0);
   const progressSelected = useDerivedValue(() =>
-    withSpring(isSelected.value, IOSpringValues.button)
+    withSpring(isSelected.value, IOSpringValues.selection)
   );
 
   React.useEffect(() => {
@@ -111,19 +113,13 @@ const TabItem = ({
     const pressedBackgroundColor = interpolateColor(
       progressPressed.value,
       [0, 1],
-      [
-        mapColorStates[color].default.background,
-        `${mapColorStates[color].pressed.background}1A`
-      ]
+      [colors.background.default, opaquePressedBackgroundColor]
     );
 
     const selectedBackgroundColor = interpolateColor(
       progressSelected.value,
       [0, 1],
-      [
-        `${mapColorStates[color].pressed.background}1A`,
-        mapColorStates[color].selected.background
-      ]
+      [opaquePressedBackgroundColor, colors.background.selected]
     );
 
     // Scale down button slightly when pressed
@@ -140,11 +136,9 @@ const TabItem = ({
         : pressedBackgroundColor,
       transform: [{ scale }]
     };
-  });
+  }, [progressPressed, progressSelected, selected]);
 
-  const colors = mapColorStates[color][selected ? "selected" : "default"];
-
-  const activeIcon = iconSelected ? (selected ? iconSelected : icon) : icon;
+  const activeIcon = selected ? iconSelected ?? icon : icon;
 
   return (
     <Pressable
@@ -162,11 +156,11 @@ const TabItem = ({
       >
         {activeIcon && (
           <>
-            <Icon name={activeIcon} color={colors.foreground} size={16} />
+            <Icon name={activeIcon} color={foregroundColor} size={16} />
             <HSpacer size={4} />
           </>
         )}
-        <LabelHeader color={colors.foreground}>{label}</LabelHeader>
+        <LabelHeader color={foregroundColor}>{label}</LabelHeader>
       </Animated.View>
     </Pressable>
   );
