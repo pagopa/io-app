@@ -15,7 +15,6 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { format } from "../../utils/dates";
-import { isImageUri } from "../../utils/url";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { Body } from "../core/typography/Body";
@@ -72,12 +71,6 @@ export const TransactionsList = (props: Props) => {
   }
 
   // ------------------ components + utils ------------------
-  const MunicipalityPlaceholder = () => (
-    <View style={styles.municipalityPlaceholder}>
-      <Icon color="grey-450" name="institution" size={"100%"} />
-    </View>
-  );
-
   const shouldShowFooterComponent = (
     ListEmptyComponent?: React.ReactElement
   ): ListEmptyComponent is React.ReactElement =>
@@ -121,14 +114,8 @@ export const TransactionsList = (props: Props) => {
 
     const amount = formatNumberCurrencyCents(item.amount.amount);
     const datetime: string = format(item.created, "DD MMM YYYY, HH:mm");
-    const recipientLogo = isImageUri(recipient) ? (
-      recipient
-    ) : (
-      <MunicipalityPlaceholder />
-    );
     return (
       <ListItemTransaction
-        paymentLogoIcon={recipientLogo}
         title={recipient}
         subtitle={datetime}
         onPress={() => props.navigateToTransactionDetails(item)}
@@ -189,14 +176,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: screenWidth - variables.contentPadding * 2,
     backgroundColor: IOColors.white
-  },
-  municipalityPlaceholder: {
-    width: 44,
-    height: 44,
-    borderRadius: 100,
-    backgroundColor: IOColors["grey-100"],
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 12
   }
 });
