@@ -37,6 +37,7 @@ const getMessages = (messagePagePot: MessagePagePot) =>
   );
 
 const MessageListScreen = () => {
+  console.log(`=== Screen Messages List`);
   const route = useRoute<MessageListScreenRouteProps>();
   const dispatch = useIODispatch();
   const messagePagePot = useIOSelector(state =>

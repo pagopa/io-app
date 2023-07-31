@@ -16,7 +16,6 @@ const messages = successReloadMessagesPayload.messages;
 
 const defaultProps: React.ComponentProps<typeof Item> = {
   category: { tag: "GENERIC" } as MessageCategory,
-  hasPaidBadge: false,
   isRead: false,
   isSelected: false,
   isSelectionModeEnabled: false,

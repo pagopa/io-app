@@ -6,7 +6,6 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
-import { createSelector } from "reselect";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
@@ -35,8 +34,7 @@ import {
   sectionStatusSelector
 } from "../../store/reducers/backendStatus";
 import {
-  allArchiveMessagesSelector,
-  allInboxMessagesSelector,
+  allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
 } from "../../store/reducers/entities/messages/allPaginated";
 import {
@@ -82,6 +80,7 @@ const MessagesHomeScreen = ({
   resetMigrationStatus,
   latestMessageOperation
 }: Props) => {
+  console.log(`=== Screen Messages Home`);
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
@@ -157,7 +156,7 @@ const MessagesHomeScreen = ({
   return (
     <TopScreenComponent
       accessibilityEvents={{
-        disableAccessibilityFocus: messageSectionStatusActive !== undefined
+        disableAccessibilityFocus: messageSectionStatusActive
       }}
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -193,6 +192,10 @@ const MessagesHomeScreen = ({
       {isSearchEnabled &&
         pipe(
           searchText,
+          O.map(a => {
+            console.log(`=== Screen Messages Home PIPE`);
+            return a;
+          }),
           O.map(_ =>
             _.length < MIN_CHARACTER_SEARCH_TEXT ? (
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
@@ -223,12 +226,10 @@ const MessagesHomeScreen = ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
-  messageSectionStatusActive: sectionStatusSelector("messages")(state),
+  messageSectionStatusActive:
+    sectionStatusSelector("messages")(state) !== undefined,
   searchText: searchTextSelector(state),
-  searchMessages: createSelector(
-    [allInboxMessagesSelector, allArchiveMessagesSelector],
-    (inbox, archive) => inbox.concat(archive)
-  )(state),
+  searchMessages: allInboxAndArchivedMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration,
   latestMessageOperation: allPaginatedSelector(state).latestMessageOperation

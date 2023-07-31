@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
   FlatList,
+  ListRenderItemInfo,
   RefreshControl,
   StyleSheet,
   Vibration
@@ -25,7 +26,6 @@ import { Dispatch } from "../../../store/actions/types";
 import {
   allArchiveSelector,
   allInboxSelector,
-  Cursor,
   isLoadingArchiveNextPage,
   isLoadingArchivePreviousPage,
   isLoadingInboxNextPage,
@@ -34,7 +34,6 @@ import {
   isReloadingInbox
 } from "../../../store/reducers/entities/messages/allPaginated";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
-import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
@@ -46,9 +45,9 @@ import {
   EmptyComponent,
   generateItemLayout,
   ItemSeparator,
-  renderEmptyList,
-  renderItem
+  renderEmptyList
 } from "./helpers";
+import MessageListItem from "./Item";
 
 const styles = StyleSheet.create({
   padded: {
@@ -128,13 +127,12 @@ const MessageList = ({
   ListHeaderComponent,
   filteredMessages,
   onLongPressItem,
-  hasPaidBadge,
 
   onPressItem = (_: UIMessage) => undefined,
   selectedMessageIds,
 
   // extracted from the store
-  allMessages,
+  allMessages = [],
   error,
   isLoadingMore,
   isLoadingPrevious,
@@ -147,6 +145,8 @@ const MessageList = ({
   reloadAll,
   testID
 }: Props) => {
+  console.log(`=== Component Messages List`);
+
   // when filteredMessage is defined, this component is used
   // in search, so loading data on demand should be prevented
   const shouldUseLoad = filteredMessages === undefined;
@@ -203,18 +203,21 @@ const MessageList = ({
     }
   };
 
-  const onLongPress = ({ id }: UIMessage) => {
-    if (!onLongPressItem) {
-      return;
-    }
-    Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
-    onLongPressItem(id);
-    const lastIndex = messages.length - 1;
-    const lastMessageId = messages[lastIndex].id;
-    if (id === lastMessageId) {
-      setLongPressedItemIndex(O.some(lastIndex));
-    }
-  };
+  const onLongPress = useCallback(
+    ({ id }: UIMessage) => {
+      if (!onLongPressItem) {
+        return;
+      }
+      Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
+      onLongPressItem(id);
+      const lastIndex = messages.length - 1;
+      const lastMessageId = messages[lastIndex].id;
+      if (id === lastMessageId) {
+        setLongPressedItemIndex(O.some(lastIndex));
+      }
+    },
+    [messages, onLongPressItem]
+  );
 
   const onEndReached = () => {
     if (shouldUseLoad && nextCursor && !isLoadingMore) {
@@ -268,6 +271,21 @@ const MessageList = ({
     />
   ) : undefined;
 
+  const renderMessageItem = useCallback(
+    ({ item: message }: ListRenderItemInfo<UIMessage>) => {
+      <MessageListItem
+        category={message.category}
+        isRead={message.isRead}
+        message={message}
+        onPress={onPressItem}
+        onLongPress={() => onLongPress(message)}
+        isSelectionModeEnabled={!!selectedMessageIds}
+        isSelected={!!selectedMessageIds?.has(message.id)}
+      />;
+    },
+    [onLongPress, onPressItem, selectedMessageIds]
+  );
+
   return (
     <>
       <Animated.FlatList
@@ -283,12 +301,7 @@ const MessageList = ({
         ref={flatListRef}
         refreshControl={refreshControl}
         refreshing={isLoadingOrRefreshingMessageList}
-        renderItem={renderItem({
-          hasPaidBadge,
-          onLongPress,
-          onPress: onPressItem,
-          selectedMessageIds
-        })}
+        renderItem={renderMessageItem}
         scrollEnabled={true}
         scrollEventThrottle={animated?.scrollEventThrottle}
         style={styles.padded}
@@ -309,43 +322,31 @@ const MessageList = ({
   );
 };
 
+// eslint-disable-next-line arrow-body-style
 const mapStateToProps = (state: GlobalState, { filter }: OwnProps) => {
-  const isArchive = filter.getArchived;
-  const paginatedState = isArchive
+  const archived = filter.getArchived ?? false;
+  const paginatedState = archived
     ? allArchiveSelector(state)
     : allInboxSelector(state);
   const error = pot.isError(paginatedState) ? paginatedState.error : undefined;
-  const { allMessages, nextCursor, previousCursor } = pot.getOrElse(
-    pot.map(paginatedState, ps => ({
-      allMessages: ps.page,
-      nextCursor: ps.next,
-      previousCursor: ps.previous
-    })),
-    {
-      allMessages: [],
-      nextCursor: undefined,
-      previousCursor: undefined
-    }
-  );
+  const messagesPage = pot.getOrElse(paginatedState, undefined);
   const didLoad = pot.isSome(paginatedState);
   return {
-    allMessages,
-    testID: `MessageList_${isArchive ? "archive" : "inbox"}`,
+    allMessages: messagesPage?.page,
+    testID: `MessageList_${archived ? "archive" : "inbox"}`,
     error,
-    hasPaidBadge: (category: UIMessage["category"]) =>
-      isNoticePaid(state, category),
-    isLoadingMore: isArchive
+    isLoadingMore: archived
       ? isLoadingArchiveNextPage(state)
       : isLoadingInboxNextPage(state),
-    isLoadingPrevious: isArchive
+    isLoadingPrevious: archived
       ? isLoadingArchivePreviousPage(state)
       : isLoadingInboxPreviousPage(state),
-    isReloadingAll: isArchive
+    isReloadingAll: archived
       ? isReloadingArchive(state)
       : isReloadingInbox(state),
     didLoad,
-    nextCursor,
-    previousCursor
+    nextCursor: messagesPage?.next,
+    previousCursor: messagesPage?.previous
   };
 };
 
@@ -357,15 +358,14 @@ const mapDispatchToProps = (dispatch: Dispatch, { filter }: OwnProps) => ({
     dispatch(reloadAllMessages.request({ pageSize, filter }));
   },
 
-  loadNextPage: (cursor: Cursor) => {
+  loadNextPage: (cursor: string) => {
     dispatch(loadNextPageMessages.request({ pageSize, cursor, filter }));
   },
-
   /**
    * We load the maximum amount of messages because we don't actually support
    * true backwards pagination. Is just to refresh the data.
    */
-  loadPreviousPage: (cursor: Cursor) => {
+  loadPreviousPage: (cursor: string) => {
     dispatch(
       loadPreviousPageMessages.request({
         pageSize: maximumItemsFromAPI,

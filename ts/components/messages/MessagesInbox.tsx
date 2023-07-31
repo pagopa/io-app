@@ -43,6 +43,7 @@ const MessagesInbox = ({
   navigateToMessageDetail,
   archiveMessages
 }: Props) => {
+  console.log(`=== Component Messages Inbox`);
   const { selectedItems, toggleItem, resetSelection } = useItemsSelection();
 
   const isSelecting = O.isSome(selectedItems);

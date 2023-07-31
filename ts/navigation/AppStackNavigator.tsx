@@ -61,6 +61,7 @@ export const AppStackNavigator = (): React.ReactElement => {
     return <IngressScreen />;
   }
 
+  console.log(`=== Navigator App Stack`);
   return <AuthenticatedStackNavigator />;
 };
 
@@ -177,11 +178,14 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
  */
-export const IONavigationContainer = () => (
-  <InnerNavigationContainer>
-    <AppStackNavigator />
-  </InnerNavigationContainer>
-);
+export const IONavigationContainer = () => {
+  console.log(`=== IO Navigation Containter`);
+  return (
+    <InnerNavigationContainer>
+      <AppStackNavigator />
+    </InnerNavigationContainer>
+  );
+};
 
 export const TestInnerNavigationContainer = isTestEnv
   ? InnerNavigationContainer
