@@ -9,12 +9,12 @@ import {
   idPayApiUatBaseUrl,
   idPayTestToken
 } from "../../../../config";
-import { useXStateMachine } from "../../../../hooks/useXStateMachine";
+import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
   isPagoPATestEnabledSelector,
@@ -47,6 +47,7 @@ type Props = {
 };
 
 const IDPayOnboardingMachineProvider = (props: Props) => {
+  const dispatch = useIODispatch();
   const [machine] = useXStateMachine(createIDPayOnboardingMachine);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;

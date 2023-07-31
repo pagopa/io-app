@@ -18,7 +18,7 @@ import InstitutionIcon from "../../../../../../img/features/idpay/institution.sv
 import CreditCardIcon from "../../../../../../img/features/idpay/creditcard.svg";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { useConfigurationMachineService } from "../xstate/provider";
-import { LOADING_TAG } from "../../../../../utils/xstate";
+import { LOADING_TAG } from "../../../../../xstate/utils";
 import I18n from "../../../../../i18n";
 import { ConfigurationMode } from "../xstate/context";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";

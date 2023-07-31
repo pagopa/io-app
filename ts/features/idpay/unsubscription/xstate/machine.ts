@@ -1,6 +1,6 @@
 import { assign, createMachine } from "xstate";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
-import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../xstate/utils";
 import { Context } from "./context";
 import { Events } from "./events";
 import { Services } from "./services";

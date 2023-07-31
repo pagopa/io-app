@@ -2,7 +2,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { guardedNavigationAction } from "../../common/xstate/utils";
+import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
 import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import {
   IDPayOnboardingParamsList,
@@ -23,7 +23,6 @@ const createActionsImplementation = (
       if (context.serviceId === undefined) {
         throw new Error("serviceId is undefined");
       }
-
       onboardingNavigation.navigate(
         IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
         {

@@ -16,7 +16,7 @@ import {
   LOADING_TAG,
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
-} from "../../../../../utils/xstate";
+} from "../../../../../xstate/utils";
 import {
   ConfigurationMode,
   Context,

@@ -6,7 +6,7 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { showToast } from "../../../../../utils/showToast";
-import { guardedNavigationAction } from "../../../common/xstate/utils";
+import { guardedNavigationAction } from "../../../../../xstate/helpers/guardedNavigationAction";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";

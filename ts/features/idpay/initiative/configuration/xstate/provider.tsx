@@ -15,7 +15,7 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../../config";
-import { useXStateMachine } from "../../../../../hooks/useXStateMachine";
+import { useXStateMachine } from "../../../../../xstate/hooks/useXStateMachine";
 import {
   AppParamsList,
   IOStackNavigationProp
