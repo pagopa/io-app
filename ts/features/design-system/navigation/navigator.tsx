@@ -1,17 +1,7 @@
-import {
-  StackNavigationOptions,
-  TransitionPresets,
-  createStackNavigator
-} from "@react-navigation/stack";
-import { HeaderBackButton } from "@react-navigation/elements";
 import * as React from "react";
-import { Alert, Platform, View, useColorScheme } from "react-native";
-import { useMemo } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useColorScheme } from "react-native";
 import { enableScreens } from "react-native-screens";
 import { createNativeStackNavigator } from "react-native-screens/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSAdvice } from "../core/DSAdvice";
@@ -45,82 +35,14 @@ import {
 } from "../../../components/core/variables/IOColors";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSCards } from "../core/DSCards";
-import IconButton from "../../../components/ui/IconButton";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { makeFontStyleObject } from "../../../components/core/fonts";
-import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
 enableScreens();
 const Stack = createNativeStackNavigator<DesignSystemParamsList>();
 const ModalStack = createNativeStackNavigator<DesignSystemModalParamsList>();
-
-// BackButton managed through React Navigation
-// const RNNBackButton = () => {
-//   const navigation = useNavigation();
-
-//   return (
-//     <IconButton
-//       icon="backiOS"
-//       color="neutral"
-//       onPress={() => {
-//         navigation.pop();
-//       }}
-//       accessibilityLabel={""}
-//     />
-//   );
-// };
-
-// const RNNCloseButton = () => {
-//   const navigation = useNavigation();
-
-//   return (
-//     <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-//       <IconButton
-//         icon="closeMedium"
-//         color="neutral"
-//         onPress={() => {
-//           navigation.goBack();
-//         }}
-//         accessibilityLabel={""}
-//       />
-//     </View>
-//   );
-// };
-
-// const HeaderFirstLevelComponent = () => (
-//   <HeaderFirstLevel
-//     title="Portafoglio"
-//     firstAction={
-//       <IconButton
-//         accessibilityLabel="Tap to trigger test alert"
-//         icon="coggle"
-//         onPress={() => {
-//           Alert.alert("Settings");
-//         }}
-//       />
-//     }
-//     secondAction={
-//       <IconButton
-//         accessibilityLabel="Tap to trigger test alert"
-//         icon="help"
-//         onPress={() => {
-//           Alert.alert("Assistance");
-//         }}
-//       />
-//     }
-//   />
-// );
-
-// const customModalHeaderConf: StackNavigationOptions = {
-//   headerLeft: () => null,
-//   headerTitle: () => null,
-//   headerRight: RNNCloseButton,
-//   headerStyle: { height: IOVisualCostants.headerHeight },
-//   headerStatusBarHeight: 0
-// };
 
 export const DesignSystemNavigator = () => {
   const colorScheme = useColorScheme();
