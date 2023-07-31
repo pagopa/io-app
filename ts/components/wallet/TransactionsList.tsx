@@ -9,7 +9,6 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Icon } from "@pagopa/io-app-design-system";
 import { formatNumberCurrencyCents } from "../../features/idpay/common/utils/strings";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
