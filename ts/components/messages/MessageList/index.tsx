@@ -272,7 +272,7 @@ const MessageList = ({
   ) : undefined;
 
   const renderMessageItem = useCallback(
-    ({ item: message }: ListRenderItemInfo<UIMessage>) => {
+    ({ item: message }: ListRenderItemInfo<UIMessage>) => (
       <MessageListItem
         category={message.category}
         isRead={message.isRead}
@@ -281,8 +281,8 @@ const MessageList = ({
         onLongPress={() => onLongPress(message)}
         isSelectionModeEnabled={!!selectedMessageIds}
         isSelected={!!selectedMessageIds?.has(message.id)}
-      />;
-    },
+      />
+    ),
     [onLongPress, onPressItem, selectedMessageIds]
   );
 
