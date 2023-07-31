@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
 });
 
 export const MainTabNavigator = () => {
-  console.log(`=== Navigator Tab`);
   const insets = useSafeAreaInsets();
   const startupLoaded = useIOSelector(isStartupLoaded);
   const tabBarHeight = 54;

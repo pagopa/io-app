@@ -69,7 +69,6 @@ import WalletNavigator from "./WalletNavigator";
 const Stack = createStackNavigator<AppParamsList>();
 
 const AuthenticatedStackNavigator = () => {
-  console.log(`=== Navigator Authenticated Stack`);
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);

@@ -42,7 +42,6 @@ const MessagesArchive = ({
   navigateToMessageDetail,
   unarchiveMessages
 }: Props) => {
-  console.log(`=== Component Messages Archive`);
   const { selectedItems, toggleItem, resetSelection } = useItemsSelection();
 
   const isSelecting = O.isSome(selectedItems);

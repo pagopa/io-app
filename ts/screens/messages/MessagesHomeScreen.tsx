@@ -80,7 +80,6 @@ const MessagesHomeScreen = ({
   resetMigrationStatus,
   latestMessageOperation
 }: Props) => {
-  console.log(`=== Screen Messages Home`);
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
@@ -192,10 +191,6 @@ const MessagesHomeScreen = ({
       {isSearchEnabled &&
         pipe(
           searchText,
-          O.map(a => {
-            console.log(`=== Screen Messages Home PIPE`);
-            return a;
-          }),
           O.map(_ =>
             _.length < MIN_CHARACTER_SEARCH_TEXT ? (
               <SearchNoResultMessage errorType="InvalidSearchBarText" />

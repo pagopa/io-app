@@ -145,8 +145,6 @@ const MessageList = ({
   reloadAll,
   testID
 }: Props) => {
-  console.log(`=== Component Messages List`);
-
   // when filteredMessage is defined, this component is used
   // in search, so loading data on demand should be prevented
   const shouldUseLoad = filteredMessages === undefined;
