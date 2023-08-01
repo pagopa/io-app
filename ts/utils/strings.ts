@@ -153,3 +153,14 @@ export const addEvery = (text: string, toAdd: string, every: number): string =>
  */
 export const splitAndTakeFirst = (text: string, splitter: string) =>
   text.split(splitter)[0];
+
+export const withTrailingPoliceCarLightEmojii = (
+  text: string,
+  visible: boolean = true
+) => {
+  if (visible) {
+    return `${text} \u{1F6A8}`;
+  } else {
+    return text;
+  }
+};

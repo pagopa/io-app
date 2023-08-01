@@ -14,6 +14,7 @@ import LandingScreen from "../screens/authentication/LandingScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
+import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -63,6 +64,11 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen name={ROUTES.CIE_PIN_SCREEN} component={CiePinScreen} />
+
+    <Stack.Screen
+      name={ROUTES.CIE_LOGIN_CONFIG_SCREEN}
+      component={CieLoginConfigScreen}
+    />
 
     <Stack.Screen
       name={ROUTES.CIE_AUTHORIZE_USAGE_SCREEN}
