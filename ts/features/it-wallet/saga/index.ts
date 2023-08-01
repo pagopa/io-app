@@ -1,17 +1,39 @@
 import { takeLatest, call } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 import { CommonActions } from "@react-navigation/native";
-import { itwActivationStart, itwWiaRequest } from "../store/actions";
+import {
+  itwActivationCompleted,
+  itwActivationStart,
+  itwActivationStop,
+  itwWiaRequest
+} from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
 import { itwCredentialsAddPid, itwPid } from "../store/actions/credentials";
-import { authenticationSaga } from "./authenticationSaga";
+import ROUTES from "../../../navigation/routes";
+import {
+  handleStartAuthenticationSaga,
+  handleStopAuthenticationSaga
+} from "./authenticationSaga";
 import { handlePidRequest } from "./pid";
 import { handleWiaRequest } from "./wia";
 import { handleCredentialsAddPid } from "./credentials";
 
 export function* watchItwSaga(): SagaIterator {
+  /**
+   * Handles the ITW activation start.
+   */
   yield* takeLatest(itwActivationStart, watchItwActivationStart);
+
+  /**
+   * Handles the ITW activation stop.
+   */
+  yield* takeLatest(itwActivationStop, watchItwActivationStop);
+
+  /**
+   * Handles the ITW activation completed.
+   */
+  yield* takeLatest(itwActivationCompleted, watchItwActivationCompleted);
 
   /**
    * Handles the wallet instance attestation issuing.
@@ -36,5 +58,25 @@ function* watchItwActivationStart(): SagaIterator {
       screen: ITW_ROUTES.ACTIVATION.DETAILS
     })
   );
-  yield* call(authenticationSaga);
+  yield* call(handleStartAuthenticationSaga);
+}
+
+function* watchItwActivationStop(): SagaIterator {
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.MAIN, {
+      screen: ROUTES.MESSAGES_HOME
+    })
+  );
+  yield* call(handleStopAuthenticationSaga);
+}
+
+function* watchItwActivationCompleted(): SagaIterator {
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ROUTES.MAIN, {
+      screen: ROUTES.ITWALLET_HOME
+    })
+  );
+  yield* call(handleStopAuthenticationSaga);
 }
