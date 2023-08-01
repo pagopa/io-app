@@ -34,11 +34,12 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSTabNavigation } from "../core/DSTabNavigation";
-
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
+import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
+import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSGradientScroll } from "../core/DSGradientScroll";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
-import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSCards } from "../core/DSCards";
 import {
   IOThemeContext,
@@ -50,7 +51,6 @@ import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
-
 const Stack = createStackNavigator<DesignSystemParamsList>();
 const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
 
@@ -357,6 +357,19 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.HEADERS.FIRST_LEVEL.route}
         component={DSHeaderFirstLevel}
+        options={{
+          header: HeaderFirstLevelComponent
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL.route}
+        component={DSHeaderSecondLevel}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
+        component={DSHeaderSecondLevelWithSectionTitle}
         options={{
           header: HeaderFirstLevelComponent
         }}
