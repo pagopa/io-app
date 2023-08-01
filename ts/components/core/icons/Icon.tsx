@@ -65,6 +65,7 @@ import IconProfile from "./svg/IconProfile";
 import IconProfileFilled from "./svg/IconProfileFilled";
 import IconProfileAlt from "./svg/IconProfileAlt";
 import IconStarFilled from "./svg/IconStarFilled";
+import IconArchive from "./svg/IconArchive";
 import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
@@ -157,6 +158,7 @@ export const IOIcons = {
   copy: IconCopy,
   selfCert: IconSelfCertification,
   institution: IconInstitution,
+  merchant: IconMerchant,
   hourglass: IconHourglass,
   shareiOs: IconShareiOs,
   shareAndroid: IconShareAndroid,
@@ -187,6 +189,8 @@ export const IOIcons = {
   docAttachPDF: IconDocumentAttachmentPDF,
   attachment: IconAttachment,
   add: IconAdd,
+  checkTick: IconCheckTick,
+  checkTickBig: IconCheckTickBig,
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,
@@ -219,6 +223,7 @@ export const IOIcons = {
   profileAlt: IconProfileAlt /* io-titolare */,
   lightbulb: IconLightbulb,
   magicWand: IconMagicWand,
+  archive: IconArchive,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
   switchOff: IconSwitchOff,
@@ -279,9 +284,6 @@ export const IOIcons = {
   productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */,
   productIOAppBlueBg: IconProductIOAppBlueBg,
-  checkTick: IconCheckTick,
-  checkTickBig: IconCheckTickBig,
-  merchant: IconMerchant,
   systemSettingsAndroid: IconSystemSettingsAndroid,
   systemSettingsiOS: IconSystemSettingsiOS,
   systemToggleInstructions: IconSystemToggleInstructions,

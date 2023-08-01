@@ -11,6 +11,7 @@ type Props = {
   onPinChanged: (pin: string) => void;
   onSubmit: (pin: string) => void;
   pin?: string;
+  InputAccessoryViewID?: string;
 };
 
 const styles = StyleSheet.create({
@@ -51,6 +52,7 @@ const CiePinpad = (props: Props) => {
         maxLength={props.pinLength}
         caretHidden={true}
         autoFocus={true}
+        inputAccessoryViewID={props.InputAccessoryViewID}
         onChangeText={(pin: string) => {
           props.onPinChanged(pin);
         }}
