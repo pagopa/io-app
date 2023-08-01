@@ -32,6 +32,7 @@ import {
 } from "../../../../store/reducers/profile";
 import { pidDataMock } from "../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../utils/dates";
+import { isIos } from "../../../../utils/platform";
 
 /**
  * Delay in milliseconds to bypass the CIE authentication process.
@@ -112,6 +113,7 @@ const ItwActivationInfoAuthScreen = () => {
       block: true,
       primary: true,
       onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
+      disabled: isIos,
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (
