@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -12,12 +11,6 @@ type OwnProps = { paymentMethod: PaymentMethod };
 
 type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 
-const styles = StyleSheet.create({
-  initiatives: {
-    paddingBottom: 24
-  }
-});
-
 /**
  * Display the features available for a payment method:
  * - vertical initiatives (eg: cashback, fa)
@@ -28,10 +21,7 @@ const styles = StyleSheet.create({
 const PaymentMethodFeatures: React.FunctionComponent<Props> = props => (
   <>
     {props.isIdpayEnabled ? (
-      <PaymentMethodInitiatives
-        paymentMethod={props.paymentMethod}
-        style={styles.initiatives}
-      />
+      <PaymentMethodInitiatives paymentMethod={props.paymentMethod} />
     ) : null}
     <PaymentMethodSettings paymentMethod={props.paymentMethod} />
   </>

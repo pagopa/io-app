@@ -1,9 +1,9 @@
+import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
-import { formatDateAsLocal } from "../../../../utils/dates";
 import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
@@ -79,7 +79,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
       return (
         <View style={IOStyles.flex}>
           <NewH6 style={{ textTransform: "capitalize" }}>
-            {`${props.cardIcon} •••• ${props.hpan}`}
+            {`${props.cardIcon} •• ${props.hpan}`}
           </NewH6>
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
@@ -108,7 +108,7 @@ const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
     <VSpacer size={8} />
     <LabelSmall color="grey-650" weight="Regular">
       {I18n.t("wallet.creditCard.validUntil", {
-        expDate: formatDateAsLocal(expDate, true)
+        expDate: format(expDate, "MM/YY")
       })}
     </LabelSmall>
   </>
@@ -213,7 +213,8 @@ const styles = StyleSheet.create({
     height: 207,
     borderRadius: 16,
     backgroundColor: IOColors["grey-100"],
-    padding: 24
+    padding: 24,
+    width: "100%" // required for consistent skeleton sizing
   },
   bottomRow: {
     height: 48,

@@ -1,8 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { toUpperCase } from "fp-ts/lib/string";
 import * as React from "react";
 import { IOIconSizeScale, Icon } from "../../../core/icons";
-import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
+import LogoPayment, {
+  IOLogoPaymentType,
+  IOLogoPaymentTypeDecodable,
+  IOPaymentLogosUpperCased
+} from "../../../core/logos/LogoPayment";
 import { IOColors } from "../../../core/variables/IOColors";
 
 export type LogoPaymentOrDefaultIconProps = {
@@ -27,9 +32,10 @@ export const LogoPaymentOrDefaultIcon = ({
   pipe(
     cardIcon,
     O.fromNullable,
+    O.map(toUpperCase),
+    O.map(brand => IOPaymentLogosUpperCased[brand]),
+    O.filter(IOLogoPaymentTypeDecodable.is),
     O.fold(
-      // would be a cleaner solution to create an io-ts type and decode
-      // but it's not worth the effort for now
       () => <Icon name="creditCard" size={size} color={fallbackIconColor} />,
       icon => <LogoPayment name={icon} size={size} />
     )

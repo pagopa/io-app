@@ -1,28 +1,14 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { HSpacer } from "../../../../components/core/spacer/Spacer";
-import { H3 } from "../../../../components/core/typography/H3";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOSpacingScale } from "../../../../components/core/variables/IOSpacing";
 import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteMethodSwitch";
 import I18n from "../../../../i18n";
-import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { isEnabledToPay } from "../../../../utils/paymentMethodCapabilities";
-import { Icon } from "../../../../components/core/icons/Icon";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
-type OwnProps = { paymentMethod: PaymentMethod };
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
-
-const styles = StyleSheet.create({
-  icon: { alignSelf: "center" },
-  row: { flex: 1, flexDirection: "row" }
-});
+type Props = { paymentMethod: PaymentMethod };
 
 /**
  * This component allows the user to choose and change the common settings for a payment methods
@@ -33,28 +19,18 @@ const styles = StyleSheet.create({
  */
 const PaymentMethodSettings = (props: Props): React.ReactElement => (
   <>
-    <View style={styles.row}>
-      <View style={styles.icon}>
-        <Icon name="coggle" size={20} color="bluegrey" />
-      </View>
-      <HSpacer size={8} />
-      <H3 color={"bluegrey"}>{I18n.t("global.buttons.settings")}</H3>
-    </View>
+    <H3
+      color={"bluegrey"}
+      style={{ paddingVertical: IOSpacingScale[3] /* 12 */ }}
+    >
+      {I18n.t("global.buttons.settings")}
+    </H3>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     <ItemSeparatorComponent noPadded={true} />
     {isEnabledToPay(props.paymentMethod) && (
-      <>
-        <FavoritePaymentMethodSwitch paymentMethod={props.paymentMethod} />
-        <ItemSeparatorComponent noPadded={true} />
-      </>
+      <FavoritePaymentMethodSwitch paymentMethod={props.paymentMethod} />
     )}
   </>
 );
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaymentMethodSettings);
+export default PaymentMethodSettings;

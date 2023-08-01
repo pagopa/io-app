@@ -39,11 +39,12 @@ export const IDPayInitiativesList = ({
   idWallet
 }: InitiativeListProps) => (
   <>
-    {initiatives.map(item => (
+    {initiatives.map((item, index) => (
       <IDPayInitiativeListItem
         item={item}
         key={item.initiativeId}
         idWallet={idWallet}
+        isLast={index === initiatives.length - 1}
       />
     ))}
   </>
@@ -52,13 +53,26 @@ export const IDPayInitiativesList = ({
 type ListItemProps = {
   item: InitiativesStatusDTO;
   idWallet: string;
+  isLast: boolean;
 };
 
-export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
+export const IDPayInitiativeListItem = ({
+  item,
+  idWallet,
+  isLast
+}: ListItemProps) => {
   const { initiativeName } = item;
 
   return (
-    <NBlistItem style={{ justifyContent: "space-between", paddingRight: 0 }}>
+    <NBlistItem
+      itemDivider={false}
+      last={isLast}
+      style={{
+        justifyContent: "space-between",
+        paddingRight: 0,
+        paddingLeft: 0 // required to override NBlistItem default padding
+      }}
+    >
       <H4>{initiativeName}</H4>
       <SwitchOrStatusLabel item={item} idWallet={idWallet} />
     </NBlistItem>
