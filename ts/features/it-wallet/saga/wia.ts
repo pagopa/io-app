@@ -7,6 +7,7 @@ import { itwWiaRequest } from "../store/actions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { getWia } from "../utils/wia";
 import { isCIEAuthenticationSupported } from "../utils/cie";
+import { isIos } from "../../../utils/platform";
 
 /*
  * This saga handles the wallet instance attestation issuing.
@@ -17,7 +18,7 @@ export function* handleWiaRequest(): SagaIterator {
   const idp = yield* select(idpSelector);
   const hasLoggedInWithCie = isSome(idp) && idp.value.name === "cie";
   const isCieSupported = yield* call(isCIEAuthenticationSupported);
-  if (hasLoggedInWithCie || isCieSupported) {
+  if ((hasLoggedInWithCie || isCieSupported) && !isIos) {
     try {
       const wia = yield* call(getWia);
       yield* put(itwWiaRequest.success(wia));
