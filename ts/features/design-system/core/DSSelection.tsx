@@ -8,7 +8,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
 import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { Divider } from "../../../components/core/Divider";
 import { H4 } from "../../../components/core/typography/H4";
@@ -19,6 +19,8 @@ import {
 import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
 import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
 import { SwitchListItem } from "../../../components/ui/SwitchListItem";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
 const styles = StyleSheet.create({
   content: {
@@ -40,10 +42,15 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
+    {/* AnimatedMessageCheckbox */}
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Checkbox (Messages)
+    </H2>
+    <AnimatedMessageCheckboxShowroom />
+    {/* RadioListItem */}
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Radio
     </H2>
-    {/* RadioListItem */}
     <RadioListItemsShowroom />
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
@@ -213,6 +220,23 @@ const RadioListItemsShowroom = () => {
         onPress={setSelectedItem}
       />
     </DSComponentViewerBox>
+  );
+};
+
+const AnimatedMessageCheckboxShowroom = () => {
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <>
+      <DSComponentViewerBox name="AnimatedMessageCheckbox">
+        <View style={[IOStyles.row, IOStyles.alignCenter]}>
+          <AnimatedMessageCheckbox checked={isEnabled} />
+          <HSpacer size={24} />
+          <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        </View>
+      </DSComponentViewerBox>
+    </>
   );
 };
 
