@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, View, SafeAreaView } from "react-native";
+import { Image, View, SafeAreaView, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -24,6 +24,19 @@ import { Pictogram } from "../../../../components/core/pictograms";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import {
+  profileBirthDateSelector,
+  profileFiscalCodeSelector,
+  profileNameSelector,
+  profileSurnameSelector
+} from "../../../../store/reducers/profile";
+import { pidDataMock } from "../../utils/mocks";
+import { formatDateToYYYYMMDD } from "../../../../utils/dates";
+
+/**
+ * Delay in milliseconds to bypass the CIE authentication process.
+ */
+const MS_TO_BYPASS = 1500;
 
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
@@ -32,10 +45,31 @@ const ItwActivationInfoAuthScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
   const wia = useIOSelector(itwWiaStateSelector);
+  const name = useIOSelector(profileNameSelector);
+  const surname = useIOSelector(profileSurnameSelector);
+  const fiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const birthDate = useIOSelector(profileBirthDateSelector);
 
   useOnFirstRender(() => {
     dispatch(itwWiaRequest.request());
   });
+
+  /**
+   * Bypass the CIE authentication process and navigate to the PID preview screen by sending
+   * PID data from the profile store or a mock if the data is not available.
+   */
+  const bypassCieLogin = () => {
+    navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW, {
+      pidData: {
+        name: name ?? pidDataMock.name,
+        surname: surname ?? pidDataMock.surname,
+        birthDate: birthDate
+          ? formatDateToYYYYMMDD(birthDate)
+          : pidDataMock.birthDate,
+        fiscalCode: fiscalCode ?? pidDataMock.fiscalCode
+      }
+    });
+  };
 
   /**
    * Renders the loading spinner.
@@ -101,12 +135,17 @@ const ItwActivationInfoAuthScreen = () => {
             </H4>
 
             {/* Wallet cards image */}
-            <Image
-              source={authInfoCie}
-              resizeMode={"contain"}
-              style={{ width: "100%", height: 200 }}
-            />
-
+            <Pressable
+              accessible={false}
+              onLongPress={bypassCieLogin}
+              delayLongPress={MS_TO_BYPASS}
+            >
+              <Image
+                source={authInfoCie}
+                resizeMode={"contain"}
+                style={{ width: "100%", height: 200 }}
+              />
+            </Pressable>
             {/* Info activation */}
             <H4 weight={"Regular"} color={"bluegrey"}>
               {I18n.t("features.itWallet.infoAuthScreen.howAuth")}

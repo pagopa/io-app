@@ -3,40 +3,12 @@ import I18n from "../../../i18n";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
-export type PidMockType = ReturnType<typeof getPidMock>;
-
-export const getPidMock = (pidData?: PidData) => ({
-  verified_claims: {
-    verification: {
-      trust_framework: "eidas",
-      assurance_level: "high",
-      evidence: [
-        {
-          type: "electronic_record",
-          record: {
-            type: "eidas.it.cie",
-            source: {
-              organization_name: "Ministero dell'Interno",
-              organization_id: "m_it",
-              country_code: "IT"
-            }
-          }
-        }
-      ]
-    },
-    claims: {
-      unique_id: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      given_name: pidData?.name ?? "Anna",
-      family_name: pidData?.surname ?? "Verdi",
-      birthdate: pidData?.birthDate ?? "1978-12-30",
-      place_of_birth: {
-        country: "IT",
-        locality: "Rome"
-      },
-      tax_id_number: pidData?.fiscalCode ?? "VRDBNC80A41H501X"
-    }
-  }
-});
+export const pidDataMock: PidData = {
+  name: "Mario",
+  surname: "Rossi",
+  fiscalCode: "RSSMRA80L05F593A",
+  birthDate: "1980-01-10"
+};
 
 enum AssuranceLevel {
   HIGH = "high"
