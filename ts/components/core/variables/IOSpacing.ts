@@ -5,7 +5,7 @@ should use a value defined in the following scale.
 */
 
 export const IOSpacingScale = [
-  4, 6, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72
+  4, 6, 8, 12, 16, 20, 24, 28, 32, 40, 48, 56, 64, 72, 80
 ] as const;
 
 export type IOSpacingScale = typeof IOSpacingScale[number];

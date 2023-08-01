@@ -222,6 +222,7 @@ ButtonLink) => {
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessible={true}
       disabled={disabled}
       hitSlop={{ top: 14, right: 24, bottom: 14, left: 24 }}

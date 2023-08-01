@@ -34,6 +34,7 @@ import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDisc
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import CgnContactSection from "../../components/merchants/CgnContactSection";
+import IconButton from "../../../../../components/ui/IconButton";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -137,7 +138,10 @@ const CgnMerchantDetailScreen = () => {
                 )
               )
             )}
-            {renderAddressesList(merchantDetail.value.addresses)}
+            {renderAddressesList(
+              merchantDetail.value.addresses,
+              merchantDetail.value.allNationalAddresses
+            )}
             {merchantDetail.value.supportValue && (
               <>
                 <VSpacer size={16} />
@@ -165,24 +169,44 @@ const CgnMerchantDetailScreen = () => {
 
 // ------------------------ render utils
 
-const AddressesListItem = ({ item }: { item: Address }) => (
+type AddressesListItemProps = {
+  item: Address;
+  isAllNationalAddress: boolean;
+};
+
+const AddressesListItem = ({
+  item,
+  isAllNationalAddress
+}: AddressesListItemProps) => (
   <TouchableDefaultOpacity
     style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
-    onPress={() => clipboardSetStringWithFeedback(item.full_address)}
   >
     <H4 weight={"Regular"} style={IOStyles.flex}>
       {item.full_address}
     </H4>
-    <View style={styles.flexEnd}>
-      <Icon name="copy" size={COPY_ICON_SIZE} color="blue" />
-    </View>
+    {!isAllNationalAddress && (
+      <View style={styles.flexEnd}>
+        <IconButton
+          accessibilityLabel={I18n.t("global.buttons.copy")}
+          icon="copy"
+          onPress={() => clipboardSetStringWithFeedback(item.full_address)}
+        />
+      </View>
+    )}
   </TouchableDefaultOpacity>
 );
 
-const renderAddressesList = (addresses: ReadonlyArray<Address> | undefined) =>
+const renderAddressesList = (
+  addresses: ReadonlyArray<Address> | undefined,
+  isAllNationalAddressMerchant: boolean
+) =>
   addresses !== undefined && addresses.length > 0
     ? addresses.map((address, index) => (
-        <AddressesListItem item={address} key={index} />
+        <AddressesListItem
+          item={address}
+          key={index}
+          isAllNationalAddress={isAllNationalAddressMerchant}
+        />
       ))
     : null;
 
@@ -203,7 +227,6 @@ const styles = StyleSheet.create({
   flexEnd: { alignSelf: "flex-end" }
 });
 
-const COPY_ICON_SIZE = 24;
 const EXTERNAL_LINK_ICON_SIZE = 20;
 
 export default CgnMerchantDetailScreen;
