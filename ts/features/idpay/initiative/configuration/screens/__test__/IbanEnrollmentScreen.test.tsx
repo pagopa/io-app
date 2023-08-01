@@ -117,7 +117,8 @@ const renderComponent = (context?: Partial<Context>) => {
         navigateToInstrumentsEnrollmentScreen: jest.fn(),
         showUpdateIbanToast: jest.fn(),
         showFailureToast: jest.fn(),
-        showInstrumentFailureToast: jest.fn()
+        showInstrumentFailureToast: jest.fn(),
+        handleSessionExpired: jest.fn()
       }
     })
     .withContext({

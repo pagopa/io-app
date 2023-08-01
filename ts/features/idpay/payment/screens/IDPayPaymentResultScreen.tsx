@@ -114,6 +114,11 @@ const failureScreenContent: Record<
     subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body"),
     icon: "timeout"
   },
+  [PaymentFailureEnum.SESSION_EXPIRED]: {
+    title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body"),
+    icon: "timeout"
+  },
   [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
     title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
     subtitle: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.body"),
