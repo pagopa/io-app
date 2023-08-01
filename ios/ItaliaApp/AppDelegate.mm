@@ -6,6 +6,7 @@
 #import <React/RCTAppSetupUtils.h>
 #import <UserNotifications/UserNotifications.h> // react-native-push-notification-ios
 #import <RNCPushNotificationIOS.h> // react-native-push-notification-ios
+#import <RNScreens/UIViewController+RNScreens.h> // react-native-screens (NativeStack)
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -14,7 +15,6 @@
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
 #import <react/config/ReactNativeConfig.h>
-#import <RNScreens/UIViewController+RNScreens.h> // react-native-screens (NativeStack)
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
