@@ -35,17 +35,18 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSGradientScroll } from "../core/DSGradientScroll";
+import { DSFullScreenModal } from "../core/DSFullScreenModal";
+import { DSCards } from "../core/DSCards";
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
-import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
-import { DSCards } from "../core/DSCards";
 import IconButton from "../../../components/ui/IconButton";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
-import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
@@ -172,9 +173,7 @@ const DesignSystemMainStack = () => {
         fontSize: 14
       },
       headerTitleAlign: "center",
-      headerStyle: {
-        height: Number(insets.top) + Number(IOVisualCostants.headerHeight)
-      },
+      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
       headerLeft: RNNBackButton
     }),
     [insets]
@@ -391,6 +390,14 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
         options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.route}
+        component={DSGradientScroll}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.title
+        }}
       />
 
       {/* LEGACY */}

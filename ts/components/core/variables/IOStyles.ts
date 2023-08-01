@@ -95,6 +95,7 @@ const btnSizeLarge = 56;
 // NEW Design System
 const btnBorderRadius = 8;
 const btnSizeDefault = 48;
+export const buttonSolidHeight: number = btnSizeDefault;
 // TODO: Replace the number type with the new IOIconSizeScale
 export const iconBtnSizeSmall: number = 24;
 

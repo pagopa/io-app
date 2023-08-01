@@ -51,6 +51,10 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
+    },
+    GRADIENT_SCROLL: {
+      route: "GRADIENT_SCROLL",
+      title: "Gradient scroll + Actions"
     }
   },
   LEGACY: {

@@ -19,7 +19,6 @@ import {
 import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
 import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
 import { SwitchListItem } from "../../../components/ui/SwitchListItem";
-import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
@@ -231,14 +230,10 @@ const AnimatedMessageCheckboxShowroom = () => {
   return (
     <>
       <DSComponentViewerBox name="AnimatedMessageCheckbox">
-        <View style={IOStyles.row}>
+        <View style={[IOStyles.row, IOStyles.alignCenter]}>
           <AnimatedMessageCheckbox checked={isEnabled} />
           <HSpacer size={24} />
-          <ButtonOutline
-            label={"Toggle"}
-            onPress={toggleSwitch}
-            accessibilityLabel={""}
-          />
+          <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
         </View>
       </DSComponentViewerBox>
     </>
