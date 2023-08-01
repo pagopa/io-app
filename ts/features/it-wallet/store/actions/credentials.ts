@@ -1,7 +1,7 @@
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
 /**
@@ -9,7 +9,7 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
  */
 type ItwCredentialsPidSuccessType = {
   pid: PidResponse;
-  decodedPid: VerifyResult;
+  decodedPid: PidWithToken;
 };
 
 /**
