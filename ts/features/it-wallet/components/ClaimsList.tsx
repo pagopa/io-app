@@ -1,6 +1,6 @@
 import React from "react";
 import { Linking } from "react-native";
-import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { ISSUER_URL, mapAssuranceLevel } from "../utils/mocks";
 import ListItemComponent from "../../../components/screens/ListItemComponent";
 import I18n from "../../../i18n";
@@ -14,7 +14,7 @@ import ButtonOutline from "../../../components/ui/ButtonOutline";
  * Contains the claims to be displayed, currenly only PID claims are supported.
  */
 type ClaimsListProps = {
-  decodedPid: VerifyResult;
+  decodedPid: PidWithToken;
 };
 
 /**

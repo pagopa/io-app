@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, View } from "react-native";
-import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { PID } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
@@ -35,7 +35,7 @@ const ItwHomeScreen = () => {
   );
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const pid = useIOSelector(ItwCredentialsPidSelector);
-  const [decodedPid, setDecodedPid] = useState<VerifyResult>();
+  const [decodedPid, setDecodedPid] = useState<PidWithToken>();
   const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),

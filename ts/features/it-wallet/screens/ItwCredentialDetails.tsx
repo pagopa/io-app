@@ -3,7 +3,7 @@ import { View } from "native-base";
 import { SafeAreaView, ScrollView } from "react-native";
 import { PID } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
-import { VerifyResult } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -23,7 +23,7 @@ import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
  */
 const ItwCredentialDetails = () => {
   const pid = useIOSelector(ItwCredentialsPidSelector);
-  const [decodedPid, setDecodedPid] = useState<VerifyResult>();
+  const [decodedPid, setDecodedPid] = useState<PidWithToken>();
   const spacerSize = 32;
 
   useOnFirstRender(() => {
@@ -57,7 +57,7 @@ const ItwCredentialDetails = () => {
           fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
         />
         <VSpacer />
-        <ClaimsList decodedPid={decodedPid as VerifyResult} />
+        <ClaimsList decodedPid={decodedPid as PidWithToken} />
         <VSpacer size={spacerSize} />
       </View>
       <FooterWithButtons
