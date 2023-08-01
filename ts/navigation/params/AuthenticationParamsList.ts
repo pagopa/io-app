@@ -14,6 +14,7 @@ export type AuthenticationParamsList = {
   // For expired cie screen
   [ROUTES.CIE_EXPIRED_SCREEN]: undefined;
   [ROUTES.CIE_PIN_SCREEN]: undefined;
+  [ROUTES.CIE_LOGIN_CONFIG_SCREEN]: undefined;
   [ROUTES.CIE_AUTHORIZE_USAGE_SCREEN]: undefined;
   [ROUTES.CIE_CARD_READER_SCREEN]: CieCardReaderScreenNavigationParams;
   [ROUTES.CIE_CONSENT_DATA_USAGE]: CieConsentDataUsageScreenNavigationParams;
