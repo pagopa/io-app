@@ -27,11 +27,12 @@ import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSTabNavigation } from "../core/DSTabNavigation";
-
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
+import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
+import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSGradientScroll } from "../core/DSGradientScroll";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
-import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSCards } from "../core/DSCards";
 import {
   IOThemeContext,
@@ -86,17 +87,16 @@ export const DesignSystemNavigator = () => {
 const DesignSystemMainStack = () => (
   <Stack.Navigator
     initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-    // headerMode="screen"
     screenOptions={{
       statusBarAnimation: "none",
       statusBarStyle: "light",
       disableBackButtonMenu: true,
-      // headerTitleAlign: "center",
+      headerTitleAlign: "center",
+      headerBackTitleVisible: false,
       headerTitleStyle: {
         ...makeFontStyleObject("Regular", false, "ReadexPro"),
         fontSize: 14
-      },
-      headerBackTitleVisible: false
+      }
     }}
   >
     <ModalStack.Screen
@@ -273,6 +273,16 @@ const DesignSystemMainStack = () => (
       component={DSHeaderFirstLevel}
     />
 
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL.route}
+      component={DSHeaderSecondLevel}
+    />
+
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
+      component={DSHeaderSecondLevelWithSectionTitle}
+    />
+
     {/* DEBUG */}
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
@@ -296,6 +306,23 @@ const DesignSystemMainStack = () => (
       options={{
         headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.title
       }}
+    />
+
+    {/* DEBUG */}
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
+      component={DSSafeArea}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
+      component={DSSafeAreaCentered}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
+      component={DSEdgeToEdgeArea}
+      options={{ headerShown: false }}
     />
 
     {/* LEGACY */}
