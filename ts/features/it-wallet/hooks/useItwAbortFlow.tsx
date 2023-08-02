@@ -8,12 +8,15 @@ import I18n from "../../../i18n";
 import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { H4 } from "../../../components/core/typography/H4";
 import ROUTES from "../../../navigation/routes";
+import { useIODispatch } from "../../../store/hooks";
+import { itwActivationStop } from "../store/actions";
 
 /**
  * A hook that returns a function to present the abort wallet activation flow bottom sheet
  */
 export const useItwAbortFlow = () => {
   const navigation = useNavigation();
+  const dispatch = useIODispatch();
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
       <H4 color={"bluegreyDark"} weight={"Regular"}>
@@ -36,6 +39,7 @@ export const useItwAbortFlow = () => {
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
+          dispatch(itwActivationStop());
           navigation.navigate(ROUTES.MAIN);
         }, I18n.t("features.itWallet.issuing.pidPreviewScreen.bottomSheet.buttons.cancel")),
         onPressWithGestureHandler: true
