@@ -1,10 +1,11 @@
+import { Link } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { useIOSelector } from "../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import type { IOColors } from "../variables/IOColors";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { useIOSelector } from "../../../store/hooks";
-import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
+import { ExternalTypographyProps, TypographyProps } from "./common";
 
 type AllowedColors = IOColors;
 type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Bold">;
@@ -26,23 +27,25 @@ export const linkDefaultColor: AllowedColors = "blueIO-500";
 export const linkDefaultWeight: AllowedWeight = "Bold";
 
 /**
- * Typography component to render `Link` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `SemiBold`, color: `blue`
- * @param props`
+ * Typography component to render Link text. This component supports both design system enabled and legacy custom styles.
+ * When design system is enabled, it renders the text using the Link component from `@pagopa/io-app-design-system`,
+ * respecting the design system's defined colors and styles.
+ * When design system is disabled, it falls back to a legacy custom style with options for custom font and font styles.
+ *
+ * @param {OwnProps} props - The props for the NewLink component.
  * @constructor
  */
 export const NewLink: React.FunctionComponent<OwnProps> = props => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  return useTypographyFactory<AllowedWeight, AllowedColors>({
+  const legacyLinkComponent = useTypographyFactory<
+    AllowedWeight,
+    AllowedColors
+  >({
     accessibilityRole: props.onPress ? "link" : undefined,
     ...props,
-    defaultWeight: isDesignSystemEnabled
-      ? linkDefaultWeight
-      : linkLegacyDefaultWeight,
-    defaultColor: isDesignSystemEnabled
-      ? linkDefaultColor
-      : linkLegacyDefaultColor,
+    defaultWeight: linkLegacyDefaultWeight,
+    defaultColor: linkLegacyDefaultColor,
     font: fontName,
     fontStyle: {
       fontSize: props.fontSize
@@ -51,4 +54,6 @@ export const NewLink: React.FunctionComponent<OwnProps> = props => {
       textDecorationLine: "underline"
     }
   });
+
+  return isDesignSystemEnabled ? <Link {...props} /> : legacyLinkComponent;
 };
