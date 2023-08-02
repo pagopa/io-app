@@ -76,6 +76,30 @@ export const profileNameSelector = createSelector(
 );
 
 /**
+ * Return the surname of the profile if some, else undefined
+ */
+export const profileSurnameSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => capitalize(p.family_name)),
+      undefined
+    )
+);
+
+/**
+ * Return the birth date of the profile if some, else undefined
+ */
+export const profileBirthDateSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Date | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.date_of_birth),
+      undefined
+    )
+);
+
+/**
  * Return the fiscal code of the profile if some, else undefined
  */
 export const profileFiscalCodeSelector = createSelector(
