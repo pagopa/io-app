@@ -21,13 +21,11 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { UIMessage } from "./types";
 
-export type Cursor = string;
-
 export type MessagePagePot = pot.Pot<
   {
     page: ReadonlyArray<UIMessage>;
-    previous?: Cursor;
-    next?: Cursor;
+    previous?: string;
+    next?: string;
   },
   string
 >;
@@ -600,6 +598,11 @@ export const allArchiveMessagesSelector = createSelector(
       pot.map(allPaginated, _ => _.page),
       []
     )
+);
+
+export const allInboxAndArchivedMessagesSelector = createSelector(
+  [allInboxMessagesSelector, allArchiveMessagesSelector],
+  (inbox, archive) => inbox.concat(archive)
 );
 
 /**
