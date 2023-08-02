@@ -1,8 +1,8 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import type { IOColors } from "../variables/IOColors";
-import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
+import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 
 // when the weight is bold, only these color are allowed
 type AllowedBoldColors = Extract<
@@ -51,7 +51,7 @@ type RegularProps = {
 
 type BoldKindProps = SemiBoldProps | BoldProps | RegularProps;
 
-type OwnProps = ExternalTypographyProps<BoldKindProps>;
+export type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h4FontSize = 16;
