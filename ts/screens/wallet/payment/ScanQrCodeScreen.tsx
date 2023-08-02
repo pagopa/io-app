@@ -112,6 +112,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
   body: "wallet.QRtoPay.contextualHelpContent"
 };
+/**
+ * @deprecated
+ */
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private focusUnsubscribe!: () => void;
@@ -209,7 +212,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         ]
       );
     }
-    await this.showImagePicker();
+    this.showImagePicker();
   };
 
   private handleBarcodeScanned = (barcode: ScannedBarcode) => {
@@ -232,12 +235,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   /**
    * Start image chooser
    */
-  private showImagePicker = async () => {
+  private showImagePicker = () => {
     const options: ImageLibraryOptions = {
       mediaType: "photo"
     };
     // Open Image Library
-    await ImagePicker.launchImageLibrary(options, response => {
+    void ImagePicker.launchImageLibrary(options, response => {
       // With the current settings the user is allowed to pick only one image
       const maybePickedImage = pipe(
         response.assets,
@@ -400,4 +403,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
+/**
+ * @deprecated
+ */
 export default connect(mapStateToProps, mapDispatchToProps)(ScanQrCodeScreen);
