@@ -8,7 +8,7 @@ import { stopCieManager, watchCieAuthenticationSaga } from "./cie";
  * A saga that makes the user go through the authentication process until
  * a SessionToken gets produced.
  */
-export function* authenticationSaga(): Generator<
+export function* handleStartAuthenticationSaga(): Generator<
   ReduxSagaEffect,
   SessionToken,
   any
@@ -26,4 +26,13 @@ export function* authenticationSaga(): Generator<
   yield* call(stopCieManager);
 
   return action.payload.token;
+}
+
+export function* handleStopAuthenticationSaga(): Generator<
+  ReduxSagaEffect,
+  void,
+  any
+> {
+  // stop cie manager from listening nfc
+  yield* call(stopCieManager);
 }

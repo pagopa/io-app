@@ -12,14 +12,20 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { useIODispatch } from "../../../../store/hooks";
+import { itwActivationStop } from "../../store/actions";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 
 const ItwActivationDetailsScreen = () => {
+  const dispatch = useIODispatch();
   const navigation = useNavigation();
   const cancelButtonProps = {
     block: true,
     light: false,
     bordered: true,
-    onPress: navigation.goBack,
+    onPress: () => {
+      dispatch(itwActivationStop());
+    },
     title: I18n.t("features.itWallet.activationScreen.cancel")
   };
 
@@ -33,6 +39,12 @@ const ItwActivationDetailsScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
+      customGoBack={
+        <ButtonDefaultOpacity
+          onPress={cancelButtonProps.onPress}
+          transparent={true}
+        />
+      }
       headerTitle={I18n.t("features.itWallet.title")}
       contextualHelp={emptyContextualHelp}
     >

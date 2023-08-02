@@ -16,7 +16,8 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwParamsList } from "../../../navigation/params";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import ROUTES from "../../../../../navigation/routes";
+import { useIODispatch } from "../../../../../store/hooks";
+import { itwActivationStop } from "../../../store/actions";
 
 export type CieInfoUsageNavigationParams = Readonly<{
   ciePin: string;
@@ -29,6 +30,7 @@ const CieInfoUsageScreen = () => {
       IOStackNavigationProp<ItwParamsList, "ITW_CIE_INFO_USAGE_SCREEN">
     >();
   const route = useRoute();
+  const dispatch = useIODispatch();
 
   const { ciePin, authorizationUri } =
     route.params as CieInfoUsageNavigationParams;
@@ -41,10 +43,9 @@ const CieInfoUsageScreen = () => {
       block: true,
       light: false,
       bordered: true,
-      onPress: () =>
-        navigation.navigate(ROUTES.MAIN, {
-          screen: ROUTES.MESSAGES_HOME
-        }),
+      onPress: () => {
+        dispatch(itwActivationStop());
+      },
       title: I18n.t("features.itWallet.issuing.infoCie.cancel")
     };
 
