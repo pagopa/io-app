@@ -8,13 +8,13 @@ import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay"
 import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import ROUTES from "../../../../navigation/routes";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { itwCredentialsAddPid } from "../../store/actions/credentials";
 import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycle";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { Pictogram } from "../../../../components/core/pictograms";
+import { itwActivationCompleted } from "../../store/actions";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
@@ -47,7 +47,9 @@ const ItwPidActivationScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => navigation.navigate(ROUTES.ITWALLET_HOME),
+    onPress: () => {
+      dispatch(itwActivationCompleted());
+    },
     title: I18n.t("global.buttons.continue")
   };
 
