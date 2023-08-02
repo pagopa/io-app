@@ -1,7 +1,6 @@
 import React from "react";
 
 /* Logos */
-import { keysDecoderFromObject } from "../../../utils/typing";
 import LogoPaymentAmex from "./svg/LogoPaymentAmex";
 import LogoPaymentApplePay from "./svg/LogoPaymentApplePay";
 import LogoPaymentBancomatPay from "./svg/LogoPaymentBancomatPay";
@@ -38,29 +37,7 @@ export const IOPaymentLogos = {
   applePay: LogoPaymentApplePay
 } as const;
 
-export const IOPaymentLogosUpperCased: { [key: string]: IOLogoPaymentType } = {
-  MAESTRO: "maestro",
-  MASTERCARD: "mastercard",
-  VISA: "visa",
-  AMEX: "amex",
-  DINERS: "diners",
-  DISCOVER: "discover",
-  JCB: "jcb",
-  UNIONPAY: "unionPay",
-  PAYPAL: "payPal",
-  BANCOMATPAY: "bancomatPay",
-  VPAY: "vPay",
-  PAGOBANCOMAT: "pagoBancomat",
-  SATISPAY: "satispay",
-  POSTEPAY: "postepay",
-  MYBANK: "myBank",
-  APPLEPAY: "applePay"
-} as const;
-
 export type IOLogoPaymentType = keyof typeof IOPaymentLogos;
-
-export const IOLogoPaymentTypeDecodable =
-  keysDecoderFromObject<IOLogoPaymentType>(IOPaymentLogos);
 
 type IOIconsProps = {
   name: IOLogoPaymentType;

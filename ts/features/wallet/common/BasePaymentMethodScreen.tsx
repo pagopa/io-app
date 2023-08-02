@@ -3,14 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import {
-  IOStyles,
-  IOVisualCostants
-} from "../../../components/core/variables/IOStyles";
+import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import ListItemAction from "../../../components/ui/ListItemAction";
@@ -28,40 +27,55 @@ type Props = {
   content: React.ReactNode;
 };
 
+// ----------------------- card layout calculations -----------------------
+
+// base consts
+const CARD_WIDTH = widthPercentageToDP(100);
+const CARD_HEIGHT = 0.5 * CARD_WIDTH;
+
+// the amount of header to render in case of scrollDown
+const absoluteMarginTopHeight = 2 * CARD_HEIGHT;
+
+// "progressbar-like" percentage of card that has a
+// blue BG, can be played around with
+const percentageOfCardWithBackground = 75;
+
+// the actual height of the visible (without scrolling) card's background
+const cardBackgroundHeight =
+  (percentageOfCardWithBackground / 100) * CARD_HEIGHT;
+
+// how much the card overflows under the header, used as absolute positioning
+// and as bottom spacer
+const cardOverflowAmount = (100 - percentageOfCardWithBackground) * 2;
+
+// the header's actual height, including the overflow that can only be seen
+// when scrolling downwards
+const headerHeight = absoluteMarginTopHeight + cardBackgroundHeight;
+
+// ----------------------------- styles -----------------------------------
+
 const styles = StyleSheet.create({
   cardContainer: {
-    height: 207,
-    width: "100%",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
+    paddingHorizontal: IOSpacingScale[4],
     position: "absolute",
-    bottom: -50,
+    bottom: -cardOverflowAmount,
     alignItems: "center"
   },
   blueHeader: {
-    marginBottom: IOVisualCostants.appMarginDefault,
-    marginTop: -300,
-    height: 470,
+    marginBottom: cardOverflowAmount,
+    marginTop: -absoluteMarginTopHeight,
+    height: headerHeight,
     backgroundColor: IOColors["blueIO-600"],
     top: 0
   }
 });
 
-const DeleteButton = ({
-  onPress
-}: {
-  onPress: (event: GestureResponderEvent) => void;
-}) => (
-  <ListItemAction
-    label={I18n.t("cardComponent.removeCta")}
-    onPress={onPress}
-    accessibilityLabel={I18n.t("cardComponent.removeCta")}
-    icon="trashcan"
-    variant="danger"
-  />
-);
+// ----------------------------- component -----------------------------------
+
 /**
  * Base layout for payment methods screen & legacy delete handling
- * @constructor
  */
 const BasePaymentMethodScreen = (props: Props) => {
   const { card, content, paymentMethod } = props;
@@ -128,8 +142,7 @@ const BasePaymentMethodScreen = (props: Props) => {
         <View style={styles.blueHeader}>
           <View style={styles.cardContainer}>{card}</View>
         </View>
-
-        <VSpacer size={40} />
+        <VSpacer size={24} />
         <View style={IOStyles.horizontalContentPadding}>
           <VSpacer size={16} />
           {content}
@@ -142,5 +155,21 @@ const BasePaymentMethodScreen = (props: Props) => {
     </BaseScreenComponent>
   );
 };
+
+// ----------------------------- utils & export -----------------------------------
+
+const DeleteButton = ({
+  onPress
+}: {
+  onPress: (event: GestureResponderEvent) => void;
+}) => (
+  <ListItemAction
+    label={I18n.t("cardComponent.removeCta")}
+    onPress={onPress}
+    accessibilityLabel={I18n.t("cardComponent.removeCta")}
+    icon="trashcan"
+    variant="danger"
+  />
+);
 
 export default BasePaymentMethodScreen;

@@ -4,14 +4,14 @@ import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
-import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
+import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
-import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
+import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {
@@ -43,14 +43,14 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
       return (
         <View style={styles.bottomRow}>
           <BottomSectionText string={props.holderName} />
-          <LogoPayment name={"pagoBancomat"} size={48} />
+          <LogoPaymentExt name="pagoBancomat" size={48} />
         </View>
       );
     default:
       return (
         <View style={styles.bottomRow}>
           <BottomSectionText string={props.holderName} />
-          <LogoPaymentOrDefaultIcon cardIcon={props.cardIcon} size={48} />
+          <LogoPaymentWithFallback isExtended brand={props.cardIcon} />
         </View>
       );
   }
@@ -190,14 +190,14 @@ type PaymentCardStandardProps =
       expirationDate: Date;
       abiCode: string;
       holderName: string;
-      cardIcon?: IOLogoPaymentType;
+      cardIcon?: IOLogoPaymentExtType;
     }
   | {
       cardType: "CREDIT";
       expirationDate: Date;
       holderName: string;
       hpan: string;
-      cardIcon?: IOLogoPaymentType;
+      cardIcon?: IOLogoPaymentExtType;
     };
 
 const LOGO_HEIGHT = 32;

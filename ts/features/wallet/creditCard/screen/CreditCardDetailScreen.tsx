@@ -14,7 +14,7 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import { IOLogoPaymentType } from "../../../../components/core/logos";
+import { IOLogoPaymentExtType } from "../../../../components/core/logos";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -61,7 +61,7 @@ const CreditCardDetailScreen = ({ route }: Props) => {
           expireMonth: O.fromNullable(info.expireMonth),
           expireYear: O.fromNullable(info.expireYear),
           holder: O.fromNullable(info.holder),
-          brand: O.fromNullable(info.brand as IOLogoPaymentType | undefined)
+          brand: O.fromNullable(info.brand as IOLogoPaymentExtType | undefined)
           // store gives it as string,
           // is later checked by component and null case is handled
         }),
