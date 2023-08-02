@@ -1,24 +1,24 @@
+import { IconButton as DSIconButton } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
-import { Pressable, GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  useAnimatedProps,
-  withSpring,
-  useDerivedValue,
-  interpolate,
   Extrapolate,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedProps,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { hexToRgba, IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOIconButtonStyles } from "../core/variables/IOStyles";
-import { AnimatedIcon, IconClassComponent, IOIcons } from "../core/icons";
-import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-
+import { WithTestID } from "../../types/WithTestID";
+import { AnimatedIcon, IOIcons, IconClassComponent } from "../core/icons";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
+import { IOIconButtonStyles } from "../core/variables/IOStyles";
 export type IconButton = WithTestID<{
   color?: "primary" | "neutral" | "contrast";
   icon: IOIcons;
@@ -41,11 +41,6 @@ type ColorStates = {
 /*
 ░░░ COMPONENT CONFIGURATION ░░░
 */
-
-/* Delete the following block if you want to
-get rid of legacy variant */
-
-/* ◀ REMOVE_LEGACY_COMPONENT: Start */
 
 const mapLegacyColorStates: Record<
   NonNullable<IconButton["color"]>,
@@ -77,38 +72,26 @@ const mapLegacyColorStates: Record<
   }
 };
 
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
-
-const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
-  // Primary button
-  primary: {
-    icon: {
-      default: IOColors["blueIO-500"],
-      pressed: IOColors["blueIO-600"],
-      disabled: hexToRgba(IOColors["blueIO-500"], 0.25)
-    }
-  },
-  // Neutral button
-  neutral: {
-    icon: {
-      default: IOColors.black,
-      pressed: IOColors["grey-850"],
-      disabled: IOColors.grey
-    }
-  },
-  // Contrast button
-  contrast: {
-    icon: {
-      default: IOColors.white,
-      pressed: hexToRgba(IOColors.white, 0.85),
-      disabled: hexToRgba(IOColors.white, 0.25)
-    }
-  }
-};
-
 const AnimatedIconClassComponent =
   Animated.createAnimatedComponent(IconClassComponent);
 
+/**
+ *
+ * The `IconButton` component is a customizable button that displays an icon. It supports animated scaling
+ * and color changes when pressed. Currently if the Design System is enabled, the component returns the IconButton of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @property {string} color - The color of the button. Possible values are: "primary", "secondary", "success", "danger", "warning", "info", etc.
+ * @property {string} icon - The name of the icon to be displayed on the button.
+ * @property {boolean} disabled - If `true`, the button will be disabled and not respond to user interactions.
+ * @property {function} onPress - The callback function to be executed when the button is pressed.
+ * @property {string} accessibilityLabel - An accessibility label for the button.
+ * @property {string} accessibilityHint - An accessibility hint for the button.
+ * @property {string} testID - A test identifier for the button, used for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the IconButton of the @pagopa/io-app-design-system library.
+ *
+ */
 export const IconButton = ({
   color = "primary",
   icon,
@@ -147,27 +130,16 @@ export const IconButton = ({
 
   // Animate the <Icon> color prop
   const animatedColor = useAnimatedProps(() => {
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const iconColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].icon.default,
-            mapColorStates[color].icon.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].icon.default,
-            mapLegacyColorStates[color].icon.pressed
-          ]
-        );
+    const iconColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].icon.default,
+        mapLegacyColorStates[color].icon.pressed
+      ]
+    );
     return { color: iconColor };
   });
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
   const onPressIn = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -178,7 +150,7 @@ export const IconButton = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  const LegacyIconButton = () => (
     <Pressable
       disabled={disabled}
       // Events
@@ -202,21 +174,7 @@ export const IconButton = ({
           !disabled && pressedAnimationStyle
         ]}
       >
-        {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
-        {isDesignSystemEnabled ? (
-          !disabled ? (
-            <AnimatedIconClassComponent
-              name={icon}
-              animatedProps={animatedColor}
-              color={mapColorStates[color]?.icon?.default}
-            />
-          ) : (
-            <AnimatedIcon
-              name={icon}
-              color={mapColorStates[color]?.icon?.disabled}
-            />
-          )
-        ) : !disabled ? (
+        {!disabled ? (
           <AnimatedIconClassComponent
             name={icon}
             animatedProps={animatedColor}
@@ -228,9 +186,21 @@ export const IconButton = ({
             color={mapLegacyColorStates[color]?.icon?.disabled}
           />
         )}
-        {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       </Animated.View>
     </Pressable>
+  );
+  return isDesignSystemEnabled ? (
+    <DSIconButton
+      icon={icon}
+      accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
+      testID={testID}
+      disabled={disabled}
+      accessibilityHint={accessibilityHint}
+      color={color}
+    />
+  ) : (
+    <LegacyIconButton />
   );
 };
 

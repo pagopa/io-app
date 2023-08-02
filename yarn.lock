@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.0.0.tgz#4685c629f21b890a83c5b8376e53ad0c99e7a5ae"
-  integrity sha512-JOOGtbzMiDheZ3acewMIcXfkys1bz41KS6cE17lytfpT+0UfwdPMrlsSvr4ZTAkdfN8KphmIB4sZX2etQ6jYbg==
+"@pagopa/io-app-design-system@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.1.2.tgz#86b79ceee5069ff5acb5d55ed657b711dc1985fa"
+  integrity sha512-CKyw+2jEVn+ffQByDDD3o/m3gs4yT9Crm0Bsf8ew8i+C/k1EisXHx2FX48wGtwpqnIIMOkV1msaM1ee1DQZi0A==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -8491,9 +8491,9 @@ expo-font@^11.4.0:
     fontfaceobserver "^2.1.0"
 
 expo-modules-core@^1.5.6:
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.5.8.tgz#3aa54a6acdf868316faf71fdc3cfa3333a7e7111"
-  integrity sha512-x/cjjrfOq0Yz3X0bjql20WUDhhmJxciYWzPMoZzxFtOORuY7sZ+qlksxm201ZlGowW7VYj64KTuGAaC9FTkGKw==
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.5.9.tgz#d8bc397860cabb23f735f5baac3602bd73231671"
+  integrity sha512-kQxllZfus7wM0O6X0Ud+SOnbH/kbxtEAQp2gkvDq3P3kqhtafue/H9CPDX04uWc/pypvp9vp/sZ+qvA0alaVuQ==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"

@@ -1,25 +1,25 @@
 import * as React from "react";
 import { useCallback } from "react";
 import {
-  View,
-  StyleSheet,
+  GestureResponderEvent,
   Pressable,
-  GestureResponderEvent
+  StyleSheet,
+  View
 } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
+  Extrapolate,
   interpolate,
-  Extrapolate
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { Icon, IOIcons } from "../core/icons";
-import { IOStyles } from "../core/variables/IOStyles";
-import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
+import { IOIcons, Icon } from "../core/icons";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = {
   label: string;
@@ -28,6 +28,20 @@ type Props = {
   icon?: IOIcons;
 };
 
+/**
+ *
+ * The `ButtonExtendedOutline` component is a custom button component with an extended outline style,
+ * allowing the display of a label, description, and an optional icon. It provides an animated scaling
+ * effect when pressed.
+ *
+ * @property {string} label - The label text displayed on the button.
+ * @property {string} description - The description text displayed below the label (optional).
+ * @property {function} onPress - The callback function to be executed when the button is pressed.
+ * @property {string} icon - The name of the icon to be displayed on the button (default: "info").
+ *
+ * @deprecated Use of this component is discouraged. It is being replaced by the ButtonExtendedOutline of the @pagopa/io-app-design-system library.
+ *
+ */
 const styles = StyleSheet.create({
   button: {
     flex: 1,
