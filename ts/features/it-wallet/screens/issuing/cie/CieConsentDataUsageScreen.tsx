@@ -54,6 +54,23 @@ const loaderComponent = (
   </LoadingSpinnerOverlay>
 );
 
+// This JS code is used to customize the page
+// to avoid session error. This is a temporary solution
+// only for the PoC purpose
+const jsCode = `
+  const article = document.querySelector('article');
+  article.className = 'u-padding-left-xl';
+  const div = document.createElement('div');
+  div.innerHTML = \`
+    <p class="u-padding-bottom-l">I seguenti dati stanno per essere inviati a: <br/><b>IO - l'app dei servizi pubblici</b></p>
+    <p class="u-padding-bottom-xs">Nome</p>
+    <p class="u-padding-bottom-xs">Cognome</p>
+    <p class="u-padding-bottom-xs">Data di nascita</p>
+    <p>Codice Fiscale</p>
+  \`;
+  article.replaceChildren(div);
+`;
+
 class CieConsentDataUsageScreen extends React.Component<Props, State> {
   private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
@@ -107,7 +124,11 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.route.params.cieConsentUri;
+    // Instead of using the URI passed as a parameter, we use this
+    // to get a generic ipzs welcome page and use the JS code
+    // replacing the content with only the necessary data.
+    // NOTE: This is a temporary solution only for the PoC purpose
+    return "https://collaudo.idserver.servizicie.interno.gov.it";
   }
 
   private handleWebViewError = () => {
@@ -168,12 +189,6 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         />
       );
     } else {
-      // This JS code is used to remove the buttons from the page
-      // to avoid new session token creation
-      const jsCode = `
-      // Iterate over the array and remove each button
-      Array.from( document.getElementsByTagName('button')).forEach(button => button.remove());
-      `;
       return (
         <WebView
           androidCameraAccessDisabled={true}
