@@ -1578,7 +1578,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
 </View>
 `;
 
-exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CERT should match the snapshot 1`] = `
+exports[`MessageList Item component when category=EU_COVID_CERT and rptId matches=false should match the snapshot 1`] = `
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
@@ -1893,7 +1893,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
 </View>
 `;
 
-exports[`MessageList Item component when hasPaidBadge=false category=GENERIC should match the snapshot 1`] = `
+exports[`MessageList Item component when category=GENERIC and rptId matches=false should match the snapshot 1`] = `
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
@@ -2182,11 +2182,11 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
 </View>
 `;
 
-exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CERT should match the snapshot 1`] = `
+exports[`MessageList Item component when category=PAYMENT and rptId matches=false should match the snapshot 1`] = `
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021
-  . Paid"
+  . "
   accessibilityRole="button"
   accessible={true}
   collapsable={false}
@@ -2314,9 +2314,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
         Object {
           "flexDirection": "row",
         },
-        Object {
-          "marginRight": 56,
-        },
+        false,
       ]
     }
   >
@@ -2377,9 +2375,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
             "flexShrink": 1,
             "minHeight": 24,
           },
-          Object {
-            "marginRight": 56,
-          },
+          false,
         ]
       }
     >
@@ -2471,59 +2467,11 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
         </Text>
       </View>
     </View>
-    <View
-      style={
-        Object {
-          "alignSelf": "flex-start",
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "borderRadius": 50,
-              "justifyContent": "center",
-              "paddingHorizontal": 20,
-              "paddingVertical": 2.5,
-            },
-            false,
-            Object {
-              "backgroundColor": "#00C5CA",
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "alignSelf": "center",
-                "fontFamily": "Titillium Web",
-                "fontStyle": "normal",
-                "fontWeight": "600",
-              },
-              Object {
-                "fontSize": 14,
-                "lineHeight": 20,
-              },
-              false,
-              Object {
-                "color": "#17324D",
-              },
-            ]
-          }
-        >
-          Paid
-        </Text>
-      </View>
-    </View>
   </View>
 </View>
 `;
 
-exports[`MessageList Item component when hasPaidBadge=true category=GENERIC should match the snapshot 1`] = `
+exports[`MessageList Item component when category=PAYMENT and rptId matches=true should match the snapshot 1`] = `
 <View
   accessibilityLabel="Unread message, received by Ċentru tas-Saħħa, health. Għandek flus?. 
     received on October 18th 2021

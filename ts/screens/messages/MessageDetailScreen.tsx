@@ -29,7 +29,7 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
 import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
-import { isNoticePaid } from "../../store/reducers/entities/payments";
+import { isNoticePaidSelector } from "../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
@@ -167,7 +167,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   // Map the potential message to the potential service
   const maybeServiceMetadata = serviceMetadataByIdSelector(serviceId)(state);
   const hasPaidBadge: boolean = message
-    ? isNoticePaid(state, message.category)
+    ? isNoticePaidSelector(state, message.category)
     : false;
 
   return {
