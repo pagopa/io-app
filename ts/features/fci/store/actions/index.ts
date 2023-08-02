@@ -13,6 +13,8 @@ import { SignatureRequestDetailView } from "../../../../../definitions/fci/Signa
 import { NetworkError } from "../../../../utils/errors";
 import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
+import { Document } from "../reducers/fciSignatureFieldDrawing";
+import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 
 /**
  * get and handle the signatureRequest from id
@@ -123,6 +125,12 @@ export const fciSignaturesListRequest = createAsyncAction(
   "FCI_SIGNATURES_LIST_FAILURE"
 )<void, SignatureRequestList, NetworkError>();
 
+export const fciDocumentSignatureFields = createAsyncAction(
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
+)<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -138,4 +146,5 @@ export type FciActions =
   | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciClearAllFiles>
   | ActionType<typeof fciMetadataRequest>
-  | ActionType<typeof fciSignaturesListRequest>;
+  | ActionType<typeof fciSignaturesListRequest>
+  | ActionType<typeof fciDocumentSignatureFields>;
