@@ -131,13 +131,6 @@ const trackAction =
           APPLICATION_STATE_NAME: action.payload
         });
       //
-      // Onboarding (with properties)
-      //
-      case getType(tosAccepted):
-        return mp.track(action.type, {
-          acceptedTosVersion: action.payload
-        });
-      //
       // Authentication actions (with properties)
       //
       case getType(idpSelected):
@@ -329,8 +322,6 @@ const trackAction =
       case getType(identificationFailure):
       case getType(identificationPinReset):
       case getType(identificationForceLogout):
-      // onboarding
-      case getType(createPinSuccess):
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):

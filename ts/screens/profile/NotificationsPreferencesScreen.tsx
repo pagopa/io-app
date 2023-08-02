@@ -16,10 +16,13 @@ import { showToast } from "../../utils/showToast";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
+  trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
-} from "../../utils/analytics";
+} from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.notifications.contextualHelpTitle",
@@ -37,6 +40,10 @@ export const NotificationsPreferencesScreen = () => {
   const isUpdating = pot.isUpdating(preferences);
 
   const { present, bottomSheet } = usePreviewMoreInfo();
+
+  useOnFirstRender(() => {
+    trackNotificationScreen(getFlowType(false, false));
+  });
 
   useEffect(() => {
     if (isError && isUpserting) {
@@ -83,7 +90,10 @@ export const NotificationsPreferencesScreen = () => {
                   "profile.preferences.notifications.preview.description"
                 )}`}
                 onValueChange={(value: boolean) => {
-                  trackNotificationsPreferencesPreviewStatus(value);
+                  trackNotificationsPreferencesPreviewStatus(
+                    value,
+                    getFlowType(false, false)
+                  );
                   togglePreference<PushNotificationsContentTypeEnum>(
                     "push_notifications_content_type",
                     value
@@ -110,7 +120,10 @@ export const NotificationsPreferencesScreen = () => {
                   "profile.preferences.notifications.reminders.description"
                 )}`}
                 onValueChange={(value: boolean) => {
-                  trackNotificationsPreferencesReminderStatus(value);
+                  trackNotificationsPreferencesReminderStatus(
+                    value,
+                    getFlowType(false, false)
+                  );
                   togglePreference<ReminderStatusEnum>(
                     "reminder_status",
                     value

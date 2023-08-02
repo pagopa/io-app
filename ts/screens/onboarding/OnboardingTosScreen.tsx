@@ -20,12 +20,17 @@ import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isProfileFirstOnBoarding,
+  isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 import { H1 } from "../../components/core/typography/H1";
 import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
+import { trackTosUserExit } from "../authentication/analytics";
+import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
 
 const styles = StyleSheet.create({
   titlePadding: {
@@ -62,6 +67,12 @@ const OnboardingTosScreen = () => {
 
   const isUpdatingProfile = pot.isUpdating(potProfile);
   const hasProfileError = pot.isError(potProfile);
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    trackTosScreen(getFlowType(true, isFirstOnBoarding));
+  });
 
   const hasAcceptedCurrentTos = pot.getOrElse(
     pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
@@ -104,7 +115,10 @@ const OnboardingTosScreen = () => {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => dispatch(abortOnboarding())
+          onPress: () => {
+            trackTosUserExit(getFlowType(true, isFirstOnBoarding));
+            dispatch(abortOnboarding());
+          }
         }
       ]
     );
@@ -152,6 +166,10 @@ const OnboardingTosScreen = () => {
             onAcceptTos={() => {
               checkToShowWhatsNew(true);
               dispatch(tosAccepted(tosVersion));
+              trackTosAccepted(
+                tosVersion,
+                getFlowType(true, isFirstOnBoarding)
+              );
             }}
           />
           {autoResizableBottomSheet}

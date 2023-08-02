@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as O from "fp-ts/lib/Option";
 import { useContext } from "react";
 import { KeyboardAvoidingView, Platform, SafeAreaView } from "react-native";
 import I18n from "../i18n";
@@ -16,6 +17,16 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../utils/supportAssistance";
+import { isProfileFirstOnBoardingSelector } from "../store/reducers/profile";
+import { getFlowType } from "../utils/analytics";
+import {
+  trackCreatePinSuccess,
+  trackPinScreen
+} from "../screens/profile/analytics";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import { trackLoginEnded } from "../screens/authentication/analytics";
+import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
+import { idpSelector } from "../store/reducers/authentication";
 import { PinCreationForm } from "./PinCreationForm";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -58,13 +69,24 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
     );
   }, [showModal]);
 
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
+  const idpSelected = useIOSelector(idpSelector);
+
+  const idp = O.isSome(idpSelected) ? idpSelected.value.name : "";
+
   const handleSubmit = React.useCallback(
     (pin: PinString) => {
       setPin(pin)
         .then(() => {
           handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
           dispatch(createPinSuccess(pin));
-
+          trackCreatePinSuccess(getFlowType(isOnboarding, isFirstOnBoarding));
+          trackLoginEnded(
+            isFastLoginEnabled,
+            idp,
+            getFlowType(isOnboarding, isFirstOnBoarding)
+          );
           if (!isOnboarding) {
             // We need to ask the user to restart the app
             showRestartModal();
@@ -80,8 +102,19 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
           // end user probably.
         });
     },
-    [assistanceTool, dispatch, navigation, showRestartModal, isOnboarding]
+    [
+      assistanceTool,
+      dispatch,
+      isOnboarding,
+      isFirstOnBoarding,
+      showRestartModal,
+      navigation
+    ]
   );
+
+  useOnFirstRender(() => {
+    trackPinScreen(getFlowType(isOnboarding, isFirstOnBoarding));
+  });
 
   const pinSelectionView = () => (
     <BaseScreenComponent
@@ -91,7 +124,7 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
       headerTitle={I18n.t("onboarding.pin.headerTitle")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <PinCreationForm onSubmit={handleSubmit} />
+        <PinCreationForm onSubmit={handleSubmit} isOnboarding={isOnboarding} />
       </SafeAreaView>
     </BaseScreenComponent>
   );

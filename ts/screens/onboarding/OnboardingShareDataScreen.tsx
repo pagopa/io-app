@@ -19,6 +19,11 @@ import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomS
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { useIOSelector } from "../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
+import { trackMixpanelScreen } from "../profile/analytics";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -27,6 +32,12 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   const dispatch = useDispatch();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     props.setMixpanelEnabled(false);
+  });
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    trackMixpanelScreen(getFlowType(true, isFirstOnBoarding));
   });
 
   const executeAbortOnboarding = () => {

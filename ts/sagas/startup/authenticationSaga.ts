@@ -1,4 +1,5 @@
-import { call, cancel, fork, put, take } from "typed-redux-saga/macro";
+import * as O from "fp-ts/lib/Option";
+import { call, cancel, fork, put, select, take } from "typed-redux-saga/macro";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -10,6 +11,14 @@ import { ReduxSagaEffect } from "../../types/utils";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
+import {
+  trackCieLoginSuccess,
+  trackLoginFlowStarting,
+  trackSpidLoginSuccess
+} from "../../screens/authentication/analytics";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { idpSelector } from "../../store/reducers/authentication";
+import { IdpCIE } from "../../screens/authentication/LandingScreen";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -22,6 +31,9 @@ export function* authenticationSaga(): Generator<
 > {
   yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
   yield* put(analyticsAuthenticationStarted());
+
+  const fastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+  trackLoginFlowStarting(fastLoginEnabled);
 
   // Watch for the test login
   const watchTestLogin = yield* fork(watchTestLoginRequestSaga);
@@ -41,6 +53,15 @@ export function* authenticationSaga(): Generator<
   // stop cie manager from listening nfc
   yield* call(stopCieManager);
 
+  const idpSelected = yield* select(idpSelector);
+
+  if (O.isSome(idpSelected)) {
+    if (idpSelected.value.id === IdpCIE.id) {
+      trackCieLoginSuccess();
+    } else {
+      trackSpidLoginSuccess();
+    }
+  }
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?

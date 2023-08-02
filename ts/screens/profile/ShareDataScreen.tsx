@@ -14,8 +14,11 @@ import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { showToast } from "../../utils/showToast";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
 import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
 import { ShareDataComponent } from "./components/ShareDataComponent";
+import { trackMixpanelScreen } from "./analytics";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -29,6 +32,10 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     );
   });
   const isMixpanelEnabled = props.isMixpanelEnabled ?? true;
+
+  useOnFirstRender(() => {
+    trackMixpanelScreen(getFlowType(false, false));
+  });
 
   const buttonProps = isMixpanelEnabled
     ? cancelButtonProps(

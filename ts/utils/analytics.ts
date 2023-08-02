@@ -24,6 +24,21 @@ export const noAnalyticsRoutes = new Set<string>(
   )
 );
 
+export type FlowType = "firstOnboarding" | "onBoarding" | "preferenze";
+
+export const getFlowType = (
+  isOnBoarding: boolean,
+  isFirstOnBoarding?: boolean
+): FlowType => {
+  if (isFirstOnBoarding) {
+    return "firstOnboarding";
+  }
+  if (isOnBoarding) {
+    return "onBoarding";
+  }
+  return "preferenze";
+};
+
 export const booleanToYesNo = (value: boolean): "yes" | "no" =>
   pipe(
     value,
@@ -41,12 +56,16 @@ export const buildEventProperties = (
     | "exit"
     | "micro_action"
     | "screen_view"
+    | "confirm"
+    | "error"
     | undefined,
-  customProperties: Record<string, unknown> = {}
+  customProperties: Record<string, unknown> = {},
+  flow?: FlowType
 ) => ({
   event_category: eventCategory,
   event_type: eventType,
-  ...customProperties
+  ...customProperties,
+  flow
 });
 
 // Notifications related events
@@ -95,24 +114,6 @@ export function trackNotificationsOptInSkipSystemPermissions() {
   void mixpanelTrack(
     "NOTIFICATIONS_OPTIN_SKIP_SYSTEM_PERMISSIONS",
     buildEventProperties("UX", "action")
-  );
-}
-
-export function trackNotificationsPreferencesPreviewStatus(enabled: boolean) {
-  void mixpanelTrack(
-    "NOTIFICATIONS_PREFERENCES_PREVIEW_STATUS",
-    buildEventProperties("UX", "action", {
-      enabled
-    })
-  );
-}
-
-export function trackNotificationsPreferencesReminderStatus(enabled: boolean) {
-  void mixpanelTrack(
-    "NOTIFICATIONS_PREFERENCES_REMINDER_STATUS",
-    buildEventProperties("UX", "action", {
-      enabled
-    })
   );
 }
 

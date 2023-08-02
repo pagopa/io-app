@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
@@ -7,6 +7,10 @@ import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/bu
 import { isValidPinNumber } from "../features/fastLogin/utils/pinPolicy";
 import { isDevEnv } from "../utils/environment";
 import { defaultPin } from "../config";
+import { trackPinError } from "../screens/profile/analytics";
+import { getFlowType } from "../utils/analytics";
+import { useIOSelector } from "../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../store/reducers/profile";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
 import { IOColors } from "./core/variables/IOColors";
@@ -21,6 +25,7 @@ import ButtonOutline from "./ui/ButtonOutline";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
+  isOnboarding: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -41,7 +46,9 @@ const pinLength = PIN_LENGTH_SIX;
  * This form will allow the user to create a new pin
  * handling the repetition check.
  */
-export const PinCreationForm = ({ onSubmit }: Props) => {
+export const PinCreationForm = ({ onSubmit, isOnboarding }: Props) => {
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
   const [pin, setPin] = React.useState("");
   const [isPinDirty, setIsPinDirty] = React.useState(false);
   const [pinConfirmation, setPinConfirmation] = React.useState("");
@@ -87,31 +94,31 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     [isFormValid, handleSubmit]
   );
 
-  const pinFieldA11yLabel = React.useMemo(
-    () =>
-      `${I18n.t("onboarding.pin.pinLabel")}${
-        !isPinValid ? ", " + I18n.t("onboarding.pin.errors.invalid") : ""
-      }`,
-    [isPinValid]
-  );
+  const pinFieldA11yLabel = React.useMemo(() => {
+    if (!isPinValid) {
+      trackPinError("creation", getFlowType(isOnboarding, isFirstOnBoarding));
+    }
+    return `${I18n.t("onboarding.pin.pinLabel")}${
+      !isPinValid ? ", " + I18n.t("onboarding.pin.errors.invalid") : ""
+    }`;
+  }, [isFirstOnBoarding, isOnboarding, isPinValid]);
 
-  const pinConfirmationFieldA11yLabel = React.useMemo(
-    () =>
-      `${I18n.t("onboarding.pin.pinConfirmationLabel")}${
-        !isPinConfirmationValid
-          ? ", " + I18n.t("onboarding.pin.errors.match")
-          : ""
-      }`,
-    [isPinConfirmationValid]
-  );
+  const pinConfirmationFieldA11yLabel = React.useMemo(() => {
+    if (!isPinConfirmationValid) {
+      trackPinError("confirm", getFlowType(isOnboarding, isFirstOnBoarding));
+    }
+    return `${I18n.t("onboarding.pin.pinConfirmationLabel")}${
+      !isPinConfirmationValid
+        ? ", " + I18n.t("onboarding.pin.errors.match")
+        : ""
+    }`;
+  }, [isFirstOnBoarding, isOnboarding, isPinConfirmationValid]);
 
-  const bulletList = (items: Array<string>) => (
-    <FlatList
-      data={items}
-      renderItem={({ item }) => (
-        <Body style={styles.bulletList}>{`\u2022 ${item}`}</Body>
-      )}
-    />
+  const bulletList = () => (
+    <View style={styles.bulletList}>
+      <Body>{`\u2022 ${I18n.t("onboarding.pin.policy.first")} `}</Body>
+      <Body>{`\u2022 ${I18n.t("onboarding.pin.policy.second")} `}</Body>
+    </View>
   );
 
   const insertValidPin = () => {
@@ -134,10 +141,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         <VSpacer />
 
         <Body>{I18n.t("onboarding.pin.policy.headerTitle")}</Body>
-        {bulletList([
-          I18n.t("onboarding.pin.policy.first"),
-          I18n.t("onboarding.pin.policy.second")
-        ])}
+        {bulletList()}
 
         <View style={{ position: "relative", marginTop: 30 }}>
           <LabelledItem

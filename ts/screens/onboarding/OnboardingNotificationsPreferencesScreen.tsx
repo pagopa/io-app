@@ -35,6 +35,13 @@ import { showToast } from "../../utils/showToast";
 import { ContentWrapper } from "../../components/core/ContentWrapper";
 import { Divider } from "../../components/core/Divider";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
+import {
+  trackNotificationScreen,
+  trackNotificationsPreferencesPreviewStatus,
+  trackNotificationsPreferencesReminderStatus
+} from "../profile/analytics";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
@@ -142,6 +149,24 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const isUpdating = pot.isUpdating(preferences);
 
   const { isFirstOnboarding } = props.route.params;
+
+  useOnFirstRender(() => {
+    trackNotificationScreen(getFlowType(true, isFirstOnboarding));
+  });
+
+  useEffect(() => {
+    trackNotificationsPreferencesPreviewStatus(
+      previewEnabled,
+      getFlowType(true, isFirstOnboarding)
+    );
+  }, [isFirstOnboarding, previewEnabled]);
+
+  useEffect(() => {
+    trackNotificationsPreferencesReminderStatus(
+      remindersEnabled,
+      getFlowType(true, isFirstOnboarding)
+    );
+  }, [isFirstOnboarding, remindersEnabled]);
 
   useEffect(() => {
     if (isError && !isUpdating) {

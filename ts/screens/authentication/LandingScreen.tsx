@@ -61,6 +61,11 @@ import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { openWebUrl } from "../../utils/url";
 import { cieSpidMoreInfoUrl } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import {
+  trackCieLoginSelected,
+  trackMethodInfo,
+  trackSpidLoginSelected
+} from "./analytics";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const IdpCIE: SpidIdp = {
+export const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
   logo: "",
@@ -219,13 +224,16 @@ class LandingScreen extends React.PureComponent<Props, State> {
       screen: ROUTES.MARKDOWN
     });
 
-  private navigateToIdpSelection = () =>
+  private navigateToIdpSelection = () => {
+    trackSpidLoginSelected();
     this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_IDP_SELECTION
     });
+  };
 
   private navigateToCiePinScreen = () => {
     if (this.isCieSupported()) {
+      trackCieLoginSelected();
       this.props.dispatchIdpCieSelected();
       this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.CIE_PIN_SCREEN
@@ -235,8 +243,10 @@ class LandingScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  private navigateToSpidCieInformationRequest = () =>
+  private navigateToSpidCieInformationRequest = () => {
+    trackMethodInfo();
     openWebUrl(cieSpidMoreInfoUrl);
+  };
 
   private renderCardComponents = () => {
     const cardProps = getCards(this.isCieSupported());

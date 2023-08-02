@@ -12,6 +12,9 @@ import BaseScreenComponent, {
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { privacyUrl } from "../../config";
 import I18n from "../../i18n";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
+import { trackTosScreen } from "./analytics";
 
 const styles = StyleSheet.create({
   webViewContainer: {
@@ -29,6 +32,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+
+  useOnFirstRender(() => {
+    trackTosScreen(getFlowType(false, false));
+  });
 
   const handleLoadEnd = useCallback(() => {
     setIsLoading(false);
