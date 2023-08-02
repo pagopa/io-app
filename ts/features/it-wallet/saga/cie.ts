@@ -29,6 +29,7 @@ export function* watchCieAuthenticationSaga(): SagaIterator {
 // stop cie manager to listen nfc tags
 export function* stopCieManager(): SagaIterator {
   try {
+    cieManager.removeAllListeners();
     yield* call(cieManager.stopListeningNFC);
   } catch {
     // just ignore
