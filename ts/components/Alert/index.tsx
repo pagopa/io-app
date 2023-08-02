@@ -249,30 +249,18 @@ export const Alert = ({
   );
 
   return isDesignSystemEnabled ? (
-    ({
-      viewRef,
-      variant,
-      title,
-      content,
-      action,
-      onPress,
-      fullWidth = false,
-      accessibilityHint,
-      testID
-    }: Alert) => (
-      <DSAlert
-        viewRef={viewRef}
-        variant={variant}
-        testID={testID}
-        title={title}
-        content={content}
-        action={action}
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        onPress={onPress!}
-        fullWidth={fullWidth}
-        accessibilityHint={accessibilityHint}
-      />
-    )
+    <DSAlert
+      viewRef={viewRef}
+      variant={variant}
+      testID={testID}
+      title={title}
+      content={content}
+      action={action}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      onPress={onPress!}
+      fullWidth={fullWidth}
+      accessibilityHint={accessibilityHint}
+    />
   ) : action ? (
     <PressableButton />
   ) : (
