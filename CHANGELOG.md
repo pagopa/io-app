@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0-rc.2](https://github.com/pagopa/io-app/compare/0.3.0-rc.1...0.3.0-rc.2) (2023-08-02)
+
+
+### Bug Fixes
+
+* rebase conflicts ([2637421](https://github.com/pagopa/io-app/commit/26374219541dba1863176897c77c161371964ce1))
+
 ## [0.3.0-rc.1](https://github.com/pagopa/io-app/compare/2.40.0-rc.0...0.3.0-rc.1) (2023-08-02)
 
 
