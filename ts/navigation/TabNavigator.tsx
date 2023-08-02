@@ -140,10 +140,8 @@ export const MainTabNavigator = () => {
               : I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={itWalletEnabled ? "navPayment" : "navWallet"}
-                iconNameFocused={
-                  itWalletEnabled ? "navPayment" : "navWalletFocused"
-                }
+                iconName={itWalletEnabled ? "psp" : "navWallet"}
+                iconNameFocused={itWalletEnabled ? "psp" : "navWalletFocused"}
                 color={color}
                 focused={focused}
               />
