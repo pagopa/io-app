@@ -3,6 +3,10 @@
  */
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+import ReactNativeHapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
+import { IOToast } from "../../../../components/Toast";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -15,7 +19,6 @@ import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/act
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
-import { showToast } from "../../../../utils/showToast";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -35,6 +38,8 @@ const WalletPaymentBarcodeScanScreen = () => {
   );
 
   const handleBarcodeSuccess = (barcode: IOBarcode) => {
+    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
     if (barcode.type === "PAGOPA") {
       dispatch(paymentInitializeState());
 
@@ -56,8 +61,6 @@ const WalletPaymentBarcodeScanScreen = () => {
           });
           break;
       }
-    } else {
-      showToast(I18n.t("barcodeScan.error"), "danger", "top");
     }
   };
 
@@ -68,7 +71,7 @@ const WalletPaymentBarcodeScanScreen = () => {
     ) {
       void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
     }
-    showToast(I18n.t("barcodeScan.error"), "danger", "top");
+    IOToast.error(I18n.t("barcodeScan.error"));
   };
 
   const handleManualInputPressed = () =>
