@@ -43,7 +43,7 @@ jobs:
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
           IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
-  release-ios:  
+  release-ios:
     needs: run-static-checks
     environment: prod
     runs-on: macos-12
