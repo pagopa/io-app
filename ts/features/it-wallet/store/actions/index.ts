@@ -15,6 +15,20 @@ export const itwActivationStart = createStandardAction(
 )<void>();
 
 /**
+ * Stop ITW activation
+ */
+export const itwActivationStop = createStandardAction(
+  "ITW_ACTIVATION_STOP"
+)<void>();
+
+/**
+ * Complete ITW activation
+ */
+export const itwActivationCompleted = createStandardAction(
+  "ITW_ACTIVATION_COMPLETED"
+)<void>();
+
+/**
  * Start ITW wallet instance attestation request.
  */
 export const itwWiaRequest = createAsyncAction(
