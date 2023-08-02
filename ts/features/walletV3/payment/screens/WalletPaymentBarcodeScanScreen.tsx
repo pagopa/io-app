@@ -3,31 +3,31 @@
  */
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { IOToast } from "../../../components/Toast";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
+import { mixpanelTrack } from "../../../../mixpanel";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
+import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
+import { showToast } from "../../../../utils/showToast";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
   IOBarcode
-} from "../../../features/barcode";
-import I18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+} from "../../../barcode";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
   body: "wallet.QRtoPay.contextualHelpContent"
 };
 
-const ScanQrCodeScreen = () => {
+const WalletPaymentBarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const { dataMatrixPosteEnabled } = useIOSelector(
@@ -56,6 +56,8 @@ const ScanQrCodeScreen = () => {
           });
           break;
       }
+    } else {
+      showToast(I18n.t("barcodeScan.error"), "danger", "top");
     }
   };
 
@@ -66,7 +68,7 @@ const ScanQrCodeScreen = () => {
     ) {
       void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
     }
-    IOToast.error(I18n.t("barcodeScan.error"));
+    showToast(I18n.t("barcodeScan.error"), "danger", "top");
   };
 
   const handleManualInputPressed = () =>
@@ -90,4 +92,4 @@ const ScanQrCodeScreen = () => {
   );
 };
 
-export default ScanQrCodeScreen;
+export { WalletPaymentBarcodeScanScreen };

@@ -42,6 +42,14 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
+import {
+  WalletOnboardingNavigator,
+  WalletOnboardingRoutes
+} from "../features/walletV3/onboarding/navigation/navigator";
+import {
+  WalletPaymentNavigator,
+  WalletPaymentRoutes
+} from "../features/walletV3/payment/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
@@ -52,10 +60,6 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import {
-  WalletOnboardingNavigator,
-  WalletOnboardingRoutes
-} from "../features/walletV3/onboarding/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -209,6 +213,15 @@ const AuthenticatedStackNavigator = () => {
         name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
         component={WalletOnboardingNavigator}
         options={{ gestureEnabled: isGestureEnabled }}
+      />
+      <Stack.Screen
+        name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
+        component={WalletPaymentNavigator}
+        options={{
+          /* FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator */
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled
+        }}
       />
     </Stack.Navigator>
   );

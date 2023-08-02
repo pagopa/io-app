@@ -65,12 +65,12 @@ import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
+import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/navigator";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
-  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod
 } from "../../store/actions/navigation";
@@ -477,14 +477,18 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  private navigateToPaymentScanQrCode = () => {
+    this.props.navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
+    });
+  };
+
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
       <ButtonDefaultOpacity
         block={true}
         onPress={
-          pot.isSome(potWallets)
-            ? this.props.navigateToPaymentScanQrCode
-            : undefined
+          pot.isSome(potWallets) ? this.navigateToPaymentScanQrCode : undefined
         }
         activeOpacity={1}
       >
@@ -602,7 +606,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     navigateToTransactionDetailsScreen({
       transaction,
