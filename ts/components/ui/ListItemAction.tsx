@@ -1,33 +1,34 @@
+import { ListItemAction as DSListItemAction } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
 import {
-  View,
-  StyleSheet,
-  Pressable,
   GestureResponderEvent,
-  Text
+  Pressable,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
-  interpolate,
   Extrapolate,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { AnimatedIcon, Icon, IOIcons } from "../core/icons";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { WithTestID } from "../../types/WithTestID";
+import { makeFontStyleObject } from "../core/fonts";
+import { IOIcons, Icon } from "../core/icons";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
-import { WithTestID } from "../../types/WithTestID";
-import { useIOSelector } from "../../store/hooks";
-import { makeFontStyleObject } from "../core/fonts";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type ListItemAction = WithTestID<{
   label: string;
@@ -39,20 +40,29 @@ export type ListItemAction = WithTestID<{
 }>;
 
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 16,
-    lineHeight: 20,
-    ...makeFontStyleObject("Regular", false, "ReadexPro")
-  },
-  /* REMOVE_LEGACY_COMPONENT: Start ▶ */
   labelLegacy: {
     fontSize: 18,
     lineHeight: 24,
     ...makeFontStyleObject("SemiBold", false, "TitilliumWeb")
   }
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 });
 
+/**
+ *
+ * A button-like component used in a list item to perform actions.
+ * Currently if the Design System is enabled, the component returns the ListItemAction of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string} variant - The variant of the ListItemAction, can be "primary" or "danger".
+ * @param {string} label - The label text displayed in the ListItemAction.
+ * @param {function} onPress - The callback function to be executed when the ListItemAction is pressed.
+ * @param {string} icon - The name of the icon to be displayed in the ListItemAction.
+ * @param {string} accessibilityLabel - The accessibility label for the ListItemAction.
+ * @param {string} testID - The testID for automated testing.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemAction of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ListItemAction = ({
   variant,
   label,
@@ -71,22 +81,12 @@ export const ListItemAction = ({
     pressed: IOColors[theme["listItem-pressed"]]
   };
 
-  /* REMOVE_LEGACY_COMPONENT: Start ▶ */
   const mapLegacyForegroundColor: Record<
     NonNullable<ListItemAction["variant"]>,
     IOColors
   > = {
     primary: "blue",
     danger: "error-850"
-  };
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
-
-  const mapForegroundColor: Record<
-    NonNullable<ListItemAction["variant"]>,
-    string
-  > = {
-    primary: IOColors[theme["interactiveElem-default"]],
-    danger: IOColors[theme.errorText]
   };
 
   // Scaling transformation applied when the button is pressed
@@ -131,7 +131,6 @@ export const ListItemAction = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyListItemAction = () => (
     <Pressable
       onPress={onPress}
@@ -172,50 +171,16 @@ export const ListItemAction = ({
       </Animated.View>
     </Pressable>
   );
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemAction = () => (
-    <Pressable
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onTouchEnd={onPressOut}
-      accessible={true}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
-      testID={testID}
-    >
-      <Animated.View
-        style={[IOListItemStyles.listItem, animatedBackgroundStyle]}
-      >
-        <Animated.View
-          style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
-        >
-          {icon && (
-            <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-              <AnimatedIcon
-                name={icon}
-                color={mapForegroundColor[variant] as IOColors}
-                size={IOListItemVisualParams.iconSize}
-              />
-            </View>
-          )}
-          <View style={IOStyles.flex}>
-            <Text
-              style={[styles.label, { color: mapForegroundColor[variant] }]}
-            >
-              {label}
-            </Text>
-          </View>
-        </Animated.View>
-      </Animated.View>
-    </Pressable>
-  );
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemAction /> here,
-  without the following condition */
   return isDesignSystemEnabled ? (
-    <NewListItemAction />
+    <DSListItemAction
+      label={label}
+      variant={variant}
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}
+      icon={icon}
+      testID={testID}
+    />
   ) : (
     <LegacyListItemAction />
   );

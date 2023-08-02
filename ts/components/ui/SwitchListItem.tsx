@@ -1,26 +1,26 @@
+import { ListItemSwitch } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
-  View,
+  GestureResponderEvent,
   StyleSheet,
-  Text,
   Switch,
-  GestureResponderEvent
+  Text,
+  View
 } from "react-native";
-import { NewH6 } from "../core/typography/NewH6";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { makeFontStyleObject } from "../core/fonts";
+import { IOIcons, Icon } from "../core/icons";
+import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { LabelSmall } from "../core/typography/LabelSmall";
+import { NewLink } from "../core/typography/NewLink";
+import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, useIOTheme } from "../core/variables/IOColors";
-import { IOIcons, Icon } from "../core/icons";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { makeFontStyleObject } from "../core/fonts";
-import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
-import { NewLink } from "../core/typography/NewLink";
 
 type Props = {
   label: string;
@@ -43,7 +43,6 @@ const DISABLED_OPACITY = 0.5;
 type OwnProps = Props &
   Pick<React.ComponentProps<typeof Switch>, "value" | "disabled">;
 
-/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
 const styles = StyleSheet.create({
   legacyTextValue: {
     flexShrink: 1,
@@ -53,8 +52,25 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
 
+/**
+ *
+ * Represents a list item with a switch (toggle) that can be turned on or off.
+ * It supports an `onSwitchValueChange` event for handling switch state changes.
+ * Currently if the Design System is enabled, the component returns the ListItemSwitch of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string} label - The label to display as the item's value.
+ * @param {string} description - The description to display as the item's description.
+ * @param {string} icon - The name of the icon to display beside the label.
+ * @param {Object} action - An optional action to display as a link at the bottom of the item. The action object should have a `label` and an `onPress` function.
+ * @param {boolean} value - The current value of the switch (true for on, false for off).
+ * @param {boolean} disabled - If true, the item will be disabled and the switch will not be interactable.
+ * @param {function} onSwitchValueChange - The function to be executed when the switch value changes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemSwitch of the @pagopa/io-app-design-system library.
+ *
+ */
 export const SwitchListItem = ({
   label,
   description,
@@ -70,7 +86,17 @@ export const SwitchListItem = ({
   // Theme
   const theme = useIOTheme();
 
-  return (
+  return isDesignSystemEnabled ? (
+    <ListItemSwitch
+      label={label}
+      disabled={disabled}
+      onSwitchValueChange={onSwitchValueChange}
+      action={action}
+      description={description}
+      icon={icon}
+      value={value}
+    />
+  ) : (
     <View
       testID="SwitchListItem"
       style={[
@@ -105,15 +131,7 @@ export const SwitchListItem = ({
                 />
               </View>
             )}
-            {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
-            {isDesignSystemEnabled ? (
-              <NewH6 color={"black"} style={{ flexShrink: 1 }}>
-                {label}
-              </NewH6>
-            ) : (
-              <Text style={styles.legacyTextValue}>{label}</Text>
-            )}
-            {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
+            {<Text style={styles.legacyTextValue}>{label}</Text>}
           </View>
           {description && (
             <>

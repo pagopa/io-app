@@ -1,6 +1,7 @@
+import { ListItemRadio } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { Pressable, View, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   Extrapolate,
@@ -11,22 +12,21 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { NewH6 } from "../core/typography/NewH6";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { WithTestID } from "../../types/WithTestID";
+import { makeFontStyleObject } from "../core/fonts";
+import { IOIcons, Icon } from "../core/icons";
+import { AnimatedRadio } from "../core/selection/checkbox/AnimatedRadio";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { LabelSmall } from "../core/typography/LabelSmall";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
-import { IOIcons, Icon } from "../core/icons";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { makeFontStyleObject } from "../core/fonts";
-import { AnimatedRadio } from "../core/selection/checkbox/AnimatedRadio";
-import { WithTestID } from "../../types/WithTestID";
 
 type Props = WithTestID<{
   value: string;
@@ -46,7 +46,6 @@ type OwnProps = Props &
     "onPress" | "accessibilityLabel" | "disabled"
   >;
 
-/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
 const styles = StyleSheet.create({
   legacyTextValue: {
     fontSize: 18,
@@ -56,14 +55,24 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
 
 /**
- *  with the automatic state management that uses a {@link AnimatedCheckBox}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
  *
- * @param props
- * @constructor
+ * Represents a list item with a radio button that can be selected or deselected.
+ * It supports an `onValueChange` event for handling radio button selection changes.
+ * Currently if the Design System is enabled, the component returns the ListItemRadio of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string} value - The label to display as the item's value.
+ * @param {string} description - The description to display as the item's description.
+ * @param {string} icon - The name of the icon to display beside the value.
+ * @param {boolean} selected - If true, the radio button will be selected.
+ * @param {boolean} disabled - If true, the item will be disabled and not selectable.
+ * @param {function} onValueChange - The function to be executed when the radio button selection changes.
+ * @param {string} testID - The test ID for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemRadio of the @pagopa/io-app-design-system library.
+ *
  */
 export const RadioListItem = ({
   value,
@@ -139,7 +148,18 @@ export const RadioListItem = ({
     }
   };
 
-  return (
+  return isDesignSystemEnabled ? (
+    <ListItemRadio
+      value={value}
+      selected={selected}
+      description={description}
+      disabled={disabled}
+      icon={icon}
+      onPress={toggleRadioItem}
+      testID={testID}
+      onValueChange={onValueChange}
+    />
+  ) : (
     <Pressable
       onPress={toggleRadioItem}
       onPressIn={onPressIn}
@@ -174,15 +194,7 @@ export const RadioListItem = ({
                   />
                 </View>
               )}
-              {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
-              {isDesignSystemEnabled ? (
-                <NewH6 color={"black"} style={{ flexShrink: 1 }}>
-                  {value}
-                </NewH6>
-              ) : (
-                <Text style={styles.legacyTextValue}>{value}</Text>
-              )}
-              {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
+              {<Text style={styles.legacyTextValue}>{value}</Text>}
             </View>
             <HSpacer size={8} />
             <View pointerEvents="none">
