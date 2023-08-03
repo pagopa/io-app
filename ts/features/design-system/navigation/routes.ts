@@ -38,6 +38,16 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Second Level (w/ section title)"
     }
   },
+  SCREENS: {
+    GRADIENT_SCROLL: {
+      route: "GRADIENT_SCROLL",
+      title: "Gradient scroll + Actions"
+    },
+    OPERATION_RESULT: {
+      route: "DS_SCREEN_OPERATION_RESULT",
+      title: "Operation result"
+    }
+  },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
     SAFE_AREA_CENTERED: {
@@ -51,10 +61,6 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
-    },
-    GRADIENT_SCROLL: {
-      route: "GRADIENT_SCROLL",
-      title: "Gradient scroll + Actions"
     }
   },
   LEGACY: {
