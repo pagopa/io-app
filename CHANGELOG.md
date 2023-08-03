@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0-rc.3](https://github.com/pagopa/io-app/compare/0.3.0-rc.2...0.3.0-rc.3) (2023-08-03)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-368](https://pagopa.atlassian.net/browse/SIW-368)] PID expiration date ([#4883](https://github.com/pagopa/io-app/issues/4883)) ([8da9dc7](https://github.com/pagopa/io-app/commit/8da9dc78ef7e25dc0c1e4c7b44a1f280d2ef593b)), closes [/github.com/pagopa/io-app/pull/4883/files#diff-c6866c78ddf6a386644f0eb63ee969544d0dd10f01025aa38e4bd0c74fa87f6](https://github.com/pagopa//github.com/pagopa/io-app/pull/4883/files/issues/diff-c6866c78ddf6a386644f0eb63ee969544d0dd10f01025aa38e4bd0c74fa87f6)
+* **IT Wallet:** [[SIW-371](https://pagopa.atlassian.net/browse/SIW-371)] Update CIE uri string ([#4888](https://github.com/pagopa/io-app/issues/4888)) ([de29102](https://github.com/pagopa/io-app/commit/de291027d38c2c8be762fa33b89d32d6dd877939))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-346](https://pagopa.atlassian.net/browse/SIW-346)] Refactor PID decode ([#4879](https://github.com/pagopa/io-app/issues/4879)) ([1e2fdc8](https://github.com/pagopa/io-app/commit/1e2fdc84cab1e8c3a4a2595da647b29e8d6280d9)), closes [/github.com/pagopa/io-app/pull/4879/files#diff-4ce0f2654dda96627fd1cc5d237e8c534e3dde7cb2f12467c4702ebe8d7f55e8](https://github.com/pagopa//github.com/pagopa/io-app/pull/4879/files/issues/diff-4ce0f2654dda96627fd1cc5d237e8c534e3dde7cb2f12467c4702ebe8d7f55e8) [/github.com/pagopa/io-app/pull/4879/files#diff-083ff3974d86efd73b25d22f1ee179731cb63ca119672d6367b411a752a3c0d4](https://github.com/pagopa//github.com/pagopa/io-app/pull/4879/files/issues/diff-083ff3974d86efd73b25d22f1ee179731cb63ca119672d6367b411a752a3c0d4) [/github.com/pagopa/io-app/pull/4879/files#diff-dee411fc8ce3a5e50129fff3ec47956fab6588c5dfc688cd15ee0f2f5ab1e9](https://github.com/pagopa//github.com/pagopa/io-app/pull/4879/files/issues/diff-dee411fc8ce3a5e50129fff3ec47956fab6588c5dfc688cd15ee0f2f5ab1e9) [/github.com/pagopa/io-app/pull/4879/files#diff-2ff274163473b8bb1386bd5b58a52408c86a9a918b46623239f0d85b0ec1b548](https://github.com/pagopa//github.com/pagopa/io-app/pull/4879/files/issues/diff-2ff274163473b8bb1386bd5b58a52408c86a9a918b46623239f0d85b0ec1b548) [/github.com/pagopa/io-app/pull/4879/files#diff-215150423afe1578abd819dd9ea4303f962ccbb388f4c06cb74b2e1e8b0f2e2](https://github.com/pagopa//github.com/pagopa/io-app/pull/4879/files/issues/diff-215150423afe1578abd819dd9ea4303f962ccbb388f4c06cb74b2e1e8b0f2e2) [/github.com/pagopa/io-app/pull/4879/files#diff-2ff274163473b8bb1386bd5b58a52408c86a9a918b46623239f0d85b0ec1b548](https://github.com/pagopa//github.com/pagopa/io-app/pull/4879/files/issues/diff-2ff274163473b8bb1386bd5b58a52408c86a9a918b46623239f0d85b0ec1b548)
+* **IT Wallet:** [[SIW-366](https://pagopa.atlassian.net/browse/SIW-366)] Bypass with CTA on iOS ([#4882](https://github.com/pagopa/io-app/issues/4882)) ([6260b81](https://github.com/pagopa/io-app/commit/6260b8157d8f7c4482a3d55a9f3b9f152495d57a))
+* **IT Wallet:** [[SIW-370](https://pagopa.atlassian.net/browse/SIW-370)] Remove E2E tests from workflow ([#4884](https://github.com/pagopa/io-app/issues/4884)) ([bc74a93](https://github.com/pagopa/io-app/commit/bc74a930d138da105a91e98a2be72cb2ffc27ca8))
+
 ## [0.3.0-rc.2](https://github.com/pagopa/io-app/compare/0.3.0-rc.1...0.3.0-rc.2) (2023-08-02)
 
 
