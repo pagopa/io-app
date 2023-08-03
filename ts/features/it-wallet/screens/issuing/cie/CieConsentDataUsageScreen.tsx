@@ -199,7 +199,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
             primary: true,
             onPress: () =>
               this.props.navigation.navigate(
-                ITW_ROUTES.ACTIVATION.PID_PREVIEW,
+                ITW_ROUTES.ACTIVATION.PID_REQUEST,
                 {
                   pidData: this.props.route.params.pidData
                 }
