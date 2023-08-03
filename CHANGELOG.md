@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.40.0-rc.1](https://github.com/pagopa/io-app/compare/2.40.0-rc.0...2.40.0-rc.1) (2023-08-02)
+
+
+### Features
+
+* [[IOPLT-108](https://pagopa.atlassian.net/browse/IOPLT-108)] Migrating typography components from Design System ([#4851](https://github.com/pagopa/io-app/issues/4851)) ([fde87ed](https://github.com/pagopa/io-app/commit/fde87ed88ec3adb393134aa939e21430c26175d2))
+* [[IOPLT-117](https://pagopa.atlassian.net/browse/IOPLT-117)] Migrating buttons components from design system ([#4869](https://github.com/pagopa/io-app/issues/4869)) ([7325cc9](https://github.com/pagopa/io-app/commit/7325cc994679489473ed4b1bc9910177bb7ae1b9))
+
+
+### Chores
+
+* Disable iOS deploy ([6bc0186](https://github.com/pagopa/io-app/commit/6bc0186e2213ce57cdae06de54897874faebb423))
+* Enable fast login in prod ([007dc1a](https://github.com/pagopa/io-app/commit/007dc1ae09876af27ef44da84fc4494beaba60b4))
+
 ## [2.40.0-rc.0](https://github.com/pagopa/io-app/compare/2.39.0-rc.4...2.40.0-rc.0) (2023-08-01)
 
 
