@@ -3,14 +3,15 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
 import { PID } from "@pagopa/io-react-native-wallet";
 import { ActionType } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
 import { itwWiaSelector } from "../store/reducers/itwWia";
 import { getPid } from "../utils/pid";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
-import { itwPid } from "../store/actions/credentials";
+import { itwDecodePid, itwPid } from "../store/actions/credentials";
 
 /*
  * This saga handles the PID issuing.
- * It calls the getPid function to get an encoded PID and then decodes it.
+ * It calls the getPid function to get an encoded PID.
  */
 export function* handlePidRequest(
   action: ActionType<typeof itwPid.request>
@@ -19,8 +20,7 @@ export function* handlePidRequest(
     const wia = yield* select(itwWiaSelector);
     if (isSome(wia)) {
       const pid = yield* call(getPid, wia.value, action.payload);
-      const decodedPid = yield* call(PID.SdJwt.decode, pid.credential);
-      yield* put(itwPid.success({ pid, decodedPid }));
+      yield* put(itwPid.success(pid));
     } else {
       yield* put(
         itwPid.failure({
@@ -32,6 +32,32 @@ export function* handlePidRequest(
     yield* put(
       itwPid.failure({
         code: ItWalletErrorTypes.PID_ISSUING_ERROR
+      })
+    );
+  }
+}
+
+/*
+ * This saga handles the PID decoding.
+ * It calls the decode function to get a decoded PID.
+ */
+export function* handlePidDecodeRequest(
+  action: ActionType<typeof itwDecodePid.request>
+): SagaIterator {
+  try {
+    if (isSome(action.payload)) {
+      const decodedPid = yield* call(
+        PID.SdJwt.decode,
+        action.payload.value.credential
+      );
+      yield* put(itwDecodePid.success(O.some(decodedPid)));
+    } else {
+      throw new Error();
+    }
+  } catch (err) {
+    yield* put(
+      itwPid.failure({
+        code: ItWalletErrorTypes.PID_DECODING_ERROR
       })
     );
   }
