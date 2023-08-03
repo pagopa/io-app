@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, View } from "react-native";
-import { PID } from "@pagopa/io-react-native-wallet";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Pictogram } from "@pagopa/io-app-design-system";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -11,7 +13,7 @@ import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScr
 import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { ITW_ROUTES } from "../navigation/routes";
 import ButtonLink from "../../../components/ui/ButtonLink";
@@ -20,22 +22,37 @@ import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycl
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentials";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import PidCredential from "../components/PidCredential";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../navigation/params";
+import { itwDecodePid } from "../store/actions/credentials";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecode";
+import { ItWalletError } from "../utils/errors/itwErrors";
+import { mapRequirementsError } from "../utils/errors/itwErrorsMapping";
+import { InfoScreenComponent } from "../../fci/components/InfoScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
   body: "wallet.contextualHelpContent"
 };
+
+export type ContentViewProps = {
+  decodedPid: PidWithToken;
+};
+
 /**
  * IT-Wallet home screen which contains a top bar with categories, an activation banner and a list of wallet items based on the selected category.
  */
 const ItwHomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const isItWalletOperational = useIOSelector(
     itwLifecycleIsOperationalSelector
   );
-  const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const pid = useIOSelector(ItwCredentialsPidSelector);
-  const [decodedPid, setDecodedPid] = useState<PidWithToken>();
+  const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
+  const dispatch = useIODispatch();
+  const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
@@ -45,14 +62,89 @@ const ItwHomeScreen = () => {
   ];
 
   useOnFirstRender(() => {
-    if (O.isSome(pid)) {
-      try {
-        setDecodedPid(PID.SdJwt.decode(pid.value.credential));
-      } catch (err) {
-        setDecodedPid(undefined);
-      }
-    }
+    dispatch(itwDecodePid.request(pid));
   });
+
+  const LoadingView = () => <LoadingSpinnerOverlay isLoading />;
+
+  const ContentView = ({ decodedPid }: ContentViewProps) => (
+    <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
+      <VSpacer />
+      <Pressable
+        onPress={() =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.VC_DETAILS
+          })
+        }
+      >
+        <PidCredential
+          name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
+          fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
+        />
+      </Pressable>
+      <View
+        style={{
+          ...IOStyles.flex,
+          ...IOStyles.selfCenter,
+          justifyContent: "flex-end"
+        }}
+      >
+        <VSpacer />
+        <ButtonLink
+          label={I18n.t("features.itWallet.homeScreen.reset.label")}
+          onPress={() => present()}
+        />
+        <VSpacer />
+      </View>
+    </View>
+  );
+
+  /**
+   * Renders the error view.
+   */
+  const ErrorView = (error: ItWalletError) => {
+    const mappedError = mapRequirementsError(error);
+    const cancelButtonProps = {
+      block: true,
+      light: false,
+      bordered: true,
+      onPress: navigation.goBack,
+      title: I18n.t("features.itWallet.generic.close")
+    };
+    return (
+      <>
+        <InfoScreenComponent
+          title={mappedError.title}
+          body={mappedError.body}
+          image={<Pictogram name="error" />}
+        />
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={cancelButtonProps}
+        />
+      </>
+    );
+  };
+
+  const RenderMask = () =>
+    pot.fold(
+      decodedPidPot,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      err => ErrorView(err),
+      some =>
+        pipe(
+          some.decodedPid,
+          O.fold(
+            () => <> </>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
+            decodedPid => <ContentView decodedPid={decodedPid} />
+          )
+        ),
+      () => <LoadingView />,
+      () => <LoadingView />,
+      (_, err) => ErrorView(err)
+    );
 
   return (
     <TopScreenComponent
@@ -106,35 +198,7 @@ const ItwHomeScreen = () => {
             />
           </View>
         ) : (selectedBadgeIdx === 0 || selectedBadgeIdx === 1) && pid ? (
-          <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
-            <VSpacer />
-            <Pressable
-              onPress={() =>
-                navigation.navigate(ITW_ROUTES.MAIN, {
-                  screen: ITW_ROUTES.PRESENTATION.VC_DETAILS
-                })
-              }
-            >
-              <PidCredential
-                name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
-                fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
-              />
-            </Pressable>
-            <View
-              style={{
-                ...IOStyles.flex,
-                ...IOStyles.selfCenter,
-                justifyContent: "flex-end"
-              }}
-            >
-              <VSpacer />
-              <ButtonLink
-                label={I18n.t("features.itWallet.homeScreen.reset.label")}
-                onPress={() => present()}
-              />
-              <VSpacer />
-            </View>
-          </View>
+          <RenderMask />
         ) : (
           <></>
         )}

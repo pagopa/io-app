@@ -45,4 +45,18 @@ const reducer = (
 export const ItwDecodedPidPotSelector = (state: GlobalState) =>
   state.features.itWallet.decodedPid;
 
+/**
+ * Selects the decode PID value from the pot.
+ * @param state - the global state
+ * @returns the decoded pid value if presente, O.none otherwise.
+ */
+export const itwDecodedPidValueSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(
+      state.features.itWallet.decodedPid,
+      decodedPid => decodedPid.decodedPid
+    ),
+    O.none
+  );
+
 export default reducer;
