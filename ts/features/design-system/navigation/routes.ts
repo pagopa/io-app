@@ -38,6 +38,12 @@ const DESIGN_SYSTEM_ROUTES = {
       title: "Second Level (w/ section title)"
     }
   },
+  SCREENS: {
+    OPERATION_RESULT: {
+      route: "DS_SCREEN_OPERATION_RESULT",
+      title: "Operation result"
+    }
+  },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
     SAFE_AREA_CENTERED: {

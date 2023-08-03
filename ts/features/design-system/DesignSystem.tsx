@@ -42,6 +42,9 @@ const DATA_ROUTES_HEADERS: RoutesProps = Object.values(
 const DATA_ROUTES_DEBUG: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.DEBUG
 );
+const DATA_ROUTES_SCREENS: RoutesProps = Object.values(
+  DESIGN_SYSTEM_ROUTES.SCREENS
+);
 const DATA_ROUTES_LEGACY: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.LEGACY
 );
@@ -58,6 +61,10 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   {
     title: "Headers",
     data: DATA_ROUTES_HEADERS
+  },
+  {
+    title: "Screens",
+    data: DATA_ROUTES_SCREENS
   },
   {
     title: "Debug",
