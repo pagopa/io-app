@@ -263,7 +263,6 @@ export const IOIcons = {
   navServicesFocused: IconNavServicesFocused,
   navProfile: IconNavProfile,
   navProfileFocused: IconNavProfileFocused,
-  navPayment: IconPSP,
   legRadioOn: LegIconRadioOn,
   legRadioOff: LegIconRadioOff,
   legCheckOn: LegIconCheckOn,
@@ -415,7 +414,7 @@ const {
   navWalletFocused,
   navServicesFocused,
   navProfileFocused,
-  navPayment
+  psp
 } = IOIcons;
 
 export const IONavIcons = {
@@ -428,7 +427,7 @@ export const IONavIcons = {
   navWalletFocused,
   navServicesFocused,
   navProfileFocused,
-  navPayment
+  psp
 } as const;
 
 export type IONavIcons = keyof typeof IONavIcons;
