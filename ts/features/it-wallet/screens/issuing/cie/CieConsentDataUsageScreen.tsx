@@ -6,10 +6,7 @@ import * as React from "react";
 import { Alert, BackHandler, NativeEventSubscription } from "react-native";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import WebView from "react-native-webview";
-import {
-  WebViewHttpErrorEvent,
-  WebViewNavigation
-} from "react-native-webview/lib/WebViewTypes";
+import { WebViewHttpErrorEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
@@ -19,7 +16,6 @@ import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { Dispatch } from "../../../../../store/actions/types";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { onLoginUriChanged } from "../../../../../utils/login";
 import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
 import { ItwParamsList } from "../../../navigation/params";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -66,7 +62,7 @@ const jsCode = `
     <p class="u-padding-bottom-xs">Nome</p>
     <p class="u-padding-bottom-xs">Cognome</p>
     <p class="u-padding-bottom-xs">Data di nascita</p>
-    <p>Codice Fiscale</p>
+    <p class="u-padding-bottom-xs">Codice Fiscale</p>
   \`;
   article.replaceChildren(div);
 `;
@@ -128,7 +124,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     // to get a generic ipzs welcome page and use the JS code
     // replacing the content with only the necessary data.
     // NOTE: This is a temporary solution only for the PoC purpose
-    return "https://collaudo.idserver.servizicie.interno.gov.it";
+    return "https://collaudo.idserver.servizicie.interno.gov.it/idp";
   }
 
   private handleWebViewError = () => {
@@ -141,30 +137,6 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
         `HTTP error ${event.nativeEvent.description} with Authorization uri`
       )
     );
-  };
-
-  private handleLoginSuccess = (token: SessionToken) => {
-    this.setState({ isLoginSuccess: true, hasError: false }, () => {
-      this.props.loginSuccess(token);
-    });
-  };
-
-  private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    const isLoginUrlWithToken = onLoginUriChanged(
-      this.handleLoginFailure,
-      this.handleLoginSuccess
-    )(event);
-
-    // URL can be loaded if it's not the login URL containing the session token - this avoids
-    // making a (useless) GET request with the session in the URL
-    return !isLoginUrlWithToken;
-  };
-
-  private handleLoginFailure = (errorCode?: string) => {
-    this.props.loginFailure(
-      new Error(`login CIE failure with code ${errorCode || "n/a"}`)
-    );
-    this.setState({ hasError: true, errorCode });
   };
 
   private getContent = () => {
@@ -197,7 +169,6 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           originWhitelist={originSchemasWhiteList}
           source={{ uri: decodeURIComponent(this.cieAuthorizationUri) }}
           javaScriptEnabled={true}
-          onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           renderLoading={() => loaderComponent}
           injectedJavaScript={jsCode}
           // eslint-disable-next-line @typescript-eslint/no-empty-function
