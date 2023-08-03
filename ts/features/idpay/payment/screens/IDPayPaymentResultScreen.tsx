@@ -1,16 +1,7 @@
 import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { default as React } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import {
-  IOPictograms,
-  Pictogram
-} from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../components/core/typography/Body";
-import { NewH4 } from "../../../../components/core/typography/NewH4";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import { PaymentFailure, PaymentFailureEnum } from "../xstate/failure";
 import { usePaymentMachineService } from "../xstate/provider";
@@ -20,6 +11,45 @@ import {
   selectIsFailure
 } from "../xstate/selectors";
 
+/**
+ * FIXME: this list is not definitive.
+ * The final list will be available with IOBP-176
+ */
+const mapFailureScreenProps: Record<
+  PaymentFailure,
+  OperationResultScreenContent
+> = {
+  [PaymentFailureEnum.GENERIC]: {
+    pictogram: "umbrella",
+    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body")
+  },
+  [PaymentFailureEnum.REJECTED]: {
+    pictogram: "error",
+    title: I18n.t("idpay.payment.result.failure.REJECTED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.REJECTED.body")
+  },
+  [PaymentFailureEnum.EXPIRED]: {
+    pictogram: "timeout",
+    title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body")
+  },
+  [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
+    pictogram: "error",
+    title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.body")
+  },
+  [PaymentFailureEnum.AUTHORIZED]: {
+    pictogram: "completed",
+    title: I18n.t("idpay.payment.result.failure.AUTHORIZED.title")
+  },
+  [PaymentFailureEnum.TOO_MANY_REQUESTS]: {
+    pictogram: "umbrella",
+    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
+    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body")
+  }
+};
+
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
 
@@ -27,136 +57,42 @@ const IDPayPaymentResultScreen = () => {
   const isCancelled = useSelector(machine, selectIsCancelled);
   const isFailure = useSelector(machine, selectIsFailure);
 
-  const handleClose = () => {
-    machine.send("EXIT");
+  const closeAction: OperationResultScreenContent["action"] = {
+    label: I18n.t("global.buttons.close"),
+    accessibilityLabel: I18n.t("global.buttons.close"),
+    onPress: () => machine.send("EXIT")
   };
 
-  const renderContent = () => {
-    if (isCancelled) {
-      return <CancelledScreenComponent />;
-    }
-
-    if (isFailure && O.isSome(failureOption)) {
-      return <FailureScreenComponent failure={failureOption.value} />;
-    }
-
-    return <SuccessScreenComponent />;
-  };
-
-  return (
-    <SafeAreaView style={IOStyles.flex}>
-      {renderContent()}
-      <FooterWithButtons
-        type="SingleButton"
-        leftButton={{
-          testID: "closeButtonTestID",
-          title: "Chiudi",
-          bordered: true,
-          onPress: handleClose
-        }}
+  if (isFailure && O.isSome(failureOption)) {
+    return (
+      <OperationResultScreenContent
+        {...mapFailureScreenProps[failureOption.value]}
+        action={closeAction}
+        testID="paymentFailureScreenTestID"
       />
-    </SafeAreaView>
-  );
-};
-
-const SuccessScreenComponent = () => (
-  <View
-    style={styles.resultScreenContainer}
-    testID="paymentSuccessScreenTestID"
-  >
-    <Pictogram name={"completed"} size={120} />
-    <VSpacer size={24} />
-    <NewH4 style={styles.justifyTextCenter}>
-      {I18n.t("idpay.payment.result.success.title")}
-    </NewH4>
-    <VSpacer size={16} />
-    <Body style={styles.justifyTextCenter}>
-      {I18n.t("idpay.payment.result.success.body")}
-    </Body>
-  </View>
-);
-
-const CancelledScreenComponent = () => (
-  <View
-    style={styles.resultScreenContainer}
-    testID="paymentCancelledScreenTestID"
-  >
-    <Pictogram name={"unrecognized"} size={120} />
-    <VSpacer size={24} />
-    <NewH4 style={styles.justifyTextCenter}>
-      {I18n.t("idpay.payment.result.cancelled.title")}
-    </NewH4>
-  </View>
-);
-
-type FailureScreenComponentProps = {
-  title: string;
-  subtitle?: string;
-  icon: IOPictograms;
-};
-
-const failureScreenContent: Record<
-  PaymentFailure,
-  FailureScreenComponentProps
-> = {
-  [PaymentFailureEnum.GENERIC]: {
-    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
-    icon: "umbrella"
-  },
-  [PaymentFailureEnum.REJECTED]: {
-    title: I18n.t("idpay.payment.result.failure.REJECTED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.REJECTED.body"),
-    icon: "error"
-  },
-  [PaymentFailureEnum.EXPIRED]: {
-    title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body"),
-    icon: "timeout"
-  },
-  [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
-    title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.body"),
-    icon: "error"
-  },
-  [PaymentFailureEnum.TOO_MANY_REQUESTS]: {
-    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body"),
-    icon: "umbrella"
+    );
   }
-};
 
-const FailureScreenComponent = (props: { failure: PaymentFailure }) => {
-  const { title, subtitle, icon } = failureScreenContent[props.failure];
+  if (isCancelled) {
+    return (
+      <OperationResultScreenContent
+        pictogram="unrecognized"
+        title={I18n.t("idpay.payment.result.cancelled.title")}
+        action={closeAction}
+        testID="paymentCancelledScreenTestID"
+      />
+    );
+  }
 
   return (
-    <View
-      style={styles.resultScreenContainer}
-      testID="paymentFailureScreenTestID"
-    >
-      <Pictogram name={icon} size={120} />
-      <VSpacer size={24} />
-      <NewH4 style={styles.justifyTextCenter}>{title}</NewH4>
-      {subtitle && (
-        <>
-          <VSpacer size={16} />
-          <Body style={styles.justifyTextCenter}>{subtitle}</Body>
-        </>
-      )}
-    </View>
+    <OperationResultScreenContent
+      pictogram="completed"
+      title={I18n.t("idpay.payment.result.success.title")}
+      subtitle={I18n.t("idpay.payment.result.success.body")}
+      action={closeAction}
+      testID="paymentSuccessScreenTestID"
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  resultScreenContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 48
-  },
-  justifyTextCenter: {
-    textAlign: "center"
-  }
-});
 
 export { IDPayPaymentResultScreen };
