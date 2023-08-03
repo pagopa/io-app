@@ -55,7 +55,7 @@ const ItwCredentialDetails = () => {
     </ScrollView>
   );
 
-  const GetDecodedPidOrError = () =>
+  const DecodedPidOrErrorView = () =>
     pipe(
       decodedPid,
       O.fold(
@@ -73,7 +73,7 @@ const ItwCredentialDetails = () => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={{ ...IOStyles.flex }}>
-        <GetDecodedPidOrError />
+        <DecodedPidOrErrorView />
       </SafeAreaView>
     </BaseScreenComponent>
   );

@@ -137,6 +137,15 @@ const ItwPidPreviewScreen = () => {
     );
   };
 
+  const getDecodedPidOrErrorView = (optionDecodedPid: O.Option<PidWithToken>) =>
+    pipe(
+      optionDecodedPid,
+      O.fold(
+        () => <> </>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
+        decodedPid => <ContentView decodedPid={decodedPid} />
+      )
+    );
+
   const RenderMask = () =>
     pot.fold(
       decodedPidPot,
@@ -144,14 +153,7 @@ const ItwPidPreviewScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       err => ErrorView(err),
-      some =>
-        pipe(
-          some.decodedPid,
-          O.fold(
-            () => <></>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
-            some => ContentView({ decodedPid: some })
-          )
-        ),
+      some => getDecodedPidOrErrorView(some.decodedPid),
       () => <LoadingView />,
       () => <LoadingView />,
       (_, err) => ErrorView(err)
