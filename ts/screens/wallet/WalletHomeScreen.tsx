@@ -393,7 +393,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}
       >
-        <VSpacer size={24} />
         <H3 weight="SemiBold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
         </H3>
