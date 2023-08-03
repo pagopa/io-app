@@ -383,6 +383,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </>
         )}
         <Divider />
+        {/* New Wallet Playground */}
+        <ListItemNav
+          value={I18n.t("profile.main.walletPlayground.titleSection")}
+          accessibilityLabel={I18n.t(
+            "profile.main.walletPlayground.titleSection"
+          )}
+          onPress={() =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.WALLET_PLAYGROUND
+            })
+          }
+        />
+        <Divider />
         {/* Design System */}
         <ListItemNav
           value={I18n.t("profile.main.designSystem")}

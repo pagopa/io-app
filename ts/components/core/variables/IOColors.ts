@@ -309,7 +309,7 @@ export const IOThemeLight: IOTheme = {
   "cardBorder-default": "grey-100",
   "icon-default": "grey-650",
   // Layout
-  "divider-default": "grey-100",
+  "divider-default": "grey-200",
   // Status
   errorIcon: "error-500",
   errorText: "error-850"
@@ -403,8 +403,8 @@ Return the color value with RGBA format (RGB + Alpha transparency), starting fro
 @param opacity Opacity value that range from 0 to 1. Default value = 1.
  */
 /* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
-export const hexToRgba = (hexCode: string, opacity: number = 1) => {
-  const hex = hexCode.replace("#", "");
+export const hexToRgba = (hexCode: ColorValue, opacity: number = 1) => {
+  const hex = hexCode.toString().replace("#", "");
 
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);

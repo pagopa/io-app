@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable arrow-body-style */
 import * as React from "react";
@@ -7,12 +8,14 @@ import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
+import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { TabItem } from "../../../components/ui/TabItem";
+import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
-import { H3 } from "../../../components/core/typography/H3";
 
 export const DSTabNavigation = () => {
   const handlePress = () => {};
@@ -118,19 +121,188 @@ export const DSTabNavigation = () => {
         </View>
         <VSpacer size={32} />
       </ContentWrapper>
+      <ContentWrapper>
+        <H2>Tab Navigation</H2>
+        <VSpacer size={24} />
+        <H3>Light</H3>
+        <VSpacer size={16} />
+      </ContentWrapper>
+      <View style={[styles.default, { paddingVertical: 24 }]}>
+        <TabNavigation>
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <TabNavigation>
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <TabNavigation>
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+        </TabNavigation>
+      </View>
+
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <H3>Dark</H3>
+        <VSpacer size={16} />
+      </ContentWrapper>
+
+      <View style={[styles.dark, { paddingVertical: 24 }]}>
+        <TabNavigation color="dark">
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <TabNavigation color="dark">
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+          <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <TabNavigation color="dark">
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+          <TabItem
+            label="Label tab"
+            accessibilityLabel="Label tab"
+            icon="starEmpty"
+            iconSelected="starFilled"
+          />
+        </TabNavigation>
+      </View>
+
+      <ContentWrapper>
+        <VSpacer size={24} />
+        <H3>Tab alignment</H3>
+        <VSpacer size={16} />
+      </ContentWrapper>
+
+      <View style={[styles.default, { paddingVertical: 24 }]}>
+        <ContentWrapper>
+          <Monospace>{`center (default)`}</Monospace>
+        </ContentWrapper>
+
+        <VSpacer size={16} />
+
+        <TabNavigation>
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <ContentWrapper>
+          <Monospace>{`start`}</Monospace>
+        </ContentWrapper>
+
+        <VSpacer size={16} />
+
+        <TabNavigation tabAlignment="start">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <ContentWrapper>
+          <Monospace>{`end`}</Monospace>
+        </ContentWrapper>
+
+        <VSpacer size={16} />
+
+        <TabNavigation tabAlignment="end">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+        </TabNavigation>
+
+        <VSpacer size={24} />
+
+        <ContentWrapper>
+          <Monospace>{`stretch`}</Monospace>
+        </ContentWrapper>
+
+        <VSpacer size={16} />
+
+        <TabNavigation tabAlignment="stretch">
+          <TabItem label="Long label" accessibilityLabel="Long label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+          <TabItem label="Label" accessibilityLabel="Label" />
+        </TabNavigation>
+      </View>
     </DesignSystemScreen>
   );
 };
 
 const styles = StyleSheet.create({
   default: {
-    backgroundColor: IOColors["blueIO-100"],
-    padding: 16,
-    borderRadius: 8
+    backgroundColor: IOColors["blueIO-100"]
   },
   dark: {
-    backgroundColor: IOColors["blueIO-850"],
-    padding: 16,
-    borderRadius: 16
+    backgroundColor: IOColors["blueIO-850"]
   }
 });

@@ -30,69 +30,89 @@ export function trackMessageNotificationParsingFailure(errors: t.Errors) {
 }
 
 export function trackThirdPartyMessageAttachmentCount(attachmentCount: number) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT", {
-    attachmentCount
-  });
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT",
+    buildEventProperties("UX", "screen_view", {
+      attachmentCount
+    })
+  );
 }
 
 export function trackThirdPartyMessageAttachmentUnavailable(
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
 ) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE",
+    buildEventProperties("KO", undefined, {
+      messageId,
+      serviceId: serviceId ?? ""
+    })
+  );
 }
 
 export function trackThirdPartyMessageAttachmentDownloadFailed(
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
 ) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED",
+    buildEventProperties("KO", undefined, {
+      messageId,
+      serviceId: serviceId ?? ""
+    })
+  );
 }
 
 export function trackThirdPartyMessageAttachmentBadFormat(
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
 ) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT",
+    buildEventProperties("KO", undefined, {
+      messageId,
+      serviceId: serviceId ?? ""
+    })
+  );
 }
 
 export function trackThirdPartyMessageAttachmentCorruptedFile(
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
 ) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE", {
-    messageId,
-    serviceId: serviceId ?? ""
-  });
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE",
+    buildEventProperties("KO", undefined, {
+      messageId,
+      serviceId: serviceId ?? ""
+    })
+  );
 }
 
 export function trackThirdPartyMessageAttachmentPreviewSuccess() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS");
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS",
+    buildEventProperties("TECH", "control")
+  );
 }
 
 export function trackThirdPartyMessageAttachmentShowPreview() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
-}
-
-export function trackThirdPartyMessageAttachmentDoNotShow() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW",
+    buildEventProperties("UX", "action")
+  );
 }
 
 export function trackThirdPartyMessageAttachmentUserAction(
   userAction: "download" | "open" | "share"
 ) {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION", {
-    userAction
-  });
+  void mixpanelTrack(
+    "THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION",
+    buildEventProperties("UX", "action", {
+      userAction
+    })
+  );
 }
 
 export function trackDisclaimerOpened(tag: MessageCategory["tag"]) {

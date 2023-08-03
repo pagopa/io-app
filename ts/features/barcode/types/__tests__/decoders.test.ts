@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { decodeIOBarcode } from "../decoders";
+import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
 
 describe("test decodeIOBarcode function", () => {
   it("should return unknown if empty value", () => {
@@ -25,6 +26,14 @@ describe("test decodeIOBarcode function", () => {
 
       expect(output).toStrictEqual(O.none);
     });
+    it("should return O.none with valid content and IDPAY type not supported", () => {
+      const value = "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg";
+      const output = decodeIOBarcode(value, {
+        barcodeTypes: IO_BARCODE_ALL_TYPES.filter(t => t !== "IDPAY")
+      });
+
+      expect(output).toStrictEqual(O.none);
+    });
   });
 
   describe("test PAGOPA QRCode barcode type", () => {
@@ -38,6 +47,14 @@ describe("test decodeIOBarcode function", () => {
     it("should return UNKNOWN on invalid QRCode content", () => {
       const value = "PAGOPA|002|000000000000000000|01199250158";
       const output = decodeIOBarcode(value);
+
+      expect(output).toStrictEqual(O.none);
+    });
+    it("should return O.none with valid content and PAGOPA type not supported", () => {
+      const value = "PAGOPA|002|000000000000000000|01199250158|0000015000";
+      const output = decodeIOBarcode(value, {
+        barcodeTypes: IO_BARCODE_ALL_TYPES.filter(t => t !== "PAGOPA")
+      });
 
       expect(output).toStrictEqual(O.none);
     });
@@ -56,6 +73,15 @@ describe("test decodeIOBarcode function", () => {
       const value =
         "codfase=NBPA;1830071A7000000000321200E01630209310000000000138961P100085240950BSCMTT83A12L719RName Surname                           test                                                                                                                      A";
       const output = decodeIOBarcode(value);
+
+      expect(output).toStrictEqual(O.none);
+    });
+    it("should return O.none with valid content and PAGOPA type not supported", () => {
+      const value =
+        "codfase=NBPA;1830071A7000000000321200E01630209310000000000138961P100085240950BSCMTT83A12L719RName Surname                           test                                                                                                                      A";
+      const output = decodeIOBarcode(value, {
+        barcodeTypes: IO_BARCODE_ALL_TYPES.filter(t => t !== "PAGOPA")
+      });
 
       expect(output).toStrictEqual(O.none);
     });
