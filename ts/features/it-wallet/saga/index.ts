@@ -11,11 +11,12 @@ import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../navigation/routes";
 import { itwCredentialsAddPid, itwPid } from "../store/actions/credentials";
 import ROUTES from "../../../navigation/routes";
+import { itwDecodePid } from "./../store/actions/credentials";
 import {
   handleStartAuthenticationSaga,
   handleStopAuthenticationSaga
 } from "./authenticationSaga";
-import { handlePidRequest } from "./pid";
+import { handlePidDecodeRequest, handlePidRequest } from "./pid";
 import { handleWiaRequest } from "./wia";
 import { handleCredentialsAddPid } from "./credentials";
 
@@ -44,6 +45,11 @@ export function* watchItwSaga(): SagaIterator {
    * Handles a PID issuing request.
    */
   yield* takeLatest(itwPid.request, handlePidRequest);
+
+  /**
+   * Handles a PID decode request.
+   */
+  yield* takeLatest(itwDecodePid.request, handlePidDecodeRequest);
 
   /**
    * Handles adding a PID to the wallet.
