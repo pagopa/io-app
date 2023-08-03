@@ -1,10 +1,12 @@
-import { ListItemTransaction as DSListItemTransaction } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  ListItemTransaction as DSListItemTransaction
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { Badge } from "@pagopa/io-app-design-system";
 import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
