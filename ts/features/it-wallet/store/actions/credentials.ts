@@ -1,16 +1,9 @@
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { PidData } from "@pagopa/io-react-native-cie-pid";
+import * as O from "fp-ts/lib/Option";
 import { ItWalletError } from "../../utils/errors/itwErrors";
-
-/**
- * Type for the itwPid action success payload.
- */
-type ItwCredentialsPidSuccessType = {
-  pid: PidResponse;
-  decodedPid: PidWithToken;
-};
 
 /**
  * Action which requests a PID issuing.
@@ -19,7 +12,16 @@ export const itwPid = createAsyncAction(
   "ITW_CREDENTIALS_PID_REQUEST",
   "ITW_CREDENTIALS_PID_SUCCESS",
   "ITW_CREDENTIALS_PID_FAILURE"
-)<PidData, ItwCredentialsPidSuccessType, ItWalletError>();
+)<PidData, PidResponse, ItWalletError>();
+
+/**
+ * Action which decodes a PID.
+ */
+export const itwDecodePid = createAsyncAction(
+  "ITW_CREDENTIAL_DECODE_PID_REQUEST",
+  "ITW_CREDENTIAL_DECODE_PID_SUCCESS",
+  "ITW_CREDENTIAL_DECODE_PID_FAILURE"
+)<O.Option<PidResponse>, O.Option<PidWithToken>, ItWalletError>();
 
 /**
  * Action which adds the PID to the wallet.
@@ -35,4 +37,5 @@ export const itwCredentialsAddPid = createAsyncAction(
  */
 export type itwCredentialsActions =
   | ActionType<typeof itwPid>
-  | ActionType<typeof itwCredentialsAddPid>;
+  | ActionType<typeof itwCredentialsAddPid>
+  | ActionType<typeof itwDecodePid>;
