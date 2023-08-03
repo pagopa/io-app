@@ -112,8 +112,10 @@ const ItwActivationInfoAuthScreen = () => {
     const continueButtonProps = {
       block: true,
       primary: true,
-      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
-      disabled: isIos,
+      onPress: () =>
+        isIos
+          ? bypassCieLogin()
+          : navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (
