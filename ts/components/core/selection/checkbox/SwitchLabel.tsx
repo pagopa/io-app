@@ -1,14 +1,14 @@
+import { SwitchLabel as DSSwitchLabel } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import { NewH6 } from "../../typography/NewH6";
-import { IOStyles } from "../../variables/IOStyles";
+import { useIOSelector } from "../../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { makeFontStyleObject } from "../../fonts";
 import { HSpacer } from "../../spacer/Spacer";
 import { IOColors } from "../../variables/IOColors";
-import { useIOSelector } from "../../../../store/hooks";
-import { makeFontStyleObject } from "../../fonts";
-import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { IOStyles } from "../../variables/IOStyles";
 import { AnimatedSwitch } from "./AnimatedSwitch";
 
 type Props = {
@@ -25,7 +25,6 @@ type OwnProps = Props &
   Pick<React.ComponentProps<typeof AnimatedSwitch>, "disabled" | "checked"> &
   Pick<React.ComponentProps<typeof Pressable>, "onPress">;
 
-/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
 const styles = StyleSheet.create({
   legacyTextValue: {
     fontSize: 16,
@@ -35,14 +34,16 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
 
 /**
  * A checkbox with the automatic state management that uses a {@link AnimatedCheckBox}
  * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
+ * Currently if the Design System is enabled, the component returns the NativeSwitch of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
  *
- * @param props
  * @constructor
+ * @deprecated The usage of this component is discouraged as it is being replaced by the SwitchLabel of the @pagopa/io-app-design-system library.
+ *
  */
 export const SwitchLabel = ({
   label,
@@ -63,7 +64,15 @@ export const SwitchLabel = ({
     }
   };
 
-  return (
+  return isDesignSystemEnabled ? (
+    <DSSwitchLabel
+      label={label}
+      disabled={disabled}
+      onPress={toggleCheckbox}
+      checked={checked}
+      onValueChange={onValueChange}
+    />
+  ) : (
     <Pressable
       disabled={disabled}
       onPress={toggleCheckbox}
@@ -83,15 +92,7 @@ export const SwitchLabel = ({
           <AnimatedSwitch checked={checked ?? toggleValue} />
         </View>
         <HSpacer size={8} />
-        {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
-        {isDesignSystemEnabled ? (
-          <NewH6 style={{ flexShrink: 1 }} color={"black"}>
-            {label}
-          </NewH6>
-        ) : (
-          <Text style={styles.legacyTextValue}>{label}</Text>
-        )}
-        {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
+        {<Text style={styles.legacyTextValue}>{label}</Text>}
       </View>
     </Pressable>
   );
