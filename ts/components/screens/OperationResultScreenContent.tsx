@@ -5,7 +5,8 @@ import {
   IOPictograms,
   IOVisualCostants,
   Pictogram,
-  VSpacer
+  VSpacer,
+  WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
@@ -21,19 +22,20 @@ type ActionProps = {
 type OperationResultScreenContent = {
   pictogram?: IOPictograms;
   title: string;
-  subTitle?: string;
-  action: ActionProps;
+  subtitle?: string;
+  action?: ActionProps;
   secondaryAction?: ActionProps;
 };
 
 const OperationResultScreenContent = ({
   pictogram,
   title,
-  subTitle,
+  subtitle,
   action,
-  secondaryAction
-}: OperationResultScreenContent) => (
-  <SafeAreaView style={styles.container}>
+  secondaryAction,
+  testID
+}: WithTestID<OperationResultScreenContent>) => (
+  <SafeAreaView style={styles.container} testID={testID}>
     <ScrollView
       centerContent={true}
       contentContainerStyle={[
@@ -49,18 +51,22 @@ const OperationResultScreenContent = ({
         </>
       )}
       <H3 style={styles.text}>{title}</H3>
-      {subTitle && (
+      {subtitle && (
         <>
           <VSpacer size={8} />
           <LabelSmall style={styles.text} color="grey-650" weight="Regular">
-            {subTitle}
+            {subtitle}
           </LabelSmall>
         </>
       )}
-      <VSpacer size={24} />
-      <View>
-        <ButtonSolid {...action} />
-      </View>
+      {action && (
+        <>
+          <VSpacer size={24} />
+          <View>
+            <ButtonSolid {...action} />
+          </View>
+        </>
+      )}
       {secondaryAction && (
         <>
           <VSpacer size={24} />

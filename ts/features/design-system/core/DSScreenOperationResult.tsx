@@ -10,7 +10,7 @@ const DSScreenOperationResult = () => {
     <OperationResultScreenContent
       pictogram="umbrellaNew"
       title="C’è un problema temporaneo, riprova."
-      subTitle="Premi a lungo uno o più messaggi per archiviarli."
+      subtitle="Premi a lungo uno o più messaggi per archiviarli."
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
