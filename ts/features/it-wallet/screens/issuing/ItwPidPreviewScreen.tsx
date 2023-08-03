@@ -1,12 +1,11 @@
 import React from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
-import { Route, useRoute } from "@react-navigation/core";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { PidData } from "@pagopa/io-react-native-cie-pid";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -23,37 +22,35 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../navigation/params";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwPid } from "../../store/actions/credentials";
-import { ItwPidType, itwPidSelector } from "../../store/reducers/itwPid";
+import { itwDecodePid } from "../../store/actions/credentials";
+import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { Pictogram } from "../../../../components/core/pictograms";
+import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecode";
 
-export type ItwPidPreviewScreenNavigationParams = {
-  pidData: PidData;
+type ContentViewProps = {
+  decodedPid: PidWithToken;
 };
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
 const ItwPidPreviewScreen = () => {
-  const route =
-    useRoute<
-      Route<"ITW_ACTIVATION_PID_PREVIEW", ItwPidPreviewScreenNavigationParams>
-    >();
   const spacerSize = 32;
   const { present, bottomSheet } = useItwAbortFlow();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
-  const pid = useIOSelector(itwPidSelector);
+  const pid = useIOSelector(itwPidValueSelector);
+  const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
 
   /**
-   * Temporary timeout to simulate loading, will be removed in the future.
+   * Dispatches the action to decode the PID on first render.
    */
   useOnFirstRender(() => {
-    dispatch(itwPid.request(route.params.pidData));
+    dispatch(itwDecodePid.request(pid));
   });
 
   /**
@@ -93,7 +90,7 @@ const ItwPidPreviewScreen = () => {
    * Renders the content of the screen if the PID is decoded.
    * @param decodedPip - the decoded PID
    */
-  const ContentView = ({ decodedPid }: Pick<ItwPidType, "decodedPid">) => {
+  const ContentView = ({ decodedPid }: ContentViewProps) => {
     const cancelButtonProps = {
       block: true,
       bordered: true,
@@ -106,21 +103,9 @@ const ItwPidPreviewScreen = () => {
       onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING),
       title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
     };
-    const name = pipe(
-      decodedPid,
-      O.fold(
-        () => "",
-        some => some.pid.claims.givenName + " " + some.pid.claims.familyName
-      )
-    );
-
-    const fiscalCode = pipe(
-      decodedPid,
-      O.fold(
-        () => "",
-        some => some.pid.claims.taxIdCode
-      )
-    );
+    const name =
+      decodedPid.pid.claims.givenName + " " + decodedPid.pid.claims.familyName;
+    const fiscalCode = decodedPid.pid.claims.taxIdCode;
     return (
       <>
         <ScreenContent
@@ -137,13 +122,7 @@ const ItwPidPreviewScreen = () => {
               iconName="notice"
             />
             <VSpacer />
-            {pipe(
-              decodedPid,
-              O.fold(
-                () => <></>,
-                some => <ClaimsList decodedPid={some} /> // maybe add a dummy view to show the error
-              )
-            )}
+            <ClaimsList decodedPid={decodedPid} />
             <VSpacer size={spacerSize} />
           </View>
         </ScreenContent>
@@ -160,12 +139,19 @@ const ItwPidPreviewScreen = () => {
 
   const RenderMask = () =>
     pot.fold(
-      pid,
+      decodedPidPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
       err => ErrorView(err),
-      some => <ContentView decodedPid={some.decodedPid} />,
+      some =>
+        pipe(
+          some.decodedPid,
+          O.fold(
+            () => <></>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
+            some => ContentView({ decodedPid: some })
+          )
+        ),
       () => <LoadingView />,
       () => <LoadingView />,
       (_, err) => ErrorView(err)

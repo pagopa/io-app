@@ -60,7 +60,7 @@ const ItwActivationInfoAuthScreen = () => {
    * PID data from the profile store or a mock if the data is not available.
    */
   const bypassCieLogin = () => {
-    navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW, {
+    navigation.navigate(ITW_ROUTES.ACTIVATION.PID_REQUEST, {
       pidData: {
         name: name ?? pidDataMock.name,
         surname: surname ?? pidDataMock.surname,

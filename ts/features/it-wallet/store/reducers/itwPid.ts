@@ -2,7 +2,6 @@ import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -10,7 +9,6 @@ import { itwPid } from "../actions/credentials";
 
 export type ItwPidType = {
   pid: O.Option<PidResponse>;
-  decodedPid: O.Option<PidWithToken>;
 };
 
 export type ItwPidState = pot.Pot<ItwPidType, ItWalletError>;
@@ -34,8 +32,7 @@ const reducer = (
       return pot.toLoading(state);
     case getType(itwPid.success):
       return pot.some({
-        pid: O.some(action.payload.pid),
-        decodedPid: O.some(action.payload.decodedPid)
+        pid: O.some(action.payload)
       });
     case getType(itwPid.failure):
       return pot.toError(state, action.payload);
