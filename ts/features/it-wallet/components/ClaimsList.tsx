@@ -24,7 +24,7 @@ type ClaimsListProps = {
  */
 const ClaimsList = ({ decodedPid }: ClaimsListProps) => {
   const expirationDate = localeDateFormat(
-    new Date(),
+    new Date(decodedPid.pid.expiration),
     I18n.t("global.dateFormats.shortFormat")
   );
   const birthDate = localeDateFormat(
