@@ -378,6 +378,14 @@ const DesignSystemMainStack = () => {
 
       {/* SCREENS */}
       <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.route}
+        component={DSGradientScroll}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.title
+        }}
+      />
+
+      <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
         component={DSScreenOperationResult}
         options={{ headerShown: false }}
@@ -398,14 +406,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
         options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name={DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.route}
-        component={DSGradientScroll}
-        options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.title
-        }}
       />
 
       {/* LEGACY */}
