@@ -129,6 +129,7 @@ export const ListItemTransaction = ({
    * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemTransaction of the @pagopa/io-app-design-system library.
    *
    */
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
@@ -172,6 +173,13 @@ export const ListItemTransaction = ({
       }
     };
 
+    const DSTransactionStatus =
+      transactionStatus === "success"
+        ? "success"
+        : transactionStatus === "failure"
+        ? "failure"
+        : "pending";
+
     return isDSEnabled ? (
       <DSListItemTransaction
         accessibilityLabel={accessibilityLabel}
@@ -183,7 +191,7 @@ export const ListItemTransaction = ({
         title={title}
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         transactionAmount={transactionAmount!}
-        transactionStatus={"success"}
+        transactionStatus={DSTransactionStatus}
       />
     ) : (
       <>
