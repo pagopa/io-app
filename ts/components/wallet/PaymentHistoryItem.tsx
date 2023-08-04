@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
@@ -7,7 +8,6 @@ import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import { Icon } from "../core/icons";
 
 type Props = Readonly<{
   text11: string;

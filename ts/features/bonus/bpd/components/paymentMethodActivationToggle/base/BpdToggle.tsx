@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import Switch from "../../../../../../components/ui/Switch";
-import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { GraphicalValue } from "./PaymentMethodBpdToggle";
 

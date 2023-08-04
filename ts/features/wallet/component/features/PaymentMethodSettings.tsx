@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -10,7 +11,6 @@ import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { isEnabledToPay } from "../../../../utils/paymentMethodCapabilities";
-import { Icon } from "../../../../components/core/icons/Icon";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };

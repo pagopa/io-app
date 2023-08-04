@@ -1,4 +1,4 @@
-import { ListItemCheckbox } from "@pagopa/io-app-design-system";
+import { IOIcons, Icon, ListItemCheckbox } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -15,7 +15,6 @@ import Animated, {
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";
-import { IOIcons, Icon } from "../core/icons";
 import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";

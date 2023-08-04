@@ -1,6 +1,8 @@
 import {
   Badge,
-  ListItemTransaction as DSListItemTransaction
+  ListItemTransaction as DSListItemTransaction,
+  IOIconSizeScale,
+  Icon
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -14,7 +16,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { getAccessibleAmountText } from "../../utils/accessibility";
 import { isImageUri } from "../../utils/url";
-import { IOIconSizeScale, Icon } from "../core/icons";
 import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";

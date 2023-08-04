@@ -1,5 +1,5 @@
 import { HapticFeedbackTypes } from "react-native-haptic-feedback";
-import { IOIcons } from "../core/icons";
+import { IOIcons } from "@pagopa/io-app-design-system";
 
 export type ToastVariant = "neutral" | "error" | "info" | "success" | "warning";
 

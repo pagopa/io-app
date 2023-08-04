@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View, ActivityIndicator } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { TestID } from "../../../types/WithTestID";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import Switch from "../../ui/Switch";
 import { calculateSlop } from "../accessibility";
 import { IOStyleVariables } from "../variables/IOStyleVariables";
-import { Icon } from "../icons/Icon";
 
 type Props<E> = {
   value: pot.Pot<boolean, E>;

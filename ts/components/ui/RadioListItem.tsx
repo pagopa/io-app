@@ -1,4 +1,4 @@
-import { ListItemRadio } from "@pagopa/io-app-design-system";
+import { IOIcons, Icon, ListItemRadio } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -16,7 +16,6 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import { IOIcons, Icon } from "../core/icons";
 import { AnimatedRadio } from "../core/selection/checkbox/AnimatedRadio";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";

@@ -1,12 +1,15 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { ListItemInfo as DSListItemInfo } from "@pagopa/io-app-design-system";
+import {
+  ListItemInfo as DSListItemInfo,
+  Icon,
+  IOIcons
+} from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import { Icon, IOIcons } from "../core/icons";
 import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
 import {
