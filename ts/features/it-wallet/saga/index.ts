@@ -61,7 +61,7 @@ function* watchItwActivationStart(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
+      screen: ITW_ROUTES.DISCOVERY.INFO
     })
   );
   yield* call(handleStartAuthenticationSaga);
