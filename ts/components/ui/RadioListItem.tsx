@@ -193,7 +193,7 @@ export const RadioListItem = ({
                   />
                 </View>
               )}
-              {<Text style={styles.legacyTextValue}>{value}</Text>}
+              <Text style={styles.legacyTextValue}>{value}</Text>
             </View>
             <HSpacer size={8} />
             <View pointerEvents="none">

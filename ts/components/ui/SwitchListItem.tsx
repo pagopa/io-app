@@ -130,7 +130,7 @@ export const SwitchListItem = ({
                 />
               </View>
             )}
-            {<Text style={styles.legacyTextValue}>{label}</Text>}
+            <Text style={styles.legacyTextValue}>{label}</Text>
           </View>
           {description && (
             <>
