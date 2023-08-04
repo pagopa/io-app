@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -26,51 +25,6 @@ type Props = {
   card: React.ReactNode;
   content: React.ReactNode;
 };
-
-// ----------------------- card layout calculations -----------------------
-
-// base consts
-const CARD_WIDTH = widthPercentageToDP(100);
-const CARD_HEIGHT = 0.5 * CARD_WIDTH;
-
-// the amount of header to render in case of scrollDown
-const absoluteMarginTopHeight = 2 * CARD_HEIGHT;
-
-// "progressbar-like" percentage of card that has a
-// blue BG, can be played around with
-const percentageOfCardWithBackground = 75;
-
-// the actual height of the visible (without scrolling) card's background
-const cardBackgroundHeight =
-  (percentageOfCardWithBackground / 100) * CARD_HEIGHT;
-
-// how much the card overflows under the header, used as absolute positioning
-// and as bottom spacer
-const cardOverflowAmount = (100 - percentageOfCardWithBackground) * 2;
-
-// the header's actual height, including the overflow that can only be seen
-// when scrolling downwards
-const headerHeight = absoluteMarginTopHeight + cardBackgroundHeight;
-
-// ----------------------------- styles -----------------------------------
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    paddingHorizontal: IOSpacingScale[4],
-    position: "absolute",
-    bottom: -cardOverflowAmount,
-    alignItems: "center"
-  },
-  blueHeader: {
-    marginBottom: cardOverflowAmount,
-    marginTop: -absoluteMarginTopHeight,
-    height: headerHeight,
-    backgroundColor: IOColors["blueIO-600"],
-    top: 0
-  }
-});
 
 // ----------------------------- component -----------------------------------
 
@@ -171,5 +125,21 @@ const DeleteButton = ({
     variant="danger"
   />
 );
+
+// ----------------------------- styles -----------------------------------
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    paddingHorizontal: IOSpacingScale[4],
+    alignItems: "center",
+    marginBottom: "-15%"
+  },
+  blueHeader: {
+    backgroundColor: IOColors["blueIO-600"],
+    paddingTop: "75%",
+    marginTop: "-75%",
+    marginBottom: "15%"
+  }
+});
 
 export default BasePaymentMethodScreen;
