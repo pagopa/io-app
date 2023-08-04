@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ItwParamsList } from "../../navigation/params";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwPid } from "../../store/actions/credentials";
@@ -20,8 +20,8 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { Pictogram } from "../../../../components/core/pictograms";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { itwActivationStop } from "../../store/actions";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
  * ItwPidRequestScreen's navigation params.
@@ -57,7 +57,7 @@ const ItwPidRequestScreen = () => {
    */
   useEffect(() => {
     if (pot.isSome(pid)) {
-      navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW);
+      navigation.navigate(ITW_ROUTES.ISSUING.PID_PREVIEW);
     }
   }, [navigation, pid]);
 

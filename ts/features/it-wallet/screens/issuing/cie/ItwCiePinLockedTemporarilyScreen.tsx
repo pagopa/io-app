@@ -14,12 +14,12 @@ import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { ItwParamsList } from "../../../navigation/params";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_CIE_PIN_TEMP_LOCKED_SCREEN"
+  "ITW_ISSUING_CIE_PIN_TEMP_LOCKED_SCREEN"
 >;
 
 type Props = NavigationProps & ReduxProps;
@@ -28,7 +28,10 @@ type State = Readonly<{
   isLoadingCompleted: boolean;
 }>;
 
-class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
+class ItwCiePinLockedTemporarilyScreen extends React.PureComponent<
+  Props,
+  State
+> {
   constructor(props: Props) {
     super(props);
     this.state = { isLoadingCompleted: false };
@@ -73,7 +76,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
 
   private handleGoBack = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.INFO
+      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
     });
 
   public render(): React.ReactNode {
@@ -102,4 +105,4 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
   }
 }
 
-export default connect()(CiePinLockedTemporarilyScreen);
+export default connect()(ItwCiePinLockedTemporarilyScreen);

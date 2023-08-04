@@ -10,26 +10,26 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { openLink } from "../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../i18n";
 import { ReduxProps } from "../../../../../store/actions/types";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/params";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 const bookingUrl = I18n.t("cie.booking_url");
 const browseToLink = () => openLink(bookingUrl);
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_CIE_EXPIRED_SCREEN"
+  "ITW_ISSUING_CIE_EXPIRED_SCREEN"
 >;
 type Props = ReduxProps & NavigationProps;
 
-class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
+class ItwCieExpiredOrInvalidScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
   }
 
   private handleGoBack = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.DETAILS
+      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
     });
 
   public render(): React.ReactNode {
@@ -61,4 +61,4 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
   }
 }
 
-export default connect()(CieExpiredOrInvalidScreen);
+export default connect()(ItwCieExpiredOrInvalidScreen);
