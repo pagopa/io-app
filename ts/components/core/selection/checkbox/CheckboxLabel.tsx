@@ -96,7 +96,7 @@ export const CheckboxLabel = ({
           <AnimatedCheckbox checked={checked ?? toggleValue} />
         </View>
         <HSpacer size={8} />
-        {<Text style={styles.legacyTextValue}>{label}</Text>}
+        <Text style={styles.legacyTextValue}>{label}</Text>
       </View>
     </Pressable>
   );
