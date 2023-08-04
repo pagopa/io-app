@@ -1,5 +1,6 @@
 import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { default as React } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
@@ -11,9 +12,8 @@ import {
   selectIsFailure
 } from "../xstate/selectors";
 
-const mapFailureScreenProps: Record<
-  PaymentFailure,
-  OperationResultScreenContent
+const mapFailureScreenProps: Partial<
+  Record<PaymentFailure, OperationResultScreenContent>
 > = {
   [PaymentFailureEnum.GENERIC]: {
     pictogram: "umbrella", // FIXME: add correct pictogram (IOBP-176)
@@ -38,11 +38,6 @@ const mapFailureScreenProps: Record<
   [PaymentFailureEnum.AUTHORIZED]: {
     pictogram: "completed", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.AUTHORIZED.title")
-  },
-  [PaymentFailureEnum.TOO_MANY_REQUESTS]: {
-    pictogram: "umbrella", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body")
   }
 };
 
@@ -53,16 +48,22 @@ const IDPayPaymentResultScreen = () => {
   const isCancelled = useSelector(machine, selectIsCancelled);
   const isFailure = useSelector(machine, selectIsFailure);
 
+  const failureProps = pipe(
+    failureOption,
+    O.alt(() => O.some(PaymentFailureEnum.GENERIC)),
+    O.chain(f => O.fromNullable(mapFailureScreenProps[f]))
+  );
+
   const closeAction: OperationResultScreenContent["action"] = {
     label: I18n.t("global.buttons.close"),
     accessibilityLabel: I18n.t("global.buttons.close"),
     onPress: () => machine.send("EXIT")
   };
 
-  if (isFailure && O.isSome(failureOption)) {
+  if (isFailure && O.isSome(failureProps)) {
     return (
       <OperationResultScreenContent
-        {...mapFailureScreenProps[failureOption.value]}
+        {...failureProps.value}
         action={closeAction}
         testID="paymentFailureScreenTestID"
       />
