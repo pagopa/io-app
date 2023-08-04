@@ -1,3 +1,4 @@
+import { H3 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -78,9 +79,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "CREDIT":
       return (
         <View style={IOStyles.flex}>
-          <NewH6 style={{ textTransform: "capitalize" }}>
-            {`${props.cardIcon} •• ${props.hpan}`}
-          </NewH6>
+          <H3 style={{ textTransform: "capitalize" }}>
+            {`${props.cardIcon} ••${props.hpan}`}
+          </H3>
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
