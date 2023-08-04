@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Alert } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -15,7 +16,6 @@ import AdviceComponent from "../../../components/AdviceComponent";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { Icon } from "../../../components/core/icons";
 import { H5 } from "../../../components/core/typography/H5";
 import { FeatureInfo } from "../../../components/FeatureInfo";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";

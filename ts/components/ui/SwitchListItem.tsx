@@ -6,6 +6,7 @@ import {
   Switch,
   GestureResponderEvent
 } from "react-native";
+import { IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { NewH6 } from "../core/typography/NewH6";
 import {
   IOSelectionListItemStyles,
@@ -15,7 +16,6 @@ import {
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOColors, useIOTheme } from "../core/variables/IOColors";
-import { IOIcons, Icon } from "../core/icons";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";

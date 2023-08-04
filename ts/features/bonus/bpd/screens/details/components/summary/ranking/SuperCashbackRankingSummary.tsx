@@ -2,6 +2,7 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../../components/core/typography/H5";
@@ -18,7 +19,6 @@ import {
   isBpdRankingReady
 } from "../../../../../store/reducers/details/periods";
 import { BpdBaseShadowBoxLayout } from "../base/BpdBaseShadowBoxLayout";
-import { Icon } from "../../../../../../../../components/core/icons";
 import { useRankingNotReadyBottomSheet } from "./RankingNotReadyBottomSheet";
 
 const loadLocales = () => ({

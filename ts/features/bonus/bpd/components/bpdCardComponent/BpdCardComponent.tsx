@@ -10,6 +10,7 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { Icon } from "@pagopa/io-app-design-system";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
 import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
@@ -27,7 +28,6 @@ import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { BpdAmount } from "../../saga/networking/amount";
 import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
-import { Icon } from "../../../../../components/core/icons";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 
@@ -373,9 +373,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             )}`}
           </H5>
           <HSpacer size={8} />
-          {isPeriodClosed && (
-            <Icon name="checkTickBig" size={20} color="white" />
-          )}
+          {isPeriodClosed && <Icon name="legCheckOn" size={20} color="white" />}
         </View>
         <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H2 weight={"Bold"} color={"white"}>

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
-import { Icon } from "../../../components/core/icons/Icon";
 import I18n from "../../../i18n";
 import LinkedText from "./LinkedText";
 

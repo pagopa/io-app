@@ -11,6 +11,7 @@ import {
   StatusBar,
   StyleSheet
 } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
@@ -20,7 +21,6 @@ import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
 import { IOColors } from "./core/variables/IOColors";
 import { VSpacer } from "./core/spacer/Spacer";
-import { Icon } from "./core/icons/Icon";
 
 export type Props = Readonly<{
   onCancel: () => void;

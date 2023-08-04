@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
-import { Icon } from "../../../components/core/icons/Icon";
 
 type Props = {
   title: string;

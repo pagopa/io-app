@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
@@ -13,7 +14,6 @@ import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getCardIconFromBrandLogo } from "../card/Logo";
-import { Icon } from "../../core/icons/Icon";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {

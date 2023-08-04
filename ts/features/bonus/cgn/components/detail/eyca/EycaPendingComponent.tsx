@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
@@ -8,7 +9,6 @@ import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { openWebUrl } from "../../../../../../utils/url";
 import { showToast } from "../../../../../../utils/showToast";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
 

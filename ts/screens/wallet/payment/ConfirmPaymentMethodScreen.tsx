@@ -5,6 +5,7 @@ import { ActionSheet, Content } from "native-base";
 import * as React from "react";
 import { View, Alert, SafeAreaView, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
@@ -91,7 +92,6 @@ import { getLookUpIdPO } from "../../../utils/pmLookUpId";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
-import { Icon } from "../../../components/core/icons/Icon";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)

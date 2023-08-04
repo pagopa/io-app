@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-import { Icon, IOIcons } from "../core/icons";
+import { Icon, IOIcons } from "@pagopa/io-app-design-system";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
