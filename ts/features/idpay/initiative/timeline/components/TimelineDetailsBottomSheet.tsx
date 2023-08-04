@@ -5,8 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import React from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
@@ -23,7 +22,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
   IOBottomSheetModal,
-  useLegacyIOBottomSheetModal
+  useIOBottomSheetAutoresizableModal
 } from "../../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
@@ -53,19 +52,11 @@ const useTimelineDetailsBottomSheet = (
 ): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
-  const insets = useSafeAreaInsets();
   const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
   const isLoading = pot.isLoading(detailsPot);
   const isError = pot.isError(detailsPot);
 
-  const handleContentOnLayout = (event: LayoutChangeEvent) => {
-    const bottomPadding = 150 + insets.bottom;
-    const { height } = event.nativeEvent.layout;
-    setSnapPoint(bottomPadding + height);
-  };
-
   const [title, setTitle] = React.useState<string>();
-  const [snapPoint, setSnapPoint] = React.useState<number>(530);
 
   const titleComponent = pipe(
     title,
@@ -118,7 +109,7 @@ const useTimelineDetailsBottomSheet = (
 
   const modalFooter = (
     <ContentWrapper>
-      <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
+      <View style={styles.footer}>
         <ButtonOutline
           label={I18n.t("global.buttons.close")}
           accessibilityLabel={I18n.t("global.buttons.close")}
@@ -130,11 +121,13 @@ const useTimelineDetailsBottomSheet = (
     </ContentWrapper>
   );
 
-  const modal = useLegacyIOBottomSheetModal(
-    <View onLayout={handleContentOnLayout}>{getModalContent()}</View>,
-    titleComponent,
-    snapPoint,
-    modalFooter
+  const modal = useIOBottomSheetAutoresizableModal(
+    {
+      component: getModalContent(),
+      title: titleComponent,
+      footer: modalFooter
+    },
+    150
   );
 
   const present = (operation: OperationListDTO) =>

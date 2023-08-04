@@ -31,9 +31,7 @@ Array [
         javaScriptEnabled={true}
         messagingEnabled={true}
         onContentProcessDidTerminate={[Function]}
-        onError={[Function]}
         onHttpError={[Function]}
-        onLoadEnd={[Function]}
         onLoadingError={[Function]}
         onLoadingFinish={[Function]}
         onLoadingProgress={[Function]}
@@ -59,6 +57,7 @@ Array [
             },
           ]
         }
+        textInteractionEnabled={true}
         textZoom={100}
         useSharedProcessPool={true}
       />
@@ -255,7 +254,7 @@ Array [
             }
             uppercase={false}
           >
-            Accept
+            Accept and continue
           </Text>
         </View>
       </View>

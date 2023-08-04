@@ -1,13 +1,18 @@
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { View } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
+import { Banner } from "../../../components/Banner";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -21,6 +26,7 @@ import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/o
 import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
+import { mixpanelTrack } from "../../../mixpanel";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -35,13 +41,58 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const successBody = (emailAddress: string) => (
-  <Label weight={"Regular"} color={"bluegrey"} style={{ textAlign: "center" }}>
-    {I18n.t("wallet.outcomeMessage.payment.success.description1")}
-    <Label weight={"Bold"} color={"bluegrey"}>{`\n${emailAddress}\n`}</Label>
-    {I18n.t("wallet.outcomeMessage.payment.success.description2")}
-  </Label>
-);
+const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
+  const handleBannerPress = () => {
+    void mixpanelTrack("VOC_USER_EXIT", {
+      screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
+    });
+
+    return openAuthenticationSession(
+      "https://io.italia.it/diccilatua/ces-pagamento",
+      ""
+    );
+  };
+  const viewRef = React.useRef<View>(null);
+  return (
+    <View>
+      <Label
+        weight={"Regular"}
+        color={"bluegrey"}
+        style={{ textAlign: "center" }}
+      >
+        {I18n.t("wallet.outcomeMessage.payment.success.description1")}
+        <Label
+          weight={"Bold"}
+          color={"bluegrey"}
+        >{`\n${emailAddress}\n`}</Label>
+        {I18n.t("wallet.outcomeMessage.payment.success.description2")}
+      </Label>
+      <VSpacer size={16} />
+      <View
+        style={{
+          // required to make the banner the correct width
+          // since the InfoScreen component is reused in a lot of screens,
+          // updating that would be a breaking change
+          width: widthPercentageToDP("100%"),
+          paddingHorizontal: 32
+        }}
+      >
+        <Banner
+          color="neutral"
+          pictogramName="feedback"
+          size="big"
+          viewRef={viewRef}
+          title={I18n.t("wallet.outcomeMessage.payment.success.banner.title")}
+          content={I18n.t(
+            "wallet.outcomeMessage.payment.success.banner.content"
+          )}
+          action={I18n.t("wallet.outcomeMessage.payment.success.banner.action")}
+          onPress={handleBannerPress}
+        />
+      </View>
+    </View>
+  );
+};
 
 const successComponent = (emailAddress: string, amount?: string) => (
   <InfoScreenComponent
@@ -51,7 +102,7 @@ const successComponent = (emailAddress: string, amount?: string) => (
         ? I18n.t("payment.paidConfirm", { amount })
         : I18n.t("wallet.outcomeMessage.payment.success.title")
     }
-    body={successBody(emailAddress)}
+    body={<SuccessBody emailAddress={emailAddress} />}
   />
 );
 

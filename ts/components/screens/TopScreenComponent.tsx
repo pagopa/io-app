@@ -13,6 +13,7 @@ interface OwnProps {
   customRightIcon?: {
     iconName: IOIcons;
     onPress: () => void;
+    accessibilityLabel: string;
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   accessibilityEvents?: AccessibilityEvents;

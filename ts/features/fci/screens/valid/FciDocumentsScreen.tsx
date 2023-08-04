@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Platform, SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
@@ -19,7 +19,6 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
@@ -34,7 +33,6 @@ import {
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { Icon } from "../../../../components/core/icons/Icon";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
@@ -44,6 +42,7 @@ import {
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import IconButton from "../../../../components/ui/IconButton";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -203,19 +202,17 @@ const FciDocumentsScreen = () => {
   };
 
   const customGoBack: React.ReactElement = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
       onPress={() => {
         if (currentDoc <= 0) {
           dispatch(fciClearStateRequest());
         }
         navigation.goBack();
       }}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <Icon name="legChevronLeft" color="bluegrey" />
-    </TouchableDefaultOpacity>
+    />
   );
 
   const renderFooterButtons = () =>

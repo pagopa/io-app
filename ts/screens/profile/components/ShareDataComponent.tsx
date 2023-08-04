@@ -24,7 +24,7 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
 );
 
 const shareDataSecurityMoreLink =
-  "https://www.pagopa.it/static/781646994f1f8ddad2d95af3aaedac3d/Sicurezza-delle-informazioni_PagoPA-S.p.A..pdf";
+  "https://www.pagopa.it/it/politiche-per-la-sicurezza-delle-informazioni";
 export const ShareDataComponent = (): React.ReactElement => {
   const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <MarkdownBody

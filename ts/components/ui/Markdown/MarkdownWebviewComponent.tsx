@@ -7,7 +7,7 @@ import { StyleProp, ViewStyle } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { handleInternalLink } from "./handlers/internalLink";
+import { handleInternalLink } from "../../../utils/internalLink";
 import { handleLinkMessage, isIoInternalLink } from "./handlers/link";
 import { WebViewMessage } from "./types";
 

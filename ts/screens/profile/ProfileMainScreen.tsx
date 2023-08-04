@@ -1,13 +1,12 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Toast } from "native-base";
+import { List, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -55,7 +54,6 @@ import {
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
@@ -65,6 +63,9 @@ import { Divider } from "../../components/core/Divider";
 import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import ButtonSolid from "../../components/ui/ButtonSolid";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
+import AppVersion from "../../components/AppVersion";
+import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -75,12 +76,6 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 type State = {
   tapsOnAppVersion: number;
 };
-
-const styles = StyleSheet.create({
-  noRightPadding: {
-    paddingRight: 0
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -185,18 +180,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private versionListItem(title: string, onPress: () => void) {
-    return (
-      <ListItem style={styles.noRightPadding}>
-        <Pressable onPress={onPress}>
-          <Body numberOfLines={1} weight="SemiBold">
-            {title}
-          </Body>
-        </Pressable>
-      </ListItem>
-    );
-  }
-
   private onLogoutPress = () => {
     Alert.alert(
       I18n.t("profile.logout.alertTitle"),
@@ -262,6 +245,24 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.setDesignSystemEnabled(enabled);
   };
 
+  private onAddTestCard = () => {
+    if (!this.props.isPagoPATestEnabled) {
+      Alert.alert(
+        I18n.t("profile.main.addCard.warning.title"),
+        I18n.t("profile.main.addCard.warning.message"),
+        [
+          {
+            text: I18n.t("profile.main.addCard.warning.closeButton"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+    this.props.startAddTestCard();
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -307,6 +308,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId,
       notificationToken,
       sessionToken,
+      isFastLoginEnabled,
       walletToken,
       setDebugModeEnabled,
       isIdPayTestEnabled,
@@ -381,6 +383,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </>
         )}
         <Divider />
+        {/* New Wallet Playground */}
+        <ListItemNav
+          value={I18n.t("profile.main.walletPlayground.titleSection")}
+          accessibilityLabel={I18n.t(
+            "profile.main.walletPlayground.titleSection"
+          )}
+          onPress={() =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.WALLET_PLAYGROUND
+            })
+          }
+        />
+        <Divider />
         {/* Design System */}
         <ListItemNav
           value={I18n.t("profile.main.designSystem")}
@@ -390,6 +405,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               screen: ROUTES.DESIGN_SYSTEM
             })
           }
+        />
+        <Divider />
+        {/* Add Test Card CTA */}
+        <ListItemNav
+          value={I18n.t("profile.main.addCard.titleSection")}
+          accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
+          onPress={this.onAddTestCard}
         />
         <Divider />
         {this.developerListItem(
@@ -426,6 +448,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
+            {isDevEnv &&
+              isFastLoginEnabled &&
+              this.debugCopyListItem(
+                "Fast Login",
+                `${isFastLoginEnabled}`,
+                () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+              )}
+
             {isDevEnv &&
               sessionToken &&
               this.debugCopyListItem("Session token", sessionToken, () =>
@@ -597,10 +627,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             isLastItem={true}
           />
 
-          {this.versionListItem(
-            `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
-            this.onTapAppVersion
-          )}
+          {/* Show the app version + Enable debug mode */}
+          <AppVersion onPress={this.onTapAppVersion} />
 
           {/* Developers Section */}
           {(this.props.isDebugModeEnabled || isDevEnv) &&
@@ -649,6 +677,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isFastLoginEnabled: isFastLoginEnabledSelector(state),
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,
@@ -680,7 +709,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
   setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }))
+    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled })),
+  startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
 });
 
 export default connect(

@@ -34,19 +34,13 @@ export const lollipopFetch = (
   const retriableFetch = toRetriableFetch(maxRetries);
   return retriableFetch(
     async (input: RequestInfo | URL, init?: RequestInit) => {
-      try {
-        const lollipopInit = await lollipopRequestInit(
-          lollipopConfig,
-          keyInfo,
-          input,
-          init
-        );
-        return await timeoutFetch(input, lollipopInit);
-      } catch {
-        // We are not interested in tracking the error but
-        // to simply fallback to the standard timeout fetch
-      }
-      return await timeoutFetch(input, init);
+      const lollipopInit = await lollipopRequestInit(
+        lollipopConfig,
+        keyInfo,
+        input,
+        init
+      );
+      return await timeoutFetch(input, lollipopInit);
     }
   );
 };

@@ -44,19 +44,6 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
               <VSpacer size={16} />
             </>
           );
-        case TransactionStatusEnum.AUTHORIZED:
-          return (
-            <>
-              <Alert
-                viewRef={alertViewRef}
-                variant="info"
-                content={I18n.t(
-                  "idpay.initiative.operationDetails.discount.details.alerts.AUTHORIZED"
-                )}
-              />
-              <VSpacer size={16} />
-            </>
-          );
         default:
           return null;
       }
@@ -68,6 +55,12 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
     transaction.amount,
     O.fromNullable,
     O.map(amount => formatNumberAmount(amount, true)),
+    O.getOrElse(() => "-")
+  );
+
+  const businessName = pipe(
+    transaction.businessName,
+    O.fromNullable,
     O.getOrElse(() => "-")
   );
 
@@ -99,6 +92,21 @@ const TimelineDiscountTransactionDetailsComponent = (props: Props) => {
         {I18n.t("idpay.initiative.operationDetails.transaction.infoTitle")}
       </H4>
       <VSpacer size={4} />
+      <View style={styles.detailRow}>
+        <Body>
+          {I18n.t(
+            "idpay.initiative.operationDetails.discount.details.labels.business"
+          )}
+        </Body>
+        <HSpacer size={16} />
+        <Body
+          weight="SemiBold"
+          numberOfLines={2}
+          style={{ flex: 1, textAlign: "right" }}
+        >
+          {businessName}
+        </Body>
+      </View>
       <View style={styles.detailRow}>
         <Body>
           {I18n.t(
@@ -147,6 +155,7 @@ const styles = StyleSheet.create({
   detailRow: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 8
   }
 });

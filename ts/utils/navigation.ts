@@ -10,9 +10,6 @@ export const IO_FIMS_LINK_PREFIX = IO_FIMS_LINK_PROTOCOL + "//";
 
 export const IO_UNIVERSAL_LINK_PREFIX = "https://continua.io.pagopa.it";
 
-export const convertUrlToNavigationLink = (path: string) =>
-  path.replace(IO_INTERNAL_LINK_PREFIX, "/");
-
 /**
  * This variable should be used on every `gestureEnabled` setting
  * in the navigator. This prevents the gestures to be enabled on Android

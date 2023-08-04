@@ -38,7 +38,6 @@ import IconGiacenza from "./svg/IconGiacenza";
 import IconChat from "./svg/IconChat";
 import IconAgreement from "./svg/IconAgreement";
 import IconSave from "./svg/IconSave";
-import IconCompleted from "./svg/IconCompleted";
 import IconSuccess from "./svg/IconSuccess";
 import IconOk from "./svg/IconOk";
 import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
@@ -66,6 +65,7 @@ import IconProfile from "./svg/IconProfile";
 import IconProfileFilled from "./svg/IconProfileFilled";
 import IconProfileAlt from "./svg/IconProfileAlt";
 import IconStarFilled from "./svg/IconStarFilled";
+import IconArchive from "./svg/IconArchive";
 import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
@@ -92,6 +92,7 @@ import IconExternalLink from "./svg/IconExternalLink";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconCanceled from "./svg/IconCanceled";
 import IconErrorFilled from "./svg/IconErrorFilled";
+import IconLegalValue from "./svg/IconLegalValue";
 import IconChevronRight from "./svg/IconChevronRight";
 import IconChevronTop from "./svg/IconChevronTop";
 import IconChevronBottom from "./svg/IconChevronBottom";
@@ -131,8 +132,6 @@ import IconProductIOAppBlueBg from "./svg/IconProductIOAppBlueBg";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
 import IconSecurity from "./svg/IconSecurity";
-import LegIconSearch from "./svg/LegIconSearch";
-import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconRadioOn from "./svg/LegIconRadioOn";
 import LegIconRadioOff from "./svg/LegIconRadioOff";
 import LegIconCheckOn from "./svg/LegIconCheckOn";
@@ -140,6 +139,14 @@ import LegIconCheckOff from "./svg/LegIconCheckOff";
 import IconCloseMedium from "./svg/IconCloseMedium";
 import IconLight from "./svg/IconLight";
 import IconLightFilled from "./svg/IconLightFilled";
+import IconCheckTick from "./svg/IconCheckTick";
+import IconCheckTickBig from "./svg/IconCheckTickBig";
+import IconMerchant from "./svg/IconMerchant";
+import IconSystemSettingsAndroid from "./svg/IconSystemSettingsAndroid";
+import IconSystemSettingsiOS from "./svg/IconSystemSettingsiOS";
+import IconSystemToggleInstructions from "./svg/IconSystemToggleInstructions";
+import IconSystemAppsAndroid from "./svg/IconSystemAppsAndroid";
+import IconSystemNotificationsInstructions from "./svg/IconSystemNotificationsInstructions";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -153,6 +160,7 @@ export const IOIcons = {
   copy: IconCopy,
   selfCert: IconSelfCertification,
   institution: IconInstitution,
+  merchant: IconMerchant,
   hourglass: IconHourglass,
   shareiOs: IconShareiOs,
   shareAndroid: IconShareAndroid,
@@ -183,7 +191,8 @@ export const IOIcons = {
   docAttachPDF: IconDocumentAttachmentPDF,
   attachment: IconAttachment,
   add: IconAdd,
-  completed: IconCompleted,
+  checkTick: IconCheckTick,
+  checkTickBig: IconCheckTickBig,
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,
@@ -203,6 +212,7 @@ export const IOIcons = {
   infoFilled: IconInfoFilled,
   canceled: IconCanceled,
   errorFilled: IconErrorFilled,
+  legalValue: IconLegalValue,
   refund: IconRefund,
   reload: IconReload,
   history: IconHistory,
@@ -215,6 +225,7 @@ export const IOIcons = {
   profileAlt: IconProfileAlt /* io-titolare */,
   lightbulb: IconLightbulb,
   magicWand: IconMagicWand,
+  archive: IconArchive,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
   switchOff: IconSwitchOff,
@@ -229,15 +240,13 @@ export const IOIcons = {
   gallery: IconGallery,
   externalLink: IconExternalLink,
   cancel: IconCancel,
-  help: IconQuestion /* io-question */,
+  help: IconQuestion,
   search: IconSearch /* io-search */,
-  legSearch: LegIconSearch,
   chevronRight: IconChevronRight,
   chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
-  legChevronLeft: LegIconChevronLeft,
   closeLarge: IconCloseLarge /* io-close */,
   closeMedium: IconCloseMedium,
   closeSmall: IconCloseSmall,
@@ -278,7 +287,12 @@ export const IOIcons = {
   productPagoPA: IconProductPagoPA /* io-pagopa */,
   productIOAppBlueBg: IconProductIOAppBlueBg,
   light: IconLight,
-  lightFilled: IconLightFilled
+  lightFilled: IconLightFilled,
+  systemSettingsAndroid: IconSystemSettingsAndroid,
+  systemSettingsiOS: IconSystemSettingsiOS,
+  systemToggleInstructions: IconSystemToggleInstructions,
+  systemAppsAndroid: IconSystemAppsAndroid,
+  systemNotificationsInstructions: IconSystemNotificationsInstructions
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
@@ -473,3 +487,22 @@ export const IOProductIcons = {
 } as const;
 
 export type IOProductIcons = keyof typeof IOProductIcons;
+
+/* System */
+const {
+  systemSettingsAndroid,
+  systemSettingsiOS,
+  systemToggleInstructions,
+  systemAppsAndroid,
+  systemNotificationsInstructions
+} = IOIcons;
+
+export const IOSystemIcons = {
+  systemSettingsAndroid,
+  systemSettingsiOS,
+  systemToggleInstructions,
+  systemAppsAndroid,
+  systemNotificationsInstructions
+} as const;
+
+export type IOSystemIcons = keyof typeof IOSystemIcons;

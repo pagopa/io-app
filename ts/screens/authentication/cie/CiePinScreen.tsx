@@ -15,7 +15,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
@@ -42,6 +42,9 @@ import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 import { pinPukHelpUrl } from "../../../config";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -145,12 +148,18 @@ const CiePinScreen: React.FC<Props> = props => {
     setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
   }, [pinPadViewRef]);
 
+  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
+  const useCieUat = useSelector(isCieLoginUatEnabledSelector);
+
   return (
     <TopScreenComponent
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
       contextualHelp={getContextualHelp()}
       goBack={true}
-      headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
+      headerTitle={withTrailingPoliceCarLightEmojii(
+        I18n.t("authentication.cie.pin.pinCardHeader"),
+        useCieUat
+      )}
     >
       <ScrollView>
         <ScreenContentHeader
@@ -174,7 +183,11 @@ const CiePinScreen: React.FC<Props> = props => {
           />
           <VSpacer size={16} />
           <AdviceComponent
-            text={I18n.t("login.expiration_info")}
+            text={
+              isFastLoginFeatureFlagEnabled
+                ? I18n.t("login.expiration_info_FL")
+                : I18n.t("login.expiration_info")
+            }
             iconColor={"black"}
           />
         </View>

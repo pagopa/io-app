@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import mockedProfile from "../../../__mocks__/initializedProfile";
-import { Version } from "../../../../definitions/backend/Version";
 import {
   hasProfileEmail,
   isProfileEmailValidated,
@@ -9,6 +8,7 @@ import {
   profileEmailSelector,
   ProfileState
 } from "../profile";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("email profile selector", () => {
   const potProfile: ProfileState = pot.some(mockedProfile);
@@ -54,7 +54,12 @@ describe("email profile selector", () => {
 
   it("should return true when the user is in his first onboarding", () => {
     expect(
-      isProfileFirstOnBoarding({ ...potProfile.value, version: 0 as Version })
+      isProfileFirstOnBoarding({
+        ...potProfile.value,
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.LEGACY
+        }
+      })
     ).toStrictEqual(true);
   });
 

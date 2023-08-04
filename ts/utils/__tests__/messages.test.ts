@@ -16,7 +16,7 @@ import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
-  getCTA,
+  getMessageCTA,
   getMessagePaymentExpirationInfo,
   getRemoteLocale,
   getServiceCTA,
@@ -180,7 +180,7 @@ describe("getRemoteLocale", () => {
 
 describe("getCTA", () => {
   it("should have 2 valid CTA", () => {
-    const maybeCTAs = getCTA(messageWithContent);
+    const maybeCTAs = getMessageCTA(messageWithContent.content.markdown);
     test2CTA(
       maybeCTAs,
       "premi",
@@ -189,7 +189,7 @@ describe("getCTA", () => {
       "ioit://PROFILE_MAIN2"
     );
     setLocale("en" as Locales);
-    const maybeCTAsEn = getCTA(messageWithContent);
+    const maybeCTAsEn = getMessageCTA(messageWithContent.content.markdown);
     test2CTA(
       maybeCTAsEn,
       "go1",
@@ -201,7 +201,7 @@ describe("getCTA", () => {
 
   it("should return the italian CTA when the language is not supported", () => {
     setLocale("fr" as Locales);
-    const maybeCTAs = getCTA(messageWithContent);
+    const maybeCTAs = getMessageCTA(messageWithContent.content.markdown);
     test2CTA(
       maybeCTAs,
       "premi",
@@ -221,24 +221,12 @@ it:
 --- 
 some noise`;
 
-    const maybeCTA = getCTA({
-      ...messageWithContent,
-      content: {
-        ...messageWithContent.content,
-        markdown: CTA_1 as MessageBodyMarkdown
-      }
-    });
+    const maybeCTA = getMessageCTA(CTA_1 as MessageBodyMarkdown);
     expect(O.isNone(maybeCTA));
   });
 
   it("should not have a valid CTA", () => {
-    const maybeCTA = getCTA({
-      ...messageWithContent,
-      content: {
-        ...messageWithContent.content,
-        markdown: "nothing of nothing" as MessageBodyMarkdown
-      }
-    });
+    const maybeCTA = getMessageCTA("nothing of nothing" as MessageBodyMarkdown);
     expect(O.isNone(maybeCTA)).toBeTruthy();
   });
 
@@ -250,13 +238,7 @@ it:
         aa: "ioit://PROFILE_MAIN"
 --- 
 some noise`;
-    const maybeCTA = getCTA({
-      ...messageWithContent,
-      content: {
-        ...messageWithContent.content,
-        markdown: NO_CTA as MessageBodyMarkdown
-      }
-    });
+    const maybeCTA = getMessageCTA(NO_CTA as MessageBodyMarkdown);
     expect(O.isNone(maybeCTA)).toBeTruthy();
   });
 
@@ -265,14 +247,8 @@ some noise`;
       ...serviceMetadataBase,
       token_name: "myPortalToken" as ServiceMetadata["token_name"]
     };
-    const maybeCTAs = getCTA(
-      {
-        ...messageWithContent,
-        content: {
-          ...messageWithContent.content,
-          markdown: CTA_WEBVIEW as MessageBodyMarkdown
-        }
-      },
+    const maybeCTAs = getMessageCTA(
+      CTA_WEBVIEW as MessageBodyMarkdown,
       validServiceMetadata
     );
     expect(O.isSome(maybeCTAs)).toBeTruthy();
@@ -287,13 +263,7 @@ some noise`;
   });
 
   it("should not have a valid CTA since the frontmatter is malformed", () => {
-    const maybeCTAs = getCTA({
-      ...messageWithContent,
-      content: {
-        ...messageWithContent.content,
-        markdown: CTA_MALFORMED as MessageBodyMarkdown
-      }
-    });
+    const maybeCTAs = getMessageCTA(CTA_MALFORMED as MessageBodyMarkdown);
     expect(O.isSome(maybeCTAs)).toBeFalsy();
   });
 });

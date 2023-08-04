@@ -1,8 +1,5 @@
 import * as React from "react";
-import { View, Platform, StyleSheet, Pressable } from "react-native";
-import DeviceInfo from "react-native-device-info";
-
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
+import { StyleSheet, Pressable, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { useState } from "react";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -21,15 +18,7 @@ const itemBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   versionContainer: {
-    position: "absolute",
-    top: Platform.select({
-      ios:
-        8 + (isIphoneX() || DeviceInfo.hasNotch() ? getStatusBarHeight() : 0),
-      android: 0
-    }),
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000
@@ -57,7 +46,7 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const [showRootName, setShowRootName] = useState(true);
 
   return (
-    <View style={styles.versionContainer} pointerEvents="box-none">
+    <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
       <Pressable
         style={styles.versionText}
         onPress={() => setShowRootName(prevState => !prevState)}
@@ -74,7 +63,7 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
           </H5>
         </Pressable>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

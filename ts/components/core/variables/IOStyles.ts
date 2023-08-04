@@ -10,6 +10,8 @@ import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 
 interface IOVisualCostants {
   appMarginDefault: IOAppMargin;
+  // Header
+  headerHeight: number;
   // Dimensions
   avatarSizeSmall: number;
   avatarSizeMedium: number;
@@ -17,6 +19,7 @@ interface IOVisualCostants {
 
 export const IOVisualCostants: IOVisualCostants = {
   appMarginDefault: 24,
+  headerHeight: 56,
   avatarSizeSmall: 44,
   avatarSizeMedium: 66
 };
@@ -34,7 +37,7 @@ export const IOStyles = StyleSheet.create({
     alignItems: "center"
   },
   horizontalContentPadding: {
-    paddingHorizontal: themeVariables.contentPadding
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   },
   row: {
     flexDirection: "row"
@@ -92,8 +95,9 @@ const btnSizeLarge = 56;
 // NEW Design System
 const btnBorderRadius = 8;
 const btnSizeDefault = 48;
+export const buttonSolidHeight: number = btnSizeDefault;
 // TODO: Replace the number type with the new IOIconSizeScale
-const iconBtnSizeSmall: number = 24;
+export const iconBtnSizeSmall: number = 24;
 
 export const IOButtonLegacyStyles = StyleSheet.create({
   /* BaseButton, used in the:
@@ -221,6 +225,7 @@ interface IOListItemVisualParams {
   paddingVertical: IOSpacingScale;
   paddingHorizontal: IOAppMargin;
   iconMargin: IOSpacingScale;
+  actionMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
   chevronSize: IOIconSizeScale;
 }
@@ -229,6 +234,7 @@ export const IOListItemVisualParams: IOListItemVisualParams = {
   paddingVertical: 12,
   paddingHorizontal: IOVisualCostants.appMarginDefault,
   iconMargin: 16,
+  actionMargin: 16,
   iconSize: 24,
   chevronSize: 24
 };
@@ -304,6 +310,7 @@ interface IOSelectionListItemVisualParams {
   iconMargin: IOSpacingScale;
   iconSize: IOIconSizeScale;
   descriptionMargin: IOSpacer;
+  actionMargin: IOSpacer;
 }
 
 export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
@@ -312,7 +319,8 @@ export const IOSelectionListItemVisualParams: IOSelectionListItemVisualParams =
     paddingHorizontal: IOVisualCostants.appMarginDefault,
     iconMargin: 8,
     iconSize: 24,
-    descriptionMargin: 4
+    descriptionMargin: 4,
+    actionMargin: 8
   };
 
 export const IOSelectionListItemStyles = StyleSheet.create({

@@ -1,5 +1,5 @@
 const DESIGN_SYSTEM_ROUTES = {
-  MAIN: "DESIGN_SYSTEM_MAIN",
+  MAIN: { route: "DESIGN_SYSTEM_MAIN", title: "Design System" },
   FOUNDATION: {
     COLOR: { route: "DESIGN_SYSTEM_COLOR", title: "Colors" },
     TYPOGRAPHY: { route: "DESIGN_SYSTEM_TYPOGRAPHY", title: "Typography" },
@@ -14,15 +14,53 @@ const DESIGN_SYSTEM_ROUTES = {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },
     TEXT_FIELDS: { route: "DESIGN_SYSTEM_TEXT_FIELDS", title: "Text Fields" },
     LIST_ITEMS: { route: "DESIGN_SYSTEM_LIST_ITEMS", title: "List Items" },
-    BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badge" },
+    BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badges & Tags" },
     TOASTS: { route: "DESIGN_SYSTEM_TOASTS", title: "Toasts" },
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
     ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
     ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice & Banners" },
+    CARDS: { route: "DESIGN_SYSTEM_CARDS", title: "Cards" },
     BOTTOM_SHEET: {
       route: "DESIGN_SYSTEM_BOTTOM_SHEET",
       title: "Bottom Sheet"
+    },
+    TAB_NAVIGATION: {
+      route: "DESIGN_SYSTEM_TAB_NAVIGATION",
+      title: "Tab Navigation"
+    }
+  },
+  HEADERS: {
+    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" },
+    SECOND_LEVEL: { route: "DS_HEADER_2LEVEL", title: "Second Level" },
+    SECOND_LEVEL_SECTION_TITLE: {
+      route: "DS_HEADER_2LEVEL_SECTITLE",
+      title: "Second Level (w/ section title)"
+    }
+  },
+  SCREENS: {
+    GRADIENT_SCROLL: {
+      route: "GRADIENT_SCROLL",
+      title: "Gradient scroll + Actions"
+    },
+    OPERATION_RESULT: {
+      route: "DS_SCREEN_OPERATION_RESULT",
+      title: "Operation result"
+    }
+  },
+  DEBUG: {
+    SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
+    SAFE_AREA_CENTERED: {
+      route: "DS_SAFE_AREA_CENTERED",
+      title: "Native safe area (centered)"
+    },
+    EDGE_TO_EDGE_AREA: {
+      route: "DS_EDGE_TO_EDGE_AREA",
+      title: "Edge to edge area"
+    },
+    FULL_SCREEN_MODAL: {
+      route: "DS_FULLSCR_MODAL",
+      title: "Full screen modal"
     }
   },
   LEGACY: {

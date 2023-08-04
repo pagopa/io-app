@@ -51,6 +51,11 @@ export const IOColors = asIOColors({
   "turquoise-150": "#AAEEEF",
   "turquoise-100": "#C2F3F4",
   "turquoise-50": "#DBF9FA",
+  "hanPurple-850": "#1A0744",
+  "hanPurple-500": "#5517E3",
+  "hanPurple-250": "#CCB9F7",
+  "hanPurple-100": "#DDD1F9",
+  "hanPurple-50": "#EEE8FC",
   "error-850": "#761F1F",
   "error-600": "#D75252",
   "error-500": "#FE6666",
@@ -304,7 +309,7 @@ export const IOThemeLight: IOTheme = {
   "cardBorder-default": "grey-100",
   "icon-default": "grey-650",
   // Layout
-  "divider-default": "grey-100",
+  "divider-default": "grey-200",
   // Status
   errorIcon: "error-500",
   errorText: "error-850"
@@ -317,7 +322,6 @@ export const IOThemeDark: IOTheme = {
   "appBackground-secondary": "grey-850",
   "appBackground-tertiary": "grey-700",
   "interactiveElem-default": "blueIO-450",
-  "interactiveElem-pressed": "blueIO-600",
   "listItem-pressed": "grey-850",
   // Typography
   "textHeading-default": "grey-200",
@@ -399,8 +403,8 @@ Return the color value with RGBA format (RGB + Alpha transparency), starting fro
 @param opacity Opacity value that range from 0 to 1. Default value = 1.
  */
 /* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
-export const hexToRgba = (hexCode: string, opacity: number = 1) => {
-  const hex = hexCode.replace("#", "");
+export const hexToRgba = (hexCode: ColorValue, opacity: number = 1) => {
+  const hex = hexCode.toString().replace("#", "");
 
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);

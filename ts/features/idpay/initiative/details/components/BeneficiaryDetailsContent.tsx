@@ -10,6 +10,7 @@ import {
   InitiativeRewardTypeEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
+import { OnboardingStatusDTO } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -34,13 +35,14 @@ import {
 export type BeneficiaryDetailsProps = {
   initiativeDetails: InitiativeDTO;
   beneficiaryDetails: InitiativeDetailDTO;
+  onboardingStatus: OnboardingStatusDTO;
 };
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const { initiativeDetails, beneficiaryDetails } = props;
+  const { initiativeDetails, beneficiaryDetails, onboardingStatus } = props;
   const { initiativeId, initiativeName } = initiativeDetails;
 
   const ruleInfoBox = pipe(
@@ -62,28 +64,28 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   );
 
   const endDateString = pipe(
-    beneficiaryDetails.endDate,
+    initiativeDetails.endDate,
     O.fromNullable,
     O.map(formatDate("DD/MM/YYYY")),
     O.getOrElse(() => "-")
   );
 
   const rankingStartDateString = pipe(
-    beneficiaryDetails.rankingStartDate,
+    beneficiaryDetails.fruitionStartDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
   const rankingEndDateString = pipe(
-    beneficiaryDetails.rankingEndDate,
+    beneficiaryDetails.fruitionEndDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
   const rewardPercentageString = pipe(
-    beneficiaryDetails.refundRule?.accumulatedAmount?.refundThreshold,
+    beneficiaryDetails.rewardRule?.rewardValue,
     O.fromNullable,
     O.map(percentage => `${percentage}%`),
     O.getOrElse(() => "-")
@@ -98,6 +100,14 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     ),
     O.toUndefined
   );
+
+  const onboardingDateString = pipe(
+    onboardingStatus.onboardingOkDate,
+    O.fromNullable,
+    O.map(formatDate("DD MMM YYYY, hh:mm")),
+    O.getOrElse(() => "-")
+  );
+
   const typeDependantEntries = () => {
     switch (initiativeDetails.initiativeRewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
@@ -197,7 +207,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         rows={[
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
-            value: "-"
+            value: onboardingDateString
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),

@@ -33,12 +33,8 @@ export function* checkNotificationsPreferencesSaga(
     // since an existing user that has already opted-in may be running the
     // application on a new device. To enable the push receival, the system
     // permission must be asked explicitly and this is the first entry point
-    // where it makes sense to do so. On iOS, if the user denies the permission,
-    // the popup dialog does not appear anymore (on following application
-    // restarts).
-    // TODO when upgrading Android target SDK to 33+, check that the system does
-    // not show the dialog on following application restarts, if the user has
-    // initially denied the permission
+    // where it makes sense to do so. If the user denies the permission,
+    // the popup dialog does not appear anymore (on following application restarts).
     yield* call(requestNotificationPermissions);
 
     return;

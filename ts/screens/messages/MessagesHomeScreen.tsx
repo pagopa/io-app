@@ -6,7 +6,6 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
-import { createSelector } from "reselect";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
@@ -35,8 +34,7 @@ import {
   sectionStatusSelector
 } from "../../store/reducers/backendStatus";
 import {
-  allArchiveMessagesSelector,
-  allInboxMessagesSelector,
+  allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
 } from "../../store/reducers/entities/messages/allPaginated";
 import {
@@ -55,7 +53,7 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -86,11 +84,15 @@ const MessagesHomeScreen = ({
 
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
 
+  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
+
+  checkToShowWhatsNew();
 
   useEffect(() => {
     if (!latestMessageOperation) {
@@ -120,7 +122,6 @@ const MessagesHomeScreen = ({
   const { present, bottomSheet } = useMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
     isLollipopEnabled && O.isNone(publicKeyOption);
@@ -154,7 +155,7 @@ const MessagesHomeScreen = ({
   return (
     <TopScreenComponent
       accessibilityEvents={{
-        disableAccessibilityFocus: messageSectionStatusActive !== undefined
+        disableAccessibilityFocus: messageSectionStatusActive
       }}
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -163,6 +164,7 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
+      {autoResizableBottomSheet}
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}
@@ -219,12 +221,10 @@ const MessagesHomeScreen = ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
-  messageSectionStatusActive: sectionStatusSelector("messages")(state),
+  messageSectionStatusActive:
+    sectionStatusSelector("messages")(state) !== undefined,
   searchText: searchTextSelector(state),
-  searchMessages: createSelector(
-    [allInboxMessagesSelector, allArchiveMessagesSelector],
-    (inbox, archive) => inbox.concat(archive)
-  )(state),
+  searchMessages: allInboxAndArchivedMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration,
   latestMessageOperation: allPaginatedSelector(state).latestMessageOperation

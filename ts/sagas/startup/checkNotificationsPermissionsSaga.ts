@@ -6,7 +6,6 @@ import ROUTES from "../../navigation/routes";
 import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
 import { SagaCallReturnType } from "../../types/utils";
 import {
-  AuthorizationStatus,
   checkNotificationPermissions,
   requestNotificationPermissions
 } from "../../utils/notification";
@@ -17,13 +16,11 @@ export function* checkNotificationsPermissionsSaga() {
   > = yield* call(checkNotificationPermissions);
 
   if (!authorizationStatus) {
-    const {
-      authorizationStatus
-    }: SagaCallReturnType<typeof requestNotificationPermissions> = yield* call(
-      requestNotificationPermissions
-    );
+    const permissionStatus: SagaCallReturnType<
+      typeof requestNotificationPermissions
+    > = yield* call(requestNotificationPermissions);
 
-    if (authorizationStatus === AuthorizationStatus.Authorized) {
+    if (permissionStatus) {
       return;
     }
 
@@ -37,6 +34,7 @@ export function* checkNotificationsPermissionsSaga() {
     yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
       notificationsInfoScreenConsent
     );
+
     yield* call(
       NavigationService.dispatchNavigationAction,
       StackActions.popToTop()

@@ -6,7 +6,8 @@ import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOr
 import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
 import { defaultRetryingFetch } from "../../../utils/fetch";
-import { createClient, createLollipopClient } from "./mockedClients";
+import { createClient } from "../../../../definitions/fast_login/client";
+import { createMockNonceClient } from "./mockedClients";
 
 // fastLogin call
 export const performFastLogin = async (fastLoginClient: FastLoginClient) =>
@@ -24,20 +25,19 @@ export const createFastLoginClient = (
   keyInfo: KeyInfo = {},
   lollipopConfig: LollipopConfig
 ) =>
-  createLollipopClient({
+  createClient({
     baseUrl,
     fetchApi: lollipopFetch(lollipopConfig, keyInfo, 1)
   });
 
 // getNonce call
-
 export const performGetNonce = async (nonceClient: GetNonceClient) =>
   await nonceClient.getNonce({} as never);
 
 type GetNonceClient = ReturnType<typeof createNonceClient>;
 
 export const createNonceClient = (baseUrl: string) =>
-  createClient({
+  createMockNonceClient({
     baseUrl,
     fetchApi: defaultRetryingFetch()
   });

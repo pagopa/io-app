@@ -8,7 +8,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
 import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { Divider } from "../../../components/core/Divider";
 import { H4 } from "../../../components/core/typography/H4";
@@ -19,6 +19,8 @@ import {
 import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
 import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
 import { SwitchListItem } from "../../../components/ui/SwitchListItem";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
 const styles = StyleSheet.create({
   content: {
@@ -40,10 +42,15 @@ export const DSSelection = () => (
     {renderCheckboxLabel()}
     {/* CheckboxListItem */}
     {renderCheckboxListItem()}
+    {/* AnimatedMessageCheckbox */}
+    <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
+      Checkbox (Messages)
+    </H2>
+    <AnimatedMessageCheckboxShowroom />
+    {/* RadioListItem */}
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Radio
     </H2>
-    {/* RadioListItem */}
     <RadioListItemsShowroom />
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
@@ -216,6 +223,23 @@ const RadioListItemsShowroom = () => {
   );
 };
 
+const AnimatedMessageCheckboxShowroom = () => {
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <>
+      <DSComponentViewerBox name="AnimatedMessageCheckbox">
+        <View style={[IOStyles.row, IOStyles.alignCenter]}>
+          <AnimatedMessageCheckbox checked={isEnabled} />
+          <HSpacer size={24} />
+          <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        </View>
+      </DSComponentViewerBox>
+    </>
+  );
+};
+
 // SWITCH
 
 const renderAnimatedSwitch = () => (
@@ -241,21 +265,25 @@ const NativeSwitchShowroom = () => {
 
 type SwitchListItemSampleProps = Pick<
   React.ComponentProps<typeof SwitchListItem>,
-  "label" | "description" | "value"
+  "label" | "description" | "value" | "icon" | "action"
 >;
 
 const SwitchListItemSample = ({
   value,
   label,
-  description
+  description,
+  action,
+  icon
 }: SwitchListItemSampleProps) => {
   const [isEnabled, setIsEnabled] = useState(value);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
     <SwitchListItem
+      icon={icon}
       label={label}
       description={description}
+      action={action}
       value={isEnabled}
       onSwitchValueChange={toggleSwitch}
     />
@@ -282,10 +310,25 @@ const SwitchListItemShowroom = () => (
       />
       <Divider />
       <SwitchListItemSample
+        icon="coggle"
         label="Let's try with a loooong loooooong looooooong title + icon"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
+      />
+      <Divider />
+      <SwitchListItemSample
+        icon="coggle"
+        label="Title + Icon + Action"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+        action={{
+          label: "Scopri di più",
+          onPress: () => {
+            Alert.alert("Link pressed");
+          }
+        }}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="SwitchListItem, disabled">

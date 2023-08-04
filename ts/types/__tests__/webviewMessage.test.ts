@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { AlertContent, WebviewMessage } from "../WebviewMessage";
+import { AlertContent, ToastContent, WebviewMessage } from "../WebviewMessage";
 
 const validCloseModal = {
   type: "CLOSE_MODAL"
@@ -117,6 +117,61 @@ const invalidShowAlert3 = {
   type: "SHOW_ALERT"
 };
 
+const validSetTitle1 = {
+  type: "SET_TITLE",
+  en: "test",
+  it: "test"
+};
+
+const validSetTitle2 = {
+  type: "SET_TITLE",
+  en: "test"
+};
+
+const invalidSetTitle1 = {
+  type: "SET_TITLE"
+};
+
+const invalidSetTitle2 = {
+  type: "SET_TITLE",
+  en: {
+    title: "Test title"
+  }
+};
+
+const invalidSetTitle3 = {
+  type: "SET_TITLE",
+  it: {
+    title: "Test title"
+  }
+};
+
+const validShowToast1 = {
+  type: "SHOW_TOAST",
+  it: {
+    text: "Test text"
+  },
+  en: {
+    text: "Test text"
+  }
+};
+
+const invalidShowToast1 = {
+  type: "SHOW_TOAST",
+  it: {
+    text: "Test text"
+  }
+};
+
+const invalidShowToast2 = {
+  type: "SHOW_TOAST",
+  en: "Test text"
+};
+
+const invalidShowToast3 = {
+  type: "SHOW_TOAST"
+};
+
 const localeEN = "en";
 
 const localeIT = "it";
@@ -213,5 +268,50 @@ describe("WebviewMessage", () => {
 
   it("Should NOT recognize a valid Message for Show Alert event", () => {
     expect(E.isRight(WebviewMessage.decode(invalidShowAlert3))).toBeFalsy();
+  });
+
+  it("Should recognize a valid Message for Set Title event", () => {
+    expect(E.isRight(WebviewMessage.decode(validSetTitle1))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validSetTitle1[localeEN]))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validSetTitle1[localeIT]))).toBeTruthy();
+  });
+
+  it("Should recognize a valid Message for Set Title event", () => {
+    expect(E.isRight(WebviewMessage.decode(validSetTitle2))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validSetTitle2[localeEN]))).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Set Title event", () => {
+    expect(E.isLeft(WebviewMessage.decode(invalidSetTitle1))).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Set Title event", () => {
+    expect(E.isLeft(WebviewMessage.decode(invalidSetTitle2))).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Set Title event", () => {
+    expect(E.isLeft(WebviewMessage.decode(invalidSetTitle3))).toBeTruthy();
+  });
+
+  it("Should recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(validShowToast1))).toBeTruthy();
+    expect(
+      E.isRight(ToastContent.decode(validShowToast1[localeEN]))
+    ).toBeTruthy();
+    expect(
+      E.isRight(ToastContent.decode(validShowToast1[localeIT]))
+    ).toBeTruthy();
+  });
+
+  it("Should NOT recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(invalidShowToast1))).toBeFalsy();
+  });
+
+  it("Should NOT recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(invalidShowToast2))).toBeFalsy();
+  });
+
+  it("Should NOT recognize a valid Message for Show Toast event", () => {
+    expect(E.isRight(WebviewMessage.decode(invalidShowToast3))).toBeFalsy();
   });
 });
