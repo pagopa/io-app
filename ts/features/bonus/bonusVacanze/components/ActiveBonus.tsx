@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
@@ -12,7 +13,6 @@ import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
-import { Icon } from "../../../../components/core/icons/Icon";
 
 type Props = {
   bonus: BonusActivationWithQrCode;

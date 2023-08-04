@@ -8,9 +8,9 @@ import {
   StyleSheet
 } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
+import { Icon } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
-import { Icon } from "../../../components/core/icons/Icon";
 import AppHeader from "./../../../components/ui/AppHeader";
 
 type Props = {

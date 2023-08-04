@@ -1,11 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOIconSizeScaleCheckbox, Icon } from "@pagopa/io-app-design-system";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../TouchableDefaultOpacity";
 import { calculateSlop } from "../../accessibility";
 import { IOColors } from "../../variables/IOColors";
-import { IOIconSizeScaleCheckbox, Icon } from "../../icons/Icon";
 
 type Props = {
   // the value of the checkbox

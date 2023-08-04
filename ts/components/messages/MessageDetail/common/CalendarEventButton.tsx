@@ -12,6 +12,7 @@ import {
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon, IOIcons } from "@pagopa/io-app-design-system";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../../../i18n";
 import {
@@ -40,7 +41,6 @@ import ButtonDefaultOpacity from "../../../ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../helpers/withLightModalContext";
 import SelectCalendarModal from "../../../SelectCalendarModal";
 import { LightModalContextInterface } from "../../../ui/LightModal";
-import { Icon } from "../../../core/icons";
 import { HSpacer } from "../../../core/spacer/Spacer";
 
 type OwnProps = {
@@ -355,7 +355,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       >
         {/* This condition doesn't make sense. We should replace it using
         a different component (e.g. ButtonOutline) */}
-        <Icon name={iconName} color={disabled ? "white" : "blue"} />
+        <Icon name={iconName as IOIcons} color={disabled ? "white" : "blue"} />
         <HSpacer size={4} />
         <NBButtonText style={styles.marginTop1}>{reminderText}</NBButtonText>
       </ButtonDefaultOpacity>

@@ -3,6 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
+import { IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
@@ -30,7 +31,6 @@ import ZendeskItemPermissionComponent, {
   ItemPermissionProps
 } from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
-import { IOIconSizeScale, Icon } from "../../../components/core/icons/Icon";
 import { IOColors } from "../../../components/core/variables/IOColors";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {

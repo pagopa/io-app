@@ -1,8 +1,8 @@
+import { IOIcons } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import { RadioListItem } from "../../ui/RadioListItem";
 import { Divider } from "../Divider";
-import { IOIcons } from "../icons/Icon";
 
 export type NewRadioItem<T> = {
   id: T;

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import Switch from "../../ui/Switch";
 import { H4 } from "../../core/typography/H4";
 import { IOStyles } from "../../core/variables/IOStyles";
@@ -7,7 +8,6 @@ import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
 import ActivityIndicator from "../../ui/ActivityIndicator";
-import { Icon } from "../../core/icons/Icon";
 
 type Props = WithTestID<{
   label: string;

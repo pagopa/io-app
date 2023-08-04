@@ -1,4 +1,10 @@
-import { ButtonOutline as DSButtonOutline } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline as DSButtonOutline,
+  AnimatedIcon,
+  IOIconSizeScale,
+  IOIcons,
+  IconClassComponent
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
 import {
@@ -17,16 +23,10 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import { makeFontStyleObject } from "../core/fonts";
+import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { WithTestID } from "../../types/WithTestID";
-import { makeFontStyleObject } from "../core/fonts";
-import {
-  AnimatedIcon,
-  IOIconSizeScale,
-  IOIcons,
-  IconClassComponent
-} from "../core/icons/Icon";
 import { HSpacer } from "../core/spacer/Spacer";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
