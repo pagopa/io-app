@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import {
   Icon,
   IOIcons,
@@ -12,7 +11,8 @@ import {
   SVGIconProps,
   IOIconSizeScale,
   IOSystemIcons
-} from "../../../components/core/icons";
+} from "@pagopa/io-app-design-system";
+import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import {

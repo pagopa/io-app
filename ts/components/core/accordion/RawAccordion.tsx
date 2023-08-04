@@ -10,11 +10,11 @@ import {
   TouchableWithoutFeedback,
   UIManager
 } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { isAndroid } from "../../../utils/platform";
 import { IOStyles } from "../variables/IOStyles";
-import { Icon } from "../icons/Icon";
 
 // TODO: handle external initial open/closed state
 type Props = {

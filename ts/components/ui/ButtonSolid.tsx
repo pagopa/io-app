@@ -1,4 +1,9 @@
-import { ButtonSolid as DSButton } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid as DSButton,
+  IOIconSizeScale,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
 import { GestureResponderEvent, Pressable, StyleSheet } from "react-native";
@@ -14,7 +19,6 @@ import Animated, {
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
-import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer } from "../core/spacer/Spacer";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
@@ -23,6 +27,7 @@ import {
   IOButtonLegacyStyles,
   IOButtonStyles
 } from "../core/variables/IOStyles";
+
 export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
   label: string;

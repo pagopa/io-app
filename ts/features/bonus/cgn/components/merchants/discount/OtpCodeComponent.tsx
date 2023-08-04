@@ -3,6 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Otp } from "../../../../../../../definitions/cgn/Otp";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H5 } from "../../../../../../components/core/typography/H5";
@@ -12,7 +13,6 @@ import I18n from "../../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../../utils/environment";
 import { addEvery } from "../../../../../../utils/strings";
-import { Icon } from "../../../../../../components/core/icons";
 
 type ProgressConfig = {
   startPercentage: number;

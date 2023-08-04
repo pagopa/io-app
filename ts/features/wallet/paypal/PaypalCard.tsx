@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
 import paypalLogoExt from "../../../../img/wallet/payment-methods/paypal-logo.png";
 import { Body } from "../../../components/core/typography/Body";
@@ -13,7 +14,6 @@ import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import BaseCardComponent from "../component/card/BaseCardComponent";
 import { BrandImage } from "../component/card/BrandImage";
-import { Icon } from "../../../components/core/icons/Icon";
 
 type Props = {
   paypal: PayPalPaymentMethod;

@@ -1,4 +1,10 @@
-import { ButtonLink as DSButtonLink } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink as DSButtonLink,
+  AnimatedIcon,
+  IOIconSizeScale,
+  IOIcons,
+  IconClassComponent
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
 import {
@@ -19,14 +25,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import {
-  AnimatedIcon,
-  IOIconSizeScale,
-  IOIcons,
-  IconClassComponent
-} from "../core/icons/Icon";
+import { WithTestID } from "../../types/WithTestID";
 import { HSpacer } from "../core/spacer/Spacer";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { IOColors } from "../core/variables/IOColors";

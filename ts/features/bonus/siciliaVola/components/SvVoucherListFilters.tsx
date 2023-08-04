@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body, Container, Left, ListItem, Right } from "native-base";
 import { View, Keyboard, SafeAreaView, ScrollView } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import AppHeader from "../../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -26,7 +27,6 @@ import { H4 } from "../../../../components/core/typography/H4";
 import { svSetFilter } from "../store/actions/voucherList";
 import { FilterState } from "../store/reducers/voucherList/filters";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../components/core/icons";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
