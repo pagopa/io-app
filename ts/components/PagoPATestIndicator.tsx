@@ -3,9 +3,12 @@ import { StyleSheet, Text, View } from "react-native";
 import {
   IOColors,
   Icon,
+  hexToRgba,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
-import { debugItemBgColor, debugItemBorderColor } from "./DebugInfoOverlay";
+
+const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
+const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   indicatoWrapper: {

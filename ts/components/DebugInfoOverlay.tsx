@@ -20,8 +20,8 @@ import PagoPATestIndicator from "./PagoPATestIndicator";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
-export const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
-export const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
+const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
+const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   versionContainer: {
