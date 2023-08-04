@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
@@ -32,7 +33,6 @@ import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { LightModalContextInterface } from "../ui/LightModal";
-import { Icon } from "../core/icons";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;

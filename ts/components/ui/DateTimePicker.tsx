@@ -2,6 +2,7 @@ import * as React from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H5 } from "../core/typography/H5";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
@@ -9,7 +10,6 @@ import { formatDateAsLocal } from "../../utils/dates";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import I18n from "../../i18n";
 import { VSpacer } from "../core/spacer/Spacer";
-import { Icon } from "../core/icons";
 
 type Props = {
   date: Date | undefined;

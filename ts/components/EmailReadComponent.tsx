@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { profileEmailSelector } from "../store/reducers/profile";
@@ -14,7 +15,6 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import { Body } from "./core/typography/Body";
 import { VSpacer } from "./core/spacer/Spacer";
 import { H3 } from "./core/typography/H3";
-import { Icon } from "./core/icons/Icon";
 
 const styles = StyleSheet.create({
   flex: {

@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { Icon } from "@pagopa/io-app-design-system";
 import AmountIcon from "../../../../../img/features/payments/Amount.svg";
 import CalendarIcon from "../../../../../img/features/payments/calendar.svg";
 import NoticeIcon from "../../../../../img/features/payments/Giacenza.svg";
@@ -25,7 +26,6 @@ import {
 } from "../../../../utils/stringBuilder";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 import { getRecepientName } from "../../../../utils/strings";
-import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   row: {

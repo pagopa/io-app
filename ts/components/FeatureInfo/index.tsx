@@ -1,6 +1,6 @@
 import React from "react";
 import { GestureResponderEvent, View } from "react-native";
-import { Icon, IOIcons, IOIconSizeScale } from "../core/icons";
+import { Icon, IOIcons, IOIconSizeScale } from "@pagopa/io-app-design-system";
 import {
   Pictogram,
   IOPictograms,
