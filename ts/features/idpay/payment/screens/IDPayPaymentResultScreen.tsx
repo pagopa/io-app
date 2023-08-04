@@ -11,40 +11,36 @@ import {
   selectIsFailure
 } from "../xstate/selectors";
 
-/**
- * FIXME: this list is not definitive.
- * The final list will be available with IOBP-176
- */
 const mapFailureScreenProps: Record<
   PaymentFailure,
   OperationResultScreenContent
 > = {
   [PaymentFailureEnum.GENERIC]: {
-    pictogram: "umbrella",
+    pictogram: "umbrella", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
     subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body")
   },
   [PaymentFailureEnum.REJECTED]: {
-    pictogram: "error",
+    pictogram: "error", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.REJECTED.title"),
     subtitle: I18n.t("idpay.payment.result.failure.REJECTED.body")
   },
   [PaymentFailureEnum.EXPIRED]: {
-    pictogram: "timeout",
+    pictogram: "timeout", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
     subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body")
   },
   [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
-    pictogram: "error",
+    pictogram: "error", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
     subtitle: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.body")
   },
   [PaymentFailureEnum.AUTHORIZED]: {
-    pictogram: "completed",
+    pictogram: "completed", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.AUTHORIZED.title")
   },
   [PaymentFailureEnum.TOO_MANY_REQUESTS]: {
-    pictogram: "umbrella",
+    pictogram: "umbrella", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
     subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body")
   }
@@ -76,7 +72,7 @@ const IDPayPaymentResultScreen = () => {
   if (isCancelled) {
     return (
       <OperationResultScreenContent
-        pictogram="unrecognized"
+        pictogram="unrecognized" // FIXME: add correct pictogram (IOBP-176)
         title={I18n.t("idpay.payment.result.cancelled.title")}
         action={closeAction}
         testID="paymentCancelledScreenTestID"
@@ -86,7 +82,7 @@ const IDPayPaymentResultScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="completed"
+      pictogram="completed" // FIXME: add correct pictogram (IOBP-176)
       title={I18n.t("idpay.payment.result.success.title")}
       subtitle={I18n.t("idpay.payment.result.success.body")}
       action={closeAction}
