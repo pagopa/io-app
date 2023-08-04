@@ -3,6 +3,7 @@ import { useSelector } from "@xstate/react";
 import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -18,7 +19,6 @@ import {
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector
 } from "../xstate/selectors";
-import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   maxheight: {

@@ -16,6 +16,7 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { Icon } from "@pagopa/io-app-design-system";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -30,7 +31,6 @@ import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
 import { IOColors } from "../../core/variables/IOColors";
-import { Icon } from "../../core/icons/Icon";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import Logo, { cardIcons } from "./Logo";
 

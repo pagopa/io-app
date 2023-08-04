@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -30,7 +31,6 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodOnboardingCoBadgeParamsList } from "../navigation/params";
 import { walletAddCoBadgeStart } from "../store/actions";
-import { Icon } from "../../../../../components/core/icons/Icon";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {

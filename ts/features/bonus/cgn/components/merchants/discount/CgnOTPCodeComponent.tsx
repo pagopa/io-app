@@ -1,6 +1,7 @@
 import * as React from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
@@ -12,7 +13,6 @@ import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { Icon } from "../../../../../../components/core/icons/Icon";
 import { OtpCodeComponent } from "./OtpCodeComponent";
 
 const styles = StyleSheet.create({

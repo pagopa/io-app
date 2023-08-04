@@ -1,12 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import I18n from "../../../../i18n";
 import { getV2ErrorMainType } from "../../../../utils/payment";
 import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
-import { IOIcons } from "../../../../components/core/icons";
 
 type StatusContentProps = {
   viewRef: React.RefObject<View>;

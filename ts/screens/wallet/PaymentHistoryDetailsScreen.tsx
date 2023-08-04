@@ -4,6 +4,7 @@ import * as React from "react";
 import { Text as NBButtonText } from "native-base";
 import { View } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
@@ -61,7 +62,6 @@ import {
   zendeskPaymentStartOrigin
 } from "../../utils/supportAssistance";
 import { H2 } from "../../components/core/typography/H2";
-import { Icon } from "../../components/core/icons/Icon";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon, IOIcons, IOIconSizeScale } from "./core/icons";
+import { Icon, IOIcons, IOIconSizeScale } from "@pagopa/io-app-design-system";
 import type { IOColors } from "./core/variables/IOColors";
 import { IOStyles } from "./core/variables/IOStyles";
 import { HSpacer } from "./core/spacer/Spacer";

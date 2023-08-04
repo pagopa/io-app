@@ -6,9 +6,9 @@ import {
   View
 } from "react-native";
 import I18n from "i18n-js";
+import { Icon } from "@pagopa/io-app-design-system";
 import { getAppVersion } from "../utils/appVersion";
 import { WithTestID } from "../types/WithTestID";
-import { Icon } from "./core/icons";
 import { HSpacer } from "./core/spacer/Spacer";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";

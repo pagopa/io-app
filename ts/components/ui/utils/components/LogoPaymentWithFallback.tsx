@@ -1,8 +1,8 @@
+import { IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { IOIconSizeScale, Icon } from "../../../core/icons";
 import {
   IOLogoPaymentExtType,
   IOPaymentExtLogos,
