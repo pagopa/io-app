@@ -1,15 +1,22 @@
 import * as React from "react";
-import { StyleSheet, Pressable, SafeAreaView } from "react-native";
+import { StyleSheet, Pressable, SafeAreaView, View, Text } from "react-native";
 import { connect } from "react-redux";
 import { useState } from "react";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import {
+  HSpacer,
+  IOStyles,
+  Icon,
+  makeFontStyleObject
+} from "@pagopa/io-app-design-system";
 import { ReduxProps } from "../store/actions/types";
 import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
-import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
-import { H5 } from "./core/typography/H5";
+import { useIOSelector } from "../store/hooks";
+import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import { IOColors, hexToRgba } from "./core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -24,11 +31,33 @@ const styles = StyleSheet.create({
     zIndex: 1000
   },
   versionText: {
+    fontSize: 12,
+    color: IOColors["grey-850"],
+    ...makeFontStyleObject("SemiBold")
+  },
+  screenDebugText: {
+    fontSize: 12,
+    color: IOColors["grey-850"],
+    ...makeFontStyleObject("Regular")
+  },
+  versionTextWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     borderColor: itemBorderColor,
     borderWidth: 1,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
     borderRadius: 8,
     backgroundColor: bgColor
+  },
+  pagoPaTestText: {
+    letterSpacing: 0.2,
+    marginLeft: 4,
+    fontSize: 9,
+    textTransform: "uppercase",
+    color: IOColors["grey-850"],
+    ...makeFontStyleObject("SemiBold")
   },
   routeText: {
     borderColor: itemBorderColor,
@@ -41,26 +70,36 @@ const styles = StyleSheet.create({
   }
 });
 
-const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
+const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);
+  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
   return (
     <SafeAreaView style={styles.versionContainer} pointerEvents="box-none">
-      <Pressable
-        style={styles.versionText}
-        onPress={() => setShowRootName(prevState => !prevState)}
-      >
-        <H5 weight="SemiBold" color="bluegreyDark">{`v: ${appVersion}`}</H5>
-      </Pressable>
+      <View style={IOStyles.row}>
+        <Pressable
+          style={styles.versionTextWrapper}
+          onPress={() => setShowRootName(prevState => !prevState)}
+        >
+          <Text style={styles.versionText}>{`v. ${appVersion}`}</Text>
+        </Pressable>
+        {isPagoPATestEnabled && (
+          <>
+            <HSpacer size={4} />
+            <View style={styles.versionTextWrapper}>
+              <Icon name="productPagoPA" color="grey-850" size={20} />
+              <Text style={styles.pagoPaTestText}>Test</Text>
+            </View>
+          </>
+        )}
+      </View>
       {showRootName && (
         <Pressable
           style={styles.routeText}
           onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
         >
-          <H5 weight="Regular" color="bluegreyDark">
-            {props.screenNameDebug}
-          </H5>
+          <Text style={styles.screenDebugText}>{props.screenNameDebug}</Text>
         </Pressable>
       )}
     </SafeAreaView>
@@ -73,4 +112,4 @@ const mapStateToProps = (state: GlobalState) => ({
   screenNameDebug: currentRouteSelector(state)
 });
 
-export default connect(mapStateToProps)(VersionInfoOverlay);
+export default connect(mapStateToProps)(DebugInfoOverlay);

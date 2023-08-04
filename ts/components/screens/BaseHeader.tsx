@@ -18,7 +18,6 @@ import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -324,13 +323,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderAppLogo = () => {
-    const { isPagoPATestEnabled, primary, dark } = this.props;
+    const { primary, dark } = this.props;
 
-    const iconColor: IOColors = isPagoPATestEnabled
-      ? "aqua"
-      : primary || dark
-      ? "white"
-      : "blue";
+    const iconColor: IOColors = primary || dark ? "white" : "blue";
     return (
       <Left>
         <View
@@ -361,7 +356,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 

@@ -15,7 +15,7 @@ import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
-import VersionInfoOverlay from "./components/VersionInfoOverlay";
+import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import { testOverlayCaption } from "./config";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
@@ -101,7 +101,7 @@ class RootContainer extends React.PureComponent<Props> {
 
         <IONavigationContainer />
 
-        {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
+        {this.props.isDebugModeEnabled && <DebugInfoOverlay />}
         {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
             title={`🛠️ TEST VERSION 🛠️`}
