@@ -18,10 +18,6 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwWiaStateSelector } from "../../store/reducers/itwWia";
 import { itwWiaRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ItWalletError } from "../../utils/errors/itwErrors";
-import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
-import { Pictogram } from "../../../../components/core/pictograms";
-import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import {
@@ -33,6 +29,7 @@ import {
 import { pidDataMock } from "../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../utils/dates";
 import { isIos } from "../../../../utils/platform";
+import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
 
 /**
  * Delay in milliseconds to bypass the CIE authentication process.
@@ -70,39 +67,6 @@ const ItwActivationInfoAuthScreen = () => {
         fiscalCode: fiscalCode ?? pidDataMock.fiscalCode
       }
     });
-  };
-
-  /**
-   * Renders the loading spinner.
-   * @returns a loading spinner overlay
-   */
-  const LoadingView = () => <LoadingSpinnerOverlay isLoading={true} />;
-
-  /**
-   * Renders the error view.
-   */
-  const ErrorView = (error: ItWalletError) => {
-    const mappedError = mapRequirementsError(error);
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: navigation.goBack,
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={mappedError.title}
-          body={mappedError.body}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
   };
 
   /**
@@ -174,14 +138,18 @@ const ItwActivationInfoAuthScreen = () => {
   const RenderMask = () =>
     pot.fold(
       wia,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      err => ErrorView(err),
+      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingSpinnerOverlay isLoading />,
+      err => (
+        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      ),
       _ => <ContentView />,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      (_, err) => ErrorView(err)
+      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingSpinnerOverlay isLoading />,
+      (_, err) => (
+        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      )
     );
 
   return (

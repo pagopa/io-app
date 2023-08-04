@@ -25,11 +25,8 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwDecodePid } from "../../store/actions/credentials";
 import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
-import { ItWalletError } from "../../utils/errors/itwErrors";
-import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
-import { Pictogram } from "../../../../components/core/pictograms";
 import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecode";
+import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -52,39 +49,6 @@ const ItwPidPreviewScreen = () => {
   useOnFirstRender(() => {
     dispatch(itwDecodePid.request(pid));
   });
-
-  /**
-   * Renders the error view.
-   */
-  const ErrorView = (error: ItWalletError) => {
-    const mappedError = mapRequirementsError(error);
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: navigation.goBack,
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={mappedError.title}
-          body={mappedError.body}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
-  };
-
-  /**
-   * Renders the loading spinner.
-   * @returns a loading spinner overlay
-   */
-  const LoadingView = () => <LoadingSpinnerOverlay isLoading={true} />;
 
   /**
    * Renders the content of the screen if the PID is decoded.
@@ -141,7 +105,7 @@ const ItwPidPreviewScreen = () => {
     pipe(
       optionDecodedPid,
       O.fold(
-        () => <> </>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
+        () => <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />,
         decodedPid => <ContentView decodedPid={decodedPid} />
       )
     );
@@ -149,14 +113,18 @@ const ItwPidPreviewScreen = () => {
   const RenderMask = () =>
     pot.fold(
       decodedPidPot,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      err => ErrorView(err),
+      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingSpinnerOverlay isLoading />,
+      err => (
+        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      ),
       some => getDecodedPidOrErrorView(some.decodedPid),
-      () => <LoadingView />,
-      () => <LoadingView />,
-      (_, err) => ErrorView(err)
+      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingSpinnerOverlay isLoading />,
+      (_, err) => (
+        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      )
     );
 
   return (

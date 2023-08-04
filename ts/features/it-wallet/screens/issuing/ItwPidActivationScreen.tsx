@@ -12,9 +12,8 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { itwCredentialsAddPid } from "../../store/actions/credentials";
 import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycle";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import { Pictogram } from "../../../../components/core/pictograms";
 import { itwActivationCompleted } from "../../store/actions";
+import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
@@ -85,33 +84,10 @@ const ItwPidActivationScreen = () => {
     </>
   );
 
-  const ErrorView = () => {
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: navigation.goBack,
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={I18n.t("features.itWallet.generic.error.title")}
-          body={I18n.t("features.itWallet.generic.error.body")}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
-  };
-
   return isLoading ? (
     <LoadingScreen />
   ) : isError ? (
-    <ErrorView></ErrorView>
+    <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />
   ) : (
     <SuccessScreen />
   );

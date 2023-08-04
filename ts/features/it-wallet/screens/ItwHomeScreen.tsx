@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Pictogram } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
@@ -27,10 +26,7 @@ import { ItwParamsList } from "../navigation/params";
 import { itwDecodePid } from "../store/actions/credentials";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecode";
-import { ItWalletError } from "../utils/errors/itwErrors";
-import { mapRequirementsError } from "../utils/errors/itwErrorsMapping";
-import { InfoScreenComponent } from "../../fci/components/InfoScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import ItwErrorViewSingleBtn from "../components/ItwErrorViewSingleBtn";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -99,51 +95,28 @@ const ItwHomeScreen = () => {
     </View>
   );
 
-  /**
-   * Renders the error view.
-   */
-  const ErrorView = (error: ItWalletError) => {
-    const mappedError = mapRequirementsError(error);
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: navigation.goBack,
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={mappedError.title}
-          body={mappedError.body}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
-  };
-
   const RenderMask = () =>
     pot.fold(
       decodedPidPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => ErrorView(err),
+      err => (
+        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      ),
       some =>
         pipe(
           some.decodedPid,
           O.fold(
-            () => <> </>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
+            () => <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />,
             decodedPid => <ContentView decodedPid={decodedPid} />
           )
         ),
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => ErrorView(err)
+      (_, err) => (
+        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      )
     );
 
   return (
@@ -206,6 +179,5 @@ const ItwHomeScreen = () => {
       </ScrollView>
     </TopScreenComponent>
   );
-  <></>;
 };
 export default ItwHomeScreen;
