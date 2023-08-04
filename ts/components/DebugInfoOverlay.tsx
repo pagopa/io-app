@@ -6,7 +6,6 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   HSpacer,
   IOStyles,
-  Icon,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import { ReduxProps } from "../store/actions/types";
@@ -17,11 +16,12 @@ import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import { useIOSelector } from "../store/hooks";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { IOColors, hexToRgba } from "./core/variables/IOColors";
+import PagoPATestIndicator from "./PagoPATestIndicator";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
-const bgColor = hexToRgba(IOColors.white, 0.4);
-const itemBorderColor = hexToRgba(IOColors.black, 0.1);
+export const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
+export const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -45,27 +45,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: itemBorderColor,
+    borderColor: debugItemBorderColor,
     borderWidth: 1,
     paddingHorizontal: 4,
     borderRadius: 8,
-    backgroundColor: bgColor
-  },
-  pagoPaTestText: {
-    letterSpacing: 0.2,
-    marginLeft: 4,
-    fontSize: 9,
-    textTransform: "uppercase",
-    color: IOColors["grey-850"],
-    ...makeFontStyleObject("SemiBold")
+    backgroundColor: debugItemBgColor
   },
   routeText: {
-    borderColor: itemBorderColor,
+    borderColor: debugItemBorderColor,
     borderWidth: 1,
     borderRadius: 8,
     maxWidth: widthPercentageToDP(80),
     paddingHorizontal: 8,
-    backgroundColor: bgColor,
+    backgroundColor: debugItemBgColor,
     marginTop: 4
   }
 });
@@ -87,10 +79,7 @@ const DebugInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
         {isPagoPATestEnabled && (
           <>
             <HSpacer size={4} />
-            <View style={styles.versionTextWrapper}>
-              <Icon name="productPagoPA" color="grey-850" size={20} />
-              <Text style={styles.pagoPaTestText}>Test</Text>
-            </View>
+            <PagoPATestIndicator />
           </>
         )}
       </View>
