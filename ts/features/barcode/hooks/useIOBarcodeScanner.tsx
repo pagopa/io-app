@@ -80,6 +80,10 @@ export type IOBarcodeScanner = {
    * Opens the system settings screen to let user to change camera permission
    */
   openCameraSettings: () => Promise<void>;
+  /**
+   * Returns true if the device has a torch
+   */
+  hasTorch: boolean;
 };
 
 /**
@@ -156,6 +160,9 @@ export const useIOBarcodeScanner = ({
   const prevDisabled = usePrevious(disabled);
   const devices = useCameraDevices();
   const device = devices.back;
+
+  // Checks that the device has a torch
+  const hasTorch = !!device?.hasTorch;
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
@@ -307,7 +314,8 @@ export const useIOBarcodeScanner = ({
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch
   };
 };
 
