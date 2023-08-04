@@ -1,38 +1,39 @@
-import * as React from "react";
-import { useCallback } from "react";
 import {
-  StyleSheet,
-  Pressable,
-  GestureResponderEvent
-  // PixelRatio
-} from "react-native";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
-  interpolate,
-  Extrapolate,
-  interpolateColor,
-  useAnimatedProps
-} from "react-native-reanimated";
-import {
+  ButtonOutline as DSButtonOutline,
   AnimatedIcon,
   IOIconSizeScale,
   IOIcons,
   IconClassComponent
 } from "@pagopa/io-app-design-system";
-import { hexToRgba, IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
+import * as React from "react";
+import { useCallback } from "react";
 import {
-  IOButtonStyles,
-  IOButtonLegacyStyles
-} from "../core/variables/IOStyles";
+  GestureResponderEvent,
+  // PixelRatio
+  Pressable,
+  StyleSheet
+} from "react-native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  interpolateColor,
+  useAnimatedProps,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
 import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { HSpacer } from "../core/spacer/Spacer";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
+import {
+  IOButtonLegacyStyles,
+  IOButtonStyles
+} from "../core/variables/IOStyles";
 
 export type ButtonOutline = WithTestID<{
   color?: "primary" | "neutral" | "contrast" | "danger";
@@ -70,11 +71,6 @@ type ColorStates = {
 /*
 ░░░ COMPONENT CONFIGURATION ░░░
 */
-
-/* Delete the following block if you want to
-get rid of legacy variant */
-
-/* ◀ REMOVE_LEGACY_COMPONENT: Start */
 
 const mapLegacyColorStates: Record<
   NonNullable<ButtonOutline["color"]>,
@@ -163,97 +159,30 @@ const IOButtonLegacyStylesLocal = StyleSheet.create({
   }
 });
 
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
-
-const mapColorStates: Record<
-  NonNullable<ButtonOutline["color"]>,
-  ColorStates
-> = {
-  // Primary button
-  primary: {
-    border: {
-      default: IOColors["blueIO-500"],
-      pressed: IOColors["blueIO-600"],
-      disabled: IOColors["grey-200"]
-    },
-    background: {
-      default: hexToRgba(IOColors["blueIO-50"], 0),
-      pressed: hexToRgba(IOColors["blueIO-50"], 1),
-      disabled: "transparent"
-    },
-    label: {
-      default: IOColors["blueIO-500"],
-      pressed: IOColors["blueIO-600"],
-      disabled: IOColors["grey-700"]
-    }
-  },
-  // Neutral button
-  neutral: {
-    border: {
-      default: IOColors.grey,
-      pressed: IOColors.bluegrey,
-      disabled: IOColors.bluegreyLight
-    },
-    background: {
-      default: IOColors.white,
-      pressed: IOColors.greyUltraLight,
-      disabled: "transparent"
-    },
-    label: {
-      default: IOColors.bluegrey,
-      pressed: IOColors.bluegreyDark,
-      disabled: IOColors.grey
-    }
-  },
-  // Contrast button
-  contrast: {
-    border: {
-      default: IOColors.white,
-      pressed: IOColors.white,
-      disabled: IOColors["blueIO-200"]
-    },
-    background: {
-      default: hexToRgba(IOColors["blueIO-600"], 0),
-      pressed: IOColors["blueIO-600"],
-      disabled: "transparent"
-    },
-    label: {
-      default: IOColors.white,
-      pressed: IOColors.white,
-      disabled: IOColors["blueIO-200"]
-    }
-  },
-  // Danger button
-  danger: {
-    border: {
-      default: IOColors.red,
-      pressed: IOColors.red,
-      disabled: IOColors.bluegreyLight
-    },
-    background: {
-      default: hexToRgba(IOColors.red, 0),
-      pressed: hexToRgba(IOColors.red, 0.15),
-      disabled: "transparent"
-    },
-    label: {
-      default: IOColors.red,
-      pressed: IOColors.red,
-      disabled: IOColors.grey
-    }
-  }
-};
-
 const DISABLED_OPACITY = 0.5;
 
-const IOButtonStylesLocal = StyleSheet.create({
-  label: {
-    ...makeFontStyleObject("Regular", false, "ReadexPro")
-  },
-  buttonWithBorder: {
-    borderWidth: 2
-  }
-});
-
+/**
+ *
+ * The `ButtonOutline` component is a customizable outline-style button that provides the option to
+ * display a label and an optional icon. It supports animated scaling and color changes when pressed.
+ * Currently if the Design System is enabled, the component returns the ButtonOutline of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @property {string} color - The color of the button. Possible values are: "primary", "secondary", "success", "danger", "warning", "info", etc.
+ * @property {string} label - The label text displayed on the button.
+ * @property {boolean} small - If `true`, the button will be rendered with a smaller size.
+ * @property {boolean} fullWidth - If `true`, the button will occupy the full width of its container.
+ * @property {boolean} disabled - If `true`, the button will be disabled and not respond to user interactions.
+ * @property {string} icon - The name of the icon to be displayed on the button (optional).
+ * @property {string} iconPosition - The position of the icon relative to the label. Possible values are: "start" (before the label) or "end" (after the label).
+ * @property {function} onPress - The callback function to be executed when the button is pressed.
+ * @property {string} accessibilityLabel - An accessibility label for the button.
+ * @property {string} accessibilityHint - An accessibility hint for the button.
+ * @property {string} testID - A test identifier for the button, used for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ButtonOutline of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ButtonOutline = ({
   color = "primary",
   label,
@@ -283,43 +212,23 @@ ButtonOutline) => {
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
 
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const backgroundColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].background.default,
-            mapColorStates[color].background.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].background.default,
-            mapLegacyColorStates[color].background.pressed
-          ]
-        );
+    const backgroundColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].background.default,
+        mapLegacyColorStates[color].background.pressed
+      ]
+    );
 
-    const borderColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].border.default,
-            mapColorStates[color].border.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].border.default,
-            mapLegacyColorStates[color].border.pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
+    const borderColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].border.default,
+        mapLegacyColorStates[color].border.pressed
+      ]
+    );
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -339,25 +248,14 @@ ButtonOutline) => {
   const pressedColorLabelAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
 
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const labelColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].border.default,
-            mapColorStates[color].border.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].label.default,
-            mapLegacyColorStates[color].label.pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
+    const labelColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].label.default,
+        mapLegacyColorStates[color].label.pressed
+      ]
+    );
 
     return {
       color: labelColor
@@ -366,24 +264,14 @@ ButtonOutline) => {
 
   // Animate the <Icon> color prop
   const pressedColorIconAnimationStyle = useAnimatedProps(() => {
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const iconColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].label.default,
-            mapColorStates[color].label.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].label.default,
-            mapLegacyColorStates[color].label.pressed
-          ]
-        );
+    const iconColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].label.default,
+        mapLegacyColorStates[color].label.pressed
+      ]
+    );
     return { color: iconColor };
   });
 
@@ -402,7 +290,6 @@ ButtonOutline) => {
   // Icon size
   const iconSize: IOIconSizeScale = small ? 16 : 20;
 
-  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
@@ -484,89 +371,24 @@ ButtonOutline) => {
       </Animated.View>
     </Pressable>
   );
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewButton = () => (
-    <Pressable
+  return isDesignSystemEnabled ? (
+    <DSButtonOutline
+      label={label}
       accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
-      testID={testID}
       onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      accessible={true}
+      accessibilityHint={accessibilityHint}
+      testID={testID}
       disabled={disabled}
-      style={!fullWidth ? IOButtonStyles.dimensionsDefault : {}}
-    >
-      <Animated.View
-        style={[
-          IOButtonStyles.button,
-          IOButtonStylesLocal.buttonWithBorder,
-          iconPosition === "end" && { flexDirection: "row-reverse" },
-          small
-            ? IOButtonStyles.buttonSizeSmall
-            : IOButtonStyles.buttonSizeDefault,
-          disabled
-            ? {
-                backgroundColor: mapColorStates[color]?.background?.disabled,
-                borderColor: mapColorStates[color]?.border?.disabled,
-                opacity: DISABLED_OPACITY
-              }
-            : {
-                backgroundColor: mapColorStates[color]?.background?.default,
-                borderColor: mapColorStates[color]?.border.default
-              },
-          /* Prevent Reanimated from overriding background colors
-          if button is disabled */
-          !disabled && pressedAnimationStyle
-        ]}
-      >
-        {icon && (
-          <>
-            {!disabled ? (
-              <AnimatedIconClassComponent
-                name={icon}
-                animatedProps={pressedColorIconAnimationStyle}
-                color={mapColorStates[color]?.label?.default}
-              />
-            ) : (
-              <AnimatedIcon
-                name={icon}
-                color={mapColorStates[color]?.label?.disabled}
-              />
-            )}
-            <HSpacer size={8} />
-          </>
-        )}
-        <Animated.Text
-          style={[
-            IOButtonStylesLocal.label,
-            IOButtonStyles.label,
-            small
-              ? IOButtonStyles.labelSizeSmall
-              : IOButtonStyles.labelSizeDefault,
-            disabled
-              ? { color: mapColorStates[color]?.label?.disabled }
-              : { color: mapColorStates[color]?.label?.default },
-            !disabled && pressedColorLabelAnimationStyle
-          ]}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          /* A11y-related props:
-          DON'T UNCOMMENT THEM */
-          /* allowFontScaling
-          maxFontSizeMultiplier={1.3} */
-        >
-          {label}
-        </Animated.Text>
-      </Animated.View>
-    </Pressable>
+      color={color}
+      fullWidth={fullWidth}
+      small={small}
+      icon={icon}
+      iconPosition={iconPosition}
+    />
+  ) : (
+    <LegacyButton />
   );
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewButton /> here,
-  without the following condition */
-  return isDesignSystemEnabled ? <NewButton /> : <LegacyButton />;
 };
 
 export default ButtonOutline;

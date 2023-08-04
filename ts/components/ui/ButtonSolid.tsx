@@ -1,32 +1,32 @@
+import {
+  ButtonSolid as DSButton,
+  IOIconSizeScale,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
-import {
-  StyleSheet,
-  Pressable,
-  GestureResponderEvent
-  // PixelRatio
-} from "react-native";
+import { GestureResponderEvent, Pressable, StyleSheet } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
-  interpolate,
   Extrapolate,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
-import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { BaseTypography } from "../core/typography/BaseTypography";
-import {
-  IOButtonStyles,
-  IOButtonLegacyStyles
-} from "../core/variables/IOStyles";
-import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { WithTestID } from "../../types/WithTestID";
 import { HSpacer } from "../core/spacer/Spacer";
+import { BaseTypography } from "../core/typography/BaseTypography";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors } from "../core/variables/IOColors";
+import {
+  IOButtonLegacyStyles,
+  IOButtonStyles
+} from "../core/variables/IOStyles";
 
 export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
@@ -56,11 +56,6 @@ type ColorStates = {
 /*
 ░░░ COMPONENT CONFIGURATION ░░░
 */
-
-/* Delete the following block if you want to
-get rid of legacy variant */
-
-/* ◀ REMOVE_LEGACY_COMPONENT: Start */
 
 const mapLegacyColorStates: Record<
   NonNullable<ButtonSolid["color"]>,
@@ -103,49 +98,29 @@ const legacyStyles = StyleSheet.create({
   }
 });
 
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
-
-// Disabled state
-const colorPrimaryButtonDisabled: IOColors = "grey-200";
-const DISABLED_OPACITY = 0.5;
-
-const styles = StyleSheet.create({
-  backgroundDisabled: {
-    backgroundColor: IOColors[colorPrimaryButtonDisabled],
-    opacity: DISABLED_OPACITY
-  }
-});
-
-const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
-  // Primary button
-  primary: {
-    default: IOColors["blueIO-500"],
-    pressed: IOColors["blueIO-600"],
-    label: {
-      default: "white",
-      disabled: "grey-700"
-    }
-  },
-  // Danger button
-  danger: {
-    default: IOColors["error-850"],
-    pressed: IOColors["error-600"],
-    label: {
-      default: "white",
-      disabled: "grey-700"
-    }
-  },
-  // Contrast button
-  contrast: {
-    default: IOColors.white,
-    pressed: IOColors["blueIO-50"],
-    label: {
-      default: "blueIO-500",
-      disabled: "grey-700"
-    }
-  }
-};
-
+/**
+ * ButtonSolid Component
+ *
+ * The `ButtonSolid` component is a reusable button component that provides a solid-colored button
+ * with customizable properties, such as color, label, icon, size, and press animations.
+ * Currently if the Design System is enabled, the component returns the Button of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @property {string} color - The color of the button. Possible values are: "primary", "secondary", "success", "danger", "warning", "info", etc.
+ * @property {string} label - The label text displayed on the button.
+ * @property {boolean} small - If `true`, the button will be rendered with a smaller size.
+ * @property {boolean} fullWidth - If `true`, the button will occupy the full width of its container.
+ * @property {boolean} disabled - If `true`, the button will be disabled and not respond to user interactions.
+ * @property {string} icon - The name of the icon to be displayed on the button.
+ * @property {string} iconPosition - The position of the icon relative to the label. Possible values are: "start" (before the label) or "end" (after the label).
+ * @property {function} onPress - The callback function to be executed when the button is pressed.
+ * @property {string} accessibilityLabel - An accessibility label for the button.
+ * @property {string} accessibilityHint - An accessibility hint for the button.
+ * @property {string} testID - A test identifier for the button, used for testing purposes.
+ *
+ * @deprecated Use of this component is discouraged. It is being replaced by the Button of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ButtonSolid = ({
   color = "primary",
   label,
@@ -175,22 +150,11 @@ ButtonSolid) => {
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
 
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const bgColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [mapColorStates[color].default, mapColorStates[color].pressed]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].default,
-            mapLegacyColorStates[color].pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
+    const bgColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [mapLegacyColorStates[color].default, mapLegacyColorStates[color].pressed]
+    );
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -220,14 +184,9 @@ ButtonSolid) => {
     ? mapLegacyColorStates[color]?.label?.disabled
     : mapLegacyColorStates[color]?.label?.default;
 
-  const foregroundColor: IOColors = disabled
-    ? mapColorStates[color]?.label?.disabled
-    : mapColorStates[color]?.label?.default;
-
   // Icon size
   const iconSize: IOIconSizeScale = small ? 16 : 20;
 
-  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
@@ -285,70 +244,23 @@ ButtonSolid) => {
   );
   /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewButton = () => (
-    <Pressable
+  return isDesignSystemEnabled ? (
+    <DSButton
+      label={label}
       accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
-      testID={testID}
       onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      accessible={true}
+      accessibilityHint={accessibilityHint}
+      color={color}
       disabled={disabled}
-      style={!fullWidth ? IOButtonStyles.dimensionsDefault : {}}
-    >
-      <Animated.View
-        style={[
-          IOButtonStyles.button,
-          iconPosition === "end" && { flexDirection: "row-reverse" },
-          small
-            ? IOButtonStyles.buttonSizeSmall
-            : IOButtonStyles.buttonSizeDefault,
-          disabled
-            ? styles.backgroundDisabled
-            : { backgroundColor: mapColorStates[color]?.default },
-          /* Prevent Reanimated from overriding background colors
-          if button is disabled */
-          !disabled && pressedAnimationStyle
-        ]}
-      >
-        {icon && (
-          <>
-            {/* If 'iconPosition' is set to 'end', we use 
-            reverse flex property to invert the position */}
-            <Icon name={icon} size={iconSize} color={foregroundColor} />
-            {/* Once we have support for 'gap' property,
-            we can get rid of that spacer */}
-            <HSpacer size={8} />
-          </>
-        )}
-        <BaseTypography
-          font="ReadexPro"
-          weight={"Regular"}
-          color={foregroundColor}
-          style={[
-            IOButtonStyles.label,
-            small
-              ? IOButtonStyles.labelSizeSmall
-              : IOButtonStyles.labelSizeDefault
-          ]}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          /* A11y-related props:
-          DON'T UNCOMMENT THEM */
-          /* allowFontScaling
-          maxFontSizeMultiplier={1.3} */
-        >
-          {label}
-        </BaseTypography>
-      </Animated.View>
-    </Pressable>
+      fullWidth={fullWidth}
+      icon={icon}
+      iconPosition={iconPosition}
+      small={small}
+      testID={testID}
+    />
+  ) : (
+    <LegacyButton />
   );
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewButton /> here,
-  without the following condition */
-  return isDesignSystemEnabled ? <NewButton /> : <LegacyButton />;
 };
 
 export default ButtonSolid;

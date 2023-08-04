@@ -1,35 +1,36 @@
-import * as React from "react";
-import { useCallback } from "react";
 import {
-  StyleSheet,
-  Pressable,
-  GestureResponderEvent
-  // PixelRatio
-} from "react-native";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
-  interpolate,
-  Extrapolate,
-  interpolateColor,
-  useAnimatedProps
-} from "react-native-reanimated";
-import {
+  ButtonLink as DSButtonLink,
   AnimatedIcon,
   IOIconSizeScale,
   IOIcons,
   IconClassComponent
 } from "@pagopa/io-app-design-system";
-import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOButtonStyles } from "../core/variables/IOStyles";
+import * as React from "react";
+import { useCallback } from "react";
+import {
+  GestureResponderEvent,
+  // PixelRatio
+  Pressable,
+  StyleSheet
+} from "react-native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  interpolateColor,
+  useAnimatedProps,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
+} from "react-native-reanimated";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { HSpacer } from "../core/spacer/Spacer";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors } from "../core/variables/IOColors";
+import { IOButtonStyles } from "../core/variables/IOStyles";
 
 export type ButtonLink = WithTestID<{
   color?: "primary";
@@ -57,11 +58,6 @@ type ColorStates = {
 ░░░ COMPONENT CONFIGURATION ░░░
 */
 
-/* Delete the following block if you want to
-get rid of legacy variant */
-
-/* ◀ REMOVE_LEGACY_COMPONENT: Start */
-
 const mapLegacyColorStates: Record<
   NonNullable<ButtonLink["color"]>,
   ColorStates
@@ -83,8 +79,6 @@ const IOButtonLegacyStylesLocal = StyleSheet.create({
   }
 });
 
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
-
 const mapColorStates: Record<NonNullable<ButtonLink["color"]>, ColorStates> = {
   // Primary button
   primary: {
@@ -98,13 +92,27 @@ const mapColorStates: Record<NonNullable<ButtonLink["color"]>, ColorStates> = {
 
 const DISABLED_OPACITY = 0.5;
 
-const IOButtonStylesLocal = StyleSheet.create({
-  label: {
-    fontSize: 16,
-    ...makeFontStyleObject("Regular", false, "ReadexPro")
-  }
-});
-
+/**
+ *
+ * The `ButtonLink` component is a customizable link-style button that provides an extended outline style,
+ * allowing the display of a label and an optional icon. It supports animated scaling and color changes
+ * when pressed.
+ * Currently if the Design System is enabled, the component returns the ButtonLink of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @property {string} color - The color of the button. Possible values are: "primary", "secondary", "success", "danger", "warning", "info", etc.
+ * @property {string} label - The label text displayed on the button.
+ * @property {boolean} disabled - If `true`, the button will be disabled and not respond to user interactions.
+ * @property {string} icon - The name of the icon to be displayed on the button (optional).
+ * @property {string} iconPosition - The position of the icon relative to the label. Possible values are: "start" (before the label) or "end" (after the label).
+ * @property {function} onPress - The callback function to be executed when the button is pressed.
+ * @property {string} accessibilityLabel - An accessibility label for the button.
+ * @property {string} accessibilityHint - An accessibility hint for the button.
+ * @property {string} testID - A test identifier for the button, used for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ButtonLink of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ButtonLink = ({
   color = "primary",
   label,
@@ -148,25 +156,14 @@ ButtonLink) => {
   const pressedColorLabelAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
 
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const labelColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].label.default,
-            mapColorStates[color].label.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].label.default,
-            mapLegacyColorStates[color].label.pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
+    const labelColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].label.default,
+        mapLegacyColorStates[color].label.pressed
+      ]
+    );
 
     return {
       color: labelColor
@@ -175,25 +172,14 @@ ButtonLink) => {
 
   // Animate the <Icon> color prop
   const pressedColorIconAnimationStyle = useAnimatedProps(() => {
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const iconColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].label.default,
-            mapColorStates[color].label.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].label.default,
-            mapLegacyColorStates[color].label.pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
+    const iconColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].label.default,
+        mapLegacyColorStates[color].label.pressed
+      ]
+    );
 
     return { color: iconColor };
   });
@@ -213,7 +199,7 @@ ButtonLink) => {
   // Icon size
   const iconSize: IOIconSizeScale = 24;
 
-  return (
+  const LegacyButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
@@ -222,6 +208,7 @@ ButtonLink) => {
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      onTouchEnd={onPressOut}
       accessible={true}
       disabled={disabled}
       hitSlop={{ top: 14, right: 24, bottom: 14, left: 24 }}
@@ -243,11 +230,7 @@ ButtonLink) => {
               <AnimatedIconClassComponent
                 name={icon}
                 animatedProps={pressedColorIconAnimationStyle}
-                color={
-                  isDesignSystemEnabled
-                    ? mapColorStates[color]?.label?.default
-                    : mapLegacyColorStates[color]?.label?.default
-                }
+                color={mapLegacyColorStates[color]?.label?.default}
                 size={iconSize}
               />
             ) : (
@@ -262,9 +245,7 @@ ButtonLink) => {
         )}
         <Animated.Text
           style={[
-            isDesignSystemEnabled
-              ? IOButtonStylesLocal.label
-              : IOButtonLegacyStylesLocal.label,
+            IOButtonLegacyStylesLocal.label,
             disabled
               ? { color: mapColorStates[color]?.label?.disabled }
               : { color: mapColorStates[color]?.label?.default },
@@ -281,6 +262,21 @@ ButtonLink) => {
         </Animated.Text>
       </Animated.View>
     </Pressable>
+  );
+  return isDesignSystemEnabled ? (
+    <DSButtonLink
+      label={label}
+      onPress={onPress}
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
+      color={color}
+      disabled={disabled}
+      icon={icon}
+      iconPosition={iconPosition}
+      testID={testID}
+    />
+  ) : (
+    <LegacyButton />
   );
 };
 

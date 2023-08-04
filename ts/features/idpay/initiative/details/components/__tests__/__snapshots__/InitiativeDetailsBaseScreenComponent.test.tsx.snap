@@ -546,11 +546,6 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                     onResponderTerminate={[Function]}
                                                     onResponderTerminationRequest={[Function]}
                                                     onStartShouldSetResponder={[Function]}
-                                                    style={
-                                                      Object {
-                                                        "alignSelf": "flex-start",
-                                                      }
-                                                    }
                                                     testID="back-button"
                                                   >
                                                     <View
@@ -682,11 +677,6 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                     onResponderTerminate={[Function]}
                                                     onResponderTerminationRequest={[Function]}
                                                     onStartShouldSetResponder={[Function]}
-                                                    style={
-                                                      Object {
-                                                        "alignSelf": "flex-start",
-                                                      }
-                                                    }
                                                   >
                                                     <View
                                                       style={

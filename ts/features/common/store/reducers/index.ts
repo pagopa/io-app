@@ -26,6 +26,12 @@ import {
   whatsNewPersistor,
   WhatsNewState
 } from "../../../whatsnew/store/reducers";
+
+import {
+  cieLoginReducer,
+  CieLoginState
+} from "../../../cieLogin/store/reducers";
+
 import walletV3Reducer, {
   WalletV3State
 } from "../../../walletV3/common/store/reducers";
@@ -34,6 +40,7 @@ type LoginFeaturesState = {
   testLogin: TestLoginState;
   nativeLogin: NativeLoginState;
   fastLogin: FastLoginState;
+  cieLogin: CieLoginState;
 };
 
 export type FeaturesState = {
@@ -58,7 +65,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
-    fastLogin: fastLoginReducer
+    fastLogin: fastLoginReducer,
+    cieLogin: cieLoginReducer
   })
 });
 
