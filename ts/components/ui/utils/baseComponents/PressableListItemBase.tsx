@@ -9,6 +9,18 @@ export type PressableBaseProps = WithTestID<{
   accessibilityLabel?: string;
   onPress?: () => void;
 }>;
+
+/**
+ * A base component for creating pressable list items with animation support.
+ *
+ * @param {string} accessibilityLabel - An optional label for accessibility.
+ * @param {function} onPress - The function to be executed when the item is pressed.
+ * @param {string} testID - An optional test identifier for testing purposes.
+ * @param {React.ReactNode} children - The content to be rendered within the list item.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the PressableListItemBase of the @pagopa/io-app-design-system library.
+ *
+ */
 export const PressableListItemBase = ({
   onPress,
   testID,
