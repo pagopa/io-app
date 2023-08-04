@@ -1,11 +1,17 @@
+import { 
+  Alert as DSAlert,
+  IOIconSizeScale,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
+import React, { useCallback } from "react";
 import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
-  View,
-  Text
+  Text,
+  View
 } from "react-native";
-import React, { useCallback } from "react";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -14,24 +20,22 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
+import { makeFontStyleObject } from "../core/fonts";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { Label } from "../core/typography/Label";
+import { NewH4 } from "../core/typography/NewH4";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import {
   IOColors,
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../core/variables/IOColors";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
-import { NewH4 } from "../core/typography/NewH4";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { makeFontStyleObject } from "../core/fonts";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-
+import { IOStyles } from "../core/variables/IOStyles";
 const iconSize: IOIconSizeScale = 24;
 
 const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
@@ -49,16 +53,10 @@ const styles = StyleSheet.create({
   spacingFullWidth: {
     padding: spacingFullWidth
   },
-  label: {
-    fontSize: 16,
-    ...makeFontStyleObject("Regular", false, "ReadexPro")
-  },
-  /* REMOVE_LEGACY_COMPONENT: Start ▶ */
   labelLegacy: {
     fontSize: 16,
     ...makeFontStyleObject("Bold", false, "TitilliumWeb")
   }
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 });
 
 type AlertProps = WithTestID<{
@@ -90,7 +88,6 @@ type VariantStates = {
 };
 
 // COMPONENT CONFIGURATION
-
 const mapVariantStates: Record<NonNullable<Alert["variant"]>, VariantStates> = {
   error: {
     icon: "errorFilled",
@@ -114,6 +111,16 @@ const mapVariantStates: Record<NonNullable<Alert["variant"]>, VariantStates> = {
   }
 };
 
+/**
+ *
+ * Displays an alert with various variants (error, warning, info, success) and an optional action.
+ * Currently if the Design System is enabled, the component returns the Alert of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ * @param {Alert} props The component props.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the Alert of the @pagopa/io-app-design-system library.
+ *
+ */
 export const Alert = ({
   viewRef,
   variant,
@@ -187,7 +194,7 @@ export const Alert = ({
             <VSpacer size={8} />
             <Text
               style={[
-                isDesignSystemEnabled ? styles.label : styles.labelLegacy,
+                styles.labelLegacy,
                 { color: IOColors[mapVariantStates[variant].foreground] }
               ]}
               numberOfLines={1}
@@ -245,5 +252,22 @@ export const Alert = ({
     </Pressable>
   );
 
-  return action ? <PressableButton /> : <StaticComponent />;
+  return isDesignSystemEnabled ? (
+    <DSAlert
+      viewRef={viewRef}
+      variant={variant}
+      testID={testID}
+      title={title}
+      content={content}
+      action={action}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      onPress={onPress!}
+      fullWidth={fullWidth}
+      accessibilityHint={accessibilityHint}
+    />
+  ) : action ? (
+    <PressableButton />
+  ) : (
+    <StaticComponent />
+  );
 };
