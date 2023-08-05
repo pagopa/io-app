@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { InvokeCreator, Receiver, Sender } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
@@ -66,11 +66,13 @@ const createServicesImplementation = (
         ({ status, value }) => {
           switch (status) {
             case 200:
+              // Every time we enroll an iban to an initiative, BE register it as a new iban
+              // so we need to filter the list to avoid duplicates
+              // This workaround will be removed when BE will fix the issue
               const uniqueIbanList = value.ibanList.filter(
                 (iban, index, self) =>
                   index === self.findIndex(t => t.iban === iban.iban)
               );
-
               return Promise.resolve({ ibanList: uniqueIbanList });
             case 401:
               return Promise.reject(InitiativeFailureType.SESSION_EXPIRED);
