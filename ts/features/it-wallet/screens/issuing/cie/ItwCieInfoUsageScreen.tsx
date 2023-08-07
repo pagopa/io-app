@@ -12,28 +12,28 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import authInfoCie from "../../../../../../img/features/it-wallet/auth-info-cie.png";
 import { Link } from "../../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../../utils/url";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwParamsList } from "../../../navigation/params";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { useIODispatch } from "../../../../../store/hooks";
 import { itwActivationStop } from "../../../store/actions";
 
-export type CieInfoUsageNavigationParams = Readonly<{
+export type ItwCieInfoUsageScreenNavigationParams = Readonly<{
   ciePin: string;
   authorizationUri: string;
 }>;
 
-const CieInfoUsageScreen = () => {
+const ItwCieInfoUsageScreen = () => {
   const navigation =
     useNavigation<
-      IOStackNavigationProp<ItwParamsList, "ITW_CIE_INFO_USAGE_SCREEN">
+      IOStackNavigationProp<ItwParamsList, "ITW_ISSUING_CIE_INFO_USAGE_SCREEN">
     >();
   const route = useRoute();
   const dispatch = useIODispatch();
 
   const { ciePin, authorizationUri } =
-    route.params as CieInfoUsageNavigationParams;
+    route.params as ItwCieInfoUsageScreenNavigationParams;
 
   /**
    * Containts the content of the screen.
@@ -54,7 +54,7 @@ const CieInfoUsageScreen = () => {
       primary: true,
       onPress: () => {
         if (authorizationUri !== undefined) {
-          navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_CARD_READER_SCREEN, {
+          navigation.navigate(ITW_ROUTES.ISSUING.CIE.CARD_READER_SCREEN, {
             ciePin,
             authorizationUri
           });
@@ -116,4 +116,4 @@ const CieInfoUsageScreen = () => {
   );
 };
 
-export default CieInfoUsageScreen;
+export default ItwCieInfoUsageScreen;

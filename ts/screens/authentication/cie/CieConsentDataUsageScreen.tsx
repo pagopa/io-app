@@ -30,7 +30,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 
-export type CieConsentDataUsageScreenNavigationParams = {
+export type ItwCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
 };
 

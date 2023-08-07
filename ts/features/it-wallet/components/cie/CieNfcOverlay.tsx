@@ -11,14 +11,14 @@ import TopScreenComponent from "../../../../components/screens/TopScreenComponen
 import { ScreenContentHeader } from "../../../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { Body } from "../../../../components/core/typography/Body";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/params";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { openNFCSettings } from "../../utils/cie";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_CIE_CARD_READER_SCREEN"
+  "ITW_ISSUING_CIE_CARD_READER_SCREEN"
 >;
 
 type Props = ReduxProps & NavigationProps;
@@ -43,7 +43,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           style: "default",
           onPress: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ACTIVATION.INFO
+              screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
             })
         }
       ]
