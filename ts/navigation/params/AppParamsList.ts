@@ -46,8 +46,8 @@ import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/scre
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { ITW_ROUTES } from "../../features/it-wallet/navigation/routes";
-import { ItwParamsList } from "../../features/it-wallet/navigation/params";
+import { ITW_ROUTES } from "../../features/it-wallet/navigation/ItwRoutes";
+import { ItwParamsList } from "../../features/it-wallet/navigation/ItwParamsList";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";

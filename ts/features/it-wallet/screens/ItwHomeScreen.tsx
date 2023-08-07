@@ -14,7 +14,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { ITW_ROUTES } from "../navigation/routes";
+import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycle";
@@ -22,7 +22,7 @@ import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentials";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import PidCredential from "../components/PidCredential";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../navigation/params";
+import { ItwParamsList } from "../navigation/ItwParamsList";
 import { itwDecodePid } from "../store/actions/credentials";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecode";
@@ -70,7 +70,7 @@ const ItwHomeScreen = () => {
       <Pressable
         onPress={() =>
           navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.VC_DETAILS
+            screen: ITW_ROUTES.PRESENTATION.PID_DETAILS
           })
         }
       >

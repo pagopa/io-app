@@ -12,31 +12,31 @@ import TopScreenComponent from "../../../../../components/screens/TopScreenCompo
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/params";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 
-export type CieWrongCiePinScreenNavigationParams = {
+export type ItwCieWrongPinScreenNavigationParams = {
   remainingCount: number;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_CIE_WRONG_PIN_SCREEN"
+  "ITW_ISSUING_CIE_WRONG_PIN_SCREEN"
 >;
 
 type Props = NavigationProps & ReturnType<typeof mapDispatchToProps>;
 
-class CieWrongCiePinScreen extends React.PureComponent<Props> {
+class ItwCieWrongPinScreen extends React.PureComponent<Props> {
   // TODO: use redux to handle control?
   private navigateToCiePinScreen = async () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN
+      screen: ITW_ROUTES.ISSUING.CIE.PIN_SCREEN
     });
   };
 
   private resetAuthentication = () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.DETAILS
+      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
     });
   };
 
@@ -96,4 +96,4 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
 }
 const mapDispatchToProps = (_: Dispatch) => ({});
 
-export default connect(undefined, mapDispatchToProps)(CieWrongCiePinScreen);
+export default connect(undefined, mapDispatchToProps)(ItwCieWrongPinScreen);

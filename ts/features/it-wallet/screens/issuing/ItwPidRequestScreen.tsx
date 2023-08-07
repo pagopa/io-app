@@ -9,15 +9,15 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ItwParamsList } from "../../navigation/params";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwPid } from "../../store/actions/credentials";
 import { itwPidSelector } from "../../store/reducers/itwPid";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
-import { ITW_ROUTES } from "../../navigation/routes";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 /**
  * ItwPidRequestScreen's navigation params.
@@ -53,7 +53,7 @@ const ItwPidRequestScreen = () => {
    */
   useEffect(() => {
     if (pot.isSome(pid)) {
-      navigation.navigate(ITW_ROUTES.ACTIVATION.PID_PREVIEW);
+      navigation.navigate(ITW_ROUTES.ISSUING.PID_PREVIEW);
     }
   }, [navigation, pid]);
 
