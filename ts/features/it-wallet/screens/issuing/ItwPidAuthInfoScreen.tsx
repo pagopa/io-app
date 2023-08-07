@@ -126,7 +126,7 @@ const ItwPidAuthInfoScreen = () => {
         >
           <View style={IOStyles.horizontalContentPadding}>
             <H4 weight={"Regular"} color={"bluegrey"}>
-              {"Non hai la CIE? "}
+              {I18n.t("features.itWallet.infoAuthScreen.noCieInfo")}
               <Link
                 onPress={() =>
                   openWebUrl(
@@ -134,7 +134,7 @@ const ItwPidAuthInfoScreen = () => {
                   )
                 }
               >
-                {"Scopri come ottenerla"}
+                {I18n.t("features.itWallet.infoAuthScreen.noCieCta")}
               </Link>
             </H4>
 
