@@ -9,7 +9,7 @@ import I18n from "../../../i18n";
 /**
  * Temporary not avaialble screen for working in progress features which might depend from other changes.
  */
-const NotAvailableScreen = () => (
+const ItwNotAvailableScreen = () => (
   <React.Fragment>
     <View style={styles.contentContainerStyle}>
       <View style={IOStyles.alignCenter}>
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
   contentContainerStyle: { flexGrow: 1, justifyContent: "center" }
 });
 
-export default NotAvailableScreen;
+export default ItwNotAvailableScreen;

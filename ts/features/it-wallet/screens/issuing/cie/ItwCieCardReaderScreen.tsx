@@ -48,22 +48,22 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwParamsList } from "../../../navigation/params";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
 
-export type CieCardReaderScreenNavigationParams = {
+export type ItwCieCardReaderScreenNavigationParams = {
   ciePin: string;
   authorizationUri: string;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_CIE_CARD_READER_SCREEN"
+  "ITW_ISSUING_CIE_CARD_READER_SCREEN"
 >;
 
 type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
@@ -179,7 +179,7 @@ const getTextForState = (
 /**
  *  This screen shown while reading the card
  */
-class CieCardReaderScreen extends React.PureComponent<Props, State> {
+class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
   private subTitleRef = React.createRef<Text>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
@@ -272,7 +272,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ACTIVATION.CIE_PIN_TEMP_LOCKED_SCREEN
+              screen: ITW_ROUTES.ISSUING.CIE.PIN_TEMP_LOCKED_SCREEN
             })
         });
         break;
@@ -283,7 +283,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ACTIVATION.CIE_WRONG_PIN_SCREEN,
+              screen: ITW_ROUTES.ISSUING.CIE.WRONG_PIN_SCREEN,
               params: {
                 remainingCount: event.attemptsLeft
               }
@@ -298,7 +298,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ACTIVATION.CIE_EXPIRED_SCREEN
+              screen: ITW_ROUTES.ISSUING.CIE.EXPIRED_SCREEN
             })
         });
         break;
@@ -374,7 +374,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       setTimeout(
         async () => {
           this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ACTIVATION.CIE_CONSENT_DATA_USAGE,
+            screen: ITW_ROUTES.ISSUING.CIE.CONSENT_DATA_USAGE,
             params: {
               cieConsentUri,
               pidData
@@ -462,7 +462,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private handleCancel = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.DETAILS
+      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
     });
 
   private getFooter = () =>
@@ -531,7 +531,7 @@ const mapStateToProps = (state: GlobalState) => {
 const ReaderScreen = (props: Props) => (
   <View style={styles.container}>
     {props.isNfcEnabled ? (
-      <CieCardReaderScreen {...props} />
+      <ItwCieCardReaderScreen {...props} />
     ) : (
       <CieNfcOverlay {...props} />
     )}

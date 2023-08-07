@@ -17,12 +17,12 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { Dispatch } from "../../../../../store/actions/types";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
-import { ItwParamsList } from "../../../navigation/params";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { loginFailure, loginSuccess } from "../../../store/actions/cie";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 
-export type CieConsentDataUsageScreenNavigationParams = {
+export type ItwCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
   pidData: PidData;
 };
@@ -33,7 +33,7 @@ type OwnProps = {
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_CIE_CONSENT_DATA_USAGE"
+  "ITW_ISSUING_CIE_CONSENT_DATA_USAGE"
 >;
 
 type State = {
@@ -67,7 +67,7 @@ const jsCode = `
   article.replaceChildren(div);
 `;
 
-class CieConsentDataUsageScreen extends React.Component<Props, State> {
+class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
   private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
@@ -79,7 +79,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 
   private resetNavigation = () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.DETAILS
+      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
     });
   };
 
@@ -198,12 +198,9 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           rightButton={{
             primary: true,
             onPress: () =>
-              this.props.navigation.navigate(
-                ITW_ROUTES.ACTIVATION.PID_REQUEST,
-                {
-                  pidData: this.props.route.params.pidData
-                }
-              ),
+              this.props.navigation.navigate(ITW_ROUTES.ISSUING.PID_REQUEST, {
+                pidData: this.props.route.params.pidData
+              }),
             title: I18n.t(
               "features.itWallet.issuing.infoConsent.footer.confirm"
             )
@@ -221,4 +218,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
 });
 
-export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
+export default connect(null, mapDispatchToProps)(ItwCieConsentDataUsageScreen);
