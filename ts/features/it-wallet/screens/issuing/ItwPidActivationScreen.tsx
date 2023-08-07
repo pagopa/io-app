@@ -13,7 +13,8 @@ import { itwCredentialsAddPid } from "../../store/actions/credentials";
 import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycle";
 import { itwActivationCompleted } from "../../store/actions";
-import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
+import ItwErrorView from "../../components/ItwErrorView";
+import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
@@ -87,7 +88,10 @@ const ItwPidActivationScreen = () => {
   return isLoading ? (
     <LoadingScreen />
   ) : isError ? (
-    <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />
+    <ItwErrorView
+      type="SingleButton"
+      leftButton={cancelButtonProps(navigation.goBack)}
+    />
   ) : (
     <SuccessScreen />
   );

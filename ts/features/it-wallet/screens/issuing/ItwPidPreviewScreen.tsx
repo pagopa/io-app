@@ -26,7 +26,8 @@ import { itwDecodePid } from "../../store/actions/credentials";
 import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecode";
-import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
+import ItwErrorView from "../../components/ItwErrorView";
+import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -105,7 +106,12 @@ const ItwPidPreviewScreen = () => {
     pipe(
       optionDecodedPid,
       O.fold(
-        () => <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />,
+        () => (
+          <ItwErrorView
+            type="SingleButton"
+            leftButton={cancelButtonProps(navigation.goBack)}
+          />
+        ),
         decodedPid => <ContentView decodedPid={decodedPid} />
       )
     );
@@ -117,13 +123,21 @@ const ItwPidPreviewScreen = () => {
       () => <LoadingSpinnerOverlay isLoading />,
       () => <LoadingSpinnerOverlay isLoading />,
       err => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={err}
+        />
       ),
       some => getDecodedPidOrErrorView(some.decodedPid),
       () => <LoadingSpinnerOverlay isLoading />,
       () => <LoadingSpinnerOverlay isLoading />,
-      (_, err) => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      (_, someErr) => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={someErr}
+        />
       )
     );
 

@@ -16,7 +16,8 @@ import { itwPid } from "../../store/actions/credentials";
 import { itwPidSelector } from "../../store/reducers/itwPid";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import { ITW_ROUTES } from "../../navigation/routes";
-import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
+import ItwErrorView from "../../components/ItwErrorView";
+import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 
 /**
  * ItwPidRequestScreen's navigation params.
@@ -77,13 +78,21 @@ const ItwPidRequestScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       err => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={err}
+        />
       ),
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      (_, someErr) => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={someErr}
+        />
       )
     );
 

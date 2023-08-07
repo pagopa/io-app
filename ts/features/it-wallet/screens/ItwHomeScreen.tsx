@@ -26,7 +26,8 @@ import { ItwParamsList } from "../navigation/params";
 import { itwDecodePid } from "../store/actions/credentials";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecode";
-import ItwErrorViewSingleBtn from "../components/ItwErrorViewSingleBtn";
+import ItwErrorView from "../components/ItwErrorView";
+import { cancelButtonProps } from "../utils/itwButtonsUtils";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -102,20 +103,33 @@ const ItwHomeScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       err => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={err}
+        />
       ),
       some =>
         pipe(
           some.decodedPid,
           O.fold(
-            () => <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />,
+            () => (
+              <ItwErrorView
+                type="SingleButton"
+                leftButton={cancelButtonProps(navigation.goBack)}
+              />
+            ),
             decodedPid => <ContentView decodedPid={decodedPid} />
           )
         ),
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      (_, someErr) => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={someErr}
+        />
       )
     );
 

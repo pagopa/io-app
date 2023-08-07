@@ -7,37 +7,30 @@ import {
 } from "../utils/errors/itwErrorsMapping";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import I18n from "../../../i18n";
+import { BlockButtonsProps } from "../../../components/ui/BlockButtons";
 
 export type ItwErrorViewProps = {
-  onClosePress: () => void;
   error?: ItWalletError;
   pictogramName?: IOPictograms;
-};
+} & BlockButtonsProps;
 
-const ItwErrorViewSingleBtn = ({
+const ItwErrorView = ({
   error,
-  onClosePress,
-  pictogramName = "error"
+  pictogramName,
+  ...footerWithButtonsProps
 }: ItwErrorViewProps) => {
   const mappedError = error ? mapItwError(error) : getItwGenericError();
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
-    onPress: onClosePress,
-    title: I18n.t("features.itWallet.generic.close")
-  };
+
   return (
     <>
       <InfoScreenComponent
         title={mappedError.title}
         body={mappedError.body}
-        image={<Pictogram name={pictogramName} />}
+        image={<Pictogram name={pictogramName ? pictogramName : "error"} />}
       />
-      <FooterWithButtons type={"SingleButton"} leftButton={cancelButtonProps} />
+      <FooterWithButtons {...footerWithButtonsProps} />
     </>
   );
 };
 
-export default ItwErrorViewSingleBtn;
+export default ItwErrorView;

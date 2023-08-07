@@ -15,9 +15,10 @@ import PidCredential from "../components/PidCredential";
 import ClaimsList from "../components/ClaimsList";
 import { useIOSelector } from "../../../store/hooks";
 import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecode";
-import ItwErrorViewSingleBtn from "../components/ItwErrorViewSingleBtn";
+import ItwErrorView from "../components/ItwErrorView";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/params";
+import { cancelButtonProps } from "../utils/itwButtonsUtils";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -64,7 +65,12 @@ const ItwCredentialDetails = () => {
     pipe(
       decodedPid,
       O.fold(
-        () => <ItwErrorViewSingleBtn onClosePress={navigation.goBack} />,
+        () => (
+          <ItwErrorView
+            type="SingleButton"
+            leftButton={cancelButtonProps(navigation.goBack)}
+          />
+        ),
         decodedPid => <ContentView decodedPid={decodedPid} />
       )
     );

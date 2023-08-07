@@ -29,7 +29,8 @@ import {
 import { pidDataMock } from "../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../utils/dates";
 import { isIos } from "../../../../utils/platform";
-import ItwErrorViewSingleBtn from "../../components/ItwErrorViewSingleBtn";
+import ItwErrorView from "../../components/ItwErrorView";
+import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 
 /**
  * Delay in milliseconds to bypass the CIE authentication process.
@@ -142,13 +143,21 @@ const ItwActivationInfoAuthScreen = () => {
       () => <LoadingSpinnerOverlay isLoading />,
       () => <LoadingSpinnerOverlay isLoading />,
       err => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={err}
+        />
       ),
       _ => <ContentView />,
       () => <LoadingSpinnerOverlay isLoading />,
       () => <LoadingSpinnerOverlay isLoading />,
-      (_, err) => (
-        <ItwErrorViewSingleBtn onClosePress={navigation.goBack} error={err} />
+      (_, someErr) => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={someErr}
+        />
       )
     );
 
