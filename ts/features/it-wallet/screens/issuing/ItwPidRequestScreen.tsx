@@ -18,6 +18,7 @@ import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay"
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import { itwActivationStop } from "../../store/actions";
 
 /**
  * ItwPidRequestScreen's navigation params.
@@ -80,7 +81,7 @@ const ItwPidRequestScreen = () => {
       err => (
         <ItwErrorView
           type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
+          leftButton={cancelButtonProps(() => dispatch(itwActivationStop()))}
           error={err}
         />
       ),
@@ -90,7 +91,7 @@ const ItwPidRequestScreen = () => {
       (_, someErr) => (
         <ItwErrorView
           type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
+          leftButton={cancelButtonProps(() => dispatch(itwActivationStop()))}
           error={someErr}
         />
       )
