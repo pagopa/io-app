@@ -1,8 +1,8 @@
+import { H6 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../i18n";
 import { TestID } from "../types/WithTestID";
-import { H4 } from "./core/typography/H4";
 import { H5 } from "./core/typography/H5";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";
@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
 export const PreferencesListItem = (props: Props): React.ReactElement => (
   <View style={styles.row} testID={props.testID}>
     <View style={styles.left}>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+      <H6 weight={"SemiBold"} color={"bluegreyDark"}>
         {props.title}
-      </H4>
+      </H6>
       <H5 weight={"Regular"} color={"bluegrey"}>
         {props.description}
       </H5>

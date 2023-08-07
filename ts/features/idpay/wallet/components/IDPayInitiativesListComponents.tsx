@@ -1,3 +1,4 @@
+import { H6 } from "@pagopa/io-app-design-system";
 import { Badge as NBbadge, ListItem as NBlistItem } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -6,7 +7,6 @@ import {
   StatusEnum
 } from "../../../../../definitions/idpay/InitiativesStatusDTO";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
-import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../i18n";
@@ -73,7 +73,7 @@ export const IDPayInitiativeListItem = ({
         paddingLeft: 0 // required to override NBlistItem default padding
       }}
     >
-      <H4>{initiativeName}</H4>
+      <H6 color="black">{initiativeName}</H6>
       <SwitchOrStatusLabel item={item} idWallet={idWallet} />
     </NBlistItem>
   );
