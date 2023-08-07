@@ -58,7 +58,7 @@ import {
 } from "../features/walletV3/onboarding/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
 import { ItwStackNavigator } from "../features/it-wallet/navigation/ItwStackNavigator";
-import { ITW_ROUTES } from "../features/it-wallet/navigation/routes";
+import { ITW_ROUTES } from "../features/it-wallet/navigation/ItwRoutes";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";

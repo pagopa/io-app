@@ -8,7 +8,7 @@ import {
   itwWiaRequest
 } from "../store/actions";
 import NavigationService from "../../../navigation/NavigationService";
-import { ITW_ROUTES } from "../navigation/routes";
+import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { itwCredentialsAddPid, itwPid } from "../store/actions/credentials";
 import ROUTES from "../../../navigation/routes";
 import { itwDecodePid } from "./../store/actions/credentials";
@@ -61,7 +61,7 @@ function* watchItwActivationStart(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ACTIVATION.DETAILS
+      screen: ITW_ROUTES.DISCOVERY.INFO
     })
   );
   yield* call(handleStartAuthenticationSaga);

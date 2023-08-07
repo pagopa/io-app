@@ -16,7 +16,7 @@ import variables from "../theme/variables";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { itWalletEnabled } from "../config";
-import NotAvailableScreen from "../features/it-wallet/screens/NotAvailableScreen";
+import ItwNotAvailableScreen from "../features/it-wallet/screens/ItwNotAvailableScreen";
 import ItwHomeScreen from "../features/it-wallet/screens/ItwHomeScreen";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
@@ -117,7 +117,7 @@ export const MainTabNavigator = () => {
         {itWalletEnabled && (
           <Tab.Screen
             name={ROUTES.QR_CODE_SCAN}
-            component={NotAvailableScreen} // TODO: SIW-222
+            component={ItwNotAvailableScreen}
             options={{
               title: I18n.t("global.navigator.scan"),
               tabBarIcon: ({ color, focused }) => (
