@@ -1,36 +1,38 @@
+import {
+  ListItemNav as DSListItemNav,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
 import {
-  View,
-  StyleSheet,
-  Pressable,
   GestureResponderEvent,
-  Text
+  Pressable,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
-  interpolate,
   Extrapolate,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { Icon, IOIcons } from "@pagopa/io-app-design-system";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { WithTestID } from "../../types/WithTestID";
+import { makeFontStyleObject } from "../core/fonts";
+import { Body } from "../core/typography/Body";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
-import { WithTestID } from "../../types/WithTestID";
-import { useIOSelector } from "../../store/hooks";
-import { makeFontStyleObject } from "../core/fonts";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { NewH6 } from "../core/typography/NewH6";
-import { Body } from "../core/typography/Body";
 
 export type ListItemNav = WithTestID<{
   value: string | React.ReactNode;
@@ -50,6 +52,23 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ *
+ * Represents a navigable list item with a label, description, and a chevron icon for navigation.
+ * It supports an onPress event for handling item navigation.
+ * Currently if the Design System is enabled, the component returns the ListItemNav of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string|JSX.Element} value - The label or JSX element to display as the item's label.
+ * @param {string|JSX.Element} description - The description or JSX element to display as the item's description.
+ * @param {function} onPress - The function to be executed when the item is pressed.
+ * @param {string} icon - The name of the icon to display (if any).
+ * @param {string} accessibilityLabel - The accessibility label for the item.
+ * @param {string} testID - The test ID for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemNav of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ListItemNav = ({
   value,
   description,
@@ -110,7 +129,6 @@ export const ListItemNav = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyListItemNav = () => (
     <Pressable
       onPress={onPress}
@@ -165,57 +183,19 @@ export const ListItemNav = ({
       </Animated.View>
     </Pressable>
   );
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemNav = () => (
-    <Pressable
+  return isDesignSystemEnabled ? (
+    <DSListItemNav
+      value={value}
       onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onTouchEnd={onPressOut}
-      accessible={true}
       accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
+      description={description}
+      icon={icon}
       testID={testID}
-    >
-      <Animated.View
-        style={[IOListItemStyles.listItem, animatedBackgroundStyle]}
-      >
-        <Animated.View
-          style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
-        >
-          {icon && (
-            <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-              <Icon
-                name={icon}
-                color="grey-450"
-                size={IOListItemVisualParams.iconSize}
-              />
-            </View>
-          )}
-          <View style={IOStyles.flex}>
-            <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
-            {description && (
-              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
-                {description}
-              </LabelSmall>
-            )}
-          </View>
-          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-            <Icon
-              name="chevronRightListItem"
-              color={theme["interactiveElem-default"]}
-              size={IOListItemVisualParams.chevronSize}
-            />
-          </View>
-        </Animated.View>
-      </Animated.View>
-    </Pressable>
+    />
+  ) : (
+    <LegacyListItemNav />
   );
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
-  without the following condition */
-  return isDesignSystemEnabled ? <NewListItemNav /> : <LegacyListItemNav />;
 };
 
 export default ListItemNav;

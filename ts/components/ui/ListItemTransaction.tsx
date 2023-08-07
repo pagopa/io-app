@@ -1,9 +1,14 @@
+import {
+  Badge,
+  ListItemTransaction as DSListItemTransaction,
+  IOIconSizeScale,
+  Icon
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { Badge, IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -106,8 +111,34 @@ export const ListItemTransaction = ({
     return <SkeletonComponent />;
   }
 
-  const designSystemBlue: IOColors = isDSEnabled ? "blue" : "blueIO-500";
+  const designSystemBlue: IOColors = "blueIO-500";
 
+  /**
+   *
+   * Represents a transaction list item with various transaction status badges.
+   * It can display a payment logo icon, a title, a subtitle, a transaction amount,
+   * and an optional chevron right icon for navigation.
+   * The component supports an onPress event for handling item navigation.
+   * Currently if the Design System is enabled, the component returns the ListItemTransaction of the @pagopa/io-app-design-system library
+   * otherwise it returns the legacy component.
+   *
+   * @param {string} accessibilityLabel - The accessibility label for the item.
+   * @param {boolean} hasChevronRight - If true, displays a chevron right icon for navigation.
+   * @param {boolean} isLoading - If true, displays a skeleton loading component.
+   * @param {string} paymentLogoIcon - The payment logo icon to display.
+   * @param {function} onPress - The function to be executed when the item is pressed.
+   * @param {string} subtitle - The subtitle text to display.
+   * @param {string} testID - The test ID for testing purposes.
+   * @param {string} title - The title text to display.
+   * @param {string} transactionAmount - The transaction amount to display.
+   * @param {string} transactionStatus - The status of the transaction. Possible values:
+   *                                          "success", "refunded", "failure", "cancelled",
+   *                                          "reversal", "pending".
+   *
+   * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemTransaction of the @pagopa/io-app-design-system library.
+   *
+   */
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const ListItemTransactionContent = () => {
     const TransactionAmountOrBadgeComponent = () => {
       switch (transactionStatus) {
@@ -151,7 +182,27 @@ export const ListItemTransaction = ({
       }
     };
 
-    return (
+    const DSTransactionStatus =
+      transactionStatus === "success"
+        ? "success"
+        : transactionStatus === "failure"
+        ? "failure"
+        : "pending";
+
+    return isDSEnabled ? (
+      <DSListItemTransaction
+        accessibilityLabel={accessibilityLabel}
+        hasChevronRight={hasChevronRight}
+        isLoading={isLoading}
+        onPress={onPress}
+        subtitle={subtitle}
+        testID={testID}
+        title={title}
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        transactionAmount={transactionAmount!}
+        transactionStatus={DSTransactionStatus}
+      />
+    ) : (
       <>
         {paymentLogoIcon && (
           <View

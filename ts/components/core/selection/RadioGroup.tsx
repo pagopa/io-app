@@ -1,6 +1,6 @@
-import { View } from "react-native";
-import * as React from "react";
 import { IOIcons } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { View } from "react-native";
 import { RadioListItem } from "../../ui/RadioListItem";
 import { Divider } from "../Divider";
 
@@ -22,6 +22,9 @@ type Props<T> = {
  * A list of radio buttons.
  * The management of the selection is demanded and derived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the RadioGroup of the @pagopa/io-app-design-system library.
+ *
  */
 export const RadioGroup = <T,>({ items, selectedItem, onPress }: Props<T>) => (
   <View>

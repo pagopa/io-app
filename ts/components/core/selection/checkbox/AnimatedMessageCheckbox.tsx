@@ -1,25 +1,25 @@
+import { AnimatedMessageCheckbox as DSAnimatedMessageCheckbox } from "@pagopa/io-app-design-system";
 import React, { useEffect } from "react";
-import { StyleSheet, Pressable, PressableProps } from "react-native";
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
+  Easing,
   interpolate,
+  useAnimatedStyle,
+  useSharedValue,
   withSpring,
-  withTiming,
-  Easing
+  withTiming
 } from "react-native-reanimated";
-import { IOColors } from "../../variables/IOColors";
-import { IOSpringValues } from "../../variables/IOAnimations";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { AnimatedTick } from "../AnimatedTick";
+import { IOSpringValues } from "../../variables/IOAnimations";
+import { IOColors } from "../../variables/IOColors";
+import { IOSpacingScale } from "../../variables/IOSpacing";
 import {
   IOSelectionTickLegacyVisualParams,
   IOSelectionTickVisualParams,
   IOVisualCostants
 } from "../../variables/IOStyles";
-import { IOSpacingScale } from "../../variables/IOSpacing";
-
+import { AnimatedTick } from "../AnimatedTick";
 type Props = {
   checked?: boolean;
 };
@@ -45,8 +45,12 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Animated message checkbox used for the specific message
- * list item (Select mode that enables related actions)
+ * Animated message checkbox used for the specific message list item (Select mode that enables related actions).
+ * Currently if the Design System is enabled, the component returns the AnimatedMessageCheckbox of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the AnimatedMessageCheckbox of the @pagopa/io-app-design-system library.
+ *
  */
 export const AnimatedMessageCheckbox = ({
   checked,
@@ -81,25 +85,24 @@ export const AnimatedMessageCheckbox = ({
     };
   });
 
-  return (
+  return isDesignSystemEnabled ? (
+    <DSAnimatedMessageCheckbox checked={isChecked} onPress={onPress} />
+  ) : (
     <Pressable
       testID="AnimatedMessageCheckboxInput"
       onPress={onPress}
       style={styles.checkBoxWrapper}
     >
-      {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following conditions */}
       <Animated.View
         style={[
           styles.checkBoxCircle,
           {
-            backgroundColor: isDesignSystemEnabled
-              ? IOColors[IOSelectionTickVisualParams.bgColorOnState]
-              : IOColors[IOSelectionTickLegacyVisualParams.bgColorOnState]
+            backgroundColor:
+              IOColors[IOSelectionTickLegacyVisualParams.bgColorOnState]
           },
           animatedCheckboxCircle
         ]}
       />
-      {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       {isChecked && (
         <AnimatedTick
           progress={tickAnimationProgress}
