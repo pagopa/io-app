@@ -1,20 +1,22 @@
 import * as React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { Icon, IOIcons } from "@pagopa/io-app-design-system";
+import {
+  ListItemInfo as DSListItemInfo,
+  Icon,
+  IOIcons
+} from "@pagopa/io-app-design-system";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { WithTestID } from "../../types/WithTestID";
+import { makeFontStyleObject } from "../core/fonts";
+import { Body } from "../core/typography/Body";
+import { IOColors } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, useIOTheme } from "../core/variables/IOColors";
-import { WithTestID } from "../../types/WithTestID";
-import { useIOSelector } from "../../store/hooks";
-import { makeFontStyleObject } from "../core/fonts";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { NewH6 } from "../core/typography/NewH6";
-import { Body } from "../core/typography/Body";
 
 export type ListItemInfo = WithTestID<{
   label: string;
@@ -36,6 +38,24 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ *
+ * Represents a list item with label and value information.
+ * It can display an optional icon and action element.
+ * Currently if the Design System is enabled, the component returns the ListItemInfo of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string|JSX.Element} label - The label or JSX element to display as the item's label.
+ * @param {string|JSX.Element} value - The value or JSX element to display as the item's value.
+ * @param {number} [numberOfLines=2] - The maximum number of lines to display for the value.
+ * @param {string} icon - The name of the icon to display (if any).
+ * @param {JSX.Element} action - The JSX element representing the action element (if any).
+ * @param {string} accessibilityLabel - The accessibility label for the item.
+ * @param {string} testID - The test ID for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemInfo of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ListItemInfo = ({
   label,
   value,
@@ -47,9 +67,6 @@ export const ListItemInfo = ({
 }: ListItemInfo) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
-  const theme = useIOTheme();
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyListItemInfo = () => (
     <View
       style={IOListItemStyles.listItem}
@@ -93,48 +110,20 @@ export const ListItemInfo = ({
       </View>
     </View>
   );
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemInfo = () => (
-    <View
-      style={IOListItemStyles.listItem}
-      testID={testID}
-      accessible={true}
+  return isDesignSystemEnabled ? (
+    <DSListItemInfo
+      label={label}
+      value={value}
       accessibilityLabel={accessibilityLabel}
-    >
-      <View style={IOListItemStyles.listItemInner}>
-        {icon && (
-          <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-            <Icon
-              name={icon}
-              color="grey-450"
-              size={IOListItemVisualParams.iconSize}
-            />
-          </View>
-        )}
-        <View style={IOStyles.flex}>
-          <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
-            {label}
-          </LabelSmall>
-          <NewH6
-            color={theme["textBody-default"]}
-            numberOfLines={numberOfLines}
-          >
-            {value}
-          </NewH6>
-        </View>
-        {action && (
-          <View style={{ marginLeft: IOListItemVisualParams.actionMargin }}>
-            {action}
-          </View>
-        )}
-      </View>
-    </View>
+      action={action}
+      icon={icon}
+      numberOfLines={numberOfLines}
+      testID={testID}
+    />
+  ) : (
+    <LegacyListItemInfo />
   );
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemInfo /> here,
-  without the following condition */
-  return isDesignSystemEnabled ? <NewListItemInfo /> : <LegacyListItemInfo />;
 };
 
 export default ListItemInfo;

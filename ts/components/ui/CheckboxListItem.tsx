@@ -1,6 +1,7 @@
+import { IOIcons, Icon, ListItemCheckbox } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { Pressable, View, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Animated, {
   Extrapolate,
@@ -11,21 +12,19 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { IOIcons, Icon } from "@pagopa/io-app-design-system";
-import { NewH6 } from "../core/typography/NewH6";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { makeFontStyleObject } from "../core/fonts";
+import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { LabelSmall } from "../core/typography/LabelSmall";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
-import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { makeFontStyleObject } from "../core/fonts";
 
 type Props = {
   value: string;
@@ -46,7 +45,6 @@ type OwnProps = Props &
     "onPress" | "accessibilityLabel" | "disabled"
   >;
 
-/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
 const styles = StyleSheet.create({
   legacyTextValue: {
     fontSize: 18,
@@ -56,14 +54,23 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   }
 });
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
 
 /**
- *  with the automatic state management that uses a {@link AnimatedCheckBox}
- * The toggleValue change when a `onPress` event is received and dispatch the `onValueChange`.
  *
- * @param props
- * @constructor
+ * A custom checkbox-like list item that can be toggled on and off.
+ * Currently if the Design System is enabled, the component returns the ListItemCheckbox of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ *
+ * @param {string} value - The value of the list item.
+ * @param {string} description - The description of the list item.
+ * @param {string} icon - The name of the icon to be displayed in the list item.
+ * @param {boolean} selected - Indicates whether the list item is currently selected.
+ * @param {boolean} disabled - Indicates whether the list item is disabled.
+ * @param {function} onValueChange - The callback function to be executed when the value changes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemCheckbox of the @pagopa/io-app-design-system library.
+ *
  */
 export const CheckboxListItem = ({
   value,
@@ -73,7 +80,6 @@ export const CheckboxListItem = ({
   disabled,
   onValueChange
 }: OwnProps) => {
-  // Experimental Design System
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const [toggleValue, setToggleValue] = useState(selected ?? false);
@@ -138,7 +144,16 @@ export const CheckboxListItem = ({
     }
   };
 
-  return (
+  return isDesignSystemEnabled ? (
+    <ListItemCheckbox
+      value={value}
+      disabled={disabled}
+      description={description}
+      icon={icon}
+      selected={selected}
+      onValueChange={onValueChange}
+    />
+  ) : (
     <Pressable
       onPress={toggleCheckbox}
       onPressIn={onPressIn}
@@ -173,15 +188,7 @@ export const CheckboxListItem = ({
                   />
                 </View>
               )}
-              {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
-              {isDesignSystemEnabled ? (
-                <NewH6 color={"black"} style={{ flexShrink: 1 }}>
-                  {value}
-                </NewH6>
-              ) : (
-                <Text style={styles.legacyTextValue}>{value}</Text>
-              )}
-              {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
+              <Text style={styles.legacyTextValue}>{value}</Text>
             </View>
             <HSpacer size={8} />
             <View pointerEvents="none">
