@@ -13,8 +13,8 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useIODispatch } from "../../../../store/hooks";
-import { itwActivationStop } from "../../store/actions";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { itwActivationStop } from "../../store/actions/itwActivationActions";
 
 const ItwDiscoveryInfoScreen = () => {
   const dispatch = useIODispatch();

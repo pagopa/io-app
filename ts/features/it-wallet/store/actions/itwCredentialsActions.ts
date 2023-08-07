@@ -35,7 +35,7 @@ export const itwCredentialsAddPid = createAsyncAction(
 /**
  * Type for credentials related actions.
  */
-export type itwCredentialsActions =
+export type ItwCredentialsActions =
   | ActionType<typeof itwPid>
   | ActionType<typeof itwCredentialsAddPid>
   | ActionType<typeof itwDecodePid>;

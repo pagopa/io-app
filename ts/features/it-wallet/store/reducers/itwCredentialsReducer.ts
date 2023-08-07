@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwCredentialsAddPid } from "../actions/credentials";
+import { itwCredentialsAddPid } from "../actions/itwCredentialsActions";
 
 type ItwCredentialsType = {
   pid: O.Option<PidResponse>;

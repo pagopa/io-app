@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Banner } from "../../../components/Banner";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { useIODispatch } from "../../../store/hooks";
-import { itwActivationStart } from "../store/actions";
+import { itwActivationStart } from "../store/actions/itwActivationActions";
 
 export type ItwActionBannerProps = {
   title: string;

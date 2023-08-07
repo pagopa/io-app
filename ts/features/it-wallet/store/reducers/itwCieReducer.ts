@@ -3,15 +3,16 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   cieIsSupported,
   hasApiLevelSupport,
   hasNFCFeature,
   nfcIsEnabled,
   updateReadingState
-} from "../actions/cie";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
+} from "../actions/itwCieActions";
 
 export type ItwCieState = {
   hasApiLevelSupport: pot.Pot<boolean, Error>;

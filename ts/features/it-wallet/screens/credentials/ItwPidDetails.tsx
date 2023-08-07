@@ -8,12 +8,12 @@ import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecode";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import PidCredential from "../../components/PidCredential";
 import ClaimsList from "../../components/ClaimsList";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;

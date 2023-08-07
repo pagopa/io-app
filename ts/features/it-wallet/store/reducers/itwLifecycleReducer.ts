@@ -2,10 +2,10 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  itwLifecycleOperational,
   itwLifecycleDeactivated,
+  itwLifecycleOperational,
   itwLifecycleValid
-} from "../actions";
+} from "../actions/itwLifecycleActions";
 
 export enum ItwLifecycleState {
   "ITW_LIFECYCLE_VALID",
