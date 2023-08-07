@@ -1,10 +1,8 @@
 import * as React from "react";
 
+import { H3, IOStyles, VSpacer, Body } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -17,7 +15,6 @@ import {
   idPayInitiativesFromInstrumentRefreshStop
 } from "../../../idpay/wallet/store/actions";
 import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   paymentMethod: PaymentMethod;
