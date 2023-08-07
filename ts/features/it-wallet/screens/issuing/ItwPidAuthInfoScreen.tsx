@@ -22,7 +22,7 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
 import { Pictogram } from "../../../../components/core/pictograms";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import {
   profileBirthDateSelector,
@@ -42,7 +42,7 @@ const MS_TO_BYPASS = 1500;
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
  */
-const ItwActivationInfoAuthScreen = () => {
+const ItwPidAuthInfoScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
   const wia = useIOSelector(itwWiaStateSelector);
@@ -60,7 +60,7 @@ const ItwActivationInfoAuthScreen = () => {
    * PID data from the profile store or a mock if the data is not available.
    */
   const bypassCieLogin = () => {
-    navigation.navigate(ITW_ROUTES.ACTIVATION.PID_REQUEST, {
+    navigation.navigate(ITW_ROUTES.ISSUING.PID_REQUEST, {
       pidData: {
         name: name ?? pidDataMock.name,
         surname: surname ?? pidDataMock.surname,
@@ -115,7 +115,7 @@ const ItwActivationInfoAuthScreen = () => {
       onPress: () =>
         isIos
           ? bypassCieLogin()
-          : navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_PIN_SCREEN),
+          : navigation.navigate(ITW_ROUTES.ISSUING.CIE.PIN_SCREEN),
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (
@@ -195,4 +195,4 @@ const ItwActivationInfoAuthScreen = () => {
   );
 };
 
-export default ItwActivationInfoAuthScreen;
+export default ItwPidAuthInfoScreen;

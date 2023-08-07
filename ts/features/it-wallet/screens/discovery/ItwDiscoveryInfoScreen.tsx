@@ -11,12 +11,12 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { H4 } from "../../../../components/core/typography/H4";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useIODispatch } from "../../../../store/hooks";
 import { itwActivationStop } from "../../store/actions";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 
-const ItwActivationDetailsScreen = () => {
+const ItwDiscoveryInfoScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const cancelButtonProps = {
@@ -32,7 +32,7 @@ const ItwActivationDetailsScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.INFO),
+    onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO),
     title: I18n.t("features.itWallet.activationScreen.confirm")
   };
 
@@ -89,4 +89,4 @@ const ItwActivationDetailsScreen = () => {
   );
 };
 
-export default ItwActivationDetailsScreen;
+export default ItwDiscoveryInfoScreen;

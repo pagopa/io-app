@@ -31,7 +31,7 @@ import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/s
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 import UnlockAccessScreen from "../../onboarding/UnlockAccessScreen";
 
-export type CieConsentDataUsageScreenNavigationParams = {
+export type ItwCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
 };
 

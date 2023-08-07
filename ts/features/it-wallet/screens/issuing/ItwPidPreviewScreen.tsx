@@ -17,9 +17,9 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ClaimsList from "../../components/ClaimsList";
 import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ItwParamsList } from "../../navigation/params";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwDecodePid } from "../../store/actions/credentials";
@@ -100,7 +100,7 @@ const ItwPidPreviewScreen = () => {
     const saveButtonProps = {
       block: true,
       primary: true,
-      onPress: () => navigation.navigate(ITW_ROUTES.ACTIVATION.PID_ISSUING),
+      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_ADDING),
       title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
     };
     const name =

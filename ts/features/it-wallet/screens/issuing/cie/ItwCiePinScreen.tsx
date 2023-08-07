@@ -38,8 +38,8 @@ import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { pinPukHelpUrl } from "../../../../../config";
-import { ItwParamsList } from "../../../navigation/params";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import { nfcIsEnabled } from "../../../store/actions/cie";
 
@@ -71,10 +71,12 @@ const getContextualHelp = () => ({
 });
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
-const CiePinScreen: React.FC<Props> = props => {
+const ItwCiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
-    useNavigation<IOStackNavigationProp<ItwParamsList, "ITW_CIE_PIN_SCREEN">>();
+    useNavigation<
+      IOStackNavigationProp<ItwParamsList, "ITW_ISSUING_CIE_PIN_SCREEN">
+    >();
   const [pin, setPin] = useState("");
   const continueButtonRef = useRef<FooterWithButtons>(null);
   const pinPadViewRef = useRef<View>(null);
@@ -113,7 +115,7 @@ const CiePinScreen: React.FC<Props> = props => {
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      navigation.navigate(ITW_ROUTES.ACTIVATION.CIE_INFO_USAGE_SCREEN, {
+      navigation.navigate(ITW_ROUTES.ISSUING.CIE.INFO_USAGE_SCREEN, {
         ciePin: pin,
         authorizationUri: authUrlGenerated
       });
@@ -200,4 +202,4 @@ const CiePinScreen: React.FC<Props> = props => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(CiePinScreen);
+export default connect(null, mapDispatchToProps)(ItwCiePinScreen);
