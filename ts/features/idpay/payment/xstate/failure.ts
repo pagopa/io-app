@@ -7,6 +7,8 @@ export enum PaymentFailureEnum {
   REJECTED = "REJECTED",
   // User session expired
   EXPIRED = "EXPIRED",
+  // Transaction was already authorized
+  AUTHORIZED = "AUTHORIZED",
   // User does not have enough budget
   BUDGET_EXHAUSTED = "BUDGET_EXHAUSTED",
   // 429 Too Many Requests
