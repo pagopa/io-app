@@ -22,14 +22,14 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwDecodePid } from "../../store/actions/credentials";
-import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
 import { Pictogram } from "../../../../components/core/pictograms";
-import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecode";
+import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
+import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReducer";
+import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;

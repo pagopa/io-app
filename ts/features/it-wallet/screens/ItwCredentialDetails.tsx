@@ -13,8 +13,7 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import PidCredential from "../components/PidCredential";
 import ClaimsList from "../components/ClaimsList";
 import { useIOSelector } from "../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecode";
-
+import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 export type ContentViewParams = {
   decodedPid: PidWithToken;
 };

@@ -41,7 +41,7 @@ import { pinPukHelpUrl } from "../../../../../config";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
-import { nfcIsEnabled } from "../../../store/actions/cie";
+import { nfcIsEnabled } from "../../../store/actions/itwCieActions";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
