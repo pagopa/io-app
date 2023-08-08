@@ -1,12 +1,12 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import * as O from "fp-ts/lib/Option";
-import { itwWiaRequest } from "../../store/actions";
-import { handleWiaRequest } from "../wia";
+import { handleWiaRequest } from "../itwWiaSaga";
 import { idpSelector } from "../../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
 import { getWia } from "../../utils/wia";
 import { isCIEAuthenticationSupported } from "../../utils/cie";
+import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 
 describe("handleWiaRequest", () => {
   const wiaMock = "wia";

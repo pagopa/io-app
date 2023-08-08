@@ -9,12 +9,12 @@ import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { itwCredentialsAddPid } from "../../store/actions/credentials";
-import { itwPidValueSelector } from "../../store/reducers/itwPid";
-import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycle";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { Pictogram } from "../../../../components/core/pictograms";
-import { itwActivationCompleted } from "../../store/actions";
+import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
+import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycleReducer";
+import { itwCredentialsAddPid } from "../../store/actions/itwCredentialsActions";
+import { itwActivationCompleted } from "../../store/actions/itwActivationActions";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.

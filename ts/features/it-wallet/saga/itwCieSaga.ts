@@ -7,7 +7,7 @@ import {
   hasApiLevelSupport,
   hasNFCFeature,
   nfcIsEnabled
-} from "../store/actions/cie";
+} from "../store/actions/itwCieActions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { convertUnknownToError } from "../../../utils/errors";
 import { startTimer } from "../../../utils/timer";

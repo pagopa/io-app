@@ -1,15 +1,25 @@
 import { SagaIterator } from "redux-saga";
-import { put, take } from "typed-redux-saga/macro";
+import { put, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { CommonActions } from "@react-navigation/native";
-import { itwLifecycleValid } from "../store/actions";
 import {
   identificationRequest,
   identificationSuccess
 } from "../../../store/actions/identification";
 import NavigationService from "../../../navigation/NavigationService";
 import I18n from "../../../i18n";
-import { itwCredentialsAddPid } from "../store/actions/credentials";
+import { itwCredentialsAddPid } from "../store/actions/itwCredentialsActions";
+import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
+
+/**
+ * Handles the IT wallet credentials related sagas.
+ */
+export function* watchItwCredentialsSaga(): SagaIterator {
+  /**
+   * Handles adding a PID to the wallet.
+   */
+  yield* takeLatest(itwCredentialsAddPid.request, handleCredentialsAddPid);
+}
 
 /*
  * This saga handles adding a PID to the wallet.

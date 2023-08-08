@@ -15,8 +15,6 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwWiaStateSelector } from "../../store/reducers/itwWia";
-import { itwWiaRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
@@ -33,6 +31,8 @@ import {
 import { pidDataMock } from "../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../utils/dates";
 import { isIos } from "../../../../utils/platform";
+import { itwWiaStateSelector } from "../../store/reducers/itwWiaReducer";
+import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 
 /**
  * Delay in milliseconds to bypass the CIE authentication process.

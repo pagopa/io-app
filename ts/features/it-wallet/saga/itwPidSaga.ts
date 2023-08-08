@@ -1,13 +1,28 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
 import { PID } from "@pagopa/io-react-native-wallet";
 import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { itwWiaSelector } from "../store/reducers/itwWia";
+import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 import { getPid } from "../utils/pid";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
-import { itwDecodePid, itwPid } from "../store/actions/credentials";
+import { itwDecodePid, itwPid } from "../store/actions/itwCredentialsActions";
+
+/**
+ * Watcher for the IT wallet PID related sagas.
+ */
+export function* watchPidSaga(): SagaIterator {
+  /**
+   * Handles a PID issuing request.
+   */
+  yield* takeLatest(itwPid.request, handlePidRequest);
+
+  /**
+   * Handles a PID decode request.
+   */
+  yield* takeLatest(itwDecodePid.request, handlePidDecodeRequest);
+}
 
 /*
  * This saga handles the PID issuing.
