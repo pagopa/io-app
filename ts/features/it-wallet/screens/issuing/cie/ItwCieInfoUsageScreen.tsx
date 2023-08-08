@@ -17,7 +17,7 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { useIODispatch } from "../../../../../store/hooks";
-import { itwActivationStop } from "../../../store/actions";
+import { itwActivationStop } from "../../../store/actions/itwActivationActions";
 
 export type ItwCieInfoUsageScreenNavigationParams = Readonly<{
   ciePin: string;

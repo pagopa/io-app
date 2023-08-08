@@ -19,8 +19,11 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import { loginFailure, loginSuccess } from "../../../store/actions/cie";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import {
+  loginFailure,
+  loginSuccess
+} from "../../../store/actions/itwCieActions";
 
 export type ItwCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;

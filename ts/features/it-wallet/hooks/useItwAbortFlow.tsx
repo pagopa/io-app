@@ -9,7 +9,7 @@ import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/Bu
 import { H4 } from "../../../components/core/typography/H4";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch } from "../../../store/hooks";
-import { itwActivationStop } from "../store/actions";
+import { itwActivationStop } from "../store/actions/itwActivationActions";
 
 /**
  * A hook that returns a function to present the abort wallet activation flow bottom sheet

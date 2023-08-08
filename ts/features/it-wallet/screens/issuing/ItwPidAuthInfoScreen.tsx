@@ -15,8 +15,6 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwWiaStateSelector } from "../../store/reducers/itwWia";
-import { itwWiaRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -31,6 +29,8 @@ import { formatDateToYYYYMMDD } from "../../../../utils/dates";
 import { isIos } from "../../../../utils/platform";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
+import { itwWiaStateSelector } from "../../store/reducers/itwWiaReducer";
+import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 
 /**
  * Delay in milliseconds to bypass the CIE authentication process.
@@ -91,7 +91,7 @@ const ItwPidAuthInfoScreen = () => {
         >
           <View style={IOStyles.horizontalContentPadding}>
             <H4 weight={"Regular"} color={"bluegrey"}>
-              {"Non hai la CIE? "}
+              {I18n.t("features.itWallet.infoAuthScreen.noCieInfo")}
               <Link
                 onPress={() =>
                   openWebUrl(
@@ -99,7 +99,7 @@ const ItwPidAuthInfoScreen = () => {
                   )
                 }
               >
-                {"Scopri come ottenerla"}
+                {I18n.t("features.itWallet.infoAuthScreen.noCieCta")}
               </Link>
             </H4>
 

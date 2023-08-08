@@ -12,13 +12,13 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwPid } from "../../store/actions/credentials";
-import { itwPidSelector } from "../../store/reducers/itwPid";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { itwActivationStop } from "../../store/actions";
+import { itwPidSelector } from "../../store/reducers/itwPidReducer";
+import { itwPid } from "../../store/actions/itwCredentialsActions";
+import { itwActivationStop } from "../../store/actions/itwActivationActions";
 
 /**
  * ItwPidRequestScreen's navigation params.

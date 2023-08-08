@@ -31,11 +31,6 @@ import TopScreenComponent from "../../../../../components/screens/TopScreenCompo
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import {
-  cieAuthenticationError,
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason
-} from "../../../store/actions/cie";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -51,10 +46,15 @@ import {
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
-import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
+import {
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason,
+  cieAuthenticationError
+} from "../../../store/actions/itwCieActions";
+import { isNfcEnabledSelector } from "../../../store/reducers/itwCieReducer";
 
 export type ItwCieCardReaderScreenNavigationParams = {
   ciePin: string;

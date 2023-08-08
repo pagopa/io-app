@@ -22,10 +22,10 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwDecodePid } from "../../store/actions/credentials";
-import { itwPidValueSelector } from "../../store/reducers/itwPid";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecode";
+import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
+import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReducer";
+import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 

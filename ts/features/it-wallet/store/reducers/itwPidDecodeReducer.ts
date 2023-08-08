@@ -4,7 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwDecodePid } from "../actions/credentials";
+import { itwDecodePid } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
 type ItwDecodedPidType = {
