@@ -9,7 +9,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -28,10 +27,12 @@ import {
   IOStyles
 } from "../core/variables/IOStyles";
 import Avatar from "./Avatar";
+import { LogoPaymentWithFallback } from "./utils/components/LogoPaymentWithFallback";
 import {
   PressableBaseProps,
   PressableListItemBase
-} from "./utils/baseComponents/PressableListItemBase";
+} from "./utils/components/PressableListItemBase";
+
 export type ListItemTransactionStatus =
   | "success"
   | "failure"
@@ -83,7 +84,12 @@ const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (React.isValidElement(logoIcon)) {
     return <>{logoIcon}</>;
   }
-  return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
+  return (
+    <LogoPaymentWithFallback
+      brand={logoIcon as IOLogoPaymentType}
+      size={CARD_LOGO_SIZE}
+    />
+  );
 };
 
 export const ListItemTransaction = ({
@@ -176,27 +182,7 @@ export const ListItemTransaction = ({
       }
     };
 
-    const DSTransactionStatus =
-      transactionStatus === "success"
-        ? "success"
-        : transactionStatus === "failure"
-        ? "failure"
-        : "pending";
-
-    return isDSEnabled ? (
-      <DSListItemTransaction
-        accessibilityLabel={accessibilityLabel}
-        hasChevronRight={hasChevronRight}
-        isLoading={isLoading}
-        onPress={onPress}
-        subtitle={subtitle}
-        testID={testID}
-        title={title}
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        transactionAmount={transactionAmount!}
-        transactionStatus={DSTransactionStatus}
-      />
-    ) : (
+    return (
       <>
         {paymentLogoIcon && (
           <View
@@ -229,30 +215,52 @@ export const ListItemTransaction = ({
     );
   };
 
-  return pipe(
-    onPress,
-    O.fromNullable,
-    O.fold(
-      () => (
-        <View
-          style={IOListItemStyles.listItem}
-          testID={testID}
-          accessible={true}
-          accessibilityLabel={accessibilityLabel}
-        >
-          <View style={IOListItemStyles.listItemInner}>
-            <ListItemTransactionContent />
+  const DSTransactionStatus =
+    transactionStatus === "success"
+      ? "success"
+      : transactionStatus === "failure"
+      ? "failure"
+      : "pending";
+
+  return isDSEnabled ? (
+    <DSListItemTransaction
+      accessibilityLabel={accessibilityLabel}
+      hasChevronRight={hasChevronRight}
+      isLoading={isLoading}
+      onPress={onPress}
+      subtitle={subtitle}
+      testID={testID}
+      title={title}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      transactionAmount={transactionAmount!}
+      transactionStatus={DSTransactionStatus}
+    />
+  ) : (
+    pipe(
+      onPress,
+      O.fromNullable,
+      O.fold(
+        () => (
+          <View
+            style={IOListItemStyles.listItem}
+            testID={testID}
+            accessible={true}
+            accessibilityLabel={accessibilityLabel}
+          >
+            <View style={IOListItemStyles.listItemInner}>
+              <ListItemTransactionContent />
+            </View>
           </View>
-        </View>
-      ),
-      onPress => (
-        <PressableListItemBase
-          onPress={onPress}
-          testID={testID}
-          accessibilityLabel={accessibilityLabel}
-        >
-          <ListItemTransactionContent />
-        </PressableListItemBase>
+        ),
+        onPress => (
+          <PressableListItemBase
+            onPress={onPress}
+            testID={testID}
+            accessibilityLabel={accessibilityLabel}
+          >
+            <ListItemTransactionContent />
+          </PressableListItemBase>
+        )
       )
     )
   );
