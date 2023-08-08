@@ -6,8 +6,8 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { H4 } from "../../../components/core/typography/H4";
-import { itwLifecycleOperational } from "../store/actions";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { itwLifecycleOperational } from "../store/actions/itwLifecycleActions";
 
 /**
  * A hook that returns a function to present the reset wallet bottom sheet in the wallet home screen.

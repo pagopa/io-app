@@ -5,7 +5,7 @@ import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/i
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwPid } from "../actions/credentials";
+import { itwPid } from "../actions/itwCredentialsActions";
 
 export type ItwPidType = {
   pid: O.Option<PidResponse>;

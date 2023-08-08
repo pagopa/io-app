@@ -3,8 +3,8 @@ import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwWiaRequest } from "../actions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { itwWiaRequest } from "../actions/itwWiaActions";
 
 export type ItwWIAState = pot.Pot<O.Option<string>, ItWalletError>;
 

@@ -13,7 +13,7 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { ItwActionBanner } from "../../features/it-wallet/components/ItwActionBanner";
 import { itWalletEnabled } from "../../config";
 import { useIOSelector } from "../../store/hooks";
-import { itwLifecycleIsOperationalSelector } from "../../features/it-wallet/store/reducers/itwLifecycle";
+import { itwLifecycleIsOperationalSelector } from "../../features/it-wallet/store/reducers/itwLifecycleReducer";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
 

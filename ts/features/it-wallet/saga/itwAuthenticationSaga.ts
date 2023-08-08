@@ -1,8 +1,8 @@
 import { call, cancel, fork, take } from "typed-redux-saga/macro";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { SessionToken } from "../../../types/SessionToken";
-import { loginSuccess } from "../store/actions/cie";
-import { stopCieManager, watchCieAuthenticationSaga } from "./cie";
+import { loginSuccess } from "../store/actions/itwCieActions";
+import { stopCieManager, watchCieAuthenticationSaga } from "./itwCieSaga";
 
 /**
  * A saga that makes the user go through the authentication process until
