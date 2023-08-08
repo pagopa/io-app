@@ -36,6 +36,8 @@ import { deletePin, getPin } from "../utils/keychain";
 import NavigationService from "../navigation/NavigationService";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
+import { trackMessageNotificationTapIfNeeded } from "../features/messages/analytics";
+import { handlePendingMessageStateIfAllowedSaga } from "./notifications";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -163,28 +165,7 @@ function* startAndHandleIdentificationResult(
     yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-      yield* select(pendingMessageStateSelector);
-
-    // Check if there is a payment ongoing
-    const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
-      yield* select(isPaymentOngoingSelector);
-
-    if (!isPaymentOngoing && pendingMessageState) {
-      // We have a pending notification message to handle
-      const messageId = pendingMessageState.id;
-
-      // Remove the pending message from the notification state
-      yield* put(clearNotificationPendingMessage());
-
-      // Navigate to message router screen
-      NavigationService.dispatchNavigationAction(
-        navigateToMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    }
+    yield* call(handlePendingMessageStateIfAllowedSaga);
   }
 }
 

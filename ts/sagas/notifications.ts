@@ -9,6 +9,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
 import {
+  clearNotificationPendingMessage,
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
 } from "../store/actions/notifications";
@@ -16,6 +17,12 @@ import { notificationsInstallationSelector } from "../store/reducers/notificatio
 import { SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
 import { trackNotificationInstallationTokenNotChanged } from "../utils/analytics";
+import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
+import { trackMessageNotificationTapIfNeeded } from "../features/messages/analytics";
+import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
+import { navigateToMainNavigatorAction, navigateToMessageRouterAction } from "../store/actions/navigation";
+import NavigationService from "../navigation/NavigationService";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -79,5 +86,44 @@ export function* updateInstallationSaga(
     }
   } catch (e) {
     yield* put(updateNotificationInstallationFailure(convertUnknownToError(e)));
+  }
+}
+
+export function* handlePendingMessageStateIfAllowedSaga(
+  shouldResetToMainNavigator: boolean = false
+) {
+  // Check if we have a pending notification message
+  const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
+    yield* select(pendingMessageStateSelector);
+  trackMessageNotificationTapIfNeeded(pendingMessageState);
+
+  // Check if there is a payment ongoing
+  const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
+    yield* select(isPaymentOngoingSelector);
+
+  console.log(
+    `=== handlePendingMessageStateIfAllowedSaga (${
+      pendingMessageState !== undefined && pendingMessageState !== null
+    })`
+  );
+
+  if (!isPaymentOngoing && pendingMessageState) {
+    // We have a pending notification message to handle
+    const messageId = pendingMessageState.id;
+
+    // Remove the pending message from the notification state
+    yield* put(clearNotificationPendingMessage());
+
+    if (shouldResetToMainNavigator) {
+      yield* call(navigateToMainNavigatorAction);
+    }
+
+    // Navigate to message router screen
+    NavigationService.dispatchNavigationAction(
+      navigateToMessageRouterAction({
+        messageId: messageId as UIMessageId,
+        fromNotification: true
+      })
+    );
   }
 }

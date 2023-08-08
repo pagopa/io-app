@@ -10,7 +10,7 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
-import { watchNotificationSaga } from "./watchNotificationSaga";
+import { handlePendingMessageStateIfAllowedSaga } from "../notifications";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -40,10 +40,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
         return;
       }
 
-      // Be aware not to block the code flow is the newApplicationState is
-      // 'active', since it is used later in the 'watchNotificationSaga' to
-      // check for an app opening from a push notification received while
-      // the application was in the background state
+      // Be aware not to block the code flow is the newApplicationState 
+      // is 'active', since it is used later in the 
+      // 'handlePendingMessageStateIfAllowedSaga' to check for an app 
+      // opening from a push notification received while the application 
+      // was in the background state
       if (newApplicationState !== "active") {
         lastState = {
           appState: newApplicationState,
@@ -52,13 +53,10 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
         return;
       }
 
-      yield* fork(
-        watchNotificationSaga,
-        lastState.appState,
-        newApplicationState
-      );
-
       if (lastState.appState !== "active" && newApplicationState === "active") {
+
+        yield* fork(handlePendingMessageStateIfAllowedSaga);
+
         // Screens requiring identification when the app pass from background/inactive to active state
         const whiteList: ReadonlyArray<string> = [];
 

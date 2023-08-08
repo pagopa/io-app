@@ -80,4 +80,11 @@ export const setMixpanelPushNotificationToken = (token: string) => {
 export const mixpanelTrack = (
   event: string,
   properties?: Record<string, unknown>
-) => mixpanel?.track(event, properties);
+) => {
+  console.log(
+    `=== mixpanel.mixpanelTrack (${
+      mixpanel ? "defined" : "UNDEFINED or NULL"
+    }) (${event})`
+  );
+  return mixpanel?.track(event, properties);
+};

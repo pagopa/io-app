@@ -122,7 +122,7 @@ import {
   handleSetMixpanelEnabled,
   initMixpanel
 } from "./mixpanel";
-import { updateInstallationSaga } from "./notifications";
+import { handlePendingMessageStateIfAllowedSaga, updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
   watchProfile,
@@ -666,25 +666,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-    yield* select(pendingMessageStateSelector);
-
-  if (pendingMessageState) {
-    // We have a pending notification message to handle
-    const messageId = pendingMessageState.id;
-
-    // Remove the pending message from the notification state
-    yield* put(clearNotificationPendingMessage());
-
-    yield* call(navigateToMainNavigatorAction);
-    // Navigate to message router screen
-    NavigationService.dispatchNavigationAction(
-      navigateToMessageRouterAction({
-        messageId: messageId as UIMessageId,
-        fromNotification: true
-      })
-    );
-  }
+  yield* call(handlePendingMessageStateIfAllowedSaga, true);
 
   yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }

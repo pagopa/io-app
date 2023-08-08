@@ -7,6 +7,7 @@ import {
   createAction,
   createStandardAction
 } from "typesafe-actions";
+import { PendingMessageState } from "../reducers/notifications/pendingMessage";
 
 export const updateNotificationsInstallationToken = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
@@ -21,11 +22,9 @@ export const updateNotificationInstallationFailure = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE"
 )<Error>();
 
-export const updateNotificationsPendingMessage = createAction(
-  "NOTIFICATIONS_PENDING_MESSAGE_UPDATE",
-  resolve => (messageId: string, foreground: boolean) =>
-    resolve({ id: messageId, foreground })
-);
+export const updateNotificationsPendingMessage = createStandardAction(
+  "NOTIFICATIONS_PENDING_MESSAGE_UPDATE"
+)<PendingMessageState>();
 
 export const clearNotificationPendingMessage = createStandardAction(
   "NOTIFICATIONS_PENDING_MESSAGE_CLEAR"
