@@ -1,13 +1,23 @@
 import { SagaIterator } from "redux-saga";
-import { put, select, call } from "typed-redux-saga/macro";
+import { put, select, call, takeLatest } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import DeviceInfo from "react-native-device-info";
 import { idpSelector } from "../../../store/reducers/authentication";
-import { itwWiaRequest } from "../store/actions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { getWia } from "../utils/wia";
 import { isCIEAuthenticationSupported } from "../utils/cie";
+import { itwWiaRequest } from "../store/actions/itwWiaActions";
+
+/**
+ * Watcher for the IT wallet instance attestation related sagas.
+ */
+export function* watchItwWiaSaga(): SagaIterator {
+  /**
+   * Handles the wallet instance attestation issuing.
+   */
+  yield* takeLatest(itwWiaRequest.request, handleWiaRequest);
+}
 
 /*
  * This saga handles the wallet instance attestation issuing.
