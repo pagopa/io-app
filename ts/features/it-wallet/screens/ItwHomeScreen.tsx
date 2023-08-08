@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Pictogram } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
@@ -23,10 +22,8 @@ import PidCredential from "../components/PidCredential";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/ItwParamsList";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { ItWalletError } from "../utils/errors/itwErrors";
-import { mapRequirementsError } from "../utils/errors/itwErrorsMapping";
-import { InfoScreenComponent } from "../../fci/components/InfoScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import ItwErrorView from "../components/ItwErrorView";
+import { cancelButtonProps } from "../utils/itwButtonsUtils";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycleReducer";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
@@ -99,51 +96,41 @@ const ItwHomeScreen = () => {
     </View>
   );
 
-  /**
-   * Renders the error view.
-   */
-  const ErrorView = (error: ItWalletError) => {
-    const mappedError = mapRequirementsError(error);
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: navigation.goBack,
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={mappedError.title}
-          body={mappedError.body}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
-  };
-
   const RenderMask = () =>
     pot.fold(
       decodedPidPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => ErrorView(err),
+      err => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={err}
+        />
+      ),
       some =>
         pipe(
           some.decodedPid,
           O.fold(
-            () => <> </>, // TODO: https://pagopa.atlassian.net/browse/SIW-364
+            () => (
+              <ItwErrorView
+                type="SingleButton"
+                leftButton={cancelButtonProps(navigation.goBack)}
+              />
+            ),
             decodedPid => <ContentView decodedPid={decodedPid} />
           )
         ),
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => ErrorView(err)
+      (_, someErr) => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(navigation.goBack)}
+          error={someErr}
+        />
+      )
     );
 
   return (
@@ -206,6 +193,5 @@ const ItwHomeScreen = () => {
       </ScrollView>
     </TopScreenComponent>
   );
-  <></>;
 };
 export default ItwHomeScreen;
