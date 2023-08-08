@@ -40,7 +40,6 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
         return;
       }
 
-
       // Be aware not to block the code flow is the newApplicationState is
       // 'active', since it is used later in the 'watchNotificationSaga' to
       // check for an app opening from a push notification received while
@@ -53,7 +52,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
         return;
       }
 
-      yield* fork(watchNotificationSaga, lastState.appState, newApplicationState);
+      yield* fork(
+        watchNotificationSaga,
+        lastState.appState,
+        newApplicationState
+      );
 
       if (lastState.appState !== "active" && newApplicationState === "active") {
         // Screens requiring identification when the app pass from background/inactive to active state
