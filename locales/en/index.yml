@@ -3265,9 +3265,9 @@ features:
     title: "IT Wallet"
     actionBanner:
       title: "Novità IT Wallet"
-      description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
-      action: "Attiva IT Wallet"
-      hideLabel: "Nascondi questo banner"
+      description: "Starting today, you can collect your digital credentials (such as Driver's License, Health Card, etc.) and access online services with IT Wallet."
+      action: "Enable IT Wallet"
+      hideLabel: "Hide this banner"
     innerActionBanner: 
       title: "Digital credential news"
       description: "Enable IT Wallet and add your digital credentials (e.g. driving license, health insurance card, etc.)"
@@ -3301,6 +3301,8 @@ features:
       confirm: "Continue with CIE + PIN"
       footerBox: "Before continuing, make sure you have the Electronic Identity Card (CIE) with you and remember the PIN [Read more](https://www.cartaidentita.interno.gov.it)"
       readMoreUrl: "https://identitadigitale.gov.it/"
+      noCieInfo: "If you don't have CIE "
+      noCieCta: "find out how to get it."
       errors:
         nfc:
           title: "Your device does not support NFC which is required to enable IT Wallet"
