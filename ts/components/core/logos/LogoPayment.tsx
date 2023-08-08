@@ -1,22 +1,22 @@
 import React from "react";
 
 /* Logos */
-import LogoPaymentMaestro from "./svg/LogoPaymentMaestro";
-import LogoPaymentMastercard from "./svg/LogoPaymentMastercard";
-import LogoPaymentVisa from "./svg/LogoPaymentVisa";
 import LogoPaymentAmex from "./svg/LogoPaymentAmex";
+import LogoPaymentApplePay from "./svg/LogoPaymentApplePay";
+import LogoPaymentBancomatPay from "./svg/LogoPaymentBancomatPay";
 import LogoPaymentDiners from "./svg/LogoPaymentDiners";
 import LogoPaymentDiscover from "./svg/LogoPaymentDiscover";
 import LogoPaymentJCB from "./svg/LogoPaymentJCB";
-import LogoPaymentUnionPay from "./svg/LogoPaymentUnionPay";
-import LogoPaymentPayPal from "./svg/LogoPaymentPayPal";
-import LogoPaymentBancomatPay from "./svg/LogoPaymentBancomatPay";
-import LogoPaymentVPay from "./svg/LogoPaymentVPay";
-import LogoPaymentPagoBancomat from "./svg/LogoPaymentPagoBancomat";
-import LogoPaymentSatispay from "./svg/LogoPaymentSatispay";
-import LogoPaymentPostepay from "./svg/LogoPaymentPostepay";
+import LogoPaymentMaestro from "./svg/LogoPaymentMaestro";
+import LogoPaymentMastercard from "./svg/LogoPaymentMastercard";
 import LogoPaymentMyBank from "./svg/LogoPaymentMyBank";
-import LogoPaymentApplePay from "./svg/LogoPaymentApplePay";
+import LogoPaymentPagoBancomat from "./svg/LogoPaymentPagoBancomat";
+import LogoPaymentPayPal from "./svg/LogoPaymentPayPal";
+import LogoPaymentPostepay from "./svg/LogoPaymentPostepay";
+import LogoPaymentSatispay from "./svg/LogoPaymentSatispay";
+import LogoPaymentUnionPay from "./svg/LogoPaymentUnionPay";
+import LogoPaymentVPay from "./svg/LogoPaymentVPay";
+import LogoPaymentVisa from "./svg/LogoPaymentVisa";
 
 export const IOPaymentLogos = {
   maestro: LogoPaymentMaestro,

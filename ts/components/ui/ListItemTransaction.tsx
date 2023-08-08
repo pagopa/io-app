@@ -9,7 +9,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -28,10 +27,12 @@ import {
   IOStyles
 } from "../core/variables/IOStyles";
 import Avatar from "./Avatar";
+import { LogoPaymentWithFallback } from "./utils/components/LogoPaymentWithFallback";
 import {
   PressableBaseProps,
   PressableListItemBase
-} from "./utils/baseComponents/PressableListItemBase";
+} from "./utils/components/PressableListItemBase";
+
 export type ListItemTransactionStatus =
   | "success"
   | "failure"
@@ -83,7 +84,12 @@ const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (React.isValidElement(logoIcon)) {
     return <>{logoIcon}</>;
   }
-  return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
+  return (
+    <LogoPaymentWithFallback
+      brand={logoIcon as IOLogoPaymentType}
+      size={CARD_LOGO_SIZE}
+    />
+  );
 };
 
 export const ListItemTransaction = ({
