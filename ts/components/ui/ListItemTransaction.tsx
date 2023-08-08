@@ -182,27 +182,7 @@ export const ListItemTransaction = ({
       }
     };
 
-    const DSTransactionStatus =
-      transactionStatus === "success"
-        ? "success"
-        : transactionStatus === "failure"
-        ? "failure"
-        : "pending";
-
-    return isDSEnabled ? (
-      <DSListItemTransaction
-        accessibilityLabel={accessibilityLabel}
-        hasChevronRight={hasChevronRight}
-        isLoading={isLoading}
-        onPress={onPress}
-        subtitle={subtitle}
-        testID={testID}
-        title={title}
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        transactionAmount={transactionAmount!}
-        transactionStatus={DSTransactionStatus}
-      />
-    ) : (
+    return (
       <>
         {paymentLogoIcon && (
           <View
@@ -235,30 +215,52 @@ export const ListItemTransaction = ({
     );
   };
 
-  return pipe(
-    onPress,
-    O.fromNullable,
-    O.fold(
-      () => (
-        <View
-          style={IOListItemStyles.listItem}
-          testID={testID}
-          accessible={true}
-          accessibilityLabel={accessibilityLabel}
-        >
-          <View style={IOListItemStyles.listItemInner}>
-            <ListItemTransactionContent />
+  const DSTransactionStatus =
+    transactionStatus === "success"
+      ? "success"
+      : transactionStatus === "failure"
+      ? "failure"
+      : "pending";
+
+  return isDSEnabled ? (
+    <DSListItemTransaction
+      accessibilityLabel={accessibilityLabel}
+      hasChevronRight={hasChevronRight}
+      isLoading={isLoading}
+      onPress={onPress}
+      subtitle={subtitle}
+      testID={testID}
+      title={title}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      transactionAmount={transactionAmount!}
+      transactionStatus={DSTransactionStatus}
+    />
+  ) : (
+    pipe(
+      onPress,
+      O.fromNullable,
+      O.fold(
+        () => (
+          <View
+            style={IOListItemStyles.listItem}
+            testID={testID}
+            accessible={true}
+            accessibilityLabel={accessibilityLabel}
+          >
+            <View style={IOListItemStyles.listItemInner}>
+              <ListItemTransactionContent />
+            </View>
           </View>
-        </View>
-      ),
-      onPress => (
-        <PressableListItemBase
-          onPress={onPress}
-          testID={testID}
-          accessibilityLabel={accessibilityLabel}
-        >
-          <ListItemTransactionContent />
-        </PressableListItemBase>
+        ),
+        onPress => (
+          <PressableListItemBase
+            onPress={onPress}
+            testID={testID}
+            accessibilityLabel={accessibilityLabel}
+          >
+            <ListItemTransactionContent />
+          </PressableListItemBase>
+        )
       )
     )
   );
