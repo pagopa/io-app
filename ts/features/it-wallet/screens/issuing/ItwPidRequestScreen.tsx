@@ -8,16 +8,13 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { InfoScreenComponent } from "../../../fci/components/InfoScreenComponent";
-import { ItWalletError } from "../../utils/errors/itwErrors";
-import { mapRequirementsError } from "../../utils/errors/itwErrorsMapping";
-import { Pictogram } from "../../../../components/core/pictograms";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
+import ItwErrorView from "../../components/ItwErrorView";
+import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { itwPidSelector } from "../../store/reducers/itwPidReducer";
 import { itwPid } from "../../store/actions/itwCredentialsActions";
@@ -62,33 +59,6 @@ const ItwPidRequestScreen = () => {
   }, [navigation, pid]);
 
   /**
-   * Renders the error view.
-   */
-  const ErrorView = (error: ItWalletError) => {
-    const mappedError = mapRequirementsError(error);
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: () => dispatch(itwActivationStop()),
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={mappedError.title}
-          body={mappedError.body}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
-  };
-
-  /**
    * Renders the loading spinner.
    * @returns a loading spinner overlay
    */
@@ -108,11 +78,23 @@ const ItwPidRequestScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => ErrorView(err),
+      err => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(() => dispatch(itwActivationStop()))}
+          error={err}
+        />
+      ),
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => ErrorView(err)
+      (_, someErr) => (
+        <ItwErrorView
+          type="SingleButton"
+          leftButton={cancelButtonProps(() => dispatch(itwActivationStop()))}
+          error={someErr}
+        />
+      )
     );
 
   return (
