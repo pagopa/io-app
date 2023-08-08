@@ -1,8 +1,11 @@
 import * as React from "react";
+import { shallowEqual } from "react-redux";
+import * as O from "fp-ts/lib/Option";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
+import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { trackFciDocOpening } from "../analytics";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
@@ -22,9 +25,25 @@ const SuccessComponent = (props: {
   const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
   const dispatch = useIODispatch();
 
+  const publicKeyOption = useIOSelector(
+    lollipopPublicKeySelector,
+    shallowEqual
+  );
+  const showUnsupportedDeviceBanner = O.isNone(publicKeyOption);
+
   // If the device is not supported by Lollipop
   // This is a temporary solution during the development of Lollipop
   // and its integration with FCI
+  if (showUnsupportedDeviceBanner) {
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.update.title")}
+        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+        testID="UnsupportedDeviceBannerID"
+      />
+    );
+  }
 
   // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
