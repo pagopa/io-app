@@ -60,6 +60,9 @@ const BarcodeScanScreen = () => {
               : "poste_datamatrix_scan"
         });
         break;
+      case "ITWALLET":
+        // TODO: blocked by [SIW-272]
+        break;
     }
   };
 
@@ -107,11 +110,13 @@ const BarcodeScanScreen = () => {
   });
 
   const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(
-    format => !dataMatrixPosteEnabled && format === "DATA_MATRIX"
+    format =>
+      (!dataMatrixPosteEnabled && format === "DATA_MATRIX") ||
+      format !== "DATA_MATRIX"
   );
 
   const enabledTypes = IO_BARCODE_ALL_TYPES.filter(
-    type => !isIdPayEnabled && type === "IDPAY"
+    type => type !== "IDPAY" || (type === "IDPAY" && isIdPayEnabled)
   );
 
   return (
