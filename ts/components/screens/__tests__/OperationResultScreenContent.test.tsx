@@ -9,10 +9,17 @@ import { OperationResultScreenContent } from "../OperationResultScreenContent";
 
 const defaultProps: OperationResultScreenContent = {
   title: "title",
-  subTitle: "subTitle",
-  actionLabel: "actionLabel",
-  actionAccessibilityLabel: "actionAccessibilityLabel",
-  action: jest.fn()
+  subtitle: "subtitle",
+  action: {
+    onPress: jest.fn(),
+    label: "Action",
+    accessibilityLabel: "Action"
+  },
+  secondaryAction: {
+    onPress: jest.fn(),
+    label: "Secondary Action",
+    accessibilityLabel: "Secondary Action"
+  }
 };
 
 describe("OperationResultScreenContent", () => {

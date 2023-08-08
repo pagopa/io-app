@@ -5,6 +5,7 @@ import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -20,7 +21,6 @@ import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
 import { BrandImage } from "../../component/card/BrandImage";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../components/core/icons/Icon";
 
 type OwnProps = {
   creditCard: CreditCardPaymentMethod;

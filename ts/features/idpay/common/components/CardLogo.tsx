@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { toUpperCase } from "fp-ts/lib/string";
 import * as React from "react";
-import { IOIconSizeScale, Icon } from "../../../../components/core/icons";
+import { IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
 import {
   IOLogoPaymentType,
   IOPaymentLogos,

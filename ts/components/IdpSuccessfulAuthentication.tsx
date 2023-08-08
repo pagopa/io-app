@@ -4,8 +4,8 @@
 import * as React from "react";
 import { View, StatusBar, StyleSheet } from "react-native";
 
+import { IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
 import variables from "../theme/variables";
-import { IOIconSizeScale, Icon } from "./core/icons";
 
 const styles = StyleSheet.create({
   container: {

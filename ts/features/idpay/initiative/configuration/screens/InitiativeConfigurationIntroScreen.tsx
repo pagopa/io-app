@@ -3,6 +3,7 @@ import { ListItem } from "native-base";
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useActor } from "@xstate/react";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -22,7 +23,6 @@ import { LOADING_TAG } from "../../../../../utils/xstate";
 import I18n from "../../../../../i18n";
 import { ConfigurationMode } from "../xstate/context";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../../components/core/icons/Icon";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;

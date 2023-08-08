@@ -1,4 +1,9 @@
-import { Alert as DSAlert } from "@pagopa/io-app-design-system";
+import {
+  Alert as DSAlert,
+  IOIconSizeScale,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import {
   GestureResponderEvent,
@@ -19,7 +24,6 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import { IOIconSizeScale, IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { Label } from "../core/typography/Label";
 import { NewH4 } from "../core/typography/NewH4";

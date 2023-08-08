@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Pressable, PressableProps } from "react-native";
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  interpolate,
-  withSpring,
-  withTiming,
   Easing,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming
 } from "react-native-reanimated";
-import { IOColors } from "../../variables/IOColors";
 import { IOSpringValues } from "../../variables/IOAnimations";
-import { AnimatedTick } from "../AnimatedTick";
+import { IOColors } from "../../variables/IOColors";
 import { IOSwitchVisualParams } from "../../variables/IOStyles";
+import { AnimatedTick } from "../AnimatedTick";
 
 type Props = {
   checked?: boolean;
@@ -49,8 +49,10 @@ const styles = StyleSheet.create({
 });
 
 /**
- * An animated checkbox. This can be used to implement a
- * standard {@link CheckBox} or other composite components.
+ * An animated checkbox. This can be used to implement a standard {@link CheckBox} or other composite components.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the AnimatedSwitch of the @pagopa/io-app-design-system library.
+ *
  */
 export const AnimatedSwitch = ({ checked, onPress, disabled }: OwnProps) => {
   const squareAnimationProgress = useSharedValue(checked ? 1 : 0);

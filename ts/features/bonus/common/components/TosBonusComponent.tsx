@@ -9,6 +9,7 @@ import {
 import * as React from "react";
 import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
+import { Icon } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -19,7 +20,6 @@ import AppHeader from "../../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
-import { Icon } from "../../../../components/core/icons/Icon";
 
 type Props = {
   onClose: () => void;

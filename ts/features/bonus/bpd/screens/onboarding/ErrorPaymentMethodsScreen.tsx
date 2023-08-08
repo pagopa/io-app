@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -13,7 +14,6 @@ import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { Icon } from "../../../../../components/core/icons/Icon";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { ListItem } from "native-base";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../core/typography/H4";
 import { H5 } from "../../core/typography/H5";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { WithTestID } from "../../../types/WithTestID";
 import { VSpacer } from "../../core/spacer/Spacer";
-import { Icon } from "../../core/icons/Icon";
 
 type Props = WithTestID<{
   isFirst: boolean;
