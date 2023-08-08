@@ -1,10 +1,8 @@
 import * as React from "react";
 
+import { Body, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { Body } from "../../../../components/core/typography/Body";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -17,14 +15,10 @@ import {
   idPayInitiativesFromInstrumentRefreshStop
 } from "../../../idpay/wallet/store/actions";
 import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import SectionHeader from "../../../../components/services/SectionHeader";
 
-type OwnProps = {
+type Props = {
   paymentMethod: PaymentMethod;
 } & Pick<React.ComponentProps<typeof View>, "style">;
-
-type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 /**
  * This component enlists the different initiatives active on the payment methods
@@ -61,7 +55,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-        <SectionHeader iconName="initiatives" title="wallet.capability.title" />
+        <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
           weight="SemiBold"
           color="blue"
@@ -70,6 +64,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
           {I18n.t("idpay.wallet.preview.showAll")}
         </Body>
       </View>
+      <VSpacer size={16} />
       <IDPayInitiativesList
         idWallet={idWalletString}
         initiatives={initiativesList.slice(0, 3)}
@@ -78,6 +73,4 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-export default connect(mapDispatchToProps)(PaymentMethodInitiatives);
+export default PaymentMethodInitiatives;
