@@ -4,3 +4,4 @@
 "NSFaceIDUsageDescription" = "IO ha necessità di accedere a Face ID per permetterti di effettuare un'autenticazione più veloce";
 "NSPhotoLibraryUsageDescription" = "Potrai salvare bonus e certificati, caricare screenshot e avvisi di pagamento.";
 "NSMicrophoneUsageDescription" = "IO ha necessità di accedere al microfono nel caso in cui desideri mandare una nota vocale";
+"NSPhotoLibraryAddUsageDescription" = "Potrai salvare immagini dall'app sul tuo dispositivo.";
