@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-identical-functions */
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -32,6 +34,70 @@ const convertToIOBarcodeFormat = (
   );
 
 /**
+ * Checks if the detected barcode format is supported
+ * @param type RNQRCodeType
+ * @param barcodeFormats Accepted formats
+ * @returns TE.Left if the format is not supported, TE.Right with the converted format otherwise
+ */
+const checkDetectedBarcodesFormat = (
+  type: RNQRCodeType,
+  barcodeFormats?: Array<IOBarcodeFormat>
+): TE.TaskEither<BarcodeFailure, IOBarcodeFormat> =>
+  pipe(
+    convertToIOBarcodeFormat(type),
+    O.filter(format => barcodeFormats?.includes(format) ?? true),
+    TE.fromOption<BarcodeFailure>(() => ({
+      reason: "UNSUPPORTED_FORMAT"
+    }))
+  );
+
+/**
+ * Checks if the detected barcodes array is not empty
+ * @param barcodes List of detected barcodes
+ * @returns TE.Left if the array is empty, TE.Right with the array otherwise
+ */
+const checkDetectedBarcodesSize = (
+  barcodes: Array<string>
+): TE.TaskEither<BarcodeFailure, Array<string>> =>
+  pipe(
+    O.of(barcodes),
+    O.filter(A.isNonEmpty),
+    TE.fromOption<BarcodeFailure>(() => ({
+      reason: "BARCODE_NOT_FOUND"
+    }))
+  );
+
+/**
+ * Decodes the detected barcodes into IOBarcode objects
+ * @param barcodes List of detected barcodes
+ * @param format Format of the detected barcodes
+ * @param barcodeTypes Accepted types of the detected barcodes
+ * @returns TE.Left if the content is not supported, TE.Right with the decoded barcodes otherwise
+ */
+const decodeDetectedBarcodes = (
+  barcodes: Array<string>,
+  format: IOBarcodeFormat,
+  barcodeTypes?: Array<IOBarcodeType>
+): TE.TaskEither<BarcodeFailure, Array<IOBarcode>> =>
+  pipe(
+    decodeMultipleIOBarcodes(barcodes, { barcodeTypes }),
+    O.map(decodedBarcodes =>
+      pipe(
+        decodedBarcodes,
+        A.map(decodedBarcode => ({
+          format,
+          ...decodedBarcode
+        }))
+      )
+    ),
+    TE.fromOption<BarcodeFailure>(() => ({
+      reason: "UNKNOWN_CONTENT",
+      format,
+      content: barcodes.join(",")
+    }))
+  );
+
+/**
  * Creates a TaskEither that decodes a barcodes from an image URI
  * @param detectOptions object which may contain the uri or the base64 of the image
  * @param barcodeFormats The accepted formats of the barcodes
@@ -42,64 +108,21 @@ export const imageDecodingTask = (
   detectOptions: QRCodeDetectOptions,
   barcodeFormats?: Array<IOBarcodeFormat>,
   barcodeTypes?: Array<IOBarcodeType>
-): TE.TaskEither<BarcodeFailure, Array<IOBarcode>> =>
+) =>
   pipe(
     barcodeDetectionTask(detectOptions),
-    // Check if any barcode is found
-    // If none return TE.left with BARCODE_NOT_FOUND error
-    TE.chain(result =>
+    TE.chain(({ type, values }) =>
       pipe(
-        A.head(result.values),
-        TE.fromOption<BarcodeFailure>(() => ({
-          reason: "BARCODE_NOT_FOUND"
-        })),
-        TE.map(() => result)
+        sequenceS(TE.Monad)({
+          // Checkif the barcode format is supported
+          format: checkDetectedBarcodesFormat(type, barcodeFormats),
+          // Check if a barcode is found by verifying that the array is not empty
+          values: checkDetectedBarcodesSize(values)
+        })
       )
     ),
-    // Check for valid barcode format
-    // If the format is not supported return TE.left with UNSUPPORTED_FORMAT error
-    TE.chain(result =>
-      pipe(
-        convertToIOBarcodeFormat(result.type),
-        O.filter(format => barcodeFormats?.includes(format) ?? true),
-        O.map(format => [result, format] as const),
-        TE.fromOption<BarcodeFailure>(() => ({
-          reason: "UNSUPPORTED_FORMAT"
-        }))
-      )
-    ),
-    // Check if any barcode was found
-    // If none return TE.left with BARCODE_NOT_FOUND error
-    TE.chain(([result, format]) =>
-      pipe(
-        result.values,
-        O.fromNullable,
-        O.filter(A.isNonEmpty),
-        O.map(values => [values, format] as const),
-        TE.fromOption<BarcodeFailure>(() => ({
-          reason: "BARCODE_NOT_FOUND"
-        }))
-      )
-    ),
-    // Decode the barcode
-    // If the barcode type is not supported return TE.left with UNKNOWN_CONTENT error
-    TE.chain(([values, format]) =>
-      pipe(
-        decodeMultipleIOBarcodes(values, { barcodeTypes }),
-        O.map(decodedBarcodes =>
-          pipe(
-            decodedBarcodes,
-            A.map(decodedBarcode => ({
-              format,
-              ...decodedBarcode
-            }))
-          )
-        ),
-        TE.fromOption<BarcodeFailure>(() => ({
-          reason: "UNKNOWN_CONTENT",
-          format,
-          content: values.join(",")
-        }))
-      )
+    TE.chain(({ format, values }) =>
+      // Decodes the detected barcodes and check if the content is supported
+      decodeDetectedBarcodes(values, format, barcodeTypes)
     )
   );
