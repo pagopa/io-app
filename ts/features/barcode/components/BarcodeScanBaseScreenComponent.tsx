@@ -14,8 +14,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
+import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
@@ -34,7 +34,7 @@ type Props = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
@@ -63,7 +63,7 @@ const BarcodeScanBaseScreenComponent = ({
     requestCameraPermission,
     openCameraSettings
   } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess,
+    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,

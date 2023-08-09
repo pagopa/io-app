@@ -13,12 +13,6 @@ import DocumentPicker, {
 } from "react-native-document-picker";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
-import PdfThumbnail, { ThumbnailResult } from "react-native-pdf-thumbnail";
-import RNQRGenerator, {
-  QRCodeDetectOptions,
-  QRCodeScanResult,
-  CodeType as RNQRCodeType
-} from "rn-qr-generator";
 import { Divider } from "../../../components/core/Divider";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -27,31 +21,9 @@ import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
-import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
-
-/**
- * Maps internal formats to external library formats
- * Necessary to work with the library {@link rn-qr-generator}
- */
-const IOBarcodeFormats: { [K in IOBarcodeFormat]: RNQRCodeType } = {
-  DATA_MATRIX: "DataMatrix",
-  QR_CODE: "QRCode"
-};
-
-/**
- * Utility functions to map external formats to internal formats
- * Converts {@link RNQRCodeType} to {@link IOBarcodeFormat}.
- * Returns undefined if no format is found
- */
-const convertToIOBarcodeFormat = (
-  format: RNQRCodeType
-): O.Option<IOBarcodeFormat> =>
-  pipe(
-    Object.entries(IOBarcodeFormats),
-    A.findFirst(([_, value]) => value === format),
-    O.map(([key, _]) => key as IOBarcodeFormat)
-  );
+import { imageDecodingTask } from "../utils/imageDecodingTask";
+import { imageGenerationTask } from "../utils/imageGenerationTask";
 
 type IOBarcodeFileScanner = {
   /**
@@ -85,9 +57,9 @@ type IOBarcodeFileScannerConfiguration = {
    */
   barcodeTypes?: Array<IOBarcodeType>;
   /**
-   * Callback called when a barcode is successfully decoded
+   * Callback called when there is at least one barcode being successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
@@ -104,85 +76,6 @@ const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
   mode: "open",
   type: [types.pdf]
 };
-
-/**
- * Creates a TaskEither that detects the QR code from an image URI
- * @param detectOptions object which may contain the uri or the base64 of the image
- * @returns
- */
-const qrCodeDetectionTask = (
-  detectOptions: QRCodeDetectOptions
-): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
-  TE.tryCatch(
-    () => RNQRGenerator.detect(detectOptions),
-    () => ({ reason: "UNEXPECTED" })
-  );
-
-/**
- * Creates a TaskEither that generates all the images from a PDF document
- * @param pdfUri
- * @returns
- */
-const imageGenerationTask = (
-  pdfUri: string
-): TE.TaskEither<BarcodeFailure, Array<ThumbnailResult>> =>
-  TE.tryCatch(
-    () => PdfThumbnail.generateAllPages(pdfUri, 100),
-    () => ({ reason: "UNEXPECTED" })
-  );
-
-/**
- * Creates a TaskEither that decodes a barcodes from an image URI
- * @param detectOptions object which may contain the uri or the base64 of the image
- * @param barcodeFormats The accepted formats of the barcodes
- * @param acceptedTypes The accepted types of the barcodes
- * @returns
- */
-const imageDecodingTask = (
-  detectOptions: QRCodeDetectOptions,
-  barcodeFormats?: Array<IOBarcodeFormat>,
-  barcodeTypes?: Array<IOBarcodeType>
-): TE.TaskEither<BarcodeFailure, IOBarcode> =>
-  pipe(
-    qrCodeDetectionTask(detectOptions),
-    TE.chain(result =>
-      pipe(
-        A.head(result.values),
-        TE.fromOption<BarcodeFailure>(() => ({ reason: "BARCODE_NOT_FOUND" })),
-        TE.map(() => result)
-      )
-    ),
-    TE.chain(result =>
-      pipe(
-        convertToIOBarcodeFormat(result.type),
-        O.filter(format => barcodeFormats?.includes(format) ?? true),
-        O.map(format => [result, format] as const),
-        TE.fromOption<BarcodeFailure>(() => ({ reason: "UNSUPPORTED_FORMAT" }))
-      )
-    ),
-    TE.chain(([result, format]) =>
-      pipe(
-        // FIXME Currently, we only support one barcode per image
-        // Extract the first barcode if any barcode is found
-        A.head(result.values),
-        TE.fromOption<BarcodeFailure>(() => ({ reason: "BARCODE_NOT_FOUND" })),
-        TE.chain(content =>
-          pipe(
-            decodeIOBarcode(content, { barcodeTypes }),
-            O.map(decodedBarcode => ({
-              format,
-              ...decodedBarcode
-            })),
-            TE.fromOption<BarcodeFailure>(() => ({
-              reason: "UNKNOWN_CONTENT",
-              format,
-              content
-            }))
-          )
-        )
-      )
-    )
-  );
 
 const useIOBarcodeFileScanner = ({
   onBarcodeError,
@@ -268,17 +161,19 @@ const useIOBarcodeFileScanner = ({
           async (barcodes, { uri }) =>
             pipe(
               imageDecodingTask({ uri }, barcodeFormats, barcodeTypes),
-              TE.map(async barcode => [...(await barcodes), barcode]),
+              TE.map(async decodedBarcodes => [
+                ...(await barcodes),
+                ...decodedBarcodes
+              ]),
               TE.getOrElse(() => T.of(barcodes))
             )()
         )
       ),
-      // FIXME Currently, we only support one barcode per PDF document
-      // Extract the first barcode if any barcode is found
       TE.map(async barcodes =>
         pipe(
           await barcodes,
-          A.head,
+          O.of,
+          O.filter(A.isNonEmpty),
           O.map(onBarcodeSuccess),
           O.getOrElse(() => onBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
         )

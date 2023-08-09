@@ -138,3 +138,20 @@ export const decodeIOBarcode = (
     O.map(A.compact),
     O.chain(A.head)
   );
+
+/**
+ * Barcode decoding for multiple values
+ * @param values List of barcode contens
+ * @returns A list of DecodedIOBarcode {@see DecodedIOBarcode} if at least one barcode is decoded
+ */
+export const decodeMultipleIOBarcodes = (
+  values: Array<string> | undefined,
+  options?: DecodeOptions
+): O.Option<Array<DecodedIOBarcode>> =>
+  pipe(
+    values,
+    O.fromNullable,
+    O.map(A.map(value => decodeIOBarcode(value, options))),
+    O.map(A.compact),
+    O.filter(A.isNonEmpty)
+  );

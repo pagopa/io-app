@@ -17,7 +17,10 @@ const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
 
-  const handleBarcodeSuccess = (barcode: IOBarcode) => {
+  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+    // IDPay does not support multiple barcodes, we take only the first one
+    const barcode = barcodes[0];
+
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
     if (barcode.type === "IDPAY") {
