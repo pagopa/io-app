@@ -1,4 +1,4 @@
-import { H3, H6 } from "@pagopa/io-app-design-system";
+import { H3, H6, IOColors, IOStyles } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,8 +8,6 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
-import { IOColors } from "../../../core/variables/IOColors";
-import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 
@@ -155,7 +153,7 @@ const CardSkeleton = ({ testID }: { testID?: string }) => (
 
 // ------------- styles + types
 
-// all cards have an expiration date except for paypal,
+// all cards have an expiration date except for paypal and bpay,
 // bancomatPay also has a phone number
 // the rendering of the circuit logo is handled by the component
 
