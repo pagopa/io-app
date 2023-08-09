@@ -53,7 +53,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
     // but in the remote case they were we'd rather show a skeleton
     ({ info, abiInfo }) =>
       sequenceS(O.Monad)({
-        abiCode: O.fromNullable(abiInfo?.abi),
+        abiCode: O.some(abiInfo?.abi),
         holderName: O.fromNullable(nameSurname),
         expireMonth: O.fromNullable(info.expireMonth),
         expireYear: O.fromNullable(info.expireYear)

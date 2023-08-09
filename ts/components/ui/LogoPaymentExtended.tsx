@@ -11,7 +11,7 @@ type LogoPaymentHugeProps = {
       icon: "payPal" | "bpay";
     }
   | {
-      abiCode: string;
+      abiCode?: string;
     }
 );
 

@@ -181,13 +181,13 @@ type PaymentCardStandardProps =
   | {
       cardType: "PAGOBANCOMAT";
       expirationDate: Date;
-      abiCode: string;
+      abiCode?: string;
       holderName: string;
     }
   | {
       cardType: "COBADGE";
       expirationDate: Date;
-      abiCode: string;
+      abiCode?: string;
       holderName: string;
       cardIcon?: IOLogoPaymentExtType;
     }
