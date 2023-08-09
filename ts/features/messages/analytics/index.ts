@@ -1,7 +1,5 @@
-import { identity, pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import * as S from "fp-ts/lib/string";
-import * as O from "fp-ts/lib/Option";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
@@ -9,7 +7,6 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { buildEventProperties } from "../../../utils/analytics";
-import { PendingMessageState } from "../../../store/reducers/notifications/pendingMessage";
 
 export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
   void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
@@ -18,7 +15,6 @@ export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
 }
 
 export function trackMessageNotificationTap(messageId: NonEmptyString) {
-  console.log(`=== Track PUSH tap`);
   return mixpanelTrack(
     "NOTIFICATIONS_MESSAGE_TAP",
     buildEventProperties("UX", "action", {
@@ -27,27 +23,7 @@ export function trackMessageNotificationTap(messageId: NonEmptyString) {
   );
 }
 
-export function trackMessageNotificationTapIfNeeded(
-  pendingMessageStateOpt?: PendingMessageState
-) {
-  pipe(
-    pendingMessageStateOpt,
-    O.fromNullable,
-    O.chain(pendingMessageState =>
-      pipe(
-        pendingMessageState.trackEvent,
-        O.fromNullable,
-        O.filter(identity),
-        O.map(_ =>
-          trackMessageNotificationTap(pendingMessageState.id as NonEmptyString)
-        )
-      )
-    )
-  );
-}
-
 export function trackMessageNotificationParsingFailure(errors: t.Errors) {
-  console.log(`=== PUSH parsing failed`);
   void mixpanelTrack("NOTIFICATION_PARSING_FAILURE", {
     reason: readablePrivacyReport(errors)
   });

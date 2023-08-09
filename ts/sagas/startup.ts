@@ -51,12 +51,7 @@ import {
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
-import {
-  navigateToMainNavigatorAction,
-  navigateToMessageRouterAction,
-  navigateToPrivacyScreen
-} from "../store/actions/navigation";
-import { clearNotificationPendingMessage } from "../store/actions/notifications";
+import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
 import {
   clearCache,
@@ -74,7 +69,6 @@ import {
   getKeyInfo
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
-import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
   isIdPayTestEnabledSelector,
   isPagoPATestEnabledSelector
@@ -86,7 +80,6 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import {
   differentProfileLoggedIn,
@@ -122,7 +115,10 @@ import {
   handleSetMixpanelEnabled,
   initMixpanel
 } from "./mixpanel";
-import { handlePendingMessageStateIfAllowedSaga, updateInstallationSaga } from "./notifications";
+import {
+  handlePendingMessageStateIfAllowedSaga,
+  updateInstallationSaga
+} from "./notifications";
 import {
   loadProfile,
   watchProfile,

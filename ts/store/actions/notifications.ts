@@ -2,11 +2,7 @@
  * Action types and action creator related to the Notifications.
  */
 
-import {
-  ActionType,
-  createAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 import { PendingMessageState } from "../reducers/notifications/pendingMessage";
 
 export const updateNotificationsInstallationToken = createStandardAction(

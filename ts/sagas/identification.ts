@@ -15,8 +15,6 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToMessageRouterAction } from "../store/actions/navigation";
-import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   paymentDeletePayment,
   runDeleteActivePaymentSaga
@@ -27,16 +25,11 @@ import {
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
-import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
-import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import NavigationService from "../navigation/NavigationService";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
-import { trackMessageNotificationTapIfNeeded } from "../features/messages/analytics";
 import { handlePendingMessageStateIfAllowedSaga } from "./notifications";
 
 type ResultAction =

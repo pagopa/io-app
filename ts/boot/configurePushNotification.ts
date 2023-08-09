@@ -17,9 +17,7 @@ import {
   pageSize,
   remindersOptInEnabled
 } from "../config";
-import {
-  setMixpanelPushNotificationToken
-} from "../mixpanel";
+import { setMixpanelPushNotificationToken } from "../mixpanel";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
@@ -114,9 +112,8 @@ function configurePushNotifications() {
             )
         ),
         O.fromEither,
-        O.chain(payload => {
-          console.log(`=== PUSH payload is (${JSON.stringify(payload)})`);
-          return pipe(
+        O.chain(payload =>
+          pipe(
             payload.message_id,
             O.fromNullable,
             O.alt(() =>
@@ -126,8 +123,8 @@ function configurePushNotifications() {
                 O.chainNullableK(_ => _.message_id)
               )
             )
-          );
-        }),
+          )
+        ),
         // We just received a push notification about a new message
         O.map(messageId =>
           pipe(trackMessageNotificationTap(messageId), trackingResult =>
