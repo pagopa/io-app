@@ -9,6 +9,7 @@ import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { RelyingPartySolution } from "@pagopa/io-react-native-wallet";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { IOBarcodeType } from "./IOBarcode";
 
@@ -43,6 +44,11 @@ export type DecodedIOBarcode =
       type: "IDPAY";
       authUrl: string;
       trxCode: string;
+    }
+  | {
+      type: "ITWALLET";
+      clientId: string;
+      requestUri: string;
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -90,6 +96,28 @@ const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
     O.alt(() => decodePagoPAQRCode(data))
   );
 
+const decodeItWalletBarcode: IOBarcodeDecoderFn = (data: string) =>
+  pipe(
+    data.match(/^[a-zA-Z0-9+/]+={0,2}$/),
+    O.fromNullable,
+    O.map(m =>
+      E.tryCatch(
+        () => RelyingPartySolution.decodeAuthRequestQR(m[0]),
+        () => new Error("Failed to decode auth request QR")
+      )
+    ),
+    O.chain(O.fromEither),
+    O.fold(
+      () => O.none,
+      m =>
+        O.some({
+          type: "ITWALLET",
+          clientId: m.clientId,
+          requestUri: m.requestURI
+        })
+    )
+  );
+
 // Each type comes with its own decoded function which is used to identify the barcode content
 // To add a new barcode type, add a new entry to this object
 //
@@ -102,7 +130,8 @@ const decodePagoPABarcode: IOBarcodeDecoderFn = (data: string) =>
 // };
 export const IOBarcodeDecoders: IOBarcodeDecodersType = {
   IDPAY: decodeIdPayBarcode,
-  PAGOPA: decodePagoPABarcode
+  PAGOPA: decodePagoPABarcode,
+  ITWALLET: decodeItWalletBarcode
 };
 
 type DecodeOptions = {

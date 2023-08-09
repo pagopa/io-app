@@ -38,6 +38,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { itWalletEnabled } from "../../../config";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -136,6 +137,8 @@ const BarcodeScanScreen = () => {
         break;
       case "IDPAY":
         openDeepLink(barcode.authUrl);
+      case "ITWALLET":
+        // TODO: blocked by [SIW-272]
         break;
     }
   };
