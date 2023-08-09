@@ -43,22 +43,24 @@ const ItwPidDetails = () => {
   };
 
   const ContentView = ({ decodedPid }: ContentViewParams) => (
-    <ScrollView>
-      <VSpacer />
-      <View style={IOStyles.horizontalContentPadding}>
-        <PidCredential
-          name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
-          fiscalCode={decodedPid.pid.claims.taxIdCode as string}
-        />
+    <>
+      <ScrollView>
         <VSpacer />
-        <ClaimsList decodedPid={decodedPid} />
-        <VSpacer size={spacerSize} />
-      </View>
+        <View style={IOStyles.horizontalContentPadding}>
+          <PidCredential
+            name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
+            fiscalCode={decodedPid.pid.claims.taxIdCode as string}
+          />
+          <VSpacer />
+          <ClaimsList decodedPid={decodedPid} />
+          <VSpacer size={spacerSize} />
+        </View>
+      </ScrollView>
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={presentationButton}
       />
-    </ScrollView>
+    </>
   );
 
   const DecodedPidOrErrorView = () =>
