@@ -18,7 +18,6 @@ import { FAQsCategoriesType } from "../../utils/faq";
 import { VSpacer } from "../core/spacer/Spacer";
 import { IOColors, getGradientColorValues } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
-import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -38,8 +37,6 @@ type Props = Readonly<{
   appLogo?: boolean;
   bounces?: boolean;
   topContent?: React.ReactNode;
-  hasDynamicSubHeader?: boolean;
-  dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
   contextualHelp?: ContextualHelpProps;
@@ -120,36 +117,19 @@ export default class DarkLayout extends React.Component<Props> {
           backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
         />
-        {this.props.hasDynamicSubHeader ? (
-          <AnimatedScreenContent
-            hideHeader={this.props.hideHeader}
-            title={this.props.title ? this.props.title : ""}
-            icon={this.props.icon}
-            iconFont={this.props.iconFont}
-            dark={true}
-            contentStyle={this.props.contentStyle}
-            dynamicSubHeader={this.props.dynamicSubHeader}
-            topContentHeight={
-              this.props.topContentHeight ? this.props.topContentHeight : 0
-            }
-            animationOffset={40}
-          >
-            {this.screenContent()}
-          </AnimatedScreenContent>
-        ) : (
-          <ScreenContent
-            hideHeader={this.props.hideHeader}
-            title={this.props.title ? this.props.title : ""}
-            icon={this.props.icon}
-            iconFont={this.props.iconFont}
-            dark={true}
-            contentStyle={this.props.contentStyle}
-            bounces={this.props.bounces}
-            referenceToContentScreen={this.props.referenceToContentScreen}
-          >
-            {this.screenContent()}
-          </ScreenContent>
-        )}
+        <ScreenContent
+          hideHeader={this.props.hideHeader}
+          title={this.props.title ? this.props.title : ""}
+          icon={this.props.icon}
+          iconFont={this.props.iconFont}
+          dark={true}
+          contentStyle={this.props.contentStyle}
+          bounces={this.props.bounces}
+          referenceToContentScreen={this.props.referenceToContentScreen}
+        >
+          {this.screenContent()}
+        </ScreenContent>
+
         {this.props.footerFullWidth}
         {this.props.footerContent && (
           <View style={IOStyles.footer}>{this.props.footerContent}</View>
