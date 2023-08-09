@@ -1,3 +1,4 @@
+import { H6 } from "@pagopa/io-app-design-system";
 import { Badge as NBbadge, ListItem as NBlistItem } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -6,7 +7,6 @@ import {
   StatusEnum
 } from "../../../../../definitions/idpay/InitiativesStatusDTO";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
-import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../i18n";
@@ -39,11 +39,12 @@ export const IDPayInitiativesList = ({
   idWallet
 }: InitiativeListProps) => (
   <>
-    {initiatives.map(item => (
+    {initiatives.map((item, index) => (
       <IDPayInitiativeListItem
         item={item}
         key={item.initiativeId}
         idWallet={idWallet}
+        isLast={index === initiatives.length - 1}
       />
     ))}
   </>
@@ -52,14 +53,27 @@ export const IDPayInitiativesList = ({
 type ListItemProps = {
   item: InitiativesStatusDTO;
   idWallet: string;
+  isLast: boolean;
 };
 
-export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
+export const IDPayInitiativeListItem = ({
+  item,
+  idWallet,
+  isLast
+}: ListItemProps) => {
   const { initiativeName } = item;
 
   return (
-    <NBlistItem style={{ justifyContent: "space-between", paddingRight: 0 }}>
-      <H4>{initiativeName}</H4>
+    <NBlistItem
+      itemDivider={false}
+      last={isLast}
+      style={{
+        justifyContent: "space-between",
+        paddingRight: 0,
+        paddingLeft: 0 // required to override NBlistItem default padding
+      }}
+    >
+      <H6 color="black">{initiativeName}</H6>
       <SwitchOrStatusLabel item={item} idWallet={idWallet} />
     </NBlistItem>
   );

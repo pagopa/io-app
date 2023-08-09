@@ -3683,6 +3683,8 @@ idpay:
         BUDGET_EXHAUSTED:
           title: Autorizzazione negata
           body: Non hai abbastanza soldi per autorizzare
+        AUTHORIZED:
+          title: L’operazione è stata già autorizzata!
     manualInput:
       title: Autorizza una transazione
       subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.

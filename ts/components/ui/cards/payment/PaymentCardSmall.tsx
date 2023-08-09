@@ -2,13 +2,13 @@ import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
+import { Icon } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
-import { Icon } from "../../../core/icons";
 import { IOLogoPaymentType } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
-import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
+import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
 
 type RenderData = {
@@ -92,7 +92,7 @@ export const PaymentCardSmall = (props: PaymentCardSmallProps) => {
   const Content = () => (
     <View style={containerStyle} testID={testID}>
       <View style={styles.logoRow}>
-        <LogoPaymentOrDefaultIcon cardIcon={iconName} size={24} />
+        <LogoPaymentWithFallback brand={iconName} size={24} />
         {isError && (
           <Icon
             testID={`${testID}-errorIcon`}

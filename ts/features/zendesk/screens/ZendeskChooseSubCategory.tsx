@@ -8,6 +8,7 @@ import {
   ScrollView
 } from "react-native";
 import { useDispatch } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
@@ -28,7 +29,6 @@ import {
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
-import { Icon } from "../../../components/core/icons/Icon";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceForPayment: boolean;

@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import paypalLogoImage from "../../../img/wallet/payment-methods/paypal-logo.png";
 // sadly no svg is available for paypal, since on Figma an image is used
 import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
-import { BankLogoOrSkeleton } from "./utils/baseComponents/BankLogoOrLoadingSkeleton";
+import { BankLogoOrSkeleton } from "./utils/components/BankLogoOrLoadingSkeleton";
 type LogoPaymentHugeProps = {
   dimensions: { height: number; width: number };
 } & (

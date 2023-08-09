@@ -1,13 +1,10 @@
 import { View } from "react-native";
 import * as React from "react";
+import { IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../../../components/core/typography/H3";
 import Markdown from "../../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../../i18n";
-import {
-  IOIconSizeScale,
-  Icon
-} from "../../../../../../../components/core/icons";
 
 const iconSize: IOIconSizeScale = 48;
 

@@ -15,6 +15,7 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { Icon } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import {
   hexToRgba,
@@ -37,7 +38,6 @@ import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
-import { Icon } from "../../../../components/core/icons/Icon";
 import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {

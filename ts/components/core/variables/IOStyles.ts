@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
+import { IOIconSizeScale } from "@pagopa/io-app-design-system";
 import themeVariables from "../../../theme/variables";
-import { IOIconSizeScale } from "../icons";
 import { IOColors } from "./IOColors";
 import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 

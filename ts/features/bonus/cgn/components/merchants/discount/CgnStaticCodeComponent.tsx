@@ -3,12 +3,12 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import I18n from "../../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
-import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   staticCode: Discount["staticCode"];
