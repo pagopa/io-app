@@ -27,4 +27,5 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUING.PID_ADDING]: undefined;
   // PRESENTATION PID
   [ITW_ROUTES.PRESENTATION.PID_DETAILS]: undefined;
+  [ITW_ROUTES.PRESENTATION.PID_ATTRIBUTES]: undefined;
 };
