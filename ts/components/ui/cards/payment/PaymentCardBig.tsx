@@ -92,7 +92,6 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
             dimensions={{ width: BPAY_LOGO_WIDTH, height: LOGO_HEIGHT }}
             icon="bpay"
           />
-          <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
   }
@@ -177,7 +176,6 @@ type PaymentCardStandardProps =
   | {
       cardType: "BANCOMATPAY";
       phoneNumber: string;
-      expirationDate: Date;
       holderName: string;
     }
   | {
