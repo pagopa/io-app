@@ -14,7 +14,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
+import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
@@ -70,7 +70,7 @@ const BarcodeScanBaseScreenComponent = ({
     disabled: !isFocused
   });
 
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess,

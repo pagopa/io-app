@@ -53,7 +53,7 @@ const convertToIOBarcodeFormat = (
     O.map(([key, _]) => key as IOBarcodeFormat)
   );
 
-type IOBarcodeFileReader = {
+type IOBarcodeFileScanner = {
   /**
    * Shows the image picker that lets the user select an image from the library
    */
@@ -73,7 +73,7 @@ type IOBarcodeFileReader = {
   showFilePicker: () => void;
 };
 
-type IOBarcodeFileReaderConfiguration = {
+type IOBarcodeFileScannerConfiguration = {
   /**
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
@@ -184,12 +184,12 @@ const imageDecodingTask = (
     )
   );
 
-const useIOBarcodeFileReader = ({
+const useIOBarcodeFileScanner = ({
   onBarcodeError,
   onBarcodeSuccess,
   barcodeFormats,
   barcodeTypes
-}: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
+}: IOBarcodeFileScannerConfiguration): IOBarcodeFileScanner => {
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
@@ -340,4 +340,4 @@ const useIOBarcodeFileReader = ({
   };
 };
 
-export { useIOBarcodeFileReader };
+export { useIOBarcodeFileScanner };
