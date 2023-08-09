@@ -1,4 +1,4 @@
-import { H3 } from "@pagopa/io-app-design-system";
+import { H3, H6 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,7 +8,6 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
-import { NewH6 } from "../../../core/typography/NewH6";
 import { IOColors } from "../../../core/variables/IOColors";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
@@ -99,9 +98,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
 
 // ------------- utils
 const BottomSectionText = (props: { string: string }) => (
-  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+  <H6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
     {props.string}
-  </NewH6>
+  </H6>
 );
 const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
   <>

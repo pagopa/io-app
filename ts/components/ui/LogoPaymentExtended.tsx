@@ -6,14 +6,9 @@ import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import { BankLogoOrSkeleton } from "./utils/components/BankLogoOrLoadingSkeleton";
 type LogoPaymentHugeProps = {
   dimensions: { height: number; width: number };
-} & (
-  | {
-      icon: "payPal" | "bpay";
-    }
-  | {
-      abiCode?: string;
-    }
-);
+  icon?: "payPal" | "bpay";
+  abiCode?: string;
+};
 
 export const LogoPaymentExtended = (props: LogoPaymentHugeProps) => {
   const { height, width } = props.dimensions;
