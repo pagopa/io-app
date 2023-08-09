@@ -22,17 +22,24 @@ export const BankLogoOrSkeleton = ({
   placeHolderColor = "grey-200"
 }: BankLogoOrSkeletonProps) => {
   const [imageUrl, setImageUrl] = React.useState<string>("");
-  const { width, height } = dimensions;
+  const { height, width: maxWidth } = dimensions;
+  const [width, setWidth] = React.useState<number>(maxWidth);
   React.useEffect(() => {
     // we pre-fetch the image to avoid having to render both items
-    // at the same time, which looks like a untidy hack
+    // at the same time, which looks like an untidy hack
     fetchBlob(getBankLogosCdnUri(abiCode))
       .then(blob => {
         const url = URL.createObjectURL(blob);
+        // to make sure the ratio is correct, we
+        // calculate it ourselves, else we risk misalignments
+        Image.getSize(url, (width, imgHeight) => {
+          const ratio = width / imgHeight;
+          setWidth(ratio * height);
+        });
         setImageUrl(url);
       })
       .catch(_ => null);
-  }, [abiCode]);
+  }, [abiCode, height]);
 
   return imageUrl !== "" ? (
     <Image
