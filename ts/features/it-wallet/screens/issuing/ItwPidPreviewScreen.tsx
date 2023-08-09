@@ -15,7 +15,6 @@ import { FeatureInfo } from "../../../../components/FeatureInfo";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import ClaimsList from "../../components/ClaimsList";
 import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -28,6 +27,9 @@ import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReduc
 import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
+import { H4 } from "../../../../components/core/typography/H4";
+import ButtonOutline from "../../../../components/ui/ButtonOutline";
+import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -37,7 +39,6 @@ type ContentViewProps = {
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
 const ItwPidPreviewScreen = () => {
-  const spacerSize = 32;
   const { present, bottomSheet } = useItwAbortFlow();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
@@ -87,8 +88,41 @@ const ItwPidPreviewScreen = () => {
               iconName="notice"
             />
             <VSpacer />
-            <ClaimsList decodedPid={decodedPid} />
-            <VSpacer size={spacerSize} />
+            <ItwPidClaimsList
+              decodedPid={decodedPid}
+              claims={["givenName", "familyName", "taxIdCode"]}
+              expiryDate
+              securityLevel
+              onLinkPress={() => null}
+              issuerInfo
+            />
+            <VSpacer />
+            <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+              {I18n.t(
+                "features.itWallet.verifiableCredentials.unrecognizedData.title"
+              )}
+            </H4>
+            <VSpacer />
+            <H4 weight={"Regular"} color={"bluegrey"}>
+              {I18n.t(
+                "features.itWallet.verifiableCredentials.unrecognizedData.body",
+                {
+                  issuer:
+                    decodedPid.pid.verification.evidence[0].record.source
+                      .organization_name
+                }
+              )}
+            </H4>
+            <VSpacer />
+            <ButtonOutline
+              fullWidth
+              accessibilityLabel="ClamListButton"
+              label={I18n.t(
+                "features.itWallet.verifiableCredentials.unrecognizedData.cta"
+              )}
+              onPress={() => null}
+            />
+            <VSpacer />
           </View>
         </ScreenContent>
 
