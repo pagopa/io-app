@@ -16,6 +16,7 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+import { Icon } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { WebviewMessage } from "../types/WebviewMessage";
@@ -33,7 +34,6 @@ import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import AppHeader from "./ui/AppHeader";
 import { LightModalContextInterface } from "./ui/LightModal";
-import { Icon } from "./core/icons/Icon";
 import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {

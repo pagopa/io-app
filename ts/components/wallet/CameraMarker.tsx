@@ -2,8 +2,8 @@ import { Col, Grid, Row } from "native-base";
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
+import { Icon, IOIcons } from "@pagopa/io-app-design-system";
 import { IOColors } from "../core/variables/IOColors";
-import { Icon } from "../core/icons/Icon";
 
 type MarkerState = "SCANNING" | "VALID" | "INVALID";
 
@@ -90,7 +90,9 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
         {(state === "VALID" || state === "INVALID") && (
           <View style={styles.iconContainer}>
             <Icon
-              name={state === "VALID" ? "checkTickBig" : "closeLarge"}
+              name={
+                (state === "VALID" ? "checkTickBig" : "closeLarge") as IOIcons
+              }
               size={96}
               color={state === "VALID" ? "green" : "red"}
             />

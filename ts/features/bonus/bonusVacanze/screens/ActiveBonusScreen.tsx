@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
+import { IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Label } from "../../../../components/core/typography/Label";
@@ -75,7 +76,6 @@ import {
   validityInterval
 } from "../utils/bonus";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
-import { IOIcons, Icon } from "../../../../components/core/icons";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";

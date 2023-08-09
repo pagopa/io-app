@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
@@ -25,7 +26,8 @@ import { IOColors } from "../../core/variables/IOColors";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { BadgeComponent } from "../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { Icon } from "../../core/icons/Icon";
+import { useIOSelector } from "../../../store/hooks";
+import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
 
 const ICON_WIDTH = 24;
 
@@ -183,7 +185,6 @@ const getTopIcon = (category: MessageCategory) =>
 
 type Props = {
   category: MessageCategory;
-  hasPaidBadge: boolean;
   isRead: boolean;
   isSelected: boolean;
   isSelectionModeEnabled: boolean;
@@ -223,7 +224,6 @@ const announceMessage = (
  */
 const MessageListItem = ({
   category,
-  hasPaidBadge,
   isRead,
   isSelected,
   isSelectionModeEnabled,
@@ -242,6 +242,9 @@ const MessageListItem = ({
   const hasQrCode = category?.tag === "EU_COVID_CERT";
   const showQrCode = hasQrCode && !isSelectionModeEnabled;
 
+  const hasPaidBadge = useIOSelector(state =>
+    isNoticePaidSelector(state, category)
+  );
   const maybeItemBadge = getMaybeItemBadge({
     paid: hasPaidBadge,
     qrCode: hasQrCode
@@ -329,7 +332,6 @@ const MessageListItemMemo = React.memo(
     curr.isRead === prev.isRead &&
     curr.isSelectionModeEnabled === prev.isSelectionModeEnabled &&
     curr.isSelected === prev.isSelected &&
-    curr.hasPaidBadge === prev.hasPaidBadge &&
     curr.onPress === prev.onPress
 );
 

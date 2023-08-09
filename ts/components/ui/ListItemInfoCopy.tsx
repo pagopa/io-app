@@ -1,37 +1,39 @@
+import {
+  ListItemInfoCopy as DSListItemInfoCopy,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
 import {
-  View,
-  StyleSheet,
-  Pressable,
   GestureResponderEvent,
-  Text
+  Pressable,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
-  interpolate,
   Extrapolate,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { Icon, IOIcons } from "../core/icons";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { WithTestID } from "../../types/WithTestID";
+import { makeFontStyleObject } from "../core/fonts";
+import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
-import { WithTestID } from "../../types/WithTestID";
-import { useIOSelector } from "../../store/hooks";
-import { makeFontStyleObject } from "../core/fonts";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { NewH6 } from "../core/typography/NewH6";
-import { Body } from "../core/typography/Body";
-import { VSpacer } from "../core/spacer/Spacer";
 
 export type ListItemInfoCopy = WithTestID<{
   label: string;
@@ -51,6 +53,24 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ *
+ * Represents a list item with label and value information, and an optional copy icon for copying the value.
+ * It supports onPress event for the copy icon.
+ * Currently if the Design System is enabled, the component returns the ListItemInfoCopy of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string|JSX.Element} label - The label or JSX element to display as the item's label.
+ * @param {string|JSX.Element} value - The value or JSX element to display as the item's value.
+ * @param {number} [numberOfLines=2] - The maximum number of lines to display for the value.
+ * @param {function} onPress - The function to be executed when the copy icon is pressed.
+ * @param {string} icon - The name of the icon to display (if any).
+ * @param {string} accessibilityLabel - The accessibility label for the item.
+ * @param {string} testID - The test ID for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemInfoCopy of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ListItemInfoCopy = ({
   label,
   value,
@@ -112,7 +132,6 @@ export const ListItemInfoCopy = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyListItemInfoCopy = () => (
     <Pressable
       onPress={onPress}
@@ -164,65 +183,17 @@ export const ListItemInfoCopy = ({
       </Animated.View>
     </Pressable>
   );
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
-  const NewListItemInfoCopy = () => (
-    <Pressable
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      accessible={true}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
-      testID={testID}
-    >
-      <Animated.View
-        style={[IOListItemStyles.listItem, animatedBackgroundStyle]}
-      >
-        <Animated.View
-          style={[IOListItemStyles.listItemInner, animatedScaleStyle]}
-        >
-          {icon && (
-            <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-              <Icon
-                name={icon}
-                color="grey-450"
-                size={IOListItemVisualParams.iconSize}
-              />
-            </View>
-          )}
-          <View style={IOStyles.flex}>
-            <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
-              {label}
-            </LabelSmall>
-            {/* Let developer using a custom component (e.g: skeleton) */}
-            {typeof value === "string" ? (
-              <NewH6
-                color={theme["interactiveElem-default"]}
-                numberOfLines={numberOfLines}
-              >
-                {value}
-              </NewH6>
-            ) : (
-              { value }
-            )}
-          </View>
-          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-            <Icon
-              name="copy"
-              color={theme["interactiveElem-default"]}
-              size={IOListItemVisualParams.chevronSize}
-            />
-          </View>
-        </Animated.View>
-      </Animated.View>
-    </Pressable>
-  );
-
-  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
-  without the following condition */
   return isDesignSystemEnabled ? (
-    <NewListItemInfoCopy />
+    <DSListItemInfoCopy
+      label={label}
+      value={value}
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}
+      icon={icon}
+      numberOfLines={numberOfLines}
+      testID={testID}
+    />
   ) : (
     <LegacyListItemInfoCopy />
   );

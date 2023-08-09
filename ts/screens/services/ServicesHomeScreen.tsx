@@ -34,6 +34,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
@@ -101,7 +102,6 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { Icon } from "../../components/core/icons";
 import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;

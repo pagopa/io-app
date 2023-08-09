@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { Icon } from "@pagopa/io-app-design-system";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
@@ -14,7 +15,6 @@ import {
   OperationTypeEnum as TransactionOperationTypeEnum,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../../definitions/idpay/TransactionOperationDTO";
-import { Icon } from "../../../../../components/core/icons";
 import I18n from "../../../../../i18n";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import {
