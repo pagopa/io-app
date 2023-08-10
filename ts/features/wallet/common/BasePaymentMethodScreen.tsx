@@ -132,7 +132,9 @@ const styles = StyleSheet.create({
   cardContainer: {
     paddingHorizontal: IOSpacingScale[4],
     alignItems: "center",
-    marginBottom: "-15%"
+    marginBottom: "-15%",
+    aspectRatio: 1.7,
+    width: "100%"
   },
   blueHeader: {
     backgroundColor: IOColors["blueIO-600"],
