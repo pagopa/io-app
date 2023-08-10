@@ -66,6 +66,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
       cardData => <PaymentCardBig cardType="PAGOBANCOMAT" {...cardData} />
     )
   );
+  const webviewUrl = "https://io.italia.it/metodi-pagamento";
   return (
     <BasePaymentMethodScreen
       paymentMethod={bancomat}
@@ -79,12 +80,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
           title={I18n.t("wallet.methodDetailsWebviewBanner.title")}
           content={I18n.t("wallet.methodDetailsWebviewBanner.content")}
           action={I18n.t("wallet.methodDetailsWebviewBanner.cta")}
-          onPress={() =>
-            openAuthenticationSession(
-              "https://io.italia.it/metodi-pagamento",
-              ""
-            )
-          }
+          onPress={() => openAuthenticationSession(webviewUrl, "")}
         />
       }
     />

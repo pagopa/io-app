@@ -76,6 +76,7 @@ const CobadgeDetailScreen = (props: Props) => {
       )
     )
   );
+  const webviewUrl = "https://io.italia.it/metodi-pagamento";
   return (
     <BasePaymentMethodScreen
       paymentMethod={cobadge}
@@ -89,12 +90,7 @@ const CobadgeDetailScreen = (props: Props) => {
           title={I18n.t("wallet.methodDetailsWebviewBanner.title")}
           content={I18n.t("wallet.methodDetailsWebviewBanner.content")}
           action={I18n.t("wallet.methodDetailsWebviewBanner.cta")}
-          onPress={() =>
-            openAuthenticationSession(
-              "https://io.italia.it/metodi-pagamento",
-              ""
-            )
-          }
+          onPress={() => openAuthenticationSession(webviewUrl, "")}
         />
       }
     />
