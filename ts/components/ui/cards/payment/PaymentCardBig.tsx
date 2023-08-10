@@ -34,6 +34,7 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
           <LabelSmall color="grey-650" weight="Regular">
             {props.phoneNumber}
           </LabelSmall>
+          <VSpacer size={8} />
           <BottomSectionText string={props.holderName} />
         </View>
       );
