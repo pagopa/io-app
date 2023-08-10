@@ -11,7 +11,6 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../store/hooks";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import PidCredential from "../../components/PidCredential";
-import ClaimsList from "../../components/ClaimsList";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
@@ -19,6 +18,7 @@ import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import ItwErrorView from "../../components/ItwErrorView";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
+import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -51,7 +51,14 @@ const ItwPidDetails = () => {
           fiscalCode={decodedPid.pid.claims.taxIdCode as string}
         />
         <VSpacer />
-        <ClaimsList decodedPid={decodedPid} />
+        <ItwPidClaimsList
+          decodedPid={decodedPid}
+          claims={["givenName", "familyName", "taxIdCode"]}
+          expiryDate
+          securityLevel
+          onLinkPress={() => null}
+          issuerInfo
+        />
         <VSpacer size={spacerSize} />
       </View>
       <FooterWithButtons
