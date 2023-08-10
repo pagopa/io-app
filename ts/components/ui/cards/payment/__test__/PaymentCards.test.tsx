@@ -76,7 +76,6 @@ describe("PaymentCardBig component", () => {
     const component = renderCardBig({
       cardType: "BANCOMATPAY",
       phoneNumber: "1234567890",
-      expirationDate: new Date(),
       holderName: "holderName",
       testID
     });
