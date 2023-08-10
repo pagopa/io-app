@@ -5,6 +5,7 @@ import { watchPidSaga } from "./itwPidSaga";
 import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwCredentialsSaga } from "./itwCredentialsSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
+import { watchItwRpSaga } from "./itwRpSaga";
 
 /**
  * Watcher for any IT wallet related sagas.
@@ -14,4 +15,5 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwWiaSaga);
   yield* fork(watchPidSaga);
   yield* fork(watchItwCredentialsSaga);
+  yield* fork(watchItwRpSaga);
 }
