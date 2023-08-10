@@ -3433,10 +3433,12 @@ features:
       type:
         digitalCredential: "Identità Digitale"
       claims:
-        name: "Nome"
-        surname: "Cognome"
-        fiscalCode: "Codice Fiscale"
-        birthDate: "Data di nascita"
+        uniqueId: "ID univoco"
+        givenName: "Nome"
+        familyName: "Cognome"
+        taxIdCode: "Codice Fiscale"
+        birthdate: "Data di nascita"
+        placeOfBirth: "Luogo di nascita"
         expirationDate: "Scadenza"
         securityLevel: "Livello di sicurezza"
         issuedBy: "Credenziale emessa da"
