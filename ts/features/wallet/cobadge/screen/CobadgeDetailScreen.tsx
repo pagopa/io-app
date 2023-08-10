@@ -1,43 +1,86 @@
+import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { sequenceS } from "fp-ts/lib/Apply";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
+import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { GlobalState } from "../../../../store/reducers/types";
+import { useIOSelector } from "../../../../store/hooks";
+import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import CobadgeCard from "../component/CoBadgeCard";
 
 export type CobadgeDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
   cobadge: CreditCardPaymentMethod;
 }>;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IOStackNavigationRouteProps<WalletParamsList, "WALLET_COBADGE_DETAIL">;
+type Props = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_COBADGE_DETAIL"
+>;
 
 /**
  * Detail screen for a cobadge card
  * @constructor
  */
-const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
-  const cobadge: CreditCardPaymentMethod = props.route.params.cobadge;
+const CobadgeDetailScreen = (props: Props) => {
+  const { cobadge } = props.route.params;
+  const card = useIOSelector(state =>
+    creditCardByIdSelector(state, cobadge.idWallet)
+  );
+  if (card === undefined || !isCobadge(card)) {
+    return <WorkunitGenericFailure />;
+  }
+  const paymentCardData = pipe(
+    cobadge,
+    ({ info, abiInfo }) =>
+      sequenceS(O.Monad)({
+        // all or nothing, if one of these is missing we don't show the card
+        blurredNumber: O.fromNullable(info.blurredNumber),
+        expireMonth: O.fromNullable(info.expireMonth),
+        expireYear: O.fromNullable(info.expireYear),
+        holder: O.fromNullable(info.holder),
+        brand: O.fromNullable(info.brand as IOLogoPaymentExtType | undefined),
+        abiCode: O.some(abiInfo?.abi)
+        // store gives it as string,
+        // is later checked by component and null case is handled
+      }),
+    O.map(cardData => ({
+      ...cardData,
+      expDate: new Date(
+        Number(cardData.expireYear),
+        Number(cardData.expireMonth)
+      )
+    }))
+  );
+
+  const cardComponent = pipe(
+    paymentCardData,
+    O.fold(
+      () => <PaymentCardBig testID="CreditCardComponent" isLoading={true} />,
+      ({ expDate, holder, brand, abiCode }) => (
+        <PaymentCardBig
+          cardType="COBADGE"
+          expirationDate={expDate}
+          holderName={holder}
+          cardIcon={brand}
+          abiCode={abiCode}
+        />
+      )
+    )
+  );
   return (
     <BasePaymentMethodScreen
       paymentMethod={cobadge}
-      card={<CobadgeCard enhancedCoBadge={cobadge} />}
+      card={cardComponent}
       content={<PaymentMethodFeatures paymentMethod={cobadge} />}
     />
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CobadgeDetailScreen);
+export default CobadgeDetailScreen;
