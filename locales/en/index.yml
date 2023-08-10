@@ -3316,10 +3316,12 @@ features:
       type:
         digitalCredential: "Digital Credential"
       claims:
-        name: "Name"
-        surname: "Surname"
-        fiscalCode: "Fiscal Code"
-        birthDate: "Birth date"
+        uniqueId: "Unique ID"
+        givenName: "Name"
+        familyName: "Surname"
+        taxIdCode: "Fiscal Code"
+        birthdate: "Birth date"
+        placeOfBirth: "Place of birth"
         expirationDate: "Expiration date"
         securityLevel: "Security level"
         issuedBy: "Credential issued by"
