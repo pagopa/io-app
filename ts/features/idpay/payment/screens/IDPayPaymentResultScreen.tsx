@@ -31,9 +31,9 @@ const mapFailureScreenProps: Partial<
     subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body")
   },
   [PaymentFailureEnum.SESSION_EXPIRED]: {
+    pictogram: "timeout", // FIXME: add correct pictogram (IOBP-176)
     title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body"),
-    icon: "timeout"
+    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body")
   },
   [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
     pictogram: "error", // FIXME: add correct pictogram (IOBP-176)
