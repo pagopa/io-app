@@ -7,8 +7,8 @@ import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenCompo
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import I18n from "../../i18n";
-import Completed from "../../../img/pictograms/payment-completed.svg";
 import { completeOnboarding } from "../../store/actions/onboarding";
+import PictogramFireworks from "../../components/core/pictograms/svg/PictogramFireworks";
 
 const OnboardingCompletedScreen = () => {
   const dispatch = useDispatch();
@@ -23,9 +23,8 @@ const OnboardingCompletedScreen = () => {
     <BaseScreenComponent>
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
-          image={<Completed width={80} height={80} />}
+          image={<PictogramFireworks size={120} color="#00C5CA" />}
           title={I18n.t("onboarding.thankYouPage.title")}
-          body={I18n.t("onboarding.thankYouPage.body")}
         />
 
         <FooterWithButtons
