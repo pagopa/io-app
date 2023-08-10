@@ -43,29 +43,31 @@ const ItwPidDetails = () => {
   };
 
   const ContentView = ({ decodedPid }: ContentViewParams) => (
-    <ScrollView>
-      <VSpacer />
-      <View style={IOStyles.horizontalContentPadding}>
-        <PidCredential
-          name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
-          fiscalCode={decodedPid.pid.claims.taxIdCode as string}
-        />
+    <>
+      <ScrollView>
         <VSpacer />
-        <ItwPidClaimsList
-          decodedPid={decodedPid}
-          claims={["givenName", "familyName", "taxIdCode"]}
-          expiryDate
-          securityLevel
-          onLinkPress={() => null}
-          issuerInfo
-        />
-        <VSpacer size={spacerSize} />
-      </View>
+        <View style={IOStyles.horizontalContentPadding}>
+          <PidCredential
+            name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
+            fiscalCode={decodedPid.pid.claims.taxIdCode as string}
+          />
+          <VSpacer />
+          <ItwPidClaimsList
+            decodedPid={decodedPid}
+            claims={["givenName", "familyName", "taxIdCode"]}
+            expiryDate
+            securityLevel
+            onLinkPress={() => null}
+            issuerInfo
+          />
+          <VSpacer size={spacerSize} />
+        </View>
+      </ScrollView>
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={presentationButton}
       />
-    </ScrollView>
+    </>
   );
 
   const DecodedPidOrErrorView = () =>

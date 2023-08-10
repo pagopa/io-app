@@ -7,7 +7,7 @@ export type MainTabParamsList = {
   [ROUTES.QR_CODE_SCAN]: undefined;
   [ROUTES.MESSAGES_HOME]: undefined;
   [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
-  [ROUTES.PAYMENT_SCAN_QR_CODE]: undefined;
+  [ROUTES.BARCODE_SCAN]: undefined;
   [ROUTES.SERVICES_HOME]: undefined;
   [ROUTES.PROFILE_MAIN]: ProfileMainNavigationParams;
 };
