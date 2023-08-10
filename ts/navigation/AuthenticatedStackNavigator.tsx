@@ -46,10 +46,8 @@ import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
-import {
-  WalletPaymentNavigator,
-  WalletPaymentRoutes
-} from "../features/walletV3/payment/navigation/navigator";
+import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";

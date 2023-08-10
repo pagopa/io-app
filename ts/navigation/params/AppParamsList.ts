@@ -43,10 +43,8 @@ import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
 } from "../../features/walletV3/onboarding/navigation/navigator";
-import {
-  WalletPaymentParamsList,
-  WalletPaymentRoutes
-} from "../../features/walletV3/payment/navigation/navigator";
+import { WalletPaymentParamsList } from "../../features/walletV3/payment/navigation/params";
+import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
