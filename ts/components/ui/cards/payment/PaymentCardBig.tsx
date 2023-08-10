@@ -1,4 +1,4 @@
-import { H3 } from "@pagopa/io-app-design-system";
+import { H3, H6, IOColors, IOStyles } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,9 +8,6 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
-import { NewH6 } from "../../../core/typography/NewH6";
-import { IOColors } from "../../../core/variables/IOColors";
-import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 
@@ -37,6 +34,7 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
           <LabelSmall color="grey-650" weight="Regular">
             {props.phoneNumber}
           </LabelSmall>
+          <VSpacer size={8} />
           <BottomSectionText string={props.holderName} />
         </View>
       );
@@ -92,7 +90,6 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
             dimensions={{ width: BPAY_LOGO_WIDTH, height: LOGO_HEIGHT }}
             icon="bpay"
           />
-          <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
   }
@@ -100,9 +97,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
 
 // ------------- utils
 const BottomSectionText = (props: { string: string }) => (
-  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+  <H6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
     {props.string}
-  </NewH6>
+  </H6>
 );
 const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
   <>
@@ -157,7 +154,7 @@ const CardSkeleton = ({ testID }: { testID?: string }) => (
 
 // ------------- styles + types
 
-// all cards have an expiration date except for paypal,
+// all cards have an expiration date except for paypal and bpay,
 // bancomatPay also has a phone number
 // the rendering of the circuit logo is handled by the component
 
@@ -177,19 +174,18 @@ type PaymentCardStandardProps =
   | {
       cardType: "BANCOMATPAY";
       phoneNumber: string;
-      expirationDate: Date;
       holderName: string;
     }
   | {
       cardType: "PAGOBANCOMAT";
       expirationDate: Date;
-      abiCode: string;
+      abiCode?: string;
       holderName: string;
     }
   | {
       cardType: "COBADGE";
       expirationDate: Date;
-      abiCode: string;
+      abiCode?: string;
       holderName: string;
       cardIcon?: IOLogoPaymentExtType;
     }

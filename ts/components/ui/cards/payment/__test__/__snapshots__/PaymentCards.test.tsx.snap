@@ -1119,13 +1119,13 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                         <Text
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="SemiBold"
+                                          defaultWeight="Regular"
                                           ellipsizeMode="tail"
-                                          font="TitilliumWeb"
+                                          font="ReadexPro"
                                           fontStyle={
                                             Object {
                                               "fontSize": 16,
-                                              "lineHeight": 24,
+                                              "lineHeight": 20,
                                             }
                                           }
                                           numberOfLines={1}
@@ -1136,17 +1136,17 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                               },
                                               Object {
                                                 "fontSize": 16,
-                                                "lineHeight": 24,
+                                                "lineHeight": 20,
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Titillium Web",
+                                                "fontFamily": "Readex Pro",
                                                 "fontStyle": "normal",
-                                                "fontWeight": "600",
+                                                "fontWeight": "400",
                                               },
                                             ]
                                           }
-                                          weight="SemiBold"
+                                          weight="Regular"
                                         >
                                           someEmail@test.com
                                         </Text>
