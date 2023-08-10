@@ -4,12 +4,12 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import I18n from "../i18n";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
-import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
@@ -17,11 +17,11 @@ import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPrefer
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { itWalletEnabled } from "../config";
-import ItwNotAvailableScreen from "../features/it-wallet/screens/ItwNotAvailableScreen";
 import ItwHomeScreen from "../features/it-wallet/screens/ItwHomeScreen";
 import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
+import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -123,8 +123,14 @@ export const MainTabNavigator = () => {
         )}
         {itWalletEnabled && (
           <Tab.Screen
-            name={ROUTES.QR_CODE_SCAN}
-            component={ItwNotAvailableScreen}
+            name={ROUTES.BARCODE_SCAN}
+            component={EmptyComponent}
+            listeners={{
+              tabPress: ({ preventDefault }) => {
+                preventDefault();
+                navigateToBarcodeScanScreen();
+              }
+            }}
             options={{
               title: I18n.t("global.navigator.scan"),
               tabBarIcon: ({ color, focused }) => (
@@ -147,8 +153,10 @@ export const MainTabNavigator = () => {
               : I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
-                iconName={itWalletEnabled ? "psp" : "navWallet"}
-                iconNameFocused={itWalletEnabled ? "psp" : "navWalletFocused"}
+                iconName={itWalletEnabled ? "navPsp" : "navWallet"}
+                iconNameFocused={
+                  itWalletEnabled ? "navPsp" : "navWalletFocused"
+                }
                 color={color}
                 focused={focused}
               />
@@ -195,24 +203,6 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {!itWalletEnabled && (
-          <Tab.Screen
-            name={ROUTES.PROFILE_MAIN}
-            component={ProfileMainScreen}
-            initialParams={{ hasBackButton: false }}
-            options={{
-              title: I18n.t("global.navigator.profile"),
-              tabBarIcon: ({ color, focused }) => (
-                <TabIconComponent
-                  iconName={"navProfile"}
-                  iconNameFocused={"navProfileFocused"}
-                  color={color}
-                  focused={focused}
-                />
-              )
-            }}
-          />
-        )}
       </Tab.Navigator>
     </LoadingSpinnerOverlay>
   );
