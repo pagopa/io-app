@@ -3163,22 +3163,23 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
-"@pagopa/io-react-native-jwt@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-jwt/-/io-react-native-jwt-0.4.1.tgz#02e277e8ea2c46257a9c8debafafef41713c04ce"
-  integrity sha512-jvyxF3ko3aJsLgHKoJNg/KGc1utq5WYtC85hPdG20GH5OiYuFCroFEFuN2G9wXfrOuwvYTHnpgaSpNO2ogGvaw==
+"@pagopa/io-react-native-jwt@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-jwt/-/io-react-native-jwt-0.6.0.tgz#aba1515aad41d3e6fda57d757b277ce2db670486"
+  integrity sha512-6fKLPPB6p8LRWHZlr18ccgS0uWu9PQ4Ncfcsf/zADMTd2/Yo8GJo/QEtxWX31WtukFPG/nRT5LS91ZuAai01Mg==
   dependencies:
     abab "^2.0.6"
+    zod "^3.21.4"
 
 "@pagopa/io-react-native-login-utils@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.0.tgz#4a9b55d84c6d77622e95de4511e4c422a862b27d"
   integrity sha512-mZ0Z7SAhWhbYIK/GvaeuecIyQPikj/D7pmejOrAiLA1KxIqO3UGH6p6LC2pZhN0JPHTcXbBiNHJRQtrqTHCfew==
 
-"@pagopa/io-react-native-wallet@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.2.2.tgz#f36c8d2a673974b4793622991c2111388b96d18a"
-  integrity sha512-30dQ7p0XfK/QvvOXFZ1saSk19T5f4OKEQyPw4LPn7YiSR8qOYsZzf+FaEAmT6ltOqgUMSzKsq303YlGHjQz+3Q==
+"@pagopa/io-react-native-wallet@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.2.8.tgz#7bd5d0a0f20079ffb1bbc8e0935a4e66dfe35a6e"
+  integrity sha512-uCCDZTbqwLSLPFPHVDcS/IP0yrPqoXEJQ/KLIxbHB9jBlDkMHZ/NEmDYV8eXS3NXMdw3B8JZjL6bWWjkLppgrw==
   dependencies:
     react-native-url-polyfill "^2.0.0"
     react-native-uuid "^2.0.1"
