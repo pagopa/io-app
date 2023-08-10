@@ -30,6 +30,7 @@ import {
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES
 } from "../types/IOBarcode";
+import { itWalletEnabled } from "../../../config";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -59,6 +60,9 @@ const BarcodeScanScreen = () => {
               ? "qrcode_scan"
               : "poste_datamatrix_scan"
         });
+        break;
+      case "ITWALLET":
+        // TODO: blocked by [SIW-272]
         break;
     }
   };
@@ -106,13 +110,25 @@ const BarcodeScanScreen = () => {
     title: ""
   });
 
-  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(
-    format => !dataMatrixPosteEnabled && format === "DATA_MATRIX"
-  );
+  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
+    switch (format) {
+      case "DATA_MATRIX":
+        return dataMatrixPosteEnabled;
+      default:
+        return true;
+    }
+  });
 
-  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(
-    type => !isIdPayEnabled && type === "IDPAY"
-  );
+  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(type => {
+    switch (type) {
+      case "IDPAY":
+        return isIdPayEnabled;
+      case "ITWALLET":
+        return itWalletEnabled;
+      default:
+        return true;
+    }
+  });
 
   return (
     <>
