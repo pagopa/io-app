@@ -1,4 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
+import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { View } from "react-native";
 import ReactNativeHapticFeedback, {
@@ -10,13 +12,17 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import {
+  PaymentStartOrigin,
+  paymentInitializeState
+} from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
@@ -25,11 +31,13 @@ import {
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
+import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import {
   IOBarcode,
   IO_BARCODE_ALL_FORMATS,
-  IO_BARCODE_ALL_TYPES
+  IO_BARCODE_ALL_TYPES,
+  PagoPaBarcode
 } from "../types/IOBarcode";
 
 const BarcodeScanScreen = () => {
@@ -42,8 +50,45 @@ const BarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
+  const handleMultiplePagoPaBarcodes = (
+    pagoPaBarcodes: Array<PagoPaBarcode>
+  ) => {
+    const hasDataMatrix = pagoPaBarcodes.some(
+      barcode => barcode.format === "DATA_MATRIX"
+    );
+
+    if (hasDataMatrix) {
+      void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+    }
+
+    const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
+      ? "poste_datamatrix_scan"
+      : "qrcode_scan";
+
+    if (pagoPaBarcodes.length > 1) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+        params: {
+          barcodes: pagoPaBarcodes,
+          paymentStartOrigin
+        }
+      });
+    }
+  };
+
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
-    // TODO: handle multiple barcodes (IOBP-170)
+    const pagoPaBarcodes: Array<PagoPaBarcode> = pipe(
+      barcodes,
+      A.filter(barcode => barcode.type === "PAGOPA"),
+      A.map(barcode => barcode as PagoPaBarcode)
+    );
+
+    if (pagoPaBarcodes.length > 1) {
+      // Prioritize pagoPa barcodes
+      handleMultiplePagoPaBarcodes(pagoPaBarcodes);
+      return;
+    }
+
     const barcode = barcodes[0];
 
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
@@ -55,13 +100,18 @@ const BarcodeScanScreen = () => {
       case "PAGOPA":
         dispatch(paymentInitializeState());
 
+        const isDataMatrix = barcode.format === "DATA_MATRIX";
+
+        if (isDataMatrix) {
+          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+        }
+
         navigateToPaymentTransactionSummaryScreen({
           rptId: barcode.rptId,
           initialAmount: barcode.amount,
-          paymentStartOrigin:
-            barcode.format === "QR_CODE"
-              ? "qrcode_scan"
-              : "poste_datamatrix_scan"
+          paymentStartOrigin: isDataMatrix
+            ? "poste_datamatrix_scan"
+            : "qrcode_scan"
         });
         break;
     }
