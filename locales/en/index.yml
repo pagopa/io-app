@@ -971,6 +971,10 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
+  methodDetailsWebviewBanner:
+    title: Vuoi pagare in app?
+    content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
+    cta: Scopri di più
   wallet: Wallet
   refreshWallet: Refresh the Wallet
   favourite:

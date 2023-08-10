@@ -1,4 +1,5 @@
-import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { Banner, IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -12,7 +13,7 @@ import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallet
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
-import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
+import I18n from "../../../../i18n";
 
 export type CobadgeDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
@@ -33,6 +34,7 @@ const CobadgeDetailScreen = (props: Props) => {
   const card = useIOSelector(state =>
     creditCardByIdSelector(state, cobadge.idWallet)
   );
+  const bannerViewRef = React.useRef(null);
   if (card === undefined || !isCobadge(card)) {
     return <WorkunitGenericFailure />;
   }
@@ -78,7 +80,23 @@ const CobadgeDetailScreen = (props: Props) => {
     <BasePaymentMethodScreen
       paymentMethod={cobadge}
       card={cardComponent}
-      content={<PaymentMethodFeatures paymentMethod={cobadge} />}
+      content={
+        <Banner
+          pictogramName="feedback"
+          size="big"
+          color="neutral"
+          viewRef={bannerViewRef}
+          title={I18n.t("wallet.methodDetailsWebviewBanner.title")}
+          content={I18n.t("wallet.methodDetailsWebviewBanner.content")}
+          action={I18n.t("wallet.methodDetailsWebviewBanner.cta")}
+          onPress={() =>
+            openAuthenticationSession(
+              "https://io.italia.it/metodi-pagamento",
+              ""
+            )
+          }
+        />
+      }
     />
   );
 };
