@@ -48,6 +48,20 @@ export const itwRpPresentation = createAsyncAction(
 )<RelyingPartySolution, string, ItWalletError>();
 
 /**
+ * ITW RP user confirmed
+ */
+export const itwRpUserConfirmed = createStandardAction(
+  "ITW_RP_USER_CONFIRMED"
+)<void>();
+
+/**
+ * ITW RP user rejected
+ */
+export const itwRpUserRejected = createStandardAction(
+  "ITW_RP_USER_REJECTED"
+)<void>();
+
+/**
  * Type for activation related actions.
  */
 export type ItwRpActions =
@@ -55,4 +69,6 @@ export type ItwRpActions =
   | ActionType<typeof itwRpStop>
   | ActionType<typeof itwRpCompleted>
   | ActionType<typeof itwRpInitialization>
-  | ActionType<typeof itwRpPresentation>;
+  | ActionType<typeof itwRpPresentation>
+  | ActionType<typeof itwRpUserConfirmed>
+  | ActionType<typeof itwRpUserRejected>;

@@ -1,13 +1,15 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, take, takeLatest } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import { RelyingPartySolution } from "@pagopa/io-react-native-wallet";
 import {
   itwRpCompleted,
   itwRpInitialization,
   itwRpPresentation,
   itwRpStart,
-  itwRpStop
+  itwRpStop,
+  itwRpUserConfirmed,
+  itwRpUserRejected
 } from "../store/actions/itwRpActions";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
 import { handleItwRpInitializationSaga } from "./itwRpInitialization";
@@ -58,12 +60,12 @@ export function* handleRpStart(
 
   yield* put(itwRpInitialization.request({ RP, authReqUrl }));
 
-  // TODO: user should tap a button to start
-  // the authorization flow with the RP
-  // This could be done by dispatching an action
-  // yielded by a take
-
-  yield* put(itwRpPresentation.request(RP));
+  const result = yield* take([itwRpUserConfirmed, itwRpUserRejected]);
+  if (result.type === getType(itwRpUserConfirmed)) {
+    yield* put(itwRpPresentation.request(RP));
+  } else {
+    yield* put(itwRpStop());
+  }
 }
 
 export function* handleRpStop(): SagaIterator {
