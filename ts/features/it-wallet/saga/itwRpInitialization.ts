@@ -7,8 +7,9 @@ import { itwRpInitialization } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 
-/**
- * Watcher for the IT wallet activation related sagas.
+/*
+ * This saga handles the RP initialization.
+ * It calls the getRequestObject method of the RP solution
  */
 export function* handleItwRpInitializationSaga(
   action: ActionType<typeof itwRpInitialization.request>
@@ -44,7 +45,7 @@ export function* handleItwRpInitializationSaga(
   } catch (e) {
     yield* put(
       itwRpInitialization.failure({
-        code: ItWalletErrorTypes.WIA_ISSUING_ERROR
+        code: ItWalletErrorTypes.RP_INITIALIZATION_ERROR
       })
     );
   }

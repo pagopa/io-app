@@ -14,31 +14,31 @@ import { handleItwRpInitializationSaga } from "./itwRpInitialization";
 import { handleItwRpPresentationSaga } from "./itwRpPresentation";
 
 /**
- * Watcher for the IT wallet activation related sagas.
+ * Watcher for the IT wallet Relying Party related sagas.
  */
 export function* watchItwRpSaga(): SagaIterator {
   /**
-   * Handles the ITW activation start.
+   * Handles the ITW RP start.
    */
   yield* takeLatest(itwRpStart, handleRpStart);
 
   /**
-   * Handles the ITW initialization flow.
+   * Handles the ITW RP initialization flow.
    */
   yield* takeLatest(itwRpInitialization.request, handleItwRpInitializationSaga);
 
   /**
-   * Handles the ITW presentation flow.
+   * Handles the ITW RP presentation flow.
    */
   yield* takeLatest(itwRpPresentation.request, handleItwRpPresentationSaga);
 
   /**
-   * Handles the ITW activation stop.
+   * Handles the ITW RP stop.
    */
   yield* takeLatest(itwRpStop, handleRpStop);
 
   /**
-   * Handles the ITW activation completed.
+   * Handles the ITW RP completed.
    */
   yield* takeLatest(itwRpCompleted, handleRpCompleted);
 }
@@ -48,7 +48,7 @@ export function* handleRpStart(
 ): SagaIterator {
   const authReqUrl = action.payload;
 
-  // get WIA
+  // Get WIA
   yield* call(itwWiaRequest.request);
   const wia = yield* take(itwWiaRequest.success);
 
@@ -58,16 +58,18 @@ export function* handleRpStart(
 
   yield* put(itwRpInitialization.request({ RP, authReqUrl }));
 
-  // TODO: user tap button to start
-  // yield* take(itwUserConfirmation);
+  // TODO: user should tap a button to start
+  // the authorization flow with the RP
+  // This could be done by dispatching an action
+  // yielded by a take
 
   yield* put(itwRpPresentation.request(RP));
 }
 
 export function* handleRpStop(): SagaIterator {
-  // stop (ex. go back or reset stack navigation)
+  // TODO: (ex. go back or reset stack navigation)
 }
 
 export function* handleRpCompleted(): SagaIterator {
-  // show a typ
+  // TODO: (ex. show a typ)
 }

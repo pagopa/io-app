@@ -13,8 +13,10 @@ import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 
-/**
- * Watcher for the IT wallet activation related sagas.
+/*
+ * This saga handles the RP presentation.
+ * It calls the sendAuthorizationResponse method of the RP solution
+ * to send the VP token to the RP
  */
 export function* handleItwRpPresentationSaga(
   action: ActionType<typeof itwRpPresentation.request>
@@ -73,7 +75,7 @@ export function* handleItwRpPresentationSaga(
   } catch (e) {
     yield* put(
       itwRpPresentation.failure({
-        code: ItWalletErrorTypes.WIA_ISSUING_ERROR
+        code: ItWalletErrorTypes.RP_PRESENTATION_ERROR
       })
     );
   }
