@@ -86,4 +86,48 @@ describe("test decodeIOBarcode function", () => {
       expect(output).toStrictEqual(O.none);
     });
   });
+
+  describe("test ITWALLET barcode type", () => {
+    it("should return O.some on valid QRCode base64 content", () => {
+      const client_id = "https://verifier.example.org";
+      const request_uri = "https://verifier.example.org/request_uri";
+      const value =
+        "eudiw://authorize?client_id=" +
+        client_id +
+        "&request_uri=" +
+        request_uri;
+      const output = decodeIOBarcode(Buffer.from(value).toString("base64"));
+
+      expect(output).toStrictEqual(
+        O.some({
+          type: "ITWALLET",
+          clientId: client_id,
+          requestUri: request_uri
+        })
+      );
+    });
+    it("should return O.none with invalid QRCode base64 content", () => {
+      const output = decodeIOBarcode(
+        Buffer.from("rewr23frfef==").toString("base64")
+      );
+      expect(output).toStrictEqual(O.none);
+    });
+    it("should return O.none with valid QRCode base64 content but wrong protocol", () => {
+      const client_id = "https://verifier.example.org";
+      const request_uri = "https://verifier.example.org/request_uri";
+      const value =
+        "wrongprotocol://authorize?client_id=" +
+        client_id +
+        "&request_uri=" +
+        request_uri;
+      const output = decodeIOBarcode(Buffer.from(value).toString("base64"));
+      expect(output).toStrictEqual(O.none);
+    });
+    it("should return O.none with valid QRCode base64 content but undefined request_uri", () => {
+      const client_id = "https://verifier.example.org";
+      const value = "eudiw://authorize?client_id=" + client_id;
+      const output = decodeIOBarcode(Buffer.from(value).toString("base64"));
+      expect(output).toStrictEqual(O.none);
+    });
+  });
 });
