@@ -63,6 +63,7 @@ This function sends to IO App the input to show the activity indicator loader.
 ## hideLoader()
 This function sends to IO App the input to hide the activity indicator loader.
 
+
 **Kind**: global function  
 <a name="showSuccess"></a>
 
