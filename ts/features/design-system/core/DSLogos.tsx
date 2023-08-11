@@ -93,7 +93,7 @@ export const DSLogos = () => {
         ]}
       >
         <LogoPaymentExtended
-          abiCode="NOT_VALID"
+          abiCode={undefined}
           dimensions={{ height: 33, width: 150 }}
         />
         <LogoPaymentExtended
@@ -117,7 +117,7 @@ export const DSLogos = () => {
           dimensions={{ height: 33, width: 150 }}
         />
         <LogoPaymentExtended
-          abiCode="NOT_VALID"
+          abiCode={undefined}
           dimensions={{ height: 33, width: 150 }}
         />
       </View>
