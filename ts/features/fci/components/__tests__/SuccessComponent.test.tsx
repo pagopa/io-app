@@ -1,5 +1,4 @@
 import React from "react";
-import * as O from "fp-ts/lib/Option";
 import { createStore, Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
@@ -18,21 +17,23 @@ type Props = {
   signatureRequest: SignatureRequestDetailView;
 };
 
-const someKeyTag = "a12e9221-c056-4bbc-8623-ca92df29361e";
-const somePublicKey = {
-  crv: "P-256",
-  x: "dyLTwacs5ej/nnXIvCMexUBkmdh6ArJ4GPKjHob61mE=",
-  kty: "EC",
-  y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
-};
-
 describe("Test SuccessComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   beforeEach(() => {
     jest.useFakeTimers();
   });
+  it("with a signature request status WAIT_FOR_SIGNATURE should dispatch a fciStartingRequest correctly", () => {
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
-  it("with an empty lollipop state, and with a signature request status WAIT_FOR_SIGNATURE (or other existent status), the unsupported device banner is show", () => {
+    const props = {
+      signatureRequest: mockSignatureRequestDetailView
+    };
+    const component = renderComponent(props, store);
+    expect(component).toBeTruthy();
+    expect(store.getActions()).toEqual([fciStartRequest()]);
+  });
+  it("with a signature request EXPIRED and a signature status equal to WAIT_FOR_SIGNATURE should render the right Error component", () => {
     const now = new Date();
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -47,59 +48,14 @@ describe("Test SuccessComponent", () => {
       signatureRequest: expiredSignatureRequest
     };
     const component = renderComponent(props, store);
-    expect(component.getByTestId("UnsupportedDeviceBannerID")).toBeTruthy();
-  });
-
-  it("with a signature request status WAIT_FOR_SIGNATURE should dispatch a fciStartRequest correctly", () => {
-    const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore({
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as GlobalState);
-
-    const props = {
-      signatureRequest: mockSignatureRequestDetailView
-    };
-
-    const component = renderComponent(props, store);
-    expect(component).toBeTruthy();
-    expect(store.getActions()).toEqual([fciStartRequest()]);
-  });
-  it("with a signature request EXPIRED and a signature status equal to WAIT_FOR_SIGNATURE should render the right Error component", () => {
-    const now = new Date();
-    const store: Store<GlobalState> = createStore(appReducer, {
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as any);
-    const expiredSignatureRequest = {
-      ...mockSignatureRequestDetailView,
-      expires_at: new Date(now.setDate(now.getDate() - 30)),
-      status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
-    };
-    const props = {
-      signatureRequest: expiredSignatureRequest
-    };
-    const component = renderComponent(props, store);
     expect(component.getByTestId("ExpiredSignatureRequestTestID")).toBeTruthy();
   });
   it("with a signature request EXPIRED and a signature status equal to REJECTED should render the right Error component", () => {
     const now = new Date();
-    const store: Store<GlobalState> = createStore(appReducer, {
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as any);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
     const expiredSignatureRequest = {
       ...mockSignatureRequestDetailView,
       expires_at: new Date(now.setDate(now.getDate() - 30)),
@@ -112,14 +68,10 @@ describe("Test SuccessComponent", () => {
     expect(component.getByTestId("ExpiredSignatureRequestTestID")).toBeTruthy();
   });
   it("with a signature request status WAIT_FOR_QTSP should render the right Error component", () => {
-    const store: Store<GlobalState> = createStore(appReducer, {
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as any);
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
     const waitQtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
       status: SignatureRequestStatusEnum.WAIT_FOR_QTSP
@@ -134,14 +86,7 @@ describe("Test SuccessComponent", () => {
   });
   it("with a signature request status SIGNED should render a GenericErrorComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore({
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as GlobalState);
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
     const signedSignatureRequest = {
       ...mockSignatureRequestDetailView,
@@ -155,14 +100,7 @@ describe("Test SuccessComponent", () => {
   });
   it("with a signature request status REJECTED should render a GenericErrorComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore({
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as GlobalState);
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
     const signedSignatureRequest = {
       ...mockSignatureRequestDetailView,
@@ -178,14 +116,7 @@ describe("Test SuccessComponent", () => {
   });
   it("with a signature request status CANCELLED should render a GenericErrorComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore({
-      ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      }
-    } as GlobalState);
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
     const signedSignatureRequest = {
       ...mockSignatureRequestDetailView,

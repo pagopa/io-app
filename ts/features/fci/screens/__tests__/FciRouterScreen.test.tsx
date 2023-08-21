@@ -1,6 +1,5 @@
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -21,13 +20,6 @@ import mockedProfile from "../../../../__mocks__/initializedProfile";
 import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
 const now = new Date();
-const someKeyTag = "a12e9221-c056-4bbc-8623-ca92df29361e";
-const somePublicKey = {
-  crv: "P-256",
-  x: "dyLTwacs5ej/nnXIvCMexUBkmdh6ArJ4GPKjHob61mE=",
-  kty: "EC",
-  y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
-};
 
 describe("Test FciRouterScreen", () => {
   beforeEach(() => {
@@ -97,11 +89,6 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      },
       profile: pot.some(mockedProfile)
     } as any);
 
@@ -128,11 +115,6 @@ describe("Test FciRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, {
       ...globalState,
-      lollipop: {
-        ...globalState.lollipop,
-        keyTag: O.some(someKeyTag),
-        publicKey: O.some(somePublicKey)
-      },
       profile: pot.some(mockedProfile)
     } as any);
 
