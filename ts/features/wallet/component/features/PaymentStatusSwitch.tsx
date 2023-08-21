@@ -19,7 +19,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { getPaymentStatusById } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
-import { showToast } from "../../../../utils/showToast";
+import { IOToast } from "../../../../components/Toast";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -82,13 +82,15 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
   useEffect(() => {
     if (!isFirstRender.current) {
       if (isError) {
-        showToast(I18n.t("global.actions.retry"), "danger");
+        IOToast.error(
+          I18n.t("wallet.methods.card.pagoPaCapability.operationError")
+        );
       }
     } else {
       // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
-  }, [isError]);
+  }, [isError, maybePaymentMethod]);
 
   return pipe(
     paymentMethodExists,
