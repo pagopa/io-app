@@ -7,7 +7,6 @@ import { MessageCategory } from "../../../../definitions/backend/MessageCategory
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import PnMessage from "../../../../img/features/pn/pn_message_badge.svg";
-import QrCode from "../../../../img/messages/qr-code.svg";
 import { pnEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
@@ -158,7 +157,7 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
     case "qrcode":
       return (
         <View style={styles.qrContainer}>
-          <QrCode height={22} width={22} fill={IOColors.white} />
+          <Icon name="qrCode" size={20} color="white" />
         </View>
       );
   }
