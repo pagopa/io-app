@@ -860,7 +860,6 @@ onboarding:
     title: "Configure IO"
   thankYouPage:
     title: Setup completed!
-    body: Now you can start using IO
   notifications:
     badge: New
     headerTitle: IO Settings
