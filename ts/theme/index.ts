@@ -9,7 +9,6 @@ import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import contentTheme from "./components/Content";
 import headerTheme from "./components/Header";
-import iconFontTheme from "./components/IconFont";
 import inputTheme from "./components/Input";
 import itemTheme from "./components/Item";
 import labelTheme from "./components/Label";
@@ -44,9 +43,6 @@ const theme = (): Theme => {
     },
     "NativeBase.Input": {
       ...inputTheme()
-    },
-    "UIComponent.IconFont": {
-      ...iconFontTheme()
     },
     "UIComponent.PreferenceItem": {
       ...preferenceItemTheme()
