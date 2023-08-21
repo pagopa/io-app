@@ -8,7 +8,7 @@ export const walletsV2_1 = {
   data: [
     {
       walletType: "Bancomat",
-      createDate: "2024-08-28",
+      createDate: "2021-08-28",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -36,7 +36,7 @@ export const walletsV2_1 = {
     },
     {
       walletType: "Bancomat",
-      createDate: "2024-07-22",
+      createDate: "2021-07-22",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -78,7 +78,7 @@ export const walletsV2_1 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_diners.png",
         expireMonth: "12",
-        expireYear: "2020",
+        expireYear: "2024",
         hashPan:
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871",
         holder: "Maria Rossi",
@@ -97,7 +97,7 @@ export const walletsV2_2 = {
   data: [
     {
       walletType: "Bancomat",
-      createDate: "2024-08-28",
+      createDate: "2021-08-28",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -139,7 +139,7 @@ export const walletsV2_2 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_diners.png",
         expireMonth: "12",
-        expireYear: "2020",
+        expireYear: "2024",
         hashPan:
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871",
         holder: "Maria Rossi",
@@ -159,7 +159,7 @@ export const walletsV2_3 = {
   data: [
     {
       walletType: "Bancomat",
-      createDate: "2024-10-22",
+      createDate: "2021-10-22",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -187,7 +187,7 @@ export const walletsV2_3 = {
     },
     {
       walletType: "Card",
-      createDate: "2024-04-15",
+      createDate: "2021-04-15",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -215,7 +215,7 @@ export const walletsV2_3 = {
     },
     {
       walletType: "Satispay",
-      createDate: "2024-11-16",
+      createDate: "2021-11-16",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -233,7 +233,7 @@ export const walletsV2_3 = {
     },
     {
       walletType: "BPay",
-      createDate: "2024-07-08",
+      createDate: "2021-07-08",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
         EnableableFunctionsEnum.pagoPA,
@@ -258,7 +258,7 @@ export const walletsV2_3 = {
 
 export const rawBPay: RawBPayPaymentMethod = {
   walletType: WalletTypeEnum.BPay,
-  createDate: "2024-07-08",
+  createDate: "2021-07-08",
   enableableFunctions: [
     EnableableFunctionsEnum.FA,
     EnableableFunctionsEnum.pagoPA,
@@ -282,7 +282,7 @@ export const rawBPay: RawBPayPaymentMethod = {
 
 export const mockCreditCardPaymentMethod: PaymentMethod = {
   walletType: WalletTypeEnum.Card,
-  createDate: "2024-07-08",
+  createDate: "2021-07-08",
   enableableFunctions: [
     EnableableFunctionsEnum.FA,
     EnableableFunctionsEnum.pagoPA,
