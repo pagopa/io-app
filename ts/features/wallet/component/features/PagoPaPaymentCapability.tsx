@@ -11,6 +11,7 @@ import Switch from "../../../../components/ui/Switch";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
@@ -25,9 +26,6 @@ const styles = StyleSheet.create({
 });
 
 type Props = { paymentMethod: PaymentMethod };
-
-const IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL =
-  "https://io.italia.it/metodi-pagamento";
 
 const getLocales = () => ({
   available: I18n.t("wallet.methods.card.pagoPaCapability.active"),
@@ -64,7 +62,7 @@ const availabilityBadge = (
  */
 const PagoPaPaymentCapability: React.FC<Props> = props => {
   const onOpenLearnMoreAboutInAppPayments = () =>
-    openWebUrl(IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL);
+    openWebUrl(acceptedPaymentMethodsFaqUrl);
   const paymentSupported = isPaymentSupported(props.paymentMethod);
 
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(

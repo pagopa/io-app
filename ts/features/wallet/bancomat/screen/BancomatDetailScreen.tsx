@@ -14,6 +14,7 @@ import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod, isBancomat } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 
 export type BancomatDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
@@ -66,7 +67,6 @@ const BancomatDetailScreen = ({ route }: Props) => {
       cardData => <PaymentCardBig cardType="PAGOBANCOMAT" {...cardData} />
     )
   );
-  const webviewUrl = "https://io.italia.it/metodi-pagamento";
   return (
     <BasePaymentMethodScreen
       paymentMethod={bancomat}
@@ -80,7 +80,9 @@ const BancomatDetailScreen = ({ route }: Props) => {
           title={I18n.t("wallet.methodDetailsWebviewBanner.title")}
           content={I18n.t("wallet.methodDetailsWebviewBanner.content")}
           action={I18n.t("wallet.methodDetailsWebviewBanner.cta")}
-          onPress={() => openAuthenticationSession(webviewUrl, "")}
+          onPress={() =>
+            openAuthenticationSession(acceptedPaymentMethodsFaqUrl, "")
+          }
         />
       }
     />

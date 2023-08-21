@@ -14,6 +14,7 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import I18n from "../../../../i18n";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 
 export type CobadgeDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
@@ -76,7 +77,6 @@ const CobadgeDetailScreen = (props: Props) => {
       )
     )
   );
-  const webviewUrl = "https://io.italia.it/metodi-pagamento";
   return (
     <BasePaymentMethodScreen
       paymentMethod={cobadge}
@@ -90,7 +90,9 @@ const CobadgeDetailScreen = (props: Props) => {
           title={I18n.t("wallet.methodDetailsWebviewBanner.title")}
           content={I18n.t("wallet.methodDetailsWebviewBanner.content")}
           action={I18n.t("wallet.methodDetailsWebviewBanner.cta")}
-          onPress={() => openAuthenticationSession(webviewUrl, "")}
+          onPress={() =>
+            openAuthenticationSession(acceptedPaymentMethodsFaqUrl, "")
+          }
         />
       }
     />
