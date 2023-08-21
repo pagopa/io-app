@@ -875,8 +875,7 @@ onboarding:
   shareData:
     title: Configura IO
   thankYouPage:
-    title: Configurazione terminata!
-    body: Ora puoi iniziare a usare IO
+    title: Il tuo profilo su IO è attivo!
   notifications:
     badge: Novità
     headerTitle: Configura IO
@@ -988,6 +987,8 @@ payment:
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
+  method:
+    expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
   wallet: Portafoglio
   refreshWallet: Aggiorna il Portafoglio
   favourite:
