@@ -1238,7 +1238,11 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
-    successful: Metodo rimosso dal tuo Portafoglio
+    ios:
+      confirm: Rimuovi metodo
+    android:
+      confirm: Rimuovi
+    successful: Metodo rimosso!
     failed: Impossibile rimuovere il metodo dal tuo Portafoglio
   newPaymentMethod:
     add: aggiungi
@@ -1438,6 +1442,8 @@ wallet:
         bottomSheetTitle: Perché non posso pagare in app?
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
+        operationCompleted: Operazione completata!
+        operationError: Disattivazione non riuscita
     bonus:
       name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1588,8 +1594,8 @@ wallet:
       card:
         validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
-    title: "Vuoi eliminare questo metodo di pagamento?"
-    body: "Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore."
+    title: "Rimuovere il metodo dal Portafoglio?"
+    body: "Se presente, verrà anche rimosso dalle iniziative a cui è stato abilitato."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Iniziative disponibili"
