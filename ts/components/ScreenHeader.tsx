@@ -1,7 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import {
@@ -16,7 +14,7 @@ import { IOColors } from "../components/core/variables/IOColors";
 import { IOStyles } from "./core/variables/IOStyles";
 import SectionPictogram from "./core/pictograms/SectionPictogram";
 
-type Props = {
+type ScreenHeader = {
   heading: React.ReactNode;
   rasterIcon?: ImageSourcePropType;
   icon?: IOIcons;
@@ -57,14 +55,20 @@ const styles = StyleSheet.create({
  * Component that implements the screen header with heading to the left
  * and an icon image to the right. The icon can be: an image, a pictogram or an icon
  */
-class ScreenHeader extends React.Component<Props> {
+const ScreenHeader = ({
+  heading,
+  rasterIcon,
+  icon,
+  pictogram,
+  dark,
+  rightComponent
+}: ScreenHeader) => {
   /* The following function doesn't seem very elegant,
   but I inherited this logic. Considering that this 
   component may be replaced soon and that it affects
   a lot of pages, I give up on refactoring it. */
-  private getIcon = () => {
+  const getIcon = () => {
     // If the image is PNG or other raster formats
-    const { rasterIcon, pictogram, icon, dark } = this.props;
     if (rasterIcon) {
       return <Image source={rasterIcon} style={styles.image} />;
     }
@@ -88,39 +92,28 @@ class ScreenHeader extends React.Component<Props> {
     }
   };
 
-  public render() {
-    const { heading, dark, rightComponent } = this.props;
-    return (
-      <View
-        style={[
-          dark && styles.darkGrayBg,
-          styles.container,
-          IOStyles.row,
-          { alignItems: "center" }
-        ]}
-      >
-        <View
-          accessible={true}
-          style={styles.text}
-          accessibilityRole={"header"}
-        >
-          {heading}
-        </View>
-        {pipe(
-          rightComponent,
-          O.fromNullable,
-          O.fold(
-            () => this.getIcon(),
-            c => c
-          )
-        )}
+  return (
+    <View
+      style={[
+        dark && styles.darkGrayBg,
+        styles.container,
+        IOStyles.row,
+        { alignItems: "center" }
+      ]}
+    >
+      <View accessible={true} style={styles.text} accessibilityRole={"header"}>
+        {heading}
       </View>
-    );
-  }
-}
+      {pipe(
+        rightComponent,
+        O.fromNullable,
+        O.fold(
+          () => getIcon(),
+          c => c
+        )
+      )}
+    </View>
+  );
+};
 
-export default connectStyle(
-  "UIComponent.ScreenHeader",
-  {},
-  mapPropsToStyleNames
-)(ScreenHeader);
+export default ScreenHeader;
