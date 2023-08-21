@@ -72,10 +72,6 @@ const styles = StyleSheet.create({
   pillRaster: {
     backgroundColor: IOColors.yellow,
     color: IOColors.black
-  },
-  pillIconFont: {
-    backgroundColor: IOColors.aqua,
-    color: IOColors.black
   }
 });
 
@@ -100,10 +96,6 @@ const pillMap = {
   raster: {
     style: styles.pillRaster,
     text: "Png"
-  },
-  iconFont: {
-    style: styles.pillIconFont,
-    text: "Font"
   }
 };
 

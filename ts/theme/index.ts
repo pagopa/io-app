@@ -15,7 +15,6 @@ import labelTheme from "./components/Label";
 import listTheme from "./components/List";
 import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
-import preferenceItemTheme from "./components/PreferenceItem";
 import textTheme from "./components/Text";
 import { Theme } from "./types";
 import variables from "./variables";
@@ -43,9 +42,6 @@ const theme = (): Theme => {
     },
     "NativeBase.Input": {
       ...inputTheme()
-    },
-    "UIComponent.PreferenceItem": {
-      ...preferenceItemTheme()
     },
     "NativeBase.List": {
       ...listTheme()

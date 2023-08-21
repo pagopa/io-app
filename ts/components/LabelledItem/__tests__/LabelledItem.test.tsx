@@ -102,7 +102,7 @@ describe("Test LabelledItem", () => {
     });
     expect(component.queryByTestId("ButtonDefaultOpacity")).not.toBeNull();
     expect(isString(icon)).toBeTruthy();
-    expect(component.queryByTestId("LabelledItem_IconFont")).not.toBeNull();
+    expect(component.queryByTestId("LabelledItem_Icon")).not.toBeNull();
   });
 
   it("should render Image if icon is not a string", () => {
