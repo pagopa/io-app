@@ -1,7 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { GestureResponderEvent, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  GestureResponderEvent,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
@@ -18,7 +24,6 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getWalletsById } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useRemovePaymentMethodBottomSheet } from "../component/RemovePaymentMethod";
 
 type Props = {
   paymentMethod: PaymentMethod;
@@ -54,23 +59,36 @@ const BasePaymentMethodScreen = (props: Props) => {
       })
     );
 
-  const { present, removePaymentMethodBottomSheet } =
-    useRemovePaymentMethodBottomSheet(
-      {
-        icon: paymentMethod.icon,
-        caption: paymentMethod.caption
-      },
-      () => {
-        deleteWallet(paymentMethod.idWallet);
-        setIsLoadingDelete(true);
-      }
-    );
-
   React.useEffect(() => {
     if (hasErrorDelete) {
       setIsLoadingDelete(false);
     }
   }, [hasErrorDelete]);
+
+  const onDeleteMethod = () => {
+    // Create a native Alert to confirm or cancel the delete action
+    Alert.alert(
+      I18n.t("wallet.newRemove.title"),
+      I18n.t("wallet.newRemove.body"),
+      [
+        {
+          text:
+            Platform.OS === "ios"
+              ? I18n.t(`wallet.delete.ios.confirm`)
+              : I18n.t(`wallet.delete.android.confirm`),
+          style: "destructive",
+          onPress: () => {
+            deleteWallet(paymentMethod.idWallet);
+          }
+        },
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "default"
+        }
+      ],
+      { cancelable: false }
+    );
+  };
 
   if (isLoadingDelete) {
     return (
@@ -101,10 +119,9 @@ const BasePaymentMethodScreen = (props: Props) => {
           <VSpacer size={16} />
           {content}
           <VSpacer size={24} />
-          <DeleteButton onPress={present} />
+          <DeleteButton onPress={onDeleteMethod} />
         </View>
         <VSpacer size={40} />
-        {removePaymentMethodBottomSheet}
       </ScrollView>
     </BaseScreenComponent>
   );
