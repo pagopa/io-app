@@ -50,7 +50,6 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../utils/accessibility";
-import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
@@ -175,7 +174,7 @@ const MessagesHomeScreen = ({
         <React.Fragment>
           <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
-            iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
+            pictogram={"messages"}
           />
           {needsMigration ? (
             <MigratingMessage

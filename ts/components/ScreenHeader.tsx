@@ -4,22 +4,33 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { IconProps } from "react-native-vector-icons/Icon";
+import {
+  IOIconSizeScale,
+  IOIcons,
+  IOPictogramSizeScale,
+  IOSectionPictogramType,
+  Icon
+} from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
-import { HEADER_ICON_HEIGHT } from "../utils/constants";
 import { IOColors } from "../components/core/variables/IOColors";
-import IconFont from "./ui/IconFont";
 import { IOStyles } from "./core/variables/IOStyles";
+import SectionPictogram from "./core/pictograms/SectionPictogram";
 
 type Props = {
   heading: React.ReactNode;
-  icon?: ImageSourcePropType;
-  iconFont?: IconProps;
+  rasterIcon?: ImageSourcePropType;
+  icon?: IOIcons;
+  pictogram?: IOSectionPictogramType;
   dark?: boolean;
   // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
   // will be rendered in place of icon
   rightComponent?: React.ReactElement;
 };
+
+const HEADER_PICTOGRAM_HEIGHT: IOPictogramSizeScale = 48;
+const HEADER_ICON_HEIGHT: IOIconSizeScale = 48;
+const HEADER_ICON_DARK: IOColors = "grey-650";
+const HEADER_ICON_LIGHT: IOColors = "grey-200";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -44,50 +55,37 @@ const styles = StyleSheet.create({
 
 /**
  * Component that implements the screen header with heading to the left
- * and an icon image to the right. The icon can be an image or an icon (from io-icon-font)
+ * and an icon image to the right. The icon can be: an image, a pictogram or an icon
  */
 class ScreenHeader extends React.Component<Props> {
+  /* The following function doesn't seem very elegant,
+  but I inherited this logic. Considering that this 
+  component may be replaced soon and that it affects
+  a lot of pages, I give up on refactoring it. */
   private getIcon = () => {
-    const { icon } = this.props;
-    if (icon) {
-      return <Image source={icon} style={styles.image} />;
+    // If the image is PNG or other raster formats
+    const { rasterIcon, pictogram, icon, dark } = this.props;
+    if (rasterIcon) {
+      return <Image source={rasterIcon} style={styles.image} />;
     }
-    const { iconFont } = this.props;
-    return pipe(
-      iconFont,
-      O.fromNullable,
-      O.fold(
-        () => undefined,
-        ic => {
-          const { dark } = this.props;
-          const imageColor = pipe(
-            ic.color,
-            O.fromNullable,
-            O.getOrElse(() =>
-              pipe(
-                dark,
-                O.fromNullable,
-                O.fold(
-                  () => customVariables.headerIconLight,
-                  isDark =>
-                    isDark
-                      ? customVariables.headerIconDark
-                      : customVariables.headerIconLight
-                )
-              )
-            )
-          );
-          return (
-            <IconFont
-              importantForAccessibility={"no-hide-descendants"}
-              name={ic.name}
-              size={Math.min(ic.size || HEADER_ICON_HEIGHT, HEADER_ICON_HEIGHT)}
-              color={imageColor}
-            />
-          );
-        }
-      )
-    );
+    // If the image is a pictogram
+    if (pictogram) {
+      const pictogramColor = dark ? HEADER_ICON_DARK : HEADER_ICON_LIGHT;
+      return (
+        <SectionPictogram
+          name={pictogram}
+          size={HEADER_PICTOGRAM_HEIGHT}
+          color={pictogramColor}
+        />
+      );
+    }
+    // If the image is an icon
+    if (icon) {
+      const iconColor = dark ? HEADER_ICON_DARK : HEADER_ICON_LIGHT;
+      return <Icon name={icon} color={iconColor} size={HEADER_ICON_HEIGHT} />;
+    } else {
+      return undefined;
+    }
   };
 
   public render() {

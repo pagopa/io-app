@@ -654,7 +654,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         bounces={false}
         appLogo={true}
         title={I18n.t("profile.main.title")}
-        icon={require("../../../img/icons/profile-illustration.png")}
+        rasterIcon={require("../../../img/icons/profile-illustration.png")}
         topContent={
           <TouchableDefaultOpacity
             accessibilityRole={"button"}

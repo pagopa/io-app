@@ -68,11 +68,6 @@ const customVariables = Object.assign(materialVariables, {
 
   toastColor: IOColors.aquaUltraLight,
 
-  /* When the background is dark */
-  headerIconDark: IOColors.milderGray,
-  /* When the background is light */
-  headerIconLight: IOColors.greyLight,
-
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
