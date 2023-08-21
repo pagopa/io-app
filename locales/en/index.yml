@@ -971,6 +971,8 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
+  method:
+    expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
   wallet: Wallet
   refreshWallet: Refresh the Wallet
   favourite:
