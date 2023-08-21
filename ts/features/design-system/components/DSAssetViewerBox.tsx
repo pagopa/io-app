@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 type DSAssetViewerBoxProps = {
   name: string;
   image: React.ReactNode;
-  type?: "vector" | "raster" | "iconFont";
+  type?: "vector" | "raster";
   size?: "small" | "medium";
   colorMode?: "light" | "dark";
 };
