@@ -789,7 +789,6 @@ onboarding:
     title: "IO einrichten"
   thankYouPage:
     title: "Einrichtung abgeschlossen!"
-    body: "Jetzt kannst du IO benutzen"
   notifications:
     badge: "Neuigkeiten"
     headerTitle: "IO einrichten"
