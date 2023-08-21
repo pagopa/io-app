@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24
   },
-
   verticalSpacing: {
     width: 16,
     flex: 0
@@ -308,7 +307,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   ? I18n.t("wallet.dummyCard.labels.holder.description.base")
                   : I18n.t("wallet.dummyCard.labels.holder.description.error")
               }
-              icon="io-titolare"
+              icon="profile"
               isValid={isCardHolderValid}
               accessibilityLabel={accessibilityLabels.cardHolder}
               inputProps={{
@@ -333,7 +332,7 @@ const AddCardScreen: React.FC<Props> = props => {
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon={detectedBrand.iconForm}
-              iconStyle={styles.creditCardForm}
+              imageStyle={styles.creditCardForm}
               isValid={isCreditCardValid}
               inputMaskProps={{
                 value: pipe(
@@ -368,7 +367,7 @@ const AddCardScreen: React.FC<Props> = props => {
               <Col>
                 <LabelledItem
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
-                  icon="io-calendario"
+                  icon="calendar"
                   accessibilityLabel={accessibilityLabels.expirationDate}
                   isValid={isCardExpirationDateValid}
                   inputMaskProps={{
@@ -398,7 +397,7 @@ const AddCardScreen: React.FC<Props> = props => {
                       ? "wallet.dummyCard.labels.securityCode4D"
                       : "wallet.dummyCard.labels.securityCode"
                   )}
-                  icon="io-lucchetto"
+                  icon="locked"
                   isValid={isCardCvvValid}
                   accessibilityLabel={
                     detectedBrand.cvvLength === 4
