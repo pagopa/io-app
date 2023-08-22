@@ -77,9 +77,9 @@ const BancomatDetailScreen = ({ route }: Props) => {
           size="big"
           color="neutral"
           viewRef={bannerViewRef}
-          title={I18n.t("wallet.methodDetailsWebviewBanner.title")}
-          content={I18n.t("wallet.methodDetailsWebviewBanner.content")}
-          action={I18n.t("wallet.methodDetailsWebviewBanner.cta")}
+          title={I18n.t("wallet.methodDetails.isSupportedBanner.title")}
+          content={I18n.t("wallet.methodDetails.isSupportedBanner.content")}
+          action={I18n.t("wallet.methodDetails.isSupportedBanner.cta")}
           onPress={() =>
             openAuthenticationSession(acceptedPaymentMethodsFaqUrl, "")
           }
