@@ -1,9 +1,6 @@
 import { View } from "react-native";
 import * as React from "react";
-import AlphaChannel from "../../../../img/test/alphaChannel.svg";
-import Fingerprint from "../../../../img/test/fingerprint.svg";
-import Analytics from "../../../../img/test/analytics.svg";
-import { IOAccordion } from "../../../components/core/accordion/IOAccordion";
+import { Icon } from "@pagopa/io-app-design-system";
 import { RawAccordion } from "../../../components/core/accordion/RawAccordion";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
@@ -16,22 +13,6 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSAccordion = () => (
   <DesignSystemScreen title={"Accordion"}>
-    <Label>{"<IOAccordion />"}</Label>
-    <View style={[IOStyles.flex, { width: "100%" }]}>
-      <IOAccordion title={"Animated Accordion"}>
-        <AlphaChannel width={128} height={128} />
-      </IOAccordion>
-      <IOAccordion title={"Accordion without animation"} animated={false}>
-        <Analytics width={128} height={128} fill={IOColors.orange} />
-      </IOAccordion>
-      <IOAccordion title={"Accordion with a very very very very long text"}>
-        <>
-          <Analytics width={128} height={128} fill={IOColors.orange} />
-          <Analytics width={128} height={128} fill={IOColors.orange} />
-        </>
-      </IOAccordion>
-    </View>
-    <VSpacer size={40} />
     <Label>{"<RawAccordion />"}</Label>
     <VSpacer size={16} />
     <View style={[IOStyles.flex, { width: "100%" }]}>
@@ -42,7 +23,7 @@ export const DSAccordion = () => (
         }}
         header={
           <View style={IOStyles.row}>
-            <Fingerprint width={32} height={32} />
+            <Icon name="biomFingerprint" size={32} />
             <H3 style={{ alignSelf: "center" }}>{"Custom header "}</H3>
             <H5 style={{ alignSelf: "center" }}>{"Purgatorio, Canto VI"}</H5>
           </View>
