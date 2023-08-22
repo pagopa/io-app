@@ -61,6 +61,8 @@ import {
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
+import { IOToast } from "../../components/Toast";
+import I18n from "../../i18n";
 
 //
 // Payment Manager APIs
@@ -248,6 +250,9 @@ export function* updatePaymentStatusSaga(
             updatePaymentStatus.success(
               convertWalletV2toWalletV1(response.right.value.data)
             )
+          );
+          IOToast.success(
+            I18n.t("wallet.methods.card.pagoPaCapability.operationCompleted")
           );
         } else {
           // this should not never happen (payload weak typed)

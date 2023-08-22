@@ -84,7 +84,7 @@
     <key>NSMotionUsageDescription</key>
     <string>The app needs NSMotionUsageDescription permission</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
+    <string>You will be able to save pictures from the app to your device.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>You’ll be able to save bonuses, certificates and upload screenshots or payment notices.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
@@ -102,7 +102,6 @@
       <string>TitilliumWeb-Regular.ttf</string>
       <string>TitilliumWeb-SemiBold.ttf</string>
       <string>TitilliumWeb-SemiBoldItalic.ttf</string>
-      <string>Ionicons.ttf</string>
       <string>RobotoMono-Bold.ttf</string>
       <string>RobotoMono-BoldItalic.ttf</string>
       <string>RobotoMono-Light.ttf</string>
