@@ -240,7 +240,6 @@ export const DSTextFields = () => {
         label={"Card number"}
         icon={detectedBrand.iconForm}
         imageStyle={{ width: 24, height: 24 }}
-        // isValid={O.isNone(creditCard.pan) ? undefined : isCardNumberValid}
         inputMaskProps={{
           value: pipe(
             creditCard.pan,
@@ -262,7 +261,6 @@ export const DSTextFields = () => {
             }
           }
         }}
-        // accessibilityLabel={accessibilityLabels.pan}
         testID={"pan"}
       />
 
