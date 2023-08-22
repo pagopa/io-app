@@ -29,32 +29,31 @@ type LabelledItemIconOrImageProps = {
   onPress?: () => void;
 };
 
-export const LabelledItemIconOrImage =
-  ({
-    icon,
-    iconColor,
-    imageStyle,
-    accessible,
-    onPress,
-    accessibilityLabelIcon
-  }: LabelledItemIconOrImageProps) => (
-    <ButtonDefaultOpacity
-      testID="ButtonDefaultOpacity"
-      onPress={onPress}
-      transparent
-      accessible={accessible ?? true}
-      style={styles.button}
-    >
-      {isString(icon) ? (
-        <Icon
-          size={24}
-          color={iconColor}
-          name={icon}
-          accessibilityLabel={accessibilityLabelIcon}
-          testID="LabelledItem_Icon"
-        />
-      ) : (
-        <Image source={icon} style={imageStyle} testID="LabelledItem_Image" />
-      )}
-    </ButtonDefaultOpacity>
-  );
+export const LabelledItemIconOrImage = ({
+  icon,
+  iconColor,
+  imageStyle,
+  accessible,
+  onPress,
+  accessibilityLabelIcon
+}: LabelledItemIconOrImageProps) => (
+  <ButtonDefaultOpacity
+    testID="ButtonDefaultOpacity"
+    onPress={onPress}
+    transparent
+    accessible={accessible ?? true}
+    style={styles.button}
+  >
+    {isString(icon) ? (
+      <Icon
+        size={24}
+        color={iconColor}
+        name={icon}
+        accessibilityLabel={accessibilityLabelIcon}
+        testID="LabelledItem_Icon"
+      />
+    ) : (
+      <Image source={icon} style={imageStyle} testID="LabelledItem_Image" />
+    )}
+  </ButtonDefaultOpacity>
+);
