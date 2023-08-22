@@ -29,7 +29,7 @@ type LabelledItemIconOrImageProps = {
   onPress?: () => void;
 };
 
-export const LabelledItemIconOrImage: React.FC<LabelledItemIconOrImageProps> =
+export const LabelledItemIconOrImage =
   ({
     icon,
     iconColor,
@@ -37,7 +37,7 @@ export const LabelledItemIconOrImage: React.FC<LabelledItemIconOrImageProps> =
     accessible,
     onPress,
     accessibilityLabelIcon
-  }): React.ReactElement => (
+  }: LabelledItemIconOrImageProps) => (
     <ButtonDefaultOpacity
       testID="ButtonDefaultOpacity"
       onPress={onPress}
