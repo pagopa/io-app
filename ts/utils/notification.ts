@@ -14,19 +14,13 @@ export enum AuthorizationStatus {
   Provisional = 3
 }
 
-const isAndroid7NougatAPI24OrMore = (version: string | number) =>
-  pipe(
-    version,
-    version => (typeof version === "string" ? Number(version) : version),
-    numericVersion => numericVersion >= 24
-  );
-const successFullBooleanTaskEither = () => TE.fromEither(E.right(true));
+const isAndroid7NougatAPI24OrMore = (Platform.Version as number) >= 24;
+const successfulBooleanTaskEither = () => TE.fromEither(E.right(true));
 
 const checkPermissionAndroid = () =>
   pipe(
-    Platform.Version,
     isAndroid7NougatAPI24OrMore,
-    B.fold(successFullBooleanTaskEither, () =>
+    B.fold(successfulBooleanTaskEither, () =>
       TE.tryCatch(
         () =>
           PermissionsAndroid.check(
@@ -80,9 +74,8 @@ const requestPermissioniOS = () =>
 
 const requestPermissionAndroid = () =>
   pipe(
-    Platform.Version,
     isAndroid7NougatAPI24OrMore,
-    B.fold(successFullBooleanTaskEither, () =>
+    B.fold(successfulBooleanTaskEither, () =>
       pipe(
         TE.tryCatch(
           () =>
