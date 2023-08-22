@@ -42,7 +42,7 @@ export const LabelledItemIconOrImage =
       testID="ButtonDefaultOpacity"
       onPress={onPress}
       transparent
-      accessible={accessible === undefined ? true : accessible}
+      accessible={accessible ?? true}
       style={styles.button}
     >
       {isString(icon) ? (
