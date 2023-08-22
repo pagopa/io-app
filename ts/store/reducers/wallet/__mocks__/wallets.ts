@@ -22,7 +22,7 @@ export const walletsV2_1 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_mc.png",
         expireMonth: "8",
-        expireYear: "2021",
+        expireYear: "2024",
         hashPan:
           "e105a87731025d54181d8e4c4c04ff344ce82e57d6a3d6c6911e8eadb0348d7b",
         holder: "Maria Rossi",
@@ -50,7 +50,7 @@ export const walletsV2_1 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_amex.png",
         expireMonth: "7",
-        expireYear: "2021",
+        expireYear: "2024",
         hashPan:
           "a591ab131bd9492e6df0357f1ac52785a96ddc8e772baddbb02e2169af9474f4",
         holder: "Maria Rossi",
@@ -78,7 +78,7 @@ export const walletsV2_1 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_diners.png",
         expireMonth: "12",
-        expireYear: "2020",
+        expireYear: "2024",
         hashPan:
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871",
         holder: "Maria Rossi",
@@ -111,7 +111,7 @@ export const walletsV2_2 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_mc.png",
         expireMonth: "8",
-        expireYear: "2021",
+        expireYear: "2024",
         hashPan:
           "e105a87731025d54181d8e4c4c04ff344ce82e57d6a3d6c6911e8eadb0348d7b",
         holder: "Maria Rossi",
@@ -139,7 +139,7 @@ export const walletsV2_2 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_diners.png",
         expireMonth: "12",
-        expireYear: "2020",
+        expireYear: "2024",
         hashPan:
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871",
         holder: "Maria Rossi",
@@ -173,7 +173,7 @@ export const walletsV2_3 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_mc.png",
         expireMonth: "10",
-        expireYear: "2021",
+        expireYear: "2024",
         hashPan:
           "e105a87731025d54181d8e4c4c04ff344ce82e57d6a3d6c6911e8eadb0348d7b",
         holder: "Maria Rossi",
@@ -201,7 +201,7 @@ export const walletsV2_3 = {
         brandLogo:
           "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_diners.png",
         expireMonth: "4",
-        expireYear: "2021",
+        expireYear: "2024",
         hashPan:
           "853afb770973eb48d5d275778bd124b28f60a684c20bcdf05dc8f0014c7ce871",
         holder: "Maria Rossi",
@@ -296,7 +296,7 @@ export const mockCreditCardPaymentMethod: PaymentMethod = {
     brandLogo:
       "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_maestro.png",
     expireMonth: "11",
-    expireYear: "2021",
+    expireYear: "2024",
     hashPan:
       "d48a59cdfbe3da7e4fe25e28cbb47d5747720ecc6fc392c87f1636fe95db22f90004",
     holder: "Maria Rossi",
