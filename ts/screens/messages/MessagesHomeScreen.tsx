@@ -3,10 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
-
-import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
@@ -16,23 +14,15 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent, {
-  InnerSectionStatus
-} from "../../components/SectionStatus";
+import SectionStatusComponent from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { unsupportedDeviceMoreInfoUrl } from "../../config";
-import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
 } from "../../store/actions/messages";
-import { useIOSelector } from "../../store/hooks";
-import {
-  isLollipopEnabledSelector,
-  sectionStatusSelector
-} from "../../store/reducers/backendStatus";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import {
   allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
@@ -81,8 +71,6 @@ const MessagesHomeScreen = ({
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
-  const publicKeyOption = useSelector(lollipopPublicKeySelector);
-
   const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
 
   useOnFirstRender(() => {
@@ -121,26 +109,6 @@ const MessagesHomeScreen = ({
   const { present, bottomSheet } = useMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const showUnsupportedDeviceBanner =
-    isLollipopEnabled && O.isNone(publicKeyOption);
-  const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
-    <InnerSectionStatus
-      sectionKey={"messages"}
-      sectionStatus={{
-        is_visible: true,
-        level: LevelEnum.warning,
-        web_url: {
-          "it-IT": unsupportedDeviceMoreInfoUrl,
-          "en-EN": unsupportedDeviceMoreInfoUrl
-        },
-        message: {
-          "it-IT": I18n.t("unsupportedDevice.warning"),
-          "en-EN": I18n.t("unsupportedDevice.warning")
-        }
-      }}
-    />
-  );
 
   const statusComponent = (
     <SectionStatusComponent
@@ -169,7 +137,6 @@ const MessagesHomeScreen = ({
         backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
-      {isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           <ScreenContentHeader
@@ -212,7 +179,6 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
-      {!isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {bottomSheet}
     </TopScreenComponent>
   );
