@@ -6,15 +6,15 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
+import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
-import I18n from "../../../../i18n";
-import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 
 export type CobadgeDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
@@ -83,7 +83,7 @@ const CobadgeDetailScreen = (props: Props) => {
       card={cardComponent}
       content={
         <Banner
-          pictogramName="feedback"
+          pictogramName="focusOn"
           size="big"
           color="neutral"
           viewRef={bannerViewRef}

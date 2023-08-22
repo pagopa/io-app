@@ -73,7 +73,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
       card={cardComponent}
       content={
         <Banner
-          pictogramName="feedback"
+          pictogramName="focusOn"
           size="big"
           color="neutral"
           viewRef={bannerViewRef}
