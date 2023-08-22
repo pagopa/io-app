@@ -18,15 +18,12 @@ import AirBaloon from "../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
 import AirBaloonRaster from "../../../../img/landing/session_expired.png";
 import AirBaloonArrow from "../../../../img/messages/empty-message-list-icon.png";
 import Timeout from "../../../../img/bonus/siciliaVola/generateVoucherTimeout.svg";
-import Airship from "../../../../img/messages/empty-archive-list-icon.png";
 import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
 import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
 import Error from "../../../../img/messages/error-message-detail-icon.png";
 import BeerMug from "../../../../img/search/beer-mug.png";
 import Search from "../../../../img/search/search-icon.png";
 import Puzzle from "../../../../img/services/icon-loading-services.png";
-import Pin from "../../../../img/services/icon-no-places.png";
-import Places from "../../../../img/services/icon-places.png";
 import Castle from "../../../../img/wallet/errors/domain-unknown-icon.png";
 import Abacus from "../../../../img/wallet/errors/invalid-amount-icon.png";
 import Vespa from "../../../../img/wallet/errors/payment-ongoing-icon.png";
@@ -96,11 +93,6 @@ export const DSLegacyPictograms = () => (
       />
       <DSAssetViewerBox
         type="raster"
-        name={"Airship"}
-        image={renderRasterImage(Airship)}
-      />
-      <DSAssetViewerBox
-        type="raster"
         name={"Baloons"}
         image={renderRasterImage(Baloons)}
       />
@@ -128,16 +120,6 @@ export const DSLegacyPictograms = () => (
         type="raster"
         name={"Puzzle"}
         image={renderRasterImage(Puzzle)}
-      />
-      <DSAssetViewerBox
-        type="raster"
-        name={"Pin"}
-        image={renderRasterImage(Pin)}
-      />
-      <DSAssetViewerBox
-        type="raster"
-        name={"Places"}
-        image={renderRasterImage(Places)}
       />
       <DSAssetViewerBox
         type="raster"
