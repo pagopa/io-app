@@ -3,7 +3,7 @@ import * as B from "fp-ts/lib/boolean";
 import * as E from "fp-ts/lib/Either";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import { PermissionsAndroid } from "react-native";
+import { Platform, PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { isIos } from "./platform";
 
@@ -14,14 +14,20 @@ export enum AuthorizationStatus {
   Provisional = 3
 }
 
+const isAndroid7NougatAPI24OrMore = (Platform.Version as number) >= 24;
+const successfulBooleanTaskEither = () => TE.fromEither(E.right(true));
+
 const checkPermissionAndroid = () =>
   pipe(
-    TE.tryCatch(
-      () =>
-        PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-        ),
-      E.toError
+    isAndroid7NougatAPI24OrMore,
+    B.fold(successfulBooleanTaskEither, () =>
+      TE.tryCatch(
+        () =>
+          PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+          ),
+        E.toError
+      )
     )
   );
 
@@ -68,16 +74,21 @@ const requestPermissioniOS = () =>
 
 const requestPermissionAndroid = () =>
   pipe(
-    TE.tryCatch(
-      () =>
-        PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+    isAndroid7NougatAPI24OrMore,
+    B.fold(successfulBooleanTaskEither, () =>
+      pipe(
+        TE.tryCatch(
+          () =>
+            PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+            ),
+          E.toError
         ),
-      E.toError
-    ),
-    TE.map(
-      permissionStatus =>
-        permissionStatus === PermissionsAndroid.RESULTS.GRANTED
+        TE.map(
+          permissionStatus =>
+            permissionStatus === PermissionsAndroid.RESULTS.GRANTED
+        )
+      )
     )
   );
 
