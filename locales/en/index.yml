@@ -860,7 +860,6 @@ onboarding:
     title: "Configure IO"
   thankYouPage:
     title: Setup completed!
-    body: Now you can start using IO
   notifications:
     badge: New
     headerTitle: IO Settings
@@ -971,6 +970,8 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
+  method:
+    expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
   wallet: Wallet
   refreshWallet: Refresh the Wallet
   favourite:
@@ -1222,7 +1223,11 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    successful: Method removed from your Wallet
+    ios:
+      confirm: Rimuovi metodo
+    android:
+      confirm: Rimuovi
+    successful: Method removed!
     failed: The method could not be removed from your Wallet
   newPaymentMethod:
     add: add
@@ -1422,6 +1427,8 @@ wallet:
         bottomSheetTitle: Why can’t I make in-app payments?
         bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
+        operationCompleted: Operazione completata!
+        operationError: Disattivazione non riuscita
     bonus:
       name: Discounts, bonuses and other initiatives
       description: Public initiatives to support Economy, or services related to payments
@@ -1572,7 +1579,7 @@ wallet:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
     title: "Delete this payment method?"
-    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
+    body: "If you delete this method, it will also be removed from the initiatives where it has been enabled."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
