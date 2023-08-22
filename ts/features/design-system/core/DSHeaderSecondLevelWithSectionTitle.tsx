@@ -73,7 +73,7 @@ export const DSHeaderSecondLevelWithSectionTitle = () => {
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       onScroll={scrollHandler}
-      scrollEventThrottle={16}
+      scrollEventThrottle={8}
       snapToOffsets={[0, titleHeight]}
       snapToEnd={false}
       decelerationRate="normal"
