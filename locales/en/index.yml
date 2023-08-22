@@ -974,6 +974,8 @@ wallet:
     title: Vuoi pagare in app?
     content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
     cta: Scopri di più
+  method:
+    expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
   wallet: Wallet
   refreshWallet: Refresh the Wallet
   favourite:
