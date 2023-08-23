@@ -36,9 +36,9 @@ const IOBarcodeFormats: IOBarcodeFormatsType = {
 };
 
 /**
- * {@link useIOBarcodeScanner} configuration
+ * {@link useIOBarcodeCameraScanner} configuration
  */
-export type IOBarcodeScannerConfiguration = {
+export type IOBarcodeCameraScannerConfiguration = {
   /**
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
@@ -63,7 +63,7 @@ export type IOBarcodeScannerConfiguration = {
   disabled?: boolean;
 };
 
-export type IOBarcodeScanner = {
+export type IOBarcodeCameraScanner = {
   /**
    * Component that renders the camera
    */
@@ -141,13 +141,13 @@ export const retrieveNextBarcode = (
  */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
-export const useIOBarcodeScanner = ({
+export const useIOBarcodeCameraScanner = ({
   onBarcodeSuccess,
   onBarcodeError,
   disabled,
   barcodeFormats,
   barcodeTypes
-}: IOBarcodeScannerConfiguration): IOBarcodeScanner => {
+}: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
   const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
     [barcodeFormats]
