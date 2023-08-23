@@ -15,7 +15,7 @@ import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
-import VersionInfoOverlay from "./components/VersionInfoOverlay";
+import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import { testOverlayCaption } from "./config";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
@@ -24,10 +24,14 @@ import { applicationChangeState } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
-import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
+import {
+  preferredLanguageSelector,
+  isPagoPATestEnabledSelector
+} from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
 import { isStringNullyOrEmpty } from "./utils/strings";
+import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -101,7 +105,20 @@ class RootContainer extends React.PureComponent<Props> {
 
         <IONavigationContainer />
 
-        {this.props.isDebugModeEnabled && <VersionInfoOverlay />}
+        {/* When debug mode is enabled, the following information
+        is displayed:
+         - App version, e.g: v.2.x
+         - Route name (as constant), e.g: MESSAGES_INBOX
+         - pagoPA test indicator
+         */}
+        {this.props.isDebugModeEnabled && <DebugInfoOverlay />}
+        {/* When debug mode is disabled, only the pagoPA
+        test indicator is displayed. It's the same component,
+        but not grouped with other indicators. */}
+        {this.props.isPagoPATestEnabled && !this.props.isDebugModeEnabled && (
+          <PagoPATestIndicatorOverlay />
+        )}
+
         {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
             title={`🛠️ TEST VERSION 🛠️`}
@@ -117,6 +134,7 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   preferredLanguage: preferredLanguageSelector(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isDebugModeEnabled: isDebugModeEnabledSelector(state)
 });
 
