@@ -106,7 +106,7 @@ const SwitchOrStatusLabel = ({ item, idWallet }: SwitchOrStatusLabelProps) => {
       return (
         <Badge
           text={I18n.t(`idpay.wallet.initiativePairing.statusLabels.${status}`)}
-          variant="blue"
+          variant="warning"
         />
       );
     default:

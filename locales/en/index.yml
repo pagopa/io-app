@@ -3339,8 +3339,8 @@ idpay:
       navigation: Available initiatives
       header: Which initiatives do you want to enable on this method?
       statusLabels:
-        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
-        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        PENDING_DEACTIVATION_REQUEST: "Pending.."
+        PENDING_ENROLLMENT_REQUEST: "Pending.."
         ENROLLMENT_FAILED: "Attivazione fallita"
       errorToasts:
         enrollment: "Errore nel collegamento dell'iniziativa, riprova."
