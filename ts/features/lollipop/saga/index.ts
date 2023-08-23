@@ -116,7 +116,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
 
   if (!lollipopCheckResult) {
     void mixpanelTrack(
-      "LOGIN_INVALID_ASSERTION_REF",
+      "LOGIN_UNEXPECTED_REQUEST_ID",
       buildEventProperties("KO", undefined)
     );
     yield* put(sessionInvalid());
