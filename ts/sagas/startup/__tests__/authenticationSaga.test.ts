@@ -30,6 +30,7 @@ describe("authenticationSaga", () => {
       .next()
       .put(analyticsAuthenticationStarted())
       .next()
+      .next() // fastloginSelector
       .fork(watchTestLoginRequestSaga)
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
@@ -42,6 +43,7 @@ describe("authenticationSaga", () => {
       .next()
       .call(stopCieManager)
       .next()
+      .next({ _tag: "some" }) // idpSelector
       .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);

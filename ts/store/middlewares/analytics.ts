@@ -57,8 +57,6 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
-import { tosAccepted } from "../actions/onboarding";
-import { createPinSuccess } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,

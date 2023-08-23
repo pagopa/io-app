@@ -9,7 +9,10 @@ import { PinCreationForm, Props } from "../PinCreationForm";
 
 describe("PinCreationForm component", () => {
   it("should make a correct first render", () => {
-    const component = renderComponent({ onSubmit: jest.fn() });
+    const component = renderComponent({
+      onSubmit: jest.fn(),
+      isOnboarding: false
+    });
 
     component.getByText(I18n.t("onboarding.pin.title"));
     component.getByText(I18n.t("onboarding.pin.subTitle"));
@@ -32,7 +35,10 @@ describe("PinCreationForm component", () => {
   });
 
   it("should show the correct error for the first pin field", async () => {
-    const component = renderComponent({ onSubmit: jest.fn() });
+    const component = renderComponent({
+      onSubmit: jest.fn(),
+      isOnboarding: false
+    });
     const targetFieldInput = component.getByTestId("PinFieldInput");
 
     fireEvent.changeText(targetFieldInput, "123");
@@ -55,7 +61,10 @@ describe("PinCreationForm component", () => {
   });
 
   it("should show the correct error for the confirmation pin field", async () => {
-    const component = renderComponent({ onSubmit: jest.fn() });
+    const component = renderComponent({
+      onSubmit: jest.fn(),
+      isOnboarding: false
+    });
     const pinFieldInput = component.getByTestId("PinFieldInput");
     const targetFieldInput = component.getByTestId("PinConfirmationFieldInput");
 

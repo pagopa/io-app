@@ -1,4 +1,4 @@
-import { call, put, select, take } from "typed-redux-saga/macro";
+import { call, put, take } from "typed-redux-saga/macro";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionInvalid } from "../../store/actions/authentication";
 import { abortOnboarding } from "../../store/actions/onboarding";
