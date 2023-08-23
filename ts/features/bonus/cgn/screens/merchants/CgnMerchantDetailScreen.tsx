@@ -11,11 +11,11 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { Icon } from "../../../../../components/core/icons/Icon";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";

@@ -875,8 +875,7 @@ onboarding:
   shareData:
     title: Configura IO
   thankYouPage:
-    title: Configurazione terminata!
-    body: Ora puoi iniziare a usare IO
+    title: Il tuo profilo su IO è attivo!
   notifications:
     badge: Novità
     headerTitle: Configura IO
@@ -988,6 +987,12 @@ payment:
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
+  methodDetails:
+    expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
+    isSupportedBanner:
+      title: Vuoi pagare in app?
+      content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
+      cta: Scopri di più
   wallet: Portafoglio
   refreshWallet: Aggiorna il Portafoglio
   favourite:
@@ -1239,7 +1244,11 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
-    successful: Metodo rimosso dal tuo Portafoglio
+    ios:
+      confirm: Rimuovi metodo
+    android:
+      confirm: Rimuovi
+    successful: Metodo rimosso!
     failed: Impossibile rimuovere il metodo dal tuo Portafoglio
   newPaymentMethod:
     add: aggiungi
@@ -1439,6 +1448,8 @@ wallet:
         bottomSheetTitle: Perché non posso pagare in app?
         bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
         bottomSheetCTA: Scopri i metodi supportati
+        operationCompleted: Operazione completata!
+        operationError: Disattivazione non riuscita
     bonus:
       name: Sconti, bonus e altre iniziative
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1589,8 +1600,8 @@ wallet:
       card:
         validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
-    title: "Vuoi eliminare questo metodo di pagamento?"
-    body: "Rimuoveremo il metodo dal Portafoglio. Le eventuali iniziative a cui è collegato si disattiveranno entro 24 ore."
+    title: "Rimuovere il metodo dal Portafoglio?"
+    body: "Se presente, verrà anche rimosso dalle iniziative a cui è stato abilitato."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Iniziative disponibili"
@@ -2709,11 +2720,11 @@ bonus:
       online: Online
       places: Luoghi
       navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri le agevolazioni e opportunità
+      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
       cta:
         filter: Filtra
       categoriesList:
-        title: Seleziona una categoria e scopri le agevolazioni e opportunità
+        title: Seleziona una categoria e scopri agevolazioni e opportunità
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -3708,6 +3719,8 @@ idpay:
         BUDGET_EXHAUSTED:
           title: Autorizzazione negata
           body: Non hai abbastanza soldi per autorizzare
+        AUTHORIZED:
+          title: L’operazione è stata già autorizzata!
     manualInput:
       title: Autorizza una transazione
       subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.

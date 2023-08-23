@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon } from "../core/icons";
+import { Icon } from "@pagopa/io-app-design-system";
 import { CTA } from "../core/typography/CTA";
 import { IOColors } from "../core/variables/IOColors";
 import { IOAlertRadius } from "../core/variables/IOShapes";

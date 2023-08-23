@@ -31,7 +31,22 @@ const DESIGN_SYSTEM_ROUTES = {
     }
   },
   HEADERS: {
-    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" }
+    FIRST_LEVEL: { route: "DS_HEADER_1LEVEL", title: "First Level" },
+    SECOND_LEVEL: { route: "DS_HEADER_2LEVEL", title: "Second Level" },
+    SECOND_LEVEL_SECTION_TITLE: {
+      route: "DS_HEADER_2LEVEL_SECTITLE",
+      title: "Second Level (w/ section title)"
+    }
+  },
+  SCREENS: {
+    GRADIENT_SCROLL: {
+      route: "GRADIENT_SCROLL",
+      title: "Gradient scroll + Actions"
+    },
+    OPERATION_RESULT: {
+      route: "DS_SCREEN_OPERATION_RESULT",
+      title: "Operation result"
+    }
   },
   DEBUG: {
     SAFE_AREA: { route: "DS_SAFE_AREA", title: "Native safe area" },
@@ -46,10 +61,6 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
-    },
-    GRADIENT_SCROLL: {
-      route: "GRADIENT_SCROLL",
-      title: "Gradient scroll + Actions"
     }
   },
   LEGACY: {

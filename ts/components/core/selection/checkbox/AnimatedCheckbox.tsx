@@ -1,23 +1,23 @@
+import { AnimatedCheckbox as DSAnimatedCheckbox } from "@pagopa/io-app-design-system";
 import React, { useEffect } from "react";
-import { StyleSheet, View, Pressable, PressableProps } from "react-native";
+import { Pressable, PressableProps, StyleSheet, View } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
+  Easing,
   interpolate,
+  useAnimatedStyle,
+  useSharedValue,
   withSpring,
-  withTiming,
-  Easing
+  withTiming
 } from "react-native-reanimated";
-import { IOColors } from "../../variables/IOColors";
-import { IOSpringValues } from "../../variables/IOAnimations";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { AnimatedTick } from "../AnimatedTick";
+import { IOSpringValues } from "../../variables/IOAnimations";
+import { IOColors } from "../../variables/IOColors";
 import {
   IOSelectionTickLegacyVisualParams,
   IOSelectionTickVisualParams
 } from "../../variables/IOStyles";
-
+import { AnimatedTick } from "../AnimatedTick";
 type Props = {
   checked?: boolean;
 };
@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
 /**
  * An animated checkbox. This can be used to implement a
  * standard {@link CheckBox} or other composite components.
+ * Currently if the Design System is enabled, the component returns the AnimatedCheckbox of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the AnimatedCheckbox of the @pagopa/io-app-design-system library.
+ *
  */
 export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -84,21 +89,25 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
     };
   });
 
-  return (
+  return isDesignSystemEnabled ? (
+    <DSAnimatedCheckbox
+      checked={isChecked}
+      onPress={onPress}
+      disabled={disabled}
+    />
+  ) : (
     <Pressable
       disabled={disabled}
       testID="AnimatedCheckboxInput"
       onPress={onPress}
       style={styles.checkBoxWrapper}
     >
-      {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following conditions */}
       <View
         style={[
           styles.checkboxBorder,
           {
-            borderColor: isDesignSystemEnabled
-              ? IOColors[IOSelectionTickVisualParams.borderColorOffState]
-              : IOColors[IOSelectionTickLegacyVisualParams.borderColorOffState]
+            borderColor:
+              IOColors[IOSelectionTickLegacyVisualParams.borderColorOffState]
           }
         ]}
       />
@@ -106,14 +115,12 @@ export const AnimatedCheckbox = ({ checked, onPress, disabled }: OwnProps) => {
         style={[
           styles.checkBoxSquare,
           {
-            backgroundColor: isDesignSystemEnabled
-              ? IOColors[IOSelectionTickVisualParams.bgColorOnState]
-              : IOColors[IOSelectionTickLegacyVisualParams.bgColorOnState]
+            backgroundColor:
+              IOColors[IOSelectionTickLegacyVisualParams.bgColorOnState]
           },
           animatedCheckboxSquare
         ]}
       />
-      {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       {isChecked && (
         <AnimatedTick
           progress={tickAnimationProgress}

@@ -1,13 +1,18 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   StackNavigationOptions,
   TransitionPresets,
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useMemo } from "react";
+import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { IOThemeContext, IOThemes } from "@pagopa/io-app-design-system";
+import { makeFontStyleObject } from "../../../components/core/fonts";
+import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
+import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
+import IconButton from "../../../components/ui/IconButton";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
@@ -16,8 +21,15 @@ import { DSAlert } from "../core/DSAlert";
 import { DSBadges } from "../core/DSBadges";
 import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
+import { DSCards } from "../core/DSCards";
 import { DSColors } from "../core/DSColors";
+import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
+import { DSFullScreenModal } from "../core/DSFullScreenModal";
+import { DSGradientScroll } from "../core/DSGradientScroll";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
+import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
+import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -29,28 +41,14 @@ import { DSLogos } from "../core/DSLogos";
 import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
+import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSSelection } from "../core/DSSelection";
+import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
-import { DSTabNavigation } from "../core/DSTabNavigation";
-
-import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
-import { DSGradientScroll } from "../core/DSGradientScroll";
-import { DSFullScreenModal } from "../core/DSFullScreenModal";
-import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
-import { DSCards } from "../core/DSCards";
-import {
-  IOThemeContext,
-  IOThemes
-} from "../../../components/core/variables/IOColors";
-import IconButton from "../../../components/ui/IconButton";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
-import { makeFontStyleObject } from "../../../components/core/fonts";
-import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
-
 const Stack = createStackNavigator<DesignSystemParamsList>();
 const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
 
@@ -362,6 +360,34 @@ const DesignSystemMainStack = () => {
         }}
       />
 
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL.route}
+        component={DSHeaderSecondLevel}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.HEADERS.SECOND_LEVEL_SECTION_TITLE.route}
+        component={DSHeaderSecondLevelWithSectionTitle}
+        options={{
+          header: HeaderFirstLevelComponent
+        }}
+      />
+
+      {/* SCREENS */}
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.route}
+        component={DSGradientScroll}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.title
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
+        component={DSScreenOperationResult}
+        options={{ headerShown: false }}
+      />
+
       {/* DEBUG */}
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route}
@@ -377,14 +403,6 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
         options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name={DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.route}
-        component={DSGradientScroll}
-        options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.DEBUG.GRADIENT_SCROLL.title
-        }}
       />
 
       {/* LEGACY */}

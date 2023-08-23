@@ -3,6 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { View, Alert, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
@@ -21,7 +22,6 @@ import {
 } from "../../../store/actions/bucket";
 import { cgnBucketSelector } from "../../../store/reducers/bucket";
 import { isDiscountBucketCodeResponseSuccess } from "../../../types/DiscountBucketCodeResponse";
-import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   discountId: Discount["id"];

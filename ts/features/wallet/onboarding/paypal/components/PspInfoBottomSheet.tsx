@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { View, StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -10,7 +11,6 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Label } from "../../../../../components/core/typography/Label";
 import { Link } from "../../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../../utils/url";
-import { Icon } from "../../../../../components/core/icons/Icon";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({

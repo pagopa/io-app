@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import {
   Icon,
   IOIcons,
@@ -11,14 +10,13 @@ import {
   // IOIconsNew,
   SVGIconProps,
   IOIconSizeScale,
-  IOSystemIcons
-} from "../../../components/core/icons";
+  IOSystemIcons,
+  IOThemeContext
+} from "@pagopa/io-app-design-system";
+import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
-import {
-  IOColors,
-  IOThemeContext
-} from "../../../components/core/variables/IOColors";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 // Filter the main object, removing already displayed icons in the other sets

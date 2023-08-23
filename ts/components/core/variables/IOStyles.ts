@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
+import { IOIconSizeScale } from "@pagopa/io-app-design-system";
 import themeVariables from "../../../theme/variables";
-import { IOIconSizeScale } from "../icons";
 import { IOColors } from "./IOColors";
 import { IOAppMargin, IOSpacer, IOSpacingScale } from "./IOSpacing";
 
@@ -97,7 +97,7 @@ const btnBorderRadius = 8;
 const btnSizeDefault = 48;
 export const buttonSolidHeight: number = btnSizeDefault;
 // TODO: Replace the number type with the new IOIconSizeScale
-const iconBtnSizeSmall: number = 24;
+export const iconBtnSizeSmall: number = 24;
 
 export const IOButtonLegacyStyles = StyleSheet.create({
   /* BaseButton, used in the:

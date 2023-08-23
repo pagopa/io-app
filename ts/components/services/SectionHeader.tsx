@@ -1,12 +1,12 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
+import { IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
 import I18n from "../../i18n";
 
 import { H3 } from "../core/typography/H3";
 import { HSpacer } from "../core/spacer/Spacer";
-import { IOIcons, Icon } from "../core/icons";
 
 const styles = StyleSheet.create({
   header: {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
@@ -13,7 +14,6 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
-import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {

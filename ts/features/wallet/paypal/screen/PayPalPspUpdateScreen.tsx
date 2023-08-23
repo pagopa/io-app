@@ -11,6 +11,7 @@ import {
   StyleSheet
 } from "react-native";
 import { useDispatch } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -39,7 +40,6 @@ import {
 } from "../../onboarding/paypal/components/PspRadioItem";
 import { convertPspData } from "../../onboarding/paypal/store/transformers";
 import { IOPayPalPsp } from "../../onboarding/paypal/types";
-import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {

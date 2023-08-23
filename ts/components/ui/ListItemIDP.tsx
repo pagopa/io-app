@@ -1,32 +1,32 @@
 import * as React from "react";
 import { useCallback } from "react";
 import {
-  StyleSheet,
-  Pressable,
   GestureResponderEvent,
-  Platform,
   Image,
-  Text,
-  ImageSourcePropType
+  ImageSourcePropType,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text
 } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  useDerivedValue,
+  Extrapolate,
   interpolate,
-  Extrapolate
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOListItemIDPRadius } from "../core/variables/IOShapes";
 import { WithTestID } from "../../types/WithTestID";
 import { toAndroidCacheTimestamp } from "../../utils/dates";
 import { makeFontStyleObject } from "../core/fonts";
+import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
+import { IOColors } from "../core/variables/IOColors";
+import { IOListItemIDPRadius } from "../core/variables/IOShapes";
 import {
-  IOListItemIDPVSpacing,
   IOListItemIDPHSpacing,
   IOListItemIDPSavedVSpacing,
+  IOListItemIDPVSpacing,
   IOListItemLogoMargin
 } from "../core/variables/IOSpacing";
 
@@ -73,6 +73,23 @@ const styles = StyleSheet.create({
 const androidIdpLogoForcedRefreshed = () =>
   Platform.OS === "android" ? `?ts=${toAndroidCacheTimestamp()}` : "";
 
+/**
+ * Represents a list item for an Identity Provider (IDP).
+ * It displays the IDP's name and logo and provides interaction when pressed.
+ *
+ * Currently if the Design System is enabled, the component returns the ListItemIDP of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @param {string} name - The name of the Identity Provider (IDP).
+ * @param {string} localLogo - The local URI of the IDP's logo image (if available).
+ * @param {string} logo - The URL of the IDP's logo image.
+ * @param {boolean} saved - Indicates whether the IDP is saved or not.
+ * @param {function} onPress - The callback function to be executed when the item is pressed.
+ * @param {string} testID - The test ID for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemIDP of the @pagopa/io-app-design-system library.
+ *
+ */
 export const ListItemIDP = ({
   name,
   localLogo,

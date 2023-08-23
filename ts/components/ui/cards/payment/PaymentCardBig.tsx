@@ -1,17 +1,15 @@
+import { H3, H6, IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
-import { formatDateAsLocal } from "../../../../utils/dates";
-import { IOLogoPaymentType, LogoPayment } from "../../../core/logos";
+import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
-import { NewH6 } from "../../../core/typography/NewH6";
-import { IOColors } from "../../../core/variables/IOColors";
-import { IOStyles } from "../../../core/variables/IOStyles";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
-import { LogoPaymentOrDefaultIcon } from "../../utils/baseComponents/LogoPaymentOrDefaultIcon";
+import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {
@@ -36,6 +34,7 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
           <LabelSmall color="grey-650" weight="Regular">
             {props.phoneNumber}
           </LabelSmall>
+          <VSpacer size={8} />
           <BottomSectionText string={props.holderName} />
         </View>
       );
@@ -43,14 +42,14 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
       return (
         <View style={styles.bottomRow}>
           <BottomSectionText string={props.holderName} />
-          <LogoPayment name={"pagoBancomat"} size={48} />
+          <LogoPaymentExt name="pagoBancomat" size={48} />
         </View>
       );
     default:
       return (
         <View style={styles.bottomRow}>
           <BottomSectionText string={props.holderName} />
-          <LogoPaymentOrDefaultIcon cardIcon={props.cardIcon} size={48} />
+          <LogoPaymentWithFallback isExtended brand={props.cardIcon} />
         </View>
       );
   }
@@ -78,9 +77,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "CREDIT":
       return (
         <View style={IOStyles.flex}>
-          <NewH6 style={{ textTransform: "capitalize" }}>
-            {`${props.cardIcon} •••• ${props.hpan}`}
-          </NewH6>
+          <H3 style={{ textTransform: "capitalize" }}>
+            {`${props.cardIcon} ••${props.hpan}`}
+          </H3>
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
@@ -91,7 +90,6 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
             dimensions={{ width: BPAY_LOGO_WIDTH, height: LOGO_HEIGHT }}
             icon="bpay"
           />
-          <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
   }
@@ -99,16 +97,16 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
 
 // ------------- utils
 const BottomSectionText = (props: { string: string }) => (
-  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+  <H6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
     {props.string}
-  </NewH6>
+  </H6>
 );
 const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
   <>
     <VSpacer size={8} />
     <LabelSmall color="grey-650" weight="Regular">
       {I18n.t("wallet.creditCard.validUntil", {
-        expDate: formatDateAsLocal(expDate, true)
+        expDate: format(expDate, "MM/YY")
       })}
     </LabelSmall>
   </>
@@ -156,7 +154,7 @@ const CardSkeleton = ({ testID }: { testID?: string }) => (
 
 // ------------- styles + types
 
-// all cards have an expiration date except for paypal,
+// all cards have an expiration date except for paypal and bpay,
 // bancomatPay also has a phone number
 // the rendering of the circuit logo is handled by the component
 
@@ -176,28 +174,27 @@ type PaymentCardStandardProps =
   | {
       cardType: "BANCOMATPAY";
       phoneNumber: string;
-      expirationDate: Date;
       holderName: string;
     }
   | {
       cardType: "PAGOBANCOMAT";
       expirationDate: Date;
-      abiCode: string;
+      abiCode?: string;
       holderName: string;
     }
   | {
       cardType: "COBADGE";
       expirationDate: Date;
-      abiCode: string;
+      abiCode?: string;
       holderName: string;
-      cardIcon?: IOLogoPaymentType;
+      cardIcon?: IOLogoPaymentExtType;
     }
   | {
       cardType: "CREDIT";
       expirationDate: Date;
       holderName: string;
       hpan: string;
-      cardIcon?: IOLogoPaymentType;
+      cardIcon?: IOLogoPaymentExtType;
     };
 
 const LOGO_HEIGHT = 32;
@@ -213,7 +210,8 @@ const styles = StyleSheet.create({
     height: 207,
     borderRadius: 16,
     backgroundColor: IOColors["grey-100"],
-    padding: 24
+    padding: 24,
+    width: "100%" // required for consistent skeleton sizing
   },
   bottomRow: {
     height: 48,

@@ -4,6 +4,7 @@ import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -28,7 +29,6 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
-import { Icon } from "../../../../components/core/icons/Icon";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 

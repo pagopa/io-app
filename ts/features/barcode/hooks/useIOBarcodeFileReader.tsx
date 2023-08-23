@@ -15,6 +15,7 @@ import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
 import PdfThumbnail, { ThumbnailResult } from "react-native-pdf-thumbnail";
 import RNQRGenerator, {
+  QRCodeDetectOptions,
   QRCodeScanResult,
   CodeType as RNQRCodeType
 } from "rn-qr-generator";
@@ -94,7 +95,8 @@ type IOBarcodeFileReaderConfiguration = {
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
-  mediaType: "photo"
+  mediaType: "photo",
+  includeBase64: true
 };
 
 const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
@@ -105,14 +107,14 @@ const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
 
 /**
  * Creates a TaskEither that detects the QR code from an image URI
- * @param imageUri
+ * @param detectOptions object which may contain the uri or the base64 of the image
  * @returns
  */
 const qrCodeDetectionTask = (
-  imageUri: string
+  detectOptions: QRCodeDetectOptions
 ): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
   TE.tryCatch(
-    () => RNQRGenerator.detect({ uri: imageUri }),
+    () => RNQRGenerator.detect(detectOptions),
     () => ({ reason: "UNEXPECTED" })
   );
 
@@ -131,18 +133,18 @@ const imageGenerationTask = (
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
- * @param imageUri
+ * @param detectOptions object which may contain the uri or the base64 of the image
  * @param barcodeFormats The accepted formats of the barcodes
  * @param acceptedTypes The accepted types of the barcodes
  * @returns
  */
 const imageDecodingTask = (
-  imageUri: string,
+  detectOptions: QRCodeDetectOptions,
   barcodeFormats?: Array<IOBarcodeFormat>,
   barcodeTypes?: Array<IOBarcodeType>
 ): TE.TaskEither<BarcodeFailure, IOBarcode> =>
   pipe(
-    qrCodeDetectionTask(imageUri),
+    qrCodeDetectionTask(detectOptions),
     TE.chain(result =>
       pipe(
         A.head(result.values),
@@ -219,10 +221,12 @@ const useIOBarcodeFileReader = ({
       response.assets,
       O.fromNullable,
       O.chain(A.head),
-      O.map(({ uri }) => uri),
+      O.map(({ base64 }) => base64),
       O.chain(O.fromNullable),
       TE.fromOption<BarcodeFailure>(() => ({ reason: "INVALID_FILE" })),
-      TE.chain(uri => imageDecodingTask(uri, barcodeFormats, barcodeTypes)),
+      TE.chain(base64 =>
+        imageDecodingTask({ base64 }, barcodeFormats, barcodeTypes)
+      ),
       TE.mapLeft(onBarcodeError),
       TE.map(onBarcodeSuccess)
     )();
@@ -263,7 +267,7 @@ const useIOBarcodeFileReader = ({
           Promise.resolve([] as Array<IOBarcode>),
           async (barcodes, { uri }) =>
             pipe(
-              imageDecodingTask(uri, barcodeFormats, barcodeTypes),
+              imageDecodingTask({ uri }, barcodeFormats, barcodeTypes),
               TE.map(async barcode => [...(await barcodes), barcode]),
               TE.getOrElse(() => T.of(barcodes))
             )()

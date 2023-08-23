@@ -141,7 +141,6 @@ export const DSCards = () => (
       <VSpacer size={16} />
       <PaymentCardBig
         cardType={"BANCOMATPAY"}
-        expirationDate={new Date()}
         holderName="Mario Rossi"
         phoneNumber="+39 1234567890"
       />

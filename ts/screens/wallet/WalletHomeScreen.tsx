@@ -10,11 +10,11 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { Icon } from "../../components/core/icons";
 import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
@@ -136,9 +136,6 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: customVariables.contentPadding,
     paddingBottom: 0
-  },
-  centered: {
-    textAlign: "center"
   }
 });
 
@@ -390,31 +387,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private renderHelpMessage = (
-    alignCenter: boolean = false
-  ): React.ReactNode => (
-    <React.Fragment>
-      <VSpacer size={24} />
-      <Body style={alignCenter ? styles.centered : undefined}>
-        {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
-        <Body
-          weight={"SemiBold"}
-          style={alignCenter ? styles.centered : undefined}
-        >
-          {I18n.t("wallet.transactionHelpMessage.text2")}
-        </Body>
-      </Body>
-    </React.Fragment>
-  );
-
-  private transactionError(renderHelp: boolean) {
+  private transactionError() {
     return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}
       >
-        {renderHelp && this.renderHelpMessage()}
-        <VSpacer size={24} />
         <H3 weight="SemiBold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
         </H3>
@@ -437,11 +415,10 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private listEmptyComponent(renderHelpInfoBox: boolean) {
+  private listEmptyComponent() {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
-          {renderHelpInfoBox && this.renderHelpMessage(true)}
           <Body style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Body>
@@ -459,20 +436,18 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private transactionList(
-    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>,
-    renderHelpInfoBox: boolean
+    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
         transactions={potTransactions}
-        helpMessage={renderHelpInfoBox ? this.renderHelpMessage() : undefined}
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        ListEmptyComponent={this.listEmptyComponent(renderHelpInfoBox)}
+        ListEmptyComponent={this.listEmptyComponent()}
       />
     );
   }
@@ -496,12 +471,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public render(): React.ReactNode {
-    const {
-      potWallets,
-      potTransactions,
-      anyHistoryPayments,
-      anyCreditCardAttempts
-    } = this.props;
+    const { potWallets, potTransactions } = this.props;
 
     const headerContent = (
       <>
@@ -514,11 +484,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       (pot.isNone(potTransactions) &&
         !pot.isLoading(potTransactions) &&
         !pot.isUpdating(potTransactions))
-        ? this.transactionError(anyHistoryPayments || anyCreditCardAttempts)
-        : this.transactionList(
-            potTransactions,
-            anyHistoryPayments || anyCreditCardAttempts
-          );
+        ? this.transactionError()
+        : this.transactionList(potTransactions);
 
     const footerContent = pot.isSome(potWallets)
       ? this.footerButton(potWallets)
@@ -540,7 +507,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         appLogo={true}
         hideHeader={true}
         topContentHeight={this.getHeaderHeight()}
-        hasDynamicSubHeader={false}
         topContent={headerContent}
         footerContent={footerContent}
         contextualHelpMarkdown={contextualHelpMarkdown}

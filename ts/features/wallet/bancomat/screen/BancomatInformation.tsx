@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
@@ -11,7 +12,6 @@ import InternationalCircuitIconsBar from "../../../../components/wallet/Internat
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
-import { Icon } from "../../../../components/core/icons/Icon";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type OwnProps = {

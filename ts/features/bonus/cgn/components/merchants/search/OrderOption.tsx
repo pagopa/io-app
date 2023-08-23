@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ListItem } from "native-base";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   text: string;

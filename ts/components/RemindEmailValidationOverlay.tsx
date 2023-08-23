@@ -16,6 +16,7 @@ import {
   Platform
 } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -52,7 +53,6 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
-import { Icon } from "./core/icons/Icon";
 import {
   Pictogram,
   IOPictograms,

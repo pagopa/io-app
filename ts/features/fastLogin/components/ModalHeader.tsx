@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { Icon } from "../../../components/core/icons";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";

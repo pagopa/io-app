@@ -3,6 +3,7 @@ import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
@@ -38,7 +39,6 @@ import {
   zendeskCategoryId,
   zendeskPaymentMethodCategory
 } from "../../../utils/supportAssistance";
-import { Icon } from "../../../components/core/icons/Icon";
 
 export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;

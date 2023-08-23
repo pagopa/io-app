@@ -13,11 +13,11 @@ import {
   Text
 } from "react-native";
 import { connect } from "react-redux";
+import { IOIcons, Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -29,7 +29,6 @@ import { IOColors } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
-import { IOIcons, Icon } from "../core/icons/Icon";
 import IconButton from "../ui/IconButton";
 import { HSpacer } from "../core/spacer/Spacer";
 import { IOSpacer } from "../core/variables/IOSpacing";
@@ -324,13 +323,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderAppLogo = () => {
-    const { isPagoPATestEnabled, primary, dark } = this.props;
+    const { primary, dark } = this.props;
 
-    const iconColor: IOColors = isPagoPATestEnabled
-      ? "aqua"
-      : primary || dark
-      ? "white"
-      : "blue";
+    const iconColor: IOColors = primary || dark ? "white" : "blue";
     return (
       <Left>
         <View
@@ -361,7 +356,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   assistanceToolConfig: assistanceToolConfigSelector(state)
 });
 
