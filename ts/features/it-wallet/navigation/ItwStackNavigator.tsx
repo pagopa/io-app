@@ -13,7 +13,7 @@ import ItwPidPreviewScreen from "../screens/issuing/ItwPidPreviewScreen";
 import ItwPidActivationScreen from "../screens/issuing/ItwPidAddingScreen";
 import ItwCredentialDetails from "../screens/credentials/ItwPidDetails";
 import ItwPidRequestScreen from "../screens/issuing/ItwPidRequestScreen";
-import ItwPidAttributesScreen from "../screens/presentation/crossdevice/ItwPidAttributesScreen";
+import ItwRpInitScreen from "../screens/presentation/crossdevice/ItwRpInitScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -71,14 +71,15 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.ISSUING.PID_ADDING}
       component={ItwPidActivationScreen}
     />
-    {/* PID DETAILS */}
+    {/* PRESENTATION PID DETAILS */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID_DETAILS}
       component={ItwCredentialDetails}
     />
+    {/* PRESENTATION CROSS DEVICE */}
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.PID_ATTRIBUTES}
-      component={ItwPidAttributesScreen}
+      name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT}
+      component={ItwRpInitScreen}
     />
   </Stack.Navigator>
 );
