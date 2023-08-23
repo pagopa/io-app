@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, take, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { RelyingPartySolution } from "@pagopa/io-react-native-wallet";
 import {
@@ -12,6 +12,8 @@ import {
   itwRpUserRejected
 } from "../store/actions/itwRpActions";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
+import { itwDecodePid } from "../store/actions/itwCredentialsActions";
+import { itwPidValueSelector } from "../store/reducers/itwPidReducer";
 import { handleItwRpInitializationSaga } from "./itwRpInitialization";
 import { handleItwRpPresentationSaga } from "./itwRpPresentation";
 
@@ -48,23 +50,40 @@ export function* watchItwRpSaga(): SagaIterator {
 export function* handleRpStart(
   action: ActionType<typeof itwRpStart>
 ): SagaIterator {
-  const authReqUrl = action.payload;
+  try {
+    const authReqUrl = action.payload;
 
-  // Get WIA
-  yield* call(itwWiaRequest.request);
-  const wia = yield* take(itwWiaRequest.success);
+    // Get WIA
+    yield* call(itwWiaRequest.request);
+    const wiaRes = yield* take<
+      ActionType<typeof itwWiaRequest.success | typeof itwWiaRequest.failure>
+    >([itwWiaRequest.success, itwWiaRequest.failure]);
+    if (wiaRes.type === getType(itwWiaRequest.failure)) {
+      throw new Error(); // TODO: SIW-408
+    }
 
-  // The RP solution is initialized using the authReqUrl
-  // of the qrcode payload
-  const RP = new RelyingPartySolution(authReqUrl, wia.payload);
+    // Decode PID
+    const pid = yield* select(itwPidValueSelector);
+    yield* call(itwDecodePid.request, pid);
+    const decodedRes = yield* take<
+      ActionType<typeof itwWiaRequest.success | typeof itwWiaRequest.failure>
+    >([itwWiaRequest.success, itwWiaRequest.failure]);
+    if (decodedRes.type === getType(itwWiaRequest.failure)) {
+      throw new Error(); // TODO: SIW-408
+    }
 
-  yield* put(itwRpInitialization.request({ RP, authReqUrl }));
-
-  const result = yield* take([itwRpUserConfirmed, itwRpUserRejected]);
-  if (result.type === getType(itwRpUserConfirmed)) {
-    yield* put(itwRpPresentation.request(RP));
-  } else {
-    yield* put(itwRpStop());
+    // The RP solution is initialized using the authReqUrl
+    // of the qrcode payload
+    const RP = new RelyingPartySolution(authReqUrl, wiaRes.payload);
+    yield* put(itwRpInitialization.request({ RP, authReqUrl }));
+    const result = yield* take<
+      ActionType<typeof itwRpUserConfirmed | typeof itwRpUserRejected>
+    >([itwRpUserConfirmed, itwRpUserRejected]);
+    if (result.type === getType(itwRpUserRejected)) {
+      throw new Error(); // TODO: SIW-408
+    }
+  } catch {
+    yield* put(itwRpStop()); // TODO: SIW-408
   }
 }
 
