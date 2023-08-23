@@ -1,18 +1,20 @@
-import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { Banner, IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
+import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
-import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 
 export type CobadgeDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
@@ -33,6 +35,7 @@ const CobadgeDetailScreen = (props: Props) => {
   const card = useIOSelector(state =>
     creditCardByIdSelector(state, cobadge.idWallet)
   );
+  const bannerViewRef = React.useRef(null);
   if (card === undefined || !isCobadge(card)) {
     return <WorkunitGenericFailure />;
   }
@@ -78,7 +81,20 @@ const CobadgeDetailScreen = (props: Props) => {
     <BasePaymentMethodScreen
       paymentMethod={cobadge}
       card={cardComponent}
-      content={<PaymentMethodFeatures paymentMethod={cobadge} />}
+      content={
+        <Banner
+          pictogramName="focusOn"
+          size="big"
+          color="neutral"
+          viewRef={bannerViewRef}
+          title={I18n.t("wallet.methodDetails.isSupportedBanner.title")}
+          content={I18n.t("wallet.methodDetails.isSupportedBanner.content")}
+          action={I18n.t("wallet.methodDetails.isSupportedBanner.cta")}
+          onPress={() =>
+            openAuthenticationSession(acceptedPaymentMethodsFaqUrl, "")
+          }
+        />
+      }
     />
   );
 };
