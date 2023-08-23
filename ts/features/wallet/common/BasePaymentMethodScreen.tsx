@@ -116,7 +116,6 @@ const BasePaymentMethodScreen = (props: Props) => {
         </View>
         <VSpacer size={24} />
         <View style={IOStyles.horizontalContentPadding}>
-          <VSpacer size={16} />
           {content}
           <VSpacer size={24} />
           <DeleteButton onPress={onDeleteMethod} />
