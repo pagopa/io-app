@@ -107,6 +107,8 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
       dispatch,
       isOnboarding,
       isFirstOnBoarding,
+      isFastLoginEnabled,
+      idp,
       showRestartModal,
       navigation
     ]
