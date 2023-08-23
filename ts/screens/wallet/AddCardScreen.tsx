@@ -53,6 +53,7 @@ import {
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 
 export type AddCardScreenNavigationParams = Readonly<{
   inPayment: O.Option<{
@@ -95,10 +96,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.saveCard.contextualHelpContent"
 };
 
-const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
-
 const openSupportedCardsPage = (): void => {
-  openWebUrl(acceptedCardsPageURL, () =>
+  openWebUrl(acceptedPaymentMethodsFaqUrl, () =>
     showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
   );
 };
