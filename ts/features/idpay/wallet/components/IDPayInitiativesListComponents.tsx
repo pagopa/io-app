@@ -72,7 +72,7 @@ export const IDPayInitiativeListItem = ({
     <View>
       <View style={styles.listItemContainer}>
         <View style={styles.leftContent}>
-          <NewH6>{initiativeName}</NewH6>
+          <NewH6 numberOfLines={1}>{initiativeName}</NewH6>
         </View>
         <SwitchOrStatusLabel item={item} idWallet={idWallet} />
       </View>
