@@ -105,12 +105,20 @@ class RootContainer extends React.PureComponent<Props> {
 
         <IONavigationContainer />
 
+        {/* When debug mode is enabled, the following information
+        is displayed:
+         - App version, e.g: v.2.x
+         - Route name (as constant), e.g: MESSAGES_INBOX
+         - pagoPA test indicator
+         */}
         {this.props.isDebugModeEnabled && <DebugInfoOverlay />}
-        {/* Just show the pagoPA test indicator if
-        debug mode is disabled */}
+        {/* When debug mode is disabled, only the pagoPA
+        test indicator is displayed. It's the same component,
+        but not grouped with other indicators. */}
         {this.props.isPagoPATestEnabled && !this.props.isDebugModeEnabled && (
           <PagoPATestIndicatorOverlay />
         )}
+
         {!isStringNullyOrEmpty(testOverlayCaption) && (
           <BetaTestingOverlay
             title={`🛠️ TEST VERSION 🛠️`}
