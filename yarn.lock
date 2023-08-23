@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.1.3.tgz#71794ccda83e802a16b6f3e4c9ade75a9dc26269"
-  integrity sha512-zBTeLXJKYJGQah93sPvU0Yqas+YffY5Vf1+0hgie57fLDuGUGc8EAYjKktmF+OL9oD2doa0NVESBZ1dui8g4Qw==
+"@pagopa/io-app-design-system@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.3.2.tgz#514c721358111bc76029c068d835ce690574e7e3"
+  integrity sha512-2l/44VAVXQGfgBS8iol9J5jkP92abPi7RhxlMk6MzOIETcoN++n/3yyKL4F2KsLgTWlHVWX/PEwYYv8701MOfw==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -3140,7 +3140,7 @@
     react-native-haptic-feedback "^2.0.2"
     react-native-linear-gradient "^2.5.6"
     react-native-reanimated "^2.9.1"
-    react-native-safe-area-context "^3.3.2"
+    react-native-safe-area-context "^4.7.1"
     react-native-svg "^12.3.0"
     rn-placeholder "1.3.3"
 
@@ -14803,6 +14803,11 @@ react-native-safe-area-context@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
   integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
+
+react-native-safe-area-context@^4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.7.1.tgz#b7be2d68dee909717cfa439bb5c7966042d231e8"
+  integrity sha512-X2pJG2ttmAbiGlItWedvDkZg1T1ikmEDiz+7HsiIwAIm2UbFqlhqn+B1JF53mSxPzdNaDcCQVHRNPvj8oFu6Yg==
 
 react-native-screen-brightness@^2.0.0-alpha:
   version "2.0.0-alpha"

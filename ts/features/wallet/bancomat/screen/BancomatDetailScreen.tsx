@@ -1,11 +1,12 @@
+import { Banner } from "@pagopa/io-app-design-system";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
+import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -13,7 +14,7 @@ import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod, isBancomat } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
-import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 
 export type BancomatDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
@@ -25,15 +26,6 @@ type Props = IOStackNavigationRouteProps<
   "WALLET_BANCOMAT_DETAIL"
 >;
 
-const bancomatScreenContent = (bancomat: BancomatPaymentMethod) => (
-  <>
-    <VSpacer size={8} />
-    <ItemSeparatorComponent noPadded={true} />
-    <VSpacer size={16} />
-    <PaymentMethodFeatures paymentMethod={bancomat} />
-  </>
-);
-
 /**
  * Detail screen for a bancomat
  * @constructor
@@ -42,6 +34,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
   const bancomat = useIOSelector(state =>
     paymentMethodByIdSelector(state, route.params.bancomat.idWallet)
   );
+  const bannerViewRef = React.useRef(null);
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   // should never happen
   if (!isBancomat(bancomat)) {
@@ -78,7 +71,20 @@ const BancomatDetailScreen = ({ route }: Props) => {
     <BasePaymentMethodScreen
       paymentMethod={bancomat}
       card={cardComponent}
-      content={bancomatScreenContent(bancomat)}
+      content={
+        <Banner
+          pictogramName="focusOn"
+          size="big"
+          color="neutral"
+          viewRef={bannerViewRef}
+          title={I18n.t("wallet.methodDetails.isSupportedBanner.title")}
+          content={I18n.t("wallet.methodDetails.isSupportedBanner.content")}
+          action={I18n.t("wallet.methodDetails.isSupportedBanner.cta")}
+          onPress={() =>
+            openAuthenticationSession(acceptedPaymentMethodsFaqUrl, "")
+          }
+        />
+      }
     />
   );
 };
