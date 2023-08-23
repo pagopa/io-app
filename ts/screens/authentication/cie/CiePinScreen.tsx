@@ -43,6 +43,8 @@ import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 import { pinPukHelpUrl } from "../../../config";
 import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -147,13 +149,17 @@ const CiePinScreen: React.FC<Props> = props => {
   }, [pinPadViewRef]);
 
   const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
+  const useCieUat = useSelector(isCieLoginUatEnabledSelector);
 
   return (
     <TopScreenComponent
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
       contextualHelp={getContextualHelp()}
       goBack={true}
-      headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
+      headerTitle={withTrailingPoliceCarLightEmojii(
+        I18n.t("authentication.cie.pin.pinCardHeader"),
+        useCieUat
+      )}
     >
       <ScrollView>
         <ScreenContentHeader

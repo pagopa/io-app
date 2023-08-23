@@ -2,16 +2,15 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
+import { Pictogram } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import I18n from "../../i18n";
-import Completed from "../../../img/pictograms/payment-completed.svg";
 import { completeOnboarding } from "../../store/actions/onboarding";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-
 import { trackThankYouPageScreen } from "../profile/analytics";
 import { useIOSelector } from "../../store/hooks";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -50,9 +49,8 @@ const OnboardingCompletedScreen = () => {
     <BaseScreenComponent>
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
-          image={<Completed width={80} height={80} />}
+          image={<Pictogram name="fireworks" />}
           title={I18n.t("onboarding.thankYouPage.title")}
-          body={I18n.t("onboarding.thankYouPage.body")}
         />
 
         <FooterWithButtons

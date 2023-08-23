@@ -6,6 +6,7 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
 import { IOStyleVariables } from "../../../../components/core/variables/IOStyleVariables";
 import I18n from "../../../../i18n";
@@ -18,8 +19,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { getPaymentStatusById } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
-import { showToast } from "../../../../utils/showToast";
-import { Icon } from "../../../../components/core/icons/Icon";
+import { IOToast } from "../../../../components/Toast";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -82,13 +82,15 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
   useEffect(() => {
     if (!isFirstRender.current) {
       if (isError) {
-        showToast(I18n.t("global.actions.retry"), "danger");
+        IOToast.error(
+          I18n.t("wallet.methods.card.pagoPaCapability.operationError")
+        );
       }
     } else {
       // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
-  }, [isError]);
+  }, [isError, maybePaymentMethod]);
 
   return pipe(
     paymentMethodExists,

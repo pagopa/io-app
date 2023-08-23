@@ -2,6 +2,7 @@ import * as React from "react";
 import { ReactNode, useContext, useState } from "react";
 import { Body, Container, Content, Left, Right } from "native-base";
 import { View, StyleSheet, SafeAreaView } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
 import { H5 } from "../core/typography/H5";
@@ -10,7 +11,6 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
-import { Icon } from "../core/icons";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
 

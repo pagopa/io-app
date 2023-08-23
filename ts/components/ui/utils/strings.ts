@@ -1,3 +1,5 @@
+import Config from "react-native-config";
+
 /**
  * simple string template for abi logos CDN
  * @param abi the bank's ABI code
@@ -9,4 +11,4 @@
  * @returns a formatted link string
  */
 export const getBankLogosCdnUri = (abi: string) =>
-  `https://assets.cdn.io.italia.it/logos/abi/${abi}.png`;
+  `${Config.CONTENT_REPO_URL}/logos/abi/${abi}.png`;

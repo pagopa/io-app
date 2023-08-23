@@ -48,12 +48,11 @@ describe("Test IDPayPaymentResultScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should render the screen correctly", () => {
-    const { component } = renderComponent();
-    expect(component).toBeTruthy();
-  });
-
   it("should render the success screen", () => {
+    mockedSelectFailureOption.mockImplementation(() => O.none);
+    mockedSelectIsFailure.mockImplementation(() => false);
+    mockedSelectIsCancelled.mockImplementation(() => false);
+
     const { component } = renderComponent();
     expect(component).toBeTruthy();
 

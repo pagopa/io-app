@@ -26,6 +26,9 @@ import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
 import { originSchemasWhiteList } from "../originSchemasWhiteList";
+import { GlobalState } from "../../../store/reducers/types";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -46,7 +49,10 @@ type State = {
   isLoginSuccess?: boolean;
 };
 
-type Props = OwnProps & NavigationProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  NavigationProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const loaderComponent = (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
@@ -183,13 +189,20 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         goBack={goBack}
-        headerTitle={I18n.t("authentication.cie.genericTitle")}
+        headerTitle={withTrailingPoliceCarLightEmojii(
+          I18n.t("authentication.cie.genericTitle"),
+          this.props.isCieUatEnabled
+        )}
       >
         {this.getContent()}
       </TopScreenComponent>
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => ({
+  isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetNavigation: () => resetToAuthenticationRoute(),
@@ -198,4 +211,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
 });
 
-export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CieConsentDataUsageScreen);

@@ -11,6 +11,7 @@ import * as React from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
@@ -56,11 +57,11 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
-import { Icon } from "../../components/core/icons";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { openWebUrl } from "../../utils/url";
 import { cieSpidMoreInfoUrl } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -149,6 +150,9 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
+  uatCie: {
+    backgroundColor: IOColors.red
+  },
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
     // TODO: Remove this half-disabled state.
@@ -180,6 +184,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
 
   private isCieSupported = () => this.props.isCieSupported;
+  private isCieUatEnabled = () => this.props.isCieUatEnabled;
 
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
@@ -248,6 +253,14 @@ class LandingScreen extends React.PureComponent<Props, State> {
     openWebUrl(cieSpidMoreInfoUrl);
   };
 
+  private navigateToCieUatSelectionScreen = () => {
+    if (this.isCieSupported()) {
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.CIE_LOGIN_CONFIG_SCREEN
+      });
+    }
+  };
+
   private renderCardComponents = () => {
     const cardProps = getCards(this.isCieSupported());
     return cardProps.map(p => (
@@ -262,6 +275,10 @@ class LandingScreen extends React.PureComponent<Props, State> {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   private renderLandingScreen = () => {
     const isCieSupported = this.isCieSupported();
+    const isCieUatEnabled = this.isCieUatEnabled();
+    const firstButtonStyle = isCieUatEnabled
+      ? styles.uatCie
+      : styles.fullOpacity;
     const secondButtonStyle = isCieSupported
       ? styles.fullOpacity
       : styles.noCie;
@@ -300,8 +317,12 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 ? this.navigateToCiePinScreen
                 : this.navigateToIdpSelection
             }
+            onLongPress={() =>
+              isCieSupported ? this.navigateToCieUatSelectionScreen() : ""
+            }
             accessibilityRole="button"
             accessible={true}
+            style={firstButtonStyle}
             accessibilityLabel={
               isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
@@ -420,7 +441,8 @@ const mapStateToProps = (state: GlobalState) => {
     continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
     hasCieApiLevelSupport: pot.getOrElse(hasApiLevelSupport, false),
-    hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false)
+    hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false),
+    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
   };
 };
 

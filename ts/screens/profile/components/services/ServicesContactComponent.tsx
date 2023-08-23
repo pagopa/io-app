@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { View, FlatList, ListRenderItemInfo } from "react-native";
 import { constNull } from "fp-ts/lib/function";
+import { Icon } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -14,7 +15,6 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import I18n from "../../../../i18n";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../components/core/icons/Icon";
 import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {

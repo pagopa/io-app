@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Text, View, SafeAreaView } from "react-native";
+import { Text, View, SafeAreaView, Platform } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   IOColors,
   hexToRgba
@@ -12,45 +14,69 @@ import {
 } from "../../../components/core/variables/IOStyles";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 
-export const DSSafeAreaCentered = () => (
-  <View style={IOStyles.flex}>
-    <SafeAreaView style={{ flex: 1, backgroundColor: IOColors["error-100"] }}>
-      <View
-        style={[
-          IOStyles.flex,
-          {
-            backgroundColor: IOColors.white,
-            alignItems: "center",
-            justifyContent: "center"
-          }
-        ]}
-      >
-        <H2>Start</H2>
-        <VSpacer size={24} />
-        <Body>Single text</Body>
-        <VSpacer size={24} />
-        <H2>End</H2>
-      </View>
-      <View
+export const DSSafeAreaCentered = () => {
+  const insets = useSafeAreaInsets();
+  const fixedBottomBarHeight: number = 70;
+
+  return (
+    <View style={IOStyles.flex}>
+      <SafeAreaView
         style={{
-          width: "100%",
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
-          backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7)
+          flexGrow: 1,
+          backgroundColor: IOColors["error-100"]
         }}
       >
+        {/* This extra View is mandatory when you have a fixed
+        bottom component to get a consistent behavior
+        across platforms */}
+        <View style={{ flexGrow: 1, paddingBottom: fixedBottomBarHeight }}>
+          <ScrollView
+            centerContent
+            contentContainerStyle={[
+              { backgroundColor: IOColors.white },
+              /* Android fallback because `centerContent`
+              is only an iOS property */
+              Platform.OS === "android" && {
+                flexGrow: 1,
+                justifyContent: "center"
+              }
+            ]}
+          >
+            <View style={{ padding: IOVisualCostants.appMarginDefault }}>
+              <H2>Start</H2>
+              <VSpacer size={24} />
+              <Body>Single text</Body>
+              <VSpacer size={24} />
+              <H2>End</H2>
+            </View>
+          </ScrollView>
+        </View>
+        {/* Fixed Component: Start */}
         <View
           style={{
-            alignSelf: "flex-end",
-            alignItems: "center",
-            justifyContent: "center",
-            height: 70,
+            bottom: 0,
+            position: "absolute",
             width: "100%",
-            backgroundColor: hexToRgba(IOColors.black, 0.8)
+            paddingBottom: insets.bottom,
+            paddingHorizontal: IOVisualCostants.appMarginDefault,
+            backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7)
           }}
         >
-          <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          <View
+            style={{
+              alignSelf: "flex-end",
+              alignItems: "center",
+              justifyContent: "center",
+              height: fixedBottomBarHeight,
+              width: "100%",
+              backgroundColor: hexToRgba(IOColors.black, 0.8)
+            }}
+          >
+            <Text style={{ color: IOColors.white }}>Fixed component</Text>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
-  </View>
-);
+        {/* Fixed Component: End */}
+      </SafeAreaView>
+    </View>
+  );
+};

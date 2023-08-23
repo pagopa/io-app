@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { H4 } from "../../../../components/core/typography/H4";
 import I18n from "../../../../i18n";
@@ -11,7 +12,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../components/core/icons";
 
 type Props = {
   phone?: string;

@@ -3,19 +3,14 @@ import { Image } from "react-native";
 import paypalLogoImage from "../../../img/wallet/payment-methods/paypal-logo.png";
 // sadly no svg is available for paypal, since on Figma an image is used
 import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
-import { BankLogoOrSkeleton } from "./utils/baseComponents/BankLogoOrLoadingSkeleton";
-type LogoPaymentHugeProps = {
+import { BankLogoOrSkeleton } from "./utils/components/BankLogoOrLoadingSkeleton";
+export type LogoPaymentExtendedProps = {
   dimensions: { height: number; width: number };
-} & (
-  | {
-      icon: "payPal" | "bpay";
-    }
-  | {
-      abiCode: string;
-    }
-);
+  icon?: "payPal" | "bpay";
+  abiCode?: string;
+};
 
-export const LogoPaymentExtended = (props: LogoPaymentHugeProps) => {
+export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
   const { height, width } = props.dimensions;
   if ("icon" in props) {
     switch (props.icon) {

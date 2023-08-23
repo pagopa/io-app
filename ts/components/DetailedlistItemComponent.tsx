@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
 import { BadgeComponent } from "./screens/BadgeComponent";
@@ -10,7 +11,6 @@ import { Body } from "./core/typography/Body";
 import { IOBadge } from "./core/IOBadge";
 import { IOStyles } from "./core/variables/IOStyles";
 import { Label } from "./core/typography/Label";
-import { Icon } from "./core/icons/Icon";
 
 type OwnProps = Readonly<{
   text11: string;

@@ -74,7 +74,7 @@ export const paymentsByRptIdSelector = (
  * Given an rptId as a string, return true if there is a matching paid transaction.
  * TODO: just a placeholder for now, see https://pagopa.atlassian.net/browse/IA-417
  */
-export const isNoticePaid = createSelector(
+export const isNoticePaidSelector = createSelector(
   [
     paymentsByRptIdSelector,
     (_: GlobalState, category: UIMessage["category"]) => category

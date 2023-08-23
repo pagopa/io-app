@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import React, { useCallback } from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
@@ -17,7 +18,6 @@ import {
   handleCtaAction
 } from "../../../utils/messages";
 import { maybeNotNullyString } from "../../../utils/strings";
-import { Icon } from "../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },

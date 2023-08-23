@@ -1,8 +1,8 @@
 import * as React from "react";
+import type { IOIcons } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import type { IOColors } from "../core/variables/IOColors";
-import type { IOIcons } from "../core/icons";
 import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
 
