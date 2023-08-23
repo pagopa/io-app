@@ -36,7 +36,7 @@ const PaymentMethodFeatures = ({ isIdpayEnabled, paymentMethod }: Props) => {
       <Alert
         viewRef={viewRef}
         variant="error"
-        content={I18n.t("wallet.method.expired")}
+        content={I18n.t("wallet.methodDetails.expired")}
       />
     );
   }
