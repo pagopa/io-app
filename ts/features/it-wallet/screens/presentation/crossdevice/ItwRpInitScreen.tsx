@@ -36,9 +36,9 @@ import {
 } from "../../../store/actions/itwRpActions";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
-  ItwRpType,
+  ItwRpInitializationType,
   itwRpInitializationSelector
-} from "../../../store/reducers/itwRpReducer";
+} from "../../../store/reducers/itwRpInitializationReducer";
 import ItwLoadingSpinner from "../../../components/ItwLoadingSpinner";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { openWebUrl } from "../../../../../utils/url";
@@ -107,7 +107,7 @@ const ItwRpInitScreen = () => {
    * Renders the content of the screen if the PID is decoded, an error otherwise.
    * @param rp - the RP data to display
    */
-  const ContentView = ({ rp }: { rp: ItwRpType }) =>
+  const ContentView = ({ rp }: { rp: ItwRpInitializationType }) =>
     pipe(
       sequenceT(O.Applicative)(rp.entity, rp.requestObject, decodedPid),
       O.fold(
