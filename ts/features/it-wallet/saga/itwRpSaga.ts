@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, take, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { RelyingPartySolution } from "@pagopa/io-react-native-wallet";
 import {
@@ -12,6 +12,8 @@ import {
   itwRpUserRejected
 } from "../store/actions/itwRpActions";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
+import { itwPidValueSelector } from "../store/reducers/itwPidReducer";
+import { itwDecodePid } from "../store/actions/itwCredentialsActions";
 import { handleItwRpInitializationSaga } from "./itwRpInitialization";
 import { handleItwRpPresentationSaga } from "./itwRpPresentation";
 
@@ -53,6 +55,16 @@ export function* handleRpStart(
   // Get WIA
   yield* call(itwWiaRequest.request);
   const wia = yield* take(itwWiaRequest.success);
+
+  // Decode PID
+  const pid = yield* select(itwPidValueSelector);
+  yield* call(itwDecodePid.request, pid);
+  const decodedRes = yield* take<
+    ActionType<typeof itwWiaRequest.success | typeof itwWiaRequest.failure>
+  >([itwWiaRequest.success, itwWiaRequest.failure]);
+  if (decodedRes.type === getType(itwWiaRequest.failure)) {
+    yield* put(itwRpStop());
+  }
 
   // The RP solution is initialized using the authReqUrl
   // of the qrcode payload
