@@ -28,7 +28,12 @@ import ItemSeparatorComponent from "../../../../../components/ItemSeparatorCompo
 import { Link } from "../../../../../components/core/typography/Link";
 import { FeatureInfo } from "../../../../../components/FeatureInfo";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { itwRpStart, itwRpStop } from "../../../store/actions/itwRpActions";
+import {
+  itwRpStart,
+  itwRpStop,
+  itwRpUserConfirmed,
+  itwRpUserRejected
+} from "../../../store/actions/itwRpActions";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   ItwRpType,
@@ -70,7 +75,7 @@ const ItwRpInitScreen = () => {
     light: false,
     bordered: true,
     onPress: () => {
-      dispatch(itwRpStop());
+      dispatch(itwRpUserRejected());
     },
     title: I18n.t(
       "features.itWallet.presentation.pidAttributesScreen.buttons.deny"
@@ -85,7 +90,7 @@ const ItwRpInitScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => null,
+    onPress: () => dispatch(itwRpUserConfirmed()),
     title: I18n.t(
       "features.itWallet.presentation.pidAttributesScreen.buttons.confirmData"
     )
