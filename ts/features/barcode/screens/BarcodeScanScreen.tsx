@@ -41,7 +41,10 @@ const BarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
-  const handleBarcodeSuccess = (barcode: IOBarcode) => {
+  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+    // TODO: handle multiple barcodes (IOBP-170)
+    const barcode = barcodes[0];
+
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
     switch (barcode.type) {
