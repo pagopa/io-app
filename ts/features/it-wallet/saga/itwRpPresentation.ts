@@ -5,9 +5,9 @@ import { SignJWT } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
 import {
-  itwRpEntityValueSelector,
-  itwRpRequestObjectValueSelector
-} from "../store/reducers/itwRpReducer";
+  itwRpInitializationEntityValueSelector,
+  itwRpInitializationRequestObjectValueSelector
+} from "../store/reducers/itwRpInitializationReducer";
 import { itwRpPresentation } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
@@ -35,7 +35,9 @@ export function* handleItwRpPresentationSaga(
       "evidence"
     ];
 
-    const requestObject = yield* select(itwRpRequestObjectValueSelector);
+    const requestObject = yield* select(
+      itwRpInitializationRequestObjectValueSelector
+    );
     const pidToken = yield* select(ItwCredentialsPidSelector);
 
     if (O.isNone(requestObject) || O.isNone(pidToken)) {
@@ -55,7 +57,7 @@ export function* handleItwRpPresentationSaga(
         signature
       );
 
-      const entity = yield* select(itwRpEntityValueSelector);
+      const entity = yield* select(itwRpInitializationEntityValueSelector);
 
       if (O.isNone(entity)) {
         throw new Error("Entity is not defined");
