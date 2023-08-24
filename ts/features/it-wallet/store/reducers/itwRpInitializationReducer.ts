@@ -10,14 +10,17 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwRpInitialization } from "../actions/itwRpActions";
 
-export type ItwRpType = {
+export type ItwRpInitializationType = {
   requestObject: O.Option<RequestObject>;
   entity: O.Option<RpEntityConfiguration>;
 };
 
-export type ItwRpState = pot.Pot<ItwRpType, ItWalletError>;
+export type ItwRpInitializationState = pot.Pot<
+  ItwRpInitializationType,
+  ItWalletError
+>;
 
-const emptyState: ItwRpState = pot.none;
+const emptyState: ItwRpInitializationState = pot.none;
 
 /**
  * This reducer handles the RP state.
@@ -28,9 +31,9 @@ const emptyState: ItwRpState = pot.none;
  * @returns the result state
  */
 const reducer = (
-  state: ItwRpState = emptyState,
+  state: ItwRpInitializationState = emptyState,
   action: Action
-): ItwRpState => {
+): ItwRpInitializationState => {
   switch (action.type) {
     case getType(itwRpInitialization.request):
       return pot.toLoading(state);
@@ -51,16 +54,18 @@ const reducer = (
  * @returns the RP pot state.
  */
 export const itwRpInitializationSelector = (state: GlobalState) =>
-  state.features.itWallet.rp;
+  state.features.itWallet.rpInit;
 
 /**
  * Selects the RP value from the global state.
  * @param state - the global state
  * @returns the rp requestObject value.
  */
-export const itwRpRequestObjectValueSelector = (state: GlobalState) =>
+export const itwRpInitializationRequestObjectValueSelector = (
+  state: GlobalState
+) =>
   pot.getOrElse(
-    pot.map(state.features.itWallet.rp, rp => rp.requestObject),
+    pot.map(state.features.itWallet.rpInit, rpInit => rpInit.requestObject),
     O.none
   );
 
@@ -69,9 +74,9 @@ export const itwRpRequestObjectValueSelector = (state: GlobalState) =>
  * @param state - the global state
  * @returns the rp entity value.
  */
-export const itwRpEntityValueSelector = (state: GlobalState) =>
+export const itwRpInitializationEntityValueSelector = (state: GlobalState) =>
   pot.getOrElse(
-    pot.map(state.features.itWallet.rp, rp => rp.entity),
+    pot.map(state.features.itWallet.rpInit, rpInit => rpInit.entity),
     O.none
   );
 
