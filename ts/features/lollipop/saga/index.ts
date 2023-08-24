@@ -120,6 +120,8 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
       buildEventProperties("KO", undefined)
     );
     yield* put(sessionInvalid());
+    // We want to take a little time before restarting the application
+    // to let the action sessionInvalid be dispatched and handled.
     yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
     yield* call(restartCleanApplication);
     return false;
