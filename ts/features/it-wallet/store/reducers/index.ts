@@ -9,7 +9,12 @@ import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
 import itwPid, { ItwPidState } from "./itwPidReducer";
 import itwDecodedPid, { ItwDecodedPidState } from "./itwPidDecodeReducer";
-import itwRp, { ItwRpState } from "./itwRpReducer";
+import itwRpInitializationReducer, {
+  ItwRpInitializationState
+} from "./itwRpInitializationReducer";
+import itwRpPresentationReducer, {
+  ItwRpPresentationState
+} from "./itwRpPresentationReducer";
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 1;
 
@@ -20,7 +25,8 @@ export type ItWalletState = {
   lifecycle: ItwLifecycleState;
   pid: ItwPidState;
   decodedPid: ItwDecodedPidState;
-  rp: ItwRpState;
+  rpInit: ItwRpInitializationState;
+  rpPresentation: ItwRpPresentationState;
 };
 
 export type PersistedItWalletState = ItWalletState & PersistPartial;
@@ -44,7 +50,8 @@ const reducers = combineReducers<ItWalletState, Action>({
   lifecycle: itwLifeCycle,
   pid: itwPid,
   decodedPid: itwDecodedPid,
-  rp: itwRp
+  rpInit: itwRpInitializationReducer,
+  rpPresentation: itwRpPresentationReducer
 });
 
 const itwReducer = persistReducer<ItWalletState, Action>(
