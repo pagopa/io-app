@@ -13,12 +13,12 @@ import {
   itwRpUserRejected
 } from "../store/actions/itwRpActions";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
-import { itwDecodePid } from "../store/actions/itwCredentialsActions";
-import { itwPidValueSelector } from "../store/reducers/itwPidReducer";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { handleItwRpPresentationSaga } from "./itwRpPresentation";
+import { itwPidValueSelector } from "../store/reducers/itwPidReducer";
+import { itwDecodePid } from "../store/actions/itwCredentialsActions";
 import { handleItwRpInitializationSaga } from "./itwRpInitialization";
+import { handleItwRpPresentationSaga } from "./itwRpPresentation";
 
 /**
  * Watcher for the IT wallet Relying Party related sagas.
