@@ -29,4 +29,5 @@ export type ItwParamsList = {
   // PRESENTATION PID
   [ITW_ROUTES.PRESENTATION.PID_DETAILS]: undefined;
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT]: ItwRpInitScreenNavigationParams;
+  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT]: undefined;
 };

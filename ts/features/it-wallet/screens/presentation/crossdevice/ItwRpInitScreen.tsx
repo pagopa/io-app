@@ -31,7 +31,6 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   itwRpStart,
   itwRpStop,
-  itwRpUserConfirmed,
   itwRpUserRejected
 } from "../../../store/actions/itwRpActions";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
@@ -42,6 +41,7 @@ import {
 import ItwLoadingSpinner from "../../../components/ItwLoadingSpinner";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { openWebUrl } from "../../../../../utils/url";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 
 /**
  * ItwRpInitScreenNavigationParams's navigation params.
@@ -78,21 +78,22 @@ const ItwRpInitScreen = () => {
       dispatch(itwRpUserRejected());
     },
     title: I18n.t(
-      "features.itWallet.presentation.pidAttributesScreen.buttons.deny"
+      "features.itWallet.presentation.initializationScreen.buttons.deny"
     )
   };
 
   /**
    * Props for the continue button.
-   * Currently does nothing.
-   * TODO: SIW-246
+   * Confirms the data and navigates to the result screen.
    */
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => dispatch(itwRpUserConfirmed()),
+    onPress: () => {
+      navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT);
+    },
     title: I18n.t(
-      "features.itWallet.presentation.pidAttributesScreen.buttons.confirmData"
+      "features.itWallet.presentation.initializationScreen.buttons.confirmData"
     )
   };
 
@@ -139,10 +140,10 @@ const ItwRpInitScreen = () => {
       <>
         <ScreenContent
           title={I18n.t(
-            "features.itWallet.presentation.pidAttributesScreen.title"
+            "features.itWallet.presentation.initializationScreen.title"
           )}
           subtitle={I18n.t(
-            "features.itWallet.presentation.pidAttributesScreen.subTitle"
+            "features.itWallet.presentation.initializationScreen.subTitle"
           )}
         >
           <View style={IOStyles.horizontalContentPadding}>
@@ -163,10 +164,10 @@ const ItwRpInitScreen = () => {
             <ItemSeparatorComponent noPadded />
             <ListItemComponent
               title={I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.requiredData.title"
+                "features.itWallet.presentation.initializationScreen.requiredData.title"
               )}
               subTitle={I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.requiredData.subTitle"
+                "features.itWallet.presentation.initializationScreen.requiredData.subTitle"
               )}
               hideIcon
               hideSeparator
@@ -178,11 +179,11 @@ const ItwRpInitScreen = () => {
             <VSpacer />
             <H4 weight={"Regular"} color={"bluegrey"}>
               {I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.wrongClaims.title"
+                "features.itWallet.presentation.initializationScreen.wrongClaims.title"
               )}
               <Link onPress={() => null}>
                 {I18n.t(
-                  "features.itWallet.presentation.pidAttributesScreen.wrongClaims.reportLink"
+                  "features.itWallet.presentation.initializationScreen.wrongClaims.reportLink"
                 )}
               </Link>
             </H4>
@@ -192,14 +193,14 @@ const ItwRpInitScreen = () => {
             <FeatureInfo
               iconName="externalLink"
               body={I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.privacy.thirdParty"
+                "features.itWallet.presentation.initializationScreen.privacy.thirdParty"
               )}
             />
             <VSpacer />
             <FeatureInfo
               iconName="hourglass"
               body={I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.privacy.preservation",
+                "features.itWallet.presentation.initializationScreen.privacy.preservation",
                 {
                   numberOfMonths: "6"
                 }
@@ -209,13 +210,13 @@ const ItwRpInitScreen = () => {
             <FeatureInfo
               iconName="trashcan"
               body={I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.privacy.deletion"
+                "features.itWallet.presentation.initializationScreen.privacy.deletion"
               )}
             />
             <VSpacer />
             <Link onPress={() => openWebUrl(policy_uri)}>
               {I18n.t(
-                "features.itWallet.presentation.pidAttributesScreen.privacy.conditionsLink"
+                "features.itWallet.presentation.initializationScreen.privacy.conditionsLink"
               )}
             </Link>
           </View>
@@ -223,7 +224,7 @@ const ItwRpInitScreen = () => {
           {/* Footer ToS and privacy link */}
           <ItwFooterInfoBox
             content={I18n.t(
-              "features.itWallet.presentation.pidAttributesScreen.tos",
+              "features.itWallet.presentation.initializationScreen.tos",
               {
                 relayingParty: organization_name
               }
@@ -277,7 +278,7 @@ const ItwRpInitScreen = () => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t(
-        "features.itWallet.presentation.pidAttributesScreen.headerTitle"
+        "features.itWallet.presentation.initializationScreen.headerTitle"
       )}
       contextualHelp={emptyContextualHelp}
     >

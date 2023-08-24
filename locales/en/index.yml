@@ -3352,7 +3352,7 @@ features:
       credentialDetails: 
         buttons: 
           qrCode: "Show QR code"
-      pidAttributesScreen: 
+      initializationScreen: 
         headerTitle: "Data presentation"
         title: "Do you confirm this data?"
         subTitle: "Here you can find the data regarding your Digital Identity and the Authority to which you are presenting them."
@@ -3371,6 +3371,21 @@ features:
         buttons: 
           confirmData: "Confirm data"
           deny: "Deny"
+      resultScreen:
+        loading: 
+          title: "Presenting your data to {{relayingParty}}"
+          subTitle: "Wait a few seconds"
+        error:
+          title: "Data presentation failed"
+          subTitle: "Try again in a few minutes. If it happens again, contact support."
+          buttons: 
+            retry: "Try again"
+            cancel: "Cancel data presentation"
+        success: 
+          title: "Successful login using IT Wallet"
+          subTitle: "You can now return to the {{relayingParty}} website to continue."
+          buttons: 
+            continue: "Ok, thanks"
     verifiableCredentials:
       type:
         digitalCredential: "Digital Credential"
