@@ -29,8 +29,8 @@ import {
   resetCustomFields
 } from "../../../utils/supportAssistance";
 import { zendeskSupportStart } from "../../zendesk/store/actions";
-import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
-import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
+import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
+import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
@@ -56,7 +56,7 @@ type Props = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
@@ -128,15 +128,15 @@ const BarcodeScanBaseScreenComponent = ({
     cameraPermissionStatus,
     requestCameraPermission,
     openCameraSettings
-  } = useIOBarcodeScanner({
-    onBarcodeSuccess,
+  } = useIOBarcodeCameraScanner({
+    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
     disabled: !isFocused
   });
 
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess,

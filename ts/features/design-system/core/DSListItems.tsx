@@ -2,19 +2,14 @@ import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { Alert, ImageSourcePropType, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOThemeContext, Icon } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import ListItemComponent from "../../../components/screens/ListItemComponent";
-import CategoryCheckbox from "../../bonus/cgn/components/merchants/search/CategoryCheckbox";
 import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-
-/* Icons */
-import BooksIcon from "../../../../img/bonus/cgn/categories/books.svg";
-import CultureIcon from "../../../../img/bonus/cgn/categories/culture.svg";
 
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
@@ -28,7 +23,6 @@ import {
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -199,22 +193,6 @@ export const DSListItems = () => (
         >
           Derivated from ListItem (NativeBase)
         </H2>
-        <DSComponentViewerBox name="CategoryCheckbox">
-          <CategoryCheckbox
-            text={"Title"}
-            value={"Value"}
-            checked={true}
-            onPress={() => alert("Action triggered")}
-            icon={BooksIcon}
-          />
-          <CategoryCheckbox
-            text={"Title"}
-            value={"Value"}
-            checked={false}
-            onPress={() => alert("Action triggered")}
-            icon={CultureIcon}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="OrderOption">
           <OrderOption
             text={"Checked"}

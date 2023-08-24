@@ -221,23 +221,6 @@ export const bancomatPayConfigSelector = createSelector(
  * based on a minumum version of the app.
  * if there is no data, false is the default value -> (LolliPOP disabled)
  */
-export const isLollipopEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pipe(
-      backendStatus,
-      O.chainNullableK(bs => bs.config),
-      O.chainNullableK(cfg => cfg.lollipop),
-      O.chainNullableK(lp => lp.min_app_version),
-      O.map(mav =>
-        isVersionSupported(
-          Platform.OS === "ios" ? mav.ios : mav.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
 
 type KeysWithMinAppVersion<T> = Extract<
   keyof T,

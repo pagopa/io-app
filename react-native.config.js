@@ -13,7 +13,6 @@ module.exports = {
     "./assets/fonts/TitilliumWeb",
     "./assets/fonts/ReadexPro",
     "./assets/fonts/io-icon-font",
-    "./assets/fonts/Ionicons",
     "./assets/fonts/RobotoMono"
   ]
 };
