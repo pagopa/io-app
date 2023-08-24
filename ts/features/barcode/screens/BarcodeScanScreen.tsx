@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
@@ -57,15 +57,19 @@ const BarcodeScanScreen = () => {
       barcode => barcode.format === "DATA_MATRIX"
     );
 
-    if (hasDataMatrix) {
-      void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-    }
-
     const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
       ? "poste_datamatrix_scan"
       : "qrcode_scan";
 
     if (pagoPaBarcodes.length > 1) {
+      ReactNativeHapticFeedback.trigger(
+        HapticFeedbackTypes.notificationSuccess
+      );
+
+      if (hasDataMatrix) {
+        void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+      }
+
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
         params: {
@@ -86,6 +90,21 @@ const BarcodeScanScreen = () => {
     if (pagoPaBarcodes.length > 1) {
       // Prioritize pagoPa barcodes
       handleMultiplePagoPaBarcodes(pagoPaBarcodes);
+      return;
+    }
+
+    if (barcodes.length >= 1) {
+      Alert.alert(
+        I18n.t("barcodeScan.multipleResultsAlert.title"),
+        I18n.t("barcodeScan.multipleResultsAlert.body"),
+        [
+          {
+            text: I18n.t(`barcodeScan.multipleResultsAlert.action`),
+            style: "default"
+          }
+        ],
+        { cancelable: false }
+      );
       return;
     }
 

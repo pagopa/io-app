@@ -970,8 +970,12 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
-  method:
+  methodDetails:
     expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
+    isSupportedBanner:
+      title: Vuoi pagare in app?
+      content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
+      cta: Scopri di più
   wallet: Wallet
   refreshWallet: Refresh the Wallet
   favourite:
@@ -3718,6 +3722,10 @@ barcodeScan:
       title: Non hai dato il permesso di usare la fotocamera
       label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
       action: Vai alle impostazioni
+  multipleResultsAlert:
+    title: Hai inquadrato più codici
+    body: Inquadra un solo codice alla volta
+    action: Riprova
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

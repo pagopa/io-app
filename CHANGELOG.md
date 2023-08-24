@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.40.0-rc.3](https://github.com/pagopa/io-app/compare/2.40.0-rc.2...2.40.0-rc.3) (2023-08-22)
+
+
+### Bug Fixes
+
+* [[IABT-1488](https://pagopa.atlassian.net/browse/IABT-1488)] Fix crash on Android 6 when checking for notifications' permission ([#4921](https://github.com/pagopa/io-app/issues/4921)) ([9d5e34e](https://github.com/pagopa/io-app/commit/9d5e34e40b766ac80ab62729b67f93b54b1616d8))
+* [[IOCOM-479](https://pagopa.atlassian.net/browse/IOCOM-479)] Strings for NSPhotoLibraryAddUsageDescription permission ([#4903](https://github.com/pagopa/io-app/issues/4903)) ([96b0531](https://github.com/pagopa/io-app/commit/96b0531c9e9001d2261d49348f878c0fbc3e679f))
+
+
+### Chores
+
+* [[IOAPPFD0-135](https://pagopa.atlassian.net/browse/IOAPPFD0-135)] Completely remove `dynamicSubHeader` reference from `DarkLayout` ([#4901](https://github.com/pagopa/io-app/issues/4901)) ([9ec583c](https://github.com/pagopa/io-app/commit/9ec583cb6831b6a2c449d25e9a3988e87f448fa3))
+* [[IOAPPFD0-136](https://pagopa.atlassian.net/browse/IOAPPFD0-136)] Remove dead assets ([#4916](https://github.com/pagopa/io-app/issues/4916)) ([6c0072b](https://github.com/pagopa/io-app/commit/6c0072b48401494951e2315864b213ad23f46eca))
+* [[IOAPPFD0-137](https://pagopa.atlassian.net/browse/IOAPPFD0-137)] Remove unused `Chooser…` components ([#4918](https://github.com/pagopa/io-app/issues/4918)) ([569d1c8](https://github.com/pagopa/io-app/commit/569d1c8c1fb4a140c0182c55ec01c5d87bbe86fb))
+* [[IOBP-161](https://pagopa.atlassian.net/browse/IOBP-161)] New design for payment methods details page aside from credit ([#4904](https://github.com/pagopa/io-app/issues/4904)) ([7f80a5b](https://github.com/pagopa/io-app/commit/7f80a5bb5cca743f47ae941b27813372975c6417))
+* [[IOBP-166](https://pagopa.atlassian.net/browse/IOBP-166)] Add `Alert` feedback into expired payment methods detail ([#4873](https://github.com/pagopa/io-app/issues/4873)) ([0d54619](https://github.com/pagopa/io-app/commit/0d546192fd016d5e3ece141ad5f0c1238b2ffcb4))
+* [[IOBP-168](https://pagopa.atlassian.net/browse/IOBP-168),[IOBP-167](https://pagopa.atlassian.net/browse/IOBP-167)] Toasts messages and native alert for delete payment method confirmation ([#4871](https://github.com/pagopa/io-app/issues/4871)) ([a6f7ac8](https://github.com/pagopa/io-app/commit/a6f7ac8e13edd188ad13b5f4f78bff1c68f545cb))
+* [[IOPID-361](https://pagopa.atlassian.net/browse/IOPID-361)] Delete isLollipopEnabledSelector ([#4893](https://github.com/pagopa/io-app/issues/4893)) ([d8b49c2](https://github.com/pagopa/io-app/commit/d8b49c2b585e2a45715ca8019f96a3cc3c8db404))
+* [[IOPID-599](https://pagopa.atlassian.net/browse/IOPID-599)] Change text and image of onboarding thankyou page  ([#4913](https://github.com/pagopa/io-app/issues/4913)) ([9a97977](https://github.com/pagopa/io-app/commit/9a9797731ad090c484faec77ed67a9278e1e2620))
+
 ## [2.40.0-rc.2](https://github.com/pagopa/io-app/compare/2.40.0-rc.0...2.40.0-rc.2) (2023-08-09)
 
 
