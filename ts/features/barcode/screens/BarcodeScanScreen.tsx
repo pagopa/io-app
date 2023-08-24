@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { IOToast } from "../../../components/Toast";
 import { Divider } from "../../../components/core/Divider";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -30,32 +30,14 @@ import {
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-  const { handleBarcode, handleMultipleBarcodes } = useIOBarcodesHandler();
+  const barcodesHandler = useIOBarcodesHandler();
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
-    // We check if there are multiple barcodes and try to handle them
-    if (barcodes.length > 1 && !handleMultipleBarcodes(barcodes)) {
-      // If the handle fails means that multiple barcodes for that type are not supported
-      Alert.alert(
-        I18n.t("barcodeScan.multipleResultsAlert.title"),
-        I18n.t("barcodeScan.multipleResultsAlert.body"),
-        [
-          {
-            text: I18n.t(`barcodeScan.multipleResultsAlert.action`),
-            style: "default"
-          }
-        ],
-        { cancelable: false }
-      );
-      return;
-    }
-
-    // Result always contains at least one barcode
-    handleBarcode(barcodes[0]);
+    barcodesHandler(barcodes);
   };
 
   const handleBarcodeError = () => {

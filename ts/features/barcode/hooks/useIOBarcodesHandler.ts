@@ -1,8 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
+import { Alert } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
+import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
@@ -18,67 +20,16 @@ import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
 import { IOBarcode, PagoPaBarcode } from "../types/IOBarcode";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
-type IOBarcodesHandler = {
-  /**
-   * Handles the case with multiple barcodes.It gives priority to pagoPA barcodes.
-   * @param barcodes Array of scanned barcodes
-   * @returns true if the barcodes have been handled, false otherwise
-   */
-  handleMultipleBarcodes: (barcodes: Array<IOBarcode>) => boolean;
-
-  /**
-   * Handles a single barcode and navigates to the correct screen.
-   * @param barcode Scanned barcode
-   * @returns true if the barcode has been handled, false otherwise
-   */
-  handleBarcode: (barcode: IOBarcode) => boolean;
-};
+type IOBarcodesHandler = (barcodes: Array<IOBarcode>) => void;
 
 /**
  * Hook that handles the barcodes from the camera scanner and the file scanner.
- * @returns @see IOBarcodesHandler
+ * @returns @see IOBarcodesHandler a function that handles the barcodes and navigates to the correct screen
  */
 export const useIOBarcodesHandler = (): IOBarcodesHandler => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
-
-  /**
-   * Handles multiple pagoPA barcodes. If there is only one barcode, it is handled by handleBarcode function instead
-   * @param barcodes Array of scanned pagoPA barcodes
-   * @returns true if the barcodes have been handled, false otherwise
-   */
-  const handlePagoPaBarcodes = (
-    pagoPABarcodes: Array<PagoPaBarcode>
-  ): boolean => {
-    if (pagoPABarcodes.length <= 1) {
-      return handleBarcode(pagoPABarcodes[0]);
-    }
-
-    ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
-
-    const hasDataMatrix = pagoPABarcodes.some(
-      barcode => barcode.format === "DATA_MATRIX"
-    );
-
-    const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
-      ? "poste_datamatrix_scan"
-      : "qrcode_scan";
-
-    if (hasDataMatrix) {
-      void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-    }
-
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
-      params: {
-        barcodes: pagoPABarcodes,
-        paymentStartOrigin
-      }
-    });
-
-    return true;
-  };
 
   /**
    * Handles the case with multiple barcodes.It gives priority to pagoPA barcodes.
@@ -89,9 +40,32 @@ export const useIOBarcodesHandler = (): IOBarcodesHandler => {
     const barcodesByType = getIOBarcodesByType(barcodes);
 
     if (barcodesByType.PAGOPA) {
-      return handlePagoPaBarcodes(
-        barcodesByType.PAGOPA as Array<PagoPaBarcode>
+      const pagoPABarcodes = barcodesByType.PAGOPA as Array<PagoPaBarcode>;
+
+      ReactNativeHapticFeedback.trigger(
+        HapticFeedbackTypes.notificationSuccess
       );
+
+      const hasDataMatrix = pagoPABarcodes.some(
+        barcode => barcode.format === "DATA_MATRIX"
+      );
+
+      const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
+        ? "poste_datamatrix_scan"
+        : "qrcode_scan";
+
+      if (hasDataMatrix) {
+        void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+      }
+
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+        params: {
+          barcodes: pagoPABarcodes,
+          paymentStartOrigin
+        }
+      });
+      return true;
     }
 
     return false;
@@ -100,15 +74,11 @@ export const useIOBarcodesHandler = (): IOBarcodesHandler => {
   /**
    * Handles a single barcode and navigates to the correct screen.
    * @param barcode Scanned barcode
-   * @returns true if the barcode has been handled, false otherwise
    */
-  const handleBarcode = (barcode: IOBarcode): boolean => {
+  const handleSingleBarcode = (barcode: IOBarcode) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
     switch (barcode.type) {
-      case "IDPAY":
-        openDeepLink(barcode.authUrl);
-        return true;
       case "PAGOPA":
         dispatch(paymentInitializeState());
 
@@ -125,14 +95,29 @@ export const useIOBarcodesHandler = (): IOBarcodesHandler => {
             ? "poste_datamatrix_scan"
             : "qrcode_scan"
         });
-        return true;
-      default:
-        return false;
+        break;
+      case "IDPAY":
+        openDeepLink(barcode.authUrl);
+        break;
     }
   };
 
-  return {
-    handleMultipleBarcodes,
-    handleBarcode
+  return (barcodes: Array<IOBarcode>) => {
+    if (barcodes.length > 1 && !handleMultipleBarcodes(barcodes)) {
+      // If the handle fails means that multiple barcodes for that type are not supported
+      Alert.alert(
+        I18n.t("barcodeScan.multipleResultsAlert.title"),
+        I18n.t("barcodeScan.multipleResultsAlert.body"),
+        [
+          {
+            text: I18n.t(`barcodeScan.multipleResultsAlert.action`),
+            style: "default"
+          }
+        ],
+        { cancelable: false }
+      );
+    } else if (barcodes.length > 0) {
+      handleSingleBarcode(barcodes[0]);
+    }
   };
 };
