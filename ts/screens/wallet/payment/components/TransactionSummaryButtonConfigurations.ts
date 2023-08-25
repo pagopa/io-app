@@ -9,7 +9,7 @@ export const loadingButtonProps = (): BlockButtonProps => ({
   disabled: true,
   style: { backgroundColor: IOColors.greyLight, width: "100%" },
   isLoading: true,
-  iconColor: IOColors.bluegreyDark
+  iconColor: "bluegreyDark"
 });
 
 export const continueButtonProps = (onPress: () => void): BlockButtonProps => ({

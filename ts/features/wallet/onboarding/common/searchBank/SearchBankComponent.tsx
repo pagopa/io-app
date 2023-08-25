@@ -79,7 +79,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
             ? I18n.t("wallet.searchAbi.loading")
             : undefined
         }}
-        icon={isLoading ? undefined : "io-search"}
+        icon={isLoading ? undefined : "search"}
       />
       <VSpacer size={16} />
       {isLoading ? (

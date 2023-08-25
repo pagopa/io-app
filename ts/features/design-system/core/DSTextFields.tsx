@@ -129,7 +129,7 @@ export const DSTextFields = () => {
 
       <LabelledItem
         label={"Text field with icon"}
-        icon="io-envelope"
+        icon="email"
         isValid={undefined}
         inputProps={{
           returnKeyType: "done",
@@ -181,8 +181,8 @@ export const DSTextFields = () => {
             returnKeyType: "done",
             contextMenuHidden: true
           }}
-          icon={"io-warning"}
-          iconColor={IOColors.red}
+          icon={"notice"}
+          iconColor={"red"}
           iconPosition="right"
           isValid={false}
           overrideBorderColor={IOColors.red}
@@ -209,7 +209,7 @@ export const DSTextFields = () => {
 
       <LabelledItem
         label={"Username"}
-        icon="io-titolare"
+        icon="profile"
         inputProps={{
           placeholder: "Username",
           returnKeyType: "done"
@@ -220,7 +220,7 @@ export const DSTextFields = () => {
 
       <LabelledItem
         label={"Password"}
-        icon="io-lucchetto"
+        icon="locked"
         inputProps={{
           placeholder: "Password",
           returnKeyType: "done",
@@ -239,8 +239,7 @@ export const DSTextFields = () => {
       <LabelledItem
         label={"Card number"}
         icon={detectedBrand.iconForm}
-        iconStyle={{ width: 24, height: 24 }}
-        // isValid={O.isNone(creditCard.pan) ? undefined : isCardNumberValid}
+        imageStyle={{ width: 24, height: 24 }}
         inputMaskProps={{
           value: pipe(
             creditCard.pan,
@@ -262,7 +261,6 @@ export const DSTextFields = () => {
             }
           }
         }}
-        // accessibilityLabel={accessibilityLabels.pan}
         testID={"pan"}
       />
 

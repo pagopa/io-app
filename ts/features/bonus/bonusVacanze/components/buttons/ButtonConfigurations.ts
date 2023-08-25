@@ -1,3 +1,4 @@
+import { IOIcons } from "@pagopa/io-app-design-system";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import I18n from "../../../../../i18n";
@@ -12,7 +13,7 @@ import I18n from "../../../../../i18n";
 export const cancelButtonProps = (
   onPress: () => void,
   title?: string,
-  iconName?: string,
+  iconName?: IOIcons,
   testID?: string
 ): BlockButtonProps => ({
   bordered: true,
@@ -32,7 +33,7 @@ export const cancelButtonProps = (
 export const confirmButtonProps = (
   onPress: () => void,
   title?: string,
-  iconName?: string,
+  iconName?: IOIcons,
   testID?: string,
   disabled?: boolean,
   buttonFontSize?: number
@@ -55,7 +56,7 @@ export const confirmButtonProps = (
 export const errorButtonProps = (
   onPress: () => void,
   title?: string,
-  iconName?: string
+  iconName?: IOIcons
 ): BlockButtonProps => ({
   alert: true,
   labelColor: IOColors.white,
@@ -72,7 +73,7 @@ export const errorButtonProps = (
 export const errorBorderedButtonProps = (
   onPress: () => void,
   title?: string,
-  iconName?: string
+  iconName?: IOIcons
 ): BlockButtonProps => ({
   title: title ?? I18n.t("global.buttons.confirm"),
   iconName,
@@ -93,7 +94,7 @@ export const errorBorderedButtonProps = (
  */
 export const disablePrimaryButtonProps = (
   title?: string,
-  iconName?: string,
+  iconName?: IOIcons,
   testID?: string
 ): BlockButtonProps => ({
   primary: true,

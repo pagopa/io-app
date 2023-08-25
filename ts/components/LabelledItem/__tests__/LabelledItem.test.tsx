@@ -20,7 +20,7 @@ const textInputMaskProps = {
   }
 } as Props;
 const onPress = jest.fn();
-const icon = "io-place";
+const icon = "email";
 const iconPosition = "left";
 const testID = "Text";
 const description = "description text";
@@ -94,7 +94,7 @@ describe("Test LabelledItem", () => {
     });
   });
 
-  it("should render IconFont if icon is a string", () => {
+  it("should render the icon if icon is a string", () => {
     const component = renderComponent({
       ...textInputProps,
       iconPosition,
@@ -102,7 +102,7 @@ describe("Test LabelledItem", () => {
     });
     expect(component.queryByTestId("ButtonDefaultOpacity")).not.toBeNull();
     expect(isString(icon)).toBeTruthy();
-    expect(component.queryByTestId("LabelledItem_IconFont")).not.toBeNull();
+    expect(component.queryByTestId("LabelledItem_Icon")).not.toBeNull();
   });
 
   it("should render Image if icon is not a string", () => {

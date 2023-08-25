@@ -47,7 +47,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
       >
         <ScreenContentHeader
           title={I18n.t("authentication.cie.nfc.enableNfcTitle")}
-          icon={require("../../../img/icons/nfc-icon.png")}
+          rasterIcon={require("../../../img/icons/nfc-icon.png")}
         />
         <Content>
           <Body>{I18n.t("authentication.cie.nfc.enableNfcContent")}</Body>
