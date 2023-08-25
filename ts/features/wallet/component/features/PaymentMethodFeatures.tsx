@@ -1,34 +1,32 @@
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as E from "fp-ts/lib/Either";
-import { View } from "react-native";
 import { Alert } from "@pagopa/io-app-design-system";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { View } from "react-native";
 
-import { connect } from "react-redux";
+import I18n from "../../../../i18n";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { isPaymentMethodExpired } from "../../../../utils/paymentMethod";
-import I18n from "../../../../i18n";
 
+import { useIOSelector } from "../../../../store/hooks";
 import PaymentMethodInitiatives from "./PaymentMethodInitiatives";
 import PaymentMethodSettings from "./PaymentMethodSettings";
 
-type OwnProps = { paymentMethod: PaymentMethod };
-
-type Props = ReturnType<typeof mapStateToProps> & OwnProps;
+type Props = { paymentMethod: PaymentMethod };
 
 /**
  * Display the features available for a payment method:
  * - vertical initiatives (eg: cashback, fa)
  * - global settings (payment capability, favourite, etc.)
  */
-const PaymentMethodFeatures = ({ isIdpayEnabled, paymentMethod }: Props) => {
+const PaymentMethodFeatures = ({ paymentMethod }: Props) => {
   const isMethodExpired = pipe(
     paymentMethod,
     isPaymentMethodExpired,
     E.getOrElse(() => false)
   );
+  const isIdpayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   if (isMethodExpired) {
     const viewRef = React.createRef<View>();
@@ -50,8 +48,4 @@ const PaymentMethodFeatures = ({ isIdpayEnabled, paymentMethod }: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  isIdpayEnabled: isIdPayEnabledSelector(state)
-});
-
-export default connect(mapStateToProps)(PaymentMethodFeatures);
+export default PaymentMethodFeatures;
