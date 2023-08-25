@@ -154,6 +154,7 @@ global:
     ok: OK
     ok2: Ok
     continue: Continue
+    notNow: Non ora
     retry: Retry
     back: Back
     confirm: Confirm
@@ -166,6 +167,7 @@ global:
     edit: "Edit"
     info: "Info"
     activate: "Activate"
+    activate2: Attiva
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
@@ -846,16 +848,25 @@ onboarding:
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
-  fingerprint:
-    headerTitle: Activation
-    title: Biometric authentication
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: your fingerprint
-        faceId: Face ID
-        touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  biometric:
+    headerTitle: Configura IO
+    available:
+      title: Attiva il riconoscimento biometrico
+      settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
+      body:
+        infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
+        biometricType: volto o impronta digitale,
+        infoEnd: in modo più rapido e sicuro.
+        enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
+        notEnrolled:
+          text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Preferenze.
+    unavailable:
+      title: Proteggi il tuo dispositivo
+      body:
+        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
+        firstInfoEnd: personalmente.
+        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
+        secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
   shareData:
     title: "Configure IO"
   thankYouPage:
