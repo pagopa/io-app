@@ -62,7 +62,7 @@ const ItwRpResultScreen = () => {
     block: true,
     light: false,
     bordered: true,
-    onPress: () => dispatch(itwRpCompleted()),
+    onPress: () => dispatch(itwRpStop()),
     title: I18n.t(
       "features.itWallet.presentation.resultScreen.success.buttons.continue"
     )

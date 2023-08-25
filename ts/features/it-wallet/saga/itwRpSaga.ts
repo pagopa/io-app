@@ -94,7 +94,3 @@ export function* handleRpStop(): SagaIterator {
     })
   );
 }
-
-export function* handleRpCompleted(): SagaIterator {
-  // TODO: (ex. show a typ)
-}
