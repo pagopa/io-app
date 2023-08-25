@@ -19,7 +19,6 @@ import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { NewH5 } from "../core/typography/NewH5";
 import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
 import {
@@ -197,7 +196,7 @@ export const ListItemTransaction = ({
           </View>
         )}
         <View style={IOStyles.flex}>
-          <NewH5 color={theme["textBody-default"]}>{title}</NewH5>
+          <LabelSmall color={theme["textBody-default"]}>{title}</LabelSmall>
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
