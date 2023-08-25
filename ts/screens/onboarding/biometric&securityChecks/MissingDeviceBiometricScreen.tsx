@@ -87,6 +87,7 @@ const MissingDeviceBiometricScreen = () => {
           type={"SingleButton"}
           leftButton={{
             title: I18n.t("global.buttons.continue"),
+            testID: "not-enrolled-biometric-confirm",
             primary: true,
             onPress: () =>
               dispatch(
