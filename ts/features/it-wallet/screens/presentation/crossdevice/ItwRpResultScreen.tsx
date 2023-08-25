@@ -2,6 +2,9 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { RpEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/rp/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../i18n";
@@ -19,7 +22,6 @@ import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { itwRpPresentationSelector } from "../../../store/reducers/itwRpPresentationReducer";
 import { itwRpInitializationEntityValueSelector } from "../../../store/reducers/itwRpInitializationReducer";
 import ItwActionCompleted from "../../../components/ItwActionCompleted";
-import { getRpEntityOrganizationName } from "../../../utils/rp";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 
 const ItwRpResultScreen = () => {
@@ -73,15 +75,18 @@ const ItwRpResultScreen = () => {
     dispatch(itwRpUserConfirmed());
   });
 
-  /*
-   * Loading view component.
+  /**
+   * Loading view component which shows a loading spinner and the RP organization name.
+   * @param rp - the RP entity configuration
    */
-  const LoadingView = () => (
+  const LoadingView = ({ rp }: { rp: RpEntityConfiguration }) => (
     <ItwLoadingSpinner
       color={IOColors.blue}
       captionTitle={I18n.t(
         "features.itWallet.presentation.resultScreen.loading.title",
-        { relayingParty: getRpEntityOrganizationName(rpEntity) }
+        {
+          relayingParty: rp.payload.metadata.federation_entity.organization_name
+        }
       )}
       captionSubtitle={I18n.t(
         "features.itWallet.presentation.resultScreen.loading.subTitle"
@@ -104,9 +109,10 @@ const ItwRpResultScreen = () => {
   );
 
   /**
-   * Success screen component with a single button which completes the RP flow.
+   * Success screen component with a single button which completes the RP flow which shows the RP organization name.
+   * @param rp - the RP entity configuration
    */
-  const SuccessView = () => (
+  const SuccessView = ({ rp }: { rp: RpEntityConfiguration }) => (
     <>
       <ItwActionCompleted
         title={I18n.t(
@@ -114,7 +120,10 @@ const ItwRpResultScreen = () => {
         )}
         content={I18n.t(
           "features.itWallet.presentation.resultScreen.success.subTitle",
-          { relayingParty: getRpEntityOrganizationName(rpEntity) }
+          {
+            relayingParty:
+              rp.payload.metadata.federation_entity.organization_name
+          }
         )}
       />
       <FooterWithButtons
@@ -126,19 +135,29 @@ const ItwRpResultScreen = () => {
   );
 
   /**
-   * Render mask which folds the presentation status of the RP flow.
+   * Render mask for the screen content.
+   * Shows an error view if the RP entity is not present, otherwise folds the presentation status pot.
    */
   const RenderMask = () =>
-    pot.fold(
-      presentationResult,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      err => <ErrorView error={err} />,
-      _ => <SuccessView />,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      (_, err) => <ErrorView error={err} />
+    pipe(
+      rpEntity,
+      O.fold(
+        () => (
+          <ItwErrorView type="SingleButton" leftButton={cancelButtonProps} />
+        ),
+        someRp =>
+          pot.fold(
+            presentationResult,
+            () => <LoadingView rp={someRp} />,
+            () => <LoadingView rp={someRp} />,
+            () => <LoadingView rp={someRp} />,
+            err => <ErrorView error={err} />,
+            _ => <SuccessView rp={someRp} />,
+            () => <LoadingView rp={someRp} />,
+            () => <LoadingView rp={someRp} />,
+            (_, err) => <ErrorView error={err} />
+          )
+      )
     );
 
   return (
