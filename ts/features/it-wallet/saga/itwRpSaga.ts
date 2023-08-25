@@ -4,7 +4,6 @@ import { ActionType, getType } from "typesafe-actions";
 import { RelyingPartySolution } from "@pagopa/io-react-native-wallet";
 import { CommonActions } from "@react-navigation/native";
 import {
-  itwRpCompleted,
   itwRpInitialization,
   itwRpPresentation,
   itwRpStart,
@@ -43,11 +42,6 @@ export function* watchItwRpSaga(): SagaIterator {
    * Handles the ITW RP stop.
    */
   yield* takeLatest(itwRpStop, handleRpStop);
-
-  /**
-   * Handles the ITW RP completed.
-   */
-  yield* takeLatest(itwRpCompleted, handleRpCompleted);
 }
 
 export function* handleRpStart(

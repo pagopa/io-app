@@ -13,7 +13,6 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwErrorView from "../../../components/ItwErrorView";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  itwRpCompleted,
   itwRpStop,
   itwRpUserConfirmed
 } from "../../../store/actions/itwRpActions";
