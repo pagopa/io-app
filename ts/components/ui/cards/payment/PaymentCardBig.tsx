@@ -1,4 +1,4 @@
-import { H3, H6, IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,8 +8,10 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
+import { NewH3 } from "../../../core/typography/NewH3";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
+import { NewH6 } from "../../../core/typography/NewH6";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {
@@ -77,9 +79,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "CREDIT":
       return (
         <View style={IOStyles.flex}>
-          <H3 style={{ textTransform: "capitalize" }}>
+          <NewH3 style={{ textTransform: "capitalize" }}>
             {`${props.cardIcon} ••${props.hpan}`}
-          </H3>
+          </NewH3>
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
@@ -97,9 +99,9 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
 
 // ------------- utils
 const BottomSectionText = (props: { string: string }) => (
-  <H6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
     {props.string}
-  </H6>
+  </NewH6>
 );
 const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
   <>
