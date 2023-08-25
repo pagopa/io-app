@@ -3339,8 +3339,8 @@ idpay:
       navigation: Available initiatives
       header: Which initiatives do you want to enable on this method?
       statusLabels:
-        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
-        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        PENDING_DEACTIVATION_REQUEST: "Pending"
+        PENDING_ENROLLMENT_REQUEST: "Pending"
         ENROLLMENT_FAILED: "Attivazione fallita"
       errorToasts:
         enrollment: "Errore nel collegamento dell'iniziativa, riprova."
@@ -3722,6 +3722,10 @@ barcodeScan:
       title: Non hai dato il permesso di usare la fotocamera
       label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
       action: Vai alle impostazioni
+  multipleResultsAlert:
+    title: Hai inquadrato più codici
+    body: Inquadra un solo codice alla volta
+    action: Riprova
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"

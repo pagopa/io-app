@@ -188,7 +188,7 @@ export const idPayInitiativeFromInstrumentPotSelector = (
     case true:
       return pot.someLoading(isItemActive);
     case false:
-      return pot.someUpdating(isItemActive, !isItemActive);
+      return pot.someLoading(isItemActive);
     default:
       return pot.none;
   }
