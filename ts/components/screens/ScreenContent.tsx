@@ -32,8 +32,8 @@ class ScreenContent extends React.PureComponent<Props> {
   public render() {
     const {
       title,
+      rasterIcon,
       icon,
-      iconFont,
       subtitle,
       dark,
       hideHeader,
@@ -52,8 +52,8 @@ class ScreenContent extends React.PureComponent<Props> {
       >
         {!hideHeader && (
           <ScreenContentHeader
+            rasterIcon={rasterIcon}
             icon={icon}
-            iconFont={iconFont}
             title={title}
             subtitle={subtitle}
             dark={dark}
