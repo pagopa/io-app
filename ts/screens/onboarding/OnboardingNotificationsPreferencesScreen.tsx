@@ -88,7 +88,7 @@ const loadingButtonProps = (): BlockButtonProps => ({
   disabled: true,
   style: { backgroundColor: IOColors.greyLight, width: "100%" },
   isLoading: true,
-  iconColor: IOColors.bluegreyDark
+  iconColor: "bluegreyDark"
 });
 
 const CustomGoBack = memo(
