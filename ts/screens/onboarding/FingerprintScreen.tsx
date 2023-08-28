@@ -2,6 +2,7 @@ import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -42,13 +43,13 @@ function localizeBiometricsType(
 /**
  * Print the icon according to current biometry status
  */
-function getBiometryIconName(biometryType: BiometricsValidType): string {
+function getBiometryIconName(biometryType: BiometricsValidType): IOIcons {
   switch (biometryType) {
     case "FACE_ID":
-      return "io-face-id";
+      return "biomFaceID";
     case "BIOMETRICS":
     case "TOUCH_ID":
-      return "io-fingerprint";
+      return "biomFingerprint";
   }
 }
 
@@ -107,7 +108,7 @@ const FingerprintScreen = ({
       >
         <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
-          iconFont={{ name: getBiometryIconName(biometryType) }}
+          icon={getBiometryIconName(biometryType)}
         />
         <VSpacer size={24} />
         <View
