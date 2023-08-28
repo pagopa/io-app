@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0-rc.6](https://github.com/pagopa/io-app/compare/0.3.0-rc.5...0.3.0-rc.6) (2023-08-28)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-409](https://pagopa.atlassian.net/browse/SIW-409)] Add RP presentation reducer ([#4931](https://github.com/pagopa/io-app/issues/4931)) ([c428a82](https://github.com/pagopa/io-app/commit/c428a82b294d0005e2b4b23aa15bb063c52b5487)), closes [/github.com/pagopa/io-app/pull/4931/files#diff-c7ac22768d24496bdaec778ecf821bfbce70da6ccaac4e8dd90cbd01a78fc84](https://github.com/pagopa//github.com/pagopa/io-app/pull/4931/files/issues/diff-c7ac22768d24496bdaec778ecf821bfbce70da6ccaac4e8dd90cbd01a78fc84)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-405](https://pagopa.atlassian.net/browse/SIW-405)] Fix JWT library crash ([#4925](https://github.com/pagopa/io-app/issues/4925)) ([31e5e00](https://github.com/pagopa/io-app/commit/31e5e004273a7245ca34cbf44841fbc18d052ab5))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-407](https://pagopa.atlassian.net/browse/SIW-407)] Add PID decode to RP initialization saga ([#4928](https://github.com/pagopa/io-app/issues/4928)) ([a1183e1](https://github.com/pagopa/io-app/commit/a1183e10e5fbc7138c2a36e1780c015c3f57be2f))
+
 ## [0.3.0-rc.5](https://github.com/pagopa/io-app/compare/0.3.0-rc.4...0.3.0-rc.5) (2023-08-21)
 
 ## [0.3.0-rc.4](https://github.com/pagopa/io-app/compare/2.40.0-rc.0...0.3.0-rc.4) (2023-08-21)
