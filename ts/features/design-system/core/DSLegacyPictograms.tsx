@@ -7,7 +7,6 @@ import {
 } from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import IconFont from "../../../components/ui/IconFont";
 
 /* PICTOGRAMS */
 import Fireworks from "../../../../img/pictograms/fireworks.png";
@@ -213,19 +212,6 @@ export const DSLegacyPictograms = () => (
         type="raster"
         name={"Profile"}
         image={renderRasterImage(Profile)}
-      />
-      <DSAssetViewerBox
-        size="small"
-        colorMode="dark"
-        type="iconFont"
-        name={"Messages"}
-        image={
-          <IconFont
-            name={"io-home-messaggi"}
-            color={IOColors.white}
-            size={24}
-          />
-        }
       />
     </View>
   </DesignSystemScreen>

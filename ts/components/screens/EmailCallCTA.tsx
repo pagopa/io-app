@@ -16,7 +16,8 @@ const EmailCallCTA: React.FunctionComponent<Props> = props => {
     small: true,
     lightText: true,
     title: I18n.t("messageDetails.call"),
-    iconName: "io-phone",
+    iconName: "phone",
+    iconColor: "blue",
     onPress: handleItemOnPress(`tel:${phone}`)
   };
 
@@ -25,7 +26,8 @@ const EmailCallCTA: React.FunctionComponent<Props> = props => {
     small: true,
     lightText: true,
     title: I18n.t("messageDetails.write"),
-    iconName: "io-envelope",
+    iconName: "email",
+    iconColor: "blue",
     onPress: handleItemOnPress(`mailto:${email}`)
   };
 
