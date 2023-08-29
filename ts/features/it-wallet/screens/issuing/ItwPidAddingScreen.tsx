@@ -19,7 +19,7 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
  */
-const ItwPidActivationScreen = () => {
+const ItwPidAddingScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwPidValueSelector);
   const navigation = useNavigation();
@@ -94,4 +94,4 @@ const ItwPidActivationScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPidActivationScreen;
+export default ItwPidAddingScreen;
