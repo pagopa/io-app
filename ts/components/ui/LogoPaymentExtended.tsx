@@ -12,7 +12,7 @@ export type LogoPaymentExtendedProps = {
     }
   | {
       abiCode: string | undefined;
-      imageA11yLabel: string;
+      imageA11yLabel?: string;
     }
 );
 
