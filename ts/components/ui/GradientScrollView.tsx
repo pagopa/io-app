@@ -138,7 +138,7 @@ to avoid little space from iPhone bottom handle */
       <Animated.ScrollView
         testID={testID}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
+        scrollEventThrottle={8}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault,
           paddingBottom: safeBottomAreaHeight
