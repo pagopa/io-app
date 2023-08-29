@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { sequenceT } from "fp-ts/lib/Apply";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { RpEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/rp/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -110,7 +110,11 @@ const ItwRpInitScreen = () => {
    */
   const ContentView = ({ rp }: { rp: ItwRpInitializationType }) =>
     pipe(
-      sequenceT(O.Applicative)(rp.entity, rp.requestObject, decodedPid),
+      sequenceS(O.Applicative)({
+        rpEntityConfig: rp.entity,
+        requestObject: rp.requestObject,
+        decodedPid
+      }),
       O.fold(
         () => (
           <ItwErrorView
@@ -118,7 +122,12 @@ const ItwRpInitScreen = () => {
             leftButton={cancelButtonProps(navigation.goBack)}
           />
         ),
-        some => <RpPreviewView decodedPid={some[2]} rp={some[0]} />
+        some => (
+          <RpPreviewView
+            decodedPid={some.decodedPid}
+            rpEntityConfig={some.rpEntityConfig}
+          />
+        )
       )
     );
 
@@ -129,13 +138,13 @@ const ItwRpInitScreen = () => {
    */
   const RpPreviewView = ({
     decodedPid,
-    rp
+    rpEntityConfig
   }: {
     decodedPid: PidWithToken;
-    rp: RpEntityConfiguration;
+    rpEntityConfig: RpEntityConfiguration;
   }) => {
     const { organization_name, policy_uri } =
-      rp.payload.metadata.federation_entity;
+      rpEntityConfig.payload.metadata.federation_entity;
     return (
       <>
         <ScreenContent
