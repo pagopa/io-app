@@ -6,6 +6,8 @@ import { FciClient } from "../../api/backendFci";
 import { fciSignaturesListRequest } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 /*
  * A saga to load a QTSP metadata.
@@ -15,9 +17,14 @@ export function* handleGetSignatureRequests(
   bearerToken: SessionToken
 ): SagaIterator {
   try {
-    const getSignatureRequestsResponse = yield* call(getSignatureRequests, {
+    const getSignatureRequestsCall = getSignatureRequests({
       Bearer: `Bearer ${bearerToken}`
     });
+
+    const getSignatureRequestsResponse = (yield* call(
+      withRefreshApiCall,
+      getSignatureRequestsCall
+    )) as unknown as SagaCallReturnType<typeof getSignatureRequests>;
 
     if (E.isLeft(getSignatureRequestsResponse)) {
       throw Error(readablePrivacyReport(getSignatureRequestsResponse.left));
@@ -29,6 +36,10 @@ export function* handleGetSignatureRequests(
           getSignatureRequestsResponse.right.value
         )
       );
+      return;
+    }
+
+    if (getSignatureRequestsResponse.right.status === 401) {
       return;
     }
 
