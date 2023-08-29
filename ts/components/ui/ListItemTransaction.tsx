@@ -214,7 +214,9 @@ export const ListItemTransaction = ({
           </View>
         )}
         <View style={IOStyles.flex}>
-          <LabelSmall color={theme["textBody-default"]}>{title}</LabelSmall>
+          <LabelSmall numberOfLines={2} color={theme["textBody-default"]}>
+            {title}
+          </LabelSmall>
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
