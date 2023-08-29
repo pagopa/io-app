@@ -44,7 +44,6 @@ const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
           <LabelSmall
             accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
               // we do this to make the screen reader read the number digit by digit,
-              // also we replace • with * to make it read "star" instead of "dot"
               phoneNumber: props.phoneNumber.split("").join(" ")
             })}
             color="grey-650"
