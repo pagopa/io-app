@@ -3,6 +3,7 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import * as O from "fp-ts/lib/Option";
+import { PidIssuerEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/pid/metadata";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
 /**
@@ -12,7 +13,11 @@ export const itwPid = createAsyncAction(
   "ITW_CREDENTIALS_PID_REQUEST",
   "ITW_CREDENTIALS_PID_SUCCESS",
   "ITW_CREDENTIALS_PID_FAILURE"
-)<PidData, PidResponse, ItWalletError>();
+)<
+  PidData,
+  { pid: PidResponse; issuer: PidIssuerEntityConfiguration },
+  ItWalletError
+>();
 
 /**
  * Action which decodes a PID.

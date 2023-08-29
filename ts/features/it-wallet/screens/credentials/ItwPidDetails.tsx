@@ -5,6 +5,8 @@ import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
+import { PidIssuerEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/pid/metadata";
+import { sequenceS } from "fp-ts/lib/Apply";
 import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -19,9 +21,11 @@ import ItwErrorView from "../../components/ItwErrorView";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
+import { itwPidIssuerSelector } from "../../store/reducers/itwPidReducer";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
+  pidIssuer: PidIssuerEntityConfiguration;
 };
 
 /**
@@ -31,6 +35,7 @@ export type ContentViewParams = {
 const ItwPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pidIssuer = useIOSelector(itwPidIssuerSelector);
   const spacerSize = 32;
 
   const presentationButton = {
@@ -42,7 +47,7 @@ const ItwPidDetails = () => {
     onPress: () => null
   };
 
-  const ContentView = ({ decodedPid }: ContentViewParams) => (
+  const ContentView = ({ decodedPid, pidIssuer }: ContentViewParams) => (
     <>
       <ScrollView>
         <VSpacer />
@@ -54,6 +59,7 @@ const ItwPidDetails = () => {
           <VSpacer />
           <ItwPidClaimsList
             decodedPid={decodedPid}
+            pidIssuer={pidIssuer}
             claims={["givenName", "familyName", "taxIdCode"]}
             expiryDate
             securityLevel
@@ -72,7 +78,7 @@ const ItwPidDetails = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      decodedPid,
+      sequenceS(O.Applicative)({ decodedPid, pidIssuer }),
       O.fold(
         () => (
           <ItwErrorView
@@ -80,7 +86,12 @@ const ItwPidDetails = () => {
             leftButton={cancelButtonProps(navigation.goBack)}
           />
         ),
-        decodedPid => <ContentView decodedPid={decodedPid} />
+        some => (
+          <ContentView
+            decodedPid={some.decodedPid}
+            pidIssuer={some.pidIssuer}
+          />
+        )
       )
     );
 

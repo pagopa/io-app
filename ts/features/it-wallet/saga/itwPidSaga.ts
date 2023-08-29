@@ -4,10 +4,14 @@ import { isSome } from "fp-ts/lib/Option";
 import { PID } from "@pagopa/io-react-native-wallet";
 import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
+import { getPublicKey } from "@pagopa/io-react-native-crypto";
+import { thumbprint } from "@pagopa/io-react-native-jwt";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 import { getPid } from "../utils/pid";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { itwDecodePid, itwPid } from "../store/actions/itwCredentialsActions";
+import { ITW_WIA_KEY_TAG } from "../utils/wia";
+import { walletPidProviderUrl, walletProviderUrl } from "../../../config";
 
 /**
  * Watcher for the IT wallet PID related sagas.
@@ -34,8 +38,26 @@ export function* handlePidRequest(
   try {
     const wia = yield* select(itwWiaSelector);
     if (isSome(wia)) {
-      const pid = yield* call(getPid, wia.value, action.payload);
-      yield* put(itwPid.success(pid));
+      const wiaPk = yield* call(getPublicKey, ITW_WIA_KEY_TAG);
+      // clientId must be the Wallet Instance public key thumbprint
+      const clientId = yield* call(thumbprint, wiaPk);
+      // Start pid issuing flow
+      const pidIssuing = new PID.Issuing(
+        walletPidProviderUrl,
+        walletProviderUrl,
+        wia.value,
+        clientId
+      );
+      const pidData = action.payload;
+      const issuer = yield* call(pidIssuing.getEntityConfiguration);
+      const pid = yield* call(
+        getPid,
+        pidIssuing,
+        wiaPk,
+        ITW_WIA_KEY_TAG,
+        pidData
+      );
+      yield* put(itwPid.success({ pid, issuer }));
     } else {
       yield* put(
         itwPid.failure({

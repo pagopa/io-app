@@ -2,6 +2,7 @@ import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
+import { PidIssuerEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/pid/metadata";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -9,6 +10,7 @@ import { itwPid } from "../actions/itwCredentialsActions";
 
 export type ItwPidType = {
   pid: O.Option<PidResponse>;
+  issuer: O.Option<PidIssuerEntityConfiguration>;
 };
 
 export type ItwPidState = pot.Pot<ItwPidType, ItWalletError>;
@@ -32,7 +34,8 @@ const reducer = (
       return pot.toLoading(state);
     case getType(itwPid.success):
       return pot.some({
-        pid: O.some(action.payload)
+        pid: O.some(action.payload.pid),
+        issuer: O.some(action.payload.issuer)
       });
     case getType(itwPid.failure):
       return pot.toError(state, action.payload);
@@ -56,6 +59,17 @@ export const itwPidSelector = (state: GlobalState) =>
 export const itwPidValueSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(state.features.itWallet.pid, pid => pid.pid),
+    O.none
+  );
+
+/**
+ * Selectes the PID issuer entity configuration from the global state.
+ * @param state - the global state
+ * @returns the PID issuer entitiy configuration.
+ */
+export const itwPidIssuerSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(state.features.itWallet.pid, pid => pid.issuer),
     O.none
   );
 

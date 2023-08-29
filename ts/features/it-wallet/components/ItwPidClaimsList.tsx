@@ -5,7 +5,8 @@ import {
   PidWithToken
 } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { isDate } from "date-fns";
-import { ISSUER_URL, mapAssuranceLevel } from "../utils/mocks";
+import { PidIssuerEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/pid/metadata";
+import { mapAssuranceLevel } from "../utils/mocks";
 import ListItemComponent from "../../../components/screens/ListItemComponent";
 import I18n from "../../../i18n";
 import { localeDateFormat } from "../../../utils/locale";
@@ -20,6 +21,7 @@ type ClaimsType = Exclude<keyof PID["claims"], "placeOfBirth">;
  */
 type ClaimsListCommonProps = {
   decodedPid: PidWithToken;
+  pidIssuer: PidIssuerEntityConfiguration;
   claims: Array<ClaimsType>;
   expiryDate?: boolean;
   issuerInfo?: boolean;
@@ -123,9 +125,13 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
       />
       <ListItemComponent
         title={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
-        subTitle={ISSUER_URL}
+        subTitle={props.pidIssuer.metadata.federation_entity.homepage_uri}
         hideIcon
-        onPress={() => Linking.openURL(ISSUER_URL)}
+        onPress={() =>
+          Linking.openURL(
+            props.pidIssuer.metadata.federation_entity.homepage_uri
+          )
+        }
       />
     </>
   );

@@ -6,6 +6,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { PidIssuerEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/pid/metadata";
+import { sequenceS } from "fp-ts/lib/Apply";
 import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -22,7 +24,10 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
+import {
+  itwPidIssuerSelector,
+  itwPidValueSelector
+} from "../../store/reducers/itwPidReducer";
 import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReducer";
 import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import ItwErrorView from "../../components/ItwErrorView";
@@ -33,6 +38,7 @@ import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
+  pidIssuer: PidIssuerEntityConfiguration;
 };
 
 /**
@@ -44,6 +50,7 @@ const ItwPidPreviewScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwPidValueSelector);
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
+  const pidIssuer = useIOSelector(itwPidIssuerSelector);
 
   /**
    * Dispatches the action to decode the PID on first render.
@@ -56,7 +63,7 @@ const ItwPidPreviewScreen = () => {
    * Renders the content of the screen if the PID is decoded.
    * @param decodedPip - the decoded PID
    */
-  const ContentView = ({ decodedPid }: ContentViewProps) => {
+  const ContentView = ({ decodedPid, pidIssuer }: ContentViewProps) => {
     const cancelButtonProps = {
       block: true,
       bordered: true,
@@ -89,6 +96,7 @@ const ItwPidPreviewScreen = () => {
             />
             <VSpacer />
             <ItwPidClaimsList
+              pidIssuer={pidIssuer}
               decodedPid={decodedPid}
               claims={["givenName", "familyName", "taxIdCode"]}
               expiryDate
@@ -138,7 +146,7 @@ const ItwPidPreviewScreen = () => {
 
   const getDecodedPidOrErrorView = (optionDecodedPid: O.Option<PidWithToken>) =>
     pipe(
-      optionDecodedPid,
+      sequenceS(O.Applicative)({ optionDecodedPid, pidIssuer }),
       O.fold(
         () => (
           <ItwErrorView
@@ -146,7 +154,12 @@ const ItwPidPreviewScreen = () => {
             leftButton={cancelButtonProps(navigation.goBack)}
           />
         ),
-        decodedPid => <ContentView decodedPid={decodedPid} />
+        some => (
+          <ContentView
+            decodedPid={some.optionDecodedPid}
+            pidIssuer={some.pidIssuer}
+          />
+        )
       )
     );
 

@@ -1,8 +1,6 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import I18n from "../../../i18n";
 
-export const ISSUER_URL = "https://www.interno.gov.it/pid/";
-
 export const pidDataMock: PidData = {
   name: "Mario",
   surname: "Rossi",
