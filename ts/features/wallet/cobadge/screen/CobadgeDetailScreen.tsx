@@ -48,9 +48,7 @@ const CobadgeDetailScreen = (props: Props) => {
         expireMonth: O.fromNullable(info.expireMonth),
         expireYear: O.fromNullable(info.expireYear),
         holderName: O.fromNullable(info.holder),
-        cardIcon: O.fromNullable(
-          info.brand as IOLogoPaymentExtType | undefined
-        ),
+        cardIcon: O.fromNullable(info.brand) as O.Option<IOLogoPaymentExtType>,
         abiCode: O.some(abiInfo?.abi),
         bankName: O.some(abiInfo?.name)
         // store gives it as string,
