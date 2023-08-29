@@ -6,9 +6,15 @@ import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import { BankLogoOrSkeleton } from "./utils/components/BankLogoOrLoadingSkeleton";
 export type LogoPaymentExtendedProps = {
   dimensions: { height: number; width: number };
-  icon?: "payPal" | "bpay";
-  abiCode?: string;
-};
+} & (
+  | {
+      icon: "payPal" | "bpay";
+    }
+  | {
+      abiCode: string | undefined;
+      imageA11yLabel: string;
+    }
+);
 
 export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
   const { height, width } = props.dimensions;
@@ -17,17 +23,30 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
       case "payPal":
         return (
           <Image
+            accessible={true}
+            accessibilityLabel="PayPal"
             source={paypalLogoImage}
             resizeMode="contain"
             style={{ height, width }}
           />
         );
       case "bpay":
-        return <BpayLogo height={height} width={width} />;
+        return (
+          <BpayLogo
+            accessible={true}
+            accessibilityLabel="BANCOMAT Pay"
+            height={height}
+            width={width}
+          />
+        );
     }
   }
 
   return (
-    <BankLogoOrSkeleton dimensions={props.dimensions} abiCode={props.abiCode} />
+    <BankLogoOrSkeleton
+      imageA11yLabel={props.imageA11yLabel}
+      dimensions={props.dimensions}
+      abiCode={props.abiCode}
+    />
   );
 };
