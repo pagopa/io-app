@@ -233,13 +233,6 @@ export const ListItemTransaction = ({
     );
   };
 
-  const DSTransactionStatus =
-    transactionStatus === "success"
-      ? "success"
-      : transactionStatus === "failure"
-      ? "failure"
-      : "pending";
-
   return isDSEnabled ? (
     <DSListItemTransaction
       accessibilityLabel={accessibilityLabel}
@@ -253,7 +246,7 @@ export const ListItemTransaction = ({
       badgeText={getBadgeTextFromStatus(transactionStatus)}
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       transactionAmount={transactionAmount!}
-      transactionStatus={DSTransactionStatus}
+      transactionStatus={transactionStatus}
     />
   ) : (
     pipe(
