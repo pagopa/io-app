@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
+import { ActionType } from "typesafe-actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { FciClient } from "../../api/backendFci";
 import { fciSignaturesListRequest } from "../../store/actions";
@@ -14,7 +15,8 @@ import { SagaCallReturnType } from "../../../../types/utils";
  */
 export function* handleGetSignatureRequests(
   getSignatureRequests: FciClient["getSignatureRequests"],
-  bearerToken: SessionToken
+  bearerToken: SessionToken,
+  action: ActionType<typeof fciSignaturesListRequest["request"]>
 ): SagaIterator {
   try {
     const getSignatureRequestsCall = getSignatureRequests({
@@ -23,7 +25,8 @@ export function* handleGetSignatureRequests(
 
     const getSignatureRequestsResponse = (yield* call(
       withRefreshApiCall,
-      getSignatureRequestsCall
+      getSignatureRequestsCall,
+      action
     )) as unknown as SagaCallReturnType<typeof getSignatureRequests>;
 
     if (E.isLeft(getSignatureRequestsResponse)) {
