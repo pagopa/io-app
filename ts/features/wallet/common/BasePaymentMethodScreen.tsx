@@ -24,6 +24,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getWalletsById } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 
 type Props = {
   paymentMethod: PaymentMethod;
@@ -41,6 +42,8 @@ const BasePaymentMethodScreen = (props: Props) => {
   const hasErrorDelete = pot.isError(useIOSelector(getWalletsById));
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
   const dispatch = useIODispatch();
+  const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
+  const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
 
   const navigation = useNavigation();
   const toast = useIOToast();
@@ -107,16 +110,15 @@ const BasePaymentMethodScreen = (props: Props) => {
       goBack={true}
       titleColor="white"
       dark={true}
-      headerBackgroundColor={IOColors["blueIO-600"]}
+      headerBackgroundColor={blueHeaderColor}
     >
       <FocusAwareStatusBar barStyle="light-content" />
       <ScrollView>
-        <View style={styles.blueHeader}>
+        <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
           <View style={styles.cardContainer}>{card}</View>
         </View>
         <VSpacer size={24} />
         <View style={IOStyles.horizontalContentPadding}>
-          <VSpacer size={16} />
           {content}
           <VSpacer size={24} />
           <DeleteButton onPress={onDeleteMethod} />
@@ -154,7 +156,6 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   blueHeader: {
-    backgroundColor: IOColors["blueIO-600"],
     paddingTop: "75%",
     marginTop: "-75%",
     marginBottom: "15%"

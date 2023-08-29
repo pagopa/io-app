@@ -367,11 +367,14 @@ export function* initializeApplicationSaga(
 
   const publicKey = yield* select(lollipopPublicKeySelector);
 
-  yield* call(
+  const isAssertionRefValid = yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
     maybeSessionInformation
   );
+  if (!isAssertionRefValid) {
+    return;
+  }
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.

@@ -48,7 +48,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
-        <TouchableDefaultOpacity onPress={present} testID={"noticeIconFont"}>
+        <TouchableDefaultOpacity onPress={present} testID={"noticeIcon"}>
           <Icon name="info" size={24} color="blue" />
         </TouchableDefaultOpacity>
       </View>

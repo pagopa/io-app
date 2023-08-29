@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>2</string>
+    <string>3</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -109,7 +109,6 @@
       <string>RobotoMono-Regular.ttf</string>
       <string>RobotoMono-RegularItalic.ttf</string>
       <string>ReadexPro-Regular.ttf</string>
-      <string>io-icon-font.ttf</string>
     </array>
     <key>UIBackgroundModes</key>
     <array>

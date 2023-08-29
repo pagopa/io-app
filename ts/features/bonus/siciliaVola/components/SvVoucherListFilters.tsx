@@ -149,6 +149,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         >
           <View style={IOStyles.horizontalContentPadding}>
             <LabelledItem
+              icon="search"
               iconPosition={"right"}
               inputProps={{
                 value: searchValue,
@@ -158,7 +159,6 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
                 ),
                 maxLength: 10
               }}
-              icon="io-search"
             />
             <VSpacer size={24} />
             {isReady(props.possibleVoucherState) && (

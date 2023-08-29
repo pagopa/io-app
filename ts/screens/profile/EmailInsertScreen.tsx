@@ -10,14 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Alert,
-  Keyboard,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  View
-} from "react-native";
+import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -52,9 +45,6 @@ type Props = IOStackNavigationRouteProps<
 const styles = StyleSheet.create({
   flex: {
     flex: 1
-  },
-  icon: {
-    marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
   }
 });
 
@@ -247,7 +237,7 @@ const EmailInsertScreen = (props: Props) => {
               <Form>
                 <LabelledItem
                   label={I18n.t("email.edit.label")}
-                  icon="io-envelope"
+                  icon="email"
                   isValid={isValidEmail()}
                   inputProps={{
                     returnKeyType: "done",
@@ -260,7 +250,6 @@ const EmailInsertScreen = (props: Props) => {
                     ),
                     onChangeText: handleOnChangeEmailText
                   }}
-                  iconStyle={styles.icon}
                 />
               </Form>
             </View>
