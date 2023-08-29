@@ -67,7 +67,7 @@ export const itwPidValueSelector = (state: GlobalState) =>
  * @param state - the global state
  * @returns the PID issuer entitiy configuration.
  */
-export const itwPidIssuerSelector = (state: GlobalState) =>
+export const itwPidIssuerEntityConfigSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(state.features.itWallet.pid, pid => pid.issuer),
     O.none

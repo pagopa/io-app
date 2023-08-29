@@ -21,7 +21,7 @@ type ClaimsType = Exclude<keyof PID["claims"], "placeOfBirth">;
  */
 type ClaimsListCommonProps = {
   decodedPid: PidWithToken;
-  pidIssuer: PidIssuerEntityConfiguration;
+  pidIssuerEntityConfig: PidIssuerEntityConfiguration;
   claims: Array<ClaimsType>;
   expiryDate?: boolean;
   issuerInfo?: boolean;
@@ -125,11 +125,13 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
       />
       <ListItemComponent
         title={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
-        subTitle={props.pidIssuer.metadata.federation_entity.homepage_uri}
+        subTitle={
+          props.pidIssuerEntityConfig.metadata.federation_entity.homepage_uri
+        }
         hideIcon
         onPress={() =>
           Linking.openURL(
-            props.pidIssuer.metadata.federation_entity.homepage_uri
+            props.pidIssuerEntityConfig.metadata.federation_entity.homepage_uri
           )
         }
       />

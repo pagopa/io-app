@@ -25,7 +25,7 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import {
-  itwPidIssuerSelector,
+  itwPidIssuerEntityConfigSelector,
   itwPidValueSelector
 } from "../../store/reducers/itwPidReducer";
 import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReducer";
@@ -38,7 +38,7 @@ import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
-  pidIssuer: PidIssuerEntityConfiguration;
+  pidIssuerEntityConfig: PidIssuerEntityConfiguration;
 };
 
 /**
@@ -50,7 +50,7 @@ const ItwPidPreviewScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwPidValueSelector);
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
-  const pidIssuer = useIOSelector(itwPidIssuerSelector);
+  const pidIssuerEntityConfig = useIOSelector(itwPidIssuerEntityConfigSelector);
 
   /**
    * Dispatches the action to decode the PID on first render.
@@ -63,7 +63,10 @@ const ItwPidPreviewScreen = () => {
    * Renders the content of the screen if the PID is decoded.
    * @param decodedPip - the decoded PID
    */
-  const ContentView = ({ decodedPid, pidIssuer }: ContentViewProps) => {
+  const ContentView = ({
+    decodedPid,
+    pidIssuerEntityConfig
+  }: ContentViewProps) => {
     const cancelButtonProps = {
       block: true,
       bordered: true,
@@ -96,7 +99,7 @@ const ItwPidPreviewScreen = () => {
             />
             <VSpacer />
             <ItwPidClaimsList
-              pidIssuer={pidIssuer}
+              pidIssuerEntityConfig={pidIssuerEntityConfig}
               decodedPid={decodedPid}
               claims={["givenName", "familyName", "taxIdCode"]}
               expiryDate
@@ -146,7 +149,7 @@ const ItwPidPreviewScreen = () => {
 
   const getDecodedPidOrErrorView = (optionDecodedPid: O.Option<PidWithToken>) =>
     pipe(
-      sequenceS(O.Applicative)({ optionDecodedPid, pidIssuer }),
+      sequenceS(O.Applicative)({ optionDecodedPid, pidIssuerEntityConfig }),
       O.fold(
         () => (
           <ItwErrorView
@@ -157,7 +160,7 @@ const ItwPidPreviewScreen = () => {
         some => (
           <ContentView
             decodedPid={some.optionDecodedPid}
-            pidIssuer={some.pidIssuer}
+            pidIssuerEntityConfig={some.pidIssuerEntityConfig}
           />
         )
       )

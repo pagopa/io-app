@@ -21,11 +21,11 @@ import ItwErrorView from "../../components/ItwErrorView";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
-import { itwPidIssuerSelector } from "../../store/reducers/itwPidReducer";
+import { itwPidIssuerEntityConfigSelector } from "../../store/reducers/itwPidReducer";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
-  pidIssuer: PidIssuerEntityConfiguration;
+  pidIssuerEntityConfig: PidIssuerEntityConfiguration;
 };
 
 /**
@@ -35,7 +35,7 @@ export type ContentViewParams = {
 const ItwPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
-  const pidIssuer = useIOSelector(itwPidIssuerSelector);
+  const pidIssuerEntityConfig = useIOSelector(itwPidIssuerEntityConfigSelector);
   const spacerSize = 32;
 
   const presentationButton = {
@@ -47,7 +47,10 @@ const ItwPidDetails = () => {
     onPress: () => null
   };
 
-  const ContentView = ({ decodedPid, pidIssuer }: ContentViewParams) => (
+  const ContentView = ({
+    decodedPid,
+    pidIssuerEntityConfig
+  }: ContentViewParams) => (
     <>
       <ScrollView>
         <VSpacer />
@@ -59,7 +62,7 @@ const ItwPidDetails = () => {
           <VSpacer />
           <ItwPidClaimsList
             decodedPid={decodedPid}
-            pidIssuer={pidIssuer}
+            pidIssuerEntityConfig={pidIssuerEntityConfig}
             claims={["givenName", "familyName", "taxIdCode"]}
             expiryDate
             securityLevel
@@ -78,7 +81,7 @@ const ItwPidDetails = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      sequenceS(O.Applicative)({ decodedPid, pidIssuer }),
+      sequenceS(O.Applicative)({ decodedPid, pidIssuerEntityConfig }),
       O.fold(
         () => (
           <ItwErrorView
@@ -89,7 +92,7 @@ const ItwPidDetails = () => {
         some => (
           <ContentView
             decodedPid={some.decodedPid}
-            pidIssuer={some.pidIssuer}
+            pidIssuerEntityConfig={some.pidIssuerEntityConfig}
           />
         )
       )
