@@ -71,6 +71,24 @@ type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
 };
 
+const getBadgeTextFromStatus = (transactionStatus: string) => {
+  switch (transactionStatus) {
+    case "success":
+    case "refunded":
+      return "";
+    case "failure":
+      return I18n.t("global.badges.failed");
+    case "cancelled":
+      return I18n.t("global.badges.cancelled");
+    case "reversal":
+      return I18n.t("global.badges.reversal");
+    case "pending":
+      return I18n.t("global.badges.onGoing");
+    default:
+      return "";
+  }
+};
+
 const CARD_LOGO_SIZE: IOIconSizeScale = 24;
 const MUNICIPALITY_LOGO_SIZE = 44;
 // this is the <Avatar/>'s "small" size,
@@ -231,6 +249,8 @@ export const ListItemTransaction = ({
       subtitle={subtitle}
       testID={testID}
       title={title}
+      paymentLogoIcon={paymentLogoIcon}
+      badgeText={getBadgeTextFromStatus(transactionStatus)}
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       transactionAmount={transactionAmount!}
       transactionStatus={DSTransactionStatus}
