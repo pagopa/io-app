@@ -134,7 +134,7 @@ const TestAuthenticationScreen = (props: Props) => {
           <ContentWrapper>
             <LabelledItem
               label={I18n.t("global.username")}
-              icon="io-titolare"
+              icon="profile"
               isValid={isUsernameFieldValid(username)}
               inputProps={{
                 disabled: isLoading,
@@ -148,7 +148,7 @@ const TestAuthenticationScreen = (props: Props) => {
             <VSpacer size={16} />
             <LabelledItem
               label={I18n.t("global.password")}
-              icon="io-lucchetto"
+              icon="locked"
               isValid={isPasswordFieldValid(password)}
               inputProps={{
                 disabled: isLoading,

@@ -24,7 +24,7 @@ describe("BancomatInformation component", () => {
   it("should call the present function when click on notice icon", () => {
     const onAddPaymentMethod = jest.fn();
     const component = getComponent(onAddPaymentMethod);
-    const ioNoticeIcon = component.queryByTestId("noticeIconFont");
+    const ioNoticeIcon = component.queryByTestId("noticeIcon");
 
     expect(ioNoticeIcon).not.toBeNull();
 
