@@ -249,7 +249,7 @@ describe("initializeApplicationSaga", () => {
         })
       )
       .next(lollipopPublicKeySelector)
-      .next()
+      .next(true) // assertionRef is valid
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()
       .fork(watchProfile, undefined)

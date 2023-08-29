@@ -72,17 +72,13 @@ const styles = StyleSheet.create({
   pillRaster: {
     backgroundColor: IOColors.yellow,
     color: IOColors.black
-  },
-  pillIconFont: {
-    backgroundColor: IOColors.aqua,
-    color: IOColors.black
   }
 });
 
 type DSAssetViewerBoxProps = {
   name: string;
   image: React.ReactNode;
-  type?: "vector" | "raster" | "iconFont";
+  type?: "vector" | "raster";
   size?: "small" | "medium";
   colorMode?: "light" | "dark";
 };
@@ -100,10 +96,6 @@ const pillMap = {
   raster: {
     style: styles.pillRaster,
     text: "Png"
-  },
-  iconFont: {
-    style: styles.pillIconFont,
-    text: "Font"
   }
 };
 

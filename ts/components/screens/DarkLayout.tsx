@@ -11,7 +11,7 @@ import {
   ViewStyle
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { IconProps } from "react-native-vector-icons/Icon";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
@@ -30,8 +30,8 @@ type Props = Readonly<{
   allowGoBack?: boolean;
   headerBody?: React.ReactNode;
   title?: string;
-  icon?: ImageSourcePropType;
-  iconFont?: IconProps;
+  rasterIcon?: ImageSourcePropType;
+  icon?: IOIcons;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
@@ -120,8 +120,8 @@ export default class DarkLayout extends React.Component<Props> {
         <ScreenContent
           hideHeader={this.props.hideHeader}
           title={this.props.title ? this.props.title : ""}
+          rasterIcon={this.props.rasterIcon}
           icon={this.props.icon}
-          iconFont={this.props.iconFont}
           dark={true}
           contentStyle={this.props.contentStyle}
           bounces={this.props.bounces}

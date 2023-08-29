@@ -164,7 +164,7 @@ const CiePinScreen: React.FC<Props> = props => {
       <ScrollView>
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pin.pinCardTitle")}
-          icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
+          rasterIcon={require("../../../../img/icons/icon_insert_cie_pin.png")}
           subtitle={I18n.t("authentication.cie.pin.subtitleHelp")}
           subtitleLink={
             <Link onPress={present}>

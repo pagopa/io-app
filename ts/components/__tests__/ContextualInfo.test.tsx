@@ -2,6 +2,7 @@ import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import React from "react";
 import { Text } from "react-native";
 import { createStore } from "redux";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import ROUTES from "../../navigation/routes";
 
 import { applicationChangeState } from "../../store/actions/application";
@@ -19,7 +20,7 @@ jest.useFakeTimers();
  * TODO: this helper is a stub for further development around an a11y-oriented
  * library that can be shared across projects.
  */
-export function buttonByIconName(iconName: string, renderAPI: RenderAPI) {
+export function buttonByIconName(iconName: IOIcons, renderAPI: RenderAPI) {
   return renderAPI.getAllByRole("button").find(
     button =>
       !!button.children.find(child => {
