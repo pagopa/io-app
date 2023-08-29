@@ -6,7 +6,6 @@ import { NotificationPreviewSample } from "./NotificationPreviewSample";
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     justifyContent: "center",
     minHeight: 200
   }
