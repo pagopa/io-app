@@ -71,7 +71,9 @@ type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
 };
 
-const getBadgeTextFromStatus = (transactionStatus: ListItemTransactionStatus) => {
+const getBadgeTextFromStatus = (
+  transactionStatus: ListItemTransactionStatus
+) => {
   switch (transactionStatus) {
     case "success":
     case "refunded":
