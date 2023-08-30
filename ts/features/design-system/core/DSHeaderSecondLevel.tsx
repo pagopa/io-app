@@ -67,7 +67,7 @@ export const DSHeaderSecondLevel = () => {
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       onScroll={scrollHandler}
-      scrollEventThrottle={16}
+      scrollEventThrottle={8}
       snapToOffsets={[0, triggerOffsetValue]}
       snapToEnd={false}
       decelerationRate="normal"
