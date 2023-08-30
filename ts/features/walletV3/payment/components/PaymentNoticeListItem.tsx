@@ -1,5 +1,4 @@
 import {
-  H6,
   HSpacer,
   Icon,
   PressableListItemBase
@@ -11,7 +10,9 @@ import { toInteger } from "lodash";
 import React from "react";
 import { View } from "react-native";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { NewH6 } from "../../../../components/core/typography/NewH6";
 import { NewLabelSmall } from "../../../../components/core/typography/NewLabelSmall";
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import {
   centsToAmount,
   formatNumberAmount
@@ -47,7 +48,12 @@ const PaymentNoticeListItem = ({
           {organizationFiscalCode}
         </LabelSmall>
       </View>
-      <H6 color="blueIO-450">{amountString}</H6>
+      <NewH6
+        color="blueIO-450"
+        accessibilityLabel={getAccessibleAmountText(amountString)}
+      >
+        {amountString}
+      </NewH6>
       <HSpacer size={8} />
       <Icon name="chevronRight" color="blueIO-450" />
     </PressableListItemBase>
