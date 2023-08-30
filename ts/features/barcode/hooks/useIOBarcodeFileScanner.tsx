@@ -24,6 +24,7 @@ import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
+import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 
 type IOBarcodeFileScanner = {
   /**
@@ -174,6 +175,7 @@ const useIOBarcodeFileScanner = ({
           await barcodes,
           O.of,
           O.filter(A.isNonEmpty),
+          O.map(getUniqueBarcodes),
           O.map(onBarcodeSuccess),
           O.getOrElse(() => onBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
         )

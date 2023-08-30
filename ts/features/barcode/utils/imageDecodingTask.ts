@@ -110,7 +110,7 @@ export const imageDecodingTask = (
   detectOptions: QRCodeDetectOptions,
   barcodeFormats?: Array<IOBarcodeFormat>,
   barcodeTypes?: Array<IOBarcodeType>
-) =>
+): TE.TaskEither<BarcodeFailure, Array<IOBarcode>> =>
   pipe(
     barcodeDetectionTask(detectOptions),
     TE.chain(({ type, values }) =>
