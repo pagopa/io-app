@@ -109,7 +109,6 @@
       <string>RobotoMono-Regular.ttf</string>
       <string>RobotoMono-RegularItalic.ttf</string>
       <string>ReadexPro-Regular.ttf</string>
-      <string>io-icon-font.ttf</string>
     </array>
     <key>UIBackgroundModes</key>
     <array>
@@ -127,8 +126,9 @@
     <array>
       <string>UIInterfaceOrientationPortrait</string>
     </array>
-    <key>UIViewControllerBasedStatusBarAppearance</key>
-    <false/>
+    <key>UIViewControllerBasedStatusBarAppearance</key><false/>
+    <!-- Add support to devices with ProMotion displays (120hz) -->
+    <key>CADisableMinimumFrameDurationOnPhone</key><true/>
     <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
     <array>
       <string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>

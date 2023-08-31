@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.3.2.tgz#514c721358111bc76029c068d835ce690574e7e3"
-  integrity sha512-2l/44VAVXQGfgBS8iol9J5jkP92abPi7RhxlMk6MzOIETcoN++n/3yyKL4F2KsLgTWlHVWX/PEwYYv8701MOfw==
+"@pagopa/io-app-design-system@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.4.0.tgz#a31026c1c738ec008f35c783623b30b6afe8471c"
+  integrity sha512-5hZOBQYP6HCU0EXTwCWPzbE3x0Lj+fWmws6wI/qtowIFqnr5Fa9d0cCXi6E/z9hWuHxZwfISJYY9NQ46ZATOJA==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -4105,14 +4105,6 @@
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#0c9a181d7823cfad215d040bc5596c2d83e1a3cd"
   integrity sha512-ZN4UbU4EM3C7XGt4zI6RqHEZS2+35EwOz9DPAD1lTTY3IpWMHAKYjryykvP35hFkSwrGMpT8nYuMFPEJRwDEJA==
-
-"@types/react-native-vector-icons@^4.6.3":
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.4.tgz#83c2d88f0c2615a44b9059eb75c11f92702c1ee2"
-  integrity sha512-G2JD98lrgjggA979WeTXlj6He1sN4Skpd4UJlcVDsD71u1yHf8raT9D7OP4vb3LZWX6ILYkVa4dzLtVkt4wyWA==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
 
 "@types/react-native@*":
   version "0.63.4"

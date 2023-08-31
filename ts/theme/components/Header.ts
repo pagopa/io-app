@@ -19,9 +19,6 @@ declare module "native-base" {
 export default (): Theme => ({
   "NativeBase.Left": {
     "NativeBase.Button": {
-      "UIComponent.IconFont": {
-        color: variables.textColor
-      },
       padding: 0,
       justifyContent: "center",
       width: (variables.iconSizeBase * 5) / 3,
@@ -79,9 +76,6 @@ export default (): Theme => ({
         margin: 0,
         padding: variables.iconSizeBase / 4
       },
-      "UIComponent.IconFont": {
-        fontSize: 24
-      },
       width: (variables.iconSizeBase * 5) / 3,
       height: (variables.iconSizeBase * 5) / 3,
       padding: variables.iconSizeBase / 3,
@@ -92,25 +86,11 @@ export default (): Theme => ({
   },
 
   ".primary": {
-    backgroundColor: variables.contentPrimaryBackground,
-    "NativeBase.Right": {
-      "NativeBase.Button": {
-        "UIComponent.IconFont": {
-          color: IOColors.white
-        }
-      }
-    }
+    backgroundColor: variables.contentPrimaryBackground
   },
 
   ".dark": {
-    backgroundColor: IOColors.bluegrey,
-    "NativeBase.Right": {
-      "NativeBase.Button": {
-        "UIComponent.IconFont": {
-          color: IOColors.white
-        }
-      }
-    }
+    backgroundColor: IOColors.bluegrey
   },
 
   ".noLeft": {
