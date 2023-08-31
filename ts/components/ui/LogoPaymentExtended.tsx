@@ -8,13 +8,12 @@ export type LogoPaymentExtendedProps = {
   dimensions: { height: number; width: number };
 } & (
   | {
-      abiCode: undefined;
-      icon: "payPal" | "bpay";
-    }
-  | {
-      icon: undefined;
+      icon?: never;
       abiCode: string | undefined;
       imageA11yLabel?: string;
+    }
+  | {
+      icon: "payPal" | "bpay";
     }
 );
 
