@@ -1,11 +1,6 @@
 import { FlatList, ListRenderItemInfo, View } from "react-native";
 import * as React from "react";
-import {
-  AccordionItem,
-  IOVisualCostants,
-  Icon,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
+import { AccordionItem, Icon, useIOTheme } from "@pagopa/io-app-design-system";
 import { RawAccordion } from "../../../components/core/accordion/RawAccordion";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
