@@ -30,7 +30,7 @@ export const itwCredentialsAddPid = createAsyncAction(
   "ITW_CREDENTIAL_ADD_PID_REQUEST",
   "ITW_CREDENTIAL_ADD_PID_SUCCESS",
   "ITW_CREDENTIAL_ADD_PID_FAILURE"
-)<PidResponse, PidResponse, void>();
+)<O.Option<PidResponse>, PidResponse, ItWalletError>();
 
 /**
  * Type for credentials related actions.
