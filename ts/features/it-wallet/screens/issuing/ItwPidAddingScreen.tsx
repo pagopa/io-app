@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
@@ -9,12 +8,13 @@ import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import { Pictogram } from "../../../../components/core/pictograms";
-import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycleReducer";
 import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import { itwCredentialsAddPid } from "../../store/actions/itwCredentialsActions";
 import { itwActivationCompleted } from "../../store/actions/itwActivationActions";
+import ItwErrorView from "../../components/ItwErrorView";
+import { cancelButtonProps } from "../../utils/itwButtonsUtils";
+import { ItwCredentialsStateSelector } from "../../store/reducers/itwCredentialsReducer";
+import { ItWalletError } from "../../utils/errors/itwErrors";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
@@ -22,26 +22,12 @@ import { itwActivationCompleted } from "../../store/actions/itwActivationActions
 const ItwPidAddingScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwPidValueSelector);
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const credentialsState = useIOSelector(ItwCredentialsStateSelector);
 
   useOnFirstRender(() => {
-    pipe(
-      pid,
-      O.fold(
-        () => setIsError(true),
-        some => dispatch(itwCredentialsAddPid.request(some))
-      )
-    );
+    dispatch(itwCredentialsAddPid.request(pid));
   });
-
-  useEffect(() => {
-    if (isWalletValid) {
-      setIsLoading(false);
-    }
-  }, [isWalletValid]);
 
   const continueButtonProps = {
     block: true,
@@ -52,7 +38,7 @@ const ItwPidAddingScreen = () => {
     title: I18n.t("global.buttons.continue")
   };
 
-  const LoadingScreen = () => (
+  const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
       captionTitle={I18n.t(
         "features.itWallet.issuing.pidActivationScreen.loading.title"
@@ -66,7 +52,7 @@ const ItwPidAddingScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
-  const SuccessScreen = () => (
+  const SuccessView = () => (
     <>
       <ItwActionCompleted
         title={I18n.t(
@@ -84,36 +70,28 @@ const ItwPidAddingScreen = () => {
     </>
   );
 
-  const ErrorView = () => {
-    const cancelButtonProps = {
-      block: true,
-      light: false,
-      bordered: true,
-      onPress: navigation.goBack,
-      title: I18n.t("features.itWallet.generic.close")
-    };
-    return (
-      <>
-        <InfoScreenComponent
-          title={I18n.t("features.itWallet.generic.error.title")}
-          body={I18n.t("features.itWallet.generic.error.body")}
-          image={<Pictogram name="error" />}
-        />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </>
-    );
-  };
-
-  return isLoading ? (
-    <LoadingScreen />
-  ) : isError ? (
-    <ErrorView></ErrorView>
-  ) : (
-    <SuccessScreen />
+  const ErrorView = ({ error }: { error: ItWalletError }) => (
+    <ItwErrorView
+      error={error}
+      type="SingleButton"
+      leftButton={cancelButtonProps(navigation.goBack)}
+    />
   );
+
+  const RenderMask = () =>
+    pot.fold(
+      credentialsState,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      err => <ErrorView error={err} />,
+      _ => <SuccessView />,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      (_, err) => <ErrorView error={err} />
+    );
+
+  return <RenderMask />;
 };
 
 export default ItwPidAddingScreen;

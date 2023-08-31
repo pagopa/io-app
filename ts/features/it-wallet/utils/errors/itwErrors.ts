@@ -24,5 +24,6 @@ export enum ItWalletErrorTypes {
   PID_ISSUING_ERROR = "PID_ISSUING_ERR", // not mapped yet
   PID_DECODING_ERROR = "PID_DECODING_ERROR", // not mapped yet
   RP_INITIALIZATION_ERROR = "RP_INITIALIZATION_ERROR", // not mapped yet
-  RP_PRESENTATION_ERROR = "RP_PRESENTATION_ERROR" // not mapped yet
+  RP_PRESENTATION_ERROR = "RP_PRESENTATION_ERROR", // not mapped yet
+  CREDENTIALS_ADD_ERROR = "CREDENTIALS_ADD_ERROR" // not mapped yet
 }
