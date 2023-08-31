@@ -30,6 +30,7 @@ import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/
 import { trackSpidLoginError } from "../../utils/analytics";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -199,6 +200,12 @@ const CieWebView = (props: Props) => {
       setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }
+
+    if (cieFlowForDevServerEnabled && url.indexOf("token=") !== -1) {
+      setInternalState(state => generateFoundAuthUrlState(url, state));
+      return false;
+    }
+
     return true;
   };
 
@@ -286,7 +293,7 @@ const CieWebView = (props: Props) => {
 
   return (
     <WithLoading
-      isLoading={true}
+      isLoading={!cieFlowForDevServerEnabled}
       loadingOpacity={1.0}
       loadingCaption={I18n.t("global.genericWaiting")}
       onCancel={props.onClose}
