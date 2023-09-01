@@ -55,22 +55,6 @@ const paymentDisabledBottomSheetBody = () => (
   </>
 );
 
-const arrivingBottomSheetTitle = () =>
-  I18n.t(
-    "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
-  );
-const arrivingBottomSheetBody = () => (
-  <>
-    <VSpacer size={24} />
-    <H4 weight={"Regular"}>
-      {I18n.t(
-        "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetDescription"
-      )}
-    </H4>
-    <VSpacer size={24} />
-  </>
-);
-
 type PaymentMethodInformation = {
   logo: ImageSourcePropType;
   title: string;

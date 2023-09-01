@@ -1,4 +1,4 @@
-import { Banner, IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { Banner } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
@@ -15,6 +15,9 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
+// TODO: Use the IOLogoPaymentExtType from @pagopa/io-app-design-system as soon as the logo
+// of Satispay is removed [https://pagopa.atlassian.net/browse/IOBP-210]
+import { IOLogoPaymentExtType } from "../../../../components/core/logos";
 
 export type CobadgeDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates
