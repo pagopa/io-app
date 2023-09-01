@@ -912,8 +912,6 @@ wallet:
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
       help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
-    details:
-      header: "Details Zahlungsmethode"
   searchAbi:
     header: "{{methodName}} hinzufügen"
     bancomat:
