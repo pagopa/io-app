@@ -12,8 +12,8 @@ import {
   H4,
   IOColors,
   IOVisualCostants,
-  IconButton,
-  ListItemInfo
+  ListItemInfo,
+  ListItemNav
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -24,51 +24,57 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import I18n from "../../../../i18n";
 
 /**
- * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
+ * A support function to check the type of the list item.
+ * Used to render the correct component based on tow type of ListItem.
+ * It should be removed when the design system will provide the new component.
+ * @param item
+ * @returns
+ */
+const isListItemInfo = (
+  item: ListItemInfo | ListItemNav
+): item is ListItemInfo => (item as ListItemInfo).action !== undefined;
+
+/**
+ * Renders the screen which display a list of features (or trusty providers)
+ * to activate the wallet.
  */
 const ItwDiscoveryProviderInfoScreen = () => {
   const navigation = useNavigation();
 
-  // All this data should be retrieved from the backend
+  // All this data should be fetched from remote
   // but for POC purposes we are using a static list
   // NOTE: the design proposed could be different from
   // the one implemented here
-  const PROVIDERS_LIST_ALL: ReadonlyArray<ListItemInfo> = [
+  const PROVIDERS_LIST_ALL: ReadonlyArray<ListItemNav> = [
     {
-      label: I18n.t("features.itWallet.featuresInfoScreen.list.cie"),
-      value: I18n.t("features.itWallet.featuresInfoScreen.list.cieSubTitle"),
-      icon: "cie",
-      action: (
-        <IconButton
-          icon="chevronRight"
-          onPress={() => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO)}
-          accessibilityLabel={""}
-        />
+      value: I18n.t("features.itWallet.featuresInfoScreen.list.cie"),
+      description: I18n.t(
+        "features.itWallet.featuresInfoScreen.list.cieSubTitle"
       ),
+      icon: "cie",
+      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cie"
       )
     }
   ];
 
-  const PROVIDERS_LIST_MAIN: ReadonlyArray<ListItemInfo> = [
+  const PROVIDERS_LIST_MAIN: ReadonlyArray<ListItemNav> = [
     {
-      label: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
-      value: I18n.t("features.itWallet.featuresInfoScreen.list.spidSubTitle"),
-      icon: "spid",
-      action: (
-        <IconButton
-          icon="chevronRight"
-          onPress={() => undefined}
-          accessibilityLabel={""}
-        />
+      value: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
+      description: I18n.t(
+        "features.itWallet.featuresInfoScreen.list.spidSubTitle"
       ),
+      icon: "spid",
+      onPress: () => undefined,
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.spid"
       )
     }
   ];
 
+  // Here we have a different type of list item because not
+  // all the components are available yet. See comment below.
   const PROVIDERS_LIST_COMING: ReadonlyArray<ListItemInfo> = [
     {
       label: I18n.t("features.itWallet.featuresInfoScreen.list.cieId"),
@@ -143,7 +149,15 @@ const ItwDiscoveryProviderInfoScreen = () => {
       </View>
     );
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<ListItemInfo>) => (
+  // The following function is used to render the list items
+  // based on the type of the item. Please note that the design system
+  // provides two different components for the list items. Next
+  // should be defined a new component or a variant of ListItem to
+  // have the expected design.
+  const renderItem = ({
+    item,
+    index
+  }: ListRenderItemInfo<ListItemInfo | ListItemNav>) => (
     <View
       style={{
         borderColor: IOColors.bluegreyLight,
@@ -154,7 +168,11 @@ const ItwDiscoveryProviderInfoScreen = () => {
         marginBottom: 8
       }}
     >
-      <ListItemInfo {...item} action={item.action} key={index} />
+      {isListItemInfo(item) ? (
+        <ListItemInfo {...item} key={index} />
+      ) : (
+        <ListItemNav {...item} key={index} onPress={item.onPress} />
+      )}
     </View>
   );
 
