@@ -25,7 +25,7 @@ import I18n from "../../../../i18n";
 
 /**
  * A support function to check the type of the list item.
- * Used to render the correct component based on tow type of ListItem.
+ * Used to render the correct component based on two type of ListItem.
  * It should be removed when the design system will provide the new component.
  * @param item
  * @returns
