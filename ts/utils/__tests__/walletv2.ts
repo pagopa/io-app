@@ -55,7 +55,7 @@ describe("convert and recognize 1 bancomat, 1 bancomat pay, 1 credit card", () =
     convertWalletV2toWalletV1
   );
   it("should convert walletv2 to walletv1", () => {
-    expect(wallets.length).toEqual(4);
+    expect(wallets.length).toEqual(3);
   });
   // eslint-disable-next-line sonarjs/no-identical-functions
   it("should recognize credit card", () => {
