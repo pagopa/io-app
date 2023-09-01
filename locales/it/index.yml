@@ -3332,7 +3332,7 @@ features:
           title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
           body: "Per proseguire è necessaria la funzione NFC del dispositivo."
     featuresInfoScreen:
-      title: "Come vuoi attivare IT Wallet?"
+      title: "Come vuoi attivare l'IT Wallet?"
       list:
         allFeaturesSection: "Tutte le funzionalità"
         mainFeaturesSection: "Principali funzionalità"
