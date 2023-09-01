@@ -4,6 +4,8 @@ import { sign } from "@pagopa/io-react-native-crypto";
 import { SignJWT } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
+import { WalletInstanceAttestation } from "@pagopa/io-react-native-wallet";
+import uuid from "react-native-uuid";
 import {
   itwRpInitializationEntityValueSelector,
   itwRpInitializationRequestObjectValueSelector
@@ -12,6 +14,7 @@ import { itwRpPresentation } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
+import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 
 /*
  * This saga handles the RP presentation.
@@ -40,15 +43,26 @@ export function* handleItwRpPresentationSaga(
     );
     const pidToken = yield* select(ItwCredentialsPidSelector);
 
-    if (O.isNone(requestObject) || O.isNone(pidToken)) {
+    const wia = yield* select(itwWiaSelector);
+
+    if (O.isNone(requestObject) || O.isNone(pidToken) || O.isNone(wia)) {
       throw new Error("Request object is not defined");
     } else {
-      // verified presentation is signed using the same key of the wallet attestation
+      const decodedWIA = yield* call(
+        WalletInstanceAttestation.decode,
+        wia.value
+      );
+
+      const walletInstanceId = uuid.v4().toString(); // TODO: This is currenly a random ID, but it should be the real wallet instance ID
+
       const { vp_token: unsignedVpToken, presentation_submission } =
-        yield* call(RP.prepareVpToken, requestObject.value, [
-          pidToken.value.credential,
-          claims
-        ]);
+        yield* call(
+          RP.prepareVpToken,
+          requestObject.value,
+          walletInstanceId,
+          [pidToken.value.credential, claims],
+          decodedWIA.payload.cnf.jwk.kid
+        );
 
       const signature = yield* call(sign, unsignedVpToken, ITW_WIA_KEY_TAG);
       const vpToken = yield* call(
