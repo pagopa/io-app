@@ -4,7 +4,6 @@ import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "@pagopa/io-app-design-system";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import I18n from "../../../i18n";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
@@ -116,14 +115,6 @@ const extractInfoFromPaymentMethod = (
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
         bottomSheetBody: paymentDisabledBottomSheetBody()
-      };
-    case "Satispay":
-      return {
-        logo: satispayLogo,
-        title: paymentMethod.kind,
-        description: nameSurname,
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
       };
     case "PayPal":
       return {
