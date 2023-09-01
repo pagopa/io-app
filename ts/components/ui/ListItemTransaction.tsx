@@ -71,6 +71,26 @@ type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
 };
 
+const getBadgeTextFromStatus = (
+  transactionStatus: ListItemTransactionStatus
+) => {
+  switch (transactionStatus) {
+    case "success":
+    case "refunded":
+      return "";
+    case "failure":
+      return I18n.t("global.badges.failed");
+    case "cancelled":
+      return I18n.t("global.badges.cancelled");
+    case "reversal":
+      return I18n.t("global.badges.reversal");
+    case "pending":
+      return I18n.t("global.badges.onGoing");
+    default:
+      return "";
+  }
+};
+
 const CARD_LOGO_SIZE: IOIconSizeScale = 24;
 const MUNICIPALITY_LOGO_SIZE = 44;
 // this is the <Avatar/>'s "small" size,
@@ -196,7 +216,9 @@ export const ListItemTransaction = ({
           </View>
         )}
         <View style={IOStyles.flex}>
-          <NewH6 color={theme["textBody-default"]}>{title}</NewH6>
+          <LabelSmall numberOfLines={2} color={theme["textBody-default"]}>
+            {title}
+          </LabelSmall>
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
@@ -215,13 +237,6 @@ export const ListItemTransaction = ({
     );
   };
 
-  const DSTransactionStatus =
-    transactionStatus === "success"
-      ? "success"
-      : transactionStatus === "failure"
-      ? "failure"
-      : "pending";
-
   return isDSEnabled ? (
     <DSListItemTransaction
       accessibilityLabel={accessibilityLabel}
@@ -231,9 +246,11 @@ export const ListItemTransaction = ({
       subtitle={subtitle}
       testID={testID}
       title={title}
+      paymentLogoIcon={paymentLogoIcon}
+      badgeText={getBadgeTextFromStatus(transactionStatus)}
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       transactionAmount={transactionAmount!}
-      transactionStatus={DSTransactionStatus}
+      transactionStatus={transactionStatus}
     />
   ) : (
     pipe(

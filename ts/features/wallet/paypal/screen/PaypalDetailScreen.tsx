@@ -49,6 +49,7 @@ const PaypalDetailScreen = () => {
       paymentMethod={paypal}
       card={<PaymentCardBig {...propsData} />}
       content={<PaymentMethodFeatures paymentMethod={paypal} />}
+      headerTitle="PayPal"
     />
   ) : !walletExisted ? (
     <WorkunitGenericFailure />
