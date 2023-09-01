@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.41.0-rc.0](https://github.com/pagopa/io-app/compare/2.40.0-rc.4...2.41.0-rc.0) (2023-09-01)
+
+
+### Chores
+
+* [[IOBP-187](https://pagopa.atlassian.net/browse/IOBP-187),[IOBP-188](https://pagopa.atlassian.net/browse/IOBP-188),[IOBP-189](https://pagopa.atlassian.net/browse/IOBP-189),[IOBP-190](https://pagopa.atlassian.net/browse/IOBP-190),[IOBP-191](https://pagopa.atlassian.net/browse/IOBP-191)] A11y fixes in payment method details ([#4936](https://github.com/pagopa/io-app/issues/4936)) ([904be99](https://github.com/pagopa/io-app/commit/904be9935a4f5335f3d3cbbe0398bff99d041b1a))
+
 ## [2.40.0-rc.4](https://github.com/pagopa/io-app/compare/2.40.0-rc.3...2.40.0-rc.4) (2023-08-31)
 
 
