@@ -59,7 +59,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
     }
   ];
 
-  const PROVIDERS_LIST_MAIN: ReadonlyArray<ListItemNav> = [
+  const FEATURES_LIST_MAIN: ReadonlyArray<ListItemNav> = [
     {
       value: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
       description: I18n.t(
@@ -75,7 +75,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
 
   // Here we have a different type of list item because not
   // all the components are available yet. See comment below.
-  const PROVIDERS_LIST_COMING: ReadonlyArray<ListItemInfo> = [
+  const FEATURES_LIST_COMING: ReadonlyArray<ListItemInfo> = [
     {
       label: I18n.t("features.itWallet.featuresInfoScreen.list.cieId"),
       value: I18n.t("features.itWallet.featuresInfoScreen.list.cieIdSubTitle"),
@@ -94,7 +94,12 @@ const ItwDiscoveryProviderInfoScreen = () => {
     }
   ];
 
-  const PROVIDER_SECTION_DATA = [
+  type FeaturesSectionData = {
+    title?: string;
+    data: ReadonlyArray<ListItemInfo | ListItemNav>;
+  };
+
+  const FEATURES_SECTION_DATA: ReadonlyArray<FeaturesSectionData> = [
     {
       title: I18n.t(
         "features.itWallet.featuresInfoScreen.list.allFeaturesSection"
@@ -105,10 +110,10 @@ const ItwDiscoveryProviderInfoScreen = () => {
       title: I18n.t(
         "features.itWallet.featuresInfoScreen.list.mainFeaturesSection"
       ),
-      data: PROVIDERS_LIST_MAIN
+      data: FEATURES_LIST_MAIN
     },
     {
-      data: PROVIDERS_LIST_COMING
+      data: FEATURES_LIST_COMING
     }
   ];
 
@@ -194,7 +199,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
             renderItem={renderItem}
             renderSectionHeader={renderHeaderSection}
             ItemSeparatorComponent={() => <Divider />}
-            sections={PROVIDER_SECTION_DATA}
+            sections={FEATURES_SECTION_DATA}
           />
         </ScreenContent>
         <View style={{ alignSelf: "center" }}>
