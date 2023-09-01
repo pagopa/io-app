@@ -2,11 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGPictogramProps } from "../Pictogram";
 
-const SectionPictogramMessages = ({
-  size,
-  color,
-  ...props
-}: SVGPictogramProps) => (
+const PictogramMessages = ({ size, color, ...props }: SVGPictogramProps) => (
   <Svg fill="none" width={size} height={size} viewBox="0 0 48 48" {...props}>
     <Path
       fillRule="evenodd"
@@ -17,4 +13,4 @@ const SectionPictogramMessages = ({
   </Svg>
 );
 
-export default SectionPictogramMessages;
+export default PictogramMessages;
