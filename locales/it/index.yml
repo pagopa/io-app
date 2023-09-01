@@ -777,6 +777,12 @@ authentication:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 email:
+  cduModal:
+    validateMail:
+      title: Indirizzo email non validato
+      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
+      editButton: Modifica email
+      validateButton: Valida email
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
