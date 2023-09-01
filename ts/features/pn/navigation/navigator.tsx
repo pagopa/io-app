@@ -3,6 +3,8 @@ import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { PnAttachmentPreview } from "../screens/PnAttachmentPreview";
 import { PnMessageDetailsScreen } from "../screens/PnMessageDetailsScreen";
+import { LegacyPnMessageDetailsScreen } from "../screens/LegacyPnMessageDetailsScreen";
+import { newPnMessageDetailsEnabled } from "../../../config";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -16,7 +18,11 @@ export const PnStackNavigator = () => (
   >
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
-      component={PnMessageDetailsScreen}
+      component={
+        newPnMessageDetailsEnabled
+          ? PnMessageDetailsScreen
+          : LegacyPnMessageDetailsScreen
+      }
     />
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_ATTACHMENT}
