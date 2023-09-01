@@ -31,6 +31,7 @@ import { trackSpidLoginError } from "../../utils/analytics";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -151,6 +152,7 @@ const CieWebView = (props: Props) => {
 
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
+  const idp = useIOSelector(selectedIdentityProviderSelector);
 
   const webView = createRef<WebView>();
   const { onSuccess } = props;
@@ -252,7 +254,8 @@ const CieWebView = (props: Props) => {
             maybeKeyTag.value,
             mixpanelEnabled,
             isFastLogin,
-            dispatch
+            dispatch,
+            idp?.id
           )
       ),
       TE.fold(
