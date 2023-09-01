@@ -15,6 +15,7 @@ import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { IOLogoPaymentExtType } from "../../../../components/core/logos";
+import { capitalize } from "../../../../utils/strings";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -90,7 +91,9 @@ const CreditCardDetailScreen = ({ route }: Props) => {
         )
       )
     );
-
+    const capitalizedCardCircuit = capitalize(
+      storeCreditCard.info.brand?.toLowerCase() ?? ""
+    );
     return (
       <LoadingSpinnerOverlay
         isLoading={areIdpayInitiativesLoading}
@@ -100,6 +103,7 @@ const CreditCardDetailScreen = ({ route }: Props) => {
           paymentMethod={storeCreditCard}
           card={cardComponent}
           content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
+          headerTitle={`${capitalizedCardCircuit} ••${storeCreditCard.info.blurredNumber}`}
         />
       </LoadingSpinnerOverlay>
     );
