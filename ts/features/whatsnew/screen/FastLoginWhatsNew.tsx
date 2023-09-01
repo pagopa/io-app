@@ -42,12 +42,6 @@ export const FastLoginWhatsNewBody = (
         {`${I18n.t("fastLogin.whatsNew.changes.third.description")} `}
       </Body>
     </Body>
-    <VSpacer size={STANDARD_SIZE_VSPACER} />
-    <H3>{I18n.t("securityTips.title")}</H3>
-    <VSpacer />
-    <Label color={"bluegrey"}>
-      {`\u2022 ${I18n.t("securityTips.biometric.first")} `}
-    </Label>
     {
       // FIX ME: Update url ticket: IOPID-419
     }
