@@ -12,6 +12,7 @@ import { NewH3 } from "../../../core/typography/NewH3";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 import { NewH6 } from "../../../core/typography/NewH6";
+import { capitalize } from "../../../../utils/strings";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {
@@ -29,28 +30,69 @@ export const PaymentCardBig = (props: PaymentCardBigProps) => {
 const BigPaymentCardBottomSection = (props: PaymentCardStandardProps) => {
   switch (props.cardType) {
     case "PAYPAL":
-      return <BottomSectionText string={props.holderEmail} />;
+      return (
+        <BottomSectionText
+          a11yLabel={I18n.t("wallet.methodDetails.a11y.paypal.owner", {
+            email: props.holderEmail
+          })}
+          string={props.holderEmail}
+        />
+      );
     case "BANCOMATPAY":
       return (
         <View style={IOStyles.column}>
-          <LabelSmall color="grey-650" weight="Regular">
+          <LabelSmall
+            accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
+              // we do this to make the screen reader read the number digit by digit,
+              phoneNumber: props.phoneNumber.split("").join(" ")
+            })}
+            color="grey-650"
+            weight="Regular"
+          >
             {props.phoneNumber}
           </LabelSmall>
           <VSpacer size={8} />
-          <BottomSectionText string={props.holderName} />
+          <BottomSectionText
+            a11yLabel={I18n.t("wallet.methodDetails.a11y.bpay.owner", {
+              fullOwnerName: props.holderName
+            })}
+            string={props.holderName}
+          />
         </View>
       );
     case "PAGOBANCOMAT":
       return (
         <View style={styles.bottomRow}>
-          <BottomSectionText string={props.holderName} />
+          <BottomSectionText
+            a11yLabel={I18n.t("wallet.methodDetails.a11y.bancomat.owner", {
+              fullOwnerName: props.holderName
+            })}
+            string={props.holderName}
+          />
           <LogoPaymentExt name="pagoBancomat" size={48} />
         </View>
       );
-    default:
+    case "COBADGE":
       return (
         <View style={styles.bottomRow}>
-          <BottomSectionText string={props.holderName} />
+          <BottomSectionText
+            a11yLabel={I18n.t("wallet.methodDetails.a11y.cobadge.owner", {
+              fullOwnerName: props.holderName
+            })}
+            string={props.holderName}
+          />
+          <LogoPaymentWithFallback isExtended brand={props.cardIcon} />
+        </View>
+      );
+    case "CREDIT":
+      return (
+        <View style={styles.bottomRow}>
+          <BottomSectionText
+            a11yLabel={I18n.t("wallet.methodDetails.a11y.credit.owner", {
+              fullOwnerName: props.holderName
+            })}
+            string={props.holderName}
+          />
           <LogoPaymentWithFallback isExtended brand={props.cardIcon} />
         </View>
       );
@@ -66,12 +108,27 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
         />
       );
     case "PAGOBANCOMAT":
+      return (
+        <View style={IOStyles.flex}>
+          <LogoPaymentExtended
+            dimensions={{ width: BANK_LOGO_WIDTH, height: LOGO_HEIGHT }}
+            abiCode={props.abiCode}
+            imageA11yLabel={I18n.t("wallet.methodDetails.a11y.bancomat.bank", {
+              bankName: props.bankName
+            })}
+          />
+          <ExpDateComponent expDate={props.expirationDate} />
+        </View>
+      );
     case "COBADGE":
       return (
         <View style={IOStyles.flex}>
           <LogoPaymentExtended
             dimensions={{ width: BANK_LOGO_WIDTH, height: LOGO_HEIGHT }}
             abiCode={props.abiCode}
+            imageA11yLabel={I18n.t("wallet.methodDetails.a11y.cobadge.bank", {
+              bankName: props.bankName ?? " "
+            })}
           />
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
@@ -79,7 +136,19 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "CREDIT":
       return (
         <View style={IOStyles.flex}>
-          <NewH3 style={{ textTransform: "capitalize" }}>
+          <NewH3
+            accessibilityLabel={I18n.t(
+              "wallet.methodDetails.a11y.credit.hpan",
+              {
+                circuit: capitalize(
+                  props.cardIcon || I18n.t("wallet.methodDetails.cardGeneric")
+                ),
+                // we space the hpan to make the screen reader read it digit by digit
+                spacedHpan: props.hpan.split("").join(" ")
+              }
+            )}
+            style={{ textTransform: "capitalize" }}
+          >
             {`${props.cardIcon} ••${props.hpan}`}
           </NewH3>
           <ExpDateComponent expDate={props.expirationDate} />
@@ -98,8 +167,14 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
 };
 
 // ------------- utils
-const BottomSectionText = (props: { string: string }) => (
-  <NewH6 numberOfLines={1} style={{ width: "75%" }} ellipsizeMode="tail">
+const BottomSectionText = (props: { string: string; a11yLabel: string }) => (
+  <NewH6
+    accessible
+    accessibilityLabel={props.a11yLabel}
+    numberOfLines={1}
+    style={{ width: "75%" }}
+    ellipsizeMode="tail"
+  >
     {props.string}
   </NewH6>
 );
@@ -183,11 +258,13 @@ type PaymentCardStandardProps =
       expirationDate: Date;
       abiCode?: string;
       holderName: string;
+      bankName?: string;
     }
   | {
       cardType: "COBADGE";
       expirationDate: Date;
       abiCode?: string;
+      bankName?: string;
       holderName: string;
       cardIcon?: IOLogoPaymentExtType;
     }
