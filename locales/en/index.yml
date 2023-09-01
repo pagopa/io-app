@@ -982,6 +982,23 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   methodDetails:
+    cobadgeTitle: 'Debit card'
+    cardGeneric: 'Card'
+    a11y:
+      credit:
+        hpan: "{{circuit}} ending {{spacedHpan}}"
+        owner: "owned by {{fullOwnerName}}"
+      paypal:
+        owner: "account: {{email}}"
+      bpay:
+        phone: "Mobile number: {{phoneNumber}}"
+        owner: "owned by {{fullOwnerName}}"
+      bancomat:
+        bank: "PagoBANCOMAT card {{bankName}}"
+        owner: "owned by {{fullOwnerName}}"
+      cobadge:
+        bank: "Debit card {{bankName}}"
+        owner: "owned by {{fullOwnerName}}"
     expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
     isSupportedBanner:
       title: Vuoi pagare in app?
@@ -1007,8 +1024,6 @@ wallet:
       dateTime: Date and time
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
-    details:
-      header: Method detail
     validUntil: Valid until {{expDate}}
   searchAbi:
     header: "Add {{methodName}}"
