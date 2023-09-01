@@ -30,6 +30,7 @@ type Props = {
   paymentMethod: PaymentMethod;
   card: React.ReactNode;
   content: React.ReactNode;
+  headerTitle?: string;
 };
 
 // ----------------------------- component -----------------------------------
@@ -105,7 +106,7 @@ const BasePaymentMethodScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.creditCard.details.header")}
+      headerTitle={props.headerTitle ?? ""}
       faqCategories={["wallet_methods"]}
       goBack={true}
       titleColor="white"
