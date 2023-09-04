@@ -21,10 +21,12 @@ import { Body } from "../../../../components/core/typography/Body";
 
 const failurePictures: Record<OnboardingFailureEnum, IOPictograms> = {
   [OnboardingFailureEnum.GENERIC]: "umbrella",
+  [OnboardingFailureEnum.UNEXPECTED]: "umbrella",
   [OnboardingFailureEnum.NOT_STARTED]: "hourglass",
   [OnboardingFailureEnum.ENDED]: "timeout",
   [OnboardingFailureEnum.NO_BUDGET]: "timeout",
   [OnboardingFailureEnum.SUSPENDED]: "timeout",
+  [OnboardingFailureEnum.SESSION_EXPIRED]: "timeout",
   [OnboardingFailureEnum.NO_REQUIREMENTS]: "error",
   [OnboardingFailureEnum.ON_EVALUATION]: "hourglass",
   [OnboardingFailureEnum.NOT_ELIGIBLE]: "error",
@@ -82,11 +84,19 @@ const FailureScreen = () => {
         <Pictogram name={failurePictures[failure]} size={80} />
         <VSpacer size={16} />
         <H3 style={styles.title}>
-          {I18n.t(`idpay.onboarding.failure.message.${failure}.title`)}
+          {I18n.t(`idpay.onboarding.failure.message.${failure}.title`, {
+            defaultValue: I18n.t(
+              "idpay.onboarding.failure.message.GENERIC.title"
+            )
+          })}
         </H3>
         <VSpacer size={16} />
         <Body style={{ textAlign: "center" }}>
-          {I18n.t(`idpay.onboarding.failure.message.${failure}.subtitle`)}
+          {I18n.t(`idpay.onboarding.failure.message.${failure}.subtitle`, {
+            defaultValue: I18n.t(
+              "idpay.onboarding.failure.message.GENERIC.subtitle"
+            )
+          })}
         </Body>
       </View>
       <View style={styles.buttonContainer}>{renderCloseButton()}</View>

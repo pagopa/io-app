@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { DefaultContext } from "xstate";
-import { E_BACK } from "./events";
+import { E_BACK } from "../types/events";
 
 type WrappedAction<TContext> = (context: TContext, event: any) => void;
 type Events = { type: string } | E_BACK;
