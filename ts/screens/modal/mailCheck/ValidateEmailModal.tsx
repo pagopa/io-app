@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
-import { Link } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { Pictogram } from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -10,6 +9,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { Link } from "../../../components/core/typography/Link";
 
 const styles = StyleSheet.create({
   mainContainer: {
