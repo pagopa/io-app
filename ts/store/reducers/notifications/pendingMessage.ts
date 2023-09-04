@@ -13,6 +13,7 @@ import { GlobalState } from "../types";
 export type PendingMessageState = Readonly<{
   id: string;
   foreground: boolean;
+  trackEvent?: boolean;
 }> | null;
 
 const INITIAL_STATE: PendingMessageState = null;

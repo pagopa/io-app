@@ -15,7 +15,7 @@ export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
 }
 
 export function trackMessageNotificationTap(messageId: NonEmptyString) {
-  void mixpanelTrack(
+  return mixpanelTrack(
     "NOTIFICATIONS_MESSAGE_TAP",
     buildEventProperties("UX", "action", {
       messageId
