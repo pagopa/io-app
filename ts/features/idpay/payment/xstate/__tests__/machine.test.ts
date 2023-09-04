@@ -50,7 +50,8 @@ describe("IDPay Payment machine", () => {
         exitAuthorization: mockExitAuthorization,
         navigateToAuthorizationScreen: mockNavigateToAuthorizationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
-        showErrorToast: mockShowErrorToast
+        showErrorToast: mockShowErrorToast,
+        handleSessionExpired: jest.fn()
       }
     });
 
@@ -127,7 +128,8 @@ describe("IDPay Payment machine", () => {
         exitAuthorization: mockExitAuthorization,
         navigateToAuthorizationScreen: mockNavigateToAuthorizationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
-        showErrorToast: jest.fn()
+        showErrorToast: jest.fn(),
+        handleSessionExpired: jest.fn()
       }
     });
 
@@ -200,7 +202,8 @@ describe("IDPay Payment machine", () => {
         exitAuthorization: mockExitAuthorization,
         navigateToAuthorizationScreen: mockNavigateToAuthorizationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
-        showErrorToast: mockShowErrorToast
+        showErrorToast: mockShowErrorToast,
+        handleSessionExpired: jest.fn()
       }
     });
 
@@ -288,7 +291,8 @@ describe("IDPay Payment machine", () => {
         exitAuthorization: mockExitAuthorization,
         navigateToAuthorizationScreen: mockNavigateToAuthorizationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
-        showErrorToast: mockShowErrorToast
+        showErrorToast: mockShowErrorToast,
+        handleSessionExpired: jest.fn()
       }
     });
 
@@ -371,7 +375,8 @@ describe("IDPay Payment machine", () => {
         exitAuthorization: mockExitAuthorization,
         navigateToAuthorizationScreen: mockNavigateToAuthorizationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
-        showErrorToast: mockShowErrorToast
+        showErrorToast: mockShowErrorToast,
+        handleSessionExpired: jest.fn()
       }
     });
 

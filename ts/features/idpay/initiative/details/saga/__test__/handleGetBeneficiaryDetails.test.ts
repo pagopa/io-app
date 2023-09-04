@@ -2,47 +2,40 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import {
-  InitiativeDTO,
-  StatusEnum as InitiativeStatusEnum
-} from "../../../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDetailDTO } from "../../../../../../../definitions/idpay/InitiativeDetailDTO";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { idpayInitiativeGet } from "../../store/actions";
-import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
+import { idPayBeneficiaryDetailsGet } from "../../store/actions";
+import { handleGetBeneficiaryDetails } from "../handleGetBeneficiaryDetails";
 
-describe("idpayInitiativeGet", () => {
+describe("idPayBeneficiaryDetailsGet", () => {
   const initiativeId = "abcdef";
 
-  const initiative: InitiativeDTO = {
-    initiativeId,
-    initiativeName: "initiativeName",
-    endDate: new Date(2023, 1, 1),
-    nInstr: 1,
-    status: InitiativeStatusEnum.REFUNDABLE
+  const initiativeDetails: InitiativeDetailDTO = {
+    initiativeName: "initiativeName"
   };
 
   describe("when the response is successful", () => {
     it(`should put ${getType(
-      idpayInitiativeGet.success
-    )} with the initiative details`, () => {
-      const getInitiativeDetails = jest.fn();
+      idPayBeneficiaryDetailsGet.success
+    )} with the initiative beneficiary details`, () => {
+      const getInitiativeBeneficiaryDetail = jest.fn();
       testSaga(
-        handleGetInitiativeDetails,
-        getInitiativeDetails,
+        handleGetBeneficiaryDetails,
+        getInitiativeBeneficiaryDetail,
         "bpdToken",
         PreferredLanguageEnum.it_IT,
-        idpayInitiativeGet.request({ initiativeId })
+        idPayBeneficiaryDetailsGet.request({ initiativeId })
       )
         .next()
         .call(
           withRefreshApiCall,
-          getInitiativeDetails({
+          getInitiativeBeneficiaryDetail({
             initiativeId
           }),
-          idpayInitiativeGet.request({ initiativeId })
+          idPayBeneficiaryDetailsGet.request({ initiativeId })
         )
-        .next(E.right({ status: 200, value: initiative }))
-        .put(idpayInitiativeGet.success(initiative))
+        .next(E.right({ status: 200, value: initiativeDetails }))
+        .put(idPayBeneficiaryDetailsGet.success(initiativeDetails))
         .next()
         .isDone();
     });
@@ -52,15 +45,15 @@ describe("idpayInitiativeGet", () => {
     const statusCode = 500;
 
     it(`should put ${getType(
-      idpayInitiativeGet.failure
+      idPayBeneficiaryDetailsGet.failure
     )} with the error`, () => {
       const getInitiativeBeneficiaryDetail = jest.fn();
       testSaga(
-        handleGetInitiativeDetails,
+        handleGetBeneficiaryDetails,
         getInitiativeBeneficiaryDetail,
         "bpdToken",
         PreferredLanguageEnum.it_IT,
-        idpayInitiativeGet.request({ initiativeId })
+        idPayBeneficiaryDetailsGet.request({ initiativeId })
       )
         .next()
         .call(
@@ -68,7 +61,7 @@ describe("idpayInitiativeGet", () => {
           getInitiativeBeneficiaryDetail({
             initiativeId
           }),
-          idpayInitiativeGet.request({ initiativeId })
+          idPayBeneficiaryDetailsGet.request({ initiativeId })
         )
         .next(
           E.right({
@@ -77,7 +70,7 @@ describe("idpayInitiativeGet", () => {
           })
         )
         .put(
-          idpayInitiativeGet.failure({
+          idPayBeneficiaryDetailsGet.failure({
             kind: "generic",
             value: new Error(`response status code ${statusCode}`)
           })

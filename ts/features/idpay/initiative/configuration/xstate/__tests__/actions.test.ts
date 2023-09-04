@@ -12,7 +12,8 @@ import ROUTES from "../../../../../../navigation/routes";
 import { IDPayDetailsRoutes } from "../../../details/navigation";
 import { InitiativeFailureType } from "../failure";
 import I18n from "../../../../../../i18n";
-import * as showToast from "../../../../../../utils/showToast";
+import { IOToast } from "../../../../../../components/Toast";
+import { refreshSessionToken } from "../../../../../fastLogin/store/actions";
 
 jest.mock("../../../../../../utils/showToast", () => ({
   showToast: jest.fn()
@@ -23,6 +24,8 @@ const navigation: Partial<IOStackNavigationProp<AppParamsList>> = {
   replace: jest.fn(),
   pop: jest.fn()
 };
+
+const dispatch = jest.fn();
 
 const T_CONTEXT: Context = {
   initiative: p.none,
@@ -42,11 +45,25 @@ const T_FAILURE = InitiativeFailureType.GENERIC;
 
 describe("IDPay Configuration machine actions", () => {
   const actions = createActionsImplementation(
-    navigation as IOStackNavigationProp<AppParamsList>
+    navigation as IOStackNavigationProp<AppParamsList>,
+    dispatch
   );
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe("handleSessionExpired", () => {
+    it("should call dispatch with sessionExpired", async () => {
+      actions.handleSessionExpired();
+      expect(dispatch).toHaveBeenCalledWith(
+        refreshSessionToken.request({
+          withUserInteraction: true,
+          showIdentificationModalAtStartup: false,
+          showLoader: true
+        })
+      );
+    });
   });
 
   describe("navigateToConfigurationIntro", () => {
@@ -205,22 +222,20 @@ describe("IDPay Configuration machine actions", () => {
 
   describe("showFailureToast", () => {
     it("should show toast", async () => {
-      const showToastSpy = jest.spyOn(showToast, "showToast");
+      const showToastSpy = jest.spyOn(IOToast, "error");
       actions.showFailureToast({ ...T_CONTEXT, failure: T_FAILURE });
       expect(showToastSpy).toHaveBeenCalledWith(
-        I18n.t(`idpay.configuration.failureStates.${T_FAILURE}`),
-        "danger"
+        I18n.t(`idpay.configuration.failureStates.${T_FAILURE}`)
       );
     });
   });
 
   describe("showUpdateIbanToast", () => {
     it("should show toast", async () => {
-      const showToastSpy = jest.spyOn(showToast, "showToast");
+      const showToastSpy = jest.spyOn(IOToast, "success");
       actions.showUpdateIbanToast();
       expect(showToastSpy).toHaveBeenCalledWith(
-        I18n.t(`idpay.configuration.iban.updateToast`),
-        "success"
+        I18n.t(`idpay.configuration.iban.updateToast`)
       );
     });
   });

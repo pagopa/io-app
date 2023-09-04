@@ -9,6 +9,7 @@ import { Context } from "../context";
 
 import { createServicesImplementation } from "../services";
 import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
+import { UnsubscriptionFailureEnum } from "../failure";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";
@@ -44,9 +45,9 @@ describe("IDPay Unsubscription machine services", () => {
 
       mockIDPayClient.getWalletDetail.mockImplementation(() => response);
 
-      await expect(
-        services.getInitiativeInfo(T_CONTEXT)
-      ).rejects.toBeUndefined();
+      await expect(services.getInitiativeInfo(T_CONTEXT)).rejects.toBe(
+        UnsubscriptionFailureEnum.GENERIC
+      );
 
       expect(mockIDPayClient.getWalletDetail).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -86,9 +87,9 @@ describe("IDPay Unsubscription machine services", () => {
 
       mockIDPayClient.unsubscribe.mockImplementation(() => response);
 
-      await expect(
-        services.unsubscribeFromInitiative(T_CONTEXT)
-      ).rejects.toBeUndefined();
+      await expect(services.unsubscribeFromInitiative(T_CONTEXT)).rejects.toBe(
+        UnsubscriptionFailureEnum.GENERIC
+      );
 
       expect(mockIDPayClient.unsubscribe).toHaveBeenCalledWith(
         expect.objectContaining({
