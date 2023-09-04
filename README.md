@@ -566,7 +566,7 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
 </details>
 
 ## Design System
-The interface for the entire application was built using [NativeBase](https://docs-v2.nativebase.io/), a component library first developed for React Native. Although it was quite useful in the early stages, the significant API changes between `2.x` and `3.x` versions made upgrading the library very expensive. For this reason, we have been gradually rolling out a new library of custom components that utilize React Native's latest APIs since Q1 2023.
+The interface for the entire application was built using [NativeBase](https://docs-v2.nativebase.io/), a component library first developed for React Native. Although it was quite useful in the early stages, the significant API changes between `2.x` and `3.x` versions made upgrading the library very expensive. For this reason, we have been gradually rolling out a new library of custom components that utilizes React Native's latest APIs since Q1 2023.
 
 The new library is available via the `io-app-design-system` library ([Github repository](https://github.com/pagopa/io-app-design-system/))
 
