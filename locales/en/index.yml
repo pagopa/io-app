@@ -3310,17 +3310,16 @@ features:
     featuresInfoScreen:
       title: "How do you want to activate the IT Wallet?"
       list:
-        allFeaturesSection: "All features"
-        mainFeaturesSection: "Main features"
-        suggestedFeature: "Reccomended"
+        allFeaturesSection: "Recommended method"
+        mainFeaturesSection: "Other methods"
         incomingFeature: "Coming soon"
         cie: "Electronic Identity Card"
-        cieSubTitle: "CIE card and PIN"
+        cieSubTitle: "Use the card and its 8-digit PIN"
         spid: "SPID"
-        spidSubTitle: "Public Digital Identity System"
+        spidSubTitle: "Use credentials and app (or SMS)"
         cieId: "CieID"
-        cieIdSubTitle: "Username, password and OTP or app"
-      compareFeatures: "Compare features"
+        cieIdSubTitle: "Use credentials and app (or SMS)"
+      compareFeatures: "What is the difference?"
     issuing:
       title: "IT Wallet activation"
       infoConsent:

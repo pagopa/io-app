@@ -3334,17 +3334,16 @@ features:
     featuresInfoScreen:
       title: "Come vuoi attivare l'IT Wallet?"
       list:
-        allFeaturesSection: "Tutte le funzionalità"
-        mainFeaturesSection: "Principali funzionalità"
-        suggestedFeature: "Consigliato"
+        allFeaturesSection: "Metodo consigliato"
+        mainFeaturesSection: "Altre modalità"
         incomingFeature: "In arrivo"
         cie: "Carta d'Identità Elettronica"
-        cieSubTitle: "Tessera CIE e PIN"
+        cieSubTitle: "Usa la carta e il suo PIN a 8 cifre"
         spid: "SPID"
-        spidSubTitle: "Sistema Pubblico di Identità Digitale"
+        spidSubTitle: "Usa credenziali e app (o SMS)"
         cieId: "CieID"
-        cieIdSubTitle: "Nome utente, password e OTP o app"
-      compareFeatures: "Confronta le funzionalità"
+        cieIdSubTitle: "Usa credenziali e app (o SMS)"
+      compareFeatures: "Qual è la differenza?"
     issuing:
       title: "Attivazione IT Wallet"
       infoConsent:
