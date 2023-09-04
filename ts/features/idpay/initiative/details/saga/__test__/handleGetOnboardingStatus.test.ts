@@ -3,46 +3,43 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
 import {
-  InitiativeDTO,
-  StatusEnum as InitiativeStatusEnum
-} from "../../../../../../../definitions/idpay/InitiativeDTO";
+  OnboardingStatusDTO,
+  StatusEnum as OnboardingStatusEnum
+} from "../../../../../../../definitions/idpay/OnboardingStatusDTO";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { idpayInitiativeGet } from "../../store/actions";
-import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
+import { idPayOnboardingStatusGet } from "../../store/actions";
+import { handleGetOnboardingStatus } from "../handleGetOnboardingStatus";
 
-describe("idpayInitiativeGet", () => {
+describe("idPayOnboardingStatusGet", () => {
   const initiativeId = "abcdef";
 
-  const initiative: InitiativeDTO = {
-    initiativeId,
-    initiativeName: "initiativeName",
-    endDate: new Date(2023, 1, 1),
-    nInstr: 1,
-    status: InitiativeStatusEnum.REFUNDABLE
+  const onboardingStatusData: OnboardingStatusDTO = {
+    status: OnboardingStatusEnum.ONBOARDING_OK,
+    statusDate: new Date(2023, 1, 1)
   };
 
   describe("when the response is successful", () => {
     it(`should put ${getType(
-      idpayInitiativeGet.success
-    )} with the initiative details`, () => {
-      const getInitiativeDetails = jest.fn();
+      idPayOnboardingStatusGet.success
+    )} with the onboarding status details`, () => {
+      const onboardingStatus = jest.fn();
       testSaga(
-        handleGetInitiativeDetails,
-        getInitiativeDetails,
+        handleGetOnboardingStatus,
+        onboardingStatus,
         "bpdToken",
         PreferredLanguageEnum.it_IT,
-        idpayInitiativeGet.request({ initiativeId })
+        idPayOnboardingStatusGet.request({ initiativeId })
       )
         .next()
         .call(
           withRefreshApiCall,
-          getInitiativeDetails({
+          onboardingStatus({
             initiativeId
           }),
-          idpayInitiativeGet.request({ initiativeId })
+          idPayOnboardingStatusGet.request({ initiativeId })
         )
-        .next(E.right({ status: 200, value: initiative }))
-        .put(idpayInitiativeGet.success(initiative))
+        .next(E.right({ status: 200, value: onboardingStatusData }))
+        .put(idPayOnboardingStatusGet.success(onboardingStatusData))
         .next()
         .isDone();
     });
@@ -52,23 +49,23 @@ describe("idpayInitiativeGet", () => {
     const statusCode = 500;
 
     it(`should put ${getType(
-      idpayInitiativeGet.failure
+      idPayOnboardingStatusGet.failure
     )} with the error`, () => {
-      const getInitiativeBeneficiaryDetail = jest.fn();
+      const onboardingStatus = jest.fn();
       testSaga(
-        handleGetInitiativeDetails,
-        getInitiativeBeneficiaryDetail,
+        handleGetOnboardingStatus,
+        onboardingStatus,
         "bpdToken",
         PreferredLanguageEnum.it_IT,
-        idpayInitiativeGet.request({ initiativeId })
+        idPayOnboardingStatusGet.request({ initiativeId })
       )
         .next()
         .call(
           withRefreshApiCall,
-          getInitiativeBeneficiaryDetail({
+          onboardingStatus({
             initiativeId
           }),
-          idpayInitiativeGet.request({ initiativeId })
+          idPayOnboardingStatusGet.request({ initiativeId })
         )
         .next(
           E.right({
@@ -77,7 +74,7 @@ describe("idpayInitiativeGet", () => {
           })
         )
         .put(
-          idpayInitiativeGet.failure({
+          idPayOnboardingStatusGet.failure({
             kind: "generic",
             value: new Error(`response status code ${statusCode}`)
           })
