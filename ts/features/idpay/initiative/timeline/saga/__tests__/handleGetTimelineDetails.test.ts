@@ -1,12 +1,13 @@
 import * as E from "fp-ts/lib/Either";
-import { expectSaga } from "redux-saga-test-plan";
+import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
 import { OperationDTO } from "../../../../../../../definitions/idpay/OperationDTO";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
-import { appReducer } from "../../../../../../store/reducers";
-import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
-import { idpayTimelineDetailsGet } from "../../store/actions";
 import { StatusEnum } from "../../../../../../../definitions/idpay/TransactionDetailDTO";
+import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
+import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+import { idpayTimelineDetailsGet } from "../../store/actions";
+import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
 
 const mockResponseSuccess: OperationDTO = {
   operationType: TransactionOperationType.TRANSACTION,
@@ -23,70 +24,69 @@ const mockResponseSuccess: OperationDTO = {
   idTrxIssuer: "1",
   status: StatusEnum.AUTHORIZED
 };
-const mockToken = "mock";
-const mockLanguage = PreferredLanguageEnum.it_IT;
+
 const mockPayload = { initiativeId: "123", operationId: "123" };
 
-describe("Test IDPay timeline details saga", () => {
-  it("should call the success handler on success", async () => {
-    const getTimelineDetails = jest.fn();
-    getTimelineDetails.mockImplementation(() =>
-      E.right({ status: 200, value: mockResponseSuccess })
-    );
-
-    await expectSaga(
-      handleGetTimelineDetails,
-      getTimelineDetails,
-      mockToken,
-      mockLanguage,
-      mockPayload
-    )
-      .withReducer(appReducer)
-      .put(idpayTimelineDetailsGet.success(mockResponseSuccess))
-      .run();
+describe("idpayTimelineDetailsGet", () => {
+  describe("when the response is successful", () => {
+    it(`should put ${getType(
+      idpayTimelineDetailsGet.success
+    )} with the operation details`, () => {
+      const getTimelineDetail = jest.fn();
+      testSaga(
+        handleGetTimelineDetails,
+        getTimelineDetail,
+        "bpdToken",
+        PreferredLanguageEnum.it_IT,
+        idpayTimelineDetailsGet.request(mockPayload)
+      )
+        .next()
+        .call(
+          withRefreshApiCall,
+          getTimelineDetail(mockPayload),
+          idpayTimelineDetailsGet.request(mockPayload)
+        )
+        .next(E.right({ status: 200, value: mockResponseSuccess }))
+        .put(idpayTimelineDetailsGet.success(mockResponseSuccess))
+        .next()
+        .isDone();
+    });
   });
 
-  it("should call the failure handler on failure", async () => {
-    const getTimelineDetails = jest.fn();
-    getTimelineDetails.mockImplementation(() =>
-      E.right({ status: 401, value: "error" })
-    );
+  describe("when the response is an Error", () => {
+    const statusCode = 500;
 
-    await expectSaga(
-      handleGetTimelineDetails,
-      getTimelineDetails,
-      mockToken,
-      mockLanguage,
-      mockPayload
-    )
-      .withReducer(appReducer)
-      .put(
-        idpayTimelineDetailsGet.failure({
-          kind: "generic",
-          value: new Error("response status code 401")
-        })
+    it(`should put ${getType(
+      idpayTimelineDetailsGet.failure
+    )} with the error`, () => {
+      const getTimelineDetail = jest.fn();
+      testSaga(
+        handleGetTimelineDetails,
+        getTimelineDetail,
+        "bpdToken",
+        PreferredLanguageEnum.it_IT,
+        idpayTimelineDetailsGet.request(mockPayload)
       )
-      .run();
-  });
-
-  it("should call the failure handler on error", async () => {
-    const getTimelineDetails = jest.fn();
-    getTimelineDetails.mockImplementation(() => E.left([]));
-
-    await expectSaga(
-      handleGetTimelineDetails,
-      getTimelineDetails,
-      mockToken,
-      mockLanguage,
-      mockPayload
-    )
-      .withReducer(appReducer)
-      .put(
-        idpayTimelineDetailsGet.failure({
-          kind: "generic",
-          value: new Error("")
-        })
-      )
-      .run();
+        .next()
+        .call(
+          withRefreshApiCall,
+          getTimelineDetail(mockPayload),
+          idpayTimelineDetailsGet.request(mockPayload)
+        )
+        .next(
+          E.right({
+            status: statusCode,
+            value: { code: statusCode, message: "error" }
+          })
+        )
+        .put(
+          idpayTimelineDetailsGet.failure({
+            kind: "generic",
+            value: new Error(`response status code ${statusCode}`)
+          })
+        )
+        .next()
+        .isDone();
+    });
   });
 });

@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { LOADING_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG } from "../../../../xstate/utils";
 import { IDPayPaymentMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayPaymentMachineType>;
