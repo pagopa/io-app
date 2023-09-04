@@ -103,7 +103,8 @@ const renderComponent = (context?: Partial<Context>) => {
         exitAuthorization: mockedExitAuthorization,
         navigateToAuthorizationScreen: jest.fn(),
         navigateToResultScreen: jest.fn(),
-        showErrorToast: jest.fn()
+        showErrorToast: jest.fn(),
+        handleSessionExpired: jest.fn()
       }
     })
     .withContext({
