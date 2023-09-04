@@ -607,7 +607,7 @@ const renderListItemTransaction = () => {
     <DSComponentViewerBox name="ListItemTransaction">
       <View>
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
@@ -615,28 +615,28 @@ const renderListItemTransaction = () => {
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           paymentLogoIcon={"amex"}
           transactionStatus="failure"
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           paymentLogoIcon={{ uri: organizationLogoURI.imageSource }}
           transactionStatus="pending"
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
@@ -644,7 +644,7 @@ const renderListItemTransaction = () => {
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"

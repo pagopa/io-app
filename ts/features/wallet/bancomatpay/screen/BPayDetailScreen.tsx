@@ -48,6 +48,7 @@ export const BPayDetailScreen: React.FunctionComponent = () => {
   );
   return (
     <BasePaymentMethodScreen
+      headerTitle="BANCOMAT Pay"
       paymentMethod={bPay}
       card={<PaymentCardBig {...cardProps} />}
       content={<PaymentMethodFeatures paymentMethod={bPay} />}
