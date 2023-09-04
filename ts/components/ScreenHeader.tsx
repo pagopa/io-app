@@ -3,15 +3,16 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import {
+  IOColors,
+  IOStyles,
+  Icon,
+  Pictogram,
   IOIconSizeScale,
   IOIcons,
-  IOPictogramSizeScale,
-  Icon
+  IOPictograms,
+  IOPictogramSizeScale
 } from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
-import { IOColors } from "../components/core/variables/IOColors";
-import { IOStyles } from "./core/variables/IOStyles";
-import { IOPictograms, Pictogram } from "./core/pictograms";
 
 type ScreenHeader = {
   heading: React.ReactNode;
