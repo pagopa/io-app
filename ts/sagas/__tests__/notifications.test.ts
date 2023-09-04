@@ -1,11 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { Action } from "redux";
-import { expectSaga } from "redux-saga-test-plan";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import {
+  handlePendingMessageStateIfAllowedSaga,
   notificationsPlatform,
+  trackMessageNotificationTapIfNeeded,
   updateInstallationSaga
 } from "../notifications";
 
@@ -15,9 +17,22 @@ import {
   sessionInvalid
 } from "../../store/actions/authentication";
 import {
+  clearNotificationPendingMessage,
   notificationsInstallationTokenRegistered,
   updateNotificationsInstallationToken
 } from "../../store/actions/notifications";
+import {
+  PendingMessageState,
+  pendingMessageStateSelector
+} from "../../store/reducers/notifications/pendingMessage";
+import NavigationService from "../../navigation/NavigationService";
+import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
+import {
+  navigateToMainNavigatorAction,
+  navigateToMessageRouterAction
+} from "../../store/actions/navigation";
+import { UIMessageId } from "../../store/reducers/entities/messages/types";
+import * as Analytics from "../../features/messages/analytics";
 
 const installationId = "installationId";
 jest.mock("../../utils/installation", () => ({
@@ -200,5 +215,144 @@ describe("updateInstallationSaga", () => {
           .run();
       });
     });
+  });
+});
+
+describe("handlePendingMessageStateIfAllowedSaga", () => {
+  const mockedPendingMessageState: PendingMessageState = {
+    id: "M01",
+    foreground: true,
+    trackEvent: false
+  };
+
+  it("make the app navigate to the message detail when the user press on a notification", () => {
+    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+      messageId: mockedPendingMessageState.id as UIMessageId,
+      fromNotification: true
+    });
+
+    testSaga(handlePendingMessageStateIfAllowedSaga, false)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(mockedPendingMessageState)
+      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(false)
+      .put(clearNotificationPendingMessage())
+      .next()
+      .call(
+        NavigationService.dispatchNavigationAction,
+        dispatchNavigationActionParameter
+      )
+      .next()
+      .isDone();
+  });
+
+  it("make the app navigate to the message detail when the user press on a notification, resetting the navigation stack before", () => {
+    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+      messageId: mockedPendingMessageState.id as UIMessageId,
+      fromNotification: true
+    });
+
+    testSaga(handlePendingMessageStateIfAllowedSaga, true)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(mockedPendingMessageState)
+      .call(trackMessageNotificationTapIfNeeded, mockedPendingMessageState)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(false)
+      .put(clearNotificationPendingMessage())
+      .next()
+      .call(navigateToMainNavigatorAction)
+      .next()
+      .call(
+        NavigationService.dispatchNavigationAction,
+        dispatchNavigationActionParameter
+      )
+      .next()
+      .isDone();
+  });
+
+  it("does nothing if there is a payment going on", () => {
+    testSaga(handlePendingMessageStateIfAllowedSaga, false)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(mockedPendingMessageState)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(true)
+      .isDone();
+  });
+
+  it("does nothing if there are not pending messages", () => {
+    testSaga(handlePendingMessageStateIfAllowedSaga, false)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(null)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(false)
+      .isDone();
+  });
+
+  it("does nothing if there are not pending messages and there is a payment going on", () => {
+    testSaga(handlePendingMessageStateIfAllowedSaga, false)
+      .next()
+      .select(pendingMessageStateSelector)
+      .next(null)
+      .next()
+      .select(isPaymentOngoingSelector)
+      .next(true)
+      .isDone();
+  });
+});
+
+describe("trackMessageNotificationTapIfNeeded", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  it("should call trackMessageNotificationTap when there is a PendingMessageState that requires tracking", () => {
+    const spiedTrackMessageNotificationTap = jest
+      .spyOn(Analytics, "trackMessageNotificationTap")
+      .mockImplementation(_ => Promise.resolve());
+    const mockPendingMessageState = {
+      id: "001",
+      foreground: true,
+      trackEvent: true
+    } as PendingMessageState;
+    trackMessageNotificationTapIfNeeded(mockPendingMessageState);
+    expect(spiedTrackMessageNotificationTap).toBeCalledWith("001");
+  });
+  it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not require tracking", () => {
+    const spiedTrackMessageNotificationTap = jest
+      .spyOn(Analytics, "trackMessageNotificationTap")
+      .mockImplementation(_ => Promise.resolve());
+    const mockPendingMessageState = {
+      id: "001",
+      foreground: true,
+      trackEvent: false
+    } as PendingMessageState;
+    trackMessageNotificationTapIfNeeded(mockPendingMessageState);
+    expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
+  });
+  it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not have a tracking information", () => {
+    const spiedTrackMessageNotificationTap = jest
+      .spyOn(Analytics, "trackMessageNotificationTap")
+      .mockImplementation(_ => Promise.resolve());
+    const mockPendingMessageState = {
+      id: "001",
+      foreground: true
+    } as PendingMessageState;
+    trackMessageNotificationTapIfNeeded(mockPendingMessageState);
+    expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
+  });
+  it("should not call trackMessageNotificationTap when there is not a PendingMessageState", () => {
+    const spiedTrackMessageNotificationTap = jest
+      .spyOn(Analytics, "trackMessageNotificationTap")
+      .mockImplementation(_ => Promise.resolve());
+    trackMessageNotificationTapIfNeeded();
+    expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
   });
 });
