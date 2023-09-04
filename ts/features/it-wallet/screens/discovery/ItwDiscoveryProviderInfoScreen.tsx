@@ -51,7 +51,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
       description: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cieSubTitle"
       ),
-      icon: "cie",
+      icon: "fiscalCodeIndividual",
       onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cie"
@@ -139,18 +139,6 @@ const ItwDiscoveryProviderInfoScreen = () => {
         <H4 style={{ flex: 1 }} color={"bluegrey"}>
           {title}
         </H4>
-
-        {title ===
-          I18n.t(
-            "features.itWallet.featuresInfoScreen.list.allFeaturesSection"
-          ) && (
-          <Badge
-            text={I18n.t(
-              "features.itWallet.featuresInfoScreen.list.suggestedFeature"
-            )}
-            variant="turquoise"
-          />
-        )}
       </View>
     );
 
@@ -193,7 +181,8 @@ const ItwDiscoveryProviderInfoScreen = () => {
             contentContainerStyle={[
               IOStyles.horizontalContentPadding,
               {
-                paddingTop: IOVisualCostants.appMarginDefault
+                paddingTop: IOVisualCostants.appMarginDefault,
+                paddingBottom: IOVisualCostants.appMarginDefault
               }
             ]}
             renderItem={renderItem}
@@ -201,19 +190,18 @@ const ItwDiscoveryProviderInfoScreen = () => {
             ItemSeparatorComponent={() => <Divider />}
             sections={FEATURES_SECTION_DATA}
           />
+          <View style={IOStyles.horizontalContentPadding}>
+            <ButtonLink
+              onPress={() => undefined}
+              label={I18n.t(
+                "features.itWallet.featuresInfoScreen.compareFeatures"
+              )}
+              accessibilityLabel={I18n.t(
+                "features.itWallet.featuresInfoScreen.compareFeatures"
+              )}
+            />
+          </View>
         </ScreenContent>
-        <View style={{ alignSelf: "center" }}>
-          <ButtonLink
-            icon="info"
-            onPress={() => undefined}
-            label={I18n.t(
-              "features.itWallet.featuresInfoScreen.compareFeatures"
-            )}
-            accessibilityLabel={I18n.t(
-              "features.itWallet.featuresInfoScreen.compareFeatures"
-            )}
-          />
-        </View>
       </SafeAreaView>
     </BaseScreenComponent>
   );
