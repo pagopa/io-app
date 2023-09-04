@@ -10,7 +10,7 @@ import ItwDiscoveryInfoScreen from "../screens/discovery/ItwDiscoveryInfoScreen"
 import ItwPidAuthInfoScreen from "../screens/issuing/ItwPidAuthInfoScreen";
 import CieInfoUsageScreen from "../screens/issuing/cie/ItwCieInfoUsageScreen";
 import ItwPidPreviewScreen from "../screens/issuing/ItwPidPreviewScreen";
-import ItwPidActivationScreen from "../screens/issuing/ItwPidAddingScreen";
+import ItwPidAddingScreen from "../screens/issuing/ItwPidAddingScreen";
 import ItwCredentialDetails from "../screens/credentials/ItwPidDetails";
 import ItwPidRequestScreen from "../screens/issuing/ItwPidRequestScreen";
 import { ItwParamsList } from "./ItwParamsList";
@@ -68,7 +68,7 @@ export const ItwStackNavigator = () => (
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID_ADDING}
-      component={ItwPidActivationScreen}
+      component={ItwPidAddingScreen}
     />
     {/* PID DETAILS */}
     <Stack.Screen
