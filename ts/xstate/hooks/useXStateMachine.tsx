@@ -1,8 +1,11 @@
 import React from "react";
+import * as X from "xstate";
 
-type MachineCreatorFn<T> = () => T;
+type MachineCreatorFn<T extends X.AnyStateMachine> = () => T;
 
-const useXStateMachine = <T,>(fn: MachineCreatorFn<T>): [T] => {
+const useXStateMachine = <T extends X.AnyStateMachine>(
+  fn: MachineCreatorFn<T>
+): [T] => {
   const machine = React.useRef<T | undefined>(undefined);
 
   if (machine.current === undefined) {

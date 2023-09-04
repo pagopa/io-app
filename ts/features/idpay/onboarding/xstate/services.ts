@@ -49,7 +49,7 @@ const createServicesImplementation = (
 
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
     }
 
     const dataResponse = await client.getInitiativeData({
@@ -60,12 +60,16 @@ const createServicesImplementation = (
     const data: Promise<InitiativeDataDTO> = pipe(
       dataResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(OnboardingFailureEnum.GENERIC);
+        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(value);
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            default:
+              return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
-          return Promise.resolve(response.value);
         }
       )
     );
@@ -75,7 +79,7 @@ const createServicesImplementation = (
 
   const loadInitiativeStatus = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
     }
 
     const statusResponse = await client.onboardingStatus({
@@ -86,25 +90,28 @@ const createServicesImplementation = (
     const data: Promise<O.Option<OnboardingStatusEnum>> = pipe(
       statusResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        response => {
-          if (response.status === 200) {
-            const onboardingStatus = response.value.status;
+        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              const onboardingStatus = value.status;
 
-            return pipe(
-              onboardingStatusToFailure[onboardingStatus],
-              O.fromNullable,
-              O.fold(
-                () => Promise.resolve(O.some(response.value.status)), // No failure, return onboarding status
-                failure => Promise.reject(failure)
-              )
-            );
-          } else if (response.status === 404) {
-            // Initiative not yet started by the citizen
-            return Promise.resolve(O.none);
+              return pipe(
+                onboardingStatusToFailure[onboardingStatus],
+                O.fromNullable,
+                O.fold(
+                  () => Promise.resolve(O.some(value.status)), // No failure, return onboarding status
+                  failure => Promise.reject(failure)
+                )
+              );
+            case 404:
+              // Initiative not yet started by the citizen
+              return Promise.resolve(O.none);
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            default:
+              return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
-
-          return Promise.reject(OnboardingFailureEnum.GENERIC);
         }
       )
     );
@@ -114,7 +121,7 @@ const createServicesImplementation = (
 
   const acceptTos = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
     }
 
     const response = await client.onboardingCitizen({
@@ -127,15 +134,17 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        response => {
-          switch (response.status) {
+        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        ({ status, value }) => {
+          switch (status) {
             case 204:
               return Promise.resolve(undefined);
             case 403:
-              const prerequisitesError = response.value.details;
+              const prerequisitesError = value.details;
               const failure = prerequisitesErrorToFailure[prerequisitesError];
               return Promise.reject(failure);
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
               return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
@@ -148,7 +157,7 @@ const createServicesImplementation = (
 
   const loadRequiredCriteria = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
     }
 
     const response = await client.checkPrerequisites({
@@ -161,18 +170,22 @@ const createServicesImplementation = (
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        response => {
-          if (response.status === 200) {
-            return Promise.resolve(O.some(response.value));
-          } else if (response.status === 202) {
-            return Promise.resolve(O.none);
-          } else if (response.status === 403) {
-            const prerequisitesError = response.value.details;
-            const failure = prerequisitesErrorToFailure[prerequisitesError];
-            return Promise.reject(failure);
+        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        ({ status, value }) => {
+          switch (status) {
+            case 200:
+              return Promise.resolve(O.some(value));
+            case 202:
+              return Promise.resolve(O.none);
+            case 403:
+              const prerequisitesError = value.details;
+              const failure = prerequisitesErrorToFailure[prerequisitesError];
+              return Promise.reject(failure);
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            default:
+              return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
-          return Promise.reject(OnboardingFailureEnum.GENERIC);
         }
       )
     );
@@ -184,11 +197,11 @@ const createServicesImplementation = (
     const { initiative, requiredCriteria, multiConsentsAnswers } = context;
 
     if (initiative === undefined || requiredCriteria === undefined) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
     }
 
     if (O.isNone(requiredCriteria)) {
-      return Promise.reject(OnboardingFailureEnum.GENERIC);
+      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
     }
 
     const consentsArray = [
@@ -212,12 +225,16 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        response => {
-          if (response.status === 202) {
-            return Promise.resolve(undefined);
+        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        ({ status }) => {
+          switch (status) {
+            case 202:
+              return Promise.resolve(undefined);
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            default:
+              return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
-          return Promise.reject(OnboardingFailureEnum.GENERIC);
         }
       )
     );

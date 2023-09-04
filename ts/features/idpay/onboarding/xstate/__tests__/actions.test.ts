@@ -12,6 +12,7 @@ import {
 import { createActionsImplementation } from "../actions";
 import { Context } from "../machine";
 import { InitiativeDataDTO } from "../../../../../../definitions/idpay/InitiativeDataDTO";
+import { refreshSessionToken } from "../../../../fastLogin/store/actions";
 
 const rootNavigation: Partial<IOStackNavigationProp<AppParamsList>> = {
   navigate: jest.fn(),
@@ -38,6 +39,8 @@ const T_SERVICE_ID = "efg456";
 const T_NO_EVENT = { type: "" };
 const T_BACK_EVENT = { type: "BACK", skipNavigation: true };
 
+const dispatch = jest.fn();
+
 const T_INITIATIVE_INFO_DTO: InitiativeDataDTO = {
   initiativeId: "1234",
   description: "",
@@ -52,11 +55,25 @@ const T_INITIATIVE_INFO_DTO: InitiativeDataDTO = {
 describe("IDPay Onboarding machine actions", () => {
   const actions = createActionsImplementation(
     rootNavigation as IOStackNavigationProp<AppParamsList>,
-    onboardingNavigation as IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>
+    onboardingNavigation as IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>,
+    dispatch
   );
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe("handleSessionExpired", () => {
+    it("should call dispatch with sessionExpired", async () => {
+      actions.handleSessionExpired();
+      expect(dispatch).toHaveBeenCalledWith(
+        refreshSessionToken.request({
+          withUserInteraction: true,
+          showIdentificationModalAtStartup: false,
+          showLoader: true
+        })
+      );
+    });
   });
 
   describe("navigateToInitiativeDetailsScreen", () => {
