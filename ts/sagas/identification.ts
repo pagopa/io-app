@@ -15,8 +15,6 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToMessageRouterAction } from "../store/actions/navigation";
-import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   paymentDeletePayment,
   runDeleteActivePaymentSaga
@@ -27,15 +25,12 @@ import {
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
-import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
-import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import NavigationService from "../navigation/NavigationService";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
+import { handlePendingMessageStateIfAllowedSaga } from "./notifications";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -163,28 +158,7 @@ function* startAndHandleIdentificationResult(
     yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-      yield* select(pendingMessageStateSelector);
-
-    // Check if there is a payment ongoing
-    const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
-      yield* select(isPaymentOngoingSelector);
-
-    if (!isPaymentOngoing && pendingMessageState) {
-      // We have a pending notification message to handle
-      const messageId = pendingMessageState.id;
-
-      // Remove the pending message from the notification state
-      yield* put(clearNotificationPendingMessage());
-
-      // Navigate to message router screen
-      NavigationService.dispatchNavigationAction(
-        navigateToMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    }
+    yield* call(handlePendingMessageStateIfAllowedSaga);
   }
 }
 
