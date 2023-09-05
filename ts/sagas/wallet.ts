@@ -26,7 +26,6 @@ import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { ContentClient } from "../api/content";
 import { PaymentManagerClient } from "../api/pagopa";
-import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
 import {
   apiUrlPrefix,
   bpdEnabled,
@@ -35,20 +34,14 @@ import {
 } from "../config";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
-  navigateToActivateBpdOnNewCreditCard,
-  navigateToSuggestBpdActivation
-} from "../features/wallet/onboarding/bancomat/navigation/action";
-import {
   handleAddPan,
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { addBancomatToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   addBancomatToWallet,
   loadAbi,
-  searchUserPans,
-  walletAddBancomatStart
+  searchUserPans
 } from "../features/wallet/onboarding/bancomat/store/actions";
 import {
   handleAddpayToWallet,
@@ -143,7 +136,6 @@ import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 import { convertUnknownToError } from "../utils/errors";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { getTitleFromCard } from "../utils/paymentMethod";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
@@ -341,23 +333,6 @@ function* startOrResumeAddCreditCardSaga(
                           n: 5
                         })
                       );
-                      yield* call(navigateToActivateBpdOnNewCreditCard, {
-                        creditCards: [
-                          {
-                            ...maybeAddedWallet.paymentMethod,
-                            icon: getCardIconFromBrandLogo(
-                              maybeAddedWallet.paymentMethod.info
-                            ),
-                            caption: getTitleFromCard(
-                              maybeAddedWallet.paymentMethod
-                            )
-                          }
-                        ]
-                      });
-                    } else if (
-                      bpdRemoteConfig?.enroll_bpd_after_add_payment_method
-                    ) {
-                      yield* call(navigateToSuggestBpdActivation);
                     }
                   }
                 }
@@ -817,12 +792,6 @@ export function* watchWalletSaga(
 
     // watch for load abi request
     yield* takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
-
-    // watch for add Bancomat to Wallet workflow
-    yield* takeLatest(
-      walletAddBancomatStart,
-      addBancomatToWalletAndActivateBpd
-    );
 
     // watch for load pans request
     yield* takeLatest(

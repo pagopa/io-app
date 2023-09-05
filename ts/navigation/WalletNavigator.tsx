@@ -21,16 +21,12 @@ import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDet
 import { BPayDetailScreen } from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditCardDetailScreen";
-import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
-import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
-import ActivateBpdOnNewBancomatScreen from "../features/wallet/onboarding/bancomat/screens/ActivateBpdOnNewBancomatScreen";
 import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
 import ActivateBpdOnNewBPayScreen from "../features/wallet/onboarding/bancomatPay/screens/ActivateBpdOnNewBPayScreen";
 import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboarding/cobadge/navigation/navigator";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
 import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge/screens/ActivateBpdOnNewCoBadgeScreen";
-import { ActivateBpdOnNewCreditCardScreen } from "../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import { PaymentMethodOnboardingPayPalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
@@ -73,18 +69,6 @@ const bptRoutes = () => (
     <Stack.Screen
       name={BPD_ROUTES.CTA_BPD_IBAN_EDIT}
       component={IbanCTAEditScreen}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD}
-      component={ActivateBpdOnNewCreditCardScreen}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN}
-      component={WalletAddBancomatNavigator}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT}
-      component={ActivateBpdOnNewBancomatScreen}
     />
     <Stack.Screen
       name={WALLET_ONBOARDING_BPAY_ROUTES.MAIN}
