@@ -24,7 +24,7 @@ import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { BrandImage } from "../../../component/card/BrandImage";
-import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../../onboarding/bancomat/hooks/useImageResize";
 
 type Props = {
   abi: Abi;
