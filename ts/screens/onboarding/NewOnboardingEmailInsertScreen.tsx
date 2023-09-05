@@ -204,9 +204,14 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <SafeAreaView style={styles.flex}>
-          <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
+          <Content
+            testID="container-test"
+            noPadded={true}
+            style={styles.flex}
+            scrollEnabled={false}
+          >
             <View style={IOStyles.horizontalContentPadding}>
-              <H1 color={"bluegreyDark"} weight={"Bold"}>
+              <H1 color={"bluegreyDark"} weight={"Bold"} testID="title-test">
                 {I18n.t("email.newinsert.title")}
               </H1>
               <VSpacer size={16} />
@@ -215,6 +220,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
                 <>
                   <VSpacer size={24} />
                   <AlertComponent
+                    testID="alert-test"
                     viewRef={viewRef}
                     variant="info"
                     content={I18n.t("email.newinsert.alert.title", {
@@ -227,7 +233,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
                 </>
               )}
               <VSpacer size={24} />
-              <Form>
+              <Form testID="form-test">
                 <View>
                   <LabelledItem
                     label={I18n.t("email.newinsert.label")}
@@ -249,9 +255,11 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
                         : EMPTY_EMAIL,
                       onChangeText: handleOnChangeEmailText
                     }}
+                    testID="input-test"
                   />
                   {isSameEmailToChange() && (
                     <View
+                      testID="error-label"
                       style={{
                         position: "absolute",
                         bottom: -25,
