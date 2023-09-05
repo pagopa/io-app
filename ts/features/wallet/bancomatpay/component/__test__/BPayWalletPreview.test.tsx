@@ -11,7 +11,7 @@ import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { BPayPaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import BPayWalletPreview from "../BPayWalletPreview";
 
 describe("BPayWalletPreview component", () => {
