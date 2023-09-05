@@ -1,30 +1,41 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayClient } from "../../../common/api/client";
-import {
-  idPayBeneficiaryDetailsGet,
-  IdPayBeneficiaryDetailsGetPayloadType
-} from "../store/actions";
+import { idPayBeneficiaryDetailsGet } from "../store/actions";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 
+/**
+ * Handle the remote call to retrieve the IDPay initiative beneficiary details
+ * @param getInitiativeBeneficiaryDetail BE API call
+ * @param bpdToken Auth token
+ * @param language Preferred language
+ * @param action Action to handle
+ */
 export function* handleGetBeneficiaryDetails(
   getInitiativeBeneficiaryDetail: IDPayClient["getInitiativeBeneficiaryDetail"],
-  token: string,
+  bearerToken: string,
   language: PreferredLanguageEnum,
-  payload: IdPayBeneficiaryDetailsGetPayloadType
+  action: ActionType<typeof idPayBeneficiaryDetailsGet["request"]>
 ) {
+  const getInitiativeBeneficiaryRequest = getInitiativeBeneficiaryDetail({
+    bearerAuth: bearerToken,
+    "Accept-Language": language,
+    initiativeId: action.payload.initiativeId
+  });
+
   try {
-    const getInitiativeBeneficiaryResult: SagaCallReturnType<
-      typeof getInitiativeBeneficiaryDetail
-    > = yield* call(getInitiativeBeneficiaryDetail, {
-      bearerAuth: token,
-      "Accept-Language": language,
-      initiativeId: payload.initiativeId
-    });
+    const getInitiativeBeneficiaryResult = (yield* call(
+      withRefreshApiCall,
+      getInitiativeBeneficiaryRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof getInitiativeBeneficiaryDetail>;
+
     yield pipe(
       getInitiativeBeneficiaryResult,
       E.fold(

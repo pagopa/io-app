@@ -1,12 +1,12 @@
 import * as React from "react";
 import { render } from "@testing-library/react-native";
-import I18n from "../../../../../ts/i18n";
-import { NotificationsPreferencesPreview } from "../NotificationsPreferencesPreview";
+import I18n from "../../../../i18n";
+import { NotificationPreviewSample } from "../NotificationPreviewSample";
 
-describe("OnboardingNotificationsPreferencesScreen", () => {
+describe("renderNotificationPreviewSample", () => {
   describe("Given enabled previews and enabled reminders", () => {
     it("then title should match 'onboarding.notifications.preview.reminderOnPreviewOnTitle' key and message should match 'onboarding.notifications.preview.reminderOnPreviewOnMessage' key", () => {
-      const screen = renderNotificationsPreferencesPreview(true, true, false);
+      const screen = renderNotificationPreviewSample(true, true);
       expect(screen).not.toBeNull();
 
       const h4Title = screen.queryByText(
@@ -22,7 +22,7 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
   });
   describe("Given disabled previews and enabled reminders", () => {
     it("then title should match 'onboarding.notifications.preview.reminderOnPreviewOffTitle' key and message should match 'onboarding.notifications.preview.reminderOnPreviewOffMessage' key", () => {
-      const screen = renderNotificationsPreferencesPreview(false, true, false);
+      const screen = renderNotificationPreviewSample(false, true);
       expect(screen).not.toBeNull();
 
       const h4Title = screen.queryByText(
@@ -38,7 +38,7 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
   });
   describe("Given enabled previews and disabled reminders", () => {
     it("then title should match 'onboarding.notifications.preview.reminderOffPreviewOnTitle' key and message should match 'onboarding.notifications.preview.reminderOffPreviewOnMessage' key", () => {
-      const screen = renderNotificationsPreferencesPreview(true, false, false);
+      const screen = renderNotificationPreviewSample(true, false);
       expect(screen).not.toBeNull();
 
       const h4Title = screen.queryByText(
@@ -54,7 +54,7 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
   });
   describe("Given disabled previews and disabled reminders", () => {
     it("then title should match 'onboarding.notifications.preview.reminderOffPreviewOffTitle' key and message should match 'onboarding.notifications.preview.reminderOnPreviewOffMessage' key", () => {
-      const screen = renderNotificationsPreferencesPreview(false, false, false);
+      const screen = renderNotificationPreviewSample(false, false);
       expect(screen).not.toBeNull();
 
       const h4Title = screen.queryByText(
@@ -70,16 +70,14 @@ describe("OnboardingNotificationsPreferencesScreen", () => {
   });
 });
 
-const renderNotificationsPreferencesPreview = (
+const renderNotificationPreviewSample = (
   previewEnabled: boolean,
-  remindersEnabled: boolean,
-  isFirstOnboarding: boolean
+  remindersEnabled: boolean
 ) => {
   const component = (
-    <NotificationsPreferencesPreview
+    <NotificationPreviewSample
       previewEnabled={previewEnabled}
       remindersEnabled={remindersEnabled}
-      isFirstOnboarding={isFirstOnboarding}
     />
   );
   return render(component);

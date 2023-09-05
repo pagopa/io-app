@@ -1,11 +1,13 @@
-import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { idPayWalletGet } from "../store/actions";
-import { readablePrivacyReport } from "../../../../utils/reporters";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
+import { idPayWalletGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
@@ -14,17 +16,21 @@ import { IDPayClient } from "../../common/api/client";
  */
 export function* handleGetIDPayWallet(
   getWallet: IDPayClient["getWallet"],
-  token: string,
-  language: PreferredLanguageEnum
+  bearerToken: string,
+  language: PreferredLanguageEnum,
+  action: ActionType<typeof idPayWalletGet["request"]>
 ) {
+  const getWalletRequest = getWallet({
+    bearerAuth: bearerToken,
+    "Accept-Language": language
+  });
+
   try {
-    const getWalletResult: SagaCallReturnType<typeof getWallet> = yield* call(
-      getWallet,
-      {
-        bearerAuth: token,
-        "Accept-Language": language
-      }
-    );
+    const getWalletResult = (yield* call(
+      withRefreshApiCall,
+      getWalletRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof getWallet>;
 
     if (E.isRight(getWalletResult)) {
       if (getWalletResult.right.status === 200) {

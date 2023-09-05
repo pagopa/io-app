@@ -1,87 +1,89 @@
 import * as E from "fp-ts/lib/Either";
-import { expectSaga } from "redux-saga-test-plan";
+import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
 import {
   InitiativeDTO,
-  StatusEnum
+  StatusEnum as InitiativeStatusEnum
 } from "../../../../../../../definitions/idpay/InitiativeDTO";
-import { appReducer } from "../../../../../../store/reducers";
+import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 
-const mockResponseSuccess: InitiativeDTO = {
-  initiativeId: "123",
-  status: StatusEnum.REFUNDABLE,
-  endDate: new Date(),
-  nInstr: 123
-};
+describe("idpayInitiativeGet", () => {
+  const initiativeId = "abcdef";
 
-const mockFailure: ErrorDTO = {
-  code: 403,
-  message: "message"
-};
-const mockToken = "mock";
-const mockLanguage = PreferredLanguageEnum.it_IT;
+  const initiative: InitiativeDTO = {
+    initiativeId,
+    initiativeName: "initiativeName",
+    endDate: new Date(2023, 1, 1),
+    nInstr: 1,
+    status: InitiativeStatusEnum.REFUNDABLE
+  };
 
-describe("Test IDPay initiative details saga", () => {
-  it("should call the success handler on success", async () => {
-    const getWallet = jest.fn();
-    getWallet.mockImplementation(() =>
-      E.right({ status: 200, value: mockResponseSuccess })
-    );
-
-    await expectSaga(
-      handleGetInitiativeDetails,
-      getWallet,
-      mockToken,
-      mockLanguage,
-      { initiativeId: "123" }
-    )
-      .withReducer(appReducer)
-      .put(idpayInitiativeGet.success(mockResponseSuccess))
-      .run();
-  });
-  it("should call the failure handler on failure", async () => {
-    const getWallet = jest.fn();
-    getWallet.mockImplementation(() =>
-      E.right({ status: 401, value: mockFailure })
-    );
-
-    await expectSaga(
-      handleGetInitiativeDetails,
-      getWallet,
-      mockToken,
-      mockLanguage,
-      { initiativeId: "123" }
-    )
-      .withReducer(appReducer)
-      .put(
-        idpayInitiativeGet.failure({
-          kind: "generic",
-          value: new Error("response status code 401")
-        })
+  describe("when the response is successful", () => {
+    it(`should put ${getType(
+      idpayInitiativeGet.success
+    )} with the initiative details`, () => {
+      const getInitiativeDetails = jest.fn();
+      testSaga(
+        handleGetInitiativeDetails,
+        getInitiativeDetails,
+        "bpdToken",
+        PreferredLanguageEnum.it_IT,
+        idpayInitiativeGet.request({ initiativeId })
       )
-      .run();
+        .next()
+        .call(
+          withRefreshApiCall,
+          getInitiativeDetails({
+            initiativeId
+          }),
+          idpayInitiativeGet.request({ initiativeId })
+        )
+        .next(E.right({ status: 200, value: initiative }))
+        .put(idpayInitiativeGet.success(initiative))
+        .next()
+        .isDone();
+    });
   });
-  it("should behave gracefully when the client throws an error", async () => {
-    const getWallet = jest.fn();
-    getWallet.mockImplementation(() => E.left([]));
 
-    await expectSaga(
-      handleGetInitiativeDetails,
-      getWallet,
-      mockToken,
-      mockLanguage,
-      { initiativeId: "123" }
-    )
-      .withReducer(appReducer)
-      .put(
-        idpayInitiativeGet.failure({
-          kind: "generic",
-          value: new Error("")
-        })
+  describe("when the response is an Error", () => {
+    const statusCode = 500;
+
+    it(`should put ${getType(
+      idpayInitiativeGet.failure
+    )} with the error`, () => {
+      const getInitiativeBeneficiaryDetail = jest.fn();
+      testSaga(
+        handleGetInitiativeDetails,
+        getInitiativeBeneficiaryDetail,
+        "bpdToken",
+        PreferredLanguageEnum.it_IT,
+        idpayInitiativeGet.request({ initiativeId })
       )
-      .run();
+        .next()
+        .call(
+          withRefreshApiCall,
+          getInitiativeBeneficiaryDetail({
+            initiativeId
+          }),
+          idpayInitiativeGet.request({ initiativeId })
+        )
+        .next(
+          E.right({
+            status: statusCode,
+            value: { code: statusCode, message: "error" }
+          })
+        )
+        .put(
+          idpayInitiativeGet.failure({
+            kind: "generic",
+            value: new Error(`response status code ${statusCode}`)
+          })
+        )
+        .next()
+        .isDone();
+    });
   });
 });

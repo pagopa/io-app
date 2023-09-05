@@ -5,14 +5,27 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import { showToast } from "../../../../utils/showToast";
+import { refreshSessionToken } from "../../../fastLogin/store/actions";
 import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
+  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   const navigateToAuthorizationScreen = () => {
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_AUTHORIZATION,
@@ -43,6 +56,7 @@ const createActionsImplementation = (
   };
 
   return {
+    handleSessionExpired,
     navigateToAuthorizationScreen,
     navigateToResultScreen,
     showErrorToast,

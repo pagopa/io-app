@@ -15,12 +15,12 @@ import {
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../../config";
-import { useXStateMachine } from "../../../../../hooks/useXStateMachine";
+import { useXStateMachine } from "../../../../../xstate/hooks/useXStateMachine";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../../store/reducers/authentication";
 import {
   isPagoPATestEnabledSelector,
@@ -50,6 +50,7 @@ type Props = {
 };
 
 const IDPayConfigurationMachineProvider = (props: Props) => {
+  const dispatch = useIODispatch();
   const [machine] = useXStateMachine(createIDPayInitiativeConfigurationMachine);
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
@@ -105,7 +106,7 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
     language
   );
 
-  const actions = createActionsImplementation(navigation);
+  const actions = createActionsImplementation(navigation, dispatch);
 
   const machineService = useInterpret(machine, {
     actions,

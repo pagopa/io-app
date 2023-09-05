@@ -101,9 +101,16 @@ function configurePushNotifications() {
     // Called when a remote or local notification is opened or received
     onNotification: notification =>
       pipe(
-        notification,
-        NotificationPayload.decode,
-        E.mapLeft(trackMessageNotificationParsingFailure),
+        notification.userInteraction,
+        B.fold(
+          () => E.left(undefined),
+          () =>
+            pipe(
+              notification,
+              NotificationPayload.decode,
+              E.mapLeft(trackMessageNotificationParsingFailure)
+            )
+        ),
         O.fromEither,
         O.chain(payload =>
           pipe(
@@ -120,21 +127,26 @@ function configurePushNotifications() {
         ),
         // We just received a push notification about a new message
         O.map(messageId =>
-          pipe(
-            trackMessageNotificationTap(messageId),
-            () => notification.foreground,
-            B.foldW(
-              // The App was closed/in background and has been now opened clicking
-              // on the push notification.
-              // Save the message id of the notification in the store so the App can
-              // navigate to the message detail screen as soon as possible (if
-              // needed after the user login/insert the unlock code)
-              () =>
-                store.dispatch(
-                  updateNotificationsPendingMessage(messageId, false)
-                ),
-              // The App is in foreground so just refresh the messages list
-              () => handleMessageReload()
+          pipe(trackMessageNotificationTap(messageId), trackingResult =>
+            pipe(
+              notification.foreground,
+              B.foldW(
+                // The App was closed/in background and has been now opened clicking
+                // on the push notification.
+                // Save the message id of the notification in the store so the App can
+                // navigate to the message detail screen as soon as possible (if
+                // needed after the user login/insert the unlock code)
+                () =>
+                  store.dispatch(
+                    updateNotificationsPendingMessage({
+                      id: messageId,
+                      foreground: false,
+                      trackEvent: trackingResult === undefined
+                    })
+                  ),
+                // The App is in foreground so just refresh the messages list
+                () => handleMessageReload()
+              )
             )
           )
         ),
