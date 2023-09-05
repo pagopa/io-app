@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View } from "react-native";
 import { Text as NBText } from "native-base";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { Label } from "../../../components/core/typography/Label";
 import GoBackButton from "../../../components/GoBackButton";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";

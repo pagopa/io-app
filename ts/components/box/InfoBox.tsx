@@ -1,7 +1,11 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
-import { IOColors } from "../core/variables/IOColors";
+import {
+  IOColors,
+  IOIconSizeScale,
+  IOIcons,
+  Icon
+} from "@pagopa/io-app-design-system";
 import { HSpacer } from "../core/spacer/Spacer";
 
 type Props = {

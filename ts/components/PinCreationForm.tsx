@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
@@ -9,7 +10,6 @@ import { isDevEnv } from "../utils/environment";
 import { defaultPin } from "../config";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
-import { IOColors } from "./core/variables/IOColors";
 import { Label } from "./core/typography/Label";
 import { H1 } from "./core/typography/H1";
 import { Body } from "./core/typography/Body";

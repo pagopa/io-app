@@ -3,7 +3,7 @@ import { View } from "react-native";
 import * as React from "react";
 import { FC } from "react";
 import { SvgProps } from "react-native-svg";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 import { HSpacer } from "../../../../../../components/core/spacer/Spacer";

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet, TextInput } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
-import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
 
 type Props = {

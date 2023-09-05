@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import {
+  IOColors,
   IOIconSizeScale,
   IOIcons,
   IOPictogramSizeScale,
@@ -10,7 +11,6 @@ import {
   Icon
 } from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
-import { IOColors } from "../components/core/variables/IOColors";
 import { IOStyles } from "./core/variables/IOStyles";
 import SectionPictogram from "./core/pictograms/SectionPictogram";
 

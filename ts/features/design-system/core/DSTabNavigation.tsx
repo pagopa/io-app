@@ -4,13 +4,13 @@
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import { Monospace } from "../../../components/core/typography/Monospace";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";

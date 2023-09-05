@@ -3,10 +3,10 @@ import { FC, useState } from "react";
 import { View, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { getAppVersion } from "../utils/appVersion";
 import { Label } from "../components/core/typography/Label";
 import { Body } from "../components/core/typography/Body";
-import { IOColors } from "../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   versionContainer: {

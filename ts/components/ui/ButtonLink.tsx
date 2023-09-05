@@ -3,7 +3,8 @@ import {
   AnimatedIcon,
   IOIconSizeScale,
   IOIcons,
-  IconClassComponent
+  IconClassComponent,
+  IOColors
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
@@ -29,7 +30,6 @@ import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { HSpacer } from "../core/spacer/Spacer";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors } from "../core/variables/IOColors";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 
 export type ButtonLink = WithTestID<{

@@ -15,9 +15,9 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
-import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOBannerRadius } from "../core/variables/IOShapes";

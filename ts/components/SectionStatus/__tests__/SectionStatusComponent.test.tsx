@@ -2,6 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
@@ -13,7 +14,6 @@ import I18n, { setLocale } from "../../../i18n";
 import { SectionStatusKey } from "../../../store/reducers/backendStatus";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
-import { IOColors } from "../../core/variables/IOColors";
 import SectionStatusComponent from "../index";
 
 jest.mock("../../../utils/url");

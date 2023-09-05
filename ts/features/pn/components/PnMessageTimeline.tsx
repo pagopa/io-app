@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { localeDateFormat } from "../../../utils/locale";

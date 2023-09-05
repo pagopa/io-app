@@ -12,9 +12,9 @@ import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Link } from "../../components/core/typography/Link";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown

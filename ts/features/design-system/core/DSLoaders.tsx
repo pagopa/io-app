@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import I18n from "../../../i18n";

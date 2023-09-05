@@ -1,11 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Badge, Tag } from "@pagopa/io-app-design-system";
+import { Badge, IOColors, Tag } from "@pagopa/io-app-design-system";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { VSpacer, HSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H4 } from "../../../components/core/typography/H4";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CustomBadge from "../../../components/ui/CustomBadge";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";

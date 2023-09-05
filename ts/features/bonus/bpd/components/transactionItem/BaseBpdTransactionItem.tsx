@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedbackProps
 } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { ShadowBox } from "../../screens/details/components/summary/base/ShadowBox";
 

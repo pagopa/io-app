@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";

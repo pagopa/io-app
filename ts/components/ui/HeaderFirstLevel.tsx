@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { IOStyles, IOVisualCostants } from "../core/variables/IOStyles";
 import { NewH3 } from "../core/typography/NewH3";

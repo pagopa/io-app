@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
@@ -10,7 +10,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
 import { Label } from "../../../../../components/core/typography/Label";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
@@ -9,7 +10,6 @@ import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { Label } from "../../core/typography/Label";
 import { Link } from "../../core/typography/Link";
-import { IOColors } from "../../core/variables/IOColors";
 import { IOStyles } from "../../core/variables/IOStyles";
 import EmailCallCTA from "../../screens/EmailCallCTA";
 

@@ -1,5 +1,6 @@
 import {
   ButtonSolid as DSButton,
+  IOColors,
   IOIconSizeScale,
   IOIcons,
   Icon
@@ -22,7 +23,6 @@ import { WithTestID } from "../../types/WithTestID";
 import { HSpacer } from "../core/spacer/Spacer";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors } from "../core/variables/IOColors";
 import {
   IOButtonLegacyStyles,
   IOButtonStyles

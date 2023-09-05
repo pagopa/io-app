@@ -1,9 +1,9 @@
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import variables from "../theme/variables";
-import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";

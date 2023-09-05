@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { Link } from "../../../../../../../components/core/typography/Link";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { useLegacyIOBottomSheetModal } from "../../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../../utils/url";

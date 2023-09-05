@@ -11,11 +11,10 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";

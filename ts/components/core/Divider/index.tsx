@@ -1,7 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOThemeContext, IOTheme } from "@pagopa/io-app-design-system";
-import { IOColors } from "../variables/IOColors";
+import {
+  IOThemeContext,
+  IOTheme,
+  IOColors
+} from "@pagopa/io-app-design-system";
 
 type DividerOrientation = "vertical" | "horizontal";
 

@@ -2,13 +2,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { PrescriptionData } from "../../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../../i18n";
 import CopyButtonComponent from "../../../CopyButtonComponent";
 import { VSpacer } from "../../../core/spacer/Spacer";
 import { Body } from "../../../core/typography/Body";
 import { H3 } from "../../../core/typography/H3";
-import { IOColors } from "../../../core/variables/IOColors";
 import { IOStyles } from "../../../core/variables/IOStyles";
 
 type Props = Readonly<{

@@ -14,11 +14,11 @@ import { Content, Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {

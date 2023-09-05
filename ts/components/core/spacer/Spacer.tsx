@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { hexToRgba, IOColors } from "../variables/IOColors";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import type { IOSpacer } from "../variables/IOSpacing";
 
 export type SpacerOrientation = "vertical" | "horizontal";

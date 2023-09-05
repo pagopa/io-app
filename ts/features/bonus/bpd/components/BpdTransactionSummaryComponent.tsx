@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { InfoBox } from "../../../../components/box/InfoBox";
@@ -8,7 +9,6 @@ import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import Markdown from "../../../../components/ui/Markdown";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import {

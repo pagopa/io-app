@@ -11,6 +11,7 @@ import {
   View
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -38,7 +39,6 @@ import {
 import ROUTES from "../../../navigation/routes";
 import { isStrictNone } from "../../../utils/pot";
 import StatusContent from "../../SectionStatus/StatusContent";
-import { IOColors } from "../../core/variables/IOColors";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";

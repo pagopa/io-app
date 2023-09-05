@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
+import { IOColorGradients } from "@pagopa/io-app-design-system";
 import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -52,7 +53,6 @@ import {
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { canEycaCardBeShown } from "../utils/eyca";
-import { IOColorGradients } from "../../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapStateToProps> &

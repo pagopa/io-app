@@ -1,7 +1,7 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -16,7 +16,6 @@ import { BadgeComponent } from "../../screens/BadgeComponent";
 import customVariables from "../../../theme/variables";
 import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
-import { IOColors } from "../../core/variables/IOColors";
 import { VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 

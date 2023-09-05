@@ -7,8 +7,8 @@ import {
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { IOColors } from "../components/core/variables/IOColors";
 import {
   bpdEnabled,
   bpdOptInPaymentMethodsEnabled,

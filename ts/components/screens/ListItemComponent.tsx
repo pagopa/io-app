@@ -9,14 +9,18 @@ import {
   ViewStyle,
   AccessibilityState
 } from "react-native";
-import { Icon, IOIcons, IOIconSizeScale } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  IOColors,
+  IOIcons,
+  IOIconSizeScale
+} from "@pagopa/io-app-design-system";
 import Switch from "../../components/ui/Switch";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
 import { IOBadge } from "../core/IOBadge";
 import { HSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
-import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "./BadgeComponent";
 

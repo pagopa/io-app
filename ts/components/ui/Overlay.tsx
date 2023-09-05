@@ -1,6 +1,6 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors } from "../core/variables/IOColors";
 
 const DEFAULT_OVERLAY_OPACITY = 1;
 const DEFAULT_BACKGROUND_COLOR = IOColors.white;

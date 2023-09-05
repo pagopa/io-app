@@ -1,6 +1,7 @@
 import { capitalize } from "lodash";
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
@@ -9,7 +10,6 @@ import {
   MessagePaymentExpirationInfo
 } from "../../../utils/messages";
 import { UIMessageDetails } from "../../../store/reducers/entities/messages/types";
-import { IOColors } from "../../core/variables/IOColors";
 import { localeDateFormat } from "../../../utils/locale";
 import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import { IOStyles } from "../../core/variables/IOStyles";

@@ -1,7 +1,7 @@
 import React from "react";
 import { ColorValue } from "react-native";
-import { IOColors } from "../variables/IOColors";
 
+import { IOColors } from "@pagopa/io-app-design-system";
 import PictogramAirBaloon from "./svg/PictogramAirBaloon";
 import PictogramHeart from "./svg/PictogramHeart";
 import PictogramCompleted from "./svg/PictogramCompleted";

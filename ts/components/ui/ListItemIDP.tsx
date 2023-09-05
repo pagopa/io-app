@@ -17,11 +17,11 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { toAndroidCacheTimestamp } from "../../utils/dates";
 import { makeFontStyleObject } from "../core/fonts";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors } from "../core/variables/IOColors";
 import { IOListItemIDPRadius } from "../core/variables/IOShapes";
 import {
   IOListItemIDPHSpacing,

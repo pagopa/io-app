@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
-
+import { IOColors } from "@pagopa/io-app-design-system";
 import { LabelledItem } from "../../../components/LabelledItem";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { H2 } from "../../../components/core/typography/H2";
 import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";

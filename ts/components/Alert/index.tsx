@@ -1,5 +1,8 @@
 import {
   Alert as DSAlert,
+  IOColors,
+  IOColorsStatusBackground,
+  IOColorsStatusForeground,
   IOIconSizeScale,
   IOIcons,
   Icon
@@ -28,11 +31,6 @@ import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { Label } from "../core/typography/Label";
 import { NewH4 } from "../core/typography/NewH4";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import {
-  IOColors,
-  IOColorsStatusBackground,
-  IOColorsStatusForeground
-} from "../core/variables/IOColors";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
 import { IOStyles } from "../core/variables/IOStyles";

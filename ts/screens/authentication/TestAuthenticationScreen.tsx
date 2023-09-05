@@ -6,6 +6,7 @@ import { SafeAreaView, View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { NavigationEvents } from "@react-navigation/compat";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -21,7 +22,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useIOSelector } from "../../store/hooks";
 import { testLoginSelector } from "../../store/reducers/testLogin";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { Alert } from "../../components/Alert";
 import {
   testLoginCleanUp,

@@ -6,10 +6,9 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, hexToRgba } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { hexToRgba, IOColors } from "../../core/variables/IOColors";
 import { IOBadge } from "../../core/IOBadge";
 import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";

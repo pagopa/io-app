@@ -14,9 +14,8 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { Icon, IOIcons } from "@pagopa/io-app-design-system";
+import { Icon, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../core/variables/IOStyles";
-import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";

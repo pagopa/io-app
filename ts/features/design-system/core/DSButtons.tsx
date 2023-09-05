@@ -1,11 +1,11 @@
 import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
 import { ButtonSolid } from "../../../components/ui/ButtonSolid";
 import { ButtonOutline } from "../../../components/ui/ButtonOutline";
 import { H2 } from "../../../components/core/typography/H2";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";

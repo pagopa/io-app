@@ -1,4 +1,10 @@
-import { IOIcons, Icon, ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  ListItemSwitch,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
   GestureResponderEvent,
@@ -14,7 +20,6 @@ import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewLink } from "../core/typography/NewLink";
-import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,
