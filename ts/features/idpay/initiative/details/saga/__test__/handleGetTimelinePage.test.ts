@@ -1,15 +1,15 @@
 import * as E from "fp-ts/lib/Either";
-import { expectSaga } from "redux-saga-test-plan";
+import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
 import {
   OperationTypeEnum,
   StatusEnum
 } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
-import { appReducer } from "../../../../../../store/reducers";
+import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 
 const mockResponseSuccess: TimelineDTO = {
   // mock TimelineDTO
@@ -33,57 +33,74 @@ const mockResponseSuccess: TimelineDTO = {
   totalElements: 1,
   totalPages: 1
 };
-const mockFailure: ErrorDTO = {
-  code: 404,
-  message: "message"
-};
-const mockToken = "mock";
-const mockLanguage = PreferredLanguageEnum.it_IT;
 
-describe("Test IDPay timeline pagination saga", () => {
-  it("should call the success handler on success", async () => {
-    const getTimeline = jest.fn();
-    getTimeline.mockImplementation(() =>
-      E.right({ status: 200, value: mockResponseSuccess })
-    );
-    await expectSaga(
-      handleGetTimelinePage,
-      getTimeline,
-      mockToken,
-      mockLanguage,
-      {
-        initiativeId: "123",
-        page: 0
-      }
-    )
-      .withReducer(appReducer)
-      .put(
-        idpayTimelinePageGet.success({ timeline: mockResponseSuccess, page: 0 })
+describe("idpayTimelinePageGet", () => {
+  const initiativeId = "abcdef";
+
+  describe("when the response is successful", () => {
+    it(`should put ${getType(
+      idpayTimelinePageGet.success
+    )} with the timeline and page number`, () => {
+      const getTimeline = jest.fn();
+      testSaga(
+        handleGetTimelinePage,
+        getTimeline,
+        "bpdToken",
+        PreferredLanguageEnum.it_IT,
+        idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize: 10 })
       )
-      .run();
+        .next()
+        .call(
+          withRefreshApiCall,
+          getTimeline({ initiativeId, page: 1, size: 10 }),
+          idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize: 10 })
+        )
+        .next(E.right({ status: 200, value: mockResponseSuccess }))
+        .put(
+          idpayTimelinePageGet.success({
+            timeline: mockResponseSuccess,
+            page: mockResponseSuccess.pageNo
+          })
+        )
+        .next()
+        .isDone();
+    });
   });
-  it("should call the failure handler on failure", async () => {
-    const getTimeline = jest.fn();
-    getTimeline.mockImplementation(() =>
-      E.right({ status: 401, value: mockFailure })
-    );
-    await expectSaga(
-      handleGetTimelinePage,
-      getTimeline,
-      mockToken,
-      mockLanguage,
-      {
-        initiativeId: "123",
-        page: 5
-      }
-    )
-      .withReducer(appReducer)
-      .put(
-        idpayTimelinePageGet.failure({
-          kind: "generic",
-          value: new Error("401")
-        })
+
+  describe("when the response is an Error", () => {
+    const statusCode = 500;
+
+    it(`should put ${getType(
+      idpayTimelinePageGet.failure
+    )} with the error`, () => {
+      const getTimeline = jest.fn();
+      testSaga(
+        handleGetTimelinePage,
+        getTimeline,
+        "bpdToken",
+        PreferredLanguageEnum.it_IT,
+        idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize: 10 })
       )
-      .run();
+        .next()
+        .call(
+          withRefreshApiCall,
+          getTimeline({ initiativeId, page: 1, size: 10 }),
+          idpayTimelinePageGet.request({ initiativeId, page: 1, pageSize: 10 })
+        )
+        .next(
+          E.right({
+            status: statusCode,
+            value: { code: statusCode, message: "error" }
+          })
+        )
+        .put(
+          idpayTimelinePageGet.failure({
+            kind: "generic",
+            value: new Error(`response status code ${statusCode}`)
+          })
+        )
+        .next()
+        .isDone();
+    });
   });
 });

@@ -30,6 +30,8 @@ import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/
 import { trackSpidLoginError } from "../../utils/analytics";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -150,6 +152,7 @@ const CieWebView = (props: Props) => {
 
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
+  const idp = useIOSelector(selectedIdentityProviderSelector);
 
   const webView = createRef<WebView>();
   const { onSuccess } = props;
@@ -199,6 +202,12 @@ const CieWebView = (props: Props) => {
       setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }
+
+    if (cieFlowForDevServerEnabled && url.indexOf("token=") !== -1) {
+      setInternalState(state => generateFoundAuthUrlState(url, state));
+      return false;
+    }
+
     return true;
   };
 
@@ -245,7 +254,8 @@ const CieWebView = (props: Props) => {
             maybeKeyTag.value,
             mixpanelEnabled,
             isFastLogin,
-            dispatch
+            dispatch,
+            idp?.id
           )
       ),
       TE.fold(
@@ -286,7 +296,7 @@ const CieWebView = (props: Props) => {
 
   return (
     <WithLoading
-      isLoading={true}
+      isLoading={!cieFlowForDevServerEnabled}
       loadingOpacity={1.0}
       loadingCaption={I18n.t("global.genericWaiting")}
       onCancel={props.onClose}

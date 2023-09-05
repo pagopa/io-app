@@ -22,7 +22,7 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
 
   const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
-  const token = idPayTestToken ?? bpdToken;
+  const bearerToken = idPayTestToken ?? bpdToken;
 
   const language = yield* select(preferredLanguageSelector);
 
@@ -32,14 +32,24 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
-  const client = createIDPayClient(baseUrl);
+  const idPayClient = createIDPayClient(baseUrl);
 
-  yield* fork(watchIDPayWalletSaga, client, token, preferredLanguage);
   yield* fork(
-    watchIDPayInitiativeDetailsSaga,
-    client,
-    token,
+    watchIDPayWalletSaga,
+    idPayClient,
+    bearerToken,
     preferredLanguage
   );
-  yield* fork(watchIDPayTimelineSaga, client, token, preferredLanguage);
+  yield* fork(
+    watchIDPayInitiativeDetailsSaga,
+    idPayClient,
+    bearerToken,
+    preferredLanguage
+  );
+  yield* fork(
+    watchIDPayTimelineSaga,
+    idPayClient,
+    bearerToken,
+    preferredLanguage
+  );
 }
