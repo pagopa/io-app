@@ -770,6 +770,11 @@ email:
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
       validateButton: Valida email
+    editMail:
+      title: Modifica la tua email
+      subtitleStart: Il tuo indirizzo email 
+      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      editButton: Modifica email
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can
