@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -46,6 +46,7 @@ export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [authority, setAuthority] = React.useState<string | undefined>();
   const serviceId = useSelector(machine, selectServiceId);
+  const [paddingBottomSheet, setPaddingBottomSheet] = useState(0);
 
   const serviceName = pipe(
     useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none,
@@ -79,6 +80,8 @@ export const PDNDPrerequisitesScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
+            onLayout: evt =>
+              setPaddingBottomSheet(evt.nativeEvent.layout.height),
             onPress: () => dismiss(),
             block: true,
             bordered: false,
@@ -90,7 +93,7 @@ export const PDNDPrerequisitesScreen = () => {
         />
       )
     },
-    130
+    130 + paddingBottomSheet
   );
 
   const pdndCriteria = useSelector(machine, pdndCriteriaSelector);
