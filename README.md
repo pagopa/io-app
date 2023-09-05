@@ -576,4 +576,4 @@ In the meantime, there are two complementary and simultaneous activities going o
 
 You can keep track of the latest developments by filtering all the PRs according to the type of activity:
 
-[![NativeBase's dismissal label](https://img.shields.io/github/labels/pagopa/io-app/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC)](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22NativeBase+dismissal+%F0%9F%A5%B7%F0%9F%8F%BC%22) [![Design System's label](https://img.shields.io/github/labels/pagopa/io-app/Design%20System)](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22Design+System%22)
+[![NativeBase's dismissal label](https://img.shields.io/github/labels/pagopa/io-app/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC)](https://github.com/pagopa/io-app/labels/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC) [![Design System's label](https://img.shields.io/github/labels/pagopa/io-app/Design%20System)](https://github.com/pagopa/io-app/labels/Design%20System)
