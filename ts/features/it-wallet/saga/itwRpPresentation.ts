@@ -5,7 +5,6 @@ import { SignJWT } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
 import { WalletInstanceAttestation } from "@pagopa/io-react-native-wallet";
-import uuid from "react-native-uuid";
 import {
   itwRpInitializationEntityValueSelector,
   itwRpInitializationRequestObjectValueSelector
@@ -48,12 +47,15 @@ export function* handleItwRpPresentationSaga(
     if (O.isNone(requestObject) || O.isNone(pidToken) || O.isNone(wia)) {
       throw new Error("Request object is not defined");
     } else {
-      const decodedWIA = yield* call(
+      const decodedWia = yield* call(
         WalletInstanceAttestation.decode,
         wia.value
       );
 
-      const walletInstanceId = uuid.v4().toString(); // TODO: This is currenly a random ID, but it should be the real wallet instance ID
+      const walletInstanceId = new URL(
+        "instance/" + decodedWia.payload.sub,
+        decodedWia.payload.iss
+      ).href;
 
       const { vp_token: unsignedVpToken, presentation_submission } =
         yield* call(
@@ -61,7 +63,7 @@ export function* handleItwRpPresentationSaga(
           requestObject.value,
           walletInstanceId,
           [pidToken.value.credential, claims],
-          decodedWIA.payload.cnf.jwk.kid
+          decodedWia.payload.cnf.jwk.kid
         );
 
       const signature = yield* call(sign, unsignedVpToken, ITW_WIA_KEY_TAG);
