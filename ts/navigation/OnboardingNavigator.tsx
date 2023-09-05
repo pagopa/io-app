@@ -51,7 +51,7 @@ const navigator = () => (
       component={FingerprintScreen}
     />
     <Stack.Screen
-      name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
+      name={ROUTES.NEW_ONBOARDING_INSERT_EMAIL_SCREEN}
       component={NewOnboardingEmailInsertScreen}
     />
     <Stack.Screen

@@ -14,7 +14,7 @@ import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
 import { IOColors, Icon, LabelSmall } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
-import { Alert as Alert1 } from "../../components/Alert";
+import { Alert as AlertComponent } from "../../components/Alert";
 import { H1 } from "../../components/core/typography/H1";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -26,7 +26,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import { profileLoadRequest } from "../../store/actions/profile";
+import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   profileEmailSelector,
@@ -41,7 +41,6 @@ import { emailInsert } from "../../store/actions/onboarding";
 
 /**
  * TODO 1. add button with spinner
- * TODO 2. fix logic with dispatch
  *
  */
 
@@ -89,6 +88,15 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
 
   const acknowledgeEmailInsert = useCallback(
     () => dispatch(emailInsert()),
+    [dispatch]
+  );
+  const updateEmail = useCallback(
+    (email: EmailString) =>
+      dispatch(
+        profileUpsert.request({
+          email
+        })
+      ),
     [dispatch]
   );
 
@@ -145,6 +153,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
         ]
       );
     }
+    return showAlertExistsEmail;
   };
 
   const navigateToEmailReadScreen = useCallback(() => {
@@ -154,10 +163,13 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    if (isValidEmail()) {
-      // The profile is reloaded to check if the user email
-      // has been updated within another session
-      isExistingEmail();
+    if (!isExistingEmail()) {
+      pipe(
+        email,
+        O.map(e => {
+          updateEmail(e as EmailString);
+        })
+      );
       acknowledgeEmailInsert();
       reloadProfile();
       navigateToEmailReadScreen();
@@ -202,7 +214,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
               {!isCduEmail && (
                 <>
                   <VSpacer size={24} />
-                  <Alert1
+                  <AlertComponent
                     viewRef={viewRef}
                     variant="info"
                     content={I18n.t("email.newinsert.alert.title", {
