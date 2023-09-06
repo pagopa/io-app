@@ -41,11 +41,10 @@ export function* handleItwRpInitializationSaga(
       wia.payload
     );
     const RP = new RelyingPartySolution(clientId, wia.payload);
-    const unsignedDPoP = yield* call(
-      RP.getUnsignedWalletInstanceDPoP,
+    const unsignedDPoP = yield* apply(RP, RP.getUnsignedWalletInstanceDPoP, [
       decodedWIA.payload.cnf.jwk,
       authReqUrl
-    );
+    ]);
     const signedDPoP = yield* call(sign, unsignedDPoP, ITW_WIA_KEY_TAG);
     const entity = yield* apply(RP, RP.getEntityConfiguration, []);
     const signedPayload = yield* call(
