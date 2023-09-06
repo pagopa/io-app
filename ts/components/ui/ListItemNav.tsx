@@ -4,7 +4,9 @@ import {
   IOIcons,
   Icon,
   hexToRgba,
-  useIOTheme
+  useIOTheme,
+  IOScaleValues,
+  IOSpringValues
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
@@ -29,7 +31,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
 import { Body } from "../core/typography/Body";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import {
   IOListItemStyles,
   IOListItemVisualParams,

@@ -6,6 +6,8 @@ import {
   IOIconSizeScale,
   IOIcons,
   Icon,
+  IOScaleValues,
+  IOSpringValues,
   HSpacer,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -31,7 +33,6 @@ import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
 import { Label } from "../core/typography/Label";
 import { NewH4 } from "../core/typography/NewH4";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
 import { IOStyles } from "../core/variables/IOStyles";

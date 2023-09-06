@@ -1,5 +1,6 @@
 import {
   AnimatedCheckbox as DSAnimatedCheckbox,
+  IOSpringValues,
   IOColors
 } from "@pagopa/io-app-design-system";
 import React, { useEffect } from "react";
@@ -14,12 +15,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { IOSpringValues } from "../../variables/IOAnimations";
 import {
   IOSelectionTickLegacyVisualParams,
   IOSelectionTickVisualParams
 } from "../../variables/IOStyles";
 import { AnimatedTick } from "../AnimatedTick";
+
 type Props = {
   checked?: boolean;
 };

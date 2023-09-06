@@ -4,6 +4,8 @@ import {
   IOIconSizeScale,
   IOIcons,
   Icon,
+  IOScaleValues,
+  IOSpringValues,
   HSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -22,7 +24,6 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { BaseTypography } from "../core/typography/BaseTypography";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import {
   IOButtonLegacyStyles,
   IOButtonStyles

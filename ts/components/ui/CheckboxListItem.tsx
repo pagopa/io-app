@@ -6,7 +6,9 @@ import {
   hexToRgba,
   useIOTheme,
   HSpacer,
-  VSpacer
+  VSpacer,
+  IOScaleValues,
+  IOSpringValues
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
@@ -26,7 +28,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { makeFontStyleObject } from "../core/fonts";
 import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,

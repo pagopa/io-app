@@ -14,11 +14,12 @@ import {
   IOIcons,
   Icon,
   hexToRgba,
-  HSpacer
+  HSpacer,
+  IOScaleValues,
+  IOSpringValues
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { LabelHeader } from "../core/typography/LabelHeader";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import { useSpringPressProgressValue } from "./utils/hooks/useSpringPressProgressValue";
 
 type ColorMode = "light" | "dark";

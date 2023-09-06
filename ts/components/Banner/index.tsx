@@ -20,7 +20,9 @@ import {
   VSpacer,
   IOPictogramsBleed,
   IOPictogramSizeScale,
-  Pictogram
+  Pictogram,
+  IOScaleValues,
+  IOSpringValues
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
@@ -35,7 +37,6 @@ import ButtonLink from "../ui/ButtonLink";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import IconButton from "../ui/IconButton";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 
 /* Styles */
 

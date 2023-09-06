@@ -4,11 +4,13 @@ import {
   interpolateColor,
   useAnimatedStyle
 } from "react-native-reanimated";
-import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
 import {
+  IOColors,
+  hexToRgba,
+  useIOTheme,
   IOScaleValues,
   IOSpringValues
-} from "../../../core/variables/IOAnimations";
+} from "@pagopa/io-app-design-system";
 import { useSpringPressProgressValue } from "./useSpringPressProgressValue";
 
 export const useListItemBaseSpringAnimation = () => {
