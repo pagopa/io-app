@@ -143,7 +143,7 @@ const ItwRpInitScreen = () => {
               label={I18n.t("features.itWallet.generic.rp")}
               icon="institution"
               value={organization_name}
-              accessibilityLabel="test"
+              accessibilityLabel={I18n.t("features.itWallet.generic.rp")}
               action={
                 <IOBadge
                   small
@@ -162,6 +162,7 @@ const ItwRpInitScreen = () => {
                 "features.itWallet.presentation.pidAttributesScreen.requiredData.subTitle"
               )}
               hideIcon
+              useExtendedSubTitle={true}
               hideSeparator
             />
             <ItwPidClaimsList
@@ -222,8 +223,8 @@ const ItwRpInitScreen = () => {
               }
             )}
           />
-          <VSpacer />
         </ScreenContent>
+        <VSpacer size={48} />
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={notNowButtonProps}
