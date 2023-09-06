@@ -23,7 +23,6 @@ import {
   withPaymentFeatureSelector,
   getWalletsById,
   pagoPaCreditCardWalletV1Selector,
-  satispayListSelector,
   updatingFavouriteWalletSelector
 } from "../wallets";
 import { GlobalState } from "../../types";
@@ -151,16 +150,6 @@ describe("walletV2 selectors", () => {
     expect(pot.getOrElse(potBPay, undefined)).toBeDefined();
     if (pot.isSome(potBPay)) {
       expect(potBPay.value.length).toEqual(1);
-    }
-  });
-  it("should filter satispay and return one", () => {
-    const maybeWallets = PatchedWalletV2ListResponse.decode(walletsV2_3);
-    const globalState = mockWalletState(maybeWallets);
-    const potSatispay = satispayListSelector(globalState);
-    expect(pot.isSome(potSatispay)).toBeTruthy();
-    expect(pot.getOrElse(potSatispay, undefined)).toBeDefined();
-    if (pot.isSome(potSatispay)) {
-      expect(potSatispay.value.length).toEqual(1);
     }
   });
 });

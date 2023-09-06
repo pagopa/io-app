@@ -13,8 +13,7 @@ import {
   CreditCardPaymentMethod,
   CreditCardType,
   PatchedWalletV2ListResponse,
-  PaymentMethod,
-  SatispayPaymentMethod
+  PaymentMethod
 } from "../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
@@ -55,26 +54,6 @@ describe("PagoPaPaymentCapability", () => {
     );
 
     expect(testComponent.getByTestId("PaymentStatusSwitch")).toBeTruthy();
-  });
-
-  it("should render a badge with the text Arriving if passed a payment method of kind Satispay", () => {
-    const aSatispay = {} as SatispayPaymentMethod;
-    const aPaymentMethod = {
-      ...aSatispay,
-      kind: "Satispay",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
-    } as PaymentMethod;
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    const component = renderScreenFakeNavRedux<GlobalState>(
-      () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    );
-    expect(component.getByText("Arriving")).toBeTruthy();
   });
 
   it("should render a badge with the text Incompatible if passed a payment method of kind Bancomat", () => {

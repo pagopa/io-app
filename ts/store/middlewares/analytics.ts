@@ -414,8 +414,6 @@ export const actionTracking =
       // API token
       void trackAction(mixpanel)(action);
       void trackBpdAction(mixpanel)(action);
-      // TODO: activate simultaneously with the activation of satispay
-      // void trackSatispayAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);

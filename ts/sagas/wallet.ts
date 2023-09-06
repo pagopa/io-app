@@ -66,16 +66,6 @@ import {
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
-import {
-  handleAddUserSatispayToWallet,
-  handleSearchUserSatispay
-} from "../features/wallet/onboarding/satispay/saga/networking";
-import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
-import {
-  addSatispayToWallet,
-  searchUserSatispay,
-  walletAddSatispayStart
-} from "../features/wallet/onboarding/satispay/store/actions";
 import NavigationService from "../navigation/NavigationService";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -821,28 +811,6 @@ export function* watchWalletSaga(
 
     // watch for add BPay to Wallet workflow
     yield* takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
-
-    // watch for add Satispay to Wallet workflow
-    yield* takeLatest(
-      walletAddSatispayStart,
-      addSatispayToWalletAndActivateBpd
-    );
-
-    // watch for load Satispay request
-    yield* takeLatest(
-      searchUserSatispay.request,
-      handleSearchUserSatispay,
-      paymentManagerClient.searchSatispay,
-      pmSessionManager
-    );
-
-    // watch for add Satispay to the user's wallet
-    yield* takeLatest(
-      addSatispayToWallet.request,
-      handleAddUserSatispayToWallet,
-      paymentManagerClient.addSatispayToWallet,
-      pmSessionManager
-    );
 
     // watch for BancomatPay search request
     yield* takeLatest(

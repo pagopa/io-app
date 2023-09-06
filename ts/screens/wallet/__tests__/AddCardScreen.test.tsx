@@ -139,7 +139,6 @@ describe("getPaymentMethods", () => {
   const props = {
     navigateBack: jest.fn(),
     startBPayOnboarding: jest.fn(),
-    startSatispayOnboarding: jest.fn(),
     startPaypalOnboarding: jest.fn(),
     startAddBancomat: jest.fn(),
     navigateToAddCreditCard: jest.fn(),
@@ -183,12 +182,6 @@ describe("getPaymentMethods", () => {
     });
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.paypal.name"))
-    ).toEqual("notImplemented");
-  });
-
-  it("satispay should be always notImplemented", () => {
-    expect(
-      getMethodStatus(methods, I18n.t("wallet.methods.satispay.name"))
     ).toEqual("notImplemented");
   });
 
