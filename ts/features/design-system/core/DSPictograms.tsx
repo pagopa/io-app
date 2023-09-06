@@ -5,13 +5,7 @@ import {
   assetItemGutter
 } from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
-import {
-  Pictogram,
-  IOPictograms,
-  PictogramSection,
-  IOSectionPictograms,
-  IOSectionPictogramType
-} from "../../../components/core/pictograms";
+import { Pictogram, IOPictograms } from "../../../components/core/pictograms";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
@@ -37,26 +31,6 @@ export const DSPictograms = () => (
           name={pictogramItemName}
           image={
             <Pictogram name={pictogramItemName as IOPictograms} size="100%" />
-          }
-        />
-      ))}
-    </View>
-
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-      Sections
-    </H2>
-    <View style={styles.itemsWrapper}>
-      {Object.entries(IOSectionPictograms).map(([pictogramItemName]) => (
-        <DSAssetViewerBox
-          colorMode="dark"
-          size="small"
-          key={pictogramItemName}
-          name={pictogramItemName}
-          image={
-            <PictogramSection
-              name={pictogramItemName as IOSectionPictogramType}
-              size="100%"
-            />
           }
         />
       ))}
