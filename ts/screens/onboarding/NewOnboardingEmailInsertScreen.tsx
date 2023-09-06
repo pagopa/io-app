@@ -7,7 +7,7 @@ import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
@@ -38,11 +38,6 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ROUTES from "../../navigation/routes";
 import { emailInsert } from "../../store/actions/onboarding";
-
-/**
- * TODO 1. add button with spinner
- *
- */
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
@@ -233,54 +228,53 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
                 </>
               )}
               <VSpacer size={24} />
-              <Form testID="form-test">
-                <View>
-                  <LabelledItem
-                    label={I18n.t("email.newinsert.label")}
-                    icon="email"
-                    isValid={isValidEmail()}
-                    overrideBorderColor={
-                      isSameEmailToChange() ? IOColors.red : undefined
-                    }
-                    inputProps={{
-                      returnKeyType: "done",
-                      onSubmitEditing: continueOnPress,
-                      autoCapitalize: "none",
-                      keyboardType: "email-address",
-                      defaultValue: isCduEmail
-                        ? pipe(
-                            email,
-                            O.getOrElse(() => EMPTY_EMAIL)
-                          )
-                        : EMPTY_EMAIL,
-                      onChangeText: handleOnChangeEmailText
+
+              <View>
+                <LabelledItem
+                  label={I18n.t("email.newinsert.label")}
+                  icon="email"
+                  isValid={isValidEmail()}
+                  overrideBorderColor={
+                    isSameEmailToChange() ? IOColors.red : undefined
+                  }
+                  inputProps={{
+                    returnKeyType: "done",
+                    onSubmitEditing: continueOnPress,
+                    autoCapitalize: "none",
+                    keyboardType: "email-address",
+                    defaultValue: isCduEmail
+                      ? pipe(
+                          email,
+                          O.getOrElse(() => EMPTY_EMAIL)
+                        )
+                      : EMPTY_EMAIL,
+                    onChangeText: handleOnChangeEmailText
+                  }}
+                  testID="TextField"
+                />
+                {isSameEmailToChange() && (
+                  <View
+                    testID="error-label"
+                    style={{
+                      position: "absolute",
+                      bottom: -25,
+                      left: 2,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center"
                     }}
-                    testID="input-test"
-                  />
-                  {isSameEmailToChange() && (
-                    <View
-                      testID="error-label"
-                      style={{
-                        position: "absolute",
-                        bottom: -25,
-                        left: 2,
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center"
-                      }}
-                      accessibilityElementsHidden={true}
-                      importantForAccessibility="no-hide-descendants"
-                    >
-                      <View style={{ marginRight: 6 }}>
-                        <Icon size={14} name="notice" color="red" />
-                      </View>
-                      <LabelSmall weight="Regular" color="red">
-                        {I18n.t("email.newinsert.alert.description")}
-                      </LabelSmall>
+                    accessibilityElementsHidden={true}
+                    importantForAccessibility="no-hide-descendants"
+                  >
+                    <View style={{ marginRight: 6 }}>
+                      <Icon size={14} name="notice" color="red" />
                     </View>
-                  )}
-                </View>
-              </Form>
+                    <LabelSmall weight="Regular" color="red">
+                      {I18n.t("email.newinsert.alert.description")}
+                    </LabelSmall>
+                  </View>
+                )}
+              </View>
             </View>
           </Content>
           {withKeyboard(renderFooterButtons())}
