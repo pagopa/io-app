@@ -1,4 +1,7 @@
-import { CheckboxLabel as DSCheckboxLabel } from "@pagopa/io-app-design-system";
+import {
+  CheckboxLabel as DSCheckboxLabel,
+  IOColors
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -7,7 +10,6 @@ import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../../fonts";
 import { HSpacer } from "../../spacer/Spacer";
-import { IOColors } from "../../variables/IOColors";
 import { IOStyles } from "../../variables/IOStyles";
 import { AnimatedCheckbox } from "./AnimatedCheckbox";
 type Props = {

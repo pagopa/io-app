@@ -1,5 +1,5 @@
 import React from "react";
-import { IOColors } from "../variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 
 import { IOPictogramSizeScale } from "./Pictogram";
 // Added these verbose names to avoid chaos and misunderstandings

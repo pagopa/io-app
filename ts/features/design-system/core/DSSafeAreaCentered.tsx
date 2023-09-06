@@ -2,10 +2,7 @@ import * as React from "react";
 import { Text, View, SafeAreaView, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import {
