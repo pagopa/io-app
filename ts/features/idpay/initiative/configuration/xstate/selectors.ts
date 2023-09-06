@@ -3,7 +3,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
-import { LOADING_TAG } from "../../../../../utils/xstate";
+import { LOADING_TAG } from "../../../../../xstate/utils";
 import { ConfigurationMode } from "./context";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";
 
