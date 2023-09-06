@@ -5,7 +5,8 @@ import {
   IOColors,
   Tag,
   VSpacer,
-  HSpacer
+  HSpacer,
+  IOTagRadius
 } from "@pagopa/io-app-design-system";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { H2 } from "../../../components/core/typography/H2";
@@ -15,7 +16,6 @@ import CustomBadge from "../../../components/ui/CustomBadge";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { IOTagRadius } from "../../../components/core/variables/IOShapes";
 
 const styles = StyleSheet.create({
   fakeNavItem: {

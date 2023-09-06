@@ -22,12 +22,12 @@ import {
   IOPictogramSizeScale,
   Pictogram,
   IOScaleValues,
-  IOSpringValues
+  IOSpringValues,
+  IOBannerRadius
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
 import { IOStyles } from "../core/variables/IOStyles";
-import { IOBannerRadius } from "../core/variables/IOShapes";
 import {
   IOBannerBigSpacing,
   IOBannerSmallHSpacing,

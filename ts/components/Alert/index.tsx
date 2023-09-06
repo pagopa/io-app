@@ -9,7 +9,9 @@ import {
   IOScaleValues,
   IOSpringValues,
   HSpacer,
-  VSpacer
+  VSpacer,
+  IOAlertRadius,
+  IOAlertSpacing
 } from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import {
@@ -33,8 +35,6 @@ import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
 import { Label } from "../core/typography/Label";
 import { NewH4 } from "../core/typography/NewH4";
-import { IOAlertRadius } from "../core/variables/IOShapes";
-import { IOAlertSpacing } from "../core/variables/IOSpacing";
 import { IOStyles } from "../core/variables/IOStyles";
 const iconSize: IOIconSizeScale = 24;
 
