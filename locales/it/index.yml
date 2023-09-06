@@ -3367,8 +3367,7 @@ features:
         label: "Resetta"
         bottomSheet: 
           title: "Vuoi resettare IT Wallet?"
-          body: "Perderai l’Identità Digitale e tornerai allo stato iniziale disattivando
-        IT Wallet. Potrai riattivarlo in un secondo momento."
+          body: "Perderai l’Identità Digitale e tornerai allo stato iniziale disattivando IT Wallet. Potrai riattivarlo in un secondo momento."
           confirm: "Conferma reset"
           cancel: "Annulla"
     infoAuthScreen:
@@ -3383,7 +3382,20 @@ features:
       errors:
         nfc:
           title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
-          body: "Per proseguire è necessaria la funzione NFC del dispositivo." 
+          body: "Per proseguire è necessaria la funzione NFC del dispositivo."
+    featuresInfoScreen:
+      title: "Come vuoi attivare l'IT Wallet?"
+      list:
+        allFeaturesSection: "Metodo consigliato"
+        mainFeaturesSection: "Altre modalità"
+        incomingFeature: "In arrivo"
+        cie: "Carta d'Identità Elettronica"
+        cieSubTitle: "Usa la carta e il suo PIN a 8 cifre"
+        spid: "SPID"
+        spidSubTitle: "Usa credenziali e app (o SMS)"
+        cieId: "CieID"
+        cieIdSubTitle: "Usa credenziali e app (o SMS)"
+      compareFeatures: "Qual è la differenza?"
     issuing:
       title: "Attivazione IT Wallet"
       infoConsent:
