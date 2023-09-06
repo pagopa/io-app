@@ -1,11 +1,11 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Pictogram, IOPictograms } from "@pagopa/io-app-design-system";
 import {
   DSAssetViewerBox,
   assetItemGutter
 } from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
-import { Pictogram, IOPictograms } from "../../../components/core/pictograms";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({

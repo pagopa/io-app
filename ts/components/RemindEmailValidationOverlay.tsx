@@ -16,7 +16,13 @@ import {
   Platform
 } from "react-native";
 import { connect } from "react-redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  Pictogram,
+  IOPictograms,
+  IOPictogramSizeScale,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -52,11 +58,6 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
-import {
-  Pictogram,
-  IOPictograms,
-  IOPictogramSizeScale
-} from "./core/pictograms/Pictogram";
 import IconButton from "./ui/IconButton";
 
 type OwnProp = {

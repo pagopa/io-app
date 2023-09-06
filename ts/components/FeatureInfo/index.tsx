@@ -5,13 +5,11 @@ import {
   IOIcons,
   IOIconSizeScale,
   HSpacer,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import {
+  VSpacer,
   Pictogram,
   IOPictograms,
   IOPictogramSizeScale
-} from "../core/pictograms";
+} from "@pagopa/io-app-design-system";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";
 import { NewLink } from "../core/typography/NewLink";

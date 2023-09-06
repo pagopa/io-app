@@ -6,14 +6,13 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
-import { Pictogram } from "../../../../../components/core/pictograms";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";

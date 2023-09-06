@@ -1,7 +1,7 @@
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View, StyleSheet } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -12,7 +12,6 @@ import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { isUpsertingSelector } from "../xstate/selectors";
 import themeVariables from "../../../../theme/variables";
-import { Pictogram } from "../../../../components/core/pictograms";
 
 const CompletionScreen = () => {
   const onboardingMachineService = useOnboardingMachineService();

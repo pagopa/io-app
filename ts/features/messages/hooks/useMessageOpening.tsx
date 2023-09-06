@@ -5,7 +5,7 @@ import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer, Pictogram } from "@pagopa/io-app-design-system";
 import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
@@ -20,7 +20,6 @@ import { messagePreconditionSelector } from "../../../store/reducers/entities/me
 import { getPaginatedMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import MessageMarkdown from "../../../components/messages/MessageDetail/MessageMarkdown";
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
-import { Pictogram } from "../../../components/core/pictograms";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { H2 } from "../../../components/core/typography/H2";

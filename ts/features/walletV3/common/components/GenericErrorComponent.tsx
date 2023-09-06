@@ -6,11 +6,7 @@ import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import {
-  IOPictograms,
-  Pictogram
-} from "../../../../components/core/pictograms";
+import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { H2 } from "../../../../components/core/typography/H2";
