@@ -118,8 +118,6 @@ const mapVariantStates: Record<NonNullable<Alert["variant"]>, VariantStates> = {
  * otherwise it returns the legacy component.
  * @param {Alert} props The component props.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the Alert of the @pagopa/io-app-design-system library.
- *
  */
 export const Alert = ({
   viewRef,

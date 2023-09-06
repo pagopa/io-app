@@ -64,8 +64,6 @@ const styles = StyleSheet.create({
  * @param {string} accessibilityLabel - The accessibility label for the item.
  * @param {string} testID - The test ID for testing purposes.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemNavAlert of the @pagopa/io-app-design-system library.
- *
  */
 export const ListItemNavAlert = ({
   value,

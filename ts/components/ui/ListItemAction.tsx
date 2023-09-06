@@ -63,8 +63,6 @@ const styles = StyleSheet.create({
  * @param {string} accessibilityLabel - The accessibility label for the ListItemAction.
  * @param {string} testID - The testID for automated testing.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemAction of the @pagopa/io-app-design-system library.
- *
  */
 export const ListItemAction = ({
   variant,

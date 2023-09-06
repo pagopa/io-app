@@ -43,8 +43,6 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the CheckboxLabel of the @pagopa/io-app-design-system library.
- *
  */
 export const CheckboxLabel = ({
   label,

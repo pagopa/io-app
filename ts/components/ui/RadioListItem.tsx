@@ -70,8 +70,6 @@ const styles = StyleSheet.create({
  * @param {function} onValueChange - The function to be executed when the radio button selection changes.
  * @param {string} testID - The test ID for testing purposes.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemRadio of the @pagopa/io-app-design-system library.
- *
  */
 export const RadioListItem = ({
   value,

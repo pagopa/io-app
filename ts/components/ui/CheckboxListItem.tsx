@@ -69,8 +69,6 @@ const styles = StyleSheet.create({
  * @param {boolean} disabled - Indicates whether the list item is disabled.
  * @param {function} onValueChange - The callback function to be executed when the value changes.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemCheckbox of the @pagopa/io-app-design-system library.
- *
  */
 export const CheckboxListItem = ({
   value,

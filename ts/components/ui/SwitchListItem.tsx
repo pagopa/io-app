@@ -67,8 +67,6 @@ const styles = StyleSheet.create({
  * @param {boolean} disabled - If true, the item will be disabled and the switch will not be interactable.
  * @param {function} onSwitchValueChange - The function to be executed when the switch value changes.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemSwitch of the @pagopa/io-app-design-system library.
- *
  */
 export const SwitchListItem = ({
   label,

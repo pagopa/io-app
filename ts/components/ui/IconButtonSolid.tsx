@@ -93,7 +93,6 @@ const mapLegacyColorStates: Record<
  * purposes. It is read by screen readers to provide additional information about the button's purpose.
  * @property {string} [testID] - An identifier used to locate this component in tests.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the the IconButtonSolid of the @pagopa/io-app-design-system library.
  */
 export const IconButtonSolid = ({
   icon,

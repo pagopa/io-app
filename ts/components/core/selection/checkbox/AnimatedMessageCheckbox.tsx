@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
  * Currently if the Design System is enabled, the component returns the AnimatedMessageCheckbox of the @pagopa/io-app-design-system library
  * otherwise it returns the legacy component.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the AnimatedMessageCheckbox of the @pagopa/io-app-design-system library.
- *
  */
 export const AnimatedMessageCheckbox = ({
   checked,

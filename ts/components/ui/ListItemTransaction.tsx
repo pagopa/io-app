@@ -155,8 +155,6 @@ export const ListItemTransaction = ({
    *                                          "success", "refunded", "failure", "cancelled",
    *                                          "reversal", "pending".
    *
-   * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemTransaction of the @pagopa/io-app-design-system library.
-   *
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
   const ListItemTransactionContent = () => {

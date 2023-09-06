@@ -23,8 +23,6 @@ type Props<T> = {
  * The management of the selection is demanded and derived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the RadioGroup of the @pagopa/io-app-design-system library.
- *
  */
 export const RadioGroup = <T,>({ items, selectedItem, onPress }: Props<T>) => (
   <View>

@@ -118,8 +118,6 @@ const legacyStyles = StyleSheet.create({
  * @property {string} accessibilityHint - An accessibility hint for the button.
  * @property {string} testID - A test identifier for the button, used for testing purposes.
  *
- * @deprecated Use of this component is discouraged. It is being replaced by the Button of the @pagopa/io-app-design-system library.
- *
  */
 export const ButtonSolid = ({
   color = "primary",

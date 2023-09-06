@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
  * otherwise it returns the legacy component.
  *
  * @constructor
- * @deprecated The usage of this component is discouraged as it is being replaced by the SwitchLabel of the @pagopa/io-app-design-system library.
  *
  */
 export const SwitchLabel = ({
