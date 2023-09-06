@@ -1,14 +1,16 @@
 import * as React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useIOTheme, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import {
+  useIOTheme,
+  HSpacer,
+  VSpacer,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
   IOPaymentExtLogos,
   IOPaymentLogos,
   LogoPayment,
   LogoPaymentExt
-} from "../../../components/core/logos";
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import {
   IOStyles,
