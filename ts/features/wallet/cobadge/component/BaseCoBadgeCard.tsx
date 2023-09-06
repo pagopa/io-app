@@ -18,7 +18,7 @@ import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 
 type Props = {
   caption?: string;

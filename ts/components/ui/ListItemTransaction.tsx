@@ -5,7 +5,8 @@ import {
   IOIconSizeScale,
   Icon,
   useIOTheme,
-  VSpacer
+  VSpacer,
+  IOLogoPaymentType
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -18,7 +19,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { getAccessibleAmountText } from "../../utils/accessibility";
 import { isImageUri } from "../../utils/url";
-import { IOLogoPaymentType } from "../core/logos";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import { IOListItemLogoMargin } from "../core/variables/IOSpacing";

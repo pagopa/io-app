@@ -1,11 +1,16 @@
-import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  VSpacer,
+  LogoPaymentExt,
+  IOLogoPaymentExtType
+} from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
-import { IOLogoPaymentExtType, LogoPaymentExt } from "../../../core/logos";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { NewH3 } from "../../../core/typography/NewH3";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";

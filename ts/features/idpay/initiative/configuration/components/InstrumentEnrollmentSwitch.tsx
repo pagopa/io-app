@@ -4,14 +4,14 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { View, StyleSheet, Image } from "react-native";
 import { ListItem as NBListItem } from "native-base";
-import { default as React } from "react";
-import { HSpacer } from "@pagopa/io-app-design-system";
-import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
-import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 import {
   IOLogoPaymentType,
-  LogoPayment
-} from "../../../../../components/core/logos";
+  LogoPayment,
+  HSpacer
+} from "@pagopa/io-app-design-system";
+import { default as React } from "react";
+import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
+import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 import { RemoteSwitch } from "../../../../../components/core/selection/RemoteSwitch";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

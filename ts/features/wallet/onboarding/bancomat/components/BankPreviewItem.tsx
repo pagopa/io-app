@@ -8,7 +8,7 @@ import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import I18n from "../../../../../i18n";
-import { useImageResize } from "../screens/hooks/useImageResize";
+import { useImageResize } from "../hooks/useImageResize";
 
 type Props = {
   // TODO: change bank in info and use a generic type

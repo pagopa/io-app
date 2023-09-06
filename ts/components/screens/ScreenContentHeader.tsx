@@ -8,7 +8,7 @@ import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import {
   IOColors,
   IOIcons,
-  IOSectionPictogramType,
+  IOPictograms,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -25,7 +25,7 @@ type Props = Readonly<{
   title?: string;
   rasterIcon?: ImageSourcePropType;
   icon?: IOIcons;
-  pictogram?: IOSectionPictogramType;
+  pictogram?: IOPictograms;
   subtitle?: string;
   subtitleLink?: JSX.Element;
   dark?: boolean;

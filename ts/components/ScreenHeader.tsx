@@ -4,21 +4,22 @@ import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import {
   IOColors,
+  IOStyles,
+  Icon,
+  Pictogram,
   IOIconSizeScale,
   IOIcons,
-  IOPictogramSizeScale,
-  IOSectionPictogramType,
-  Icon
+  IOPictograms,
+  IOPictogramSizeScale
 } from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
-import { IOStyles } from "./core/variables/IOStyles";
-import SectionPictogram from "./core/pictograms/SectionPictogram";
 
 type ScreenHeader = {
   heading: React.ReactNode;
   rasterIcon?: ImageSourcePropType;
   icon?: IOIcons;
-  pictogram?: IOSectionPictogramType;
+  /* Need to point at `io-app-design-system` */
+  pictogram?: IOPictograms;
   dark?: boolean;
   // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
   // will be rendered in place of icon
@@ -76,7 +77,7 @@ const ScreenHeader = ({
     if (pictogram) {
       const pictogramColor = dark ? HEADER_ICON_DARK : HEADER_ICON_LIGHT;
       return (
-        <SectionPictogram
+        <Pictogram
           name={pictogram}
           size={HEADER_PICTOGRAM_HEIGHT}
           color={pictogramColor}
