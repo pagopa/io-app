@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.41.0-rc.1](https://github.com/pagopa/io-app/compare/2.41.0-rc.0...2.41.0-rc.1) (2023-09-05)
+
+
+### Features
+
+* [[IOCOM-447](https://pagopa.atlassian.net/browse/IOCOM-447)] Add local feature flag for the redesign of the PN message detail ([#4941](https://github.com/pagopa/io-app/issues/4941)) ([807cac7](https://github.com/pagopa/io-app/commit/807cac72c6ba8ff7e69d4ddd2bee416590510a28))
+
+
+### Bug Fixes
+
+* [[IOCOM-395](https://pagopa.atlassian.net/browse/IOCOM-395)] Proper handling of NOTIFICATION_MESSAGE_TAP analytics' event ([#4902](https://github.com/pagopa/io-app/issues/4902)) ([b33106e](https://github.com/pagopa/io-app/commit/b33106e3da513d6e897847cb2e2214f6e441d11a))
+* [[IOCOM-411](https://pagopa.atlassian.net/browse/IOCOM-411)] Fix overflowing text in notification preview in opt-in screen ([#4911](https://github.com/pagopa/io-app/issues/4911)) ([1bee9db](https://github.com/pagopa/io-app/commit/1bee9dba47f5aab933ada23b35eac6820fe6bc26))
+
+
+### Chores
+
+* [[IOBP-163](https://pagopa.atlassian.net/browse/IOBP-163)] Handle 401 status code in IDPay flows (Fast Login) ([#4859](https://github.com/pagopa/io-app/issues/4859)) ([2e33498](https://github.com/pagopa/io-app/commit/2e334988c575ad9c37fe35665226297b27630b6b))
+* [[IOBP-208](https://pagopa.atlassian.net/browse/IOBP-208)] Removal of pagoBancomat onboarding  ([#4945](https://github.com/pagopa/io-app/issues/4945)) ([c3a651c](https://github.com/pagopa/io-app/commit/c3a651c297cd77b8646b40afca802dee12d88edc))
+* [[IOPID-444](https://pagopa.atlassian.net/browse/IOPID-444)] Updated fast login what's new ([#4942](https://github.com/pagopa/io-app/issues/4942)) ([a8f7bae](https://github.com/pagopa/io-app/commit/a8f7bae28ee3c60bd6799fb894f5233c5aec23dd))
+* [[IOPID-670](https://pagopa.atlassian.net/browse/IOPID-670),[IOPID-714](https://pagopa.atlassian.net/browse/IOPID-714)] Fix EIC login flow + EIC dev server login local FF ([#4948](https://github.com/pagopa/io-app/issues/4948)) ([3703f39](https://github.com/pagopa/io-app/commit/3703f39f46ba008d718445151dcb9d8244121c0c))
+
 ## [2.41.0-rc.0](https://github.com/pagopa/io-app/compare/2.40.0-rc.4...2.41.0-rc.0) (2023-09-01)
 
 
