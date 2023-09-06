@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
 import ReactNativeHapticFeedback, {
@@ -30,6 +30,8 @@ import {
   IO_BARCODE_ALL_TYPES
 } from "../types/IOBarcode";
 import { itWalletEnabled } from "../../../config";
+import { ITW_ROUTES } from "../../it-wallet/navigation/ItwRoutes";
+import NavigationService from "../../../navigation/NavigationService";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -64,7 +66,16 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITWALLET":
-        // TODO: blocked by [SIW-272]
+        const params = {
+          authReqUrl: barcode.requestUri,
+          clientId: barcode.clientId
+        };
+        NavigationService.dispatchNavigationAction(
+          CommonActions.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT,
+            params
+          })
+        );
         break;
     }
   };
