@@ -5,7 +5,11 @@ import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  VSpacer,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -35,7 +39,6 @@ import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/s
 import { Body } from "../../components/core/typography/Body";
 import ButtonOutline from "../../components/ui/ButtonOutline";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
-import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

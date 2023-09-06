@@ -6,14 +6,12 @@ import {
   Divider,
   VDivider,
   HSpacer,
-  VSpacer
+  VSpacer,
+  IOAppMargin,
+  IOSpacer
 } from "@pagopa/io-app-design-system";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
-import {
-  IOAppMargin,
-  IOSpacer
-} from "../../../components/core/variables/IOSpacing";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { Body } from "../../../components/core/typography/Body";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";

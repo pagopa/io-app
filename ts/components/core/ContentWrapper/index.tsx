@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import type { IOAppMargin } from "../variables/IOSpacing";
+import type { IOAppMargin } from "@pagopa/io-app-design-system";
 import { IOVisualCostants } from "../variables/IOStyles";
 
 type IOContentWrapperProps = {

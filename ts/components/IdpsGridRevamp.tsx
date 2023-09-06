@@ -13,13 +13,12 @@ import {
 } from "react-native";
 
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer, IOSpacingScale } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
 import { IOVisualCostants } from "./core/variables/IOStyles";
 import { ListItemIDP } from "./ui/ListItemIDP";
-import { IOSpacingScale } from "./core/variables/IOSpacing";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;

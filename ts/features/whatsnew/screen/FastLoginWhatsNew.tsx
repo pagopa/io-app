@@ -1,11 +1,10 @@
 import * as React from "react";
 import I18n from "i18n-js";
 
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer, IOSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
-import { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
 const STANDARD_SIZE_VSPACER: IOSpacer = 24;
 const SIZE_FROM_BOTTOM_VSPACER: IOSpacer = 48;

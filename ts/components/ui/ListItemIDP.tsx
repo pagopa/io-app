@@ -21,17 +21,15 @@ import {
   IOColors,
   IOScaleValues,
   IOSpringValues,
-  IOListItemIDPRadius
-} from "@pagopa/io-app-design-system";
-import { WithTestID } from "../../types/WithTestID";
-import { toAndroidCacheTimestamp } from "../../utils/dates";
-import { makeFontStyleObject } from "../core/fonts";
-import {
+  IOListItemIDPRadius,
   IOListItemIDPHSpacing,
   IOListItemIDPSavedVSpacing,
   IOListItemIDPVSpacing,
   IOListItemLogoMargin
-} from "../core/variables/IOSpacing";
+} from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../types/WithTestID";
+import { toAndroidCacheTimestamp } from "../../utils/dates";
+import { makeFontStyleObject } from "../core/fonts";
 
 type ListItemIDP = WithTestID<{
   name: string;

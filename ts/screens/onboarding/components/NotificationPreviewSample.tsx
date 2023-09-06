@@ -1,6 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  HSpacer,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import customVariables from "../../../theme/variables";
@@ -10,7 +15,6 @@ import {
   IOStyles,
   IOVisualCostants
 } from "../../../components/core/variables/IOStyles";
-import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 
 const styles = StyleSheet.create({
   notification: {

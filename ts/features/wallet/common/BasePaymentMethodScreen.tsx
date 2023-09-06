@@ -9,10 +9,13 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  VSpacer,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
-import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";

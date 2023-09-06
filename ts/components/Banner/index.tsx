@@ -23,16 +23,14 @@ import {
   Pictogram,
   IOScaleValues,
   IOSpringValues,
-  IOBannerRadius
+  IOBannerRadius,
+  IOBannerBigSpacing,
+  IOBannerSmallHSpacing,
+  IOBannerSmallVSpacing
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
 import { IOStyles } from "../core/variables/IOStyles";
-import {
-  IOBannerBigSpacing,
-  IOBannerSmallHSpacing,
-  IOBannerSmallVSpacing
-} from "../core/variables/IOSpacing";
 import ButtonLink from "../ui/ButtonLink";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
