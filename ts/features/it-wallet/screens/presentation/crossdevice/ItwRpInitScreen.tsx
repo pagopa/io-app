@@ -1,13 +1,12 @@
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { IOColors, ListItemInfo } from "@pagopa/io-app-design-system";
+import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { RpEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/rp/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../i18n";
@@ -28,20 +27,13 @@ import ItemSeparatorComponent from "../../../../../components/ItemSeparatorCompo
 import { Link } from "../../../../../components/core/typography/Link";
 import { FeatureInfo } from "../../../../../components/FeatureInfo";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import {
-  itwRpStart,
-  itwRpStop,
-  itwRpUserRejected
-} from "../../../store/actions/itwRpActions";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import {
-  ItwRpInitializationType,
-  itwRpInitializationSelector
-} from "../../../store/reducers/itwRpInitializationReducer";
-import ItwLoadingSpinner from "../../../components/ItwLoadingSpinner";
-import { ItWalletError } from "../../../utils/errors/itwErrors";
+import { itwRpInitializationSelector } from "../../../store/reducers/itwRpInitializationReducer";
 import { openWebUrl } from "../../../../../utils/url";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+import { itwRpInitialization } from "../../../store/actions/itwRpActions";
+import { ItWalletError } from "../../../utils/errors/itwErrors";
+import { FEDERATION_ENTITY } from "../../../utils/mocks";
 
 /**
  * ItwRpInitScreenNavigationParams's navigation params.
@@ -49,6 +41,7 @@ import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
  */
 export type ItwRpInitScreenNavigationParams = {
   authReqUrl: string;
+  clientId: string;
 };
 
 /**
@@ -75,7 +68,7 @@ const ItwRpInitScreen = () => {
     light: false,
     bordered: true,
     onPress: () => {
-      dispatch(itwRpUserRejected());
+      navigation.goBack();
     },
     title: I18n.t(
       "features.itWallet.presentation.initializationScreen.buttons.deny"
@@ -89,9 +82,7 @@ const ItwRpInitScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => {
-      navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT);
-    },
+    onPress: () => null,
     title: I18n.t(
       "features.itWallet.presentation.initializationScreen.buttons.confirmData"
     )
@@ -101,20 +92,21 @@ const ItwRpInitScreen = () => {
    * Dispatches the action to start the RP flow on first render.
    */
   useOnFirstRender(() => {
-    dispatch(itwRpStart(route.params.authReqUrl));
+    dispatch(
+      itwRpInitialization.request({
+        authReqUrl: route.params.authReqUrl,
+        clientId: route.params.clientId
+      })
+    );
   });
 
   /**
    * Renders the content of the screen if the PID is decoded, an error otherwise.
    * @param rp - the RP data to display
    */
-  const ContentView = ({ rp }: { rp: ItwRpInitializationType }) =>
+  const ContentView = () =>
     pipe(
-      sequenceS(O.Applicative)({
-        rpEntityConfig: rp.entity,
-        requestObject: rp.requestObject,
-        decodedPid
-      }),
+      sequenceS(O.Applicative)({ decodedPid }),
       O.fold(
         () => (
           <ItwErrorView
@@ -122,12 +114,7 @@ const ItwRpInitScreen = () => {
             leftButton={cancelButtonProps(navigation.goBack)}
           />
         ),
-        some => (
-          <RpPreviewView
-            decodedPid={some.decodedPid}
-            rpEntityConfig={some.rpEntityConfig}
-          />
-        )
+        some => <RpPreviewView decodedPid={some.decodedPid} />
       )
     );
 
@@ -136,15 +123,9 @@ const ItwRpInitScreen = () => {
    * @param rp - the RP data to display
    * @param decodedPid - the decoded PID
    */
-  const RpPreviewView = ({
-    decodedPid,
-    rpEntityConfig
-  }: {
-    decodedPid: PidWithToken;
-    rpEntityConfig: RpEntityConfiguration;
-  }) => {
-    const { organization_name, policy_uri } =
-      rpEntityConfig.payload.metadata.federation_entity;
+  const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => {
+    // PUT ME IN MOCK.JS
+    const { organization_name, policy_uri } = FEDERATION_ENTITY;
     return (
       <>
         <ScreenContent
@@ -164,7 +145,7 @@ const ItwRpInitScreen = () => {
               action={
                 <IOBadge
                   small
-                  text={organization_name}
+                  text={I18n.t("features.itWallet.generic.trusted")}
                   variant="solid"
                   color="blue"
                 />
@@ -253,7 +234,11 @@ const ItwRpInitScreen = () => {
   /*
    * Fixed loading view.
    */
-  const LoadingView = () => <ItwLoadingSpinner color={IOColors.blue} />;
+  const LoadingView = () => (
+    <ItwLoadingSpinnerOverlay isLoading={true}>
+      <></>
+    </ItwLoadingSpinnerOverlay>
+  );
 
   /**
    * Error view with a single button which stops the RP flow.
@@ -262,7 +247,7 @@ const ItwRpInitScreen = () => {
   const ErrorView = ({ error }: { error: ItWalletError }) => (
     <ItwErrorView
       type="SingleButton"
-      leftButton={cancelButtonProps(() => dispatch(itwRpStop()))}
+      leftButton={cancelButtonProps(() => navigation.goBack())}
       error={error}
     />
   );
@@ -277,7 +262,7 @@ const ItwRpInitScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       err => <ErrorView error={err} />,
-      some => <ContentView rp={some} />,
+      _ => <ContentView />, // some is the RP data
       () => <LoadingView />,
       () => <LoadingView />,
       (_, err) => <ErrorView error={err} />

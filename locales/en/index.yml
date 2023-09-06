@@ -3360,7 +3360,7 @@ features:
           title: "Required data"
           subTitle: "Required to access the services you are requesting."
         wrongClaims: 
-          title: "Something wrong?"
+          title: "Something wrong? "
           reportLink: "Report an error"
         privacy: 
           thirdParty: "Data is not shared with third parties"
@@ -3413,6 +3413,7 @@ features:
         body: "Try again in a few minutes. If it happens again, contact support."
       close: "Close"
       rp: "Relying Party"
+      trusted: "Trusted"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

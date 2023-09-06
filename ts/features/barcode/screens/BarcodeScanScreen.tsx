@@ -64,9 +64,12 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITWALLET":
-        const params = { authReqUrl: barcode.requestUri };
+        const params = {
+          authReqUrl: barcode.requestUri,
+          clientId: barcode.clientId
+        };
         NavigationService.dispatchNavigationAction(
-          CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+          CommonActions.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT,
             params
           })

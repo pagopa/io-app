@@ -1,9 +1,13 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { sign } from "@pagopa/io-react-native-crypto";
 import { SignJWT } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
+import {
+  RelyingPartySolution,
+  WalletInstanceAttestation
+} from "@pagopa/io-react-native-wallet";
 import {
   itwRpInitializationEntityValueSelector,
   itwRpInitializationRequestObjectValueSelector
@@ -12,6 +16,7 @@ import { itwRpPresentation } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
+import { itwWiaRequest } from "../store/actions/itwWiaActions";
 
 /*
  * This saga handles the RP presentation.
@@ -22,7 +27,7 @@ export function* handleItwRpPresentationSaga(
   action: ActionType<typeof itwRpPresentation.request>
 ): SagaIterator {
   try {
-    const RP = action.payload;
+    const { authReqUrl } = action.payload;
 
     // TODO: this claims should be selected by user
     const claims = [
@@ -40,15 +45,32 @@ export function* handleItwRpPresentationSaga(
     );
     const pidToken = yield* select(ItwCredentialsPidSelector);
 
+    // Get WIA
+    yield* put(itwWiaRequest.request());
+    const wia = yield* take(itwWiaRequest.success);
+
     if (O.isNone(requestObject) || O.isNone(pidToken)) {
       throw new Error("Request object is not defined");
     } else {
-      // verified presentation is signed using the same key of the wallet attestation
+      const RP = new RelyingPartySolution(authReqUrl, wia.payload);
+      const decodedWia = yield* call(
+        WalletInstanceAttestation.decode,
+        wia.payload
+      );
+
+      const walletInstanceId = new URL(
+        "instance/" + decodedWia.payload.sub,
+        decodedWia.payload.iss
+      ).href;
+
       const { vp_token: unsignedVpToken, presentation_submission } =
-        yield* call(RP.prepareVpToken, requestObject.value, [
-          pidToken.value.credential,
-          claims
-        ]);
+        yield* call(
+          RP.prepareVpToken,
+          requestObject.value,
+          walletInstanceId,
+          [pidToken.value.credential, claims],
+          decodedWia.payload.cnf.jwk.kid
+        );
 
       const signature = yield* call(sign, unsignedVpToken, ITW_WIA_KEY_TAG);
       const vpToken = yield* call(
