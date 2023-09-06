@@ -3423,6 +3423,7 @@ features:
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
       close: "Chiudi"
       rp: "Relying Party"
+      trusted: "Trusted"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

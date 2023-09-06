@@ -1,10 +1,13 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { sign } from "@pagopa/io-react-native-crypto";
 import { SignJWT } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
-import { WalletInstanceAttestation } from "@pagopa/io-react-native-wallet";
+import {
+  RelyingPartySolution,
+  WalletInstanceAttestation
+} from "@pagopa/io-react-native-wallet";
 import {
   itwRpInitializationEntityValueSelector,
   itwRpInitializationRequestObjectValueSelector
@@ -13,7 +16,7 @@ import { itwRpPresentation } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
-import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
+import { itwWiaRequest } from "../store/actions/itwWiaActions";
 
 /*
  * This saga handles the RP presentation.
@@ -24,7 +27,7 @@ export function* handleItwRpPresentationSaga(
   action: ActionType<typeof itwRpPresentation.request>
 ): SagaIterator {
   try {
-    const RP = action.payload;
+    const { authReqUrl } = action.payload;
 
     // TODO: this claims should be selected by user
     const claims = [
@@ -42,14 +45,17 @@ export function* handleItwRpPresentationSaga(
     );
     const pidToken = yield* select(ItwCredentialsPidSelector);
 
-    const wia = yield* select(itwWiaSelector);
+    // Get WIA
+    yield* put(itwWiaRequest.request());
+    const wia = yield* take(itwWiaRequest.success);
 
-    if (O.isNone(requestObject) || O.isNone(pidToken) || O.isNone(wia)) {
+    if (O.isNone(requestObject) || O.isNone(pidToken)) {
       throw new Error("Request object is not defined");
     } else {
+      const RP = new RelyingPartySolution(authReqUrl, wia.payload);
       const decodedWia = yield* call(
         WalletInstanceAttestation.decode,
-        wia.value
+        wia.payload
       );
 
       const walletInstanceId = new URL(
