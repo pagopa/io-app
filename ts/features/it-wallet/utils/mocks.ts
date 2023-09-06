@@ -26,3 +26,11 @@ export const mapAssuranceLevel = (level: AssuranceLevel | string) => {
       );
   }
 };
+
+export const FEDERATION_ENTITY = {
+  organization_name: "Comune di Milano",
+  homepage_uri: "https://www.comune.milano.it/",
+  policy_uri: "https://www.comune.milano.it/privacy",
+  logo_uri: "https://www.comune.milano.it/logo.png",
+  contacts: "https://www.comune.milano.it/contacts"
+};

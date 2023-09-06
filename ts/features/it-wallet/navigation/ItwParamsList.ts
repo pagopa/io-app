@@ -3,6 +3,7 @@ import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/I
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
 import { ItwCieInfoUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieInfoUsageScreen";
 import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/cie/ItwCieWrongPinScreen";
+import { ItwRpInitScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpInitScreen";
 import { ITW_ROUTES } from "./ItwRoutes";
 
 export type ItwParamsList = {
@@ -28,4 +29,5 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUING.PID_ADDING]: undefined;
   // PRESENTATION PID
   [ITW_ROUTES.PRESENTATION.PID_DETAILS]: undefined;
+  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT]: ItwRpInitScreenNavigationParams;
 };
