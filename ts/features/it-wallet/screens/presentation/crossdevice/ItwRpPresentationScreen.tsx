@@ -39,7 +39,7 @@ type ItwRpResultScreenRouteProps = RouteProp<
   "ITW_PRESETATION_CROSS_DEVICE_RESULT"
 >;
 
-const ItwRpResultScreen = () => {
+const ItwPresentationScreen = () => {
   const route = useRoute<ItwRpResultScreenRouteProps>();
   const dispatch = useIODispatch();
   const presentationResult = useIOSelector(itwRpPresentationSelector);
@@ -188,4 +188,4 @@ const ItwRpResultScreen = () => {
   );
 };
 
-export default ItwRpResultScreen;
+export default ItwPresentationScreen;

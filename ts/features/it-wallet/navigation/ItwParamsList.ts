@@ -4,7 +4,7 @@ import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing
 import { ItwCieInfoUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieInfoUsageScreen";
 import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/cie/ItwCieWrongPinScreen";
 import { ItwRpInitScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpInitScreen";
-import { ItwRpResultScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpResultScreen";
+import { ItwRpResultScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
 import { ITW_ROUTES } from "./ItwRoutes";
 
 export type ItwParamsList = {
