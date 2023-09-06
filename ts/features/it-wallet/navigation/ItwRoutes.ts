@@ -1,7 +1,8 @@
 export const ITW_ROUTES = {
   MAIN: "ITW_MAIN",
   DISCOVERY: {
-    INFO: "ITW_DISCOVERY_INFO"
+    INFO: "ITW_DISCOVERY_INFO",
+    FEATURES_INFO: "ITW_DISCOVERY_FEATURES_INFO"
   } as const,
   ISSUING: {
     CIE: {

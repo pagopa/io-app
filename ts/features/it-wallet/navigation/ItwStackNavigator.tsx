@@ -14,6 +14,7 @@ import ItwPidAddingScreen from "../screens/issuing/ItwPidAddingScreen";
 import ItwCredentialDetails from "../screens/credentials/ItwPidDetails";
 import ItwPidRequestScreen from "../screens/issuing/ItwPidRequestScreen";
 import ItwRpInitScreen from "../screens/presentation/crossdevice/ItwRpInitScreen";
+import ItwDiscoveryProviderInfoScreen from "../screens/discovery/ItwDiscoveryProviderInfoScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -28,6 +29,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.DISCOVERY.INFO}
       component={ItwDiscoveryInfoScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.DISCOVERY.FEATURES_INFO}
+      component={ItwDiscoveryProviderInfoScreen}
     />
     {/* Issuing CIE */}
     <Stack.Screen
