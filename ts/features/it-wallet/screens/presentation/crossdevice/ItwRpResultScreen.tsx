@@ -1,6 +1,5 @@
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -66,9 +65,7 @@ const ItwRpResultScreen = () => {
     light: false,
     bordered: true,
     onPress: navigateToItWalletHome,
-    title: I18n.t(
-      "features.itWallet.presentation.resultScreen.error.buttons.cancel"
-    )
+    title: I18n.t("global.buttons.cancel")
   };
 
   /**

@@ -4,10 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  itwRpInitialization,
-  itwRpPresentation
-} from "../actions/itwRpActions";
+import { itwRpPresentation } from "../actions/itwRpActions";
 
 export type ItwRpPresentationType = {
   result: O.Option<string>;

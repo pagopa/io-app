@@ -3403,9 +3403,6 @@ features:
         error:
           title: "Presentazione dei dati non riuscita"
           subTitle: "Riprova tra qualche minuto. Se si ripete, contatta l’assistenza."
-          buttons: 
-            retry: "Riprova"
-            cancel: "Annulla presentazione dati"
         success: 
           title: "Accesso eseguito correttamente con IT Wallet"
           subTitle: "Ora puoi tornare sul sito di {{relayingParty}} per continuare"
