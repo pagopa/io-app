@@ -2,6 +2,7 @@ import {
   Badge,
   ListItemTransaction as DSListItemTransaction,
   IOIconSizeScale,
+  IOLogoPaymentType,
   Icon
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -15,7 +16,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { getAccessibleAmountText } from "../../utils/accessibility";
 import { isImageUri } from "../../utils/url";
-import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";

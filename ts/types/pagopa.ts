@@ -36,7 +36,6 @@ import {
   CardInfo,
   TypeEnum as CreditCardTypeEnum
 } from "../../definitions/pagopa/walletv2/CardInfo";
-import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
@@ -117,7 +116,6 @@ export type Psp = t.TypeOf<typeof Psp>;
 // required attributes
 const PatchedPaymentMethodInfo = t.union([
   CardInfo,
-  SatispayInfoPagoPa,
   BPayInfoPagoPa,
   PayPalInfo
 ]);
@@ -161,7 +159,6 @@ export type RawPaymentMethod =
   | RawBancomatPaymentMethod
   | RawCreditCardPaymentMethod
   | RawBPayPaymentMethod
-  | RawSatispayPaymentMethod
   | RawPayPalPaymentMethod;
 
 export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
@@ -179,11 +176,6 @@ export type RawBPayPaymentMethod = WalletV2WithoutInfo & {
   info: BPayInfoPagoPa;
 };
 
-export type RawSatispayPaymentMethod = WalletV2WithoutInfo & {
-  kind: "Satispay";
-  info: SatispayInfoPagoPa;
-};
-
 export type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
   kind: "PayPal";
   info: PayPalInfo;
@@ -193,10 +185,6 @@ export type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
 export const isRawBancomat = (
   pm: RawPaymentMethod | undefined
 ): pm is RawBancomatPaymentMethod => pm?.kind === "Bancomat";
-
-export const isRawSatispay = (
-  pm: RawPaymentMethod | undefined
-): pm is RawSatispayPaymentMethod => pm?.kind === "Satispay";
 
 export const isRawPayPal = (
   pm: RawPaymentMethod | undefined
@@ -233,8 +221,6 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
 export type BPayPaymentMethod = RawBPayPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
-export type SatispayPaymentMethod = RawSatispayPaymentMethod &
-  PaymentMethodRepresentation;
 
 export type PayPalPaymentMethod = RawPayPalPaymentMethod &
   PaymentMethodRepresentation;
@@ -243,17 +229,12 @@ export type PaymentMethod =
   | BancomatPaymentMethod
   | CreditCardPaymentMethod
   | BPayPaymentMethod
-  | SatispayPaymentMethod
   | PayPalPaymentMethod;
 
 // payment methods type guards
 export const isBancomat = (
   pm: PaymentMethod | undefined
 ): pm is BancomatPaymentMethod => pm?.kind === "Bancomat";
-
-export const isSatispay = (
-  pm: PaymentMethod | undefined
-): pm is SatispayPaymentMethod => pm?.kind === "Satispay";
 
 export const isPayPal = (
   pm: PaymentMethod | undefined

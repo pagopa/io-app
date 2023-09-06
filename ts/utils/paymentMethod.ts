@@ -14,7 +14,6 @@ import {
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import paypalImage from "../../img/wallet/cards-icons/paypal.png";
-import satispayImage from "../../img/wallet/cards-icons/satispay.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
@@ -33,13 +32,10 @@ import {
   RawCreditCardPaymentMethod,
   RawPayPalPaymentMethod,
   RawPaymentMethod,
-  RawSatispayPaymentMethod,
-  SatispayPaymentMethod,
   isRawBPay,
   isRawBancomat,
   isRawCreditCard,
-  isRawPayPal,
-  isRawSatispay
+  isRawPayPal
 } from "../types/pagopa";
 import { isExpired } from "./dates";
 import { getPaypalAccountEmail } from "./paypal";
@@ -49,8 +45,6 @@ export const getPaymentMethodHash = (
   pm: RawPaymentMethod
 ): string | undefined => {
   switch (pm.kind) {
-    case "Satispay":
-      return pm.info.uuid;
     case "PayPal":
       return getPaypalAccountEmail(pm.info);
     case "BPay":
@@ -86,9 +80,6 @@ export const getImageFromPaymentMethod = (
   if (isRawBancomat(paymentMethod)) {
     return pagoBancomatImage;
   }
-  if (isRawSatispay(paymentMethod)) {
-    return satispayImage;
-  }
   if (isRawPayPal(paymentMethod)) {
     return paypalImage;
   }
@@ -110,7 +101,6 @@ export const getTitleFromBancomat = (
     O.getOrElse(() => I18n.t("wallet.methods.bancomat.name"))
   );
 
-const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
 const getTitleForPaypal = (paypal: RawPayPalPaymentMethod) =>
   getPaypalAccountEmail(paypal.info);
 /**
@@ -127,9 +117,6 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBancomat(paymentMethod)) {
     return getTitleFromBancomat(paymentMethod, abiList);
-  }
-  if (isRawSatispay(paymentMethod)) {
-    return getTitleForSatispay();
   }
   if (isRawBPay(paymentMethod)) {
     return (
@@ -160,14 +147,6 @@ export const enhanceBancomat = (
     : undefined,
   caption: getTitleFromBancomat(bancomat, abiList),
   icon: getImageFromPaymentMethod(bancomat)
-});
-
-export const enhanceSatispay = (
-  raw: RawSatispayPaymentMethod
-): SatispayPaymentMethod => ({
-  ...raw,
-  caption: getTitleForSatispay(),
-  icon: getImageFromPaymentMethod(raw)
 });
 
 export const enhanceBPay = (
@@ -211,7 +190,6 @@ export const enhancePaymentMethod = (
     case "CreditCard":
       return enhanceCreditCard(pm, abiList);
     case "PayPal":
-    case "Satispay":
       return {
         ...pm,
         caption: getTitleFromPaymentMethod(pm, abiList),
@@ -238,7 +216,6 @@ export const isPaymentMethodExpired = (
   switch (paymentMethod.kind) {
     case "BPay":
     case "PayPal":
-    case "Satispay":
       return E.right(false);
     case "Bancomat":
     case "CreditCard":
