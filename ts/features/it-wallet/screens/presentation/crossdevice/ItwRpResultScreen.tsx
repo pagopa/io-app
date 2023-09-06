@@ -1,10 +1,10 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { SafeAreaView, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { RpEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/rp/types";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../i18n";
@@ -12,18 +12,36 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwErrorView from "../../../components/ItwErrorView";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import {
-  itwRpStop,
-  itwRpUserConfirmed
-} from "../../../store/actions/itwRpActions";
-import ItwLoadingSpinner from "../../../components/ItwLoadingSpinner";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { itwRpPresentationSelector } from "../../../store/reducers/itwRpPresentationReducer";
 import { itwRpInitializationEntityValueSelector } from "../../../store/reducers/itwRpInitializationReducer";
 import ItwActionCompleted from "../../../components/ItwActionCompleted";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { itwRpPresentation } from "../../../store/actions/itwRpActions";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { navigateToItWalletHome } from "../../../utils/navigation";
+import { FEDERATION_ENTITY } from "../../../utils/mocks";
+import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+
+/**
+ * ItwRpResultScreenNavigationParams's navigation params.
+ * The authReqUrl is the url to use to start the RP flow.
+ */
+export type ItwRpResultScreenNavigationParams = {
+  authReqUrl: string;
+  clientId: string;
+};
+
+/**
+ * Type of the route props for the ItwPidRequestScreen.
+ */
+type ItwRpResultScreenRouteProps = RouteProp<
+  ItwParamsList,
+  "ITW_PRESETATION_CROSS_DEVICE_RESULT"
+>;
 
 const ItwRpResultScreen = () => {
+  const route = useRoute<ItwRpResultScreenRouteProps>();
   const dispatch = useIODispatch();
   const presentationResult = useIOSelector(itwRpPresentationSelector);
   const rpEntity = useIOSelector(itwRpInitializationEntityValueSelector);
@@ -35,7 +53,7 @@ const ItwRpResultScreen = () => {
   const retryButtonProps = {
     block: true,
     primary: true,
-    onPress: () => dispatch(itwRpUserConfirmed()),
+    onPress: () => dispatch(itwRpPresentation.request(route.params)),
     title: I18n.t("global.buttons.retry")
   };
 
@@ -47,7 +65,7 @@ const ItwRpResultScreen = () => {
     block: true,
     light: false,
     bordered: true,
-    onPress: () => dispatch(itwRpStop()),
+    onPress: navigateToItWalletHome,
     title: I18n.t(
       "features.itWallet.presentation.resultScreen.error.buttons.cancel"
     )
@@ -58,10 +76,7 @@ const ItwRpResultScreen = () => {
    * Dispatches the completion action to complete the RP flow.
    */
   const completeButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
-    onPress: () => dispatch(itwRpStop()),
+    onPress: navigateToItWalletHome,
     title: I18n.t(
       "features.itWallet.presentation.resultScreen.success.buttons.continue"
     )
@@ -71,26 +86,27 @@ const ItwRpResultScreen = () => {
    * Dispatches the action to start the RP presentation flow after the user confirms.
    */
   useOnFirstRender(() => {
-    dispatch(itwRpUserConfirmed());
+    dispatch(itwRpPresentation.request(route.params));
   });
 
   /**
    * Loading view component which shows a loading spinner and the RP organization name.
-   * @param rp - the RP entity configuration
    */
-  const LoadingView = ({ rp }: { rp: RpEntityConfiguration }) => (
-    <ItwLoadingSpinner
-      color={IOColors.blue}
+  const LoadingView = () => (
+    <ItwLoadingSpinnerOverlay
+      isLoading
       captionTitle={I18n.t(
         "features.itWallet.presentation.resultScreen.loading.title",
         {
-          relayingParty: rp.payload.metadata.federation_entity.organization_name
+          relayingParty: FEDERATION_ENTITY.organization_name
         }
       )}
       captionSubtitle={I18n.t(
         "features.itWallet.presentation.resultScreen.loading.subTitle"
       )}
-    />
+    >
+      <></>
+    </ItwLoadingSpinnerOverlay>
   );
 
   /**
@@ -111,7 +127,7 @@ const ItwRpResultScreen = () => {
    * Success screen component with a single button which completes the RP flow which shows the RP organization name.
    * @param rp - the RP entity configuration
    */
-  const SuccessView = ({ rp }: { rp: RpEntityConfiguration }) => (
+  const SuccessView = () => (
     <>
       <ItwActionCompleted
         title={I18n.t(
@@ -120,8 +136,7 @@ const ItwRpResultScreen = () => {
         content={I18n.t(
           "features.itWallet.presentation.resultScreen.success.subTitle",
           {
-            relayingParty:
-              rp.payload.metadata.federation_entity.organization_name
+            relayingParty: FEDERATION_ENTITY.organization_name
           }
         )}
       />
@@ -129,7 +144,6 @@ const ItwRpResultScreen = () => {
         type={"SingleButton"}
         leftButton={completeButtonProps}
       />
-      <VSpacer size={24} />
     </>
   );
 
@@ -144,16 +158,18 @@ const ItwRpResultScreen = () => {
         () => (
           <ItwErrorView type="SingleButton" leftButton={cancelButtonProps} />
         ),
-        someRp =>
+        (
+          _ // some equals to the RP federation entity
+        ) =>
           pot.fold(
             presentationResult,
-            () => <LoadingView rp={someRp} />,
-            () => <LoadingView rp={someRp} />,
-            () => <LoadingView rp={someRp} />,
+            () => <LoadingView />,
+            () => <LoadingView />,
+            () => <LoadingView />,
             err => <ErrorView error={err} />,
-            _ => <SuccessView rp={someRp} />,
-            () => <LoadingView rp={someRp} />,
-            () => <LoadingView rp={someRp} />,
+            _ => <SuccessView />,
+            () => <LoadingView />,
+            () => <LoadingView />,
             (_, err) => <ErrorView error={err} />
           )
       )
@@ -161,7 +177,8 @@ const ItwRpResultScreen = () => {
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={false}
+      customGoBack={<View></View>}
       headerTitle={I18n.t(
         "features.itWallet.presentation.initializationScreen.headerTitle"
       )}

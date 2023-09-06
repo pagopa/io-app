@@ -25,7 +25,7 @@ export const itwRpPresentation = createAsyncAction(
   "ITW_RP_PRESENTATION_REQUEST",
   "ITW_RP_PRESENTATION_SUCCESS",
   "ITW_RP_PRESENTATION_FAILURE"
-)<{ authReqUrl: string }, string, ItWalletError>();
+)<{ authReqUrl: string; clientId: string }, string, ItWalletError>();
 
 /**
  * Type for activation related actions.

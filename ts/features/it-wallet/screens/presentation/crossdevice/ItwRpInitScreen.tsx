@@ -34,6 +34,7 @@ import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverl
 import { itwRpInitialization } from "../../../store/actions/itwRpActions";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { FEDERATION_ENTITY } from "../../../utils/mocks";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 
 /**
  * ItwRpInitScreenNavigationParams's navigation params.
@@ -82,7 +83,12 @@ const ItwRpInitScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => null,
+    light: false,
+    onPress: () =>
+      navigation.navigate(
+        ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT,
+        route.params
+      ),
     title: I18n.t(
       "features.itWallet.presentation.initializationScreen.buttons.confirmData"
     )
@@ -124,7 +130,6 @@ const ItwRpInitScreen = () => {
    * @param decodedPid - the decoded PID
    */
   const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => {
-    // PUT ME IN MOCK.JS
     const { organization_name, policy_uri } = FEDERATION_ENTITY;
     return (
       <>

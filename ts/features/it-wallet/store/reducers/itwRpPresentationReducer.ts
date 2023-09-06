@@ -39,7 +39,7 @@ const reducer = (
       return pot.some({
         result: O.some(action.payload)
       });
-    case getType(itwRpInitialization.failure):
+    case getType(itwRpPresentation.failure):
       return pot.toError(state, action.payload);
   }
   return state;
