@@ -3307,6 +3307,19 @@ features:
         nfc:
           title: "Your device does not support NFC which is required to enable IT Wallet"
           body: "To proceed, the NFC function of the device is required."
+    featuresInfoScreen:
+      title: "How do you want to activate the IT Wallet?"
+      list:
+        allFeaturesSection: "Recommended method"
+        mainFeaturesSection: "Other methods"
+        incomingFeature: "Coming soon"
+        cie: "Electronic Identity Card"
+        cieSubTitle: "Use the card and its 8-digit PIN"
+        spid: "SPID"
+        spidSubTitle: "Use credentials and app (or SMS)"
+        cieId: "CieID"
+        cieIdSubTitle: "Use credentials and app (or SMS)"
+      compareFeatures: "What is the difference?"
     issuing:
       title: "IT Wallet activation"
       infoConsent:

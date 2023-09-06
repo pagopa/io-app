@@ -32,7 +32,7 @@ const ItwDiscoveryInfoScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO),
+    onPress: () => navigation.navigate(ITW_ROUTES.DISCOVERY.FEATURES_INFO),
     title: I18n.t("features.itWallet.activationScreen.confirm")
   };
 
