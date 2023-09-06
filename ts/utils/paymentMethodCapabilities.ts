@@ -35,8 +35,6 @@ const paymentNotSupportedCustomRepresentation = (
   paymentMethod: PaymentMethod
 ): PaymentSupportStatus => {
   switch (paymentMethod.kind) {
-    case "Satispay":
-      return "arriving";
     default:
       return "notAvailable";
   }

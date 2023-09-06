@@ -55,7 +55,7 @@ const availabilityBadge = (
  *
  * We have 4 possible different cases:
  *   - The card can pay on IO -> has capability pagoPa
- *   - The card will be able to pay in the future on IO -> Satispay, BPay
+ *   - The card will be able to pay in the future on IO -> BPay
  *   - The card is not able to pay on IO, (no pagoPa capability) and type === PRV or Bancomat
  *   - The card can onboard another card that can pay on IO -> co-badge credit card (no pagoPa capability) and type !== PRV
  * @param props

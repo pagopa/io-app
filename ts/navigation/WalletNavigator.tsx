@@ -29,12 +29,8 @@ import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/coba
 import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge/screens/ActivateBpdOnNewCoBadgeScreen";
 import { PaymentMethodOnboardingPayPalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
-import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
-import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
-import ActivateBpdOnNewSatispayScreen from "../features/wallet/onboarding/satispay/screens/ActivateBpdOnNewSatispayScreen";
 import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
 import PaypalDetailScreen from "../features/wallet/paypal/screen/PaypalDetailScreen";
-import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
@@ -73,14 +69,6 @@ const bptRoutes = () => (
     <Stack.Screen
       name={BPD_ROUTES.CTA_BPD_IBAN_EDIT}
       component={IbanCTAEditScreen}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN}
-      component={PaymentMethodOnboardingSatispayNavigator}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY}
-      component={ActivateBpdOnNewSatispayScreen}
     />
     <Stack.Screen
       name={WALLET_ONBOARDING_BPAY_ROUTES.MAIN}
@@ -131,10 +119,6 @@ const WalletNavigator = () => {
       <Stack.Screen
         name={ROUTES.WALLET_BANCOMAT_DETAIL}
         component={BancomatDetailScreen}
-      />
-      <Stack.Screen
-        name={ROUTES.WALLET_SATISPAY_DETAIL}
-        component={SatispayDetailScreen}
       />
       <Stack.Screen
         name={ROUTES.WALLET_PAYPAL_DETAIL}
