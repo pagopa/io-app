@@ -3325,6 +3325,25 @@ features:
       credentialDetails: 
         buttons: 
           qrCode: "Show QR code"
+      pidAttributesScreen: 
+        headerTitle: "Data presentation"
+        title: "Do you confirm this data?"
+        subTitle: "Here you can find the data regarding your Digital Identity and the Authority to which you are presenting them."
+        requiredData: 
+          title: "Required data"
+          subTitle: "Required to access the services you are requesting."
+        wrongClaims: 
+          title: "Something wrong? "
+          reportLink: "Report an error"
+        privacy: 
+          thirdParty: "Data is not shared with third parties"
+          preservation: "Data will be retained for {{numberOfMonths}} months"
+          deletion: "You can delete your data at any time"
+          conditionsLink: "Terms of Service"
+        tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
+        buttons: 
+          confirmData: "Confirm data"
+          deny: "Deny"
     verifiableCredentials:
       type:
         digitalCredential: "Digital Credential"
@@ -3351,6 +3370,8 @@ features:
         title: "There's a problem on our systems"
         body: "Try again in a few minutes. If it happens again, contact support."
       close: "Close"
+      rp: "Relying Party"
+      trusted: "Trusted"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

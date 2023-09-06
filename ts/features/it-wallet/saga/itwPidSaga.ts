@@ -71,7 +71,7 @@ export function* handlePidDecodeRequest(
     }
   } catch (err) {
     yield* put(
-      itwPid.failure({
+      itwDecodePid.failure({
         code: ItWalletErrorTypes.PID_DECODING_ERROR
       })
     );

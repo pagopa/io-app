@@ -137,6 +137,7 @@ const BarcodeScanScreen = () => {
         break;
       case "IDPAY":
         openDeepLink(barcode.authUrl);
+        break;
       case "ITWALLET":
         // TODO: blocked by [SIW-272]
         break;

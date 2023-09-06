@@ -3325,6 +3325,25 @@ features:
       credentialDetails: 
         buttons: 
           qrCode: "Mostra QR code"
+      pidAttributesScreen: 
+        headerTitle: "Presentazione dati"
+        title: "Confermi questi dati?"
+        subTitle: "Qui trovi i dati relativi alla tua Identità Digitale e l’Ente a cui li stai presentando"
+        requiredData: 
+          title: "Dati obbligatori"
+          subTitle: "Necessari per accedere ai servizi che richiedi"
+        wrongClaims: 
+          title: "Qualcosa non torna? "
+          reportLink: "Segnala un errore"
+        privacy: 
+          thirdParty: "I dati non sono condivisi con terze parti"
+          preservation: "I dati saranno conservati per {{numberOfMonths}} mesi"
+          deletion: "Potrai cancellare i dati in qualsiasi momento"
+          conditionsLink: "Tutte le condizioni"
+        buttons: 
+          confirmData: "Conferma dati"
+          deny: "Nega"
+        tos: "Proseguendo accetti i [Termini e condizioni d’uso]() del servizio e confermi di avere letto l’[Informativa Privacy]() di {{relayingParty}}."
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"
@@ -3351,6 +3370,8 @@ features:
         title: "C'è un problema sui nostri sistemi"
         body: "Riprova tra qualche minuto. Se si ripete, contatta l'assistenza."
       close: "Chiudi"
+      rp: "Relying Party"
+      trusted: "Trusted"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
