@@ -5,6 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
+import { Divider } from "@pagopa/io-app-design-system";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -23,7 +24,6 @@ import {
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
 import { localeDateFormat } from "../../../../../utils/locale";
-import { Divider } from "../../../../../components/core/Divider";
 export type OperationsListScreenParams = { initiativeId: string };
 
 type OperationsListScreenRouteProps = RouteProp<

@@ -2,14 +2,13 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { VSpacer, Divider } from "@pagopa/io-app-design-system";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import { Divider } from "../../../../../components/core/Divider";
 import {
   AppParamsList,
   IOStackNavigationProp

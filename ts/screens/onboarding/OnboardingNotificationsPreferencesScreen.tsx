@@ -4,7 +4,7 @@ import * as B from "fp-ts/lib/boolean";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { InfoBox } from "../../components/box/InfoBox";
@@ -33,8 +33,6 @@ import customVariables from "../../theme/variables";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { showToast } from "../../utils/showToast";
 import { ContentWrapper } from "../../components/core/ContentWrapper";
-import { Divider } from "../../components/core/Divider";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
