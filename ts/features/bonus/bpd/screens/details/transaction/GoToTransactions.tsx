@@ -1,11 +1,10 @@
 import * as React from "react";
 import { getBottomSpace, isIphoneX } from "react-native-iphone-x-helper";
 import DeviceInfo from "react-native-device-info";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
 import I18n from "../../../../../../i18n";
-import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
 
 type Props = { goToTransactions: () => void };
 

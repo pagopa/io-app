@@ -1,8 +1,8 @@
 import * as React from "react";
 import I18n from "i18n-js";
 
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
 import { IOSpacer } from "../../../components/core/variables/IOSpacing";

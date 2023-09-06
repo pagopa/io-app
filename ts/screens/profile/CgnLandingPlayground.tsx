@@ -1,14 +1,13 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },

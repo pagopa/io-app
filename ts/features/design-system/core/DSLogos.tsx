@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useIOTheme } from "@pagopa/io-app-design-system";
+import { useIOTheme, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOLogoPaymentExtType,
   IOLogoPaymentType,
@@ -9,7 +9,6 @@ import {
   LogoPayment,
   LogoPaymentExt
 } from "../../../components/core/logos";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import {
   IOStyles,

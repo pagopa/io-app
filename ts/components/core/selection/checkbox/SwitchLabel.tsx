@@ -1,6 +1,7 @@
 import {
   SwitchLabel as DSSwitchLabel,
-  IOColors
+  IOColors,
+  HSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
@@ -9,7 +10,6 @@ import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../../fonts";
-import { HSpacer } from "../../spacer/Spacer";
 import { IOStyles } from "../../variables/IOStyles";
 import { AnimatedSwitch } from "./AnimatedSwitch";
 

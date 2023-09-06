@@ -1,10 +1,10 @@
 import { NavigationEvents } from "@react-navigation/compat";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { IOPictograms, Pictogram } from "../core/pictograms";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 

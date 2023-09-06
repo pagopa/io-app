@@ -10,12 +10,11 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";

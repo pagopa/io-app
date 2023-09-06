@@ -1,10 +1,9 @@
 import * as React from "react";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import I18n from "../../../i18n";
 import { H2 } from "../../../components/core/typography/H2";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSLoaders = () => (
   <DesignSystemScreen title={"Loaders"}>

@@ -3,10 +3,9 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import SectionCardComponent, {
   SectionCardStatus
 } from "../../../../components/wallet/card/SectionCardComponent";

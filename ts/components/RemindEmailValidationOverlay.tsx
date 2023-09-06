@@ -16,7 +16,7 @@ import {
   Platform
 } from "react-native";
 import { connect } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -39,7 +39,6 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { VSpacer } from "./core/spacer/Spacer";
 import { Body } from "./core/typography/Body";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import { IOStyles } from "./core/variables/IOStyles";

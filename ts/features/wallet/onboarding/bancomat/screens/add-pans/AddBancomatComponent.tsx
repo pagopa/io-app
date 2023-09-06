@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
@@ -21,10 +22,6 @@ import PreviewBancomatCard from "../../../../bancomat/component/bancomatCard/Pre
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { isBancomatBlocked } from "../../../../../../utils/paymentMethod";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   pan: Card;

@@ -3,7 +3,8 @@ import {
   IOColors,
   IOIconSizeScale,
   IOIcons,
-  Icon
+  Icon,
+  HSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
@@ -20,7 +21,6 @@ import Animated, {
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
-import { HSpacer } from "../core/spacer/Spacer";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import {

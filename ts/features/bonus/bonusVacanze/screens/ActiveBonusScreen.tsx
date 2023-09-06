@@ -21,7 +21,9 @@ import {
   IOColors,
   IOIcons,
   Icon,
-  hexToRgba
+  hexToRgba,
+  HSpacer,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
@@ -76,7 +78,6 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";

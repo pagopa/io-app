@@ -5,13 +5,13 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import { OnboardingStatusDTO } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

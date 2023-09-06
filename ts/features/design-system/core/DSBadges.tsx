@@ -1,8 +1,13 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Badge, IOColors, Tag } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  IOColors,
+  Tag,
+  VSpacer,
+  HSpacer
+} from "@pagopa/io-app-design-system";
 import { IOBadge } from "../../../components/core/IOBadge";
-import { VSpacer, HSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

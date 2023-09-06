@@ -16,12 +16,11 @@ import {
   StyleSheet
 } from "react-native";
 import { connect, useSelector } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";

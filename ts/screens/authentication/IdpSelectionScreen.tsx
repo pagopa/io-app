@@ -5,7 +5,7 @@ import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -29,7 +29,6 @@ import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";

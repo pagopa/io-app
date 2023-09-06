@@ -14,12 +14,12 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   IOColors,
   IOIcons,
-  getGradientColorValues
+  getGradientColorValues,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 import {
   ContextualHelpProps,

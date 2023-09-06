@@ -4,14 +4,13 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import {
   DiscountCodeType,
   DiscountCodeTypeEnum
 } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";

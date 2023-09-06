@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";

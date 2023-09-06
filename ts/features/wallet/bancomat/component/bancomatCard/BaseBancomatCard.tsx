@@ -10,11 +10,10 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import { IOColors, hexToRgba, VSpacer } from "@pagopa/io-app-design-system";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { IOBadge } from "../../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
 import I18n from "../../../../../i18n";

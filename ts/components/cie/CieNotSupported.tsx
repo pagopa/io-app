@@ -2,9 +2,14 @@ import { List, ListItem } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform, View } from "react-native";
-import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import Markdown from "../ui/Markdown";
 import { Body } from "../core/typography/Body";
 

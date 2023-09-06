@@ -1,6 +1,11 @@
 import { SectionList, View } from "react-native";
 import * as React from "react";
-import { IOColors, useIOTheme, Divider } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  useIOTheme,
+  Divider,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   IOStyles,
   IOVisualCostants
@@ -11,7 +16,6 @@ import {
 } from "../../navigation/params/AppParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import ListItemNav from "../../components/ui/ListItemNav";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";

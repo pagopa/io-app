@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { StatusEnum as InitiativeStatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { Alert } from "../../../../../components/Alert";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import I18n from "../../../../../i18n";
 import {
   IDPayConfigurationParamsList,

@@ -12,10 +12,9 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import variables from "../theme/variables";
 import { roundToThirdDecimal } from "../utils/number";
-import { VSpacer } from "./core/spacer/Spacer";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;

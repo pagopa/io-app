@@ -4,7 +4,8 @@ import {
   AccordionItem,
   IOColors,
   Icon,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { RawAccordion } from "../../../components/core/accordion/RawAccordion";
 import { Body } from "../../../components/core/typography/Body";
@@ -12,7 +13,6 @@ import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 const assistanceData: Array<AccordionItem> = [
   {

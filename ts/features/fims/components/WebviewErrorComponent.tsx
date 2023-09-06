@@ -1,11 +1,11 @@
 import { View, Image, StyleSheet } from "react-native";
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body as BodyText } from "../../../components/core/typography/Body";
 import brokenLinkImage from "../../../../img/broken-link.png";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({

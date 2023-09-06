@@ -15,11 +15,16 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { Icon, hexToRgba, IOColors } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  hexToRgba,
+  IOColors,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
 import { makeFontStyleObject } from "../../../../components/core/fonts";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";

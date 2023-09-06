@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
+import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";

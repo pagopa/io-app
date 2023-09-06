@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
@@ -16,7 +16,6 @@ import {
   convertReceivedDateToAccessible
 } from "../../../utils/convertDateToWordDistance";
 import { IOBadge } from "../../core/IOBadge";
-import { HSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { H3 } from "../../core/typography/H3";
 import { H5 } from "../../core/typography/H5";

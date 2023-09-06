@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { H2 } from "../../../components/core/typography/H2";
@@ -13,7 +13,6 @@ import {
   INITIAL_CARD_FORM_STATE
 } from "../../../utils/input";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSTextFields = () => {
   /*

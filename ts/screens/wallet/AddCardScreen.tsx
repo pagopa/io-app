@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Link } from "../../components/core/typography/Link";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -52,7 +52,6 @@ import {
 } from "../../utils/input";
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 
 export type AddCardScreenNavigationParams = Readonly<{

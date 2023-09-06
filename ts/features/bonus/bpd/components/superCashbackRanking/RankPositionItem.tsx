@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -9,7 +9,6 @@ import {
   formatNumberWithNoDigits
 } from "../../../../../utils/stringBuilder";
 import I18n from "../../../../../i18n";
-import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {

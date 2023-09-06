@@ -1,12 +1,13 @@
 import * as React from "react";
 import { View, Text } from "react-native";
-import { IOColors, IOThemeContext } from "@pagopa/io-app-design-system";
 import {
+  IOColors,
+  IOThemeContext,
   VSpacer,
   HSpacer,
+  IOSpacer,
   SpacerOrientation
-} from "../../../components/core/spacer/Spacer";
-import type { IOSpacer } from "../../../components/core/variables/IOSpacing";
+} from "@pagopa/io-app-design-system";
 
 type DSSpacerViewerBoxProps = {
   size: IOSpacer;

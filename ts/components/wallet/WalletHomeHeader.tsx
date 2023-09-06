@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { navigateToAvailableBonusScreen } from "../../features/bonus/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
@@ -13,7 +13,6 @@ import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomShee
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";

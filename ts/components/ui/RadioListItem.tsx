@@ -4,7 +4,9 @@ import {
   Icon,
   ListItemRadio,
   hexToRgba,
-  useIOTheme
+  useIOTheme,
+  HSpacer,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
@@ -24,7 +26,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
 import { AnimatedRadio } from "../core/selection/checkbox/AnimatedRadio";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 import {

@@ -5,7 +5,9 @@ import {
   IOColorsStatusForeground,
   IOIconSizeScale,
   IOIcons,
-  Icon
+  Icon,
+  HSpacer,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import {
@@ -27,7 +29,6 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { Label } from "../core/typography/Label";
 import { NewH4 } from "../core/typography/NewH4";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";

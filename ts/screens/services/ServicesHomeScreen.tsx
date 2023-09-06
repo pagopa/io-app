@@ -34,9 +34,8 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";

@@ -1,8 +1,7 @@
 import { none } from "fp-ts/lib/Option";
 import { View } from "react-native";
 import * as React from "react";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import BlockButtons from "../../../../../../components/ui/BlockButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";

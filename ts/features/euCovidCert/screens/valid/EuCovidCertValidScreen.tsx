@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -45,7 +45,6 @@ import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type OwnProps = {
   validCertificate: ValidCertificate;

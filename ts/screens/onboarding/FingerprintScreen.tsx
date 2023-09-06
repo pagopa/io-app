@@ -2,7 +2,7 @@ import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOIcons } from "@pagopa/io-app-design-system";
+import { IOIcons, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -18,7 +18,6 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { BiometricsValidType } from "../../utils/biometrics";
 import { IOVisualCostants } from "../../components/core/variables/IOStyles";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 
 export type FingerprintScreenNavigationParams = Readonly<{
   biometryType: BiometricsValidType;

@@ -8,7 +8,8 @@ import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import {
   IOColors,
   IOIcons,
-  IOSectionPictogramType
+  IOSectionPictogramType,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import {
   HEADER_ANIMATION_DURATION,
@@ -18,7 +19,6 @@ import ScreenHeader from "../ScreenHeader";
 import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 
 type Props = Readonly<{

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
@@ -13,7 +13,6 @@ import { Label } from "../../../../../components/core/typography/Label";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
-import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   discount: Discount;

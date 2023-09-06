@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import customVariables from "../../theme/variables";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOPictograms, Pictogram } from "../core/pictograms";

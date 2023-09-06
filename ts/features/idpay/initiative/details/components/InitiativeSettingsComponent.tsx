@@ -3,11 +3,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import ListItemNav from "../../../../../components/ui/ListItemNav";
 import ListItemNavAlert from "../../../../../components/ui/ListItemNavAlert";

@@ -9,10 +9,14 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  hexToRgba,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

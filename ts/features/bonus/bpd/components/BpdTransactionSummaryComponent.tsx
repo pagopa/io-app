@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { InfoBox } from "../../../../components/box/InfoBox";
@@ -17,7 +17,6 @@ import {
 } from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   lastUpdateDate: string;

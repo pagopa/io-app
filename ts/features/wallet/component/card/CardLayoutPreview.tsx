@@ -1,8 +1,7 @@
 import * as React from "react";
 import { View, AccessibilityProps, Platform, StyleSheet } from "react-native";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import { IOColors, hexToRgba, VSpacer } from "@pagopa/io-app-design-system";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   left: React.ReactNode;

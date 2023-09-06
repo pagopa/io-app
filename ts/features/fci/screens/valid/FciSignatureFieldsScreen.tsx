@@ -5,7 +5,7 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -40,7 +40,6 @@ import {
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";

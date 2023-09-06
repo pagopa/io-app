@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";

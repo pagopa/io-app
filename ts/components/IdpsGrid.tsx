@@ -16,13 +16,12 @@ import {
 } from "react-native";
 
 import { connect } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import themeVariables from "../theme/variables";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
 import { toAndroidCacheTimestamp } from "../utils/dates";
-import { VSpacer } from "./core/spacer/Spacer";
 
 type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;

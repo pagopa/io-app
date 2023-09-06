@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
-import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 

@@ -4,9 +4,9 @@ import {
   IOColors,
   IOIconSizeScale,
   IOIcons,
-  Icon
+  Icon,
+  HSpacer
 } from "@pagopa/io-app-design-system";
-import { HSpacer } from "../core/spacer/Spacer";
 
 type Props = {
   iconName?: IOIcons;

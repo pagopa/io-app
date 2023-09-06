@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";

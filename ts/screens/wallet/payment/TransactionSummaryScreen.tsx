@@ -11,9 +11,8 @@ import * as React from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

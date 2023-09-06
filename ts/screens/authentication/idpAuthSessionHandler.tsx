@@ -55,7 +55,7 @@ import { SessionToken } from "../../types/SessionToken";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../components/core/pictograms";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import themeVariables from "../../theme/variables";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";

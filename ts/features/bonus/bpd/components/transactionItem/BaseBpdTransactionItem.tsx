@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedbackProps
 } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { HSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IOColors, HSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

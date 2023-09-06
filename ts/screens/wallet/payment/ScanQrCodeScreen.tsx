@@ -21,13 +21,12 @@ import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import { connect } from "react-redux";
 import RNQRGenerator from "rn-qr-generator";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import {
   BarcodeCamera,
   ScannedBarcode
 } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {

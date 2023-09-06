@@ -1,7 +1,7 @@
 import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
 import { ButtonSolid } from "../../../components/ui/ButtonSolid";
 import { ButtonOutline } from "../../../components/ui/ButtonOutline";
@@ -12,7 +12,6 @@ import PaymentButton from "../../../components/messages/MessageDetail/common/Pay
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import IconButtonContained from "../../../components/ui/IconButtonContained";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
