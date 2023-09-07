@@ -7,8 +7,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   IODSExperimentalContextProvider,
-  IOThemeContext,
-  IOThemes
+  IOThemes,
+  IOThemeContext
 } from "@pagopa/io-app-design-system";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
