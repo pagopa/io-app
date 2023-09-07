@@ -2,9 +2,12 @@ import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

@@ -4,7 +4,12 @@
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
-import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  HSpacer,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 import { H2 } from "../../../components/core/typography/H2";
@@ -14,7 +19,6 @@ import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 
 export const DSTabNavigation = () => {
   const handlePress = () => {};

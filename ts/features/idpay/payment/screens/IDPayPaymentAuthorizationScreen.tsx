@@ -4,9 +4,14 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { Icon, Divider, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  Divider,
+  HSpacer,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { NewH6 } from "../../../../components/core/typography/NewH6";

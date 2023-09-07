@@ -1,11 +1,14 @@
 import * as React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  hexToRgba,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { Body } from "../../../components/core/typography/Body";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 
 const bottomBarHeight: number = 70;
 

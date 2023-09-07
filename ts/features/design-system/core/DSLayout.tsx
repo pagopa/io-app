@@ -8,11 +8,11 @@ import {
   HSpacer,
   VSpacer,
   IOAppMargin,
-  IOSpacer
+  IOSpacer,
+  ContentWrapper
 } from "@pagopa/io-app-design-system";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { Body } from "../../../components/core/typography/Body";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { H3 } from "../../../components/core/typography/H3";

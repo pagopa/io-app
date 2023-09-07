@@ -1,7 +1,10 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
-import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
+import {
+  VSpacer,
+  Pictogram,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

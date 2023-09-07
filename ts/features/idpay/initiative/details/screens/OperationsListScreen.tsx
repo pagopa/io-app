@@ -5,9 +5,13 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
-import { Divider, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  HSpacer,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
-import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
