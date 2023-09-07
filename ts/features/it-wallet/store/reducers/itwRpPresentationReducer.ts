@@ -4,10 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  itwRpInitialization,
-  itwRpPresentation
-} from "../actions/itwRpActions";
+import { itwRpPresentation } from "../actions/itwRpActions";
 
 export type ItwRpPresentationType = {
   result: O.Option<string>;
@@ -39,7 +36,7 @@ const reducer = (
       return pot.some({
         result: O.some(action.payload)
       });
-    case getType(itwRpInitialization.failure):
+    case getType(itwRpPresentation.failure):
       return pot.toError(state, action.payload);
   }
   return state;

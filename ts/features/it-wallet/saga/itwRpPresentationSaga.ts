@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select, take } from "typed-redux-saga/macro";
+import { apply, call, put, select, take } from "typed-redux-saga/macro";
 import { sign } from "@pagopa/io-react-native-crypto";
 import { SignJWT } from "@pagopa/io-react-native-jwt";
 import * as O from "fp-ts/lib/Option";
@@ -65,13 +65,12 @@ export function* handleItwRpPresentationSaga(
       ).href;
 
       const { vp_token: unsignedVpToken, presentation_submission } =
-        yield* call(
-          RP.prepareVpToken,
+        yield* apply(RP, RP.prepareVpToken, [
           requestObject.value,
           walletInstanceId,
           [pidToken.value.credential, claims],
           decodedWia.payload.cnf.jwk.kid
-        );
+        ]);
 
       const signature = yield* call(sign, unsignedVpToken, ITW_WIA_KEY_TAG);
       const vpToken = yield* call(
@@ -86,13 +85,12 @@ export function* handleItwRpPresentationSaga(
         throw new Error("Entity is not defined");
       } else {
         // Submit authorization response
-        const result = yield* call(
-          RP.sendAuthorizationResponse,
+        const result = yield* apply(RP, RP.sendAuthorizationResponse, [
           requestObject.value,
           vpToken,
           presentation_submission,
           entity.value
-        );
+        ]);
 
         yield* put(itwRpPresentation.success(result));
       }
