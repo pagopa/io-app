@@ -791,7 +791,7 @@ email:
       content: !include email_insert_help.md
   newinsert:
     header: "Configure IO"
-    title: "What is your email?"
+    title: "What is your email address?"
     subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
     label: "Personal email address"
     alert: 
