@@ -244,6 +244,6 @@ const styles = StyleSheet.create({
   rightSection: {
     marginLeft: IOListItemVisualParams.iconMargin,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "center"
   }
 });
