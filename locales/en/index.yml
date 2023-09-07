@@ -3436,6 +3436,18 @@ features:
         buttons: 
           confirmData: "Confirm data"
           deny: "Deny"
+      resultScreen:
+        loading: 
+          title: "Presenting your data to {{relayingParty}}"
+          subTitle: "Wait a few seconds"
+        error:
+          title: "Data presentation failed"
+          subTitle: "Try again in a few minutes. If it happens again, contact support."
+        success: 
+          title: "Successful login using IT Wallet"
+          subTitle: "You can now return to the {{relayingParty}} website to continue."
+          buttons: 
+            continue: "Ok, thanks"
     verifiableCredentials:
       type:
         digitalCredential: "Digital Credential"
