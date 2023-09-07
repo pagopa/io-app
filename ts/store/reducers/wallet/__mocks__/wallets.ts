@@ -154,7 +154,7 @@ export const walletsV2_2 = {
   ]
 };
 
-// 1 bancomat, 1 bancomatPay, 1 satispay, 1 creditCard
+// 1 bancomat, 1 bancomatPay, 1 creditCard
 export const walletsV2_3 = {
   data: [
     {
@@ -208,24 +208,6 @@ export const walletsV2_3 = {
         htokenList: ["token1", "token2"],
         issuerAbiCode: "00352",
         type: "PP"
-      },
-      onboardingChannel: "I",
-      pagoPA: true,
-      updateDate: "2020-11-20"
-    },
-    {
-      walletType: "Satispay",
-      createDate: "2021-11-16",
-      enableableFunctions: [
-        EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
-      ],
-      favourite: false,
-      idWallet: 25924,
-      info: {
-        brandLogo: "http://placeimg.com/640/480/technics",
-        uuid: "2f969cf41246000a4f5a3b6e100e1826bd58205a0feba80f64c2a853fb8f4fa50000"
       },
       onboardingChannel: "I",
       pagoPA: true,

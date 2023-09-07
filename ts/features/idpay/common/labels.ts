@@ -33,7 +33,6 @@ const circuitTypeLabels: OperationTypeLabels = {
   "06": "Diners",
   "07": "PostePay",
   "08": "BancomatPay",
-  "09": "Satispay",
   "10": "PrivateCircuit"
 };
 

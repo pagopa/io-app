@@ -7,7 +7,7 @@ import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../../../../__mocks__/initializedProfile";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import BPayCard from "../BPayCard";
 
 const aPhone = "+39 34*******0000";

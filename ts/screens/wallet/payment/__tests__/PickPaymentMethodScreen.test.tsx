@@ -16,10 +16,7 @@ import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/p
 import { toIndexed } from "../../../../store/helpers/indexer";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  CreditCardPaymentMethod,
-  SatispayPaymentMethod
-} from "../../../../types/pagopa";
+import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
@@ -47,18 +44,6 @@ const aCreditCard = {
   pagoPA: true,
   onboardingChannel: "IO"
 } as CreditCardPaymentMethod;
-
-const aSatispay = {
-  idWallet: 2,
-  kind: "Satispay",
-  walletType: WalletTypeEnum.Satispay,
-  pagoPA: false,
-  onboardingChannel: "IO",
-  enableableFunctions: [EnableableFunctionsEnum.BPD],
-  caption: "",
-  icon: "",
-  info: {}
-} as SatispayPaymentMethod;
 
 const mockPresentFn = jest.fn();
 
@@ -194,30 +179,6 @@ describe("PickPaymentMethodScreen", () => {
         })
       ]);
     }
-  });
-  it("should show the notPayablePaymentMethodList there is at least one not payable payment method", () => {
-    const indexedWalletById = toIndexed(
-      [aSatispay].map(convertWalletV2toWalletV1),
-      pm => pm.idWallet
-    );
-
-    store = mockStore({
-      ...globalState,
-      wallet: {
-        ...globalState.wallet,
-        wallets: {
-          ...globalState.wallet.wallets,
-          walletById: pot.some(indexedWalletById)
-        }
-      }
-    });
-
-    const component = renderPickPaymentMethodScreen(store);
-    const availablePaymentMethodList = component.queryByTestId(
-      "notPayablePaymentMethodList"
-    );
-
-    expect(availablePaymentMethodList).not.toBeNull();
   });
 
   it("should show a credit card if the field onboardingChannel is undefined", () => {

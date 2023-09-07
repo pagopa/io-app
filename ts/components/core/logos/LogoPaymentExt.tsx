@@ -13,7 +13,6 @@ import LogoPaymentExtUnionPay from "./svg/LogoPaymentExtUnionPay";
 import LogoPaymentExtPayPal from "./svg/LogoPaymentExtPayPal";
 import LogoPaymentExtBancomatPay from "./svg/LogoPaymentExtBancomatPay";
 import LogoPaymentExtPostepay from "./svg/LogoPaymentExtPostepay";
-import LogoPaymentExtSatispay from "./svg/LogoPaymentExtSatispay";
 import LogoPaymentExtPagoBancomat from "./svg/LogoPaymentExtPagoBancomat";
 import LogoPaymentExtApplePay from "./svg/LogoPaymentExtApplePay";
 
@@ -30,7 +29,6 @@ export const IOPaymentExtLogos = {
   payPal: LogoPaymentExtPayPal,
   bancomatPay: LogoPaymentExtBancomatPay,
   postepay: LogoPaymentExtPostepay,
-  satispay: LogoPaymentExtSatispay,
   pagoBancomat: LogoPaymentExtPagoBancomat,
   applePay: LogoPaymentExtApplePay
 } as const;

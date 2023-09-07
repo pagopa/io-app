@@ -1126,25 +1126,6 @@ wallet:
       koNotFound:
         title: "Non abbiamo trovato nessun BANCOMAT Pay attivo"
         body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
-    satispay:
-      name: "Satispay"
-      headerTitle: "Aggiungi Satispay"
-      start:
-        title: "Vuoi aggiungere su IO il tuo account Satispay?"
-        body: "Verificheremo se esiste un account Satispay associato al tuo codice fiscale."
-        cta: "Informativa sul trattamento dei dati personali"
-      loadingSearch:
-        title: "Stiamo verificando il tuo account Satispay\n\nAttendi qualche secondo"
-      loadingAdd:
-        title: "Stiamo aggiungendo il tuo account Satispay\n\nAttendi qualche secondo"
-      add:
-        title: "Vuoi aggiungere questo account Satispay?"
-      koTimeout:
-        title: "Non siamo riusciti a contattare Satispay"
-        body: "Riprova per favore"
-      koNotFound:
-        title: "Non ci risulta che tu abbia ancora attivato Satispay"
-        body: "Contatta Satispay per l’attivazione"
     paypal:
       name: "PayPal"
       headerTitle: "Aggiungi PayPal"
@@ -1488,9 +1469,6 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
-    satispay:
-      name: Satispay
-      description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
       description: Paga con carta o conto corrente collegati
@@ -1615,12 +1593,6 @@ wallet:
         title: "La tua carta ha più di un logo?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te."
         addCta: "Aggiungi secondo circuito"
-  satispay:
-    details:
-      infobox:
-        one: "Satispay"
-        two: " non consente ancora di pagare tramite IO"
-        three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
   cobadge:
     details:
       card:

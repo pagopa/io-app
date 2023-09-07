@@ -25,12 +25,10 @@ import {
   isCreditCard,
   isPayPal,
   isRawCreditCard,
-  isSatispay,
   PaymentMethod,
   PayPalPaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
-  SatispayPaymentMethod,
   Wallet
 } from "../../../types/pagopa";
 
@@ -316,15 +314,6 @@ export const paypalListSelector = createSelector(
 );
 
 /**
- * Return a satispay list in the wallet
- */
-export const satispayListSelector = createSelector(
-  [paymentMethodsSelector],
-  (paymentMethodPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
-    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isSatispay))
-);
-
-/**
  * Return the paypal (only 1 can be in the wallet) payment method
  */
 export const paypalSelector = createSelector(
@@ -377,17 +366,6 @@ export const bancomatListVisibleInWalletSelector = createSelector(
   (bancomatListPot): pot.Pot<ReadonlyArray<BancomatPaymentMethod>, Error> =>
     pot.map(bancomatListPot, bancomatList =>
       bancomatList.filter(isVisibleInWallet)
-    )
-);
-
-/**
- * Return a satispay list visible in the wallet
- */
-export const satispayListVisibleInWalletSelector = createSelector(
-  [satispayListSelector],
-  (satispayListPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
-    pot.map(satispayListPot, satispayList =>
-      satispayList.filter(isVisibleInWallet)
     )
 );
 
