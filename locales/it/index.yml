@@ -3408,6 +3408,18 @@ features:
           confirmData: "Conferma dati"
           deny: "Nega"
         tos: "Proseguendo accetti i [Termini e condizioni d’uso]() del servizio e confermi di avere letto l’[Informativa Privacy]() di {{relayingParty}}."
+      resultScreen:
+        loading: 
+          title: "Sto presentando i tuoi dati a {{relayingParty}}"
+          subTitle: "Attendi qualche secondo"
+        error:
+          title: "Presentazione dei dati non riuscita"
+          subTitle: "Riprova tra qualche minuto. Se si ripete, contatta l’assistenza."
+        success: 
+          title: "Accesso eseguito correttamente con IT Wallet"
+          subTitle: "Ora puoi tornare sul sito di {{relayingParty}} per continuare"
+          buttons: 
+            continue: "Ok, grazie"
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"
