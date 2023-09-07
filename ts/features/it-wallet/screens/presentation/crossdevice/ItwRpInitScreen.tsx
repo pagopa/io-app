@@ -27,7 +27,6 @@ import ItemSeparatorComponent from "../../../../../components/ItemSeparatorCompo
 import { Link } from "../../../../../components/core/typography/Link";
 import { FeatureInfo } from "../../../../../components/FeatureInfo";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { itwRpInitializationSelector } from "../../../store/reducers/itwRpInitializationReducer";
 import { openWebUrl } from "../../../../../utils/url";
@@ -35,6 +34,7 @@ import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverl
 import { itwRpInitialization } from "../../../store/actions/itwRpActions";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { FEDERATION_ENTITY } from "../../../utils/mocks";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 
 /**
  * ItwRpInitScreenNavigationParams's navigation params.
@@ -84,7 +84,11 @@ const ItwRpInitScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: () => null,
+    onPress: () =>
+      navigation.navigate(
+        ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT,
+        route.params
+      ),
     title: I18n.t(
       "features.itWallet.presentation.pidAttributesScreen.buttons.confirmData"
     )
@@ -223,8 +227,8 @@ const ItwRpInitScreen = () => {
               }
             )}
           />
+          <VSpacer size={48} />
         </ScreenContent>
-        <VSpacer size={48} />
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={notNowButtonProps}
