@@ -7,10 +7,10 @@ import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import CobadgeCard from "../BaseCoBadgeCard";
 
-jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
+jest.mock("../../../onboarding/bancomat/hooks/useImageResize");
 
 const aCaption = "****1234";
 const anAbiLogo = "http://127.0.0.1:3000/static_contents/logos/abi/03069.png";

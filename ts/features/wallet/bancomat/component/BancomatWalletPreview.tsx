@@ -12,7 +12,7 @@ import { navigateToBancomatDetailScreen } from "../../../../store/actions/naviga
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { CardLogoPreview } from "../../component/card/CardLogoPreview";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 
 type OwnProps = { bancomat: BancomatPaymentMethod };
 

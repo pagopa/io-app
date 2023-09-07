@@ -2,7 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { PspData } from "../../../definitions/pagopa/PspData";
-import * as hooks from "../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
+import * as hooks from "../../features/wallet/onboarding/bancomat/hooks/useImageResize";
 import { getPspIconUrlFromAbi } from "../../utils/paymentMethod";
 import { PspComponent } from "../wallet/payment/PspComponent";
 

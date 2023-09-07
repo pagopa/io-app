@@ -12,7 +12,7 @@ import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
-import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../bancomat/hooks/useImageResize";
 import { IOPayPalPsp } from "../types";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
