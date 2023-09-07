@@ -129,7 +129,7 @@ const ModulePaymentNoticeContent = ({
           {subtitle}
         </LabelSmall>
       </View>
-      <View style={styles.rightSection}>
+      <View style={[styles.rightSection, { flexShrink: 1 }]}>
         <AmountOrBadgeComponent />
         <Icon
           name="chevronRightListItem"
