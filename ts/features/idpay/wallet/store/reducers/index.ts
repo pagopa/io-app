@@ -165,9 +165,7 @@ const idPayInitiativesFromInstrumentPotSelector = (state: GlobalState) =>
 export const idPayAreInitiativesFromInstrumentLoadingSelector = createSelector(
   [isIdPayEnabledSelector, idPayInitiativesFromInstrumentPotSelector],
   (isIDPayEnabled, initiativesPot) =>
-    isIDPayEnabled &&
-    pot.isLoading(initiativesPot) &&
-    !pot.isSome(initiativesPot)
+    isIDPayEnabled && pot.isLoading(initiativesPot)
 );
 export const idPayAreInitiativesFromInstrumentErrorSelector = (
   state: GlobalState
