@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0-rc.0](https://github.com/pagopa/io-app/compare/0.3.0-rc.3...0.4.0-rc.0) (2023-09-07)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-196](https://pagopa.atlassian.net/browse/SIW-196)] Add features info screen to select provider for wallet activation ([#4943](https://github.com/pagopa/io-app/issues/4943)) ([f590d57](https://github.com/pagopa/io-app/commit/f590d57e0ca9f521a62127efd4e4bccb9b9010d6))
+* **IT Wallet:** [[SIW-231](https://pagopa.atlassian.net/browse/SIW-231)] Add decoder type to support itw qrcode ([#4897](https://github.com/pagopa/io-app/issues/4897)) ([2400327](https://github.com/pagopa/io-app/commit/2400327cb5a8de32d06253fcec113d25699b29cb))
+* **IT Wallet:** [[SIW-232](https://pagopa.atlassian.net/browse/SIW-232)] Add RP initialization screen ([#4906](https://github.com/pagopa/io-app/issues/4906)) ([43e71a9](https://github.com/pagopa/io-app/commit/43e71a94de1289d3104628495a7bea76e3cc1789))
+* **IT Wallet:** [[SIW-246](https://pagopa.atlassian.net/browse/SIW-246)] Add RP presentation screen ([#4932](https://github.com/pagopa/io-app/issues/4932)) ([5c0932a](https://github.com/pagopa/io-app/commit/5c0932a8e32d851d89f0a3317561cdf2c8fb51eb))
+* **IT Wallet:** [[SIW-364](https://pagopa.atlassian.net/browse/SIW-364)] Add generic error and loading screens ([#4889](https://github.com/pagopa/io-app/issues/4889)) ([2a5d9b9](https://github.com/pagopa/io-app/commit/2a5d9b947ef1d06c0f2b01d8885d859efa4c3654))
+* **IT Wallet:** [[SIW-379](https://pagopa.atlassian.net/browse/SIW-379)] Update`io-react-native-wallet` package ([#4909](https://github.com/pagopa/io-app/issues/4909)) ([60da37b](https://github.com/pagopa/io-app/commit/60da37b87c5a6dd37aeed63a5a3917c1a88b7753))
+* **IT Wallet:** [[SIW-380](https://pagopa.atlassian.net/browse/SIW-380)] Add Relying Party actions and reducers  ([#4910](https://github.com/pagopa/io-app/issues/4910)) ([491e61f](https://github.com/pagopa/io-app/commit/491e61f229886abe5415aefc47f5f5772d950e60))
+* **IT Wallet:** [[SIW-381](https://pagopa.atlassian.net/browse/SIW-381)] Add Relying Party saga ([#4912](https://github.com/pagopa/io-app/issues/4912)) ([2e257d8](https://github.com/pagopa/io-app/commit/2e257d84564693955aaa1de2524ee0b29c65b519))
+* **IT Wallet:** [[SIW-390](https://pagopa.atlassian.net/browse/SIW-390)] Generalize PID claims list component ([#4900](https://github.com/pagopa/io-app/issues/4900)) ([8be996c](https://github.com/pagopa/io-app/commit/8be996c4fb716c07253f66d1b9f5246f9a1e6da2))
+* **IT Wallet:** [[SIW-403](https://pagopa.atlassian.net/browse/SIW-403)] Add navigation to qrcode tab bar button ([#4914](https://github.com/pagopa/io-app/issues/4914)) ([1d70802](https://github.com/pagopa/io-app/commit/1d708020410c340d2ed5f7dc215728acce40193e))
+* **IT Wallet:** [[SIW-409](https://pagopa.atlassian.net/browse/SIW-409)] Add RP presentation reducer ([#4931](https://github.com/pagopa/io-app/issues/4931)) ([c428a82](https://github.com/pagopa/io-app/commit/c428a82b294d0005e2b4b23aa15bb063c52b5487)), closes [/github.com/pagopa/io-app/pull/4931/files#diff-c7ac22768d24496bdaec778ecf821bfbce70da6ccaac4e8dd90cbd01a78fc84](https://github.com/pagopa//github.com/pagopa/io-app/pull/4931/files/issues/diff-c7ac22768d24496bdaec778ecf821bfbce70da6ccaac4e8dd90cbd01a78fc84)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-393](https://pagopa.atlassian.net/browse/SIW-393)] PID details footer scrolling with the content view ([#4907](https://github.com/pagopa/io-app/issues/4907)) ([e37dd40](https://github.com/pagopa/io-app/commit/e37dd40388c32ef2b6dfcaa53e35d7d52fe4406c))
+* **IT Wallet:** [[SIW-405](https://pagopa.atlassian.net/browse/SIW-405)] Fix JWT library crash ([#4925](https://github.com/pagopa/io-app/issues/4925)) ([31e5e00](https://github.com/pagopa/io-app/commit/31e5e004273a7245ca34cbf44841fbc18d052ab5))
+* **IT Wallet:** [[SIW-445](https://pagopa.atlassian.net/browse/SIW-445)] Fix components not showing text with dark mode ([#4962](https://github.com/pagopa/io-app/issues/4962)) ([3378a2d](https://github.com/pagopa/io-app/commit/3378a2d5506ca5a5fcb845a3f0bd91054d0104df))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-348](https://pagopa.atlassian.net/browse/SIW-348)]  Screen naming convention refactor ([#4891](https://github.com/pagopa/io-app/issues/4891)) ([dff7c2b](https://github.com/pagopa/io-app/commit/dff7c2b051ed43f652b8ae22da52b68185f8bf30)), closes [/github.com/pagopa/io-app/pull/4891/files#diff-57231530d062f1464675dd6301352d78a3643853739d6914a5b25ed51187](https://github.com/pagopa//github.com/pagopa/io-app/pull/4891/files/issues/diff-57231530d062f1464675dd6301352d78a3643853739d6914a5b25ed51187)
+* **IT Wallet:** [[SIW-349](https://pagopa.atlassian.net/browse/SIW-349)] Refactor state structure ([#4892](https://github.com/pagopa/io-app/issues/4892)) ([fdad0bb](https://github.com/pagopa/io-app/commit/fdad0bbb29e10d621ada79b508487a46b4e884d1))
+* **IT Wallet:** [[SIW-363](https://pagopa.atlassian.net/browse/SIW-363)] Add main banner translation ([#4895](https://github.com/pagopa/io-app/issues/4895)) ([4b627b5](https://github.com/pagopa/io-app/commit/4b627b5db5f497ef33e0bacb50dda07ef6bb0e5e))
+* **IT Wallet:** [[SIW-365](https://pagopa.atlassian.net/browse/SIW-365)] Remove hardcoded strings from info screen  ([#4896](https://github.com/pagopa/io-app/issues/4896)) ([79c2ee2](https://github.com/pagopa/io-app/commit/79c2ee20a5394d5eb7f91bc16a5fbe883cff4daf))
+* **IT Wallet:** [[SIW-375](https://pagopa.atlassian.net/browse/SIW-375)] Refactor credentials state ([#4937](https://github.com/pagopa/io-app/issues/4937)) ([711202d](https://github.com/pagopa/io-app/commit/711202dba7b999f44da1007a7f9b08b224e26e21))
+* **IT Wallet:** [[SIW-407](https://pagopa.atlassian.net/browse/SIW-407)] Add PID decode to RP initialization saga ([#4928](https://github.com/pagopa/io-app/issues/4928)) ([a1183e1](https://github.com/pagopa/io-app/commit/a1183e10e5fbc7138c2a36e1780c015c3f57be2f))
+* **IT Wallet:** [[SIW-426](https://pagopa.atlassian.net/browse/SIW-426)] Update wallet library dependencies ([#4949](https://github.com/pagopa/io-app/issues/4949)) ([32db761](https://github.com/pagopa/io-app/commit/32db7613a725748ea86b7e1f816d4ceb51fe1137))
+
 ## [0.3.0-rc.6](https://github.com/pagopa/io-app/compare/0.3.0-rc.5...0.3.0-rc.6) (2023-08-28)
 
 
