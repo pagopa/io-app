@@ -245,6 +245,5 @@ const styles = StyleSheet.create({
     marginLeft: IOListItemVisualParams.iconMargin,
     flexDirection: "row",
     alignItems: "center",
-    height: "100%"
   }
 });
