@@ -1,6 +1,6 @@
 /**
- * A screen where user after login (with CIE) can set email address if it is
- * not present in the profile.
+ * A screen where user after login can set email address if it is
+ * not present in the profile or if it is already used.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
@@ -63,7 +63,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const NewOnboardingEmailInsertScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
-  // TODO: change this state logic and name (this value will be retrive by the backend)
+  // FIXME - < https://pagopa.atlassian.net/browse/IOPID-690> change this state logic and name (this value will be retrive by the backend)
   const [isCduEmail] = useState<boolean>(false);
 
   const viewRef = React.createRef<View>();
@@ -131,11 +131,10 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
    * This function control if the email is already used
    * @returns boolean
    *
-   * TODO: this function need to be integrated with API that control if the email already exists
+   * FIXME - < https://pagopa.atlassian.net/browse/IOPID-690> this function need to be integrated with API that control if the email already exists
    */
   const isExistingEmail = () => {
     const showAlertExistsEmail: boolean = false;
-    // TODO: insert the selector to control the email
     if (showAlertExistsEmail) {
       Alert.alert(
         I18n.t("email.newinsert.alert.modaltitle"),
@@ -153,7 +152,9 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
 
   const navigateToEmailReadScreen = useCallback(() => {
     props.navigation.dispatch(StackActions.popToTop());
-    props.navigation.navigate(ROUTES.ONBOARDING_READ_EMAIL_SCREEN);
+    props.navigation.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+    });
   }, [props.navigation]);
 
   const continueOnPress = () => {
