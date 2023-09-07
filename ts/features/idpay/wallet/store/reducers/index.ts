@@ -51,10 +51,7 @@ const reducer = (
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
-      if (
-        !action.payload.isRefreshing &&
-        !pot.isSome(state.initiativesWithInstrument)
-      ) {
+      if (!action.payload.isRefreshing) {
         return {
           ...state,
           initiativesWithInstrument: pot.noneLoading,
@@ -168,7 +165,9 @@ const idPayInitiativesFromInstrumentPotSelector = (state: GlobalState) =>
 export const idPayAreInitiativesFromInstrumentLoadingSelector = createSelector(
   [isIdPayEnabledSelector, idPayInitiativesFromInstrumentPotSelector],
   (isIDPayEnabled, initiativesPot) =>
-    isIDPayEnabled && pot.isLoading(initiativesPot)
+    isIDPayEnabled &&
+    pot.isLoading(initiativesPot) &&
+    !pot.isSome(initiativesPot)
 );
 export const idPayAreInitiativesFromInstrumentErrorSelector = (
   state: GlobalState
