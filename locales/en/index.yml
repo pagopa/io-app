@@ -795,11 +795,11 @@ email:
     subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
     label: "Personal email address"
     alert: 
-      title: "The email {{email}} associated with your SPID identity is already in use on IO, enter a different one."
-      description: "email already in use"
-      modaltitle: "This email is already in use"
+      title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
+      description: "email address already in use"
+      modaltitle: "This email address is already in use"
       modaldescription: "This can happen if you share the same address with a family member"
-      modalbutton: "Use another email"
+      modalbutton: "Use another email address"
   edit:
     title: Edit email
     subtitle: The email you inserted is
