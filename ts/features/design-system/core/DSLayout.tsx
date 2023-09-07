@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
+import { IOColors, IOThemeContext } from "@pagopa/io-app-design-system";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
@@ -9,10 +10,6 @@ import {
 } from "../../../components/core/variables/IOSpacing";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { Body } from "../../../components/core/typography/Body";
-import {
-  IOColors,
-  IOThemeContext
-} from "../../../components/core/variables/IOColors";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { H3 } from "../../../components/core/typography/H3";
 import { H1 } from "../../../components/core/typography/H1";
