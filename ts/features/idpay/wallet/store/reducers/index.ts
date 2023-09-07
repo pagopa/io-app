@@ -51,7 +51,10 @@ const reducer = (
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
-      if (!action.payload.isRefreshing) {
+      if (
+        !action.payload.isRefreshing &&
+        !pot.isSome(state.initiativesWithInstrument)
+      ) {
         return {
           ...state,
           initiativesWithInstrument: pot.noneLoading,
@@ -69,11 +72,17 @@ const reducer = (
         };
       }
 
+      if (!pot.isError(state.initiativesWithInstrument)) {
+        return {
+          ...state,
+          initiativesWithInstrument: pot.toLoading(
+            state.initiativesWithInstrument
+          )
+        };
+      }
       return {
         ...state,
-        initiativesWithInstrument: pot.toLoading(
-          state.initiativesWithInstrument
-        )
+        initiativesWithInstrument: state.initiativesWithInstrument
       };
     case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(
