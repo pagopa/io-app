@@ -119,7 +119,7 @@ const ModulePaymentNoticeContent = ({
 
   return (
     <>
-      <View style={IOStyles.flex}>
+      <View style={{ flexGrow: 1, flexShrink: 1 }}>
         {title && (
           <LabelSmall numberOfLines={1} weight="Regular" color="bluegrey">
             {title}
