@@ -8,6 +8,7 @@ import {
   RelyingPartySolution,
   WalletInstanceAttestation
 } from "@pagopa/io-react-native-wallet";
+
 import {
   itwRpInitializationEntityValueSelector,
   itwRpInitializationRequestObjectValueSelector

@@ -10,6 +10,7 @@ import { ITW_ROUTES } from "./ItwRoutes";
 export type ItwParamsList = {
   // DISCOVERY
   [ITW_ROUTES.DISCOVERY.INFO]: undefined;
+  [ITW_ROUTES.DISCOVERY.FEATURES_INFO]: undefined;
   // ISSUING CIE
   [ITW_ROUTES.ISSUING.CIE.EXPIRED_SCREEN]: undefined;
   [ITW_ROUTES.ISSUING.CIE.PIN_SCREEN]: undefined;

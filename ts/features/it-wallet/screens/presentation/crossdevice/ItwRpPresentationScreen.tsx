@@ -177,7 +177,7 @@ const ItwPresentationScreen = () => {
       goBack={false}
       customGoBack={<View></View>}
       headerTitle={I18n.t(
-        "features.itWallet.presentation.initializationScreen.headerTitle"
+        "features.itWallet.presentation.pidAttributesScreen.headerTitle"
       )}
       contextualHelp={emptyContextualHelp}
     >
