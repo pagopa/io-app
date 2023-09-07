@@ -227,8 +227,8 @@ const ItwRpInitScreen = () => {
               }
             )}
           />
+          <VSpacer size={48} />
         </ScreenContent>
-        <VSpacer size={48} />
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={notNowButtonProps}
