@@ -44,7 +44,7 @@ const startRotationAnimation = (
       toValue: 360,
       duration: durationMs,
       easing: Easing.linear,
-      useNativeDriver: false
+      useNativeDriver: true
     })
   ).start();
 };
