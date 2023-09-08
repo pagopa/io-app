@@ -69,11 +69,17 @@ const reducer = (
         };
       }
 
+      if (!pot.isError(state.initiativesWithInstrument)) {
+        return {
+          ...state,
+          initiativesWithInstrument: pot.toLoading(
+            state.initiativesWithInstrument
+          )
+        };
+      }
       return {
         ...state,
-        initiativesWithInstrument: pot.toLoading(
-          state.initiativesWithInstrument
-        )
+        initiativesWithInstrument: state.initiativesWithInstrument
       };
     case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(

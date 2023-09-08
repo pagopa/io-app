@@ -62,6 +62,14 @@ global:
     failed: "Failed"
     cancelled: "Cancelled"
     reversal: "Reversal"
+  modules:
+    paymentNotice:
+      badges:
+        payed: "Payed"
+        error: "Error"
+        expired: "Expired"
+        revoked: "Revoked"
+        canceled: "Canceled"
   password: Password
   username: Username
   unknown: unknown
@@ -1098,25 +1106,6 @@ wallet:
       koNotFound:
         title: "We haven't found any active BANCOMAT Pay service"
         body: "Contact your bank to activate BANCOMAT Pay!"
-    satispay:
-      name: "Satispay"
-      headerTitle: "Add Satispay"
-      start:
-        title: "Do you want to add your Satispay account to IO?"
-        body: "We will check if there is a Satispay account associated with your tax code."
-        cta: "Information on the processing of personal data"
-      loadingSearch:
-        title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
-      loadingAdd:
-        title: "We are adding your Satispay account\n\nPlease wait a few seconds"
-      add:
-        title: "Do you want to add this Satispay account?"
-      koTimeout:
-        title: "We were unable to contact Satispay"
-        body: "Retry please"
-      koNotFound:
-        title: "We do not know that you have activated Satispay yet"
-        body: "Contact Satispay for activation"
     paypal:
       name: "PayPal"
       headerTitle: "Add PayPal"
@@ -1460,9 +1449,6 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
-    satispay:
-      name: Satispay
-      description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
       description: Pay with your linked card or bank account
@@ -1586,12 +1572,6 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
         addCta: "Add second circuit"
-  satispay:
-    details:
-      infobox:
-        one: "Satispay"
-        two: " can't be used yet to make payments through IO"
-        three: ": this feature will be enabled on future app version release."
   cobadge:
     details:
       card:

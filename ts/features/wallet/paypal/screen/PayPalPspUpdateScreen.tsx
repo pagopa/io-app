@@ -33,7 +33,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
   PSP_LOGO_MAX_WIDTH

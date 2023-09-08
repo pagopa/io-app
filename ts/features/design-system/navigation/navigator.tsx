@@ -36,6 +36,7 @@ import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSListItems } from "../core/DSListItems";
+import { DSModules } from "../core/DSModules";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
 import { DSPictograms } from "../core/DSPictograms";
@@ -49,6 +50,7 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
+
 const Stack = createStackNavigator<DesignSystemParamsList>();
 const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
 
@@ -293,6 +295,14 @@ const DesignSystemMainStack = () => {
         component={DSListItems}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.title
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.route}
+        component={DSModules}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.title
         }}
       />
 
