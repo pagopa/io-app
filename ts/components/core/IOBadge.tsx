@@ -5,7 +5,7 @@ import { makeFontStyleObject } from "./fonts";
 
 export type IOBadgeOutlineColors = Extract<
   IOColors,
-  "blue" | "white" | "red" | "orange"
+  "blue" | "white" | "grey" | "red" | "orange"
 >;
 export type IOBadgeSolidColors = Extract<
   IOColors,
@@ -40,6 +40,7 @@ type SolidVariantProps = {
 const mapOutlineColor: Record<NonNullable<IOBadgeOutlineColors>, IOColors> = {
   blue: "blue",
   white: "white",
+  grey: "bluegreyDark",
   red: "red",
   orange: "orange"
 };
