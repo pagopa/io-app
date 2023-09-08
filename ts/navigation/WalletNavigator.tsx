@@ -24,9 +24,6 @@ import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditC
 import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
 import ActivateBpdOnNewBPayScreen from "../features/wallet/onboarding/bancomatPay/screens/ActivateBpdOnNewBPayScreen";
-import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboarding/cobadge/navigation/navigator";
-import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
-import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge/screens/ActivateBpdOnNewCoBadgeScreen";
 import { PaymentMethodOnboardingPayPalOnboardingNavigator } from "../features/wallet/onboarding/paypal/navigation/navigator";
 import PAYPAL_ROUTES from "../features/wallet/onboarding/paypal/navigation/routes";
 import PayPalPspUpdateScreen from "../features/wallet/paypal/screen/PayPalPspUpdateScreen";
@@ -77,14 +74,6 @@ const bptRoutes = () => (
     <Stack.Screen
       name={WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW}
       component={ActivateBpdOnNewBPayScreen}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_COBADGE_ROUTES.MAIN}
-      component={PaymentMethodOnboardingCoBadgeNavigator}
-    />
-    <Stack.Screen
-      name={WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW}
-      component={ActivateBpdOnNewCoBadgeScreen}
     />
   </>
 );

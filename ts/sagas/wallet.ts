@@ -53,18 +53,6 @@ import {
   searchUserBPay,
   walletAddBPayStart
 } from "../features/wallet/onboarding/bancomatPay/store/actions";
-import {
-  handleAddCoBadgeToWallet,
-  handleLoadCoBadgeConfiguration,
-  handleSearchUserCoBadge
-} from "../features/wallet/onboarding/cobadge/saga/networking";
-import { addCoBadgeToWalletAndActivateBpd } from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
-import {
-  addCoBadgeToWallet,
-  loadCoBadgeAbiConfiguration,
-  searchUserCoBadge,
-  walletAddCoBadgeStart
-} from "../features/wallet/onboarding/cobadge/store/actions";
 import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
 import NavigationService from "../navigation/NavigationService";
 import { navigateToWalletHome } from "../store/actions/navigation";
@@ -112,7 +100,6 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   refreshPMTokenWhileAddCreditCard,
-  runSendAddCobadgeTrackSaga,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled,
@@ -139,7 +126,6 @@ import { defaultRetryingFetch } from "../utils/fetch";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
-import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import {
   addWalletCreditCardRequestHandler,
   deleteAllPaymentMethodsByFunctionRequestHandler,
@@ -827,31 +813,6 @@ export function* watchWalletSaga(
       pmSessionManager
     );
 
-    // watch for CoBadge search request
-    yield* takeLatest(
-      searchUserCoBadge.request,
-      handleSearchUserCoBadge,
-      paymentManagerClient.getCobadgePans,
-      paymentManagerClient.searchCobadgePans,
-      pmSessionManager
-    );
-    // watch for add CoBadge to the user's wallet
-    yield* takeLatest(
-      addCoBadgeToWallet.request,
-      handleAddCoBadgeToWallet,
-      paymentManagerClient.addCobadgeToWallet,
-      pmSessionManager
-    );
-    // watch for CoBadge configuration request
-    yield* takeLatest(
-      loadCoBadgeAbiConfiguration.request,
-      handleLoadCoBadgeConfiguration,
-      contentClient.getCobadgeServices
-    );
-
-    // watch for add co-badge to Wallet workflow
-    yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
-
     yield* fork(
       watchPaypalOnboardingSaga,
       paymentManagerClient,
@@ -859,9 +820,6 @@ export function* watchWalletSaga(
     );
   }
 
-  // Check if a user has a bancomat and has not requested a cobadge yet and send
-  // the information to mixpanel
-  yield* takeLatest(runSendAddCobadgeTrackSaga, sendAddCobadgeMessageSaga);
   yield* fork(paymentsDeleteUncompletedSaga);
 }
 

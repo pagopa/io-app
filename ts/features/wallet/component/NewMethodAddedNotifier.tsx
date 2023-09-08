@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import bancomatInformationBottomSheet from "../bancomat/utils/bancomatInformationBottomSheet";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
-import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps>;
 
 /**
  * Handle the notification for a new payment method added
@@ -20,9 +17,7 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   const [lastNotifiedBancomatHash, setLastNotifiedBancomatHash] =
     useState<string>("");
 
-  const { present, bottomSheet } = bancomatInformationBottomSheet(
-    props.startCoBadgeOnboarding
-  );
+  const { present, bottomSheet } = bancomatInformationBottomSheet();
 
   useActionOnFocus(() => {
     const lastAddedHash = props.addedBancomat.reduce(
@@ -39,16 +34,8 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   return bottomSheet;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  startCoBadgeOnboarding: () =>
-    navigateToOnboardingCoBadgeChooseTypeStartScreen({})
-});
-
 const mapStateToProps = (state: GlobalState) => ({
   addedBancomat: onboardingBancomatAddedPansSelector(state)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewPaymentMethodAddedNotifier);
+export default connect(mapStateToProps)(NewPaymentMethodAddedNotifier);

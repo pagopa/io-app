@@ -5,9 +5,6 @@ import onboardingBancomatReducer, {
 import onboardingBPayReducer, {
   OnboardingBPayState
 } from "../bancomatPay/store/reducers";
-import onboardingCoBadgeReducer, {
-  OnboardingCoBadgeState
-} from "../cobadge/store/reducers";
 import {
   onboardingPaypalReducer,
   OnboardPayPalState
@@ -17,7 +14,6 @@ export type PaymentMethodOnboardingState = {
   // The information related to adding new Bancomat to the wallet
   bancomat: OnboardingBancomatState;
   bPay: OnboardingBPayState;
-  coBadge: OnboardingCoBadgeState;
   paypal: OnboardPayPalState;
 };
 
@@ -25,7 +21,6 @@ const onboardingReducer = combineReducers<PaymentMethodOnboardingState, Action>(
   {
     bancomat: onboardingBancomatReducer,
     bPay: onboardingBPayReducer,
-    coBadge: onboardingCoBadgeReducer,
     paypal: onboardingPaypalReducer
   }
 );

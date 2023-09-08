@@ -13,7 +13,6 @@ import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackFciAction from "../../features/fci/analytics";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
-import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import trackZendesk from "../../features/zendesk/analytics/index";
 import { mixpanel } from "../../mixpanel";
@@ -415,7 +414,6 @@ export const actionTracking =
       void trackAction(mixpanel)(action);
       void trackBpdAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
-      void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
       void trackServiceAction(mixpanel)(action);

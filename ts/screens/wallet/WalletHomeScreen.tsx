@@ -79,10 +79,7 @@ import {
   fetchTransactionsLoadComplete,
   fetchTransactionsRequestWithExpBackoff
 } from "../../store/actions/wallet/transactions";
-import {
-  fetchWalletsRequestWithExpBackoff,
-  runSendAddCobadgeTrackSaga
-} from "../../store/actions/wallet/wallets";
+import { fetchWalletsRequestWithExpBackoff } from "../../store/actions/wallet/wallets";
 import {
   bpdRemoteConfigSelector,
   isCGNEnabledSelector,
@@ -235,11 +232,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       "hardwareBackPress",
       this.handleBackPress
     );
-
-    // Dispatch the action associated to the saga responsible to remind a user
-    // to add the co-badge card.
-    // This cover the case in which a user update the app and don't refresh the wallet.
-    this.props.runSendAddCobadgeMessageSaga();
   }
 
   public componentWillUnmount() {
@@ -273,24 +265,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           pot.isError(this.props.potWallets)))
     ) {
       showToast(I18n.t("wallet.errors.loadingData"));
-    }
-
-    // Dispatch the action associated to the saga responsible to remind a user
-    // to add the co-badge card only if a new bancomat or a co-badge card was added
-    const isBancomatListUpdated =
-      pot.isSome(this.props.bancomatListVisibleInWallet) &&
-      (!pot.isSome(prevProps.bancomatListVisibleInWallet) ||
-        this.props.bancomatListVisibleInWallet.value.length !==
-          prevProps.bancomatListVisibleInWallet.value.length);
-
-    const isCobadgeListUpdated =
-      pot.isSome(this.props.coBadgeListVisibleInWallet) &&
-      (!pot.isSome(prevProps.coBadgeListVisibleInWallet) ||
-        this.props.coBadgeListVisibleInWallet.value.length !==
-          prevProps.coBadgeListVisibleInWallet.value.length);
-
-    if (isBancomatListUpdated || isCobadgeListUpdated) {
-      this.props.runSendAddCobadgeMessageSaga();
     }
   }
 
@@ -588,8 +562,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
-    dispatch(fetchTransactionsLoadComplete(transactions)),
-  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
+    dispatch(fetchTransactionsLoadComplete(transactions))
 });
 
 export default withValidatedPagoPaVersion(

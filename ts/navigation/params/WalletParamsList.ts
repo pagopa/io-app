@@ -15,8 +15,6 @@ import { CobadgeDetailScreenNavigationParams } from "../../features/wallet/cobad
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import { PaymentMethodOnboardingBPayParamsList } from "../../features/wallet/onboarding/bancomatPay/navigation/params";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../../features/wallet/onboarding/bancomatPay/navigation/routes";
-import { PaymentMethodOnboardingCoBadgeParamsList } from "../../features/wallet/onboarding/cobadge/navigation/params";
-import WALLET_ONBOARDING_COBADGE_ROUTES from "../../features/wallet/onboarding/cobadge/navigation/routes";
 import { PaymentMethodOnboardingPayPalParamsList } from "../../features/wallet/onboarding/paypal/navigation/params";
 import PAYPAL_ROUTES from "../../features/wallet/onboarding/paypal/navigation/routes";
 import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
@@ -74,10 +72,8 @@ export type WalletParamsList = {
     .MAIN]: NavigatorScreenParams<BpdOptInParamsList>;
 
   [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingBPayParamsList>;
-  [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingCoBadgeParamsList>;
   [PAYPAL_ROUTES.ONBOARDING
     .MAIN]: NavigatorScreenParams<PaymentMethodOnboardingPayPalParamsList>;
 
   [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: undefined;
-  [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: undefined;
 };
