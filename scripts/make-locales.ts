@@ -44,7 +44,7 @@ const partialLocales = new Set<string>(["de"]);
 /**
  * Custom YAML type for including files
  */
-export const IncludeYamlType = (includeRoot: string) =>
+const IncludeYamlType = (includeRoot: string) =>
   new yaml.Type("!include", {
     kind: "scalar",
 
@@ -70,15 +70,14 @@ export const IncludeYamlType = (includeRoot: string) =>
  */
 export async function readLocaleDoc(
   rootPath: string,
-  locale: string,
-  json: boolean = false
+  locale: string
 ): Promise<LocaleDoc> {
   const localePath = path.join(rootPath, locale);
   const filename = path.join(localePath, "index.yml");
   const content = await fs.readFile(filename);
   const doc = yaml.safeLoad(content.toString(), {
     filename,
-    json,
+    json: false,
     schema: yaml.Schema.create(IncludeYamlType(localePath))
   });
   return {
