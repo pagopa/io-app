@@ -7,6 +7,14 @@ import * as path from "path";
 import chalk from "chalk";
 import { extractKeys, readLocaleDoc } from "./make-locales";
 
+// NOTE TO THE READER:
+// THIS SCRIPT DOES NOT DELETE ALL UNUSED LOCALES
+// it does delete a big chunk of them, though!
+//
+// the reason for this is that some locales are accessed with a non literal notation,
+// so it's best to go for a "best guess" approach, instead of risking deleting
+// locales that are actually used.
+
 /**
  * yq is a CLI yaml manipulation tool
  * which is required for this script.
