@@ -62,6 +62,14 @@ global:
     failed:  "Fallito"
     cancelled: "Annullata"
     reversal: "Storno"
+  modules:
+    paymentNotice:
+      badges:
+        payed: "Pagato"
+        error: "Errore"
+        expired: "Scaduto"
+        revoked: "Revocato"
+        canceled: "Annullato"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
