@@ -62,6 +62,14 @@ global:
     failed: "Failed"
     cancelled: "Cancelled"
     reversal: "Reversal"
+  modules:
+    paymentNotice:
+      badges:
+        payed: "Payed"
+        error: "Error"
+        expired: "Expired"
+        revoked: "Revoked"
+        canceled: "Canceled"
   password: Password
   username: Username
   unknown: unknown
