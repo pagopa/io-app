@@ -1,23 +1,97 @@
+/* eslint-disable functional/no-let */
 /* eslint-disable no-console */
+/* eslint-disable functional/immutable-data */
 import { exec } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 import chalk from "chalk";
 import { extractKeys, readLocaleDoc } from "./make-locales";
 
-const isUnused = (input: string): Promise<boolean> =>
-  new Promise(res => {
-    exec(
-      `grep -F -r "${input}" ${path.join(__dirname, "../ts")}`,
-      (err, stdout, _) => {
+/**
+ * yq is a CLI yaml manipulation tool
+ * which is required for this script.
+ * this func installs it using Homebrew if it's not installed
+ */
+const installYqIfNeeded = async () => {
+  const isInstalled = await new Promise(res =>
+    exec("which yq", (err, stdout, _) => {
+      if (err) {
+        return res(false);
+      }
+      return res(stdout.length > 0);
+    })
+  );
+  if (!isInstalled) {
+    console.log(
+      chalk.yellow(
+        `yq is a yaml manipulation tool which is required for this script. 
+        installing it right now...`
+      )
+    );
+    await new Promise(res =>
+      exec("brew install yq", (err, _stdout, _) => {
         if (err) {
+          console.log(
+            chalk.red(
+              `error installing yq (https://github.com/mikefarah/yq) 
+              maybe you need to install homebrew?`
+            )
+          );
+          process.exit(1);
+        }
+        console.log(chalk.green("yq installation successful"));
+        return res(true);
+      })
+    );
+  } else {
+    console.log(chalk.green("yay! yq is installed!"));
+  }
+};
+
+/**
+* since some locales are accessed with a notation like 
+* `key.key.key.${myVal}`,
+* so we check for all possible combinations of the locale.
+*
+* e.g. `key.key.*.key` or `key.key.key.*`
+* @param locale the locale to generate regex for
+
+(e.g `wallet.time.now.hour`)
+*/
+const generatePossibleLocaleRegexChecker = (locale: string) => {
+  const localeArr = [];
+  const originalSplit = locale.split(".");
+  for (let i = 0; i < originalSplit.length; i++) {
+    const newObj = {
+      ...originalSplit,
+      // grep will throw an error if the first char is any
+      [i]: i === 0 ? originalSplit[i] : ".*"
+    };
+    // escape char is needed since we're using grep regex
+    // eslint-disable-next-line no-useless-escape
+    localeArr.push(Object.values(newObj).join(`\.`));
+  }
+  return localeArr;
+};
+
+const isUnused = (input: string): Promise<boolean> => {
+  const regex = generatePossibleLocaleRegexChecker(input).join("|");
+  return new Promise(res => {
+    exec(
+      `grep -E -r "${regex}" ${path.join(__dirname, "../ts")}`,
+      (err, stdout, _) => {
+        if (err && err.signal === null) {
           return res(true);
         }
         return res(stdout.length === 0);
       }
     );
   });
+};
 
+/**
+ * @returns an array of the locale names, like ['en', 'fr', 'es']
+ */
 const getAllLocaleNames = () => {
   const localeFolders = fs
     .readdirSync(path.join(__dirname, "../locales"), {
@@ -26,26 +100,59 @@ const getAllLocaleNames = () => {
     .filter(d => d.isDirectory());
   const localeNamesArr = localeFolders.map(d => d.name);
   console.log(
-    chalk.green(`found ${localeNamesArr.length} locales in the project`)
+    chalk.green(
+      `found ${localeNamesArr.length} locales in the project: ${localeNamesArr}`
+    )
   );
   return localeNamesArr;
 };
 
+/**
+ *  self explanatory, uses yq to delete a key from a locale
+ * @param entry the key to delete
+ * @param localeName the locale to delete the key from,
+ * e.g. 'en' or 'fr'
+ */
 const deleteYmlEntry = (entry: string, localeName: string) =>
-  exec(
-    // brew install yq if you don't have it
-    `yq -i 'del(.${entry})' ${path.join(
-      path.join(__dirname, "../locales"),
-      localeName,
-      "index.yml"
-    )}`,
-    (err, _stdout, _) => {
-      if (err) {
-        console.log(chalk.red(`error deleting ${entry}`));
-      } else {
-        console.log(chalk.grey(`deleted ${entry}`));
+  new Promise(res =>
+    exec(
+      `yq -i 'del(.${entry})' ${path.join(
+        path.join(__dirname, "../locales"),
+        localeName,
+        "index.yml"
+      )}`,
+      (err, _stdout, _) => {
+        if (err) {
+          console.log(chalk.red(`error deleting ${entry}`));
+          return res(false);
+        } else {
+          console.log(chalk.grey(`deleted ${entry}`));
+          return res(true);
+        }
       }
-    }
+    )
+  );
+
+/**
+ * uses yq to look for null or undefined entries, skippable
+ * @param locale  the locale to clean up, e.g. 'en' or 'fr'
+ * @returns  a promise that resolves to true if the cleanup was successful
+ */
+const cleanupLocales = async (locale: string) =>
+  new Promise(res =>
+    exec(
+      `yq -i " del(.. |select(.==null or .== {})) " ` +
+        path.join(__dirname, "../locales", locale, "index.yml"),
+      (err, _stdout, _) => {
+        if (err) {
+          console.log(chalk.red(`${err} error cleaning up ${locale}`));
+          return res(false);
+        } else {
+          console.log(chalk.green(`cleaned up ${locale} locale`));
+          return res(true);
+        }
+      }
+    )
   );
 
 const findUnused = async (root: string, locale: string) => {
@@ -55,49 +162,33 @@ const findUnused = async (root: string, locale: string) => {
   return keys.filter((_, idx) => unusedPromises[idx]);
 };
 
-const run = async (root: string, locale: string) => {
+const main = async (root: string, locale: string) => {
   const localeLangNames = getAllLocaleNames();
-  console.log(localeLangNames);
   const unusedKeys = await findUnused(root, locale);
 
   if (unusedKeys.length === 0) {
     console.log(chalk.green("no unused keys found!"));
     process.exit(1);
   }
-
+  console.log(chalk.bgBlue("checking for yq installation..."));
+  await installYqIfNeeded();
   console.log(chalk.red(`found ${unusedKeys.length} unused keys, deleting...`));
-
-  for (const loopLocaleName of localeLangNames) {
-    if (!localeLangNames.includes(loopLocaleName)) {
-      continue;
-    }
+  // for every locale, delete every unused key
+  for (const localeName of localeLangNames) {
     console.log(
       chalk.green(
-        `deleting unused keys from ${loopLocaleName.toUpperCase()} locale`
+        `deleting unused keys from ${localeName.toUpperCase()} locale`
       )
     );
-    for (const entry of unusedKeys) {
-      if (!unusedKeys.includes(entry)) {
-        continue;
-      }
-      deleteYmlEntry(entry, loopLocaleName);
+    for (const k of unusedKeys) {
+      await deleteYmlEntry(k, localeName);
     }
     // do something to clean locale up, in order to avoid null or empty objects
-    exec(
-      `yq -i " del(.. |select(.==null or .== {})) " ` +
-        path.join(__dirname, "../locales", loopLocaleName, "index.yml"),
-      (err, _stdout, _) => {
-        if (err) {
-          console.log(chalk.red(`${err} error cleaning up ${loopLocaleName}`));
-        } else {
-          console.log(chalk.green(`cleaned up ${loopLocaleName}`));
-        }
-      }
-    );
+    await cleanupLocales(localeName);
   }
 };
 
-run(path.join(__dirname, "../locales"), "en").then(
+main(path.join(__dirname, "../locales"), "en").then(
   () => {
     console.log("done");
   },
