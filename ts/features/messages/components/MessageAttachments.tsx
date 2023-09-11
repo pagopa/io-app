@@ -19,9 +19,16 @@ import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 type Props = {
   attachments: ReadonlyArray<UIAttachment>;
   openPreview: (attachment: UIAttachment) => void;
+  disabled?: boolean;
 };
 
 const styles = StyleSheet.create({
+  attachmentContainerDisabled: {
+    opacity: 0.35
+  },
+  attachmentContainerEnabled: {
+    opacity: 1.0
+  },
   container: {
     paddingRight: 0,
     paddingLeft: 0,
@@ -70,6 +77,7 @@ const AttachmentIcon = (props: {
 const AttachmentItem = (props: {
   attachment: UIAttachment;
   openPreview: (attachment: UIAttachment) => void;
+  disabled?: boolean;
 }) => {
   const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
     props.attachment,
@@ -80,7 +88,7 @@ const AttachmentItem = (props: {
     <TouchableOpacity
       style={styles.container}
       onPress={onAttachmentSelect}
-      disabled={pot.isLoading(downloadPot)}
+      disabled={!!props.disabled || pot.isLoading(downloadPot)}
       accessible={true}
       accessibilityLabel={props.attachment.displayName}
       accessibilityRole="button"
@@ -128,9 +136,17 @@ export const MessageAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
       {props.attachments.map((attachment, index) => (
-        <View key={index}>
+        <View
+          key={index}
+          style={
+            props.disabled
+              ? styles.attachmentContainerDisabled
+              : styles.attachmentContainerEnabled
+          }
+        >
           <AttachmentItem
             attachment={attachment}
+            disabled={props.disabled}
             openPreview={props.openPreview}
           />
           {index < props.attachments.length - 1 && (
