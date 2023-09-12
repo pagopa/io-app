@@ -62,6 +62,7 @@ import { openWebUrl } from "../../utils/url";
 import { cieSpidMoreInfoUrl } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -178,7 +179,8 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.state = { isRootedOrJailbroken: O.none, isSessionExpired: false };
   }
 
-  private isCieSupported = () => this.props.isCieSupported;
+  private isCieSupported = () =>
+    cieFlowForDevServerEnabled || this.props.isCieSupported;
   private isCieUatEnabled = () => this.props.isCieUatEnabled;
 
   public async componentDidMount() {

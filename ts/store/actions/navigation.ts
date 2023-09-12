@@ -25,8 +25,7 @@ import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScree
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
-  CreditCardPaymentMethod,
-  SatispayPaymentMethod
+  CreditCardPaymentMethod
 } from "../../types/pagopa";
 
 /**
@@ -365,19 +364,6 @@ export const navigateToBancomatDetailScreen = (
     CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_BANCOMAT_DETAIL,
       params: { bancomat }
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToSatispayDetailScreen = (
-  satispay: SatispayPaymentMethod
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_SATISPAY_DETAIL,
-      params: { satispay }
     })
   );
 

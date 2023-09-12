@@ -2,6 +2,7 @@ import React from "react";
 import { ColorValue } from "react-native";
 import { IOColors } from "../variables/IOColors";
 
+import PictogramMessages from "./svg/PictogramMessages";
 import PictogramAirBaloon from "./svg/PictogramAirBaloon";
 import PictogramHeart from "./svg/PictogramHeart";
 import PictogramCompleted from "./svg/PictogramCompleted";
@@ -42,6 +43,7 @@ import PictogramFeedback from "./svg/PictogramFeedback";
 import PictogramCameraRequest from "./svg/PictogramCameraRequest";
 
 export const IOPictograms = {
+  messages: PictogramMessages,
   airBaloon: PictogramAirBaloon,
   abacus: PictogramAbacus,
   emailValidation: PictogramEmailValidation /* io-email-validated */,

@@ -49,7 +49,8 @@ const BancomatDetailScreen = ({ route }: Props) => {
         abiCode: O.some(abiInfo?.abi),
         holderName: O.fromNullable(nameSurname),
         expireMonth: O.fromNullable(info.expireMonth),
-        expireYear: O.fromNullable(info.expireYear)
+        expireYear: O.fromNullable(info.expireYear),
+        bankName: O.some(abiInfo?.name)
       }),
     O.map(cardData => ({
       ...cardData,
@@ -71,6 +72,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
     <BasePaymentMethodScreen
       paymentMethod={bancomat}
       card={cardComponent}
+      headerTitle="PagoBANCOMAT"
       content={
         <Banner
           pictogramName="focusOn"

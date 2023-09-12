@@ -1,4 +1,5 @@
 export const mockActions = {
+  handleSessionExpired: jest.fn(),
   navigateToConfigurationIntro: jest.fn(),
   navigateToIbanOnboardingScreen: jest.fn(),
   exitConfiguration: jest.fn(),

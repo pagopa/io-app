@@ -2,6 +2,7 @@ import {
   Badge,
   ListItemTransaction as DSListItemTransaction,
   IOIconSizeScale,
+  IOLogoPaymentType,
   Icon
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
@@ -15,7 +16,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { getAccessibleAmountText } from "../../utils/accessibility";
 import { isImageUri } from "../../utils/url";
-import { IOLogoPaymentType } from "../core/logos";
 import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
@@ -69,6 +69,26 @@ export type ListItemTransaction = WithTestID<
 
 type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
+};
+
+const getBadgeTextFromStatus = (
+  transactionStatus: ListItemTransactionStatus
+) => {
+  switch (transactionStatus) {
+    case "success":
+    case "refunded":
+      return "";
+    case "failure":
+      return I18n.t("global.badges.failed");
+    case "cancelled":
+      return I18n.t("global.badges.cancelled");
+    case "reversal":
+      return I18n.t("global.badges.reversal");
+    case "pending":
+      return I18n.t("global.badges.onGoing");
+    default:
+      return "";
+  }
 };
 
 const CARD_LOGO_SIZE: IOIconSizeScale = 24;
@@ -196,7 +216,9 @@ export const ListItemTransaction = ({
           </View>
         )}
         <View style={IOStyles.flex}>
-          <NewH6 color={theme["textBody-default"]}>{title}</NewH6>
+          <LabelSmall numberOfLines={2} color={theme["textBody-default"]}>
+            {title}
+          </LabelSmall>
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
@@ -215,13 +237,6 @@ export const ListItemTransaction = ({
     );
   };
 
-  const DSTransactionStatus =
-    transactionStatus === "success"
-      ? "success"
-      : transactionStatus === "failure"
-      ? "failure"
-      : "pending";
-
   return isDSEnabled ? (
     <DSListItemTransaction
       accessibilityLabel={accessibilityLabel}
@@ -231,9 +246,11 @@ export const ListItemTransaction = ({
       subtitle={subtitle}
       testID={testID}
       title={title}
+      paymentLogoIcon={paymentLogoIcon}
+      badgeText={getBadgeTextFromStatus(transactionStatus)}
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       transactionAmount={transactionAmount!}
-      transactionStatus={DSTransactionStatus}
+      transactionStatus={transactionStatus}
     />
   ) : (
     pipe(

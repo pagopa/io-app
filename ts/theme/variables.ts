@@ -68,11 +68,6 @@ const customVariables = Object.assign(materialVariables, {
 
   toastColor: IOColors.aquaUltraLight,
 
-  /* When the background is dark */
-  headerIconDark: IOColors.milderGray,
-  /* When the background is light */
-  headerIconLight: IOColors.greyLight,
-
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
@@ -173,11 +168,7 @@ const customVariables = Object.assign(materialVariables, {
   activeOpacity: 0.25,
 
   // Spacing
-  spacingBase: 8,
-
-  // IconFont
-  selectedColor: IOColors.blue,
-  unselectedColor: IOColors.bluegrey
+  spacingBase: 8
 });
 
 export default customVariables;

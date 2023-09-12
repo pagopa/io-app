@@ -35,10 +35,6 @@ export default (): Theme => ({
       fontSize: variables.btnXSmallIconSize,
       paddingTop: 1,
       paddingRight: 4
-    },
-    "UIComponent.IconFont": {
-      fontSize: variables.btnXSmallIconSize,
-      paddingRight: 4
     }
   },
 
@@ -52,10 +48,6 @@ export default (): Theme => ({
     "NativeBase.Text": {
       fontSize: variables.btnSmallFontSize,
       lineHeight: variables.btnSmallLineHeight
-    },
-    "UIComponent.IconFont": {
-      fontSize: variables.btnSmallIconSize,
-      paddingRight: 4
     }
   },
 
@@ -63,17 +55,11 @@ export default (): Theme => ({
     "NativeBase.Text": {
       color: IOColors.white
     },
-    "UIComponent.IconFont": {
-      color: IOColors.white
-    },
     backgroundColor: variables.calendarExpirableColor
   },
 
   ".unNamed": {
     "NativeBase.Text": {
-      color: variables.textMessageDetailLinkColor
-    },
-    "UIComponent.IconFont": {
       color: variables.textMessageDetailLinkColor
     },
     backgroundColor: IOColors.greyLight
@@ -84,9 +70,6 @@ export default (): Theme => ({
       "NativeBase.Text": {
         color: variables.btnLightTextColor,
         fontWeight: variables.textBoldWeight
-      },
-      "UIComponent.IconFont": {
-        color: variables.btnLightTextColor
       },
       borderWidth: 1,
       borderColor: variables.btnLightBorderColor,
@@ -108,13 +91,7 @@ export default (): Theme => ({
       "NativeBase.Icon": {
         color: variables.btnDisabledBg
       },
-      "UIComponent.IconFont": {
-        color: variables.btnDisabledBg
-      },
       backgroundColor: IOColors.white
-    },
-    "UIComponent.IconFont": {
-      color: variables.brandPrimary
     },
     backgroundColor: IOColors.white
   },
@@ -127,24 +104,12 @@ export default (): Theme => ({
     borderWidth: 1,
     "NativeBase.Text": {
       color: IOColors.white
-    },
-    "UIComponent.IconFont": {
-      color: IOColors.white
     }
   },
 
   ".cancel": {
     backgroundColor: IOColors.bluegrey,
     "NativeBase.Text": {
-      color: IOColors.white
-    },
-    "UIComponent.IconFont": {
-      color: IOColors.white
-    }
-  },
-
-  ".disabled": {
-    "UIComponent.IconFont": {
       color: IOColors.white
     }
   },
@@ -154,11 +119,6 @@ export default (): Theme => ({
     fontSize: variables.btnFontSize,
     paddingLeft: 0,
     paddingRight: 0
-  },
-
-  "UIComponent.IconFont": {
-    fontSize: variables.btnWidgetHeight,
-    paddingRight: 8
   },
 
   justifyContent: "center",
