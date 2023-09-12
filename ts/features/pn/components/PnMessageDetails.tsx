@@ -185,11 +185,13 @@ export const PnMessageDetails = ({
             <VSpacer />
             <DSFullWidthComponent>
               <StatusContent
-                accessibilityLabel={`Accessibility text for the advice component`}
+                accessibilityLabel={I18n.t(
+                  "features.pn.details.cancelledMessage.body"
+                )}
                 backgroundColor={statusColorMap.warning}
                 foregroundColor={getStatusTextColor(LevelEnum.warning)}
                 iconName={statusIconMap.warning}
-                testID={"SectionStatusComponentContent"}
+                testID={"PnCancelledMessageBanner"}
                 viewRef={viewRef}
               >
                 {I18n.t("features.pn.details.cancelledMessage.body")}

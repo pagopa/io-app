@@ -83,7 +83,6 @@ const AttachmentItem = (props: {
     props.attachment,
     props.openPreview
   );
-
   return (
     <TouchableOpacity
       style={styles.container}
@@ -92,6 +91,7 @@ const AttachmentItem = (props: {
       accessible={true}
       accessibilityLabel={props.attachment.displayName}
       accessibilityRole="button"
+      testID="MessageAttachmentTouchable"
     >
       <View style={styles.row}>
         <View style={styles.icon}>
@@ -143,6 +143,7 @@ export const MessageAttachments = (props: Props): React.ReactElement | null =>
               ? styles.attachmentContainerDisabled
               : styles.attachmentContainerEnabled
           }
+          testID="MessageAttachmentContainer"
         >
           <AttachmentItem
             attachment={attachment}
