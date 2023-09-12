@@ -7,7 +7,10 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ValidationError } from "io-ts";
 import { getType } from "typesafe-actions";
 import { RequestResponseTypes } from "@pagopa/ts-commons/lib/requests";
-import { sessionExpired } from "../../../store/actions/authentication";
+import {
+  logoutRequest,
+  sessionExpired
+} from "../../../store/actions/authentication";
 import { SessionToken } from "../../../types/SessionToken";
 import { startApplicationInitialization } from "../../../store/actions/application";
 import {
@@ -40,8 +43,10 @@ import {
   askUserToRefreshSessionToken,
   showRefreshTokenLoader,
   refreshSessionToken,
-  refreshTokenTransientError
+  refreshTokenTransientError,
+  refreshTokenNoPinError
 } from "../store/actions";
+import { getPin } from "../../../utils/keychain";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -52,7 +57,18 @@ function* handleRefreshSessionToken(
     typeof refreshSessionToken.request
   >
 ) {
+  const isPinAvailable = O.isSome(yield* call(getPin));
+
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
+
+  if (!isPinAvailable) {
+    if (withUserInteraction) {
+      yield* put(refreshTokenNoPinError());
+    } else {
+      yield* put(logoutRequest());
+    }
+    return;
+  }
 
   if (!withUserInteraction) {
     yield* call(doRefreshTokenSaga, refreshSessionTokenRequestAction);

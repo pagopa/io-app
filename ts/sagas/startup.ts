@@ -274,6 +274,11 @@ export function* initializeApplicationSaga(
     keyInfo
   );
 
+  // Watch for requests to logout
+  // Since this saga is spawned and not forked
+  // it will handle its own cancelation logic.
+  yield* spawn(watchLogoutSaga, backendClient.logout);
+
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(checkSession, backendClient.getSession);
@@ -655,11 +660,6 @@ export function* initializeApplicationSaga(
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
-
-  // Watch for requests to logout
-  // Since this saga is spawned and not forked
-  // it will handle its own cancelation logic.
-  yield* spawn(watchLogoutSaga, backendClient.logout);
 
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
