@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 
-type MessagePreconditionFooterProps = {
+type Props = {
   messageId: string;
   onDismiss: () => void;
   navigationAction: (message: UIMessage) => void;
@@ -25,7 +25,7 @@ export const PreconditionFooter = ({
   messageId,
   navigationAction,
   onDismiss
-}: MessagePreconditionFooterProps) => {
+}: Props) => {
   const message = useIOSelector(state =>
     getPaginatedMessageById(state, messageId)
   );
