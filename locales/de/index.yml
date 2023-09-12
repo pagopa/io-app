@@ -726,6 +726,17 @@ email:
     alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
       title: "E-Mail"
+  newinsert:
+    header: "IO konfigurieren"
+    title: "Wie lautet Ihre E-Mail?"
+    subtitle: "Wir verwenden E-Mail für bestimmte Mitteilungen, wie z. B. Zahlungsbelege oder Nachrichten, die mit dem Kundendienst ausgetauscht werden."
+    label: "Persönliche E-Mail Adresse"
+    alert: 
+      title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
+      description: "E-Mail bereits in Gebrauch"
+      modaltitle: "Diese E-Mail ist bereits in Gebrauch"
+      modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
+      modalbutton: "Andere E-Mail verwenden"
   edit:
     title: "E-Mail-Adresse bearbeiten"
     subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
