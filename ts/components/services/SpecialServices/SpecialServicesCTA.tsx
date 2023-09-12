@@ -45,7 +45,7 @@ const foldFeatureFlag = (
   isEnabled: boolean,
   isSupported: boolean,
   cta: JSX.Element
-): JSX.Element | null =>
+) =>
   pipe(
     isEnabled,
     B.fold(constNull, () =>
