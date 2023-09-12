@@ -798,6 +798,17 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+  newinsert:
+    header: "Configure IO"
+    title: "What is your email address?"
+    subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
+    label: "Personal email address"
+    alert: 
+      title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
+      description: "email address already in use"
+      modaltitle: "This email address is already in use"
+      modaldescription: "This can happen if you share the same address with a family member"
+      modalbutton: "Use another email address"
   edit:
     title: Edit email
     subtitle: The email you inserted is
