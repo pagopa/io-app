@@ -1,3 +1,5 @@
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
 import {
   H3,
   IOPictograms,
@@ -5,8 +7,6 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as React from "react";
-import { StyleSheet, View } from "react-native";
 
 type Props = {
   pictogram: IOPictograms;
