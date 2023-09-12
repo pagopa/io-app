@@ -12,7 +12,6 @@ import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareData
 import OnboardingTosScreen from "../screens/onboarding/OnboardingTosScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import { isGestureEnabled } from "../utils/navigation";
-import NewOnboardingEmailInsertScreen from "../screens/onboarding/NewOnboardingEmailInsertScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -49,10 +48,6 @@ const navigator = () => (
     <Stack.Screen
       name={ROUTES.ONBOARDING_FINGERPRINT}
       component={FingerprintScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.NEW_ONBOARDING_INSERT_EMAIL_SCREEN}
-      component={NewOnboardingEmailInsertScreen}
     />
     <Stack.Screen
       name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}

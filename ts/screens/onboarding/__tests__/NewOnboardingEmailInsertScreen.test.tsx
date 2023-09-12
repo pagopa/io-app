@@ -62,7 +62,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext(
     NewOnboardingEmailInsertScreen,
-    ROUTES.NEW_ONBOARDING_INSERT_EMAIL_SCREEN,
+    ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
     {},
     store
   );

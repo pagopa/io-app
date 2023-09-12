@@ -41,7 +41,7 @@ import { emailInsert } from "../../store/actions/onboarding";
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
-  "NEW_ONBOARDING_INSERT_EMAIL_SCREEN"
+  "ONBOARDING_INSERT_EMAIL_SCREEN"
 >;
 
 const styles = StyleSheet.create({
