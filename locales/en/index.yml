@@ -177,6 +177,7 @@ global:
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
+    updateIO: "Update IO"
     findOutMore: "Find out more"
     details: "Details"
     choose: "Scegli"
@@ -3070,6 +3071,9 @@ features:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
+    updateBottomSheet:
+      title: "Aggiorna l'app IO"
+      subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
   euCovidCertificate:
     save:
       album: "IO"

@@ -7,7 +7,6 @@ import { MessageCategory } from "../../../../definitions/backend/MessageCategory
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import PnMessage from "../../../../img/features/pn/pn_message_badge.svg";
-import { pnEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
@@ -27,6 +26,7 @@ import { BadgeComponent } from "../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { useIOSelector } from "../../../store/hooks";
 import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 
 const ICON_WIDTH = 24;
 
@@ -177,7 +177,7 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
   }
 };
 
-const getTopIcon = (category: MessageCategory) =>
+const getTopIcon = (category: MessageCategory, pnEnabled: boolean) =>
   category.tag === TagEnumPN.PN && pnEnabled ? (
     <PnMessage width={20} height={20} fill={IOColors.bluegreyLight} />
   ) : null;
@@ -241,6 +241,7 @@ const MessageListItem = ({
   const hasQrCode = category?.tag === "EU_COVID_CERT";
   const showQrCode = hasQrCode && !isSelectionModeEnabled;
 
+  const pnEnabled = useIOSelector(isPnEnabledSelector);
   const hasPaidBadge = useIOSelector(state =>
     isNoticePaidSelector(state, category)
   );
@@ -264,7 +265,7 @@ const MessageListItem = ({
           <H5 numberOfLines={1}>{organizationName}</H5>
         </View>
         <View style={[styles.titleIconAndDate, IOStyles.alignCenter]}>
-          {getTopIcon(category)}
+          {getTopIcon(category, pnEnabled)}
           <HSpacer size={8} />
           <Label
             weight="Bold"
