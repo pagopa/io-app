@@ -3,6 +3,7 @@ import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
+import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
@@ -12,8 +13,7 @@ import EmailReadScreen from "../screens/profile/EmailReadScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
-import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
-import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import PinScreen from "../screens/profile/PinScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
@@ -25,10 +25,11 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
-import { isGestureEnabled } from "../utils/navigation";
-import PinScreen from "../screens/profile/PinScreen";
+import { IDPayCodePlayGround } from "../screens/profile/playgrounds/IDPayCodePlayground";
+import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
+import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
-import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
+import { isGestureEnabled } from "../utils/navigation";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -109,6 +110,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
       component={IDPayOnboardingPlayground}
+    />
+    <Stack.Screen
+      name={ROUTES.IDPAY_CODE_PLAYGROUND}
+      component={IDPayCodePlayGround}
     />
     <Stack.Screen
       name={ROUTES.WALLET_PLAYGROUND}
