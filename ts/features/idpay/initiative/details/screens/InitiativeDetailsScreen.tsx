@@ -39,6 +39,7 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IDPayPaymentRoutes } from "../../../payment/navigation/navigator";
+import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -182,6 +183,9 @@ const InitiativeDetailsScreen = () => {
                     size={5}
                   />
                   <VSpacer size={32} />
+                  <InitiativeDiscountSettingsComponent
+                    initiative={initiative}
+                  />
                 </ContentWrapper>
               );
 
