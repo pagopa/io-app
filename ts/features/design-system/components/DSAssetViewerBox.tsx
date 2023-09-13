@@ -46,6 +46,12 @@ const styles = StyleSheet.create({
     borderColor: hexToRgba(IOColors.black, 0.1),
     borderWidth: 1
   },
+  assetItemBleed: {
+    paddingRight: 0,
+    paddingLeft: 8,
+    paddingVertical: 4,
+    justifyContent: "flex-end"
+  },
   assetItemSmall: {
     padding: 24
   },
@@ -69,13 +75,19 @@ const styles = StyleSheet.create({
   pillRaster: {
     backgroundColor: IOColors.yellow,
     color: IOColors.black
+  },
+  pillBleed: {
+    backgroundColor: IOColors["success-500"],
+    color: IOColors.white
   }
 });
 
 type DSAssetViewerBoxProps = {
   name: string;
   image: React.ReactNode;
-  type?: "vector" | "raster";
+  /* "bleed" shows the pictogram without padding
+  "hasBleed" shows the pictgram label on top right */
+  type?: "vector" | "raster" | "bleed" | "hasBleed";
   size?: "small" | "medium";
   colorMode?: "light" | "dark";
 };
@@ -93,6 +105,10 @@ const pillMap = {
   raster: {
     style: styles.pillRaster,
     text: "Png"
+  },
+  hasBleed: {
+    style: styles.pillBleed,
+    text: "Bleed"
   }
 };
 
@@ -113,6 +129,7 @@ export const DSAssetViewerBox = ({
       style={[
         styles.assetItem,
         size === "small" ? styles.assetItemSmall : {},
+        type === "bleed" ? styles.assetItemBleed : {},
         colorMode === "dark" ? styles.assetItemDark : {}
       ]}
     >
@@ -121,17 +138,18 @@ export const DSAssetViewerBox = ({
         source={FakeTransparentBg}
       />
       {image}
-      {type !== "vector" && (
-        <Text
-          style={[
-            styles.pill,
-            size === "small" ? styles.pillSmall : {},
-            pillMap[type].style
-          ]}
-        >
-          {pillMap[type].text}
-        </Text>
-      )}
+      {type === "raster" ||
+        (type === "hasBleed" && (
+          <Text
+            style={[
+              styles.pill,
+              size === "small" ? styles.pillSmall : {},
+              pillMap[type].style
+            ]}
+          >
+            {pillMap[type].text}
+          </Text>
+        ))}
     </View>
     <View
       style={{

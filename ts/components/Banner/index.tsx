@@ -15,12 +15,14 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+
+// Design System components
 import {
   IOColors,
   VSpacer,
   IOPictogramsBleed,
   IOPictogramSizeScale,
-  Pictogram,
+  PictogramBleed,
   IOScaleValues,
   IOSpringValues,
   IOBannerRadius,
@@ -37,7 +39,6 @@ import { NewH6 } from "../core/typography/NewH6";
 import IconButton from "../ui/IconButton";
 
 /* Styles */
-
 const colorTitle: IOColors = "blueIO-850";
 const colorContent: IOColors = "grey-700";
 const colorCloseButton: IconButton["color"] = "neutral";
@@ -227,7 +228,7 @@ export const Banner = ({
         )}
       </View>
       <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
-        <Pictogram
+        <PictogramBleed
           name={pictogramName}
           size={size === "big" ? sizePictogramBig : sizePictogramSmall}
         />
