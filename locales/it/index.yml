@@ -3296,7 +3296,10 @@ features:
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Firmato"
       notAvailable: "Non disponibile"
-      signingInProgress: "Firma in corso"        
+      signingInProgress: "Firma in corso"     
+    signatureFieldInfo:
+      title: "Cosa sono le clausole vessatorie?"
+      subTitle: "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."   
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
