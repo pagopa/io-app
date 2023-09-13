@@ -2,10 +2,10 @@ import React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { RenderAPI, render } from "@testing-library/react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PnMessagePayment } from "../PnMessagePayment";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { NotificationPaymentInfo } from "../../store/types/types";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 
 describe("PnMessagePayment component", () => {
   // Renders nothing
