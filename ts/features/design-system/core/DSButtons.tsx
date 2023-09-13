@@ -1,7 +1,10 @@
 import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
+import {
+  useIOExperimentalDesign,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { ButtonSolid } from "../../../components/ui/ButtonSolid";
 import { ButtonOutline } from "../../../components/ui/ButtonOutline";
 import { H2 } from "../../../components/core/typography/H2";
@@ -39,59 +42,92 @@ const onButtonPress = () => {
 // eslint-disable-next-line complexity, sonarjs/cognitive-complexity
 export const DSButtons = () => {
   const { isExperimental } = useIOExperimentalDesign();
+  const theme = useIOTheme();
 
   return (
     <DesignSystemScreen title={"Buttons"}>
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         ButtonSolid
       </H2>
       {renderButtonSolid(isExperimental)}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         ButtonOutline
       </H2>
       {renderButtonOutline(isExperimental)}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         ButtonLink
       </H2>
       {renderButtonLink()}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         IconButton
       </H2>
       {renderIconButton(isExperimental)}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         IconButtonSolid
       </H2>
       {renderIconButtonSolid(isExperimental)}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         IconButtonContained (Icebox)
       </H2>
       {renderIconButtonContained(isExperimental)}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         Block Buttons (NativeBase)
       </H2>
       {renderBlockButtons()}
 
       <VSpacer size={48} />
 
-      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
         Specific buttons
       </H2>
       {renderSpecificButtons()}
