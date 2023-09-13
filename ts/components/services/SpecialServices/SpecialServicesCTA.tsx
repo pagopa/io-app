@@ -41,7 +41,7 @@ const UpdateAppCTA = () => {
   );
 };
 
-const foldFeatureFlag = (
+const renderCta = (
   isEnabled: boolean,
   isSupported: boolean,
   cta: JSX.Element
@@ -88,19 +88,15 @@ const SpecialServicesCTA = (props: Props) => {
           ({ isEnabled, isSupported }) => {
             switch (csf) {
               case "cgn":
-                return foldFeatureFlag(
+                return renderCta(
                   isEnabled,
                   isSupported,
                   <CgnServiceCTA serviceId={props.serviceId} />
                 );
               case "cdc":
-                return foldFeatureFlag(
-                  isEnabled,
-                  isSupported,
-                  <CdcServiceCTA />
-                );
+                return renderCta(isEnabled, isSupported, <CdcServiceCTA />);
               case "pn":
-                return foldFeatureFlag(
+                return renderCta(
                   isEnabled,
                   isSupported,
                   <PnServiceCTA
