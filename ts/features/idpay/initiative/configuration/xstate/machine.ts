@@ -128,6 +128,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             {
               /**
+               * Configuration in "PAYMENT_METHODS" mode
+               */
+              cond: "isPaymentMethodsOnlyMode",
+              target: "CONFIGURING_PAYMENT_METHODS"
+            },
+            {
+              /**
                * Configuration in "IBAN" mode
                */
               cond: "isIbanOnlyMode",
@@ -736,6 +743,294 @@ const createIDPayInitiativeConfigurationMachine = () =>
             }
           ]
         },
+        /**
+         * Payment instrument configuration states.
+         * As soon as the machines enteres in this state, the "LOADING_INSTRUMENTS" state is started
+         */
+        CONFIGURING_PAYMENT_METHODS: {
+          id: "PAYMENT_METHODS",
+          initial: "LOADING_PAYMENT_METHODS_INSTRUMENTS",
+          states: {
+            /**
+             * In this state we are fetching the user's instruments.
+             * This is a parallel state, which means that all the child states are executes simultaneously.
+             * So as soon as the machine enters in this state, both `LOADING_WALLET_INSTRUMENTS` and `LOADING_INITIATIVE_INSTRUMENTS` starts
+             */
+            LOADING_PAYMENT_METHODS_INSTRUMENTS: {
+              tags: [LOADING_TAG],
+              entry: "navigateToPaymentMethodsScreen",
+              type: "parallel",
+              states: {
+                /**
+                 * In this state we are fetching the PagoPA payment instruments of the user.
+                 * On success we set the received instrument to the context
+                 *
+                 * Note: instead to have a single state we have two child states (LOADING and LOAD_SUCCESS).
+                 * This, unfortunately, is due to a limitation (or bug) of XState. A single state does not work.
+                 */
+                LOADING_WALLET_INSTRUMENTS: {
+                  initial: "LOADING",
+                  states: {
+                    LOADING: {
+                      invoke: {
+                        src: "loadWalletInstruments",
+                        id: "loadWalletInstruments",
+                        onDone: {
+                          target: "LOAD_SUCCESS",
+                          actions: "loadWalletInstrumentsSuccess"
+                        },
+                        onError: [
+                          {
+                            cond: "isSessionExpired",
+                            target: "#ROOT.SESSION_EXPIRED"
+                          },
+                          {
+                            cond: "isPaymentMethodsOnlyMode",
+                            target: "#ROOT.CONFIGURATION_FAILURE",
+                            actions: "setFailure"
+                          },
+                          {
+                            target: "#ROOT.CONFIGURING_IBAN",
+                            actions: ["setFailure", "showFailureToast"]
+                          }
+                        ]
+                      }
+                    },
+                    LOAD_SUCCESS: {
+                      type: "final"
+                    }
+                  }
+                },
+
+                /**
+                 * In this state we are fetching the IDPay payment instruments of the user.
+                 * On success we set the received instrument to the context
+                 *
+                 * Note: instead to have a single state we have two child states (LOADING and LOAD_SUCCESS).
+                 * This, unfortunately, is due to a limitation (or bug) of XState. A single state does not work.
+                 */
+                LOADING_INITIATIVE_INSTRUMENTS: {
+                  initial: "LOADING",
+                  states: {
+                    LOADING: {
+                      invoke: {
+                        src: "loadInitiativeInstruments",
+                        id: "loadInitiativeInstruments",
+                        onDone: {
+                          target: "LOAD_SUCCESS",
+                          actions: "loadInitiativeInstrumentsSuccess"
+                        },
+                        onError: [
+                          {
+                            cond: "isSessionExpired",
+                            target: "#ROOT.SESSION_EXPIRED"
+                          },
+                          {
+                            cond: "isPaymentMethodsOnlyMode",
+                            target: "#ROOT.CONFIGURATION_FAILURE",
+                            actions: "setFailure"
+                          },
+                          {
+                            target: "#ROOT.CONFIGURING_IBAN",
+                            actions: ["setFailure", "showFailureToast"]
+                          }
+                        ]
+                      }
+                    },
+                    LOAD_SUCCESS: {
+                      type: "final"
+                    }
+                  }
+                }
+              },
+              onDone: [
+                {
+                  /**
+                   * If the user has PagoPA instruments we go to the state where we show the instrument toggles
+                   */
+                  cond: "hasInstruments",
+                  target: "DISPLAYING_INSTRUMENTS_PAYMENT_METHODS"
+                },
+                {
+                  /**
+                   * If the configuration mode is "INSTRUMENT", we go to the state where we show the instrument toggles.
+                   * In this case we do not care if the user does not have any PagoPA instrument
+                   */
+                  cond: "isPaymentMethodsOnlyMode",
+                  target: "DISPLAYING_INSTRUMENTS_PAYMENT_METHODS"
+                },
+                {
+                  /**
+                   * User has no instrument to show, the machine goes to the success state and inform the user that
+                   * he should add an instrument in order to use the initiative
+                   */
+                  target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
+                }
+              ]
+            },
+
+            /**
+             * In this state we are showing the instruments list to the user.
+             * On entry we are updating the instrument statuses in the context to show the correct status in the instrument switch.
+             * This state implements a polling mechanism using XState delays (https://xstate.js.org/docs/guides/delays.html)
+             */
+            DISPLAYING_INSTRUMENTS_PAYMENT_METHODS: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "updateInstrumentStatuses",
+              initial: "DISPLAYING",
+              invoke: {
+                id: "instrumentsEnrollmentService",
+                src: "instrumentsEnrollmentService"
+              },
+              on: {
+                /**
+                 * This event forwards the "ENROLL_INSTRUMENT" event to instrumentsEnrollmentService.
+                 */
+                ENROLL_INSTRUMENT: {
+                  actions: [
+                    "updateInstrumentEnrollStatus",
+                    "forwardToInstrumentsEnrollmentService"
+                  ]
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when an instrument is enrolled successfully
+                 */
+                ENROLL_INSTRUMENT_SUCCESS: {
+                  actions: "updateInstrumentEnrollStatusSuccess"
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when there is a failure in the instrument enrollment
+                 */
+                ENROLL_INSTRUMENT_FAILURE: {
+                  actions: [
+                    "updateInstrumentEnrollStatusFailure",
+                    "showInstrumentFailureToast"
+                  ]
+                },
+
+                /**
+                 * This event forwards the "DELETE_INSTRUMEMT" event to instrumentsEnrollmentService.
+                 */
+                DELETE_INSTRUMENT: {
+                  actions: [
+                    "updateInstrumentDeleteStatus",
+                    "forwardToInstrumentsEnrollmentService"
+                  ]
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when an instrument is deactivated successfully
+                 */
+                DELETE_INSTRUMENT_SUCCESS: {
+                  actions: "updateInstrumentDeleteStatusSuccess"
+                },
+
+                /**
+                 * This event is called by instrumentsEnrollmentService when there is a failure in the instrument deactivation
+                 */
+                DELETE_INSTRUMENT_FAILURE: {
+                  actions: [
+                    "updateInstrumentDeleteStatusFailure",
+                    "showInstrumentFailureToast"
+                  ]
+                },
+
+                /**
+                 * Back navigation event
+                 */
+                BACK: [
+                  {
+                    /**
+                     * If we are configuring instruments only, back navigation should close the configuration flow
+                     */
+                    cond: "isPaymentMethodsOnlyMode",
+                    target: "#ROOT.CONFIGURATION_CLOSED"
+                  }
+                ],
+
+                /**
+                 * Default next event, we are going to the next state which completes the instruments configurations
+                 */
+                NEXT: {
+                  target: "INSTRUMENTS_COMPLETED"
+                },
+
+                /**
+                 * This event is like the NEXT event, except it sets to the context the `areInstrumentsSkipped` flag.
+                 * This flag is used to display additional CTA at the end of the configuration process (DISPLAYING_CONFIGURATION_SUCCESS)
+                 */
+                SKIP: {
+                  target: "INSTRUMENTS_COMPLETED",
+                  actions: "skipInstruments"
+                }
+              },
+              states: {
+                /**
+                 * In this state we are displaying the instruments, after REFRESHING_INSTRUMENTS_STATES delay the substate transitions to
+                 * the REFRESHING_INSTRUMENTS_STATES state
+                 */
+                DISPLAYING: {
+                  after: {
+                    INSTRUMENTS_POLLING_INTERVAL: {
+                      target: "REFRESHING_INSTRUMENTS_STATES"
+                    }
+                  }
+                },
+                /**
+                 * In this state instruments states are refreshed by invoking loadInitiativeInstruments service and then returns to the
+                 * DISPLAYING state.
+                 */
+                REFRESHING_INSTRUMENTS_STATES: {
+                  invoke: {
+                    src: "loadInitiativeInstruments",
+                    id: "loadInitiativeInstruments",
+                    onDone: {
+                      target: "DISPLAYING",
+                      actions: [
+                        "loadInitiativeInstrumentsSuccess",
+                        "updateInstrumentStatuses"
+                      ]
+                    },
+                    onError: [
+                      {
+                        cond: "isSessionExpired",
+                        target: "#ROOT.SESSION_EXPIRED"
+                      },
+                      {
+                        target: "DISPLAYING",
+                        actions: ["setFailure", "showFailureToast"]
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+
+            /**
+             * Final instrument section status. It triggers the parent `onDone`
+             */
+            INSTRUMENTS_COMPLETED: {
+              type: "final"
+            }
+          },
+          onDone: [
+            {
+              /**
+               * If we are configuring instruments, the next state is the final state
+               */
+              cond: "isInstrumentsOnlyMode",
+              target: "CONFIGURATION_COMPLETED"
+            },
+            {
+              /**
+               * If we are configuring the entire initiative, the next state is where we display the success message to the user
+               */
+              target: "DISPLAYING_CONFIGURATION_SUCCESS"
+            }
+          ]
+        },
 
         /**
          * State where we are displaying the success message to the user.
@@ -996,6 +1291,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
           ),
         isInstrumentsOnlyMode: (context, _) =>
           context.mode === ConfigurationMode.INSTRUMENTS,
+        isPaymentMethodsOnlyMode: (context, _) =>
+          context.mode === ConfigurationMode.PAYMENT_METHODS,
         hasInstruments: (context, _) => context.walletInstruments.length > 0
       },
       delays: {

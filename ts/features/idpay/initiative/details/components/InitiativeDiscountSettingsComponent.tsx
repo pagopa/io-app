@@ -27,7 +27,7 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
   const navigateToInstrumentsConfiguration = (initiativeId: string) => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS,
       params: {
         initiativeId
       }

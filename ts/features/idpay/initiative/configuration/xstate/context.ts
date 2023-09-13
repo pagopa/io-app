@@ -12,7 +12,8 @@ import { InitiativeFailureType } from "./failure";
 export enum ConfigurationMode {
   COMPLETE = "COMPLETE",
   IBAN = "IBAN",
-  INSTRUMENTS = "INSTRUMENTS"
+  INSTRUMENTS = "INSTRUMENTS",
+  PAYMENT_METHODS = "PAYMENT_METHODS"
 }
 
 export type InstrumentStatusByIdWallet = {
