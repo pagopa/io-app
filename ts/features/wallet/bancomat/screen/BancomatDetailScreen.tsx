@@ -75,7 +75,7 @@ const BancomatDetailScreen = ({ route }: Props) => {
       headerTitle="PagoBANCOMAT"
       content={
         <Banner
-          pictogramName="focusOn"
+          pictogramName="help"
           size="big"
           color="neutral"
           viewRef={bannerViewRef}
