@@ -23,10 +23,10 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  attachmentContainerDisabled: {
+  opacityDisabled: {
     opacity: 0.35
   },
-  attachmentContainerEnabled: {
+  opacityEnabled: {
     opacity: 1.0
   },
   container: {
@@ -85,7 +85,10 @@ const AttachmentItem = (props: {
   );
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[
+        styles.container,
+        props.disabled ? styles.opacityDisabled : styles.opacityEnabled
+      ]}
       onPress={onAttachmentSelect}
       disabled={!!props.disabled || pot.isLoading(downloadPot)}
       accessible={true}
@@ -136,15 +139,7 @@ export const MessageAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
       {props.attachments.map((attachment, index) => (
-        <View
-          key={index}
-          style={
-            props.disabled
-              ? styles.attachmentContainerDisabled
-              : styles.attachmentContainerEnabled
-          }
-          testID="MessageAttachmentContainer"
-        >
+        <View key={index}>
           <AttachmentItem
             attachment={attachment}
             disabled={props.disabled}
