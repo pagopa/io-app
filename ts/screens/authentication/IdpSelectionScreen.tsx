@@ -5,6 +5,7 @@ import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ButtonOutline } from "@pagopa/io-app-design-system";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -34,7 +35,6 @@ import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { Body } from "../../components/core/typography/Body";
-import ButtonOutline from "../../components/ui/ButtonOutline";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
 

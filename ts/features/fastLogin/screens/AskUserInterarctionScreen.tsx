@@ -6,6 +6,7 @@ import {
   Modal,
   GestureResponderEvent
 } from "react-native";
+import { ButtonOutline, ButtonSolid } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import {
   IOPictograms,
@@ -17,8 +18,6 @@ import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
-import ButtonOutline from "../../../components/ui/ButtonOutline";
-import ButtonSolid from "../../../components/ui/ButtonSolid";
 import CountDown from "../components/CountDown";
 import ModalHeader from "../components/ModalHeader";
 

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import { ButtonOutline } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
@@ -17,7 +18,6 @@ import { LabelledItem } from "./LabelledItem";
 import { IOStyles } from "./core/variables/IOStyles";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { VSpacer } from "./core/spacer/Spacer";
-import ButtonOutline from "./ui/ButtonOutline";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;

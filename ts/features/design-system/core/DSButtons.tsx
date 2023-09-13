@@ -2,11 +2,12 @@ import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import {
+  ButtonLink,
+  ButtonOutline,
+  ButtonSolid,
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { ButtonSolid } from "../../../components/ui/ButtonSolid";
-import { ButtonOutline } from "../../../components/ui/ButtonOutline";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
@@ -20,7 +21,6 @@ import IconButtonContained from "../../../components/ui/IconButtonContained";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 import IconButton from "../../../components/ui/IconButton";
-import ButtonLink from "../../../components/ui/ButtonLink";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {

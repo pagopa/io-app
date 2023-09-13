@@ -7,6 +7,7 @@ import * as t from "io-ts";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { ButtonOutline } from "@pagopa/io-app-design-system";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
@@ -17,7 +18,6 @@ import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import ButtonOutline from "../../../../../components/ui/ButtonOutline";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {

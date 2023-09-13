@@ -1,11 +1,10 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { IOThemeContext } from "@pagopa/io-app-design-system";
+import { ButtonSolid, IOThemeContext } from "@pagopa/io-app-design-system";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
-import ButtonSolid from "../../../components/ui/ButtonSolid";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import {
   useIOBottomSheetAutoresizableModal,
