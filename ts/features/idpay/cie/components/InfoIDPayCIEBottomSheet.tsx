@@ -7,27 +7,28 @@ import {
 } from "../../../../utils/hooks/bottomSheet";
 import { FeatureInfo } from "../../../../components/FeatureInfo";
 import { NewH4 } from "../../../../components/core/typography/NewH4";
+import I18n from "../../../../i18n";
 
 /**
- * This custom hook, useInfoCIEBottomSheet, is designed to display a bottom sheet
+ * This custom hook, useInfoIDPayCIEBottomSheet, is designed to display a bottom sheet
  * containing detailed information about how the CIE (Carta d'Identità Elettronica) payment authorization works.
  */
-const useInfoCIEBottomSheet = (): IOBottomSheetModal => {
+const useInfoIDPayCIEBottomSheet = (): IOBottomSheetModal => {
   const getModalContent = () => (
     <View>
       <FeatureInfo
         iconName="pinOn"
-        body="Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        body={I18n.t("idpay.initiative.cie.bottomSheet.featureOne")}
       />
       <VSpacer size={24} />
       <FeatureInfo
         iconName="pinOn"
-        body="Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
+        body={I18n.t("idpay.initiative.cie.bottomSheet.featureTwo")}
       />
       <VSpacer size={24} />
       <FeatureInfo
         iconName="pinOn"
-        body="Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
+        body={I18n.t("idpay.initiative.cie.bottomSheet.featureThree")}
       />
       <VSpacer size={24} />
     </View>
@@ -35,10 +36,10 @@ const useInfoCIEBottomSheet = (): IOBottomSheetModal => {
 
   const modal = useIOBottomSheetAutoresizableModal({
     component: getModalContent(),
-    title: <NewH4>Come funziona?</NewH4>
+    title: <NewH4>{I18n.t("idpay.initiative.cie.bottomSheet.title")}</NewH4>
   });
 
   return { ...modal };
 };
 
-export { useInfoCIEBottomSheet };
+export { useInfoIDPayCIEBottomSheet };
