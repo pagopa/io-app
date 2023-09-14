@@ -6,53 +6,55 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
 import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import { createActionsImplementation } from "./actions";
 import {
-  IDPayCIEOnboardingMachineType,
-  createIDPayCIEOnboardingMachine
+  IDPayCodeOnboardingMachineType,
+  createIDPayCodeOnboardingMachine
 } from "./machine";
 import { createServicesImplementation } from "./services";
 
-type CIEOnboardingMachineContext =
-  InterpreterFrom<IDPayCIEOnboardingMachineType>;
-const CIEOnboardingMachineContext =
-  React.createContext<CIEOnboardingMachineContext>(
-    {} as CIEOnboardingMachineContext
+type CodeOnboardingMachineContext =
+  InterpreterFrom<IDPayCodeOnboardingMachineType>;
+const CodeOnboardingMachineContext =
+  React.createContext<CodeOnboardingMachineContext>(
+    {} as CodeOnboardingMachineContext
   );
 
 type Props = {
   children: React.ReactNode;
 };
 
-const IDPayCIEOnboardingMachineProvider = (props: Props) => {
-  const dispatch = useIODispatch();
+const IDPayCodeOnboardingMachineProvider = (props: Props) => {
+  // const dispatch = useIODispatch();
   const isIDPayCodeEnabled = true; // TODO: get from store
   const machineGenerator = () =>
-    createIDPayCIEOnboardingMachine(isIDPayCodeEnabled);
+    createIDPayCodeOnboardingMachine(isIDPayCodeEnabled);
   const [machine] = useXStateMachine(machineGenerator);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const token = "token"; // get from wherever
   const client = null; // ''
 
-  const actions = createActionsImplementation(navigation, dispatch);
+  const actions = createActionsImplementation(
+    navigation
+    //  dispatch
+  );
   const services = createServicesImplementation(client, token);
 
   const machineService = useInterpret(machine, { services, actions });
 
   return (
-    <CIEOnboardingMachineContext.Provider value={machineService}>
+    <CodeOnboardingMachineContext.Provider value={machineService}>
       {props.children}
-    </CIEOnboardingMachineContext.Provider>
+    </CodeOnboardingMachineContext.Provider>
   );
 };
 
-const useCIEOnboardingMachineService = () =>
-  React.useContext(CIEOnboardingMachineContext);
+const useCodeOnboardingMachineService = () =>
+  React.useContext(CodeOnboardingMachineContext);
 
 export {
-  CIEOnboardingMachineContext,
-  IDPayCIEOnboardingMachineProvider,
-  useCIEOnboardingMachineService
+  CodeOnboardingMachineContext,
+  IDPayCodeOnboardingMachineProvider,
+  useCodeOnboardingMachineService
 };

@@ -3,11 +3,10 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
-  dispatch: ReturnType<typeof useIODispatch>
+  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
+  //  dispatch: ReturnType<typeof useIODispatch>
 ) => {
   const authorizeUser = () => {
     // CALL AUTH HOOK
