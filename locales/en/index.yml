@@ -868,7 +868,7 @@ onboarding:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
   biometric:
-    headerTitle: Configura IO
+    headerTitle: Configure IO
     available:
       title: Attiva il riconoscimento biometrico
       settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
