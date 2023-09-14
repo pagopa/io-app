@@ -876,7 +876,7 @@ onboarding:
         infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorizeoperations and payments with your
         biometricType: face or fingerprint
         infoEnd: more quickly and securely.
-        enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
+        enrolledText: The biometric information is stored in your phone's memory. it will not be disclosed in any way to IO systems or stored anywhere else.
         notEnrolled:
           text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Sicurezza.
     unavailable:
