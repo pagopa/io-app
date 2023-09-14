@@ -884,7 +884,7 @@ onboarding:
       body:
         firstInfoStart: Io ti invia le comunicazioni che ti riguardano
         firstInfoEnd: personalmente.
-        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
+        secondInfoStart:Protect your device from unwanted access and make sure that only you can access the app. To do this, go to your device settings, set an
         secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
   shareData:
     title: "Configure IO"
