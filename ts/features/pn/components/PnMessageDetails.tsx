@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { createRef, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
@@ -19,7 +20,7 @@ import { TransactionSummaryStatus } from "../../../screens/wallet/payment/compon
 import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { PnConfigSelector } from "../../../store/reducers/backendStatus";
+import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
 import {
   UIAttachment,
   UIMessageId
@@ -37,6 +38,14 @@ import {
   trackPNPaymentInfoPaid,
   trackPNPaymentInfoPayable
 } from "../analytics";
+import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
+import StatusContent from "../../../components/SectionStatus/StatusContent";
+import {
+  getStatusTextColor,
+  statusColorMap,
+  statusIconMap
+} from "../../../components/SectionStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
@@ -70,7 +79,11 @@ export const PnMessageDetails = ({
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
+  const frontendUrl = useIOSelector(pnFrontendUrlSelector);
+
+  const viewRef = createRef<View>();
+
+  const isCancelled = message.isCancelled ?? false;
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -153,6 +166,25 @@ export const PnMessageDetails = ({
       >
         {service && <PnMessageDetailsHeader service={service} />}
         <PnMessageDetailsContent style={styles.content} message={message} />
+        {isCancelled && (
+          <>
+            <VSpacer />
+            <DSFullWidthComponent>
+              <StatusContent
+                accessibilityLabel={I18n.t(
+                  "features.pn.details.cancelledMessage.body"
+                )}
+                backgroundColor={statusColorMap.warning}
+                foregroundColor={getStatusTextColor(LevelEnum.warning)}
+                iconName={statusIconMap.warning}
+                testID={"PnCancelledMessageBanner"}
+                viewRef={viewRef}
+              >
+                {I18n.t("features.pn.details.cancelledMessage.body")}
+              </StatusContent>
+            </DSFullWidthComponent>
+          </>
+        )}
         {message.attachments && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
@@ -160,6 +192,7 @@ export const PnMessageDetails = ({
             <MessageAttachments
               attachments={message.attachments}
               openPreview={openAttachment}
+              disabled={isCancelled}
             />
           </PnMessageDetailsSection>
         )}
