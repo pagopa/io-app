@@ -176,7 +176,7 @@ global:
     info: "Info"
     activate: "Activate"
     activate2: Enable
-    deactivate: "Deactivate"
+    deactivate: "Disable"
     show: "Show"
     update: "Update"
     findOutMore: "Find out more"
