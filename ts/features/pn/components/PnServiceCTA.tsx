@@ -22,9 +22,7 @@ import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,
   trackPNServiceStartActivation,
-  trackPNServiceStartDeactivation,
-  trackPNServiceStatusChangeError,
-  trackPNServiceStatusChangeSuccess
+  trackPNServiceStartDeactivation
 } from "../analytics";
 
 type Props = {
@@ -115,10 +113,8 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     const isError = pot.isError(serviceActivation);
     if (wasUpdating && !isStillUpdating) {
       if (isError) {
-        trackPNServiceStatusChangeError(isServiceActive);
         showToast(I18n.t("features.pn.service.toast.error"), "danger");
       } else {
-        trackPNServiceStatusChangeSuccess(isServiceActive);
         dispatch(loadServicePreference.request(serviceId));
         if (pot.toUndefined(serviceActivation)) {
           showToast(I18n.t("features.pn.service.toast.activated"), "success");
