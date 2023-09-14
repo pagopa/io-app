@@ -3,9 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as AR from "fp-ts/lib/Array";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { createRef, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -42,6 +43,14 @@ import {
   trackPNShowTimeline,
   trackPNUxSuccess
 } from "../analytics";
+import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
+import StatusContent from "../../../components/SectionStatus/StatusContent";
+import {
+  getStatusTextColor,
+  statusColorMap,
+  statusIconMap
+} from "../../../components/SectionStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
@@ -73,8 +82,11 @@ export const PnMessageDetails = ({
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
+  const viewRef = createRef<View>();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
+
+  const isCancelled = message.isCancelled ?? false;
 
   const payment = pipe(
     message.recipients,
@@ -168,6 +180,25 @@ export const PnMessageDetails = ({
       >
         {service && <PnMessageDetailsHeader service={service} />}
         <PnMessageDetailsContent style={styles.content} message={message} />
+        {isCancelled && (
+          <>
+            <VSpacer />
+            <DSFullWidthComponent>
+              <StatusContent
+                accessibilityLabel={I18n.t(
+                  "features.pn.details.cancelledMessage.body"
+                )}
+                backgroundColor={statusColorMap.warning}
+                foregroundColor={getStatusTextColor(LevelEnum.warning)}
+                iconName={statusIconMap.warning}
+                testID={"PnCancelledMessageBanner"}
+                viewRef={viewRef}
+              >
+                {I18n.t("features.pn.details.cancelledMessage.body")}
+              </StatusContent>
+            </DSFullWidthComponent>
+          </>
+        )}
         {message.attachments && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
@@ -175,6 +206,7 @@ export const PnMessageDetails = ({
             <MessageAttachments
               attachments={message.attachments}
               openPreview={openAttachment}
+              disabled={isCancelled}
             />
           </PnMessageDetailsSection>
         )}
