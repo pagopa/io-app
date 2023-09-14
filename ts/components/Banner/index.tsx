@@ -15,6 +15,11 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import {
+  IOPictogramSizeScale,
+  IOPictogramsBleed,
+  PictogramBleed
+} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
 import { IOColors } from "../core/variables/IOColors";
@@ -27,11 +32,6 @@ import {
   IOBannerSmallVSpacing
 } from "../core/variables/IOSpacing";
 import ButtonLink from "../ui/ButtonLink";
-import {
-  IOPictogramsBleed,
-  IOPictogramSizeScale,
-  Pictogram
-} from "../core/pictograms";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import IconButton from "../ui/IconButton";
@@ -228,7 +228,7 @@ export const Banner = ({
         )}
       </View>
       <View style={[styles.bleedPictogram, IOStyles.selfCenter]}>
-        <Pictogram
+        <PictogramBleed
           name={pictogramName}
           size={size === "big" ? sizePictogramBig : sizePictogramSmall}
         />
