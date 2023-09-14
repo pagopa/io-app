@@ -175,7 +175,7 @@ global:
     edit: "Edit"
     info: "Info"
     activate: "Activate"
-    activate2: Attiva
+    activate2: Enable
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
