@@ -28,7 +28,7 @@ const createIDPayCodeOnboardingMachine = (isCodeEnabled: boolean) =>
         DISPLAYING_INTRO: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
-            START_FLOW: {
+            NEXT: {
               target: "AUTHORIZING_USER"
             }
           }
@@ -67,7 +67,7 @@ const createIDPayCodeOnboardingMachine = (isCodeEnabled: boolean) =>
           entry: "navigateToPinShowScreen",
           tags: [WAITING_USER_INPUT_TAG],
           on: {
-            CONTINUE: {
+            NEXT: {
               target: "DISPLAYING_ONBOARDING_SUCCESS"
             }
           }

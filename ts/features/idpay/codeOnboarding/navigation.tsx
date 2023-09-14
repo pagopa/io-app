@@ -4,20 +4,25 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 
+import { useSelector } from "@xstate/react";
 import * as React from "react";
-import { View } from "react-native";
-import { IDPayCodeOnboardingMachineProvider } from "./xstate/provider";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import {
+  IDPayCodeOnboardingMachineProvider,
+  useIDPayCodeOnboardingMachineService
+} from "./xstate/provider";
+import { selectCurrentPage } from "./xstate/selectors";
 
 export const IDPayCodeOnboardingRoutes = {
   IDPAY_CODE_ONBOARDING_MAIN: "IDPAY_CODE_ONBOARDING_MAIN",
   IDPAY_CODE_ONBOARDING_INTRO: "IDPAY_CODE_ONBOARDING_INTRO",
-  IDPAY_CODE_ONBOARDING_END: "IDPAY_CODE_ONBOARDING_END",
+  IDPAY_CODE_ONBOARDING_CODE_DISPLAY: "IDPAY_CODE_ONBOARDING_CODE_DISPLAY",
   IDPAY_CODE_ONBOARDING_RESULT: "IDPAY_CODE_ONBOARDING_RESULT"
 } as const;
 
 export type IDPayCodeOnboardingParamsList = {
   [IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_INTRO]: undefined;
-  [IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_END]: undefined;
+  [IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_CODE_DISPLAY]: undefined;
   [IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_RESULT]: undefined;
 };
 
@@ -36,7 +41,7 @@ export const IDPayCodeOnboardingNavigator = () => (
         options={{ gestureEnabled: true }}
       />
       <Stack.Screen
-        name={IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_END}
+        name={IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_CODE_DISPLAY}
         component={MockScreen}
       />
       <Stack.Screen
@@ -47,7 +52,22 @@ export const IDPayCodeOnboardingNavigator = () => (
   </IDPayCodeOnboardingMachineProvider>
 );
 
-const MockScreen = () => <View></View>;
+const MockScreen = () => {
+  const machine = useIDPayCodeOnboardingMachineService();
+  const handler = () => machine.send("NEXT");
+  const currentPage = useSelector(machine, selectCurrentPage);
+
+  return (
+    <OperationResultScreenContent
+      title={"currentState: " + currentPage.toString()}
+      action={{
+        onPress: handler,
+        label: "Next",
+        accessibilityLabel: "Next"
+      }}
+    />
+  );
+};
 
 export type IDPayCodeOnboardingStackNavigationRouteProps<
   ParamList extends ParamListBase,

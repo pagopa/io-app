@@ -50,11 +50,11 @@ const IDPayCodeOnboardingMachineProvider = (props: Props) => {
   );
 };
 
-const useCodeOnboardingMachineService = () =>
+const useIDPayCodeOnboardingMachineService = () =>
   React.useContext(CodeOnboardingMachineContext);
 
 export {
   CodeOnboardingMachineContext,
   IDPayCodeOnboardingMachineProvider,
-  useCodeOnboardingMachineService
+  useIDPayCodeOnboardingMachineService
 };
