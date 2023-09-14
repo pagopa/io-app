@@ -84,5 +84,5 @@ export const paymentFromPNMessagePot = (
       )
     ),
     O.chainNullableK(recipient => recipient.payment),
-    O.getOrElseW(() => undefined)
+    O.toUndefined
   );
