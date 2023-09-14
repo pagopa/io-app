@@ -29,7 +29,6 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
-  pnEnabled,
   svEnabled,
   zendeskEnabled
 } from "../config";
@@ -99,7 +98,10 @@ import {
   tokenRefreshSelector
 } from "../features/fastLogin/store/selectors";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import { backendStatusSelector } from "../store/reducers/backendStatus";
+import {
+  backendStatusSelector,
+  isPnEnabledSelector
+} from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
@@ -559,6 +561,10 @@ export function* initializeApplicationSaga(
     // Start watching for EU Covid Certificate actions
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
+
+  const pnEnabled: ReturnType<typeof isPnEnabledSelector> = yield* select(
+    isPnEnabledSelector
+  );
 
   if (pnEnabled) {
     // Start watching for PN actions
