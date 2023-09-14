@@ -21,6 +21,7 @@ import {
 } from "../store";
 import { IDPayConfigurationPaymentMethods } from "../types";
 import { InstrumentPaymentMethodSwitch } from "../components/InstrumentPaymentMethodSwitch";
+import { useInfoIDPayCIEBottomSheet } from "../components/InfoIDPayCIEBottomSheet";
 
 type InstrumentsPaymentMehtodsScreenRouteParams = {
   initiative?: InitiativeDTO;
@@ -44,6 +45,9 @@ const InstrumentsPaymentMethodsScreen = () => {
   const isLoadingPaymentMethods = useIOSelector(
     isLoadingPaymentMethodsSelector
   );
+
+  const { bottomSheet, present: presentCIEBottomSheet } =
+    useInfoIDPayCIEBottomSheet();
 
   React.useEffect(() => {
     if (initiative) {
@@ -73,6 +77,14 @@ const InstrumentsPaymentMethodsScreen = () => {
     // console.log(paymentMethodType, value);
   };
 
+  const handlePressActionButton = (
+    paymentMethodType: IDPayConfigurationPaymentMethods
+  ) => {
+    if (paymentMethodType === IDPayConfigurationPaymentMethods.CIE) {
+      presentCIEBottomSheet();
+    }
+  };
+
   return (
     <>
       <BaseScreenComponent
@@ -99,12 +111,13 @@ const InstrumentsPaymentMethodsScreen = () => {
                 key={paymentMethod.idWallet}
                 instrumentPaymentMethod={paymentMethod}
                 onValueChange={handlePaymentMethodValueChange}
-                onPressAction={() => null}
+                onPressAction={handlePressActionButton}
               />
             ))}
             <VSpacer size={16} />
           </ScrollView>
         </LoadingSpinnerOverlay>
+        {bottomSheet}
       </BaseScreenComponent>
     </>
   );
