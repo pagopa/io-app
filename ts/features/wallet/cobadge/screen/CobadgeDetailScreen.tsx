@@ -77,7 +77,7 @@ const CobadgeDetailScreen = (props: Props) => {
       headerTitle={I18n.t("wallet.methodDetails.cobadgeTitle")}
       content={
         <Banner
-          pictogramName="focusOn"
+          pictogramName="help"
           size="big"
           color="neutral"
           viewRef={bannerViewRef}

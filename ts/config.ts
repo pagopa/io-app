@@ -107,9 +107,6 @@ export const newTransactionSummaryEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// PN (Piattaforma Notifiche) Feature Flag
-export const pnEnabled = Config.PN_ENABLED === "YES";
-
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 

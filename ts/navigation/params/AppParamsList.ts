@@ -17,9 +17,9 @@ import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
 import {
-  IDPayPaymentParamsList,
-  IDPayPaymentRoutes
-} from "../../features/idpay/payment/navigation/navigator";
+  IDPayCodeOnboardingParamsList,
+  IDPayCodeOnboardingRoutes
+} from "../../features/idpay/codeOnboarding/navigation";
 import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
@@ -33,16 +33,20 @@ import {
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
 import {
+  IDPayPaymentParamsList,
+  IDPayPaymentRoutes
+} from "../../features/idpay/payment/navigation/navigator";
+import {
   IDPayUnsubscriptionNavigatorParams,
   IDPayUnsubscriptionParamsList,
   IDPayUnsubscriptionRoutes
 } from "../../features/idpay/unsubscription/navigation/navigator";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
+import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
 } from "../../features/walletV3/onboarding/navigation/navigator";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
@@ -84,6 +88,7 @@ export type AppParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
+  [IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayCodeOnboardingParamsList>;
   [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
     | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
     | IDPayUnsubscriptionNavigatorParams;
