@@ -2,12 +2,15 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { sequenceS } from "fp-ts/lib/Apply";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { NotificationPaymentInfo } from "../store/types/types";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 
-const getRptIdFromPayment = (payment?: NotificationPaymentInfo) =>
+const getRptIdFromPayment = (
+  payment?: NotificationPaymentInfo
+): RptId | undefined =>
   pipe(
     payment,
     O.fromNullable,
