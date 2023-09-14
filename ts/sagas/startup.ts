@@ -476,17 +476,16 @@ export function* initializeApplicationSaga(
       }
     }
   }
-
-  // Ask to accept ToS if there is a new available version
-  yield* call(checkAcceptedTosSaga, userProfile);
-
-  // After tos acceptance, we dispatch a load success to allow the execution of the check
+  // We dispatch a load success to allow the execution of the check
   // which save the hashed code tax code
   const profile = yield* select(profileSelector);
   if (pot.isSome(profile)) {
     yield* put(profileLoadSuccess(profile.value));
     yield* take(setProfileHashedFiscalCode);
   }
+
+  // Ask to accept ToS if there is a new available version
+  yield* call(checkAcceptedTosSaga, userProfile);
 
   if (!handleSessionExpiration) {
     yield* call(setLanguageFromProfileIfExists);
