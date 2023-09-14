@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, View } from "react-native";
+import { Alert, View, ImageSourcePropType } from "react-native";
 import { IOThemeContext } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -7,6 +7,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { ModulePaymentNotice } from "../../../components/ui/ModulePaymentNotice";
 import ButtonExtendedOutline from "../../../components/ui/ButtonExtendedOutline";
+import ModuleIDP from "../../../components/ui/ModuleIDP";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -35,6 +36,17 @@ export const DSModules = () => (
           ButtonExtendedOutline
         </H2>
         {renderButtonExtendedOutline()}
+
+        <VSpacer size={40} />
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16 }}
+        >
+          ModuleIDP
+        </H2>
+        {renderModuleIDP()}
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
@@ -127,4 +139,57 @@ const renderButtonExtendedOutline = () => (
       />
     </View>
   </DSComponentViewerBox>
+);
+
+const mockIDPProviderItem = {
+  id: "posteid",
+  name: "Poste ID",
+  logo: "",
+  localLogo: require("../../../../img/spid-idp-posteid.png"),
+  profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
+};
+
+const renderModuleIDP = () => (
+  <>
+    <DSComponentViewerBox name="ModuleIDP, default variant">
+      <View>
+        <ModuleIDP
+          name={mockIDPProviderItem.name}
+          logo={mockIDPProviderItem.logo as ImageSourcePropType}
+          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+          onPress={() => {
+            Alert.alert("Action triggered");
+          }}
+          testID={`idp-${mockIDPProviderItem.id}-button`}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleIDP, saved variant">
+      <View>
+        <ModuleIDP
+          saved
+          name={mockIDPProviderItem.name}
+          logo={mockIDPProviderItem.logo as ImageSourcePropType}
+          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+          onPress={() => {
+            Alert.alert("Action triggered");
+          }}
+          testID={`idp-${mockIDPProviderItem.id}-button`}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleIDP, default variant, stress test">
+      <View>
+        <ModuleIDP
+          name={"This is a very loooooong IDP provider name"}
+          logo={mockIDPProviderItem.logo as ImageSourcePropType}
+          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
+          onPress={() => {
+            Alert.alert("Action triggered");
+          }}
+          testID={`idp-${mockIDPProviderItem.id}-button`}
+        />
+      </View>
+    </DSComponentViewerBox>
+  </>
 );

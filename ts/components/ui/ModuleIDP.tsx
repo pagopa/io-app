@@ -30,7 +30,7 @@ import {
   IOListItemLogoMargin
 } from "../core/variables/IOSpacing";
 
-type ListItemIDP = WithTestID<{
+type ModuleIDP = WithTestID<{
   name: string;
   localLogo: ImageSourcePropType;
   logo: ImageSourcePropType;
@@ -77,7 +77,7 @@ const androidIdpLogoForcedRefreshed = () =>
  * Represents a list item for an Identity Provider (IDP).
  * It displays the IDP's name and logo and provides interaction when pressed.
  *
- * Currently if the Design System is enabled, the component returns the ListItemIDP of the @pagopa/io-app-design-system library
+ * Currently if the Design System is enabled, the component returns the ModuleIDP of the @pagopa/io-app-design-system library
  * otherwise it returns the legacy component.
  *
  * @param {string} name - The name of the Identity Provider (IDP).
@@ -87,17 +87,15 @@ const androidIdpLogoForcedRefreshed = () =>
  * @param {function} onPress - The callback function to be executed when the item is pressed.
  * @param {string} testID - The test ID for testing purposes.
  *
- * @deprecated The usage of this component is discouraged as it is being replaced by the ListItemIDP of the @pagopa/io-app-design-system library.
- *
  */
-export const ListItemIDP = ({
+export const ModuleIDP = ({
   name,
   localLogo,
   logo,
   saved,
   onPress,
   testID
-}: ListItemIDP) => {
+}: ModuleIDP) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
@@ -161,4 +159,4 @@ export const ListItemIDP = ({
   );
 };
 
-export default ListItemIDP;
+export default ModuleIDP;

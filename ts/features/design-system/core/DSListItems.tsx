@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { Alert, ImageSourcePropType, View } from "react-native";
+import { Alert, View } from "react-native";
 import { ButtonLink, IOThemeContext, Icon } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
@@ -29,7 +29,6 @@ import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
-import { ListItemIDP } from "../../../components/ui/ListItemIDP";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
 
 const onButtonPress = () => {
@@ -75,15 +74,6 @@ export const DSListItems = () => (
           ListItemAction
         </H2>
         {renderListItemAction()}
-
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16, marginTop: 16 }}
-        >
-          ListItemIDP
-        </H2>
-        {renderListItemIDP()}
 
         <H2
           color={theme["textHeading-default"]}
@@ -541,59 +531,6 @@ const renderListItemInfo = () => (
       />
     </View>
   </DSComponentViewerBox>
-);
-
-const mockIDPProviderItem = {
-  id: "posteid",
-  name: "Poste ID",
-  logo: "",
-  localLogo: require("../../../../img/spid-idp-posteid.png"),
-  profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-};
-
-const renderListItemIDP = () => (
-  <>
-    <DSComponentViewerBox name="ListItemIDP, default variant">
-      <View>
-        <ListItemIDP
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemIDP, saved variant">
-      <View>
-        <ListItemIDP
-          saved
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemIDP, default variant, stress test">
-      <View>
-        <ListItemIDP
-          name={"This is a very loooooong IDP provider name"}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-  </>
 );
 
 const renderListItemTransaction = () => {

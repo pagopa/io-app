@@ -18,7 +18,7 @@ import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOVisualCostants } from "./core/variables/IOStyles";
-import { ListItemIDP } from "./ui/ListItemIDP";
+import { ModuleIDP } from "./ui/ModuleIDP";
 import { IOSpacingScale } from "./core/variables/IOSpacing";
 
 type OwnProps = {
@@ -55,7 +55,7 @@ const renderItem =
     const onPress = () => onIdpSelected(item);
 
     return (
-      <ListItemIDP
+      <ModuleIDP
         key={id}
         name={name}
         logo={logo as ImageSourcePropType}
