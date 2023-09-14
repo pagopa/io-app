@@ -880,7 +880,7 @@ onboarding:
         notEnrolled:
           text: To use it, go to your device settings and configure it. Then activate it on IO under Profile > Security.
     unavailable:
-      title: Proteggi il tuo dispositivo
+      title: Protect your device
       body:
         firstInfoStart: Io ti invia le comunicazioni che ti riguardano
         firstInfoEnd: personalmente.
