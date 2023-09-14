@@ -878,7 +878,7 @@ onboarding:
         infoEnd: more quickly and securely.
         enrolledText: The biometric information is stored in your phone's memory. it will not be disclosed in any way to IO systems or stored anywhere else.
         notEnrolled:
-          text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Sicurezza.
+          text: To use it, go to your device settings and configure it. Then activate it on IO under Profile > Security.
     unavailable:
       title: Proteggi il tuo dispositivo
       body:
