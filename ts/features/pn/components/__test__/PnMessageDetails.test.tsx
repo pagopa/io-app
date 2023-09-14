@@ -41,12 +41,12 @@ describe("PnMessageDetails component", () => {
     );
     expect(component.queryByTestId("PnCancelledMessageBanner")).toBeFalsy();
   });
-  it("should have a full opaque attachmnet section when the PN message is not cancelled", () => {
+  it("every attachment item should have a full opaque style when the PN message is not cancelled", () => {
     const { component } = renderComponent(
       generateComponentProperties(generatePnMessage())
     );
     const messageAttachmentComponents = component.queryAllByTestId(
-      "MessageAttachmentContainer"
+      "MessageAttachmentTouchable"
     );
     expect(messageAttachmentComponents.length).toBe(2);
 
@@ -64,7 +64,7 @@ describe("PnMessageDetails component", () => {
     );
     expect(component.queryByTestId("PnCancelledMessageBanner")).toBeDefined();
   });
-  it("should have a semi-transparent attachmnet section when the PN message is cancelled", () => {
+  it("every attachment item should have a semi-transparent style when the PN message is cancelled", () => {
     const { component } = renderComponent(
       generateComponentProperties({
         ...generatePnMessage(),
@@ -72,7 +72,7 @@ describe("PnMessageDetails component", () => {
       })
     );
     const messageAttachmentComponents = component.queryAllByTestId(
-      "MessageAttachmentContainer"
+      "MessageAttachmentTouchable"
     );
     expect(messageAttachmentComponents.length).toBe(2);
 
