@@ -1,3 +1,6 @@
+import { identificationRequest } from "../../../../store/actions/identification";
+import { useIODispatch } from "../../../../store/hooks";
+import I18n from "../../../../i18n";
 import { Context } from "./context";
 
 export type Services = {
@@ -13,7 +16,15 @@ const mapFetchError = (error: unknown) => {
   return undefined;
 };
 
-const createServicesImplementation = (client: unknown, token: string) => {
+enum FailureEnum {
+  GENERIC = "GENERIC"
+}
+
+const createServicesImplementation = (
+  client: unknown,
+  token: string,
+  dispatch: ReturnType<typeof useIODispatch>
+) => {
   const generatePin = async (context: Context) => {
     // required to avoid errors while implementation is so barebone
     // eslint-disable-next-line no-console
@@ -23,7 +34,25 @@ const createServicesImplementation = (client: unknown, token: string) => {
 
     return new Promise((resolve, _reject) => resolve(true));
   };
-  return { generatePin };
+  const authorizeUser = async () =>
+    new Promise((resolve, reject) =>
+      dispatch(
+        identificationRequest(
+          false,
+          true,
+          undefined,
+          {
+            label: I18n.t("global.buttons.cancel"),
+            onCancel: () => reject(FailureEnum.GENERIC)
+          },
+          {
+            onSuccess: () => resolve(true)
+          }
+        )
+      )
+    );
+
+  return { generatePin, authorizeUser };
 };
 
 export { createServicesImplementation };

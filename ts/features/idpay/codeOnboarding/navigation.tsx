@@ -55,11 +55,11 @@ export const IDPayCodeOnboardingNavigator = () => (
 const MockScreen = () => {
   const machine = useIDPayCodeOnboardingMachineService();
   const handler = () => machine.send("NEXT");
-  const currentPage = useSelector(machine, selectCurrentPage);
+  const currentState = useSelector(machine, selectCurrentPage);
 
   return (
     <OperationResultScreenContent
-      title={"currentState: " + currentPage.toString()}
+      title={"currentState: " + currentState.toString()}
       action={{
         onPress: handler,
         label: "Next",

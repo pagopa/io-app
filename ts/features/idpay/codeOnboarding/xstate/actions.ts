@@ -6,13 +6,7 @@ import {
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
-  //  dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const authorizeUser = () => {
-    // CALL AUTH HOOK
-    console.log("authorizeUser");
-  };
-
   const navigateToPinShowScreen = () => {
     // navigation.navigate
     console.log("navigateToPinShowScreen");
@@ -29,7 +23,6 @@ const createActionsImplementation = (
     navigation.pop();
   };
   return {
-    authorizeUser,
     navigateToPinShowScreen,
     navigateToErrorScreen,
     navigateToSuccessScreen,

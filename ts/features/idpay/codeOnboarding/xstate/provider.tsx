@@ -6,6 +6,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import { createActionsImplementation } from "./actions";
 import {
@@ -26,7 +27,7 @@ type Props = {
 };
 
 const IDPayCodeOnboardingMachineProvider = (props: Props) => {
-  // const dispatch = useIODispatch();
+  const dispatch = useIODispatch();
   const isIDPayCodeEnabled = true; // TODO: get from store
   const machineGenerator = () =>
     createIDPayCodeOnboardingMachine(isIDPayCodeEnabled);
@@ -39,7 +40,7 @@ const IDPayCodeOnboardingMachineProvider = (props: Props) => {
     navigation
     //  dispatch
   );
-  const services = createServicesImplementation(client, token);
+  const services = createServicesImplementation(client, token, dispatch);
 
   const machineService = useInterpret(machine, { services, actions });
 

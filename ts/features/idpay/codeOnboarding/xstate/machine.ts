@@ -2,6 +2,12 @@ import { createMachine } from "xstate";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../xstate/utils";
 import { Context, INITIAL_CONTEXT } from "./context";
 
+type Services = {
+  authorizeUser: {
+    data: unknown;
+  };
+};
+
 const createIDPayCodeOnboardingMachine = (isCodeEnabled: boolean) =>
   createMachine(
     {
@@ -11,7 +17,7 @@ const createIDPayCodeOnboardingMachine = (isCodeEnabled: boolean) =>
       schema: {
         context: {} as Context,
         events: undefined,
-        services: undefined
+        services: {} as Services
       },
       predictableActionArguments: true,
       id: "IDPAY_CODE_ONBOARDING",
@@ -35,8 +41,10 @@ const createIDPayCodeOnboardingMachine = (isCodeEnabled: boolean) =>
         },
         AUTHORIZING_USER: {
           tags: [WAITING_USER_INPUT_TAG],
-          on: {
-            AUTH_SUCCESS: [
+          invoke: {
+            id: "authorizeUser",
+            src: "authorizeUser",
+            onDone: [
               {
                 cond: "pin_exists",
                 target: "DISPLAYING_ONBOARDING_SUCCESS"
@@ -45,7 +53,7 @@ const createIDPayCodeOnboardingMachine = (isCodeEnabled: boolean) =>
                 target: "GENERATING_PIN"
               }
             ],
-            AUTH_FAILURE: {
+            onError: {
               target: "DISPLAYING_ONBOARDING_FAILURE"
             }
           }
