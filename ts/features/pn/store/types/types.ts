@@ -74,7 +74,9 @@ export const FullReceivedNotificationR = t.interface({
 
 export const FullReceivedNotificationO = t.partial({
   abstract: t.string,
-  senderDenomination: t.string
+  senderDenomination: t.string,
+  isCancelled: t.boolean,
+  completedPayments: t.readonlyArray(t.string)
 });
 
 export const FullReceivedNotification = t.intersection(
