@@ -883,7 +883,7 @@ onboarding:
       title: Protect your device
       body:
         firstInfoStart: Io ti invia le comunicazioni che ti riguardano
-        firstInfoEnd: personalmente.
+        firstInfoEnd: personally.
         secondInfoStart:Protect your device from unwanted access and make sure that only you can access the app. To do this, go to your device settings, set an
         secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
   shareData:
