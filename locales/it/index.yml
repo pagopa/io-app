@@ -177,6 +177,7 @@ global:
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
+    updateIO: "Aggiorna IO"
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
@@ -3105,6 +3106,9 @@ features:
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
+    updateBottomSheet:
+      title: "Aggiorna l'app IO"
+      subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
   euCovidCertificate:
     save:
       album: "IO"
@@ -3174,6 +3178,8 @@ features:
       loadError:
         title: Qualcosa è andato storto
         body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      cancelledMessage:
+        body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
       paymentSection:
         title: Avviso di pagamento
       attachmentsSection:
