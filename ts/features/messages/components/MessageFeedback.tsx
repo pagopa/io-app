@@ -8,6 +8,19 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
+    marginHorizontal: 16
+  },
+  text: {
+    textAlign: "center"
+  }
+});
+
 type Props = {
   pictogram: IOPictograms;
   title: string;
@@ -29,16 +42,3 @@ export const MessageFeedback = ({ pictogram, title, subtitle }: Props) => (
     )}
   </View>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    marginHorizontal: 16
-  },
-  text: {
-    textAlign: "center"
-  }
-});
