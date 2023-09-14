@@ -24,12 +24,12 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const navigateToInstrumentsConfiguration = (initiativeId: string) => {
+  const navigateToInstrumentsConfiguration = (initiative: InitiativeDTO) => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
         IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS,
       params: {
-        initiativeId
+        initiative
       }
     });
   };
@@ -50,7 +50,7 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
           onPress={() => null}
         />
       ),
-      ({ initiativeId, nInstr }) => (
+      initiative => (
         <ListItemNav
           value={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
@@ -60,12 +60,12 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
             {
               defaultValue: I18n.t(
                 `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
-                { count: nInstr }
+                { count: initiative.nInstr }
               ),
-              count: nInstr
+              count: initiative.nInstr
             }
           )}
-          onPress={() => navigateToInstrumentsConfiguration(initiativeId)}
+          onPress={() => navigateToInstrumentsConfiguration(initiative)}
           accessibilityLabel={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}

@@ -79,14 +79,6 @@ const createActionsImplementation = (
     })
   );
 
-  const navigateToPaymentMethodsScreen = guardedNavigationAction(() =>
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS,
-      params: {}
-    })
-  );
-
   const navigateToConfigurationSuccessScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS
@@ -153,7 +145,6 @@ const createActionsImplementation = (
     navigateToIbanOnboardingScreen,
     navigateToIbanEnrollmentScreen,
     navigateToInstrumentsEnrollmentScreen,
-    navigateToPaymentMethodsScreen,
     navigateToAddPaymentMethodScreen,
     navigateToInitiativeDetailScreen,
     navigateToConfigurationSuccessScreen,
