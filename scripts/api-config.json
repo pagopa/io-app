@@ -24,6 +24,7 @@
     "allowRandomValues": false
   },
   "wallet": {
+    "useLegacyRptIdVerificationSystem": true,
     "payment": {
       "amount": 2222,
       "pspFeeAmount": 100
