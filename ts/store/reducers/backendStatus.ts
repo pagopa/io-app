@@ -14,7 +14,6 @@ import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { BpdConfig } from "../../../definitions/content/BpdConfig";
-import { PnConfig } from "../../../definitions/content/PnConfig";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
@@ -23,7 +22,6 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
-  pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
   uaDonationsEnabled
@@ -353,37 +351,59 @@ export const barcodesScannerConfigSelector = createSelector(
 );
 
 /**
- * Return the remote config for the PN feature.
+ * Return the remote config about PN enabled/disabled
+ * if there is no data, false is the default value -> (PN disabled)
  */
-export const PnConfigSelector = createSelector(
+export const isPnEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(s => s.config.pn.enabled),
+    O.getOrElse(() => false)
+  );
+
+/**
+ * Return false if the app needs to be updated in order to use PN.
+ */
+export const isPnSupportedSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): PnConfig =>
+  (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs => bs.config.pn),
-      O.getOrElseW(() => ({
-        enabled: false,
-        frontend_url: "",
-        optInServiceId: ""
-      }))
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.pn.min_app_version.ios
+            : bs.config.pn.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
     )
 );
 
 /**
- * Return the remote config about PN enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (PN disabled)
+ * Return the minimum app version required to use PN.
  */
-export const isPnEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pnEnabled &&
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.pn.enabled),
-      O.getOrElseW(() => false)
-    )
-);
+export const pnMinAppVersionSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(bs =>
+      Platform.OS === "ios"
+        ? bs.config.pn.min_app_version.ios
+        : bs.config.pn.min_app_version.android
+    ),
+    O.getOrElse(() => "-")
+  );
+
+/**
+ * Return the url of the PN frontend.
+ */
+export const pnFrontendUrlSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(bs => bs.config.pn.frontend_url),
+    O.getOrElse(() => "")
+  );
 
 export const configSelector = createSelector(
   backendStatusSelector,
