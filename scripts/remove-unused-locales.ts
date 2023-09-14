@@ -196,7 +196,7 @@ const main = async (root: string, locale: string) => {
   }
 };
 
-main(path.join(__dirname, "../locales"), "en").then(
+main(path.join(__dirname, "../locales"), "it").then(
   () => {
     console.log("done");
   },
