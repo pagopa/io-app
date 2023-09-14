@@ -5,6 +5,7 @@ import { PnAttachmentPreview } from "../screens/PnAttachmentPreview";
 import { PnMessageDetailsScreen } from "../screens/PnMessageDetailsScreen";
 import { LegacyPnMessageDetailsScreen } from "../screens/LegacyPnMessageDetailsScreen";
 import { newPnMessageDetailsEnabled } from "../../../config";
+import { PnPaidPaymentScreen } from "../screens/PnPaidPaymentScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -27,6 +28,10 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_ATTACHMENT}
       component={PnAttachmentPreview}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
+      component={PnPaidPaymentScreen}
     />
   </Stack.Navigator>
 );
