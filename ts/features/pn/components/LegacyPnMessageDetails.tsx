@@ -20,7 +20,7 @@ import { TransactionSummaryStatus } from "../../../screens/wallet/payment/compon
 import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { PnConfigSelector } from "../../../store/reducers/backendStatus";
+import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
 import {
   UIAttachment,
   UIMessageId
@@ -74,7 +74,7 @@ export const LegacyPnMessageDetails = ({
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
+  const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const payment = pipe(
     message.recipients,
