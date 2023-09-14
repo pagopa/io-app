@@ -4,10 +4,10 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
   useIOBottomSheetAutoresizableModal
-} from "../../../../utils/hooks/bottomSheet";
-import { FeatureInfo } from "../../../../components/FeatureInfo";
-import { NewH4 } from "../../../../components/core/typography/NewH4";
-import I18n from "../../../../i18n";
+} from "../../../../../utils/hooks/bottomSheet";
+import { FeatureInfo } from "../../../../../components/FeatureInfo";
+import { NewH4 } from "../../../../../components/core/typography/NewH4";
+import I18n from "../../../../../i18n";
 
 /**
  * This custom hook, useInfoIDPayCIEBottomSheet, is designed to display a bottom sheet
@@ -17,12 +17,12 @@ const useInfoIDPayCIEBottomSheet = (): IOBottomSheetModal => {
   const getModalContent = () => (
     <View>
       <FeatureInfo
-        iconName="pinOn"
+        iconName="fiscalCodeIndividual"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureOne")}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        iconName="pinOn"
+        iconName="phone"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureTwo")}
       />
       <VSpacer size={24} />

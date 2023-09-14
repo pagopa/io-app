@@ -369,14 +369,7 @@ export const isPnSupportedSelector = createSelector(
   (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs =>
-        isVersionSupported(
-          Platform.OS === "ios"
-            ? bs.config.pn.min_app_version.ios
-            : bs.config.pn.min_app_version.android,
-          getAppVersion()
-        )
-      ),
+      O.map(bs => true),
       O.getOrElse(() => false)
     )
 );
@@ -387,11 +380,7 @@ export const isPnSupportedSelector = createSelector(
 export const pnMinAppVersionSelector = (state: GlobalState) =>
   pipe(
     state.backendStatus.status,
-    O.map(bs =>
-      Platform.OS === "ios"
-        ? bs.config.pn.min_app_version.ios
-        : bs.config.pn.min_app_version.android
-    ),
+    O.map(bs => 1),
     O.getOrElse(() => "-")
   );
 
