@@ -354,15 +354,12 @@ export const barcodesScannerConfigSelector = createSelector(
  * Return the remote config about PN enabled/disabled
  * if there is no data, false is the default value -> (PN disabled)
  */
-export const isPnEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.pn.enabled),
-      O.getOrElseW(() => false)
-    )
-);
+export const isPnEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(s => s.config.pn.enabled),
+    O.getOrElse(() => false)
+  );
 
 /**
  * Return false if the app needs to be updated in order to use PN.
@@ -387,32 +384,26 @@ export const isPnSupportedSelector = createSelector(
 /**
  * Return the minimum app version required to use PN.
  */
-export const pnMinAppVersionSelector = createSelector(
-  backendStatusSelector,
-  backendStatus =>
-    pipe(
-      backendStatus,
-      O.map(bs =>
-        Platform.OS === "ios"
-          ? bs.config.pn.min_app_version.ios
-          : bs.config.pn.min_app_version.android
-      ),
-      O.getOrElse(() => "-")
-    )
-);
+export const pnMinAppVersionSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(bs =>
+      Platform.OS === "ios"
+        ? bs.config.pn.min_app_version.ios
+        : bs.config.pn.min_app_version.android
+    ),
+    O.getOrElse(() => "-")
+  );
 
 /**
  * Return the url of the PN frontend.
  */
-export const pnFrontendUrlSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): string =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.pn.frontend_url),
-      O.getOrElse(() => "")
-    )
-);
+export const pnFrontendUrlSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(bs => bs.config.pn.frontend_url),
+    O.getOrElse(() => "")
+  );
 
 export const configSelector = createSelector(
   backendStatusSelector,
