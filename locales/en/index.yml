@@ -882,7 +882,7 @@ onboarding:
     unavailable:
       title: Protect your device
       body:
-        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
+        firstInfoStart: IO sends you communications that concern you
         firstInfoEnd: personally.
         secondInfoStart:Protect your device from unwanted access and make sure that only you can access the app. To do this, go to your device settings, set an
         secondInfoEnd: unlock code or configure biometric recognition.
