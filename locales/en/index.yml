@@ -162,7 +162,7 @@ global:
     ok: OK
     ok2: Ok
     continue: Continue
-    notNow: Non ora
+    notNow: Maybe later
     retry: Retry
     back: Back
     confirm: Confirm
