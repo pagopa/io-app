@@ -874,7 +874,7 @@ onboarding:
       settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
       body:
         infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorizeoperations and payments with your
-        biometricType: volto o impronta digitale,
+        biometricType: face or fingerprint
         infoEnd: in modo più rapido e sicuro.
         enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
         notEnrolled:
