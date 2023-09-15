@@ -20,12 +20,13 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   title?: string;
   icon?: React.ReactNode;
+  testID?: string;
 }>;
 
 export const PnMessageDetailsSection = (
   props: React.PropsWithChildren<Props>
 ): React.ReactElement | null => (
-  <View style={styles.container}>
+  <View style={styles.container} testID={props.testID}>
     <View style={styles.header}>
       {props.title && <H2 color="bluegrey">{props.title}</H2>}
       {props.icon && <View style={styles.icon}>{props.icon}</View>}
