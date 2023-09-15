@@ -13,6 +13,7 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
+import { IconButton } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -42,7 +43,6 @@ import {
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
-import IconButton from "../../../../components/ui/IconButton";
 
 const styles = StyleSheet.create({
   pdf: {

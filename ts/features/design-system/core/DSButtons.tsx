@@ -5,6 +5,8 @@ import {
   ButtonLink,
   ButtonOutline,
   ButtonSolid,
+  IconButton,
+  IconButtonContained,
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -17,10 +19,8 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import IconButtonContained from "../../../components/ui/IconButtonContained";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
-import IconButton from "../../../components/ui/IconButton";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {

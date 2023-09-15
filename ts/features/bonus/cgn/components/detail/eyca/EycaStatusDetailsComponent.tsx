@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, IconButton } from "@pagopa/io-app-design-system";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
@@ -22,7 +22,6 @@ import { IOBadge } from "../../../../../../components/core/IOBadge";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
 import { showToast } from "../../../../../../utils/showToast";
-import IconButton from "../../../../../../components/ui/IconButton";
 import { IOSpacingScale } from "../../../../../../components/core/variables/IOSpacing";
 
 type Props = {

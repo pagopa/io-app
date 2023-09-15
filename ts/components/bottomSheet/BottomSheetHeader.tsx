@@ -2,12 +2,12 @@ import * as React from "react";
 import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { IconButton } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { IOVisualCostants, IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { NewH4 } from "../core/typography/NewH4";
-import IconButton from "../ui/IconButton";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 

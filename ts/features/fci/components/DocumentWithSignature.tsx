@@ -5,6 +5,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SafeAreaView, StyleSheet } from "react-native";
+import { IconButton } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -20,7 +21,6 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import IconButton from "../../../components/ui/IconButton";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
 export type SignatureFieldAttrType =

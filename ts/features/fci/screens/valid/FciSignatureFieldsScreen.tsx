@@ -5,6 +5,7 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
+import { IconButton } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -49,7 +50,6 @@ import {
   trackFciShowSignatureFields,
   trackFciStartSignature
 } from "../../analytics";
-import IconButton from "../../../../components/ui/IconButton";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];

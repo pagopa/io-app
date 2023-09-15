@@ -11,7 +11,7 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, IconButton } from "@pagopa/io-app-design-system";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
@@ -33,7 +33,6 @@ import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
-import IconButton from "../../../../../components/ui/IconButton";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];

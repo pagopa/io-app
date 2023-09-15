@@ -2,7 +2,12 @@ import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { Alert, View } from "react-native";
-import { ButtonLink, IOThemeContext, Icon } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  IOThemeContext,
+  Icon,
+  IconButton
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -23,7 +28,6 @@ import {
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";

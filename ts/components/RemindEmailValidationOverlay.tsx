@@ -16,7 +16,7 @@ import {
   Platform
 } from "react-native";
 import { connect } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, IconButton } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -58,7 +58,6 @@ import {
   IOPictograms,
   IOPictogramSizeScale
 } from "./core/pictograms/Pictogram";
-import IconButton from "./ui/IconButton";
 
 type OwnProp = {
   isOnboarding?: boolean;

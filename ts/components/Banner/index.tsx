@@ -19,6 +19,7 @@ import {
   ButtonLink,
   IOPictogramSizeScale,
   IOPictogramsBleed,
+  IconButton,
   PictogramBleed
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
@@ -34,7 +35,6 @@ import {
 } from "../core/variables/IOSpacing";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import IconButton from "../ui/IconButton";
 import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 
 /* Styles */
