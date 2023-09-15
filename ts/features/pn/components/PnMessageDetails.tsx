@@ -1,22 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as AR from "fp-ts/lib/Array";
 import React, { createRef, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import {
-  TransactionSummary,
-  TransactionSummaryRow
-} from "../../../screens/wallet/payment/components/TransactionSummary";
-import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
+import { TransactionSummaryRow } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
@@ -26,22 +21,18 @@ import {
   UIAttachment,
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
-import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isDuplicatedPayment } from "../../../utils/payment";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import PN_ROUTES from "../navigation/routes";
-import { PNMessage } from "../store/types/types";
-import { getRptIdFromPayment } from "../utils/rptId";
+import { NotificationPaymentInfo, PNMessage } from "../store/types/types";
 import {
   trackPNAttachmentOpening,
   trackPNPaymentInfoError,
   trackPNPaymentInfoPaid,
-  trackPNPaymentInfoPayable,
-  trackPNShowTimeline,
-  trackPNUxSuccess
+  trackPNPaymentInfoPayable
 } from "../analytics";
 import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
@@ -56,6 +47,7 @@ import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
+import { PnMessagePayment } from "./PnMessagePayment";
 
 const styles = StyleSheet.create({
   content: {
@@ -65,17 +57,19 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  isRead: boolean;
   messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
+  payment: NotificationPaymentInfo | undefined;
+  rptId: RptId | undefined;
 }>;
 
 export const PnMessageDetails = ({
-  isRead,
   message,
   messageId,
-  service
+  service,
+  payment,
+  rptId
 }: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
   const [shouldTrackMixpanel, setShouldTrackMixpanel] = useState(true);
@@ -83,18 +77,13 @@ export const PnMessageDetails = ({
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const viewRef = createRef<View>();
-  const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const isCancelled = message.isCancelled ?? false;
-
-  const payment = pipe(
-    message.recipients,
-    AR.findFirst(_ => _.taxId === currentFiscalCode),
-    O.chainNullableK(_ => _.payment),
-    O.getOrElseW(() => undefined)
-  );
-  const rptId = getRptIdFromPayment(payment);
+  const completedPaymentNoticeCode =
+    isCancelled && message.completedPayments
+      ? message.completedPayments[0]
+      : undefined;
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -149,20 +138,18 @@ export const PnMessageDetails = ({
     if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
       return;
     }
-    trackPNUxSuccess(!!payment, isRead);
 
     if (isPaid) {
       trackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
       trackPNPaymentInfoError(paymentVerificationError);
-    } else {
+    } else if (!isCancelled) {
       trackPNPaymentInfoPayable();
     }
     setShouldTrackMixpanel(false);
   }, [
-    isRead,
-    payment,
     firstLoadingRequest,
+    isCancelled,
     isPaid,
     isVerifyingPayment,
     paymentVerificationError,
@@ -210,30 +197,16 @@ export const PnMessageDetails = ({
             />
           </PnMessageDetailsSection>
         )}
-        {payment && (
-          <PnMessageDetailsSection
-            title={I18n.t("features.pn.details.paymentSection.title")}
-          >
-            {firstLoadingRequest && (
-              <>
-                <TransactionSummary
-                  paymentVerification={paymentVerification}
-                  paymentNoticeNumber={payment.noticeCode}
-                  organizationFiscalCode={payment.creditorTaxId}
-                  isPaid={isPaid}
-                />
-                {O.isSome(paymentVerificationError) && (
-                  <TransactionSummaryErrorDetails
-                    error={paymentVerificationError}
-                    paymentNoticeNumber={payment.noticeCode}
-                    organizationFiscalCode={payment.creditorTaxId}
-                    messageId={messageId}
-                  />
-                )}
-              </>
-            )}
-          </PnMessageDetailsSection>
-        )}
+        <PnMessagePayment
+          messageId={messageId}
+          firstLoadingRequest={firstLoadingRequest}
+          isCancelled={isCancelled}
+          isPaid={isPaid}
+          payment={payment}
+          paymentVerification={paymentVerification}
+          paymentVerificationError={paymentVerificationError}
+          completedPaymentNoticeCode={completedPaymentNoticeCode}
+        />
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
@@ -253,7 +226,6 @@ export const PnMessageDetails = ({
           <PnMessageTimeline
             message={message}
             onExpand={() => {
-              trackPNShowTimeline();
               scrollViewRef.current?.scrollToEnd({ animated: true });
             }}
           />
