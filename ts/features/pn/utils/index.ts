@@ -1,8 +1,10 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
+import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 import { UIService } from "../../../store/reducers/entities/services/types";
-import { NotificationStatus } from "../store/types/types";
+import { NotificationStatus, PNMessage } from "../store/types/types";
 import { CTAS } from "../../../types/MessageCTA";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
@@ -65,4 +67,22 @@ export const isPNOptInMessage = (
           cta2HasServiceNavigationLink: false
         } as PNOptInMessageInfo)
     )
+  );
+
+export const paymentFromPNMessagePot = (
+  userFiscalCode: string | undefined,
+  message: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    message,
+    pot.toOption,
+    O.flatten,
+    O.chain(message =>
+      pipe(
+        message.recipients,
+        A.findFirst(recipient => recipient.taxId === userFiscalCode)
+      )
+    ),
+    O.chainNullableK(recipient => recipient.payment),
+    O.toUndefined
   );
