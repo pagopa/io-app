@@ -1,5 +1,6 @@
 import { SectionList, View } from "react-native";
 import * as React from "react";
+import { useIOTheme } from "@pagopa/io-app-design-system";
 import {
   IOStyles,
   IOVisualCostants
@@ -13,7 +14,6 @@ import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import ListItemNav from "../../components/ui/ListItemNav";
 import { Divider } from "../../components/core/Divider";
-import { IOColors, useIOTheme } from "../../components/core/variables/IOColors";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";
 
@@ -117,8 +117,7 @@ export const DesignSystem = (props: Props) => {
       contentContainerStyle={[
         IOStyles.horizontalContentPadding,
         {
-          paddingTop: IOVisualCostants.appMarginDefault,
-          backgroundColor: IOColors[theme["appBackground-primary"]]
+          paddingTop: IOVisualCostants.appMarginDefault
         }
       ]}
       renderSectionHeader={renderDSSection}
