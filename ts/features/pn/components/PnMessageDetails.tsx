@@ -11,11 +11,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import {
-  TransactionSummary,
-  TransactionSummaryRow
-} from "../../../screens/wallet/payment/components/TransactionSummary";
-import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
+import { TransactionSummaryRow } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
@@ -51,6 +47,7 @@ import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
+import { PnMessagePayment } from "./PnMessagePayment";
 
 const styles = StyleSheet.create({
   content: {
@@ -79,11 +76,14 @@ export const PnMessageDetails = ({
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
+  const viewRef = createRef<View>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
-  const viewRef = createRef<View>();
-
   const isCancelled = message.isCancelled ?? false;
+  const completedPaymentNoticeCode =
+    isCancelled && message.completedPayments
+      ? message.completedPayments[0]
+      : undefined;
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -143,12 +143,13 @@ export const PnMessageDetails = ({
       trackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
       trackPNPaymentInfoError(paymentVerificationError);
-    } else {
+    } else if (!isCancelled) {
       trackPNPaymentInfoPayable();
     }
     setShouldTrackMixpanel(false);
   }, [
     firstLoadingRequest,
+    isCancelled,
     isPaid,
     isVerifyingPayment,
     paymentVerificationError,
@@ -196,30 +197,16 @@ export const PnMessageDetails = ({
             />
           </PnMessageDetailsSection>
         )}
-        {payment && (
-          <PnMessageDetailsSection
-            title={I18n.t("features.pn.details.paymentSection.title")}
-          >
-            {firstLoadingRequest && (
-              <>
-                <TransactionSummary
-                  paymentVerification={paymentVerification}
-                  paymentNoticeNumber={payment.noticeCode}
-                  organizationFiscalCode={payment.creditorTaxId}
-                  isPaid={isPaid}
-                />
-                {O.isSome(paymentVerificationError) && (
-                  <TransactionSummaryErrorDetails
-                    error={paymentVerificationError}
-                    paymentNoticeNumber={payment.noticeCode}
-                    organizationFiscalCode={payment.creditorTaxId}
-                    messageId={messageId}
-                  />
-                )}
-              </>
-            )}
-          </PnMessageDetailsSection>
-        )}
+        <PnMessagePayment
+          messageId={messageId}
+          firstLoadingRequest={firstLoadingRequest}
+          isCancelled={isCancelled}
+          isPaid={isPaid}
+          payment={payment}
+          paymentVerification={paymentVerification}
+          paymentVerificationError={paymentVerificationError}
+          completedPaymentNoticeCode={completedPaymentNoticeCode}
+        />
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
