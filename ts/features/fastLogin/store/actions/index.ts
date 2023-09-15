@@ -23,6 +23,10 @@ export const refreshTokenTransientError = createStandardAction(
   "REFRESHING_TOKEN_TRANSIENT_ERROR"
 )<void>();
 
+export const refreshTokenNoPinError = createStandardAction(
+  "REFRESHING_TOKEN_NO_PIN_ERROR"
+)<void>();
+
 export const clearTokenTransientError = createStandardAction(
   "CLEAR_TOKEN_TRANSIENT_ERROR"
 )<void>();
