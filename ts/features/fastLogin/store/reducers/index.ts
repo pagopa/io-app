@@ -4,6 +4,7 @@ import {
   clearPendingAction,
   clearTokenTransientError,
   refreshSessionToken,
+  refreshTokenNoPinError,
   refreshTokenTransientError,
   savePendingAction,
   showRefreshTokenLoader
@@ -37,14 +38,20 @@ type TokenRefreshErrorState = {
 type TokenRefreshTransientErrorState = {
   kind: "transient-error";
 };
+
+type TokenRefreshNoPinErrorState = {
+  kind: "no-pin-error";
+};
+
 type TokenRefreshSuccessState = {
   kind: "success";
   timestamp: number;
 };
-type TokenRefreshState =
+export type TokenRefreshState =
   | TokenRefreshProgressState
   | TokenRefreshErrorState
   | TokenRefreshTransientErrorState
+  | TokenRefreshNoPinErrorState
   | TokenRefreshSuccessState
   | TokenRefreshIdleState;
 
@@ -108,6 +115,11 @@ export const fastLoginReducer = (
       return {
         ...state,
         tokenRefresh: { kind: "transient-error" }
+      };
+    case getType(refreshTokenNoPinError):
+      return {
+        ...state,
+        tokenRefresh: { kind: "no-pin-error" }
       };
     case getType(clearTokenTransientError):
       return {

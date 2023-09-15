@@ -3766,6 +3766,10 @@ unsupportedDevice:
 fastLogin:
   userInteraction:
     sessionExpired: 
+      noPin:
+        title: Too much time has passed!
+        subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
+        submitButtonTitle: Continue
       continueNavigation: 
         title: "La tua sessione è scaduta"
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
