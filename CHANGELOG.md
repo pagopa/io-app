@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0-rc.1](https://github.com/pagopa/io-app/compare/0.3.0-rc.6...0.4.0-rc.1) (2023-09-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-196](https://pagopa.atlassian.net/browse/SIW-196)] Add features info screen to select provider for wallet activation ([#4943](https://github.com/pagopa/io-app/issues/4943)) ([f590d57](https://github.com/pagopa/io-app/commit/f590d57e0ca9f521a62127efd4e4bccb9b9010d6))
+* **IT Wallet:** [[SIW-232](https://pagopa.atlassian.net/browse/SIW-232)] Add RP initialization screen ([#4906](https://github.com/pagopa/io-app/issues/4906)) ([43e71a9](https://github.com/pagopa/io-app/commit/43e71a94de1289d3104628495a7bea76e3cc1789))
+* **IT Wallet:** [[SIW-246](https://pagopa.atlassian.net/browse/SIW-246)] Add RP presentation screen ([#4932](https://github.com/pagopa/io-app/issues/4932)) ([5c0932a](https://github.com/pagopa/io-app/commit/5c0932a8e32d851d89f0a3317561cdf2c8fb51eb))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-445](https://pagopa.atlassian.net/browse/SIW-445)] Fix components not showing text with dark mode ([#4962](https://github.com/pagopa/io-app/issues/4962)) ([3378a2d](https://github.com/pagopa/io-app/commit/3378a2d5506ca5a5fcb845a3f0bd91054d0104df))
+* **IT Wallet:** [[SIW-471](https://pagopa.atlassian.net/browse/SIW-471)] Move loading animation to native thread ([#4964](https://github.com/pagopa/io-app/issues/4964)) ([6d1da95](https://github.com/pagopa/io-app/commit/6d1da957516d2b31cfb9fc864440e4209c1954fa))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-375](https://pagopa.atlassian.net/browse/SIW-375)] Refactor credentials state ([#4937](https://github.com/pagopa/io-app/issues/4937)) ([711202d](https://github.com/pagopa/io-app/commit/711202dba7b999f44da1007a7f9b08b224e26e21))
+* **IT Wallet:** [[SIW-426](https://pagopa.atlassian.net/browse/SIW-426)] Update wallet library dependencies ([#4949](https://github.com/pagopa/io-app/issues/4949)) ([32db761](https://github.com/pagopa/io-app/commit/32db7613a725748ea86b7e1f816d4ceb51fe1137))
+* **IT Wallet:** [[SIW-487](https://pagopa.atlassian.net/browse/SIW-487)] Update io-react-native-wallet to 0.4.1 ([#4985](https://github.com/pagopa/io-app/issues/4985)) ([0c610c8](https://github.com/pagopa/io-app/commit/0c610c85ba0ced8a20ad31b8b724263a83a25f7f))
+
 ## [0.4.0-rc.0](https://github.com/pagopa/io-app/compare/0.3.0-rc.3...0.4.0-rc.0) (2023-09-07)
 
 
