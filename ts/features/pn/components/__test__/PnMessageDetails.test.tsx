@@ -156,6 +156,8 @@ const generatePnMessage = () =>
     ]
   } as PNMessage);
 const generateComponentProperties = (pnMessage: PNMessage) => ({
+  payment: undefined,
+  rptId: undefined,
   isRead: false,
   messageId: generateTestMessageId(),
   message: pnMessage,

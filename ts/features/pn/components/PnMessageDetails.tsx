@@ -1,19 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
-import * as AR from "fp-ts/lib/Array";
-import React, {
-  createRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { createRef, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -29,22 +21,18 @@ import {
   UIAttachment,
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
-import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isDuplicatedPayment } from "../../../utils/payment";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import PN_ROUTES from "../navigation/routes";
-import { PNMessage } from "../store/types/types";
-import { getRptIdFromPayment } from "../utils/rptId";
+import { NotificationPaymentInfo, PNMessage } from "../store/types/types";
 import {
   trackPNAttachmentOpening,
   trackPNPaymentInfoError,
   trackPNPaymentInfoPaid,
-  trackPNPaymentInfoPayable,
-  trackPNShowTimeline,
-  trackPNUxSuccess
+  trackPNPaymentInfoPayable
 } from "../analytics";
 import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
@@ -69,26 +57,26 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  isRead: boolean;
   messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
+  payment: NotificationPaymentInfo | undefined;
+  rptId: RptId | undefined;
 }>;
 
 export const PnMessageDetails = ({
-  isRead,
   message,
   messageId,
-  service
+  service,
+  payment,
+  rptId
 }: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
   const [shouldTrackMixpanel, setShouldTrackMixpanel] = useState(true);
-  const uxEventTrackedRef = useRef(false);
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const viewRef = createRef<View>();
-  const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const isCancelled = message.isCancelled ?? false;
@@ -96,20 +84,6 @@ export const PnMessageDetails = ({
     isCancelled && message.completedPayments
       ? message.completedPayments[0]
       : undefined;
-
-  const payment = pipe(
-    message.recipients,
-    AR.findFirst(_ => _.taxId === currentFiscalCode),
-    O.chainNullableK(_ => _.payment),
-    O.toUndefined
-  );
-  const rptId = pipe(
-    isCancelled,
-    B.fold(
-      () => getRptIdFromPayment(payment),
-      () => undefined
-    )
-  );
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -161,17 +135,10 @@ export const PnMessageDetails = ({
   const isPaid = isDuplicatedPayment(paymentVerificationError);
 
   useEffect(() => {
-    if (!uxEventTrackedRef.current) {
-      trackPNUxSuccess(!!payment, isRead);
-      // eslint-disable-next-line functional/immutable-data
-      uxEventTrackedRef.current = true;
-    }
-  }, [isRead, payment, uxEventTrackedRef]);
-
-  useEffect(() => {
     if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
       return;
     }
+
     if (isPaid) {
       trackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
@@ -181,10 +148,8 @@ export const PnMessageDetails = ({
     }
     setShouldTrackMixpanel(false);
   }, [
-    isCancelled,
-    isRead,
-    payment,
     firstLoadingRequest,
+    isCancelled,
     isPaid,
     isVerifyingPayment,
     paymentVerificationError,
@@ -261,7 +226,6 @@ export const PnMessageDetails = ({
           <PnMessageTimeline
             message={message}
             onExpand={() => {
-              trackPNShowTimeline();
               scrollViewRef.current?.scrollToEnd({ animated: true });
             }}
           />
