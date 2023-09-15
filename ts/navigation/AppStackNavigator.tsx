@@ -8,7 +8,11 @@ import {
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
-import { IOThemeDark, IOThemeLight } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOThemeDark,
+  IOThemeLight
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
@@ -71,8 +75,8 @@ export const IONavigationDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    background: IOThemeDark["appBackground-primary"],
-    card: IOThemeDark["appBackground-primary"]
+    background: IOColors[IOThemeDark["appBackground-primary"]],
+    card: IOColors[IOThemeDark["appBackground-primary"]]
   }
 };
 
@@ -80,8 +84,8 @@ export const IONavigationLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: IOThemeLight["appBackground-primary"],
-    card: IOThemeLight["appBackground-primary"]
+    background: IOColors[IOThemeLight["appBackground-primary"]],
+    card: IOColors[IOThemeLight["appBackground-primary"]]
   }
 };
 
