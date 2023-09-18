@@ -69,7 +69,8 @@ const navigateToScreenHandler =
   (
     message: UIMessage,
     messageDetails: UIMessageDetails,
-    isPnEnabled: boolean
+    isPnEnabled: boolean,
+    firstTimeOpening: boolean
   ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
@@ -85,7 +86,7 @@ const navigateToScreenHandler =
         navigateToPnMessageDetailsScreen({
           messageId: message.id,
           serviceId: message.serviceId,
-          isRead: message.isRead
+          firstTimeOpening
         })
       );
     } else {
@@ -180,11 +181,13 @@ const MessageRouterScreen = ({
       } else if (
         isNotOpeningFromBackgroundNotificationWhileSynchronizingInbox
       ) {
+        const isFirstTimeOpening = !maybeMessage.isRead;
         setMessageReadState(maybeMessage);
         navigateToScreenHandler(
           maybeMessage,
           maybeMessageDetails.value,
-          isPnEnabled
+          isPnEnabled,
+          isFirstTimeOpening
         )(navigation.dispatch);
         setDidNavigateToScreenHandler(true);
       }
