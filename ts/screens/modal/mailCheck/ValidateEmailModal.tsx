@@ -31,6 +31,7 @@ const ValidateEmailModal = (props: Props) => {
   useAvoidHardwareBackButton();
 
   const continueButtonProps = {
+    // TODO: Jira ticket IOPID-689. Add new logic.
     onPress: () => undefined,
     title: I18n.t("email.cduModal.validateMail.validateButton"),
     block: true
@@ -51,7 +52,12 @@ const ValidateEmailModal = (props: Props) => {
           </Body>
           <Body weight="SemiBold">{props.email}</Body>
           <VSpacer size={16} />
-          <Link onPress={() => undefined}>
+          <Link
+            onPress={
+              // TODO: Jira ticket IOPID-689. Add new logic.
+              () => undefined
+            }
+          >
             {I18n.t("email.cduModal.validateMail.editButton")}
           </Link>
         </View>

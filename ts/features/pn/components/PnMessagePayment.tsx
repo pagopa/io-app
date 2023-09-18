@@ -1,7 +1,9 @@
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import I18n from "i18n-js";
 import { H5, VSpacer } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import { NotificationPaymentInfo } from "../store/types/types";
 import { TransactionSummary } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
@@ -11,6 +13,7 @@ import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTran
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { ModulePaymentNotice } from "../../../components/ui/ModulePaymentNotice";
 import { InfoBox } from "../../../components/box/InfoBox";
+import { navigateToPnCancelledMessagePaidPaymentScreen } from "../navigation/actions";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 
 type Props = {
@@ -40,6 +43,25 @@ const paymentSectionShouldRenderNothing = (
   (!isCancelled && !payment) ||
   (isCancelled && !payment && !completedPaymentNoticeCode);
 
+const generateNavigationToPaidPaymentScreenAction = (
+  noticeCode: string,
+  maybePayment: NotificationPaymentInfo | undefined
+) =>
+  pipe(
+    maybePayment,
+    O.fromNullable,
+    O.filter(payment => noticeCode === payment.noticeCode),
+    O.fold(
+      () => undefined,
+      payment => payment.creditorTaxId
+    ),
+    maybeCreditorTaxId =>
+      navigateToPnCancelledMessagePaidPaymentScreen({
+        noticeCode,
+        creditorTaxId: maybeCreditorTaxId
+      })
+  );
+
 export const PnMessagePayment = ({
   messageId,
   firstLoadingRequest,
@@ -50,6 +72,7 @@ export const PnMessagePayment = ({
   paymentVerification,
   paymentVerificationError
 }: Props) => {
+  const navigation = useNavigation();
   if (
     paymentSectionShouldRenderNothing(
       isCancelled,
@@ -59,7 +82,6 @@ export const PnMessagePayment = ({
   ) {
     return null;
   }
-
   if (isCancelled) {
     return (
       <PnMessageDetailsSection
@@ -83,7 +105,14 @@ export const PnMessagePayment = ({
             <ModulePaymentNotice
               title={I18n.t("features.pn.details.noticeCode")}
               subtitle={completedPaymentNoticeCode}
-              onPress={() => undefined}
+              onPress={() =>
+                navigation.dispatch(
+                  generateNavigationToPaidPaymentScreenAction(
+                    completedPaymentNoticeCode,
+                    payment
+                  )
+                )
+              }
               paymentNoticeStatus={"payed"}
               testID={"PnCancelledPaymentModulePaymentNotice"}
             />
