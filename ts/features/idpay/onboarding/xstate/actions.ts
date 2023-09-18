@@ -5,7 +5,7 @@ import {
 import { useIODispatch } from "../../../../store/hooks";
 import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
 import { refreshSessionToken } from "../../../fastLogin/store/actions";
-import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes,
