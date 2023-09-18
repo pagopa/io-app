@@ -15,7 +15,7 @@ import I18n from "../../../../../i18n";
 import { IOToast } from "../../../../../components/Toast";
 import { refreshSessionToken } from "../../../../fastLogin/store/actions";
 
-jest.mock("../../../../../../utils/showToast", () => ({
+jest.mock("../../../../../utils/showToast", () => ({
   showToast: jest.fn()
 }));
 
