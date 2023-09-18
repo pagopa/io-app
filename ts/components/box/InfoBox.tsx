@@ -9,6 +9,7 @@ type Props = {
   iconColor?: IOColors;
   iconSize?: IOIconSizeScale;
   alignedCentral?: boolean;
+  testID?: string;
 };
 
 const styles = StyleSheet.create({
@@ -40,7 +41,7 @@ export const InfoBox: React.FunctionComponent<Props> = props => {
   const iconSize = props.iconSize ?? ICON_SIZE;
   const centralAlignment = props.alignedCentral ? styles.alignedCentral : {};
   return (
-    <View style={[styles.row, centralAlignment]}>
+    <View style={[styles.row, centralAlignment]} testID={props.testID}>
       <View style={styles.icon}>
         <Icon name={iconName} size={iconSize} color={iconColor} />
       </View>

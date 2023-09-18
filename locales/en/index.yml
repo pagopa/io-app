@@ -177,6 +177,7 @@ global:
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
+    updateIO: "Update IO"
     findOutMore: "Find out more"
     details: "Details"
     choose: "Scegli"
@@ -772,6 +773,12 @@ authentication:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
 email:
+  cduModal:
+    validateMail:
+      title: Email address not validated
+      subtitle: To continue using the app, you must validate your email address
+      editButton: Edit email
+      validateButton: Validate email
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can
@@ -3081,6 +3088,9 @@ features:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
+    updateBottomSheet:
+      title: "Aggiorna l'app IO"
+      subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
   euCovidCertificate:
     save:
       album: "IO"
@@ -3147,9 +3157,14 @@ features:
         error: "Si è verificato un errore con la tua richiesta"
     details:
       title: Dettaglio del messaggio
+      noticeCode: "Codice avviso"
       loadError:
         title: Qualcosa è andato storto
         body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      cancelledMessage:
+        body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
+        unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        payments: "Pagamenti"
       paymentSection:
         title: Avviso di pagamento
       attachmentsSection:
@@ -3741,6 +3756,10 @@ unsupportedDevice:
 fastLogin:
   userInteraction:
     sessionExpired: 
+      noPin:
+        title: Too much time has passed!
+        subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
+        submitButtonTitle: Continue
       continueNavigation: 
         title: "La tua sessione è scaduta"
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."

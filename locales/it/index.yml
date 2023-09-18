@@ -177,6 +177,7 @@ global:
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
+    updateIO: "Aggiorna IO"
     findOutMore: "Scopri di più"
     details: "Dettagli"
     choose: "Scegli"
@@ -785,6 +786,12 @@ authentication:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 email:
+  cduModal:
+    validateMail:
+      title: Indirizzo email non validato
+      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
+      editButton: Modifica email
+      validateButton: Valida email
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
@@ -3105,6 +3112,9 @@ features:
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
+    updateBottomSheet:
+      title: "Aggiorna l'app IO"
+      subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
   euCovidCertificate:
     save:
       album: "IO"
@@ -3171,9 +3181,14 @@ features:
         error: "Si è verificato un errore con la tua richiesta"
     details:
       title: Dettaglio del messaggio
+      noticeCode: "Codice avviso"
       loadError:
         title: Qualcosa è andato storto
         body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      cancelledMessage:
+        body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
+        unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        payments: "Pagamenti"
       paymentSection:
         title: Avviso di pagamento
       attachmentsSection:
@@ -3764,7 +3779,11 @@ unsupportedDevice:
     faq: "Come mai?"
 fastLogin:
   userInteraction:
-    sessionExpired: 
+    sessionExpired:
+      noPin:
+        title: È passato troppo tempo!
+        subtitle: Per ragioni di sicurezza devi autenticarti di nuovo con SPID o CIE. Potrai poi continuare la configurazione di IO da dove l’avevi interrotta.
+        submitButtonTitle: Continua
       continueNavigation: 
         title: "La tua sessione è scaduta"
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."

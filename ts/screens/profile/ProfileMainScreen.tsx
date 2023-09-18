@@ -378,6 +378,16 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     })
                   }
                 />
+                <Divider />
+                <ListItemNav
+                  value={"IDPay Code Playground"}
+                  accessibilityLabel="IDPay CIE onboarding playground"
+                  onPress={() =>
+                    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                      screen: ROUTES.IDPAY_CODE_PLAYGROUND
+                    })
+                  }
+                />
               </>
             )}
           </>
