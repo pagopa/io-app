@@ -30,6 +30,7 @@ const EmailAlreadyUsedModal = (props: Props) => {
   useAvoidHardwareBackButton();
 
   const continueButtonProps = {
+    // TODO: Jira ticket IOPID-689. Add new logic.
     onPress: () => undefined,
     title: I18n.t("email.cduModal.editMail.editButton"),
     block: true
