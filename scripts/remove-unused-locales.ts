@@ -149,7 +149,7 @@ const deleteYmlEntry = (entry: string, localeName: string) =>
 const cleanupLocales = async (locale: string) =>
   new Promise(res =>
     exec(
-      `yq -i " del(.. |select(.==null or .== {})) " ` +
+      `yq -i 'del(.. |select( tag == "!!map" and length == 0 )) ' ` +
         path.join(__dirname, "../locales", locale, "index.yml"),
       (err, _stdout, _) => {
         if (err) {
