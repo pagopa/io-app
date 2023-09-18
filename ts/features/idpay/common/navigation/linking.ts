@@ -1,5 +1,5 @@
 import { PathConfigMap } from "@react-navigation/native";
-import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayOnboardingRoutes } from "../../onboarding/navigation/navigator";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
 
