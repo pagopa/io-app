@@ -3530,6 +3530,12 @@ idpay:
         date: Data rimborso
         cro: CRO
       errorBody: Impossibile caricare il dettaglio
+    cie:
+      bottomSheet:
+        title: "Come funziona?"
+        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
