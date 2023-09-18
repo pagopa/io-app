@@ -139,7 +139,7 @@ export const MessageAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
       {props.attachments.map((attachment, index) => (
-        <View key={index}>
+        <View key={index} testID="MessageAttachmentContainer">
           <AttachmentItem
             attachment={attachment}
             disabled={props.disabled}
