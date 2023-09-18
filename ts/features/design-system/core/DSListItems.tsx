@@ -16,7 +16,7 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
+import { TimelineOperationListItem } from "../../idpay/details/components/TimelineOperationListItem";
 import {
   OperationTypeEnum,
   StatusEnum
