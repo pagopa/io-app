@@ -777,8 +777,13 @@ email:
     validateMail:
       title: Email address not validated
       subtitle: To continue using the app, you must validate your email address
-      editButton: Edit email
-      validateButton: Validate email
+      editButton: Edit email address
+      validateButton: Validate email address
+    editMail:
+      title: Edit your email address
+      subtitleStart: This email address
+      subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
+      editButton: Edit email address
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can
