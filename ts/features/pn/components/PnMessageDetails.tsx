@@ -96,7 +96,7 @@ export const PnMessageDetails = ({
     : O.none;
 
   const verifyPaymentIfNeeded = useCallback(() => {
-    if (rptId) {
+    if (!isCancelled && rptId) {
       dispatch(
         paymentVerifica.request({
           rptId,
@@ -105,16 +105,16 @@ export const PnMessageDetails = ({
       );
       setFirstLoadingRequest(true);
     }
-  }, [rptId, dispatch]);
+  }, [isCancelled, rptId, dispatch]);
 
   const startPayment = useCallback(() => {
-    if (rptId) {
+    if (!isCancelled && rptId) {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
         screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
         params: { rptId }
       });
     }
-  }, [rptId, navigation]);
+  }, [isCancelled, rptId, navigation]);
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
@@ -235,6 +235,7 @@ export const PnMessageDetails = ({
       </ScrollView>
 
       {firstLoadingRequest &&
+        !isCancelled &&
         !pot.isLoading(paymentVerification) &&
         pot.isSome(paymentVerification) && (
           <FooterWithButtons
