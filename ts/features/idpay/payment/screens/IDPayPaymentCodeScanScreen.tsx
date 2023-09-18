@@ -19,7 +19,7 @@ const IDPayPaymentCodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
-    if (barcodes.length >= 1) {
+    if (barcodes.length > 1) {
       Alert.alert(
         I18n.t("barcodeScan.multipleResultsAlert.title"),
         I18n.t("barcodeScan.multipleResultsAlert.body"),
