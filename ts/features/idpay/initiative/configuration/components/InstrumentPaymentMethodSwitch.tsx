@@ -1,4 +1,8 @@
-import { IOIcons, ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  IOIcons,
+  ListItemSwitch,
+  SwitchAction
+} from "@pagopa/io-app-design-system";
 import { default as React } from "react";
 import {
   InstrumentDTO,
@@ -60,10 +64,9 @@ const InstrumentPaymentMethodSwitch = (props: PaymentMethodSwitchProps) => {
           `idpay.configuration.instruments.paymentMethods.${paymentType}.actionItem`
         ),
         onPress: () => onPressAction?.(paymentType)
-        // TODO: Fix the following action as any exporting the type SwitchAction from the @pagopa/io-app-design-system [https://pagopa.atlassian.net/browse/IOBP-249]
-      } as any;
+      } as SwitchAction;
     }
-    return null;
+    return undefined;
   };
 
   return (
