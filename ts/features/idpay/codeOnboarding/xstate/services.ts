@@ -34,8 +34,7 @@ const createServicesImplementation = (
 
     return new Promise((resolve, _reject) => resolve(true));
   };
-  const authorizeUser = async () =>
-    new Promise((resolve, reject) =>
+  const authorizeUser =  new Promise((resolve, reject) =>
       dispatch(
         identificationRequest(
           false,
