@@ -773,6 +773,12 @@ authentication:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
 email:
+  cduModal:
+    validateMail:
+      title: Email address not validated
+      subtitle: To continue using the app, you must validate your email address
+      editButton: Edit email
+      validateButton: Validate email
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can
