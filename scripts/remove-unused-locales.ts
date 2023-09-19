@@ -142,6 +142,7 @@ const deleteYmlEntry = (entry: string, localeName: string) =>
   );
 
 /**
+ * runs a custom script that
  * uses yq to look for null or undefined entries, skippable
  * @param locale  the locale to clean up, e.g. 'en' or 'fr'
  * @returns  a promise that resolves to true if the cleanup was successful
@@ -149,8 +150,12 @@ const deleteYmlEntry = (entry: string, localeName: string) =>
 const cleanupLocales = async (locale: string) =>
   new Promise(res =>
     exec(
-      `yq -i 'del(.. |select( tag == "!!map" and length == 0 )) ' ` +
-        path.join(__dirname, "../locales", locale, "index.yml"),
+      `${__dirname}/remove_empty_i18n_keys.sh ${path.join(
+        __dirname,
+        "../locales",
+        locale,
+        "index.yml"
+      )}`,
       (err, _stdout, _) => {
         if (err) {
           console.log(chalk.red(`${err} error cleaning up ${locale}`));
