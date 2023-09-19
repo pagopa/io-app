@@ -7,6 +7,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import {
+  ButtonSolid,
   VSpacer,
   Pictogram,
   ContentWrapper
@@ -18,7 +19,6 @@ import {
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
-import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
