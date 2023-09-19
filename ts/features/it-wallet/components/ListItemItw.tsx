@@ -31,7 +31,7 @@ import Animated, {
   Extrapolate
 } from "react-native-reanimated";
 
-type ItwListItem = WithTestID<{
+type ListItemItw = WithTestID<{
   title: string;
   subTitle?: string;
   numberOfLines?: number;
@@ -64,7 +64,7 @@ const DISABLED_OPACITY = 0.5;
  * It supports an optional left icon, a title, an optional subtitle and an optional right node.
  * It also supports a disabled state which greys out the component and disables the onPress callback.
  */
-export const ItwListItem = ({
+export const ListItemItw = ({
   title,
   subTitle,
   numberOfLines,
@@ -75,7 +75,7 @@ export const ItwListItem = ({
   disabled = false,
   // Accessibility
   accessibilityLabel
-}: ItwListItem) => {
+}: ListItemItw) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
   const theme = useIOTheme();
 
@@ -167,4 +167,4 @@ export const ItwListItem = ({
   );
 };
 
-export default ItwListItem;
+export default ListItemItw;

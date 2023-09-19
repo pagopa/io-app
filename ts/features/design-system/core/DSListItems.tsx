@@ -41,7 +41,7 @@ import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import { ListItemIDP } from "../../../components/ui/ListItemIDP";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
-import { ItwListItem } from "../../it-wallet/components/ItwListItem";
+import { ListItemItw } from "../../it-wallet/components/ListItemItw";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -324,8 +324,8 @@ export const DSListItems = () => (
             isNew={true}
           />
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="ItWalletListItem">
-          <ItwListItem
+        <DSComponentViewerBox name="ListItemItw">
+          <ListItemItw
             title="Title test"
             subTitle="Subtitle test"
             icon="abacus"
