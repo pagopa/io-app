@@ -10,6 +10,7 @@ import {
   IOSpringValues,
   IOStyles,
   Icon,
+  LabelSmall,
   WithTestID,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -31,7 +32,8 @@ import Animated, {
 } from "react-native-reanimated";
 
 type ItwListItem = WithTestID<{
-  label: string;
+  title: string;
+  subTitle?: string;
   numberOfLines?: number;
   onPress: (event: GestureResponderEvent) => void;
   icon?: IOIcons;
@@ -58,7 +60,8 @@ const styles = StyleSheet.create({
 const DISABLED_OPACITY = 0.5;
 
 export const ItwListItem = ({
-  label,
+  title,
+  subTitle,
   numberOfLines,
   onPress,
   icon,
@@ -101,10 +104,32 @@ export const ItwListItem = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  const infoCopyText = (
+  const renderTitle = (
     <H6 color={theme["interactiveElem-default"]} numberOfLines={numberOfLines}>
-      {label}
+      {title}
     </H6>
+  );
+
+  const renderSubTitle = subTitle && (
+    <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+      {subTitle}
+    </LabelSmall>
+  );
+
+  const renderRightNode = rightNode && (
+    <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+      {rightNode}
+    </View>
+  );
+
+  const renderIcon = icon && (
+    <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+      <Icon
+        name={icon}
+        color="grey-450"
+        size={IOListItemVisualParams.iconSize}
+      />
+    </View>
   );
 
   return (
@@ -126,19 +151,12 @@ export const ItwListItem = ({
           disabled ? { opacity: DISABLED_OPACITY } : {}
         ]}
       >
-        {icon && (
-          <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
-            <Icon
-              name={icon}
-              color="grey-450"
-              size={IOListItemVisualParams.iconSize}
-            />
-          </View>
-        )}
-        <View style={IOStyles.flex}>{infoCopyText}</View>
-        <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-          {rightNode}
+        {renderIcon}
+        <View style={IOStyles.flex}>
+          {renderTitle}
+          {renderSubTitle}
         </View>
+        {renderRightNode}
       </Animated.View>
     </Pressable>
   );

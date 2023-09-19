@@ -326,7 +326,8 @@ export const DSListItems = () => (
         </DSComponentViewerBox>
         <DSComponentViewerBox name="ItWalletListItem">
           <ItwListItem
-            label="Test"
+            title="Title test"
+            subTitle="Subtitle test"
             icon="abacus"
             onPress={() => Alert.alert("pressed")}
             accessibilityLabel="test"
