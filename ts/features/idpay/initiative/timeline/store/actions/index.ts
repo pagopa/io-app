@@ -15,4 +15,4 @@ export const idpayTimelineDetailsGet = createAsyncAction(
   "IDPAY_TIMELINE_DETAILS_FAILURE"
 )<IdPayTimelineDetailsGetPayloadType, OperationDTO, NetworkError>();
 
-export type IDPayTimelineActions = ActionType<typeof idpayTimelineDetailsGet>;
+export type IdPayTimelineActions = ActionType<typeof idpayTimelineDetailsGet>;

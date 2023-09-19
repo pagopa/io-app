@@ -1,5 +1,5 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
@@ -13,10 +13,11 @@ import {
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
+import { watchIdPayCodeSaga } from "../../code/saga";
 import { watchIDPayInitiativeDetailsSaga } from "../../initiative/details/saga";
+import { watchIDPayTimelineSaga } from "../../initiative/timeline/saga";
 import { watchIDPayWalletSaga } from "../../wallet/saga";
 import { createIDPayClient } from "../api/client";
-import { watchIDPayTimelineSaga } from "../../initiative/timeline/saga";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -33,6 +34,8 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   );
 
   const idPayClient = createIDPayClient(baseUrl);
+
+  yield* fork(watchIdPayCodeSaga, idPayClient, bearerToken);
 
   yield* fork(
     watchIDPayWalletSaga,

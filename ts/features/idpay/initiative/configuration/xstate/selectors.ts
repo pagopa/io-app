@@ -2,7 +2,7 @@ import * as P from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
+import { CardInstrumentDTO } from "../../../../../../definitions/idpay/CardInstrumentDTO";
 import { LOADING_TAG } from "../../../../../xstate/utils";
 import { ConfigurationMode } from "./context";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";
@@ -10,7 +10,7 @@ import { IDPayInitiativeConfigurationMachineType } from "./machine";
 type StateWithContext = StateFrom<IDPayInitiativeConfigurationMachineType>;
 
 type IDPayInstrumentsByIdWallet = {
-  [idWallet: string]: InstrumentDTO;
+  [idWallet: string]: CardInstrumentDTO;
 };
 
 const isLoadingSelector = (state: StateWithContext) =>

@@ -1,24 +1,27 @@
 import { combineReducers } from "redux";
 import initiativeDetailsReducer, {
-  IDPayInitiativeState
+  IdPayInitiativeState
 } from "../../../initiative/details/store/index";
 import walletReducer, {
-  IDPayWalletState
+  IdPayWalletState
 } from "../../../wallet/store/reducers/index";
 import timelineReducer, {
-  IDPayTimelineState
+  IdPayTimelineState
 } from "../../../initiative/timeline/store";
+import codeReducer, { IdPayCodeState } from "../../../code/store/reducers";
 
 export type IDPayState = {
-  wallet: IDPayWalletState;
-  initiative: IDPayInitiativeState;
-  timeline: IDPayTimelineState;
+  wallet: IdPayWalletState;
+  initiative: IdPayInitiativeState;
+  timeline: IdPayTimelineState;
+  code: IdPayCodeState;
 };
 
 const idPayReducer = combineReducers({
   wallet: walletReducer,
   initiative: initiativeDetailsReducer,
-  timeline: timelineReducer
+  timeline: timelineReducer,
+  code: codeReducer
 });
 
 export default idPayReducer;

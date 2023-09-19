@@ -7,18 +7,18 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { idpayTimelineDetailsGet } from "./actions";
 
-export type IDPayTimelineState = {
+export type IdPayTimelineState = {
   details: pot.Pot<OperationDTO, NetworkError>;
 };
 
-const INITIAL_STATE: IDPayTimelineState = {
+const INITIAL_STATE: IdPayTimelineState = {
   details: pot.none
 };
 
 const reducer = (
-  state: IDPayTimelineState = INITIAL_STATE,
+  state: IdPayTimelineState = INITIAL_STATE,
   action: Action
-): IDPayTimelineState => {
+): IdPayTimelineState => {
   switch (action.type) {
     case getType(idpayTimelineDetailsGet.request):
       return {

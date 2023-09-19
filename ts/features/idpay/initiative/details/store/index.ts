@@ -23,14 +23,14 @@ import {
 
 export type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
-export type IDPayInitiativeState = {
+export type IdPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
   onboardingStatus: pot.Pot<OnboardingStatusDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
 };
 
-const INITIAL_STATE: IDPayInitiativeState = {
+const INITIAL_STATE: IdPayInitiativeState = {
   details: pot.none,
   beneficiaryDetails: pot.none,
   onboardingStatus: pot.none,
@@ -38,9 +38,9 @@ const INITIAL_STATE: IDPayInitiativeState = {
 };
 
 const reducer = (
-  state: IDPayInitiativeState = INITIAL_STATE,
+  state: IdPayInitiativeState = INITIAL_STATE,
   action: Action
-): IDPayInitiativeState => {
+): IdPayInitiativeState => {
   switch (action.type) {
     case getType(idpayInitiativeGet.request):
       return {

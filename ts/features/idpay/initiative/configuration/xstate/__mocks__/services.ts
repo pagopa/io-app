@@ -4,7 +4,7 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../../definitions/idpay/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../../definitions/idpay/InstrumentDTO";
+import { InstrumentListDTO } from "../../../../../../../definitions/idpay/InstrumentListDTO";
 
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../../types/pagopa";
@@ -28,7 +28,7 @@ export const T_WALLET: Wallet = {
   paymentMethod: undefined
 };
 
-export const T_INSTRUMENT_DTO: InstrumentDTO = {
+export const T_INSTRUMENT_DTO: InstrumentListDTO = {
   instrumentId: "1234",
   idWallet: "12345"
 };

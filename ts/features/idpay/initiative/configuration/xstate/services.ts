@@ -5,7 +5,7 @@ import { InvokeCreator, Receiver, Sender } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
+import { CardInstrumentDTO } from "../../../../../../definitions/idpay/CardInstrumentDTO";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
@@ -187,7 +187,7 @@ const createServicesImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
+    const data: Promise<ReadonlyArray<CardInstrumentDTO>> = pipe(
       response,
       E.fold(
         () =>

@@ -57,6 +57,8 @@ import {
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
+import { IDPayCodeRoutes } from "../features/idpay/code/navigation/routes";
+import { IDPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -201,6 +203,10 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
             component={IDPayPaymentNavigator}
             options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen
+            name={IDPayCodeRoutes.IDPAY_CODE_MAIN}
+            component={IDPayCodeNavigator}
           />
         </>
       )}
