@@ -2,7 +2,12 @@ import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { Alert, ImageSourcePropType, View } from "react-native";
-import { IOThemeContext, Icon } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  IOThemeContext,
+  Icon,
+  Label
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -37,6 +42,7 @@ import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import { ListItemIDP } from "../../../components/ui/ListItemIDP";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
+import { ItwListItem } from "../../it-wallet/components/ItwListItem";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -319,7 +325,15 @@ export const DSListItems = () => (
             isNew={true}
           />
         </DSComponentViewerBox>
-        <VSpacer size={40} />
+        <DSComponentViewerBox name="ItWalletListItem">
+          <ItwListItem
+            label="Test"
+            icon="abacus"
+            onPress={() => Alert.alert("pressed")}
+            accessibilityLabel="test"
+            rightNode={<Badge variant="success" text="In arrivo" />}
+          />
+        </DSComponentViewerBox>
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
