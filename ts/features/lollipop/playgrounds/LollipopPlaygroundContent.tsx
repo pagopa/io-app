@@ -1,9 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, StyleSheet, TextInput } from "react-native";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import ButtonSolid from "../../../components/ui/ButtonSolid";
-import ButtonOutline from "../../../components/ui/ButtonOutline";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { Label } from "../../../components/core/typography/Label";
 import { Alert } from "../../../components/Alert";

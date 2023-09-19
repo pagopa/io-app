@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
+  ButtonSolid,
   IOColors,
   Icon,
   HSpacer,
@@ -12,7 +13,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
