@@ -6,7 +6,7 @@ import { View, StyleSheet, Image } from "react-native";
 import { ListItem as NBListItem } from "native-base";
 import { IOLogoPaymentType, LogoPayment } from "@pagopa/io-app-design-system";
 import { default as React } from "react";
-import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/CardInstrumentDTO";
+import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 import { RemoteSwitch } from "../../../../../components/core/selection/RemoteSwitch";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";

@@ -9,9 +9,9 @@ import {
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import {
-  CardInstrumentDTO,
+  InstrumentDTO,
   StatusEnum as InstrumentStatusEnum
-} from "../../../../../../definitions/idpay/CardInstrumentDTO";
+} from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
@@ -41,7 +41,7 @@ type Services = {
     data: ReadonlyArray<Wallet>;
   };
   loadInitiativeInstruments: {
-    data: ReadonlyArray<CardInstrumentDTO>;
+    data: ReadonlyArray<InstrumentDTO>;
   };
 };
 

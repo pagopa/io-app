@@ -3,9 +3,9 @@ import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import {
-  CardInstrumentDTO,
+  InstrumentDTO,
   StatusEnum as InstrumentStatusEnum
-} from "../../../../../../definitions/idpay/CardInstrumentDTO";
+} from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
 import { InitiativeFailureType } from "./failure";
 
@@ -25,7 +25,7 @@ export type Context = {
   initiative: p.Pot<InitiativeDTO, Error>;
   ibanList: p.Pot<ReadonlyArray<IbanDTO>, Error>;
   walletInstruments: ReadonlyArray<Wallet>;
-  initiativeInstruments: ReadonlyArray<CardInstrumentDTO>;
+  initiativeInstruments: ReadonlyArray<InstrumentDTO>;
   instrumentStatuses: InstrumentStatusByIdWallet;
   areInstrumentsSkipped?: boolean;
   selectedIban?: IbanDTO;
