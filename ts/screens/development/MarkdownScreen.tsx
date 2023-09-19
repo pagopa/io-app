@@ -1,9 +1,8 @@
 import { Container, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, TextInput } from "react-native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../components/core/spacer/Spacer";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";

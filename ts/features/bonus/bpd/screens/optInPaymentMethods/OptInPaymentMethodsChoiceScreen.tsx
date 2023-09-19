@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";

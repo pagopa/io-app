@@ -1,7 +1,13 @@
 import {
   ListItemInfoCopy as DSListItemInfoCopy,
+  IOColors,
   IOIcons,
-  Icon
+  Icon,
+  hexToRgba,
+  useIOTheme,
+  VSpacer,
+  IOScaleValues,
+  IOSpringValues
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
@@ -25,10 +31,7 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOListItemStyles,
   IOListItemVisualParams,

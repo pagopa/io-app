@@ -9,8 +9,8 @@ import {
   SafeAreaView,
   StyleSheet
 } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import image from "../../../img/rooted/broken-phone.png";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";

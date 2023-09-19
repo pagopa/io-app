@@ -5,9 +5,18 @@ import FingerprintScanner, {
   Biometrics,
   FingerprintScannerError
 } from "react-native-fingerprint-scanner";
+import { isPinOrFingerprintSet } from "react-native-device-info";
 import { isDebugBiometricIdentificationEnabled } from "../config";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
+
+/**
+ * Retrieve biometric settings from the base system. This function wraps the basic
+ * method "isSensorAvailable" of react-native-fingerprint-scanner library and simplifies the possible returned values in
+ * function of its usage.
+ *
+ * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ */
 
 const biometricErrors = [
   // possibly working, but the string returned is undocumented
@@ -87,3 +96,28 @@ export const biometricAuthenticationRequest = (
       // We need to explicitly release the listener to avoid bugs on android platform
       void FingerprintScanner.release();
     });
+
+type biometricState = "Available" | "NotEnrolled" | "NotSupported";
+
+export const getBometricState = (): Promise<biometricState> =>
+  new Promise(resolve => {
+    FingerprintScanner.isSensorAvailable()
+      .then(_ => resolve("Available"))
+      .catch(e => {
+        const error = e as FingerprintScannerError;
+        if (error.name === "FingerprintScannerNotEnrolled") {
+          resolve("NotEnrolled");
+        } else {
+          resolve("NotSupported");
+        }
+      });
+  });
+
+export const isDevicePinSet = (): Promise<boolean> =>
+  new Promise(resolve => {
+    isPinOrFingerprintSet()
+      .then(value => {
+        resolve(value);
+      })
+      .catch(_ => resolve(false));
+  });

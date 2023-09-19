@@ -1,8 +1,7 @@
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
+import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { Pictogram } from "../../../components/core/pictograms/Pictogram";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

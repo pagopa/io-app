@@ -1,11 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import * as React from "react";
 import { ReactNode } from "react";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../typography/H4";
 import { IOStyles } from "../variables/IOStyles";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { IOColors } from "../variables/IOColors";
 
 export type RadioItem<T> = {
   body: ReactNode;

@@ -5,7 +5,6 @@ import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
 import { MessageRouterScreenNavigationParams } from "../../screens/messages/MessageRouterScreen";
-import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
@@ -78,19 +77,6 @@ export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
       screen: ROUTES.ONBOARDING_PIN
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToOnboardingFingerprintScreenAction = (
-  params: FingerprintScreenNavigationParams
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_FINGERPRINT,
-      params
     })
   );
 

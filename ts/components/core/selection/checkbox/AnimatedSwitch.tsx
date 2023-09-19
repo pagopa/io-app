@@ -9,8 +9,7 @@ import Animated, {
   withSpring,
   withTiming
 } from "react-native-reanimated";
-import { IOSpringValues } from "../../variables/IOAnimations";
-import { IOColors } from "../../variables/IOColors";
+import { IOColors, IOSpringValues } from "@pagopa/io-app-design-system";
 import { IOSwitchVisualParams } from "../../variables/IOStyles";
 import { AnimatedTick } from "../AnimatedTick";
 

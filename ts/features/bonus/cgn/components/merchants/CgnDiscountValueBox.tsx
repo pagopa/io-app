@@ -4,10 +4,10 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type ValueBoxProps = {
   value: number;

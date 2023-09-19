@@ -162,6 +162,7 @@ global:
     ok: OK
     ok2: Ok
     continue: Continue
+    notNow: Maybe later
     retry: Retry
     back: Back
     confirm: Confirm
@@ -173,8 +174,9 @@ global:
     add: Add
     edit: "Edit"
     info: "Info"
-    activate: "Activate"
-    deactivate: "Deactivate"
+    activate: "Enable"
+    activate2: Enable
+    deactivate: "Disable"
     show: "Show"
     update: "Update"
     updateIO: "Update IO"
@@ -877,16 +879,25 @@ onboarding:
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
-  fingerprint:
-    headerTitle: Activation
-    title: Biometric authentication
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: your fingerprint
-        faceId: Face ID
-        touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  biometric:
+    headerTitle: Configure IO
+    available:
+      title: Enable biometric recognition
+      settings: You can always change your choice in Profile > Security
+      body:
+        infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorizeoperations and payments with your
+        biometricType: face or fingerprint
+        infoEnd: more quickly and securely.
+        enrolledText: The biometric information is stored in your phone's memory. it will not be disclosed in any way to IO systems or stored anywhere else.
+        notEnrolled:
+          text: To use it, go to your device settings and configure it. Then activate it on IO under Profile > Security.
+    unavailable:
+      title: Protect your device
+      body:
+        firstInfoStart: IO sends you communications that concern you
+        firstInfoEnd: personally.
+        secondInfoStart: Protect your device from unwanted access and make sure that only you can access the app. To do this, go to your device settings, set an
+        secondInfoEnd: unlock code or configure biometric recognition.
   shareData:
     title: "Configure IO"
   thankYouPage:

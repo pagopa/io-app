@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -11,7 +11,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { Label } from "../../../components/core/typography/Label";
 import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";

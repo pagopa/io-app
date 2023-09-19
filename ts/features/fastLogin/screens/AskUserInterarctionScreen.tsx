@@ -6,12 +6,13 @@ import {
   Modal,
   GestureResponderEvent
 } from "react-native";
-import I18n from "../../../i18n";
 import {
+  HSpacer,
+  VSpacer,
   IOPictograms,
   Pictogram
-} from "../../../components/core/pictograms/Pictogram";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
+} from "@pagopa/io-app-design-system";
+import I18n from "../../../i18n";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { ComponentProps, FC } from "react";
 import { SvgProps } from "react-native-svg";
 import LinearGradient from "react-native-linear-gradient";
+import { getGradientColorValues } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../../../locales/locales";
 import {
   ProductCategory,
@@ -19,7 +20,6 @@ import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustain
 import Job from "../../../../../img/bonus/cgn/categories/job.svg";
 import I18n from "../../../../i18n";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { getGradientColorValues } from "../../../../components/core/variables/IOColors";
 
 export type Category = {
   type: ProductCategory;

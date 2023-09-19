@@ -2,6 +2,7 @@ import { MixedStyleRecord } from "@native-html/transient-render-engine";
 import * as React from "react";
 import { useWindowDimensions } from "react-native";
 import RenderHtml from "react-native-render-html";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { allUsedFonts, makeFontStyleObject } from "./fonts";
 import {
   bodyDefaultColor,
@@ -19,7 +20,6 @@ import { calculateH3WeightColor, h3FontSize } from "./typography/H3";
 import { calculateH4WeightColor, h4FontSize } from "./typography/H4";
 import { h5DefaultColor, h5DefaultWeight, h5FontSize } from "./typography/H5";
 import { linkDefaultColor, linkDefaultWeight } from "./typography/Link";
-import { IOColors } from "./variables/IOColors";
 
 type Props = React.ComponentProps<typeof RenderHtml>;
 

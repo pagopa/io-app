@@ -1,9 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text, ImageBackground } from "react-native";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 
 /* Fake Transparent BG */
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
