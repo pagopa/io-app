@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import {
   DSAssetViewerBox,
   assetItemGutter,
   renderRasterImage
 } from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 /* PICTOGRAMS */
 import Fireworks from "../../../../img/pictograms/fireworks.png";

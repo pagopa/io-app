@@ -1,11 +1,11 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "react-native";
 import * as React from "react";
+import { IOColors } from "@pagopa/io-app-design-system";
 import Fingerprint from "../../../../../img/test/fingerprint.svg";
 import I18n from "../../../../i18n";
 import { Body } from "../../typography/Body";
 import { H3 } from "../../typography/H3";
-import { IOColors } from "../../variables/IOColors";
 import { IOStyles } from "../../variables/IOStyles";
 import { RawAccordion } from "../RawAccordion";
 

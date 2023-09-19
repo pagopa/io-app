@@ -12,11 +12,15 @@ import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
-import { IOColors, Icon, LabelSmall } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  LabelSmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import { Alert as AlertComponent } from "../../components/Alert";
 import { H1 } from "../../components/core/typography/H1";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Text } from "react-native";
+import type { IOColors } from "@pagopa/io-app-design-system";
 import {
   IOFontFamily,
   IOFontWeight
 } from "../../../../../components/core/fonts";
-import type { IOColors } from "../../../../../components/core/variables/IOColors";
 import { useTypographyFactory } from "../../../../../components/core/typography/Factory";
 
 type AllowedWeight = Extract<IOFontWeight, "Regular">;

@@ -2,7 +2,11 @@ import {
   IconButton as DSIconButton,
   AnimatedIcon,
   IconClassComponent,
-  IOIcons
+  IOIcons,
+  IOColors,
+  hexToRgba,
+  IOScaleValues,
+  IOSpringValues
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
@@ -20,8 +24,6 @@ import Animated, {
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { IOIconButtonStyles } from "../core/variables/IOStyles";
 export type IconButton = WithTestID<{
   color?: "primary" | "neutral" | "contrast";

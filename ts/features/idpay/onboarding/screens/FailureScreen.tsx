@@ -4,12 +4,8 @@ import { useSelector } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { View, SafeAreaView, StyleSheet } from "react-native";
+import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import {
-  IOPictograms,
-  Pictogram
-} from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";

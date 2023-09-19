@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import { useStore } from "react-redux";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIODispatch } from "../../../../store/hooks";
@@ -19,7 +20,6 @@ import {
   isExpired,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
-import { HSpacer } from "../../../core/spacer/Spacer";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import ExtractedCTABar from "../../../cta/ExtractedCTABar";
 import { isPNOptInMessage } from "../../../../features/pn/utils";

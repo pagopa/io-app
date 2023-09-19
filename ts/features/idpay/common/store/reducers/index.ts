@@ -1,14 +1,12 @@
 import { combineReducers } from "redux";
+import codeReducer, { IdPayCodeState } from "../../../code/store/reducers";
 import initiativeDetailsReducer, {
   IdPayInitiativeState
-} from "../../../initiative/details/store/index";
+} from "../../../details/store/index";
+import timelineReducer, { IdPayTimelineState } from "../../../timeline/store";
 import walletReducer, {
   IdPayWalletState
 } from "../../../wallet/store/reducers/index";
-import timelineReducer, {
-  IdPayTimelineState
-} from "../../../initiative/timeline/store";
-import codeReducer, { IdPayCodeState } from "../../../code/store/reducers";
 
 export type IDPayState = {
   wallet: IdPayWalletState;

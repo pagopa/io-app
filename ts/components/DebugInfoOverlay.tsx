@@ -5,7 +5,9 @@ import { useState } from "react";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   HSpacer,
+  IOColors,
   IOStyles,
+  hexToRgba,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
 import { ReduxProps } from "../store/actions/types";
@@ -15,7 +17,6 @@ import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import { useIOSelector } from "../store/hooks";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
-import { IOColors, hexToRgba } from "./core/variables/IOColors";
 import PagoPATestIndicator from "./PagoPATestIndicator";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;

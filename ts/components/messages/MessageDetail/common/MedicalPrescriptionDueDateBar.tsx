@@ -8,6 +8,7 @@ import * as O from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import React from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
+import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
@@ -22,10 +23,8 @@ import {
   ExpireStatus,
   getMessagePaymentExpirationInfo
 } from "../../../../utils/messages";
-import { HSpacer, VSpacer } from "../../../core/spacer/Spacer";
 import { Body } from "../../../core/typography/Body";
 import { Label } from "../../../core/typography/Label";
-import { IOColors } from "../../../core/variables/IOColors";
 import { IOStyles } from "../../../core/variables/IOStyles";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";

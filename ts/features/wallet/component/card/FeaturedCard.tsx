@@ -3,10 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps

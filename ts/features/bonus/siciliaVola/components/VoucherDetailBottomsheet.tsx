@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { NetworkError } from "../../../../utils/errors";
 import { RemoteValue } from "../../bpd/model/RemoteValue";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import VoucherInformationComponent from "./VoucherInformationComponent";
 
 type Props = {

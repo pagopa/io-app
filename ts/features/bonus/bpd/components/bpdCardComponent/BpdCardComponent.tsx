@@ -10,18 +10,18 @@ import {
   StyleSheet
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { Icon } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  hexToRgba,
+  IOColors,
+  HSpacer
+} from "@pagopa/io-app-design-system";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
 import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
-import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import {
-  hexToRgba,
-  IOColors
-} from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";

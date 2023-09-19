@@ -1,9 +1,13 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  HSpacer,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { TranslationKeys } from "../../../../locales/locales";
@@ -11,8 +15,6 @@ import {
   IOStyles,
   IOVisualCostants
 } from "../../../components/core/variables/IOStyles";
-import { HSpacer } from "../../../components/core/spacer/Spacer";
-import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 
 const styles = StyleSheet.create({
   notification: {

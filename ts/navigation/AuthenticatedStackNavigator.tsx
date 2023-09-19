@@ -21,11 +21,11 @@ import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
-} from "../features/idpay/initiative/configuration/navigation/navigator";
+} from "../features/idpay/configuration/navigation/navigator";
 import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
-} from "../features/idpay/initiative/details/navigation";
+} from "../features/idpay/details/navigation";
 import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes

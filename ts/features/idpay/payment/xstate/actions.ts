@@ -8,7 +8,7 @@ import {
 import { useIODispatch } from "../../../../store/hooks";
 import { showToast } from "../../../../utils/showToast";
 import { refreshSessionToken } from "../../../fastLogin/store/actions";
-import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 

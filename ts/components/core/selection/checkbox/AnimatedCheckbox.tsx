@@ -1,4 +1,8 @@
-import { AnimatedCheckbox as DSAnimatedCheckbox } from "@pagopa/io-app-design-system";
+import {
+  AnimatedCheckbox as DSAnimatedCheckbox,
+  IOSpringValues,
+  IOColors
+} from "@pagopa/io-app-design-system";
 import React, { useEffect } from "react";
 import { Pressable, PressableProps, StyleSheet, View } from "react-native";
 import Animated, {
@@ -11,13 +15,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { IOSpringValues } from "../../variables/IOAnimations";
-import { IOColors } from "../../variables/IOColors";
 import {
   IOSelectionTickLegacyVisualParams,
   IOSelectionTickVisualParams
 } from "../../variables/IOStyles";
 import { AnimatedTick } from "../AnimatedTick";
+
 type Props = {
   checked?: boolean;
 };
