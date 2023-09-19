@@ -1,7 +1,6 @@
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { useIOTheme } from "@pagopa/io-app-design-system";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   componentWrapper: {

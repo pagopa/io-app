@@ -3,9 +3,8 @@ import * as O from "fp-ts/lib/Option";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { HSpacer, Icon } from "@pagopa/io-app-design-system";
+import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import { FooterTopShadow } from "../FooterTopShadow";
 

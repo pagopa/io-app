@@ -6,7 +6,8 @@ import {
   ButtonLink,
   IOThemeContext,
   Icon,
-  IconButton
+  IconButton,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
@@ -21,13 +22,12 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
+import { TimelineOperationListItem } from "../../idpay/details/components/TimelineOperationListItem";
 import {
   OperationTypeEnum,
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";

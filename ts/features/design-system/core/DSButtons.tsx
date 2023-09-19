@@ -7,18 +7,19 @@ import {
   ButtonSolid,
   IconButton,
   IconButtonContained,
+  IOColors,
+  HSpacer,
+  VSpacer,
   useIOExperimentalDesign,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 

@@ -16,7 +16,7 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { WebviewMessage } from "../types/WebviewMessage";
@@ -28,7 +28,6 @@ import {
   closeInjectedScript
 } from "../utils/webview";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { VSpacer } from "./core/spacer/Spacer";
 import { Label } from "./core/typography/Label";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";

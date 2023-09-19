@@ -15,14 +15,15 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import {
+  IOColors,
+  IOSpringValues,
+  IOScaleValues,
   Icon,
   IOListItemVisualParams,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
 import { IOStyles } from "../core/variables/IOStyles";
-import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { WithTestID } from "../../types/WithTestID";
 import { NewH6 } from "../core/typography/NewH6";

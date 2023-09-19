@@ -2,12 +2,12 @@ import * as React from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import { useIOSelector } from "../../../../store/hooks";
 import { getPaginatedMessageById } from "../../../../store/reducers/entities/messages/paginatedById";
 import I18n from "../../../../i18n";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 
 type Props = {

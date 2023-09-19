@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { RefreshIndicator } from "./RefreshIndicator";
 
 const styles = StyleSheet.create({

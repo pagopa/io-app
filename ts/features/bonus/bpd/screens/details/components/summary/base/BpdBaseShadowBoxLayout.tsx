@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { ShadowBox } from "./ShadowBox";
 
 type Props = {

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { IOColors } from "@pagopa/io-app-design-system";
 import HeaderImage from "../../../../../img/features/pn/pn_alert_header.svg";
 import customVariables from "../../../../theme/variables";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { H3 } from "../../../../components/core/typography/H3";
 
 type Props = {

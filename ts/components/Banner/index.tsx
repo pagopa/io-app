@@ -15,30 +15,29 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+// Design System components
 import {
   ButtonLink,
-  IOPictogramSizeScale,
-  IOPictogramsBleed,
   IconButton,
-  PictogramBleed
-} from "@pagopa/io-app-design-system";
-import { WithTestID } from "../../types/WithTestID";
-// Design System components
-import { IOColors } from "../core/variables/IOColors";
-import { VSpacer } from "../core/spacer/Spacer";
-import { IOStyles } from "../core/variables/IOStyles";
-import { IOBannerRadius } from "../core/variables/IOShapes";
-import {
+  IOColors,
+  VSpacer,
+  IOPictogramsBleed,
+  IOPictogramSizeScale,
+  PictogramBleed,
+  IOScaleValues,
+  IOSpringValues,
+  IOBannerRadius,
   IOBannerBigSpacing,
   IOBannerSmallHSpacing,
   IOBannerSmallVSpacing
-} from "../core/variables/IOSpacing";
+} from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../types/WithTestID";
+// Design System components
+import { IOStyles } from "../core/variables/IOStyles";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
 
 /* Styles */
-
 const colorTitle: IOColors = "blueIO-850";
 const colorContent: IOColors = "grey-700";
 const colorCloseButton: IconButton["color"] = "neutral";

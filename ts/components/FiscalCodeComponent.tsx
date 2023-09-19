@@ -21,6 +21,7 @@ import {
   ViewStyle
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
@@ -33,7 +34,6 @@ import {
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
 import { makeFontStyleObject } from "./core/fonts";
-import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
   profile: InitializedProfile;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
+import { IOColors } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../LoadingSpinnerOverlay";
-import { IOColors } from "../../core/variables/IOColors";
 import I18n from "../../../i18n";
 
 const styles = StyleSheet.create({

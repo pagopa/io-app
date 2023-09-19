@@ -4,10 +4,15 @@ import { pipe } from "fp-ts/lib/function";
 import { Col, Grid, Row, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet, View } from "react-native";
-import { IOIconSizeScale, IOIcons, Icon } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIconSizeScale,
+  IOIcons,
+  Icon,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../../theme/fonts";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { hexToRgba, IOColors } from "../core/variables/IOColors";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size

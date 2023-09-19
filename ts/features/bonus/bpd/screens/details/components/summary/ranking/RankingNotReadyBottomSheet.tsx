@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../../../i18n";
 import Markdown from "../../../../../../../../components/ui/Markdown";
 import { useLegacyIOBottomSheetModal } from "../../../../../../../../utils/hooks/bottomSheet";
-import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
 
 /**
  * Display information about the current period

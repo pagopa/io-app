@@ -1,6 +1,6 @@
 import { View, SafeAreaView } from "react-native";
 import * as React from "react";
-import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";

@@ -18,9 +18,11 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  IOBottomSheetHeaderRadius,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
-import { IOBottomSheetHeaderRadius } from "../../components/core/variables/IOShapes";
-import { IOSpacingScale } from "../../components/core/variables/IOSpacing";
 import {
   IOStyles,
   IOVisualCostants

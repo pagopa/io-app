@@ -16,7 +16,7 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -26,11 +26,9 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
-import { IOColors } from "../../core/variables/IOColors";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import Logo, { cardIcons } from "./Logo";
 

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View, ActivityIndicator, Platform, StyleSheet } from "react-native";
 
+import { IOColors } from "@pagopa/io-app-design-system";
 import variables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   androidIndicatorInner: {
