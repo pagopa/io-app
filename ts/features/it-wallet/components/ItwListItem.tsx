@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
 
 const DISABLED_OPACITY = 0.5;
 
+/**
+ * Components which renders a list item for the IT-WALLET stream.
+ * It supports an optional left icon, a title, an optional subtitle and an optional right node.
+ * It also supports a disabled state which greys out the component and disables the onPress callback.
+ */
 export const ItwListItem = ({
   title,
   subTitle,
