@@ -1,14 +1,18 @@
 import { default as React } from "react";
 import { StyleSheet, View } from "react-native";
-import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  ButtonSolidProps,
+  VSpacer,
+  Pictogram
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../components/core/typography/H3";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
-import ButtonSolid from "../../../components/ui/ButtonSolid";
 
 type Props = {
   title: string;
   body: string;
-  action: Pick<ButtonSolid, "label" | "accessibilityLabel" | "onPress">;
+  action: Pick<ButtonSolidProps, "label" | "accessibilityLabel" | "onPress">;
 };
 
 const CameraPermissionView = (props: Props) => (
