@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleProp, StyleSheet, TextStyle } from "react-native";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 

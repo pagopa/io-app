@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Platform, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";

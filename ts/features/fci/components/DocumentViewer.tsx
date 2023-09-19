@@ -5,7 +5,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import * as S from "fp-ts/lib/string";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { isIos } from "../../../utils/platform";

@@ -1,9 +1,8 @@
-import { Link } from "@pagopa/io-app-design-system";
+import { Link, IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import type { IOColors } from "../variables/IOColors";
 import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 

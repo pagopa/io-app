@@ -6,15 +6,17 @@ import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import {
+  VSpacer,
+  Pictogram,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import Placeholder from "rn-placeholder";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
-import { Pictogram } from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ButtonOutline from "../../../../components/ui/ButtonOutline";

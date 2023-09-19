@@ -2,8 +2,7 @@ import { Col, Grid, Row } from "native-base";
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
-import { Icon, IOIcons } from "@pagopa/io-app-design-system";
-import { IOColors } from "../core/variables/IOColors";
+import { Icon, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 
 type MarkerState = "SCANNING" | "VALID" | "INVALID";
 

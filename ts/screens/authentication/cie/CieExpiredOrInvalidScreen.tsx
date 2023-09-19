@@ -1,7 +1,7 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";

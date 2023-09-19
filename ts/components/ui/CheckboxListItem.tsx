@@ -1,4 +1,15 @@
-import { IOIcons, Icon, ListItemCheckbox } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  ListItemCheckbox,
+  hexToRgba,
+  useIOTheme,
+  HSpacer,
+  VSpacer,
+  IOScaleValues,
+  IOSpringValues
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -16,10 +27,7 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";
 import { AnimatedCheckbox } from "../core/selection/checkbox/AnimatedCheckbox";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,

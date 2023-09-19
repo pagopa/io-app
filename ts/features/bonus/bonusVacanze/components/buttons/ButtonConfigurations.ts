@@ -1,5 +1,4 @@
-import { IOIcons } from "@pagopa/io-app-design-system";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import I18n from "../../../../../i18n";
 

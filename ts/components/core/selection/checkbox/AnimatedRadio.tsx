@@ -1,4 +1,8 @@
-import { AnimatedRadio as DSAnimatedRadio } from "@pagopa/io-app-design-system";
+import {
+  AnimatedRadio as DSAnimatedRadio,
+  IOSpringValues,
+  IOColors
+} from "@pagopa/io-app-design-system";
 
 import React, { useEffect } from "react";
 import { Pressable, PressableProps, StyleSheet, View } from "react-native";
@@ -12,8 +16,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { IOSpringValues } from "../../variables/IOAnimations";
-import { IOColors } from "../../variables/IOColors";
 import {
   IOSelectionTickLegacyVisualParams,
   IOSelectionTickVisualParams

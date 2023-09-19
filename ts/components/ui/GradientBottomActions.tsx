@@ -2,11 +2,14 @@ import * as React from "react";
 import { View, StyleSheet, ViewStyle, StyleProp } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba,
+  VSpacer,
+  IOSpacer
+} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { IOVisualCostants } from "../core/variables/IOStyles";
-import { IOSpacer } from "../core/variables/IOSpacing";
-import { VSpacer } from "../core/spacer/Spacer";
 
 export type GradientBottomActions = WithTestID<{
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;

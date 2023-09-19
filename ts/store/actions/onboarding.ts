@@ -2,17 +2,11 @@
  * Action types and action creator related to the Onboarding.
  */
 
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const fingerprintAcknowledge = createAsyncAction(
-  "FINGERPRINT_ACKNOWLEDGE_REQUEST",
-  "FINGERPRINT_ACKNOWLEDGE_SUCCESS",
-  "FINGERPRINT_ACKNOWLEDGE_FAILURE"
-)<void, void, void>();
+export const fingerprintAcknowledged = createStandardAction(
+  "FINGERPRINT_ACKNOWLEDGED"
+)();
 
 export const tosAccepted = createStandardAction("TOS_ACCEPTED")<number>();
 
@@ -32,7 +26,7 @@ export const completeOnboarding = createStandardAction("COMPLETE_ONBOARDING")();
 
 type OnboardingActionTypes =
   | typeof tosAccepted
-  | typeof fingerprintAcknowledge
+  | typeof fingerprintAcknowledged
   | typeof emailInsert
   | typeof emailAcknowledged
   | typeof abortOnboarding

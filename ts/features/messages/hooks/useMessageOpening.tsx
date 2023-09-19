@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -14,7 +15,7 @@ import {
 import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import ROUTES from "../../../navigation/routes";
 import { trackDisclaimerOpened } from "../analytics";
 import {
@@ -32,7 +33,6 @@ import {
   PreconditionContentSkeleton
 } from "../components/PreconditionBottomSheet/PreconditionContent";
 import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
-import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 
 const renderPreconditionHeader = (
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>

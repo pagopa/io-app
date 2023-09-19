@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useMemo } from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
-import { IOColors } from "../variables/IOColors";
 
 /**
  * The specific properties needed to calculate the font style using {@link makeFontStyleObject} (these information

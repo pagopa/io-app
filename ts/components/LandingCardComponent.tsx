@@ -5,7 +5,7 @@
 import * as React from "react";
 import { View, Dimensions, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { VSpacer } from "./core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "./core/typography/Body";
 import { H2 } from "./core/typography/H2";
 
