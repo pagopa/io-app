@@ -1,7 +1,6 @@
 import { default as React } from "react";
 import { StyleSheet, View } from "react-native";
-import { Pictogram } from "../../../components/core/pictograms";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../components/core/typography/H3";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import ButtonSolid from "../../../components/ui/ButtonSolid";

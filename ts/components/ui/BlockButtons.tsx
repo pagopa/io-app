@@ -3,11 +3,10 @@ import * as O from "fp-ts/lib/Option";
 import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, IOIcons, Icon, HSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { HSpacer } from "../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   button: {

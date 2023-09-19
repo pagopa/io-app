@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import { Image, StyleSheet, View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
@@ -14,7 +15,6 @@ import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
-import { VSpacer } from "./core/spacer/Spacer";
 import { H2 } from "./core/typography/H2";
 
 type Props = {

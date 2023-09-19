@@ -11,7 +11,7 @@ import {
   ScrollView,
   Platform
 } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import AppHeader from "../../../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -26,7 +26,6 @@ import {
   confirmButtonProps
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../../components/LabelledItem";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import CategoryCheckbox from "./search/CategoryCheckbox";
 import OrderOption from "./search/OrderOption";
 import { DistanceSlider } from "./search/DistanceSlider";

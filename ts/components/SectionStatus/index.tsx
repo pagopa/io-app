@@ -5,7 +5,7 @@ import _ from "lodash";
 import React, { useCallback } from "react";
 import { Pressable, View } from "react-native";
 import { connect } from "react-redux";
-import { IOIcons } from "@pagopa/io-app-design-system";
+import type { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
 import {
@@ -17,7 +17,6 @@ import { getFullLocale } from "../../utils/locale";
 import { maybeNotNullyString } from "../../utils/strings";
 import { openWebUrl } from "../../utils/url";
 import { Link } from "../core/typography/Link";
-import { IOColors } from "../core/variables/IOColors";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {

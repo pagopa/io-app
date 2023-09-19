@@ -1,10 +1,10 @@
 import * as React from "react";
-import { IOFontFamily, IOFontWeight } from "../fonts";
 import {
   IOColors,
   IOColorsStatusForeground,
   IOTheme
-} from "../variables/IOColors";
+} from "@pagopa/io-app-design-system";
+import { IOFontFamily, IOFontWeight } from "../fonts";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 

@@ -3,8 +3,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H2 } from "../../../../components/core/typography/H2";
 

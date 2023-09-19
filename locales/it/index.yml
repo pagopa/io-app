@@ -162,6 +162,7 @@ global:
     ok: OK
     ok2: Ok
     continue: Continua
+    notNow: Non ora
     retry: Riprova
     back: Indietro
     confirm: Conferma
@@ -174,6 +175,7 @@ global:
     edit: "Modifica"
     info: "Info"
     activate: "Attiva"
+    activate2: Attiva
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
@@ -792,6 +794,11 @@ email:
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
       validateButton: Valida email
+    editMail:
+      title: Modifica la tua email
+      subtitleStart: Il tuo indirizzo email 
+      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      editButton: Modifica email
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
@@ -888,16 +895,25 @@ onboarding:
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
-  fingerprint:
-    headerTitle: Attivazione
-    title: Autenticazione biometrica
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: la tua impronta digitale
-        faceId: Face ID
-        touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  biometric:
+    headerTitle: Configura IO
+    available:
+      title: Attiva il riconoscimento biometrico
+      settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
+      body:
+        infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
+        biometricType: volto o impronta digitale,
+        infoEnd: in modo più rapido e sicuro.
+        enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
+        notEnrolled:
+          text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Sicurezza.
+    unavailable:
+      title: Proteggi il tuo dispositivo
+      body:
+        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
+        firstInfoEnd: personalmente.
+        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
+        secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
   shareData:
     title: Configura IO
   thankYouPage:

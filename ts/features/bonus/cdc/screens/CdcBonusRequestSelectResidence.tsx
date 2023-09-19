@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -27,7 +28,6 @@ import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import { ResidentChoice } from "../types/CdcBonusRequest";
 import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
   {

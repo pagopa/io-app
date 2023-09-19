@@ -1,9 +1,8 @@
 import { AccessibilityRole, StyleSheet, View } from "react-native";
 import React, { ComponentProps } from "react";
-import { IOIcons, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
-import { IOColors } from "../core/variables/IOColors";
 
 const iconSize = 24;
 

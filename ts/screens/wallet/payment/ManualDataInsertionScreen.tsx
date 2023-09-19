@@ -14,11 +14,11 @@ import { Content, Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -41,7 +41,6 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 

@@ -1,11 +1,10 @@
 import React from "react";
 import { View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../components/core/typography/H5";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import i18n from "../../../i18n";
 import { handleItemOnPress } from "../../../utils/url";
-import { HSpacer } from "../../../components/core/spacer/Spacer";
 import { trackPNTimelineExternal } from "../analytics";
 
 export const PnMessageTimelineCTA = (props: { url: string }) => (

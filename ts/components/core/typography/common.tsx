@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
+import type { IOColors } from "@pagopa/io-app-design-system";
 import { RequiredAll } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
-import type { IOColors } from "../variables/IOColors";
 
 /**
  * A default function used to calculate the weight and color with some fallback values if not specified.

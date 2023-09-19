@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Link } from "../../../../../../components/core/typography/Link";
@@ -9,7 +10,6 @@ import { useWhyOtherCardsBottomSheet } from "../../../screens/details/components
 import { PaymentMethodWithActivation } from "../../../store/reducers/details/combiner";
 import { useOtherChannelInformationBottomSheet } from "../bottomsheet/OtherChannelInformation";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { PaymentMethodRawList } from "./PaymentMethodRawList";
 
 type Props = { paymentList: ReadonlyArray<PaymentMethodWithActivation> };

@@ -23,11 +23,11 @@ import {
 import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
-} from "../../features/idpay/initiative/configuration/navigation/navigator";
+} from "../../features/idpay/configuration/navigation/navigator";
 import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
-} from "../../features/idpay/initiative/details/navigation";
+} from "../../features/idpay/details/navigation";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes

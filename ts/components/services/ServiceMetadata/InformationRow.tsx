@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../../locales/locales";
 import { capitalize } from "../../../utils/strings";
 import I18n from "../../../i18n";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
-import { HSpacer } from "../../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   touchable: {

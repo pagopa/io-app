@@ -11,11 +11,11 @@ import * as React from "react";
 import { View, Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
-import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
