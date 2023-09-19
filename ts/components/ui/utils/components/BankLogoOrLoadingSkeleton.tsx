@@ -1,12 +1,14 @@
 import * as React from "react";
 import { Image } from "react-native";
 import Placeholder from "rn-placeholder";
-import { IOColors } from "../../../core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { getBankLogosCdnUri } from "../strings";
+
 type BankLogoOrSkeletonProps = {
   abiCode?: string;
   dimensions: { height: number; width: number };
   placeHolderColor?: IOColors;
+  imageA11yLabel?: string;
 };
 
 /**
@@ -19,7 +21,8 @@ type BankLogoOrSkeletonProps = {
 export const BankLogoOrSkeleton = ({
   abiCode,
   dimensions,
-  placeHolderColor = "grey-200"
+  placeHolderColor = "grey-200",
+  imageA11yLabel
 }: BankLogoOrSkeletonProps) => {
   const [imageUrl, setImageUrl] = React.useState<string | undefined>(undefined);
   const { height, width: maxWidth } = dimensions;
@@ -46,6 +49,8 @@ export const BankLogoOrSkeleton = ({
 
   return imageUrl !== undefined ? (
     <Image
+      accessible
+      accessibilityLabel={imageA11yLabel}
       source={{ uri: imageUrl }}
       style={{
         height,

@@ -5,11 +5,10 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { VSpacer, ContentWrapper } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
@@ -24,6 +23,7 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
+import ButtonSolid from "../../../../components/ui/ButtonSolid";
 
 const secondaryButtonProps = {
   block: true,
@@ -76,21 +76,23 @@ export const PDNDPrerequisitesScreen = () => {
         </Markdown>
       ),
       footer: (
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={{
-            onPress: () => dismiss(),
-            block: true,
-            bordered: false,
-            labelColor: IOColors.white,
-            title: I18n.t(
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <ButtonSolid
+            fullWidth
+            label={I18n.t(
               "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            )
-          }}
-        />
+            )}
+            accessibilityLabel={I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+            )}
+            onPress={() => dismiss()}
+          />
+          <VSpacer size={16} />
+        </ContentWrapper>
       )
     },
-    130
+    162
   );
 
   const pdndCriteria = useSelector(machine, pdndCriteriaSelector);

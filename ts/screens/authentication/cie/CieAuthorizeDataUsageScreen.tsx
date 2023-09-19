@@ -4,7 +4,7 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { View, Alert, StyleSheet } from "react-native";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";

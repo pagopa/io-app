@@ -3,16 +3,14 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer, ContentWrapper } from "@pagopa/io-app-design-system";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import ButtonSolid from "../../../../../components/ui/ButtonSolid";
 import I18n from "../../../../../i18n";
 import { TestID } from "../../../../../types/WithTestID";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
-import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../bancomat/hooks/useImageResize";
 import { IOPayPalPsp } from "../types";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -26,7 +27,6 @@ import {
   confirmButtonProps
 } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const CdcBonusRequestSelectYear = () => {
   const navigation =

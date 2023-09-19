@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { localeDateFormat } from "../../../utils/locale";
 import { PNMessage } from "../store/types/types";
 import { getNotificationStatusInfo } from "../utils";
+import { trackPNShowTimeline } from "../analytics";
 
 const styles = StyleSheet.create({
   row: {
@@ -144,7 +145,13 @@ export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
         return <PnMessageTimelineItem key={i} {...props} />;
       })}
       {!expanded && message.notificationStatusHistory.length > 1 && (
-        <Link onPress={() => setExpanded(true)} style={{ paddingBottom: 24 }}>
+        <Link
+          onPress={() => {
+            trackPNShowTimeline();
+            setExpanded(true);
+          }}
+          style={{ paddingBottom: 24 }}
+        >
           {I18n.t("features.pn.details.timeline.expand")}
         </Link>
       )}

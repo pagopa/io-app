@@ -1,5 +1,5 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 
 export const loadingButtonProps = (): BlockButtonProps => ({

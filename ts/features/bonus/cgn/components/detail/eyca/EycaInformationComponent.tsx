@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Label } from "../../../../../../components/core/typography/Label";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";

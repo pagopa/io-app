@@ -103,7 +103,8 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
   keyTag: string,
   isMixpanelEnabled: boolean | null,
   isFastLogin: boolean,
-  dispatch: AppDispatch
+  dispatch: AppDispatch,
+  idpId?: string
 ) =>
   pipe(
     TE.tryCatch(
@@ -123,7 +124,8 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                   const headers = getLollipopLoginHeaders(
                     publicKey,
                     DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                    isFastLogin
+                    isFastLogin,
+                    idpId
                   );
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },

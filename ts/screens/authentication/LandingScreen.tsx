@@ -11,14 +11,12 @@ import * as React from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import ContextualInfo from "../../components/ContextualInfo";
-import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -62,6 +60,7 @@ import { openWebUrl } from "../../utils/url";
 import { cieSpidMoreInfoUrl } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -183,7 +182,8 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.state = { isRootedOrJailbroken: O.none, isSessionExpired: false };
   }
 
-  private isCieSupported = () => this.props.isCieSupported;
+  private isCieSupported = () =>
+    cieFlowForDevServerEnabled || this.props.isCieSupported;
   private isCieUatEnabled = () => this.props.isCieUatEnabled;
 
   public async componentDidMount() {

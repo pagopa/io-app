@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {

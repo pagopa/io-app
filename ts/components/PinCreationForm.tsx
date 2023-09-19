@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
@@ -13,14 +14,12 @@ import { useIOSelector } from "../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../store/reducers/profile";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
-import { IOColors } from "./core/variables/IOColors";
 import { Label } from "./core/typography/Label";
 import { H1 } from "./core/typography/H1";
 import { Body } from "./core/typography/Body";
 import { LabelledItem } from "./LabelledItem";
 import { IOStyles } from "./core/variables/IOStyles";
 import { LabelSmall } from "./core/typography/LabelSmall";
-import { VSpacer } from "./core/spacer/Spacer";
 import ButtonOutline from "./ui/ButtonOutline";
 
 export type Props = {

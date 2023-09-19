@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text as NBButtonText } from "native-base";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { IOColors } from "./core/variables/IOColors";
 
 const styles = StyleSheet.create({
   buttonBar: {

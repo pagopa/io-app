@@ -2,8 +2,8 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import I18n from "i18n-js";
 import * as React from "react";
 import { Platform } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../components/core/fonts";
-import { IOColors } from "../components/core/variables/IOColors";
 import ServicesLocalScreen from "../screens/services/ServicesLocalScreen";
 import ServicesNationalScreen from "../screens/services/ServicesNationalScreen";
 

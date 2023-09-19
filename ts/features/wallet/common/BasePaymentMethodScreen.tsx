@@ -9,11 +9,13 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import {
+  IOColors,
+  VSpacer,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
@@ -30,6 +32,7 @@ type Props = {
   paymentMethod: PaymentMethod;
   card: React.ReactNode;
   content: React.ReactNode;
+  headerTitle?: string;
 };
 
 // ----------------------------- component -----------------------------------
@@ -105,7 +108,7 @@ const BasePaymentMethodScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.creditCard.details.header")}
+      headerTitle={props.headerTitle ?? ""}
       faqCategories={["wallet_methods"]}
       goBack={true}
       titleColor="white"

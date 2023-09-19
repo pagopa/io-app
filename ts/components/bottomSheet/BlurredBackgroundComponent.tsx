@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
 
 const opaqueBgColor = hexToRgba(IOColors.black, 0.2);
 

@@ -3,7 +3,12 @@ import {
   AnimatedIcon,
   IOIconSizeScale,
   IOIcons,
-  IconClassComponent
+  IconClassComponent,
+  IOColors,
+  hexToRgba,
+  IOScaleValues,
+  IOSpringValues,
+  HSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
@@ -27,9 +32,6 @@ import { makeFontStyleObject } from "../core/fonts";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { HSpacer } from "../core/spacer/Spacer";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import {
   IOButtonLegacyStyles,
   IOButtonStyles

@@ -2,6 +2,7 @@ import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
 
 export enum OnboardingFailureEnum {
+  UNEXPECTED = "UNEXPECTED",
   GENERIC = "GENERIC",
   NOT_STARTED = "NOT_STARTED",
   ENDED = "ENDED",
@@ -11,7 +12,8 @@ export enum OnboardingFailureEnum {
   ON_EVALUATION = "ON_EVALUATION",
   NOT_ELIGIBLE = "NOT_ELIGIBLE",
   ONBOARDED = "ONBOARDED",
-  UNSUBSCRIBED = "UNSUBSCRIBED"
+  UNSUBSCRIBED = "UNSUBSCRIBED",
+  SESSION_EXPIRED = "SESSION_EXPIRED"
 }
 
 export type OnboardingFailure = t.TypeOf<typeof OnboardingFailure>;

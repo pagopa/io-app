@@ -1,11 +1,6 @@
 import * as React from "react";
 import { Dimensions, Text, View, ColorValue, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { H2 } from "../../../components/core/typography/H2";
-import { H3 } from "../../../components/core/typography/H3";
-import { H5 } from "../../../components/core/typography/H5";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import {
   IOColorsLegacy,
   IOColors,
@@ -18,8 +13,13 @@ import {
   themeStatusColorsLightMode,
   themeStatusColorsDarkMode,
   IOThemeLight,
-  IOThemeDark
-} from "../../../components/core/variables/IOColors";
+  IOThemeDark,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
+import { H5 } from "../../../components/core/typography/H5";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";

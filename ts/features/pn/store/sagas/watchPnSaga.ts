@@ -1,4 +1,7 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
@@ -9,6 +12,12 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { BackendPnClient } from "../../api/backendPn";
 import { pnActivationUpsert } from "../actions";
+import {
+  trackPNServiceStatusChangeError,
+  trackPNServiceStatusChangeSuccess
+} from "../../analytics";
+import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,
@@ -32,8 +41,10 @@ function* upsertPnActivation(
         pnActivationUpsert.failure(new Error(readableReport(result.left)))
       );
     } else if (result.right.status === 204) {
+      trackPNServiceStatusChangeSuccess(activation_status);
       yield* put(pnActivationUpsert.success(activation_status));
     } else {
+      yield* call(reportPNServiceStatusOnFailure, !activation_status);
       yield* put(
         pnActivationUpsert.failure(
           new Error(`response status ${result.right.status}`)
@@ -41,8 +52,24 @@ function* upsertPnActivation(
       );
     }
   } catch (e) {
+    yield* call(reportPNServiceStatusOnFailure, !activation_status);
     yield* put(pnActivationUpsert.failure(getError(e)));
   }
+}
+
+function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
+  const selectedServicePreferencePot = yield* select(servicePreferenceSelector);
+  const isServiceActive = pipe(
+    selectedServicePreferencePot,
+    pot.toOption,
+    O.map(
+      servicePreferenceResponse =>
+        isServicePreferenceResponseSuccess(servicePreferenceResponse) &&
+        servicePreferenceResponse.value.inbox
+    ),
+    O.getOrElse(() => predictedValue)
+  );
+  trackPNServiceStatusChangeError(isServiceActive);
 }
 
 export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {

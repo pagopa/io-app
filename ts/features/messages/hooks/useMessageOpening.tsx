@@ -1,220 +1,108 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as React from "react";
+import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
-import Placeholder from "rn-placeholder";
-import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
+import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
-import customVariables from "../../../theme/variables";
-import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   getMessagePrecondition,
   clearMessagePrecondition
 } from "../../../store/actions/messages";
 import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
-import { getPaginatedMessageById } from "../../../store/reducers/entities/messages/paginatedById";
-import MessageMarkdown from "../../../components/messages/MessageDetail/MessageMarkdown";
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
-import { Pictogram } from "../../../components/core/pictograms";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { H2 } from "../../../components/core/typography/H2";
-import { H3 } from "../../../components/core/typography/H3";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import ROUTES from "../../../navigation/routes";
+import { trackDisclaimerOpened } from "../analytics";
 import {
-  trackDisclaimerOpened,
-  trackNotificationRejected,
-  trackUxConversion
-} from "../analytics";
+  isPnSupportedSelector,
+  pnMinAppVersionSelector
+} from "../../../store/reducers/backendStatus";
+import { MessageFeedback } from "../components/MessageFeedback";
+import { openAppStoreUrl } from "../../../utils/url";
+import {
+  PreconditionHeader,
+  PreconditionHeaderSkeleton
+} from "../components/PreconditionBottomSheet/PreconditionHeader";
+import {
+  PreconditionContent,
+  PreconditionContentSkeleton
+} from "../components/PreconditionBottomSheet/PreconditionContent";
+import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
 
-const BOTTOM_SHEET_HEIGHT = 500;
-
-type MessagePreconditionProps = {
-  content: RemoteValue<ThirdPartyMessagePrecondition, Error>;
-};
-
-type MessagePreconditionContentProps = MessagePreconditionProps & {
-  onLoadEnd: () => void;
-};
-
-type MessagePreconditionFooterProps = {
-  isContentLoadCompleted: boolean;
-  messageId: string;
-  onDismiss: () => void;
-  navigationAction: (message: UIMessage) => void;
-};
-
-const foldMessage = (
-  message: pot.Pot<UIMessage, Error>,
-  callback: (message: UIMessage) => void
-) => pipe(message, pot.toOption, O.map(callback));
-
-const MessagePreconditionFooter = (props: MessagePreconditionFooterProps) => {
-  const message = useIOSelector(state =>
-    getPaginatedMessageById(state, props.messageId)
+const renderPreconditionHeader = (
+  content: RemoteValue<ThirdPartyMessagePrecondition, Error>
+) =>
+  fold(
+    content,
+    constNull,
+    () => <PreconditionHeaderSkeleton />,
+    ({ title }) => <PreconditionHeader title={title} />,
+    () => <View />
   );
 
-  const handleCancelPress = () => {
-    foldMessage(message, (foldedMessage: UIMessage) =>
-      trackNotificationRejected(foldedMessage.category.tag)
-    );
-    props.onDismiss();
-  };
+const renderPreconditionContent = (
+  content: RemoteValue<ThirdPartyMessagePrecondition, Error>,
+  onLoadEnd: (value: boolean) => void
+) =>
+  fold(
+    content,
+    constNull,
+    () => <PreconditionContentSkeleton />,
+    ({ markdown }) => (
+      <PreconditionContent
+        markdown={markdown}
+        onLoadEnd={() => onLoadEnd(true)}
+      />
+    ),
+    () => (
+      <MessageFeedback
+        pictogram="umbrellaNew"
+        title={I18n.t("global.genericError")}
+      />
+    )
+  );
 
-  const handleContinuePress = () => {
-    foldMessage(message, (foldedMessage: UIMessage) => {
-      trackUxConversion(foldedMessage.category.tag);
-      props.navigationAction(foldedMessage);
-    });
-    props.onDismiss();
-  };
-
-  // if the markdown is not loaded yet
-  // we don't render the footer
-  if (!props.isContentLoadCompleted) {
+const renderPreconditionFooter = (
+  messageId: string,
+  isContentLoadCompleted: boolean,
+  onDismiss: () => void,
+  navigationAction: (message: UIMessage) => void
+) => {
+  // We don't render the footer until the markdown is loaded
+  if (!isContentLoadCompleted) {
     return <></>;
   }
 
   return (
-    <FooterWithButtons
-      type={"TwoButtonsInlineHalf"}
-      leftButton={{
-        bordered: true,
-        labelColor: IOColors.blue,
-        title: I18n.t("global.buttons.cancel"),
-        onPressWithGestureHandler: true,
-        onPress: handleCancelPress
-      }}
-      rightButton={{
-        primary: true,
-        labelColor: IOColors.white,
-        title: I18n.t("global.buttons.continue"),
-        onPressWithGestureHandler: true,
-        onPress: handleContinuePress
-      }}
+    <PreconditionFooter
+      messageId={messageId}
+      onDismiss={() => onDismiss()}
+      navigationAction={navigationAction}
     />
   );
 };
 
-const MessagePreconditionContentSkeleton = () => (
-  <View style={{ marginTop: customVariables.spacerWidth }}>
-    {Array.from({ length: 4 }).map((_, i) => (
-      <View key={i}>
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-        <Placeholder.Box
-          width={"100%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-        <Placeholder.Box
-          width={"90%"}
-          animate={"fade"}
-          height={21}
-          radius={4}
-        />
-        <VSpacer size={8} />
-      </View>
-    ))}
-  </View>
-);
-
-const MessagePreconditionContent = ({
-  content,
-  onLoadEnd
-}: MessagePreconditionContentProps) => {
-  const [isLoaded, setLoaded] = useState(false);
-
-  const handleOnLoadEnd = () => {
-    setLoaded(true);
-    onLoadEnd();
-  };
-
-  return fold(
-    content,
-    constNull,
-    () => <MessagePreconditionContentSkeleton />,
-    ({ markdown }) => (
-      <>
-        {!isLoaded && <MessagePreconditionContentSkeleton />}
-        <View
-          style={{
-            display: isLoaded ? "flex" : "none",
-            marginTop: customVariables.spacerWidth
-          }}
-        >
-          <MessageMarkdown onLoadEnd={handleOnLoadEnd}>
-            {markdown}
-          </MessageMarkdown>
-        </View>
-      </>
-    ),
-    () => <ErrorComponent />
-  );
-};
-
-const ErrorComponent = () => (
-  <View style={[IOStyles.flex, IOStyles.alignCenter]}>
-    <VSpacer size={24} />
-    <Pictogram name="error" />
-    <VSpacer size={24} />
-    <H2 accessible>{I18n.t("global.genericError")}</H2>
-    <VSpacer size={16} />
-  </View>
-);
-
-const MessagePreconditionHeaderSkeleton = () => (
-  <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-    <View style={{ marginRight: customVariables.spacerWidth }}>
-      <Placeholder.Box animate={"fade"} width={32} height={32} radius={32} />
-    </View>
-    <Placeholder.Box animate="fade" width={150} height={21} radius={4} />
-  </View>
-);
-
-const MessagePreconditionHeader = ({ content }: MessagePreconditionProps) =>
-  fold(
-    content,
-    constNull,
-    () => <MessagePreconditionHeaderSkeleton />,
-    ({ title }) => (
-      <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-        <HeaderImage
-          width={32}
-          height={32}
-          fill={IOColors.blue}
-          style={{ marginRight: customVariables.spacerWidth }}
-        />
-        <H3>{title}</H3>
-      </View>
-    ),
-    () => <View />
-  );
-
 export const useMessageOpening = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
+
+  const pnSupported = useIOSelector(isPnSupportedSelector);
+  const pnMinAppVersion = useIOSelector(pnMinAppVersionSelector);
+
   const { messageId: maybeMessageId, content } = useIOSelector(
     messagePreconditionSelector
   );
   const [isContentLoadCompleted, setIsContentLoadCompleted] =
-    useState<boolean>(false);
+    React.useState<boolean>(false);
 
-  const navigate = useCallback(
+  const openAppStore = React.useCallback(() => openAppStoreUrl(), []);
+
+  const navigate = React.useCallback(
     (message: UIMessage) => {
       navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
         screen: ROUTES.MESSAGE_ROUTER,
@@ -227,47 +115,101 @@ export const useMessageOpening = () => {
     [navigation]
   );
 
-  const modal = useLegacyIOBottomSheetModal(
-    <MessagePreconditionContent
-      content={content}
-      onLoadEnd={() => setIsContentLoadCompleted(true)}
-    />,
-    <MessagePreconditionHeader content={content} />,
-    BOTTOM_SHEET_HEIGHT,
-    pipe(
+  const getTitleModal = () => {
+    if (!pnSupported) {
+      return <View />;
+    }
+
+    return renderPreconditionHeader(content);
+  };
+
+  const getContentModal = () => {
+    if (!pnSupported) {
+      return (
+        <MessageFeedback
+          pictogram="updateOS"
+          title={I18n.t("features.messages.updateBottomSheet.title")}
+          subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
+            value: pnMinAppVersion
+          })}
+        />
+      );
+    }
+
+    return renderPreconditionContent(content, setIsContentLoadCompleted);
+  };
+
+  const getFooterModal = () => {
+    if (!pnSupported) {
+      return (
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={{
+            bordered: true,
+            labelColor: IOColors.blue,
+            title: I18n.t("global.buttons.cancel"),
+            onPressWithGestureHandler: true,
+            onPress: () => modal.dismiss()
+          }}
+          rightButton={{
+            primary: true,
+            labelColor: IOColors.white,
+            title: I18n.t("global.buttons.updateIO"),
+            onPressWithGestureHandler: true,
+            onPress: openAppStore
+          }}
+        />
+      );
+    }
+
+    return pipe(
       maybeMessageId,
       O.fold(
         () => <></>,
-        messageId => (
-          <MessagePreconditionFooter
-            isContentLoadCompleted={isContentLoadCompleted}
-            messageId={messageId}
-            onDismiss={() => modal.dismiss()}
-            navigationAction={navigate}
-          />
-        )
+        messageId =>
+          renderPreconditionFooter(
+            messageId,
+            isContentLoadCompleted,
+            () => modal.dismiss(),
+            navigate
+          )
       )
-    ),
-    () => {
-      setIsContentLoadCompleted(false);
-      dispatch(clearMessagePrecondition());
-    }
-  );
+    );
+  };
 
-  const present = (message: UIMessage) => {
-    if (message.hasPrecondition) {
-      trackDisclaimerOpened(message.category.tag);
-      dispatch(
-        getMessagePrecondition.request({
-          id: message.id,
-          categoryTag: message.category.tag
-        })
-      );
-      modal.present();
+  const getCallbackModal = () => {
+    if (!pnSupported) {
       return;
     }
 
-    navigate(message);
+    return () => {
+      setIsContentLoadCompleted(false);
+      dispatch(clearMessagePrecondition());
+    };
+  };
+
+  const modal = useIOBottomSheetModal({
+    snapPoint: [500],
+    title: getTitleModal(),
+    component: getContentModal(),
+    footer: getFooterModal(),
+    onDismiss: getCallbackModal()
+  });
+
+  const present = (message: UIMessage) => {
+    if (!message.hasPrecondition) {
+      navigate(message);
+      return;
+    }
+
+    trackDisclaimerOpened(message.category.tag);
+    dispatch(
+      getMessagePrecondition.request({
+        id: message.id,
+        categoryTag: message.category.tag
+      })
+    );
+    modal.present();
   };
 
   return { ...modal, present };

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Platform } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../components/core/fonts";
-import { IOColors } from "../components/core/variables/IOColors";
 import MessageListScreen, {
   MessagesHomeTabNavigationParams
 } from "../screens/messages/MessageListScreen";

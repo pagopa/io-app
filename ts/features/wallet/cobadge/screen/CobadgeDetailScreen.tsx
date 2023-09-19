@@ -47,15 +47,16 @@ const CobadgeDetailScreen = (props: Props) => {
         blurredNumber: O.fromNullable(info.blurredNumber),
         expireMonth: O.fromNullable(info.expireMonth),
         expireYear: O.fromNullable(info.expireYear),
-        holder: O.fromNullable(info.holder),
-        brand: O.fromNullable(info.brand as IOLogoPaymentExtType | undefined),
-        abiCode: O.some(abiInfo?.abi)
+        holderName: O.fromNullable(info.holder),
+        cardIcon: O.fromNullable(info.brand) as O.Option<IOLogoPaymentExtType>,
+        abiCode: O.some(abiInfo?.abi),
+        bankName: O.some(abiInfo?.name)
         // store gives it as string,
         // is later checked by component and null case is handled
       }),
     O.map(cardData => ({
       ...cardData,
-      expDate: new Date(
+      expirationDate: new Date(
         Number(cardData.expireYear),
         Number(cardData.expireMonth)
       )
@@ -66,24 +67,17 @@ const CobadgeDetailScreen = (props: Props) => {
     paymentCardData,
     O.fold(
       () => <PaymentCardBig testID="CreditCardComponent" isLoading={true} />,
-      ({ expDate, holder, brand, abiCode }) => (
-        <PaymentCardBig
-          cardType="COBADGE"
-          expirationDate={expDate}
-          holderName={holder}
-          cardIcon={brand}
-          abiCode={abiCode}
-        />
-      )
+      data => <PaymentCardBig cardType="COBADGE" {...data} />
     )
   );
   return (
     <BasePaymentMethodScreen
       paymentMethod={cobadge}
       card={cardComponent}
+      headerTitle={I18n.t("wallet.methodDetails.cobadgeTitle")}
       content={
         <Banner
-          pictogramName="focusOn"
+          pictogramName="help"
           size="big"
           color="neutral"
           viewRef={bannerViewRef}

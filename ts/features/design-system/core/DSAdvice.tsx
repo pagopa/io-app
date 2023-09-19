@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -11,7 +11,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { Label } from "../../../components/core/typography/Label";
 import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
@@ -182,7 +181,7 @@ const renderBanner = () => {
               color={color}
               size="big"
               title="Banner title"
-              pictogramName="donation"
+              pictogramName="charity"
               action="Action text"
               onPress={onLinkPress}
             />
@@ -194,7 +193,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
             />
             <VSpacer size={24} />
             <Banner
@@ -204,7 +203,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
               action="Dona anche tu"
               onPress={onLinkPress}
             />
@@ -217,7 +216,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
             />
             <VSpacer size={24} />
             <Banner
@@ -228,7 +227,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
               action="Dona anche tu"
               onPress={onLinkPress}
             />
@@ -244,7 +243,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
               onClose={onClose}
               labelClose="Nascondi questo banner"
             />
@@ -258,7 +257,7 @@ const renderBanner = () => {
               }
               action="Dona anche tu"
               onPress={onLinkPress}
-              pictogramName="donation"
+              pictogramName="charity"
               onClose={onClose}
               labelClose="Nascondi questo banner"
             />
@@ -272,7 +271,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
               action="Dona anche tu"
               onPress={onLinkPress}
             />
@@ -286,7 +285,7 @@ const renderBanner = () => {
               }
               action="Dona anche tu"
               onPress={onLinkPress}
-              pictogramName="donation"
+              pictogramName="charity"
             />
             <VSpacer size={24} />
             <Banner
@@ -296,7 +295,7 @@ const renderBanner = () => {
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="donation"
+              pictogramName="charity"
             />
           </DSComponentViewerBox>
         </React.Fragment>

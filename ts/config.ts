@@ -107,9 +107,6 @@ export const newTransactionSummaryEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// PN (Piattaforma Notifiche) Feature Flag
-export const pnEnabled = Config.PN_ENABLED === "YES";
-
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 
@@ -117,11 +114,19 @@ export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 export const fastLoginBypassGetNonce =
   Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
 
+// CIE Login Flow with dev server Feature Flag
+export const cieLoginFlowWithDevServerEnabled =
+  Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
+
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
 // Opt-in for reminder push notifications
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
+
+// Redesign of the PN message details screen
+export const newPnMessageDetailsEnabled =
+  Config.NEW_PN_MESSAGE_DETAILS_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;

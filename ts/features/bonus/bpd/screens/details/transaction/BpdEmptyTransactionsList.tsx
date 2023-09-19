@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
