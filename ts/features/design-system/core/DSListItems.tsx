@@ -6,7 +6,7 @@ import {
   Badge,
   IOThemeContext,
   Icon,
-  Label
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
@@ -32,7 +32,6 @@ import {
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -334,6 +333,7 @@ export const DSListItems = () => (
             rightNode={<Badge variant="success" text="In arrivo" />}
           />
         </DSComponentViewerBox>
+        <VSpacer size={40} />
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
