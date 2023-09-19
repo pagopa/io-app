@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { Text, StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import variables from "../../theme/variables";
 import { isTestEnv } from "../../utils/environment";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { makeFontStyleObject } from "../core/fonts";
 
 type Props = {

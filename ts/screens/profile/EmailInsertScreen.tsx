@@ -11,6 +11,7 @@ import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -18,7 +19,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";

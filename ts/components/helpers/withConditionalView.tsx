@@ -1,8 +1,8 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { IOColors } from "../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {

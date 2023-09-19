@@ -1,8 +1,8 @@
 import { Button } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
-import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { Label } from "../../../../../../../components/core/typography/Label";

@@ -2,15 +2,14 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useState } from "react";
+import { Divider, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
 import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
-import { Divider } from "../../../components/core/Divider";
 import { H4 } from "../../../components/core/typography/H4";
 import {
   NewRadioItem,

@@ -1,9 +1,12 @@
-import { H4 } from "@pagopa/io-app-design-system";
+import {
+  H4,
+  IOColorsStatusForeground,
+  IOTheme
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorsStatusForeground, IOTheme } from "../variables/IOColors";
 import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 

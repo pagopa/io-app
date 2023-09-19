@@ -12,8 +12,8 @@ import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Alert, Keyboard, SafeAreaView, StyleSheet } from "react-native";
 import { StackActions } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {

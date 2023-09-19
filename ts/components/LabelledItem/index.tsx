@@ -24,14 +24,13 @@ import {
   View
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
-import { IOIcons } from "@pagopa/io-app-design-system";
+import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
-import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import TextInputMask from "../ui/MaskedInput";
 import { LabelledItemIconOrImage } from "./LabelledItemIconOrImage";

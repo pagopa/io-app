@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { connect } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
@@ -27,7 +27,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
 import { IOBadge, IOBadgeOutlineColors } from "../core/IOBadge";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";

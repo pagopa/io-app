@@ -2,12 +2,12 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { IOColors } from "./core/variables/IOColors";
 
 type Props = Readonly<{
   textToCopy: string;

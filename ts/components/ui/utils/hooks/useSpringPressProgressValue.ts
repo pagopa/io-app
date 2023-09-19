@@ -4,7 +4,7 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { IOSpringValues } from "../../../core/variables/IOAnimations";
+import { IOSpringValues } from "@pagopa/io-app-design-system";
 
 export const useSpringPressProgressValue = (
   springValue = IOSpringValues.button

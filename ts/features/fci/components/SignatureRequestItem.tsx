@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
 import { SignatureRequestListView } from "../../../../definitions/fci/SignatureRequestListView";
-import { HSpacer } from "../../../components/core/spacer/Spacer";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";

@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";

@@ -5,12 +5,13 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import { Alert } from "../../../../components/Alert";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";

@@ -5,8 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { LabelledItem } from "../../../../components/LabelledItem";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import {

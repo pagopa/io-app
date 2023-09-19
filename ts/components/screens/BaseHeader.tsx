@@ -13,7 +13,13 @@ import {
   Text
 } from "react-native";
 import { connect } from "react-redux";
-import { IOIcons, Icon } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  HSpacer,
+  IOSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -25,13 +31,10 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { Body } from "../core/typography/Body";
-import { IOColors } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import IconButton from "../ui/IconButton";
-import { HSpacer } from "../core/spacer/Spacer";
-import { IOSpacer } from "../core/variables/IOSpacing";
 
 type HelpButtonProps = {
   dark?: boolean;

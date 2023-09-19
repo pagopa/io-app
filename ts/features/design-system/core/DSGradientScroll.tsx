@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Alert, View } from "react-native";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { Body } from "../../../components/core/typography/Body";
 import ButtonOutline from "../../../components/ui/ButtonOutline";

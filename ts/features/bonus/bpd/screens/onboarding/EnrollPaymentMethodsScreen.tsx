@@ -3,7 +3,7 @@ import * as React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

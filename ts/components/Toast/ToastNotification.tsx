@@ -1,9 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, IOAlertRadius } from "@pagopa/io-app-design-system";
 import { CTA } from "../core/typography/CTA";
-import { IOColors } from "../core/variables/IOColors";
-import { IOAlertRadius } from "../core/variables/IOShapes";
 import { Toast, ToastVariant } from "./types";
 
 type ColorVariant = {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import fireworksIcon from "../../../../../../../img/bonus/bpd/fireworks.png";
 import { formatNumberAmount } from "../../../../../../utils/stringBuilder";
 import { H4 } from "../../../../../../components/core/typography/H4";

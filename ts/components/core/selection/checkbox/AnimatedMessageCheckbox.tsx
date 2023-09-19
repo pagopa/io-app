@@ -1,4 +1,9 @@
-import { AnimatedMessageCheckbox as DSAnimatedMessageCheckbox } from "@pagopa/io-app-design-system";
+import {
+  AnimatedMessageCheckbox as DSAnimatedMessageCheckbox,
+  IOSpringValues,
+  IOColors,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import React, { useEffect } from "react";
 import { Pressable, PressableProps, StyleSheet } from "react-native";
 import Animated, {
@@ -11,9 +16,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { IOSpringValues } from "../../variables/IOAnimations";
-import { IOColors } from "../../variables/IOColors";
-import { IOSpacingScale } from "../../variables/IOSpacing";
 import {
   IOSelectionTickLegacyVisualParams,
   IOSelectionTickVisualParams,

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -28,7 +29,6 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";

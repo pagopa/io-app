@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
