@@ -20,6 +20,11 @@ import { mixpanelTrack } from "../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import ROUTES from "../../navigation/routes";
+import {
+  trackBiometricActivationAccepted,
+  trackBiometricActivationDeclined
+} from "../onboarding/biometric&securityChecks/analytics";
+import { getFlowType } from "../../utils/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -78,11 +83,15 @@ const SecurityScreen = (): React.ReactElement => {
     if (biometricPreference) {
       // if user asks to enable biometric then call enable action directly
       setFingerprintPreference(biometricPreference);
+      trackBiometricActivationAccepted(getFlowType(false, false));
       return;
     }
     // if user asks to disable biometric recnognition is required to proceed
     void biometricAuthenticationRequest(
-      () => setFingerprintPreference(biometricPreference),
+      () => {
+        trackBiometricActivationDeclined(getFlowType(false, false));
+        setFingerprintPreference(biometricPreference);
+      },
       _ =>
         showToast(
           I18n.t(

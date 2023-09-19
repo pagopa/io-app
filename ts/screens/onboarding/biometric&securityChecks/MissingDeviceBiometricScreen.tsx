@@ -12,6 +12,8 @@ import I18n from "../../../i18n";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -25,6 +27,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const MissingDeviceBiometricScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
+
+  useOnFirstRender(() => {
+    trackBiometricConfigurationEducationalScreen();
+  });
 
   const handleGoBack = () =>
     Alert.alert(
