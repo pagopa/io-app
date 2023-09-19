@@ -1,12 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { XOR } from "../../../../../../types/utils";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   main: { flex: 1, flexDirection: "row", flexWrap: "nowrap" },

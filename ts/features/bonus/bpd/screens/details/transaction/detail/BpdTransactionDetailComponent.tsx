@@ -1,11 +1,8 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
 import { IOBadge } from "../../../../../../../components/core/IOBadge";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../../components/core/typography/H5";

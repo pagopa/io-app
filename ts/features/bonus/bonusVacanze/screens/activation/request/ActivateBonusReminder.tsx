@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
-import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { HSpacer, Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../../../components/core/typography/Body";
 

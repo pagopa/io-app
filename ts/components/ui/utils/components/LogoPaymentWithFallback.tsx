@@ -1,10 +1,11 @@
 import {
+  IOColors,
+  Icon,
   IOIconSizeScale,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
   IOPaymentExtLogos,
   IOPaymentLogos,
-  Icon,
   LogoPayment,
   LogoPaymentExt
 } from "@pagopa/io-app-design-system";
@@ -12,7 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { IOColors } from "../../../core/variables/IOColors";
 
 export type LogoPaymentWithFallback = {
   brand?: string;

@@ -6,12 +6,12 @@ import {
   Keyboard
 } from "react-native";
 import { debounce } from "lodash";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import { BankPreviewItem } from "../../bancomat/components/BankPreviewItem";
 import { sortAbiByName } from "../../bancomat/utils/abi";
 import { LabelledItem } from "../../../../../components/LabelledItem";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   bankList: ReadonlyArray<Abi>;

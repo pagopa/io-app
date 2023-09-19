@@ -6,6 +6,7 @@ import * as React from "react";
 import { View, Alert, Modal, StatusBar, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -38,10 +39,8 @@ import {
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
 
-import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { Label } from "../../components/core/typography/Label";
 import { Body } from "../../components/core/typography/Body";

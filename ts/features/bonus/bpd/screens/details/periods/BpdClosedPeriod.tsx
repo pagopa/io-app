@@ -2,7 +2,7 @@ import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {

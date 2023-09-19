@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { IOBadge } from "../../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";

@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
@@ -22,10 +23,6 @@ import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   pan: PaymentInstrument;

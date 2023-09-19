@@ -1,11 +1,11 @@
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import { VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { H1 } from "../../core/typography/H1";
 import { IOStyles } from "../../core/variables/IOStyles";

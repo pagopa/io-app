@@ -9,8 +9,8 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../components/error/WorkunitGenericFailure";

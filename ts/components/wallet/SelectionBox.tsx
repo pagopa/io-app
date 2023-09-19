@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors } from "../core/variables/IOColors";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 
 type Props = {

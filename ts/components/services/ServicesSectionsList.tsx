@@ -9,11 +9,11 @@ import {
   NativeSyntheticEvent,
   StyleSheet
 } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import ServiceList from "./ServiceList";

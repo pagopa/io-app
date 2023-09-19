@@ -1,12 +1,11 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
