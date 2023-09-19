@@ -1,13 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { Icon } from "@pagopa/io-app-design-system";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import {
+  IOColors,
+  Icon,
+  HSpacer,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import Markdown from "../../../../components/ui/Markdown";

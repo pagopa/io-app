@@ -1,12 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H4 } from "../../../components/core/typography/H4";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { WithTestID } from "../../../types/WithTestID";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { HSpacer } from "../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   container: {

@@ -7,6 +7,7 @@ import * as React from "react";
 import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import {
   PaymentHistory,
@@ -16,7 +17,6 @@ import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import { getIuv } from "../../utils/payment";
-import { IOColors } from "../core/variables/IOColors";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 

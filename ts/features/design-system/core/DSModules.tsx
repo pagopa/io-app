@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Alert, View } from "react-native";
-import { IOThemeContext } from "@pagopa/io-app-design-system";
+import { IOThemeContext, VSpacer } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { ModulePaymentNotice } from "../../../components/ui/ModulePaymentNotice";
 
 const onButtonPress = () => {

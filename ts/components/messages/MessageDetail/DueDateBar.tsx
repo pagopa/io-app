@@ -2,7 +2,7 @@ import { capitalize } from "lodash";
 import React from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
@@ -12,9 +12,7 @@ import {
   isExpiring,
   MessagePaymentExpirationInfo
 } from "../../../utils/messages";
-import { IOColors } from "../../core/variables/IOColors";
 import { localeDateFormat } from "../../../utils/locale";
-import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { IOStyles } from "../../core/variables/IOStyles";
 import CalendarIconComponent from "./common/CalendarIconComponent";

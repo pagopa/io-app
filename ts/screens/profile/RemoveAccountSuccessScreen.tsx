@@ -2,6 +2,7 @@ import { Content } from "native-base";
 import * as React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -16,7 +17,6 @@ import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps>;

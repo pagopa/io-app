@@ -2,11 +2,7 @@ import { useSelector } from "@xstate/react";
 import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import {
-  IOPictograms,
-  Pictogram
-} from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ButtonOutline from "../../../../components/ui/ButtonOutline";

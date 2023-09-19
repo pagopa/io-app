@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { MIN_CHARACTER_SEARCH_TEXT } from "./SearchButton";

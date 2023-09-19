@@ -5,10 +5,9 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { Skeleton } from "../../common/components/Skeleton";
 

@@ -9,13 +9,10 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { hexToRgba, IOColors } from "@pagopa/io-app-design-system";
 import cgnBackground from "../../../../../img/bonus/cgn/cgn-preview.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
-import {
-  hexToRgba,
-  IOColors
-} from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";

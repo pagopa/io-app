@@ -3,11 +3,11 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { PrescriptionData } from "../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../i18n";
 import { Attachment } from "../../../store/reducers/entities/messages/types";
 import { getPrescriptionDataFromName } from "../../../utils/messages";
-import { VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { IOStyles } from "../../core/variables/IOStyles";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";

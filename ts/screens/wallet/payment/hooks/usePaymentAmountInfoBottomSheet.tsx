@@ -1,6 +1,6 @@
 import React from "react";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";

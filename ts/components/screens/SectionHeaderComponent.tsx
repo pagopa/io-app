@@ -14,10 +14,9 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import customVariables from "../../theme/variables";
-import { VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
-import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import OrganizationLogo from "../services/OrganizationLogo";
 import { MultiImage } from "../ui/MultiImage";

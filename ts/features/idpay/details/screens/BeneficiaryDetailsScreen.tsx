@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView } from "react-native";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
