@@ -7,6 +7,7 @@ import * as t from "io-ts";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
+  ButtonOutline,
   VSpacer,
   Pictogram,
   ContentWrapper
@@ -19,7 +20,6 @@ import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../.
 import { ChannelEnum } from "../../../../../definitions/idpay/TransactionOperationDTO";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ButtonOutline from "../../../../components/ui/ButtonOutline";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
