@@ -1,11 +1,10 @@
 import React from "react";
 import { View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
   useIOBottomSheetAutoresizableModal
 } from "../../../../../utils/hooks/bottomSheet";
-import { FeatureInfo } from "../../../../../components/FeatureInfo";
 import { NewH4 } from "../../../../../components/core/typography/NewH4";
 import I18n from "../../../../../i18n";
 
@@ -17,17 +16,17 @@ const useInfoIDPayCIEBottomSheet = (): IOBottomSheetModal => {
   const getModalContent = () => (
     <View>
       <FeatureInfo
-        iconName="fiscalCodeIndividual"
+        iconName="contactless"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureOne")}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        iconName="phone"
+        iconName="keyboard"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureTwo")}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        iconName="pinOn"
+        iconName="change"
         body={I18n.t("idpay.initiative.cie.bottomSheet.featureThree")}
       />
       <VSpacer size={24} />
