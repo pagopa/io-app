@@ -1,8 +1,8 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { IOStyles } from "../../core/variables/IOStyles";
 

@@ -10,7 +10,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";

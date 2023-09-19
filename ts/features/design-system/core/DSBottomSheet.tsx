@@ -1,8 +1,11 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { ButtonSolid, IOThemeContext } from "@pagopa/io-app-design-system";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import {
+  ButtonSolid,
+  IOThemeContext,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import ListItemNav from "../../../components/ui/ListItemNav";

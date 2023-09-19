@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { IOThemeContext } from "@pagopa/io-app-design-system";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors, IOThemeContext } from "@pagopa/io-app-design-system";
 
 export const iconItemGutter = 8;
 

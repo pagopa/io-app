@@ -17,18 +17,19 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { WithTestID } from "../../types/WithTestID";
-import { toAndroidCacheTimestamp } from "../../utils/dates";
-import { makeFontStyleObject } from "../core/fonts";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors } from "../core/variables/IOColors";
-import { IOListItemIDPRadius } from "../core/variables/IOShapes";
 import {
+  IOColors,
+  IOScaleValues,
+  IOSpringValues,
+  IOListItemIDPRadius,
   IOListItemIDPHSpacing,
   IOListItemIDPSavedVSpacing,
   IOListItemIDPVSpacing,
   IOListItemLogoMargin
-} from "../core/variables/IOSpacing";
+} from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../types/WithTestID";
+import { toAndroidCacheTimestamp } from "../../utils/dates";
+import { makeFontStyleObject } from "../core/fonts";
 
 type ModuleIDP = WithTestID<{
   name: string;

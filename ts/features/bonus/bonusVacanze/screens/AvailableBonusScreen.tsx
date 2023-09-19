@@ -13,6 +13,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -64,7 +65,6 @@ import {
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   loadServiceDetail,

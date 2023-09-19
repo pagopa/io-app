@@ -1,6 +1,6 @@
 import * as React from "react";
+import { IOColors, IOTheme } from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColors, IOTheme } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 

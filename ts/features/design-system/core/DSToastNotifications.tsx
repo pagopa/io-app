@@ -1,7 +1,6 @@
 import { Toast as NBToast } from "native-base";
 import * as React from "react";
-import { ButtonOutline } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import { showToast } from "../../../utils/showToast";

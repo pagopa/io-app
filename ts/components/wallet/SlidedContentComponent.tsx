@@ -1,8 +1,8 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
-import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   dark?: boolean;

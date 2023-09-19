@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";

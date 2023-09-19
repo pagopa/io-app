@@ -2,7 +2,12 @@ import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { Alert, View } from "react-native";
-import { ButtonLink, IOThemeContext, Icon } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  IOThemeContext,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -16,13 +21,12 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
+import { TimelineOperationListItem } from "../../idpay/details/components/TimelineOperationListItem";
 import {
   OperationTypeEnum,
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";

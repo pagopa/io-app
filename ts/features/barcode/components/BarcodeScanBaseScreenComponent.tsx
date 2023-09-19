@@ -3,7 +3,7 @@ import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import IconButton from "../../../components/ui/IconButton";

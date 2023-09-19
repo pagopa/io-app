@@ -7,9 +7,9 @@ import {
   ScrollViewProps,
   StyleSheet
 } from "react-native";
+import { IOSpringValues } from "@pagopa/io-app-design-system";
 import IconButtonSolid from "./ui/IconButtonSolid";
 import { ScaleInOutAnimation } from "./animations/ScaleInOutAnimation";
-import { IOSpringValues } from "./core/variables/IOAnimations";
 
 type ForceScrollDownViewProps = {
   /**

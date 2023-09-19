@@ -6,22 +6,24 @@ import { SafeAreaView, View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { NavigationEvents } from "@react-navigation/compat";
+import {
+  IOColors,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
-import { ContentWrapper } from "../../components/core/ContentWrapper";
 import { Body } from "../../components/core/typography/Body";
 import { getAppVersion } from "../../utils/appVersion";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useIOSelector } from "../../store/hooks";
 import { testLoginSelector } from "../../store/reducers/testLogin";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { Alert } from "../../components/Alert";
 import {
   testLoginCleanUp,
