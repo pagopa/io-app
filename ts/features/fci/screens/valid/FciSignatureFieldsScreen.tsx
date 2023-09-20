@@ -49,6 +49,7 @@ import {
   trackFciStartSignature
 } from "../../analytics";
 import IconButton from "../../../../components/ui/IconButton";
+import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -111,6 +112,9 @@ const FciSignatureFieldsScreen = (
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
+  const { present: presentInfo, bottomSheet: fciSignaturefieldInfo } =
+    useFciSignatureFieldInfo();
+
   const onPressDetail = (signatureField: SignatureField) => {
     trackFciShowSignatureFields();
     showModal(
@@ -151,20 +155,37 @@ const FciSignatureFieldsScreen = (
       )
     );
 
-  const renderSectionHeader = (info: {
-    section: { title: string };
-  }): React.ReactNode => (
-    <View
-      style={{
-        backgroundColor: IOColors.white,
-        flexDirection: "row"
-      }}
-    >
-      <H3 color="bluegrey">
-        {getClauseLabel(info.section.title as Clause["type"])}
-      </H3>
-    </View>
-  );
+  const renderSectionHeader = (info: { section: { title: string } }) => {
+    const clauseLabel = getClauseLabel(info.section.title as Clause["type"]);
+    return (
+      <View
+        style={{
+          backgroundColor: IOColors.white,
+          flexDirection: "row"
+        }}
+      >
+        <H3 color="bluegrey" style={IOStyles.flex}>
+          {clauseLabel}
+        </H3>
+
+        {/* 
+          Show info icon and signature field info only for unfair clauses
+          NOTE: this could be a temporary solution, since we could have
+          an improved user experience.
+        */}
+        {info.section.title === ClausesTypeEnum.UNFAIR && (
+          <>
+            <IconButton
+              icon={"info"}
+              onPress={presentInfo}
+              accessibilityLabel={I18n.t("global.buttons.info")}
+            />
+            {fciSignaturefieldInfo}
+          </>
+        )}
+      </View>
+    );
+  };
 
   const renderSignatureFields = () => (
     <SectionList
