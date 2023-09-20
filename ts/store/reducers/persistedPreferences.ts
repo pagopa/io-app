@@ -52,7 +52,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isMixpanelEnabled: null,
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
-  isDesignSystemEnabled: false
+  isDesignSystemEnabled: true
 };
 
 export default function preferencesReducer(
