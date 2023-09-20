@@ -1,10 +1,9 @@
 /* eslint-disable functional/immutable-data */
 import * as React from "react";
 import { SafeAreaView, View } from "react-native";
-import { Pictogram } from "@pagopa/io-app-design-system";
+import { ButtonSolid, Pictogram } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import I18n from "../../../../i18n";
 
 type WalletOnboardingSuccessProps = {
