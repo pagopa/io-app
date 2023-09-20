@@ -12,10 +12,7 @@ import {
   LogoPaymentExt
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
-import {
-  IOStyles,
-  IOVisualCostants
-} from "../../../components/core/variables/IOStyles";
+import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import Avatar from "../../../components/ui/Avatar";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -50,92 +47,44 @@ export const DSLogos = () => {
       <H2
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 16 }}
       >
         Avatar
       </H2>
       {renderAvatar()}
 
-      <VSpacer size={24} />
+      <VSpacer size={32} />
 
       <H2
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 16 }}
       >
         Payment Networks (Small)
       </H2>
       {renderPaymentLogosSmall()}
 
+      <VSpacer size={16} />
+
       <H2
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 16 }}
       >
         Payment Networks (Big)
       </H2>
       {renderPaymentLogosBig()}
+
+      <VSpacer size={16} />
+
       <H2
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 16 }}
       >
-        LogoPaymentExtended
+        Banks (Extended)
       </H2>
-      <NewH6>with ABI</NewH6>
-      <View
-        style={[
-          IOStyles.row,
-          {
-            justifyContent: "space-between",
-            alignItems: "center",
-            alignContent: "center"
-          }
-        ]}
-      >
-        <LogoPaymentExtended
-          abiCode={undefined}
-          dimensions={{ height: 33, width: 150 }}
-        />
-        <LogoPaymentExtended
-          abiCode="08509"
-          dimensions={{ height: 33, width: 150 }}
-        />
-      </View>
-      <VSpacer size={16} />
-      <View
-        style={[
-          IOStyles.row,
-          {
-            justifyContent: "space-between",
-            alignItems: "center",
-            alignContent: "center"
-          }
-        ]}
-      >
-        <LogoPaymentExtended
-          abiCode="03124"
-          dimensions={{ height: 33, width: 150 }}
-        />
-        <LogoPaymentExtended
-          abiCode={undefined}
-          dimensions={{ height: 33, width: 150 }}
-        />
-      </View>
-      <VSpacer size={16} />
-      <View style={IOStyles.alignCenter}>
-        <NewH6 style={{ alignSelf: "flex-start" }}>icon = payPal</NewH6>
-        <LogoPaymentExtended
-          icon="payPal"
-          dimensions={{ height: 33, width: 150 }}
-        />
-        <NewH6 style={{ alignSelf: "flex-start" }}>icon = bpay</NewH6>
-        <VSpacer size={16} />
-        <LogoPaymentExtended
-          icon="bpay"
-          dimensions={{ height: 33, width: 220 }}
-        />
-      </View>
+      {renderLogoPaymentExtended()}
     </DesignSystemScreen>
   );
 };
@@ -275,4 +224,38 @@ const renderPaymentLogosBig = () => (
       />
     ))}
   </View>
+);
+
+const renderLogoPaymentExtended = () => (
+  <>
+    <DSComponentViewerBox name={`LogoPaymentExtended · ABI code defined`}>
+      <LogoPaymentExtended
+        abiCode="03124"
+        dimensions={{ height: 33, width: 150 }}
+      />
+      <VSpacer />
+      <LogoPaymentExtended
+        abiCode="08509"
+        dimensions={{ height: 33, width: 150 }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`LogoPaymentExtended · ABI code undefined`}>
+      <LogoPaymentExtended
+        abiCode={undefined}
+        dimensions={{ height: 33, width: 150 }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`LogoPaymentExtended · icon = payPal`}>
+      <LogoPaymentExtended
+        icon="payPal"
+        dimensions={{ height: 33, width: 150 }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={`LogoPaymentExtended · icon = bpay`}>
+      <LogoPaymentExtended
+        icon="bpay"
+        dimensions={{ height: 33, width: 220 }}
+      />
+    </DSComponentViewerBox>
+  </>
 );
