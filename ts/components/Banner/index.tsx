@@ -15,9 +15,9 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-
 // Design System components
 import {
+  ButtonLink,
   IOColors,
   VSpacer,
   IOPictogramsBleed,
@@ -33,7 +33,6 @@ import {
 import { WithTestID } from "../../types/WithTestID";
 // Design System components
 import { IOStyles } from "../core/variables/IOStyles";
-import ButtonLink from "../ui/ButtonLink";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
 import IconButton from "../ui/IconButton";
