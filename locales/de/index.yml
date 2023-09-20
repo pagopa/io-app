@@ -23,7 +23,7 @@ date:
     - "Fr."
     - "Sa."
   month_names:
-    - ""
+    - " "
     - "Januar"
     - "Februar"
     - "März"
@@ -37,7 +37,7 @@ date:
     - "November"
     - "Dezember"
   abbr_month_names:
-    - ""
+    - " "
     - "Jan."
     - "Feb."
     - "März"
