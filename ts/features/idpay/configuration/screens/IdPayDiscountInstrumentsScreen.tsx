@@ -5,7 +5,6 @@ import { H1, VSpacer } from "@pagopa/io-app-design-system";
 import { ScrollView, StyleSheet } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -21,6 +20,7 @@ import { IDPayDiscountInitiativeInstruments } from "../types";
 import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
 import { useInfoIDPayCIEBottomSheet } from "../../code/components/InfoIDPayCIEBottomSheet";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
+import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiative?: InitiativeDTO;
@@ -86,7 +86,7 @@ const IdPayDiscountInstrumentsScreen = () => {
 
   return (
     <>
-      <BaseScreenComponent
+      <TopScreenComponent
         goBack={handleBackPress}
         contextualHelp={emptyContextualHelp}
       >
@@ -117,7 +117,7 @@ const IdPayDiscountInstrumentsScreen = () => {
           </ScrollView>
         </LoadingSpinnerOverlay>
         {bottomSheet}
-      </BaseScreenComponent>
+      </TopScreenComponent>
     </>
   );
 };
@@ -125,7 +125,7 @@ const IdPayDiscountInstrumentsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 
