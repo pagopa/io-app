@@ -2,7 +2,12 @@ import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { Alert, ImageSourcePropType, View } from "react-native";
-import { IOThemeContext, Icon } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  IOThemeContext,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -27,7 +32,6 @@ import {
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import ButtonLink from "../../../components/ui/ButtonLink";
 import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
@@ -37,6 +41,7 @@ import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import { ListItemIDP } from "../../../components/ui/ListItemIDP";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
+import { ListItemItw } from "../../it-wallet/components/ListItemItw";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -317,6 +322,16 @@ export const DSListItems = () => (
             name={"Partner Name"}
             onPress={() => alert("Action triggered")}
             isNew={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemItw">
+          <ListItemItw
+            title="Title test"
+            subTitle="Subtitle test"
+            icon="abacus"
+            onPress={() => Alert.alert("pressed")}
+            accessibilityLabel="test"
+            rightNode={<Badge variant="success" text="In arrivo" />}
           />
         </DSComponentViewerBox>
         <VSpacer size={40} />
