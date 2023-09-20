@@ -57,23 +57,27 @@ const ItwDiscoveryProviderInfoScreen = () => {
     }
   ];
 
-  const FEATURES_LIST_MAIN: ReadonlyArray<ListItemNav> = [
-    {
-      value: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
-      description: I18n.t(
-        "features.itWallet.featuresInfoScreen.list.spidSubTitle"
-      ),
-      icon: "spid",
-      onPress: () => undefined,
-      accessibilityLabel: I18n.t(
-        "features.itWallet.featuresInfoScreen.list.spid"
-      )
-    }
-  ];
+  const FEATURES_LIST_MAIN: ReadonlyArray<ListItemNav> = [];
 
   // Here we have a different type of list item because not
   // all the components are available yet. See comment below.
   const FEATURES_LIST_COMING: ReadonlyArray<ListItemInfo> = [
+    {
+      label: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
+      value: I18n.t("features.itWallet.featuresInfoScreen.list.spidSubTitle"),
+      icon: "spid",
+      action: (
+        <Badge
+          text={I18n.t(
+            "features.itWallet.featuresInfoScreen.list.incomingFeature"
+          )}
+          variant="default"
+        />
+      ),
+      accessibilityLabel: I18n.t(
+        "features.itWallet.featuresInfoScreen.list.spid"
+      )
+    },
     {
       label: I18n.t("features.itWallet.featuresInfoScreen.list.cieId"),
       value: I18n.t("features.itWallet.featuresInfoScreen.list.cieIdSubTitle"),
