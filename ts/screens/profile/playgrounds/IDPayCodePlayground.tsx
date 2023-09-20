@@ -9,12 +9,13 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 
-export const IDPayCodePlayGround = () => {
+export const IdPayCodePlayGround = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const navigateToOnboarding = () => {
     navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
-      screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING
+      screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING,
+      params: {}
     });
   };
 

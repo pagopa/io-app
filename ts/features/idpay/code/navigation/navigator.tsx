@@ -13,7 +13,7 @@ import { IdPayCodeRoutes } from "./routes";
 
 const Stack = createStackNavigator<IdPayCodeParamsList>();
 
-export const IDPayCodeNavigator = () => (
+export const IdPayCodeNavigator = () => (
   <Stack.Navigator
     initialRouteName={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
     headerMode={"none"}
@@ -39,15 +39,15 @@ export const IDPayCodeNavigator = () => (
   </Stack.Navigator>
 );
 
-export type IDPayCodeStackNavigationRouteProps<
+export type IdPayCodeStackNavigationRouteProps<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = {
-  navigation: IDPayCodeStackNavigationProp<ParamList, RouteName>;
+  navigation: IdPayCodeStackNavigationProp<ParamList, RouteName>;
   route: RouteProp<ParamList, RouteName>;
 };
 
-export type IDPayCodeStackNavigationProp<
+export type IdPayCodeStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<ParamList, RouteName>;
