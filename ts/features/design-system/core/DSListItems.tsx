@@ -3,6 +3,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { Alert, View } from "react-native";
 import {
+  Badge,
   ButtonLink,
   Divider,
   IOThemeContext,
@@ -33,6 +34,7 @@ import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchan
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
+import { ListItemItw } from "../../it-wallet/components/ListItemItw";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -277,6 +279,16 @@ export const DSListItems = () => (
             name={"Partner Name"}
             onPress={() => alert("Action triggered")}
             isNew={true}
+          />
+        </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemItw">
+          <ListItemItw
+            title="Title test"
+            subTitle="Subtitle test"
+            icon="abacus"
+            onPress={() => Alert.alert("pressed")}
+            accessibilityLabel="test"
+            rightNode={<Badge variant="success" text="In arrivo" />}
           />
         </DSComponentViewerBox>
         <VSpacer size={40} />
