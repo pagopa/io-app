@@ -1,4 +1,4 @@
-import { ButtonSolid } from "@pagopa/io-app-design-system";
+import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native";
@@ -17,7 +17,7 @@ const IdPayCodeRenewScreen = () => {
 
   const handleContinue = () => {
     dispatch(idPayGenerateCode.request({}));
-    navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+    navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
       screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
       params: {
         isRenew: true
@@ -27,8 +27,12 @@ const IdPayCodeRenewScreen = () => {
 
   return (
     <BaseScreenComponent>
-      <ScrollView centerContent={true}>
+      <ScrollView
+        centerContent={true}
+        contentContainerStyle={IOStyles.horizontalContentPadding}
+      >
         <ButtonSolid
+          fullWidth={true}
           label="Rigenera"
           accessibilityLabel="Rigenera"
           onPress={handleContinue}

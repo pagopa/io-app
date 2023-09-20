@@ -1,4 +1,4 @@
-import { ButtonSolid, H1 } from "@pagopa/io-app-design-system";
+import { ButtonSolid, H1, IOStyles } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as React from "react";
@@ -32,7 +32,7 @@ const IdPayCodeDisplayScreen = () => {
   const idPayCodePot = useIOSelector(idPayCodeSelector);
 
   const isGeneratingCode = pot.isLoading(idPayCodePot);
-  const isFailure = pot.isLoading(idPayCodePot);
+  const isFailure = pot.isError(idPayCodePot);
   const idPayCode = pot.getOrElse(idPayCodePot, "");
 
   React.useEffect(() => {
@@ -44,19 +44,24 @@ const IdPayCodeDisplayScreen = () => {
   }, [isFailure, navigation]);
 
   const handleContinue = () => {
-    navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
-      screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
-    });
+    if (isRenew) {
+      navigation.pop();
+    } else {
+      navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+        screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
+      });
+    }
   };
 
   const handleClose = () => {
-    navigation.popToTop();
+    navigation.pop();
   };
 
   const renderButton = () => {
     if (isRenew) {
       return (
         <ButtonSolid
+          fullWidth={true}
           label="Chiudi"
           accessibilityLabel="Chiudi"
           onPress={handleClose}
@@ -66,6 +71,7 @@ const IdPayCodeDisplayScreen = () => {
 
     return (
       <ButtonSolid
+        fullWidth={true}
         label="Continua"
         accessibilityLabel="Continua"
         onPress={handleContinue}
@@ -75,10 +81,13 @@ const IdPayCodeDisplayScreen = () => {
 
   return (
     <BaseScreenComponent>
-      <LoadingSpinnerOverlay isLoading={isGeneratingCode}>
-        <ScrollView centerContent={true}>
+      <LoadingSpinnerOverlay isLoading={isGeneratingCode} loadingOpacity={1}>
+        <ScrollView
+          centerContent={true}
+          contentContainerStyle={IOStyles.horizontalContentPadding}
+        >
           <H1>{idPayCode}</H1>
-          {renderButton}
+          {renderButton()}
         </ScrollView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>

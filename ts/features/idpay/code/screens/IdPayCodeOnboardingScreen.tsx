@@ -1,4 +1,4 @@
-import { ButtonSolid } from "@pagopa/io-app-design-system";
+import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native";
@@ -8,10 +8,10 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { IdPayCodeRoutes } from "../navigation/routes";
-import { isIdPayCodeOnboardedSelector } from "../store/selectors";
 import { IdPayCodeParamsList } from "../navigation/params";
+import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayEnrollCode, idPayGenerateCode } from "../store/actions";
+import { isIdPayCodeOnboardedSelector } from "../store/selectors";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
@@ -34,12 +34,12 @@ const IdPayCodeOnboardingScreen = () => {
   const handleContinue = () => {
     if (isCodeOnboarded && initiativeId !== undefined) {
       dispatch(idPayEnrollCode.request({ initiativeId }));
-      navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
       });
     } else {
       dispatch(idPayGenerateCode.request({ initiativeId }));
-      navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
         params: {
           isRenew: false
@@ -50,10 +50,14 @@ const IdPayCodeOnboardingScreen = () => {
 
   return (
     <BaseScreenComponent>
-      <ScrollView centerContent={true}>
+      <ScrollView
+        centerContent={true}
+        contentContainerStyle={IOStyles.horizontalContentPadding}
+      >
         <ButtonSolid
-          label="Continua"
-          accessibilityLabel="Continua"
+          fullWidth={true}
+          label="Inizia"
+          accessibilityLabel="Inizia"
           onPress={handleContinue}
         />
       </ScrollView>
@@ -61,5 +65,5 @@ const IdPayCodeOnboardingScreen = () => {
   );
 };
 
-export type { IdPayCodeOnboardingRouteParams };
 export { IdPayCodeOnboardingScreen };
+export type { IdPayCodeOnboardingRouteParams };
