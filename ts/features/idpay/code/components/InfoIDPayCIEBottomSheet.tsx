@@ -4,9 +4,9 @@ import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import {
   IOBottomSheetModal,
   useIOBottomSheetAutoresizableModal
-} from "../../../../../utils/hooks/bottomSheet";
-import { NewH4 } from "../../../../../components/core/typography/NewH4";
-import I18n from "../../../../../i18n";
+} from "../../../../utils/hooks/bottomSheet";
+import { NewH4 } from "../../../../components/core/typography/NewH4";
+import I18n from "../../../../i18n";
 
 /**
  * This custom hook, useInfoIDPayCIEBottomSheet, is designed to display a bottom sheet
