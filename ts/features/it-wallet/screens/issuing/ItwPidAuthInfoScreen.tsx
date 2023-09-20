@@ -126,7 +126,7 @@ const ItwPidAuthInfoScreen = () => {
             content={I18n.t("features.itWallet.infoAuthScreen.footerBox")}
             infoIcon
           />
-          <VSpacer />
+          <VSpacer size={48} />
         </ScreenContent>
         <FooterWithButtons
           type={"SingleButton"}
