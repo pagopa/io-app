@@ -14,36 +14,36 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { idpayInitiativePaymentMethodsGet } from "../store/actions";
+import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
 import {
-  idpayInitiativePaymentMethodsInstrumentsSelector,
-  isLoadingPaymentMethodsSelector
+  idpayDiscountInitiativeInstrumentsSelector,
+  isLoadingDiscountInitiativeInstrumentsSelector
 } from "../store";
-import { IDPayConfigurationPaymentMethods } from "../types";
-import { InstrumentPaymentMethodSwitch } from "../components/InstrumentPaymentMethodSwitch";
+import { IDPayDiscountInitiativeInstruments } from "../types";
+import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
 import { useInfoIDPayCIEBottomSheet } from "../components/InfoIDPayCIEBottomSheet";
 
-type InstrumentsPaymentMehtodsScreenRouteParams = {
+type IdPayDiscountInstrumentsScreenRouteParams = {
   initiative?: InitiativeDTO;
 };
 
-type InstrumentsPaymentMethodsScreenRouteProps = RouteProp<
+type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
   IDPayConfigurationParamsList,
-  "IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS"
+  "IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS"
 >;
 
-const InstrumentsPaymentMethodsScreen = () => {
+const IdPayDiscountInstrumentsScreen = () => {
   const dispatch = useIODispatch();
-  const route = useRoute<InstrumentsPaymentMethodsScreenRouteProps>();
+  const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
   const navigation =
     useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
   const { initiative } = route.params;
 
   const initiativePaymentMethods = useIOSelector(
-    idpayInitiativePaymentMethodsInstrumentsSelector
+    idpayDiscountInitiativeInstrumentsSelector
   );
   const isLoadingPaymentMethods = useIOSelector(
-    isLoadingPaymentMethodsSelector
+    isLoadingDiscountInitiativeInstrumentsSelector
   );
 
   const { bottomSheet, present: presentCIEBottomSheet } =
@@ -52,7 +52,7 @@ const InstrumentsPaymentMethodsScreen = () => {
   React.useEffect(() => {
     if (initiative) {
       dispatch(
-        idpayInitiativePaymentMethodsGet.request({
+        idpayDiscountInitiativeInstrumentsGet.request({
           initiativeId: initiative.initiativeId
         })
       );
@@ -62,7 +62,7 @@ const InstrumentsPaymentMethodsScreen = () => {
   const handleBackPress = () => navigation.goBack();
 
   const handlePaymentMethodValueChange = (
-    paymentMethodType: IDPayConfigurationPaymentMethods,
+    paymentMethodType: IDPayDiscountInitiativeInstruments,
     value: boolean
   ) => {
     // if (value) {
@@ -78,9 +78,9 @@ const InstrumentsPaymentMethodsScreen = () => {
   };
 
   const handlePressActionButton = (
-    paymentMethodType: IDPayConfigurationPaymentMethods
+    paymentMethodType: IDPayDiscountInitiativeInstruments
   ) => {
-    if (paymentMethodType === IDPayConfigurationPaymentMethods.CIE) {
+    if (paymentMethodType === IDPayDiscountInitiativeInstruments.CIE) {
       presentCIEBottomSheet();
     }
   };
@@ -107,7 +107,7 @@ const InstrumentsPaymentMethodsScreen = () => {
             </Body>
             <VSpacer size={24} />
             {initiativePaymentMethods.map(paymentMethod => (
-              <InstrumentPaymentMethodSwitch
+              <IdPayDiscountInstrumentEnrollmentSwitch
                 key={paymentMethod.idWallet}
                 instrumentPaymentMethod={paymentMethod}
                 onValueChange={handlePaymentMethodValueChange}
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export type { InstrumentsPaymentMehtodsScreenRouteParams };
+export type { IdPayDiscountInstrumentsScreenRouteParams };
 
-export default InstrumentsPaymentMethodsScreen;
+export default IdPayDiscountInstrumentsScreen;

@@ -8,7 +8,7 @@ import {
   InstrumentDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/InstrumentDTO";
-import { IDPayConfigurationPaymentMethods } from "../types";
+import { IDPayDiscountInitiativeInstruments } from "../types";
 import I18n from "../../../../../i18n";
 
 export type PaymentMethodSwitchRef = {
@@ -19,19 +19,19 @@ export type PaymentMethodSwitchRef = {
 type PaymentMethodSwitchProps = {
   instrumentPaymentMethod: InstrumentDTO;
   onValueChange: (
-    paymentType: IDPayConfigurationPaymentMethods,
+    paymentType: IDPayDiscountInitiativeInstruments,
     value: boolean
   ) => void;
-  onPressAction?: (paymentType: IDPayConfigurationPaymentMethods) => void;
+  onPressAction?: (paymentType: IDPayDiscountInitiativeInstruments) => void;
 };
 
 const getInstrumentPaymentMethodIcon = (
-  paymentType: IDPayConfigurationPaymentMethods
+  paymentType: IDPayDiscountInitiativeInstruments
 ): IOIcons => {
   switch (paymentType) {
-    case IDPayConfigurationPaymentMethods.APP_IO:
+    case IDPayDiscountInitiativeInstruments.APP_IO:
       return "device";
-    case IDPayConfigurationPaymentMethods.CIE:
+    case IDPayDiscountInitiativeInstruments.CIE:
       return "fiscalCodeIndividual";
   }
 };
@@ -41,24 +41,26 @@ const getPaymentTypeFromInstrument = (
 ) => {
   switch (instrumentPaymentMethod.brand) {
     case "io":
-      return IDPayConfigurationPaymentMethods.APP_IO;
+      return IDPayDiscountInitiativeInstruments.APP_IO;
     case "cie":
-      return IDPayConfigurationPaymentMethods.CIE;
+      return IDPayDiscountInitiativeInstruments.CIE;
     default:
-      return IDPayConfigurationPaymentMethods.CIE;
+      return IDPayDiscountInitiativeInstruments.CIE;
   }
 };
 
 /**
  * A component to enable/disable the payment method of an instrument into discount initiative configuration
  */
-const InstrumentPaymentMethodSwitch = (props: PaymentMethodSwitchProps) => {
+const IdPayDiscountInstrumentEnrollmentSwitch = (
+  props: PaymentMethodSwitchProps
+) => {
   const { instrumentPaymentMethod, onPressAction, onValueChange } = props;
 
   const paymentType = getPaymentTypeFromInstrument(instrumentPaymentMethod);
 
   const renderSwitchAction = () => {
-    if (paymentType !== IDPayConfigurationPaymentMethods.APP_IO) {
+    if (paymentType !== IDPayDiscountInitiativeInstruments.APP_IO) {
       return {
         label: I18n.t(
           `idpay.configuration.instruments.paymentMethods.${paymentType}.actionItem`
@@ -71,7 +73,7 @@ const InstrumentPaymentMethodSwitch = (props: PaymentMethodSwitchProps) => {
 
   return (
     <ListItemSwitch
-      disabled={paymentType === IDPayConfigurationPaymentMethods.APP_IO}
+      disabled={paymentType === IDPayDiscountInitiativeInstruments.APP_IO}
       value={instrumentPaymentMethod.status === StatusEnum.ACTIVE}
       action={renderSwitchAction()}
       icon={getInstrumentPaymentMethodIcon(paymentType)}
@@ -86,4 +88,4 @@ const InstrumentPaymentMethodSwitch = (props: PaymentMethodSwitchProps) => {
   );
 };
 
-export { InstrumentPaymentMethodSwitch };
+export { IdPayDiscountInstrumentEnrollmentSwitch };

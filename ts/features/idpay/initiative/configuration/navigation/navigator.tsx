@@ -14,9 +14,9 @@ import InstrumentsEnrollmentScreen, {
 } from "../screens/InstrumentsEnrollmentScreen";
 import { IDPayConfigurationMachineProvider } from "../xstate/provider";
 import { isGestureEnabled } from "../../../../../utils/navigation";
-import InstrumentsPaymentMethodsScreen, {
-  InstrumentsPaymentMehtodsScreenRouteParams
-} from "../screens/InstrumentsPaymentMethodsScreen";
+import IdPayDiscountInstrumentsScreen, {
+  IdPayDiscountInstrumentsScreenRouteParams
+} from "../screens/IdPayDiscountInstrumentsScreen";
 
 export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_MAIN: "IDPAY_CONFIGURATION_MAIN",
@@ -27,8 +27,8 @@ export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT:
     "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT",
   IDPAY_CONFIGURATION_SUCCESS: "IDPAY_CONFIGURATION_SUCCESS",
-  IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS:
-    "IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS"
+  IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS:
+    "IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS"
 } as const;
 
 export type IDPayConfigurationParamsList = {
@@ -37,7 +37,7 @@ export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING]: undefined;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT]: IbanEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: InstrumentsEnrollmentScreenRouteParams;
-  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS]: InstrumentsPaymentMehtodsScreenRouteParams;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS]: IdPayDiscountInstrumentsScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
 };
 
@@ -83,10 +83,8 @@ export const IDPayConfigurationNavigator = () => (
       />
 
       <Stack.Screen
-        name={
-          IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_PAYMENT_METHODS
-        }
-        component={InstrumentsPaymentMethodsScreen}
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS}
+        component={IdPayDiscountInstrumentsScreen}
       />
     </Stack.Navigator>
   </IDPayConfigurationMachineProvider>

@@ -7,14 +7,14 @@ import { InstrumentListDTO } from "../../../../../../definitions/idpay/Instrumen
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { idpayInitiativePaymentMethodsGet } from "./actions";
+import { idpayDiscountInitiativeInstrumentsGet } from "./actions";
 
 export type IDPayInitiativeConfigurationState = {
-  paymentMethods: pot.Pot<InstrumentListDTO, NetworkError>;
+  discountInstruments: pot.Pot<InstrumentListDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeConfigurationState = {
-  paymentMethods: pot.none
+  discountInstruments: pot.none
 };
 
 const reducer = (
@@ -22,20 +22,23 @@ const reducer = (
   action: Action
 ): IDPayInitiativeConfigurationState => {
   switch (action.type) {
-    case getType(idpayInitiativePaymentMethodsGet.request):
+    case getType(idpayDiscountInitiativeInstrumentsGet.request):
       return {
         ...state,
-        paymentMethods: pot.toLoading(pot.none)
+        discountInstruments: pot.toLoading(pot.none)
       };
-    case getType(idpayInitiativePaymentMethodsGet.success):
+    case getType(idpayDiscountInitiativeInstrumentsGet.success):
       return {
         ...state,
-        paymentMethods: pot.some(action.payload)
+        discountInstruments: pot.some(action.payload)
       };
-    case getType(idpayInitiativePaymentMethodsGet.failure):
+    case getType(idpayDiscountInitiativeInstrumentsGet.failure):
       return {
         ...state,
-        paymentMethods: pot.toError(state.paymentMethods, action.payload)
+        discountInstruments: pot.toError(
+          state.discountInstruments,
+          action.payload
+        )
       };
   }
   return state;
@@ -46,24 +49,24 @@ const idpayInitativeConfigurationSelector = (state: GlobalState) =>
 
 export const idpayInitiativePaymentMethodsSelector = createSelector(
   idpayInitativeConfigurationSelector,
-  inititative => inititative.paymentMethods
+  inititative => inititative.discountInstruments
 );
 
-export const idpayInitiativePaymentMethodsInstrumentsSelector = createSelector(
+export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
-  paymentMethods =>
+  discountInstruments =>
     pipe(
       pot.getOrElse(
         pot.map(
-          paymentMethods,
-          paymentMethods => paymentMethods.instrumentList
+          discountInstruments,
+          discountInstruments => discountInstruments.instrumentList
         ),
         []
       )
     )
 );
 
-export const isLoadingPaymentMethodsSelector = createSelector(
+export const isLoadingDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   paymentMethods => pot.isLoading(paymentMethods)
 );
