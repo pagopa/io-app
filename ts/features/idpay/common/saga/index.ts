@@ -35,7 +35,7 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
 
   const idPayClient = createIDPayClient(baseUrl);
 
-  yield* fork(watchIdPayCodeSaga, idPayClient, bearerToken);
+  yield* fork(watchIdPayCodeSaga, idPayClient, bearerToken, preferredLanguage);
 
   yield* fork(
     watchIDPayWalletSaga,

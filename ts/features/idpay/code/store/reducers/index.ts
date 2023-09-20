@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  idPayEnrollCode,
   idPayGenerateCode,
   idPayGetCodeStatus,
   idPayResetCode
@@ -11,11 +12,13 @@ import {
 export type IdPayCodeState = {
   isOnboarded: pot.Pot<boolean, NetworkError>;
   code: pot.Pot<string, NetworkError>;
+  enrollmentRequest: pot.Pot<void, NetworkError>;
 };
 
 const INITIAL_STATE: IdPayCodeState = {
   isOnboarded: pot.none,
-  code: pot.none
+  code: pot.none,
+  enrollmentRequest: pot.none
 };
 
 const reducer = (
@@ -66,6 +69,22 @@ const reducer = (
       return {
         ...state,
         code: pot.toError(state.code, action.payload)
+      };
+
+    case getType(idPayEnrollCode.request):
+      return {
+        ...state,
+        enrollmentRequest: pot.toLoading(state.enrollmentRequest)
+      };
+    case getType(idPayEnrollCode.success):
+      return {
+        ...state,
+        enrollmentRequest: pot.some(undefined)
+      };
+    case getType(idPayEnrollCode.failure):
+      return {
+        ...state,
+        enrollmentRequest: pot.toError(state.enrollmentRequest, action.payload)
       };
 
     case getType(idPayResetCode):

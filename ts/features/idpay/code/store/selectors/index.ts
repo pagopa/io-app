@@ -11,6 +11,11 @@ export const isIdPayCodeOnboardedSelector = createSelector(
   state => pot.getOrElse(state.isOnboarded, false)
 );
 
+export const idPayCodeEnrollmentRequestSelector = createSelector(
+  idPayCodeStateSelector,
+  state => state.enrollmentRequest
+);
+
 export const idPayCodeSelector = createSelector(
   idPayCodeStateSelector,
   state => state.code
