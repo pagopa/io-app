@@ -623,39 +623,50 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Array [
-                                                        Object {
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontSize": 18,
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "600",
-                                                          "lineHeight": 24,
-                                                        },
-                                                        Object {
-                                                          "color": "#17324D",
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    Metodi di pagamento associati
-                                                  </Text>
-                                                  <Text
-                                                    color="error-850"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
+                                                        },
+                                                        Object {
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    Metodi di pagamento associati
+                                                  </Text>
+                                                  <Text
+                                                    color="error-850"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#761F1F",
@@ -684,7 +695,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -698,7 +709,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -707,7 +718,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -853,39 +864,50 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Array [
-                                                        Object {
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontSize": 18,
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "600",
-                                                          "lineHeight": 24,
-                                                        },
-                                                        Object {
-                                                          "color": "#17324D",
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    IBAN per l'accredito
-                                                  </Text>
-                                                  <Text
-                                                    color="error-850"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
+                                                        },
+                                                        Object {
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    IBAN per l'accredito
+                                                  </Text>
+                                                  <Text
+                                                    color="error-850"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#761F1F",
@@ -914,7 +936,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -928,7 +950,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -937,7 +959,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -1619,39 +1641,50 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Array [
-                                                        Object {
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontSize": 18,
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "600",
-                                                          "lineHeight": 24,
-                                                        },
-                                                        Object {
-                                                          "color": "#17324D",
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    Metodi di pagamento associati
-                                                  </Text>
-                                                  <Text
-                                                    color="error-850"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
+                                                        },
+                                                        Object {
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    Metodi di pagamento associati
+                                                  </Text>
+                                                  <Text
+                                                    color="error-850"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#761F1F",
@@ -1680,7 +1713,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -1694,7 +1727,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -1703,7 +1736,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -1787,38 +1820,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    IBAN per l'accredito
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    IBAN per l'accredito
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -1844,7 +1892,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -1858,7 +1906,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -1867,7 +1915,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -2487,38 +2535,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    Metodi di pagamento associati
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    Metodi di pagamento associati
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -2544,7 +2607,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -2558,7 +2621,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -2567,7 +2630,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -2713,39 +2776,50 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Array [
-                                                        Object {
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontSize": 18,
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "600",
-                                                          "lineHeight": 24,
-                                                        },
-                                                        Object {
-                                                          "color": "#17324D",
-                                                        },
-                                                      ]
-                                                    }
-                                                  >
-                                                    IBAN per l'accredito
-                                                  </Text>
-                                                  <Text
-                                                    color="error-850"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
+                                                        },
+                                                        Object {
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    IBAN per l'accredito
+                                                  </Text>
+                                                  <Text
+                                                    color="error-850"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#761F1F",
@@ -2774,7 +2848,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -2788,7 +2862,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -2797,7 +2871,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -3417,38 +3491,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    Metodi di pagamento associati
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    Metodi di pagamento associati
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -3474,7 +3563,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -3488,7 +3577,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -3497,7 +3586,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -3581,38 +3670,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    IBAN per l'accredito
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    IBAN per l'accredito
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -3638,7 +3742,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -3652,7 +3756,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -3661,7 +3765,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -4281,38 +4385,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    Metodi di pagamento associati
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    Metodi di pagamento associati
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -4338,7 +4457,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -4352,7 +4471,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -4361,7 +4480,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -4445,38 +4564,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    IBAN per l'accredito
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    IBAN per l'accredito
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -4502,7 +4636,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -4516,7 +4650,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -4525,7 +4659,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -5145,38 +5279,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    Metodi di pagamento associati
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    Metodi di pagamento associati
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -5202,7 +5351,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -5216,7 +5365,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -5225,7 +5374,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
@@ -5309,38 +5458,53 @@ Object {
                                                   }
                                                 >
                                                   <Text
-                                                    style={
-                                                      Object {
-                                                        "color": "#17324D",
-                                                        "fontFamily": "Titillium Web",
-                                                        "fontSize": 18,
-                                                        "fontStyle": "normal",
-                                                        "fontWeight": "600",
-                                                        "lineHeight": 24,
-                                                      }
-                                                    }
-                                                  >
-                                                    IBAN per l'accredito
-                                                  </Text>
-                                                  <Text
-                                                    color="bluegrey"
-                                                    defaultColor="bluegrey"
+                                                    color="black"
+                                                    defaultColor="black"
                                                     defaultWeight="Regular"
-                                                    font="TitilliumWeb"
+                                                    font="ReadexPro"
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 16,
-                                                        "lineHeight": 24,
+                                                        "lineHeight": 20,
                                                       }
                                                     }
                                                     style={
                                                       Array [
                                                         Object {
                                                           "fontSize": 16,
-                                                          "lineHeight": 24,
+                                                          "lineHeight": 20,
                                                         },
                                                         Object {
-                                                          "color": "#475A6D",
+                                                          "color": "#0E0F13",
+                                                          "fontFamily": "Readex Pro",
+                                                          "fontStyle": "normal",
+                                                          "fontWeight": "400",
+                                                        },
+                                                      ]
+                                                    }
+                                                    weight="Regular"
+                                                  >
+                                                    IBAN per l'accredito
+                                                  </Text>
+                                                  <Text
+                                                    color="grey-700"
+                                                    defaultColor="blue"
+                                                    defaultWeight="Bold"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 14,
+                                                        "lineHeight": 21,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Array [
+                                                        Object {
+                                                          "fontSize": 14,
+                                                          "lineHeight": 21,
+                                                        },
+                                                        Object {
+                                                          "color": "#555C70",
                                                           "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
                                                           "fontWeight": "400",
@@ -5366,7 +5530,7 @@ Object {
                                                     align="xMidYMid"
                                                     bbHeight={24}
                                                     bbWidth={24}
-                                                    color={4278219750}
+                                                    color={4278927075}
                                                     focusable={false}
                                                     height={24}
                                                     importantForAccessibility="no-hide-descendants"
@@ -5380,7 +5544,7 @@ Object {
                                                           "borderWidth": 0,
                                                         },
                                                         Object {
-                                                          "color": "#0073E6",
+                                                          "color": "#0B3EE3",
                                                         },
                                                         Object {
                                                           "flex": 0,
@@ -5389,7 +5553,7 @@ Object {
                                                         },
                                                       ]
                                                     }
-                                                    tintColor={4278219750}
+                                                    tintColor={4278927075}
                                                     vbHeight={24}
                                                     vbWidth={24}
                                                     width={24}
