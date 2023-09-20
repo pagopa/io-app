@@ -8,7 +8,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   IOColors,
   VSpacer,
-  IOSpacingScale
+  IOSpacingScale,
+  ButtonOutline
 } from "@pagopa/io-app-design-system";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -37,7 +38,6 @@ import { IdpData } from "../../../definitions/content/IdpData";
 import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { Body } from "../../components/core/typography/Body";
-import ButtonOutline from "../../components/ui/ButtonOutline";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 type Props = ReturnType<typeof mapStateToProps> &
