@@ -2,6 +2,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as React from "react";
 
 import {
+  Badge,
   Divider,
   IOThemeContext,
   Icon,
@@ -12,7 +13,8 @@ import {
   ListItemNavAlert,
   ListItemTransaction,
   ListItemTransactionLogo,
-  ListItemTransactionStatusWithBadge
+  ListItemTransactionStatusWithBadge,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { Alert, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
@@ -30,6 +32,7 @@ import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption
 import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { ListItemItw } from "../../it-wallet/components/ListItemItw";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -283,6 +286,17 @@ export const DSListItems = () => (
             isNew={true}
           />
         </DSComponentViewerBox>
+        <DSComponentViewerBox name="ListItemItw">
+          <ListItemItw
+            title="Title test"
+            subTitle="Subtitle test"
+            icon="abacus"
+            onPress={() => Alert.alert("pressed")}
+            accessibilityLabel="test"
+            rightNode={<Badge variant="success" text="In arrivo" />}
+          />
+        </DSComponentViewerBox>
+        <VSpacer size={40} />
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
