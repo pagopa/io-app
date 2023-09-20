@@ -1,14 +1,17 @@
 import React from "react";
 import { GestureResponderEvent, View } from "react-native";
-import { Icon, IOIcons, IOIconSizeScale } from "@pagopa/io-app-design-system";
 import {
+  Icon,
+  IOIcons,
+  IOIconSizeScale,
+  HSpacer,
+  VSpacer,
   Pictogram,
   IOPictograms,
   IOPictogramSizeScale
-} from "../core/pictograms";
+} from "@pagopa/io-app-design-system";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOStyles } from "../core/variables/IOStyles";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { NewLink } from "../core/typography/NewLink";
 
 type PartialFeatureInfo = {

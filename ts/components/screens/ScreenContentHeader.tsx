@@ -5,7 +5,12 @@
  */
 import * as React from "react";
 import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
-import { IOIcons, IOPictograms } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  IOPictograms,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   HEADER_ANIMATION_DURATION,
   HEADER_HEIGHT
@@ -14,8 +19,6 @@ import ScreenHeader from "../ScreenHeader";
 import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 
 type Props = Readonly<{

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { H4 } from "../../../../components/core/typography/H4";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 /**
  * A bottomsheet that display generic information on bancomat and a cta to start the onboarding of a new

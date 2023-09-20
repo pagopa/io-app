@@ -2,13 +2,13 @@ import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
 import UnsubscribeToBpd from "../components/unsubscribe/UnsubscribeToBpd";
 import WalletPaymentMethodBpdList from "../components/paymentMethod/WalletPaymentMethodBpdList";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

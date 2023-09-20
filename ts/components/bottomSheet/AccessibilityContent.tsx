@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, Modal } from "react-native";
-import { VSpacer } from "../core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = {

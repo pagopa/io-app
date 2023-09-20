@@ -2,15 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { View, StyleSheet } from "react-native";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { profileNameSelector } from "../../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../../components/core/spacer/Spacer";
 import SuperCashbackRankingSummary from "./ranking/SuperCashbackRankingSummary";
 import { TextualSummary } from "./textualSummary/TextualSummary";
 import TransactionsGraphicalSummary from "./TransactionsGraphicalSummary";

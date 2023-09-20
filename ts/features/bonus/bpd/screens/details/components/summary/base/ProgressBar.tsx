@@ -1,6 +1,6 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "../../../../../../../../components/core/variables/IOColors";
 
 type Props = {
   // between 0 and 1

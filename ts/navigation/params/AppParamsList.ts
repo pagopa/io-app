@@ -21,14 +21,6 @@ import {
   IDPayCodeOnboardingRoutes
 } from "../../features/idpay/codeOnboarding/navigation";
 import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../features/idpay/initiative/configuration/navigation/navigator";
-import {
-  IDPayDetailsParamsList,
-  IDPayDetailsRoutes
-} from "../../features/idpay/initiative/details/navigation";
-import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
@@ -47,6 +39,14 @@ import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
 } from "../../features/walletV3/onboarding/navigation/navigator";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../features/idpay/configuration/navigation/navigator";
+import {
+  IDPayDetailsParamsList,
+  IDPayDetailsRoutes
+} from "../../features/idpay/details/navigation";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";

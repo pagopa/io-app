@@ -1,11 +1,13 @@
 import { testSaga } from "redux-saga-test-plan";
 import { left, right } from "fp-ts/lib/Either";
+import { ActionType } from "typesafe-actions";
 import { getNetworkError } from "../../../../../utils/errors";
 import { fciSignaturesListRequest } from "../../../store/actions";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { handleGetSignatureRequests } from "../handleGetSignatureRequests";
 import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
 import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 
 const successResponse = {
   status: 200,
@@ -18,14 +20,22 @@ const failureResponse = {
 
 describe("handleGetSignatureRequests", () => {
   const mockBackendFciClient = jest.fn();
+  const loadAction: ActionType<typeof fciSignaturesListRequest.request> = {
+    type: "FCI_SIGNATURES_LIST_REQUEST",
+    payload: undefined
+  };
+  const getSignatureRequestsCall = mockBackendFciClient({
+    Bearer: "mockedToken"
+  });
   it("it should dispatch fciSignaturesListRequest.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken
+      "mockedToken" as SessionToken,
+      loadAction
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
       .next(right(successResponse))
       .put(fciSignaturesListRequest.success(successResponse.value))
       .next()
@@ -35,10 +45,11 @@ describe("handleGetSignatureRequests", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken
+      "mockedToken" as SessionToken,
+      loadAction
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
       .next(right(failureResponse))
       .next(
         fciSignaturesListRequest.failure(
@@ -52,10 +63,11 @@ describe("handleGetSignatureRequests", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken
+      "mockedToken" as SessionToken,
+      loadAction
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
       .next(left(new Error()))
       .next(
         fciSignaturesListRequest.failure(
@@ -72,10 +84,11 @@ describe("handleGetSignatureRequests", () => {
     testSaga(
       handleGetSignatureRequests,
       mockBackendFciClient,
-      "mockedToken" as SessionToken
+      "mockedToken" as SessionToken,
+      loadAction
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .call(withRefreshApiCall, getSignatureRequestsCall, loadAction)
       .throw(mockedError)
       .next(fciSignaturesListRequest.failure(getNetworkError(mockedError)))
       .next()

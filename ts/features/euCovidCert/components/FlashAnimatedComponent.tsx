@@ -2,10 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useCallback } from "react";
 import { Animated, Easing, StyleSheet } from "react-native";
-import {
-  hexToRgba,
-  IOColors
-} from "../../../components/core/variables/IOColors";
+import { hexToRgba, IOColors } from "@pagopa/io-app-design-system";
 
 const whiteBgTransparent = hexToRgba(IOColors.white, 0);
 const whiteBg = hexToRgba(IOColors.white, 1);

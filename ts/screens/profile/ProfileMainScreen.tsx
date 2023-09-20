@@ -2,16 +2,13 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { List, Toast } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import { ButtonSolid, Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
-import AppVersion from "../../components/AppVersion";
 import ContextualInfo from "../../components/ContextualInfo";
-import FiscalCodeComponent from "../../components/FiscalCodeComponent";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import { Divider } from "../../components/core/Divider";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
   TabBarItemPressType,
@@ -23,18 +20,12 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
-import ButtonSolid from "../../components/ui/ButtonSolid";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
-import ListItemNav from "../../components/ui/ListItemNav";
 import Markdown from "../../components/ui/Markdown";
-import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import { isPlaygroundsEnabled } from "../../config";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { toThumbprint } from "../../features/lollipop/utils/crypto";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -43,7 +34,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { navigateToLogout } from "../../store/actions/navigation";
 import {
-  preferencesDesignSystemSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -57,7 +47,6 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
-  isDesignSystemEnabledSelector,
   isIdPayTestEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -66,6 +55,14 @@ import { GlobalState } from "../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { toThumbprint } from "../../features/lollipop/utils/crypto";
+import ListItemNav from "../../components/ui/ListItemNav";
+import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
+import { SwitchListItem } from "../../components/ui/SwitchListItem";
+import AppVersion from "../../components/AppVersion";
+import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -241,10 +238,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.showModal();
   };
 
-  private onDesignSystemToggle = (enabled: boolean) => {
-    this.props.setDesignSystemEnabled(enabled);
-  };
-
   private onAddTestCard = () => {
     if (!this.props.isPagoPATestEnabled) {
       Alert.alert(
@@ -303,7 +296,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       isDebugModeEnabled,
       isPagoPATestEnabled,
       isPnTestEnabled,
-      isDesignSystemEnabled,
       navigation,
       notificationId,
       notificationToken,
@@ -450,11 +442,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
         <Divider />
-        {this.developerListItem(
-          I18n.t("profile.main.designSystemEnvironment"),
-          isDesignSystemEnabled,
-          this.onDesignSystemToggle
-        )}
+        <DSEnableSwitch />
         <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
@@ -700,7 +688,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
   isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   publicKey: lollipopPublicKeySelector(state)
 });
 
@@ -718,8 +705,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
-  setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled })),
   startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
 });
 

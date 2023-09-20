@@ -2,12 +2,12 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Image } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import unavailableImage from "../../../../../img/wallet/errors/payment-expired-icon.png";
 import I18n from "../../../../i18n";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

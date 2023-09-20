@@ -7,11 +7,10 @@ import {
   ScrollView,
   View
 } from "react-native";
+import { IOColors, ContentWrapper } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import CiePinpad from "../../../../components/CiePinpad";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import CieLoginConfigScreenContent from "./CieLoginConfigScreenContent";
 
 type PinViewProps = {

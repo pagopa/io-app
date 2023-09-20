@@ -1,13 +1,13 @@
 import { ListItem } from "native-base";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../../utils/messages";
 
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { HSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOBadge } from "../../../../components/core/IOBadge";

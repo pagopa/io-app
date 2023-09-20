@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.42.0-rc.1](https://github.com/pagopa/io-app/compare/2.42.0-rc.0...2.42.0-rc.1) (2023-09-19)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1976](https://pagopa.atlassian.net/browse/SFEQS-1976)] Handle 401 status code adding fast login wrapper ([#4935](https://github.com/pagopa/io-app/issues/4935)) ([47bb1c5](https://github.com/pagopa/io-app/commit/47bb1c5f6f10493ba2ccd33062692d58ec243e2f))
+* [[IOCOM-497](https://pagopa.atlassian.net/browse/IOCOM-497)] PN cancelled message UI ([#4970](https://github.com/pagopa/io-app/issues/4970)) ([dac2fe9](https://github.com/pagopa/io-app/commit/dac2fe996b8759cf9fed954177db14d21e0ef4c1))
+* [[IOCOM-498](https://pagopa.atlassian.net/browse/IOCOM-498)] Payment UI on a PN cancelled message ([#4977](https://github.com/pagopa/io-app/issues/4977)) ([3703fa5](https://github.com/pagopa/io-app/commit/3703fa51cbfc483751a67498623092e144b098c9))
+* [[IOCOM-522](https://pagopa.atlassian.net/browse/IOCOM-522)] Paid payments details' screen for a cancelled PN message ([#4987](https://github.com/pagopa/io-app/issues/4987)) ([46d8347](https://github.com/pagopa/io-app/commit/46d83476986a827d784f2362b6cb890340d38e11))
+* [[IOCOM-528](https://pagopa.atlassian.net/browse/IOCOM-528)] Add check on minimum app version for PN ([#4975](https://github.com/pagopa/io-app/issues/4975)) ([630c594](https://github.com/pagopa/io-app/commit/630c5945ec213287611be92eebd8d235c3309a9f))
+* [[IOPID-652](https://pagopa.atlassian.net/browse/IOPID-652)] Biometric educational ([#4971](https://github.com/pagopa/io-app/issues/4971)) ([6bb82ff](https://github.com/pagopa/io-app/commit/6bb82ffd3df69fffa1667428b4a8ea987e88c009))
+* [[IOPID-666](https://pagopa.atlassian.net/browse/IOPID-666)] FL missing pin logout flow ([#4968](https://github.com/pagopa/io-app/issues/4968)) ([a0f92a0](https://github.com/pagopa/io-app/commit/a0f92a08f2f766259e9316333a9006d8d91aac8e))
+* [[IOPID-686](https://pagopa.atlassian.net/browse/IOPID-686)] EmailAlreadyUsed Modal ([#4953](https://github.com/pagopa/io-app/issues/4953)) ([a33ee15](https://github.com/pagopa/io-app/commit/a33ee15685521b74927c10fbeb733b545735c873))
+* [[IOPID-687](https://pagopa.atlassian.net/browse/IOPID-687)] ValidateEmail Modal ([#4946](https://github.com/pagopa/io-app/issues/4946)) ([b7b0f1e](https://github.com/pagopa/io-app/commit/b7b0f1e6cf4afeb023a9fd440672f6f63e178ddc))
+
+
+### Bug Fixes
+
+* [[IOBP-248](https://pagopa.atlassian.net/browse/IOBP-248)] Fix IDPay decoded barcodes max length in barcode scan screen ([#4989](https://github.com/pagopa/io-app/issues/4989)) ([de3817d](https://github.com/pagopa/io-app/commit/de3817d150d955e1f4b38895b590f7f5361e0088))
+* [[IOCOM-480](https://pagopa.atlassian.net/browse/IOCOM-480)] Various fixes for reported anomalies on PN mixpanel events ([#4963](https://github.com/pagopa/io-app/issues/4963)) ([018796a](https://github.com/pagopa/io-app/commit/018796a5c46dfb8ca3c253b80f83a5ffdc8dad2e))
+
+
+### Chores
+
+* [[IOAPPFD0-142](https://pagopa.atlassian.net/browse/IOAPPFD0-142)] Remove local visual style references from the codebase ([#4956](https://github.com/pagopa/io-app/issues/4956)) ([66db085](https://github.com/pagopa/io-app/commit/66db0859933c204f8caf6f590c6fe8c9fc9a7596))
+* [[IOAPPFD0-146](https://pagopa.atlassian.net/browse/IOAPPFD0-146)] Add the new `IODSExperimentalContextProvider` to the main app, remove local `Button…` components ([#4978](https://github.com/pagopa/io-app/issues/4978)) ([93e664f](https://github.com/pagopa/io-app/commit/93e664f14cd819082edb0647bfc8e290a43bc18c))
+* [[IOBP-255](https://pagopa.atlassian.net/browse/IOBP-255)] Flatter IDPay folder structure ([#4990](https://github.com/pagopa/io-app/issues/4990)) ([3ccce0a](https://github.com/pagopa/io-app/commit/3ccce0ad3fbfa9f4518e8cb883741ad9dedaf361))
+
 ## [2.42.0-rc.0](https://github.com/pagopa/io-app/compare/2.41.0-rc.1...2.42.0-rc.0) (2023-09-13)
 
 

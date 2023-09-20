@@ -1,8 +1,8 @@
 import I18n from "i18n-js";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 
 const indicator = (

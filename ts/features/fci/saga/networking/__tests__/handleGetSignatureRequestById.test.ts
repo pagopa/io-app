@@ -10,6 +10,7 @@ import {
 import { fciSignatureRequestFromId } from "../../../store/actions";
 import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 
 const mockId = "mockId";
 
@@ -28,6 +29,10 @@ describe("handleGetSignatureRequestById", () => {
     type: "FCI_SIGNATURE_DETAIL_REQUEST",
     payload: mockId
   };
+  const getSignatureDetailByIdRequest = mockBackendFciClient({
+    id: "mockedId",
+    Bearer: "mockedToken"
+  });
   it("Should dispatch fciSignatureRequestFromId.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleGetSignatureRequestById,
@@ -36,10 +41,7 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        id: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .next(right(successResponse))
       .put(fciSignatureRequestFromId.success(successResponse.value))
       .next()
@@ -53,10 +55,7 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        id: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .next(right(failureResponse))
       .next(fciSignatureRequestFromId.failure(getNetworkError(failureResponse)))
       .next()
@@ -70,10 +69,7 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        id: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .next(left(new Error()))
       .next(
         fciSignatureRequestFromId.failure(
@@ -94,10 +90,7 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        id: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .throw(new Error(JSON.stringify(mockedError)))
       .next(fciSignatureRequestFromId.failure(getNetworkError(mockedError)))
       .next()

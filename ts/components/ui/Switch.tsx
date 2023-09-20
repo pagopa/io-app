@@ -4,9 +4,9 @@ import { Platform } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
 
 const maybeDisabled = O.fromPredicate(
   (isDisabled: boolean | undefined = undefined) => isDisabled === true

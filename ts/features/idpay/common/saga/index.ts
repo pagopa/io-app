@@ -13,11 +13,11 @@ import {
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
-import { watchIDPayInitiativeDetailsSaga } from "../../initiative/details/saga";
+import { watchIDPayInitiativeDetailsSaga } from "../../details/saga";
 import { watchIDPayWalletSaga } from "../../wallet/saga";
 import { createIDPayClient } from "../api/client";
-import { watchIDPayTimelineSaga } from "../../initiative/timeline/saga";
-import { watchIDPayInitiativeConfigurationSaga } from "../../initiative/configuration/saga";
+import { watchIDPayTimelineSaga } from "../../timeline/saga";
+import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
