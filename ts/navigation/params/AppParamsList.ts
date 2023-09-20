@@ -46,8 +46,8 @@ import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/scre
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { IDPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
-import { IDPayCodeParamsList } from "../../features/idpay/code/navigation/params";
+import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
+import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -91,7 +91,7 @@ export type AppParamsList = {
     | IDPayUnsubscriptionNavigatorParams;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
   [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IDPayPaymentParamsList>;
-  [IDPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IDPayCodeParamsList>;
+  [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;
 
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
 };

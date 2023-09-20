@@ -1,7 +1,8 @@
-import { IDPayCodeRoutes } from "./routes";
+import { IdPayCodeRoutes } from "./routes";
 
-export type IDPayCodeParamsList = {
-  [IDPayCodeRoutes.IDPAY_CODE_LANDING]: undefined;
-  [IDPayCodeRoutes.IDPAY_CODE_DISPLAY]: undefined;
-  [IDPayCodeRoutes.IDPAY_CODE_RESULT]: undefined;
+export type IdPayCodeParamsList = {
+  [IdPayCodeRoutes.IDPAY_CODE_ONBOARDING]: undefined;
+  [IdPayCodeRoutes.IDPAY_CODE_DISPLAY]: undefined;
+  [IdPayCodeRoutes.IDPAY_CODE_RENEW]: undefined;
+  [IdPayCodeRoutes.IDPAY_CODE_RESULT]: undefined;
 };

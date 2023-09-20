@@ -4,32 +4,37 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { IDPayCodeDisplayScreen } from "../screens/IDPayCodeDisplayScreen";
-import { IDPayCodeLandingScreen } from "../screens/IDPayCodeLandingScreen";
-import { IDPayCodeResultScreen } from "../screens/IDPayCodeResultScreen";
-import { IDPayCodeParamsList } from "./params";
-import { IDPayCodeRoutes } from "./routes";
+import { IdPayCodeDisplayScreen } from "../screens/IdPayCodeDisplayScreen";
+import { IdPayCodeOnboardingScreen } from "../screens/IdPayCodeOnboardingScreen";
+import { IdPayCodeRenewScreen } from "../screens/IdPayCodeRenewScreen";
+import { IdPayCodeResultScreen } from "../screens/IdPayCodeResultScreen";
+import { IdPayCodeParamsList } from "./params";
+import { IdPayCodeRoutes } from "./routes";
 
-const Stack = createStackNavigator<IDPayCodeParamsList>();
+const Stack = createStackNavigator<IdPayCodeParamsList>();
 
 export const IDPayCodeNavigator = () => (
   <Stack.Navigator
-    initialRouteName={IDPayCodeRoutes.IDPAY_CODE_LANDING}
+    initialRouteName={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
     headerMode={"none"}
     screenOptions={{ gestureEnabled: false }}
   >
     <Stack.Screen
-      name={IDPayCodeRoutes.IDPAY_CODE_LANDING}
-      component={IDPayCodeLandingScreen}
+      name={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
+      component={IdPayCodeOnboardingScreen}
       options={{ gestureEnabled: true }}
     />
     <Stack.Screen
-      name={IDPayCodeRoutes.IDPAY_CODE_DISPLAY}
-      component={IDPayCodeDisplayScreen}
+      name={IdPayCodeRoutes.IDPAY_CODE_DISPLAY}
+      component={IdPayCodeDisplayScreen}
     />
     <Stack.Screen
-      name={IDPayCodeRoutes.IDPAY_CODE_RESULT}
-      component={IDPayCodeResultScreen}
+      name={IdPayCodeRoutes.IDPAY_CODE_RENEW}
+      component={IdPayCodeRenewScreen}
+    />
+    <Stack.Screen
+      name={IdPayCodeRoutes.IDPAY_CODE_RESULT}
+      component={IdPayCodeResultScreen}
     />
   </Stack.Navigator>
 );
