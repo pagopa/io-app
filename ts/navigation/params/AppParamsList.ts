@@ -17,10 +17,6 @@ import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
 import {
-  IDPayCodeOnboardingParamsList,
-  IDPayCodeOnboardingRoutes
-} from "../../features/idpay/codeOnboarding/navigation";
-import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
@@ -88,7 +84,6 @@ export type AppParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: NavigatorScreenParams<IDPayDetailsParamsList>;
-  [IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayCodeOnboardingParamsList>;
   [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
     | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
     | IDPayUnsubscriptionNavigatorParams;

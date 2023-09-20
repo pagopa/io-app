@@ -19,10 +19,6 @@ import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
-  IDPayCodeOnboardingNavigator,
-  IDPayCodeOnboardingRoutes
-} from "../features/idpay/codeOnboarding/navigation";
-import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
@@ -178,10 +174,6 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
-          />
-          <Stack.Screen
-            name={IDPayCodeOnboardingRoutes.IDPAY_CODE_ONBOARDING_MAIN}
-            component={IDPayCodeOnboardingNavigator}
           />
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
