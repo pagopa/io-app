@@ -23,7 +23,7 @@ date:
     - "ven"
     - "sab"
   month_names:
-    - ""
+    - " "
     - "gennaio"
     - "febbraio"
     - "marzo"
@@ -37,7 +37,7 @@ date:
     - "novembre"
     - "dicembre"
   abbr_month_names:
-    - ""
+    - " "
     - "gen"
     - "feb"
     - "mar"
