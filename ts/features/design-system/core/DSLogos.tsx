@@ -21,7 +21,6 @@ import {
   logoItemGutter
 } from "../components/DSLogoPaymentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { NewH6 } from "../../../components/core/typography/NewH6";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
