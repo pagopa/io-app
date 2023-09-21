@@ -56,7 +56,8 @@ const BancomatDetailScreen = ({ route }: Props) => {
       ...cardData,
       expirationDate: new Date(
         Number(cardData.expireYear),
-        Number(cardData.expireMonth)
+        // month is 0 based, BE res is not
+        Number(cardData.expireMonth) - 1
       )
     }))
   );
