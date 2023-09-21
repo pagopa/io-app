@@ -3371,6 +3371,15 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  code:
+    onboarding:
+      header: Ecco il tuo codice!
+      body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
+      bodyBold: "memorizzalo in un luogo sicuro"
+      bodyCta: "Come funziona?"
+      banner:
+        header: E se lo dimentichi?
+        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
