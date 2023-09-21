@@ -3480,6 +3480,15 @@ idpay:
               READMITTED: "Riattivazione"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      IDPayCode:
+        failureScreen:
+          cta: Chiudi
+          header:
+            GENERIC: In questo momento non è possibile generare un codice
+        successScreen:
+          header: Ora puoi utilizzare la tua carta d’identità per pagare!
+          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
         title: Cosa ti permette di fare?
