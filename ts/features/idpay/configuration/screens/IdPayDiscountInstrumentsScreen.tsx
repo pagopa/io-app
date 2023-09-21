@@ -18,9 +18,9 @@ import {
 } from "../store";
 import { IDPayDiscountInitiativeInstruments } from "../types";
 import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
-import { useInfoIDPayCIEBottomSheet } from "../../code/components/InfoIDPayCIEBottomSheet";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiative?: InitiativeDTO;
@@ -46,7 +46,7 @@ const IdPayDiscountInstrumentsScreen = () => {
   );
 
   const { bottomSheet, present: presentCIEBottomSheet } =
-    useInfoIDPayCIEBottomSheet();
+    useIdPayInfoCieBottomSheet();
 
   React.useEffect(() => {
     if (initiative) {
