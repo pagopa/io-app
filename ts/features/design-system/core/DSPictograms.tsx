@@ -60,15 +60,6 @@ export const DSPictograms = () => {
   const theme = useContext(IOThemeContext);
   return (
     <DesignSystemScreen title={"Pictograms"}>
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={{
-          marginBottom: 16
-        }}
-      >
-        Pictograms
-      </H2>
       <View style={styles.itemsWrapper}>
         {Object.entries(filteredIOPictograms).map(([pictogramItemName]) => (
           <DSAssetViewerBox
@@ -94,18 +85,18 @@ export const DSPictograms = () => {
           marginBottom: 16
         }}
       >
-        Object Pictograms
+        Bleed Pictograms
       </H2>
       <View style={styles.itemsWrapper}>
-        {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
+        {Object.entries(IOPictogramsBleed).map(([pictogramItemName]) => (
           <DSAssetViewerBox
+            type="bleed"
             key={pictogramItemName}
             name={pictogramItemName}
-            spacing="small"
             size="small"
             image={
-              <Pictogram
-                name={pictogramItemName as IOPictogramsObject}
+              <PictogramBleed
+                name={pictogramItemName as IOPictogramsBleed}
                 size="100%"
               />
             }
@@ -120,18 +111,18 @@ export const DSPictograms = () => {
           marginBottom: 16
         }}
       >
-        Bleed Pictograms
+        Object Pictograms
       </H2>
       <View style={styles.itemsWrapper}>
-        {Object.entries(IOPictogramsBleed).map(([pictogramItemName]) => (
+        {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
           <DSAssetViewerBox
-            type="bleed"
             key={pictogramItemName}
             name={pictogramItemName}
+            spacing="small"
             size="small"
             image={
-              <PictogramBleed
-                name={pictogramItemName as IOPictogramsBleed}
+              <Pictogram
+                name={pictogramItemName as IOPictogramsObject}
                 size="100%"
               />
             }
