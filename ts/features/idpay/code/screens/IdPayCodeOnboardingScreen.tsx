@@ -67,7 +67,7 @@ const IdPayCodeOnboardingScreen = () => {
       <TopScreenComponent goBack>
         <View style={styles.wizardContent}>
           <View style={IOStyles.alignCenter}>
-            <Pictogram name="cie" size={180} />
+            <Pictogram name="cie" size={240} />
           </View>
           <VSpacer size={24} />
           <NewH3 style={styles.textCenter}>
