@@ -1,10 +1,8 @@
 import {
-  Body,
   ButtonLink,
   ButtonSolid,
   ContentWrapper,
   IOStyles,
-  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,9 +19,11 @@ import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayEnrollCode, idPayGenerateCode } from "../store/actions";
 import { isIdPayCodeOnboardedSelector } from "../store/selectors";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
-import { NewH3 } from "../../../../components/core/typography/NewH3";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
-import TypedI18n from "../../../../i18n";
+import I18n from "../../../../i18n";
+import { identificationRequest } from "../../../../store/actions/identification";
+import { shufflePinPadOnPayment } from "../../../../config";
+import { IdPayWizardBody } from "../components/IdPayWizardBody";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
@@ -45,6 +45,43 @@ const IdPayCodeOnboardingScreen = () => {
 
   const isCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
 
+  /**
+   * Callback to be called when the biometric authentication is successful
+   */
+  const onBiometricAuthenticationSuccess = () => {
+    dispatch(idPayGenerateCode.request({ initiativeId }));
+    navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
+      params: {
+        initiativeId
+      }
+    });
+  };
+
+  /**
+   * Request biometric authentication to the user
+   */
+  const requestBiometricAuthentication = () => {
+    dispatch(
+      identificationRequest(
+        true,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: onBiometricAuthenticationSuccess
+        },
+        shufflePinPadOnPayment
+      )
+    );
+  };
+
+  /**
+   * Callback to be called when the user presses the "Start" button
+   */
   const handleContinue = () => {
     if (isCodeOnboarded && initiativeId !== undefined) {
       dispatch(idPayEnrollCode.request({ initiativeId }));
@@ -52,46 +89,30 @@ const IdPayCodeOnboardingScreen = () => {
         screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
       });
     } else {
-      dispatch(idPayGenerateCode.request({ initiativeId }));
-      navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
-        screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
-        params: {
-          initiativeId
-        }
-      });
+      requestBiometricAuthentication();
     }
   };
 
   return (
     <SafeAreaView style={IOStyles.flex}>
       <TopScreenComponent goBack>
-        <View style={styles.wizardContent}>
-          <View style={IOStyles.alignCenter}>
-            <Pictogram name="cie" size={240} />
-          </View>
-          <VSpacer size={24} />
-          <NewH3 style={styles.textCenter}>
-            {TypedI18n.t("idpay.code.onboarding.title")}
-          </NewH3>
-          <VSpacer size={8} />
-          <Body weight="Regular" color="grey-850" style={styles.textCenter}>
-            {TypedI18n.t("idpay.code.onboarding.description")}
-          </Body>
-        </View>
+        <IdPayWizardBody
+          pictogram="cie"
+          title={I18n.t("idpay.code.onboarding.title")}
+          description={I18n.t("idpay.code.onboarding.description")}
+        />
       </TopScreenComponent>
       <ContentWrapper>
         <ButtonSolid
-          label={TypedI18n.t("idpay.code.onboarding.buttons.start")}
-          accessibilityLabel={TypedI18n.t(
-            "idpay.code.onboarding.buttons.start"
-          )}
+          label={I18n.t("idpay.code.onboarding.buttons.start")}
+          accessibilityLabel={I18n.t("idpay.code.onboarding.buttons.start")}
           onPress={handleContinue}
           fullWidth
         />
         <VSpacer size={24} />
         <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
           <ButtonLink
-            label={TypedI18n.t("idpay.code.onboarding.buttons.howItWorks")}
+            label={I18n.t("idpay.code.onboarding.buttons.howItWorks")}
             onPress={presentCIEBottomSheet}
           />
         </View>
@@ -100,17 +121,6 @@ const IdPayCodeOnboardingScreen = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  textCenter: {
-    textAlign: "center"
-  },
-  wizardContent: {
-    ...IOStyles.flex,
-    ...IOStyles.horizontalContentPadding,
-    ...IOStyles.centerJustified
-  }
-});
 
 export { IdPayCodeOnboardingScreen };
 export type { IdPayCodeOnboardingRouteParams };
