@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { Pictogram } from "../../../components/core/pictograms";
+import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H2 } from "../../../components/core/typography/H2";
 import I18n from "../../../i18n";

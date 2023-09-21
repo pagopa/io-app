@@ -1,10 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { VSpacer, Divider, Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { Divider } from "../../../components/core/Divider";
 import Markdown from "../../../components/ui/Markdown";
-import { Icon } from "../../../components/core/icons";
 
 type Props = {
   content: string;

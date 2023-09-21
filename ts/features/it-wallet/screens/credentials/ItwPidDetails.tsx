@@ -5,11 +5,11 @@ import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../store/hooks";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import PidCredential from "../../components/PidCredential";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -19,6 +19,7 @@ import ItwErrorView from "../../components/ItwErrorView";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
+import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -33,11 +34,11 @@ const ItwPidDetails = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const spacerSize = 32;
 
-  const presentationButton = {
+  const presentationButton: BlockButtonProps = {
     title: I18n.t(
       "features.itWallet.presentation.credentialDetails.buttons.qrCode"
     ),
-    iconName: "io-qr",
+    iconName: "qrCode",
     iconColor: "white",
     onPress: () => null
   };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Banner } from "../../../components/Banner";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { useIODispatch } from "../../../store/hooks";
 import { itwActivationStart } from "../store/actions/itwActivationActions";
 
@@ -31,12 +31,12 @@ export const ItwActionBanner = ({
         testID={"ItwBannerTestID"}
         viewRef={viewRef}
         color={"neutral"}
-        variant="big"
+        size="big"
         title={title}
         content={content}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        pictogramName={"setup"}
+        pictogramName={"itWallet"}
         action={action}
         labelClose={labelClose}
         onPress={() => dispatch(itwActivationStart())}

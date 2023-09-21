@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { ListItemInfo } from "@pagopa/io-app-design-system";
+import { ListItemInfo, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
@@ -14,7 +14,6 @@ import ScreenContent from "../../../../../components/screens/ScreenContent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import ItwFooterInfoBox from "../../../components/ItwFooterInfoBox";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
