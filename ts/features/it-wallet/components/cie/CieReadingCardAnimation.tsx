@@ -2,10 +2,9 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { View, Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import customVariables from "../../../../theme/variables";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import AnimatedRing from "../../../../components/animations/AnimatedRing";
-import { Icon } from "../../../../components/core/icons";
 
 export enum ReadingState {
   "reading" = "reading",

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Image, View, SafeAreaView, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -17,7 +18,6 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import {
   profileBirthDateSelector,
   profileFiscalCodeSelector,

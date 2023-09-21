@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Image, View, SafeAreaView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -15,7 +16,6 @@ import { openWebUrl } from "../../../../../utils/url";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { useIODispatch } from "../../../../../store/hooks";
 import { itwActivationStop } from "../../../store/actions/itwActivationActions";
 

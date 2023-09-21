@@ -8,9 +8,9 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 /**
  * Props for the component which consists of the name and fiscal code to be render on the card.

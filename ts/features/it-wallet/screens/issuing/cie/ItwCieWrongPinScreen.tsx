@@ -5,7 +5,7 @@ import { Content } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { ScreenContentHeader } from "../../../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";

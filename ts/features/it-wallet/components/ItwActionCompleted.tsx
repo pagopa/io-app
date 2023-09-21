@@ -2,9 +2,9 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import {
   IOPictogramSizeScale,
-  Pictogram
-} from "../../../components/core/pictograms";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 import { H2 } from "../../../components/core/typography/H2";
 import { H4 } from "../../../components/core/typography/H4";

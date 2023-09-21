@@ -9,12 +9,12 @@ import Animated, {
   interpolate,
   Extrapolate
 } from "react-native-reanimated";
-import { Badge } from "../../../../components/core/Badge";
-import { WithTestID } from "../../../../types/WithTestID";
 import {
   IOScaleValues,
-  IOSpringValues
-} from "../../../../components/core/variables/IOAnimations";
+  IOSpringValues,
+  Badge
+} from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../../../types/WithTestID";
 import { IOButtonStyles } from "../../../../components/core/variables/IOStyles";
 
 export type BadgeButton = WithTestID<
