@@ -25,6 +25,7 @@ import {
 } from "../../../../utils/stringBuilder";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 import { getRecepientName } from "../../../../utils/strings";
+import { format } from "../../../../utils/dates";
 
 const styles = StyleSheet.create({
   row: {
@@ -189,6 +190,12 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     )
   );
 
+  const dueDate = pot.toUndefined(
+    pot.mapNullable(props.paymentVerification, _ =>
+      format(_.dueDate, "DD MMMM YYYY")
+    )
+  );
+
   const formattedPaymentNoticeNumber = props.paymentNoticeNumber
     .replace(/(\d{4})/g, "$1  ")
     .trim();
@@ -245,21 +252,14 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
           <InfoButton onPress={presentPaymentInfoBottomSheet} />
         )}
       </TransactionSummaryRow>
-      {/*
-      This undefined will be removed once the backend will return
-      the data needed to render the row. We're keeping it "deactivated"
-      in order to have a reference for both the string and the icon
-      of the final design that we're going to use.
-      */}
-      {undefined && (
-        <TransactionSummaryRow
-          axis={"vertical"}
-          title={I18n.t("wallet.firstTransactionSummary.expireDate")}
-          icon={<CalendarIcon {...iconProps} />}
-          placeholder={<LoadingPlaceholder size={"half"} />}
-          isLoading={isLoading}
-        />
-      )}
+      <TransactionSummaryRow
+        axis={"vertical"}
+        title={I18n.t("wallet.firstTransactionSummary.expireDate")}
+        subtitle={dueDate}
+        icon={<CalendarIcon {...iconProps} />}
+        placeholder={<LoadingPlaceholder size={"half"} />}
+        isLoading={isLoading}
+      />
       <TransactionSummaryRow
         axis={"horizontal"}
         title={I18n.t("payment.noticeCode")}
