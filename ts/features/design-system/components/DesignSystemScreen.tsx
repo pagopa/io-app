@@ -1,7 +1,11 @@
 import * as React from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ContentWrapper, useIOTheme } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  IOColors,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 
 type Props = {
@@ -17,7 +21,7 @@ export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
   return (
     <ScrollView
       contentContainerStyle={{
-        backgroundColor: theme["appBackground-primary"],
+        backgroundColor: IOColors[theme["appBackground-primary"]],
         paddingTop: IOVisualCostants.appMarginDefault,
         paddingBottom: insets.bottom + IOVisualCostants.appMarginDefault
       }}
