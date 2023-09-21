@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   IOColorsStatusForeground,
   IOTheme
-} from "../../../../components/core/variables/IOColors";
+} from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight } from "../../../../components/core/fonts";
 import {
   ExternalTypographyProps,

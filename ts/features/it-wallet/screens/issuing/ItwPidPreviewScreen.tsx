@@ -6,6 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
 import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -13,7 +14,6 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { FeatureInfo } from "../../../../components/FeatureInfo";
 import ScreenContent from "../../../../components/screens/ScreenContent";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
@@ -28,7 +28,6 @@ import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { H4 } from "../../../../components/core/typography/H4";
-import ButtonOutline from "../../../../components/ui/ButtonOutline";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 
 type ContentViewProps = {

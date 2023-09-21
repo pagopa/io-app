@@ -1,11 +1,8 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 import { Overlay } from "../../../components/ui/Overlay";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
 import ItwLoadingSpinner from "./ItwLoadingSpinner";
 
 const styles = StyleSheet.create({

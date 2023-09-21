@@ -13,9 +13,9 @@ import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../store/actions/types";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
@@ -58,10 +58,10 @@ class ItwCiePinLockedTemporarilyScreen extends React.PureComponent<
       onPress: this.handleGoBack,
       title: I18n.t("global.buttons.cancel")
     };
-    const retryButtonProps = {
+    const retryButtonProps: BlockButtonProps = {
       primary: true,
-      iconColor: IOColors.white,
-      iconName: "io-cie",
+      iconColor: "white",
+      iconName: "cie",
       onPress: this.goToCieID,
       title: I18n.t("authentication.cie.pinTempLocked.button")
     };

@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import ItwActionCompleted from "../../components/ItwActionCompleted";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import { itwCredentialsAddPid } from "../../store/actions/itwCredentialsActions";
 import { itwActivationCompleted } from "../../store/actions/itwActivationActions";

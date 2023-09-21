@@ -16,12 +16,11 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import AdviceComponent from "../../../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CiePinpad from "../../../../../components/CiePinpad";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Link } from "../../../../../components/core/typography/Link";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -155,7 +154,7 @@ const ItwCiePinScreen: React.FC<Props> = props => {
       <ScrollView>
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pin.pinCardTitle")}
-          icon={require("../../../../../../img/icons/icon_insert_cie_pin.png")}
+          rasterIcon={require("../../../../../../img/icons/icon_insert_cie_pin.png")}
           subtitle={I18n.t("authentication.cie.pin.subtitleHelp")}
           subtitleLink={
             <Link onPress={present}>

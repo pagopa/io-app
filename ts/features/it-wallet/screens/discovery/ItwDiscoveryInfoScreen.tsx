@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Image, SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import walletCards from "../../../../../img/features/it-wallet/wallet-cards.png";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -9,7 +10,6 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { H4 } from "../../../../components/core/typography/H4";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useIODispatch } from "../../../../store/hooks";

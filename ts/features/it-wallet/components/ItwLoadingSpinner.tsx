@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, View, ColorValue, Animated, Easing } from "react-native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../types/WithTestID";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { H4 } from "../../../components/core/typography/H4";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 
 type Props = WithTestID<{
