@@ -24,17 +24,25 @@ export const noAnalyticsRoutes = new Set<string>(
   )
 );
 
-export type FlowType = "firstOnboarding" | "onBoarding" | "preferenze";
+export type FlowType =
+  | "firstOnboarding"
+  | "onBoarding"
+  | "preferenze"
+  | "browsing";
 
 export const getFlowType = (
   isOnBoarding: boolean,
-  isFirstOnBoarding?: boolean
+  isFirstOnBoarding?: boolean,
+  isUserBrowsing?: boolean
 ): FlowType => {
   if (isFirstOnBoarding) {
     return "firstOnboarding";
   }
   if (isOnBoarding) {
     return "onBoarding";
+  }
+  if (isUserBrowsing) {
+    return "browsing";
   }
   return "preferenze";
 };

@@ -20,6 +20,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { trackLoginRootedScreen } from "./analytics";
 
 type Props = {
   onContinue: () => void;
@@ -61,6 +62,7 @@ type ConfirmConfig = {
 
 const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
   const [markdownLoaded, setMarkdownLoaded] = React.useState(false);
+  trackLoginRootedScreen();
 
   const showAlert = (confirmConfig: ConfirmConfig) => {
     const buttons: ReadonlyArray<AlertButton> = [

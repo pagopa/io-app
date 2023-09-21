@@ -31,6 +31,7 @@ import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../utils/url";
+import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";
 
 const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
 
@@ -92,6 +93,8 @@ const UpdateAppModal: React.FC = () => {
   // Disable Android back button
   useHardwareBackButton(() => true);
 
+  trackForcedUpdateScreen();
+
   // Reset the error state after a given timeout
   const [error, setError] = useState(false);
 
@@ -110,6 +113,7 @@ const UpdateAppModal: React.FC = () => {
 
   // Tries to open the native app store, falling to browser web store
   const openAppStore = useCallback(async () => {
+    trackUpdateAppButton();
     try {
       await Linking.openURL(storeUrl);
     } catch (e) {

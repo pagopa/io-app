@@ -12,6 +12,8 @@ import {
   isWhatsNewDisplayedSelector
 } from "../store/reducers";
 import { ACTIVE_VERSION, whatsNewVersions } from "../versions";
+import { trackWhatsNewScreen } from "../analytics";
+import { getFlowType } from "../../../utils/analytics";
 
 export const useWhatsNew = () => {
   const dispatch = useIODispatch();
@@ -78,6 +80,8 @@ export const useWhatsNew = () => {
     ) {
       presentWhatsNewBottomSheet();
       dispatch(whatsNewDisplayed());
+
+      trackWhatsNewScreen(getFlowType(!isWhatsNewCheckEnabled, false, true));
     }
   };
 
