@@ -42,14 +42,14 @@ const IdPayCodeOnboardingScreen = () => {
       navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
         params: {
-          isRenew: false
+          initiativeId
         }
       });
     }
   };
 
   return (
-    <BaseScreenComponent>
+    <BaseScreenComponent headerTitle="IdPay Code Onboarding" goBack={true}>
       <ScrollView
         centerContent={true}
         contentContainerStyle={IOStyles.horizontalContentPadding}
