@@ -4,10 +4,10 @@ import {
   createStackNavigator
 } from "@react-navigation/stack";
 import * as React from "react";
-import { IdPayCodeDisplayScreen } from "../screens/IdPayCodeDisplayScreen";
+import { IdPayCodeDisplayScreen } from "../screens/IdPayCodeDisplayScreen2";
 import { IdPayCodeOnboardingScreen } from "../screens/IdPayCodeOnboardingScreen";
 import { IdPayCodeRenewScreen } from "../screens/IdPayCodeRenewScreen";
-import { IdPayCodeResultScreen } from "../screens/IdPayCodeResultScreen";
+import { IdPayCodeResultScreen } from "../screens/IdPayCodeResultScreen2";
 import { IdPayCodeParamsList } from "./params";
 import { IdPayCodeRoutes } from "./routes";
 

@@ -25,7 +25,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
-import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
+import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground2";
 import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";

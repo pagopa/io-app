@@ -1,4 +1,4 @@
-import { IdPayCodeDisplayRouteParams } from "../screens/IdPayCodeDisplayScreen";
+import { IdPayCodeDisplayRouteParams } from "../screens/IdPayCodeDisplayScreen2";
 import { IdPayCodeOnboardingRouteParams } from "../screens/IdPayCodeOnboardingScreen";
 import { IdPayCodeRoutes } from "./routes";
 
