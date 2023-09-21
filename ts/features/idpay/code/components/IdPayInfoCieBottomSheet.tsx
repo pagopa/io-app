@@ -9,10 +9,10 @@ import { NewH4 } from "../../../../components/core/typography/NewH4";
 import I18n from "../../../../i18n";
 
 /**
- * This custom hook, useInfoIDPayCIEBottomSheet, is designed to display a bottom sheet
+ * This custom hook, useIdPayInfoCieBottomSheet, is designed to display a bottom sheet
  * containing detailed information about how the CIE (Carta d'Identità Elettronica) payment authorization works.
  */
-const useInfoIDPayCIEBottomSheet = (): IOBottomSheetModal => {
+const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
   const getModalContent = () => (
     <View>
       <FeatureInfo
@@ -41,4 +41,4 @@ const useInfoIDPayCIEBottomSheet = (): IOBottomSheetModal => {
   return { ...modal };
 };
 
-export { useInfoIDPayCIEBottomSheet };
+export { useIdPayInfoCieBottomSheet };
