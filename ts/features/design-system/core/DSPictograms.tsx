@@ -6,7 +6,6 @@ import {
   IOPictogramsObject,
   IOPictogramsLegacy,
   IOThemeContext,
-  IOVisualCostants,
   Pictogram,
   PictogramBleed,
   SVGPictogramProps

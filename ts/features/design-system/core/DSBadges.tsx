@@ -216,7 +216,7 @@ const renderTag = () => (
           borderRadius: IOTagRadius + 8
         }}
       >
-        <Tag text={"Looooooooong string"} variant="error" />
+        <Tag text={"Loooooooooooong string"} variant="error" />
       </View>
     </DSComponentViewerBox>
   </View>
