@@ -15,6 +15,8 @@ import {
   idPayCodeSelector
 } from "../store/selectors";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../i18n";
 
 const IdPayCodeResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -35,6 +37,43 @@ const IdPayCodeResultScreen = () => {
     dispatch(idPayResetCode());
     navigation.pop();
   };
+
+  return isFailure ? (
+    <OperationResultScreenContent
+      title={I18n.t(
+        `idpay.initiative.discountDetails.IDPayCode.failureScreen.header.GENERIC`
+      )}
+      pictogram={"umbrellaNew"}
+      action={{
+        label: I18n.t(
+          "idpay.initiative.discountDetails.IDPayCode.failureScreen.cta"
+        ),
+        accessibilityLabel: I18n.t(
+          "idpay.initiative.discountDetails.IDPayCode.failureScreen.cta"
+        ),
+        onPress: handleClose
+      }}
+    />
+  ) : (
+    <OperationResultScreenContent
+      title={I18n.t(
+        `idpay.initiative.discountDetails.IDPayCode.successScreen.header`
+      )}
+      pictogram="success"
+      action={{
+        label: I18n.t(
+          "idpay.initiative.discountDetails.IDPayCode.successScreen.cta"
+        ),
+        accessibilityLabel: I18n.t(
+          "idpay.initiative.discountDetails.IDPayCode.successScreen.cta"
+        ),
+        onPress: handleClose
+      }}
+      subtitle={I18n.t(
+        "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
+      )}
+    />
+  );
 
   return (
     <BaseScreenComponent>
