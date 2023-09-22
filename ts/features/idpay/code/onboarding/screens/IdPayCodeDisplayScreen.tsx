@@ -2,9 +2,10 @@ import {
   Banner,
   Body,
   ButtonSolid,
+  H2,
   IOColors,
   IOSpacingScale,
-  Label,
+  Link,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
@@ -37,7 +38,7 @@ export const IdPayCodeDisplayScreen = () => {
   return (
     <SafeAreaView style={styles.mainContainer}>
       <TopScreenComponent contextualHelp={emptyContextualHelp}>
-        <NewH3>{I18n.t("idpay.code.onboarding.header")}</NewH3>
+        <H2>{I18n.t("idpay.code.onboarding.header")}</H2>
         <VSpacer size={16} />
         <Body color="grey-700" weight="Regular">
           {I18n.t("idpay.code.onboarding.body1")}
@@ -45,7 +46,7 @@ export const IdPayCodeDisplayScreen = () => {
         <Body color="grey-700" weight="Bold">
           {I18n.t("idpay.code.onboarding.bodyBold")}
         </Body>
-        <Label>{I18n.t("idpay.code.onboarding.bodyCta")}</Label>
+        <Link>{I18n.t("idpay.code.onboarding.bodyCta")}</Link>
         <VSpacer size={24} />
         <CodeDisplayComponent code={code} />
         <VSpacer size={24} />
