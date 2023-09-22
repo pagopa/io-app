@@ -19,7 +19,8 @@ import {
   serviceAlertDisplayedOnceSuccess,
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
-  preferencesDesignSystemSetEnabled
+  preferencesDesignSystemSetEnabled,
+  preferencesIdPayCodeCieBannerClose
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -39,6 +40,7 @@ export type PersistedPreferencesState = Readonly<{
   isPnTestEnabled: boolean;
   isIdPayTestEnabled?: boolean;
   isDesignSystemEnabled: boolean;
+  isIdPayInitiativeBannerClosed: Record<string, boolean>;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -52,7 +54,8 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isMixpanelEnabled: null,
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
-  isDesignSystemEnabled: false
+  isDesignSystemEnabled: false,
+  isIdPayInitiativeBannerClosed: {}
 };
 
 export default function preferencesReducer(
@@ -147,6 +150,15 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesIdPayCodeCieBannerClose, action)) {
+    return {
+      ...state,
+      isIdPayInitiativeBannerClosed: {
+        [action.payload.initiativeId]: true
+      }
+    };
+  }
+
   return state;
 }
 
@@ -183,6 +195,9 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled;
+
+export const isIdPayInitiativeBannerClosedSelector = (state: GlobalState) =>
+  state.persistedPreferences.isIdPayInitiativeBannerClosed;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

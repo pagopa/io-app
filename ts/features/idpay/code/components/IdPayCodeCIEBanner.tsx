@@ -3,9 +3,9 @@ import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayDiscountInitiativeInstrumentsGet } from "../../configuration/store/actions";
-import { idPayCodeCieBannerClose } from "../store/actions";
 import { showIdPayCodeBannerSelector } from "../store/selectors";
 import { ScaleInOutAnimation } from "../../../../components/animations/ScaleInOutAnimation";
+import { preferencesIdPayCodeCieBannerClose } from "../../../../store/actions/persistedPreferences";
 
 export type IdPayCodeCIEBannerParams = {
   initiativeId: string;
@@ -28,7 +28,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
   }, [initiativeId, dispatch]);
 
   const handleOnCloseBanner = () => {
-    dispatch(idPayCodeCieBannerClose({ initiativeId }));
+    dispatch(preferencesIdPayCodeCieBannerClose({ initiativeId }));
   };
 
   if (showBanner) {

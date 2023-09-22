@@ -5,6 +5,7 @@ import { IdPayCodeState } from "../reducers";
 import { idpayDiscountInitiativeInstrumentsSelector } from "../../../configuration/store";
 import { InstrumentTypeEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { idpayInitiativeIdSelector } from "../../../details/store";
+import { isIdPayInitiativeBannerClosedSelector } from "../../../../../store/reducers/persistedPreferences";
 
 export const idPayCodeStateSelector = (state: GlobalState): IdPayCodeState =>
   state.features.idPay.code;
@@ -24,11 +25,6 @@ export const idPayCodeSelector = createSelector(
   state => state.code
 );
 
-export const idPayCodeBannerSelector = createSelector(
-  idPayCodeStateSelector,
-  idPayCode => idPayCode.bannerClosed
-);
-
 export const hasIdPayCodeInstrument = createSelector(
   idpayDiscountInitiativeInstrumentsSelector,
   instruments =>
@@ -39,10 +35,10 @@ export const hasIdPayCodeInstrument = createSelector(
 
 export const showIdPayCodeBannerSelector = createSelector(
   idpayInitiativeIdSelector,
-  idPayCodeBannerSelector,
+  isIdPayInitiativeBannerClosedSelector,
   hasIdPayCodeInstrument,
-  (initiativeId, bannerClosed, hasIdPayCodeInstrument) =>
+  (initiativeId, initiativeBannerClosed, hasIdPayCodeInstrument) =>
     initiativeId !== undefined &&
-    !bannerClosed[initiativeId] &&
+    (!initiativeBannerClosed || !initiativeBannerClosed[initiativeId]) &&
     !hasIdPayCodeInstrument
 );
