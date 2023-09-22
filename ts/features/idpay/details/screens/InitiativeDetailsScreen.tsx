@@ -188,6 +188,7 @@ const InitiativeDetailsScreen = () => {
                   <InitiativeDiscountSettingsComponent
                     initiative={initiative}
                   />
+                  <VSpacer size={16} />
                 </ContentWrapper>
               );
 

@@ -6,10 +6,14 @@ import {
 import { default as React } from "react";
 import {
   InstrumentDTO,
+  InstrumentTypeEnum,
   StatusEnum
 } from "../../../../../definitions/idpay/InstrumentDTO";
-import { IDPayDiscountInitiativeInstruments } from "../types";
 import I18n from "../../../../i18n";
+
+type ValidInstrumentType =
+  | InstrumentTypeEnum.IDPAYCODE
+  | InstrumentTypeEnum.QRCODE;
 
 export type PaymentMethodSwitchRef = {
   switchStatus: boolean;
@@ -18,34 +22,20 @@ export type PaymentMethodSwitchRef = {
 
 type PaymentMethodSwitchProps = {
   instrumentPaymentMethod: InstrumentDTO;
-  onValueChange: (
-    paymentType: IDPayDiscountInitiativeInstruments,
-    value: boolean
-  ) => void;
-  onPressAction?: (paymentType: IDPayDiscountInitiativeInstruments) => void;
+  onValueChange: (paymentType: InstrumentTypeEnum, value: boolean) => void;
+  onPressAction?: (paymentType: InstrumentTypeEnum) => void;
 };
 
 const getInstrumentPaymentMethodIcon = (
-  paymentType: IDPayDiscountInitiativeInstruments
+  paymentType: InstrumentTypeEnum
 ): IOIcons => {
   switch (paymentType) {
-    case IDPayDiscountInitiativeInstruments.APP_IO:
+    case InstrumentTypeEnum.QRCODE:
       return "device";
-    case IDPayDiscountInitiativeInstruments.CIE:
+    case InstrumentTypeEnum.IDPAYCODE:
       return "fiscalCodeIndividual";
-  }
-};
-
-const getPaymentTypeFromInstrument = (
-  instrumentPaymentMethod: InstrumentDTO
-) => {
-  switch (instrumentPaymentMethod.brand) {
-    case "io":
-      return IDPayDiscountInitiativeInstruments.APP_IO;
-    case "cie":
-      return IDPayDiscountInitiativeInstruments.CIE;
     default:
-      return IDPayDiscountInitiativeInstruments.CIE;
+      return "device";
   }
 };
 
@@ -57,15 +47,16 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
 ) => {
   const { instrumentPaymentMethod, onPressAction, onValueChange } = props;
 
-  const paymentType = getPaymentTypeFromInstrument(instrumentPaymentMethod);
+  const instrumentType =
+    instrumentPaymentMethod.instrumentType as ValidInstrumentType;
 
   const renderSwitchAction = () => {
-    if (paymentType !== IDPayDiscountInitiativeInstruments.APP_IO) {
+    if (instrumentType !== InstrumentTypeEnum.QRCODE) {
       return {
         label: I18n.t(
-          `idpay.configuration.instruments.paymentMethods.${paymentType}.actionItem`
+          `idpay.configuration.instruments.paymentMethods.${instrumentType}.actionItem`
         ),
-        onPress: () => onPressAction?.(paymentType)
+        onPress: () => onPressAction?.(instrumentType)
       } as SwitchAction;
     }
     return undefined;
@@ -73,16 +64,16 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
 
   return (
     <ListItemSwitch
-      disabled={paymentType === IDPayDiscountInitiativeInstruments.APP_IO}
+      disabled={instrumentType === InstrumentTypeEnum.QRCODE}
       value={instrumentPaymentMethod.status === StatusEnum.ACTIVE}
       action={renderSwitchAction()}
-      icon={getInstrumentPaymentMethodIcon(paymentType)}
-      onSwitchValueChange={value => onValueChange(paymentType, value)}
+      icon={getInstrumentPaymentMethodIcon(instrumentType)}
+      onSwitchValueChange={value => onValueChange(instrumentType, value)}
       label={I18n.t(
-        `idpay.configuration.instruments.paymentMethods.${paymentType}.title`
+        `idpay.configuration.instruments.paymentMethods.${instrumentType}.title`
       )}
       description={I18n.t(
-        `idpay.configuration.instruments.paymentMethods.${paymentType}.description`
+        `idpay.configuration.instruments.paymentMethods.${instrumentType}.description`
       )}
     />
   );

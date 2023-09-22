@@ -8,7 +8,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
@@ -16,14 +15,15 @@ import {
   idpayDiscountInitiativeInstrumentsSelector,
   isLoadingDiscountInitiativeInstrumentsSelector
 } from "../store";
-import { IDPayDiscountInitiativeInstruments } from "../types";
 import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
+import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
-  initiative?: InitiativeDTO;
+  initiativeId?: string;
+  initiativeName?: string;
 };
 
 type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
@@ -36,7 +36,7 @@ const IdPayDiscountInstrumentsScreen = () => {
   const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
   const navigation =
     useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
-  const { initiative } = route.params;
+  const { initiativeId, initiativeName } = route.params;
 
   const initiativePaymentMethods = useIOSelector(
     idpayDiscountInitiativeInstrumentsSelector
@@ -49,19 +49,17 @@ const IdPayDiscountInstrumentsScreen = () => {
     useIdPayInfoCieBottomSheet();
 
   React.useEffect(() => {
-    if (initiative) {
+    if (initiativeId) {
       dispatch(
         idpayDiscountInitiativeInstrumentsGet.request({
-          initiativeId: initiative.initiativeId
+          initiativeId
         })
       );
     }
-  }, [initiative, dispatch]);
-
-  const handleBackPress = () => navigation.goBack();
+  }, [initiativeId, dispatch]);
 
   const handlePaymentMethodValueChange = (
-    paymentMethodType: IDPayDiscountInitiativeInstruments,
+    paymentMethodType: InstrumentTypeEnum,
     value: boolean
   ) => {
     // if (value) {
@@ -76,20 +74,15 @@ const IdPayDiscountInstrumentsScreen = () => {
     // console.log(paymentMethodType, value);
   };
 
-  const handlePressActionButton = (
-    paymentMethodType: IDPayDiscountInitiativeInstruments
-  ) => {
-    if (paymentMethodType === IDPayDiscountInitiativeInstruments.CIE) {
+  const handlePressActionButton = (paymentMethodType: InstrumentTypeEnum) => {
+    if (paymentMethodType === InstrumentTypeEnum.IDPAYCODE) {
       presentCIEBottomSheet();
     }
   };
 
   return (
     <>
-      <TopScreenComponent
-        goBack={handleBackPress}
-        contextualHelp={emptyContextualHelp}
-      >
+      <TopScreenComponent goBack contextualHelp={emptyContextualHelp}>
         <LoadingSpinnerOverlay
           isLoading={isLoadingPaymentMethods}
           loadingOpacity={1}
@@ -101,13 +94,13 @@ const IdPayDiscountInstrumentsScreen = () => {
             <VSpacer size={8} />
             <Body>
               {I18n.t("idpay.configuration.instruments.paymentMethods.body", {
-                initiativeName: initiative?.initiativeName ?? ""
+                initiativeName: initiativeName ?? ""
               })}
             </Body>
             <VSpacer size={24} />
             {initiativePaymentMethods.map(paymentMethod => (
               <IdPayDiscountInstrumentEnrollmentSwitch
-                key={paymentMethod.idWallet}
+                key={paymentMethod.instrumentId}
                 instrumentPaymentMethod={paymentMethod}
                 onValueChange={handlePaymentMethodValueChange}
                 onPressAction={handlePressActionButton}
