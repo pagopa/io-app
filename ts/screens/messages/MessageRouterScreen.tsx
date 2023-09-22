@@ -44,6 +44,7 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../utils/pot";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/entities/messages/allPaginated";
 import { trackPNPushOpened } from "../../features/pn/analytics";
+import { trackOpenMessage } from "../../features/messages/analytics";
 
 export type MessageRouterScreenNavigationParams = {
   messageId: UIMessageId;
@@ -73,6 +74,27 @@ const navigateToScreenHandler =
     firstTimeOpening: boolean
   ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
+    const containsPayment = pipe(
+      message.category.tag,
+      O.of,
+      O.filter(tag => tag !== TagEnumPN.PN),
+      O.map(_ =>
+        pipe(
+          messageDetails,
+          O.of,
+          O.chainNullableK(m => m.paymentData),
+          O.isSome
+        )
+      ),
+      O.toUndefined
+    );
+
+    trackOpenMessage(
+      message.serviceName,
+      message.organizationName,
+      containsPayment
+    );
+
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
       navigateBack();
       navigateToEuCovidCertificateDetailScreen({
