@@ -58,10 +58,7 @@ const IdPayDiscountInstrumentsScreen = () => {
     }
   }, [initiativeId, dispatch]);
 
-  const handlePaymentMethodValueChange = (
-    paymentMethodType: InstrumentTypeEnum,
-    value: boolean
-  ) => {
+  const handleCieValueChange = (value: boolean) => {
     // if (value) {
     //   navigation.navigate(
     //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
@@ -72,12 +69,6 @@ const IdPayDiscountInstrumentsScreen = () => {
     //   );
     // }
     // console.log(paymentMethodType, value);
-  };
-
-  const handlePressActionButton = (paymentMethodType: InstrumentTypeEnum) => {
-    if (paymentMethodType === InstrumentTypeEnum.IDPAYCODE) {
-      presentCIEBottomSheet();
-    }
   };
 
   return (
@@ -98,14 +89,17 @@ const IdPayDiscountInstrumentsScreen = () => {
               })}
             </Body>
             <VSpacer size={24} />
-            {initiativePaymentMethods.map(paymentMethod => (
-              <IdPayDiscountInstrumentEnrollmentSwitch
-                key={paymentMethod.instrumentId}
-                instrumentPaymentMethod={paymentMethod}
-                onValueChange={handlePaymentMethodValueChange}
-                onPressAction={handlePressActionButton}
-              />
-            ))}
+            <IdPayDiscountInstrumentEnrollmentSwitch
+              instrumentType={InstrumentTypeEnum.IDPAYCODE}
+              onValueChange={handleCieValueChange}
+              onPressAction={presentCIEBottomSheet}
+              value={initiativePaymentMethods.some(
+                el => el.instrumentType === InstrumentTypeEnum.IDPAYCODE
+              )}
+            />
+            <IdPayDiscountInstrumentEnrollmentSwitch
+              instrumentType={InstrumentTypeEnum.QRCODE}
+            />
             <VSpacer size={16} />
           </ScrollView>
         </LoadingSpinnerOverlay>

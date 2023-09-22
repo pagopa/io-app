@@ -4,11 +4,7 @@ import {
   SwitchAction
 } from "@pagopa/io-app-design-system";
 import { default as React } from "react";
-import {
-  InstrumentDTO,
-  InstrumentTypeEnum,
-  StatusEnum
-} from "../../../../../definitions/idpay/InstrumentDTO";
+import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import I18n from "../../../../i18n";
 
 type ValidInstrumentType =
@@ -21,10 +17,19 @@ export type PaymentMethodSwitchRef = {
 };
 
 type PaymentMethodSwitchProps = {
-  instrumentPaymentMethod: InstrumentDTO;
-  onValueChange: (paymentType: InstrumentTypeEnum, value: boolean) => void;
-  onPressAction?: (paymentType: InstrumentTypeEnum) => void;
-};
+  onPressAction?: () => void;
+} & (
+  | {
+      instrumentType: InstrumentTypeEnum.QRCODE;
+      value?: never;
+      onValueChange?: never;
+    }
+  | {
+      instrumentType: ValidInstrumentType;
+      value: boolean;
+      onValueChange: (value: boolean) => void;
+    }
+);
 
 const getInstrumentPaymentMethodIcon = (
   paymentType: InstrumentTypeEnum
@@ -45,10 +50,7 @@ const getInstrumentPaymentMethodIcon = (
 const IdPayDiscountInstrumentEnrollmentSwitch = (
   props: PaymentMethodSwitchProps
 ) => {
-  const { instrumentPaymentMethod, onPressAction, onValueChange } = props;
-
-  const instrumentType =
-    instrumentPaymentMethod.instrumentType as ValidInstrumentType;
+  const { instrumentType, value, onPressAction, onValueChange } = props;
 
   const renderSwitchAction = () => {
     if (instrumentType !== InstrumentTypeEnum.QRCODE) {
@@ -56,7 +58,7 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
         label: I18n.t(
           `idpay.configuration.instruments.paymentMethods.${instrumentType}.actionItem`
         ),
-        onPress: () => onPressAction?.(instrumentType)
+        onPress: () => onPressAction?.()
       } as SwitchAction;
     }
     return undefined;
@@ -64,11 +66,10 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
 
   return (
     <ListItemSwitch
-      disabled={instrumentType === InstrumentTypeEnum.QRCODE}
-      value={instrumentPaymentMethod.status === StatusEnum.ACTIVE}
+      value={value}
       action={renderSwitchAction()}
       icon={getInstrumentPaymentMethodIcon(instrumentType)}
-      onSwitchValueChange={value => onValueChange(instrumentType, value)}
+      onSwitchValueChange={value => onValueChange?.(value)}
       label={I18n.t(
         `idpay.configuration.instruments.paymentMethods.${instrumentType}.title`
       )}
