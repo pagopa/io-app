@@ -70,7 +70,8 @@ const CreditCardDetailScreen = ({ route }: Props) => {
         ...cardData,
         expDate: new Date(
           Number(cardData.expireYear),
-          Number(cardData.expireMonth)
+          // month is 0 based, while BE response isn't
+          Number(cardData.expireMonth) - 1
         )
       }))
     );

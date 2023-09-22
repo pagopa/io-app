@@ -58,7 +58,8 @@ const CobadgeDetailScreen = (props: Props) => {
       ...cardData,
       expirationDate: new Date(
         Number(cardData.expireYear),
-        Number(cardData.expireMonth)
+        // month is 0 based, BE response is not
+        Number(cardData.expireMonth) - 1
       )
     }))
   );
