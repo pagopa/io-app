@@ -15,14 +15,13 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
+import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayCodeSelector } from "../store/selectors";
-import { IdPayCodeParamsList } from "../navigation/params";
-import { idPayEnrollCode } from "../store/actions";
 
 type IdPayCodeDisplayRouteParams = {
-  initiativeId?: string;
+  isOnboarding?: boolean;
 };
 
 type IdPayCodeDisplayRouteProps = RouteProp<
@@ -32,10 +31,9 @@ type IdPayCodeDisplayRouteProps = RouteProp<
 
 const IdPayCodeDisplayScreen = () => {
   const route = useRoute<IdPayCodeDisplayRouteProps>();
-  const { initiativeId } = route.params;
+  const { isOnboarding } = route.params;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useIODispatch();
 
   const idPayCodePot = useIOSelector(idPayCodeSelector);
 
@@ -52,8 +50,7 @@ const IdPayCodeDisplayScreen = () => {
   }, [isFailure, navigation]);
 
   const handleContinue = () => {
-    if (initiativeId) {
-      dispatch(idPayEnrollCode.request({ initiativeId }));
+    if (isOnboarding) {
       navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
       });
@@ -74,10 +71,8 @@ const IdPayCodeDisplayScreen = () => {
           <VSpacer size={32} />
           <ButtonSolid
             fullWidth={true}
-            label={initiativeId !== undefined ? "Chiudi" : "Continua"}
-            accessibilityLabel={
-              initiativeId !== undefined ? "Chiudi" : "Continua"
-            }
+            label={isOnboarding ? "Continua" : "Chiudi"}
+            accessibilityLabel={isOnboarding ? "Continua" : "Chiudi"}
             onPress={handleContinue}
           />
         </ScrollView>
@@ -86,5 +81,5 @@ const IdPayCodeDisplayScreen = () => {
   );
 };
 
-export type { IdPayCodeDisplayRouteParams };
 export { IdPayCodeDisplayScreen };
+export type { IdPayCodeDisplayRouteParams };

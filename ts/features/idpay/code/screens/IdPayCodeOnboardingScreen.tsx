@@ -1,4 +1,9 @@
-import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonSolid,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { ScrollView } from "react-native";
@@ -42,7 +47,7 @@ const IdPayCodeOnboardingScreen = () => {
       navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
         params: {
-          initiativeId
+          isOnboarding: true
         }
       });
     }
@@ -54,6 +59,11 @@ const IdPayCodeOnboardingScreen = () => {
         centerContent={true}
         contentContainerStyle={IOStyles.horizontalContentPadding}
       >
+        <Body>
+          Code status: {isCodeOnboarded ? "Generated ✅" : "Not generated ❌"}
+        </Body>
+        <Body>Initiative ID: {initiativeId}</Body>
+        <VSpacer size={32} />
         <ButtonSolid
           fullWidth={true}
           label="Inizia"
