@@ -57,6 +57,8 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
+import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
+import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -201,6 +203,10 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
             component={IDPayPaymentNavigator}
             options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen
+            name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
+            component={IdPayCodeNavigator}
           />
         </>
       )}

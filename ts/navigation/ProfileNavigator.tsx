@@ -25,8 +25,8 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
-import { IDPayCodePlayGround } from "../screens/profile/playgrounds/IDPayCodePlayground";
-import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
+import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
+import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { isGestureEnabled } from "../utils/navigation";
@@ -109,11 +109,11 @@ const ProfileStackNavigator = () => (
     />
     <Stack.Screen
       name={ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
-      component={IDPayOnboardingPlayground}
+      component={IdPayOnboardingPlayground}
     />
     <Stack.Screen
       name={ROUTES.IDPAY_CODE_PLAYGROUND}
-      component={IDPayCodePlayGround}
+      component={IdPayCodePlayGround}
     />
     <Stack.Screen
       name={ROUTES.WALLET_PLAYGROUND}
