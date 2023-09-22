@@ -17,11 +17,11 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import InstitutionIcon from "../../../../../img/features/idpay/institution.svg";
 import CreditCardIcon from "../../../../../img/features/idpay/creditcard.svg";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { LOADING_TAG } from "../../../../xstate/utils";
 import I18n from "../../../../i18n";
 import { ConfigurationMode } from "../xstate/context";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;

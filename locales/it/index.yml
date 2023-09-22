@@ -3558,6 +3558,12 @@ idpay:
         date: Data rimborso
         cro: CRO
       errorBody: Impossibile caricare il dettaglio
+    cie:
+      bottomSheet:
+        title: "Come funziona?"
+        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3661,6 +3667,17 @@ idpay:
       buttons:
         continue: "Inizia la configurazione"
     instruments:
+      paymentMethods:
+        header: "Come vuoi autorizzare i pagamenti?"
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
+        IDPAYCODE:
+          title: "Usa la Carta d'identità elettronica"
+          description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
+          actionItem: "Come funziona?"
+        QRCODE:
+          title: "Usa l'app IO"
+          description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
+          actionItem: "Come funziona?"
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."

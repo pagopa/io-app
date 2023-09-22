@@ -25,7 +25,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { BonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
@@ -41,6 +40,8 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
+import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
+import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { IdPayCodeCIEBanner } from "../../code/components/IdPayCodeCIEBanner";
 
 export type InitiativeDetailsScreenParams = {
@@ -186,6 +187,10 @@ const InitiativeDetailsScreen = () => {
                     size={5}
                   />
                   <VSpacer size={32} />
+                  <InitiativeDiscountSettingsComponent
+                    initiative={initiative}
+                  />
+                  <VSpacer size={16} />
                 </ContentWrapper>
               );
 
