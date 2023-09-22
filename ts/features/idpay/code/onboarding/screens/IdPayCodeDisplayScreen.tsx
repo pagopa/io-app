@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     minHeight: 60,
     maxWidth: 60,
     flex: 1,
-    borderWidth: 2,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
     borderColor: IOColors["grey-200"],
