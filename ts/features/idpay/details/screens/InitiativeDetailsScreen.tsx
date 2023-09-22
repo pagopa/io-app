@@ -41,6 +41,7 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
+import { IdPayCodeCIEBanner } from "../../code/components/IdPayCodeCIEBanner";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -179,6 +180,7 @@ const InitiativeDetailsScreen = () => {
               return (
                 <ContentWrapper>
                   <VSpacer size={8} />
+                  <IdPayCodeCIEBanner />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeId}
                     size={5}
