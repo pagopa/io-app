@@ -12,6 +12,7 @@ import {
   Pictogram,
   ContentWrapper
 } from "@pagopa/io-app-design-system";
+import Animated, { Layout } from "react-native-reanimated";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
@@ -42,7 +43,7 @@ import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { IdPayCodeCIEBanner } from "../../code/components/IdPayCodeCIEBanner";
+import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -181,16 +182,18 @@ const InitiativeDetailsScreen = () => {
               return (
                 <ContentWrapper>
                   <VSpacer size={8} />
-                  <IdPayCodeCIEBanner />
-                  <InitiativeTimelineComponent
-                    initiativeId={initiativeId}
-                    size={5}
-                  />
-                  <VSpacer size={32} />
-                  <InitiativeDiscountSettingsComponent
-                    initiative={initiative}
-                  />
-                  <VSpacer size={16} />
+                  <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
+                  <Animated.View layout={Layout.duration(500)}>
+                    <InitiativeTimelineComponent
+                      initiativeId={initiativeId}
+                      size={5}
+                    />
+                    <VSpacer size={32} />
+                    <InitiativeDiscountSettingsComponent
+                      initiative={initiative}
+                    />
+                    <VSpacer size={16} />
+                  </Animated.View>
                 </ContentWrapper>
               );
 

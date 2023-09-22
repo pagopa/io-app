@@ -1,45 +1,67 @@
 import * as React from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { idpayDiscountInitiativeInstrumentsGet } from "../../configuration/store/actions";
+import { idPayCodeCieBannerClose } from "../store/actions";
+import { showIdPayCodeBannerSelector } from "../store/selectors";
+import { ScaleInOutAnimation } from "../../../../components/animations/ScaleInOutAnimation";
 
-// export type IdPayCodeCIEBannerParams = {};
+export type IdPayCodeCIEBannerParams = {
+  initiativeId: string;
+};
 
-const IdPayCodeCIEBanner = () => {
+const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
   const bannerViewRef = React.useRef(null);
   // const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
+  const showBanner = useIOSelector(showIdPayCodeBannerSelector);
 
-  return (
-    <>
-      {/* <IdPayCodeCIEBanner /> */}
-      <Banner
-        color="turquoise"
-        pictogramName="cie"
-        title={I18n.t(
-          "idpay.initiative.discountDetails.IDPayCode.banner.title"
-        )}
-        size="big"
-        content={I18n.t(
-          "idpay.initiative.discountDetails.IDPayCode.banner.body"
-        )}
-        action={I18n.t(
-          "idpay.initiative.discountDetails.IDPayCode.banner.action"
-        )}
-        onPress={() => {
-          // TODO: Navigate to the onboarding IDPay code screen
-        }}
-        onClose={() => {
-          // TODO: Dispatch action to hide banner and save it in the store
-        }}
-        labelClose={I18n.t(
-          "idpay.initiative.discountDetails.IDPayCode.banner.close"
-        )}
-        viewRef={bannerViewRef}
-      />
-      <VSpacer size={24} />
-    </>
-  );
+  React.useEffect(() => {
+    if (initiativeId) {
+      dispatch(
+        idpayDiscountInitiativeInstrumentsGet.request({
+          initiativeId
+        })
+      );
+    }
+  }, [initiativeId, dispatch]);
+
+  const handleOnCloseBanner = () => {
+    dispatch(idPayCodeCieBannerClose({ initiativeId }));
+  };
+
+  if (showBanner) {
+    return (
+      <ScaleInOutAnimation>
+        <Banner
+          color="turquoise"
+          pictogramName="cie"
+          title={I18n.t(
+            "idpay.initiative.discountDetails.IDPayCode.banner.title"
+          )}
+          size="big"
+          content={I18n.t(
+            "idpay.initiative.discountDetails.IDPayCode.banner.body"
+          )}
+          action={I18n.t(
+            "idpay.initiative.discountDetails.IDPayCode.banner.action"
+          )}
+          onPress={() => {
+            // TODO: Navigate to the onboarding IDPay code screen
+          }}
+          onClose={handleOnCloseBanner}
+          labelClose={I18n.t(
+            "idpay.initiative.discountDetails.IDPayCode.banner.close"
+          )}
+          viewRef={bannerViewRef}
+        />
+        <VSpacer size={24} />
+      </ScaleInOutAnimation>
+    );
+  }
+
+  return <></>;
 };
 
-export { IdPayCodeCIEBanner };
+export { IdPayCodeCieBanner };

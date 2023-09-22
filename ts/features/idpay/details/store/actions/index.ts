@@ -60,7 +60,7 @@ export const idPayOnboardingStatusGet = createAsyncAction(
   "IDPAY_ONBOARDNIG_STATUS_FAILURE"
 )<IdPayOnboardingStatusGetPayloadType, OnboardingStatusDTO, NetworkError>();
 
-export type IdPayInitiativeActions =
+export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>
   | ActionType<typeof idpayTimelinePageGet>
   | ActionType<typeof idPayBeneficiaryDetailsGet>

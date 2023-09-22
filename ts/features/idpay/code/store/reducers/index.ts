@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  idPayCodeCieBannerClose,
   idPayEnrollCode,
   idPayGenerateCode,
   idPayGetCodeStatus,
@@ -13,12 +14,14 @@ export type IdPayCodeState = {
   isOnboarded: pot.Pot<boolean, NetworkError>;
   code: pot.Pot<string, NetworkError>;
   enrollmentRequest: pot.Pot<void, NetworkError>;
+  bannerClosed: Record<string, boolean>;
 };
 
 const INITIAL_STATE: IdPayCodeState = {
   isOnboarded: pot.none,
   code: pot.none,
-  enrollmentRequest: pot.none
+  enrollmentRequest: pot.none,
+  bannerClosed: {}
 };
 
 const reducer = (
@@ -91,6 +94,14 @@ const reducer = (
       return {
         ...state,
         code: pot.none
+      };
+
+    case getType(idPayCodeCieBannerClose):
+      return {
+        ...state,
+        bannerClosed: {
+          [action.payload.initiativeId]: true
+        }
       };
   }
   return state;
