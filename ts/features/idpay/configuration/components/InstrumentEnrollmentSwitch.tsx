@@ -1,17 +1,18 @@
+import {
+  HSpacer,
+  IOColors,
+  IOLogoPaymentType,
+  LogoPayment
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { View, StyleSheet, Image } from "react-native";
-import { ListItem as NBListItem } from "native-base";
-import {
-  IOLogoPaymentType,
-  LogoPayment,
-  HSpacer
-} from "@pagopa/io-app-design-system";
 import { default as React } from "react";
+import { Image, StyleSheet, View } from "react-native";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
+import { IOBadge } from "../../../../components/core/IOBadge";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -19,7 +20,6 @@ import { CreditCardType, Wallet } from "../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../common/labels";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { instrumentStatusByIdWalletSelector } from "../xstate/selectors";
-import { IOBadge } from "../../../../components/core/IOBadge";
 
 export type InstrumentEnrollmentSwitchRef = {
   switchStatus: boolean;
@@ -87,17 +87,16 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
   const instrumentLogo = getPaymentMethodLogo(wallet);
   const instrumentMaskedPan = getPaymentMaskedPan(wallet);
 
+  // FIXME IOBP-271 use ListItemSwitch with Badge and Loading indicators
   return (
-    <NBListItem>
-      <View style={[IOStyles.flex, IOStyles.rowSpaceBetween]}>
-        <View style={styles.instrumentsInfo}>
-          {instrumentLogo}
-          <HSpacer size={8} />
-          <H4>{`•••• ${instrumentMaskedPan}`}</H4>
-        </View>
-        {renderSwitch()}
+    <View style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.listItem]}>
+      <View style={styles.instrumentsInfo}>
+        {instrumentLogo}
+        <HSpacer size={8} />
+        <H4>{`•••• ${instrumentMaskedPan}`}</H4>
       </View>
-    </NBListItem>
+      {renderSwitch()}
+    </View>
   );
 };
 
@@ -151,6 +150,11 @@ const getPaymentMethodLogo = (wallet: Wallet): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
+  listItem: {
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: IOColors["grey-100"]
+  },
   issuerLogo: {
     width: 24,
     height: 16,
