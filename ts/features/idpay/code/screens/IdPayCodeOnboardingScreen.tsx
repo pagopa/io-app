@@ -1,14 +1,5 @@
-import {
-  ButtonLink,
-  ButtonSolid,
-  ContentWrapper,
-  IOStyles,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -18,12 +9,11 @@ import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayEnrollCode, idPayGenerateCode } from "../store/actions";
 import { isIdPayCodeOnboardedSelector } from "../store/selectors";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../config";
-import { IdPayWizardBody } from "../components/IdPayWizardBody";
+import { WizardScreen } from "./WizardScreen";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
@@ -94,31 +84,22 @@ const IdPayCodeOnboardingScreen = () => {
   };
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
-      <TopScreenComponent goBack>
-        <IdPayWizardBody
-          pictogram="cie"
-          title={I18n.t("idpay.code.onboarding.title")}
-          description={I18n.t("idpay.code.onboarding.description")}
-        />
-      </TopScreenComponent>
-      <ContentWrapper>
-        <ButtonSolid
-          label={I18n.t("idpay.code.onboarding.buttons.start")}
-          accessibilityLabel={I18n.t("idpay.code.onboarding.buttons.start")}
-          onPress={handleContinue}
-          fullWidth
-        />
-        <VSpacer size={24} />
-        <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-          <ButtonLink
-            label={I18n.t("idpay.code.onboarding.buttons.howItWorks")}
-            onPress={presentCIEBottomSheet}
-          />
-        </View>
-      </ContentWrapper>
+    <>
+      <WizardScreen
+        pictogram="cie"
+        title={I18n.t("idpay.code.onboarding.title")}
+        description={I18n.t("idpay.code.onboarding.description")}
+        primaryButton={{
+          text: I18n.t("idpay.code.onboarding.buttons.start"),
+          onPress: handleContinue
+        }}
+        actionButton={{
+          text: I18n.t("idpay.code.onboarding.buttons.howItWorks"),
+          onPress: presentCIEBottomSheet
+        }}
+      />
       {bottomSheet}
-    </SafeAreaView>
+    </>
   );
 };
 
