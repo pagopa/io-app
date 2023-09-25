@@ -21,10 +21,10 @@ import {
   IOColors,
   IOScaleValues,
   IOSpringValues,
-  IOListItemIDPRadius,
-  IOListItemIDPHSpacing,
-  IOListItemIDPSavedVSpacing,
-  IOListItemIDPVSpacing,
+  IOModuleIDPRadius,
+  IOModuleIDPHSpacing,
+  IOModuleIDPSavedVSpacing,
+  IOModuleIDPVSpacing,
   IOListItemLogoMargin
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: IOColors["grey-100"],
-    borderRadius: IOListItemIDPRadius,
+    borderRadius: IOModuleIDPRadius,
     backgroundColor: IOColors.white,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: IOListItemIDPVSpacing,
-    paddingHorizontal: IOListItemIDPHSpacing
+    paddingVertical: IOModuleIDPVSpacing,
+    paddingHorizontal: IOModuleIDPHSpacing
   },
   idpName: {
     color: IOColors["grey-700"],
@@ -149,7 +149,7 @@ export const ModuleIDP = ({
       <Animated.View
         style={[
           styles.button,
-          saved && { paddingVertical: IOListItemIDPSavedVSpacing },
+          saved && { paddingVertical: IOModuleIDPSavedVSpacing },
           animatedStyle
         ]}
       >
