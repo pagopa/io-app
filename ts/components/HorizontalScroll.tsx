@@ -10,11 +10,14 @@ import {
   Dimensions,
   Platform,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  NativeSyntheticEvent,
+  NativeScrollEvent
 } from "react-native";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import variables from "../theme/variables";
 import { roundToThirdDecimal } from "../utils/number";
+import { trackCarousel } from "../screens/authentication/analytics/carouselAnalytics";
 
 type Props = {
   cards: ReadonlyArray<JSX.Element>;
@@ -63,6 +66,12 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
   const scrollRef = React.useRef<ScrollView>(null);
   const { indexToScroll } = props;
 
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    trackCarousel(currentIndex, props.cards);
+  }, [currentIndex, props.cards]);
+
   React.useEffect(() => {
     pipe(
       indexToScroll,
@@ -110,6 +119,31 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
     );
   });
 
+  const handleScrollEvent = (
+    event: NativeSyntheticEvent<NativeScrollEvent>
+  ) => {
+    {
+      const currentIndex = Platform.select({
+        ios: Math.round(
+          event.nativeEvent.contentOffset.x / Dimensions.get("window").width
+        ),
+        default: Math.round(
+          roundToThirdDecimal(event.nativeEvent.contentOffset.x) /
+            roundToThirdDecimal(Dimensions.get("window").width)
+        )
+      });
+      setCurrentIndex(currentIndex);
+      pipe(
+        props.onCurrentElement,
+        O.fromNullable,
+        O.map(onCurrElement => onCurrElement(currentIndex))
+      );
+      Animated.event([{ nativeEvent: { contentOffset: { x: animVal } } }])(
+        event
+      );
+    }
+  };
+
   return (
     <View style={styles.scrollView}>
       <ScrollView
@@ -119,25 +153,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         scrollEnabled={props.cards.length > 1}
         scrollEventThrottle={props.cards.length}
         pagingEnabled={true}
-        onScroll={event => {
-          const currentIndex = Platform.select({
-            ios: Math.round(
-              event.nativeEvent.contentOffset.x / Dimensions.get("window").width
-            ),
-            default: Math.round(
-              roundToThirdDecimal(event.nativeEvent.contentOffset.x) /
-                roundToThirdDecimal(Dimensions.get("window").width)
-            )
-          });
-          pipe(
-            props.onCurrentElement,
-            O.fromNullable,
-            O.map(onCurrElement => onCurrElement(currentIndex))
-          );
-          Animated.event([{ nativeEvent: { contentOffset: { x: animVal } } }])(
-            event
-          );
-        }}
+        onScroll={handleScrollEvent}
       >
         {props.cards}
       </ScrollView>
