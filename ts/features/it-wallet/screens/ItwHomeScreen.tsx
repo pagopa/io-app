@@ -27,7 +27,7 @@ import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReduc
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
 import { itwDecodePid } from "../store/actions/itwCredentialsActions";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
-import { itWalletPhaseOneEnabled } from "../../../config";
+import { itWalletExperimentalEnabled } from "../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -71,7 +71,7 @@ const ItwHomeScreen = () => {
    * Otherwise do nothing.
    */
   const onPressAddCredentials = () => {
-    if (itWalletPhaseOneEnabled) {
+    if (itWalletExperimentalEnabled) {
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.CREDENTIALS.CATALOG
       });
