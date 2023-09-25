@@ -272,7 +272,6 @@ const renderButtonSolid = (isExperimental: boolean) => (
       <View>
         <ButtonSolid
           color="danger"
-          small
           disabled
           fullWidth
           accessibilityLabel="Tap to trigger test alert"
