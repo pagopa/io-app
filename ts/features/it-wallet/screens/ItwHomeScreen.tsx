@@ -5,7 +5,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
-import { ButtonLink, VSpacer } from "@pagopa/io-app-design-system";
+import { ButtonLink, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
@@ -15,7 +15,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
-import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import PidCredential from "../components/PidCredential";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
@@ -27,6 +26,7 @@ import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycl
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
 import { itwDecodePid } from "../store/actions/itwCredentialsActions";
+import { useItwResetFlow } from "../hooks/useItwResetFlow";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -42,6 +42,7 @@ export type ContentViewProps = {
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const { present, bottomSheet } = useItwResetFlow();
   const isItWalletOperational = useIOSelector(
     itwLifecycleIsOperationalSelector
   );
@@ -49,7 +50,6 @@ const ItwHomeScreen = () => {
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
   const dispatch = useIODispatch();
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
-  const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
     I18n.t("features.itWallet.homeScreen.categories.personal"),
@@ -64,31 +64,60 @@ const ItwHomeScreen = () => {
   const LoadingView = () => <LoadingSpinnerOverlay isLoading />;
 
   const ContentView = ({ decodedPid }: ContentViewProps) => (
-    <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
-      <VSpacer />
-      <Pressable
-        onPress={() =>
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.PID_DETAILS
-          })
-        }
-      >
-        <PidCredential
-          name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
-          fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
-        />
-      </Pressable>
-      <View
-        style={{
-          ...IOStyles.flex,
-          ...IOStyles.selfCenter,
-          justifyContent: "flex-end"
-        }}
-      >
+    <View
+      style={{
+        ...IOStyles.flex,
+        justifyContent: "flex-start"
+      }}
+    >
+      <ScrollView>
         <VSpacer />
-        <ButtonLink
-          label={I18n.t("features.itWallet.homeScreen.reset.label")}
-          onPress={() => present()}
+        <Pressable
+          onPress={() =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.PID_DETAILS
+            })
+          }
+        >
+          <PidCredential
+            name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
+            fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
+          />
+        </Pressable>
+        <View
+          style={{
+            ...IOStyles.flex,
+            ...IOStyles.selfCenter,
+            justifyContent: "flex-end"
+          }}
+        >
+          <View
+            style={{
+              ...IOStyles.flex,
+              justifyContent: "flex-end"
+            }}
+          ></View>
+        </View>
+      </ScrollView>
+      <View style={{ justifyContent: "flex-end" }}>
+        <View style={IOStyles.selfCenter}>
+          <ButtonLink
+            label={I18n.t("features.itWallet.homeScreen.reset.label")}
+            onPress={() => present()}
+          />
+        </View>
+        <VSpacer />
+        <ButtonSolid
+          icon="add"
+          onPress={() =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.CREDENTIALS.CATALOG
+            })
+          }
+          label={"Aggiungi tessera"}
+          accessibilityLabel={"Aggiungi tessera"}
+          iconPosition="end"
+          fullWidth
         />
         <VSpacer />
       </View>
@@ -163,13 +192,7 @@ const ItwHomeScreen = () => {
         </ScrollView>
       </View>
 
-      <ScrollView
-        style={IOStyles.horizontalContentPadding}
-        contentContainerStyle={{
-          ...IOStyles.centerJustified,
-          flexGrow: 1
-        }}
-      >
+      <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
         {isItWalletOperational ? (
           <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
             <ItwActionBanner
@@ -189,7 +212,7 @@ const ItwHomeScreen = () => {
           <></>
         )}
         {bottomSheet}
-      </ScrollView>
+      </View>
     </TopScreenComponent>
   );
 };

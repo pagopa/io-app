@@ -33,4 +33,5 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT]: ItwRpInitScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE
     .RESULT]: ItwRpResultScreenNavigationParams;
+  [ITW_ROUTES.CREDENTIALS.CATALOG]: undefined;
 };
