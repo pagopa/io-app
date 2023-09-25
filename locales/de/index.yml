@@ -1884,6 +1884,173 @@ bottomSheets:
     content: !include bottomsheets/ciePin.md
 bonus:
   requestLabel: "Boni und Rabatte"
+  cgn:
+    generic:
+      linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
+    accessibility:
+      code: Premendo l'elemento copierai il codice
+    name: Carta Giovani Nazionale
+    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
+    merchantsList:
+      news: novità
+      online: Online
+      places: Luoghi
+      navigationTitle: Agevolazioni
+      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
+      cta:
+        filter: Filtra
+      categoriesList:
+        title: Seleziona una categoria e scopri agevolazioni e opportunità
+      filter:
+        title: Filtra esercenti
+        searchTitle: Cerca per nome
+        inputPlaceholder: Cerca negozio, teatro o altro
+        addressTitle: Cerca per indirizzo
+        addressPlaceholder: Cerca indirizzo
+        sliderLabel: Distanza entro cui cercare
+        sliderUnit: Km
+        orderTitle: Visualizza
+        categories: Categorie
+        cta:
+          cancel: Rimuovi
+          confirm:
+            zero: Applica filtri
+            one: Applica filtri ({{count}})
+            other: Applica filtri ({{count}})
+        order:
+          byDistance: Per vicinanza alla tua posizione
+          byName: Ordine alfabetico
+    merchantDetail:
+      bucket:
+        alert:
+          cta: Ho capito!
+        error:
+          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
+      title:
+        deals: Agevolazioni e opportunità
+        description: Descrizione
+        services: Servizi
+        addresses: Indirizzi
+        hours: Orari
+        validity: Validità
+        discountCode: Codice Sconto
+        conditions: Condizioni
+      cta:
+        label: Vai al sito dell'operatore
+        landingPage: Accedi all’opportunità
+        discountUrl: Vai all'opportunità
+      categories:
+        all: Tutti gli operatori
+        counting: e altre {{count}}
+        cultureAndEntertainment: Cultura e Tempo Libero
+        health: Salute e Benessere
+        learning: Istruzione e Formazione
+        sport: Sport
+        home: Casa
+        telco: Telefonia e Internet
+        finance: Servizi Bancari e Finanziari
+        travel: Viaggi e Trasporti
+        mobility: Mobilità Sostenibile
+        job: Lavoro e Tirocini
+    cta:
+      activeBonus: Richiedi la Carta
+      deactivateBonus: Disattiva la Carta
+      goToDetail: Visualizza la Carta
+    detail:
+      cta:
+        buyers: Vedi le opportunità CGN
+        otp: Genera codice
+        eyca:
+          copy: Copia numero carta EYCA
+          pending: Vedi le opportunità EYCA
+          bottomSheet: Visita il sito di EYCA
+          showEycaDiscounts: Vedi le opportunità EYCA
+      tos:
+        link: Informativa sul trattamento dei dati personali
+      information:
+        active: "La carta è attiva e può essere usata fino al {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata revocata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
+      ownership: Chi può usare la carta?
+      status:
+        title: Carta Giovani Nazionale (CGN)
+        eyca: Carta EYCA
+        eycaCircuit: Circuito EYCA
+        eycaNumber: Numero carta
+        eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
+        eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
+        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nUsando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        badge:
+          active: Attiva
+          revoked: Revocata
+          expired: Scaduta
+        date:
+          activated: Attivata il
+          expired: Scaduta il
+          revoked: Revocata il
+        expiration:
+          cgn: Scade il
+          eyca: Scade il
+    activation:
+      eyca:
+        loading:
+          caption: "Stiamo processando la tua richiesta"
+          subCaption: "Ti preghiamo di attendere."
+        error:
+          title: "Il servizio di EYCA in questo momento non è disponibile."
+          body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      loading:
+        caption: "Stiamo attivando la tua Carta Giovani Nazionale"
+        subCaption: "Ti preghiamo di attendere."
+      error:
+        title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
+        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ineligible:
+        title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
+        body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
+      timeout:
+        title: "Stiamo processando la tua richiesta."
+        body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+      alreadyActive:
+        title: "La tua Carta Giovani Nazionale è attiva!"
+        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+      pending:
+        title: "La tua Carta Giovani Nazionale è in fase di attivazione."
+        body: "Riceverai un messaggio quando sarà attivata."
+      success:
+        title: "Fatto!"
+        body: "La tua Carta Giovani Nazionale è attiva."
+      deactivate:
+        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        alert:
+          title: "Disattiva carta"
+          message: "Sei sicuro di voler disattivare la tua Carta Giovani Nazionale? Se confermi, perderai la possibilità di accedere alle agevolazioni previste dall’iniziativa e la carta scomparirà dal Portafoglio."
+    otp:
+      error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
+      screen:
+        title: Usa codice sconto
+        cta: Copia codice
+        text1: "Copia questo codice nell'apposito campo sul sito dell'esercente entro"
+        text2: "Una volta scaduto, il codice non è più valido"
+        link: Il codice non funziona?
+        bottomSheet:
+          body:
+            text1: "Alcuni esercenti richiedono l’inserimento di un "
+            text2: "codice sconto statico."
+            text3: "Cerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso."
+            text4: "All’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
+          cta: Vai alla lista esercenti
+      code:
+        title: Il tuo codice sconto
+        validUntil: Valido ancora per
+        minutes:
+          one: 1 minuto
+          other: "{{minutes}} minuti"
+        seconds:
+          one: 1 secondo
+          other: "{{seconds}} secondi"
 features:
   euCovidCertificate:
     save:
