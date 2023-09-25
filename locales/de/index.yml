@@ -1894,44 +1894,44 @@ bonus:
   requestLabel: "Boni und Rabatte"
   cgn:
     generic:
-      linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
+      linkError: "Die Website des Anbieters ist zur Zeit nicht erreichbar. Bitte versuche es später noch einmal."
     accessibility:
-      code: Premendo l'elemento copierai il codice
-    name: Carta Giovani Nazionale
-    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
+      code: "Durch Drücken des Elements wird der Code kopiert"
+    name: "Nationale Jugendkarte"
+    departmentName: "Präsidium des italienischen Ministerrates, Abteilung für Jugendpolitik und Zivildienst"
     merchantsList:
-      news: novità
-      online: Online
-      places: Luoghi
-      navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri agevolazioni e opportunità
+      news: "Neu"
+      online: "Online"
+      places: "Orte"
+      navigationTitle: "Ermäßigungen"
+      screenTitle: "Wähle einen Anbieter und entdecke Vorteile und Möglichkeiten"
       cta:
-        filter: Filtra
+        filter: "Filtern"
       categoriesList:
-        title: Seleziona una categoria e scopri agevolazioni e opportunità
+        title: "Wähle eine Kategorie und entdecke Vorteile und Möglichkeiten"
       filter:
-        title: Filtra esercenti
-        searchTitle: Cerca per nome
-        inputPlaceholder: Cerca negozio, teatro o altro
-        addressTitle: Cerca per indirizzo
-        addressPlaceholder: Cerca indirizzo
-        sliderLabel: Distanza entro cui cercare
-        sliderUnit: Km
-        orderTitle: Visualizza
-        categories: Categorie
+        title: "Anbieter filtern"
+        searchTitle: "Suche nach Name"
+        inputPlaceholder: "Suche nach Geschäft, Theater oder sonstigem"
+        addressTitle: "Suche nach Adresse"
+        addressPlaceholder: "Adresse suchen"
+        sliderLabel: "Entfernung, in der gesucht werden soll"
+        sliderUnit: "Km"
+        orderTitle: "Anzeigen"
+        categories: "Kategorien"
         cta:
-          cancel: Rimuovi
+          cancel: "Entfernen"
           confirm:
-            zero: Applica filtri
-            one: Applica filtri ({{count}})
-            other: Applica filtri ({{count}})
+            zero: "Filter anwenden"
+            one: "({{count}}) Filter anwenden"
+            other: "({{count}}) Filter anwenden"
         order:
-          byDistance: Per vicinanza alla tua posizione
-          byName: Ordine alfabetico
+          byDistance: "Nach der Nähe zu deinem Standort"
+          byName: "Alphabetisch geordnet"
     merchantDetail:
       bucket:
         alert:
-          cta: Ho capito!
+          cta: "Verstanden!"
         error:
           noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
       title:
