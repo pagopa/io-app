@@ -1888,6 +1888,9 @@ bottomSheets:
     title: "Wo finde ich meine PIN?"
     content: !include bottomsheets/ciePin.md
 bonus:
+  bonusList:
+    title: "Bonus oder Rabatt hinzufügen"
+    contentTitle: "Wähle einen der verfügbaren Boni oder Rabatte"
   requestLabel: "Boni und Rabatte"
   cgn:
     generic:
