@@ -48,6 +48,8 @@ import { loginSuccess } from "../../../store/actions/authentication";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import { SessionToken } from "../../../types/SessionToken";
 import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { trackLoginCiePinScreen } from "../analytics/cieAnalytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request()),
@@ -80,6 +82,10 @@ const getContextualHelp = () => ({
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen: React.FC<Props> = props => {
+  useOnFirstRender(() => {
+    trackLoginCiePinScreen();
+  });
+
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
     useNavigation<
