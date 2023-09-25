@@ -2,9 +2,9 @@ import {
   H6,
   IOColors,
   IOIcons,
-  IOListItemIDPHSpacing,
-  IOListItemIDPRadius,
-  IOListItemIDPVSpacing,
+  IOModuleIDPHSpacing,
+  IOModuleIDPRadius,
+  IOModuleIDPVSpacing,
   IOListItemVisualParams,
   IOScaleValues,
   IOSpringValues,
@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: IOColors["grey-300"],
-    borderRadius: IOListItemIDPRadius,
+    borderRadius: IOModuleIDPRadius,
     backgroundColor: IOColors.white,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: IOListItemIDPVSpacing,
-    paddingHorizontal: IOListItemIDPHSpacing
+    paddingVertical: IOModuleIDPVSpacing,
+    paddingHorizontal: IOModuleIDPHSpacing
   }
 });
 

@@ -1,6 +1,10 @@
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { ListItemInfo, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FeatureInfo,
+  ListItemInfo,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
@@ -24,7 +28,6 @@ import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { Link } from "../../../../../components/core/typography/Link";
-import { FeatureInfo } from "../../../../../components/FeatureInfo";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { itwRpInitializationSelector } from "../../../store/reducers/itwRpInitializationReducer";
