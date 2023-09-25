@@ -35,6 +35,8 @@ import {
   selectIsPreAuthorizing,
   selectTransactionData
 } from "../xstate/selectors";
+import { useIODispatch } from "../../../../store/hooks";
+import { identificationRequest } from "../../../../store/actions/identification";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
   trxCode?: string;
@@ -49,6 +51,8 @@ const IDPayPaymentAuthorizationScreen = () => {
   const route = useRoute<IDPayPaymentAuthorizationRouteProps>();
 
   const machine = usePaymentMachineService();
+  const dispatch = useIODispatch();
+
   const transactionData = useSelector(machine, selectTransactionData);
 
   const { trxCode } = route.params;
@@ -75,7 +79,20 @@ const IDPayPaymentAuthorizationScreen = () => {
   };
 
   const handleConfirm = () => {
-    machine.send("CONFIRM_AUTHORIZATION");
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => machine.send("CONFIRM_AUTHORIZATION")
+        }
+      )
+    );
   };
 
   const renderContent = () => {
