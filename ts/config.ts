@@ -131,6 +131,9 @@ export const newPnMessageDetailsEnabled =
 // IT Wallet Feature Flag
 export const itWalletEnabled = Config.IT_WALLET_ENABLED === "YES";
 
+export const itWalletPhaseOneEnabled =
+  Config.IT_WALLET_PHASE_ONE_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
