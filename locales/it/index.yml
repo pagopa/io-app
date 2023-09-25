@@ -851,6 +851,16 @@ email:
     validation_ok: La mail è stata validata. Ora puoi accedere a tutte le funzionalità di IO.
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
+  newvalidate:
+    title: Valida la tua email
+    subtitle: Segui le istruzioni che abbiamo inviato a {{email}}.
+    link: L’indirizzo è errato?
+    buttonlabelsent: Email inviata
+    buttonlabelsentagain: Invia email nuovamente
+    toast: Fatto! Controlla tua casella di posta.
+  newvalidemail: 
+    title: Email validata!
+    subtitle: IO utilizzerà l’indirizzo email {{email}} per comunicare con te.
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
