@@ -27,6 +27,7 @@ import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReduc
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
 import { itwDecodePid } from "../store/actions/itwCredentialsActions";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
+import { itWalletPhaseOneEnabled } from "../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -39,6 +40,7 @@ export type ContentViewProps = {
 
 /**
  * IT-Wallet home screen which contains a top bar with categories, an activation banner and a list of wallet items based on the selected category.
+ * It also a label to reset the wallet credentials and a button to add a new credential which only works if the experimental feature flag is true.
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -57,9 +59,24 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.payments")
   ];
 
+  /**
+   * Decodes the PID on first render since we don't know if the PID has been decoded yet.
+   */
   useOnFirstRender(() => {
     dispatch(itwDecodePid.request(pid));
   });
+
+  /**
+   * Condionally navigate to the credentials catalog screen if the experimental feature flag is true.
+   * Otherwise do nothing.
+   */
+  const onPressAddCredentials = () => {
+    if (itWalletPhaseOneEnabled) {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.CREDENTIALS.CATALOG
+      });
+    }
+  };
 
   const LoadingView = () => <LoadingSpinnerOverlay isLoading />;
 
@@ -109,13 +126,11 @@ const ItwHomeScreen = () => {
         <VSpacer />
         <ButtonSolid
           icon="add"
-          onPress={() =>
-            navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.CREDENTIALS.CATALOG
-            })
-          }
-          label={"Aggiungi tessera"}
-          accessibilityLabel={"Aggiungi tessera"}
+          onPress={onPressAddCredentials}
+          label={I18n.t("features.itWallet.homeScreen.buttons.addCredential")}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.homeScreen.buttons.addCredential"
+          )}
           iconPosition="end"
           fullWidth
         />

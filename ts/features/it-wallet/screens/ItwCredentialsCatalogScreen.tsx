@@ -1,48 +1,67 @@
 import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { Badge, IOStyles, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../navigation/ItwParamsList";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { ListItemItw } from "../components/ListItemItw";
 import ScreenContent from "../../../components/screens/ScreenContent";
+import ItwSearchBar from "../components/ItwSearchBar";
+import I18n from "../../../i18n";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
 const ItwCredentialsCatalogScreen = () => {
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-
   /**
    * Renders the content of the screen if the PID is decoded.
    * @param decodedPip - the decoded PID
    */
   const ContentView = () => (
     <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
+      <VSpacer />
+      <ItwSearchBar />
+      <VSpacer />
       <ListItemItw
         onPress={() => null}
-        accessibilityLabel="Tessera 1"
-        title="Tessera 1"
+        accessibilityLabel={I18n.t(
+          "features.itWallet.verifiableCredentials.type.disabilityCard"
+        )}
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.type.disabilityCard"
+        )}
         icon="disabilityCard"
         rightNode={<Icon name="chevronRight" />}
       />
-      <VSpacer />
+      <VSpacer size={8} />
       <ListItemItw
         onPress={() => null}
-        accessibilityLabel="Tessera 2"
-        title="Tessera 2"
+        accessibilityLabel={I18n.t(
+          "features.itWallet.verifiableCredentials.type.healthCard"
+        )}
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.type.healthCard"
+        )}
         icon="healthCard"
         rightNode={<Icon name="chevronRight" />}
       />
-      <VSpacer />
+      <VSpacer size={8} />
       <ListItemItw
         onPress={() => null}
-        accessibilityLabel="Tessera 3"
-        title="Tessera 3"
+        accessibilityLabel={I18n.t(
+          "features.itWallet.verifiableCredentials.type.drivingLicense"
+        )}
+        title={I18n.t(
+          "features.itWallet.verifiableCredentials.type.drivingLicense"
+        )}
         icon="driverLicense"
-        rightNode={<Badge text="In Arrivo" variant="success" />}
+        rightNode={
+          <Badge
+            text={I18n.t(
+              "features.itWallet.issuing.credentialsCatalogScreen.incomingFeature"
+            )}
+            variant="success"
+          />
+        }
         disabled
       />
     </ScrollView>
@@ -51,7 +70,11 @@ const ItwCredentialsCatalogScreen = () => {
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
-        <ScreenContent title="Aggiungi altre tessere">
+        <ScreenContent
+          title={I18n.t(
+            "features.itWallet.issuing.credentialsCatalogScreen.title"
+          )}
+        >
           <ContentView />
         </ScreenContent>
       </SafeAreaView>
