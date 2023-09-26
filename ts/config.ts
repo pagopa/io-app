@@ -127,6 +127,9 @@ export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 // IT Wallet Feature Flag
 export const itWalletEnabled = Config.IT_WALLET_ENABLED === "YES";
 
+export const itWalletExperimentalEnabled =
+  Config.IT_WALLET_EXPERIMENTAL_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
