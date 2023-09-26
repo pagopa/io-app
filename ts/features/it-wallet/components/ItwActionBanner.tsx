@@ -1,16 +1,27 @@
 import * as React from "react";
-import { View } from "react-native";
+import { GestureResponderEvent, View } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { Banner } from "../../../components/Banner";
 import { useIODispatch } from "../../../store/hooks";
 import { itwActivationStart } from "../store/actions/itwActivationActions";
 
-export type ItwActionBannerProps = {
+/**
+ * Common props for the component which are always required.
+ */
+type CommonProps = {
   title: string;
   content: string;
   action: string;
-  labelClose: string;
 };
+
+/**
+ * Discriminated union props for the component which make the onClose callback optional and labelClose required if onClose is defined.
+ */
+type TruncateProps =
+  | { onClose?: (event: GestureResponderEvent) => void; labelClose?: never }
+  | { onClose: (event: GestureResponderEvent) => void; labelClose: string };
+
+type ItwActionBannerProps = CommonProps & TruncateProps;
 
 /**
  * The base graphical component, take a text as input and dispatch onPress when pressed
@@ -20,6 +31,7 @@ export const ItwActionBanner = ({
   title,
   content,
   action,
+  onClose,
   labelClose
 }: ItwActionBannerProps): React.ReactElement => {
   const viewRef = React.createRef<View>();
@@ -34,13 +46,11 @@ export const ItwActionBanner = ({
         size="big"
         title={title}
         content={content}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         pictogramName={"itWallet"}
         action={action}
         labelClose={labelClose}
         onPress={() => dispatch(itwActivationStart())}
-        onClose={() => null}
+        onClose={onClose}
       />
     </>
   );
