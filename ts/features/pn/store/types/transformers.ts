@@ -12,7 +12,7 @@ export const toPNMessage = (
     messageFromApi.third_party_message,
     ThirdPartyMessage.decode,
     O.fromEither,
-    O.chainNullableK(m => m.details),
+    O.chainNullableK(message => message.details),
     O.map(details => ({
       ...details,
       attachments: pipe(
