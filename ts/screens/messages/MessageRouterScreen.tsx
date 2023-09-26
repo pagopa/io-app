@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
@@ -75,18 +76,11 @@ const navigateToScreenHandler =
   ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
     const containsPayment = pipe(
-      message.category.tag,
-      O.of,
-      O.filter(tag => tag !== TagEnumPN.PN),
-      O.map(_ =>
-        pipe(
-          messageDetails,
-          O.of,
-          O.chainNullableK(m => m.paymentData),
-          O.isSome
-        )
-      ),
-      O.toUndefined
+      message.category.tag !== TagEnumPN.PN,
+      B.fold(
+        () => undefined,
+        () => pipe(messageDetails.paymentData, O.fromNullable, O.isSome)
+      )
     );
 
     trackOpenMessage(
