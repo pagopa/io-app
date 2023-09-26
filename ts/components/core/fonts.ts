@@ -31,6 +31,11 @@ const fonts = {
   RobotoMono: Platform.select({
     android: "RobotoMono",
     ios: "Roboto Mono"
+  }),
+  DMMono: Platform.select({
+    android: "DMMono",
+    web: "DMMono",
+    ios: "DM Mono"
   })
 };
 
