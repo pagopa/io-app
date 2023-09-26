@@ -128,7 +128,7 @@ const NewRemindEmailValidationOverlay = () => {
   );
 
   useEffect(() => {
-    // use polling to get the profile info, to validate if the email is valid or not
+    // use polling to get the profile info, to check if the email is valid or not
     const polling = setInterval(() => reloadProfile(), profilePolling);
     return () => {
       clearTimeout(timeout.current);
