@@ -4,7 +4,7 @@ import React from "react";
 import I18n from "i18n-js";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { NotificationPaymentInfo } from "../store/types/types";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { TransactionSummary } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
 import { PotFromActions } from "../../../types/utils";

@@ -5,7 +5,7 @@ import { RenderAPI, fireEvent, render } from "@testing-library/react-native";
 import { NavigationAction } from "@react-navigation/native";
 import { PnMessagePayment } from "../PnMessagePayment";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
-import { NotificationPaymentInfo } from "../../store/types/types";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import PN_ROUTES from "../../navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 
