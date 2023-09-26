@@ -1,10 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { formatIntegerNumber } from "../../../../utils/stringBuilder";
 
 type Props = {

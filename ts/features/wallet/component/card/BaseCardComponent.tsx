@@ -1,12 +1,9 @@
 import * as React from "react";
 import { View, Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import customVariables from "../../../../theme/variables";
 import { TestID } from "../../../../types/WithTestID";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   topLeftCorner: React.ReactNode;

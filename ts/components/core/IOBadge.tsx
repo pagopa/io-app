@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, PixelRatio, Platform } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "./fonts";
-import { IOColors } from "./variables/IOColors";
 
 export type IOBadgeOutlineColors = Extract<
   IOColors,

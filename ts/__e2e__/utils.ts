@@ -96,6 +96,12 @@ export const createE2EPin = async () => {
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
   await element(by.id(onboardingPinConfirmButtonId)).tap();
+
+  const onboardingNotEnrolledConfirmButtonId = "not-enrolled-biometric-confirm";
+  await waitFor(element(by.id(onboardingNotEnrolledConfirmButtonId)))
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+  await element(by.id(onboardingNotEnrolledConfirmButtonId)).tap();
 };
 
 /**

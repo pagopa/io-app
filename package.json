@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.42.0-rc.0",
+  "version": "2.42.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v12.6.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v12.6.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.27/definitions.yml",
@@ -97,6 +97,7 @@
     "generate:wallet": "npm-run-all generate:wallet-api",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
+    "remove_unused_locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/remove-unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
     "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\"",
     "prepare": "husky install"
@@ -126,7 +127,6 @@
     "@react-native-picker/picker": "^2.4.1",
     "@react-navigation/bottom-tabs": "^5.11.15",
     "@react-navigation/compat": "^5.3.20",
-    "@react-navigation/drawer": "^5.12.9",
     "@react-navigation/material-top-tabs": "^5.x",
     "@react-navigation/native": "^5.9.8",
     "@react-navigation/stack": "^5.14.9",

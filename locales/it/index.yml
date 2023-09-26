@@ -23,7 +23,7 @@ date:
     - "ven"
     - "sab"
   month_names:
-    - ""
+    - " "
     - "gennaio"
     - "febbraio"
     - "marzo"
@@ -37,7 +37,7 @@ date:
     - "novembre"
     - "dicembre"
   abbr_month_names:
-    - ""
+    - " "
     - "gen"
     - "feb"
     - "mar"
@@ -162,6 +162,7 @@ global:
     ok: OK
     ok2: Ok
     continue: Continua
+    notNow: Non ora
     retry: Riprova
     back: Indietro
     confirm: Conferma
@@ -174,6 +175,7 @@ global:
     edit: "Modifica"
     info: "Info"
     activate: "Attiva"
+    activate2: Attiva
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
@@ -786,6 +788,17 @@ authentication:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 email:
+  cduModal:
+    validateMail:
+      title: Indirizzo email non validato
+      subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
+      editButton: Modifica email
+      validateButton: Valida email
+    editMail:
+      title: Modifica la tua email
+      subtitleStart: Il tuo indirizzo email 
+      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      editButton: Modifica email
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
@@ -892,16 +905,25 @@ onboarding:
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
-  fingerprint:
-    headerTitle: Attivazione
-    title: Autenticazione biometrica
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: la tua impronta digitale
-        faceId: Face ID
-        touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  biometric:
+    headerTitle: Configura IO
+    available:
+      title: Attiva il riconoscimento biometrico
+      settings: Puoi sempre modificare la tua scelta in Profilo > Sicurezza
+      body:
+        infoStart: Potrai usare il riconoscimento biometrico al posto del codice di sblocco. Ti permetterà di accedere all’app e autorizzare operazioni e pagamenti, con il tuo
+        biometricType: volto o impronta digitale,
+        infoEnd: in modo più rapido e sicuro.
+        enrolledText: Le informazioni biometriche vengono salvate nella memoria del tuo telefono, non verranno in nessun modo comunicate ai sistemi di IO o salvate da altre parti.
+        notEnrolled:
+          text: Per usarlo, vai alle impostazioni del tuo dispositivo e configuralo. Poi attivalo su IO in Profilo > Sicurezza.
+    unavailable:
+      title: Proteggi il tuo dispositivo
+      body:
+        firstInfoStart: Io ti invia le comunicazioni che ti riguardano
+        firstInfoEnd: personalmente.
+        secondInfoStart: Proteggi il tuo dispositivo da accessi indesiderati e assicurati che solo tu possa accedere all'app. Per farlo, vai alle impostazioni del tuo dispositivo, imposta un
+        secondInfoEnd: codice di sblocco o configura il riconoscimento biometrico.
   shareData:
     title: Configura IO
   thankYouPage:
@@ -3185,11 +3207,14 @@ features:
         error: "Si è verificato un errore con la tua richiesta"
     details:
       title: Dettaglio del messaggio
+      noticeCode: "Codice avviso"
       loadError:
         title: Qualcosa è andato storto
         body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
       cancelledMessage:
         body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
+        unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        payments: "Pagamenti"
       paymentSection:
         title: Avviso di pagamento
       attachmentsSection:
@@ -3312,7 +3337,10 @@ features:
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Firmato"
       notAvailable: "Non disponibile"
-      signingInProgress: "Firma in corso"        
+      signingInProgress: "Firma in corso"     
+    signatureFieldInfo:
+      title: "Cosa sono le clausole vessatorie?"
+      subTitle: "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."   
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3455,6 +3483,15 @@ idpay:
               READMITTED: "Riattivazione"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      IDPayCode:
+        failureScreen:
+          cta: Chiudi
+          header:
+            GENERIC: In questo momento non è possibile generare un codice
+        successScreen:
+          header: Ora puoi utilizzare la tua carta d’identità per pagare!
+          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
         title: Cosa ti permette di fare?
@@ -3780,7 +3817,11 @@ unsupportedDevice:
     faq: "Come mai?"
 fastLogin:
   userInteraction:
-    sessionExpired: 
+    sessionExpired:
+      noPin:
+        title: È passato troppo tempo!
+        subtitle: Per ragioni di sicurezza devi autenticarti di nuovo con SPID o CIE. Potrai poi continuare la configurazione di IO da dove l’avevi interrotta.
+        submitButtonTitle: Continua
       continueNavigation: 
         title: "La tua sessione è scaduta"
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."

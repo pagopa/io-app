@@ -7,10 +7,7 @@ import {
   ImageSourcePropType,
   ImageBackground
 } from "react-native";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../components/core/typography/H5";
 
 /* Fake Transparent BG */

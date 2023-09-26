@@ -2,21 +2,21 @@ import {
   IOColors,
   IOLogoPaymentExtType,
   IOStyles,
-  LogoPaymentExt
+  LogoPaymentExt,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import { format } from "date-fns";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
-import { VSpacer } from "../../../core/spacer/Spacer";
+import { format } from "../../../../utils/dates";
+import { capitalize } from "../../../../utils/strings";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { NewH3 } from "../../../core/typography/NewH3";
+import { NewH6 } from "../../../core/typography/NewH6";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
-import { NewH6 } from "../../../core/typography/NewH6";
-import { capitalize } from "../../../../utils/strings";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {

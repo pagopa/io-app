@@ -6,9 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../components/core/typography/H5";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
@@ -139,7 +138,7 @@ export const MessageAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
       {props.attachments.map((attachment, index) => (
-        <View key={index}>
+        <View key={index} testID="MessageAttachmentContainer">
           <AttachmentItem
             attachment={attachment}
             disabled={props.disabled}

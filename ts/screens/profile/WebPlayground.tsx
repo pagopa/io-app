@@ -4,7 +4,7 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { connect } from "react-redux";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Switch from "../../components/ui/Switch";
@@ -15,7 +15,6 @@ import { navigateBack } from "../../store/actions/navigation";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { LabelledItem } from "../../components/LabelledItem";
 import { showToast } from "../../utils/showToast";
-import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 

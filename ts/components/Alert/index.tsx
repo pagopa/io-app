@@ -1,8 +1,17 @@
 import {
   Alert as DSAlert,
+  IOColors,
+  IOColorsStatusBackground,
+  IOColorsStatusForeground,
   IOIconSizeScale,
   IOIcons,
-  Icon
+  Icon,
+  IOScaleValues,
+  IOSpringValues,
+  HSpacer,
+  VSpacer,
+  IOAlertRadius,
+  IOAlertSpacing
 } from "@pagopa/io-app-design-system";
 import React, { useCallback } from "react";
 import {
@@ -24,17 +33,8 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { Label } from "../core/typography/Label";
 import { NewH4 } from "../core/typography/NewH4";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import {
-  IOColors,
-  IOColorsStatusBackground,
-  IOColorsStatusForeground
-} from "../core/variables/IOColors";
-import { IOAlertRadius } from "../core/variables/IOShapes";
-import { IOAlertSpacing } from "../core/variables/IOSpacing";
 import { IOStyles } from "../core/variables/IOStyles";
 const iconSize: IOIconSizeScale = 24;
 

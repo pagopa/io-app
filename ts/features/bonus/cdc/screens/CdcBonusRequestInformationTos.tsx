@@ -8,6 +8,7 @@ import {
   StyleSheet
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -24,7 +25,6 @@ import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { H4 } from "../../../../components/core/typography/H4";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   logo: {

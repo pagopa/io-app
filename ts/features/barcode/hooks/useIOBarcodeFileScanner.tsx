@@ -13,8 +13,7 @@ import DocumentPicker, {
 } from "react-native-document-picker";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
-import { Divider } from "../../../components/core/Divider";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Divider, VSpacer } from "@pagopa/io-app-design-system";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";

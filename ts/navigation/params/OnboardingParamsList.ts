@@ -1,4 +1,3 @@
-import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
 import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../screens/onboarding/OnboardingNotificationsPreferencesScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ROUTES from "../routes";
@@ -9,7 +8,9 @@ export type OnboardingParamsList = {
   [ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE]: undefined;
   [ROUTES.ONBOARDING_TOS]: undefined;
   [ROUTES.ONBOARDING_PIN]: undefined;
-  [ROUTES.ONBOARDING_FINGERPRINT]: FingerprintScreenNavigationParams;
+  [ROUTES.ONBOARDING_MISSING_DEVICE_PIN]: undefined;
+  [ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC]: undefined;
+  [ROUTES.ONBOARDING_FINGERPRINT]: undefined;
   [ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN]: undefined;
   [ROUTES.ONBOARDING_READ_EMAIL_SCREEN]: undefined;
   [ROUTES.ONBOARDING_COMPLETED]: undefined;

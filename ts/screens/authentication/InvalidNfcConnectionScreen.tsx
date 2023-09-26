@@ -7,6 +7,7 @@ import { Container } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 
+import { VSpacer } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { H1 } from "../../components/core/typography/H1";
@@ -15,7 +16,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../navigation/params/AppParamsList";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 
 type OwnProps = {

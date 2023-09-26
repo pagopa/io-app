@@ -23,7 +23,7 @@ date:
     - "Fr."
     - "Sa."
   month_names:
-    - ""
+    - " "
     - "Januar"
     - "Februar"
     - "März"
@@ -37,7 +37,7 @@ date:
     - "November"
     - "Dezember"
   abbr_month_names:
-    - ""
+    - " "
     - "Jan."
     - "Feb."
     - "März"
@@ -797,15 +797,6 @@ onboarding:
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
-  fingerprint:
-    headerTitle: "Aktivierung"
-    title: "Biometrische Authentifizierung"
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: "deinen Fingerabdruck"
-        faceId: "Face ID"
-        touchId: "Touch ID"
   shareData:
     title: "IO einrichten"
   thankYouPage:

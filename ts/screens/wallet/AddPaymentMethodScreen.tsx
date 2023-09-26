@@ -5,11 +5,11 @@ import { Content } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
 import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
 import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {

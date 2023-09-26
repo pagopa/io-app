@@ -4,6 +4,7 @@ import WebView from "react-native-webview";
 import { View, Image, ImageBackground, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../components/core/typography/H3";
 import I18n from "../../../../../i18n";
@@ -16,7 +17,6 @@ import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
 import { eycaDetailSelector } from "../../store/reducers/eyca/details";
 import { canEycaCardBeShown } from "../../utils/eyca";
-import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { playSvg } from "./CardSvgPayload";
 import DepartmentLabel from "./DepartmentLabel";
 

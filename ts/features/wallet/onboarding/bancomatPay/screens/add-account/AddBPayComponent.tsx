@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
@@ -17,10 +18,6 @@ import {
 import { abiListSelector } from "../../../store/abi";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import BPayCard from "../../../../bancomatpay/component/BPayCard";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   account: BPay;
