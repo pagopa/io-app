@@ -3371,6 +3371,24 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  code:
+    onboarding:
+      header: Ecco il tuo codice!
+      body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
+      bodyBold: "memorizzalo in un luogo sicuro"
+      bodyCta: "Come funziona?"
+      banner:
+        header: E se lo dimentichi?
+        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+    renew:
+      screen:
+        header: Codice ID Pay
+        body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+        link: Come funziona?
+        generateCTA: Genera un nuovo codice
+      alert:
+        title: Vuoi generare un nuovo codice ID Pay?
+        body: Il codice attualmente in uso verrà sovrascritto.
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
@@ -3644,6 +3662,9 @@ idpay:
         continue: "Start configuration"
     instruments:
       paymentMethods:
+        badge:
+          active: "Attivo"
+          pending: "In lavorazione"
         header: "Come vuoi autorizzare i pagamenti?"
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
         IDPAYCODE:
