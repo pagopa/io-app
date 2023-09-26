@@ -5,13 +5,12 @@ import {
   H2,
   IOColors,
   IOVisualCostants,
-  Link,
+  LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NewH3 } from "../../../../../components/core/typography/NewH3";
 import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";
@@ -46,7 +45,7 @@ export const IdPayCodeDisplayScreen = () => {
         <Body color="grey-700" weight="Bold">
           {I18n.t("idpay.code.onboarding.bodyBold")}
         </Body>
-        <Link>{I18n.t("idpay.code.onboarding.bodyCta")}</Link>
+        <LabelLink>{I18n.t("idpay.code.onboarding.bodyCta")}</LabelLink>
         <VSpacer size={24} />
         <CodeDisplayComponent code={code} />
         <VSpacer size={24} />
