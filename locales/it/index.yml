@@ -1057,7 +1057,7 @@ wallet:
       title: Vuoi pagare in app?
       content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
       cta: Scopri di più
-  wallet: Portafoglio
+  wallet: Pagamenti
   refreshWallet: Aggiorna il Portafoglio
   favourite:
     setFavoriteTitle: Usa come preferito
