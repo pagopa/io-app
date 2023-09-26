@@ -150,9 +150,11 @@ const DeleteButton = ({
 
 // ----------------------------- styles -----------------------------------
 
+const cardContainerHorizontalSpacing: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingHorizontal: IOSpacingScale[4],
+    paddingHorizontal: cardContainerHorizontalSpacing,
     alignItems: "center",
     marginBottom: "-15%",
     aspectRatio: 1.7,
