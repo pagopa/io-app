@@ -17,7 +17,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import AdviceComponent from "../../../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CiePinpad from "../../../../../components/CiePinpad";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -170,11 +169,6 @@ const ItwCiePinScreen: React.FC<Props> = props => {
             pinLength={CIE_PIN_LENGTH}
             onPinChanged={setPin}
             onSubmit={showModal}
-          />
-          <VSpacer size={16} />
-          <AdviceComponent
-            text={I18n.t("login.expiration_info")}
-            iconColor={"black"}
           />
         </View>
       </ScrollView>
