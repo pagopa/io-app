@@ -8,7 +8,13 @@ import { Content } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { View, SafeAreaView } from "react-native";
-import { ButtonLink, Label } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  IOPictogramSizeScale,
+  Label,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "../i18n";
 
@@ -22,10 +28,8 @@ import {
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import ROUTES from "../navigation/routes";
-import { VSpacer } from "./core/spacer/Spacer";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { Pictogram, IOPictogramSizeScale } from "./core/pictograms/Pictogram";
 import { IOToast } from "./Toast";
 import BaseScreenComponent from "./screens/BaseScreenComponent";
 
