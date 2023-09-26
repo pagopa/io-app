@@ -206,13 +206,18 @@ export function trackPNShowTimeline() {
 
 export function trackPNUxSuccess(
   containsPayment: boolean,
-  firstTimeOpening: boolean
+  firstTimeOpening: boolean,
+  isCancelled: boolean
 ) {
   void mixpanelTrack(
     "PN_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
       contains_payment: booleanToYesNo(containsPayment),
-      first_time_opening: booleanToYesNo(firstTimeOpening)
+      first_time_opening: booleanToYesNo(firstTimeOpening),
+      notification_status: isCancelled ? "cancelled" : "active",
+      contains_multipayment: "no",
+      count_payment: containsPayment ? 1 : 0,
+      contains_f24: "no"
     })
   );
 }

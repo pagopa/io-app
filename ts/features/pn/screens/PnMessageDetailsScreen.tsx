@@ -26,7 +26,7 @@ import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
-import { paymentFromPNMessagePot } from "../utils";
+import { isCancelledFromPNMessagePot, paymentFromPNMessagePot } from "../utils";
 import { getRptIdFromPayment } from "../utils/rptId";
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
@@ -105,7 +105,8 @@ export const PnMessageDetailsScreen = (
   if (!uxEventTracked.current && isStrictSome(message)) {
     // eslint-disable-next-line functional/immutable-data
     uxEventTracked.current = true;
-    trackPNUxSuccess(!!rptId, firstTimeOpening);
+    const isCancelled = isCancelledFromPNMessagePot(message);
+    trackPNUxSuccess(!!rptId, firstTimeOpening, isCancelled);
   }
 
   return (
