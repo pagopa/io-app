@@ -86,3 +86,12 @@ export const paymentFromPNMessagePot = (
     O.chainNullableK(recipient => recipient.payment),
     O.toUndefined
   );
+
+export const isCancelledFromPNMessagePot = (
+  potMessage: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    pot.getOrElse(potMessage, O.none),
+    O.chainNullableK(message => message.isCancelled),
+    O.getOrElse(() => false)
+  );
