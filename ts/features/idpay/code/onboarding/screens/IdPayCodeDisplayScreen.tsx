@@ -4,7 +4,7 @@ import {
   ButtonSolid,
   H2,
   IOColors,
-  IOSpacingScale,
+  IOVisualCostants,
   Link,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -72,7 +72,7 @@ export const IdPayCodeDisplayScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    paddingHorizontal: IOSpacingScale[6] // 24
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   },
   codeDigit: {
     minHeight: 60,
