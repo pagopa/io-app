@@ -178,9 +178,6 @@ const ItwHomeScreen = () => {
                 "features.itWallet.innerActionBanner.description"
               )}
               action={I18n.t("features.itWallet.innerActionBanner.action")}
-              labelClose={I18n.t(
-                "features.itWallet.innerActionBanner.hideLabel"
-              )}
             />
           </View>
         ) : (selectedBadgeIdx === 0 || selectedBadgeIdx === 1) && pid ? (
