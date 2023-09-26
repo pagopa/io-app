@@ -1,10 +1,10 @@
 import { Divider, IOStyles, ListItemNav } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 
 export const IDPayCodePlayGround = () => (
-  <BaseScreenComponent goBack={true} headerTitle={"IDPay Code Playground"}>
+  <TopScreenComponent goBack={true} customGoBack={false} dark={false}>
     <View style={IOStyles.horizontalContentPadding}>
       <ListItemNav
         value={"Onboarding Start Screen"}
@@ -17,6 +17,12 @@ export const IDPayCodePlayGround = () => (
         accessibilityLabel="Result Screen"
         onPress={() => null}
       />
+      <Divider />
+      <ListItemNav
+        value={"Regenerate code"}
+        accessibilityLabel="regenerate code"
+        onPress={() => null} // navigate to code generation screen (IdPayCodeRenewScreen)
+      />
     </View>
-  </BaseScreenComponent>
+  </TopScreenComponent>
 );
