@@ -6,6 +6,7 @@ import {
   ButtonOutline,
   ButtonSolid,
   IconButton,
+  IconButtonSolid,
   IconButtonContained,
   IOColors,
   HSpacer,
@@ -21,7 +22,6 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
