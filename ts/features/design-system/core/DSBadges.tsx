@@ -187,7 +187,7 @@ const renderIOBadge = () => (
 
 const renderTag = () => (
   <View>
-    <DSComponentViewerBox name={"Tag, different variants"}>
+    <DSComponentViewerBox name={"Tag · Different variants"}>
       <Tag text={"Entro il 30 mag"} variant="warning" />
       <VSpacer size={8} />
       <Tag text={"Completato"} variant="success" />
@@ -200,7 +200,14 @@ const renderTag = () => (
         <Tag text={"Valore legale"} variant="legalMessage" />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name={"Tag, stress test"}>
+    <DSComponentViewerBox name={"Tag · With icon, no text"}>
+      <Tag variant="attachment" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Without icon"}>
+      <VSpacer size={8} />
+      <Tag text={"No icon"} variant="noIcon" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Stress test"}>
       <View
         style={{
           backgroundColor: IOColors["error-100"],
@@ -209,7 +216,7 @@ const renderTag = () => (
           borderRadius: IOTagRadius + 8
         }}
       >
-        <Tag text={"Looooooooong string"} variant="error" />
+        <Tag text={"Loooooooooooong string"} variant="error" />
       </View>
     </DSComponentViewerBox>
   </View>
