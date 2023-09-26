@@ -45,7 +45,15 @@ const IdPayDiscountInstrumentsScreen = () => {
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
-  const { bottomSheet, present: presentCIEBottomSheet } =
+  const idPayCodeInitiative = React.useMemo(
+    () =>
+      initiativePaymentMethods.find(
+        initiative => initiative.instrumentType === InstrumentTypeEnum.IDPAYCODE
+      ),
+    [initiativePaymentMethods]
+  );
+
+  const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
   React.useEffect(() => {
@@ -59,6 +67,7 @@ const IdPayDiscountInstrumentsScreen = () => {
   }, [initiativeId, dispatch]);
 
   const handleCieValueChange = (value: boolean) => {
+    // TODO: If value is true, navigate to onboarding screen
     // if (value) {
     //   navigation.navigate(
     //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
@@ -92,10 +101,10 @@ const IdPayDiscountInstrumentsScreen = () => {
             <IdPayDiscountInstrumentEnrollmentSwitch
               instrumentType={InstrumentTypeEnum.IDPAYCODE}
               onValueChange={handleCieValueChange}
-              onPressAction={presentCIEBottomSheet}
-              value={initiativePaymentMethods.some(
-                el => el.instrumentType === InstrumentTypeEnum.IDPAYCODE
-              )}
+              onPressAction={presentCieBottomSheet}
+              status={idPayCodeInitiative?.status}
+              isLoading={isLoadingPaymentMethods}
+              value={idPayCodeInitiative ? true : false}
             />
             <IdPayDiscountInstrumentEnrollmentSwitch
               instrumentType={InstrumentTypeEnum.QRCODE}

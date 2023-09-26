@@ -3663,6 +3663,9 @@ idpay:
         continue: "Inizia la configurazione"
     instruments:
       paymentMethods:
+        badge:
+          active: "Attivo"
+          pending: "In lavorazione"
         header: "Come vuoi autorizzare i pagamenti?"
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
         IDPAYCODE:

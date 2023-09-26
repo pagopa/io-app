@@ -1,10 +1,14 @@
 import {
+  Badge,
   IOIcons,
   ListItemSwitch,
   SwitchAction
 } from "@pagopa/io-app-design-system";
 import { default as React } from "react";
-import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
+import {
+  InstrumentTypeEnum,
+  StatusEnum
+} from "../../../../../definitions/idpay/InstrumentDTO";
 import I18n from "../../../../i18n";
 
 type ValidInstrumentType =
@@ -18,6 +22,8 @@ export type PaymentMethodSwitchRef = {
 
 type PaymentMethodSwitchProps = {
   onPressAction?: () => void;
+  isLoading?: boolean;
+  status?: StatusEnum;
 } & (
   | {
       instrumentType: InstrumentTypeEnum.QRCODE;
@@ -44,13 +50,46 @@ const getInstrumentPaymentMethodIcon = (
   }
 };
 
+const getInstrumentPaymentMethodBage = (
+  instrumentType: InstrumentTypeEnum,
+  status?: StatusEnum
+) => {
+  if (instrumentType === InstrumentTypeEnum.QRCODE) {
+    return {
+      text: I18n.t(
+        `idpay.configuration.instruments.paymentMethods.badge.active`
+      ),
+      variant: "info"
+    } as Badge;
+  }
+  switch (status) {
+    case StatusEnum.PENDING_DEACTIVATION_REQUEST:
+    case StatusEnum.PENDING_ENROLLMENT_REQUEST:
+      return {
+        text: I18n.t(
+          `idpay.configuration.instruments.paymentMethods.badge.pending`
+        ),
+        variant: "warning"
+      } as Badge;
+    default:
+      return undefined;
+  }
+};
+
 /**
  * A component to enable/disable the payment method of an instrument into discount initiative configuration
  */
 const IdPayDiscountInstrumentEnrollmentSwitch = (
   props: PaymentMethodSwitchProps
 ) => {
-  const { instrumentType, value, onPressAction, onValueChange } = props;
+  const {
+    instrumentType,
+    value,
+    isLoading,
+    status,
+    onPressAction,
+    onValueChange
+  } = props;
 
   const renderSwitchAction = () => {
     if (instrumentType !== InstrumentTypeEnum.QRCODE) {
@@ -67,12 +106,14 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
   return (
     <ListItemSwitch
       value={value}
+      isLoading={isLoading}
       action={renderSwitchAction()}
       icon={getInstrumentPaymentMethodIcon(instrumentType)}
       onSwitchValueChange={value => onValueChange?.(value)}
       label={I18n.t(
         `idpay.configuration.instruments.paymentMethods.${instrumentType}.title`
       )}
+      badge={getInstrumentPaymentMethodBage(instrumentType, status)}
       description={I18n.t(
         `idpay.configuration.instruments.paymentMethods.${instrumentType}.description`
       )}
