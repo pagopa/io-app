@@ -727,16 +727,16 @@ email:
     help:
       title: "E-Mail"
   newinsert:
-    header: "IO konfigurieren"
-    title: "Wie lautet Ihre E-Mail?"
-    subtitle: "Wir verwenden E-Mail für bestimmte Mitteilungen, wie z. B. Zahlungsbelege oder Nachrichten, die mit dem Kundendienst ausgetauscht werden."
-    label: "Persönliche E-Mail Adresse"
+    header: ""
+    title: ""
+    subtitle: ""
+    label: ""
     alert: 
-      title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
-      description: "E-Mail bereits in Gebrauch"
-      modaltitle: "Diese E-Mail ist bereits in Gebrauch"
-      modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
-      modalbutton: "Andere E-Mail verwenden"
+      title: ""
+      description: ""
+      modaltitle: ""
+      modaldescription: ""
+      modalbutton: ""
   edit:
     title: "E-Mail-Adresse bearbeiten"
     subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
@@ -759,15 +759,15 @@ email:
     validated: "E-Mail bestätigt!"
     validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
   newvalidate:
-    title: Bestätigen Sie Ihre E-Mail
-    subtitle: Folgen Sie den Anweisungen, die wir an {{email}}.
-    link: Ist die E-Mail Adresse falsch?
-    buttonlabelsent: E-Mail gesendet
-    buttonlabelsentagain: Erneut E-Mail
-    toast: Erledigt! Prüfen Sie Ihren Briefkasten.
+    title: ""
+    subtitle: ""
+    link: ""
+    buttonlabelsent: ""
+    buttonlabelsentagain: ""
+    toast: ""
   newvalidemail: 
-    title: E-Mail validiert!
-    subtitle: IO wird die E-Mail-Adresse verwenden {{email}} um mit Ihnen zu kommunizieren.
+    title: ""
+    subtitle: ""
 onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:

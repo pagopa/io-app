@@ -9,7 +9,7 @@ import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import {
-  ButtonLink,
+  LabelLink,
   IOPictogramSizeScale,
   Label,
   Pictogram,
@@ -43,7 +43,8 @@ const NewRemindEmailValidationOverlay = () => {
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
-  const [isVerifyButtonDisabled, setIsVerifyButtonDisabled] = useState(false);
+  const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
+    useState(false);
   const timeout = useRef<number | undefined>();
   const navigation = useNavigation();
 
@@ -62,12 +63,12 @@ const NewRemindEmailValidationOverlay = () => {
     [dispatch]
   );
 
-  // function to locate the title of the button. If the email is validated and if it is not, whether the confirmation email was sent or not
-  const controlButtonTitle = () => {
+  // function to localize the title of the button. If the email is validated and if it is not, whether the confirmation email was sent or not
+  const buttonTitle = () => {
     if (isEmailValidated) {
       return I18n.t("global.buttons.continue");
     } else {
-      if (isVerifyButtonDisabled) {
+      if (isValidateEmailButtonDisabled) {
         return I18n.t("email.newvalidate.buttonlabelsent");
       } else {
         return I18n.t("email.newvalidate.buttonlabelsentagain");
@@ -80,13 +81,13 @@ const NewRemindEmailValidationOverlay = () => {
     if (isEmailValidated) {
       return false;
     } else {
-      return isVerifyButtonDisabled;
+      return isValidateEmailButtonDisabled;
     }
   };
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
-      // if email is validated the user navigate tu prefereces screen
+      // if the email is validated the user navigate to the preferences screen
       navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
         screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
       });
@@ -98,12 +99,11 @@ const NewRemindEmailValidationOverlay = () => {
           sendEmailValidation();
         })
       );
-
       IOToast.show(I18n.t("email.newvalidate.toast"));
-      setIsVerifyButtonDisabled(true);
+      setIsValidateEmailButtonDisabled(true);
       // eslint-disable-next-line functional/immutable-data
       timeout.current = setTimeout(() => {
-        setIsVerifyButtonDisabled(false);
+        setIsValidateEmailButtonDisabled(false);
       }, emailSentTimeout);
     }
   };
@@ -122,7 +122,7 @@ const NewRemindEmailValidationOverlay = () => {
         bordered: !isEmailValidated,
         disabled: isButtonDisabled(),
         onPress: handleSendEmailValidationButton,
-        title: controlButtonTitle()
+        title: buttonTitle()
       }}
     />
   );
@@ -151,7 +151,7 @@ const NewRemindEmailValidationOverlay = () => {
           </View>
           <VSpacer size={16} />
           <View style={IOStyles.alignCenter}>
-            <Label weight="Bold" color="bluegrey">
+            <Label weight="Bold">
               {I18n.t(
                 isEmailValidated
                   ? "email.newvalidemail.title"
@@ -160,11 +160,7 @@ const NewRemindEmailValidationOverlay = () => {
             </Label>
           </View>
           <VSpacer size={16} />
-          <Label
-            weight="Regular"
-            color="bluegrey"
-            style={{ textAlign: "center" }}
-          >
+          <Label weight="Regular" style={{ textAlign: "center" }}>
             {I18n.t(
               isEmailValidated
                 ? "email.newvalidemail.subtitle"
@@ -175,11 +171,9 @@ const NewRemindEmailValidationOverlay = () => {
           {!isEmailValidated && (
             <View style={IOStyles.selfCenter}>
               <VSpacer size={16} />
-              <ButtonLink
-                accessibilityLabel="Tap to trigger test alert"
-                label={I18n.t("email.newvalidate.link")}
-                onPress={navigateToInsertEmail}
-              />
+              <LabelLink onPress={navigateToInsertEmail}>
+                {I18n.t("email.newvalidate.link")}
+              </LabelLink>
               <VSpacer size={8} />
             </View>
           )}
