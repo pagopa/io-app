@@ -76,6 +76,10 @@
     {
       "path": "assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf",
       "sha1": "b2863e22d4491bd1866a7ab4f1d6f52db07166a6"
+    },
+    {
+      "path": "assets/fonts/DMMono/DMMono-Medium.ttf",
+      "sha1": "0ceec76262c08cec6c956e1ffe2bfc60321e8f58"
     }
   ]
 }
