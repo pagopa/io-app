@@ -114,7 +114,7 @@ const ItwCiePinScreen: React.FC<Props> = props => {
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      navigation.navigate(ITW_ROUTES.ISSUING.CIE.INFO_USAGE_SCREEN, {
+      navigation.navigate(ITW_ROUTES.ISSUING.CIE.CARD_READER_SCREEN, {
         ciePin: pin,
         authorizationUri: authUrlGenerated
       });
