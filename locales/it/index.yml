@@ -3371,7 +3371,7 @@ features:
           confirm: "Conferma reset"
           cancel: "Annulla"
       buttons:
-        addCredential: "Aggiunti tessera"
+        addCredential: "Aggiunti documento"
     infoAuthScreen:
       title: "Accedi con CIE + PIN e salva la tua identità digitale"
       subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
@@ -3440,7 +3440,7 @@ features:
           content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
           button: "Continua"
       credentialsCatalogScreen:
-        title: "Aggiungi altre tessere"
+        title: "Aggiungi altri documenti"
         incomingFeature: "In arrivo"
     presentation: 
       credentialDetails: 
