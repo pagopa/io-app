@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import {
   StackNavigationOptions,
   TransitionPresets,
@@ -51,6 +51,10 @@ import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
+import {
+  IONavigationDarkTheme,
+  IONavigationLightTheme
+} from "../../../navigation/AppStackNavigator";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -60,12 +64,13 @@ const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
 // BackButton managed through React Navigation
 const RNNBackButton = () => {
   const navigation = useNavigation();
+  const colorScheme = useColorScheme();
 
   return (
     <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
       <IconButton
         icon="backiOS"
-        color="neutral"
+        color={colorScheme === "dark" ? "contrast" : "neutral"}
         onPress={() => {
           navigation.goBack();
         }}
@@ -128,41 +133,47 @@ export const DesignSystemNavigator = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <IOThemeContext.Provider
-      value={colorScheme === "dark" ? IOThemes.dark : IOThemes.light}
+    <ThemeProvider
+      value={
+        colorScheme === "dark" ? IONavigationDarkTheme : IONavigationLightTheme
+      }
     >
-      {/* You need two nested navigators to apply the modal
+      <IOThemeContext.Provider
+        value={colorScheme === "dark" ? IOThemes.dark : IOThemes.light}
+      >
+        {/* You need two nested navigators to apply the modal
       behavior only to the single screen and not to any other.
       Read documentation for reference:
       https://reactnavigation.org/docs/5.x/modal/#creating-a-modal-stack
       
       With RN Navigation 6.x it's much easier because you can
       use the Group function */}
-      <ModalStack.Navigator
-        mode="modal"
-        headerMode="screen"
-        screenOptions={
-          Platform.OS === "ios"
-            ? {
-                gestureEnabled: isGestureEnabled,
-                cardOverlayEnabled: true,
-                ...TransitionPresets.ModalPresentationIOS
-              }
-            : {}
-        }
-      >
-        <ModalStack.Screen
-          name={DESIGN_SYSTEM_ROUTES.MAIN.route}
-          component={DesignSystemMainStack}
-          options={{ headerShown: false }}
-        />
-        <ModalStack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
-          component={DSFullScreenModal}
-          options={customModalHeaderConf}
-        />
-      </ModalStack.Navigator>
-    </IOThemeContext.Provider>
+        <ModalStack.Navigator
+          mode="modal"
+          headerMode="screen"
+          screenOptions={
+            Platform.OS === "ios"
+              ? {
+                  gestureEnabled: isGestureEnabled,
+                  cardOverlayEnabled: true,
+                  ...TransitionPresets.ModalPresentationIOS
+                }
+              : {}
+          }
+        >
+          <ModalStack.Screen
+            name={DESIGN_SYSTEM_ROUTES.MAIN.route}
+            component={DesignSystemMainStack}
+            options={{ headerShown: false }}
+          />
+          <ModalStack.Screen
+            name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
+            component={DSFullScreenModal}
+            options={customModalHeaderConf}
+          />
+        </ModalStack.Navigator>
+      </IOThemeContext.Provider>
+    </ThemeProvider>
   );
 };
 
