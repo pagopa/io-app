@@ -5,7 +5,8 @@ import {
   ListItemSwitch,
   useIOTheme,
   HSpacer,
-  VSpacer
+  VSpacer,
+  LabelLink
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
@@ -20,7 +21,6 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { makeFontStyleObject } from "../core/fonts";
 import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { NewLink } from "../core/typography/NewLink";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,
@@ -151,9 +151,9 @@ export const SwitchListItem = ({
           {action && (
             <>
               <VSpacer size={IOSelectionListItemVisualParams.actionMargin} />
-              <NewLink fontSize="small" onPress={action.onPress}>
+              <LabelLink fontSize="small" onPress={action.onPress}>
                 {action.label}
-              </NewLink>
+              </LabelLink>
             </>
           )}
         </View>
