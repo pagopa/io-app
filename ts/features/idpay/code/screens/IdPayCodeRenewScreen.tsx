@@ -50,7 +50,7 @@ export const IdPayCodeRenewScreen = () => {
         <ListItemAction
           label={I18n.t("idpay.code.renew.screen.generateCTA")}
           onPress={() => customAlert(handleConfirm)}
-          icon="reload" // becomes `change` once new DS is released
+          icon="reload" // FIXME:: update to "change" once new DS ver is released (SEE #IOBP-277)
           accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
           variant="danger"
         />
