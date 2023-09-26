@@ -2,7 +2,16 @@ import React, { useState } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  H3,
+  H4,
+  IOColors,
+  TextInput,
+  TextInputPassword,
+  TextInputValidation,
+  VSpacer,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { H2 } from "../../../components/core/typography/H2";
@@ -13,8 +22,141 @@ import {
   INITIAL_CARD_FORM_STATE
 } from "../../../utils/input";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 export const DSTextFields = () => {
+  const theme = useIOTheme();
+
+  return (
+    <DesignSystemScreen title={"Text Fields"}>
+      <H3 color={theme["textHeading-default"]}>Text Fields</H3>
+
+      <VSpacer />
+      <H4 color={theme["textHeading-default"]}>Base input</H4>
+      <VSpacer />
+
+      <DSComponentViewerBox name="Base input">
+        <InputComponentWrapper placeholder={"Base input"} />
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="Base input with value formatted">
+        <InputComponentWrapper
+          placeholder={"Base input"}
+          inputTyoe={"credit-card"}
+          bottomMessage="Handles credit card input type"
+        />
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="Base input with validation">
+        <InputValidationComponentWrapper
+          placeholder={"Base input"}
+          onValidate={value => value.length > 2}
+          bottomMessage="Inserisci almeno 3 caratteri"
+        />
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="Base input with validation and error">
+        <InputValidationComponentWrapper
+          placeholder={"Base input"}
+          onValidate={value => value.length > 2}
+          bottomMessage="Inserisci almeno 3 caratteri"
+          errorMessage="Troppo corto"
+        />
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name="Base input with icon">
+        <InputComponentWrapper icon="amount" placeholder={"Base input"} />
+      </DSComponentViewerBox>
+
+      <VSpacer />
+      <H4 color={theme["textHeading-default"]}>Secret input</H4>
+      <VSpacer />
+      <DSComponentViewerBox name="Secret input">
+        <InputPasswordComponentWrapper placeholder={"Password"} />
+      </DSComponentViewerBox>
+
+      <VSpacer />
+      <H4 color={theme["textHeading-default"]}>Disabled states</H4>
+      <VSpacer />
+      <DSComponentViewerBox name="">
+        <InputComponentWrapper disabled placeholder={"Base input (Disabled)"} />
+        <VSpacer />
+        <InputComponentWrapper
+          disabled
+          placeholder={"Base input (Disabled with value)"}
+          value={"Some value"}
+        />
+        <VSpacer />
+        <InputPasswordComponentWrapper
+          disabled
+          placeholder={"Password input (Disabled)"}
+        />
+        <VSpacer />
+        <InputValidationComponentWrapper
+          disabled
+          placeholder={"Validation input (Disabled)"}
+          onValidate={value => value.length > 2}
+        />
+      </DSComponentViewerBox>
+      <VSpacer />
+
+      <H3 color={theme["textHeading-default"]} weight={"Bold"}>
+        Legacy Text Fields
+      </H3>
+      <VSpacer />
+      <LegacyTextFields />
+    </DesignSystemScreen>
+  );
+};
+
+const InputComponentWrapper = (
+  props: Omit<
+    React.ComponentProps<typeof TextInput>,
+    "value" | "onChangeText"
+  > & { value?: string }
+) => {
+  const [inputValue, setInputValue] = React.useState(props.value ?? "");
+
+  return (
+    <TextInput {...props} value={inputValue} onChangeText={setInputValue} />
+  );
+};
+
+const InputValidationComponentWrapper = (
+  props: Omit<
+    React.ComponentProps<typeof TextInputValidation>,
+    "value" | "onChangeText"
+  > & { value?: string }
+) => {
+  const [inputValue, setInputValue] = React.useState(props.value ?? "");
+
+  return (
+    <TextInputValidation
+      {...props}
+      value={inputValue}
+      onChangeText={setInputValue}
+    />
+  );
+};
+
+const InputPasswordComponentWrapper = (
+  props: Omit<
+    React.ComponentProps<typeof TextInputPassword>,
+    "value" | "onChangeText"
+  > & { value?: string }
+) => {
+  const [inputValue, setInputValue] = React.useState(props.value ?? "");
+
+  return (
+    <TextInputPassword
+      {...props}
+      value={inputValue}
+      onChangeText={setInputValue}
+    />
+  );
+};
+
+const LegacyTextFields = () => {
   /*
   ALL THE FOLLOWING STATES are declared for
   demo purposes in the Design System's section
@@ -35,7 +177,7 @@ export const DSTextFields = () => {
   };
 
   return (
-    <DesignSystemScreen title={"Text Fields"}>
+    <>
       <LabelledItem
         label={"Default text field"}
         isValid={undefined}
@@ -233,7 +375,6 @@ export const DSTextFields = () => {
       >
         Payments
       </H2>
-
       <LabelledItem
         label={"Card number"}
         icon={detectedBrand.iconForm}
@@ -261,8 +402,6 @@ export const DSTextFields = () => {
         }}
         testID={"pan"}
       />
-
-      <VSpacer size={40} />
-    </DesignSystemScreen>
+    </>
   );
 };

@@ -3,9 +3,9 @@ import { View, StyleSheet } from "react-native";
 import {
   IOPictograms,
   IOPictogramsBleed,
+  IOPictogramsObject,
   IOPictogramsLegacy,
   IOThemeContext,
-  IOVisualCostants,
   Pictogram,
   PictogramBleed,
   SVGPictogramProps
@@ -50,6 +50,7 @@ const filterPictogramSet = (
 
 const filteredIOPictograms = filterPictogramSet(
   {
+    ...IOPictogramsObject,
     ...IOPictogramsLegacy
   },
   IOPictograms
@@ -59,20 +60,12 @@ export const DSPictograms = () => {
   const theme = useContext(IOThemeContext);
   return (
     <DesignSystemScreen title={"Pictograms"}>
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={{
-          marginBottom: 16
-        }}
-      >
-        Pictograms
-      </H2>
       <View style={styles.itemsWrapper}>
         {Object.entries(filteredIOPictograms).map(([pictogramItemName]) => (
           <DSAssetViewerBox
             key={pictogramItemName}
             name={pictogramItemName}
+            spacing="small"
             type={
               Object.keys(IOPictogramsBleed).includes(pictogramItemName)
                 ? "hasBleed"
@@ -89,8 +82,7 @@ export const DSPictograms = () => {
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
         style={{
-          marginBottom: 16,
-          paddingTop: IOVisualCostants.appMarginDefault
+          marginBottom: 16
         }}
       >
         Bleed Pictograms
@@ -116,8 +108,33 @@ export const DSPictograms = () => {
         color={theme["textHeading-default"]}
         weight={"SemiBold"}
         style={{
-          marginBottom: 16,
-          paddingTop: IOVisualCostants.appMarginDefault
+          marginBottom: 16
+        }}
+      >
+        Object Pictograms
+      </H2>
+      <View style={styles.itemsWrapper}>
+        {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
+          <DSAssetViewerBox
+            key={pictogramItemName}
+            name={pictogramItemName}
+            spacing="small"
+            size="small"
+            image={
+              <Pictogram
+                name={pictogramItemName as IOPictogramsObject}
+                size="100%"
+              />
+            }
+          />
+        ))}
+      </View>
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{
+          marginBottom: 16
         }}
       >
         Legacy Pictograms
