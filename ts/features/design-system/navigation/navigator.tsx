@@ -8,11 +8,14 @@ import * as React from "react";
 import { useMemo } from "react";
 import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOThemeContext, IOThemes } from "@pagopa/io-app-design-system";
+import {
+  IOThemeContext,
+  IOThemes,
+  IconButton
+} from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
-import IconButton from "../../../components/ui/IconButton";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
