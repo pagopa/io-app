@@ -6,7 +6,7 @@ import {
   ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
+import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -79,7 +79,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="payed"
-        badgeText={I18n.t("global.modules.paymentNotice.badges.payed")}
+        badgeText={getBadgeTextByPaymentNoticeStatus("payed")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -87,7 +87,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="error"
-        badgeText={I18n.t("global.modules.paymentNotice.badges.error")}
+        badgeText={getBadgeTextByPaymentNoticeStatus("error")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -95,7 +95,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="expired"
-        badgeText={I18n.t("global.modules.paymentNotice.badges.expired")}
+        badgeText={getBadgeTextByPaymentNoticeStatus("expired")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -103,7 +103,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="revoked"
-        badgeText={I18n.t("global.modules.paymentNotice.badges.revoked")}
+        badgeText={getBadgeTextByPaymentNoticeStatus("revoked")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -111,7 +111,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="canceled"
-        badgeText={I18n.t("global.modules.paymentNotice.badges.canceled")}
+        badgeText={getBadgeTextByPaymentNoticeStatus("canceled")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
