@@ -3404,15 +3404,6 @@ features:
         footer:
           cancel: "Annulla"
           confirm: "Autorizza"
-      infoCie:
-        title: "Verifica la tua Carta d’Identità Elettronica"
-        subTitle: "Dovrai appoggiare la Carta sul retro del tuo dispositivo, in basso, e tenerla ferma per qualche secondo."
-        howAuth: "Dopo l’autenticazione potrai creare la tua Identità Digitale, grazie alla quale potrai accedere ai servizi online della Pubblica Amministrazione e richiedere altre credenziali digitali."
-        confirm: "Inizia"
-        cancel: "Annulla"
-        footerBox: "Per aiutarti, puoi posizionare la Carta su un tavolo e appoggiarci sopra lo smartphone (con lo schermo rivolto verso l’alto) e poi premi **Inizia**."
-        readMoreUrl: "https://identitadigitale.gov.it/"
-        readMoreText: "Guarda come fare"
       loading:
         title: "Sto caricando i dati dal Ministero dell’Interno"
         subtitle: "Attendi qualche secondo"
