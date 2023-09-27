@@ -30,7 +30,7 @@ const IdPayCodeOnboardingScreen = () => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
-  const { bottomSheet, present: presentCIEBottomSheet } =
+  const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
   const isCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
@@ -95,7 +95,7 @@ const IdPayCodeOnboardingScreen = () => {
         }}
         actionButton={{
           text: I18n.t("idpay.code.onboarding.buttons.howItWorks"),
-          onPress: presentCIEBottomSheet
+          onPress: presentCieBottomSheet
         }}
       />
       {bottomSheet}
