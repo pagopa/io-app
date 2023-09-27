@@ -191,7 +191,7 @@ global:
   navigator:
     messages: Messaggi
     wallet: Portafoglio
-    scan: Inquadra
+    scan: Inquadra QR
     documents: Documenti
     profile: Profilo
     services: Servizi
