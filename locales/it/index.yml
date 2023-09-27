@@ -3376,6 +3376,8 @@ features:
           body: "Perderai l’Identità Digitale e tornerai allo stato iniziale disattivando IT Wallet. Potrai riattivarlo in un secondo momento."
           confirm: "Conferma reset"
           cancel: "Annulla"
+      buttons:
+        addCredential: "Aggiungi documento"
     infoAuthScreen:
       title: "Accedi con CIE + PIN e salva la tua identità digitale"
       subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
@@ -3434,6 +3436,9 @@ features:
           title: "Fatto! il tuo IT Wallet è attivo su IO!"
           content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
           button: "Continua"
+      credentialsCatalogScreen:
+        title: "Aggiungi altri documenti"
+        incomingFeature: "In arrivo"
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3472,6 +3477,9 @@ features:
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"
+        disabilityCard: "Tessera Europa della disabilità"
+        healthCard: "Tessera Sanitaria"
+        drivingLicense: "Licenza di guida"
       claims:
         uniqueId: "ID univoco"
         givenName: "Nome"
@@ -3497,6 +3505,7 @@ features:
       close: "Chiudi"
       rp: "Relying Party"
       trusted: "Trusted"
+      search: "Cerca"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

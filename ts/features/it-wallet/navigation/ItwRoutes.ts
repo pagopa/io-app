@@ -24,5 +24,8 @@ export const ITW_ROUTES = {
       INIT: "ITW_PRESENTATION_CROSS_DEVICE_INIT",
       RESULT: "ITW_PRESETATION_CROSS_DEVICE_RESULT"
     } as const
-  }
+  },
+  CREDENTIALS: {
+    CATALOG: "ITW_CREDENTIALS_CATALOG"
+  } as const
 } as const;

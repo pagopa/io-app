@@ -3352,6 +3352,8 @@ features:
           body: "By deactivating IT Wallet, you will lose your Digital Identity and return to the initial state. You can reactivate it later."
           confirm: "Confirm reset"
           cancel: "Cancel"
+      buttons:
+        addCredential: "Add credential"
     infoAuthScreen:
       title: "Log in with CIE + PIN and save your digital identity"
       subTitle: "To activate IT Wallet you need to authenticate yourself using your Electronic Identity Card (CIE) + PIN."
@@ -3410,6 +3412,9 @@ features:
           title: "Done! your IT Wallet is active on IO!"
           content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
           button: "Continue"
+      credentialsCatalogScreen:
+        title: "Add more credentials"
+        incomingFeature: "Coming soon"
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3447,7 +3452,10 @@ features:
             continue: "Ok, thanks"
     verifiableCredentials:
       type:
-        digitalCredential: "Digital Credential"
+        digitalCredential: "Identità Digitale"
+        disabilityCard: "European Disability Card"
+        healthCard: "Health Insurance Card"
+        drivingLicense: "Driving License"
       claims:
         uniqueId: "Unique ID"
         givenName: "Name"
@@ -3473,6 +3481,7 @@ features:
       close: "Close"
       rp: "Relying Party"
       trusted: "Trusted"
+      search: "Cerca"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
