@@ -20,10 +20,12 @@ import {
 import { idPayInitiativeFromInstrumentPotSelector } from "../store/reducers";
 import { NewH6 } from "../../../../components/core/typography/NewH6";
 
+const itemContainerVerticalSpacing: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   listItemContainer: {
     ...IOStyles.row,
-    paddingVertical: IOSpacingScale[4]
+    paddingVertical: itemContainerVerticalSpacing
   },
   leftContent: {
     ...IOStyles.flex,

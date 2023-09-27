@@ -16,8 +16,8 @@ import {
 import { PNMessage } from "../../store/types/types";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Download } from "../../../../store/reducers/entities/messages/downloads";
+import { NotificationRecipient } from "../../../../../definitions/pn/NotificationRecipient";
 
 const mockedOnAttachmentSelect = jest.fn();
 
@@ -124,10 +124,10 @@ const generatePnMessage = () =>
     subject: "This is the message subject",
     senderDenomination: "Sender denomination",
     abstract: "Message abstract",
-    serviceId: "" as ServiceId,
     notificationStatusHistory: [],
     recipients: [
       {
+        recipientType: "-",
         taxId: generateTestFiscalCode(),
         denomination: "AaAaAa BbBbBb",
         payment: {
@@ -135,7 +135,7 @@ const generatePnMessage = () =>
           creditorTaxId: "00000000009"
         }
       }
-    ],
+    ] as Array<NotificationRecipient>,
     attachments: [
       {
         messageId: generateTestMessageId(),
