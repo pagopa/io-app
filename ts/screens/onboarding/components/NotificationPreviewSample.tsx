@@ -16,6 +16,10 @@ import {
   IOVisualCostants
 } from "../../../components/core/variables/IOStyles";
 
+const notificationMarginVertical: IOSpacingScale = 4;
+const notificationPaddingVertical: IOSpacingScale = 8;
+const notificationPaddingHorizontal: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   notification: {
     flexDirection: "row",
@@ -25,10 +29,10 @@ const styles = StyleSheet.create({
     borderColor: IOColors.bluegreyLight,
     borderRadius: customVariables.borderRadiusBase,
     minHeight: 72,
-    marginVertical: IOSpacingScale[0],
+    marginVertical: notificationMarginVertical,
     marginHorizontal: IOVisualCostants.appMarginDefault,
-    paddingVertical: IOSpacingScale[2],
-    paddingHorizontal: IOSpacingScale[4]
+    paddingVertical: notificationPaddingVertical,
+    paddingHorizontal: notificationPaddingHorizontal
   }
 });
 

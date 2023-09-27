@@ -30,16 +30,17 @@ type Props = {
   openBottomSheet: () => void;
 };
 
+const CARD_PADDING_END: IOSpacingScale = 6;
+const ICON_SIZE = 24;
+
 const styles = StyleSheet.create({
   spaced: {
     justifyContent: "space-between"
   },
   cardNumber: {
-    paddingEnd: IOSpacingScale[1]
+    paddingEnd: CARD_PADDING_END
   }
 });
-
-const ICON_SIZE = 24;
 
 // this component shows EYCA card details related to user's CGN
 const EycaStatusDetailsComponent = (props: Props) => {
