@@ -6,6 +6,7 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { IbanListDTO } from "../../../../../definitions/idpay/IbanListDTO";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
+import { TypeEnum } from "../../../../../definitions/pagopa/Wallet";
 import { PaymentManagerClient } from "../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../types/pagopa";
 import { SessionManager } from "../../../../utils/SessionManager";
@@ -156,7 +157,11 @@ const createServicesImplementation = (
               const wallet = pipe(
                 value.data,
                 O.fromNullable,
-                O.map(_ => _.map(convertWalletV2toWalletV1)),
+                O.map(_ =>
+                  _.map(convertWalletV2toWalletV1).filter(
+                    el => el.type === TypeEnum.CREDIT_CARD
+                  )
+                ),
                 O.getOrElse(() => [] as ReadonlyArray<Wallet>)
               );
 
