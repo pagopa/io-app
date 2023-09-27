@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { FullReceivedNotification } from "../types";
+import { IOReceivedNotification } from "../../../../../../definitions/pn/IOReceivedNotification";
 
 describe("FullReceivedNotification type", () => {
   it("should decode a cancelled notification with completed payments list", () => {
@@ -16,16 +16,16 @@ describe("FullReceivedNotification type", () => {
       isCancelled: true,
       completedPayments
     };
-    const maybeFullReceivedNotification = FullReceivedNotification.decode(
+    const maybeFullReceivedNotification = IOReceivedNotification.decode(
       fullReceivedNotification
     );
     expect(E.isRight(maybeFullReceivedNotification)).toBe(true);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .isCancelled
     ).toBe(true);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .completedPayments
     ).toBe(completedPayments);
   });
@@ -37,16 +37,16 @@ describe("FullReceivedNotification type", () => {
       notificationStatusHistory: [],
       isCancelled: true
     };
-    const maybeFullReceivedNotification = FullReceivedNotification.decode(
+    const maybeFullReceivedNotification = IOReceivedNotification.decode(
       fullReceivedNotification
     );
     expect(E.isRight(maybeFullReceivedNotification)).toBe(true);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .isCancelled
     ).toBe(true);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .completedPayments
     ).toBeUndefined();
   });
@@ -58,16 +58,16 @@ describe("FullReceivedNotification type", () => {
       notificationStatusHistory: [],
       isCancelled: false
     };
-    const maybeFullReceivedNotification = FullReceivedNotification.decode(
+    const maybeFullReceivedNotification = IOReceivedNotification.decode(
       fullReceivedNotification
     );
     expect(E.isRight(maybeFullReceivedNotification)).toBe(true);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .isCancelled
     ).toBe(false);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .completedPayments
     ).toBeUndefined();
   });
@@ -78,16 +78,16 @@ describe("FullReceivedNotification type", () => {
       recipients: [],
       notificationStatusHistory: []
     };
-    const maybeFullReceivedNotification = FullReceivedNotification.decode(
+    const maybeFullReceivedNotification = IOReceivedNotification.decode(
       fullReceivedNotification
     );
     expect(E.isRight(maybeFullReceivedNotification)).toBe(true);
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .isCancelled
     ).toBeUndefined();
     expect(
-      (maybeFullReceivedNotification as E.Right<FullReceivedNotification>).right
+      (maybeFullReceivedNotification as E.Right<IOReceivedNotification>).right
         .completedPayments
     ).toBeUndefined();
   });
