@@ -726,17 +726,6 @@ email:
     alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
       title: "E-Mail"
-  newinsert:
-    header: ""
-    title: ""
-    subtitle: ""
-    label: ""
-    alert: 
-      title: ""
-      description: ""
-      modaltitle: ""
-      modaldescription: ""
-      modalbutton: ""
   edit:
     title: "E-Mail-Adresse bearbeiten"
     subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
@@ -758,16 +747,6 @@ email:
     validation_ok: "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen."
     validated: "E-Mail bestätigt!"
     validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
-  newvalidate:
-    title: ""
-    subtitle: ""
-    link: ""
-    buttonlabelsent: ""
-    buttonlabelsentagain: ""
-    toast: ""
-  newvalidemail: 
-    title: ""
-    subtitle: ""
 onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:

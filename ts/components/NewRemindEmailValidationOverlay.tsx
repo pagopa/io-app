@@ -15,7 +15,6 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import I18n from "../i18n";
 
 import {
@@ -28,10 +27,13 @@ import {
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import ROUTES from "../navigation/routes";
+import NavigationService from "../navigation/NavigationService";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
-import BaseScreenComponent from "./screens/BaseScreenComponent";
+import { LightModalContextInterface } from "./ui/LightModal";
+import TopScreenComponent from "./screens/TopScreenComponent";
+import { withLightModalContext } from "./helpers/withLightModalContext";
 
 const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
@@ -39,14 +41,21 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
 
-const NewRemindEmailValidationOverlay = () => {
+type OwnProp = {
+  isOnboarding?: boolean;
+};
+
+type Props = LightModalContextInterface & OwnProp;
+
+const NewRemindEmailValidationOverlay = (props: Props) => {
+  const { isOnboarding } = props;
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
     useState(false);
   const timeout = useRef<number | undefined>();
-  const navigation = useNavigation();
+  const polling = useRef<number | undefined>();
 
   const email = pipe(
     optionEmail,
@@ -88,28 +97,34 @@ const NewRemindEmailValidationOverlay = () => {
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
       // if the email is validated the user navigate to the preferences screen
-      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
-      });
+      if (isOnboarding) {
+        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
+        });
+      } else {
+        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.INSERT_EMAIL_SCREEN
+        });
+      }
     } else {
       // send email validation only if it exists
       pipe(
         optionEmail,
         O.map(_ => {
           sendEmailValidation();
+          IOToast.show(I18n.t("email.newvalidate.toast"));
+          setIsValidateEmailButtonDisabled(true);
+          // eslint-disable-next-line functional/immutable-data
+          timeout.current = setTimeout(() => {
+            setIsValidateEmailButtonDisabled(false);
+          }, emailSentTimeout);
         })
       );
-      IOToast.show(I18n.t("email.newvalidate.toast"));
-      setIsValidateEmailButtonDisabled(true);
-      // eslint-disable-next-line functional/immutable-data
-      timeout.current = setTimeout(() => {
-        setIsValidateEmailButtonDisabled(false);
-      }, emailSentTimeout);
     }
   };
 
   const navigateToInsertEmail = () => {
-    navigation.navigate(ROUTES.ONBOARDING, {
+    NavigationService.navigate(ROUTES.ONBOARDING, {
       screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
     });
   };
@@ -129,15 +144,25 @@ const NewRemindEmailValidationOverlay = () => {
 
   useEffect(() => {
     // use polling to get the profile info, to check if the email is valid or not
-    const polling = setInterval(() => reloadProfile(), profilePolling);
+    // eslint-disable-next-line functional/immutable-data
+    polling.current = setInterval(() => reloadProfile(), profilePolling);
     return () => {
       clearTimeout(timeout.current);
-      clearInterval(polling);
+      clearInterval(polling.current);
     };
   }, [reloadProfile]);
 
+  useEffect(() => {
+    if (isEmailValidated) {
+      clearInterval(polling.current);
+    }
+  }, [isEmailValidated]);
+
   return (
-    <BaseScreenComponent goBack={false}>
+    <TopScreenComponent
+      goBack={false}
+      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={40} />
         <VSpacer size={40} />
@@ -180,7 +205,7 @@ const NewRemindEmailValidationOverlay = () => {
         </Content>
         {renderFooter()}
       </SafeAreaView>
-    </BaseScreenComponent>
+    </TopScreenComponent>
   );
 };
-export default NewRemindEmailValidationOverlay;
+export default withLightModalContext(NewRemindEmailValidationOverlay);
