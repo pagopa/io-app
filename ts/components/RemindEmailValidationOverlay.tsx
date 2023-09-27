@@ -18,6 +18,7 @@ import {
 import { connect } from "react-redux";
 import {
   Icon,
+  IconButton,
   Pictogram,
   IOPictograms,
   IOPictogramSizeScale,
@@ -58,7 +59,6 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
-import IconButton from "./ui/IconButton";
 
 type OwnProp = {
   isOnboarding?: boolean;

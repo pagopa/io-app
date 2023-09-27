@@ -3,10 +3,8 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
 import { TransactionSummaryErrorContent } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
-import {
-  NotificationStatusHistoryElement,
-  PNMessage
-} from "../../pn/store/types/types";
+import { PNMessage } from "../../pn/store/types/types";
+import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
 
