@@ -3341,9 +3341,10 @@ features:
     homeScreen:
       categories: 
         any: "Any"
-        personal: "Personal"
-        cgn: "Carta giovani"
+        itWallet: "IT Wallet"
+        health: "Health"
         payments: "Payments methods"
+        bonus: "Bonuses and discounts"
       reset: 
         label: "Reset"
         bottomSheet: 
