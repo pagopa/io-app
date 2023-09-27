@@ -47,8 +47,6 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     biometricTechnology,
     isScreenLockSet
   });
-  // Identify the user using the device uniqueId
-  await mp.identify(getDeviceId());
 };
 
 export const terminateMixpanel = async () => {
