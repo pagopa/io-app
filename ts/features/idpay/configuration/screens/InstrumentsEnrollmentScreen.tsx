@@ -1,8 +1,8 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import AdviceComponent from "../../../../components/AdviceComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
@@ -11,7 +11,6 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -235,7 +234,10 @@ const InstrumentsEnrollmentScreen = () => {
         contextualHelp={emptyContextualHelp}
       >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <ScrollView style={styles.container}>
+          <ScrollView
+            style={[IOStyles.flex, IOStyles.horizontalContentPadding]}
+          >
+            <VSpacer size={16} />
             <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
             <VSpacer size={8} />
             <Body>
@@ -258,7 +260,7 @@ const InstrumentsEnrollmentScreen = () => {
               iconColor="bluegrey"
               text={I18n.t("idpay.configuration.instruments.footer")}
             />
-            <VSpacer size={32} />
+            <VSpacer size={16} />
           </ScrollView>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
         </LoadingSpinnerOverlay>
@@ -267,13 +269,6 @@ const InstrumentsEnrollmentScreen = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: customVariables.contentPadding
-  }
-});
 
 export type { InstrumentsEnrollmentScreenRouteParams };
 
