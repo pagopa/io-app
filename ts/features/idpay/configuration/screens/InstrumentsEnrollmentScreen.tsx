@@ -1,19 +1,18 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import AdviceComponent from "../../../../components/AdviceComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
-import { Wallet } from "../../../../types/pagopa";
 import customVariables from "../../../../theme/variables";
+import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
@@ -254,19 +253,12 @@ const InstrumentsEnrollmentScreen = () => {
               />
             ))}
             <VSpacer size={16} />
-            {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
-            <View style={styles.bottomSection}>
-              <Icon name="navWallet" color="bluegrey" />
-              <HSpacer size={8} />
-              <LabelSmall
-                color="bluegrey"
-                weight="Regular"
-                style={IOStyles.flex} // required for correct wrapping
-              >
-                {I18n.t("idpay.configuration.instruments.footer")}
-              </LabelSmall>
-            </View>
-            {/* TODO:: end AdviceComponent  */}
+            <AdviceComponent
+              iconName="navWallet"
+              iconColor="bluegrey"
+              text={I18n.t("idpay.configuration.instruments.footer")}
+            />
+            <VSpacer size={32} />
           </ScrollView>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
         </LoadingSpinnerOverlay>
@@ -280,10 +272,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: customVariables.contentPadding
-  },
-  bottomSection: {
-    flexDirection: "row",
-    alignItems: "center"
   }
 });
 
