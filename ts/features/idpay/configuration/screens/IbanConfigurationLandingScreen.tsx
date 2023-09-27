@@ -75,7 +75,7 @@ const IbanConfigurationLanding = () => {
           IOStyles.horizontalContentPadding
         ]}
       >
-        <Pictogram name="ibanCard" size={240} />
+        <Pictogram name="ibanCard" size={180} />
         <VSpacer size={32} />
         <View style={[IOStyles.horizontalContentPadding, styles.textContainer]}>
           <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>
