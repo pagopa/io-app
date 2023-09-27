@@ -14,7 +14,7 @@ export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
-    yield* call(initializeMixPanel);
+    yield* call(initializeMixPanel, isMixpanelEnabledResult === true);
   }
 }
 
@@ -22,7 +22,7 @@ export function* handleSetMixpanelEnabled(
   action: ActionType<typeof setMixpanelEnabled>
 ) {
   if (action.payload) {
-    yield* call(initializeMixPanel);
+    yield* call(initializeMixPanel, action.payload);
   } else {
     yield* call(terminateMixpanel);
   }
