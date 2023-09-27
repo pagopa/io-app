@@ -25,7 +25,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
-import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IDPayCodePlayground";
+import { IDPayCodePlayGround } from "../screens/profile/playgrounds/IDPayCodePlayground";
 import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
@@ -113,7 +113,7 @@ const ProfileStackNavigator = () => (
     />
     <Stack.Screen
       name={ROUTES.IDPAY_CODE_PLAYGROUND}
-      component={IdPayCodePlayGround}
+      component={IDPayCodePlayGround}
     />
     <Stack.Screen
       name={ROUTES.WALLET_PLAYGROUND}
