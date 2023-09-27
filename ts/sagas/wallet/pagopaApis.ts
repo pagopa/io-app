@@ -655,8 +655,11 @@ export function* paymentVerificaRequestHandler(
       if (response.right.status === 200) {
         // Verifica succeeded
         yield* put(paymentVerifica.success(response.right.value));
-      } else if (response.right.status === 500) {
-        // Verifica failed with a 500, that usually means there was an error
+      } else if (
+        response.right.status === 500 ||
+        response.right.status === 504
+      ) {
+        // Verifica failed with a 500 or 504, that usually means there was an error
         // interacting with pagoPA that we can interpret
         yield* put(paymentVerifica.failure(response.right.value.detail_v2));
       } else {
@@ -699,7 +702,10 @@ export function* paymentAttivaRequestHandler(
       if (response.right.status === 200) {
         // Attiva succeeded
         yield* put(paymentAttiva.success(response.right.value));
-      } else if (response.right.status === 500) {
+      } else if (
+        response.right.status === 500 ||
+        response.right.status === 504
+      ) {
         // Attiva failed
         throw Error(response.right.value.detail_v2);
       } else {
