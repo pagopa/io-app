@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { IOColors, HSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import {
   disableSearch,
@@ -12,16 +13,16 @@ import {
   updateSearchText
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { LabelledItem } from "../LabelledItem";
-import IconFont from "../ui/IconFont";
+import IconButton from "../ui/IconButton";
+import { ICON_BUTTON_MARGIN } from "../screens/BaseHeader";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
 export type SearchType = "Messages" | "Services";
 
 interface OwnProps {
-  color?: string;
+  color?: IOColors;
   searchType?: SearchType;
   // if this handler is defined it will be called in place of dispatching actions about search activation (see handleSearchPress)
   onSearchTap?: () => void;
@@ -56,21 +57,22 @@ class SearchButton extends React.Component<Props, State> {
               onChangeText: this.onSearchTextChange,
               autoFocus: true
             }}
-            icon="io-close"
+            icon="closeLarge"
             iconPosition="right"
             onPress={this.onSearchDisable}
             accessibilityLabelIcon={I18n.t("global.buttons.close")}
             iconColor={this.props.color}
           />
         ) : (
-          <ButtonDefaultOpacity
-            hasFullHitSlop
-            onPress={this.handleSearchPress}
-            transparent={true}
-            accessibilityLabel={I18n.t("global.buttons.search")}
-          >
-            <IconFont name="io-search" color={this.props.color} />
-          </ButtonDefaultOpacity>
+          <>
+            <IconButton
+              color="neutral"
+              icon="search"
+              onPress={this.handleSearchPress}
+              accessibilityLabel={I18n.t("global.buttons.search")}
+            />
+            <HSpacer size={ICON_BUTTON_MARGIN} />
+          </>
         )}
       </React.Fragment>
     );

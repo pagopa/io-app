@@ -2,16 +2,15 @@ import { ListItem } from "native-base";
 import * as React from "react";
 import { View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { Label } from "../../../../../components/core/typography/Label";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { getBPDMethodsVisibleInWalletSelector } from "../../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
 type Props = {
@@ -56,7 +55,7 @@ export const useBottomSheetMethodsToDelete = (props: {
     // (subtitle + footer) + items
     280 + paymentMethods.length * 58
   );
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <BottomSheetMethodsToDelete paymentMethods={paymentMethods} />,
     <View style={IOStyles.flex}>
       <H3>

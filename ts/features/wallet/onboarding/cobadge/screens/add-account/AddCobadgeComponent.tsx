@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
@@ -21,12 +22,7 @@ import {
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { isCoBadgeOrPrivativeBlocked } from "../../../../../../utils/paymentMethod";
-import {
-  HSpacer,
-  VSpacer
-} from "../../../../../../components/core/spacer/Spacer";
+import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: PaymentInstrument;
@@ -92,8 +88,8 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             <VSpacer size={24} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
-            {isCoBadgeOrPrivativeBlocked(props.pan) ? (
-              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+            {isCoBadgeBlocked(props.pan) ? (
+              <InfoBox iconColor="red" iconName="errorFilled">
                 <Body>{blockedCard}</Body>
               </InfoBox>
             ) : (
@@ -106,7 +102,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <VSpacer size={16} />
         </ScrollView>
-        {isCoBadgeOrPrivativeBlocked(props.pan) ? (
+        {isCoBadgeBlocked(props.pan) ? (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(

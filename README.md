@@ -4,8 +4,8 @@
 </p>
 
 <p align="center">
-    <a href="https://circleci.com/gh/pagopa/io-app">
-        <img src="https://circleci.com/gh/pagopa/io-app.svg?style=svg" />
+    <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
     </a>
     <a href="https://codecov.io/gh/pagopa/io-app">
         <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
@@ -43,10 +43,10 @@
   - [Main technologies used](#main-technologies-used)
   - [SPID Authentication](#spid-authentication)
   - [Deep linking](#deep-linking)
+  - [Design System](#design-system) 🚧
 - Appendix
   - [Internationalization](locales/README.md)
   - [End to end test](e2e/README.md)
-  - [Core components](ts/components/core/README.md) 🚧
 
 # FAQ
 
@@ -155,6 +155,10 @@ Because different platforms have different types of Permissions below we have tw
     <tr>
       <td>DOWNLOAD_WITHOUT_NOTIFICATION</td>
       <td>Allows the app to download files in background without promping a notification.</td>
+    </tr>
+    <tr>
+      <td>POST_NOTIFICATIONS</td>
+      <td>Allows the app to post notifications. Used for push notification.</td>
     </tr>
   </table>                                     
 
@@ -339,7 +343,7 @@ The node version used in this project is stored in [.node-version](.node-version
 while the version of Ruby is stored in [.ruby-version](.ruby-version).
 
 ### React Native
-Follow the [official tutorial](https://reactnative.dev/docs/environment-setup) for installing the `React Native CLI` for your operating system.
+Follow the [official tutorial](https://reactnative.dev/docs/environment-setup?guide=native) for installing the `React Native CLI` for your operating system.
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
@@ -361,6 +365,9 @@ $ rbenv install && rbenv version
 
 # Install yarn and rehash to install shims
 $ npm install -g yarn && nodenv rehash
+
+# Install bundle
+$ gem install bundle
 
 # Install the required Gems from the Gemfile
 # Run this only during the first setup and when Gems dependencies change
@@ -428,16 +435,17 @@ This section lists possible solutions to problems you might encounter while buil
 <details>
 <summary>iOS build</summary>
 
-- While running `yarn run-ios` you might encounter the following error:
-    ```
+-   ```
     error: redefinition of module 'YogaKit' build Failed
     ```
     Restart your machine to fix the issue.
 
-- While using a virtual node enviroment and building with Xcode you might encounter the following error: 
-    ```
+    ---
+
+-   ```
     error: Can't find 'node' binary to build React Native bundle If you have non-standard nodejs installation, select your project in Xcode, find 'Build Phases' - 'Bundle React Native code and images' and change NODE_BINARY to absolute path to your node executable (you can find it by invoking 'which node' in the terminal)
     ```
+    While using a virtual node enviroment and building with Xcode you might encounter the aformentioned error.
     Create a local Xcode enviroment file by running: 
     ```bash
     $ cd ios
@@ -445,6 +453,22 @@ This section lists possible solutions to problems you might encounter while buil
     ```
     Edit `.xcode.env.local` to your needs by adding your node binary path which can be found by running `which node`.
 
+    ---
+
+-   ```
+    error No simulator available with name "iPhone 13".
+    ```
+    This happens because new versions of Xcode do not automatically create a simulator for the iPhone 13. 
+    To fix the issue you can either create a new simulator and name it `iPhone 13` or run the command `yarn run-ios --simulator='a valid simulator name'`.
+
+    ---
+
+-   ```
+    Application launch for 'it.pagopa.app.io' did not return a valid pid nor a launch error. Domain: NSPOSIXErrorDomain Code: 3 Failure Reason: No such process User Info: { DVTErrorCreationDateKey = "2022-01-25 12:02:41 +0000"; IDERunOperationFailingWorker = IDELaunchiPhoneSimulatorLauncher; }
+    ```
+    This happens on Apple Silicon CPUs because some `Pods` do not implement the `XCFramework` yet. Install `Rosetta` by running `softwareupdate --install-rosetta` to fix the issue.
+
+    ---
 </details>
 
 # Architecture
@@ -488,19 +512,10 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://main/messages</td>
         </tr>
         <tr>
-            <td>ioit://main/wallet</td>
-        </tr>
-        <tr>
             <td>ioit://main/services</td>
         </tr>
         <tr>
             <td>ioit://main/profile</td>
-        </tr>
-    </table>
-    <h3>messages</h3>
-    <table>
-        <tr>
-            <td>ioit://messages</td>
         </tr>
     </table>
     <h3>wallet</h3>
@@ -514,29 +529,11 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
         <tr>
             <td>ioit://wallet/card-onboarding-attempts</td>
         <tr>
-        <tr>
-            <td>ioit://wallet/bpd-iban-update</td>
-        <tr>
-        <tr>
-            <td>ioit://wallet/bpd-opt-in</td>
-        <tr>
-        <tr>
-            <td>ioit://wallet/bpd-opt-in/choice</td>
-        <tr>
     </table>
     <h3>services</h3>
     <table>
         <tr>
-            <td>ioit://services</td>
-        </tr>
-        <tr>
-            <td>ioit://services/service-detail</td>
-        </tr>
-        <tr>
-            <td>ioit://services/webview</td>
-        </tr>
-        <tr>
-            <td>ioit://services/sv-generation/check-status</td>
+            <td>ioit://services/service-detail?serviceId=:id</td>
         </tr>
     </table>
     <h3>profile</h3>
@@ -554,22 +551,10 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://profile/privacy-main</td>
         </tr>
     </table>
-    <h3>cgn</h3>
-    <table>
-        <tr>
-            <td>ioit://cgn-details/detail</td>
-        </tr>
-        <tr>
-            <td>ioit://cgn-details/categories</td>
-        </tr>
-        <tr>
-            <td>ioit://cgn-details/categories-merchant/:category</td>
-        </tr>
-    </table>
     <h3>fci</h3>
     <table>
         <tr>
-            <td>ioit://fci/main</td>
+            <td>ioit://fci/main?signatureRequestId=:id</td>
         </tr>
         <tr>
             <td>ioit://fci/signature-requests</td>
@@ -578,27 +563,17 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
             <td>ioit://cgn-details/categories-merchant/:category</td>
         </tr>
     </table>
-    <h3>idpay</h3>
-    <table>
-        <tr>
-            <td>ioit://idpay/onboarding/:serviceId</td>
-        </tr>
-        <tr>
-            <td>ioit://idpay/initiative/:initiativeId</td>
-        </tr>
-    </table>
-    <h3>miscs</h3>
-    <table>
-        <tr>
-            <td>ioit://uadonations-webview </td>
-        </tr>
-        <tr>
-            <td>ioit://fims/webview</td>
-        </tr>
-        <tr>
-            <td>ioit://cgn-activation</td>
-        </tr>
-    </table>
 </details>
 
+## Design System
+The interface for the entire application was built using [NativeBase](https://docs-v2.nativebase.io/), a component library first developed for React Native. Although it was quite useful in the early stages, the significant API changes between `2.x` and `3.x` versions made upgrading the library very expensive. For this reason, we have been gradually rolling out a new library of custom components that utilizes React Native's latest APIs since Q1 2023.
 
+The new library is available through the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) package.
+
+In the meantime, there are two complementary and simultaneous activities going on in the application:
+- The partial (or complete) rewriting of legacy screens to deprecate NativeBase and remove it from the codebase.
+- The gradual introduction of the new design system through the development of new screens or the adaptation of existing ones.
+
+You can keep track of the latest developments by filtering all the PRs according to the type of activity:
+
+[![NativeBase's dismissal label](https://img.shields.io/github/labels/pagopa/io-app/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC)](https://github.com/pagopa/io-app/labels/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC) [![Design System's label](https://img.shields.io/github/labels/pagopa/io-app/Design%20System)](https://github.com/pagopa/io-app/labels/Design%20System)

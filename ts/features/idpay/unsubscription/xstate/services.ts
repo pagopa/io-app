@@ -6,6 +6,7 @@ import { PreferredLanguage } from "../../../../../definitions/backend/PreferredL
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { IDPayClient } from "../../common/api/client";
 import { Context } from "./context";
+import { UnsubscriptionFailureEnum } from "./failure";
 
 export type Services = {
   getInitiativeInfo: {
@@ -37,11 +38,20 @@ const createServicesImplementation = (
     return pipe(
       dataResponse,
       E.fold(
-        () => Promise.reject(undefined),
+        () => Promise.reject(UnsubscriptionFailureEnum.UNEXPECTED),
         flow(
-          E.map(({ status, value }) =>
-            status !== 200 ? Promise.reject(undefined) : Promise.resolve(value)
-          ),
+          E.map(({ status, value }) => {
+            switch (status) {
+              case 200:
+                return Promise.resolve(value);
+              case 401:
+                return Promise.reject(
+                  UnsubscriptionFailureEnum.SESSION_EXPIRED
+                );
+              default:
+                return Promise.reject(UnsubscriptionFailureEnum.GENERIC);
+            }
+          }),
           E.getOrElse(() => Promise.reject(undefined))
         )
       )
@@ -64,13 +74,20 @@ const createServicesImplementation = (
     return pipe(
       dataResponse,
       E.fold(
-        () => Promise.reject(undefined),
+        () => Promise.reject(UnsubscriptionFailureEnum.UNEXPECTED),
         flow(
-          E.map(({ status }) =>
-            status !== 200
-              ? Promise.reject(undefined)
-              : Promise.resolve(undefined)
-          ),
+          E.map(({ status }) => {
+            switch (status) {
+              case 204:
+                return Promise.resolve(undefined);
+              case 401:
+                return Promise.reject(
+                  UnsubscriptionFailureEnum.SESSION_EXPIRED
+                );
+              default:
+                return Promise.reject(UnsubscriptionFailureEnum.GENERIC);
+            }
+          }),
           E.getOrElse(() => Promise.reject(undefined))
         )
       )

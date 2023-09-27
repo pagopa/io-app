@@ -55,7 +55,7 @@ describe("Credit Card onboarding", () => {
       await element(by.id("securityCodeInputMask")).typeText("123");
 
       // Close the keyboard
-      await element(by.label("Done")).atIndex(0).tap();
+      await element(by.label("Fine")).atIndex(0).tap();
       await element(by.text(I18n.t("global.buttons.continue"))).tap();
 
       await waitFor(element(by.id("saveOrContinueButton")))
@@ -78,7 +78,7 @@ describe("Credit Card onboarding", () => {
         .withTimeout(e2eWaitRenderTimeout);
 
       // Wait for return to wallet
-      await waitFor(element(by.text(I18n.t("wallet.wallet"))))
+      await waitFor(element(by.id("wallet-home-header-title")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
     });

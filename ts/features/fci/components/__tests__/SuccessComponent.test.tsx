@@ -114,6 +114,22 @@ describe("Test SuccessComponent", () => {
       component.getByTestId("RejectedSignatureRequestTestID")
     ).toBeTruthy();
   });
+  it("with a signature request status CANCELLED should render a GenericErrorComponent", () => {
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
+    const signedSignatureRequest = {
+      ...mockSignatureRequestDetailView,
+      status: SignatureRequestStatusEnum.CANCELLED
+    };
+    const props = {
+      signatureRequest: signedSignatureRequest
+    };
+    const component = renderComponent(props, store);
+    expect(
+      component.getByTestId("CancelledSignatureRequestTestID")
+    ).toBeTruthy();
+  });
 });
 
 function renderComponent(props: Props, store: Store<GlobalState>) {

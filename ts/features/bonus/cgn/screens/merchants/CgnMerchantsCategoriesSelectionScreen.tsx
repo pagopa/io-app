@@ -5,14 +5,14 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { IOBadge } from "../../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { H1 } from "../../../../../components/core/typography/H1";
 import {
   IOColors,
-  getGradientColorValues
-} from "../../../../../components/core/variables/IOColors";
+  getGradientColorValues,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
+import { IOBadge } from "../../../../../components/core/IOBadge";
+import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";

@@ -55,6 +55,7 @@ const CgnUnsubscribe = () => {
         accessibilityRole={"button"}
         accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
         onPress={requestUnsubscription}
+        testID="cgnDeactivateBonusTestId"
       >
         {I18n.t("bonus.cgn.cta.deactivateBonus")}
       </Link>

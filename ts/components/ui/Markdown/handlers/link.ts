@@ -3,10 +3,23 @@ import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../i18n";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
-import { IO_INTERNAL_LINK_PREFIX } from "../../../../utils/navigation";
+import {
+  IO_INTERNAL_LINK_PREFIX,
+  IO_FIMS_LINK_PREFIX,
+  IO_FIMS_LINK_PROTOCOL
+} from "../../../../utils/navigation";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);
+
+export const isIoFIMSLink = (href: string): boolean =>
+  href.startsWith(IO_FIMS_LINK_PREFIX);
+
+export const removeFIMSPrefixFromUrl = (fimsUrlWithProtocol: string) => {
+  // eslint-disable-next-line no-useless-escape
+  const regexp = new RegExp(`^${IO_FIMS_LINK_PROTOCOL}\/\/`, "i");
+  return fimsUrlWithProtocol.replace(regexp, "");
+};
 
 /**
  * a dedicated codec for CustomHandledLink

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H3 } from "../../../components/core/typography/H3";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -9,9 +9,10 @@ import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { fciEndRequest } from "../store/actions";
-import { useIODispatch } from "../../../store/hooks";
-import { H4 } from "../../../components/core/typography/H4";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackFciUserExit } from "../analytics";
+import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
+import Markdown from "../../../components/ui/Markdown";
 
 const styles = StyleSheet.create({
   verticalPad: {
@@ -25,9 +26,12 @@ const styles = StyleSheet.create({
 export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
   const route = useRoute();
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View style={styles.verticalPad}>
-      <H4 weight={"Regular"}>{I18n.t("features.fci.abort.content")}</H4>
+      <Markdown>
+        {I18n.t("features.fci.abort.content", { dossierTitle })}
+      </Markdown>
     </View>,
     <View style={IOStyles.flex}>
       <H3 color={"bluegreyDark"} weight={"SemiBold"}>

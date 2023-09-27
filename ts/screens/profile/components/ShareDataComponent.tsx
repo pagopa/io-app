@@ -1,6 +1,6 @@
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../../components/box/InfoBox";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { Label } from "../../../components/core/typography/Label";
@@ -9,7 +9,7 @@ import Markdown from "../../../components/ui/Markdown";
 import { privacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { ioSuppliersUrl } from "../../../urls";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
 type MarkdownProps = {
@@ -24,9 +24,9 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
 );
 
 const shareDataSecurityMoreLink =
-  "https://www.pagopa.it/static/781646994f1f8ddad2d95af3aaedac3d/Sicurezza-delle-informazioni_PagoPA-S.p.A..pdf";
+  "https://www.pagopa.it/it/politiche-per-la-sicurezza-delle-informazioni";
 export const ShareDataComponent = (): React.ReactElement => {
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <MarkdownBody
       body={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
     />,
@@ -36,11 +36,13 @@ export const ShareDataComponent = (): React.ReactElement => {
 
   return (
     <>
-      <H1>{I18n.t("profile.main.privacy.shareData.screen.title")}</H1>
+      <H1 testID="share-data-component-title">
+        {I18n.t("profile.main.privacy.shareData.screen.title")}
+      </H1>
       <VSpacer size={16} />
       <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
       <VSpacer size={16} />
-      <InfoBox iconName={"io-analytics"}>
+      <InfoBox iconName="analytics">
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
           <Label color={"bluegrey"}>
@@ -57,7 +59,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         </Body>
       </InfoBox>
       <VSpacer size={16} />
-      <InfoBox iconName={"io-eye-off"}>
+      <InfoBox iconName="eyeHide">
         <Body>
           {`${I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
@@ -71,7 +73,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         </Body>
       </InfoBox>
       <VSpacer size={16} />
-      <InfoBox iconName={"io-fornitori"}>
+      <InfoBox iconName="fornitori">
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
           <Label color={"bluegrey"}>

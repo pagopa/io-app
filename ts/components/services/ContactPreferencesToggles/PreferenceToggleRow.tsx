@@ -1,10 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import Switch from "../../ui/Switch";
 import { H4 } from "../../core/typography/H4";
 import { IOStyles } from "../../core/variables/IOStyles";
-import IconFont from "../../ui/IconFont";
-import { IOColors } from "../../core/variables/IOColors";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
@@ -56,7 +55,7 @@ const PreferenceToggleRow = ({
             accessibilityRole={"button"}
             accessibilityLabel={I18n.t("global.accessibility.reload")}
           >
-            <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
+            <Icon name="reload" size={20} color="blue" />
           </TouchableDefaultOpacity>
         );
       case "ready":

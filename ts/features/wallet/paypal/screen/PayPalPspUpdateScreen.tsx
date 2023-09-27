@@ -11,7 +11,7 @@ import {
   StyleSheet
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -19,7 +19,6 @@ import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -29,12 +28,11 @@ import {
 } from "../../../../store/actions/wallet/payment";
 import { useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
-import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
   PSP_LOGO_MAX_WIDTH
@@ -145,12 +143,9 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
       </View>
       <View style={IOStyles.row}>
         <Label color={"blue"}>{formatNumberCentsToAmount(psp.fee)}</Label>
-        <IconFont
-          style={{ justifyContent: "center" }}
-          name={"io-right"}
-          size={24}
-          color={customVariables.contentPrimaryBackground}
-        />
+        <View style={{ justifyContent: "center" }}>
+          <Icon name="chevronRightListItem" size={24} color="blue" />
+        </View>
       </View>
     </ListItem>
   );

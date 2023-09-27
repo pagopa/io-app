@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, PixelRatio, Platform } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "./fonts";
-import { IOColors } from "./variables/IOColors";
 
 export type IOBadgeOutlineColors = Extract<
   IOColors,
-  "blue" | "white" | "red" | "orange"
+  "blue" | "white" | "grey" | "red" | "orange"
 >;
 export type IOBadgeSolidColors = Extract<
   IOColors,
@@ -22,7 +22,7 @@ type IOBadgeCommonProps = {
 
 type IOBadgeConditionalProps =
   | {
-      variant: "solid" | "outline";
+      variant: "solid";
       color: IOBadgeSolidColors;
     }
   | {
@@ -40,6 +40,7 @@ type SolidVariantProps = {
 const mapOutlineColor: Record<NonNullable<IOBadgeOutlineColors>, IOColors> = {
   blue: "blue",
   white: "white",
+  grey: "bluegreyDark",
   red: "red",
   orange: "orange"
 };
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
 
 /**
  * Official badge component
+@deprecated("Use the new Badge component instead")
  */
 export const IOBadge = ({
   text,

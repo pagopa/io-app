@@ -1,12 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import CardIcon from "../../../../img/assistance/card.svg";
-import EmailIcon from "../../../../img/assistance/email.svg";
-import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import {
+  IOColors,
+  IOIconSizeScale,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -46,26 +48,29 @@ type ItemProps = {
   email?: string;
 };
 
-const iconProps = { width: 24, height: 24 };
+const iconStyleProps = {
+  size: 24 as IOIconSizeScale,
+  color: "blue" as IOColors
+};
 
 const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     id: "profileNameSurname",
-    icon: <NameSurnameIcon {...iconProps} />,
+    icon: <Icon name="profile" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.nameSurname"),
     value: props.nameSurname,
     testId: "profileNameSurname"
   },
   {
     id: "profileFiscalCode",
-    icon: <CardIcon {...iconProps} />,
+    icon: <Icon name="fiscalCodeIndividual" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
   },
   {
     id: "profileEmail",
-    icon: <EmailIcon {...iconProps} />,
+    icon: <Icon name="email" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email,
     testId: "profileEmail"
@@ -121,11 +126,6 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     <BaseScreenComponent
       showChat={false}
       goBack={true}
-      // customRightIcon is needed to have a centered header title
-      customRightIcon={{
-        iconName: "",
-        onPress: constNull
-      }}
       headerTitle={I18n.t("support.askPermissions.listTitle")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>

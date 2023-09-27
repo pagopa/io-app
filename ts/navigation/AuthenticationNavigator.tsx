@@ -11,10 +11,10 @@ import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinSc
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
-import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
-import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
+import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
+import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -47,18 +47,13 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
+      name={ROUTES.AUTHENTICATION_AUTH_SESSION}
+      component={AuthSessionPage}
+    />
+
+    <Stack.Screen
       name={ROUTES.AUTHENTICATION_IDP_TEST}
       component={TestAuthenticationScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.AUTHENTICATION_SPID_INFORMATION}
-      component={SpidInformationScreen}
-    />
-
-    <Stack.Screen
-      name={ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION}
-      component={SpidCIEInformationScreen}
     />
 
     <Stack.Screen name={ROUTES.MARKDOWN} component={MarkdownScreen} />
@@ -69,6 +64,11 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen name={ROUTES.CIE_PIN_SCREEN} component={CiePinScreen} />
+
+    <Stack.Screen
+      name={ROUTES.CIE_LOGIN_CONFIG_SCREEN}
+      component={CieLoginConfigScreen}
+    />
 
     <Stack.Screen
       name={ROUTES.CIE_AUTHORIZE_USAGE_SCREEN}

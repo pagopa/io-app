@@ -2,17 +2,15 @@ import * as React from "react";
 import { ReactNode, useContext, useState } from "react";
 import { Body, Container, Content, Left, Right } from "native-base";
 import { View, StyleSheet, SafeAreaView } from "react-native";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../core/typography/H4";
-import { IOColors } from "../core/variables/IOColors";
 import { H5 } from "../core/typography/H5";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
-import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +64,7 @@ const TextboxWithSuggestionModal = (props: ModalProps) => {
       <AppHeader>
         <Left>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Left>
         <Body style={{ alignItems: "center", marginRight: 32 }}>

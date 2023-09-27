@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { H5 } from "../../../../components/core/typography/H5";
 import { H3 } from "../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { withBase64Uri } from "../../../../utils/image";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   voucherCode: string;

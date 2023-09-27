@@ -11,16 +11,14 @@ import {
   StatusBar,
   StyleSheet
 } from "react-native";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
-import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { useMaxBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
-import { IOColors } from "./core/variables/IOColors";
-import { VSpacer } from "./core/spacer/Spacer";
 
 export type Props = Readonly<{
   onCancel: () => void;
@@ -94,7 +92,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
             accessibilityRole={"button"}
             accessibilityLabel={I18n.t("global.buttons.close")}
           >
-            <IconFont name="io-close" color={IOColors.white} />
+            <Icon name="closeLarge" color="white" />
           </Button>
         </Right>
       </AppHeader>

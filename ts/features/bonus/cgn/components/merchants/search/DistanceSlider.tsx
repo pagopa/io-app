@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import * as React from "react";
 import Slider from "@react-native-community/slider";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../i18n";
 
 type Props = {

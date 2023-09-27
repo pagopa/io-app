@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -73,7 +73,7 @@ export const useChangeActivationConfirmationBottomSheet = (
 ) => {
   const { cta } = getText(newVal ? "Activation" : "Deactivation");
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <BpdChangeActivationConfirmationScreen
       onCancel={() => dismiss()}
       onConfirm={() => {

@@ -1,14 +1,13 @@
 import * as React from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { cgnOtpDataSelector } from "../../../store/reducers/otp";
 import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
 import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
-import Eye from "../../../../../../../img/icons/Eye.svg";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -102,11 +101,7 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
           {"••••••••••"}
         </BaseTypography>
 
-        <Eye
-          width={COPY_ICON_SIZE}
-          height={COPY_ICON_SIZE}
-          fill={IOColors.blue}
-        />
+        <Icon size={COPY_ICON_SIZE} color="blue" name={"eyeShow"} />
       </View>
     </TouchableWithoutFeedback>
   );

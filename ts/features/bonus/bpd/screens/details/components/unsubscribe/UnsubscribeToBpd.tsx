@@ -2,15 +2,15 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOColors } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../../components/core/typography/Label";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
 import { identificationRequest } from "../../../../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../../../../config";
-import { useIOBottomSheetModal } from "../../../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../../../utils/hooks/bottomSheet";
 import {
   cancelButtonProps,
   errorButtonProps
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <UnsubscribeComponent />,
     I18n.t("bonus.bpd.unsubscribe.title"),
     582,

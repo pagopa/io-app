@@ -12,19 +12,15 @@ import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { Body } from "../../components/core/typography/Body";
-import { Label } from "../../components/core/typography/Label";
 import { Link } from "../../components/core/typography/Link";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
@@ -37,7 +33,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
@@ -57,7 +52,7 @@ import {
 } from "../../utils/input";
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 
 export type AddCardScreenNavigationParams = Readonly<{
   inPayment: O.Option<{
@@ -83,14 +78,9 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24
   },
-
   verticalSpacing: {
     width: 16,
     flex: 0
-  },
-  button: {
-    width: "100%",
-    borderColor: IOColors.blue
   },
   whiteBg: {
     backgroundColor: IOColors.white
@@ -105,10 +95,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.saveCard.contextualHelpContent"
 };
 
-const acceptedCardsPageURL: string = "https://io.italia.it/metodi-pagamento";
-
 const openSupportedCardsPage = (): void => {
-  openWebUrl(acceptedCardsPageURL, () =>
+  openWebUrl(acceptedPaymentMethodsFaqUrl, () =>
     showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
   );
 };
@@ -240,28 +228,6 @@ const AddCardScreen: React.FC<Props> = props => {
     maybeCreditCardValidOrExpired(creditCard)
   );
 
-  const inPayment = props.route.params.inPayment;
-
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <>
-      <Body>{I18n.t("wallet.missingDataText.body")}</Body>
-      <VSpacer size={24} />
-      <ButtonDefaultOpacity
-        style={styles.button}
-        bordered={true}
-        onPress={() => {
-          dismiss();
-          props.startAddCobadgeWorkflow();
-        }}
-        onPressWithGestureHandler={true}
-      >
-        <Label>{I18n.t("wallet.missingDataText.cta")}</Label>
-      </ButtonDefaultOpacity>
-    </>,
-    I18n.t("wallet.missingDataCTA"),
-    300
-  );
-
   const detectedBrand: SupportedBrand = CreditCardDetector.validate(
     creditCard.pan
   );
@@ -339,7 +305,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   ? I18n.t("wallet.dummyCard.labels.holder.description.base")
                   : I18n.t("wallet.dummyCard.labels.holder.description.error")
               }
-              icon="io-titolare"
+              icon="profile"
               isValid={isCardHolderValid}
               accessibilityLabel={accessibilityLabels.cardHolder}
               inputProps={{
@@ -364,7 +330,7 @@ const AddCardScreen: React.FC<Props> = props => {
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon={detectedBrand.iconForm}
-              iconStyle={styles.creditCardForm}
+              imageStyle={styles.creditCardForm}
               isValid={isCreditCardValid}
               inputMaskProps={{
                 value: pipe(
@@ -399,7 +365,7 @@ const AddCardScreen: React.FC<Props> = props => {
               <Col>
                 <LabelledItem
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
-                  icon="io-calendario"
+                  icon="calendar"
                   accessibilityLabel={accessibilityLabels.expirationDate}
                   isValid={isCardExpirationDateValid}
                   inputMaskProps={{
@@ -429,7 +395,7 @@ const AddCardScreen: React.FC<Props> = props => {
                       ? "wallet.dummyCard.labels.securityCode4D"
                       : "wallet.dummyCard.labels.securityCode"
                   )}
-                  icon="io-lucchetto"
+                  icon="locked"
                   isValid={isCardCvvValid}
                   accessibilityLabel={
                     detectedBrand.cvvLength === 4
@@ -459,18 +425,6 @@ const AddCardScreen: React.FC<Props> = props => {
               </Col>
             </Grid>
 
-            {!O.isSome(inPayment) && (
-              <>
-                <VSpacer size={16} />
-                <Link
-                  accessibilityRole="link"
-                  accessibilityLabel={I18n.t("wallet.missingDataCTA")}
-                  onPress={present}
-                >
-                  {I18n.t("wallet.missingDataCTA")}
-                </Link>
-              </>
-            )}
             <VSpacer size={16} />
 
             <Link
@@ -493,7 +447,6 @@ const AddCardScreen: React.FC<Props> = props => {
             O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
           )}
         />
-        {bottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -501,8 +454,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
+const mapDispatchToProps = (_: Dispatch, props: OwnProps) => ({
   navigateBack: () => navigateBack(),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({

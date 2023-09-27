@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -18,7 +18,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
@@ -100,11 +100,15 @@ const getLocales = () => ({
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet, bottomSheet } =
-    useIOBottomSheetModal(
-      <Body>{locales.whatIsPspBody}</Body>,
-      locales.whatIsPspTitle,
-      280
-    );
+    useIOBottomSheetAutoresizableModal({
+      title: locales.whatIsPspTitle,
+      component: (
+        <View>
+          <Body>{locales.whatIsPspBody}</Body>
+          <VSpacer size={16} />
+        </View>
+      )
+    });
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();

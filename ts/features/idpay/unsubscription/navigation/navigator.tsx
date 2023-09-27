@@ -4,6 +4,7 @@ import React from "react";
 import UnsubscriptionConfirmationScreen from "../screens/UnsubscriptionConfirmationScreen";
 import UnsubscriptionResultScreen from "../screens/UnsubscriptionResultScreen";
 import { IDPayUnsubscriptionMachineProvider } from "../xstate/provider";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 
 export const IDPayUnsubscriptionRoutes = {
   IDPAY_UNSUBSCRIPTION_MAIN: "IDPAY_UNSUBSCRIPTION_MAIN",
@@ -22,6 +23,7 @@ const Stack = createStackNavigator<IDPayUnsubscriptionParamsList>();
 export type IDPayUnsubscriptionNavigatorParams = {
   initiativeId: string;
   initiativeName?: string;
+  initiativeType?: InitiativeRewardTypeEnum;
 };
 
 type IDPayUnsubscriptionScreenRouteProps = RouteProp<
@@ -32,12 +34,13 @@ type IDPayUnsubscriptionScreenRouteProps = RouteProp<
 export const IDPayUnsubscriptionNavigator = () => {
   const route = useRoute<IDPayUnsubscriptionScreenRouteProps>();
 
-  const { initiativeId, initiativeName } = route.params;
+  const { initiativeId, initiativeName, initiativeType } = route.params;
 
   return (
     <IDPayUnsubscriptionMachineProvider
       initiativeId={initiativeId}
       initiativeName={initiativeName}
+      initiativeType={initiativeType}
     >
       <Stack.Navigator
         initialRouteName={

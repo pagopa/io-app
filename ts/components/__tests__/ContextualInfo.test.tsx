@@ -2,6 +2,7 @@ import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import React from "react";
 import { Text } from "react-native";
 import { createStore } from "redux";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import ROUTES from "../../navigation/routes";
 
 import { applicationChangeState } from "../../store/actions/application";
@@ -19,7 +20,7 @@ jest.useFakeTimers();
  * TODO: this helper is a stub for further development around an a11y-oriented
  * library that can be shared across projects.
  */
-export function buttonByIconName(iconName: string, renderAPI: RenderAPI) {
+export function buttonByIconName(iconName: IOIcons, renderAPI: RenderAPI) {
   return renderAPI.getAllByRole("button").find(
     button =>
       !!button.children.find(child => {
@@ -38,18 +39,20 @@ const options = {
 };
 
 describe("ContextualInfo component", () => {
-  it("should render a button with the 'io-close' icon", () => {
+  it("should render a close button", () => {
     const component = renderComponent(options);
-    // ensure that the close icon is inside an accessible button
-    expect(buttonByIconName("io-close", component)).toBeDefined();
+    expect(
+      component.queryByTestId("contextualInfo_closeButton")
+    ).not.toBeNull();
   });
 
   describe("when the close button is pressed", () => {
     it("should call `onClose`", () => {
       const onClose = jest.fn();
       const component = renderComponent({ ...options, onClose });
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const closeButton = buttonByIconName("io-close", component)!;
+      const closeButton = component.queryByTestId(
+        "contextualInfo_closeButton"
+      )!;
       fireEvent(closeButton, "onPress");
       expect(onClose).toHaveBeenCalledTimes(1);
     });

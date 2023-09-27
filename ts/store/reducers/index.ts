@@ -18,6 +18,7 @@ import {
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
+import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -184,14 +185,14 @@ export function createRootReducer(
               messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
-              transactionsRead: state.entities.transactionsRead,
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.entities._persist
             },
             features: {
-              pn: {
+              whatsNew: {
+                ...whatsNewInitialState,
                 // eslint-disable-next-line no-underscore-dangle
-                _persist: state.features.pn._persist
+                _persist: state.features.whatsNew._persist
               },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist

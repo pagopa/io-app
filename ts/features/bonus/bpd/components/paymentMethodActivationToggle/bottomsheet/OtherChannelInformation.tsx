@@ -1,13 +1,12 @@
 import { none } from "fp-ts/lib/Option";
 import { View } from "react-native";
 import * as React from "react";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import BlockButtons from "../../../../../../components/ui/BlockButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../store/actions/navigation";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -46,7 +45,7 @@ export const OtherChannelInformation: React.FunctionComponent<Props> =
   );
 
 export const useOtherChannelInformationBottomSheet = () => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <OtherChannelInformation
       onAddPayment={() => {
         dismiss();

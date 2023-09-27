@@ -1,12 +1,15 @@
 import * as React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import { IOColors, VSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
 import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { isValidPinNumber } from "../features/fastLogin/utils/pinPolicy";
+import { isDevEnv } from "../utils/environment";
+import { defaultPin } from "../config";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
-import { IOColors } from "./core/variables/IOColors";
 import { Label } from "./core/typography/Label";
 import { H1 } from "./core/typography/H1";
 import { Body } from "./core/typography/Body";
@@ -21,6 +24,9 @@ export type Props = {
 const styles = StyleSheet.create({
   flex: {
     flex: 1
+  },
+  bulletList: {
+    marginLeft: 10
   }
 });
 
@@ -40,15 +46,12 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   const [isPinConfirmationDirty, setIsPinConfirmationDirty] =
     React.useState(false);
 
-  const isPinValid = !isPinDirty || pin.length === pinLength;
+  const isPinValid = !isPinDirty || isValidPinNumber(pin);
 
   const isPinConfirmationValid =
     !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
 
-  const isFormValid =
-    pin.length === pinLength &&
-    pinConfirmation.length === pinLength &&
-    pinConfirmation === pin;
+  const isFormValid = isValidPinNumber(pin) && pinConfirmation === pin;
 
   const handlePinBlur = React.useCallback(() => {
     setIsPinDirty(true);
@@ -70,7 +73,12 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
 
   const computedConfirmButtonProps = React.useMemo(
     () => ({
-      ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
+      ...confirmButtonProps(
+        () => null,
+        I18n.t("global.buttons.continue"),
+        undefined,
+        "pin-creation-form-confirm"
+      ),
       disabled: !isFormValid,
       onPress: handleSubmit
     }),
@@ -80,7 +88,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   const pinFieldA11yLabel = React.useMemo(
     () =>
       `${I18n.t("onboarding.pin.pinLabel")}${
-        !isPinValid ? ", " + I18n.t("onboarding.pin.errors.length") : ""
+        !isPinValid ? ", " + I18n.t("onboarding.pin.errors.invalid") : ""
       }`,
     [isPinValid]
   );
@@ -95,16 +103,39 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     [isPinConfirmationValid]
   );
 
+  const bulletList = (items: Array<string>) => (
+    <FlatList
+      data={items}
+      renderItem={({ item }) => (
+        <Body style={styles.bulletList}>{`\u2022 ${item}`}</Body>
+      )}
+    />
+  );
+
+  const insertValidPin = () => {
+    setPin(defaultPin);
+    setPinConfirmation(defaultPin);
+  };
+
   return (
     <View style={styles.flex}>
       <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
         <View style={{ marginTop: 10 }} />
 
-        <H1>{I18n.t("onboarding.pin.title")}</H1>
+        <H1 testID="pin-creation-form-title">
+          {I18n.t("onboarding.pin.title")}
+        </H1>
 
         <View style={{ marginTop: 10 }} />
 
         <Body>{I18n.t("onboarding.pin.subTitle")}</Body>
+        <VSpacer />
+
+        <Body>{I18n.t("onboarding.pin.policy.headerTitle")}</Body>
+        {bulletList([
+          I18n.t("onboarding.pin.policy.first"),
+          I18n.t("onboarding.pin.policy.second")
+        ])}
 
         <View style={{ position: "relative", marginTop: 30 }}>
           <LabelledItem
@@ -120,12 +151,13 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               returnKeyType: "done",
               contextMenuHidden: true
             }}
-            icon={isPinValid ? undefined : "io-warning"}
-            iconColor={IOColors.red}
+            icon={isPinValid ? undefined : "notice"}
+            iconColor={"red"}
             iconPosition="right"
             isValid={isPinValid ? undefined : false}
             overrideBorderColor={isPinValid ? undefined : IOColors.red}
             testID="PinField"
+            inputAccessoryViewID="" // hide keyboard toolbar
           />
 
           {!isPinValid && (
@@ -135,7 +167,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               importantForAccessibility="no-hide-descendants"
             >
               <LabelSmall weight="Regular" color="red">
-                {I18n.t("onboarding.pin.errors.length")}
+                {I18n.t("onboarding.pin.errors.invalid")}
               </LabelSmall>
             </View>
           )}
@@ -155,14 +187,15 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               returnKeyType: "done",
               contextMenuHidden: true
             }}
-            icon={isPinConfirmationValid ? undefined : "io-warning"}
-            iconColor={IOColors.red}
+            icon={isPinConfirmationValid ? undefined : "notice"}
+            iconColor={"red"}
             iconPosition="right"
             isValid={isPinConfirmationValid ? undefined : false}
             overrideBorderColor={
               isPinConfirmationValid ? undefined : IOColors.red
             }
             testID="PinConfirmationField"
+            inputAccessoryViewID="" // hide keyboard toolbar
           />
 
           {!isPinConfirmationValid && (
@@ -179,13 +212,23 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
         </View>
 
         <View style={{ marginTop: 45 }}>
-          <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
+          <InfoBox iconName="profileAlt" iconColor="bluegrey">
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("onboarding.pin.tutorial")}
             </Label>
           </InfoBox>
         </View>
       </ScrollView>
+
+      {isDevEnv && (
+        <View style={{ alignSelf: "center" }}>
+          <ButtonOutline
+            label={`Enter Pin: ${defaultPin} (DevEnv Only)`}
+            accessibilityLabel=""
+            onPress={insertValidPin}
+          />
+        </View>
+      )}
 
       <FooterWithButtons
         type="SingleButton"

@@ -1,15 +1,14 @@
 import { NavigationEvents } from "@react-navigation/compat";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { IOPictogramType, Pictogram } from "../core/pictograms";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 
 type Props = {
-  image: IOPictogramType;
+  image: IOPictograms;
   title: string;
   body?: string | React.ReactNode;
 };

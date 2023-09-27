@@ -3,13 +3,10 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
-
-import { createSelector } from "reselect";
-import { LevelEnum } from "../../../definitions/content/SectionStatus";
-import { IOColors } from "../../components/core/variables/IOColors";
-import { useMessageOpening } from "../../components/messages/hooks/useMessageOpening";
+import { IOColors } from "@pagopa/io-app-design-system";
+import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -17,26 +14,17 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent, {
-  InnerSectionStatus
-} from "../../components/SectionStatus";
+import SectionStatusComponent from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { unsupportedDeviceMoreInfoUrl } from "../../config";
-import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
 } from "../../store/actions/messages";
-import { useIOSelector } from "../../store/hooks";
+import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import {
-  isLollipopEnabledSelector,
-  sectionStatusSelector
-} from "../../store/reducers/backendStatus";
-import {
-  allArchiveMessagesSelector,
-  allInboxMessagesSelector,
+  allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
 } from "../../store/reducers/entities/messages/allPaginated";
 import {
@@ -52,10 +40,9 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../utils/accessibility";
-import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-
+import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -84,13 +71,15 @@ const MessagesHomeScreen = ({
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
-  const publicKeyOption = useSelector(lollipopPublicKeySelector);
+  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
 
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
+
+  checkToShowWhatsNew();
 
   useEffect(() => {
     if (!latestMessageOperation) {
@@ -121,27 +110,6 @@ const MessagesHomeScreen = ({
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
-  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const showUnsupportedDeviceBanner =
-    isLollipopEnabled && O.isNone(publicKeyOption);
-  const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
-    <InnerSectionStatus
-      sectionKey={"messages"}
-      sectionStatus={{
-        is_visible: true,
-        level: LevelEnum.warning,
-        web_url: {
-          "it-IT": unsupportedDeviceMoreInfoUrl,
-          "en-EN": unsupportedDeviceMoreInfoUrl
-        },
-        message: {
-          "it-IT": I18n.t("unsupportedDevice.warning"),
-          "en-EN": I18n.t("unsupportedDevice.warning")
-        }
-      }}
-    />
-  );
-
   const statusComponent = (
     <SectionStatusComponent
       sectionKey={"messages"}
@@ -154,7 +122,7 @@ const MessagesHomeScreen = ({
   return (
     <TopScreenComponent
       accessibilityEvents={{
-        disableAccessibilityFocus: messageSectionStatusActive !== undefined
+        disableAccessibilityFocus: messageSectionStatusActive
       }}
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -163,17 +131,17 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
+      {autoResizableBottomSheet}
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
-      {isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
-            iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
+            pictogram={"messages"}
           />
           {needsMigration ? (
             <MigratingMessage
@@ -211,7 +179,6 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
-      {!isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {bottomSheet}
     </TopScreenComponent>
   );
@@ -219,12 +186,10 @@ const MessagesHomeScreen = ({
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
-  messageSectionStatusActive: sectionStatusSelector("messages")(state),
+  messageSectionStatusActive:
+    sectionStatusSelector("messages")(state) !== undefined,
   searchText: searchTextSelector(state),
-  searchMessages: createSelector(
-    [allInboxMessagesSelector, allArchiveMessagesSelector],
-    (inbox, archive) => inbox.concat(archive)
-  )(state),
+  searchMessages: allInboxAndArchivedMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration,
   latestMessageOperation: allPaginatedSelector(state).latestMessageOperation

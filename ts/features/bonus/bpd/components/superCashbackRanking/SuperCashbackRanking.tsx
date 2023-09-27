@@ -1,14 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   formatIntegerNumber,
   formatNumberWithNoDigits
@@ -115,4 +114,8 @@ const SuperCashbackRanking = connect(mapStateToProps)(SuperCashbackBottomSheet);
 export default SuperCashbackRanking;
 
 export const useSuperCashbackRankingBottomSheet = () =>
-  useIOBottomSheetModal(<SuperCashbackRanking />, <SuperCashbackHeader />, 470);
+  useLegacyIOBottomSheetModal(
+    <SuperCashbackRanking />,
+    <SuperCashbackHeader />,
+    470
+  );

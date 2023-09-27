@@ -2,7 +2,6 @@ import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { ValidationError } from "io-ts";
-import { sessionExpired } from "../../store/actions/authentication";
 import { Action } from "../../store/actions/types";
 import { readablePrivacyReport } from "../../utils/reporters";
 
@@ -28,7 +27,7 @@ export function handleResponse<T>(
   response: E.Either<Array<ValidationError>, ResponseType<T>>,
   onSuccess: (payload: T) => Action,
   onFailure: (e: Error) => Action
-): Action {
+): Action | undefined {
   return pipe(
     response,
     E.fromNullable(new Error("Response is undefined")),
@@ -44,7 +43,7 @@ export function handleResponse<T>(
         }
 
         if (data.status === 401) {
-          return sessionExpired();
+          return undefined;
         }
 
         if (data.status === 500) {

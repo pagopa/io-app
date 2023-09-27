@@ -2,14 +2,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
-import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import LegalMessage from "../../../../img/features/mvl/legalMessage.svg";
 import PnMessage from "../../../../img/features/pn/pn_message_badge.svg";
-import QrCode from "../../../../img/messages/qr-code.svg";
-import { mvlEnabled, pnEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
@@ -18,16 +15,16 @@ import {
   convertReceivedDateToAccessible
 } from "../../../utils/convertDateToWordDistance";
 import { IOBadge } from "../../core/IOBadge";
-import { HSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { H3 } from "../../core/typography/H3";
 import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
-import { IOColors } from "../../core/variables/IOColors";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { BadgeComponent } from "../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
+import { useIOSelector } from "../../../store/hooks";
+import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 
 const ICON_WIDTH = 24;
 
@@ -146,17 +143,19 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
   switch (itemBadge) {
     case "paid":
       return (
-        <IOBadge
-          text={I18n.t("messages.badge.paid")}
-          variant="solid"
-          color="aqua"
-        />
+        <View style={{ alignSelf: "flex-start" }}>
+          <IOBadge
+            text={I18n.t("messages.badge.paid")}
+            variant="solid"
+            color="aqua"
+          />
+        </View>
       );
 
     case "qrcode":
       return (
         <View style={styles.qrContainer}>
-          <QrCode height={22} width={22} fill={IOColors.white} />
+          <Icon name="qrCode" size={20} color="white" />
         </View>
       );
   }
@@ -176,24 +175,13 @@ const itemBadgeToAccessibilityLabel = (itemBadge: ItemBadge): string => {
   }
 };
 
-function getTopIcon(category: MessageCategory) {
-  switch (category.tag) {
-    case TagEnumBase.LEGAL_MESSAGE:
-      return mvlEnabled ? (
-        <LegalMessage width={20} height={20} fill={IOColors.bluegreyLight} />
-      ) : null;
-    case TagEnumPN.PN:
-      return pnEnabled ? (
-        <PnMessage width={20} height={20} fill={IOColors.bluegreyLight} />
-      ) : null;
-    default:
-      return null;
-  }
-}
+const getTopIcon = (category: MessageCategory, pnEnabled: boolean) =>
+  category.tag === TagEnumPN.PN && pnEnabled ? (
+    <PnMessage width={20} height={20} fill={IOColors.bluegreyLight} />
+  ) : null;
 
 type Props = {
   category: MessageCategory;
-  hasPaidBadge: boolean;
   isRead: boolean;
   isSelected: boolean;
   isSelectionModeEnabled: boolean;
@@ -233,7 +221,6 @@ const announceMessage = (
  */
 const MessageListItem = ({
   category,
-  hasPaidBadge,
   isRead,
   isSelected,
   isSelectionModeEnabled,
@@ -249,10 +236,13 @@ const MessageListItem = ({
     message.organizationName || UNKNOWN_SERVICE_DATA.organizationName;
   const serviceName = message.serviceName || UNKNOWN_SERVICE_DATA.serviceName;
   const messageTitle = message.title || I18n.t("messages.errorLoading.noTitle");
-  const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
   const hasQrCode = category?.tag === "EU_COVID_CERT";
   const showQrCode = hasQrCode && !isSelectionModeEnabled;
 
+  const pnEnabled = useIOSelector(isPnEnabledSelector);
+  const hasPaidBadge = useIOSelector(state =>
+    isNoticePaidSelector(state, category)
+  );
   const maybeItemBadge = getMaybeItemBadge({
     paid: hasPaidBadge,
     qrCode: hasQrCode
@@ -273,7 +263,7 @@ const MessageListItem = ({
           <H5 numberOfLines={1}>{organizationName}</H5>
         </View>
         <View style={[styles.titleIconAndDate, IOStyles.alignCenter]}>
-          {getTopIcon(category)}
+          {getTopIcon(category, pnEnabled)}
           <HSpacer size={8} />
           <Label
             weight="Bold"
@@ -310,10 +300,10 @@ const MessageListItem = ({
               hasQrCode && styles.qrCheckBoxContainer
             ]}
           >
-            <IconFont
-              name={iconName}
+            <Icon
+              name={isSelected ? "legCheckOn" : "legCheckOff"}
               size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
+              color="blue"
             />
           </View>
         ) : (
@@ -340,7 +330,6 @@ const MessageListItemMemo = React.memo(
     curr.isRead === prev.isRead &&
     curr.isSelectionModeEnabled === prev.isSelectionModeEnabled &&
     curr.isSelected === prev.isSelected &&
-    curr.hasPaidBadge === prev.hasPaidBadge &&
     curr.onPress === prev.onPress
 );
 

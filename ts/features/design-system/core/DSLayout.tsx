@@ -1,22 +1,22 @@
 import * as React from "react";
 import { View } from "react-native";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
-import {
-  IOSpacer,
-  IOContentWrapper
-} from "../../../components/core/variables/IOSpacing";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
-import { Body } from "../../../components/core/typography/Body";
 import {
   IOColors,
-  IOThemeContext
-} from "../../../components/core/variables/IOColors";
+  IOThemeContext,
+  Divider,
+  VDivider,
+  HSpacer,
+  VSpacer,
+  IOAppMargin,
+  IOSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
+import { Body } from "../../../components/core/typography/Body";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { H3 } from "../../../components/core/typography/H3";
 import { H1 } from "../../../components/core/typography/H1";
-import { Divider, VDivider } from "../../../components/core/Divider";
 
 export const DSLayout = () => (
   <IOThemeContext.Consumer>
@@ -38,7 +38,7 @@ export const DSLayout = () => (
             ContentWrapper
           </H3>
         </ContentWrapper>
-        {IOContentWrapper.map((value, i, arr) => (
+        {IOAppMargin.map((value, i, arr) => (
           <React.Fragment key={`${value}-${i}`}>
             <View
               style={{

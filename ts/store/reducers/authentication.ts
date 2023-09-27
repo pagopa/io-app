@@ -26,6 +26,7 @@ import {
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
@@ -133,6 +134,14 @@ export function isSessionExpired(
 }
 
 // Selectors
+export const authenticationStateSelector = (
+  state: GlobalState
+): AuthenticationState => state.authentication;
+
+export const loggedOutWithIdpAuthSelector = createSelector(
+  authenticationStateSelector,
+  authState => (isLoggedOutWithIdp(authState) ? authState : undefined)
+);
 
 export const isLogoutRequested = (state: GlobalState) =>
   state.authentication.kind === "LogoutRequested";
@@ -145,6 +154,11 @@ export const sessionTokenSelector = (
 ): SessionToken | undefined =>
   isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
+    : undefined;
+
+export const fimsTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.fimsToken
     : undefined;
 
 /**
@@ -194,10 +208,10 @@ export const tokenFromNameSelector = (
 export const isLoggedInWithTestIdpSelector = (state: GlobalState) =>
   isLoggedIn(state.authentication) && state.authentication.idp.isTestIdp;
 
-export const selectedIdentityProviderSelector = (state: GlobalState) =>
-  isLoggedOutWithIdp(state.authentication)
-    ? state.authentication.idp
-    : undefined;
+export const selectedIdentityProviderSelector = createSelector(
+  authenticationStateSelector,
+  authState => (isLoggedOutWithIdp(authState) ? authState.idp : undefined)
+);
 
 function matchWithIdp<I>(
   state: AuthenticationState,
@@ -269,6 +283,16 @@ const reducer = (
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
       sessionToken: action.payload.token
+    };
+  }
+
+  if (isActionOf(refreshSessionToken.success, action) && isLoggedIn(state)) {
+    // Save the new SessionToken in the state
+    return {
+      ...state,
+      ...{
+        sessionToken: action.payload
+      }
     };
   }
 

@@ -6,16 +6,17 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
-import IconFont from "../../../components/ui/IconFont";
+import {
+  IOColors,
+  Icon,
+  hexToRgba,
+  HSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { hexToRgba, IOColors } from "../../core/variables/IOColors";
 import { IOBadge } from "../../core/IOBadge";
 import { Label } from "../../core/typography/Label";
-import { Icon } from "../../core/icons";
 import { IOStyles } from "../../core/variables/IOStyles";
-import { HSpacer } from "../../core/spacer/Spacer";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -27,6 +28,7 @@ type Props = {
   cardStyle?: ViewStyle;
   accessibilityLabel?: string;
   accessibilityHint?: string;
+  testId?: string;
 };
 
 const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
@@ -82,20 +84,16 @@ const styles = StyleSheet.create({
 });
 
 const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const { label, onPress, isNew, isError, cardStyle } = props;
+  const { label, onPress, isNew, isError, cardStyle, testId } = props;
   const rightLabel = () => {
     switch (props.status) {
       case undefined:
       case "add":
         return (
           <>
-            <IconFont
-              name="io-plus"
-              color={IOColors.white}
-              size={customVariables.fontSize2}
-            />
+            <Icon name="add" size={20} color="white" />
             <HSpacer size={4} />
-            <Label color="white" weight="Bold">
+            <Label color="white" weight="Bold" testID={testId}>
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
             </Label>
           </>
@@ -108,31 +106,27 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             accessible={false}
             importantForAccessibility={"no-hide-descendants"}
             accessibilityElementsHidden={true}
+            testID={testId}
           />
         );
       case "refresh":
         return (
           <View style={[IOStyles.row, IOStyles.alignCenter]}>
-            <Label weight="Bold" color="white">
+            <Label weight="Bold" color="white" testID={testId}>
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
             </Label>
             <HSpacer size={8} />
-            <Icon color="white" name="reload" size={20} />
+            <Icon color="white" name="reload" size={16} />
           </View>
         );
       case "show":
         return (
           <View style={IOStyles.row}>
-            <Label color="white" weight="Bold">
+            <Label color="white" weight="Bold" testID={testId}>
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
             </Label>
             <HSpacer size={4} />
-            <IconFont
-              style={{ marginTop: 1, marginLeft: 2 }}
-              name={"io-right"}
-              color={IOColors.white}
-              size={20}
-            />
+            <Icon size={20} color="white" name="chevronRightListItem" />
           </View>
         );
     }

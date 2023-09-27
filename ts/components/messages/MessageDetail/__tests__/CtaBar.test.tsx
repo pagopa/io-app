@@ -131,7 +131,7 @@ const renderComponent = (props: React.ComponentProps<typeof CtaBar>) => {
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <CtaBar {...props} />,
-      ROUTES.MESSAGE_DETAIL_PAGINATED,
+      ROUTES.MESSAGE_DETAIL,
       {},
       store
     ),

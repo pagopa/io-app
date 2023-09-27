@@ -7,7 +7,6 @@ import { ActionType, getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { BackendClient } from "../../api/backend";
 import { totServiceFetchWorkers } from "../../config";
-import { mixpanelTrack } from "../../mixpanel";
 import { applicationChangeState } from "../../store/actions/application";
 import {
   loadServiceDetail,
@@ -18,6 +17,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
 import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
+import { trackServiceDetailLoadingStatistics } from "../../utils/analytics";
 
 /**
  * A generator to load the service details from the Backend
@@ -204,7 +204,7 @@ function* watchLoadServicesDetailToTrack() {
   );
 }
 
-type ServicesDetailLoadTrack = {
+export type ServicesDetailLoadTrack = {
   // when loading starts
   startTime: Millisecond;
   // the amount of loading millis
@@ -232,11 +232,7 @@ const defaultDetailLoadTrack = (): ServicesDetailLoadTrack => ({
 let servicesDetailLoadTrack = defaultDetailLoadTrack();
 
 const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
-  void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
-    ...trackingStats,
-    // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
-    servicesId: undefined
-  });
+  trackServiceDetailLoadingStatistics(trackingStats);
   // reset on complete
   // when it is "PARTIAL" data must be keep to be used when the app come active again
   if (trackingStats.kind === "COMPLETE") {

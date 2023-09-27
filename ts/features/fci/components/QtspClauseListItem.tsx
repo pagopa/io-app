@@ -1,12 +1,12 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import IconFont from "../../../components/ui/IconFont";
+import { Icon } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
+import I18n from "../../../i18n";
 import LinkedText from "./LinkedText";
 
 type Props = {
@@ -49,7 +49,12 @@ const QtspClauseListItem = (props: Props) => {
       </View>
       <View style={IOStyles.horizontalContentPadding} />
       <TouchableDefaultOpacity
-        accessibilityRole={"radio"}
+        accessibilityLabel={
+          checked
+            ? I18n.t("features.fci.signatureFields.accessibility.selected")
+            : I18n.t("features.fci.signatureFields.accessibility.unselected")
+        }
+        accessibilityRole={"checkbox"}
         testID={"QtspClauseListItemButtonTestID"}
         onPress={() => {
           onChange(!checked);
@@ -57,11 +62,11 @@ const QtspClauseListItem = (props: Props) => {
         }}
       >
         <View style={IOStyles.column}>
-          <IconFont
+          <Icon
             testID="QtspClauseListItemCheckboxTestID"
-            name={checked ? "io-checkbox-on" : "io-checkbox-off"}
-            color={checked ? IOColors.blue : IOColors.bluegreyDark}
-            size={22}
+            name={checked ? "legCheckOn" : "legCheckOff"}
+            color={checked ? "blue" : "bluegreyDark"}
+            size={24}
           />
         </View>
       </TouchableDefaultOpacity>

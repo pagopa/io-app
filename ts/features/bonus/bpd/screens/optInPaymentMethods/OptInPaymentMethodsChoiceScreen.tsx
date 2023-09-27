@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -45,14 +45,14 @@ const generateOptionBody = (
 ) => (
   <>
     {showBadge && (
-      <>
+      <View style={{ alignSelf: "flex-start" }}>
         <IOBadge
           variant="solid"
           color="blue"
           text={I18n.t("bonus.bpd.optInPaymentMethods.choice.suggestedOption")}
         />
         <VSpacer size={4} />
-      </>
+      </View>
     )}
     <H4>{title}</H4>
     <LabelSmall weight="Regular" color="bluegrey">
@@ -166,15 +166,11 @@ const OptInPaymentMethodsChoiceScreen = () => {
         (isReady(showOptInChoice) && !showOptInChoice.value)
       }
     >
-      {/* The void customRightIcon and customGoBack are needed to have a centered header title */}
+      {/* The void customGoBack are needed to have a centered header title */}
       <BaseScreenComponent
         showChat={false}
         goBack={false}
         headerTitle={I18n.t("bonus.bpd.optInPaymentMethods.choice.header")}
-        customRightIcon={{
-          iconName: "",
-          onPress: () => true
-        }}
         customGoBack={
           <ButtonDefaultOpacity onPress={() => true} transparent={true} />
         }

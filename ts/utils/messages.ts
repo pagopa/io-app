@@ -2,33 +2,34 @@
  * Generic utilities for messages
  */
 
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { Predicate } from "fp-ts/lib/Predicate";
+import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { identity, pipe } from "fp-ts/lib/function";
+import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
-import {
-  getInternalRoute,
-  handleInternalLink
-} from "../components/ui/Markdown/handlers/internalLink";
-import {
-  deriveCustomHandledLink,
-  isIoInternalLink
-} from "../components/ui/Markdown/handlers/link";
-import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
-import { localeFallback } from "../i18n";
-import { Locales } from "../../locales/locales";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { mixpanelTrack } from "../mixpanel";
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
+import { Locales } from "../../locales/locales";
+import {
+  deriveCustomHandledLink,
+  isIoFIMSLink,
+  isIoInternalLink,
+  removeFIMSPrefixFromUrl
+} from "../components/ui/Markdown/handlers/link";
+import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { trackMessageCTAFrontMatterDecodingError } from "../features/messages/analytics";
+import { localeFallback } from "../i18n";
+import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { getExpireStatus } from "./dates";
+import { getInternalRoute, handleInternalLink } from "./internalLink";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
@@ -61,7 +62,7 @@ export function messageNeedsCTABar(
     message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
     hasMessagePaymentData(message) ||
-    O.isSome(getCTA(message))
+    O.isSome(getMessageCTA(message.content.markdown))
   );
 }
 
@@ -84,6 +85,14 @@ export const handleCtaAction = (
       return;
     }
     handleInternalLink(linkTo, `${convertedLink}`);
+  } else if (isIoFIMSLink(cta.action)) {
+    const url = removeFIMSPrefixFromUrl(cta.action);
+    NavigationService.navigate(FIMS_ROUTES.MAIN, {
+      screen: FIMS_ROUTES.WEBVIEW,
+      params: {
+        url
+      }
+    });
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
     if (E.isRight(maybeHandledAction)) {
@@ -248,9 +257,7 @@ const extractCTA = (
       try {
         return FM<MessageCTA>(text).attributes;
       } catch (e) {
-        void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
-          serviceId
-        });
+        trackMessageCTAFrontMatterDecodingError(serviceId);
         return null;
       }
     }),
@@ -267,21 +274,6 @@ const extractCTA = (
       )
     )
   );
-
-/**
- * extract the CTAs if they are nested inside the message markdown content
- * if some CTAs are been found, the localized version will be returned
- * @deprecated please use getMessageCTA instead
- * @param message
- * @param serviceMetadata
- * @param serviceId
- */
-export const getCTA = (
-  message: CreatedMessageWithContentAndAttachments,
-  serviceMetadata?: ServiceMetadata,
-  serviceId?: ServiceId
-): O.Option<CTAS> =>
-  getMessageCTA(message.content.markdown, serviceMetadata, serviceId);
 
 /**
  * Extract the CTAs if they are nested inside the message markdown content.
@@ -328,6 +320,15 @@ export const isCtaActionValid = (
       O.fromNullable,
       O.map(f => f(serviceMetadata)),
       O.getOrElse(() => true)
+    );
+  }
+  if (isIoFIMSLink(cta.action)) {
+    return pipe(
+      E.tryCatch(
+        () => new URL(cta.action),
+        () => false
+      ),
+      E.fold(identity, _ => true)
     );
   }
   // check if it is a custom action (it should be composed in a specific format)

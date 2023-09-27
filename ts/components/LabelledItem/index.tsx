@@ -16,6 +16,7 @@ import * as React from "react";
 import { useState } from "react";
 import {
   ImageSourcePropType,
+  ImageStyle,
   NativeSyntheticEvent,
   StyleSheet,
   TextInputFocusEventData,
@@ -23,16 +24,16 @@ import {
   View
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
+import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
-import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import TextInputMask from "../ui/MaskedInput";
-import { Icon, StyleType } from "./Icon";
+import { LabelledItemIconOrImage } from "./LabelledItemIconOrImage";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -61,16 +62,17 @@ type CommonProp = Readonly<{
   focusBorderColor?: string;
   overrideBorderColor?: string;
   hasNavigationEvents?: boolean;
-  icon?: string | ImageSourcePropType;
-  iconColor?: string;
+  icon?: IOIcons | ImageSourcePropType;
+  iconColor?: IOColors;
+  imageStyle?: ImageStyle;
   iconPosition?: "left" | "right";
-  iconStyle?: StyleType;
   inputMaskProps?: TextInputMaskProps &
     React.ComponentPropsWithRef<typeof TextInputMask>;
   inputProps?: TextInputAdditionalProps;
   isValid?: boolean;
   label?: string;
   onPress?: () => void;
+  inputAccessoryViewID?: string;
 }>;
 
 export type Props = WithTestID<CommonProp>;
@@ -84,7 +86,7 @@ type LabelColor = Exclude<DescriptionColor, "red">;
 type ColorByProps = {
   borderColor: string | undefined;
   descriptionColor: DescriptionColor;
-  iconColor: string;
+  iconColor: IOColors;
   labelColor: LabelColor;
   placeholderTextColor: string;
 };
@@ -99,13 +101,13 @@ function getColorsByProps({
   hasFocus: boolean;
   isEmpty: boolean;
   isValid?: boolean;
-  iconColor?: string;
+  iconColor?: IOColors;
 }): ColorByProps {
   if (isDisabledTextInput) {
     return {
       borderColor: IOColors.greyLight,
       descriptionColor: "bluegreyLight",
-      iconColor: iconColor ?? IOColors.bluegreyLight,
+      iconColor: iconColor ?? "bluegreyLight",
       labelColor: "bluegreyLight",
       placeholderTextColor: IOColors.bluegreyLight
     };
@@ -113,7 +115,7 @@ function getColorsByProps({
   return {
     borderColor: hasFocus && isEmpty ? IOColors.milderGray : undefined,
     descriptionColor: isValid === false ? "red" : "bluegreyDark",
-    iconColor: iconColor ?? IOColors.bluegrey,
+    iconColor: iconColor ?? "bluegrey",
     placeholderTextColor: brandGrayDarken,
     labelColor: "bluegreyDark"
   };
@@ -185,11 +187,14 @@ export const LabelledItem: React.FC<Props> = ({
             <NavigationEvents onWillBlur={props.onPress} />
           )}
 
+          {/* Icon OR Image. They can't be managed separately because
+          credit card sorting have a fallback value that's an icon,
+          not an image */}
           {iconPosition === "left" && props.icon && (
-            <Icon
+            <LabelledItemIconOrImage
               icon={props.icon}
               iconColor={iconColor}
-              iconStyle={props.iconStyle}
+              imageStyle={props.imageStyle}
               accessible={false}
               accessibilityLabelIcon={props.accessibilityLabelIcon}
               onPress={props.onPress}
@@ -213,6 +218,7 @@ export const LabelledItem: React.FC<Props> = ({
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               testID={`${props.testID}InputMask`}
+              inputAccessoryViewID={props.inputAccessoryViewID}
             />
           )}
 
@@ -234,14 +240,15 @@ export const LabelledItem: React.FC<Props> = ({
               testID={`${props.testID}Input`}
               disabled={props.inputProps?.disabled}
               placeholderTextColor={placeholderTextColor}
+              inputAccessoryViewID={props.inputAccessoryViewID}
             />
           )}
 
           {iconPosition === "right" && props.icon && (
-            <Icon
+            <LabelledItemIconOrImage
               icon={props.icon}
               iconColor={iconColor}
-              iconStyle={props.iconStyle}
+              imageStyle={props.imageStyle}
               accessibilityLabelIcon={props.accessibilityLabelIcon}
               onPress={props.onPress}
             />

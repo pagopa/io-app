@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
-import IconFont from "./ui/IconFont";
 import { H5 } from "./core/typography/H5";
 import { H3 } from "./core/typography/H3";
 import { Body } from "./core/typography/Body";
@@ -93,9 +93,9 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
   private getIconName = () =>
     this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
-        ? "io-checkbox-on"
-        : "io-checkbox-off"
-      : "io-right";
+        ? "legCheckOn"
+        : "legCheckOff"
+      : "chevronRightListItem";
 
   shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
     // assuming that:
@@ -158,11 +158,7 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
               />
             )}
 
-            <IconFont
-              name={this.getIconName()}
-              size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
-            />
+            <Icon name={this.getIconName()} size={ICON_WIDTH} color="blue" />
           </View>
         </View>
         {this.props.children}

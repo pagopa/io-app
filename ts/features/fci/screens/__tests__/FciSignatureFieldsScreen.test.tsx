@@ -8,7 +8,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import FciSignatureFieldsScreen from "../valid/FciSignatureFieldsScreen";
 import { fciSignatureRequestFromId } from "../../store/actions";
-import { getSectionListData } from "../../utils/signatureFields";
+import {
+  getSectionListData,
+  orderSignatureFields
+} from "../../utils/signatureFields";
 
 type Props = {
   documentId: DocumentDetailView["id"];
@@ -69,8 +72,10 @@ describe("Test FciSignatureFields screen", () => {
       "FciSignatureFieldsSectionListTestID"
     ).props.data;
     const expectedList = getSectionListData(
-      mockSignatureRequestDetailView.documents[0].metadata.signature_fields ??
-        []
+      orderSignatureFields(
+        mockSignatureRequestDetailView.documents[0].metadata.signature_fields ??
+          []
+      )
     );
     expect(dataList).toEqual(expectedList);
   });

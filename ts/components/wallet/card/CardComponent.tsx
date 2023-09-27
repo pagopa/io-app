@@ -16,6 +16,7 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
@@ -25,12 +26,10 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import { VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import Logo, { cardIcons } from "./Logo";
 
 interface BaseProps {
@@ -132,9 +131,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
   },
-  paddedIcon: {
-    paddingLeft: 10
-  },
   paddedTop: {
     paddingTop: 10
   }
@@ -209,29 +205,23 @@ export default class CardComponent extends React.Component<Props> {
       return (
         <View style={styles.row}>
           {!hideFavoriteIcon && isFavorite !== undefined && (
-            <IconFont
-              name={
-                pot.getOrElseWithUpdating(isFavorite, false)
-                  ? "io-filled-star"
-                  : "io-empty-star"
-              }
-              color={
-                pot.isUpdating(isFavorite)
-                  ? IOColors.bluegrey
-                  : variables.brandPrimary
-              }
-              onPress={this.handleFavoritePress}
-            />
+            <TouchableDefaultOpacity onPress={this.handleFavoritePress}>
+              <Icon
+                name={
+                  pot.getOrElseWithUpdating(isFavorite, false)
+                    ? "starFilled"
+                    : "starEmpty"
+                }
+                color={pot.isUpdating(isFavorite) ? "bluegrey" : "blue"}
+              />
+            </TouchableDefaultOpacity>
           )}
 
           {!hideMenu && (
             <Menu>
               <MenuTrigger>
-                <IconFont
-                  name={"io-more"}
-                  color={variables.brandPrimary}
-                  style={styles.paddedIcon}
-                />
+                <Icon name="dotMenu" color="blue" />
+                <HSpacer size={8} />
               </MenuTrigger>
 
               <MenuOptions>
@@ -358,6 +348,8 @@ export default class CardComponent extends React.Component<Props> {
     const footerTextStyle = isFullCard
       ? styles.transactionsText
       : styles.pickPaymentText;
+
+    const footerIconColor: IOColors = isFullCard ? "blue" : "white";
     const text = I18n.t(
       isFullCard ? "cardComponent.detailsAndTransactions" : "cardComponent.pick"
     );
@@ -370,11 +362,7 @@ export default class CardComponent extends React.Component<Props> {
         onPress={this.handleOnCardPress}
       >
         <NBButtonText style={footerTextStyle}>{text}</NBButtonText>
-        <IconFont
-          name={"io-right"}
-          size={variables.iconSize2}
-          style={footerTextStyle}
-        />
+        <Icon name="chevronRightListItem" size={20} color={footerIconColor} />
       </ButtonDefaultOpacity>
     );
   }

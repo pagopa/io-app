@@ -3,24 +3,19 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { Image, Linking, StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
+  WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import brokenLinkImage from "../../../img/broken-link.png";
-import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Body } from "../../components/core/typography/Body";
-import { H2 } from "../../components/core/typography/H2";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
-import ButtonOutline from "../../components/ui/ButtonOutline";
-import ButtonSolid from "../../components/ui/ButtonSolid";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
@@ -36,7 +31,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
-  isLoggedOutWithIdp,
+  loggedOutWithIdpAuthSelector,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -55,7 +50,9 @@ import {
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
+import { trackSpidLoginError } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
+import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -82,25 +79,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
-  errorContainer: {
-    padding: 20,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 30,
-    flex: 1,
-    flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
-  },
-  flex2: {
-    flex: 2
-  },
   webViewWrapper: { flex: 1 }
 });
 
@@ -120,7 +98,7 @@ const IdpLoginScreen = (props: Props) => {
   }, []);
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
-  const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
+  const loginUri = idpId ? getIdpLoginUri(idpId, 2) : undefined;
   const {
     retryLollipopLogin,
     shouldBlockUrlNavigationWhileCheckingLollipop,
@@ -137,15 +115,10 @@ const IdpLoginScreen = (props: Props) => {
     [props.loggedOutWithIdpAuth]
   );
 
-  const handleLoadingError = (error: WebViewErrorEvent): void => {
-    const { code, description, domain } = error.nativeEvent;
-    void mixpanelTrack("SPID_ERROR", {
-      idp: props.loggedOutWithIdpAuth?.idp.id,
-      code,
-      description,
-      domain
-    });
-
+  const handleLoadingError = (
+    error: WebViewErrorEvent | WebViewHttpErrorEvent
+  ): void => {
+    trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
     setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
   };
 
@@ -244,55 +217,13 @@ const IdpLoginScreen = (props: Props) => {
         </View>
       );
     } else if (pot.isError(requestState)) {
-      const errorType = requestState.error;
-      const errorTranslationKey = `authentication.errors.spid.error_${errorCode}`;
-
       return (
-        <View
-          style={[IOStyles.horizontalContentPadding, styles.errorContainer]}
-        >
-          <Image source={brokenLinkImage} resizeMode="contain" />
-          <VSpacer size={24} />
-          <H2>
-            {I18n.t(
-              errorType === ErrorType.LOADING_ERROR
-                ? "authentication.errors.network.title"
-                : "authentication.errors.login.title"
-            )}
-          </H2>
-
-          {errorType === ErrorType.LOGIN_ERROR && (
-            <>
-              <VSpacer size={16} />
-              <Body style={{ textAlign: "center" }}>
-                {I18n.t(errorTranslationKey, {
-                  defaultValue: I18n.t("authentication.errors.spid.unknown")
-                })}
-              </Body>
-              <VSpacer size={16} />
-            </>
-          )}
-
-          <View style={styles.errorButtonsContainer}>
-            <View style={styles.cancelButtonStyle}>
-              <ButtonOutline
-                fullWidth
-                onPress={() => props.navigation.goBack()}
-                label={I18n.t("global.buttons.cancel")}
-                accessibilityLabel={I18n.t("global.buttons.cancel")}
-              />
-            </View>
-
-            <View style={styles.flex2}>
-              <ButtonSolid
-                fullWidth
-                onPress={onRetryButtonPressed}
-                label={I18n.t("global.buttons.retry")}
-                accessibilityLabel={I18n.t("global.buttons.retry")}
-              />
-            </View>
-          </View>
-        </View>
+        <IdpAuthErrorScreen
+          requestStateError={requestState.error}
+          errorCode={errorCode}
+          onCancel={() => props.navigation.goBack()}
+          onRetry={onRetryButtonPressed}
+        />
       );
     }
     // loading complete, no mask needed
@@ -355,6 +286,7 @@ const IdpLoginScreen = (props: Props) => {
             originWhitelist={originSchemasWhiteList}
             source={webviewSource}
             onError={handleLoadingError}
+            onHttpError={handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}
             onShouldStartLoadWithRequest={handleShouldStartLoading}
@@ -369,16 +301,12 @@ const IdpLoginScreen = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => {
   const selectedIdp = selectedIdentityProviderSelector(state);
 
-  const selectedIdpTextData = pipe(
-    selectedIdp,
-    O.fromNullable,
-    O.chain(idp => idpContextualHelpDataFromIdSelector(idp.id)(state))
-  );
+  const selectedIdpTextData = idpContextualHelpDataFromIdSelector(
+    selectedIdp?.id
+  )(state);
 
   return {
-    loggedOutWithIdpAuth: isLoggedOutWithIdp(state.authentication)
-      ? state.authentication
-      : undefined,
+    loggedOutWithIdpAuth: loggedOutWithIdpAuthSelector(state),
     loggedInAuth: isLoggedIn(state.authentication)
       ? state.authentication
       : undefined,

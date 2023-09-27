@@ -3,20 +3,20 @@ import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
-  IOPictogramType,
+  ButtonOutline,
+  VSpacer,
+  IOPictograms,
   Pictogram
-} from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ButtonOutline from "../../../../components/ui/ButtonOutline";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { selectIsFailure } from "../xstate/selectors";
 
 type ScreenContentType = {
-  pictogram: IOPictogramType;
+  pictogram: IOPictograms;
   title: string;
   content: string;
   buttonLabel: string;

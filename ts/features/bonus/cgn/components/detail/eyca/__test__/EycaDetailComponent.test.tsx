@@ -2,13 +2,13 @@ import { fireEvent, render } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import * as React from "react";
 import { Provider } from "react-redux";
+import { IOColors } from "@pagopa/io-app-design-system";
 import EycaDetailComponent from "../EycaDetailComponent";
 import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
 import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
 import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import * as urlUtils from "../../../../../../../utils/url";
 import { appReducer } from "../../../../../../../store/reducers";
@@ -27,6 +27,12 @@ const eycaCardActive: EycaCard = {
 const eycaCardPending: EycaCard = {
   status: PendingStatus.PENDING
 };
+
+jest.mock("react-native-safe-area-context", () => ({
+  useSafeAreaInsets: jest
+    .fn()
+    .mockReturnValue({ top: 20, left: 0, right: 0, bottom: 0 })
+}));
 
 describe("EycaDetailComponent", () => {
   jest.useFakeTimers();

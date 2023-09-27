@@ -1,15 +1,15 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
+import type { IOColors } from "@pagopa/io-app-design-system";
 import DocumentsNavigationBar, {
   IndicatorPositionEnum
 } from "../DocumentsNavigationBar";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   titleRight: string;
   titleLeft: string;
-  iconRightColor?: string;
-  iconLeftColor?: string;
+  iconRightColor?: IOColors;
+  iconLeftColor?: IOColors;
   disabled?: boolean;
   indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
@@ -21,8 +21,8 @@ describe("Test DocumentsNavigationBar component", () => {
     const props: Props = {
       titleRight: "Pagina 1 di 2",
       titleLeft: "Documento 1 di 2",
-      iconRightColor: IOColors.blue,
-      iconLeftColor: IOColors.blue,
+      iconRightColor: "blue",
+      iconLeftColor: "blue",
       indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()

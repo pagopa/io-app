@@ -3,12 +3,11 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback } from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
@@ -90,10 +89,9 @@ const ErrorButton = (props: ErrorButtonProp) => {
           "bonus.cdc.serviceCta.error.status"
         )} ${I18n.t("global.accessibility.alert")}`}
         backgroundColor={"orange"}
-        iconColor={IOColors.white}
-        iconName={"io-warning"}
+        foregroundColor={"white"}
+        iconName={"notice"}
         viewRef={viewRef}
-        labelColor={"white"}
       >
         {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>

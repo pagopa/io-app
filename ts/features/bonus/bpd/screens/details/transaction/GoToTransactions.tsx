@@ -1,9 +1,9 @@
 import * as React from "react";
 import { getBottomSpace, isIphoneX } from "react-native-iphone-x-helper";
 import DeviceInfo from "react-native-device-info";
+import { Icon, HSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
-import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 
 type Props = { goToTransactions: () => void };
@@ -29,7 +29,8 @@ const GoToTransactions: React.FunctionComponent<Props> = props => (
         : 0
     }}
   >
-    <IconFont name="io-transactions" size={24} color={"white"} />
+    <Icon name="transactions" size={24} color="white" />
+    <HSpacer size={8} />
     <Label color={"white"}>
       {I18n.t("bonus.bpd.details.transaction.goToButton")}
     </Label>

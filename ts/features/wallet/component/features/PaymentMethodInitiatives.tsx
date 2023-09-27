@@ -1,14 +1,9 @@
 import * as React from "react";
 
+import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import Initiative from "../../../../../img/wallet/initiatives.svg";
-import { HSpacer } from "../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import { View } from "react-native";
+import { NewH6 } from "../../../../components/core/typography/NewH6";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -22,16 +17,9 @@ import {
 } from "../../../idpay/wallet/store/actions";
 import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
 
-type OwnProps = {
+type Props = {
   paymentMethod: PaymentMethod;
 } & Pick<React.ComponentProps<typeof View>, "style">;
-
-type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
-
-const styles = StyleSheet.create({
-  icon: { alignSelf: "center" },
-  row: { flex: 1, flexDirection: "row" }
-});
 
 /**
  * This component enlists the different initiatives active on the payment methods
@@ -67,17 +55,8 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 
   return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
-      <View style={styles.row}>
-        <View style={styles.row}>
-          <Initiative
-            width={20}
-            height={20}
-            stroke={IOColors.bluegreyDark}
-            style={styles.icon}
-          />
-          <HSpacer size={16} />
-          <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
-        </View>
+      <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+        <NewH6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</NewH6>
         <Body
           weight="SemiBold"
           color="blue"
@@ -86,6 +65,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
           {I18n.t("idpay.wallet.preview.showAll")}
         </Body>
       </View>
+      <VSpacer size={16} />
       <IDPayInitiativesList
         idWallet={idWalletString}
         initiatives={initiativesList.slice(0, 3)}
@@ -94,6 +74,4 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-export default connect(mapDispatchToProps)(PaymentMethodInitiatives);
+export default PaymentMethodInitiatives;

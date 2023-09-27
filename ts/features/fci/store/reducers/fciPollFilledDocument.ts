@@ -20,8 +20,6 @@ const reducer = (
   action: Action
 ): FciPollFilledDocumentState => {
   switch (action.type) {
-    case getType(fciPollFilledDocument.request):
-      return pot.toLoading(state);
     case getType(fciPollFilledDocument.success):
       return pot.some(action.payload);
     case getType(fciPollFilledDocument.failure):

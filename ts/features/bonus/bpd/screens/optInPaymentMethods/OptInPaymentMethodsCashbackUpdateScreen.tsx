@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -47,17 +47,13 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
   };
 
   return (
-    // The void customRightIcon and customGoBack are needed to have a centered header title
+    // The void customGoBack is needed to have a centered header title
     <BaseScreenComponent
       showChat={false}
       goBack={false}
       headerTitle={I18n.t(
         "bonus.bpd.optInPaymentMethods.cashbackUpdate.header"
       )}
-      customRightIcon={{
-        iconName: "",
-        onPress: () => true
-      }}
       customGoBack={
         <ButtonDefaultOpacity onPress={() => true} transparent={true} />
       }

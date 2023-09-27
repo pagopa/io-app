@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Platform, SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
@@ -13,14 +13,12 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import IconFont from "../../../../components/ui/IconFont";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
@@ -40,8 +38,11 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 import {
   getOptionalSignatureFields,
-  getRequiredSignatureFields
+  getRequiredSignatureFields,
+  getSignatureFieldsLength
 } from "../../utils/signatureFields";
+import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import IconButton from "../../../../components/ui/IconButton";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -107,14 +108,23 @@ const FciDocumentsScreen = () => {
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
+  const {
+    present: showNoSignatureFieldsBs,
+    bottomSheet: fciNoSignatureFields
+  } = useFciNoSignatureFields({ currentDoc });
+
   const onContinuePress = () => {
-    trackFciSigningDoc();
-    navigation.dispatch(
-      StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
-        documentId: documents[currentDoc].id,
-        currentDoc
-      })
-    );
+    if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
+      trackFciSigningDoc();
+      navigation.dispatch(
+        StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
+          documentId: documents[currentDoc].id,
+          currentDoc
+        })
+      );
+    } else {
+      showNoSignatureFieldsBs();
+    }
   };
 
   const onCancelPress = () => present();
@@ -161,6 +171,8 @@ const FciDocumentsScreen = () => {
       onPageChanged={(page, _) => {
         setCurrentPage(page);
       }}
+      enablePaging
+      enableAnnotationRendering={false}
       style={styles.pdf}
     />
   );
@@ -190,19 +202,17 @@ const FciDocumentsScreen = () => {
   };
 
   const customGoBack: React.ReactElement = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
       onPress={() => {
         if (currentDoc <= 0) {
           dispatch(fciClearStateRequest());
         }
         navigation.goBack();
       }}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
-    </TouchableDefaultOpacity>
+    />
   );
 
   const renderFooterButtons = () =>
@@ -226,12 +236,8 @@ const FciDocumentsScreen = () => {
             currentPage,
             totalPages
           })}
-          iconLeftColor={
-            currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-          }
-          iconRightColor={
-            currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-          }
+          iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
+          iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
           onPrevious={onPrevious}
           onNext={onNext}
           disabled={false}
@@ -250,6 +256,7 @@ const FciDocumentsScreen = () => {
           )}
         </SafeAreaView>
         {fciAbortSignature}
+        {fciNoSignatureFields}
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );

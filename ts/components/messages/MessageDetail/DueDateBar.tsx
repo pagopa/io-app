@@ -2,6 +2,7 @@ import { capitalize } from "lodash";
 import React from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
@@ -11,11 +12,7 @@ import {
   isExpiring,
   MessagePaymentExpirationInfo
 } from "../../../utils/messages";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
-
 import { localeDateFormat } from "../../../utils/locale";
-import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import { Body } from "../../core/typography/Body";
 import { IOStyles } from "../../core/variables/IOStyles";
 import CalendarIconComponent from "./common/CalendarIconComponent";
@@ -161,7 +158,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
   if (isPaid) {
     return (
       <View style={styles.messagePaidBg}>
-        <IconFont name="io-complete" color={IOColors.bluegreyDark} />
+        <Icon name="ok" color="bluegreyDark" />
         <View style={IOStyles.horizontalContentPadding}>
           <Body color="bluegreyDark">{I18n.t("wallet.errors.DUPLICATED")}</Body>
         </View>

@@ -1,11 +1,14 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import {
+  IOColors,
+  IOIconSizeScaleCheckbox,
+  Icon
+} from "@pagopa/io-app-design-system";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../TouchableDefaultOpacity";
-import IconFont from "../../../ui/IconFont";
 import { calculateSlop } from "../../accessibility";
-import { IOColors } from "../../variables/IOColors";
 
 type Props = {
   // the value of the checkbox
@@ -15,20 +18,23 @@ type Props = {
 type OwnProps = Props &
   Pick<TouchableDefaultOpacityProps, "disabled" | "onPress">;
 
-const size = 24;
+const SIZE: number = 24;
+const BORDER_WIDTH: number = 2;
+const INTERNAL_PADDING: number = 3;
 
-const offColor = IOColors.bluegrey;
-const onColor = IOColors.blue;
-const slop = calculateSlop(size);
-const tickSize = size * 0.85;
+const offColor: IOColors = "bluegrey";
+const onColor: IOColors = "blue";
+const slop = calculateSlop(SIZE);
+/* SIZE - INTERNAL_PADDING * 2; */
+const tickSize: IOIconSizeScaleCheckbox = 18;
 
 const styles = StyleSheet.create({
   checkBox: {
-    width: size,
-    height: size,
+    width: SIZE,
+    height: SIZE,
     backgroundColor: IOColors.white,
     borderColor: IOColors.blue,
-    borderWidth: 2,
+    borderWidth: BORDER_WIDTH,
     borderRadius: 4
   }
 });
@@ -54,10 +60,21 @@ export const RawCheckBox: React.FunctionComponent<OwnProps> = props => {
       testID="RawCheckbox"
       onPress={props.onPress}
       hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
-      style={[styles.checkBox, { borderColor: getBorderColor(checked) }]}
+      style={[
+        styles.checkBox,
+        { borderColor: IOColors[getBorderColor(checked)] }
+      ]}
     >
       {checked && (
-        <IconFont name={"io-tick-big"} size={tickSize} color={onColor} />
+        <View
+          style={{
+            top: -BORDER_WIDTH,
+            left: -BORDER_WIDTH,
+            padding: INTERNAL_PADDING
+          }}
+        >
+          <Icon name="checkTickBig" size={tickSize} color={onColor} />
+        </View>
       )}
     </TouchableDefaultOpacity>
   );

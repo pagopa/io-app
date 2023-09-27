@@ -8071,36 +8071,102 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
     }
   }
 >
-  <Text
+  <RNSVGSvgView
     accessibilityElementsHidden={true}
     accessibilityLabel=""
     accessible={false}
-    allowFontScaling={false}
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    color={4279710285}
+    focusable={false}
+    height={24}
     importantForAccessibility="no-hide-descendants"
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
     style={
       Array [
         Object {
-          "color": "#17324D",
-          "fontSize": 12,
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
         },
-        Array [
-          Object {},
-          Object {
-            "color": "#17324D",
-          },
-          Object {},
-        ],
         Object {
-          "fontFamily": "io-icon-font",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
+          "color": "#17324D",
         },
-        Object {},
+        Object {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
       ]
     }
+    tintColor={4279710285}
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
   >
-    
-  </Text>
+    <RNSVGGroup>
+      <RNSVGPath
+        d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
+        fill={
+          Array [
+            2,
+          ]
+        }
+        propList={
+          Array [
+            "fill",
+          ]
+        }
+      />
+      <RNSVGPath
+        clipRule={0}
+        d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
+        fill={
+          Array [
+            2,
+          ]
+        }
+        fillRule={0}
+        propList={
+          Array [
+            "fill",
+            "fillRule",
+          ]
+        }
+      />
+      <RNSVGPath
+        d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
+        fill={
+          Array [
+            2,
+          ]
+        }
+        propList={
+          Array [
+            "fill",
+          ]
+        }
+      />
+      <RNSVGPath
+        clipRule={0}
+        d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
+        fill={
+          Array [
+            2,
+          ]
+        }
+        fillRule={0}
+        propList={
+          Array [
+            "fill",
+            "fillRule",
+          ]
+        }
+      />
+    </RNSVGGroup>
+  </RNSVGSvgView>
   <View
     style={
       Object {

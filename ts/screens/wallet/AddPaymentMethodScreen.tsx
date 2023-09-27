@@ -5,13 +5,11 @@ import { Content } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
 import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
 import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
-import SatispayLogo from "../../../img/wallet/payment-methods/satispay-logo.svg";
-import GDOLogo from "../../../img/wallet/unknown-gdo-primary.svg";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -22,15 +20,12 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList, {
   IPaymentMethod
 } from "../../components/wallet/PaymentMethodsList";
-import { bpdEnabled } from "../../config";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { walletAddBPayStart } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import {
   OnOnboardingCompleted,
   walletAddPaypalStart
 } from "../../features/wallet/onboarding/paypal/store/actions";
-import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
-import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
@@ -134,32 +129,6 @@ const getPaymentMethods = (
     status: options.canOnboardBPay ? "implemented" : "notImplemented",
     onPress: props.startBPayOnboarding,
     section: "digital_payments"
-  },
-  {
-    name: I18n.t("wallet.methods.satispay.name"),
-    description: I18n.t("wallet.methods.satispay.description"),
-    icon: SatispayLogo,
-    onPress: props.startSatispayOnboarding,
-    status: "notImplemented",
-    section: "digital_payments"
-  },
-  {
-    name: I18n.t("wallet.methods.pagobancomat.name"),
-    description: I18n.t("wallet.methods.pagobancomat.description"),
-    icon: CreditCard,
-    onPress: props.startAddBancomat,
-    status:
-      bpdEnabled && !options.onlyPaymentMethodCanPay
-        ? "implemented"
-        : "notImplemented",
-    section: "bancomat"
-  },
-  {
-    name: I18n.t("wallet.methods.loyalty.name"),
-    description: I18n.t("wallet.methods.loyalty.description"),
-    icon: GDOLogo,
-    onPress: props.startAddPrivative,
-    status: !options.onlyPaymentMethodCanPay ? "implemented" : "notImplemented"
   }
 ];
 
@@ -253,11 +222,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => navigateBack(),
   startBPayOnboarding: () => dispatch(walletAddBPayStart()),
-  startSatispayOnboarding: () => dispatch(walletAddSatispayStart()),
   startPaypalOnboarding: (onOboardingCompleted: OnOnboardingCompleted) =>
     dispatch(walletAddPaypalStart(onOboardingCompleted)),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
-  startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>
     navigateToWalletAddCreditCard({
       inPayment: props.route.params.inPayment,

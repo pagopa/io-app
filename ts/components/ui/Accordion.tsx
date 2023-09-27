@@ -3,13 +3,13 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import IconFont from "./IconFont";
 import Markdown from "./Markdown";
 
 type Props = {
@@ -27,10 +27,6 @@ const styles = StyleSheet.create({
   },
   pad: {
     paddingVertical: customVariables.spacerHeight
-  },
-  headerIcon: {
-    paddingHorizontal: 10,
-    alignSelf: "center"
   }
 });
 
@@ -59,17 +55,13 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         <View style={IOStyles.flex}>
           <Body weight="SemiBold">{title}</Body>
         </View>
-        <IconFont
-          name={"io-right"}
-          color={customVariables.brandPrimary}
-          size={24}
-          style={[
-            styles.headerIcon,
-            {
-              transform: [{ rotateZ: expanded ? "-90deg" : "90deg" }]
-            }
-          ]}
-        />
+        <View
+          style={{
+            transform: [{ rotateZ: expanded ? "0deg" : "180deg" }]
+          }}
+        >
+          <Icon name="chevronTop" color="blue" size={24} />
+        </View>
       </View>
       {!expanded && <ItemSeparatorComponent noPadded={true} />}
     </TouchableDefaultOpacity>

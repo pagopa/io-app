@@ -10,7 +10,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -67,7 +67,7 @@ function renderListItem(
     <ListItemComponent
       title={title}
       subTitle={subTitle}
-      iconName={isActive ? "io-radio-on" : "io-radio-off"}
+      iconName={isActive ? "legRadioOn" : "legRadioOff"}
       smallIconSize={true}
       iconOnTop={true}
       useExtendedSubTitle={true}

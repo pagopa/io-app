@@ -1,43 +1,37 @@
 import * as React from "react";
 import Pdf from "react-native-pdf";
 import { Body, Container, Left, Right } from "native-base";
-import { PDFDocument, rgb } from "pdf-lib";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import ReactNativeBlobUtil from "react-native-blob-util";
 import { constNull, pipe } from "fp-ts/lib/function";
-import * as S from "fp-ts/lib/string";
 import * as O from "fp-ts/lib/Option";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import IconFont from "../../../components/ui/IconFont";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import AppHeader from "../../../components/ui/AppHeader";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../components/core/typography/H5";
-import { savePath } from "../saga/networking/handleDownloadDocument";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { fciDocumentSignatureFields } from "../store/actions";
+import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import IconButton from "../../../components/ui/IconButton";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
 export type SignatureFieldAttrType =
   | ExistingSignatureFieldAttrs
   | SignatureFieldToBeCreatedAttrs;
 
-const hasUniqueName = (
-  f: SignatureFieldAttrType
-): f is ExistingSignatureFieldAttrs =>
-  (f as ExistingSignatureFieldAttrs).unique_name !== undefined;
-
 type Props = WithTestID<{
   attrs: SignatureFieldAttrType;
   currentDoc: number;
   onClose: () => void;
-  onError?: (error: object) => void;
+  onError: () => void;
 }>;
 
 const styles = StyleSheet.create({
@@ -47,154 +41,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
-
 const DocumentWithSignature = (props: Props) => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
-  const [signaturePage, setSignaturePage] = React.useState(0);
-  const [pdfString, setPdfString] = React.useState<string>("");
-  const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const parsedDocuments = useIOSelector(fciSignatureFieldDrawingSelector);
   const { attrs, currentDoc } = props;
-
-  /**
-   * Get the pdf url from documents,
-   * download it as base64 string and
-   * load the pdf as pdf-lib object
-   * to draw a rect over the signature field
-   * @param uniqueName the of the signature field
-   */
-  const drawRectangleOverSignatureFieldById = React.useCallback(
-    async (uniqueName: string) => {
-      // TODO: refactor this function to use fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
-      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
-        `${savePath(documents[currentDoc].url)}`,
-        "base64"
-      );
-
-      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
-        // get the signature field by unique name
-        pipe(
-          res.findPageForAnnotationRef(
-            res.getForm().getSignature(uniqueName).ref
-          ),
-          O.fromNullable,
-          O.map(pageRef => {
-            const page = res.getPages().indexOf(pageRef);
-            setSignaturePage(page + 1);
-            // The signature field is extracted by its unique_name.
-            // Using low-level acrofield (acrobat field) it is possible
-            // to obtain the elements of the signature field such as the
-            // box that contains it. Once the box is obtained, its
-            // coordinates are used to draw a rectangle on the related page.
-            const signature = res.getForm().getSignature(uniqueName);
-            const [widget] = signature.acroField.getWidgets();
-            const rect = widget.getRectangle();
-            res.getPage(page).drawRectangle({
-              x: rect.x,
-              y: rect.y,
-              width: rect.width,
-              height: rect.height,
-              color: rgb(0, 0.77, 0.79),
-              opacity: 0.5,
-              borderOpacity: 0.75
-            });
-          })
-        );
-
-        return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
-      });
-    },
-    [currentDoc, documents]
-  );
-
-  /**
-   * Get the pdf url from documents,
-   * download it as base64 string and
-   * load the pdf as pdf-lib object
-   * to draw a rect over the signature field
-   * giving a set of coordinates
-   * @param attrs the signature field attrs containing the coords
-   */
-  const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
-    async (attrs: SignatureFieldToBeCreatedAttrs) => {
-      // TODO: refactor this function to use fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
-      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
-        `${savePath(documents[currentDoc].url)}`,
-        "base64"
-      );
-
-      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
-        const page = attrs.page;
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        setSignaturePage(page.valueOf() + 1);
-        // The signature box is drawn using the coordinates of the signature field.
-        res.getPage(page).drawRectangle({
-          x: attrs.bottom_left.x ?? 0,
-          y: attrs.bottom_left.y ?? 0,
-          height: Math.abs(
-            (attrs.top_right.y ?? 0) - (attrs.bottom_left.y ?? 0)
-          ),
-          width: Math.abs(
-            (attrs.top_right.x ?? 0) - (attrs.bottom_left.x ?? 0)
-          ),
-          color: rgb(0, 0.77, 0.79),
-          opacity: 0.5,
-          borderOpacity: 0.75
-        });
-
-        return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
-      });
-    },
-    [currentDoc, documents]
-  );
-
-  const onSignatureDetail = React.useCallback(
-    (attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs) => {
-      if (hasUniqueName(attrs)) {
-        drawRectangleOverSignatureFieldById(attrs.unique_name).catch(
-          readableReport // TODO: it should be displayed to the user?
-        );
-      } else {
-        drawRectangleOverSignatureFieldByCoordinates(attrs).catch(
-          readableReport // TODO: it should be displayed to the user?
-        );
-      }
-    },
-    [
-      drawRectangleOverSignatureFieldByCoordinates,
-      drawRectangleOverSignatureFieldById
-    ]
-  );
-
-  React.useEffect(() => {
-    pipe(
-      attrs,
-      O.fromNullable,
-      O.map(_ => {
-        onSignatureDetail(_);
-      }),
-      O.getOrElse(() => {
-        setPdfString("");
-        setSignaturePage(0);
-      })
-    );
-  }, [attrs, onSignatureDetail]);
-
-  React.useEffect(() => {
-    if (isPdfLoaded) {
-      pipe(
-        pdfRef.current,
-        O.fromNullable,
-        O.map(_ => _.setPage(signaturePage))
-      );
-    }
-  }, [pdfRef, signaturePage, isPdfLoaded]);
-
+  const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
-
   const continueButtonProps = {
     block: true,
     primary: true,
@@ -202,6 +57,22 @@ const DocumentWithSignature = (props: Props) => {
     title: I18n.t("features.fci.documents.footer.backToSignFieldsList")
   };
 
+  /**
+   * Dispatches the request to draw the signature field on the pdf.
+   */
+  useOnFirstRender(() => {
+    dispatch(
+      fciDocumentSignatureFields.request({
+        uri: documents[currentDoc].url,
+        attrs
+      })
+    );
+  });
+
+  /**
+   * Points the pdf to the given page by using its ref.
+   * @param page the page to point the pdf to
+   */
   const pointToPage = (page: number) =>
     pipe(
       pdfRef.current,
@@ -209,26 +80,38 @@ const DocumentWithSignature = (props: Props) => {
       O.map(_ => _.setPage(page))
     );
 
-  const renderPager = () => (
-    <Pdf
-      ref={pdfRef}
-      source={{
-        uri: pdfString
-      }}
-      onLoadComplete={(numberOfPages, _) => {
-        setTotalPages(numberOfPages);
-        setIsPdfLoaded(true);
-      }}
-      onPageChanged={(page, _) => {
-        setCurrentPage(page);
-      }}
-      // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
-      onError={props.onError}
-      onPressLink={constNull}
-      style={styles.pdf}
-    />
+  /**
+   * Renders the pdf with the signature field drawn on it.
+   */
+  const RenderPdf = React.useCallback(
+    ({ document, page }: { document: string; page: number }) => (
+      <Pdf
+        ref={pdfRef}
+        source={{
+          uri: document
+        }}
+        page={page + 1}
+        onLoadComplete={(numberOfPages, _) => {
+          setTotalPages(numberOfPages);
+        }}
+        onPageChanged={(page, _) => {
+          setCurrentPage(page);
+        }}
+        // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
+        onError={props.onError}
+        onPressLink={constNull}
+        enablePaging
+        enableAnnotationRendering={false}
+        style={styles.pdf}
+      />
+    ),
+    [props.onError]
   );
 
+  /**
+   * Callback to be used when the user presses the previous button.
+   * It decrements the current page and points the pdf to the new page.
+   */
   const onPrevious = () => {
     pipe(
       currentPage,
@@ -241,6 +124,10 @@ const DocumentWithSignature = (props: Props) => {
     );
   };
 
+  /**
+   * Callback to be used when the user presses the next button.
+   * It increments the current page and points the pdf to the new page.
+   */
   const onNext = () => {
     pipe(
       currentPage,
@@ -253,23 +140,59 @@ const DocumentWithSignature = (props: Props) => {
     );
   };
 
+  /**
+   * Renders the loading spinner.
+   * @returns a loading spinner overlay
+   */
+  const LoadingView = () => <LoadingSpinnerOverlay isLoading={true} />;
+
+  /**
+   * Callback to be used when the pdf cannot be loaded or the signature field cannot be drawn.
+   * It returns an empty fragment and calls the `onError` callback.
+   */
+  const ErrorView = React.useCallback(() => {
+    props.onError();
+    return <></>;
+  }, [props]);
+
+  /**
+   * Renders the pdf, a loading view or an error view depending on the state of the pot.
+   */
+  const RenderMask = React.useCallback(
+    () =>
+      pot.fold(
+        parsedDocuments,
+        () => <LoadingView />,
+        () => <LoadingView />,
+        () => <LoadingView />,
+        () => <ErrorView />,
+        some => (
+          <RenderPdf document={some.drawnBase64} page={some.signaturePage} />
+        ),
+        () => <LoadingView />,
+        () => <LoadingView />,
+        () => <ErrorView />
+      ),
+    [ErrorView, RenderPdf, parsedDocuments]
+  );
+
   return (
     <Container>
       <AppHeader>
         <Left />
         <Body style={{ alignItems: "center" }}>
           <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+            {I18n.t("messagePDFPreview.title")}
           </H5>
         </Body>
         <Right>
-          <ButtonDefaultOpacity
+          <IconButton
+            icon="closeLarge"
             onPress={props.onClose}
-            transparent={true}
+            color="neutral"
             testID="FciDocumentWithSignatureTopRightButtonTestID"
-          >
-            <IconFont name="io-close" />
-          </ButtonDefaultOpacity>
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          />
         </Right>
       </AppHeader>
       <DocumentsNavigationBar
@@ -282,31 +205,19 @@ const DocumentWithSignature = (props: Props) => {
           currentPage,
           totalPages
         })}
-        iconLeftColor={
-          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-        }
-        iconRightColor={
-          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-        }
+        iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
+        iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-        {documents.length > 0 && (
-          <>
-            {!S.isEmpty(pdfString) ? (
-              renderPager()
-            ) : (
-              <View style={IOStyles.flex} />
-            )}
-            <FooterWithButtons
-              type={"SingleButton"}
-              leftButton={continueButtonProps}
-            />
-          </>
-        )}
+        <RenderMask />
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={continueButtonProps}
+        />
       </SafeAreaView>
     </Container>
   );

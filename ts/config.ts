@@ -31,6 +31,9 @@ const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 // default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
+// default fast login max retries
+const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
+
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
@@ -46,8 +49,6 @@ export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const debugRemotePushNotification =
-  Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
@@ -75,9 +76,6 @@ export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
-
-// MVL messages
-export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
 
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
@@ -109,11 +107,26 @@ export const newTransactionSummaryEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// PN (Piattaforma Notifiche) Feature Flag
-export const pnEnabled = Config.PN_ENABLED === "YES";
+// Fast Login Feature Flag
+export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
+
+// Fast Login Bypass getNonce
+export const fastLoginBypassGetNonce =
+  Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
+
+// CIE Login Flow with dev server Feature Flag
+export const cieLoginFlowWithDevServerEnabled =
+  Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
+
+// Native Login Feature Flag
+export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
 // Opt-in for reminder push notifications
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
+
+// Redesign of the PN message details screen
+export const newPnMessageDetailsEnabled =
+  Config.NEW_PN_MESSAGE_DETAILS_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
@@ -199,6 +212,27 @@ export const unsupportedDeviceLearnMoreUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
 );
 
+export const cieSpidMoreInfoUrl: string = pipe(
+  Config.CIE_SPID_INFORMATION_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://identitadigitale.gov.it")
+);
+
+export const pinPukHelpUrl: string = pipe(
+  Config.PIN_PUK_HELP_URL,
+  NonEmptyString.decode,
+  E.getOrElse(
+    () =>
+      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk"
+  )
+);
+
+export const fastLoginMaxRetries = pipe(
+  parseInt(Config.FAST_LOGIN_MAX_RETRIES, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FAST_LOGIN_MAX_RETRIES)
+);
+
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
@@ -233,3 +267,9 @@ export const idPayTestToken =
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
+
+export const walletV3ApiBaseUrl = Config.WALLETV3_API_BASEURL;
+export const walletV3ApiUatBaseUrl = Config.WALLETV3_API_UAT_BASEURL;
+
+// Default pin for dev mode
+export const defaultPin = "162534";

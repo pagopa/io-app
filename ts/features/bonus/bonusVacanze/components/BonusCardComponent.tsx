@@ -15,15 +15,16 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import {
+  Icon,
   hexToRgba,
-  IOColors
-} from "../../../../components/core/variables/IOColors";
+  IOColors,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
 import { makeFontStyleObject } from "../../../../components/core/fonts";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
@@ -202,7 +203,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <Menu>
               <MenuTrigger>
-                <IconFont name={"io-more"} color={IOColors.white} />
+                <Icon name="dotMenu" color="white" />
               </MenuTrigger>
 
               <MenuOptions>

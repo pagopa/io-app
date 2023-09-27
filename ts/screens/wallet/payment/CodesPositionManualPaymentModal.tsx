@@ -8,10 +8,10 @@ import {
   StyleSheet
 } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
+import { Icon } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
 import AppHeader from "./../../../components/ui/AppHeader";
-import IconFont from "./../../../components/ui/IconFont";
 
 type Props = {
   onCancel: () => void;
@@ -63,7 +63,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
               onPress={this.props.onCancel}
               transparent={true}
             >
-              <IconFont name="io-close" />
+              <Icon name="closeLarge" color="black" />
             </ButtonDefaultOpacity>
           </Right>
         </AppHeader>

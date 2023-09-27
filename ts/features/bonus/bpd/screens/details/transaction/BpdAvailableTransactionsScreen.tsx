@@ -14,8 +14,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -206,7 +206,7 @@ const renderSectionHeader = (info: {
 
 export const NoPaymentMethodAreActiveWarning = () => (
   <View testID={"NoPaymentMethodAreActiveWarning"}>
-    <InfoBox iconName={"io-warning"}>
+    <InfoBox iconName="notice">
       <H4 weight={"Regular"}>
         {I18n.t("bonus.bpd.details.transaction.noPaymentMethod.text1")}
         <H4 weight={"Bold"}>

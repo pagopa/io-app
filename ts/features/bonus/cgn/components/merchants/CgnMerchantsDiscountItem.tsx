@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
@@ -9,12 +10,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
 import { Label } from "../../../../../components/core/typography/Label";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
-import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   discount: Discount;
@@ -54,22 +52,31 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
     <TouchableDefaultOpacity style={styles.listItem} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
         <View style={[IOStyles.flex, IOStyles.row, IOStyles.alignCenter]}>
-          <Label weight={"SemiBold"} color={"bluegreyDark"}>
-            {`${discount.name} `}
-          </Label>
-          {discount.isNew && (
-            <>
-              <HSpacer size={4} />
-              <IOBadge
-                variant="solid"
-                color="blue"
-                text={I18n.t("bonus.cgn.merchantsList.news")}
-                small
-              />
-            </>
-          )}
+          <View>
+            {discount.isNew && (
+              <>
+                <View style={{ alignSelf: "flex-start" }}>
+                  <HSpacer size={4} />
+                  <IOBadge
+                    variant="solid"
+                    color="blue"
+                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                    small
+                  />
+                </View>
+                <VSpacer size={4} />
+              </>
+            )}
+            <Label
+              weight={"SemiBold"}
+              color={"bluegreyDark"}
+              style={{ flexShrink: 1 }}
+            >
+              {discount.name}
+            </Label>
+          </View>
         </View>
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        <Icon name="chevronRightListItem" color="blue" size={24} />
       </View>
       {cgnDiscountDetail}
     </TouchableDefaultOpacity>

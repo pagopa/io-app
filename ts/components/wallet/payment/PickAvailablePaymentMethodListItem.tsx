@@ -2,8 +2,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
 import paypalLogo from "../../../../img/wallet/payment-methods/paypal.png";
 import I18n from "../../../i18n";
@@ -12,8 +12,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
@@ -53,23 +51,11 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? ""
       };
-    case "Satispay":
-      return {
-        logo: satispayLogo,
-        title: paymentMethod.kind,
-        description: nameSurname
-      };
     case "PayPal":
       return {
         logo: paypalLogo,
         title: I18n.t("wallet.methods.paypal.name"),
         description: paymentMethod.caption
-      };
-    case "Privative":
-      return {
-        logo: paymentMethod.icon,
-        title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod, nameSurname)
       };
   }
 };
@@ -93,7 +79,7 @@ const PickAvailablePaymentMethodListItem: React.FC<Props> = (props: Props) => {
       description={description}
       rightElement={
         props.rightElement ?? (
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+          <Icon name="chevronRightListItem" color="blue" size={24} />
         )
       }
       onPress={props.onPress}

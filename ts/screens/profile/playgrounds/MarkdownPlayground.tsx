@@ -3,20 +3,17 @@ import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import React, { useCallback } from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
+import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
 import Markdown from "../../../components/ui/Markdown";
 import { CTA } from "../../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
-  getCTA,
+  getMessageCTA,
   handleCtaAction
 } from "../../../utils/messages";
 import { maybeNotNullyString } from "../../../utils/strings";
@@ -42,12 +39,7 @@ const MarkdownPlayground = () => {
     [linkTo]
   );
 
-  const message: CreatedMessageWithContent = {
-    content: {
-      markdown: markdownText
-    }
-  } as CreatedMessageWithContent;
-  const maybeCTA = getCTA(message);
+  const maybeCTA = getMessageCTA(markdownText as MessageBodyMarkdown);
   const ctaMessage = O.isSome(maybeCTA)
     ? `${maybeCTA.value.cta_1 ? "2" : "1"} cta found!`
     : "no CTA found";
@@ -70,12 +62,7 @@ const MarkdownPlayground = () => {
                 style={styles.contentCenter}
                 onPress={() => setMarkdownText(inputText)}
               >
-                <IconFont
-                  name={"io-right"}
-                  style={{
-                    color: IOColors.white
-                  }}
-                />
+                <Icon name="chevronRight" color="white" />
               </ButtonDefaultOpacity>
             </View>
           </View>

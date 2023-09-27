@@ -9,33 +9,30 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
+import { Props } from "../../../fci/components/ErrorComponent";
 
 const fakeTestID = "fakeTestID";
-
-type Props = {
-  title: string;
-  subTitle: string;
-  image: number;
-};
 
 describe("Test ErrorComponent", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
   it("with all props should render an ErrorComponent correctly", () => {
-    const props = {
+    const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      image: 1
+      pictogram: "airBaloon",
+      onPress: constNull
     };
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();
   });
   it("with all props should render a ErrorComponent with right title and subtitle label", () => {
-    const props = {
+    const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      image: 1
+      pictogram: "airBaloon",
+      onPress: constNull
     };
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();
@@ -43,10 +40,11 @@ describe("Test ErrorComponent", () => {
     expect(component.queryByText(props.subTitle)).toBeTruthy();
   });
   it("with all props should render a FootStackButtons with close button", () => {
-    const props = {
+    const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      image: 1
+      pictogram: "airBaloon",
+      onPress: constNull
     };
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();
@@ -54,11 +52,12 @@ describe("Test ErrorComponent", () => {
     expect(closeButton).not.toBeNull();
   });
   it("with all props should render a FootStackButtons with retry button and a close button", () => {
-    const props = {
+    const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      image: 1,
-      retry: true
+      pictogram: "airBaloon",
+      retry: true,
+      onPress: constNull
     };
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();
@@ -66,12 +65,13 @@ describe("Test ErrorComponent", () => {
     expect(component.getByTestId("FciCloseButtonTestID")).not.toBeNull();
   });
   it("with all props should render a FootStackButtons with retry button and assistance button", () => {
-    const props = {
+    const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      image: 1,
+      pictogram: "airBaloon",
       retry: true,
-      assistance: true
+      assistance: true,
+      onPress: constNull
     };
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();
@@ -79,11 +79,12 @@ describe("Test ErrorComponent", () => {
     expect(component.getByTestId("FciAssistanceButtonTestID")).not.toBeNull();
   });
   it("with all props should render a FootStackButtons with assistance button and a close button", () => {
-    const props = {
+    const props: Props = {
       title: "title",
       subTitle: "subTitle",
-      image: 1,
-      assistance: true
+      pictogram: "airBaloon",
+      assistance: true,
+      onPress: constNull
     };
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();

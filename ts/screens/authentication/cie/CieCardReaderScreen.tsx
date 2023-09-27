@@ -19,13 +19,12 @@ import {
   Text
 } from "react-native";
 import { connect } from "react-redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -53,6 +52,10 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../utils/supportAssistance";
+import { isDevEnv } from "../../../utils/environment";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
+import { getCieUatEndpoint } from "../../../features/cieLogin/utils/endpoints";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -384,7 +387,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  public async startCieAndroid() {
+  public async startCieAndroid(useCieUat: boolean) {
     cieManager
       .start()
       .then(async () => {
@@ -393,6 +396,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         cieManager.onSuccess(this.handleCieSuccess);
         await cieManager.setPin(this.ciePin);
         cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
+        cieManager.enableLog(isDevEnv);
+        cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
       })
@@ -401,11 +406,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       });
   }
 
-  public async startCieiOS() {
+  public async startCieiOS(useCieUat: boolean) {
     cieManager.removeAllListeners();
     cieManager.onEvent(this.handleCieEvent);
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
+    cieManager.enableLog(isDevEnv);
+    cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
@@ -444,7 +451,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       ios: this.startCieiOS,
       default: this.startCieAndroid
     });
-    await startCie();
+    await startCie(this.props.isCieUatEnabled);
     const srEnabled = await isScreenReaderEnabled();
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
@@ -477,7 +484,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             title: I18n.t("global.buttons.cancel")
           }}
           rightButton={{
-            onPress: this.startCieiOS,
+            onPress: () => this.startCieiOS(this.props.isCieUatEnabled),
             title: I18n.t("authentication.cie.nfc.retry")
           }}
         />
@@ -489,7 +496,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       <TopScreenComponent
         onAccessibilityNavigationHeaderFocus={this.handleOnHeaderFocus}
         goBack={true}
-        headerTitle={I18n.t("authentication.cie.card.headerTitle")}
+        headerTitle={withTrailingPoliceCarLightEmojii(
+          I18n.t("authentication.cie.card.headerTitle"),
+          this.props.isCieUatEnabled
+        )}
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
@@ -515,7 +525,8 @@ const mapStateToProps = (state: GlobalState) => {
   const isEnabled = isNfcEnabledSelector(state);
   return {
     isNfcEnabled: pot.getOrElse(isEnabled, false),
-    assistanceToolConfig: assistanceToolConfigSelector(state)
+    assistanceToolConfig: assistanceToolConfigSelector(state),
+    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
   };
 };
 

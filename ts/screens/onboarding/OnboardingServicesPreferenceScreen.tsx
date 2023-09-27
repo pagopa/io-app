@@ -2,11 +2,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { InfoBox } from "../../components/box/InfoBox";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H5 } from "../../components/core/typography/H5";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -45,11 +44,7 @@ const OnboardingServicesPreferenceScreen = (
 ): React.ReactElement => {
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
-  const mode =
-    !isFirstOnboarding &&
-    props.profileServicePreferenceMode === ServicesPreferencesModeEnum.LEGACY
-      ? ServicesPreferencesModeEnum.AUTO
-      : props.profileServicePreferenceMode;
+  const mode = props.profileServicePreferenceMode;
   const [modeSelected, setModeSelected] = React.useState<
     ServicesPreferencesModeEnum | undefined
   >(mode);
@@ -109,7 +104,7 @@ const OnboardingServicesPreferenceScreen = (
             onSelectMode={handleOnSelectMode}
             showBadge={showBadge}
           />
-          <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
+          <InfoBox iconName="navProfile" iconColor="bluegrey">
             <H5 color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </H5>

@@ -9,7 +9,6 @@ import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/P
 import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
 
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
-import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as NavigationActions from "../../../../store/actions/navigation";
@@ -17,13 +16,11 @@ import { pspForPaymentV2WithCallbacks } from "../../../../store/actions/wallet/p
 import { toIndexed } from "../../../../store/helpers/indexer";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  CreditCardPaymentMethod,
-  SatispayPaymentMethod
-} from "../../../../types/pagopa";
+import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
+import WALLET_ONBOARDING_COBADGE_ROUTES from "../../../../features/wallet/onboarding/cobadge/navigation/routes";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
@@ -48,18 +45,6 @@ const aCreditCard = {
   onboardingChannel: "IO"
 } as CreditCardPaymentMethod;
 
-const aSatispay = {
-  idWallet: 2,
-  kind: "Satispay",
-  walletType: WalletTypeEnum.Satispay,
-  pagoPA: false,
-  onboardingChannel: "IO",
-  enableableFunctions: [EnableableFunctionsEnum.BPD],
-  caption: "",
-  icon: "",
-  info: {}
-} as SatispayPaymentMethod;
-
 const mockPresentFn = jest.fn();
 
 jest.mock("../../../../utils/hooks/bottomSheet", () => {
@@ -68,7 +53,7 @@ jest.mock("../../../../utils/hooks/bottomSheet", () => {
 
   return {
     __esModule: true,
-    useIOBottomSheetModal: () => ({
+    useIOBottomSheetAutoresizableModal: () => ({
       present: mockPresentFn,
       bottomSheet: react.View
     })
@@ -195,30 +180,6 @@ describe("PickPaymentMethodScreen", () => {
       ]);
     }
   });
-  it("should show the notPayablePaymentMethodList there is at least one not payable payment method", () => {
-    const indexedWalletById = toIndexed(
-      [aSatispay].map(convertWalletV2toWalletV1),
-      pm => pm.idWallet
-    );
-
-    store = mockStore({
-      ...globalState,
-      wallet: {
-        ...globalState.wallet,
-        wallets: {
-          ...globalState.wallet.wallets,
-          walletById: pot.some(indexedWalletById)
-        }
-      }
-    });
-
-    const component = renderPickPaymentMethodScreen(store);
-    const availablePaymentMethodList = component.queryByTestId(
-      "notPayablePaymentMethodList"
-    );
-
-    expect(availablePaymentMethodList).not.toBeNull();
-  });
 
   it("should show a credit card if the field onboardingChannel is undefined", () => {
     const indexedWalletById = toIndexed(
@@ -251,7 +212,7 @@ describe("PickPaymentMethodScreen", () => {
 const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     PickPaymentMethodScreen,
-    WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
+    WALLET_ONBOARDING_COBADGE_ROUTES.SEARCH_AVAILABLE,
     {
       rptId,
       initialAmount,

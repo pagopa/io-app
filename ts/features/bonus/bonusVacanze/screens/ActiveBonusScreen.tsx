@@ -12,18 +12,23 @@ import {
   Easing,
   SafeAreaView,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  Platform
 } from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  hexToRgba,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Label } from "../../../../components/core/typography/Label";
 import { Link } from "../../../../components/core/typography/Link";
-import {
-  hexToRgba,
-  IOColors
-} from "../../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
@@ -31,7 +36,6 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -41,7 +45,7 @@ import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { getRemoteLocale } from "../../../../utils/messages";
 import {
@@ -74,7 +78,6 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";
@@ -129,9 +132,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: 327
   },
-  icon: {
-    paddingLeft: 12
-  },
   paddedContentLeft: {
     paddingLeft: variables.contentPadding
   },
@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white
   },
   footerButton: { flex: 1, alignItems: "center" },
-  footerButtonIcon: { color: IOColors.blue, marginBottom: 6, fontSize: 24 },
   hover: {
     minWidth: "100%",
     minHeight: "100%",
@@ -216,7 +215,7 @@ const screenShortInitialState: ScreenShotState = {
 
 type FooterButtonProp = {
   label: string;
-  iconName: string;
+  iconName: IOIcons;
   onPress: () => void;
 };
 
@@ -231,7 +230,8 @@ const FooterButton: React.FunctionComponent<FooterButtonProp> = (
   props: FooterButtonProp
 ) => (
   <TouchableDefaultOpacity onPress={props.onPress} style={styles.footerButton}>
-    <IconFont name={props.iconName} style={styles.footerButtonIcon} />
+    <Icon name={props.iconName} color="blue" size={24} />
+    <VSpacer size={4} />
     <Label weight={"Regular"}>{props.label}</Label>
   </TouchableDefaultOpacity>
 );
@@ -378,7 +378,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const { present: openModalBox, bottomSheet } = useIOBottomSheetModal(
+  const { present: openModalBox, bottomSheet } = useLegacyIOBottomSheetModal(
     <QrModalBox
       codeToDisplay={getBonusCodeFormatted(bonus)}
       codeToCopy={bonus.id}
@@ -401,7 +401,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     <ActiveBonusFooterButtons
       firstButton={{
         label: I18n.t("bonus.bonusVacanze.cta.qrCode"),
-        iconName: "io-qr",
+        iconName: "qrCode",
         onPress: openModalBox
       }}
       secondButton={
@@ -411,14 +411,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         isShareEnabled()
           ? {
               label: I18n.t("global.genericShare").toLowerCase(),
-              iconName: "io-share",
+              iconName: Platform.OS === "android" ? "shareAndroid" : "shareiOs",
               onPress: handleShare
             }
           : undefined
       }
       thirdButton={{
         label: I18n.t("global.genericSave").toLowerCase(),
-        iconName: "io-save",
+        iconName: "save",
         onPress: saveScreenShot
       }}
     />
@@ -428,9 +428,9 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     bonus && isBonusActive(bonus) && renderBonusActiveButtons();
 
   const renderInformationBlock = (
-    icon: string,
+    icon: IOIcons,
     text: string,
-    iconColor?: string
+    iconColor?: IOColors
   ) => {
     const now = new Date();
     return (
@@ -454,16 +454,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             IOStyles.centerJustified
           ]}
         >
-          <IconFont
-            name={icon}
-            color={pipe(
-              iconColor,
-              O.fromNullable,
-              O.getOrElse(() => variables.textColor)
-            )}
-            size={variables.iconSize3}
-            style={styles.icon}
-          />
+          <Icon name={icon} color={iconColor} size={24} />
           <HSpacer size={16} />
           <View style={IOStyles.flex}>
             <VSpacer size={8} />
@@ -481,7 +472,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     switch (bonus.status) {
       case BonusActivationStatusEnum.ACTIVE:
         return renderInformationBlock(
-          "io-calendario",
+          "calendar",
           I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
             from: pipe(
               bonusValidityInterval,
@@ -501,7 +492,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         );
       case BonusActivationStatusEnum.REDEEMED:
         return renderInformationBlock(
-          "io-complete",
+          "ok",
           I18n.t("bonus.bonusVacanze.statusInfo.redeemed", {
             date: formatDateAsLocal(
               pipe(
@@ -512,11 +503,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               true
             )
           }),
-          variables.brandSuccess
+          "green"
         );
       case BonusActivationStatusEnum.FAILED:
         return renderInformationBlock(
-          "io-notice",
+          "notice",
           I18n.t("bonus.bonusVacanze.statusInfo.bonusRejected")
         );
       default:

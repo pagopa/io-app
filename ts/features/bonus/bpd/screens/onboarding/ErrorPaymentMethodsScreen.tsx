@@ -2,14 +2,12 @@ import * as React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -46,12 +44,7 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <VSpacer size={40} />
             <VSpacer size={40} />
-            <IconFont
-              name={"io-complete"}
-              size={120}
-              color={IOColors.aqua as string}
-              style={styles.center}
-            />
+            <Icon name="ok" size={96} color="aqua" />
             <VSpacer size={48} />
             <H2 style={styles.center}>{title}</H2>
             <VSpacer size={40} />

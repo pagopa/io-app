@@ -5,7 +5,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import * as S from "fp-ts/lib/string";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { isIos } from "../../../utils/platform";
@@ -37,7 +37,7 @@ const renderFooter = (url: string, filePath: string) =>
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.ios.presentOptionsMenu(filePath);
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      }, I18n.t("messagePDFPreview.open"))}
     />
   ) : (
     <FooterWithButtons
@@ -53,11 +53,7 @@ const renderFooter = (url: string, filePath: string) =>
             undefined,
             false
           )().catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.sharing"
-              )
-            );
+            showToast(I18n.t("messagePDFPreview.errors.sharing"));
           });
         },
         title: I18n.t("global.buttons.share")
@@ -77,24 +73,17 @@ const renderFooter = (url: string, filePath: string) =>
           )
             .then(_ => {
               showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.savedAtLocation",
-                  {
-                    name: "attachment.displayName"
-                  }
-                ),
+                I18n.t("messagePDFPreview.savedAtLocation", {
+                  name: "attachment.displayName"
+                }),
                 "success"
               );
             })
             .catch(_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.errors.saving"
-                )
-              );
+              showToast(I18n.t("messagePDFPreview.errors.saving"));
             });
         },
-        title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
+        title: I18n.t("messagePDFPreview.save")
       }}
       rightButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.android
@@ -103,18 +92,15 @@ const renderFooter = (url: string, filePath: string) =>
             "application/pdf"
           )
           .catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.opening"
-              )
-            );
+            showToast(I18n.t("messagePDFPreview.errors.opening"));
           });
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      }, I18n.t("messagePDFPreview.open"))}
     />
   );
 
 type Props = {
   documentUrl: string;
+  enableAnnotationRendering?: boolean;
   onLoadComplete?: (totalPages: number) => void;
   onPageChanged?: (page: number) => void;
   onError: () => void;
@@ -132,6 +118,7 @@ const LoadingComponent = () => (
 export const DocumentViewer = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
+  const enableAnnotationRendering = props.enableAnnotationRendering;
   const dispatch = useIODispatch();
   const fciDownloadSelector = useIOSelector(fciDownloadPreviewSelector);
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
@@ -160,6 +147,8 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
             onError={_ => {
               setIsError(true);
             }}
+            enablePaging
+            enableAnnotationRendering={enableAnnotationRendering ? true : false}
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>

@@ -11,6 +11,7 @@ import {
   View
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -28,7 +29,6 @@ import { attachmentsFromThirdPartyMessage } from "../../../store/reducers/entiti
 import { UIService } from "../../../store/reducers/entities/services/types";
 import variables from "../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../../utils/messages";
-import { VSpacer } from "../../core/spacer/Spacer";
 import OrganizationHeader from "../../OrganizationHeader";
 import { H2 } from "../../core/typography/H2";
 import {
@@ -38,7 +38,6 @@ import {
 import ROUTES from "../../../navigation/routes";
 import { isStrictNone } from "../../../utils/pot";
 import StatusContent from "../../SectionStatus/StatusContent";
-import { IOColors } from "../../core/variables/IOColors";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
@@ -91,9 +90,8 @@ const renderThirdPartyAttachmentsError = (viewRef: React.RefObject<View>) => (
   <>
     <StatusContent
       backgroundColor={"orange"}
-      iconColor={IOColors.white}
-      iconName={"io-notice"}
-      labelColor={"white"}
+      foregroundColor={"white"}
+      iconName={"notice"}
       viewRef={viewRef}
       labelPaddingVertical={16}
     >

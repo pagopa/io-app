@@ -4,11 +4,11 @@
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW" />
-      <data android:scheme="http"/>
+      <data android:scheme="http" android:host="*" />
     </intent>
     <intent>
       <action android:name="android.intent.action.VIEW" />
-      <data android:scheme="https"/>
+      <data android:scheme="https" android:host="*" />
     </intent>
   </queries>
 
@@ -18,6 +18,7 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
   <!-- Force removal of ACCESS_WIFI_STATE see https://pagopa.atlassian.net/browse/IA-557 -->
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" tools:node="remove" />
   <!-- Force removal of READ_PHONE_STATE due to react-native-device-info library see https://github.com/react-native-community/react-native-device-info/issues/955 -->
@@ -29,7 +30,7 @@
   <uses-permission android:name="android.permission.READ_CALENDAR" />
   <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
-  <!-- Required by @react-native-community/cameraroll -->
+  <!-- Required by @react-native-camera-roll/camera-roll -->
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -103,7 +104,7 @@
     <!-- END Zendesk -->
 
     <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:windowSoftInputMode="adjustResize" android:exported="true">
-      <intent-filter android:autoVerify="true">
+      <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
@@ -115,7 +116,7 @@
         <data android:scheme="ioit" android:host="ioit" />
       </intent-filter>
 
-      <intent-filter>
+      <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />

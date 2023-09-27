@@ -1,14 +1,14 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { InfoBox } from "../../../../components/box/InfoBox";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import Markdown from "../../../../components/ui/Markdown";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import {
@@ -17,7 +17,6 @@ import {
 } from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   lastUpdateDate: string;
@@ -74,10 +73,10 @@ export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { present, bottomSheet } = useIOBottomSheetModal(
+  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <>
       <VSpacer size={24} />
-      <InfoBox iconName={"io-calendar"} iconSize={32}>
+      <InfoBox iconName="calendar" iconSize={32}>
         <H4 weight={"Regular"}>
           {I18n.t(
             "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
@@ -104,7 +103,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   return (
     <>
       <View style={styles.row}>
-        <InfoBox iconName={"io-notice"} iconSize={32}>
+        <InfoBox iconName="notice" iconSize={32}>
           <H4 weight={"Regular"}>
             {I18n.t("bonus.bpd.details.transaction.detail.summary.lastUpdated")}
             <H4>{props.lastUpdateDate}</H4>

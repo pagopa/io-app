@@ -11,6 +11,8 @@ import {
   testableCheckSession,
   checkSessionResult
 } from "../watchCheckSessionSaga";
+import { handleSessionExpiredSaga } from "../../../features/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();
@@ -112,6 +114,11 @@ describe("checkSessionResult", () => {
     };
     testSaga(checkSessionResult, sessionInvalidAction)
       .next()
+      .call(handleSessionExpiredSaga);
+    testSaga(handleSessionExpiredSaga)
+      .next()
+      .select(isFastLoginEnabledSelector)
+      .next(false)
       .put(sessionExpired());
   });
 });

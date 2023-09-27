@@ -1,12 +1,11 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -56,7 +55,7 @@ export const useNotActivableInformationBottomSheet = (
   representation: PaymentMethodRepresentation,
   type: NotActivableType
 ) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <BpdNotActivableInformation type={type} representation={representation} />,
     getTitle(type),
     310

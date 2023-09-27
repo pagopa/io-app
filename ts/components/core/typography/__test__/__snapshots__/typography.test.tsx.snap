@@ -901,12 +901,14 @@ exports[`Test Typography Components LabelSmall Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 14,
+      "lineHeight": 21,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       },
       Object {
         "color": "#0073E6",
@@ -931,12 +933,14 @@ exports[`Test Typography Components LabelSmall Snapshot 2`] = `
   fontStyle={
     Object {
       "fontSize": 14,
+      "lineHeight": 21,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       },
       Object {
         "color": "#0073E6",
@@ -961,12 +965,14 @@ exports[`Test Typography Components LabelSmall Snapshot 3`] = `
   fontStyle={
     Object {
       "fontSize": 14,
+      "lineHeight": 21,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       },
       Object {
         "color": "#475A6D",
@@ -991,12 +997,14 @@ exports[`Test Typography Components LabelSmall Snapshot 4`] = `
   fontStyle={
     Object {
       "fontSize": 14,
+      "lineHeight": 21,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       },
       Object {
         "color": "#C02927",
@@ -1021,12 +1029,14 @@ exports[`Test Typography Components LabelSmall Snapshot 5`] = `
   fontStyle={
     Object {
       "fontSize": 14,
+      "lineHeight": 21,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 14,
+        "lineHeight": 21,
       },
       Object {
         "color": "#FFFFFF",

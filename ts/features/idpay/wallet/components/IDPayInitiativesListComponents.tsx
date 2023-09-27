@@ -1,28 +1,35 @@
-import { Badge as NBbadge, ListItem as NBlistItem } from "native-base";
+import {
+  Badge,
+  Divider,
+  IOSpacingScale,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   InitiativesStatusDTO,
   StatusEnum
 } from "../../../../../definitions/idpay/InitiativesStatusDTO";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
-import { H4 } from "../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import TypedI18n from "../../../../i18n";
+import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../store/actions";
 import { idPayInitiativeFromInstrumentPotSelector } from "../store/reducers";
+import { NewH6 } from "../../../../components/core/typography/NewH6";
+
+const itemContainerVerticalSpacing: IOSpacingScale = 16;
 
 const styles = StyleSheet.create({
-  badge: {
-    height: 24,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: IOColors.blue
+  listItemContainer: {
+    ...IOStyles.row,
+    paddingVertical: itemContainerVerticalSpacing
+  },
+  leftContent: {
+    ...IOStyles.flex,
+    paddingRight: 8
   }
 });
 
@@ -39,11 +46,12 @@ export const IDPayInitiativesList = ({
   idWallet
 }: InitiativeListProps) => (
   <>
-    {initiatives.map(item => (
+    {initiatives.map((item, index) => (
       <IDPayInitiativeListItem
         item={item}
         key={item.initiativeId}
         idWallet={idWallet}
+        isLast={index === initiatives.length - 1}
       />
     ))}
   </>
@@ -52,16 +60,26 @@ export const IDPayInitiativesList = ({
 type ListItemProps = {
   item: InitiativesStatusDTO;
   idWallet: string;
+  isLast: boolean;
 };
 
-export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
+export const IDPayInitiativeListItem = ({
+  item,
+  idWallet,
+  isLast
+}: ListItemProps) => {
   const { initiativeName } = item;
 
   return (
-    <NBlistItem style={{ justifyContent: "space-between", paddingRight: 0 }}>
-      <H4>{initiativeName}</H4>
-      <SwitchOrStatusLabel item={item} idWallet={idWallet} />
-    </NBlistItem>
+    <View>
+      <View style={styles.listItemContainer}>
+        <View style={styles.leftContent}>
+          <NewH6 numberOfLines={1}>{initiativeName}</NewH6>
+        </View>
+        <SwitchOrStatusLabel item={item} idWallet={idWallet} />
+      </View>
+      {!isLast && <Divider />}
+    </View>
   );
 };
 
@@ -88,13 +106,10 @@ const SwitchOrStatusLabel = ({ item, idWallet }: SwitchOrStatusLabelProps) => {
     case StatusEnum.PENDING_ENROLLMENT_REQUEST:
     case StatusEnum.PENDING_DEACTIVATION_REQUEST:
       return (
-        <NBbadge style={styles.badge}>
-          <LabelSmall color="white">
-            {TypedI18n.t(
-              `idpay.wallet.initiativePairing.statusLabels.${status}`
-            )}
-          </LabelSmall>
-        </NBbadge>
+        <Badge
+          text={I18n.t(`idpay.wallet.initiativePairing.statusLabels.${status}`)}
+          variant="warning"
+        />
       );
     default:
       return null;

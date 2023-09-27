@@ -1,6 +1,5 @@
 import * as React from "react";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
 import { WithTestID } from "../../../types/WithTestID";
 import ErrorComponent from "./ErrorComponent";
 
@@ -17,7 +16,7 @@ const GenericErrorComponent = (props: Props) => (
   <ErrorComponent
     title={props.title}
     subTitle={props.subTitle}
-    image={genericError}
+    pictogram={"umbrella"}
     testID={props.testID}
     onPress={props.onPress}
     retry={props.retry}

@@ -4,7 +4,7 @@ import { getType } from "typesafe-actions";
 import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { pnActivationUpsert } from "../actions/service";
+import { pnActivationUpsert } from "../actions";
 
 export type PnActivationState = pot.Pot<boolean, Error>;
 

@@ -34,11 +34,10 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -51,7 +50,6 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -336,7 +334,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       accessibilityLabel={I18n.t("services.accessibility.edit")}
       onPress={this.props.navigateToServicePreference}
     >
-      <IconFont name={"io-coggle"} size={16} color={IOColors.blue} />
+      <Icon name="coggle" size={20} color="blue" />
       <Label color={"blue"} weight={"Bold"} style={{ marginLeft: 8 }}>
         {I18n.t("global.buttons.edit").toLocaleUpperCase()}
       </Label>

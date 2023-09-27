@@ -20,7 +20,7 @@ describe("PinCreationForm component", () => {
 
     // No error should be rendered at first
     const lengthErrors = component.queryAllByText(
-      I18n.t("onboarding.pin.errors.length")
+      I18n.t("onboarding.pin.errors.invalid")
     );
 
     const matchErrors = component.queryAllByText(
@@ -40,16 +40,17 @@ describe("PinCreationForm component", () => {
 
     await waitFor(() => {
       expect(
-        component.queryByText(I18n.t("onboarding.pin.errors.length"))
+        component.queryByText(I18n.t("onboarding.pin.errors.invalid"))
       ).toBeTruthy();
     });
 
     fireEvent.changeText(targetFieldInput, "123456");
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() => {
       expect(
-        component.queryByText(I18n.t("onboarding.pin.errors.length"))
-      ).toBeFalsy();
+        component.queryByText(I18n.t("onboarding.pin.errors.invalid"))
+      ).toBeTruthy();
     });
   });
 

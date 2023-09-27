@@ -5,14 +5,15 @@
 import { Platform } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { BpdConfig } from "../../../definitions/content/BpdConfig";
-import { PnConfig } from "../../../definitions/content/PnConfig";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
@@ -21,7 +22,6 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
-  pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
   uaDonationsEnabled
@@ -31,6 +31,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
+import { Config } from "../../../definitions/content/Config";
 import { GlobalState } from "./types";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 
@@ -218,23 +219,45 @@ export const bancomatPayConfigSelector = createSelector(
  * based on a minumum version of the app.
  * if there is no data, false is the default value -> (LolliPOP disabled)
  */
-export const isLollipopEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pipe(
-      backendStatus,
-      O.chainNullableK(bs => bs.config),
-      O.chainNullableK(cfg => cfg.lollipop),
-      O.chainNullableK(lp => lp.min_app_version),
-      O.map(mav =>
-        isVersionSupported(
-          Platform.OS === "ios" ? mav.ios : mav.android,
-          getAppVersion()
+
+type KeysWithMinAppVersion<T> = Extract<
+  keyof T,
+  {
+    [K in keyof T]: T[K] extends { min_app_version?: any } | undefined
+      ? K
+      : never;
+  }[keyof T]
+>;
+
+export const isPropertyWithMinAppVersionEnabled = (
+  localFlag: boolean,
+  configPropertyName: KeysWithMinAppVersion<Config>,
+  backendStatus: O.Option<BackendStatus>
+): boolean =>
+  localFlag &&
+  pipe(
+    backendStatus,
+    O.chainNullableK(bs => bs.config),
+    O.chainNullableK(cfg =>
+      configPropertyName ? cfg[configPropertyName] : undefined
+    ),
+    O.chainNullableK(lp => lp.min_app_version),
+    O.map(mav => (Platform.OS === "ios" ? mav.ios : mav.android)),
+    O.chain(semVer =>
+      pipe(
+        semVer,
+        PatternString(`^(?!0(.0)*$)\\d+(\\.\\d+)*$`).decode,
+        E.fold(
+          _ => O.none,
+          v => O.some(v)
         )
-      ),
-      O.getOrElse(() => false)
+      )
+    ),
+    O.fold(
+      () => false,
+      v => isVersionSupported(v, getAppVersion())
     )
-);
+  );
 
 /**
  * return the remote config about CGN enabled/disabled
@@ -328,36 +351,59 @@ export const barcodesScannerConfigSelector = createSelector(
 );
 
 /**
- * Return the remote config for the PN feature.
+ * Return the remote config about PN enabled/disabled
+ * if there is no data, false is the default value -> (PN disabled)
  */
-export const PnConfigSelector = createSelector(
+export const isPnEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(s => s.config.pn.enabled),
+    O.getOrElse(() => false)
+  );
+
+/**
+ * Return false if the app needs to be updated in order to use PN.
+ */
+export const isPnSupportedSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): PnConfig =>
+  (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs => bs.config.pn),
-      O.getOrElseW(() => ({
-        enabled: false,
-        frontend_url: ""
-      }))
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.pn.min_app_version.ios
+            : bs.config.pn.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
     )
 );
 
 /**
- * Return the remote config about PN enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (PN disabled)
+ * Return the minimum app version required to use PN.
  */
-export const isPnEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean =>
-    pnEnabled &&
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.pn.enabled),
-      O.getOrElseW(() => false)
-    )
-);
+export const pnMinAppVersionSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(bs =>
+      Platform.OS === "ios"
+        ? bs.config.pn.min_app_version.ios
+        : bs.config.pn.min_app_version.android
+    ),
+    O.getOrElse(() => "-")
+  );
+
+/**
+ * Return the url of the PN frontend.
+ */
+export const pnFrontendUrlSelector = (state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(bs => bs.config.pn.frontend_url),
+    O.getOrElse(() => "")
+  );
 
 export const configSelector = createSelector(
   backendStatusSelector,

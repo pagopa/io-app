@@ -1,21 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { pipe } from "fp-ts/lib/function";
-import { TagEnum as TagEnumBase } from "../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../definitions/backend/MessageCategoryPN";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
-import { euCovidCertificateEnabled, mvlEnabled } from "../../config";
+import { euCovidCertificateEnabled } from "../../config";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
-import { navigateToMvlDetailsScreen } from "../../features/mvl/navigation/actions";
 import { navigateToPnMessageDetailsScreen } from "../../features/pn/navigation/actions";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -28,13 +27,13 @@ import {
 } from "../../store/actions/messages";
 import {
   navigateBack,
-  navigateToPaginatedMessageDetailScreenAction
+  navigateToMessageDetailScreenAction
 } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { useIOSelector } from "../../store/hooks";
 import { isPnEnabledSelector } from "../../store/reducers/backendStatus";
 import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
-import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
   UIMessageDetails,
@@ -44,17 +43,18 @@ import { serviceByIdSelector } from "../../store/reducers/entities/services/serv
 import { GlobalState } from "../../store/reducers/types";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../utils/pot";
-import { mixpanelTrack } from "../../mixpanel";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/entities/messages/allPaginated";
+import { trackPNPushOpened } from "../../features/pn/analytics";
+import { trackOpenMessage } from "../../features/messages/analytics";
 
-export type MessageRouterScreenPaginatedNavigationParams = {
+export type MessageRouterScreenNavigationParams = {
   messageId: UIMessageId;
   fromNotification: boolean;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
   MessagesParamsList,
-  "MESSAGE_ROUTER_PAGINATED"
+  "MESSAGE_ROUTER"
 >;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -71,9 +71,24 @@ const navigateToScreenHandler =
   (
     message: UIMessage,
     messageDetails: UIMessageDetails,
-    isPnEnabled: boolean
+    isPnEnabled: boolean,
+    firstTimeOpening: boolean
   ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
+    const containsPayment = pipe(
+      message.category.tag !== TagEnumPN.PN,
+      B.fold(
+        () => undefined,
+        () => pipe(messageDetails.paymentData, O.fromNullable, O.isSome)
+      )
+    );
+
+    trackOpenMessage(
+      message.serviceName,
+      message.organizationName,
+      containsPayment
+    );
+
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
       navigateBack();
       navigateToEuCovidCertificateDetailScreen({
@@ -81,24 +96,19 @@ const navigateToScreenHandler =
           .authCode as EUCovidCertificateAuthCode,
         messageId: message.id
       });
-    } else if (
-      mvlEnabled &&
-      message.category.tag === TagEnumBase.LEGAL_MESSAGE
-    ) {
-      navigateBack();
-      dispatch(navigateToMvlDetailsScreen({ id: message.id }));
     } else if (isPnEnabled && message.category.tag === TagEnumPN.PN) {
       navigateBack();
       dispatch(
         navigateToPnMessageDetailsScreen({
           messageId: message.id,
-          serviceId: message.serviceId
+          serviceId: message.serviceId,
+          firstTimeOpening
         })
       );
     } else {
       navigateBack();
       dispatch(
-        navigateToPaginatedMessageDetailScreenAction({
+        navigateToMessageDetailScreenAction({
           messageId: message.id,
           serviceId: message.serviceId
         })
@@ -179,7 +189,7 @@ const MessageRouterScreen = ({
         !fromNotification || !isSynchronizingInbox;
 
       if (isPNDetailsFromNotification) {
-        void mixpanelTrack("PN_PUSH_OPENED");
+        trackPNPushOpened();
         navigation.navigate(ROUTES.MAIN, {
           screen: ROUTES.MESSAGES_HOME
         });
@@ -187,11 +197,13 @@ const MessageRouterScreen = ({
       } else if (
         isNotOpeningFromBackgroundNotificationWhileSynchronizingInbox
       ) {
+        const isFirstTimeOpening = !maybeMessage.isRead;
         setMessageReadState(maybeMessage);
         navigateToScreenHandler(
           maybeMessage,
           maybeMessageDetails.value,
-          isPnEnabled
+          isPnEnabled,
+          isFirstTimeOpening
         )(navigation.dispatch);
         setDidNavigateToScreenHandler(true);
       }
@@ -249,7 +261,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
   const messageId = ownProps.route.params.messageId;
   const fromNotification = ownProps.route.params.fromNotification;
-  const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
+  const maybeMessage = pot.toUndefined(
+    getPaginatedMessageById(state, messageId)
+  );
   const isServiceAvailable = pipe(
     maybeMessage?.serviceId,
     O.fromNullable,

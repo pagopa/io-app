@@ -39,48 +39,66 @@ exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "alignItems": "center",
       "opacity": 1,
       "width": 51,
     }
   }
 >
-  <Text
+  <RNSVGSvgView
     accessibilityElementsHidden={true}
     accessibilityLabel=""
     accessible={false}
-    allowFontScaling={false}
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    color={4278219750}
+    focusable={false}
+    height={24}
     importantForAccessibility="no-hide-descendants"
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
     style={
       Array [
         Object {
-          "color": "#0073E6",
-          "fontSize": 24,
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
         },
-        Array [
-          Array [
-            Object {},
-            Object {
-              "textAlign": "center",
-            },
-          ],
-          Object {
-            "color": "#0073E6",
-          },
-          Object {
-            "fontSize": 24,
-          },
-        ],
         Object {
-          "fontFamily": "io-icon-font",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
+          "color": "#0073E6",
         },
-        Object {},
+        Object {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
       ]
     }
+    tintColor={4278219750}
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
   >
-    
-  </Text>
+    <RNSVGGroup>
+      <RNSVGPath
+        clipRule={0}
+        d="M20.5 3.52945V1.50002c0-.55229.4477-1 1-1s1 .44771 1 1v4.5c0 .26521-.1054.51957-.2929.7071a.99994.99994 0 0 1-.7071.2929L17 7.00001c-.5523 0-1-.44771-1-1 0-.55228.4477-1 1-1l2.1415.00001a10.00086 10.00086 0 0 0-3.3774-2.26457A10.00004 10.00004 0 0 0 4.6248 5.24676a9.99995 9.99995 0 0 0-2.53547 5.41974 9.99986 9.99986 0 0 0 1.01273 5.8971A9.99994 9.99994 0 0 0 13.1813 21.93a9.99978 9.99978 0 0 0 5.458-2.452c.413-.3667 1.045-.3292 1.4117.0838s.3292 1.0451-.0838 1.4118a12.0013 12.0013 0 0 1-6.5496 2.9424 12.00094 12.00094 0 0 1-7.05709-1.3237 12.00006 12.00006 0 0 1-5.03804-5.116 11.99975 11.99975 0 0 1-1.21528-7.0765 11.99992 11.99992 0 0 1 3.04257-6.50368A11.99992 11.99992 0 0 1 9.36088.29382 11.99986 11.99986 0 0 1 20.5 3.52945Z"
+        fill={
+          Array [
+            2,
+          ]
+        }
+        fillRule={0}
+        propList={
+          Array [
+            "fill",
+            "fillRule",
+          ]
+        }
+      />
+    </RNSVGGroup>
+  </RNSVGSvgView>
 </View>
 `;
 

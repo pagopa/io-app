@@ -5,7 +5,6 @@ import configureMockStore from "redux-mock-store";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
-import { PnPreferences } from "../../../features/pn/store/reducers/preferences";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
@@ -20,10 +19,6 @@ import {
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
-
-jest.mock("../../../config", () => ({
-  pnEnabled: true
-}));
 
 const mockNavigate = jest.fn();
 
@@ -45,7 +40,10 @@ jest.mock("@react-navigation/native", () => {
 const mockPresentBottomSheet = jest.fn();
 
 jest.mock("../../../utils/hooks/bottomSheet", () => ({
-  useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet })
+  useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet }),
+  useIOBottomSheetAutoresizableModal: () => ({
+    present: mockPresentBottomSheet
+  })
 }));
 
 describe("MessagesHomeScreen", () => {
@@ -74,7 +72,7 @@ describe("MessagesHomeScreen", () => {
           );
           fireEvent(component.getByText(message.title), "onPress");
           expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
-            screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+            screen: ROUTES.MESSAGE_ROUTER,
             params: {
               messageId: message.id,
               fromNotification: false
@@ -111,7 +109,6 @@ describe("MessagesHomeScreen", () => {
 
 type InputState = {
   inboxMessages: ReadonlyArray<UIMessage>;
-  pnPreferences?: PnPreferences;
 };
 
 const renderComponent = (
@@ -146,23 +143,20 @@ const renderComponent = (
         allPaginated
       }
     },
-    features: {
-      ...globalState.features,
-      pn: {
-        ...globalState.features.pn,
-        preferences: {
-          ...globalState.features.pn.preferences,
-          ...state.pnPreferences
-        }
-      }
-    },
     backendStatus: {
       ...baseBackendState,
       status: O.some({
         ...baseRawBackendStatus,
         config: {
           ...baseBackendConfig,
-          pn: { enabled: isPnEnabled, frontend_url: "" }
+          pn: {
+            enabled: isPnEnabled,
+            frontend_url: "",
+            min_app_version: {
+              ios: "2.35.0.1",
+              android: "2.35.0.1"
+            }
+          }
         }
       })
     }

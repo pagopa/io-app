@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body, Container, Left, ListItem, Right } from "native-base";
 import { View, Keyboard, SafeAreaView, ScrollView } from "react-native";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import AppHeader from "../../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { H5 } from "../../../../components/core/typography/H5";
 import I18n from "../../../../i18n";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -24,10 +24,8 @@ import { possibleVoucherStateSelector } from "../store/reducers/voucherList/poss
 import { isReady } from "../../bpd/model/RemoteValue";
 import { StatoVoucherBean } from "../../../../../definitions/api_sicilia_vola/StatoVoucherBean";
 import { H4 } from "../../../../components/core/typography/H4";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { svSetFilter } from "../store/actions/voucherList";
 import { FilterState } from "../store/reducers/voucherList/filters";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
@@ -65,10 +63,10 @@ const PossibleVoucherStateOption = ({
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
-    <IconFont
-      name={checked ? "io-radio-on" : "io-radio-off"}
-      size={22}
-      color={checked ? IOColors.blue : IOColors.bluegrey}
+    <Icon
+      name={checked ? "legRadioOn" : "legRadioOff"}
+      size={24}
+      color={checked ? "blue" : "bluegrey"}
     />
   </ListItem>
 );
@@ -138,7 +136,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         </Body>
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
@@ -150,6 +148,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         >
           <View style={IOStyles.horizontalContentPadding}>
             <LabelledItem
+              icon="search"
               iconPosition={"right"}
               inputProps={{
                 value: searchValue,
@@ -159,7 +158,6 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
                 ),
                 maxLength: 10
               }}
-              icon="io-search"
             />
             <VSpacer size={24} />
             {isReady(props.possibleVoucherState) && (

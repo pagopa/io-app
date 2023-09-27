@@ -3,14 +3,18 @@ import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { v4 as uuid } from "uuid";
-import { put, select, call } from "typed-redux-saga/macro";
+import { put, select, call, delay } from "typed-redux-saga/macro";
 import {
   deleteKey,
   generate,
   getPublicKey,
   PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopRemovePublicKey,
@@ -27,11 +31,15 @@ import { restartCleanApplication } from "../../../sagas/commons";
 
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import {
+  buildEventProperties,
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
 import { isLoggedInWithTestIdpSelector } from "../../../store/reducers/authentication";
+import { mixpanelTrack } from "../../../mixpanel";
+
+const WAIT_A_BIT_AFTER_SESSION_EXPIRED = 1000 as Millisecond;
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -81,7 +89,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   // See: https://pagopa.atlassian.net/browse/LLK-72
   const isLoggedInWithTestIdp = yield* select(isLoggedInWithTestIdpSelector);
   if (isLoggedInWithTestIdp) {
-    return;
+    return true;
   }
 
   const lollipopCheckResult = pipe(
@@ -107,10 +115,21 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   );
 
   if (!lollipopCheckResult) {
+    void mixpanelTrack(
+      "LOGIN_UNEXPECTED_REQUEST_ID",
+      buildEventProperties("KO", undefined)
+    );
     yield* put(sessionInvalid());
+    // We want to take a little time before restarting the application
+    // to let the action sessionInvalid be dispatched and handled.
+    yield* delay(WAIT_A_BIT_AFTER_SESSION_EXPIRED);
     yield* call(restartCleanApplication);
+    return false;
   }
+
+  return true;
 }
+
 /**
  * Generates a new crypto key pair.
  */
@@ -184,6 +203,12 @@ function* generateCryptoKeyPair(keyTag: string) {
       yield* call(trackLollipopKeyGenerationFailure, message);
     }
   }
+}
+
+export function* getKeyInfo() {
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  return yield* call(generateKeyInfo, keyTag, publicKey);
 }
 
 export const generateKeyInfo = (

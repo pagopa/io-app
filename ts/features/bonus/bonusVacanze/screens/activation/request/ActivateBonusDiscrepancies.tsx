@@ -1,9 +1,8 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { Icon, HSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../../components/ui/IconFont";
 import themeVariables from "../../../../../../theme/variables";
 
 type Props = {
@@ -37,7 +36,7 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
         IOStyles.horizontalContentPadding
       ]}
     >
-      <IconFont name={"io-notice"} size={iconSize} />
+      <Icon name="notice" size={iconSize} />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
         <Body>

@@ -2,15 +2,14 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { InfoBox } from "../../../components/box/InfoBox";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -85,7 +84,7 @@ const ZendeskSupportComponent = ({
         </Link>
       </H4>
       <VSpacer size={24} />
-      <InfoBox iconName={"io-notice"} iconColor={IOColors.blue} iconSize={18}>
+      <InfoBox iconName="notice" iconColor="blue" iconSize={20}>
         <Label color={"bluegrey"} weight={"Regular"}>
           {I18n.t("support.helpCenter.supportComponent.adviceMessage")}
         </Label>

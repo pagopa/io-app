@@ -1,15 +1,14 @@
 import * as React from "react";
 import { View } from "react-native";
-import Markdown from "../../../../../../components/ui/Markdown";
-import I18n from "../../../../../../i18n";
-import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../../../utils/url";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
+import Markdown from "../../../../../../components/ui/Markdown";
+import I18n from "../../../../../../i18n";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
 import { showToast } from "../../../../../../utils/showToast";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
-
-const EYCA_DISCOUNTS_URL = "https://www.eyca.org/discounts/it";
+import { openWebUrl } from "../../../../../../utils/url";
+import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
 
 /**
  * this component shows information about EYCA card. It is included within a bottom sheet
@@ -30,7 +29,7 @@ const EycaInformationComponent: React.FunctionComponent = () => {
             style={{ width: "100%" }}
             bordered
             onPress={() =>
-              openWebUrl(EYCA_DISCOUNTS_URL, () =>
+              openWebUrl(EYCA_WEBSITE_BASE_URL, () =>
                 showToast(I18n.t("bonus.cgn.generic.linkError"))
               )
             }
@@ -42,13 +41,13 @@ const EycaInformationComponent: React.FunctionComponent = () => {
           </ButtonDefaultOpacity>
         )}
       </View>
+      <VSpacer size={16} />
     </View>
   );
 };
 
 export const useEycaInformationBottomSheet = () =>
-  useIOBottomSheetModal(
-    <EycaInformationComponent />,
-    I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle"),
-    420
-  );
+  useIOBottomSheetAutoresizableModal({
+    component: <EycaInformationComponent />,
+    title: I18n.t("bonus.cgn.detail.status.eycaBottomSheetTitle")
+  });

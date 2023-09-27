@@ -4,13 +4,12 @@ import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -82,7 +81,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
       style={[styles.verticalPadding, styles.alertTextContainer]}
       testID="FciDataSharingScreenAlertTextTestID"
     >
-      <IconFont name={"io-notice"} size={iconSize} color={IOColors.bluegrey} />
+      <Icon name="notice" size={iconSize} color="bluegrey" />
       <H4 weight="Regular" style={styles.paddingTextLarge} color={"bluegrey"}>
         {I18n.t("features.fci.shareDataScreen.alertText")}
         <View style={styles.paddingText} />

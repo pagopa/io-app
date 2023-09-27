@@ -18,15 +18,13 @@ type CoBadgeRequestQuery = {
 };
 
 const cobadgePrefix = "WALLET_ONBOARDING_COBADGE_SEARCH";
-const privativePrefix = "WALLET_ONBOARDING_PRIVATIVE_SEARCH";
 
 const withTokenSuffix = "WITH_TOKEN";
 const withoutTokenSuffix = "WITHOUT_TOKEN";
 
 /**
- * This method contains the generic networking logic used to request a user's cobadge and privative
- * cards. The request for privative cards also requires the pancode
- * @param cobadgeQuery  the input data to search the privative / cobadge
+ * This method contains the generic networking logic used to request a user's cobadge
+ * @param cobadgeQuery  the input data to search the cobadge
  * @param getCobadgePans the http client for /cobadge/pans
  * @param searchCobadgePans the http client for /cobadge/search
  * @param sessionManager
@@ -41,9 +39,9 @@ export const searchUserCobadge = async (
   sessionManager: SessionManager<PaymentManagerToken>,
   searchRequestId: string | undefined
 ): Promise<E.Either<NetworkError, CobadgeResponse>> => {
-  const logPrefix = `${
-    cobadgeQuery.panCode ? privativePrefix : cobadgePrefix
-  }_${searchRequestId ? withTokenSuffix : withoutTokenSuffix}`;
+  const logPrefix = `${cobadgePrefix}_${
+    searchRequestId ? withTokenSuffix : withoutTokenSuffix
+  }`;
 
   try {
     void mixpanelTrack(`${logPrefix}_REQUEST`, {

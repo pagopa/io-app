@@ -1,6 +1,6 @@
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
+import * as O from "fp-ts/lib/Option";
 import { startApplicationInitialization } from "../store/actions/application";
 import {
   checkCurrentSession,
@@ -15,8 +15,6 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToPaginatedMessageRouterAction } from "../store/actions/navigation";
-import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   paymentDeletePayment,
   runDeleteActivePaymentSaga
@@ -27,14 +25,12 @@ import {
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
-import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
-import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { deletePin } from "../utils/keychain";
-import NavigationService from "../navigation/NavigationService";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { deletePin, getPin } from "../utils/keychain";
+import { isFastLoginEnabledSelector } from "./../features/fastLogin/store/selectors/index";
+import { handlePendingMessageStateIfAllowedSaga } from "./notifications";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -86,7 +82,10 @@ function* waitIdentificationResult(): Generator<
 
     case getType(identificationSuccess): {
       // if the identification has been successfully, check if the current session is still valid
-      yield* put(checkCurrentSession.request());
+      const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+      if (!isFastLoginEnabled) {
+        yield* put(checkCurrentSession.request());
+      }
       return IdentificationResult.success;
     }
 
@@ -136,12 +135,15 @@ export function* startAndReturnIdentificationResult(
 
 // Started by redux action
 function* startAndHandleIdentificationResult(
-  pin: PinString,
   identificationRequestAction: ActionType<typeof identificationRequest>
 ) {
+  const pin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
+  if (O.isNone(pin)) {
+    return;
+  }
   yield* put(
     identificationStart(
-      pin,
+      pin.value,
       identificationRequestAction.payload.canResetPin,
       identificationRequestAction.payload.isValidatingTask,
       identificationRequestAction.payload.identificationGenericData,
@@ -156,38 +158,14 @@ function* startAndHandleIdentificationResult(
     yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-      yield* select(pendingMessageStateSelector);
-
-    // Check if there is a payment ongoing
-    const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
-      yield* select(isPaymentOngoingSelector);
-
-    if (!isPaymentOngoing && pendingMessageState) {
-      // We have a pending notification message to handle
-      const messageId = pendingMessageState.id;
-
-      // Remove the pending message from the notification state
-      yield* put(clearNotificationPendingMessage());
-
-      // Navigate to message router screen
-      NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    }
+    yield* call(handlePendingMessageStateIfAllowedSaga);
   }
 }
 
-export function* watchIdentification(
-  pin: PinString
-): IterableIterator<ReduxSagaEffect> {
+export function* watchIdentification(): IterableIterator<ReduxSagaEffect> {
   // Watch for identification request
   yield* takeLatest(
     getType(identificationRequest),
-    startAndHandleIdentificationResult,
-    pin
+    startAndHandleIdentificationResult
   );
 }

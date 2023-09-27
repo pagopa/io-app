@@ -1,13 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   text11: string;
@@ -40,8 +39,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const ICON_WIDTH = 24;
-
 export default class PaymentHistoryItem extends React.PureComponent<Props> {
   public render() {
     return (
@@ -66,11 +63,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
             </Body>
           </View>
           <View style={styles.icon}>
-            <IconFont
-              name={"io-right"}
-              size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
-            />
+            <Icon name="chevronRightListItem" size={24} color="blue" />
           </View>
         </View>
         {this.props.children}

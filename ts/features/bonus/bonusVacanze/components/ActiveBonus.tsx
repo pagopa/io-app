@@ -1,14 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
@@ -107,7 +105,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           </H3>
         </View>
         <View style={styles.icon}>
-          <IconFont name="io-right" size={ICON_WIDTH} color={IOColors.white} />
+          <Icon name="chevronRightListItem" size={ICON_WIDTH} color="white" />
         </View>
       </View>
     </TouchableDefaultOpacity>

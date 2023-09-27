@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { identity, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ActivityIndicator } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
@@ -8,15 +11,19 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { AppDispatch } from "../../../App";
-import { pnActivationUpsert } from "../store/actions/service";
+import { pnActivationUpsert } from "../store/actions";
 import { pnActivationSelector } from "../store/reducers/activation";
 import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
-import { mixpanelTrack } from "../../../mixpanel";
+import {
+  trackPNServiceActivated,
+  trackPNServiceDeactivated,
+  trackPNServiceStartActivation,
+  trackPNServiceStartDeactivation
+} from "../analytics";
 
 type Props = {
   serviceId: ServiceId;
@@ -55,7 +62,7 @@ const ActivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
-      void mixpanelTrack("PN_SERVICE_CTAFIRED");
+      trackPNServiceStartActivation();
       props.dispatch(pnActivationUpsert.request(true));
     }}
   >
@@ -68,7 +75,7 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
     block
     primary
     onPress={() => {
-      void mixpanelTrack("PN_SERVICE_CTAFIRED");
+      trackPNServiceStartDeactivation();
       props.dispatch(pnActivationUpsert.request(false));
     }}
     style={{
@@ -106,14 +113,8 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     const isError = pot.isError(serviceActivation);
     if (wasUpdating && !isStillUpdating) {
       if (isError) {
-        void mixpanelTrack("PN_SERVICE_STATUSCHANGE_ERROR", {
-          currentStatus: isServiceActive
-        });
         showToast(I18n.t("features.pn.service.toast.error"), "danger");
       } else {
-        void mixpanelTrack("PN_SERVICE_STATUSCHANGE_SUCCESS", {
-          newStatus: pot.toUndefined(serviceActivation)
-        });
         dispatch(loadServicePreference.request(serviceId));
         if (pot.toUndefined(serviceActivation)) {
           showToast(I18n.t("features.pn.service.toast.activated"), "success");
@@ -123,12 +124,26 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     setIsUpdating(isStillUpdating);
   }, [isUpdating, dispatch, serviceId, serviceActivation, isServiceActive]);
 
-  useOnFirstRender(
-    () => {
-      dispatch(pnActivationUpsert.request(true));
-    },
-    () => activate === true
-  );
+  useOnFirstRender(() => {
+    pipe(
+      isServiceActive,
+      O.fromNullable,
+      O.filter(identity),
+      O.fold(
+        () => trackPNServiceDeactivated(),
+        () => trackPNServiceActivated()
+      )
+    );
+    pipe(
+      activate,
+      O.fromNullable,
+      O.filter(identity),
+      O.fold(
+        () => undefined,
+        () => void dispatch(pnActivationUpsert.request(true))
+      )
+    );
+  });
 
   if (!servicePreferenceValue || servicePreferenceValue.id !== serviceId) {
     return null;

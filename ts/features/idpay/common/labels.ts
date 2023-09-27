@@ -33,14 +33,13 @@ const circuitTypeLabels: OperationTypeLabels = {
   "06": "Diners",
   "07": "PostePay",
   "08": "BancomatPay",
-  "09": "Satispay",
   "10": "PrivateCircuit"
 };
 
-export const getLabelForCircuitType = (circuitType: string) =>
+export const getLabelForCircuitType = (circuitType: string | undefined) =>
   pipe(
     circuitType,
-    O.some,
+    O.fromNullable,
     O.chain(type => O.fromNullable(circuitTypeLabels[type])),
     O.getOrElse(() => "-")
   );

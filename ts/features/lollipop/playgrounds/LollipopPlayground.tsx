@@ -4,9 +4,9 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
 import { createLollipopClient, signMessage } from "../api/backend";
 import { useIOSelector } from "../../../store/hooks";
@@ -15,7 +15,6 @@ import {
   lollipopPublicKeySelector
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 import { apiUrlPrefix } from "../../../config";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
@@ -53,9 +52,7 @@ const LollipopPlayground = () => {
                 {
                   keyTag,
                   publicKey,
-                  publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
-                    maybePublicKey
-                  )}`
+                  publicKeyThumbprint: toThumbprint(maybePublicKey)
                 },
                 { nonce: "aNonce", signBody }
               )

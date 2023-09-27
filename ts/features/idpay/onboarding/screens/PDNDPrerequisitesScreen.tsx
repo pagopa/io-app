@@ -5,11 +5,14 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  ButtonSolid,
+  VSpacer,
+  ContentWrapper
+} from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
@@ -20,7 +23,7 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
@@ -42,8 +45,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const BOTTOM_SHEET_HEIGHT = 290;
-
 export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [authority, setAuthority] = React.useState<string | undefined>();
@@ -62,26 +63,39 @@ export const PDNDPrerequisitesScreen = () => {
     machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
   const goBackOnPress = () => machine.send({ type: "BACK" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <Markdown>
-      {I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.body", {
-        provider: authority
-      })}
-    </Markdown>,
-    I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
-    BOTTOM_SHEET_HEIGHT,
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={{
-        onPress: () => dismiss(),
-        block: true,
-        bordered: false,
-        labelColor: IOColors.white,
-        title: I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-        )
-      }}
-    ></FooterWithButtons>
+  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t(
+        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
+      ),
+      component: (
+        <Markdown>
+          {I18n.t(
+            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+            {
+              provider: authority
+            }
+          )}
+        </Markdown>
+      ),
+      footer: (
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <ButtonSolid
+            fullWidth
+            label={I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+            )}
+            accessibilityLabel={I18n.t(
+              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+            )}
+            onPress={() => dismiss()}
+          />
+          <VSpacer size={16} />
+        </ContentWrapper>
+      )
+    },
+    162
   );
 
   const pdndCriteria = useSelector(machine, pdndCriteriaSelector);

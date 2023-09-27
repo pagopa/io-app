@@ -1,9 +1,11 @@
-import * as React from "react";
 import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
+import * as React from "react";
+import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
+import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
 import {
@@ -19,15 +21,20 @@ import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
-} from "../features/idpay/initiative/configuration/navigation/navigator";
+} from "../features/idpay/configuration/navigation/navigator";
 import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
-} from "../features/idpay/initiative/details/navigation";
+} from "../features/idpay/details/navigation";
 import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
+import {
+  IDPayPaymentNavigator,
+  IDPayPaymentRoutes
+} from "../features/idpay/payment/navigation/navigator";
+import { IDPayPaymentCodeScanScreen } from "../features/idpay/payment/screens/IDPayPaymentCodeScanScreen";
 import {
   IDPayUnsubscriptionNavigator,
   IDPayUnsubscriptionRoutes
@@ -40,21 +47,24 @@ import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
-  isFIMSEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
+  isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
+import {
+  WalletOnboardingNavigator,
+  WalletOnboardingRoutes
+} from "../features/walletV3/onboarding/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
+import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
-import { AppParamsList } from "./params/AppParamsList";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -95,6 +105,12 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
         component={ProfileStackNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.BARCODE_SCAN}
+        component={BarcodeScanScreen}
+        options={{ gestureEnabled: false }}
       />
 
       {cgnEnabled && (
@@ -164,14 +180,36 @@ const AuthenticatedStackNavigator = () => {
             component={IDPayConfigurationNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
           />
-
           <Stack.Screen
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
             options={{ gestureEnabled: isGestureEnabled }}
           />
+          {/* 
+            This screen is outside the main payment navigator to enable the slide from bottom animation.
+            FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator
+          */}
+          <Stack.Screen
+            name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
+            component={IDPayPaymentCodeScanScreen}
+            options={{
+              ...TransitionPresets.ModalSlideFromBottomIOS,
+              gestureEnabled: isGestureEnabled
+            }}
+          />
+          <Stack.Screen
+            name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
+            component={IDPayPaymentNavigator}
+            options={{ gestureEnabled: false }}
+          />
         </>
       )}
+
+      <Stack.Screen
+        name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
+        component={WalletOnboardingNavigator}
+        options={{ gestureEnabled: isGestureEnabled }}
+      />
     </Stack.Navigator>
   );
 };

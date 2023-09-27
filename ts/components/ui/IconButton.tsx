@@ -1,39 +1,42 @@
+import {
+  IconButton as DSIconButton,
+  AnimatedIcon,
+  IconClassComponent,
+  IOIcons,
+  IOColors,
+  hexToRgba,
+  IOScaleValues,
+  IOSpringValues
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback } from "react";
-import { Pressable, GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  useAnimatedProps,
-  withSpring,
-  useDerivedValue,
-  interpolate,
   Extrapolate,
-  interpolateColor
+  interpolate,
+  interpolateColor,
+  useAnimatedProps,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+  withSpring
 } from "react-native-reanimated";
-import { hexToRgba, IOColors } from "../core/variables/IOColors";
-import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
-import { AnimatedIcon, IconClassComponent, IOIcons } from "../core/icons";
-import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
-
+import { WithTestID } from "../../types/WithTestID";
+import { IOIconButtonStyles } from "../core/variables/IOStyles";
 export type IconButton = WithTestID<{
-  icon: IOIcons;
   color?: "primary" | "neutral" | "contrast";
+  icon: IOIcons;
   disabled?: boolean;
+  // Accessibility
   accessibilityLabel: string;
   accessibilityHint?: string;
+  // Events
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
 type ColorStates = {
-  background: {
-    default: string;
-    pressed: string;
-    disabled: string;
-  };
   icon: {
     default: string;
     pressed: string;
@@ -45,95 +48,31 @@ type ColorStates = {
 ░░░ COMPONENT CONFIGURATION ░░░
 */
 
-/* Delete the following block if you want to
-get rid of legacy variant */
-
-/* ◀ REMOVE_LEGACY_COMPONENT: Start */
-
 const mapLegacyColorStates: Record<
   NonNullable<IconButton["color"]>,
   ColorStates
 > = {
   // Primary button
   primary: {
-    background: {
-      default: hexToRgba(IOColors.blue, 0),
-      pressed: hexToRgba(IOColors.blue, 0.15),
-      disabled: "transparent"
-    },
     icon: {
       default: IOColors.blue,
-      pressed: IOColors.blue,
+      pressed: IOColors["blue-600"],
       disabled: hexToRgba(IOColors.blue, 0.25)
     }
   },
   // Neutral button
   neutral: {
-    background: {
-      default: IOColors.white,
-      pressed: IOColors.greyUltraLight,
-      disabled: "transparent"
-    },
     icon: {
-      default: IOColors.bluegrey,
-      pressed: IOColors.black,
+      default: IOColors.black,
+      pressed: IOColors.bluegreyDark,
       disabled: IOColors.grey
     }
   },
   // Contrast button
   contrast: {
-    background: {
-      default: hexToRgba(IOColors.white, 0),
-      pressed: hexToRgba(IOColors.white, 0.2),
-      disabled: "transparent"
-    },
     icon: {
       default: IOColors.white,
-      pressed: IOColors.white,
-      disabled: hexToRgba(IOColors.white, 0.25)
-    }
-  }
-};
-
-/* REMOVE_LEGACY_COMPONENT: End ▶ */
-
-const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
-  // Primary button
-  primary: {
-    background: {
-      default: hexToRgba(IOColors["blueIO-500"], 0),
-      pressed: hexToRgba(IOColors["blueIO-500"], 0.15),
-      disabled: "transparent"
-    },
-    icon: {
-      default: IOColors["blueIO-500"],
-      pressed: IOColors["blueIO-600"],
-      disabled: hexToRgba(IOColors["blueIO-500"], 0.25)
-    }
-  },
-  // Neutral button
-  neutral: {
-    background: {
-      default: IOColors.white,
-      pressed: IOColors.greyUltraLight,
-      disabled: "transparent"
-    },
-    icon: {
-      default: IOColors.bluegrey,
-      pressed: IOColors.black,
-      disabled: IOColors.grey
-    }
-  },
-  // Contrast button
-  contrast: {
-    background: {
-      default: hexToRgba(IOColors.white, 0),
-      pressed: hexToRgba(IOColors.white, 0.2),
-      disabled: "transparent"
-    },
-    icon: {
-      default: IOColors.white,
-      pressed: IOColors.white,
+      pressed: hexToRgba(IOColors.white, 0.85),
       disabled: hexToRgba(IOColors.white, 0.25)
     }
   }
@@ -142,9 +81,26 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
 const AnimatedIconClassComponent =
   Animated.createAnimatedComponent(IconClassComponent);
 
+/**
+ *
+ * The `IconButton` component is a customizable button that displays an icon. It supports animated scaling
+ * and color changes when pressed. Currently if the Design System is enabled, the component returns the IconButton of the @pagopa/io-app-design-system library
+ * otherwise it returns the legacy component.
+ *
+ * @property {string} color - The color of the button. Possible values are: "primary", "secondary", "success", "danger", "warning", "info", etc.
+ * @property {string} icon - The name of the icon to be displayed on the button.
+ * @property {boolean} disabled - If `true`, the button will be disabled and not respond to user interactions.
+ * @property {function} onPress - The callback function to be executed when the button is pressed.
+ * @property {string} accessibilityLabel - An accessibility label for the button.
+ * @property {string} accessibilityHint - An accessibility hint for the button.
+ * @property {string} testID - A test identifier for the button, used for testing purposes.
+ *
+ * @deprecated The usage of this component is discouraged as it is being replaced by the IconButton of the @pagopa/io-app-design-system library.
+ *
+ */
 export const IconButton = ({
-  icon,
   color = "primary",
+  icon,
   disabled = false,
   onPress,
   accessibilityLabel,
@@ -165,27 +121,6 @@ export const IconButton = ({
   // Interpolate animation values from `isPressed` values
 
   const pressedAnimationStyle = useAnimatedStyle(() => {
-    // Link color states to the pressed states
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const backgroundColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].background.default,
-            mapColorStates[color].background.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].background.default,
-            mapLegacyColorStates[color].background.pressed
-          ]
-        );
-    /* REMOVE_LEGACY_COMPONENT: End ▶ */
-
     // Scale down button slightly when pressed
     const scale = interpolate(
       progressPressed.value,
@@ -195,34 +130,22 @@ export const IconButton = ({
     );
 
     return {
-      backgroundColor,
       transform: [{ scale }]
     };
   });
 
   // Animate the <Icon> color prop
   const animatedColor = useAnimatedProps(() => {
-    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
-    const iconColor = isDesignSystemEnabled
-      ? interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapColorStates[color].icon.default,
-            mapColorStates[color].icon.pressed
-          ]
-        )
-      : interpolateColor(
-          progressPressed.value,
-          [0, 1],
-          [
-            mapLegacyColorStates[color].icon.default,
-            mapLegacyColorStates[color].icon.pressed
-          ]
-        );
+    const iconColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [
+        mapLegacyColorStates[color].icon.default,
+        mapLegacyColorStates[color].icon.pressed
+      ]
+    );
     return { color: iconColor };
   });
-  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
   const onPressIn = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -233,41 +156,31 @@ export const IconButton = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  const LegacyIconButton = () => (
     <Pressable
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={"button"}
-      testID={testID}
+      disabled={disabled}
+      // Events
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
+      // Accessibility
       accessible={true}
-      disabled={disabled}
-      style={IOButtonStyles.dimensionsDefault}
+      accessibilityRole={"button"}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      // Usability
+      // Add a touchable area around the button
+      hitSlop={8}
+      // Test
+      testID={testID}
     >
       <Animated.View
         style={[
-          IOIconButtonStyles.button,
-          IOIconButtonStyles.buttonSizeDefault,
+          IOIconButtonStyles.buttonSizeSmall,
           !disabled && pressedAnimationStyle
         ]}
       >
-        {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
-        {isDesignSystemEnabled ? (
-          !disabled ? (
-            <AnimatedIconClassComponent
-              name={icon}
-              animatedProps={animatedColor}
-              color={mapColorStates[color]?.icon?.default}
-            />
-          ) : (
-            <AnimatedIcon
-              name={icon}
-              color={mapColorStates[color]?.icon?.disabled}
-            />
-          )
-        ) : !disabled ? (
+        {!disabled ? (
           <AnimatedIconClassComponent
             name={icon}
             animatedProps={animatedColor}
@@ -279,9 +192,21 @@ export const IconButton = ({
             color={mapLegacyColorStates[color]?.icon?.disabled}
           />
         )}
-        {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       </Animated.View>
     </Pressable>
+  );
+  return isDesignSystemEnabled ? (
+    <DSIconButton
+      icon={icon}
+      accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
+      testID={testID}
+      disabled={disabled}
+      accessibilityHint={accessibilityHint}
+      color={color}
+    />
+  ) : (
+    <LegacyIconButton />
   );
 };
 

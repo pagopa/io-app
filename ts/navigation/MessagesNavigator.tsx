@@ -1,12 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { mvlEnabled } from "../config";
 import { EUCovidCertStackNavigator } from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
-import { MvlStackNavigator } from "../features/mvl/navigation/navigator";
-import MVL_ROUTES from "../features/mvl/navigation/routes";
-import PaginatedMessageDetailScreen from "../screens/messages/MessageDetailScreen";
-import PaginatedMessageRouterScreen from "../screens/messages/MessageRouterScreen";
+import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
+import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import { PnStackNavigator } from "../features/pn/navigation/navigator";
 import PN_ROUTES from "../features/pn/navigation/routes";
 import { useIOSelector } from "../store/hooks";
@@ -23,18 +20,18 @@ export const MessagesStackNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ROUTES.MESSAGE_ROUTER_PAGINATED}
+      initialRouteName={ROUTES.MESSAGE_ROUTER}
       headerMode={"none"}
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
-        name={ROUTES.MESSAGE_ROUTER_PAGINATED}
-        component={PaginatedMessageRouterScreen}
+        name={ROUTES.MESSAGE_ROUTER}
+        component={MessageRouterScreen}
       />
 
       <Stack.Screen
-        name={ROUTES.MESSAGE_DETAIL_PAGINATED}
-        component={PaginatedMessageDetailScreen}
+        name={ROUTES.MESSAGE_DETAIL}
+        component={MessageDetailScreen}
       />
 
       <Stack.Screen
@@ -46,10 +43,6 @@ export const MessagesStackNavigator = () => {
         name={EUCOVIDCERT_ROUTES.MAIN}
         component={EUCovidCertStackNavigator}
       />
-
-      {mvlEnabled && (
-        <Stack.Screen name={MVL_ROUTES.MAIN} component={MvlStackNavigator} />
-      )}
 
       {isPnEnabled && (
         <Stack.Screen name={PN_ROUTES.MAIN} component={PnStackNavigator} />

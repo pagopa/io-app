@@ -114,7 +114,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("loadInitiative", () => {
     it("should fail if not service id is provided in context", async () => {
       await expect(services.loadInitiative(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.GENERIC
+        OnboardingFailureEnum.UNEXPECTED
       );
 
       expect(mockIDPayClient.getInitiativeData).toHaveBeenCalledTimes(0);
@@ -122,7 +122,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.getInitiativeData.mockImplementation(() => response);
 
@@ -170,7 +170,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("loadInitiativeStatus", () => {
     it("should fail if initiative is not provided with context", async () => {
       await expect(services.loadInitiativeStatus(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.GENERIC
+        OnboardingFailureEnum.UNEXPECTED
       );
 
       expect(mockIDPayClient.onboardingStatus).toHaveBeenCalledTimes(0);
@@ -178,7 +178,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -201,7 +201,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should return none if response status code == 404", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 404, value: { code: 0, message: "" } });
+        E.right({ status: 404, value: { code: 400, message: "" } });
 
       mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -239,7 +239,7 @@ describe("IDPay Onboarding machine services", () => {
         const response: E.Either<
           Error,
           { status: number; value?: OnboardingStatusDTO }
-        > = E.right({ status: 200, value: { status } });
+        > = E.right({ status: 200, value: { status, statusDate: new Date() } });
 
         mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -264,7 +264,7 @@ describe("IDPay Onboarding machine services", () => {
         const response: E.Either<
           Error,
           { status: number; value?: OnboardingStatusDTO }
-        > = E.right({ status: 200, value: { status } });
+        > = E.right({ status: 200, value: { status, statusDate: new Date() } });
 
         mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
@@ -282,7 +282,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("acceptTos", () => {
     it("should fail if initiative is not provided with context", async () => {
       await expect(services.acceptTos(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.GENERIC
+        OnboardingFailureEnum.UNEXPECTED
       );
 
       expect(mockIDPayClient.onboardingCitizen).toHaveBeenCalledTimes(0);
@@ -290,7 +290,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 204", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.onboardingCitizen.mockImplementation(() => response);
 
@@ -342,7 +342,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("loadRequiredCriteria", () => {
     it("should fail if initiative is not provided with context", async () => {
       await expect(services.loadRequiredCriteria(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.GENERIC
+        OnboardingFailureEnum.UNEXPECTED
       );
 
       expect(mockIDPayClient.checkPrerequisites).toHaveBeenCalledTimes(0);
@@ -350,7 +350,7 @@ describe("IDPay Onboarding machine services", () => {
 
     it("should fail if response status code != 200 or 202", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.checkPrerequisites.mockImplementation(() => response);
 
@@ -432,7 +432,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("acceptRequiredCriteria", () => {
     it("should fail if initiative or required criterias are not provided with context", async () => {
       await expect(services.acceptRequiredCriteria(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.GENERIC
+        OnboardingFailureEnum.UNEXPECTED
       );
 
       expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledTimes(0);
@@ -444,14 +444,14 @@ describe("IDPay Onboarding machine services", () => {
           ...T_CONTEXT,
           requiredCriteria: O.none
         })
-      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
+      ).rejects.toMatch(OnboardingFailureEnum.UNEXPECTED);
 
       expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if response status code != 202", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.consentOnboarding.mockImplementation(() => response);
 

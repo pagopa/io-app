@@ -13,9 +13,9 @@ import {
   UIMessage,
   UIMessageDetails,
   UIMessageId,
-  UIAttachment
+  UIAttachment,
+  WithUIMessageId
 } from "../reducers/entities/messages/types";
-import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import {
@@ -23,6 +23,7 @@ import {
   DownloadError
 } from "../reducers/entities/messages/downloads";
 import { ThirdPartyMessagePrecondition } from "../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { MessageCategory } from "../../../definitions/backend/MessageCategory";
 
 /**
  * Load a single message given its ID
@@ -51,7 +52,7 @@ export type MessagesFailurePayload = {
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
-  cursor?: Cursor;
+  cursor?: string;
   filter: Filter;
 };
 
@@ -144,7 +145,11 @@ export const getMessagePrecondition = createAsyncAction(
   "GET_MESSAGE_PRECONDITION_REQUEST",
   "GET_MESSAGE_PRECONDITION_SUCCESS",
   "GET_MESSAGE_PRECONDITION_FAILURE"
-)<UIMessageId, ThirdPartyMessagePrecondition, Error>();
+)<
+  WithUIMessageId<{ categoryTag: MessageCategory["tag"] }>,
+  ThirdPartyMessagePrecondition,
+  Error
+>();
 
 export const clearMessagePrecondition = createAction(
   "CLEAR_MESSAGE_PRECONDITION"

@@ -1,15 +1,8 @@
 import * as React from "react";
-import { shallowEqual } from "react-redux";
-import * as O from "fp-ts/lib/Option";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
-import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
-import hourglass from "../../../../img/pictograms/hourglass.png";
-import fireworks from "../../../../img/pictograms/fireworks.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
-import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { trackFciDocOpening } from "../analytics";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
@@ -29,27 +22,6 @@ const SuccessComponent = (props: {
   const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
   const dispatch = useIODispatch();
 
-  const publicKeyOption = useIOSelector(
-    lollipopPublicKeySelector,
-    shallowEqual
-  );
-  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const showUnsupportedDeviceBanner =
-    isLollipopEnabled && O.isNone(publicKeyOption);
-
-  // If the device is not supported by Lollipop
-  // This is a temporary solution during the development of Lollipop
-  // and its integration with FCI
-  if (showUnsupportedDeviceBanner) {
-    return (
-      <GenericErrorComponent
-        title={I18n.t("features.fci.errors.generic.update.title")}
-        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
-      />
-    );
-  }
-
   // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
   if (
@@ -63,7 +35,7 @@ const SuccessComponent = (props: {
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
         email={issuer_email}
-        image={imageExpired}
+        pictogram={"timeout"}
         testID={"ExpiredSignatureRequestTestID"}
       />
     );
@@ -81,7 +53,7 @@ const SuccessComponent = (props: {
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
           subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
-          image={hourglass}
+          pictogram={"hourglass"}
           testID={"WaitQtspSignatureRequestTestID"}
         />
       );
@@ -91,7 +63,7 @@ const SuccessComponent = (props: {
           title={I18n.t("features.fci.errors.signed.title")}
           subTitle={I18n.t("features.fci.errors.signed.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
-          image={fireworks}
+          pictogram={"fireworks"}
           testID={"SignedSignatureRequestTestID"}
         />
       );
@@ -103,6 +75,17 @@ const SuccessComponent = (props: {
           email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
           testID="RejectedSignatureRequestTestID"
+        />
+      );
+    case SignatureRequestStatusEnum.CANCELLED:
+      return (
+        <ErrorComponent
+          title={I18n.t("features.fci.errors.generic.cancelled.title")}
+          subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
+          email={issuer_email}
+          onPress={() => dispatch(fciEndRequest())}
+          pictogram={"timeout"}
+          testID={"CancelledSignatureRequestTestID"}
         />
       );
     default:

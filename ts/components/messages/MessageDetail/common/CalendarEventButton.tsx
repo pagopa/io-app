@@ -12,6 +12,7 @@ import {
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon, IOIcons, HSpacer } from "@pagopa/io-app-design-system";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../../../i18n";
 import {
@@ -39,7 +40,6 @@ import { requestIOAndroidPermission } from "../../../../utils/permission";
 import ButtonDefaultOpacity from "../../../ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../helpers/withLightModalContext";
 import SelectCalendarModal from "../../../SelectCalendarModal";
-import IconFont from "../../../ui/IconFont";
 import { LightModalContextInterface } from "../../../ui/LightModal";
 
 type OwnProps = {
@@ -341,8 +341,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     );
     const { small, disabled, medium } = this.props;
     const iconName = this.state.isEventInDeviceCalendar
-      ? "io-tick-big"
-      : "io-plus";
+      ? "checkTickBig"
+      : "add";
     return (
       <ButtonDefaultOpacity
         disabled={disabled}
@@ -352,7 +352,10 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         bordered={!disabled}
         style={this.props.small ? styles.oneThird : styles.button}
       >
-        <IconFont name={iconName} />
+        {/* This condition doesn't make sense. We should replace it using
+        a different component (e.g. ButtonOutline) */}
+        <Icon name={iconName as IOIcons} color={disabled ? "white" : "blue"} />
+        <HSpacer size={4} />
         <NBButtonText style={styles.marginTop1}>{reminderText}</NBButtonText>
       </ButtonDefaultOpacity>
     );

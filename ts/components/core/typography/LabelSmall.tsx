@@ -1,6 +1,6 @@
 import * as React from "react";
+import type { IOColors, IOTheme } from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import type { IOColors, IOTheme } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
@@ -26,6 +26,7 @@ type OwnProps = ExternalTypographyProps<
 const fontName: IOFontFamily = "TitilliumWeb";
 
 const fontSizeMapping: Record<FontSize, number> = { regular: 14, small: 12 };
+const lineHeightMapping: Record<FontSize, number> = { regular: 21, small: 18 };
 
 /**
  * Typography component to render `LabelSmall` text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -42,6 +43,9 @@ export const LabelSmall: React.FunctionComponent<OwnProps> = props =>
     fontStyle: {
       fontSize: props.fontSize
         ? fontSizeMapping[props.fontSize]
-        : fontSizeMapping.regular
+        : fontSizeMapping.regular,
+      lineHeight: props.fontSize
+        ? lineHeightMapping[props.fontSize]
+        : lineHeightMapping.regular
     }
   });

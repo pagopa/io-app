@@ -3,10 +3,8 @@ import { ReactNode } from "react";
 import { View, StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
-import MoneyDownIcon from "../../../../../../img/wallet/payment-methods/paypal/money_down.svg";
-import LabelIcon from "../../../../../../img/wallet/payment-methods/paypal/label.svg";
-import EditIcon from "../../../../../../img/wallet/payment-methods/paypal/edit.svg";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
 import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -34,7 +32,7 @@ const iconSize = 24;
 // icon and description
 const getItem = (props: Props) => [
   {
-    icon: <MoneyDownIcon width={iconSize} height={iconSize} />,
+    icon: <Icon name="psp" size={iconSize} color="blue" />,
     description: (
       <Body>
         {I18n.t(
@@ -44,7 +42,7 @@ const getItem = (props: Props) => [
     )
   },
   {
-    icon: <LabelIcon width={iconSize} height={iconSize} />,
+    icon: <Icon name="tag" size={iconSize} color="blue" />,
     description: (
       <Body>
         {I18n.t(
@@ -60,7 +58,7 @@ const getItem = (props: Props) => [
     )
   },
   {
-    icon: <EditIcon width={iconSize} height={iconSize} />,
+    icon: <Icon name="security" size={iconSize} color="blue" />,
     description: (
       <View>
         <TouchableWithoutFeedback
@@ -101,5 +99,6 @@ export const PspInfoBottomSheetContent = (props: Props) => (
     {getItem(props).map((item, idx) => (
       <ItemLayout {...item} key={`info_row_${idx}`} />
     ))}
+    <VSpacer size={16} />
   </View>
 );

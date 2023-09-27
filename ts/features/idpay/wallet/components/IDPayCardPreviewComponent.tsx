@@ -9,15 +9,16 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { H4 } from "../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import {
   IOColors,
-  hexToRgba
-} from "../../../../components/core/variables/IOColors";
+  hexToRgba,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import walletCardBg from "../../../../../img/features/idpay/wallet_card.png";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { H4 } from "../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 
@@ -73,9 +74,17 @@ const IDPayCardPreviewComponent = (props: Props) => {
           accessible={true}
           accessibilityRole={"button"}
         >
-          <View style={[IOStyles.flex, IOStyles.rowSpaceBetween]}>
-            <H4>{initiativeName}</H4>
-            <LabelSmall weight="SemiBold" fontSize="regular" color="black">
+          <View style={[IOStyles.flex, IOStyles.row]}>
+            <H4 style={IOStyles.flex} ellipsizeMode="tail" numberOfLines={1}>
+              {initiativeName}
+            </H4>
+            <HSpacer size={8} />
+            <LabelSmall
+              weight="SemiBold"
+              fontSize="regular"
+              color="black"
+              ellipsizeMode={"tail"}
+            >
               {availableAmount}
             </LabelSmall>
           </View>
@@ -124,6 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     paddingLeft: 16,
     paddingRight: 24
   },

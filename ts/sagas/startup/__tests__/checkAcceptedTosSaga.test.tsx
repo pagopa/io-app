@@ -15,6 +15,7 @@ import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile = {
@@ -23,7 +24,10 @@ describe("checkAcceptedTosSaga", () => {
     is_email_enabled: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
-    version: 0 as NonNegativeInteger
+    version: 0 as NonNegativeInteger,
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.LEGACY
+    }
   };
 
   const oldOnboardedProfile = {

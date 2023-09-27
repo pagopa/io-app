@@ -13,6 +13,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -64,7 +65,6 @@ import {
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   loadServiceDetail,
@@ -140,9 +140,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ]);
 
     if (bpdEnabled) {
-      const bpdHandler = bpdConfig?.program_active
-        ? this.props.startBpdOnboarding
-        : () => this.completedAlert(info.item[getRemoteLocale()].name);
+      const bpdHandler = () =>
+        this.completedAlert(info.item[getRemoteLocale()].name);
 
       handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
     }

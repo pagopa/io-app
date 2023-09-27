@@ -94,4 +94,13 @@ export const fciSignatureRequestIdSelector = createSelector(
     pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
 );
 
+/**
+ * Selects the dossier title if present, undefined otherwise.
+ */
+export const fciSignatureRequestDossierTitleSelector = (state: GlobalState) => {
+  const signatureRequest = state.features.fci.signatureRequest;
+  return pot.isSome(signatureRequest)
+    ? signatureRequest.value.dossier_title
+    : undefined;
+};
 export default reducer;

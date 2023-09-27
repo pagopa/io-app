@@ -9,15 +9,14 @@ import {
 import * as React from "react";
 import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 
@@ -111,7 +110,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
+            <Icon name="closeLarge" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

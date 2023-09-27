@@ -3,12 +3,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { Otp } from "../../../../../../../definitions/cgn/Otp";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H5 } from "../../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../../utils/environment";
@@ -192,7 +191,7 @@ export const OtpCodeComponent = (props: Props) => {
       >
         {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>
-          <IconFont name="io-copy" color={IOColors.blue} />
+          <Icon name="copy" color="blue" />
         </View>
       </TouchableDefaultOpacity>
       <View

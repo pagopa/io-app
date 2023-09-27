@@ -2,21 +2,18 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import I18n from "../../../i18n";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
-import { VSpacer } from "../../core/spacer/Spacer";
 import { H4 } from "../../core/typography/H4";
-import { IOColors } from "../../core/variables/IOColors";
-import IconFont from "../../ui/IconFont";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
@@ -57,29 +54,12 @@ const paymentDisabledBottomSheetBody = () => (
   </>
 );
 
-const arrivingBottomSheetTitle = () =>
-  I18n.t(
-    "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
-  );
-const arrivingBottomSheetBody = () => (
-  <>
-    <VSpacer size={24} />
-    <H4 weight={"Regular"}>
-      {I18n.t(
-        "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetDescription"
-      )}
-    </H4>
-    <VSpacer size={24} />
-  </>
-);
-
 type PaymentMethodInformation = {
   logo: ImageSourcePropType;
   title: string;
   description: string;
   bottomSheetTitle: string;
   bottomSheetBody: JSX.Element;
-  snapPoint?: number;
 };
 
 const extractInfoFromPaymentMethod = (
@@ -98,8 +78,7 @@ const extractInfoFromPaymentMethod = (
           nameSurname
         ),
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody(),
-        snapPoint: 360
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "Bancomat":
       return {
@@ -118,16 +97,7 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody(),
-        snapPoint: 360
-      };
-    case "Satispay":
-      return {
-        logo: satispayLogo,
-        title: paymentMethod.kind,
-        description: nameSurname,
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
     case "PayPal":
       return {
@@ -135,19 +105,7 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.kind,
         description: getPaypalAccountEmail(paymentMethod.info),
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
-        bottomSheetBody: paymentDisabledBottomSheetBody(),
-        snapPoint: 360
-      };
-    case "Privative":
-      return {
-        logo: paymentMethod.icon,
-        title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(
-          paymentMethod,
-          nameSurname
-        ),
-        bottomSheetTitle: unacceptedBottomSheetTitle(),
-        bottomSheetBody: unacceptedBottomSheetBody()
+        bottomSheetBody: paymentDisabledBottomSheetBody()
       };
   }
 };
@@ -155,23 +113,17 @@ const extractInfoFromPaymentMethod = (
 const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   props: Props
 ) => {
-  const {
-    logo,
-    title,
-    description,
-    bottomSheetTitle,
-    bottomSheetBody,
-    snapPoint
-  } = extractInfoFromPaymentMethod(
-    props.paymentMethod,
-    props.nameSurname ?? ""
+  const { logo, title, description, bottomSheetTitle, bottomSheetBody } =
+    extractInfoFromPaymentMethod(props.paymentMethod, props.nameSurname ?? "");
+
+  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
+    {
+      component: bottomSheetBody,
+      title: bottomSheetTitle
+    },
+    32
   );
 
-  const { present, bottomSheet } = useIOBottomSheetModal(
-    bottomSheetBody,
-    bottomSheetTitle,
-    snapPoint ?? 300
-  );
   return (
     <>
       {bottomSheet}
@@ -185,9 +137,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
         logo={logo}
         title={title}
         description={description}
-        rightElement={
-          <IconFont name={"io-info"} color={IOColors.blue} size={24} />
-        }
+        rightElement={<Icon name="info" color="blue" size={24} />}
         onPress={present}
       />
     </>

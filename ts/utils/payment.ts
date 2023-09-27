@@ -33,7 +33,6 @@ import {
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
-  PrivativePaymentMethod,
   Psp,
   Transaction,
   Wallet
@@ -456,10 +455,7 @@ export const getPaymentOutcomeCodeDescription = (
 };
 
 export const getPickPaymentMethodDescription = (
-  paymentMethod:
-    | CreditCardPaymentMethod
-    | PrivativePaymentMethod
-    | BancomatPaymentMethod,
+  paymentMethod: CreditCardPaymentMethod | BancomatPaymentMethod,
   defaultHolder: string = ""
 ) => {
   const translatedExpireDate = getTranslatedShortNumericMonthYear(

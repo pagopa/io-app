@@ -2,10 +2,7 @@ import { Col, Grid, Row } from "native-base";
 import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
-import IconFont from "../ui/IconFont";
-
-import variables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
+import { Icon, IOColors, IOIcons } from "@pagopa/io-app-design-system";
 
 type MarkerState = "SCANNING" | "VALID" | "INVALID";
 
@@ -20,13 +17,6 @@ type Props = {
  * This is overlayed on the camera preview of the QR code scanner.
  */
 export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
-  const iconName =
-    state === "INVALID"
-      ? "io-close"
-      : state === "VALID"
-      ? "io-tick-big"
-      : undefined;
-
   const sideLength = screenWidth / 2;
 
   const borderLength = screenWidth / 6;
@@ -89,34 +79,21 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
       left: 0,
       bottom: 0,
       justifyContent: "center",
-      alignItems: "center"
-    },
-
-    icon: {
-      fontSize: sideLength,
-      lineHeight: sideLength,
+      alignItems: "center",
       opacity: 0.7
-    },
-
-    iconValid: {
-      color: variables.brandSuccess
-    },
-
-    iconInvalid: {
-      color: variables.brandDanger
     }
   });
   return (
     <View style={styles.rectangleContainer}>
       <View style={styles.rectangle}>
-        {iconName && (
+        {(state === "VALID" || state === "INVALID") && (
           <View style={styles.iconContainer}>
-            <IconFont
-              name={iconName}
-              style={[
-                styles.icon,
-                state === "VALID" ? styles.iconValid : styles.iconInvalid
-              ]}
+            <Icon
+              name={
+                (state === "VALID" ? "checkTickBig" : "closeLarge") as IOIcons
+              }
+              size={96}
+              color={state === "VALID" ? "green" : "red"}
             />
           </View>
         )}

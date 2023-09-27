@@ -6,21 +6,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import {
-  all,
-  call,
-  put,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga/macro";
+import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { AppVersion } from "../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
-import { Locales } from "../../locales/locales";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
 import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
@@ -31,13 +23,11 @@ import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
-import { sessionExpired } from "../store/actions/authentication";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
-import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import {
   loadBonusBeforeRemoveAccount,
   profileLoadFailure,
@@ -50,7 +40,6 @@ import {
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
-import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { getAppVersion } from "../utils/appVersion";
@@ -59,10 +48,10 @@ import { convertUnknownToError } from "../utils/errors";
 import { deletePin } from "../utils/keychain";
 import {
   fromLocaleToPreferredLanguage,
-  fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
+import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -73,7 +62,10 @@ export function* loadProfile(
   SagaCallReturnType<typeof getProfile>
 > {
   try {
-    const response = yield* call(getProfile, {});
+    const response = (yield* call(
+      withRefreshApiCall,
+      getProfile({})
+    )) as unknown as SagaCallReturnType<typeof getProfile>;
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));
@@ -88,11 +80,6 @@ export function* loadProfile(
       );
       return O.some(response.right.value);
     }
-    if (response.right.status === 401) {
-      // in case we got an expired session while loading the profile, we reset
-      // the session
-      yield* put(sessionExpired());
-    }
     throw response
       ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
@@ -103,6 +90,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
@@ -123,7 +111,19 @@ function* createOrUpdateProfileSaga(
   const currentProfile = profileState.value;
 
   const rawAppVersion = yield* call(getAppVersion);
-  const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
+
+  const appVersion = pipe(
+    rawAppVersion,
+    AppVersion.decode,
+    E.fold(
+      () => undefined,
+      version => version
+    )
+  );
+
+  const preferred_languages = [
+    fromLocaleToPreferredLanguage(getLocalePrimaryWithFallback())
+  ];
 
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
@@ -138,10 +138,11 @@ function* createOrUpdateProfileSaga(
         is_email_enabled: currentProfile.is_email_enabled,
         version: currentProfile.version,
         email: currentProfile.email,
-        preferred_languages: currentProfile.preferred_languages,
+        preferred_languages:
+          currentProfile.preferred_languages ?? preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         accepted_tos_version: currentProfile.accepted_tos_version,
-        last_app_version: O.toUndefined(maybeAppVersion),
+        last_app_version: currentProfile.last_app_version ?? appVersion,
         push_notifications_content_type:
           currentProfile.push_notifications_content_type,
         reminder_status: currentProfile.reminder_status,
@@ -155,16 +156,20 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
-        last_app_version: O.toUndefined(maybeAppVersion),
+        last_app_version: currentProfile.last_app_version ?? appVersion,
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0
       };
   try {
-    const response: SagaCallReturnType<typeof createOrUpdateProfile> =
-      yield* call(createOrUpdateProfile, {
+    const response = (yield* call(
+      withRefreshApiCall,
+      createOrUpdateProfile({
         body: newProfile
-      });
+      }),
+      undefined,
+      I18n.t("profile.errors.upsert")
+    )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
       throw new Error(readablePrivacyReport(response.left));
@@ -178,15 +183,12 @@ function* createOrUpdateProfileSaga(
       throw new Error(response.right.value.title);
     }
 
-    if (response.right.status === 401) {
-      // on 401, expire the current session and restart the authentication flow
-      yield* put(sessionExpired());
-      throw new Error(I18n.t("profile.errors.upsert"));
-    }
-
     if (response.right.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw new Error(response.right.value.title);
+      throw new Error(
+        response.right.value?.title ??
+          `Profile upsert: received successful non-200 HTTP response with no "title" parameter in the body`
+      );
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield* put(
@@ -281,7 +283,10 @@ function* startEmailValidationProcessSaga(
   SagaCallReturnType<typeof startEmailValidationProcess>
 > {
   try {
-    const response = yield* call(startEmailValidationProcess, {});
+    const response = (yield* call(
+      withRefreshApiCall,
+      startEmailValidationProcess({})
+    )) as unknown as SagaCallReturnType<typeof startEmailValidationProcess>;
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));
@@ -289,56 +294,11 @@ function* startEmailValidationProcessSaga(
     if (response.right.status === 202) {
       yield* put(startEmailValidation.success());
     }
-    if (response.right.status === 401) {
-      // in case we got an expired session while loading the profile, we reset
-      // the session
-      yield* put(sessionExpired());
-    }
     throw response
       ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
   } catch (e) {
     yield* put(startEmailValidation.failure(convertUnknownToError(e)));
-  }
-}
-
-// check if the current device language matches the one saved in the profile
-function* checkPreferredLanguage(
-  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-): Generator<ReduxSagaEffect, any, O.Option<Locales>> {
-  // check if the preferred_languages is up to date
-  const preferredLanguages =
-    profileLoadSuccessAction.payload.preferred_languages;
-  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> =
-    yield* select(preferredLanguageSelector);
-  // deviceLocale could be the one stored or the one retrieved from the running device
-  const deviceLocale = pipe(
-    currentStoredLocale,
-    O.getOrElse(() => getLocalePrimaryWithFallback())
-  );
-  // if the preferred language isn't set, update it with the current device locale
-  if (!preferredLanguages || preferredLanguages.length === 0) {
-    yield* put(
-      profileUpsert.request({
-        preferred_languages: [fromLocaleToPreferredLanguage(deviceLocale)]
-      })
-    );
-  }
-  const currentLocale =
-    preferredLanguages && preferredLanguages.length > 0
-      ? fromPreferredLanguageToLocale(preferredLanguages[0])
-      : deviceLocale;
-  // if there is not value stored about preferred language or
-  // the stored value is different from one into the profile, update it
-  if (
-    O.isNone(currentStoredLocale) ||
-    currentStoredLocale.value !== currentLocale
-  ) {
-    yield* put(
-      preferredLanguageSaveSuccess({
-        preferredLanguage: currentLocale
-      })
-    );
   }
 }
 
@@ -438,15 +398,15 @@ function* checkStoreHashedFiscalCode(
 function* checkLoadedProfile(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
+  yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
+  // If the tos has never been accepted or is not part of the upsert payload, do not run check that could upsert profile
+  if (!profileLoadSuccessAction.payload.accepted_tos_version) {
+    return;
+  }
   // This saga will upsert the `last_app_version` value in the
   // profile only if it actually changed from the one stored in
   // the backend.
   yield* call(upsertAppVersionSaga);
-
-  yield* all([
-    call(checkPreferredLanguage, profileLoadSuccessAction),
-    call(checkStoreHashedFiscalCode, profileLoadSuccessAction)
-  ]);
 }
 
 // watch for some actions about profile

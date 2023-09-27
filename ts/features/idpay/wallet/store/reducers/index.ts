@@ -69,11 +69,17 @@ const reducer = (
         };
       }
 
+      if (!pot.isError(state.initiativesWithInstrument)) {
+        return {
+          ...state,
+          initiativesWithInstrument: pot.toLoading(
+            state.initiativesWithInstrument
+          )
+        };
+      }
       return {
         ...state,
-        initiativesWithInstrument: pot.toLoading(
-          state.initiativesWithInstrument
-        )
+        initiativesWithInstrument: state.initiativesWithInstrument
       };
     case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(
@@ -188,7 +194,7 @@ export const idPayInitiativeFromInstrumentPotSelector = (
     case true:
       return pot.someLoading(isItemActive);
     case false:
-      return pot.someUpdating(isItemActive, !isItemActive);
+      return pot.someLoading(isItemActive);
     default:
       return pot.none;
   }

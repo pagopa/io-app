@@ -13,6 +13,8 @@ import { SignatureRequestDetailView } from "../../../../../definitions/fci/Signa
 import { NetworkError } from "../../../../utils/errors";
 import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
+import { Document } from "../reducers/fciSignatureFieldDrawing";
+import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 
 /**
  * get and handle the signatureRequest from id
@@ -92,33 +94,21 @@ export const fciStartSigningRequest = createStandardAction(
 )<void>();
 
 /**
- * start the FCI signed start action
- */
-export const fciShowSignedDocumentsStartRequest = createStandardAction(
-  "FCI_SIGNED_DOCUMENTS_START_REQUEST"
-)<void>();
-
-/**
- * start the FCI signed end action
- */
-export const fciShowSignedDocumentsEndRequest = createStandardAction(
-  "FCI_SIGNED_DOCUMENTS_END_REQUEST"
-)<void>();
-
-/**
  * clear the FCI store
  */
 export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
 
+/**
+ * poll the filled document
+ * to check if it is ready
+ * to be downloaded
+ */
 export const fciPollFilledDocument = createAsyncAction(
-  "POLL_FILLED_DOCUMENT_REQUEST",
-  "POLL_FILLED_DOCUMENT_SUCCESS",
-  "POLL_FILLED_DOCUMENT_FAILURE"
-)<void, { isReady: boolean }, NetworkError>();
-
-export const fciCancelPollingFilledDocument = createStandardAction(
-  "POLL_FILLED_DOCUMENT_CANCEL"
-)<void>();
+  "FCI_POLL_FILLED_DOCUMENT_REQUEST",
+  "FCI_POLL_FILLED_DOCUMENT_SUCCESS",
+  "FCI_POLL_FILLED_DOCUMENT_FAILURE",
+  "FCI_POLL_FILLED_DOCUMENT_CANCEL"
+)<void, { isReady: boolean }, NetworkError, void>();
 
 export const fciClearAllFiles =
   createStandardAction("CLEAR_ALL_FILES")<{ path: string }>();
@@ -135,6 +125,12 @@ export const fciSignaturesListRequest = createAsyncAction(
   "FCI_SIGNATURES_LIST_FAILURE"
 )<void, SignatureRequestList, NetworkError>();
 
+export const fciDocumentSignatureFields = createAsyncAction(
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
+)<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -147,10 +143,8 @@ export type FciActions =
   | ActionType<typeof fciEndRequest>
   | ActionType<typeof fciDownloadPreview>
   | ActionType<typeof fciDownloadPreviewClear>
-  | ActionType<typeof fciShowSignedDocumentsStartRequest>
-  | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
-  | ActionType<typeof fciCancelPollingFilledDocument>
   | ActionType<typeof fciClearAllFiles>
   | ActionType<typeof fciMetadataRequest>
-  | ActionType<typeof fciSignaturesListRequest>;
+  | ActionType<typeof fciSignaturesListRequest>
+  | ActionType<typeof fciDocumentSignatureFields>;

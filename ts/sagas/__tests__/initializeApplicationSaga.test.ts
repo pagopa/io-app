@@ -30,15 +30,16 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
-  generateKeyInfo,
-  generateLollipopKeySaga
+  generateLollipopKeySaga,
+  getKeyInfo
 } from "../../features/lollipop/saga";
-import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../../features/lollipop/store/reducers/lollipop";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions";
+import { backendStatusSelector } from "../../store/reducers/backendStatus";
+import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -75,6 +76,7 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -83,14 +85,17 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .next(lollipopKeyTagSelector)
-      .next(lollipopPublicKeySelector)
-      .next(generateKeyInfo, O.none, O.none)
+      .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
       .next(200) // checkSession
+      .next()
       .next()
       .next()
       .next()
@@ -111,7 +116,7 @@ describe("initializeApplicationSaga", () => {
       .put(startApplicationInitialization());
   });
 
-  it("should dispatch sessionExpired if check session response is 401", () => {
+  it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(checkAppHistoryVersionSaga)
@@ -127,6 +132,7 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -135,15 +141,64 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .next(lollipopKeyTagSelector)
-      .next(lollipopPublicKeySelector)
-      .next(generateKeyInfo, O.none, O.none)
+      .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
       .next(401) // checksession
+      .select(isFastLoginEnabledSelector)
+      .next(false) // FastLogin FF
       .put(sessionExpired());
+  });
+
+  it("should dispatch refreshTokenRequest if check session response is 401 & FastLogin enabled", () => {
+    testSaga(initializeApplicationSaga)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .next()
+      .next()
+      .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
+      .next(pot.some(profile))
+      .put(resetProfileState())
+      .next()
+      .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(getKeyInfo)
+      .fork(watchSessionExpiredSaga)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
+      .next(401) // checksession
+      .next(true) // FastLogin FF
+      .put(
+        refreshSessionToken.request({
+          withUserInteraction: false,
+          showIdentificationModalAtStartup: true,
+          showLoader: false
+        })
+      );
   });
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
@@ -162,6 +217,7 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .next()
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
@@ -170,14 +226,17 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next(generateLollipopKeySaga)
       .next(false) // unsupported device
+      .select(backendStatusSelector)
+      .next(O.some({}))
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .next(lollipopKeyTagSelector)
-      .next(lollipopPublicKeySelector)
-      .next(generateKeyInfo, O.none, O.none)
+      .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
       .next(200) // check session
+      .next()
       .next()
       .next()
       .next()
@@ -197,7 +256,8 @@ describe("initializeApplicationSaga", () => {
           walletToken: "wallet_token"
         })
       )
-      .next()
+      .next(lollipopPublicKeySelector)
+      .next(true) // assertionRef is valid
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()
       .fork(watchProfile, undefined)

@@ -2,16 +2,15 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type OwnProps = {
   onAddPaymentMethod: () => void;
@@ -47,13 +46,9 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
-        <IconFont
-          name={"io-info"}
-          size={24}
-          color={IOColors.blue}
-          onPress={present}
-          testID={"noticeIconFont"}
-        />
+        <TouchableDefaultOpacity onPress={present} testID={"noticeIcon"}>
+          <Icon name="info" size={24} color="blue" />
+        </TouchableDefaultOpacity>
       </View>
       <VSpacer size={16} />
       <InternationalCircuitIconsBar />

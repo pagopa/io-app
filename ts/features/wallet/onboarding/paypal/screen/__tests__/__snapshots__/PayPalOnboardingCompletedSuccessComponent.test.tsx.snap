@@ -54,7 +54,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -225,6 +225,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={1}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -394,6 +396,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={2}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={

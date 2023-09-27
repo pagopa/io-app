@@ -23,7 +23,7 @@ date:
     - "Fri"
     - "Sat"
   month_names:
-    - ""
+    - " "
     - "January"
     - "February"
     - "March"
@@ -37,7 +37,7 @@ date:
     - "November"
     - "December"
   abbr_month_names:
-    - ""
+    - " "
     - "Jan"
     - "Feb"
     - "Mar"
@@ -59,6 +59,17 @@ global:
   badges:
     blocked: "Blocked"
     onGoing: "Ongoing"
+    failed: "Failed"
+    cancelled: "Cancelled"
+    reversal: "Reversal"
+  modules:
+    paymentNotice:
+      badges:
+        payed: "Payed"
+        error: "Error"
+        expired: "Expired"
+        revoked: "Revoked"
+        canceled: "Canceled"
   password: Password
   username: Username
   unknown: unknown
@@ -66,6 +77,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    minusSymbol: minus
     switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
@@ -142,6 +154,7 @@ global:
     reference: !include markdown_reference.md
     decodeError: Message can't be decoded
   buttons:
+    deny: "Deny"
     share: Share
     delete: Delete
     cancel: Cancel
@@ -149,6 +162,7 @@ global:
     ok: OK
     ok2: Ok
     continue: Continue
+    notNow: Maybe later
     retry: Retry
     back: Back
     confirm: Confirm
@@ -160,19 +174,23 @@ global:
     add: Add
     edit: "Edit"
     info: "Info"
-    activate: "Activate"
-    deactivate: "Deactivate"
+    activate: "Enable"
+    activate2: Enable
+    deactivate: "Disable"
     show: "Show"
     update: "Update"
+    updateIO: "Update IO"
     findOutMore: "Find out more"
     details: "Details"
     choose: "Scegli"
+    copy: Copy
   navigator:
-    messages: messages
-    wallet: wallet
-    documents: documents
-    profile: profile
-    services: services
+    messages: Messages
+    wallet: Wallet
+    scan: Scan
+    documents: Documents
+    profile: Profile
+    services: Services
   actions:
     retry: An error occurred, please retry
     search: Text to search
@@ -250,6 +268,8 @@ login:
     line1: welcome in your
     line2: Digital Citizenship
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
+  expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
+  biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -366,7 +386,7 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy & Terms
+        title: Privacy Policy and Terms of Service
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
@@ -403,7 +423,7 @@ profile:
             cta: "the Privacy Policy and Terms and Conditions"
           profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
-            shareData: "Share data"
+            shareData: "Share"
             dontShareData: "Don’t share data"
             dontShare: "Don’t share"
           confirmToast: "Preferences updated!"
@@ -437,10 +457,18 @@ profile:
       idpayTest: Test IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
-    appVersion: App Version
+    appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
     designSystem: Design System
+    addCard:
+      titleSection: Add test card
+      warning: 
+        title: Warning
+        message: To add a new test card, you must enable the pagoPA test environment from the settings.
+        closeButton: Close
+    walletPlayground:
+      titleSection: "New Wallet Playground"
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -509,18 +537,18 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Choose if you want to allow previews and receive reminders.
+      subtitle: Choose how to receive messages and reminders.
       titleExistingUser: Customize push notifications
       subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
-        title: Show previews
-        description: Include the sender and subject of the message in the push notification · 
+        title: Show a preview
+        description: Include the sender and subject of the message in the push notification
         link: More info
         bottomSheet:
-          title: Show previews
+          title: Show a preview
           content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
           cta: Ok!
       error: An error occurred with your request
@@ -550,6 +578,10 @@ spid:
   subscription:
     line1: SPID is the digital identity to access online services of the Public Administration.
     line2: Insert your email address to enable it.
+  pending_login:
+    title: Accesso in corso
+    details: Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!
+    button: Torna alla lista
 authentication:
   landing:
     accessibility:
@@ -558,7 +590,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after 30 days from the last login with SPID or CIE, we ask you to sign in again to use IO.
+      body: For security reasons, after {{days}} days from the last login with SPID or CIE, we ask you to sign in again to use IO.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -743,6 +775,17 @@ authentication:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
 email:
+  cduModal:
+    validateMail:
+      title: Email address not validated
+      subtitle: To continue using the app, you must validate your email address
+      editButton: Edit email address
+      validateButton: Validate email address
+    editMail:
+      title: Edit your email address
+      subtitleStart: This email address
+      subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
+      editButton: Edit email address
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can
@@ -768,6 +811,17 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+  newinsert:
+    header: "Configure IO"
+    title: "What is your email address?"
+    subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
+    label: "Personal email address"
+    alert: 
+      title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
+      description: "email address already in use"
+      modaltitle: "This email address is already in use"
+      modaldescription: "This can happen if you share the same address with a family member"
+      modalbutton: "Use another email address"
   edit:
     title: Edit email
     subtitle: The email you inserted is
@@ -799,7 +853,7 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Configure IO
-    accept: Accept
+    accept: Accept and continue
     error: Loading error
     alert:
       title: Attention
@@ -811,31 +865,43 @@ onboarding:
   pin:
     headerTitle: IO Settings
     title: Unlock code
-    subTitle: It's a six-digit code that you need to access IO and authorize certain in-app transations.
+    subTitle: It's a six-digit code you'll use to login and authorize some in-app operations. If supported by your device, you can replace it with biometric authentication.
     pinLabel: Create unlock code
     pinConfirmationLabel: Repeat unlock code
     tutorial: You can change the code at any time under Profile > Security
     errors:
-      length: The code must have six digits
+      invalid: The code is not valid
       match: The code doesn’t match
+    policy:
+      headerTitle: "For security reasons, the code must not contain:"
+      first: repeated numbers (e.g. 000000)
+      second: a number sequence (e.g. 123456 or 654321)
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
-  fingerprint:
-    headerTitle: Activation
-    title: Biometric authentication
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: your fingerprint
-        faceId: Face ID
-        touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  biometric:
+    headerTitle: Configure IO
+    available:
+      title: Enable biometric recognition
+      settings: You can always change your choice in Profile > Security
+      body:
+        infoStart: You can use biometric recognition in place of the unlock code. This will let you access the app and authorizeoperations and payments with your
+        biometricType: face or fingerprint
+        infoEnd: more quickly and securely.
+        enrolledText: The biometric information is stored in your phone's memory. it will not be disclosed in any way to IO systems or stored anywhere else.
+        notEnrolled:
+          text: To use it, go to your device settings and configure it. Then activate it on IO under Profile > Security.
+    unavailable:
+      title: Protect your device
+      body:
+        firstInfoStart: IO sends you communications that concern you
+        firstInfoEnd: personally.
+        secondInfoStart: Protect your device from unwanted access and make sure that only you can access the app. To do this, go to your device settings, set an
+        secondInfoEnd: unlock code or configure biometric recognition.
   shareData:
     title: "Configure IO"
   thankYouPage:
     title: Setup completed!
-    body: Now you can start using IO
   notifications:
     badge: New
     headerTitle: IO Settings
@@ -846,7 +912,7 @@ onboarding:
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
       reminderOffPreviewOnMessage: Summer camp registration is now open
-      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffTitle: You have a notice due tomorrow
       reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
@@ -854,14 +920,25 @@ onboarding:
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: IO Settings
-    title: Enable push notifications?
-    subTitle: "To receive push notifications from IO, enable them in the iOS Settings. Here's how:"
-    instruction1: 1. Press 'Notifications'
-    instruction2: 2. Enable 'Allow notifications'
-    openSettings: Open iOS settings
-    continue: Maybe later
+    title: Enable push notifications not to miss important messages!
+    subTitle: To do so, you'll have to edit the preferences in your device settings.
+    openSettings: Go to Settings
+    continue: Not now
     contextualHelpTitle: Push notifications
     contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
+    instructions:
+      title: "Here's how:"
+      label: Step
+      ios:
+        step1: Go to "Settings"
+        step2: Select "Notifications"
+        step3: Enable "Allow Notifications"
+      android:
+        step1: Go to "Settings"
+        step2: Select "Applications"
+        step3: Select "IO"
+        step4: Select "Notifications"
+        step5: Enable notifications
 forms:
   validators:
     required: Required value
@@ -935,6 +1012,29 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
+  methodDetails:
+    cobadgeTitle: 'Debit card'
+    cardGeneric: 'Card'
+    a11y:
+      credit:
+        hpan: "{{circuit}} ending {{spacedHpan}}"
+        owner: "owned by {{fullOwnerName}}"
+      paypal:
+        owner: "account: {{email}}"
+      bpay:
+        phone: "Mobile number: {{phoneNumber}}"
+        owner: "owned by {{fullOwnerName}}"
+      bancomat:
+        bank: "PagoBANCOMAT card {{bankName}}"
+        owner: "owned by {{fullOwnerName}}"
+      cobadge:
+        bank: "Debit card {{bankName}}"
+        owner: "owned by {{fullOwnerName}}"
+    expired: Il metodo è scaduto e non puoi più usarlo per fare pagamenti in app.
+    isSupportedBanner:
+      title: Vuoi pagare in app?
+      content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
+      cta: Scopri di più
   wallet: Wallet
   refreshWallet: Refresh the Wallet
   favourite:
@@ -955,8 +1055,7 @@ wallet:
       dateTime: Date and time
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
-    details:
-      header: Method detail
+    validUntil: Valid until {{expDate}}
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
@@ -990,7 +1089,6 @@ wallet:
       bancomat: "{{bankName}} BANCOMAT"
       coBadge: "{{brand}} Card, {{bankName}}"
       bancomatPay: "{{bankName}} BANCOMATPay"
-      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
       cta: "View method details"
       bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
@@ -1042,25 +1140,6 @@ wallet:
       koNotFound:
         title: "We haven't found any active BANCOMAT Pay service"
         body: "Contact your bank to activate BANCOMAT Pay!"
-    satispay:
-      name: "Satispay"
-      headerTitle: "Add Satispay"
-      start:
-        title: "Do you want to add your Satispay account to IO?"
-        body: "We will check if there is a Satispay account associated with your tax code."
-        cta: "Information on the processing of personal data"
-      loadingSearch:
-        title: "We are verifying your Satispay account\n\nPlease wait a few seconds"
-      loadingAdd:
-        title: "We are adding your Satispay account\n\nPlease wait a few seconds"
-      add:
-        title: "Do you want to add this Satispay account?"
-      koTimeout:
-        title: "We were unable to contact Satispay"
-        body: "Retry please"
-      koNotFound:
-        title: "We do not know that you have activated Satispay yet"
-        body: "Contact Satispay for activation"
     paypal:
       name: "PayPal"
       headerTitle: "Add PayPal"
@@ -1151,41 +1230,11 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
-    privative:
-      headerTitle: "Add supermarket card"
-      choosePrivativeIssuer:
-        loading: "Loading settings\n\nPlease wait a few seconds"
-        title: "Choose the card brand"
-        body: "By adding the card to your Wallet, you’ll be able to join the initiatives available on IO."
-        koDisabled:
-          title: "This supermarket doesn't offer this feature yet"
-          body: "We are working to allow you to add your card soon."
-        koUnavailable:
-          title: "We're unable to contact the server"
-          body: "We are working to solve the problem."
-      addPrivativeCardNumber:
-        title: "Insert card number"
-        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
-        disclaimer:
-          text1: "By continuing you accept the"
-          text2: "information on the processing of personal data"
-      search:
-        loading: "We are verifying your card\n\nPlease wait"
-        koTimeout:
-          title: "It is currently impossible to verify your card"
-          body: "Please try again"
-        koNotFound:
-          title: "There is an issue with this card"
-          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
-          cta:
-            modifyCardNumber: "Change card number"
-        koServiceError:
-          title: "We're unable to retrieve your card"
-          body: "Please try again later."
-      add:
-        screenTitle: "Do you want to add this card?"
-        loading: "We are adding your card\n\nPlease hold on..."
-        blocked: "This card is blocked and can't be activated to join the initiatives available on IO. Please, contact your supermarket."
+    generalError: "There was a generic error while adding the payment method"
+    success:
+      title: "Payment method added successfully!"
+      continueButton: "Continue"
+    failure: "Error while adding the card"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1216,7 +1265,11 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    successful: Method removed from your Wallet
+    ios:
+      confirm: Rimuovi metodo
+    android:
+      confirm: Rimuovi
+    successful: Method removed!
     failed: The method could not be removed from your Wallet
   newPaymentMethod:
     add: add
@@ -1416,24 +1469,20 @@ wallet:
         bottomSheetTitle: Why can’t I make in-app payments?
         bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
+        operationCompleted: Operazione completata!
+        operationError: Disattivazione non riuscita
     bonus:
       name: Discounts, bonuses and other initiatives
       description: Public initiatives to support Economy, or services related to payments
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
-    loyalty:
-      name: Supermarket Loyalty Card
-      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card used to pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
-    satispay:
-      name: Satispay
-      description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
       description: Pay with your linked card or bank account
@@ -1490,7 +1539,6 @@ wallet:
         fieldError: "To continue, please fix the {{field}} field"
         missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
-  missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
   missingDataText:
     body: If you can't find the security code, it's likely your card doesn't support online payments.
@@ -1558,19 +1606,13 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
         addCta: "Add second circuit"
-  satispay:
-    details:
-      infobox:
-        one: "Satispay"
-        two: " can't be used yet to make payments through IO"
-        three: ": this feature will be enabled on future app version release."
   cobadge:
     details:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
     title: "Delete this payment method?"
-    body: "We’ll remove the method from the Wallet. Any connected initiatives will deactivate within 24 hours."
+    body: "If you delete this method, it will also be removed from the initiatives where it has been enabled."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1616,6 +1658,10 @@ wallet:
         title: "Your card has been successfully added!"
     payment:
       success:
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
         title: "Thank you for your payment!"
         description1: "We sent a receipt to"
         description2: "You can also find it in your Wallet."
@@ -1805,6 +1851,19 @@ messageDetails:
       thirdPart: " for more information."
     failing:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
+messagePDFPreview:
+  title: "PDF Preview"
+  singleBtn: "Save or share"
+  open: "Open"
+  save: "Save"
+  savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  errors:
+    previewing:
+      title: "Preview is not available"
+      body: "To view the document, download and open it with a PDF reader app."
+    sharing: "An error occurred while sharing the document"
+    opening: "An error occurred while opening the document. You may not have a PDF reader installed."
+    saving: "An error occurred while saving the document"
 notifications:
   installation:
     errorTitle: Push notifications
@@ -1841,21 +1900,21 @@ services:
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
-      title: "How do you want to configure services on IO?"
-      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
+      title: "Who can contact you?"
+      body: "IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message."
       quickConfig:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
         body:
-          text1: "Only the services which have something important to tell you will contact you."
+          text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
         body:
-          text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
+          text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
           title: "If you confirm, you won't receive any message"
           body: "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
@@ -2728,12 +2787,13 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the benefits
+        buyers: Discover the CGN benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
-          pending: Find out more on EYCA
-          bottomSheet: Check EYCA discounts
+          pending: Check EYCA discounts
+          bottomSheet: Check the EYCA website
+          showEycaDiscounts: Check EYCA discounts
       tos:
         link: Information on the processing of personal data
       information:
@@ -2741,15 +2801,15 @@ bonus:
         warning: "Attention! "
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
-      ownership: Who can take advantage of benefits?
+      ownership: Who can use this card?
       status:
-        title: Carta Giovani Nazionale
+        title: Carta Giovani Nazionale (CGN)
         eyca: EYCA card
         eycaCircuit: EYCA circuit
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating operators, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy using the card at participating merchants, you will be able to obtain discounts and concessions on cultural activities, shops, transport, catering and accommodation even in European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
@@ -3044,46 +3104,9 @@ features:
     loading:
       title: "Loading message details"
       subtitle: "Please wait"
-  mvl:
-    title: "legal message"
-    ko:
-      genericError:
-        title: "There was an error retrieving the message"
-        subtitle: "Please try again"
-    details:
-      hasAttachments: "contains attachments"
-      attachments:
-        title: "Attachments"
-        toast:
-          success: "Download complete"
-        pdfPreview:
-          title: "PDF Preview"
-          singleBtn: "Save, print, or share"
-          open: "Open"
-          save: "Save"
-          savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
-          errors:
-            previewing:
-              title: "Preview is not available"
-              body: "To view the document, download and open it with a PDF reader app."
-            sharing: "An error occurred while sharing the document"
-            opening: "An error occurred while opening the document. You may not have a PDF reader installed."
-            saving: "An error occurred while saving the document"
-      body:
-        plain: "plain text"
-        html: "html"
-      metadata:
-        title: "the message has legal value"
-        description: "On {{date}} at {{time}} the message \"{{subject}}\" was sent to you by \"{{sender}}\""
-        messageId: "Message identifier:"
-        links:
-          copy: "Copy message identifier"
-          recipients: "Show full list of recipients"
-          signature: "Show signature details"
-          certificates: "Show certificates"
-          originalMessage: "Download original message"
-          datiCert: "Download daticert.xml"
-          smime: "Download smime.p7s"
+    updateBottomSheet:
+      title: "Aggiorna l'app IO"
+      subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
   euCovidCertificate:
     save:
       album: "IO"
@@ -3150,9 +3173,14 @@ features:
         error: "Si è verificato un errore con la tua richiesta"
     details:
       title: Dettaglio del messaggio
+      noticeCode: "Codice avviso"
       loadError:
         title: Qualcosa è andato storto
         body: Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
+      cancelledMessage:
+        body: "Questa notifica è stata annullata dall'ente mittente. Puoi ignorarne il contenuto."
+        unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
+        payments: "Pagamenti"
       paymentSection:
         title: Avviso di pagamento
       attachmentsSection:
@@ -3169,7 +3197,7 @@ features:
           PAID: Pagata
           ACCEPTED: Depositata
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
-          VIEWED: Perfezionata per visione
+          VIEWED: Avvenuto accesso
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
@@ -3207,6 +3235,9 @@ features:
         rejected:
           title: The signature failed
           subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
+        cancelled:
+          title: The signature request has been cancelled
+          subTitle: For further support, write to
         signing:
           title: The signature failed
           subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.
@@ -3215,7 +3246,7 @@ features:
           subTitle: The signature request is not associated with your Tax Code.
     abort:
       title: "Quit signing"
-      content: "Do you want to quit signing the documents?"
+      content: "Do you want to quit signing **{{dossierTitle}}**?"
       cancel: "Quit signing"
       confirm: "Keep signing"
     checkService:
@@ -3223,6 +3254,11 @@ features:
       content: "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents."
       cancel: "Not now"
       confirm: "Turn on"
+    noFields:
+      title: "Sign the entire document"
+      content: "Do you want to sign the entire document?"
+      leftButton: "Reread"
+      rightButton: "Sign"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
@@ -3239,7 +3275,7 @@ features:
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
       title: "Share these data?"
-      content: "They will be shared with the digital signature provider. If you cancel, you won't be able to complete the signature."
+      content: "They will enable the digital signature provider to provide the service and certify your signature."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Do you want to change or update your e-mail address?"
@@ -3267,7 +3303,10 @@ features:
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Signed"
       notAvailable: "Not available"
-      signingInProgress: "Signature in progress"   
+      signingInProgress: "Signature in progress"
+    signatureFieldInfo:
+      title: "What are restrictive clauses?"
+      subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."   
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3332,6 +3371,24 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  code:
+    onboarding:
+      header: Ecco il tuo codice!
+      body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
+      bodyBold: "memorizzalo in un luogo sicuro"
+      bodyCta: "Come funziona?"
+      banner:
+        header: E se lo dimentichi?
+        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+    renew:
+      screen:
+        header: Codice ID Pay
+        body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+        link: Come funziona?
+        generateCTA: Genera un nuovo codice
+      alert:
+        title: Vuoi generare un nuovo codice ID Pay?
+        body: Il codice attualmente in uso verrà sovrascritto.
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
@@ -3340,8 +3397,8 @@ idpay:
       navigation: Available initiatives
       header: Which initiatives do you want to enable on this method?
       statusLabels:
-        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
-        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        PENDING_DEACTIVATION_REQUEST: "Pending"
+        PENDING_ENROLLMENT_REQUEST: "Pending"
         ENROLLMENT_FAILED: "Attivazione fallita"
       errorToasts:
         enrollment: "Errore nel collegamento dell'iniziativa, riprova."
@@ -3394,20 +3451,72 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
+              QRCODE_TRANSACTION: "Pagamento"
               ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION:  "Pagamento POS"
-              REVERSAL:  "Storno"
-              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
-              REJECTED_DELETE_INSTRUMENT: 
-                "Errore disattivazione metodo"
+              REVERSAL:  "Pagamento POS"
+              DELETE_INSTRUMENT:  "Disattivazione metodo ···· {{maskedPan}}"
+              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN:  "Disattivazione metodo"
+              REJECTED_ADD_INSTRUMENT:  "Attivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
-              REJECTED_REFUND:  "Errore rimboso"
+              REJECTED_REFUND:  "Rimborso sul tuo conto"
               SUSPENDED:  "Sospensione"
               READMITTED: "Riattivazione"
+    discountDetails:
+      authorizeButton: Autorizza un pagamento
+      IDPayCode:
+        failureScreen:
+          cta: Chiudi
+          header:
+            GENERIC: In questo momento non è possibile generare un codice
+        successScreen:
+          header: Ora puoi utilizzare la tua carta d’identità per pagare!
+          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          cta: Ok, chiudi
+    beneficiaryDetails:
+      infobox:
+        title: Cosa ti permette di fare?
+        rulesButton: Leggi le regole
+      infoModal:
+        title: "Regole dell'iniziativa"
+        button: "Ok, ho capito"
+      spentUntilNow: Speso finora
+      summary: Riepilogo
+      status: Stato iniziativa
+      endDate: Scadenza
+      amount: Saldo disponibile
+      toBeRefunded: In attesa di rimborso
+      refunded: Totale rimborsato
+      spendingRules: Regole di spesa
+      spendFrom: A partire dal giorno
+      spendTo: Entro il giorno
+      spendPercentage: Percentuale riconosciuta
+      enrollmentDetails: Dettagli dell'adesione
+      enrollmentDate: Data
+      protocolNumber: Numero di protocollo
+      lastUpdate: "Saldo aggiornato al {{dateString}}"
+      buttons:
+        privacy: Preferenze & Privacy
+        unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
+      discount:
+        labels:
+          AUTHORIZED: Authorized
+          CANCELLED: Annullata
+          REWARDED: Eseguita
+        details:
+          alerts:
+            AUTHORIZED: "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente."
+            CANCELLED: "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+          labels:
+            business: Esercente
+            status: Stato
+            totalAmount: Importo totale
+            idpayAmount: Importo transazione ID Pay
+            transactionID: ID transazione
       title: 
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione
@@ -3438,6 +3547,12 @@ idpay:
         date: Data rimborso
         cro: CRO
       errorBody: Impossibile caricare il dettaglio
+    cie:
+      bottomSheet:
+        title: "Come funziona?"
+        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3622,9 +3737,113 @@ idpay:
       title: C’è un problema sui nostri sistemi
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
+  payment:
+    authorization:
+      header: "Confermi l’operazione?"
+      toAuth: Da autorizzare
+      amount: Importo del bene
+      businessName: Richiesto da
+      dateTime: Data e Ora
+      infoDivider: "Informazioni sull’iniziativa"
+      initiativeName: Iniziativa
+      availableAmount: Credito disponibile
+      error: C’è stato un errore, riprova
+    result:
+      success:
+        title: Operazione autorizzata con successo!
+        body: Potrai controllare i dettagli dallo storico delle tue operazioni.
+      cancelled:
+        title: L’operazione è stata annullata
+      failure:
+        GENERIC:
+          title: Si è verificato un errore imprevisto
+          body: Non è stato addebitato alcun importo.
+        REJECTED:
+          title: Autorizzazione negata
+          body: Testo TBD
+        EXPIRED:
+          title: La sessione è scaduta
+          body: Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+        BUDGET_EXHAUSTED:
+          title: Autorizzazione negata
+          body: Non hai abbastanza soldi per autorizzare
+        AUTHORIZED:
+          title: L’operazione è stata già autorizzata!
+    manualInput:
+      title: Autorizza una transazione
+      subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
+      input: Codice Transazione
+      button: Continua
+barcodeScan: 
+  error: IO non riconosce questo codice
+  tabs:
+    scan: Inquadra
+    upload: Carica
+    input: Digita
+  upload:
+    image: Carica un'immagine
+    file: Carica un file
+  manual:
+    authorize: Autorizza una transazione
+    notice: Paga un avviso pagoPA
+  permissions:
+    undefined: 
+      title: Ci serve il tuo permesso
+      label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
+      action: Consenti l’accesso
+    denied:
+      title: Non hai dato il permesso di usare la fotocamera
+      label: Per concederlo, accedi alle impostazioni del tuo sistema operativo.
+      action: Vai alle impostazioni
+  multipleResultsAlert:
+    title: Hai inquadrato più codici
+    body: Inquadra un solo codice alla volta
+    action: Riprova
 unsupportedDevice:  
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
   subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
   cta:
     faq: "Learn more"
+fastLogin:
+  userInteraction:
+    sessionExpired: 
+      noPin:
+        title: Too much time has passed!
+        subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
+        submitButtonTitle: Continue
+      continueNavigation: 
+        title: "La tua sessione è scaduta"
+        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
+        submitButtonTitle: "Continua la navigazione"
+        cancelButtonTitle: "Annulla"
+      transientError:
+        title: "We couldn't authenticate you"
+        subtitle: "Close the app and try again in a few minutes."
+        submitButtonTitle: "Go to FAQs"
+  whatsNew:
+    title: Logging into IO just got easier!
+    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face. 
+    changes:
+      first:
+        title: Easier
+        description: log in with just your unlock code, fingerprint or face.
+      second:
+        title: Faster
+        description: use your SPID or CIE only once a year or in case you log out.
+      third:
+        title: Safer
+        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
+securityTips:
+  title: Safety tips
+  biometric:
+    first: Use fingerprint or face recognition only to identify yourself.
+  ioEsco:
+    urlString: ioesco.io.italia.it
+    lostDevice:
+      if: If
+      lose: you lose
+      sentence: your device, log out from IO through
+    compromisedCredentials: If you think your SPID or CIE credentials might be compromised, block access to your IO account through
+whatsNew:
+  title: What's changed?

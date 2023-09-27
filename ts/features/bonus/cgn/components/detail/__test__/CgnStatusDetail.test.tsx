@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import I18n from "../../../../../../i18n";
@@ -11,7 +12,6 @@ import {
 import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
 import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import CgnStatusDetail from "../CgnStatusDetail";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,

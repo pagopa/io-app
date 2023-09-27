@@ -2,20 +2,36 @@
  * A saga to manage notifications
  */
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { identity, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { BackendClient } from "../api/backend";
-import { mixpanelTrack } from "../mixpanel";
 import {
+  clearNotificationPendingMessage,
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
 } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
+import { trackNotificationInstallationTokenNotChanged } from "../utils/analytics";
+import {
+  PendingMessageState,
+  pendingMessageStateSelector
+} from "../store/reducers/notifications/pendingMessage";
+import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
+import {
+  navigateToMainNavigatorAction,
+  navigateToMessageRouterAction
+} from "../store/actions/navigation";
+import NavigationService from "../navigation/NavigationService";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { trackMessageNotificationTap } from "../features/messages/analytics";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -45,7 +61,7 @@ export function* updateInstallationSaga(
     notificationsInstallation.token ===
     notificationsInstallation.registeredToken
   ) {
-    void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
+    trackNotificationInstallationTokenNotChanged();
     return undefined;
   }
   try {
@@ -80,4 +96,60 @@ export function* updateInstallationSaga(
   } catch (e) {
     yield* put(updateNotificationInstallationFailure(convertUnknownToError(e)));
   }
+}
+
+export function* handlePendingMessageStateIfAllowedSaga(
+  shouldResetToMainNavigator: boolean = false
+) {
+  // Check if we have a pending notification message
+  const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
+    yield* select(pendingMessageStateSelector);
+  // It may be needed to track the push notification tap event (since mixpanel
+  // was not initialized at the moment where the notification came - e.g., when
+  // the application was killed and the push notification is tapped)
+  yield* call(trackMessageNotificationTapIfNeeded, pendingMessageState);
+
+  // Check if there is a payment ongoing
+  const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> =
+    yield* select(isPaymentOngoingSelector);
+
+  if (!isPaymentOngoing && pendingMessageState) {
+    // We have a pending notification message to handle
+    const messageId = pendingMessageState.id;
+
+    // Remove the pending message from the notification state
+    yield* put(clearNotificationPendingMessage());
+
+    if (shouldResetToMainNavigator) {
+      yield* call(navigateToMainNavigatorAction);
+    }
+
+    // Navigate to message router screen
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      navigateToMessageRouterAction({
+        messageId: messageId as UIMessageId,
+        fromNotification: true
+      })
+    );
+  }
+}
+
+export function trackMessageNotificationTapIfNeeded(
+  pendingMessageStateOpt?: PendingMessageState
+) {
+  pipe(
+    pendingMessageStateOpt,
+    O.fromNullable,
+    O.chain(pendingMessageState =>
+      pipe(
+        pendingMessageState.trackEvent,
+        O.fromNullable,
+        O.filter(identity),
+        O.map(_ =>
+          trackMessageNotificationTap(pendingMessageState.id as NonEmptyString)
+        )
+      )
+    )
+  );
 }

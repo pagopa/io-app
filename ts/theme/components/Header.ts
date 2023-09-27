@@ -1,9 +1,10 @@
 import { Platform } from "react-native";
 
+import { IOColors } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { IOVisualCostants } from "../../components/core/variables/IOStyles";
 
 declare module "native-base" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -18,9 +19,6 @@ declare module "native-base" {
 export default (): Theme => ({
   "NativeBase.Left": {
     "NativeBase.Button": {
-      "UIComponent.IconFont": {
-        color: variables.textColor
-      },
       padding: 0,
       justifyContent: "center",
       width: (variables.iconSizeBase * 5) / 3,
@@ -34,7 +32,6 @@ export default (): Theme => ({
       height: (variables.iconSizeBase * 5) / 3
     },
     padding: 0,
-    minWidth: 40,
     flex: 0
   },
 
@@ -79,9 +76,6 @@ export default (): Theme => ({
         margin: 0,
         padding: variables.iconSizeBase / 4
       },
-      "UIComponent.IconFont": {
-        fontSize: 24
-      },
       width: (variables.iconSizeBase * 5) / 3,
       height: (variables.iconSizeBase * 5) / 3,
       padding: variables.iconSizeBase / 3,
@@ -92,25 +86,11 @@ export default (): Theme => ({
   },
 
   ".primary": {
-    backgroundColor: variables.contentPrimaryBackground,
-    "NativeBase.Right": {
-      "NativeBase.Button": {
-        "UIComponent.IconFont": {
-          color: IOColors.white
-        }
-      }
-    }
+    backgroundColor: variables.contentPrimaryBackground
   },
 
   ".dark": {
-    backgroundColor: IOColors.bluegrey,
-    "NativeBase.Right": {
-      "NativeBase.Button": {
-        "UIComponent.IconFont": {
-          color: IOColors.white
-        }
-      }
-    }
+    backgroundColor: IOColors.bluegrey
   },
 
   ".noLeft": {
@@ -128,8 +108,7 @@ export default (): Theme => ({
       ? variables.appHeaderHeight + 18
       : variables.appHeaderHeight,
   borderBottomWidth: variables.headerBorderBottomWidth,
-  paddingLeft: variables.titleHeaderPaddingLeft,
-  paddingRight: variables.appHeaderPaddingHorizontal,
+  paddingHorizontal: IOVisualCostants.appMarginDefault,
   /* iOS */
   // shadowOpacity: 0,
   shadowOffset: {

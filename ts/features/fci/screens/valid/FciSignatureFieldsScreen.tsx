@@ -1,10 +1,11 @@
 import * as React from "react";
-import { View, SafeAreaView, SectionList } from "react-native";
+import { View, SafeAreaView, SectionList, Platform } from "react-native";
 import { useSelector } from "react-redux";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -22,9 +23,6 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { FCI_ROUTES } from "../../navigation/routes";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import {
   fciEndRequest,
@@ -39,9 +37,9 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   getClauseLabel,
   getRequiredSignatureFields,
-  getSectionListData
+  getSectionListData,
+  orderSignatureFields
 } from "../../utils/signatureFields";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
@@ -50,6 +48,8 @@ import {
   trackFciShowSignatureFields,
   trackFciStartSignature
 } from "../../analytics";
+import IconButton from "../../../../components/ui/IconButton";
+import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -112,6 +112,9 @@ const FciSignatureFieldsScreen = (
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
+  const { present: presentInfo, bottomSheet: fciSignaturefieldInfo } =
+    useFciSignatureFieldInfo();
+
   const onPressDetail = (signatureField: SignatureField) => {
     trackFciShowSignatureFields();
     showModal(
@@ -119,10 +122,18 @@ const FciSignatureFieldsScreen = (
         attrs={signatureField.attrs}
         currentDoc={currentDoc}
         onClose={hideModal}
-        onError={() => setIsError(true)}
+        onError={() => onError()}
         testID={"FciDocumentWithSignatureTestID"}
       />
     );
+  };
+
+  /**
+   * Callback which sets the isError state to true and hides the modal.
+   */
+  const onError = () => {
+    setIsError(true);
+    hideModal();
   };
 
   const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>
@@ -144,25 +155,44 @@ const FciSignatureFieldsScreen = (
       )
     );
 
-  const renderSectionHeader = (info: {
-    section: { title: string };
-  }): React.ReactNode => (
-    <View
-      style={{
-        backgroundColor: IOColors.white,
-        flexDirection: "row"
-      }}
-    >
-      <H3 color="bluegrey">
-        {getClauseLabel(info.section.title as Clause["type"])}
-      </H3>
-    </View>
-  );
+  const renderSectionHeader = (info: { section: { title: string } }) => {
+    const clauseLabel = getClauseLabel(info.section.title as Clause["type"]);
+    return (
+      <View
+        style={{
+          backgroundColor: IOColors.white,
+          flexDirection: "row"
+        }}
+      >
+        <H3 color="bluegrey" style={IOStyles.flex}>
+          {clauseLabel}
+        </H3>
+
+        {/* 
+          Show info icon and signature field info only for unfair clauses
+          NOTE: this could be a temporary solution, since we could have
+          an improved user experience.
+        */}
+        {info.section.title === ClausesTypeEnum.UNFAIR && (
+          <>
+            <IconButton
+              icon={"info"}
+              onPress={presentInfo}
+              accessibilityLabel={I18n.t("global.buttons.info")}
+            />
+            {fciSignaturefieldInfo}
+          </>
+        )}
+      </View>
+    );
+  };
 
   const renderSignatureFields = () => (
     <SectionList
       style={IOStyles.horizontalContentPadding}
-      sections={getSectionListData(signatureFieldsSelector)}
+      sections={getSectionListData(
+        orderSignatureFields(signatureFieldsSelector)
+      )}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}
       testID={"FciSignatureFieldsSectionListTestID"}
       renderItem={({ item }) => (
@@ -219,14 +249,12 @@ const FciSignatureFieldsScreen = (
   };
 
   const customGoBack: React.ReactElement = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
       onPress={navigation.goBack}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
-    </TouchableDefaultOpacity>
+    />
   );
 
   if (isError) {

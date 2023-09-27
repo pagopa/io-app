@@ -88,7 +88,9 @@ const CgnServiceCTA = (props: Props) => {
         danger
         onPress={requestUnsubscription}
       >
-        <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
+        <Label testID="cgnDeactivateBonusTestId" color={"red"}>
+          {I18n.t("bonus.cgn.cta.deactivateBonus")}
+        </Label>
       </ButtonDefaultOpacity>
     );
   }
@@ -100,6 +102,7 @@ const CgnServiceCTA = (props: Props) => {
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
       }}
+      testID="service-activate-bonus-button"
     >
       <Label color={"white"}>{I18n.t("bonus.cgn.cta.activeBonus")}</Label>
     </ButtonDefaultOpacity>

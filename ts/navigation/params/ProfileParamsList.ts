@@ -27,4 +27,6 @@ export type ProfileParamsList = {
   [ROUTES.CGN_LANDING_PLAYGROUND]: undefined;
   [ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS]: undefined;
   [ROUTES.IDPAY_ONBOARDING_PLAYGROUND]: undefined;
+  [ROUTES.IDPAY_CODE_PLAYGROUND]: undefined;
+  [ROUTES.WALLET_PLAYGROUND]: undefined;
 };

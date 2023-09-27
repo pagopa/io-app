@@ -3,16 +3,14 @@ import { useSelector } from "@xstate/react";
 import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -45,10 +43,10 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
-    <IconFont
-      name={checked ? "io-radio-on" : "io-radio-off"}
-      size={22}
-      color={checked ? IOColors.blue : IOColors.bluegrey}
+    <Icon
+      name={checked ? "legRadioOn" : "legRadioOff"}
+      size={24}
+      color={checked ? "blue" : "bluegrey"}
     />
   </NBListItem>
 );

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ListItem } from "native-base";
-import IconFont from "../../../../../../components/ui/IconFont";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 
 type Props = {
@@ -23,10 +22,10 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
-    <IconFont
-      name={checked ? "io-radio-on" : "io-radio-off"}
-      size={22}
-      color={checked ? IOColors.blue : IOColors.bluegrey}
+    <Icon
+      name={checked ? "legRadioOn" : "legRadioOff"}
+      size={24}
+      color={checked ? "blue" : "bluegrey"}
     />
   </ListItem>
 );

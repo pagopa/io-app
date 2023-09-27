@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { deriveCustomHandledLink } from "../link";
+import { deriveCustomHandledLink, removeFIMSPrefixFromUrl } from "../link";
 
 const loadingCases: ReadonlyArray<
   [input: string, expectedResult: ReturnType<typeof deriveCustomHandledLink>]
@@ -67,11 +67,34 @@ const loadingCases: ReadonlyArray<
   ]
 ];
 
+const fimsCases: ReadonlyArray<
+  [input: string, expectedResult: ReturnType<typeof removeFIMSPrefixFromUrl>]
+> = [
+  [
+    "iosso://https://italia.io/main/messages?messageId=4&serviceId=5",
+    "https://italia.io/main/messages?messageId=4&serviceId=5"
+  ],
+  [
+    "iOsSo://https://italia.io/main/messages?messageId=4&serviceId=5",
+    "https://italia.io/main/messages?messageId=4&serviceId=5"
+  ]
+];
+
 describe("deriveCustomHandledLink", () => {
   test.each(loadingCases)(
     "given %p as argument, returns %p",
     (firstArg, expectedResult) => {
       const result = deriveCustomHandledLink(firstArg);
+      expect(result).toEqual(expectedResult);
+    }
+  );
+});
+
+describe("removeFIMSPrefixFromUrl", () => {
+  test.each(fimsCases)(
+    "given %p as argument, returns %p",
+    (firstArg, expectedResult) => {
+      const result = removeFIMSPrefixFromUrl(firstArg);
       expect(result).toEqual(expectedResult);
     }
   );

@@ -2,20 +2,18 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { View, FlatList, ListRenderItemInfo } from "react-native";
 import { constNull } from "fp-ts/lib/function";
+import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import { H1 } from "../../../../components/core/typography/H1";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H4 } from "../../../../components/core/typography/H4";
-import IconFont from "../../../../components/ui/IconFont";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {
@@ -78,16 +76,17 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             <H4>{item.title}</H4>
             <H5 weight={"Regular"}>
               {item.description1}
-              {item.description2 && <H5>{` ${item.description2}`}</H5>}
+              {item.description2 && <H5>{`\n${item.description2}`}</H5>}
             </H5>
           </View>
           <HSpacer size={24} />
-          <IconFont
-            name={isSelected ? "io-radio-on" : "io-radio-off"}
-            color={IOColors.blue}
-            size={28}
-            style={{ alignSelf: "flex-start" }}
-          />
+          <View style={{ alignSelf: "flex-start" }}>
+            <Icon
+              name={isSelected ? "legRadioOn" : "legRadioOff"}
+              color="blue"
+              size={24}
+            />
+          </View>
         </TouchableDefaultOpacity>
         <VSpacer size={16} />
         <ItemSeparatorComponent noPadded />

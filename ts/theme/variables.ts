@@ -10,7 +10,7 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
-import { IOColors } from "../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
@@ -68,11 +68,6 @@ const customVariables = Object.assign(materialVariables, {
 
   toastColor: IOColors.aquaUltraLight,
 
-  /* When the background is dark */
-  headerIconDark: IOColors.milderGray,
-  /* When the background is light */
-  headerIconLight: IOColors.greyLight,
-
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
@@ -85,15 +80,6 @@ const customVariables = Object.assign(materialVariables, {
   iconFamily: "Entypo" /* NB Theme variable, don't remove */,
   iconSizeBase: 24,
 
-  get iconSize2(): number {
-    return this.iconSizeBase * (5 / 6);
-  },
-  get iconSize3(): number {
-    return this.iconSizeBase * 1;
-  },
-  get iconSize6(): number {
-    return this.iconSizeBase * 2;
-  },
   // Content
   contentPadding: 24,
   contentPaddingLarge: 48,
@@ -182,11 +168,7 @@ const customVariables = Object.assign(materialVariables, {
   activeOpacity: 0.25,
 
   // Spacing
-  spacingBase: 8,
-
-  // IconFont
-  selectedColor: IOColors.blue,
-  unselectedColor: IOColors.bluegrey
+  spacingBase: 8
 });
 
 export default customVariables;

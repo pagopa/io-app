@@ -2,15 +2,15 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { FC } from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native";
+import { Icon } from "@pagopa/io-app-design-system";
 import { PspData } from "../../../../definitions/pagopa/PspData";
-import { useImageResize } from "../../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../../features/wallet/onboarding/bancomat/hooks/useImageResize";
 import customVariables from "../../../theme/variables";
 import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { Body } from "../../core/typography/Body";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -73,11 +73,7 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
         )}
         <View style={styles.feeContainer}>
           <H4 color="blue">{cost}</H4>
-          <IconFont
-            name="io-right"
-            size={ICON_SIZE}
-            color={customVariables.contentPrimaryBackground}
-          />
+          <Icon name="chevronRightListItem" size={ICON_SIZE} color="blue" />
         </View>
       </View>
     </TouchableDefaultOpacity>

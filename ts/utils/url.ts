@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
-import { Linking } from "react-native";
+import { constNull, pipe } from "fp-ts/lib/function";
+import { ImageURISource, Linking } from "react-native";
 import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
@@ -104,3 +104,57 @@ export const openAppStoreUrl = async (onError: () => void = constNull) => {
     openWebUrl(webStoreURL, onError);
   }
 };
+
+/**
+ * Escape characters with special meaning either inside or outside character sets.
+ * Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+ */
+export function escapeStringRegexp(string: string) {
+  if (typeof string !== "string") {
+    throw new TypeError("Expected a string");
+  }
+
+  return string.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
+}
+
+/**
+ * Extract the path from a given url if it matches one of the given prefixes
+ * @param prefixes  the prefixes to match
+ * @param url the url to match
+ * @returns the path if the url matches one of the prefixes, undefined otherwise
+ */
+export function extractPathFromURL(
+  prefixes: ReadonlyArray<string>,
+  url: string
+): string | undefined {
+  for (const prefix of prefixes) {
+    const protocol = prefix.match(/^[^:]+:/)?.[0] ?? "";
+    const host = prefix
+      .replace(new RegExp(`^${escapeStringRegexp(protocol)}`), "")
+      .replace(/\/+/g, "/") // Replace multiple slash (//) with single ones
+      .replace(/^\//, ""); // Remove extra leading slash
+
+    const prefixRegex = new RegExp(
+      `^${escapeStringRegexp(protocol)}(/)*${host
+        .split(".")
+        .map(it => (it === "*" ? "[^/]+" : escapeStringRegexp(it)))
+        .join("\\.")}`
+    );
+
+    const normalizedURL = url.replace(/\/+/g, "/");
+
+    if (prefixRegex.test(normalizedURL)) {
+      return normalizedURL.replace(prefixRegex, "");
+    }
+  }
+
+  return undefined;
+}
+/**
+ * type guard to check if a value is an ImageURISource
+ * @argument value the value to check, can be anything
+ * @returns boolean
+ */
+
+export const isImageUri = (value: unknown): value is ImageURISource =>
+  typeof value === "object" && value !== null && "uri" in value;

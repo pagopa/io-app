@@ -1,8 +1,8 @@
 import * as React from "react";
+import type { IOColors, IOTheme } from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import type { IOColors, IOTheme } from "../variables/IOColors";
-import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
+import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<

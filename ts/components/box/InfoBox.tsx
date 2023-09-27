@@ -1,14 +1,19 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import IconFont from "../ui/IconFont";
-import { IOColors } from "../core/variables/IOColors";
-import { HSpacer } from "../core/spacer/Spacer";
+import {
+  IOColors,
+  IOIconSizeScale,
+  IOIcons,
+  Icon,
+  HSpacer
+} from "@pagopa/io-app-design-system";
 
 type Props = {
-  iconName?: string;
-  iconColor?: string;
-  iconSize?: number;
+  iconName?: IOIcons;
+  iconColor?: IOColors;
+  iconSize?: IOIconSizeScale;
   alignedCentral?: boolean;
+  testID?: string;
 };
 
 const styles = StyleSheet.create({
@@ -27,7 +32,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ICON_SIZE = 32;
+const ICON_SIZE: IOIconSizeScale = 32;
 
 /**
  * This component display a box with an icon and a component on the right.
@@ -35,18 +40,15 @@ const ICON_SIZE = 32;
  * @constructor
  */
 export const InfoBox: React.FunctionComponent<Props> = props => {
-  const iconName = props.iconName ?? "io-notice";
-  const iconColor = props.iconColor ?? IOColors.blue;
+  const iconName = props.iconName ?? "notice";
+  const iconColor = props.iconColor ?? "blue";
   const iconSize = props.iconSize ?? ICON_SIZE;
   const centralAlignment = props.alignedCentral ? styles.alignedCentral : {};
   return (
-    <View style={[styles.row, centralAlignment]}>
-      <IconFont
-        name={iconName}
-        size={iconSize}
-        color={iconColor}
-        style={styles.icon}
-      />
+    <View style={[styles.row, centralAlignment]} testID={props.testID}>
+      <View style={styles.icon}>
+        <Icon name={iconName} size={iconSize} color={iconColor} />
+      </View>
       <HSpacer size={16} />
       <View style={styles.shrink}>{props.children}</View>
     </View>

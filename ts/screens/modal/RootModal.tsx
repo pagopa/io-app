@@ -8,7 +8,12 @@ import UnsupportedDeviceScreen from "../../features/lollipop/screens/Unsupported
 import { isDeviceSupportedSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { mixpanelTrack } from "../../mixpanel";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
+import {
+  isFastLoginUserInteractionNeededForSessionExpiredSelector,
+  tokenRefreshSelector
+} from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
+import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -37,6 +42,16 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     });
     return <UpdateAppModal />;
   }
+
+  const fastLoginModals = FastLoginModals(
+    props.tokenRefreshing,
+    props.isFastLoginUserInteractionNeeded
+  );
+
+  if (fastLoginModals) {
+    return fastLoginModals;
+  }
+
   return <IdentificationModal />;
 };
 
@@ -44,7 +59,10 @@ const mapStateToProps = (state: GlobalState) => ({
   isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
   isAppSupported: isAppSupportedSelector(state),
   versionInfo: versionInfoDataSelector(state),
-  isDeviceSupported: isDeviceSupportedSelector(state)
+  isDeviceSupported: isDeviceSupportedSelector(state),
+  isFastLoginUserInteractionNeeded:
+    isFastLoginUserInteractionNeededForSessionExpiredSelector(state),
+  tokenRefreshing: tokenRefreshSelector(state)
 });
 
 export default connect(mapStateToProps)(RootModal);

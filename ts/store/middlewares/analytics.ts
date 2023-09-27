@@ -11,12 +11,10 @@ import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
-import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
+import trackFciAction from "../../features/fci/analytics";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
-import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
-import trackFciAction from "../../features/fci/analytics";
 import trackZendesk from "../../features/zendesk/analytics/index";
 import { mixpanel } from "../../mixpanel";
 import { getNetworkErrorMessage } from "../../utils/errors";
@@ -49,8 +47,8 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  removeMessages,
-  migrateToPaginatedMessages
+  migrateToPaginatedMessages,
+  removeMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -416,12 +414,8 @@ export const actionTracking =
       // API token
       void trackAction(mixpanel)(action);
       void trackBpdAction(mixpanel)(action);
-      void trackBancomatAction(mixpanel)(action);
-      // TODO: activate simultaneously with the activation of satispay
-      // void trackSatispayAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
-      void trackPrivativeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
       void trackContentAction(mixpanel)(action);
       void trackServiceAction(mixpanel)(action);

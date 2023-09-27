@@ -12,10 +12,17 @@ import {
   Alert,
   BackHandler,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors } from "../components/core/variables/IOColors";
+import {
+  Icon,
+  Pictogram,
+  IOPictograms,
+  IOPictogramSizeScale,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -38,7 +45,6 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { VSpacer } from "./core/spacer/Spacer";
 import { Body } from "./core/typography/Body";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import { IOStyles } from "./core/variables/IOStyles";
@@ -50,9 +56,9 @@ import SectionStatusComponent from "./SectionStatus";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import IconFont from "./ui/IconFont";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
+import IconButton from "./ui/IconButton";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -87,7 +93,7 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
 const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
-const VALIDATION_ICON_WIDTH = 84;
+const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
 const emailCtaKey = "email.validate.cta";
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
@@ -218,15 +224,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     <View style={styles.error}>
       <Body color="white">{I18n.t("global.actions.retry")}</Body>
       <View>
-        <IconFont
-          name={"io-close"}
+        <TouchableDefaultOpacity
           onPress={() => {
             this.setState({ displayError: false });
           }}
-          color={IOColors.white}
           accessible={true}
           accessibilityLabel={I18n.t("global.buttons.close")}
-        />
+        >
+          <Icon name="closeLarge" color="white" />
+        </TouchableDefaultOpacity>
       </View>
     </View>
   );
@@ -254,20 +260,19 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     );
 
   private customOnboardingGoBack = (
-    <TouchableDefaultOpacity
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
       onPress={this.handleOnboardingGoBack}
-      accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <IconFont name={"io-back"} />
-    </TouchableDefaultOpacity>
+    />
   );
 
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
-      iconName: "io-close",
-      onPress: this.props.navigateBack
+      iconName: "closeLarge",
+      onPress: this.props.navigateBack,
+      accessibilityLabel: I18n.t("global.buttons.close")
     }
   };
 
@@ -356,9 +361,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       O.getOrElse(() => EMPTY_EMAIL)
     );
 
-    const icon = this.state.emailHasBeenValidate
-      ? "io-email-validated"
-      : "io-email-to-validate";
+    const illustration: IOPictograms = this.state.emailHasBeenValidate
+      ? "emailValidation"
+      : "emailToValidate";
 
     const title = this.state.emailHasBeenValidate
       ? I18n.t("email.validate.validated")
@@ -374,12 +379,13 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       >
         <Content bounces={false}>
           <VSpacer size={40} />
-          <IconFont
-            name={icon}
-            size={VALIDATION_ICON_WIDTH}
-            color={customVariables.colorHighlight}
-            style={IOStyles.selfCenter}
-          />
+          <View style={IOStyles.selfCenter}>
+            <Pictogram
+              name={illustration}
+              size={VALIDATION_ILLUSTRATION_WIDTH}
+              color="aqua"
+            />
+          </View>
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>
             <Body weight="SemiBold">{title}</Body>

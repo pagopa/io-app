@@ -2,13 +2,17 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { loadPreviousPageMessages as action } from "../../../store/actions/messages";
+import {
+  loadPreviousPageMessages as action,
+  loadPreviousPageMessages
+} from "../../../store/actions/messages";
 import {
   apiPayload,
   defaultRequestPayload,
   successLoadPreviousPageMessagesPayload
 } from "../../../__mocks__/messages";
 import { testTryLoadPreviousPageMessages } from "../watchLoadPreviousPageMessages";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 const tryLoadPreviousPageMessages = testTryLoadPreviousPageMessages!;
 
@@ -30,7 +34,11 @@ describe("tryLoadPreviousPageMessages", () => {
         action.request(defaultRequestPayload)
       )
         .next()
-        .call(getMessages, getMessagesPayload)
+        .call(
+          withRefreshApiCall,
+          getMessages(getMessagesPayload),
+          loadPreviousPageMessages.request(defaultRequestPayload)
+        )
         .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadPreviousPageMessagesPayload))
         .next()
@@ -46,7 +54,11 @@ describe("tryLoadPreviousPageMessages", () => {
         action.request(defaultRequestPayload)
       )
         .next()
-        .call(getMessages, getMessagesPayload)
+        .call(
+          withRefreshApiCall,
+          getMessages(getMessagesPayload),
+          loadPreviousPageMessages.request(defaultRequestPayload)
+        )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(
           action.failure({
@@ -69,11 +81,9 @@ describe("tryLoadPreviousPageMessages", () => {
         action.request(defaultRequestPayload)
       )
         .next()
-        .call(getMessages, getMessagesPayload)
-        .next()
         .put(
           action.failure({
-            error: new Error("Response is undefined"),
+            error: new Error("I made a boo-boo, sir!"),
             filter: defaultRequestPayload.filter
           })
         )

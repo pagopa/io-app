@@ -176,7 +176,7 @@ describe("screenContextualHelpDataSelector", () => {
     assertScreenValues("title EN", "**content EN**");
   });
 
-  it("should return data (english) if the current screen is present as key and the set language is not supported", async () => {
+  it("should return data (italian) if the current screen is present as key and the set language is not supported", async () => {
     setLocale("br" as Locales);
     assertScreenValues("title IT", "**content IT**");
   });

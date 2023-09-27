@@ -6,10 +6,9 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Icon } from "@pagopa/io-app-design-system";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyleVariables } from "../../../../components/core/variables/IOStyleVariables";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
@@ -20,7 +19,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { getPaymentStatusById } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
-import { showToast } from "../../../../utils/showToast";
+import { IOToast } from "../../../../components/Toast";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -62,7 +61,7 @@ const Fallback = () => {
   void mixpanelTrack("PAYMENT_STATUS_SWITCH_ID_NOT_IN_WALLET_LIST");
   return (
     <View style={{ paddingLeft: IOStyleVariables.switchWidth - 24 }}>
-      <IconFont name={"io-close"} size={24} color={IOColors.blue} />
+      <Icon name="closeLarge" size={24} color="blue" />
     </View>
   );
 };
@@ -83,13 +82,15 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
   useEffect(() => {
     if (!isFirstRender.current) {
       if (isError) {
-        showToast(I18n.t("global.actions.retry"), "danger");
+        IOToast.error(
+          I18n.t("wallet.methods.card.pagoPaCapability.operationError")
+        );
       }
     } else {
       // eslint-disable-next-line functional/immutable-data
       isFirstRender.current = false;
     }
-  }, [isError]);
+  }, [isError, maybePaymentMethod]);
 
   return pipe(
     paymentMethodExists,

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { H4 } from "../../../../components/core/typography/H4";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 /**
  * A bottomsheet that display generic information on bancomat and a cta to start the onboarding of a new
@@ -14,7 +14,7 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
  * This will be also visualized inside a bottomsheet after an addition of a new bancomat
  */
 export default (onAdd?: () => void) => {
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View>
       <InternationalCircuitIconsBar />
       <VSpacer size={16} />

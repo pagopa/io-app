@@ -2,8 +2,10 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { guardedNavigationAction } from "../../common/xstate/utils";
-import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
+import { useIODispatch } from "../../../../store/hooks";
+import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
+import { refreshSessionToken } from "../../../fastLogin/store/actions";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes,
@@ -16,14 +18,24 @@ const createActionsImplementation = (
   onboardingNavigation: IDPayOnboardingStackNavigationProp<
     IDPayOnboardingParamsList,
     keyof IDPayOnboardingParamsList
-  >
+  >,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   const navigateToInitiativeDetailsScreen = guardedNavigationAction(
     (context: Context) => {
       if (context.serviceId === undefined) {
         throw new Error("serviceId is undefined");
       }
-
       onboardingNavigation.navigate(
         IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
         {
@@ -83,6 +95,7 @@ const createActionsImplementation = (
   };
 
   return {
+    handleSessionExpired,
     navigateToInitiativeDetailsScreen,
     navigateToPDNDCriteriaScreen,
     navigateToBoolSelfDeclarationsScreen,

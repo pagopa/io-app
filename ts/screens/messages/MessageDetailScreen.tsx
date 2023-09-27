@@ -9,8 +9,8 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../components/error/WorkunitGenericFailure";
@@ -27,9 +27,9 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
-import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
-import { isNoticePaid } from "../../store/reducers/entities/payments";
+import { isNoticePaidSelector } from "../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export type MessageDetailScreenPaginatedNavigationParams = {
+export type MessageDetailScreenNavigationParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
 };
 
 type OwnProps = IOStackNavigationRouteProps<
   MessagesParamsList,
-  "MESSAGE_DETAIL_PAGINATED"
+  "MESSAGE_DETAIL"
 >;
 
 type Props = OwnProps &
@@ -156,7 +156,7 @@ const MessageDetailScreen = ({
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.route.params.messageId;
   const serviceId = ownProps.route.params.serviceId;
-  const message = pot.toUndefined(getMessageById(state, messageId));
+  const message = pot.toUndefined(getPaginatedMessageById(state, messageId));
   const messageDetails = getDetailsByMessageId(state, messageId);
   const goBack = () => ownProps.navigation.goBack();
   const service = pipe(
@@ -167,7 +167,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   // Map the potential message to the potential service
   const maybeServiceMetadata = serviceMetadataByIdSelector(serviceId)(state);
   const hasPaidBadge: boolean = message
-    ? isNoticePaid(state, message.category)
+    ? isNoticePaidSelector(state, message.category)
     : false;
 
   return {

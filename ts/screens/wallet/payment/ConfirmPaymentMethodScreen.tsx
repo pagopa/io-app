@@ -5,6 +5,7 @@ import { ActionSheet, Content } from "native-base";
 import * as React from "react";
 import { View, Alert, SafeAreaView, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
+import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
@@ -12,12 +13,10 @@ import CardIcon from "../../../../img/wallet/card.svg";
 import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import TagIcon from "../../../../img/wallet/tag.svg";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -25,7 +24,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
@@ -128,8 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-
-  iconRowText: { marginLeft: 8 },
 
   flex: { flex: 1 }
 });
@@ -405,19 +401,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             <VSpacer size={24} />
 
             <View style={styles.iconRow}>
-              <IconFont
-                name="io-info"
-                size={20}
-                style={{
-                  color: IOColors.bluegrey
-                }}
-              />
-
-              <H3
-                color="bluegrey"
-                style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+              <Icon name="info" size={20} color="bluegrey" />
+              <HSpacer size={8} />
+              <H3 color="bluegrey" accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.paymentInformations")}
               </H3>
             </View>
@@ -441,12 +427,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View style={styles.iconRow}>
               <CardIcon width={20} height={20} />
-
-              <H3
-                color="bluegrey"
-                style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+              <HSpacer size={8} />
+              <H3 color="bluegrey" accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.payWith")}
               </H3>
             </View>
@@ -468,12 +450,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View style={styles.iconRow}>
               <TagIcon width={20} height={20} />
-
-              <H3
-                color="bluegrey"
-                style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+              <HSpacer size={8} />
+              <H3 color="bluegrey" accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.transactionCosts")}
               </H3>
             </View>

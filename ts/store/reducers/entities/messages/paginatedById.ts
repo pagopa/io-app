@@ -115,12 +115,13 @@ export default reducer;
 export const allPaginatedByIdSelector = (state: GlobalState): PaginatedById =>
   state.entities.messages.paginatedById;
 
-export const getMessageById = createSelector(
+export const getPaginatedMessageById = createSelector(
   [allPaginatedByIdSelector, (_: GlobalState, messageId: string) => messageId],
   (paginatedById, messageId): pot.Pot<UIMessage, Error> =>
     paginatedById[messageId] ?? pot.none
 );
 
-export const getServiceByMessageId = createSelector(getMessageById, message =>
-  pot.isSome(message) ? message.value.serviceId : undefined
+export const getServiceByMessageId = createSelector(
+  getPaginatedMessageById,
+  message => (pot.isSome(message) ? message.value.serviceId : undefined)
 );

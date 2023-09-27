@@ -1,6 +1,5 @@
 import * as E from "fp-ts/lib/Either";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
 import {
   InitiativeDTO,
   StatusEnum
@@ -9,6 +8,8 @@ import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context } from "../context";
 
 import { createServicesImplementation } from "../services";
+import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
+import { UnsubscriptionFailureEnum } from "../failure";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";
@@ -40,13 +41,13 @@ describe("IDPay Unsubscription machine services", () => {
   describe("loadInitiative", () => {
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.getWalletDetail.mockImplementation(() => response);
 
-      await expect(
-        services.getInitiativeInfo(T_CONTEXT)
-      ).rejects.toBeUndefined();
+      await expect(services.getInitiativeInfo(T_CONTEXT)).rejects.toBe(
+        UnsubscriptionFailureEnum.GENERIC
+      );
 
       expect(mockIDPayClient.getWalletDetail).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -82,13 +83,13 @@ describe("IDPay Unsubscription machine services", () => {
   describe("unsubscribeFromInitiative", () => {
     it("should fail if response status code != 200", async () => {
       const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
-        E.right({ status: 400, value: { code: 0, message: "" } });
+        E.right({ status: 400, value: { code: 400, message: "" } });
 
       mockIDPayClient.unsubscribe.mockImplementation(() => response);
 
-      await expect(
-        services.unsubscribeFromInitiative(T_CONTEXT)
-      ).rejects.toBeUndefined();
+      await expect(services.unsubscribeFromInitiative(T_CONTEXT)).rejects.toBe(
+        UnsubscriptionFailureEnum.GENERIC
+      );
 
       expect(mockIDPayClient.unsubscribe).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -101,7 +102,7 @@ describe("IDPay Unsubscription machine services", () => {
 
     it("should unsubscribe from initiative", async () => {
       const response: E.Either<Error, { status: number; value?: undefined }> =
-        E.right({ status: 200, value: undefined });
+        E.right({ status: 204, value: undefined });
 
       mockIDPayClient.unsubscribe.mockImplementation(() => response);
 

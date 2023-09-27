@@ -2,10 +2,9 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { View, Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
-import IconFont from "../ui/IconFont";
-import { IOColors } from "../core/variables/IOColors";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -215,12 +214,9 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             />
           </ProgressCircle>
           {this.props.readingState === ReadingState.completed && (
-            <IconFont
-              name={"io-success"}
-              color={customVariables.textLinkColor}
-              size={50}
-              style={styles.successIcon}
-            />
+            <View style={styles.successIcon}>
+              <Icon name="success" color="blue" size={48} />
+            </View>
           )}
         </View>
       </View>

@@ -54,7 +54,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -124,7 +124,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -225,6 +225,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={1}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -394,6 +396,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={2}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -779,7 +783,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -849,7 +853,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -950,6 +954,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={3}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -1119,6 +1125,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={4}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -1492,34 +1500,67 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                               }
                                             }
                                           >
-                                            <Text
+                                            <RNSVGSvgView
                                               accessibilityElementsHidden={true}
                                               accessibilityLabel=""
                                               accessible={false}
-                                              allowFontScaling={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              color={4278219750}
+                                              focusable={false}
+                                              height={24}
                                               importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
                                               style={
                                                 Array [
                                                   Object {
-                                                    "color": undefined,
-                                                    "fontSize": 12,
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
                                                   },
-                                                  Array [
-                                                    Object {},
-                                                    Object {},
-                                                    Object {},
-                                                  ],
                                                   Object {
-                                                    "fontFamily": "io-icon-font",
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "normal",
+                                                    "color": "#0073E6",
                                                   },
-                                                  Object {},
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
                                                 ]
                                               }
+                                              tintColor={4278219750}
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
                                             >
-                                              $
-                                            </Text>
+                                              <RNSVGGroup>
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M12.9999 1c0-.55229-.4477-1-1-1-.5522 0-1 .44771-1 1v10H1.00098c-.55229 0-1 .4477-1 1s.44771 1 1 1h9.99892v10.0008c0 .5522.4478 1 1 1 .5523 0 1-.4478 1-1V13h9.9999c.5523 0 1-.4477 1-1s-.4477-1-1-1h-9.9999V1Z"
+                                                  fill={
+                                                    Array [
+                                                      2,
+                                                    ]
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                            <View
+                                              style={
+                                                Object {
+                                                  "width": 4,
+                                                }
+                                              }
+                                            />
                                             <Text
                                               style={
                                                 Array [
@@ -1620,7 +1661,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -1690,7 +1731,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -1791,6 +1832,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={7}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -1960,6 +2003,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={8}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -2333,34 +2378,67 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                               }
                                             }
                                           >
-                                            <Text
+                                            <RNSVGSvgView
                                               accessibilityElementsHidden={true}
                                               accessibilityLabel=""
                                               accessible={false}
-                                              allowFontScaling={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              color={4278219750}
+                                              focusable={false}
+                                              height={24}
                                               importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
                                               style={
                                                 Array [
                                                   Object {
-                                                    "color": undefined,
-                                                    "fontSize": 12,
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
                                                   },
-                                                  Array [
-                                                    Object {},
-                                                    Object {},
-                                                    Object {},
-                                                  ],
                                                   Object {
-                                                    "fontFamily": "io-icon-font",
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "normal",
+                                                    "color": "#0073E6",
                                                   },
-                                                  Object {},
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
                                                 ]
                                               }
+                                              tintColor={4278219750}
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
                                             >
-                                              $
-                                            </Text>
+                                              <RNSVGGroup>
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M12.9999 1c0-.55229-.4477-1-1-1-.5522 0-1 .44771-1 1v10H1.00098c-.55229 0-1 .4477-1 1s.44771 1 1 1h9.99892v10.0008c0 .5522.4478 1 1 1 .5523 0 1-.4478 1-1V13h9.9999c.5523 0 1-.4477 1-1s-.4477-1-1-1h-9.9999V1Z"
+                                                  fill={
+                                                    Array [
+                                                      2,
+                                                    ]
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                            <View
+                                              style={
+                                                Object {
+                                                  "width": 4,
+                                                }
+                                              }
+                                            />
                                             <Text
                                               style={
                                                 Array [
@@ -2461,7 +2539,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -2531,7 +2609,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                   }
                 }
               >
-                MESSAGE_DETAIL_PAGINATED
+                MESSAGE_DETAIL
               </Text>
             </View>
           </View>
@@ -2632,6 +2710,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
             <View
               collapsable={false}
               forwardedRef={[Function]}
+              handlerTag={5}
+              handlerType="PanGestureHandler"
               onGestureHandlerEvent={[Function]}
               onGestureHandlerStateChange={[Function]}
               style={
@@ -2801,6 +2881,8 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                               <View
                                 collapsable={false}
                                 forwardedRef={[Function]}
+                                handlerTag={6}
+                                handlerType="PanGestureHandler"
                                 onGestureHandlerEvent={[Function]}
                                 onGestureHandlerStateChange={[Function]}
                                 style={
@@ -3174,34 +3256,67 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                               }
                                             }
                                           >
-                                            <Text
+                                            <RNSVGSvgView
                                               accessibilityElementsHidden={true}
                                               accessibilityLabel=""
                                               accessible={false}
-                                              allowFontScaling={false}
+                                              align="xMidYMid"
+                                              bbHeight={24}
+                                              bbWidth={24}
+                                              color={4278219750}
+                                              focusable={false}
+                                              height={24}
                                               importantForAccessibility="no-hide-descendants"
+                                              meetOrSlice={0}
+                                              minX={0}
+                                              minY={0}
                                               style={
                                                 Array [
                                                   Object {
-                                                    "color": undefined,
-                                                    "fontSize": 12,
+                                                    "backgroundColor": "transparent",
+                                                    "borderWidth": 0,
                                                   },
-                                                  Array [
-                                                    Object {},
-                                                    Object {},
-                                                    Object {},
-                                                  ],
                                                   Object {
-                                                    "fontFamily": "io-icon-font",
-                                                    "fontStyle": "normal",
-                                                    "fontWeight": "normal",
+                                                    "color": "#0073E6",
                                                   },
-                                                  Object {},
+                                                  Object {
+                                                    "flex": 0,
+                                                    "height": 24,
+                                                    "width": 24,
+                                                  },
                                                 ]
                                               }
+                                              tintColor={4278219750}
+                                              vbHeight={24}
+                                              vbWidth={24}
+                                              width={24}
                                             >
-                                              $
-                                            </Text>
+                                              <RNSVGGroup>
+                                                <RNSVGPath
+                                                  clipRule={0}
+                                                  d="M12.9999 1c0-.55229-.4477-1-1-1-.5522 0-1 .44771-1 1v10H1.00098c-.55229 0-1 .4477-1 1s.44771 1 1 1h9.99892v10.0008c0 .5522.4478 1 1 1 .5523 0 1-.4478 1-1V13h9.9999c.5523 0 1-.4477 1-1s-.4477-1-1-1h-9.9999V1Z"
+                                                  fill={
+                                                    Array [
+                                                      2,
+                                                    ]
+                                                  }
+                                                  fillRule={0}
+                                                  propList={
+                                                    Array [
+                                                      "fill",
+                                                      "fillRule",
+                                                    ]
+                                                  }
+                                                />
+                                              </RNSVGGroup>
+                                            </RNSVGSvgView>
+                                            <View
+                                              style={
+                                                Object {
+                                                  "width": 4,
+                                                }
+                                              }
+                                            />
                                             <Text
                                               style={
                                                 Array [

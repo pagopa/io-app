@@ -1,11 +1,11 @@
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import maestro from "../../../img/wallet/cards-icons/maestro.png";
 import mastercard from "../../../img/wallet/cards-icons/mastercard.png";
 import visaElectron from "../../../img/wallet/cards-icons/visa-electron.png";
 import visa from "../../../img/wallet/cards-icons/visa.png";
 import vpay from "../../../img/wallet/cards-icons/vPay.png";
-import { HSpacer } from "../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   brandLogo: {

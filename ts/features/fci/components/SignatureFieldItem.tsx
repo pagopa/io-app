@@ -1,9 +1,8 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
-import IconFont from "../../../components/ui/IconFont";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
@@ -47,11 +46,11 @@ const SignatureFieldItem = (props: Props) => {
         </H4>
         <TouchableDefaultOpacity
           accessibilityRole={"checkbox"}
-          accessibilityValue={{
-            text: checked
+          accessibilityLabel={
+            checked
               ? I18n.t("features.fci.signatureFields.accessibility.selected")
               : I18n.t("features.fci.signatureFields.accessibility.unselected")
-          }}
+          }
           accessibilityState={{ selected: checked }}
           testID={"SignatureFieldItemButtonTestID"}
           onPress={() => {
@@ -60,17 +59,17 @@ const SignatureFieldItem = (props: Props) => {
           disabled={props.disabled}
           style={{ alignSelf: "center" }}
         >
-          <IconFont
+          <Icon
             testID="SignatureFieldItemCheckboxTestID"
-            name={checked ? "io-checkbox-on" : "io-checkbox-off"}
+            name={checked ? "legCheckOn" : "legCheckOff"}
             color={
               checked && !props.disabled
-                ? IOColors.blue
+                ? "blue"
                 : props.disabled
-                ? IOColors.grey
-                : IOColors.bluegreyDark
+                ? "grey"
+                : "bluegreyDark"
             }
-            size={22}
+            size={24}
           />
         </TouchableDefaultOpacity>
       </View>

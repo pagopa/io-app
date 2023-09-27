@@ -9,19 +9,31 @@ import {
   getMessagePrecondition,
   clearMessagePrecondition
 } from "../../store/actions/messages";
+import { isTestEnv } from "../../utils/environment";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../types/utils";
+import { trackDisclaimerLoadError } from "../../features/messages/analytics";
+
+export const testWorkerMessagePrecondition = isTestEnv
+  ? workerMessagePrecondition
+  : undefined;
 
 function* workerMessagePrecondition(
   getThirdPartyMessagePrecondition: ReturnType<
-    typeof BackendClient
-  >["getThirdPartyMessagePrecondition"],
+    BackendClient["getThirdPartyMessagePrecondition"]
+  >,
   action: ActionType<typeof getMessagePrecondition.request>
 ) {
-  const messageId = action.payload;
+  const { id, categoryTag } = action.payload;
 
   try {
-    const result = yield* call(getThirdPartyMessagePrecondition, {
-      id: messageId
-    });
+    const result = (yield* call(
+      withRefreshApiCall,
+      getThirdPartyMessagePrecondition({ id }),
+      action
+    )) as unknown as SagaCallReturnType<
+      typeof getThirdPartyMessagePrecondition
+    >;
 
     if (E.isRight(result)) {
       if (result.right.status === 200) {
@@ -33,14 +45,13 @@ function* workerMessagePrecondition(
       throw Error(readableReport(result.left));
     }
   } catch (e) {
+    trackDisclaimerLoadError(categoryTag);
     yield* put(getMessagePrecondition.failure(convertUnknownToError(e)));
   }
 }
 
 export function* watchMessagePrecondition(
-  getThirdPartyMessagePrecondition: ReturnType<
-    typeof BackendClient
-  >["getThirdPartyMessagePrecondition"]
+  getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"]
 ): SagaIterator {
   yield* takeLatest(
     getType(getMessagePrecondition.request),
@@ -48,7 +59,7 @@ export function* watchMessagePrecondition(
       yield* race({
         response: call(
           workerMessagePrecondition,
-          getThirdPartyMessagePrecondition,
+          getThirdPartyMessagePrecondition(),
           action
         ),
         cancel: take(clearMessagePrecondition)

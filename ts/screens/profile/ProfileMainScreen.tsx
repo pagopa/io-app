@@ -1,14 +1,12 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Text as NBButtonText, Toast } from "native-base";
+import { List, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
+import { ButtonSolid, Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
-import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -26,7 +24,6 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
-import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
@@ -39,8 +36,7 @@ import { navigateToLogout } from "../../store/actions/navigation";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled,
-  preferencesDesignSystemSetEnabled
+  preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -52,16 +48,21 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
   isIdPayTestEnabledSelector,
-  isDesignSystemEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
+import ListItemNav from "../../components/ui/ListItemNav";
+import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
+import { SwitchListItem } from "../../components/ui/SwitchListItem";
+import AppVersion from "../../components/AppVersion";
+import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -72,24 +73,6 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 type State = {
   tapsOnAppVersion: number;
 };
-
-const styles = StyleSheet.create({
-  developerSectionItem: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  developerSectionItemLeft: {
-    flex: 1
-  },
-  developerSectionItemRight: {
-    flex: 0
-  },
-  noRightPadding: {
-    paddingRight: 0
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -148,44 +131,49 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     description?: string
   ) {
     return (
-      <ListItem style={styles.noRightPadding}>
-        <View style={styles.developerSectionItem}>
-          <View style={styles.developerSectionItemLeft}>
-            <Body>{title}</Body>
-            <Body>{description}</Body>
-          </View>
-          <View style={styles.developerSectionItemRight}>
-            <Switch value={switchValue} onValueChange={onSwitchValueChange} />
-          </View>
-        </View>
-      </ListItem>
+      <SwitchListItem
+        label={title}
+        description={description}
+        value={switchValue}
+        onSwitchValueChange={onSwitchValueChange}
+      />
+    );
+  }
+
+  private debugCopyListItem(label: string, value: string, onPress: () => void) {
+    return (
+      <>
+        <ListItemInfoCopy
+          label={label}
+          value={value}
+          onPress={onPress}
+          accessibilityLabel={value}
+          numberOfLines={5}
+        />
+        <Divider />
+      </>
     );
   }
 
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
-      <ListItem style={styles.noRightPadding}>
-        <ButtonDefaultOpacity
-          primary={true}
-          danger={isDanger}
-          small={true}
-          onPress={onPress}
-        >
-          <NBButtonText numberOfLines={1}>{title}</NBButtonText>
-        </ButtonDefaultOpacity>
-      </ListItem>
-    );
-  }
-
-  private versionListItem(title: string, onPress: () => void) {
-    return (
-      <ListItem style={styles.noRightPadding}>
-        <Pressable onPress={onPress}>
-          <Body numberOfLines={1} weight="SemiBold">
-            {title}
-          </Body>
-        </Pressable>
-      </ListItem>
+      <View style={{ paddingVertical: 8 }}>
+        {isDanger ? (
+          <ButtonSolid
+            color="danger"
+            label={title}
+            onPress={onPress}
+            accessibilityLabel={title}
+          />
+        ) : (
+          <ButtonSolid
+            color="primary"
+            label={title}
+            onPress={onPress}
+            accessibilityLabel={title}
+          />
+        )}
+      </View>
     );
   }
 
@@ -250,8 +238,22 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.showModal();
   };
 
-  private onDesignSystemToggle = (enabled: boolean) => {
-    this.props.setDesignSystemEnabled(enabled);
+  private onAddTestCard = () => {
+    if (!this.props.isPagoPATestEnabled) {
+      Alert.alert(
+        I18n.t("profile.main.addCard.warning.title"),
+        I18n.t("profile.main.addCard.warning.message"),
+        [
+          {
+            text: I18n.t("profile.main.addCard.warning.closeButton"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+    this.props.startAddTestCard();
   };
 
   private idResetTap?: number;
@@ -294,11 +296,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       isDebugModeEnabled,
       isPagoPATestEnabled,
       isPnTestEnabled,
-      isDesignSystemEnabled,
       navigation,
       notificationId,
       notificationToken,
       sessionToken,
+      isFastLoginEnabled,
       walletToken,
       setDebugModeEnabled,
       isIdPayTestEnabled,
@@ -311,35 +313,45 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <SectionHeaderComponent
           sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+          style={{ borderBottomWidth: 0 }}
         />
         {isPlaygroundsEnabled && (
           <>
-            <ListItemComponent
-              title={"Lollipop Playground"}
+            <ListItemNav
+              value={"Lollipop Playground"}
+              accessibilityLabel={"Lollipop Playground"}
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.LOLLIPOP_PLAYGROUND
                 })
               }
             />
-            <ListItemComponent
-              title={"MyPortal Web Playground"}
+            {/* We should use FlatList or FlashList to manage
+            automatically the <Divider /> component */}
+            <Divider />
+            <ListItemNav
+              value={"MyPortal Web Playground"}
+              accessibilityLabel={"MyPortal Web Playground"}
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.WEB_PLAYGROUND
                 })
               }
             />
-            <ListItemComponent
-              title={"Markdown Playground"}
+            <Divider />
+            <ListItemNav
+              value={"Markdown Playground"}
+              accessibilityLabel={"Markdown Playground"}
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.MARKDOWN_PLAYGROUND
                 })
               }
             />
-            <ListItemComponent
-              title={"CGN LandingPage Playground"}
+            <Divider />
+            <ListItemNav
+              value={"CGN LandingPage Playground"}
+              accessibilityLabel="CGN LandingPage Playground"
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.CGN_LANDING_PLAYGROUND
@@ -347,99 +359,136 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               }
             />
             {isIdPayTestEnabled && (
-              <ListItemComponent
-                title={"IDPay Onboarding Playground"}
-                onPress={() =>
-                  navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-                  })
-                }
-              />
+              <>
+                <Divider />
+                <ListItemNav
+                  value={"IDPay Onboarding Playground"}
+                  accessibilityLabel="IDPay Onboarding Playground"
+                  onPress={() =>
+                    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                      screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+                    })
+                  }
+                />
+                <Divider />
+                <ListItemNav
+                  value={"IDPay Code Playground"}
+                  accessibilityLabel="IDPay CIE onboarding playground"
+                  onPress={() =>
+                    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                      screen: ROUTES.IDPAY_CODE_PLAYGROUND
+                    })
+                  }
+                />
+              </>
             )}
           </>
         )}
+        <Divider />
+        {/* New Wallet Playground */}
+        <ListItemNav
+          value={I18n.t("profile.main.walletPlayground.titleSection")}
+          accessibilityLabel={I18n.t(
+            "profile.main.walletPlayground.titleSection"
+          )}
+          onPress={() =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.WALLET_PLAYGROUND
+            })
+          }
+        />
+        <Divider />
         {/* Design System */}
-        <ListItemComponent
-          title={I18n.t("profile.main.designSystem")}
+        <ListItemNav
+          value={I18n.t("profile.main.designSystem")}
+          accessibilityLabel={I18n.t("profile.main.designSystem")}
           onPress={() =>
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.DESIGN_SYSTEM
             })
           }
-          isFirstItem={true}
         />
+        <Divider />
+        {/* Add Test Card CTA */}
+        <ListItemNav
+          value={I18n.t("profile.main.addCard.titleSection")}
+          accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
+          onPress={this.onAddTestCard}
+        />
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
           isPagoPATestEnabled,
           this.onPagoPAEnvironmentToggle,
           I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.pnEnvironment.pnEnv"),
           isPnTestEnabled,
           this.onPnEnvironmentToggle
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.debugMode"),
           isDebugModeEnabled,
           setDebugModeEnabled
         )}
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.idpay.idpayTest"),
           isIdPayTestEnabled,
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
-        {this.developerListItem(
-          I18n.t("profile.main.designSystemEnvironment"),
-          isDesignSystemEnabled,
-          this.onDesignSystemToggle
-        )}
+        <Divider />
+        <DSEnableSwitch />
+        <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
             {isDevEnv &&
+              isFastLoginEnabled &&
+              this.debugCopyListItem(
+                "Fast Login",
+                `${isFastLoginEnabled}`,
+                () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+              )}
+
+            {isDevEnv &&
               sessionToken &&
-              this.debugListItem(
-                `Session Token ${sessionToken}`,
-                () => clipboardSetStringWithFeedback(sessionToken),
-                false
+              this.debugCopyListItem("Session token", sessionToken, () =>
+                clipboardSetStringWithFeedback(sessionToken)
               )}
 
             {isDevEnv &&
               walletToken &&
-              this.debugListItem(
-                `Wallet token ${walletToken}`,
-                () => clipboardSetStringWithFeedback(walletToken),
-                false
+              this.debugCopyListItem("Wallet token", walletToken, () =>
+                clipboardSetStringWithFeedback(walletToken)
               )}
 
             {isDevEnv &&
-              this.debugListItem(
-                `Notification ID ${notificationId}`,
-                () => clipboardSetStringWithFeedback(notificationId),
-                false
+              this.debugCopyListItem("Notification ID", notificationId, () =>
+                clipboardSetStringWithFeedback(notificationId)
               )}
 
             {isDevEnv &&
               notificationToken &&
-              this.debugListItem(
-                `Notification token ${notificationToken}`,
-                () => clipboardSetStringWithFeedback(notificationToken),
-                false
+              this.debugCopyListItem(
+                "Notification token",
+                notificationToken,
+                () => clipboardSetStringWithFeedback(notificationToken)
               )}
 
-            {this.debugListItem(
-              `Device unique ID ${deviceUniqueId}`,
-              () => clipboardSetStringWithFeedback(deviceUniqueId),
-              false
+            {this.debugCopyListItem("Device unique ID", deviceUniqueId, () =>
+              clipboardSetStringWithFeedback(deviceUniqueId)
             )}
 
             {thumbprint &&
-              this.debugListItem(
-                `Thumbprint ${thumbprint}`,
-                () => clipboardSetStringWithFeedback(thumbprint),
-                false
+              this.debugCopyListItem("Thumbprint", thumbprint, () =>
+                clipboardSetStringWithFeedback(thumbprint)
               )}
+
+            <VSpacer size={16} />
 
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
@@ -576,10 +625,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             isLastItem={true}
           />
 
-          {this.versionListItem(
-            `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
-            this.onTapAppVersion
-          )}
+          {/* Show the app version + Enable debug mode */}
+          <AppVersion onPress={this.onTapAppVersion} />
 
           {/* Developers Section */}
           {(this.props.isDebugModeEnabled || isDevEnv) &&
@@ -605,7 +652,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         bounces={false}
         appLogo={true}
         title={I18n.t("profile.main.title")}
-        icon={require("../../../img/icons/profile-illustration.png")}
+        rasterIcon={require("../../../img/icons/profile-illustration.png")}
         topContent={
           <TouchableDefaultOpacity
             accessibilityRole={"button"}
@@ -628,6 +675,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isFastLoginEnabled: isFastLoginEnabledSelector(state),
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,
@@ -640,7 +688,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
   isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   publicKey: lollipopPublicKeySelector(state)
 });
 
@@ -658,8 +705,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
-  setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }))
+  startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
 });
 
 export default connect(

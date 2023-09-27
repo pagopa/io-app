@@ -5,16 +5,18 @@ import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { debounce, shuffle } from "lodash";
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { BiometricsValidType } from "../../utils/biometrics";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { Link } from "../core/typography/Link";
 import { IOStyles } from "../core/variables/IOStyles";
+import { isDevEnv } from "../../utils/environment";
+import { defaultPin } from "../../config";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const SMALL_ICON_WIDTH = 17;
+const CANCEL_ICON_WIDTH = 24;
 const ICON_WIDTH = 48;
 const SHAKE_ANIMATION_DURATION = 600 as Millisecond;
 const INPUT_MARGIN = 36;
@@ -77,7 +79,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       case "BIOMETRICS":
       case "TOUCH_ID":
         return E.right({
-          name: "io-fingerprint",
+          name: "biomFingerprint",
           size: ICON_WIDTH,
           accessibilityLabel: I18n.t(
             "identification.unlockCode.accessibility.fingerprint"
@@ -85,7 +87,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         });
       case "FACE_ID":
         return E.right({
-          name: "io-face-id",
+          name: "biomFaceID",
           size: ICON_WIDTH,
           accessibilityLabel: I18n.t(
             "identification.unlockCode.accessibility.faceId"
@@ -163,8 +165,8 @@ class Pinpad extends React.PureComponent<Props, State> {
         ),
         Tuple2(
           E.right({
-            name: "io-cancel",
-            size: SMALL_ICON_WIDTH,
+            name: "cancel",
+            size: CANCEL_ICON_WIDTH,
             accessibilityLabel: I18n.t(
               "identification.unlockCode.accessibility.delete"
             )
@@ -275,6 +277,13 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
+  enterDefaultPin = () => {
+    if (!isDevEnv) {
+      return;
+    }
+    this.handleChangeText(defaultPin);
+  };
+
   private handlePinDigit = (digit: string) =>
     this.handleChangeText(
       `${this.state.value}${digit}`.substr(0, this.state.pinLength)
@@ -347,6 +356,19 @@ class Pinpad extends React.PureComponent<Props, State> {
             isDisabled={this.state.isDisabled}
           />
         </ShakeAnimation>
+
+        {isDevEnv && (
+          <View style={IOStyles.alignCenter}>
+            <VSpacer size={16} />
+            <Link
+              onPress={() => this.enterDefaultPin()}
+              weight="Bold"
+              color="white"
+            >
+              {"Enter default pin (DevEnv Only)"}
+            </Link>
+          </View>
+        )}
         {this.props.onCancel && (
           <React.Fragment>
             <VSpacer size={24} />

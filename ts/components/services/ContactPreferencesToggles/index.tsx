@@ -27,6 +27,7 @@ import { isStrictSome } from "../../../utils/pot";
 import { showToast } from "../../../utils/showToast";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";
+import { trackPNPushSettings } from "../../../features/pn/analytics";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox" | "can_access_message_read_status";
@@ -35,6 +36,7 @@ type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
   serviceId: ServiceId;
   isSpecialService: boolean;
+  customSpecialFlowOpt?: string;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -115,10 +117,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <SectionHeader
-        iconName="io-envelope"
-        title={"serviceDetail.contacts.title"}
-      />
+      <SectionHeader iconName="email" title={"serviceDetail.contacts.title"} />
       {/*
         This Toggle is disabled if the current service is a Special Service cause user can
         enable or disable the service only using the proper Special Service flow and not only tapping the specific toggle
@@ -139,7 +138,18 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
           <>
             <PreferenceToggleRow
               label={I18n.t("services.pushNotifications")}
-              onPress={(value: boolean) => onValueChange(value, "push")}
+              onPress={(value: boolean) => {
+                pipe(
+                  props.customSpecialFlowOpt,
+                  O.fromNullable,
+                  O.filter(customSpecialFlow => customSpecialFlow === "pn"),
+                  O.fold(
+                    () => undefined,
+                    _ => trackPNPushSettings(value)
+                  )
+                );
+                onValueChange(value, "push");
+              }}
               value={getChannelPreference(
                 props.servicePreferenceStatus,
                 "push"

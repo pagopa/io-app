@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
 import {
@@ -7,9 +9,16 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
-import { mixpanelTrack } from "../../../mixpanel";
 import { useIOSelector } from "../../../store/hooks";
 import { pnMessageAttachmentSelector } from "../store/reducers";
+import {
+  trackPNAttachmentOpen,
+  trackPNAttachmentOpeningSuccess,
+  trackPNAttachmentSave,
+  trackPNAttachmentSaveShare,
+  trackPNAttachmentShare
+} from "../analytics";
+import { isIos } from "../../../utils/platform";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -49,25 +58,13 @@ export const PnAttachmentPreview = (
     <MessageAttachmentPreview
       messageId={messageId}
       attachment={pnMessageAttachmentOption.value}
-      onPDFError={() => {
-        void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
-          previewStatus: "error"
-        });
-      }}
-      onLoadComplete={() => {
-        void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
-          previewStatus: "displayed"
-        });
-      }}
-      onShare={() => {
-        void mixpanelTrack("PN_ATTACHMENT_SHARE");
-      }}
-      onOpen={() => {
-        void mixpanelTrack("PN_ATTACHMENT_OPEN");
-      }}
-      onDownload={() => {
-        void mixpanelTrack("PN_ATTACHMENT_SAVE");
-      }}
+      onOpen={trackPNAttachmentOpen}
+      onShare={() =>
+        pipe(isIos, B.fold(trackPNAttachmentShare, trackPNAttachmentSaveShare))
+      }
+      onDownload={trackPNAttachmentSave}
+      onLoadComplete={() => trackPNAttachmentOpeningSuccess("displayer")}
+      onPDFError={() => trackPNAttachmentOpeningSuccess("error")}
     />
   ) : (
     <></>

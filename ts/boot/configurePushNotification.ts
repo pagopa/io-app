@@ -3,21 +3,21 @@
  */
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import {
-  debugRemotePushNotification,
   maximumItemsFromAPI,
   pageSize,
   remindersOptInEnabled
 } from "../config";
-import { mixpanelTrack, setMixpanelPushNotificationToken } from "../mixpanel";
+import { setMixpanelPushNotificationToken } from "../mixpanel";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
@@ -28,8 +28,10 @@ import {
 } from "../store/actions/notifications";
 import { getCursors } from "../store/reducers/entities/messages/allPaginated";
 import { isDevEnv } from "../utils/environment";
-import { readablePrivacyReport } from "../utils/reporters";
-import { trackMessageNotificationTap } from "../utils/analytics";
+import {
+  trackMessageNotificationParsingFailure,
+  trackMessageNotificationTap
+} from "../features/messages/analytics";
 import { store } from "./configureStoreAndPersistor";
 
 /**
@@ -97,19 +99,18 @@ function configurePushNotifications() {
     },
 
     // Called when a remote or local notification is opened or received
-    onNotification: notification => {
-      if (debugRemotePushNotification) {
-        Alert.alert("Notification", JSON.stringify(notification));
-      }
-
+    onNotification: notification =>
       pipe(
-        notification,
-        NotificationPayload.decode,
-        E.mapLeft(errors => {
-          void mixpanelTrack("NOTIFICATION_PARSING_FAILURE", {
-            reason: readablePrivacyReport(errors)
-          });
-        }),
+        notification.userInteraction,
+        B.fold(
+          () => E.left(undefined),
+          () =>
+            pipe(
+              notification,
+              NotificationPayload.decode,
+              E.mapLeft(trackMessageNotificationParsingFailure)
+            )
+        ),
         O.fromEither,
         O.chain(payload =>
           pipe(
@@ -124,27 +125,34 @@ function configurePushNotifications() {
             )
           )
         ),
-        O.map(messageId => {
-          trackMessageNotificationTap(messageId);
-          const isForeground = notification.foreground;
-          // We just received a push notification about a new message
-          if (isForeground) {
-            // The App is in foreground so just refresh the messages list
-            handleMessageReload();
-          } else {
-            // The App was closed/in background and has been now opened clicking
-            // on the push notification.
-            // Save the message id of the notification in the store so the App can
-            // navigate to the message detail screen as soon as possible (if
-            // needed after the user login/insert the unlock code)
-            store.dispatch(updateNotificationsPendingMessage(messageId, false));
-          }
-        })
-      );
-
-      // On iOS we need to call this when the remote notification handling is complete
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
-    },
+        // We just received a push notification about a new message
+        O.map(messageId =>
+          pipe(trackMessageNotificationTap(messageId), trackingResult =>
+            pipe(
+              notification.foreground,
+              B.foldW(
+                // The App was closed/in background and has been now opened clicking
+                // on the push notification.
+                // Save the message id of the notification in the store so the App can
+                // navigate to the message detail screen as soon as possible (if
+                // needed after the user login/insert the unlock code)
+                () =>
+                  store.dispatch(
+                    updateNotificationsPendingMessage({
+                      id: messageId,
+                      foreground: false,
+                      trackEvent: trackingResult === undefined
+                    })
+                  ),
+                // The App is in foreground so just refresh the messages list
+                () => handleMessageReload()
+              )
+            )
+          )
+        ),
+        // On iOS we need to call this when the remote notification handling is complete
+        () => notification.finish(PushNotificationIOS.FetchResult.NoData)
+      ),
     // Only for iOS, we need to customize push notification prompt.
     // We delay the push notification promt until opt-in screen
     // during onboarding where permission is clearly required

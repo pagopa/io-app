@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { SagaIterator } from "redux-saga";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import {
+  identificationPinReset,
   identificationRequest,
   identificationSuccess
 } from "../../../store/actions/identification";
@@ -32,11 +33,10 @@ import {
   fciStartSigningRequest,
   fciSigningRequest,
   fciEndRequest,
-  fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest,
   fciClearAllFiles,
   fciMetadataRequest,
-  fciSignaturesListRequest
+  fciSignaturesListRequest,
+  fciDocumentSignatureFields
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -56,6 +56,7 @@ import {
 import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
 import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
+import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
 
 /**
  * Handle the FCI Signature requests
@@ -111,18 +112,6 @@ export function* watchFciSaga(
     keyInfo
   );
 
-  // const fciLollipopClient = createFciClientWithLollipop(apiUrlPrefix, keyInfo);
-
-  yield* takeLatest(
-    fciShowSignedDocumentsStartRequest,
-    watchFciSignedDocumentsStartSaga
-  );
-
-  yield* takeLatest(
-    fciShowSignedDocumentsEndRequest,
-    watchFciSignedDocumentsEndSaga
-  );
-
   yield* takeLatest(fciEndRequest, watchFciEndSaga);
 
   yield* takeLatest(fciClearAllFiles, clearAllFciFiles);
@@ -140,6 +129,17 @@ export function* watchFciSaga(
     fciGeneratedClient.getSignatureRequests,
     bearerToken
   );
+
+  yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
+
+  yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
+}
+
+/**
+ * Handle the identification pin reset to clear fci state
+ */
+function* watchIdentificationPinResetSaga(): SagaIterator {
+  yield* put(fciClearStateRequest());
 }
 
 /**
@@ -221,8 +221,10 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       onCancel: () => undefined
     })
   );
+
   const res = yield* take(identificationSuccess);
-  if (res.type === "IDENTIFICATION_SUCCESS") {
+
+  if (isActionOf(identificationSuccess, res)) {
     const potQtspClauses: FciQtspClausesState = yield* select(
       fciQtspClausesMetadataSelector
     );
@@ -262,26 +264,6 @@ function* watchFciSigningRequestSaga(): SagaIterator {
       })
     );
   }
-}
-
-function* watchFciSignedDocumentsStartSaga(): SagaIterator {
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    StackActions.replace(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOC_PREVIEW,
-      params: {
-        documentUrl: ""
-      }
-    })
-  );
-}
-
-function* watchFciSignedDocumentsEndSaga(): SagaIterator {
-  yield* put(fciClearStateRequest());
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    CommonActions.goBack()
-  );
 }
 
 function* deletePath(path: string) {

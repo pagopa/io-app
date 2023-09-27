@@ -3,9 +3,8 @@ import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/cr
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/MessageDetailScreen";
-import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/MessageRouterScreen";
-import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
+import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
+import { MessageRouterScreenNavigationParams } from "../../screens/messages/MessageRouterScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
@@ -26,9 +25,7 @@ import { WalletHomeNavigationParams } from "../../screens/wallet/WalletHomeScree
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
-  CreditCardPaymentMethod,
-  PrivativePaymentMethod,
-  SatispayPaymentMethod
+  CreditCardPaymentMethod
 } from "../../types/pagopa";
 
 /**
@@ -80,19 +77,6 @@ export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
       screen: ROUTES.ONBOARDING_PIN
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToOnboardingFingerprintScreenAction = (
-  params: FingerprintScreenNavigationParams
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_FINGERPRINT,
-      params
     })
   );
 
@@ -158,22 +142,22 @@ export const navigateToEmailInsertScreen = () => {
 /**
  * Open the Message Detail screen supporting the new UIMessage type.
  */
-export const navigateToPaginatedMessageDetailScreenAction = (
-  params: MessageDetailScreenPaginatedNavigationParams
+export const navigateToMessageDetailScreenAction = (
+  params: MessageDetailScreenNavigationParams
 ) =>
   CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_DETAIL_PAGINATED,
+    screen: ROUTES.MESSAGE_DETAIL,
     params
   });
 
 /**
  * Open the Message Detail Router supporting the new UIMessage type.
  */
-export const navigateToPaginatedMessageRouterAction = (
-  params: MessageRouterScreenPaginatedNavigationParams
+export const navigateToMessageRouterAction = (
+  params: MessageRouterScreenNavigationParams
 ) =>
   CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
+    screen: ROUTES.MESSAGE_ROUTER,
     params
   });
 
@@ -383,19 +367,6 @@ export const navigateToBancomatDetailScreen = (
     })
   );
 
-/**
- * @deprecated
- */
-export const navigateToSatispayDetailScreen = (
-  satispay: SatispayPaymentMethod
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_SATISPAY_DETAIL,
-      params: { satispay }
-    })
-  );
-
 export const navigateToPayPalDetailScreen = () =>
   CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.WALLET_PAYPAL_DETAIL
@@ -422,19 +393,6 @@ export const navigateToCobadgeDetailScreen = (
     CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_COBADGE_DETAIL,
       params: { cobadge }
-    })
-  );
-
-/**
- * @deprecated
- */
-export const navigateToPrivativeDetailScreen = (
-  privative: PrivativePaymentMethod
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_PRIVATIVE_DETAIL,
-      params: { privative }
     })
   );
 

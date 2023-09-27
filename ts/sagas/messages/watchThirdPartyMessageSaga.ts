@@ -4,28 +4,39 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import {
-  call,
   put,
   select,
   takeEvery,
-  takeLatest
+  takeLatest,
+  call
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
-import { mixpanelTrack } from "../../mixpanel";
-import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
-import { trackThirdPartyMessageAttachmentCount } from "../../utils/analytics";
+import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { getError } from "../../utils/errors";
+import {
+  trackPNNotificationLoadError,
+  trackPNNotificationLoadSuccess
+} from "../../features/pn/analytics";
+import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../types/utils";
 
 function* getThirdPartyMessage(
-  client: ReturnType<typeof BackendClient>,
+  client: BackendClient,
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const id = action.payload;
+  const getThirdPartyMessage = client.getThirdPartyMessage();
+
   try {
-    const result = yield* call(client.getThirdPartyMessage, { id });
+    const result = (yield* call(
+      withRefreshApiCall,
+      getThirdPartyMessage({ id }),
+      action
+    )) as unknown as SagaCallReturnType<typeof getThirdPartyMessage>;
     if (E.isLeft(result)) {
       yield* put(
         loadThirdPartyMessage.failure({
@@ -56,24 +67,18 @@ function* trackSuccess(
   const messageFromApi = action.payload.content;
   const messageId = messageFromApi.id;
 
-  const message = pot.toUndefined(yield* select(getMessageById, messageId));
+  const message = pot.toUndefined(
+    yield* select(getPaginatedMessageById, messageId)
+  );
 
   if (message?.category.tag === "PN") {
     const pnMessageOption = toPNMessage(messageFromApi);
 
     if (O.isSome(pnMessageOption)) {
       const pnMessage = pnMessageOption.value;
-      void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
-        notificationLastStatus:
-          pnMessage.notificationStatusHistory[
-            pnMessage.notificationStatusHistory.length - 1
-          ].status,
-        hasAttachments: (pnMessage.attachments?.length ?? 0) > 0
-      });
+      trackPNNotificationLoadSuccess(pnMessage);
     } else {
-      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
-        jsonDecodeFailed: true
-      });
+      trackPNNotificationLoadError();
     }
   } else {
     const attachments = messageFromApi.third_party_message.attachments;
@@ -86,19 +91,18 @@ function* trackFailure(
   action: ActionType<typeof loadThirdPartyMessage.failure>
 ) {
   const messageId = action.payload.id;
-  const errorCode = action.payload.error.message;
-
-  const message = pot.toUndefined(yield* select(getMessageById, messageId));
+  const message = pot.toUndefined(
+    yield* select(getPaginatedMessageById, messageId)
+  );
 
   if (message?.category.tag === "PN") {
-    void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
-      errorCode
-    });
+    const errorCode = action.payload.error.message;
+    trackPNNotificationLoadError(errorCode);
   }
 }
 
 export function* watchThirdPartyMessageSaga(
-  client: ReturnType<typeof BackendClient>
+  client: BackendClient
 ): SagaIterator {
   yield* takeLatest(
     getType(loadThirdPartyMessage.request),

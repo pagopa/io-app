@@ -1,6 +1,7 @@
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View, StyleSheet } from "react-native";
+import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -11,8 +12,6 @@ import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { isUpsertingSelector } from "../xstate/selectors";
 import themeVariables from "../../../../theme/variables";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Pictogram } from "../../../../components/core/pictograms";
 
 const CompletionScreen = () => {
   const onboardingMachineService = useOnboardingMachineService();
@@ -41,7 +40,7 @@ const CompletionScreen = () => {
   return (
     <SafeAreaView style={IOStyles.flex}>
       <View style={styles.container}>
-        <Pictogram name="completed" size={100} />
+        <Pictogram name="completed" size={120} />
         <VSpacer size={16} />
         <H3> {I18n.t("idpay.onboarding.success.requestSent.title")}</H3>
         <VSpacer size={16} />
