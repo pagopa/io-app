@@ -52,9 +52,10 @@ const ItwHomeScreen = () => {
   const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
-    I18n.t("features.itWallet.homeScreen.categories.personal"),
-    I18n.t("features.itWallet.homeScreen.categories.cgn"),
-    I18n.t("features.itWallet.homeScreen.categories.payments")
+    I18n.t("features.itWallet.homeScreen.categories.itWallet"),
+    I18n.t("features.itWallet.homeScreen.categories.health"),
+    I18n.t("features.itWallet.homeScreen.categories.payments"),
+    I18n.t("features.itWallet.homeScreen.categories.bonus")
   ];
 
   useOnFirstRender(() => {
