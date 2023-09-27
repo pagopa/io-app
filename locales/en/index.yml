@@ -196,7 +196,7 @@ global:
   navigator:
     messages: Messages
     wallet: Wallet
-    scan: Scan
+    scan: Scan QR
     documents: Documents
     profile: Profile
     services: Services
