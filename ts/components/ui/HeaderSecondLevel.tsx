@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import I18n from "i18n-js";
 import {
+  IconButton,
   IOColors,
   hexToRgba,
   HSpacer,
@@ -21,7 +22,6 @@ import {
   iconBtnSizeSmall
 } from "../core/variables/IOStyles";
 import { makeFontStyleObject } from "../../components/core/fonts";
-import IconButton from "./IconButton";
 
 export type HeaderSecondLevel = WithTestID<{
   scrollValues: ScrollValues;
