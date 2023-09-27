@@ -1,21 +1,18 @@
 import {
-  HSpacer,
-  IOColors,
+  Badge,
   IOLogoPaymentType,
+  ListItemSwitch,
   LogoPayment
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { default as React } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import defaultCardIcon from "../../../../../img/wallet/cards-icons/unknown.png";
-import { IOBadge } from "../../../../components/core/IOBadge";
-import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
-import { H4 } from "../../../../components/core/typography/H4";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../common/labels";
 import { useConfigurationMachineService } from "../xstate/provider";
@@ -45,58 +42,52 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
     instrumentStatusByIdWalletSelector(wallet.idWallet)
   );
 
-  const renderSwitch = () => {
-    if (pot.isSome(instrumentStatusPot)) {
-      const status = instrumentStatusPot.value;
-
-      if (
-        status === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
-        status === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
-      ) {
-        return (
-          <IOBadge
-            text={instrumentStatusLabels[status]}
-            variant="solid"
-            color="blue"
-          />
-        );
-      }
-    }
-
-    const switchValuePot = pot.map(
-      instrumentStatusPot,
-      status => status === InstrumentStatusEnum.ACTIVE || isStaged
-    );
-
-    const isActive = pot.getOrElse(
-      pot.map(
-        instrumentStatusPot,
-        status => status === InstrumentStatusEnum.ACTIVE
-      ),
-      false
-    );
-
-    return (
-      <RemoteSwitch
-        value={switchValuePot}
-        onValueChange={() => onValueChange(!isActive)}
-      />
-    );
-  };
-
   const instrumentLogo = getPaymentMethodLogo(wallet);
   const instrumentMaskedPan = getPaymentMaskedPan(wallet);
 
-  // FIXME IOBP-271 use ListItemSwitch with Badge and Loading indicators
+  const badge = pipe(
+    pot.toOption(instrumentStatusPot),
+    O.chain(O.fromNullable),
+    O.filter(
+      status =>
+        status === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
+        status === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
+    ),
+    O.fold(
+      () => undefined,
+      status =>
+        ({
+          text: instrumentStatusLabels[status],
+          variant: "blue"
+        } as Badge)
+    )
+  );
+
+  const isActive = pot.getOrElse(
+    pot.map(
+      instrumentStatusPot,
+      status => status === InstrumentStatusEnum.ACTIVE
+    ),
+    false
+  );
+
+  const switchValue = pot.getOrElse(
+    pot.map(
+      instrumentStatusPot,
+      status => status === InstrumentStatusEnum.ACTIVE || isStaged
+    ),
+    isActive
+  );
+
   return (
-    <View style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.listItem]}>
-      <View style={styles.instrumentsInfo}>
-        {instrumentLogo}
-        <HSpacer size={8} />
-        <H4>{`•••• ${instrumentMaskedPan}`}</H4>
-      </View>
-      {renderSwitch()}
-    </View>
+    <ListItemSwitch
+      icon={"creditCard"}
+      label={`•••• ${instrumentMaskedPan}`}
+      value={switchValue}
+      onSwitchValueChange={() => onValueChange(!isActive)}
+      isLoading={pot.isLoading(instrumentStatusPot)}
+      badge={badge}
+    />
   );
 };
 
@@ -150,20 +141,10 @@ const getPaymentMethodLogo = (wallet: Wallet): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-  listItem: {
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: IOColors["grey-100"]
-  },
   issuerLogo: {
     width: 24,
     height: 16,
     resizeMode: "contain"
-  },
-  instrumentsInfo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
   }
 });
 
