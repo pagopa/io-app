@@ -7,6 +7,7 @@ import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import {
   ButtonLink,
+  ButtonSolid,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -19,7 +20,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
-import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import PidCredential from "../components/PidCredential";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
@@ -31,6 +31,8 @@ import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycl
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
 import { itwDecodePid } from "../store/actions/itwCredentialsActions";
+import { useItwResetFlow } from "../hooks/useItwResetFlow";
+import { itWalletExperimentalEnabled } from "../../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -43,9 +45,11 @@ export type ContentViewProps = {
 
 /**
  * IT-Wallet home screen which contains a top bar with categories, an activation banner and a list of wallet items based on the selected category.
+ * It also a label to reset the wallet credentials and a button to add a new credential which only works if the experimental feature flag is true.
  */
 const ItwHomeScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const { present, bottomSheet } = useItwResetFlow();
   const isItWalletOperational = useIOSelector(
     itwLifecycleIsOperationalSelector
   );
@@ -53,7 +57,6 @@ const ItwHomeScreen = () => {
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
   const dispatch = useIODispatch();
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
-  const { present, bottomSheet } = useItwResetFlow();
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
     I18n.t("features.itWallet.homeScreen.categories.itWallet"),
@@ -62,38 +65,80 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.bonus")
   ];
 
+  /**
+   * Decodes the PID on first render since we don't know if the PID has been decoded yet.
+   */
   useOnFirstRender(() => {
     dispatch(itwDecodePid.request(pid));
   });
 
+  /**
+   * Condionally navigate to the credentials catalog screen if the experimental feature flag is true.
+   * Otherwise do nothing.
+   */
+  const onPressAddCredentials = () => {
+    if (itWalletExperimentalEnabled) {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.CREDENTIALS.CATALOG
+      });
+    }
+  };
+
   const LoadingView = () => <LoadingSpinnerOverlay isLoading />;
 
   const ContentView = ({ decodedPid }: ContentViewProps) => (
-    <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
-      <VSpacer />
-      <Pressable
-        onPress={() =>
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.PID_DETAILS
-          })
-        }
-      >
-        <PidCredential
-          name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
-          fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
-        />
-      </Pressable>
-      <View
-        style={{
-          ...IOStyles.flex,
-          ...IOStyles.selfCenter,
-          justifyContent: "flex-end"
-        }}
-      >
+    <View
+      style={{
+        ...IOStyles.flex,
+        justifyContent: "flex-start"
+      }}
+    >
+      <ScrollView>
         <VSpacer />
-        <ButtonLink
-          label={I18n.t("features.itWallet.homeScreen.reset.label")}
-          onPress={() => present()}
+        <Pressable
+          onPress={() =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.PRESENTATION.PID_DETAILS
+            })
+          }
+        >
+          <PidCredential
+            name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
+            fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
+          />
+        </Pressable>
+        <View
+          style={{
+            ...IOStyles.flex,
+            ...IOStyles.selfCenter,
+            justifyContent: "flex-end"
+          }}
+        >
+          <View
+            style={{
+              ...IOStyles.flex,
+              justifyContent: "flex-end"
+            }}
+          ></View>
+        </View>
+      </ScrollView>
+      <View style={{ justifyContent: "flex-end" }}>
+        <View style={IOStyles.selfCenter}>
+          <ButtonLink
+            label={I18n.t("features.itWallet.homeScreen.reset.label")}
+            onPress={() => present()}
+          />
+        </View>
+        <VSpacer />
+        <ButtonSolid
+          icon="add"
+          onPress={onPressAddCredentials}
+          label={I18n.t("features.itWallet.homeScreen.buttons.addCredential")}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.homeScreen.buttons.addCredential"
+          )}
+          iconPosition="end"
+          fullWidth
         />
         <VSpacer />
       </View>
@@ -168,13 +213,7 @@ const ItwHomeScreen = () => {
         </ScrollView>
       </View>
 
-      <ScrollView
-        style={IOStyles.horizontalContentPadding}
-        contentContainerStyle={{
-          ...IOStyles.centerJustified,
-          flexGrow: 1
-        }}
-      >
+      <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
         {isItWalletOperational ? (
           <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
             <ItwActionBanner
@@ -191,7 +230,7 @@ const ItwHomeScreen = () => {
           <></>
         )}
         {bottomSheet}
-      </ScrollView>
+      </View>
     </TopScreenComponent>
   );
 };

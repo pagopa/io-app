@@ -15,6 +15,7 @@ import ItwPidRequestScreen from "../screens/issuing/ItwPidRequestScreen";
 import ItwRpInitScreen from "../screens/presentation/crossdevice/ItwRpInitScreen";
 import ItwPresentationScreen from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
 import ItwDiscoveryProviderInfoScreen from "../screens/discovery/ItwDiscoveryProviderInfoScreen";
+import ItwCredentialsCatalogScreen from "../screens/ItwCredentialsCatalogScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -85,6 +86,11 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT}
       component={ItwPresentationScreen}
+    />
+    {/* CREDENTIALS */}
+    <Stack.Screen
+      name={ITW_ROUTES.CREDENTIALS.CATALOG}
+      component={ItwCredentialsCatalogScreen}
     />
   </Stack.Navigator>
 );
