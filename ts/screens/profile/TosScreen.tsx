@@ -3,15 +3,16 @@
  * This screen is used as Privacy screen From Profile section.
  */
 import * as React from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { privacyUrl } from "../../config";
 import I18n from "../../i18n";
+import { useStartSupportRequest } from "../../hooks/useStartSupportRequest";
 
 const styles = StyleSheet.create({
   webViewContainer: {
@@ -30,6 +31,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const startSupportRequest = useStartSupportRequest({
+    faqCategories: ["privacy"],
+    contextualHelpMarkdown
+  });
+
+  const navigation = useNavigation();
+
   const handleLoadEnd = useCallback(() => {
     setIsLoading(false);
   }, [setIsLoading]);
@@ -38,23 +46,36 @@ const TosScreen = () => {
     setIsLoading(true);
   }, [setIsLoading]);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          type="singleAction"
+          title={I18n.t("profile.main.privacy.title")}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          goBack={navigation.goBack}
+          firstAction={{
+            icon: "help",
+            onPress: startSupportRequest,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      )
+    });
+  }, [navigation, startSupportRequest]);
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <BaseScreenComponent
-        goBack={true}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}
-        headerTitle={I18n.t("profile.main.privacy.privacyPolicy.title")}
-      >
-        <SafeAreaView style={styles.webViewContainer}>
-          <TosWebviewComponent
-            handleLoadEnd={handleLoadEnd}
-            handleReload={handleReload}
-            webViewSource={{ uri: privacyUrl }}
-            shouldRenderFooter={false}
-          />
-        </SafeAreaView>
-      </BaseScreenComponent>
+      <SafeAreaView style={styles.webViewContainer}>
+        <TosWebviewComponent
+          handleLoadEnd={handleLoadEnd}
+          handleReload={handleReload}
+          webViewSource={{ uri: privacyUrl }}
+          shouldRenderFooter={false}
+        />
+      </SafeAreaView>
     </LoadingSpinnerOverlay>
   );
 };

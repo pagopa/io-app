@@ -1,18 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, AlertButton } from "react-native";
-import { HeaderSecondLevel, IconButton } from "@pagopa/io-app-design-system";
-import { useSharedValue } from "react-native-reanimated";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 // import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -29,15 +21,9 @@ import { userDataProcessingSelector } from "../../store/reducers/userDataProcess
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { showToast } from "../../utils/showToast";
-import { useStartSupportRequest } from "../../hooks/useStartSupportRequest";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
-};
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
-  body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
 };
 
 const getRequestProcessingAlertTitle = () => ({
@@ -59,11 +45,6 @@ const getRequestProcessingAlertSubtitle = () => ({
  */
 const PrivacyMainScreen = ({ navigation }: Props) => {
   const dispatch = useIODispatch();
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: ["privacy"],
-    contextualHelpMarkdown
-  });
-  const translationY = useSharedValue(0);
 
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
@@ -83,27 +64,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     );
   });
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          type="singleAction"
-          title={I18n.t("profile.main.privacy.title")}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          scrollValues={{
-            contentOffsetY: translationY,
-            triggerOffset: 0
-          }}
-          goBack={navigation.goBack}
-          firstAction={{
-            icon: "help",
-            onPress: startSupportRequest,
-            accessibilityLabel: ""
-          }}
-        />
-      )
-    });
-  }, [navigation, startSupportRequest, translationY]);
   // show an alert to confirm the request submission
   const handleAlreadyProcessingAlert = useCallback(
     (choice: UserDataProcessingChoiceEnum) => {

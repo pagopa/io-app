@@ -34,28 +34,27 @@ export const useStartSupportRequest = ({
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
-  return (): (() => void) | undefined => {
+  return (): void => {
     switch (choosenTool) {
       case ToolEnum.zendesk:
         // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
-        return () => {
-          resetCustomFields();
-          dispatch(
-            zendeskSupportStart({
-              faqCategories,
-              contextualHelp,
-              contextualHelpMarkdown,
-              startingRoute: currentScreenName,
-              assistanceForPayment: false,
-              assistanceForCard: false,
-              assistanceForFci: false
-            })
-          );
-        };
+        resetCustomFields();
+        dispatch(
+          zendeskSupportStart({
+            faqCategories,
+            contextualHelp,
+            contextualHelpMarkdown,
+            startingRoute: currentScreenName,
+            assistanceForPayment: false,
+            assistanceForCard: false,
+            assistanceForFci: false
+          })
+        );
+        return;
       case ToolEnum.instabug:
       case ToolEnum.web:
       case ToolEnum.none:
-        return undefined;
+        return;
     }
   };
 };
