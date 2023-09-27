@@ -80,6 +80,7 @@ export const PnMessageDetails = ({
   const viewRef = createRef<View>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
+  const hasAttachment = message.attachments && message.attachments.length > 0;
   const isCancelled = message.isCancelled ?? false;
   const completedPaymentNoticeCode =
     isCancelled && message.completedPayments
@@ -187,7 +188,7 @@ export const PnMessageDetails = ({
             </DSFullWidthComponent>
           </>
         )}
-        {message.attachments && (
+        {hasAttachment && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
