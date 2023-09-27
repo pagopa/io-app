@@ -48,7 +48,7 @@ type OwnProp = {
 type Props = LightModalContextInterface & OwnProp;
 
 const NewRemindEmailValidationOverlay = (props: Props) => {
-  const { isOnboarding } = props;
+  const { isOnboarding, hideModal } = props;
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
@@ -98,9 +98,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     if (isEmailValidated) {
       // if the email is validated the user navigate to the preferences screen
       if (isOnboarding) {
-        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
-        });
+        hideModal();
       } else {
         NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.INSERT_EMAIL_SCREEN
