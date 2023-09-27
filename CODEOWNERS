@@ -5,3 +5,6 @@
 /locales/ @pagopa/io-app @thisisjp
 /ios/ItaliaApp/it.lproj/ @pagopa/io-app @thisisjp
 /ios/ItaliaApp/en.lproj/ @pagopa/io-app @thisisjp
+
+# io-wallet features to be co-owned by the io-wallet team
+/ts/features/it-wallet @pagopa/io-wallet
