@@ -18,7 +18,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 
-const IDPayOnboardingPlayground = () => {
+const IdPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [serviceId, setServiceId] = React.useState<string | undefined>();
 
@@ -168,4 +168,4 @@ const TestServiceItem = (props: TestServiceItemProps) => {
   );
 };
 
-export default IDPayOnboardingPlayground;
+export default IdPayOnboardingPlayground;
