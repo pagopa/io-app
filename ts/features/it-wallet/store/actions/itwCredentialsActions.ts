@@ -1,8 +1,8 @@
-import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import * as O from "fp-ts/lib/Option";
+import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
 /**
