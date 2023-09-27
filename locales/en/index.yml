@@ -1040,7 +1040,7 @@ wallet:
       title: Vuoi pagare in app?
       content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
       cta: Scopri di più
-  wallet: Wallet
+  wallet: Payments
   refreshWallet: Refresh the Wallet
   favourite:
     setFavoriteTitle: Use as favorite
@@ -3326,10 +3326,12 @@ features:
       action: "Enable IT Wallet"
       hideLabel: "Hide this banner"
     activationScreen:
-      title: "All your digital credentials on IO!"
-      subTitle: "IT Wallet is the new feature on IO that allows you to obtain your digital credentials (such as the EU Disability Card, driving license and health card, etc.) and access the online services of the Public Administration in total security."
-      howActivate: "How to activate it?"
-      howActivateDescription: "You can activate IT Wallet using your Electronic Identity Card (CIE) and its PIN. If you prefer, you can also use SPID or CieID."
+      title: "Your digital identity and your documents in the IO Wallet."
+      subTitle: "IT Wallet is a feature that allows you to add your digital identity to the IO Wallet, which is a collection of personal data that enables you to authenticate yourself online, and your personal documents like driving license, health insurance card and the European disability card."
+      where: "Online and in person."
+      whereDescription: "Carry the digital version of your documents with you all times. Use your digital identity to access online services, both public and private. Use the other cards to share the data they contain with others, both online and in person, whenever you need to."
+      howActivate: "Easy to activate"
+      howActivateDescription: "You will need your Electronic Identity Card (CIE) and its PIN. The data coming from your CIE will be part of your digital identity, the first credential in your IT Wallet."
       tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]()."
       cancel: "Not now"
       confirm: "Activate IT Wallet"

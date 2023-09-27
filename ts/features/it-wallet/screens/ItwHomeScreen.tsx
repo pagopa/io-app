@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
-import { ButtonLink, ButtonSolid, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  ButtonSolid,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
@@ -193,7 +198,7 @@ const ItwHomeScreen = () => {
       }}
       sectionTitle={I18n.t("global.navigator.wallet")}
     >
-      <View style={IOStyles.horizontalContentPadding}>
+      <View style={styles.horizontalScroll}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {badgesLabels.map((label, idx) => (
             <BadgeButton
@@ -228,4 +233,11 @@ const ItwHomeScreen = () => {
     </TopScreenComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  horizontalScroll: {
+    marginLeft: IOVisualCostants.appMarginDefault
+  }
+});
+
 export default ItwHomeScreen;
