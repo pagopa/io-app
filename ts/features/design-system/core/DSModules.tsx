@@ -1,12 +1,16 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
-import { IOThemeContext, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOThemeContext,
+  ModuleIDP,
+  ModulePaymentNotice,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import I18n from "i18n-js";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { ModulePaymentNotice } from "../../../components/ui/ModulePaymentNotice";
 import ButtonExtendedOutline from "../../../components/ui/ButtonExtendedOutline";
-import ModuleIDP from "../../../components/ui/ModuleIDP";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -75,6 +79,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="payed"
+        badgeText={I18n.t("global.modules.paymentNotice.badges.payed")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -82,6 +87,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="error"
+        badgeText={I18n.t("global.modules.paymentNotice.badges.error")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -89,6 +95,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="expired"
+        badgeText={I18n.t("global.modules.paymentNotice.badges.expired")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -96,6 +103,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="revoked"
+        badgeText={I18n.t("global.modules.paymentNotice.badges.revoked")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -103,6 +111,7 @@ const renderModulePaymentNotice = () => (
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
         paymentNoticeStatus="canceled"
+        badgeText={I18n.t("global.modules.paymentNotice.badges.canceled")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
@@ -156,10 +165,9 @@ const renderModuleIDP = () => (
           name={mockIDPProviderItem.name}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
+          urlLogoIDP={""}
         />
       </View>
     </DSComponentViewerBox>
@@ -170,10 +178,9 @@ const renderModuleIDP = () => (
           name={mockIDPProviderItem.name}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
+          urlLogoIDP={""}
         />
       </View>
     </DSComponentViewerBox>
@@ -183,10 +190,9 @@ const renderModuleIDP = () => (
           name={"This is a very loooooong IDP provider name"}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
+          urlLogoIDP={""}
         />
       </View>
     </DSComponentViewerBox>
