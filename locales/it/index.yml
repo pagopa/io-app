@@ -3362,9 +3362,10 @@ features:
     homeScreen:
       categories: 
         any: "Tutto"
-        personal: "Personali"
-        cgn: "Carta giovani"
+        itWallet: "IT Wallet"
+        health: "Sanità"
         payments: "Metodi di pagamento"
+        bonus: "Bonus e sconti"
       reset: 
         label: "Resetta"
         bottomSheet: 
