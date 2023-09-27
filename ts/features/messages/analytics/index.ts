@@ -1,12 +1,33 @@
 import * as t from "io-ts";
+import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
+import { pipe } from "fp-ts/lib/function";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { buildEventProperties } from "../../../utils/analytics";
+import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+
+export function trackOpenMessage(
+  organizationName: string,
+  serviceName: string,
+  containsPayment: boolean | undefined
+) {
+  void mixpanelTrack(
+    "OPEN_MESSAGE",
+    buildEventProperties("UX", "screen_view", {
+      organization_name: organizationName,
+      service_name: serviceName,
+      contains_payment: pipe(
+        containsPayment,
+        O.fromNullable,
+        O.fold(() => "unknown" as const, booleanToYesNo)
+      )
+    })
+  );
+}
 
 export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
   void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
