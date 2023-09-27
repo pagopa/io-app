@@ -18,7 +18,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 
-export const IDPayCodePlayGround = () => {
+export const IdPayCodePlayGround = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [initiativeId, setInitiativeId] = React.useState<string | undefined>();
 
