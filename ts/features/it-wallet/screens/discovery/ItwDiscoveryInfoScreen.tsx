@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Image, SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { H6, VSpacer } from "@pagopa/io-app-design-system";
 import walletCards from "../../../../../img/features/it-wallet/wallet-cards.png";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -9,7 +9,6 @@ import I18n from "../../../../i18n";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { H4 } from "../../../../components/core/typography/H4";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useIODispatch } from "../../../../store/hooks";
@@ -61,16 +60,26 @@ const ItwDiscoveryInfoScreen = () => {
               style={{ width: "100%", height: 250 }}
             />
 
-            {/* Info activation */}
-            <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-              {I18n.t("features.itWallet.activationScreen.howActivate")}
-            </H4>
+            {/* Info where */}
+            <H6 weight={"SemiBold"} color={"bluegreyDark"}>
+              {I18n.t("features.itWallet.activationScreen.where")}
+            </H6>
             <VSpacer />
-            <H4 weight={"Regular"} color={"bluegrey"}>
+            <H6 weight={"Regular"} color={"bluegrey"}>
+              {I18n.t("features.itWallet.activationScreen.whereDescription")}
+            </H6>
+            <VSpacer />
+
+            {/* Info activation */}
+            <H6 weight={"SemiBold"} color={"bluegreyDark"}>
+              {I18n.t("features.itWallet.activationScreen.howActivate")}
+            </H6>
+            <VSpacer />
+            <H6 weight={"Regular"} color={"bluegrey"}>
               {I18n.t(
                 "features.itWallet.activationScreen.howActivateDescription"
               )}
-            </H4>
+            </H6>
           </View>
 
           {/* Footer ToS and privacy link */}
