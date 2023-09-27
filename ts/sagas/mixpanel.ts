@@ -1,12 +1,22 @@
 import { call, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { ActionType } from "typesafe-actions";
+import { MixpanelInstance } from "react-native-mixpanel";
 import { initializeMixPanel, terminateMixpanel } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../types/utils";
+
+export function* resetMixpanel(
+  mp: MixpanelInstance | undefined
+): Generator<ReduxSagaEffect, void, boolean> {
+  if (mp) {
+    const reset = () => mp.reset();
+    yield* call(reset);
+  }
+}
 
 export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
   const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
