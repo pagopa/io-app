@@ -2,10 +2,10 @@ import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
 import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
 import I18n from "i18n-js";
+import { IconButton } from "@pagopa/io-app-design-system";
 import themeVariables from "../theme/variables";
 import AppHeader from "./ui/AppHeader";
 import { H1 } from "./core/typography/H1";
-import IconButton from "./ui/IconButton";
 
 type Props = Readonly<{
   title: string;
