@@ -3,6 +3,7 @@ import * as E from "fp-ts/lib/Either";
 
 import { call, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import { MixpanelInstance } from "react-native-mixpanel";
 import { BackendClient } from "../../api/backend";
 import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../features/lollipop/saga";
 import { startApplicationInitialization } from "../../store/actions/application";
@@ -16,6 +17,7 @@ import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
 import { resetAssistanceData } from "../../utils/supportAssistance";
 import { StartupStatusEnum } from "../../store/reducers/startup";
+import { mixpanel } from "../../mixpanel";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
@@ -52,6 +54,11 @@ export function* logoutSaga(
   } finally {
     // clean up crypto keys
     yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
+    // reset mixpanel
+    if (mixpanel) {
+      const resetMixpanel = (mp: MixpanelInstance) => mp.reset();
+      yield* call(resetMixpanel, mixpanel);
+    }
     // clean up any assistance data
     resetAssistanceData();
     // startApplicationInitialization is dispatched
