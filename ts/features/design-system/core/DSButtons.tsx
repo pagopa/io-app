@@ -5,6 +5,9 @@ import {
   ButtonLink,
   ButtonOutline,
   ButtonSolid,
+  IconButton,
+  IconButtonSolid,
+  IconButtonContained,
   IOColors,
   HSpacer,
   VSpacer,
@@ -18,10 +21,7 @@ import PaymentButton from "../../../components/messages/MessageDetail/common/Pay
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import IconButtonContained from "../../../components/ui/IconButtonContained";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import IconButtonSolid from "../../../components/ui/IconButtonSolid";
-import IconButton from "../../../components/ui/IconButton";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
