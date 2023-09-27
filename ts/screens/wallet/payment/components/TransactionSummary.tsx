@@ -190,10 +190,12 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     )
   );
 
-  const dueDate = pot.toUndefined(
-    pot.mapNullable(props.paymentVerification, _ =>
-      format(_.dueDate, "DD MMMM YYYY")
-    )
+  const dueDate = pipe(
+    props.paymentVerification,
+    pot.toOption,
+    O.chainNullableK(_ => _.dueDate),
+    O.map(_ => format(_, "DD MMMM YYYY")),
+    O.toUndefined
   );
 
   const formattedPaymentNoticeNumber = props.paymentNoticeNumber
