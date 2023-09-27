@@ -3395,6 +3395,24 @@ support:
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
+  code:
+    onboarding:
+      header: Ecco il tuo codice!
+      body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
+      bodyBold: "memorizzalo in un luogo sicuro"
+      bodyCta: "Come funziona?"
+      banner:
+        header: E se lo dimentichi?
+        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+    renew:
+      alert:
+        title: Vuoi generare un nuovo codice ID Pay?
+        body: Il codice attualmente in uso verrà sovrascritto.
+      screen:
+        header: Codice ID Pay
+        body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+        link: Come funziona?
+        generateCTA: Genera un nuovo codice
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
@@ -3553,6 +3571,12 @@ idpay:
         date: Data rimborso
         cro: CRO
       errorBody: Impossibile caricare il dettaglio
+    cie:
+      bottomSheet:
+        title: "Come funziona?"
+        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
