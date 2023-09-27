@@ -94,7 +94,6 @@ const MessagesInbox = ({
                 title={I18n.t("features.itWallet.actionBanner.title")}
                 content={I18n.t("features.itWallet.actionBanner.description")}
                 action={I18n.t("features.itWallet.actionBanner.action")}
-                labelClose={I18n.t("features.itWallet.actionBanner.hideLabel")}
               />
             ) : (
               <UaDonationsBanner />
