@@ -18,6 +18,7 @@ import Animated, {
 // Design System components
 import {
   ButtonLink,
+  IconButton,
   IOColors,
   VSpacer,
   IOPictogramsBleed,
@@ -35,7 +36,6 @@ import { WithTestID } from "../../types/WithTestID";
 import { IOStyles } from "../core/variables/IOStyles";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import IconButton from "../ui/IconButton";
 
 /* Styles */
 const colorTitle: IOColors = "blueIO-850";

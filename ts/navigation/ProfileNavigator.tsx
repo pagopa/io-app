@@ -27,14 +27,14 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
-import { IDPayCodePlayGround } from "../screens/profile/playgrounds/IDPayCodePlayground";
-import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
+import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
 import { ContextualHelpPropsMarkdown } from "../components/screens/BaseScreenComponent";
 import I18n from "../i18n";
+import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -222,14 +222,14 @@ const ProfileStackNavigator = () => {
           headerShown: false
         }}
         name={ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
-        component={IDPayOnboardingPlayground}
+        component={IdPayOnboardingPlayground}
       />
       <Stack.Screen
         options={{
           headerShown: false
         }}
         name={ROUTES.IDPAY_CODE_PLAYGROUND}
-        component={IDPayCodePlayGround}
+        component={IdPayCodePlayGround}
       />
       <Stack.Screen
         options={{

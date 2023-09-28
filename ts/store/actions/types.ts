@@ -23,7 +23,7 @@ import { GlobalState } from "../reducers/types";
 import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
-import { IDPayActions } from "../../features/idpay/common/actions";
+import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
@@ -102,7 +102,7 @@ export type Action =
   | PnActions
   | StartupActions
   | FciActions
-  | IDPayActions
+  | IdPayActions
   | LollipopActions
   | FastLoginActions
   | WhatsNewActions
