@@ -71,7 +71,7 @@ export const categories: Record<ProductCategory, Category> = {
   },
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
-    icon: "categSustainability",
+    icon: "categMobility",
     nameKey: "bonus.cgn.merchantDetail.categories.mobility",
     colors: getGradientColorValues("cgnMobility")
   },
