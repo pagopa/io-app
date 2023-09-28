@@ -43,7 +43,7 @@ import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { IdPayCodeCieBanner } from "../../code/components/CodeCieBanner";
+import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
