@@ -3,7 +3,7 @@ import * as React from "react";
 import { View } from "react-native";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 
-export const IDPayCodePlayGround = () => (
+export const IdPayCodePlayGround = () => (
   <TopScreenComponent goBack={true} customGoBack={false} dark={false}>
     <View style={IOStyles.horizontalContentPadding}>
       <ListItemNav
