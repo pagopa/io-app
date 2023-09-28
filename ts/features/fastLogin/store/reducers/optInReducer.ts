@@ -3,6 +3,10 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { setFastLoginOptIn } from "../actions/optInActions";
 import { Action } from "../../../../store/actions/types";
+import {
+  logoutFailure,
+  logoutSuccess
+} from "../../../../store/actions/authentication";
 
 export type FastLoginOptInState = {
   fastLoginEnabled: boolean | undefined;
@@ -17,6 +21,9 @@ const fastLoginOptInReducer = (
   action: Action
 ): FastLoginOptInState => {
   switch (action.type) {
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
+      return fastLoginOptInInitialState;
     case getType(setFastLoginOptIn):
       return {
         ...state,
