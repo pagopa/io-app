@@ -8,6 +8,7 @@ import { generate, getPublicKey } from "@pagopa/io-react-native-crypto";
  * In the future we should change the generate function to reject with a CryptoError if the key already exists, thus allowing us
  * to better handle the error case and call getPublicKey only if generate fails due to an already existing key.
  * TODO: IW-548-fix-keys-deletion
+ * @throws when the generation fails and consequently the key doesn't exist.
  * @returns the public key used to sign the WIA attestation.
  */
 export const getOrGenerateCyptoKey = async (keyTag: string) =>
