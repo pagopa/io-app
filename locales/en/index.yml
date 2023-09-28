@@ -3380,6 +3380,11 @@ idpay:
       banner:
         header: E se lo dimentichi?
         body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+      title: Paga con la tua carta d'identità elettronica
+      description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
+      buttons:
+        start: Inizia
+        howItWorks: Come funziona?
     renew:
       screen:
         header: Codice ID Pay
