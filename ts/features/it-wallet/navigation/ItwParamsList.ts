@@ -1,7 +1,6 @@
 import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/ItwPidRequestScreen";
 import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/ItwCieCardReaderScreen";
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
-import { ItwCieInfoUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieInfoUsageScreen";
 import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/cie/ItwCieWrongPinScreen";
 import { ItwRpInitScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpInitScreen";
 import { ItwRpResultScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
@@ -21,8 +20,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUING.CIE
     .WRONG_PIN_SCREEN]: ItwCieWrongPinScreenNavigationParams;
   [ITW_ROUTES.ISSUING.CIE.PIN_TEMP_LOCKED_SCREEN]: undefined;
-  [ITW_ROUTES.ISSUING.CIE
-    .INFO_USAGE_SCREEN]: ItwCieInfoUsageScreenNavigationParams;
   // ISSUING
   [ITW_ROUTES.ISSUING.PID_AUTH_INFO]: undefined;
   [ITW_ROUTES.ISSUING.PID_REQUEST]: ItwPidRequestScreenNavigationParams;
@@ -33,4 +30,5 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT]: ItwRpInitScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE
     .RESULT]: ItwRpResultScreenNavigationParams;
+  [ITW_ROUTES.CREDENTIALS.CATALOG]: undefined;
 };

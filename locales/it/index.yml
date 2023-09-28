@@ -191,7 +191,7 @@ global:
   navigator:
     messages: Messaggi
     wallet: Portafoglio
-    scan: Inquadra
+    scan: Inquadra QR
     documents: Documenti
     profile: Profilo
     services: Servizi
@@ -3362,9 +3362,10 @@ features:
     homeScreen:
       categories: 
         any: "Tutto"
-        personal: "Personali"
-        cgn: "Carta giovani"
+        itWallet: "IT Wallet"
+        health: "Sanità"
         payments: "Metodi di pagamento"
+        bonus: "Bonus e sconti"
       reset: 
         label: "Resetta"
         bottomSheet: 
@@ -3372,6 +3373,8 @@ features:
           body: "Perderai l’Identità Digitale e tornerai allo stato iniziale disattivando IT Wallet. Potrai riattivarlo in un secondo momento."
           confirm: "Conferma reset"
           cancel: "Annulla"
+      buttons:
+        addCredential: "Aggiungi documento"
     infoAuthScreen:
       title: "Accedi con CIE + PIN e salva la tua identità digitale"
       subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
@@ -3404,15 +3407,6 @@ features:
         footer:
           cancel: "Annulla"
           confirm: "Autorizza"
-      infoCie:
-        title: "Verifica la tua Carta d’Identità Elettronica"
-        subTitle: "Dovrai appoggiare la Carta sul retro del tuo dispositivo, in basso, e tenerla ferma per qualche secondo."
-        howAuth: "Dopo l’autenticazione potrai creare la tua Identità Digitale, grazie alla quale potrai accedere ai servizi online della Pubblica Amministrazione e richiedere altre credenziali digitali."
-        confirm: "Inizia"
-        cancel: "Annulla"
-        footerBox: "Per aiutarti, puoi posizionare la Carta su un tavolo e appoggiarci sopra lo smartphone (con lo schermo rivolto verso l’alto) e poi premi **Inizia**."
-        readMoreUrl: "https://identitadigitale.gov.it/"
-        readMoreText: "Guarda come fare"
       loading:
         title: "Sto caricando i dati dal Ministero dell’Interno"
         subtitle: "Attendi qualche secondo"
@@ -3439,6 +3433,9 @@ features:
           title: "Fatto! il tuo IT Wallet è attivo su IO!"
           content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
           button: "Continua"
+      credentialsCatalogScreen:
+        title: "Aggiungi altri documenti"
+        incomingFeature: "In arrivo"
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3477,6 +3474,9 @@ features:
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"
+        disabilityCard: "Tessera Europa della disabilità"
+        healthCard: "Tessera Sanitaria"
+        drivingLicense: "Licenza di guida"
       claims:
         uniqueId: "ID univoco"
         givenName: "Nome"
@@ -3502,6 +3502,7 @@ features:
       close: "Chiudi"
       rp: "Relying Party"
       trusted: "Trusted"
+      search: "Cerca"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

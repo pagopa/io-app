@@ -191,7 +191,7 @@ global:
   navigator:
     messages: Messages
     wallet: Wallet
-    scan: Scan
+    scan: Scan QR
     documents: Documents
     profile: Profile
     services: Services
@@ -3338,9 +3338,10 @@ features:
     homeScreen:
       categories: 
         any: "Any"
-        personal: "Personal"
-        cgn: "Carta giovani"
+        itWallet: "IT Wallet"
+        health: "Health"
         payments: "Payments methods"
+        bonus: "Bonuses and discounts"
       reset: 
         label: "Reset"
         bottomSheet: 
@@ -3348,6 +3349,8 @@ features:
           body: "By deactivating IT Wallet, you will lose your Digital Identity and return to the initial state. You can reactivate it later."
           confirm: "Confirm reset"
           cancel: "Cancel"
+      buttons:
+        addCredential: "Add credential"
     infoAuthScreen:
       title: "Log in with CIE + PIN and save your digital identity"
       subTitle: "To activate IT Wallet you need to authenticate yourself using your Electronic Identity Card (CIE) + PIN."
@@ -3380,15 +3383,6 @@ features:
         footer:
           cancel: "Cancel"
           confirm: "Authorize"
-      infoCie:
-        title: "Verify your Electronic Identity Card"
-        subTitle: "You will have to place the Card on the back of your device, at the bottom, and hold it still for a few seconds."
-        howAuth: "After authentication, you will be able to create your Digital Identity, thanks to which you will be able to access the online services of the Public Administration and request other digital credentials."
-        confirm: "Start"
-        cancel: "Cancel"
-        footerBox: "To help you, you can place the Card on a table and place your smartphone on top of it (screen facing up) and then press **Start**."
-        readMoreUrl: "https://identitadigitale.gov.it/"
-        readMoreText: "See how to do it"
       loading:
         title: "I am loading the data from the Ministry of the Interior"
         subtitle: "Wait a few seconds"
@@ -3415,6 +3409,9 @@ features:
           title: "Done! your IT Wallet is active on IO!"
           content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
           button: "Continue"
+      credentialsCatalogScreen:
+        title: "Add more credentials"
+        incomingFeature: "Coming soon"
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3452,7 +3449,10 @@ features:
             continue: "Ok, thanks"
     verifiableCredentials:
       type:
-        digitalCredential: "Digital Credential"
+        digitalCredential: "Identità Digitale"
+        disabilityCard: "European Disability Card"
+        healthCard: "Health Insurance Card"
+        drivingLicense: "Driving License"
       claims:
         uniqueId: "Unique ID"
         givenName: "Name"
@@ -3478,6 +3478,7 @@ features:
       close: "Close"
       rp: "Relying Party"
       trusted: "Trusted"
+      search: "Cerca"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
