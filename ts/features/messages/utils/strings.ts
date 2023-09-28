@@ -3,9 +3,9 @@ import I18n from "../../../i18n";
 
 export const getBadgeTextByPaymentNoticeStatus = (
   paymentNoticeStatus: Exclude<PaymentNoticeStatus, "default">
-) => {
+): string => {
   switch (paymentNoticeStatus) {
-    case "payed":
+    case "paid":
       return I18n.t("global.modules.paymentNotice.badges.payed");
     case "error":
       return I18n.t("global.modules.paymentNotice.badges.error");
@@ -15,5 +15,7 @@ export const getBadgeTextByPaymentNoticeStatus = (
       return I18n.t("global.modules.paymentNotice.badges.revoked");
     case "canceled":
       return I18n.t("global.modules.paymentNotice.badges.canceled");
+    default:
+      return "";
   }
 };

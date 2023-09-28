@@ -78,8 +78,8 @@ const renderModulePaymentNotice = () => (
       <ModulePaymentNotice
         title="Codice avviso"
         subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="payed"
-        badgeText={getBadgeTextByPaymentNoticeStatus("payed")}
+        paymentNoticeStatus="paid"
+        badgeText={getBadgeTextByPaymentNoticeStatus("paid")}
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
