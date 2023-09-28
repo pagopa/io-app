@@ -167,7 +167,6 @@ const renderModuleIDP = () => (
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
           onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
-          urlLogoIDP={""}
         />
       </View>
     </DSComponentViewerBox>
@@ -180,7 +179,6 @@ const renderModuleIDP = () => (
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
           onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
-          urlLogoIDP={""}
         />
       </View>
     </DSComponentViewerBox>
@@ -192,7 +190,6 @@ const renderModuleIDP = () => (
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
           onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
-          urlLogoIDP={""}
         />
       </View>
     </DSComponentViewerBox>
