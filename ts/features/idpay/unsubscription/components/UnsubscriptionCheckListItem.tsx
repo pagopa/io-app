@@ -1,7 +1,6 @@
-import { ListItem as NBListItem } from "native-base";
 import React from "react";
-import { View } from "react-native";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
+import { HSpacer, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
@@ -15,7 +14,7 @@ type Props = {
 };
 
 const UnsubscriptionCheckListItem = (props: Props) => (
-  <NBListItem>
+  <View style={styles.listItem}>
     <View style={IOStyles.row}>
       <View style={IOStyles.flex}>
         <H4>{props.title}</H4>
@@ -27,7 +26,15 @@ const UnsubscriptionCheckListItem = (props: Props) => (
       <HSpacer size={24} />
       <CheckBox {...props} />
     </View>
-  </NBListItem>
+  </View>
 );
+
+const styles = StyleSheet.create({
+  listItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: IOColors["grey-100"],
+    paddingVertical: 16
+  }
+});
 
 export { UnsubscriptionCheckListItem };

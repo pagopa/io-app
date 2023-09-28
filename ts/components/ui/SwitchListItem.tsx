@@ -92,15 +92,26 @@ export const SwitchListItem = ({
   const theme = useIOTheme();
 
   return isDesignSystemEnabled ? (
-    <ListItemSwitch
-      label={label}
-      disabled={disabled}
-      onSwitchValueChange={onSwitchValueChange}
-      action={action}
-      description={description}
-      icon={icon}
-      value={value}
-    />
+    icon ? (
+      <ListItemSwitch
+        label={label}
+        disabled={disabled}
+        onSwitchValueChange={onSwitchValueChange}
+        action={action}
+        description={description}
+        icon={icon}
+        value={value}
+      />
+    ) : (
+      <ListItemSwitch
+        label={label}
+        disabled={disabled}
+        onSwitchValueChange={onSwitchValueChange}
+        action={action}
+        description={description}
+        value={value}
+      />
+    )
   ) : (
     <View
       testID="SwitchListItem"

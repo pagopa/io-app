@@ -1,18 +1,21 @@
-import { useSelector } from "@xstate/react";
-import { Text as NBButtonText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Body } from "../../../../components/core/typography/Body";
-import { H3 } from "../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { useSelector } from "@xstate/react";
+import {
+  Body,
+  ButtonOutline,
+  ButtonSolid,
+  H3,
+  IOStyles,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
-  selectInitiativeDetails,
-  selectAreInstrumentsSkipped
+  selectAreInstrumentsSkipped,
+  selectInitiativeDetails
 } from "../xstate/selectors";
 
 const ConfigurationSuccessScreen = () => {
@@ -44,39 +47,42 @@ const ConfigurationSuccessScreen = () => {
     if (areInstrumentsSkipped) {
       return (
         <View>
-          <ButtonDefaultOpacity
-            block={true}
+          <ButtonSolid
+            label={I18n.t(
+              "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
+            )}
+            accessibilityLabel={I18n.t(
+              "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
+            )}
             onPress={handleAddPaymentMethodButtonPress}
-          >
-            <NBButtonText white={true}>
-              {I18n.t(
-                "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
-              )}
-            </NBButtonText>
-          </ButtonDefaultOpacity>
+            fullWidth={true}
+          />
           <VSpacer />
-          <ButtonDefaultOpacity
-            block={true}
+          <ButtonOutline
+            label={I18n.t(
+              "idpay.configuration.associationSuccess.buttons.skip"
+            )}
+            accessibilityLabel={I18n.t(
+              "idpay.configuration.associationSuccess.buttons.skip"
+            )}
             onPress={handleNavigateToInitiativePress}
-            bordered={true}
-          >
-            <NBButtonText>
-              {I18n.t("idpay.configuration.associationSuccess.buttons.skip")}
-            </NBButtonText>
-          </ButtonDefaultOpacity>
+            fullWidth={true}
+          />
         </View>
       );
     }
 
     return (
-      <ButtonDefaultOpacity
-        block={true}
+      <ButtonSolid
+        label={I18n.t(
+          "idpay.configuration.associationSuccess.buttons.continue"
+        )}
+        accessibilityLabel={I18n.t(
+          "idpay.configuration.associationSuccess.buttons.continue"
+        )}
         onPress={handleNavigateToInitiativePress}
-      >
-        <NBButtonText white={true}>
-          {I18n.t("idpay.configuration.associationSuccess.buttons.continue")}
-        </NBButtonText>
-      </ButtonDefaultOpacity>
+        fullWidth={true}
+      />
     );
   };
 
@@ -89,7 +95,7 @@ const ConfigurationSuccessScreen = () => {
           <H3>{I18n.t("idpay.configuration.associationSuccess.title")}</H3>
           <VSpacer />
           <View style={IOStyles.alignCenter}>
-            <Body>
+            <Body style={{ textAlign: "center" }}>
               {I18n.t(
                 areInstrumentsSkipped
                   ? "idpay.configuration.associationSuccess.noInstrumentsBody"
