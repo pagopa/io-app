@@ -92,9 +92,8 @@ const renderModulePaymentNotice = () => (
 
       {noticeStatusArray.map(
         (noticeStatus: PaymentNoticeStatusWithoutDefault) => (
-          <>
+          <React.Fragment key={`paymentNotice-${noticeStatus}`}>
             <ModulePaymentNotice
-              key={`paymentNotice-${noticeStatus}`}
               title="Codice avviso"
               subtitle="9999 9999 9999 9999 99"
               paymentNoticeStatus={noticeStatus}
@@ -102,7 +101,7 @@ const renderModulePaymentNotice = () => (
               onPress={onButtonPress}
             />
             <VSpacer size={16} />
-          </>
+          </React.Fragment>
         )
       )}
 
