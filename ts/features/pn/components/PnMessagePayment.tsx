@@ -2,9 +2,9 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import I18n from "i18n-js";
-import { H5, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { NotificationPaymentInfo } from "../store/types/types";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { TransactionSummary } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
 import { PotFromActions } from "../../../types/utils";
@@ -14,6 +14,7 @@ import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { ModulePaymentNotice } from "../../../components/ui/ModulePaymentNotice";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { navigateToPnCancelledMessagePaidPaymentScreen } from "../navigation/actions";
+import { H5 } from "../../../components/core/typography/H5";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 
 type Props = {

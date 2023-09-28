@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Icon,
+  IconButton,
   HSpacer,
   VSpacer,
   IOSpacingScale
@@ -23,23 +24,23 @@ import { IOBadge } from "../../../../../../components/core/IOBadge";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
 import { showToast } from "../../../../../../utils/showToast";
-import IconButton from "../../../../../../components/ui/IconButton";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
   openBottomSheet: () => void;
 };
 
+const CARD_PADDING_END: IOSpacingScale = 6;
+const ICON_SIZE = 24;
+
 const styles = StyleSheet.create({
   spaced: {
     justifyContent: "space-between"
   },
   cardNumber: {
-    paddingEnd: IOSpacingScale[1]
+    paddingEnd: CARD_PADDING_END
   }
 });
-
-const ICON_SIZE = 24;
 
 // this component shows EYCA card details related to user's CGN
 const EycaStatusDetailsComponent = (props: Props) => {

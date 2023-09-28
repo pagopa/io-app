@@ -6,6 +6,7 @@ import {
   ButtonLink,
   IOThemeContext,
   Icon,
+  IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
@@ -27,7 +28,6 @@ import {
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
