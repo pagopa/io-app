@@ -102,7 +102,7 @@ import {
   backendStatusSelector,
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
-import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";

@@ -9,7 +9,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
-import { refreshSessionToken } from "../../../fastLogin/store/actions";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
