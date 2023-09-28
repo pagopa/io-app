@@ -53,17 +53,13 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 };
 
 export const identifyMixpanel = async () => {
-  if (mixpanel) {
-    // console.log(">>>>>>>>> IDENTIFY (profile) mixpanel");
-    await mixpanel.identify(getDeviceId());
-  }
+  // console.log(">>>>>>>>> IDENTIFY (profile) mixpanel");
+  await mixpanel?.identify(getDeviceId());
 };
 
 export const resetMixpanel = async () => {
-  if (mixpanel !== undefined) {
-    // console.log(">>>>>>>>> RESET mixpanel");
-    await mixpanel.reset();
-  }
+  // console.log(">>>>>>>>> RESET mixpanel");
+  await mixpanel?.reset();
 };
 
 export const terminateMixpanel = async () => {
