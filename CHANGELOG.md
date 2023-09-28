@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0-rc.4](https://github.com/pagopa/io-app/compare/0.4.0-rc.2...0.4.0-rc.4) (2023-09-28)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-442](https://pagopa.atlassian.net/browse/SIW-442)] Add credentials catalog screen ([#5013](https://github.com/pagopa/io-app/issues/5013)) ([7f38620](https://github.com/pagopa/io-app/commit/7f3862015306d049297e4dccd143dc80c5bbddc2))
+* **IT Wallet:** [[SIW-482](https://pagopa.atlassian.net/browse/SIW-482)] Update `io-react-native-wallet` version ([#5031](https://github.com/pagopa/io-app/issues/5031)) ([59a420b](https://github.com/pagopa/io-app/commit/59a420b7612829effaddff336ae659bf3516afc3))
+* **IT Wallet:** [[SIW-506](https://pagopa.atlassian.net/browse/SIW-506)] Add ITW experimental feature flag ([#5010](https://github.com/pagopa/io-app/issues/5010)) ([b790dd2](https://github.com/pagopa/io-app/commit/b790dd276f92eb2b6e46e212b10787a698f2fea9))
+* **IT Wallet:** [[SIW-508](https://pagopa.atlassian.net/browse/SIW-508)] Update design system to 1.9.0 ([#5009](https://github.com/pagopa/io-app/issues/5009)) ([7b220f8](https://github.com/pagopa/io-app/commit/7b220f832ced2eeba258b1f8f817216b4f63160c))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-546](https://pagopa.atlassian.net/browse/SIW-546)] Update `podfile.lock` ([#5035](https://github.com/pagopa/io-app/issues/5035)) ([248abea](https://github.com/pagopa/io-app/commit/248abea2668022aaa27d4d4401cefe8be7b7ea8c))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-502](https://pagopa.atlassian.net/browse/SIW-502)] Update io-react-native-wallet to 0.4.3 ([#5004](https://github.com/pagopa/io-app/issues/5004)) ([1328109](https://github.com/pagopa/io-app/commit/1328109c7922d95fa9b15bb98071d97a705c8289))
+* **IT Wallet:** [[SIW-510](https://pagopa.atlassian.net/browse/SIW-510)] Make ItwActionBanner component non dismissible ([#5015](https://github.com/pagopa/io-app/issues/5015)) ([3ae38a5](https://github.com/pagopa/io-app/commit/3ae38a52ffc153a4aeeb6f72e81b4f3876e834bf))
+* **IT Wallet:** [[SIW-511](https://pagopa.atlassian.net/browse/SIW-511)] Change payments screen title ([#5018](https://github.com/pagopa/io-app/issues/5018)) ([7497bf9](https://github.com/pagopa/io-app/commit/7497bf9aa69054e0e22bc7a2fe3bb64b17265d9a))
+* **IT Wallet:** [[SIW-512](https://pagopa.atlassian.net/browse/SIW-512)] Update navigator scan qr code label ([#5032](https://github.com/pagopa/io-app/issues/5032)) ([3a4d8b5](https://github.com/pagopa/io-app/commit/3a4d8b5fcb912384d9e392318b70b1c9e35f310f))
+* **IT Wallet:** [[SIW-514](https://pagopa.atlassian.net/browse/SIW-514)] Update copy in ITW_DISCOVERY_INFO screen ([#5019](https://github.com/pagopa/io-app/issues/5019)) ([b6e4a1b](https://github.com/pagopa/io-app/commit/b6e4a1b25cfb92d1c87192f0e06a6e5b8c11fe76))
+* **IT Wallet:** [[SIW-515](https://pagopa.atlassian.net/browse/SIW-515)] Add link to terms and privacy policy ([#5033](https://github.com/pagopa/io-app/issues/5033)) ([6157c90](https://github.com/pagopa/io-app/commit/6157c9013a80c00257b91a81ec6909a78bdd8fbc))
+* **IT Wallet:** [[SIW-519](https://pagopa.atlassian.net/browse/SIW-519)] Remove AdviceComponent from ITW CIE pin screen ([#5017](https://github.com/pagopa/io-app/issues/5017)) ([decebe2](https://github.com/pagopa/io-app/commit/decebe27103c41c78318912c87c1fb32ff2f9b5a))
+* **IT Wallet:** [[SIW-520](https://pagopa.atlassian.net/browse/SIW-520)] Remove CIE info usage screen  ([#5020](https://github.com/pagopa/io-app/issues/5020)) ([e669042](https://github.com/pagopa/io-app/commit/e669042e8762b51baa8ff4ee9e56e0c729dd05d2))
+* **IT Wallet:** [[SIW-524](https://pagopa.atlassian.net/browse/SIW-524)] Update ITW home screen navbar labels ([#5030](https://github.com/pagopa/io-app/issues/5030)) ([d82b73b](https://github.com/pagopa/io-app/commit/d82b73b5cbcf3c044560f54884bed21a83118753))
+* **IT Wallet:** [[SIW-529](https://pagopa.atlassian.net/browse/SIW-529)] Remove tab navigator right horizontal padding in ITW home screen ([#5022](https://github.com/pagopa/io-app/issues/5022)) ([2fb6bd0](https://github.com/pagopa/io-app/commit/2fb6bd01d44befe66c927714ef9699b3c98b99f2))
+
 ## [0.4.0-rc.3](https://github.com/pagopa/io-app/compare/2.42.0-rc.1...0.4.0-rc.3) (2023-09-22)
 
 
