@@ -8,6 +8,7 @@ import {
   InstrumentDTO,
   InstrumentTypeEnum
 } from "../../../../../../definitions/idpay/InstrumentDTO";
+
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../types/pagopa";
 import { Events } from "../events";
@@ -32,8 +33,8 @@ export const T_WALLET: Wallet = {
 
 export const T_INSTRUMENT_DTO: InstrumentDTO = {
   instrumentId: "1234",
-  idWallet: "12345",
-  instrumentType: InstrumentTypeEnum.CARD
+  instrumentType: InstrumentTypeEnum.CARD,
+  idWallet: "12345"
 };
 
 export const T_NOT_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
