@@ -3,13 +3,13 @@ import codeReducer, { IdPayCodeState } from "../../../code/store/reducers";
 import initiativeDetailsReducer, {
   IdPayInitiativeState
 } from "../../../details/store/index";
+import timelineReducer, { IdPayTimelineState } from "../../../timeline/store";
 import walletReducer, {
   IdPayWalletState
 } from "../../../wallet/store/reducers/index";
 import configurationReducer, {
   IDPayInitiativeConfigurationState
 } from "../../../configuration/store";
-import timelineReducer, { IdPayTimelineState } from "../../../timeline/store";
 
 export type IDPayState = {
   wallet: IdPayWalletState;

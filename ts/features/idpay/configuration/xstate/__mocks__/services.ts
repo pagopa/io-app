@@ -33,8 +33,8 @@ export const T_WALLET: Wallet = {
 
 export const T_INSTRUMENT_DTO: InstrumentDTO = {
   instrumentId: "1234",
-  instrumentType: InstrumentTypeEnum.CARD,
-  idWallet: "12345"
+  idWallet: "12345",
+  instrumentType: InstrumentTypeEnum.CARD
 };
 
 export const T_NOT_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
