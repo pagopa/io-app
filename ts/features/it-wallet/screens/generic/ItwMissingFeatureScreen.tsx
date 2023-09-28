@@ -8,8 +8,8 @@ import { BlockButtonProps } from "@pagopa/io-app-design-system/lib/typescript/co
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
 import ItwResultScreen from "./ItwResultScreen";
 
 const ItwMissingFeatureScreen = () => {

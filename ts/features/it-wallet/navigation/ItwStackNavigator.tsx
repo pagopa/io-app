@@ -16,7 +16,7 @@ import ItwRpInitScreen from "../screens/presentation/crossdevice/ItwRpInitScreen
 import ItwPresentationScreen from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
 import ItwDiscoveryProviderInfoScreen from "../screens/discovery/ItwDiscoveryProviderInfoScreen";
 import ItwCredentialsCatalogScreen from "../screens/ItwCredentialsCatalogScreen";
-import ItwMissingFeatureScreen from "../screens/ItwMissingFeatureScreen";
+import ItwMissingFeatureScreen from "../screens/generic/ItwMissingFeatureScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
