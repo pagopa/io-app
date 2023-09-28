@@ -6,7 +6,7 @@ export const getBadgeTextByPaymentNoticeStatus = (
 ): string => {
   switch (paymentNoticeStatus) {
     case "paid":
-      return I18n.t("global.modules.paymentNotice.badges.payed");
+      return I18n.t("global.modules.paymentNotice.badges.paid");
     case "error":
       return I18n.t("global.modules.paymentNotice.badges.error");
     case "expired":
