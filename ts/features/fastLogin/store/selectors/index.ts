@@ -41,7 +41,7 @@ export const isFastLoginFFEnabled = createSelector(
 export const isFastLoginEnabledSelector = createSelector(
   isFastLoginFFEnabled,
   isFastLoginOptinEnabledSelector,
-  (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && optInEnabled
+  (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && !!optInEnabled
 );
 
 export const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>
