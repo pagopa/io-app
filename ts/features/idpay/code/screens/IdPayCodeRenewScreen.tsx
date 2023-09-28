@@ -5,17 +5,35 @@ import {
   ListItemAction,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Alert, View } from "react-native";
 import { Link } from "../../../../components/core/typography/Link";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import I18n from "../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { IdPayCodeRoutes } from "../navigation/routes";
+import { idPayGenerateCode } from "../store/actions";
 
 export const IdPayCodeRenewScreen = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
+
+  const handleContinue = () => {
+    dispatch(idPayGenerateCode.request({}));
+    navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
+      params: {
+        isOnboarding: false
+      }
+    });
+  };
 
   const handleConfirm = () => {
     dispatch(
@@ -28,7 +46,7 @@ export const IdPayCodeRenewScreen = () => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => null // TODO: handle success
+          onSuccess: handleContinue
         }
       )
     );
@@ -50,7 +68,7 @@ export const IdPayCodeRenewScreen = () => {
         <ListItemAction
           label={I18n.t("idpay.code.renew.screen.generateCTA")}
           onPress={() => customAlert(handleConfirm)}
-          icon="reload" // FIXME:: update to "change" once new DS ver is released (SEE #IOBP-277)
+          icon="change"
           accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
           variant="danger"
         />
