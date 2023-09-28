@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import React from "react";
 
 import { H1, VSpacer } from "@pagopa/io-app-design-system";
@@ -8,7 +8,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
 import {
