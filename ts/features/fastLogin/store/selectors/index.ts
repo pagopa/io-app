@@ -8,6 +8,10 @@ import { isPropertyWithMinAppVersionEnabled } from "./../../../../store/reducers
 const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
 
+export const isFastLoginOptinEnabledSelector = createSelector(
+  fastLoginOptInSelector,
+  optIn => optIn.fastLoginEnabled
+);
 /**
  * return the remote config about FastLogin enabled/disabled
  * based on a minumum version of the app.
@@ -30,14 +34,9 @@ export const isFastLoginFFEnabled = createSelector(
  * false is the default value -> (FastLogin disabled)
  */
 export const isFastLoginEnabledSelector = createSelector(
-  backendStatusSelector,
-  fastLoginOptInSelector,
-  (backendStatus, optIn) =>
-    isPropertyWithMinAppVersionEnabled(
-      fastLoginEnabled,
-      "fastLogin",
-      backendStatus
-    ) && optIn.fastLoginEnabled
+  isFastLoginFFEnabled,
+  isFastLoginOptinEnabledSelector,
+  (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && optInEnabled
 );
 
 export const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>
