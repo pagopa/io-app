@@ -3,7 +3,7 @@ import { takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
-import { handleGetInitiativePaymentMethods } from "./handleGetInitiativePaymentMethods";
+import { handleGetDiscountInitiativeInstruments } from "./handleGetDiscountInitiativeInstruments";
 
 /**
  * Handle IDPAY initiative requests
@@ -18,7 +18,7 @@ export function* watchIDPayInitiativeConfigurationSaga(
 ): SagaIterator {
   yield* takeLatest(
     idpayDiscountInitiativeInstrumentsGet.request,
-    handleGetInitiativePaymentMethods,
+    handleGetDiscountInitiativeInstruments,
     idPayClient.getInstrumentList,
     bearerToken,
     preferredLanguage

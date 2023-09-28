@@ -20,6 +20,7 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
+import { idpayInitiativesInstrumentDelete } from "../../wallet/store/actions";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId?: string;
@@ -67,17 +68,25 @@ const IdPayDiscountInstrumentsScreen = () => {
   }, [initiativeId, dispatch]);
 
   const handleCieValueChange = (value: boolean) => {
-    // TODO: If value is true, navigate to onboarding screen
-    // if (value) {
-    //   navigation.navigate(
-    //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-    //     {
-    //       initiative,
-    //       paymentMethodType
-    //     }
-    //   );
-    // }
-    // console.log(paymentMethodType, value);
+    if (value) {
+      // TODO: If value is true, navigate to onboarding screen
+      //   navigation.navigate(
+      //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      //     {
+      //       initiative,
+      //       paymentMethodType
+      //     }
+      //   );
+    } else {
+      if (idPayCodeInitiative && initiativeId) {
+        dispatch(
+          idpayInitiativesInstrumentDelete.request({
+            initiativeId,
+            instrumentId: idPayCodeInitiative.instrumentId
+          })
+        );
+      }
+    }
   };
 
   return (

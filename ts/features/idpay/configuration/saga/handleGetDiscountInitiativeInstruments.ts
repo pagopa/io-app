@@ -17,7 +17,7 @@ import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
  * @param language Preferred language
  * @param action Action to handle
  */
-export function* handleGetInitiativePaymentMethods(
+export function* handleGetDiscountInitiativeInstruments(
   getInitiativePaymentMethods: IDPayClient["getInstrumentList"],
   bearerToken: string,
   language: PreferredLanguageEnum,
