@@ -7,6 +7,8 @@ import {
   IOThemeContext,
   Icon,
   IconButton,
+  ListItemNav,
+  ListItemNavAlert,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
@@ -28,8 +30,6 @@ import {
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import ListItemNav from "../../../components/ui/ListItemNav";
-import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
@@ -303,43 +303,33 @@ const renderListItemNav = () => (
       <View>
         <ListItemNav
           value={"Value"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
         <ListItemNav
           value={"Value"}
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
         <ListItemNav
           value="A looong looooong looooooooong looooooooooong title"
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
 
         <ListItemNav
           value={"Value"}
           icon="gallery"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
         <ListItemNav
           value={"Value"}
           description="Description"
           icon="gallery"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
       </View>
@@ -348,34 +338,26 @@ const renderListItemNav = () => (
       <View>
         <ListItemNavAlert
           value={"Value"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
         <ListItemNavAlert
           value={"Value"}
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
         <ListItemNavAlert
           withoutIcon
           value={"Value"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
         <ListItemNavAlert
           withoutIcon
           value={"Value"}
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
       </View>
