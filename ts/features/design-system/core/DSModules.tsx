@@ -4,6 +4,7 @@ import {
   IOThemeContext,
   ModuleIDP,
   ModulePaymentNotice,
+  PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
@@ -15,6 +16,19 @@ import ButtonExtendedOutline from "../../../components/ui/ButtonExtendedOutline"
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
+
+type PaymentNoticeStatusWithoutDefault = Exclude<
+  PaymentNoticeStatus,
+  "default"
+>;
+
+const noticeStatusArray: Array<PaymentNoticeStatusWithoutDefault> = [
+  "paid",
+  "error",
+  "expired",
+  "revoked",
+  "canceled"
+];
 
 export const DSModules = () => (
   <IOThemeContext.Consumer>
@@ -75,46 +89,23 @@ const renderModulePaymentNotice = () => (
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="paid"
-        badgeText={getBadgeTextByPaymentNoticeStatus("paid")}
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="error"
-        badgeText={getBadgeTextByPaymentNoticeStatus("error")}
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="expired"
-        badgeText={getBadgeTextByPaymentNoticeStatus("expired")}
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="revoked"
-        badgeText={getBadgeTextByPaymentNoticeStatus("revoked")}
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="canceled"
-        badgeText={getBadgeTextByPaymentNoticeStatus("canceled")}
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
+
+      {noticeStatusArray.map(
+        (noticeStatus: PaymentNoticeStatusWithoutDefault) => (
+          <>
+            <ModulePaymentNotice
+              key={`paymentNotice-${noticeStatus}`}
+              title="Codice avviso"
+              subtitle="9999 9999 9999 9999 99"
+              paymentNoticeStatus={noticeStatus}
+              badgeText={getBadgeTextByPaymentNoticeStatus(noticeStatus)}
+              onPress={onButtonPress}
+            />
+            <VSpacer size={16} />
+          </>
+        )
+      )}
+
       <ModulePaymentNotice
         subtitle="TARI 2023 - Rata 01"
         paymentNoticeStatus="default"
