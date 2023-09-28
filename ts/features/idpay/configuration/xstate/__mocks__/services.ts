@@ -9,7 +9,6 @@ import {
   InstrumentTypeEnum
 } from "../../../../../../definitions/idpay/InstrumentDTO";
 
-
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../types/pagopa";
 import { Events } from "../events";
