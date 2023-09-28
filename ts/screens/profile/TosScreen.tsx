@@ -3,16 +3,14 @@
  * This screen is used as Privacy screen From Profile section.
  */
 import * as React from "react";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { privacyUrl } from "../../config";
 import I18n from "../../i18n";
-import { useStartSupportRequest } from "../../hooks/useStartSupportRequest";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
   webViewContainer: {
@@ -30,13 +28,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
-
-  const startSupportRequest = useStartSupportRequest({
-    faqCategories: ["privacy"],
-    contextualHelpMarkdown
+  useHeaderSecondLevel({
+    title: I18n.t("profile.main.privacy.privacyPolicy.title"),
+    backAccessibilityLabel: I18n.t("profile.main.privacy.title"),
+    supportRequest: true,
+    contextualHelpMarkdown,
+    faqCategories: ["privacy"]
   });
-
-  const navigation = useNavigation();
 
   const handleLoadEnd = useCallback(() => {
     setIsLoading(false);
@@ -45,26 +43,6 @@ const TosScreen = () => {
   const handleReload = useCallback(() => {
     setIsLoading(true);
   }, [setIsLoading]);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          type="singleAction"
-          title={I18n.t("profile.main.privacy.title")}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          goBack={navigation.goBack}
-          firstAction={{
-            icon: "help",
-            onPress: startSupportRequest,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )
-          }}
-        />
-      )
-    });
-  }, [navigation, startSupportRequest]);
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
