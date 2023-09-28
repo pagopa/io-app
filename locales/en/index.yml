@@ -3447,6 +3447,11 @@ features:
           subTitle: "You can now return to the {{relayingParty}} website to continue."
           buttons: 
             continue: "Ok, thanks"
+    missingFeatureScreen: 
+      title: "This screen will be available soon."
+      subtitle: "At this moment, it doesn't exist yet, but we are working on its implementation."
+      button: 
+        label: "I understand"
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"
