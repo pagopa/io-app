@@ -1,9 +1,12 @@
 /* eslint-disable sonarjs/no-identical-functions */
+import {
+  IOColors,
+  PressableListItemBase,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { Button, ScrollView, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
@@ -150,21 +153,28 @@ type TestServiceItemProps = {
 const TestServiceItem = (props: TestServiceItemProps) => {
   const { label, serviceId, willFail } = props.service;
   return (
-    <NBListItem onPress={props.onPress}>
-      <View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center"
-          }}
-        >
-          <Label color="bluegrey">
-            {label} <LabelSmall>{willFail ? "❌" : "✅"}</LabelSmall>
-          </Label>
+    <View
+      style={{
+        borderBottomWidth: 1,
+        borderBottomColor: IOColors["grey-100"]
+      }}
+    >
+      <PressableListItemBase onPress={props.onPress}>
+        <View style={{ flex: 1 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center"
+            }}
+          >
+            <Label color="bluegrey">
+              {label} <LabelSmall>{willFail ? "❌" : "✅"}</LabelSmall>
+            </Label>
+          </View>
+          <Monospace selectable>{serviceId}</Monospace>
         </View>
-        <Monospace selectable>{serviceId}</Monospace>
-      </View>
-    </NBListItem>
+      </PressableListItemBase>
+    </View>
   );
 };
 
