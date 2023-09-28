@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { uniqWith, isEqual } from "lodash";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
-import { fastLoginEnabled } from "../../../../config";
+import { fastLoginBypassOptInt, fastLoginEnabled } from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "./../../../../store/reducers/backendStatus";
 
@@ -10,7 +10,12 @@ const fastLoginOptInSelector = (state: GlobalState) =>
 
 export const isFastLoginOptinEnabledSelector = createSelector(
   fastLoginOptInSelector,
-  optIn => optIn.fastLoginEnabled
+  optIn => {
+    if (fastLoginBypassOptInt) {
+      return true;
+    }
+    return optIn.fastLoginEnabled;
+  }
 );
 /**
  * return the remote config about FastLogin enabled/disabled

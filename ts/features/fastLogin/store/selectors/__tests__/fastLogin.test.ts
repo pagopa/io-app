@@ -24,6 +24,15 @@ describe("FastLogin remote flag test", () => {
 
   function checkFastLoginFlagWithBrokenStatus(expectedValue: boolean) {
     const customStoreWithMissingMinAppVersionInFastLoginConfig = {
+      features: {
+        loginFeatures: {
+          fastLogin: {
+            optIn: {
+              fastLoginEnabled: true
+            }
+          }
+        }
+      },
       backendStatus: {
         status: O.some({
           ...status,
@@ -85,6 +94,15 @@ describe("FastLogin remote flag test", () => {
     expectedValue: boolean
   ) {
     const customStore = {
+      features: {
+        loginFeatures: {
+          fastLogin: {
+            optIn: {
+              fastLoginEnabled: true
+            }
+          }
+        }
+      },
       backendStatus: {
         status: O.some({
           ...status,
