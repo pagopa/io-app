@@ -24,7 +24,6 @@ export const initializeMixPanel = async () => {
   const privateInstance = new MixpanelInstance(mixpanelToken);
   await privateInstance.initialize();
   mixpanel = privateInstance;
-  // console.log(">>>>>>>>> INITIALIZE mixpanel");
   // On app first open
   // On profile page, when user opt-in
   await setupMixpanel(mixpanel);
@@ -53,19 +52,15 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 };
 
 export const identifyMixpanel = async () => {
-  // console.log(">>>>>>>>> IDENTIFY (profile) mixpanel");
   await mixpanel?.identify(getDeviceId());
 };
 
 export const resetMixpanel = async () => {
-  // console.log(">>>>>>>>> RESET mixpanel");
   await mixpanel?.reset();
 };
 
 export const terminateMixpanel = async () => {
-  // console.log(">>>>>>>>> OPT-OUT (onboarding)");
   if (mixpanel) {
-    // console.log(">>>>>>>>> OPT-OUT (profile)");
     await mixpanel.flush();
     await mixpanel.optOutTracking();
     mixpanel = undefined;
