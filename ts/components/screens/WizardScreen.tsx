@@ -12,7 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import TopScreenComponent from "./screens/TopScreenComponent";
+import TopScreenComponent from "./TopScreenComponent";
 
 export type WizardButtonProps = {
   text: string;
