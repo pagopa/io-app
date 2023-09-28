@@ -1,8 +1,12 @@
 import { call, select, take, takeLatest } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { ActionType, getType } from "typesafe-actions";
-import { MixpanelInstance } from "react-native-mixpanel";
-import { initializeMixPanel, mixpanel, terminateMixpanel } from "../mixpanel";
+import {
+  identifyMixpanel,
+  initializeMixPanel,
+  resetMixpanel,
+  terminateMixpanel
+} from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
@@ -16,18 +20,24 @@ import {
 export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
   yield* takeLatest(
     [getType(sessionExpired), getType(sessionInvalid)],
-    resetMixpanel,
-    mixpanel
+    resetMixpanel
   );
 }
 
-export function* resetMixpanel(
-  mp: MixpanelInstance | undefined
-): Generator<ReduxSagaEffect, void, boolean> {
-  if (mp) {
-    const reset = () => mp.reset();
-    yield* call(reset);
-  }
+export function* identifyMixpanelSaga(): Generator<
+  ReduxSagaEffect,
+  void,
+  boolean
+> {
+  yield* call(identifyMixpanel);
+}
+
+export function* resetMixpanelSaga(): Generator<
+  ReduxSagaEffect,
+  void,
+  boolean
+> {
+  yield* call(resetMixpanel);
 }
 
 export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
@@ -36,7 +46,7 @@ export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
-    yield* call(initializeMixPanel, isMixpanelEnabledResult === true);
+    yield* call(initializeMixPanel);
   }
 }
 
@@ -44,7 +54,9 @@ export function* handleSetMixpanelEnabled(
   action: ActionType<typeof setMixpanelEnabled>
 ) {
   if (action.payload) {
-    yield* call(initializeMixPanel, action.payload);
+    yield* call(initializeMixPanel);
+    // The user has opted in
+    yield* call(identifyMixpanelSaga);
   } else {
     yield* call(terminateMixpanel);
   }
@@ -59,6 +71,10 @@ export function* askMixpanelOptIn() {
   // user already express a preference
   // do nothing
   if (isMixpanelEnabledResult !== null) {
+    if (isMixpanelEnabledResult === true) {
+      // if user already opt-in, identify mixpanel
+      yield* call(identifyMixpanelSaga);
+    }
     return;
   }
   // navigate to the screen where user can opt-in or not his preference

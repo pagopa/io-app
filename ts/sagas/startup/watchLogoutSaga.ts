@@ -16,8 +16,7 @@ import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
 import { resetAssistanceData } from "../../utils/supportAssistance";
 import { StartupStatusEnum } from "../../store/reducers/startup";
-import { mixpanel } from "../../mixpanel";
-import { resetMixpanel } from "../mixpanel";
+import { resetMixpanelSaga } from "../mixpanel";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
@@ -55,7 +54,7 @@ export function* logoutSaga(
     // clean up crypto keys
     yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
     // reset mixpanel
-    yield* call(resetMixpanel, mixpanel);
+    yield* call(resetMixpanelSaga);
     // clean up any assistance data
     resetAssistanceData();
     // startApplicationInitialization is dispatched

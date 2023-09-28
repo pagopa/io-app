@@ -17,22 +17,20 @@ export let mixpanel: MixpanelInstance | undefined;
 /**
  * Initialize mixpanel at start
  */
-export const initializeMixPanel = async (optedIn: boolean) => {
+export const initializeMixPanel = async () => {
   if (mixpanel !== undefined) {
-    if (optedIn) {
-      // During the onboarding flow, Mixpanel is already initialized.
-      // We need to identify the user if the user opted in.
-      await mixpanel.identify(getDeviceId());
-    }
     return;
   }
   const privateInstance = new MixpanelInstance(mixpanelToken);
   await privateInstance.initialize();
   mixpanel = privateInstance;
-  await setupMixpanel(mixpanel, optedIn);
+  // console.log(">>>>>>>>> INITIALIZE mixpanel");
+  // On app first open
+  // On profile page, when user opt-in
+  await setupMixpanel(mixpanel);
 };
 
-const setupMixpanel = async (mp: MixpanelInstance, optedIn: boolean) => {
+const setupMixpanel = async (mp: MixpanelInstance) => {
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
   await mp.optInTracking();
   // on iOS it can be deactivate by invoking a SDK method
@@ -52,15 +50,26 @@ const setupMixpanel = async (mp: MixpanelInstance, optedIn: boolean) => {
     biometricTechnology,
     isScreenLockSet
   });
-  if (optedIn) {
-    // In the profile screen, the user can opt-in/opt-out to/from Mixpanel.
-    // If the user opted in, we need to identify the user.
-    await mp.identify(getDeviceId());
+};
+
+export const identifyMixpanel = async () => {
+  if (mixpanel) {
+    // console.log(">>>>>>>>> IDENTIFY (profile) mixpanel");
+    await mixpanel.identify(getDeviceId());
+  }
+};
+
+export const resetMixpanel = async () => {
+  if (mixpanel !== undefined) {
+    // console.log(">>>>>>>>> RESET mixpanel");
+    await mixpanel.reset();
   }
 };
 
 export const terminateMixpanel = async () => {
+  // console.log(">>>>>>>>> OPT-OUT (onboarding)");
   if (mixpanel) {
+    // console.log(">>>>>>>>> OPT-OUT (profile)");
     await mixpanel.flush();
     await mixpanel.optOutTracking();
     mixpanel = undefined;
