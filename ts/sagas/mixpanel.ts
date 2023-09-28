@@ -1,13 +1,25 @@
-import { call, select, take } from "typed-redux-saga/macro";
+import { call, select, take, takeLatest } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import { MixpanelInstance } from "react-native-mixpanel";
-import { initializeMixPanel, terminateMixpanel } from "../mixpanel";
+import { initializeMixPanel, mixpanel, terminateMixpanel } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../types/utils";
+import {
+  sessionExpired,
+  sessionInvalid
+} from "../store/actions/authentication";
+
+export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
+  yield* takeLatest(
+    [getType(sessionExpired), getType(sessionInvalid)],
+    resetMixpanel,
+    mixpanel
+  );
+}
 
 export function* resetMixpanel(
   mp: MixpanelInstance | undefined
