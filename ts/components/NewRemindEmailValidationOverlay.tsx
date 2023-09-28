@@ -131,6 +131,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     <FooterWithButtons
       type={"SingleButton"}
       leftButton={{
+        testID: "button-test",
         block: true,
         bordered: !isEmailValidated,
         disabled: isButtonDisabled(),
@@ -164,7 +165,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
       <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={40} />
         <VSpacer size={40} />
-        <Content bounces={false}>
+        <Content bounces={false} testID="container-test">
           <View style={IOStyles.selfCenter}>
             <Pictogram
               name={"emailValidation"}
@@ -174,7 +175,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
           </View>
           <VSpacer size={16} />
           <View style={IOStyles.alignCenter}>
-            <Label weight="Bold">
+            <Label weight="Bold" testID="title-test">
               {I18n.t(
                 isEmailValidated
                   ? "email.newvalidemail.title"
@@ -183,7 +184,11 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
             </Label>
           </View>
           <VSpacer size={16} />
-          <Label weight="Regular" style={{ textAlign: "center" }}>
+          <Label
+            weight="Regular"
+            style={{ textAlign: "center" }}
+            testID="subtitle-test"
+          >
             {I18n.t(
               isEmailValidated
                 ? "email.newvalidemail.subtitle"
@@ -194,7 +199,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
           {!isEmailValidated && (
             <View style={IOStyles.selfCenter}>
               <VSpacer size={16} />
-              <LabelLink onPress={navigateToInsertEmail}>
+              <LabelLink onPress={navigateToInsertEmail} testID="link-test">
                 {I18n.t("email.newvalidate.link")}
               </LabelLink>
               <VSpacer size={8} />
