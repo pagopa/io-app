@@ -35,8 +35,9 @@ type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
 const IdPayDiscountInstrumentsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
-  const navigation =
-    useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
+  // TODO: Uncomment this when the navigation is available to navigate to the onboarding screen
+  // const navigation =
+  //   useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
   const { initiativeId, initiativeName } = route.params;
 
   const initiativePaymentMethods = useIOSelector(
