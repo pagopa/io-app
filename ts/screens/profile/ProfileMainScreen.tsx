@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import {
   ButtonSolid,
   Divider,
+  ListItemInfoCopy,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -61,7 +62,6 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
-import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";

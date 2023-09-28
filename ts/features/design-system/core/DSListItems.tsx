@@ -7,6 +7,7 @@ import {
   IOThemeContext,
   Icon,
   IconButton,
+  ListItemInfoCopy,
   ListItemNav,
   ListItemNavAlert,
   VSpacer
@@ -30,13 +31,16 @@ import {
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
+};
+
+const onCopyButtonPress = () => {
+  Alert.alert("Copied!", "Value copied");
 };
 
 export const DSListItems = () => (
@@ -371,35 +375,27 @@ const renderListItemInfoCopy = () => (
       <ListItemInfoCopy
         label={"Label"}
         value="Value"
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
       />
       <ListItemInfoCopy
         label={"Codice fiscale"}
         value="01199250158"
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
         icon="institution"
       />
       <ListItemInfoCopy
         label={"Carta di credito"}
         value="4975 3013 5042 7899"
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
         icon="creditCard"
       />
       <ListItemInfoCopy
         label={"Indirizzo"}
         value={`P.za Colonna, 370\n00186 Roma (RM)`}
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
       />
     </View>
