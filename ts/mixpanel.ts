@@ -52,10 +52,12 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 };
 
 export const identifyMixpanel = async () => {
+  // Identify the user using the device uniqueId
   await mixpanel?.identify(getDeviceId());
 };
 
 export const resetMixpanel = async () => {
+  // Reset mixpanel auto generated uniqueId
   await mixpanel?.reset();
 };
 
