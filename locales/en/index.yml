@@ -3448,6 +3448,7 @@ features:
           buttons: 
             continue: "Ok, thanks"
     missingFeatureScreen: 
+      headerTitle: "Screen not available"
       title: "This screen will be available soon."
       subtitle: "At this moment, it doesn't exist yet, but we are working on its implementation."
       button: 

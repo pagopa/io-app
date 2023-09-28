@@ -65,7 +65,10 @@ const ItwMissingFeatureScreen = () => {
   return isExperimental ? (
     <ExperimentalContentView />
   ) : (
-    <BaseScreenComponent goBack={true} headerTitle="Test">
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("features.itWallet.missingFeatureScreen.headerTitle")}
+    >
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
         <View style={{ flexGrow: 1 }}>
           <LegacyContentView />
