@@ -65,7 +65,7 @@ global:
   modules:
     paymentNotice:
       badges:
-        payed: "Payed"
+        paid: "Paid"
         error: "Error"
         expired: "Expired"
         revoked: "Revoked"
