@@ -43,7 +43,6 @@ const IdPayCodeOnboardingScreen = () => {
     navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
       screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
       params: {
-        // initiativeId,
         isOnboarding: true
       }
     });
