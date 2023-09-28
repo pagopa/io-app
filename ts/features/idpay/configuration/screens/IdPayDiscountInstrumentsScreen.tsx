@@ -1,4 +1,4 @@
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import React from "react";
 
 import { H1, VSpacer } from "@pagopa/io-app-design-system";
@@ -8,7 +8,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
 import {
@@ -20,6 +19,7 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
+import { idpayInitiativesInstrumentDelete } from "../../wallet/store/actions";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId?: string;
@@ -34,8 +34,9 @@ type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
 const IdPayDiscountInstrumentsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
-  const navigation =
-    useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
+  // TODO: Uncomment this when the navigation is available to navigate to the onboarding screen
+  // const navigation =
+  //   useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
   const { initiativeId, initiativeName } = route.params;
 
   const initiativePaymentMethods = useIOSelector(
@@ -67,17 +68,25 @@ const IdPayDiscountInstrumentsScreen = () => {
   }, [initiativeId, dispatch]);
 
   const handleCieValueChange = (value: boolean) => {
-    // TODO: If value is true, navigate to onboarding screen
-    // if (value) {
-    //   navigation.navigate(
-    //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-    //     {
-    //       initiative,
-    //       paymentMethodType
-    //     }
-    //   );
-    // }
-    // console.log(paymentMethodType, value);
+    if (value) {
+      // TODO: If value is true, navigate to onboarding screen
+      //   navigation.navigate(
+      //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      //     {
+      //       initiative,
+      //       paymentMethodType
+      //     }
+      //   );
+    } else {
+      if (idPayCodeInitiative && initiativeId) {
+        dispatch(
+          idpayInitiativesInstrumentDelete.request({
+            initiativeId,
+            instrumentId: idPayCodeInitiative.instrumentId
+          })
+        );
+      }
+    }
   };
 
   return (

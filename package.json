@@ -24,9 +24,9 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.27/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.27/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.27/pagopa/privative/definitions.yml",
+  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v4.5.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.6.2-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.6.2-RELEASE/openapi/generated/api_fast_login.yaml",
-  "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/IDP-1794-aggiornamento-swagger/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/ca0f61d6c764dcc8a8594c1593d436dcdae58a7c/src/domains/wallet-app/api/wallet-service/v1/_openapi.json.tpl",
   "private": true,
   "scripts": {
@@ -112,7 +112,7 @@
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^4.1.5",
-    "@pagopa/io-app-design-system": "1.10.0",
+    "@pagopa/io-app-design-system": "1.11.2",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.2.1",
     "@pagopa/io-react-native-login-utils": "^0.2.0",
