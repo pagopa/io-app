@@ -28,6 +28,9 @@ export type WizardScreenProps = {
   goBack?: () => void;
 };
 
+/**
+ * A common screen used in a wizard flow to show a pictogram, a title, a description and one or two buttons.
+ */
 const WizardScreen = ({
   title,
   description,
