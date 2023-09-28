@@ -10,5 +10,5 @@ import { generate, getPublicKey } from "@pagopa/io-react-native-crypto";
  * TODO: IW-548-fix-keys-deletion
  * @returns the public key used to sign the WIA attestation.
  */
-export const generateCryptoKey = async (keyTag: string) =>
+export const getOrGenerateCyptoKey = async (keyTag: string) =>
   generate(keyTag).catch(_ => getPublicKey(keyTag));
