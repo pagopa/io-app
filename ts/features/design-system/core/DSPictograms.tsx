@@ -8,7 +8,11 @@ import {
   IOThemeContext,
   Pictogram,
   PictogramBleed,
-  SVGPictogramProps
+  SVGPictogramProps,
+  IOColors,
+  HSpacer,
+  hexToRgba,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useContext } from "react";
 import {
@@ -17,6 +21,7 @@ import {
 } from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -26,6 +31,21 @@ const styles = StyleSheet.create({
     marginLeft: (assetItemGutter / 2) * -1,
     marginRight: (assetItemGutter / 2) * -1,
     marginBottom: 24
+  },
+  agnosticPictogramWrapper: {
+    borderRadius: 8,
+    padding: 16,
+    alignContent: "center",
+    justifyContent: "center",
+    flexDirection: "row"
+  },
+  agnosticPictogramWrapperBlue: {
+    backgroundColor: IOColors["blueIO-500"]
+  },
+  agnosticPictogramWrapperWhite: {
+    backgroundColor: IOColors.white,
+    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderWidth: 1
   }
 });
 
@@ -129,6 +149,43 @@ export const DSPictograms = () => {
           />
         ))}
       </View>
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{
+          marginBottom: 16
+        }}
+      >
+        Color mode agnostic
+      </H2>
+      <DSComponentViewerBox name={`pictogramStyle = "light-content"`}>
+        <View
+          style={[
+            styles.agnosticPictogramWrapper,
+            styles.agnosticPictogramWrapperBlue
+          ]}
+        >
+          <Pictogram name="feature" pictogramStyle="light-content" />
+          <HSpacer size={24} />
+          <Pictogram name="umbrellaNew" pictogramStyle="light-content" />
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox name={`pictogramStyle = "dark-content"`}>
+        <View
+          style={[
+            styles.agnosticPictogramWrapper,
+            styles.agnosticPictogramWrapperWhite
+          ]}
+        >
+          <Pictogram name="feedback" pictogramStyle="dark-content" />
+          <HSpacer size={24} />
+          <Pictogram name="charity" pictogramStyle="dark-content" />
+        </View>
+      </DSComponentViewerBox>
+
+      <VSpacer size={40} />
 
       <H2
         color={theme["textHeading-default"]}

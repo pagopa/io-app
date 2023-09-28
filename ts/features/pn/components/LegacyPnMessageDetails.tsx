@@ -30,7 +30,8 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isDuplicatedPayment } from "../../../utils/payment";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import PN_ROUTES from "../navigation/routes";
-import { NotificationPaymentInfo, PNMessage } from "../store/types/types";
+import { PNMessage } from "../store/types/types";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import {
   trackPNAttachmentOpening,
   trackPNPaymentInfoError,

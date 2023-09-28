@@ -6,7 +6,12 @@ import { ReactElement, useEffect } from "react";
 import { View, ScrollView, StyleSheet, Platform } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IconButton,
+  IOColors,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -28,7 +33,6 @@ import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import IconButton from "../../components/ui/IconButton";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
