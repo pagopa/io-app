@@ -13,7 +13,7 @@ import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomShee
 import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../../config";
-import { WizardScreen } from "./WizardScreen";
+import { WizardScreen } from "../../../../components/WizardScreen";
 
 type IdPayCodeOnboardingRouteParams = {
   initiativeId?: string;
