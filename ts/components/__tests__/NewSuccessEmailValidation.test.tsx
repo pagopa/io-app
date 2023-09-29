@@ -3,14 +3,14 @@ import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../i18n";
 
-import NewRemindEmailValidationOverlay from "../NewRemindEmailValidationOverlay";
+import NewSuccessEmailValidation from "../NewSuccessEmailValidation";
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 
 const email = "prova.prova@prova.com";
 
-describe("NewRemindEmailValidationOverlay ", async () => {
+describe("NewSuccessEmailValidation", async () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore();
 
@@ -21,7 +21,7 @@ describe("NewRemindEmailValidationOverlay ", async () => {
     finalState = mockStore({
       ...globalState,
       profile: pot.some({
-        is_email_validated: false,
+        is_email_validated: true,
         email: "prova.prova@prova.com"
       })
     });
@@ -32,35 +32,25 @@ describe("NewRemindEmailValidationOverlay ", async () => {
     expect(component).toBeDefined();
     expect(component.getByTestId("container-test")).not.toBeNull();
     expect(component.getByTestId("title-test")).toBeDefined();
-    expect(component.getByText(I18n.t("email.newvalidate.title"))).toBeTruthy();
     expect(
-      component.getByText(I18n.t("email.newvalidate.subtitle", { email }))
+      component.getByText(I18n.t("email.newvalidemail.title"))
     ).toBeTruthy();
-    expect(component.getByTestId("link-test")).toBeDefined();
+    expect(
+      component.getByText(I18n.t("email.newvalidemail.subtitle", { email }))
+    ).toBeTruthy();
     const button = component.getByTestId("button-test");
     expect(button).toBeDefined();
-    expect(
-      component.getByText(I18n.t("email.newvalidate.buttonlabelsentagain"))
-    ).toBeTruthy();
+    expect(component.getByText(I18n.t("global.buttons.continue"))).toBeTruthy();
     expect(button).not.toBeDisabled();
     if (button) {
       fireEvent.press(button);
     }
-    expect(
-      component.getByText(I18n.t("email.newvalidate.buttonlabelsent"))
-    ).toBeDisabled();
-
-    setTimeout(() => {
-      expect(
-        component.getByText(I18n.t("email.newvalidate.buttonlabelsentagain"))
-      ).not.toBeDisabled();
-    }, 10000);
   });
 });
 
 const renderComponent = (globalStateProp?: any) =>
   renderScreenWithNavigationStoreContext(
-    NewRemindEmailValidationOverlay,
+    NewSuccessEmailValidation,
     "DUMMY",
     {},
     globalStateProp
