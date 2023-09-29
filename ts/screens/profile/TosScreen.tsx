@@ -30,7 +30,6 @@ const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   useHeaderSecondLevel({
     title: I18n.t("profile.main.privacy.privacyPolicy.title"),
-    backAccessibilityLabel: I18n.t("profile.main.privacy.title"),
     supportRequest: true,
     contextualHelpMarkdown,
     faqCategories: ["privacy"]
