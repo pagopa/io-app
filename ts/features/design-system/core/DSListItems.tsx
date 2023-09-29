@@ -7,6 +7,7 @@ import {
   IOThemeContext,
   Icon,
   IconButton,
+  ListItemAction,
   ListItemInfo,
   ListItemInfoCopy,
   ListItemNav,
@@ -32,7 +33,6 @@ import {
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import ListItemAction from "../../../components/ui/ListItemAction";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
 
 const onButtonPress = () => {
