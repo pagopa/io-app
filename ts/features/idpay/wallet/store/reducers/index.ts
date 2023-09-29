@@ -200,22 +200,4 @@ export const idPayInitiativeFromInstrumentPotSelector = (
   }
 };
 
-export const idPayIsLoadingInitiativeFromInstrumentPotSelector = (
-  state: GlobalState,
-  initiativeId: string
-) => {
-  const value = idPayInitiativeFromInstrumentPotSelector(state, initiativeId);
-  return pot.fold(
-    value,
-    () => true,
-    () => true,
-    () => true,
-    () => false,
-    () => false,
-    () => true,
-    () => false,
-    () => false
-  );
-};
-
 export default reducer;

@@ -5,8 +5,8 @@ import {
   useRoute
 } from "@react-navigation/native";
 import React from "react";
-
 import { H1, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { ScrollView, StyleSheet } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -29,7 +29,7 @@ import { idpayInitiativesInstrumentDelete } from "../../wallet/store/actions";
 import { IdPayCodeRoutes } from "../../code/navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
-import { idPayIsLoadingInitiativeFromInstrumentPotSelector } from "../../wallet/store/reducers";
+import { idPayInitiativeFromInstrumentPotSelector } from "../../wallet/store/reducers";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId: string;
@@ -54,8 +54,8 @@ const IdPayDiscountInstrumentsScreen = () => {
   const isLoadingDiscountInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );
-  const isLoadingInstrument = useIOSelector(state =>
-    idPayIsLoadingInitiativeFromInstrumentPotSelector(state, initiativeId)
+  const switchValue = useIOSelector(state =>
+    idPayInitiativeFromInstrumentPotSelector(state, initiativeId)
   );
 
   const idPayCodeInitiative = React.useMemo(
@@ -122,7 +122,7 @@ const IdPayDiscountInstrumentsScreen = () => {
               onValueChange={handleCieValueChange}
               onPressAction={presentCieBottomSheet}
               status={idPayCodeInitiative?.status}
-              isLoading={isLoadingInstrument}
+              isLoading={pot.isLoading(switchValue)}
               value={idPayCodeInitiative ? true : false}
             />
             <IdPayDiscountInstrumentEnrollmentSwitch
