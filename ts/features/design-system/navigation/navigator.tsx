@@ -50,6 +50,7 @@ import { DSSelection } from "../core/DSSelection";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
+import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DSTypography } from "../core/DSTypography";
 import {
   IONavigationDarkTheme,
@@ -409,6 +410,12 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
         component={DSScreenOperationResult}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
+        component={DSWizardScreen}
         options={{ headerShown: false }}
       />
 
