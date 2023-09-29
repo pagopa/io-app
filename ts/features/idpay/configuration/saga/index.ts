@@ -2,8 +2,12 @@ import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
-import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
-import { handleGetDiscountInitiativeInstruments } from "./handleGetDiscountInitiativeInstruments";
+import {
+  idpayInitiativeInstrumentDelete,
+  idpayInitiativeInstrumentsGet
+} from "../store/actions";
+import { handleGetInitiativeInstruments } from "./handleGetInitiativeInstruments";
+import { handleDeleteInitiativeInstruments } from "./handleDeleteInitiativeInstrument";
 
 /**
  * Handle IDPAY initiative requests
@@ -17,9 +21,17 @@ export function* watchIDPayInitiativeConfigurationSaga(
   preferredLanguage: PreferredLanguageEnum
 ): SagaIterator {
   yield* takeLatest(
-    idpayDiscountInitiativeInstrumentsGet.request,
-    handleGetDiscountInitiativeInstruments,
+    idpayInitiativeInstrumentsGet.request,
+    handleGetInitiativeInstruments,
     idPayClient.getInstrumentList,
+    bearerToken,
+    preferredLanguage
+  );
+
+  yield* takeLatest(
+    idpayInitiativeInstrumentDelete.request,
+    handleDeleteInitiativeInstruments,
+    idPayClient.deleteInstrument,
     bearerToken,
     preferredLanguage
   );

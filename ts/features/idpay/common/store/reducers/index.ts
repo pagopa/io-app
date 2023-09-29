@@ -8,14 +8,14 @@ import walletReducer, {
   IdPayWalletState
 } from "../../../wallet/store/reducers/index";
 import configurationReducer, {
-  IDPayInitiativeConfigurationState
+  IdPayInitiativeConfigurationState
 } from "../../../configuration/store";
 
 export type IDPayState = {
   wallet: IdPayWalletState;
   initiative: IdPayInitiativeState;
   timeline: IdPayTimelineState;
-  configuration: IDPayInitiativeConfigurationState;
+  configuration: IdPayInitiativeConfigurationState;
   code: IdPayCodeState;
 };
 

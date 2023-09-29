@@ -15,8 +15,12 @@ import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
 import {
+  idpayInitiativeInstrumentDelete,
+  idpayInitiativeInstrumentsGet
+} from "../store/actions";
+import {
+  idPayIsLoadingInitiativeInstrumentSelector,
   idpayDiscountInitiativeInstrumentsSelector,
   isLoadingDiscountInitiativeInstrumentsSelector
 } from "../store";
@@ -25,11 +29,9 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
-import { idpayInitiativesInstrumentDelete } from "../../wallet/store/actions";
 import { IdPayCodeRoutes } from "../../code/navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
-import { idPayInitiativeFromInstrumentPotSelector } from "../../wallet/store/reducers";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId: string;
@@ -54,9 +56,6 @@ const IdPayDiscountInstrumentsScreen = () => {
   const isLoadingDiscountInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );
-  const switchValue = useIOSelector(state =>
-    idPayInitiativeFromInstrumentPotSelector(state, initiativeId)
-  );
 
   const idPayCodeInitiative = React.useMemo(
     () =>
@@ -66,13 +65,20 @@ const IdPayDiscountInstrumentsScreen = () => {
     [initiativePaymentMethods]
   );
 
+  const isLoadingIdPayCodeInstrument = useIOSelector(state =>
+    idPayIsLoadingInitiativeInstrumentSelector(
+      state,
+      idPayCodeInitiative?.instrumentId || ""
+    )
+  );
+
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
   const refresh = React.useCallback(() => {
     if (initiativeId) {
       dispatch(
-        idpayDiscountInitiativeInstrumentsGet.request({
+        idpayInitiativeInstrumentsGet.request({
           initiativeId
         })
       );
@@ -90,7 +96,7 @@ const IdPayDiscountInstrumentsScreen = () => {
     } else {
       if (idPayCodeInitiative && initiativeId) {
         dispatch(
-          idpayInitiativesInstrumentDelete.request({
+          idpayInitiativeInstrumentDelete.request({
             initiativeId,
             instrumentId: idPayCodeInitiative.instrumentId
           })
@@ -122,7 +128,7 @@ const IdPayDiscountInstrumentsScreen = () => {
               onValueChange={handleCieValueChange}
               onPressAction={presentCieBottomSheet}
               status={idPayCodeInitiative?.status}
-              isLoading={pot.isLoading(switchValue)}
+              isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
               value={idPayCodeInitiative ? true : false}
             />
             <IdPayDiscountInstrumentEnrollmentSwitch

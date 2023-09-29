@@ -8,7 +8,7 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
-import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
+import { idpayInitiativeInstrumentsGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative associated payment methods for discount initiatives
@@ -17,11 +17,11 @@ import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
  * @param language Preferred language
  * @param action Action to handle
  */
-export function* handleGetDiscountInitiativeInstruments(
+export function* handleGetInitiativeInstruments(
   getInitiativePaymentMethods: IDPayClient["getInstrumentList"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idpayDiscountInitiativeInstrumentsGet["request"]>
+  action: ActionType<typeof idpayInitiativeInstrumentsGet["request"]>
 ) {
   const getInitiativeDetailsRequest = getInitiativePaymentMethods({
     bearerAuth: bearerToken,
@@ -41,15 +41,15 @@ export function* handleGetDiscountInitiativeInstruments(
       E.fold(
         error =>
           put(
-            idpayDiscountInitiativeInstrumentsGet.failure({
+            idpayInitiativeInstrumentsGet.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             })
           ),
         response =>
           put(
             response.status === 200
-              ? idpayDiscountInitiativeInstrumentsGet.success(response.value)
-              : idpayDiscountInitiativeInstrumentsGet.failure({
+              ? idpayInitiativeInstrumentsGet.success(response.value)
+              : idpayInitiativeInstrumentsGet.failure({
                   ...getGenericError(
                     new Error(`response status code ${response.status}`)
                   )
@@ -59,7 +59,7 @@ export function* handleGetDiscountInitiativeInstruments(
     );
   } catch (e) {
     yield* put(
-      idpayDiscountInitiativeInstrumentsGet.failure({ ...getNetworkError(e) })
+      idpayInitiativeInstrumentsGet.failure({ ...getNetworkError(e) })
     );
   }
 }
