@@ -44,6 +44,10 @@ type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
   "IDPAY_CONFIGURATION_DISCOUNT_INSTRUMENTS"
 >;
 
+/**
+ * Screen that shows the list of available instruments for a discount initiative which has been selected
+ * Actually are available only the CIE and the QRCode
+ */
 const IdPayDiscountInstrumentsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
@@ -51,7 +55,7 @@ const IdPayDiscountInstrumentsScreen = () => {
     useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const { initiativeId, initiativeName } = route.params;
 
-  const initiativePaymentMethods = useIOSelector(
+  const initiativeInstruments = useIOSelector(
     idpayDiscountInitiativeInstrumentsSelector
   );
   const isLoadingInstruments = useIOSelector(
@@ -60,10 +64,10 @@ const IdPayDiscountInstrumentsScreen = () => {
 
   const idPayCodeInitiative = React.useMemo(
     () =>
-      initiativePaymentMethods.find(
+      initiativeInstruments.find(
         initiative => initiative.instrumentType === InstrumentTypeEnum.IDPAYCODE
       ),
-    [initiativePaymentMethods]
+    [initiativeInstruments]
   );
 
   const isLoadingIdPayCodeInstrument = useIOSelector(state =>
