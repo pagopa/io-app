@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { ButtonSolid, H1, IOStyles } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { ScrollView } from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -14,9 +14,6 @@ import {
   idPayCodeEnrollmentRequestSelector,
   idPayCodeSelector
 } from "../store/selectors";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 
 const IdPayCodeResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -38,7 +35,7 @@ const IdPayCodeResultScreen = () => {
     navigation.pop();
   };
 
-  return isFailure ? (
+  const screenContent = isFailure ? (
     <OperationResultScreenContent
       title={I18n.t(
         `idpay.initiative.discountDetails.IDPayCode.failureScreen.header.GENERIC`
@@ -76,22 +73,9 @@ const IdPayCodeResultScreen = () => {
   );
 
   return (
-    <BaseScreenComponent>
-      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-        <ScrollView
-          centerContent={true}
-          contentContainerStyle={IOStyles.horizontalContentPadding}
-        >
-          <H1>{isFailure ? "Failure ❌" : "Success ✅"}</H1>
-          <ButtonSolid
-            fullWidth={true}
-            label="Chiudi"
-            accessibilityLabel="Chiudi"
-            onPress={handleClose}
-          />
-        </ScrollView>
-      </LoadingSpinnerOverlay>
-    </BaseScreenComponent>
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+      {screenContent}
+    </LoadingSpinnerOverlay>
   );
 };
 

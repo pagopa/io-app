@@ -47,6 +47,10 @@ const DESIGN_SYSTEM_ROUTES = {
     OPERATION_RESULT: {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
+    },
+    WIZARD_SCREEN: {
+      route: "WIZARD_SCREEN",
+      title: "Wizard Screen"
     }
   },
   DEBUG: {
