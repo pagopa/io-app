@@ -1,7 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { IOIconSizeScaleCheckbox, Icon } from "@pagopa/io-app-design-system";
-import { IOColors, hexToRgba } from "../../components/core/variables/IOColors";
+import {
+  IOColors,
+  IOIconSizeScaleCheckbox,
+  Icon,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 
 type Props = {
   checked: boolean;

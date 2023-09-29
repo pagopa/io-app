@@ -1,6 +1,5 @@
-import I18n from "i18n-js";
 import * as React from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import {
   isAppSupportedSelector,
   versionInfoDataSelector
@@ -14,10 +13,7 @@ import {
   tokenRefreshSelector
 } from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
-import AskUserInteractionScreen from "../../features/fastLogin/screens/AskUserInterarctionScreen";
-import LoadingScreenModal from "../../features/fastLogin/screens/RefreshTokenLoadingScreen";
-import { askUserToRefreshSessionToken } from "../../features/fastLogin/store/actions";
-import { openWebUrl } from "../../utils/url";
+import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -31,8 +27,6 @@ type Props = ReturnType<typeof mapStateToProps>;
  * - IdentificationModal -> the default case. It renders itself only if an identification action is required
  */
 const RootModal: React.FunctionComponent<Props> = (props: Props) => {
-  const dispatch = useDispatch();
-
   if (!props.isDeviceSupported) {
     return <UnsupportedDeviceScreen />;
   }
@@ -49,60 +43,13 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     return <UpdateAppModal />;
   }
 
-  if (props.tokenRefreshing.kind === "transient-error") {
-    return (
-      <AskUserInteractionScreen
-        pictogramName="umbrella"
-        title={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.transientError.title"
-        )}
-        subtitle={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
-        )}
-        onSubmit={() => {
-          // FIXME: update this URL once available
-          // https://pagopa.atlassian.net/browse/IOPID-393
-          openWebUrl("https://io.italia.it/faq");
-        }}
-        buttonStylesProps={{
-          submitButtonStyle: {
-            type: "solid",
-            title: I18n.t(
-              "fastLogin.userInteraction.sessionExpired.transientError.submitButtonTitle"
-            )
-          }
-        }}
-      />
-    );
-  }
+  const fastLoginModals = FastLoginModals(
+    props.tokenRefreshing,
+    props.isFastLoginUserInteractionNeeded
+  );
 
-  if (props.tokenRefreshing.kind === "in-progress") {
-    return <LoadingScreenModal />;
-  }
-
-  if (props.isFastLoginUserInteractionNeeded) {
-    return (
-      <AskUserInteractionScreen
-        pictogramName="timeout"
-        title={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
-        )}
-        subtitle={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.continueNavigation.subtitle"
-        )}
-        onSubmit={() => {
-          dispatch(askUserToRefreshSessionToken.success("yes"));
-        }}
-        buttonStylesProps={{
-          submitButtonStyle: {
-            type: "solid",
-            title: I18n.t(
-              "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
-            )
-          }
-        }}
-      />
-    );
+  if (fastLoginModals) {
+    return fastLoginModals;
   }
 
   return <IdentificationModal />;

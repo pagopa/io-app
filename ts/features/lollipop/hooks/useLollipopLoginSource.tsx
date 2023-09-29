@@ -6,7 +6,6 @@ import { useCallback, useState } from "react";
 import URLParse from "url-parse";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
@@ -21,6 +20,8 @@ import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../cieLogin/utils";
+import { selectedIdentityProviderSelector } from "../../../store/reducers/authentication";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -33,11 +34,11 @@ export const useLollipopLoginSource = (
   );
 
   const dispatch = useIODispatch();
-  const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
+  const idp = useIOSelector(selectedIdentityProviderSelector);
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -74,18 +75,12 @@ export const useLollipopLoginSource = (
       return;
     }
 
-    if (
-      !useLollipopLogin ||
-      O.isNone(maybeKeyTag) ||
-      O.isNone(maybePublicKey)
-    ) {
-      if (useLollipopLogin) {
-        // We track missing key tag event only if lollipop is enabled
-        // (since the key tag is not used without lollipop)
-        trackLollipopIdpLoginFailure(
-          "Missing key tag while trying to login with lollipop"
-        );
-      }
+    if (O.isNone(maybeKeyTag) || O.isNone(maybePublicKey)) {
+      // We track missing key tag event only if lollipop is enabled
+      // (since the key tag is not used without lollipop)
+      trackLollipopIdpLoginFailure(
+        "Missing key tag while trying to login with lollipop"
+      );
 
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
@@ -118,7 +113,8 @@ export const useLollipopLoginSource = (
                 headers: getLollipopLoginHeaders(
                   key,
                   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                  isFastLogin
+                  isFastLogin,
+                  cieFlowForDevServerEnabled ? idp?.id : undefined
                 )
               })
           )
@@ -127,12 +123,12 @@ export const useLollipopLoginSource = (
     )();
   }, [
     dispatch,
+    idp,
     isFastLogin,
     loginUri,
     maybeKeyTag,
     maybePublicKey,
-    mixpanelEnabled,
-    useLollipopLogin
+    mixpanelEnabled
   ]);
 
   const retryLollipopLogin = useCallback(() => {
@@ -149,11 +145,6 @@ export const useLollipopLoginSource = (
 
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
     (url: string) => {
-      if (!useLollipopLogin) {
-        // Lollipop not enabled, do not check the Url
-        return false;
-      }
-
       const parsedUrl = new URLParse(url, true);
       const urlQuery = parsedUrl.query;
       const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
@@ -193,13 +184,7 @@ export const useLollipopLoginSource = (
 
       return false;
     },
-    [
-      lollipopCheckStatus.status,
-      maybeKeyTag,
-      maybePublicKey,
-      useLollipopLogin,
-      verifyLollipop
-    ]
+    [lollipopCheckStatus.status, maybeKeyTag, maybePublicKey, verifyLollipop]
   );
 
   useOnFirstRender(() => {

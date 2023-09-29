@@ -1,42 +1,38 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { Alert, ImageSourcePropType, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Alert, View } from "react-native";
+import {
+  ButtonLink,
+  IOThemeContext,
+  Icon,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import ListItemComponent from "../../../components/screens/ListItemComponent";
-import CategoryCheckbox from "../../bonus/cgn/components/merchants/search/CategoryCheckbox";
 import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-
-/* Icons */
-import BooksIcon from "../../../../img/bonus/cgn/categories/books.svg";
-import CultureIcon from "../../../../img/bonus/cgn/categories/culture.svg";
 
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
+import { TimelineOperationListItem } from "../../idpay/details/components/TimelineOperationListItem";
 import {
   OperationTypeEnum,
   StatusEnum
 } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import ButtonLink from "../../../components/ui/ButtonLink";
-import IconButton from "../../../components/ui/IconButton";
 import ListItemNav from "../../../components/ui/ListItemNav";
 import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
 import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
 import ListItemAction from "../../../components/ui/ListItemAction";
 import ListItemInfo from "../../../components/ui/ListItemInfo";
-import { ListItemIDP } from "../../../components/ui/ListItemIDP";
 import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
 
 const onButtonPress = () => {
@@ -82,15 +78,6 @@ export const DSListItems = () => (
           ListItemAction
         </H2>
         {renderListItemAction()}
-
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16, marginTop: 16 }}
-        >
-          ListItemIDP
-        </H2>
-        {renderListItemIDP()}
 
         <H2
           color={theme["textHeading-default"]}
@@ -199,22 +186,6 @@ export const DSListItems = () => (
         >
           Derivated from ListItem (NativeBase)
         </H2>
-        <DSComponentViewerBox name="CategoryCheckbox">
-          <CategoryCheckbox
-            text={"Title"}
-            value={"Value"}
-            checked={true}
-            onPress={() => alert("Action triggered")}
-            icon={BooksIcon}
-          />
-          <CategoryCheckbox
-            text={"Title"}
-            value={"Value"}
-            checked={false}
-            onPress={() => alert("Action triggered")}
-            icon={CultureIcon}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="OrderOption">
           <OrderOption
             text={"Checked"}
@@ -566,59 +537,6 @@ const renderListItemInfo = () => (
   </DSComponentViewerBox>
 );
 
-const mockIDPProviderItem = {
-  id: "posteid",
-  name: "Poste ID",
-  logo: "",
-  localLogo: require("../../../../img/spid-idp-posteid.png"),
-  profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-};
-
-const renderListItemIDP = () => (
-  <>
-    <DSComponentViewerBox name="ListItemIDP, default variant">
-      <View>
-        <ListItemIDP
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemIDP, saved variant">
-      <View>
-        <ListItemIDP
-          saved
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemIDP, default variant, stress test">
-      <View>
-        <ListItemIDP
-          name={"This is a very loooooong IDP provider name"}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-  </>
-);
-
 const renderListItemTransaction = () => {
   const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
   const organizationLogoURI = {
@@ -629,7 +547,7 @@ const renderListItemTransaction = () => {
     <DSComponentViewerBox name="ListItemTransaction">
       <View>
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
@@ -637,28 +555,28 @@ const renderListItemTransaction = () => {
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           paymentLogoIcon={"amex"}
           transactionStatus="failure"
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           paymentLogoIcon={{ uri: organizationLogoURI.imageSource }}
           transactionStatus="pending"
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"
@@ -666,7 +584,7 @@ const renderListItemTransaction = () => {
           onPress={onButtonPress}
         />
         <ListItemTransaction
-          title="TITLE"
+          title="Title"
           subtitle="subtitle"
           transactionStatus="success"
           transactionAmount="€ 1.000,00"

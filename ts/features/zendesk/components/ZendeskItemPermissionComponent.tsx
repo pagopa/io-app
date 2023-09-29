@@ -1,7 +1,7 @@
 import { ListItem } from "native-base";
 import { View } from "react-native";
 import * as React from "react";
-import { HSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 

@@ -12,6 +12,7 @@ import {
 } from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 
 const mockedPayload: CreateFilledDocument = {
   document_url: "https://mockedUrl" as NonEmptyString
@@ -32,6 +33,10 @@ describe("handleCreateFilledDocument", () => {
     type: "FCI_QTSP_FILLED_DOC_REQUEST",
     payload: mockedPayload
   };
+  const postQtspFilledBodyRequest = mockBackendFciClient({
+    body: loadAction.payload,
+    Bearer: "mockedToken"
+  });
   it("Should dispatch fciLoadQtspFilledDocument.success with the response payload if the response is right and the status code is 200", () => {
     testSaga(
       handleCreateFilledDocument,
@@ -40,10 +45,7 @@ describe("handleCreateFilledDocument", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        body: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, postQtspFilledBodyRequest, loadAction)
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
       .next()
@@ -59,10 +61,7 @@ describe("handleCreateFilledDocument", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        body: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, postQtspFilledBodyRequest, loadAction)
       .next(right(failureResponse))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -80,10 +79,7 @@ describe("handleCreateFilledDocument", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        body: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, postQtspFilledBodyRequest, loadAction)
       .next(left(new Error()))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -104,10 +100,7 @@ describe("handleCreateFilledDocument", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, {
-        body: loadAction.payload,
-        Bearer: "Bearer mockedToken"
-      })
+      .call(withRefreshApiCall, postQtspFilledBodyRequest, loadAction)
       .throw(mockedError)
       .next(fciLoadQtspFilledDocument.failure(getNetworkError(mockedError)))
       .next()

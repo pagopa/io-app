@@ -3,10 +3,9 @@ import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IconButton, IOColors } from "@pagopa/io-app-design-system";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import IconButton from "../../../components/ui/IconButton";
 import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
@@ -14,8 +13,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
-import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
+import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
+import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
@@ -34,7 +33,7 @@ type Props = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
@@ -62,15 +61,15 @@ const BarcodeScanBaseScreenComponent = ({
     cameraPermissionStatus,
     requestCameraPermission,
     openCameraSettings
-  } = useIOBarcodeScanner({
-    onBarcodeSuccess,
+  } = useIOBarcodeCameraScanner({
+    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
     disabled: !isFocused
   });
 
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess,

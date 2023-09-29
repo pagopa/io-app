@@ -3,10 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
-import IconFont from "../../../../../components/ui/IconFont";
 import { FooterTopShadow } from "../FooterTopShadow";
 
 const styles = StyleSheet.create({
@@ -25,7 +24,12 @@ type Props = {
 const renderButton = (props: BlockButtonProps) => (
   <>
     <ButtonDefaultOpacity style={styles.button} {...props}>
-      {props.iconName && <IconFont name={props.iconName} />}
+      {props.iconName && (
+        <>
+          <Icon name={props.iconName} />
+          <HSpacer size={8} />
+        </>
+      )}
       <NBButtonText
         style={pipe(
           props.buttonFontSize,

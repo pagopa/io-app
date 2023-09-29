@@ -1,15 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import { useSelector } from "@xstate/react";
-import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
+import {
+  Body,
+  H1,
+  IOColors,
+  IOStyles,
+  Icon,
+  PressableListItemBase,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../components/core/typography/H4";
-import { Link } from "../../../../components/core/typography/Link";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
@@ -19,12 +21,7 @@ import {
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector
 } from "../xstate/selectors";
-
-const styles = StyleSheet.create({
-  maxheight: {
-    height: "100%"
-  }
-});
+import { Link } from "../../../../components/core/typography/Link";
 
 type ListItemProps = {
   text: string;
@@ -33,23 +30,22 @@ type ListItemProps = {
 };
 
 const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
-  <NBListItem
-    style={{
-      flexDirection: "row",
-      justifyContent: "space-between",
-      paddingVertical: 12
-    }}
-    onPress={onPress}
-  >
-    <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
-      {text}
-    </H4>
-    <Icon
-      name={checked ? "legRadioOn" : "legRadioOff"}
-      size={24}
-      color={checked ? "blue" : "bluegrey"}
-    />
-  </NBListItem>
+  <View style={styles.outerListItem}>
+    <PressableListItemBase onPress={onPress}>
+      <View
+        style={[IOStyles.flex, IOStyles.rowSpaceBetween, styles.innerListItem]}
+      >
+        <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
+          {text}
+        </H4>
+        <Icon
+          name={checked ? "legRadioOn" : "legRadioOff"}
+          size={24}
+          color={checked ? "blue" : "bluegrey"}
+        />
+      </View>
+    </PressableListItemBase>
+  </View>
 );
 
 const buttonProps = {
@@ -133,5 +129,18 @@ const MultiValuePrerequisitesScreen = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  outerListItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: IOColors["grey-100"]
+  },
+  innerListItem: {
+    paddingVertical: 4
+  },
+  maxheight: {
+    height: "100%"
+  }
+});
 
 export default MultiValuePrerequisitesScreen;

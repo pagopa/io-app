@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
+import type { IOColors } from "@pagopa/io-app-design-system";
 import { XOR } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
-import type { IOColors } from "../variables/IOColors";
 import { BaseTypography } from "./BaseTypography";
 import {
   calculateWeightColor,

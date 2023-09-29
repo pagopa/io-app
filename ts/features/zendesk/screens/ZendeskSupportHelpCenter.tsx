@@ -5,9 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H3 } from "../../../components/core/typography/H3";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FAQComponent from "../../../components/FAQComponent";
 import BaseScreenComponent, {

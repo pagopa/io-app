@@ -1,9 +1,9 @@
 import { CommonActions } from "@react-navigation/native";
 import * as React from "react";
 import { BackHandler, NativeEventSubscription, Platform } from "react-native";
+import { IconButton } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
-import IconButton from "./ui/IconButton";
 
 interface OwnProps {
   [k: string]: any;

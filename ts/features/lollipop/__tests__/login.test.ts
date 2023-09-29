@@ -1,6 +1,6 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { expectSaga } from "redux-saga-test-plan";
-import { put, call } from "typed-redux-saga/macro";
+import { delay } from "typed-redux-saga/macro";
 import {
   EffectProviders,
   StaticProvider
@@ -45,16 +45,13 @@ jest.mock("../../../store/reducers/authentication", () => ({
   isLoggedInWithTestIdpSelector: () => false
 }));
 
-const mockedSessionInvalid: StaticProvider = [put(sessionInvalid()), true];
-const mockedRestartCleanApplication: StaticProvider = [
-  call(restartCleanApplication),
-  true
-];
+jest.mock("../../../utils/supportAssistance", () => ({
+  resetAssistanceData: jest.fn()
+}));
 
-const mockedFunctions: Array<StaticProvider | EffectProviders> = [
-  mockedSessionInvalid,
-  mockedRestartCleanApplication
-];
+const mockedDelay: StaticProvider = [delay(1000), true];
+
+const mockedFunctions: Array<StaticProvider | EffectProviders> = [mockedDelay];
 
 describe(`Test login with lollipop check and store aligned with server`, () => {
   it(`should not put sessionIvalid or call restartCleanApplication`, async () =>

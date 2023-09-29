@@ -9,7 +9,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayWalletSubscribedInitiativeListSelector } from "../store/reducers";
-import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
 type Props = {

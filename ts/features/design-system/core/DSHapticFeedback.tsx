@@ -1,10 +1,12 @@
 import * as React from "react";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import {
+  ButtonSolid,
+  IOThemeContext,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
-import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import ButtonSolid from "../../../components/ui/ButtonSolid";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSHapticFeedback = () => (

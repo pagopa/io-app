@@ -1,4 +1,5 @@
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
@@ -7,7 +8,6 @@ import {
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const ManualConfigConfirm = (): React.ReactElement => (
   <>

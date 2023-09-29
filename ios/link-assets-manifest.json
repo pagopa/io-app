@@ -50,14 +50,6 @@
       "sha1": "93e4080794b725f216a94b57ed62a51bc77bce91"
     },
     {
-      "path": "assets/fonts/io-icon-font/io-icon-font.ttf",
-      "sha1": "89f1dc6b2cf7006f20483dde41c99a8f66df1fbe"
-    },
-    {
-      "path": "assets/fonts/Ionicons/Ionicons.ttf",
-      "sha1": "991bb7fac9709cd58da37901770efd4703c542ed"
-    },
-    {
       "path": "assets/fonts/RobotoMono/LICENSE.txt",
       "sha1": "47b573e3824cd5e02a1a3ae99e2735b49e0256e4"
     },
@@ -84,6 +76,10 @@
     {
       "path": "assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf",
       "sha1": "b2863e22d4491bd1866a7ab4f1d6f52db07166a6"
+    },
+    {
+      "path": "assets/fonts/DMMono/DMMono-Medium.ttf",
+      "sha1": "0ceec76262c08cec6c956e1ffe2bfc60321e8f58"
     }
   ]
 }

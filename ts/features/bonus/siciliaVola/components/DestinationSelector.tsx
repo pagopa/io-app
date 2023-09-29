@@ -5,6 +5,7 @@ import { ListItem } from "native-base";
 import { debounce } from "lodash";
 import { useContext, useEffect, useRef, useState } from "react";
 import { FlatList } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../store/reducers/types";
 import TextboxWithSuggestion from "../../../../components/ui/TextboxWithSuggestion";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -16,7 +17,6 @@ import {
 } from "../store/actions/voucherGeneration";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import WrappedFlatList from "./WrappedMunicipalityFlatList";
 
 type OwnProps = {

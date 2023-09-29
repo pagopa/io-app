@@ -25,7 +25,8 @@ export const failureMap: Record<CodeEnum, PaymentFailureEnum> = {
   [CodeEnum.PAYMENT_STATUS_NOT_VALID]: PaymentFailureEnum.GENERIC,
   [CodeEnum.PAYMENT_GENERIC_ERROR]: PaymentFailureEnum.GENERIC,
   [CodeEnum.PAYMENT_TOO_MANY_REQUESTS]: PaymentFailureEnum.TOO_MANY_REQUESTS,
-  [CodeEnum.PAYMENT_ALREADY_AUTHORIZED]: PaymentFailureEnum.AUTHORIZED
+  [CodeEnum.PAYMENT_ALREADY_AUTHORIZED]: PaymentFailureEnum.AUTHORIZED,
+  [CodeEnum.PAYMENT_USER_SUSPENDED]: PaymentFailureEnum.AUTHORIZED
 };
 
 /**
@@ -69,7 +70,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 401:
-                return Promise.reject(PaymentFailureEnum.REJECTED);
+                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(failureMap[value.code]);
             }
@@ -111,7 +112,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 401:
-                return Promise.reject(PaymentFailureEnum.REJECTED);
+                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(failureMap[value.code]);
             }
@@ -151,7 +152,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 200:
                 return Promise.resolve(value);
               case 401:
-                return Promise.reject(PaymentFailureEnum.REJECTED);
+                return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
                 return Promise.reject(failureMap[value.code]);
             }

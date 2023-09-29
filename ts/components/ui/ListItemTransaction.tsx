@@ -1,37 +1,39 @@
 import {
   Badge,
   ListItemTransaction as DSListItemTransaction,
+  IOColors,
   IOIconSizeScale,
-  Icon
+  Icon,
+  useIOTheme,
+  VSpacer,
+  IOLogoPaymentType,
+  IOListItemLogoMargin
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { getCardLogoComponent } from "../../features/idpay/common/components/CardLogo";
 import I18n from "../../i18n";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { WithTestID } from "../../types/WithTestID";
 import { getAccessibleAmountText } from "../../utils/accessibility";
 import { isImageUri } from "../../utils/url";
-import { IOLogoPaymentType } from "../core/logos";
-import { VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { NewH6 } from "../core/typography/NewH6";
-import { IOColors, useIOTheme } from "../core/variables/IOColors";
-import { IOListItemLogoMargin } from "../core/variables/IOSpacing";
 import {
   IOListItemStyles,
   IOListItemVisualParams,
   IOStyles
 } from "../core/variables/IOStyles";
 import Avatar from "./Avatar";
+import { LogoPaymentWithFallback } from "./utils/components/LogoPaymentWithFallback";
 import {
   PressableBaseProps,
   PressableListItemBase
-} from "./utils/baseComponents/PressableListItemBase";
+} from "./utils/components/PressableListItemBase";
+
 export type ListItemTransactionStatus =
   | "success"
   | "failure"
@@ -70,6 +72,26 @@ type LeftComponentProps = {
   logoIcon: PaymentLogoIcon;
 };
 
+const getBadgeTextFromStatus = (
+  transactionStatus: ListItemTransactionStatus
+) => {
+  switch (transactionStatus) {
+    case "success":
+    case "refunded":
+      return "";
+    case "failure":
+      return I18n.t("global.badges.failed");
+    case "cancelled":
+      return I18n.t("global.badges.cancelled");
+    case "reversal":
+      return I18n.t("global.badges.reversal");
+    case "pending":
+      return I18n.t("global.badges.onGoing");
+    default:
+      return "";
+  }
+};
+
 const CARD_LOGO_SIZE: IOIconSizeScale = 24;
 const MUNICIPALITY_LOGO_SIZE = 44;
 // this is the <Avatar/>'s "small" size,
@@ -83,7 +105,12 @@ const LeftComponent = ({ logoIcon }: LeftComponentProps) => {
   if (React.isValidElement(logoIcon)) {
     return <>{logoIcon}</>;
   }
-  return getCardLogoComponent(logoIcon as IOLogoPaymentType, CARD_LOGO_SIZE);
+  return (
+    <LogoPaymentWithFallback
+      brand={logoIcon as IOLogoPaymentType}
+      size={CARD_LOGO_SIZE}
+    />
+  );
 };
 
 export const ListItemTransaction = ({
@@ -190,7 +217,9 @@ export const ListItemTransaction = ({
           </View>
         )}
         <View style={IOStyles.flex}>
-          <NewH6 color={theme["textBody-default"]}>{title}</NewH6>
+          <LabelSmall numberOfLines={2} color={theme["textBody-default"]}>
+            {title}
+          </LabelSmall>
           <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
             {subtitle}
           </LabelSmall>
@@ -209,13 +238,6 @@ export const ListItemTransaction = ({
     );
   };
 
-  const DSTransactionStatus =
-    transactionStatus === "success"
-      ? "success"
-      : transactionStatus === "failure"
-      ? "failure"
-      : "pending";
-
   return isDSEnabled ? (
     <DSListItemTransaction
       accessibilityLabel={accessibilityLabel}
@@ -225,9 +247,11 @@ export const ListItemTransaction = ({
       subtitle={subtitle}
       testID={testID}
       title={title}
+      paymentLogoIcon={paymentLogoIcon}
+      badgeText={getBadgeTextFromStatus(transactionStatus)}
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       transactionAmount={transactionAmount!}
-      transactionStatus={DSTransactionStatus}
+      transactionStatus={transactionStatus}
     />
   ) : (
     pipe(

@@ -1,4 +1,4 @@
-import { IOColors } from "../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
 import { Theme } from "../types";
 import variables from "../variables";

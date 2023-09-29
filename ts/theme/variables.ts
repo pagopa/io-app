@@ -10,7 +10,7 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
-import { IOColors } from "../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
@@ -67,11 +67,6 @@ const customVariables = Object.assign(materialVariables, {
   itemSeparator: IOColors.bluegreyLight,
 
   toastColor: IOColors.aquaUltraLight,
-
-  /* When the background is dark */
-  headerIconDark: IOColors.milderGray,
-  /* When the background is light */
-  headerIconLight: IOColors.greyLight,
 
   // Font
   ...makeFontStyleObject(Platform.select),
@@ -173,11 +168,7 @@ const customVariables = Object.assign(materialVariables, {
   activeOpacity: 0.25,
 
   // Spacing
-  spacingBase: 8,
-
-  // IconFont
-  selectedColor: IOColors.blue,
-  unselectedColor: IOColors.bluegrey
+  spacingBase: 8
 });
 
 export default customVariables;

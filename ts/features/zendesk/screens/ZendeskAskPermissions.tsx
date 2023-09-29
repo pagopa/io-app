@@ -3,8 +3,12 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { IOIconSizeScale, Icon } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import {
+  IOColors,
+  IOIconSizeScale,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -63,7 +67,6 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 /**
  * Transform an array of string into a Zendesk

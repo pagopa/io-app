@@ -1,11 +1,11 @@
 import React, { ReactElement, useMemo } from "react";
 import { Dispatch } from "redux";
 import { useLinkTo } from "@react-navigation/native";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
-import { HSpacer } from "../core/spacer/Spacer";
 import { trackPNOptInMessageAccepted } from "../../features/pn/analytics";
 import { PNOptInMessageInfo } from "../../features/pn/utils";
 import { ExtractedCtaButton } from "./ExtractedCtaButton";
@@ -65,7 +65,7 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
         props,
         linkTo,
         false,
-        props.isPNOptInMessage?.cta1HasServiceNavigationLink ?? false,
+        props.isPNOptInMessage?.cta2HasServiceNavigationLink ?? false,
         ctas.cta_2
       ),
     [ctas.cta_2, linkTo, props]
@@ -76,7 +76,7 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
         props,
         linkTo,
         true,
-        props.isPNOptInMessage?.cta2HasServiceNavigationLink ?? false,
+        props.isPNOptInMessage?.cta1HasServiceNavigationLink ?? false,
         ctas.cta_1
       ),
     [ctas.cta_1, linkTo, props]

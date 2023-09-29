@@ -1,7 +1,7 @@
 import React from "react";
 import TestRenderer from "react-test-renderer";
+import type { IOColors } from "@pagopa/io-app-design-system";
 import { IOFontWeight } from "../../fonts";
-import type { IOColors } from "../../variables/IOColors";
 import { Body } from "../Body";
 import { calculateWeightColor } from "../common";
 import { H1 } from "../H1";

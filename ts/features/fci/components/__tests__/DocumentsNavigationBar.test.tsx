@@ -1,9 +1,9 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
+import type { IOColors } from "@pagopa/io-app-design-system";
 import DocumentsNavigationBar, {
   IndicatorPositionEnum
 } from "../DocumentsNavigationBar";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   titleRight: string;

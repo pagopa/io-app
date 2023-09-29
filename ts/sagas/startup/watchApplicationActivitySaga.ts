@@ -1,5 +1,5 @@
 import { AppStateStatus } from "react-native";
-import { call, put, select, takeLatest } from "typed-redux-saga/macro";
+import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { backgroundActivityTimeout } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
@@ -10,6 +10,7 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
+import { handlePendingMessageStateIfAllowedSaga } from "../notifications";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -21,7 +22,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
 
   // eslint-disable-next-line functional/no-let
   let lastState = {
-    appState: "active",
+    appState: "active" as AppStateStatus,
     timestamp: 0
   };
 
@@ -39,6 +40,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
         return;
       }
 
+      // Be aware not to block the code flow is the newApplicationState
+      // is 'active', since it is used later in the
+      // 'handlePendingMessageStateIfAllowedSaga' to check for an app
+      // opening from a push notification received while the application
+      // was in the background state
       if (newApplicationState !== "active") {
         lastState = {
           appState: newApplicationState,
@@ -48,6 +54,8 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
       }
 
       if (lastState.appState !== "active" && newApplicationState === "active") {
+        yield* fork(handlePendingMessageStateIfAllowedSaga);
+
         // Screens requiring identification when the app pass from background/inactive to active state
         const whiteList: ReadonlyArray<string> = [];
 

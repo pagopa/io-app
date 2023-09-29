@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native";
 import { Icon } from "@pagopa/io-app-design-system";
 import { PspData } from "../../../../definitions/pagopa/PspData";
-import { useImageResize } from "../../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../../features/wallet/onboarding/bancomat/hooks/useImageResize";
 import customVariables from "../../../theme/variables";
 import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";

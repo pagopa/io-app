@@ -1,16 +1,17 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { PreferencesListItem } from "../../../../components/PreferencesListItem";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../components/core/IOBadge";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import Markdown from "../../../../components/ui/Markdown";
 import Switch from "../../../../components/ui/Switch";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
+import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
@@ -25,9 +26,6 @@ const styles = StyleSheet.create({
 });
 
 type Props = { paymentMethod: PaymentMethod };
-
-const IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL =
-  "https://io.italia.it/metodi-pagamento";
 
 const getLocales = () => ({
   available: I18n.t("wallet.methods.card.pagoPaCapability.active"),
@@ -57,14 +55,14 @@ const availabilityBadge = (
  *
  * We have 4 possible different cases:
  *   - The card can pay on IO -> has capability pagoPa
- *   - The card will be able to pay in the future on IO -> Satispay, BPay
+ *   - The card will be able to pay in the future on IO -> BPay
  *   - The card is not able to pay on IO, (no pagoPa capability) and type === PRV or Bancomat
  *   - The card can onboard another card that can pay on IO -> co-badge credit card (no pagoPa capability) and type !== PRV
  * @param props
  */
 const PagoPaPaymentCapability: React.FC<Props> = props => {
   const onOpenLearnMoreAboutInAppPayments = () =>
-    openWebUrl(IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL);
+    openWebUrl(acceptedPaymentMethodsFaqUrl);
   const paymentSupported = isPaymentSupported(props.paymentMethod);
 
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(

@@ -1,8 +1,8 @@
 import I18n from "i18n-js";
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";
-import { VSpacer } from "../core/spacer/Spacer";
 import BlockButtons from "../ui/BlockButtons";
 import Markdown from "../ui/Markdown";
 import EmailCallCTA from "./EmailCallCTA";
