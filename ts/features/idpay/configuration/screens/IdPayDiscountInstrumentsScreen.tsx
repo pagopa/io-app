@@ -1,7 +1,13 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import React from "react";
-
 import { H1, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { ScrollView, StyleSheet } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
@@ -9,8 +15,12 @@ import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { idpayDiscountInitiativeInstrumentsGet } from "../store/actions";
 import {
+  idpayInitiativeInstrumentDelete,
+  idpayInitiativeInstrumentsGet
+} from "../store/actions";
+import {
+  idPayIsLoadingInitiativeInstrumentSelector,
   idpayDiscountInitiativeInstrumentsSelector,
   isLoadingDiscountInitiativeInstrumentsSelector
 } from "../store";
@@ -19,11 +29,13 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
-import { idpayInitiativesInstrumentDelete } from "../../wallet/store/actions";
+import { IdPayCodeRoutes } from "../../code/navigation/routes";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IdPayCodeParamsList } from "../../code/navigation/params";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
-  initiativeId?: string;
-  initiativeName?: string;
+  initiativeId: string;
+  initiativeName: string;
 };
 
 type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
@@ -34,15 +46,14 @@ type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
 const IdPayDiscountInstrumentsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<IdPayDiscountInstrumentsScreenRouteProps>();
-  // TODO: Uncomment this when the navigation is available to navigate to the onboarding screen
-  // const navigation =
-  //   useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
+  const navigation =
+    useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const { initiativeId, initiativeName } = route.params;
 
   const initiativePaymentMethods = useIOSelector(
     idpayDiscountInitiativeInstrumentsSelector
   );
-  const isLoadingPaymentMethods = useIOSelector(
+  const isLoadingDiscountInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
@@ -54,33 +65,38 @@ const IdPayDiscountInstrumentsScreen = () => {
     [initiativePaymentMethods]
   );
 
+  const isLoadingIdPayCodeInstrument = useIOSelector(state =>
+    idPayIsLoadingInitiativeInstrumentSelector(
+      state,
+      idPayCodeInitiative?.instrumentId || ""
+    )
+  );
+
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
-  React.useEffect(() => {
+  const refresh = React.useCallback(() => {
     if (initiativeId) {
       dispatch(
-        idpayDiscountInitiativeInstrumentsGet.request({
+        idpayInitiativeInstrumentsGet.request({
           initiativeId
         })
       );
     }
   }, [initiativeId, dispatch]);
 
+  useFocusEffect(refresh);
+
   const handleCieValueChange = (value: boolean) => {
     if (value) {
-      // TODO: If value is true, navigate to onboarding screen
-      //   navigation.navigate(
-      //     IDPayConfigurationParamsList.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-      //     {
-      //       initiative,
-      //       paymentMethodType
-      //     }
-      //   );
+      navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+        screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING,
+        params: { initiativeId }
+      });
     } else {
       if (idPayCodeInitiative && initiativeId) {
         dispatch(
-          idpayInitiativesInstrumentDelete.request({
+          idpayInitiativeInstrumentDelete.request({
             initiativeId,
             instrumentId: idPayCodeInitiative.instrumentId
           })
@@ -93,7 +109,7 @@ const IdPayDiscountInstrumentsScreen = () => {
     <>
       <TopScreenComponent goBack contextualHelp={emptyContextualHelp}>
         <LoadingSpinnerOverlay
-          isLoading={isLoadingPaymentMethods}
+          isLoading={isLoadingDiscountInstruments}
           loadingOpacity={1}
         >
           <ScrollView style={styles.container}>
@@ -112,7 +128,7 @@ const IdPayDiscountInstrumentsScreen = () => {
               onValueChange={handleCieValueChange}
               onPressAction={presentCieBottomSheet}
               status={idPayCodeInitiative?.status}
-              isLoading={isLoadingPaymentMethods}
+              isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
               value={idPayCodeInitiative ? true : false}
             />
             <IdPayDiscountInstrumentEnrollmentSwitch

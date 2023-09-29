@@ -1,45 +1,104 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
-import * as _ from "lodash";
+import * as O from "fp-ts/lib/Option";
+
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { InstrumentListDTO } from "../../../../../definitions/idpay/InstrumentListDTO";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { idpayDiscountInitiativeInstrumentsGet } from "./actions";
+import { StatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
+import {
+  idpayInitiativeInstrumentDelete,
+  idpayInitiativeInstrumentsGet
+} from "./actions";
 
-export type IDPayInitiativeConfigurationState = {
-  discountInstruments: pot.Pot<InstrumentListDTO, NetworkError>;
+export type IdPayInitiativeConfigurationState = {
+  instruments: pot.Pot<InstrumentListDTO, NetworkError>;
+  instrumentStatus: Record<string, pot.Pot<StatusEnum, NetworkError>>;
 };
 
-const INITIAL_STATE: IDPayInitiativeConfigurationState = {
-  discountInstruments: pot.none
+const INITIAL_STATE: IdPayInitiativeConfigurationState = {
+  instruments: pot.none,
+  instrumentStatus: {}
 };
 
 const reducer = (
-  state: IDPayInitiativeConfigurationState = INITIAL_STATE,
+  state: IdPayInitiativeConfigurationState = INITIAL_STATE,
   action: Action
-): IDPayInitiativeConfigurationState => {
+): IdPayInitiativeConfigurationState => {
   switch (action.type) {
-    case getType(idpayDiscountInitiativeInstrumentsGet.request):
+    case getType(idpayInitiativeInstrumentsGet.request):
       return {
         ...state,
-        discountInstruments: pot.toLoading(pot.none)
+        instruments: pot.toLoading(pot.none)
       };
-    case getType(idpayDiscountInitiativeInstrumentsGet.success):
+    case getType(idpayInitiativeInstrumentsGet.success):
       return {
         ...state,
-        discountInstruments: pot.some(action.payload)
+        instruments: pot.some(action.payload)
       };
-    case getType(idpayDiscountInitiativeInstrumentsGet.failure):
+    case getType(idpayInitiativeInstrumentsGet.failure):
       return {
         ...state,
-        discountInstruments: pot.toError(
-          state.discountInstruments,
-          action.payload
-        )
+        instruments: pot.toError(state.instruments, action.payload)
       };
+    case getType(idpayInitiativeInstrumentDelete.request): {
+      const { instrumentId } = action.payload;
+      if (!state.instrumentStatus[instrumentId]) {
+        return {
+          ...state,
+          instrumentStatus: {
+            ...state.instrumentStatus,
+            [instrumentId]: pot.noneLoading
+          }
+        };
+      }
+      return {
+        ...state,
+        instrumentStatus: {
+          ...state.instrumentStatus,
+          [instrumentId]: pot.toLoading(state.instrumentStatus[instrumentId])
+        }
+      };
+    }
+    case getType(idpayInitiativeInstrumentDelete.success): {
+      const { instrumentId } = action.payload;
+      return {
+        instruments: pipe(
+          pot.getOrElse(state.instruments, null),
+          O.fromNullable,
+          O.map(el => el.instrumentList),
+          O.map(instruments =>
+            instruments.filter(
+              instrument => instrument.instrumentId !== instrumentId
+            )
+          ),
+          O.map(filteredInstruments =>
+            pot.some({ instrumentList: filteredInstruments })
+          ),
+          O.getOrElseW(() => pot.none)
+        ),
+        instrumentStatus: {
+          ...state.instrumentStatus,
+          [instrumentId]: pot.some(StatusEnum.PENDING_DEACTIVATION_REQUEST)
+        }
+      };
+    }
+    case getType(idpayInitiativeInstrumentDelete.failure): {
+      const { instrumentId, error } = action.payload;
+      return {
+        ...state,
+        instrumentStatus: {
+          ...state.instrumentStatus,
+          [instrumentId]: pot.toError(
+            state.instrumentStatus[instrumentId],
+            error
+          )
+        }
+      };
+    }
   }
   return state;
 };
@@ -49,18 +108,20 @@ const idpayInitativeConfigurationSelector = (state: GlobalState) =>
 
 export const idpayInitiativePaymentMethodsSelector = createSelector(
   idpayInitativeConfigurationSelector,
-  inititative => inititative.discountInstruments
+  inititative => inititative.instruments
+);
+
+export const idPayInitiativeInstrumentsStatusSelector = createSelector(
+  idpayInitativeConfigurationSelector,
+  inititative => inititative.instrumentStatus
 );
 
 export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
-  discountInstruments =>
+  instruments =>
     pipe(
       pot.getOrElse(
-        pot.map(
-          discountInstruments,
-          discountInstruments => discountInstruments.instrumentList
-        ),
+        pot.map(instruments, instruments => instruments.instrumentList),
         []
       )
     )
@@ -69,6 +130,13 @@ export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
 export const isLoadingDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   paymentMethods => pot.isLoading(paymentMethods)
+);
+
+export const idPayIsLoadingInitiativeInstrumentSelector = createSelector(
+  idPayInitiativeInstrumentsStatusSelector,
+  (_: GlobalState, instrumentId: string) => instrumentId,
+  (instrumentsStatus, instrumentId) =>
+    instrumentsStatus[instrumentId] ?? pot.none
 );
 
 export default reducer;

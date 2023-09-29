@@ -3693,7 +3693,7 @@ idpay:
       paymentMethods:
         badge:
           active: "Attivo"
-          pending: "In lavorazione"
+          pending: "In attesa"
         header: "Come vuoi autorizzare i pagamenti?"
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
         IDPAYCODE:
