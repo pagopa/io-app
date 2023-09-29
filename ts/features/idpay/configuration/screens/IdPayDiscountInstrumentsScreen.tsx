@@ -16,8 +16,9 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  idpayInitiativeInstrumentDelete,
-  idpayInitiativeInstrumentsGet
+  idPayInitiativesInstrumentRefreshStart,
+  idPayInitiativesInstrumentRefreshStop,
+  idpayInitiativeInstrumentDelete
 } from "../store/actions";
 import {
   idPayIsLoadingInitiativeInstrumentSelector,
@@ -35,7 +36,7 @@ import { IdPayCodeParamsList } from "../../code/navigation/params";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId: string;
-  initiativeName: string;
+  initiativeName?: string;
 };
 
 type IdPayDiscountInstrumentsScreenRouteProps = RouteProp<
@@ -53,7 +54,7 @@ const IdPayDiscountInstrumentsScreen = () => {
   const initiativePaymentMethods = useIOSelector(
     idpayDiscountInitiativeInstrumentsSelector
   );
-  const isLoadingDiscountInstruments = useIOSelector(
+  const isLoadingInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
@@ -75,17 +76,18 @@ const IdPayDiscountInstrumentsScreen = () => {
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
-  const refresh = React.useCallback(() => {
-    if (initiativeId) {
-      dispatch(
-        idpayInitiativeInstrumentsGet.request({
-          initiativeId
-        })
-      );
-    }
+  const getInstruments = React.useCallback(() => {
+    dispatch(
+      idPayInitiativesInstrumentRefreshStart({
+        initiativeId
+      })
+    );
+    return () => {
+      dispatch(idPayInitiativesInstrumentRefreshStop());
+    };
   }, [initiativeId, dispatch]);
 
-  useFocusEffect(refresh);
+  useFocusEffect(getInstruments);
 
   const handleCieValueChange = (value: boolean) => {
     if (value) {
@@ -109,7 +111,7 @@ const IdPayDiscountInstrumentsScreen = () => {
     <>
       <TopScreenComponent goBack contextualHelp={emptyContextualHelp}>
         <LoadingSpinnerOverlay
-          isLoading={isLoadingDiscountInstruments}
+          isLoading={isLoadingInstruments}
           loadingOpacity={1}
         >
           <ScrollView style={styles.container}>

@@ -7,22 +7,23 @@ import { View } from "react-native";
 import { H3 } from "../../../../components/core/typography/H3";
 import ListItemNav from "../../../../components/ui/ListItemNav";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { Skeleton } from "../../common/components/Skeleton";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../configuration/navigation/navigator";
 
 type Props = {
-  initiative?: InitiativeDTO;
+  initiative: InitiativeDTO;
 };
 
 const InitiativeDiscountSettingsComponent = (props: Props) => {
   const { initiative } = props;
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation =
+    useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
 
   const navigateToInstrumentsConfiguration = (initiative: InitiativeDTO) => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
