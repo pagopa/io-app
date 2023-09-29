@@ -84,6 +84,14 @@ export type IOBarcodeCameraScanner = {
    * Returns true if the device has a torch
    */
   hasTorch: boolean;
+  /**
+   * Returns true if the torch is on
+   */
+  isTorchOn: boolean;
+  /**
+   * Toggles the torch states between "on" and "off"
+   */
+  toggleTorch: () => void;
 };
 
 /**
@@ -163,6 +171,7 @@ export const useIOBarcodeCameraScanner = ({
 
   // Checks that the device has a torch
   const hasTorch = !!device?.hasTorch;
+  const [isTorchOn, setTorchOn] = React.useState<boolean>(false);
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
@@ -302,6 +311,7 @@ export const useIOBarcodeCameraScanner = ({
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
           isActive={!disabled}
+          torch={isTorchOn ? "on" : "off"}
         />
       )}
       <View style={{ alignSelf: "center" }}>
@@ -310,12 +320,16 @@ export const useIOBarcodeCameraScanner = ({
     </View>
   );
 
+  const toggleTorch = () => setTorchOn(prev => !prev);
+
   return {
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
     openCameraSettings,
-    hasTorch
+    hasTorch,
+    isTorchOn,
+    toggleTorch
   };
 };
 
