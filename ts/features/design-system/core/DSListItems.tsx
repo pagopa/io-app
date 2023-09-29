@@ -1,9 +1,11 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { Alert, View } from "react-native";
+import { Alert, ImageURISource, View } from "react-native";
 import {
   ButtonLink,
+  Divider,
+  IOLogoPaymentType,
   IOThemeContext,
   Icon,
   IconButton,
@@ -12,6 +14,8 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemNavAlert,
+  ListItemTransaction,
+  ListItemTransactionStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
@@ -27,13 +31,8 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationListItem } from "../../idpay/details/components/TimelineOperationListItem";
-import {
-  OperationTypeEnum,
-  StatusEnum
-} from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
+import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -244,22 +243,7 @@ export const DSListItems = () => (
             accessibilityLabel={"Accessibility Label"}
           />
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="TimelineTransactionCard">
-          <TimelineOperationListItem
-            operation={{
-              brand: "MASTERCARD",
-              operationId: "213123",
-              operationType: "Pagamento Pos" as OperationTypeEnum,
-              operationDate: new Date(),
-              brandLogo: "",
-              maskedPan: "****",
-              amount: 100,
-              accrued: 50,
-              circuitType: "MasterCard",
-              status: StatusEnum.AUTHORIZED
-            }}
-          />
-        </DSComponentViewerBox>
+
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -515,91 +499,146 @@ const renderListItemInfo = () => (
   </DSComponentViewerBox>
 );
 
-const renderListItemTransaction = () => {
-  const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
-  const organizationLogoURI = {
-    imageSource: `${cdnPath}82003830161.png`,
-    name: "Comune di Milano"
-  };
-  return (
-    <DSComponentViewerBox name="ListItemTransaction">
-      <View>
-        <ListItemTransaction
-          title="Title"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          isLoading={true}
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Title"
-          subtitle="subtitle"
-          paymentLogoIcon={"amex"}
-          transactionStatus="failure"
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Title"
-          subtitle="subtitle"
-          paymentLogoIcon={{ uri: organizationLogoURI.imageSource }}
-          transactionStatus="pending"
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Title"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Title"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          paymentLogoIcon={"mastercard"}
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Title"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          hasChevronRight={true}
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="This one is not clickable"
-          subtitle="subtitle"
-          transactionStatus="failure"
-          paymentLogoIcon={"postepay"}
-        />
-        <ListItemTransaction
-          title="This one is clickable but has a very long title"
-          subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
-          transactionAmount="€ 1.000,00"
-          paymentLogoIcon={"postepay"}
-          onPress={onButtonPress}
-          transactionStatus="success"
-        />
-        <ListItemTransaction
-          title="Custom icon"
-          subtitle="This one has a custom icon on the left"
-          transactionStatus="success"
-          paymentLogoIcon={<Icon name="notice" color="red" />}
-          transactionAmount=""
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Refunded transaction"
-          subtitle="This one has a custom icon and transaction amount with a green color"
-          transactionStatus="refunded"
-          paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
-          transactionAmount="€ 100"
-          onPress={onButtonPress}
-        />
-      </View>
-    </DSComponentViewerBox>
-  );
+/* LIST ITEM TRANSACTION */
+
+type PartialTransactionStatus = Exclude<
+  ListItemTransactionStatus,
+  "success" | "refunded"
+>;
+
+/* Mock assets */
+const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const organizationLogoURI = {
+  imageSource: `${cdnPath}82003830161.png`,
+  name: "Comune di Milano"
 };
+
+type mockTransactionStatusData = {
+  status: PartialTransactionStatus;
+  asset: IOLogoPaymentType | ImageURISource | React.ReactNode;
+};
+
+const transactionStatusArray: Array<mockTransactionStatusData> = [
+  {
+    status: "failure",
+    asset: "amex"
+  },
+  {
+    status: "pending",
+    asset: { uri: organizationLogoURI.imageSource }
+  },
+  {
+    status: "cancelled",
+    asset: "unionPay"
+  },
+  {
+    status: "reversal",
+    asset: "applePay"
+  }
+];
+
+const renderListItemTransaction = () => (
+  <DSComponentViewerBox name="ListItemTransaction">
+    <View>
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        isLoading={true}
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      {transactionStatusArray.map(
+        ({ status, asset }: mockTransactionStatusData) => (
+          <React.Fragment key={`transactionStatus-${status}`}>
+            <ListItemTransaction
+              title="Title"
+              subtitle="subtitle"
+              paymentLogoIcon={asset}
+              transactionStatus={status}
+              badgeText={getBadgeTextByTransactionStatus(status)}
+              onPress={onButtonPress}
+            />
+            <Divider />
+          </React.Fragment>
+        )
+      )}
+
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        paymentLogoIcon={"mastercard"}
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        hasChevronRight={true}
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="This one is not clickable"
+        subtitle="subtitle"
+        transactionStatus="failure"
+        badgeText={getBadgeTextByTransactionStatus("failure")}
+        paymentLogoIcon={"postepay"}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="This one is clickable but has a very long title"
+        subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
+        transactionAmount="€ 1.000,00"
+        paymentLogoIcon={"postepay"}
+        onPress={onButtonPress}
+        transactionStatus="success"
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Custom icon"
+        subtitle="This one has a custom icon on the left"
+        transactionStatus="success"
+        paymentLogoIcon={<Icon name="notice" color="red" />}
+        transactionAmount=""
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Refunded transaction"
+        subtitle="This one has a custom icon and transaction amount with a green color"
+        transactionStatus="refunded"
+        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+        transactionAmount="€ 100"
+        onPress={onButtonPress}
+      />
+    </View>
+  </DSComponentViewerBox>
+);
