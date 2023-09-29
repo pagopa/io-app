@@ -3,7 +3,7 @@ import {
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import { walletProviderUrl } from "../../../config";
-import { generateCryptoKey } from "./keychain";
+import { getOrGenerateCyptoKey } from "./keychain";
 
 /**
  * The key alias used to store the WIA crypto key in the keychain.
@@ -16,7 +16,7 @@ export const ITW_WIA_KEY_TAG = "ITW_WIA_CRYTPO";
  * @returns the WIA attestation
  */
 export const getWia = async () => {
-  await generateCryptoKey(ITW_WIA_KEY_TAG);
+  await getOrGenerateCyptoKey(ITW_WIA_KEY_TAG);
   const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
   const issuingAttestation = WalletInstanceAttestation.getAttestation({
     wiaCryptoContext
