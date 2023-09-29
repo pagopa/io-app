@@ -72,7 +72,7 @@ export const idPayInitiativesFromInstrumentRefreshStop = createStandardAction(
   "IDPAY_INITIATIVES_FROM_INSTRUMENT_REFRESH_STOP"
 )();
 
-export type IDPayWalletActions =
+export type IdPayWalletActions =
   | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayInitiativesFromInstrumentGet>
   | ActionType<typeof idpayInitiativesInstrumentEnroll>
