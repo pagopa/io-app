@@ -115,7 +115,8 @@ import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStat
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
-  initMixpanel
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
 import {
   handlePendingMessageStateIfAllowedSaga,
@@ -268,6 +269,7 @@ export function* initializeApplicationSaga(
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
+  yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
