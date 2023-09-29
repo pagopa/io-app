@@ -294,25 +294,28 @@ const renderListItemNav = () => (
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNav
           value={"Value"}
           description="Description"
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNav
           value="A looong looooong looooooooong looooooooooong title"
           description="Description"
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
-
+        <Divider />
         <ListItemNav
           value={"Value"}
           icon="gallery"
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNav
           value={"Value"}
           description="Description"
@@ -329,18 +332,21 @@ const renderListItemNav = () => (
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNavAlert
           value={"Value"}
           description="Description"
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNavAlert
           withoutIcon
           value={"Value"}
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNavAlert
           withoutIcon
           value={"Value"}
@@ -362,6 +368,7 @@ const renderListItemInfoCopy = () => (
         onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
       />
+      <Divider />
       <ListItemInfoCopy
         label={"Codice fiscale"}
         value="01199250158"
@@ -369,6 +376,7 @@ const renderListItemInfoCopy = () => (
         accessibilityLabel="Empty just for testing purposes"
         icon="institution"
       />
+      <Divider />
       <ListItemInfoCopy
         label={"Carta di credito"}
         value="4975 3013 5042 7899"
@@ -376,6 +384,7 @@ const renderListItemInfoCopy = () => (
         accessibilityLabel="Empty just for testing purposes"
         icon="creditCard"
       />
+      <Divider />
       <ListItemInfoCopy
         label={"Indirizzo"}
         value={`P.za Colonna, 370\n00186 Roma (RM)`}
@@ -457,11 +466,13 @@ const renderListItemInfo = () => (
         value={"Value"}
         accessibilityLabel="Empty just for testing purposes"
       />
+      <Divider />
       <ListItemInfo
         label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
       />
+      <Divider />
       <ListItemInfo
         icon="creditCard"
         label="Label"
@@ -475,6 +486,7 @@ const renderListItemInfo = () => (
           />
         }
       />
+      <Divider />
       <ListItemInfo
         icon="psp"
         label="Label"
@@ -488,7 +500,7 @@ const renderListItemInfo = () => (
           />
         }
       />
-
+      <Divider />
       <ListItemInfo
         label="Label"
         value={"Value"}
