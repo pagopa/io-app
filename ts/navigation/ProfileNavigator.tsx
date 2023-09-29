@@ -38,7 +38,7 @@ import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePla
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+const profilePrivacyContextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
   body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
 };
@@ -53,7 +53,7 @@ const ProfileStackNavigator = () => {
 
   const startSupportRequest = useStartSupportRequest({
     faqCategories: ["privacy"],
-    contextualHelpMarkdown
+    profilePrivacyContextualHelpMarkdown
   });
 
   return (
