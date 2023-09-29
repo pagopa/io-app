@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0-rc.5](https://github.com/pagopa/io-app/compare/0.4.0-rc.4...0.4.0-rc.5) (2023-09-29)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-558](https://pagopa.atlassian.net/browse/SIW-558)] Fix camera crash on iPhone 15 ([#5048](https://github.com/pagopa/io-app/issues/5048)) ([b4287ff](https://github.com/pagopa/io-app/commit/b4287ff6cfd78c33429b2b377555e65fee63177d)), closes [/github.com/mrousavy/react-native-vision-camera/issues/1840#issuecomment-1732360337](https://github.com/pagopa//github.com/mrousavy/react-native-vision-camera/issues/1840/issues/issuecomment-1732360337)
+
 ## [0.4.0-rc.4](https://github.com/pagopa/io-app/compare/0.4.0-rc.2...0.4.0-rc.4) (2023-09-28)
 
 
