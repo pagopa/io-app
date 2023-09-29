@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { call, delay, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -60,6 +60,26 @@ export function* handleGetInitiativeInstruments(
   } catch (e) {
     yield* put(
       idpayInitiativeInstrumentsGet.failure({ ...getNetworkError(e) })
+    );
+  }
+}
+
+export function* handleInitiativesFromInstrumentRefresh(
+  initiativeId: string,
+  refreshDelay: number = 3000
+) {
+  yield* put(
+    idpayInitiativeInstrumentsGet.request({
+      initiativeId
+    })
+  );
+  while (true) {
+    yield* delay(refreshDelay);
+    yield* put(
+      idpayInitiativeInstrumentsGet.request({
+        initiativeId,
+        isRefreshing: true
+      })
     );
   }
 }

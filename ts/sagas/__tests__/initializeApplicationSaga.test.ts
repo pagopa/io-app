@@ -15,7 +15,10 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
-import { initMixpanel } from "../mixpanel";
+import {
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
+} from "../mixpanel";
 import {
   loadProfile,
   watchProfile,
@@ -92,6 +95,8 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // checkSession
@@ -148,6 +153,8 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(401) // checksession
@@ -187,6 +194,8 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .spawn(watchLogoutSaga, undefined)
       .next()
@@ -232,6 +241,8 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .spawn(watchLogoutSaga, undefined)
       .next()

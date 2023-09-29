@@ -30,9 +30,14 @@ const reducer = (
 ): IdPayInitiativeConfigurationState => {
   switch (action.type) {
     case getType(idpayInitiativeInstrumentsGet.request):
+      if (!action.payload.isRefreshing) {
+        return {
+          ...state,
+          instruments: pot.noneLoading
+        };
+      }
       return {
-        ...state,
-        instruments: pot.toLoading(pot.none)
+        ...state
       };
     case getType(idpayInitiativeInstrumentsGet.success):
       return {
@@ -71,13 +76,15 @@ const reducer = (
           O.fromNullable,
           O.map(el => el.instrumentList),
           O.map(instruments =>
-            instruments.filter(
-              instrument => instrument.instrumentId !== instrumentId
-            )
+            instruments.map(instrument => ({
+              ...instrument,
+              status:
+                instrument.instrumentId === instrumentId
+                  ? StatusEnum.PENDING_DEACTIVATION_REQUEST
+                  : instrument.status
+            }))
           ),
-          O.map(filteredInstruments =>
-            pot.some({ instrumentList: filteredInstruments })
-          ),
+          O.map(instruments => pot.some({ instrumentList: instruments })),
           O.getOrElseW(() => pot.none)
         ),
         instrumentStatus: {
@@ -116,6 +123,9 @@ export const idPayInitiativeInstrumentsStatusSelector = createSelector(
   inititative => inititative.instrumentStatus
 );
 
+/**
+ * Selector that returns the list of retrieved instruments
+ */
 export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   instruments =>
@@ -127,11 +137,17 @@ export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
     )
 );
 
+/**
+ * Selector that returns true if the instrument list is loading
+ */
 export const isLoadingDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   paymentMethods => pot.isLoading(paymentMethods)
 );
 
+/**
+ * Selector used to know if a specific initiativeId is loading or not
+ */
 export const idPayIsLoadingInitiativeInstrumentSelector = createSelector(
   idPayInitiativeInstrumentsStatusSelector,
   (_: GlobalState, instrumentId: string) => instrumentId,
