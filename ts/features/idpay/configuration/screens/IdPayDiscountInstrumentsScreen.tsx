@@ -1,8 +1,12 @@
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import React from "react";
 
 import { H1, VSpacer } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { ScrollView, StyleSheet } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -25,7 +29,7 @@ import { idpayInitiativesInstrumentDelete } from "../../wallet/store/actions";
 import { IdPayCodeRoutes } from "../../code/navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
-import { idPayInitiativeFromInstrumentPotSelector } from "../../wallet/store/reducers";
+import { idPayIsLoadingInitiativeFromInstrumentPotSelector } from "../../wallet/store/reducers";
 
 type IdPayDiscountInstrumentsScreenRouteParams = {
   initiativeId: string;
@@ -50,8 +54,8 @@ const IdPayDiscountInstrumentsScreen = () => {
   const isLoadingDiscountInstruments = useIOSelector(
     isLoadingDiscountInitiativeInstrumentsSelector
   );
-  const switchValue = useIOSelector(state =>
-    idPayInitiativeFromInstrumentPotSelector(state, initiativeId)
+  const isLoadingInstrument = useIOSelector(state =>
+    idPayIsLoadingInitiativeFromInstrumentPotSelector(state, initiativeId)
   );
 
   const idPayCodeInitiative = React.useMemo(
@@ -65,7 +69,7 @@ const IdPayDiscountInstrumentsScreen = () => {
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
 
-  React.useEffect(() => {
+  const refresh = React.useCallback(() => {
     if (initiativeId) {
       dispatch(
         idpayDiscountInitiativeInstrumentsGet.request({
@@ -74,6 +78,8 @@ const IdPayDiscountInstrumentsScreen = () => {
       );
     }
   }, [initiativeId, dispatch]);
+
+  useFocusEffect(refresh);
 
   const handleCieValueChange = (value: boolean) => {
     if (value) {
@@ -116,7 +122,7 @@ const IdPayDiscountInstrumentsScreen = () => {
               onValueChange={handleCieValueChange}
               onPressAction={presentCieBottomSheet}
               status={idPayCodeInitiative?.status}
-              isLoading={pot.isLoading(switchValue)}
+              isLoading={isLoadingInstrument}
               value={idPayCodeInitiative ? true : false}
             />
             <IdPayDiscountInstrumentEnrollmentSwitch
