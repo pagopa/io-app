@@ -1,11 +1,16 @@
 import * as React from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
+
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
 import { showIdPayCodeBannerSelector } from "../store/selectors";
 import { ScaleInOutAnimation } from "../../../../components/animations/ScaleInOutAnimation";
 import { preferencesIdPayCodeCieBannerClose } from "../../../../store/actions/persistedPreferences";
+import { IdPayCodeParamsList } from "../navigation/params";
+import { IdPayCodeRoutes } from "../navigation/routes";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
 export type IdPayCodeCIEBannerParams = {
   initiativeId: string;
@@ -13,7 +18,8 @@ export type IdPayCodeCIEBannerParams = {
 
 const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
   const bannerViewRef = React.useRef(null);
-  // const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation =
+    useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const dispatch = useIODispatch();
   const showBanner = useIOSelector(showIdPayCodeBannerSelector);
 
@@ -29,6 +35,15 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
 
   const handleOnCloseBanner = () => {
     dispatch(preferencesIdPayCodeCieBannerClose({ initiativeId }));
+  };
+
+  const handleNavigateToOnboardingStart = () => {
+    navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING,
+      params: {
+        initiativeId
+      }
+    });
   };
 
   if (showBanner) {
@@ -47,9 +62,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
           action={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.action"
           )}
-          onPress={() => {
-            // TODO: Navigate to the onboarding IDPay code screen
-          }}
+          onPress={handleNavigateToOnboardingStart}
           onClose={handleOnCloseBanner}
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
