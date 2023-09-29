@@ -7,7 +7,6 @@ import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserD
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
-// import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -186,11 +185,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       loadingOpacity={0.9}
       loadingCaption={I18n.t("profile.main.privacy.loading")}
     >
-      {/* <TopScreenComponent
-        goBack={() => navigation.goBack()}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}
-      > */}
       <ScreenContent
         title={I18n.t("profile.main.privacy.title")}
         subtitle={I18n.t("profile.main.privacy.subtitle")}
@@ -255,7 +249,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           />
         </List>
       </ScreenContent>
-      {/* </TopScreenComponent> */}
     </LoadingSpinnerOverlay>
   );
 };
