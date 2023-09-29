@@ -2,7 +2,7 @@ import { PID, createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { walletPidProviderUrl, walletProviderUrl } from "../../../config";
 import { ITW_WIA_KEY_TAG } from "./wia";
-import { generateCryptoKey } from "./keychain";
+import { getOrGenerateCyptoKey } from "./keychain";
 
 /**
  * PID Key Tag for interacting with the keychain.
@@ -32,7 +32,7 @@ export const getPid = async (instanceAttestation: string, pidData: PidData) => {
 
   // Generate fresh key for PID binding
   // ensure the key esists befor starting the issuing process
-  await generateCryptoKey(ITW_PID_KEY_TAG);
+  await getOrGenerateCyptoKey(ITW_PID_KEY_TAG);
   const pidCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
 
   // Credential request
