@@ -53,7 +53,7 @@ const ProfileStackNavigator = () => {
 
   const startSupportRequest = useStartSupportRequest({
     faqCategories: ["privacy"],
-    profilePrivacyContextualHelpMarkdown
+    contextualHelpMarkdown: profilePrivacyContextualHelpMarkdown
   });
 
   return (
