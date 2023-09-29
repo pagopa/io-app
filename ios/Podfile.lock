@@ -544,8 +544,6 @@ PODS:
     - React-Core
   - RNSVG (12.3.0):
     - React-Core
-  - RNVectorIcons (7.0.0):
-    - React
   - RNZendeskChat (0.3.23):
     - React
     - ZendeskAnswerBotSDK (~> 3.0.0)
@@ -692,7 +690,6 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
   - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
@@ -899,8 +896,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNVectorIcons:
-    :path: "../node_modules/react-native-vector-icons"
   RNZendeskChat:
     :path: "../node_modules/io-react-native-zendesk"
   vision-camera-code-scanner:
