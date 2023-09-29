@@ -24,6 +24,8 @@ export const initializeMixPanel = async () => {
   const privateInstance = new MixpanelInstance(mixpanelToken);
   await privateInstance.initialize();
   mixpanel = privateInstance;
+  // On app first open
+  // On profile page, when user opt-in
   await setupMixpanel(mixpanel);
 };
 
@@ -47,8 +49,16 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     biometricTechnology,
     isScreenLockSet
   });
+};
+
+export const identifyMixpanel = async () => {
   // Identify the user using the device uniqueId
-  await mp.identify(getDeviceId());
+  await mixpanel?.identify(getDeviceId());
+};
+
+export const resetMixpanel = async () => {
+  // Reset mixpanel auto generated uniqueId
+  await mixpanel?.reset();
 };
 
 export const terminateMixpanel = async () => {
