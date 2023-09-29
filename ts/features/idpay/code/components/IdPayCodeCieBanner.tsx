@@ -2,7 +2,7 @@ import * as React from "react";
 import { VSpacer, Banner } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { idpayDiscountInitiativeInstrumentsGet } from "../../configuration/store/actions";
+import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
 import { showIdPayCodeBannerSelector } from "../store/selectors";
 import { ScaleInOutAnimation } from "../../../../components/animations/ScaleInOutAnimation";
 import { preferencesIdPayCodeCieBannerClose } from "../../../../store/actions/persistedPreferences";
@@ -20,7 +20,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
   React.useEffect(() => {
     if (initiativeId) {
       dispatch(
-        idpayDiscountInitiativeInstrumentsGet.request({
+        idpayInitiativeInstrumentsGet.request({
           initiativeId
         })
       );
