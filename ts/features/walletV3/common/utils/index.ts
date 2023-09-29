@@ -1,4 +1,4 @@
-import { ListItemTransactionStatus } from "@pagopa/io-app-design-system";
+import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 
 /**
@@ -7,7 +7,7 @@ import I18n from "i18n-js";
  */
 
 export const getBadgeTextByTransactionStatus = (
-  transactionStatus: Exclude<ListItemTransactionStatus, "success" | "refunded">
+  transactionStatus: ListItemTransactionStatusWithBadge
 ) => {
   switch (transactionStatus) {
     case "failure":

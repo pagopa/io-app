@@ -1,11 +1,10 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { Alert, ImageURISource, View } from "react-native";
+import { Alert, View } from "react-native";
 import {
   ButtonLink,
   Divider,
-  IOLogoPaymentType,
   IOThemeContext,
   Icon,
   IconButton,
@@ -15,7 +14,8 @@ import {
   ListItemNav,
   ListItemNavAlert,
   ListItemTransaction,
-  ListItemTransactionStatus,
+  ListItemTransactionLogo,
+  ListItemTransactionStatusWithBadge,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
@@ -513,11 +513,6 @@ const renderListItemInfo = () => (
 
 /* LIST ITEM TRANSACTION */
 
-type PartialTransactionStatus = Exclude<
-  ListItemTransactionStatus,
-  "success" | "refunded"
->;
-
 /* Mock assets */
 const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
 const organizationLogoURI = {
@@ -526,8 +521,8 @@ const organizationLogoURI = {
 };
 
 type mockTransactionStatusData = {
-  status: PartialTransactionStatus;
-  asset: IOLogoPaymentType | ImageURISource | React.ReactNode;
+  status: ListItemTransactionStatusWithBadge;
+  asset: ListItemTransactionLogo;
 };
 
 const transactionStatusArray: Array<mockTransactionStatusData> = [

@@ -5,7 +5,8 @@ import React from "react";
 import {
   Icon,
   ListItemTransaction,
-  ListItemTransactionStatus
+  ListItemTransactionStatus,
+  ListItemTransactionStatusWithBadge
 } from "@pagopa/io-app-design-system";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../definitions/idpay/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../definitions/idpay/InstrumentOperationDTO";
@@ -39,11 +40,6 @@ type TimelineOperationListItemProps = {
   operation: OperationListDTO;
   onPress?: () => void;
 };
-
-type PartialTransactionStatus = Exclude<
-  ListItemTransactionStatus,
-  "success" | "refunded"
->;
 
 const getPaymentLogoIcon = (operation: OperationListDTO) => {
   switch (operation.operationType) {
@@ -191,7 +187,7 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
       paymentLogoIcon={getPaymentLogoIcon(operation)}
       transactionStatus={getOperationStatus()}
       badgeText={getBadgeTextByTransactionStatus(
-        getOperationStatus() as PartialTransactionStatus
+        getOperationStatus() as ListItemTransactionStatusWithBadge
       )}
       transactionAmount={getTransactionAmountLabel(operation)}
       onPress={onPress}
