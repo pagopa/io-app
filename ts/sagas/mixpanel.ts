@@ -1,12 +1,44 @@
-import { call, select, take } from "typed-redux-saga/macro";
+import { call, select, take, takeLatest } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
-import { ActionType } from "typesafe-actions";
-import { initializeMixPanel, terminateMixpanel } from "../mixpanel";
+import { ActionType, getType } from "typesafe-actions";
+import {
+  identifyMixpanel,
+  initializeMixPanel,
+  resetMixpanel,
+  terminateMixpanel
+} from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { ReduxSagaEffect } from "../types/utils";
+import {
+  sessionExpired,
+  sessionInvalid
+} from "../store/actions/authentication";
+
+export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
+  yield* takeLatest(
+    [getType(sessionExpired), getType(sessionInvalid)],
+    resetMixpanel
+  );
+}
+
+export function* identifyMixpanelSaga(): Generator<
+  ReduxSagaEffect,
+  void,
+  boolean
+> {
+  yield* call(identifyMixpanel);
+}
+
+export function* resetMixpanelSaga(): Generator<
+  ReduxSagaEffect,
+  void,
+  boolean
+> {
+  yield* call(resetMixpanel);
+}
 
 export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
   const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
@@ -23,6 +55,8 @@ export function* handleSetMixpanelEnabled(
 ) {
   if (action.payload) {
     yield* call(initializeMixPanel);
+    // The user has opted in
+    yield* call(identifyMixpanelSaga);
   } else {
     yield* call(terminateMixpanel);
   }
@@ -37,6 +71,10 @@ export function* askMixpanelOptIn() {
   // user already express a preference
   // do nothing
   if (isMixpanelEnabledResult !== null) {
+    if (isMixpanelEnabledResult === true) {
+      // if user already opt-in, identify mixpanel
+      yield* call(identifyMixpanelSaga);
+    }
     return;
   }
   // navigate to the screen where user can opt-in or not his preference
