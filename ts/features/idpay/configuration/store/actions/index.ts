@@ -37,17 +37,17 @@ export const idpayInitiativeInstrumentDelete = createAsyncAction(
   IdPayInitiativeInstrumentsDeleteErrorPayloadType
 >();
 
-export const idPayInitiativesInstrumentRefreshStart = createStandardAction(
-  "IDPAY_INITIATIVES_INSTRUMENT_REFRESH_START"
+export const idPayInitiativeInstrumentsRefreshStart = createStandardAction(
+  "IDPAY_INITIATIVE_INSTRUMENTS_REFRESH_START"
 )<IdPayInitiativeInstrumentsGetPayloadType>();
 
-export const idPayInitiativesInstrumentRefreshStop = createStandardAction(
-  "IDPAY_INITIATIVES_INSTRUMENT_REFRESH_STOP"
+export const idPayInitiativeInstrumentsRefreshStop = createStandardAction(
+  "IDPAY_INITIATIVE_INSTRUMENTS_REFRESH_STOP"
 )();
 
 export type IDPayInitiativeConfigurationActions = ActionType<
   | typeof idpayInitiativeInstrumentsGet
   | typeof idpayInitiativeInstrumentDelete
-  | typeof idPayInitiativesInstrumentRefreshStart
-  | typeof idPayInitiativesInstrumentRefreshStop
+  | typeof idPayInitiativeInstrumentsRefreshStart
+  | typeof idPayInitiativeInstrumentsRefreshStop
 >;

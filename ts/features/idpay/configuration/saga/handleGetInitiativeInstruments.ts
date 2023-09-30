@@ -67,7 +67,7 @@ export function* handleGetInitiativeInstruments(
 /**
  * Handle the refresh polling for the initiative instruments
  */
-export function* handleInitiativesFromInstrumentRefresh(
+export function* handleInitiativeInstrumentsRefresh(
   initiativeId: string,
   refreshDelay: number = 3000
 ) {

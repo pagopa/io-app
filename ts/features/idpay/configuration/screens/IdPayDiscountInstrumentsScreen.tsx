@@ -16,8 +16,8 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  idPayInitiativesInstrumentRefreshStart,
-  idPayInitiativesInstrumentRefreshStop,
+  idPayInitiativeInstrumentsRefreshStart,
+  idPayInitiativeInstrumentsRefreshStop,
   idpayInitiativeInstrumentDelete
 } from "../store/actions";
 import {
@@ -62,7 +62,7 @@ const IdPayDiscountInstrumentsScreen = () => {
     isLoadingDiscountInitiativeInstrumentsSelector
   );
 
-  const idPayCodeInitiative = React.useMemo(
+  const idPayCodeInstrument = React.useMemo(
     () =>
       initiativeInstruments.find(
         initiative => initiative.instrumentType === InstrumentTypeEnum.IDPAYCODE
@@ -73,7 +73,7 @@ const IdPayDiscountInstrumentsScreen = () => {
   const isLoadingIdPayCodeInstrument = useIOSelector(state =>
     idPayIsLoadingInitiativeInstrumentSelector(
       state,
-      idPayCodeInitiative?.instrumentId || ""
+      idPayCodeInstrument?.instrumentId || ""
     )
   );
 
@@ -82,12 +82,12 @@ const IdPayDiscountInstrumentsScreen = () => {
 
   const getInstruments = React.useCallback(() => {
     dispatch(
-      idPayInitiativesInstrumentRefreshStart({
+      idPayInitiativeInstrumentsRefreshStart({
         initiativeId
       })
     );
     return () => {
-      dispatch(idPayInitiativesInstrumentRefreshStop());
+      dispatch(idPayInitiativeInstrumentsRefreshStop());
     };
   }, [initiativeId, dispatch]);
 
@@ -100,11 +100,11 @@ const IdPayDiscountInstrumentsScreen = () => {
         params: { initiativeId }
       });
     } else {
-      if (idPayCodeInitiative && initiativeId) {
+      if (idPayCodeInstrument && initiativeId) {
         dispatch(
           idpayInitiativeInstrumentDelete.request({
             initiativeId,
-            instrumentId: idPayCodeInitiative.instrumentId
+            instrumentId: idPayCodeInstrument.instrumentId
           })
         );
       }
@@ -133,9 +133,9 @@ const IdPayDiscountInstrumentsScreen = () => {
               instrumentType={InstrumentTypeEnum.IDPAYCODE}
               onValueChange={handleCieValueChange}
               onPressAction={presentCieBottomSheet}
-              status={idPayCodeInitiative?.status}
+              status={idPayCodeInstrument?.status}
               isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
-              value={idPayCodeInitiative ? true : false}
+              value={idPayCodeInstrument ? true : false}
             />
             <IdPayDiscountInstrumentEnrollmentSwitch
               instrumentType={InstrumentTypeEnum.QRCODE}
