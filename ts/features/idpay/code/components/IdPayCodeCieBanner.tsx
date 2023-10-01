@@ -6,11 +6,11 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
 import { showIdPayCodeBannerSelector } from "../store/selectors";
-import { ScaleInOutAnimation } from "../../../../components/animations/ScaleInOutAnimation";
 import { preferencesIdPayCodeCieBannerClose } from "../../../../store/actions/persistedPreferences";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configuration/store";
 
 export type IdPayCodeCIEBannerParams = {
   initiativeId: string;
@@ -22,6 +22,9 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
     useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
   const dispatch = useIODispatch();
   const showBanner = useIOSelector(showIdPayCodeBannerSelector);
+  const isLoadingInitiativeInstruments = useIOSelector(
+    isLoadingDiscountInitiativeInstrumentsSelector
+  );
 
   React.useEffect(() => {
     if (initiativeId) {
@@ -46,9 +49,9 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
     });
   };
 
-  if (showBanner) {
+  if (showBanner && !isLoadingInitiativeInstruments) {
     return (
-      <ScaleInOutAnimation>
+      <>
         <Banner
           color="turquoise"
           pictogramName="cie"
@@ -70,7 +73,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
           viewRef={bannerViewRef}
         />
         <VSpacer size={24} />
-      </ScaleInOutAnimation>
+      </>
     );
   }
 

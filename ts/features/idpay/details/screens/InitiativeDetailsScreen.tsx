@@ -183,7 +183,7 @@ const InitiativeDetailsScreen = () => {
                 <ContentWrapper>
                   <VSpacer size={8} />
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
-                  <Animated.View layout={Layout.duration(500)}>
+                  <Animated.View layout={Layout.duration(200)}>
                     <InitiativeTimelineComponent
                       initiativeId={initiativeId}
                       size={5}

@@ -15,14 +15,14 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
-import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
+import { IdPayInstrumentInitiativesList } from "../components/IdPayInstrumentInitiativesList";
 import {
   idPayInitiativesFromInstrumentRefreshStart,
   idPayInitiativesFromInstrumentRefreshStop
 } from "../store/actions";
 import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
 
-export type AvailableInitiativesListScreenNavigationParams = {
+export type IdPayInstrumentInitiativesScreenRouteParams = {
   idWallet: string;
 };
 
@@ -31,7 +31,7 @@ type Props = IOStackNavigationRouteProps<
   "WALLET_IDPAY_INITIATIVE_LIST"
 >;
 
-export const IdPayInitiativeListScreen = (props: Props) => {
+export const IdPayInstrumentInitiativesScreen = (props: Props) => {
   const { idWallet } = props.route.params;
   const dispatch = useIODispatch();
 
@@ -72,7 +72,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
           </View>
         )}
         <VSpacer size={16} />
-        <IDPayInitiativesList
+        <IdPayInstrumentInitiativesList
           initiatives={idpayInitiatives}
           idWallet={idWallet}
         />

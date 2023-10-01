@@ -11,14 +11,14 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { IDPayClient } from "../../common/api/client";
 import {
   IdPayInitiativeInstrumentsGetPayloadType,
-  idPayInitiativesInstrumentRefreshStart,
-  idPayInitiativesInstrumentRefreshStop,
+  idPayInitiativeInstrumentsRefreshStart,
+  idPayInitiativeInstrumentsRefreshStop,
   idpayInitiativeInstrumentDelete,
   idpayInitiativeInstrumentsGet
 } from "../store/actions";
 import {
   handleGetInitiativeInstruments,
-  handleInitiativesFromInstrumentRefresh
+  handleInitiativeInstrumentsRefresh
 } from "./handleGetInitiativeInstruments";
 import { handleDeleteInitiativeInstruments } from "./handleDeleteInitiativeInstrument";
 
@@ -52,11 +52,11 @@ export function* watchIDPayInitiativeConfigurationSaga(
   const instrumentRefreshChannel = yield* call(channel);
 
   yield* takeEvery(
-    idPayInitiativesInstrumentRefreshStart,
+    idPayInitiativeInstrumentsRefreshStart,
     function* (action: { payload: IdPayInitiativeInstrumentsGetPayloadType }) {
       yield* race({
         task: call(
-          handleInitiativesFromInstrumentRefresh,
+          handleInitiativeInstrumentsRefresh,
           action.payload.initiativeId
         ),
         cancel: take(instrumentRefreshChannel)
@@ -64,7 +64,7 @@ export function* watchIDPayInitiativeConfigurationSaga(
     }
   );
 
-  yield* takeEvery(idPayInitiativesInstrumentRefreshStop, function* () {
+  yield* takeEvery(idPayInitiativeInstrumentsRefreshStop, function* () {
     yield* put(instrumentRefreshChannel, "kill");
   });
 }

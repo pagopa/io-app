@@ -11,7 +11,7 @@ import { IDPayClient } from "../../common/api/client";
 import { idpayInitiativeInstrumentsGet } from "../store/actions";
 
 /**
- * Handle the remote call to retrieve the IDPay initiative associated payment methods for discount initiatives
+ * Handle the remote call to retrieve the IDPay initiative associated payment methods for initiatives
  * @param getInitiativePaymentMethods BE API call
  * @param bpdToken Auth token
  * @param language Preferred language
@@ -64,7 +64,10 @@ export function* handleGetInitiativeInstruments(
   }
 }
 
-export function* handleInitiativesFromInstrumentRefresh(
+/**
+ * Handle the refresh polling for the initiative instruments
+ */
+export function* handleInitiativeInstrumentsRefresh(
   initiativeId: string,
   refreshDelay: number = 3000
 ) {
