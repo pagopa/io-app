@@ -6,7 +6,7 @@ import { IdPayWalletActions } from "../../../wallet/store/actions";
 
 export type IdPayActions =
   | IdPayWalletActions
-  | IDPayInitiativeActions
+  | IdPayInitiativeActions
   | IdPayTimelineActions
   | IdPayCodeActions
   | IDPayInitiativeConfigurationActions;
