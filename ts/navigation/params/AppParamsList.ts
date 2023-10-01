@@ -17,9 +17,24 @@ import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
 import {
+  IDPayOnboardingParamsList,
+  IDPayOnboardingRoutes
+} from "../../features/idpay/onboarding/navigation/navigator";
+import {
   IDPayPaymentParamsList,
   IDPayPaymentRoutes
 } from "../../features/idpay/payment/navigation/navigator";
+import {
+  IDPayUnsubscriptionNavigatorParams,
+  IDPayUnsubscriptionParamsList,
+  IDPayUnsubscriptionRoutes
+} from "../../features/idpay/unsubscription/navigation/navigator";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
+import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import {
+  WalletOnboardingParamsList,
+  WalletOnboardingRoutes
+} from "../../features/walletV3/onboarding/navigation/navigator";
 import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
@@ -28,21 +43,6 @@ import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
 } from "../../features/idpay/details/navigation";
-import {
-  IDPayOnboardingParamsList,
-  IDPayOnboardingRoutes
-} from "../../features/idpay/onboarding/navigation/navigator";
-import {
-  IDPayUnsubscriptionNavigatorParams,
-  IDPayUnsubscriptionParamsList,
-  IDPayUnsubscriptionRoutes
-} from "../../features/idpay/unsubscription/navigation/navigator";
-import {
-  WalletOnboardingParamsList,
-  WalletOnboardingRoutes
-} from "../../features/walletV3/onboarding/navigation/navigator";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
