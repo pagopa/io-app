@@ -15,7 +15,6 @@ import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { InitiativeFailureType } from "../xstate/failure";
 import { useConfigurationMachineService } from "../xstate/provider";
@@ -28,6 +27,7 @@ import {
   selectIsInstrumentsOnlyMode,
   selectWalletInstruments
 } from "../xstate/selectors";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
