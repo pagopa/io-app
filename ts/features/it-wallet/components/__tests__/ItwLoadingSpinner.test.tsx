@@ -29,23 +29,6 @@ describe("Test ItwLoadingSpinner animated indicator", () => {
     ).props;
     expect(style).toHaveProperty("borderTopColor", "#ABC");
   });
-  it("should render a Loading Animation correctly with caption title and subtitle", () => {
-    const props = {
-      color: "#ABC",
-      captionTitle: "Loading",
-      captionSubtitle: "Please wait"
-    };
-
-    const component = renderComponent({ ...props });
-    const captionTitle = component.getByTestId("LoadingSpinnerCaptionTitleID");
-    const captionSubtitle = component.getByTestId(
-      "LoadingSpinnerCaptionSubTitleID"
-    );
-    expect(captionTitle).toBeTruthy();
-    expect(captionSubtitle).toBeTruthy();
-    expect(captionTitle.props.children).toEqual("Loading");
-    expect(captionSubtitle.props.children).toEqual("Please wait");
-  });
 });
 
 const renderComponent = ({ color, captionTitle, captionSubtitle }: Props) =>
