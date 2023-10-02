@@ -12,14 +12,14 @@ import { ScrollView } from "react-native-gesture-handler";
 import {
   IOColors,
   VSpacer,
-  IOSpacingScale
+  IOSpacingScale,
+  ListItemAction
 } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import ListItemAction from "../../../components/ui/ListItemAction";
 import I18n from "../../../i18n";
 import { deleteWalletRequest } from "../../../store/actions/wallet/wallets";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
