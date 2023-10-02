@@ -3,6 +3,7 @@ import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import {
+  CheckboxLabel,
   Divider,
   HSpacer,
   ListItemSwitch,
@@ -16,7 +17,6 @@ import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
-import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { H4 } from "../../../components/core/typography/H4";
