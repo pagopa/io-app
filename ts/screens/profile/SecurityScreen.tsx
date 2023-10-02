@@ -1,25 +1,29 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { List } from "native-base";
+import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import I18n from "../../i18n";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { List } from "native-base";
+import React, { useCallback, useEffect, useState } from "react";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { identificationRequest } from "../../store/actions/identification";
+import ScreenContent from "../../components/screens/ScreenContent";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { shufflePinPadOnPayment } from "../../config";
+import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
+import { isIdPayCodeOnboardedSelector } from "../../features/idpay/code/store/selectors";
+import I18n from "../../i18n";
+import { mixpanelTrack } from "../../mixpanel";
+import ROUTES from "../../navigation/routes";
+import { identificationRequest } from "../../store/actions/identification";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isIdPayEnabledSelector } from "../../store/reducers/backendStatus";
+import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { useScreenReaderEnabled } from "../../utils/accessibility";
 import {
   biometricAuthenticationRequest,
   getBiometricsType,
   isBiometricsValidType
 } from "../../utils/biometrics";
 import { showToast } from "../../utils/showToast";
-import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
-import { useScreenReaderEnabled } from "../../utils/accessibility";
-import ScreenContent from "../../components/screens/ScreenContent";
-import { mixpanelTrack } from "../../mixpanel";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
-import ROUTES from "../../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -32,6 +36,16 @@ const SecurityScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const isScreenReaderEnabled = useScreenReaderEnabled();
   const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
+
+  const idPayCodeHandler = () => {
+    navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      screen: isIdPayCodeOnboarded
+        ? IdPayCodeRoutes.IDPAY_CODE_RENEW
+        : IdPayCodeRoutes.IDPAY_CODE_ONBOARDING
+    });
+  };
 
   const requestIdentificationAndResetPin = useCallback(() => {
     const onSuccess = () => {
@@ -105,12 +119,30 @@ const SecurityScreen = (): React.ReactElement => {
       >
         <List withContentLateralPadding>
           {/* Ask for verification and reset unlock code */}
-          <ListItemComponent
-            title={I18n.t("identification.unlockCode.reset.button_short")}
-            subTitle={I18n.t("identification.unlockCode.reset.subtitle")}
+          <ListItemNav
+            value={I18n.t("identification.unlockCode.reset.button_short")}
+            accessibilityLabel={I18n.t(
+              "identification.unlockCode.reset.button_short"
+            )}
+            description={I18n.t("identification.unlockCode.reset.subtitle")}
             onPress={requestIdentificationAndResetPin}
             testID="reset-unlock-code"
           />
+          <Divider />
+          {isIdPayEnabled && (
+            /* Reset IDPay code */
+            <>
+              <ListItemNav
+                value={I18n.t("idpay.code.reset.title")}
+                accessibilityLabel={I18n.t("idpay.code.reset.title")}
+                description={I18n.t("idpay.code.reset.body")}
+                onPress={idPayCodeHandler}
+                testID="reset-idpay-code"
+              />
+              <Divider />
+            </>
+          )}
+
           {/* Enable/disable biometric recognition */}
           {isFingerprintAvailable && (
             <ListItemComponent
