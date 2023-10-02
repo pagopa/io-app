@@ -108,7 +108,7 @@ import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { watchItwSaga } from "../features/it-wallet/saga";
 import { itwLifecycleIsValidSelector } from "../features/it-wallet/store/reducers/itwLifecycleReducer";
 import { itwDecodePid } from "../features/it-wallet/store/actions/itwCredentialsActions";
-import { itwPidValueSelector } from "../features/it-wallet/store/reducers/itwPidReducer";
+import { ItwCredentialsPidSelector } from "../features/it-wallet/store/reducers/itwCredentialsReducer";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -464,16 +464,6 @@ export function* initializeApplicationSaga(
       return;
     }
 
-    /**
-     * If IT-Wallet is enabled and operational, then dispatch the PID decode request.
-     */
-    const isItWalletEnabled = itWalletEnabled;
-    const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
-    if (isItWalletEnabled && isItWalletValid) {
-      const pid = yield* select(itwPidValueSelector);
-      yield* put(itwDecodePid.request(pid));
-    }
-
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
       // At application startup, the state of the refresh token is "idle".
@@ -604,6 +594,12 @@ export function* initializeApplicationSaga(
   if (itWalletEnabled) {
     // Start watching for ITWallet actions
     yield* fork(watchItwSaga);
+    // If IT-Wallet is enabled and operational, then dispatch the PID decode request.
+    const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
+    if (isItWalletValid) {
+      const pid = yield* select(ItwCredentialsPidSelector);
+      yield* put(itwDecodePid.request(pid));
+    }
   }
 
   // Load the user metadata
