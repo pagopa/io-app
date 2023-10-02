@@ -9,11 +9,11 @@ import {
 } from "../../../../store/actions/authentication";
 
 export type FastLoginOptInState = {
-  fastLoginEnabled: boolean | undefined;
+  enabled: boolean | undefined;
 };
 
 export const fastLoginOptInInitialState: FastLoginOptInState = {
-  fastLoginEnabled: undefined
+  enabled: undefined
 };
 
 const fastLoginOptInReducer = (
@@ -27,7 +27,7 @@ const fastLoginOptInReducer = (
     case getType(setFastLoginOptIn):
       return {
         ...state,
-        fastLoginEnabled: action.payload.fastLoginEnabled
+        enabled: action.payload.enabled
       };
     default:
       return state;
@@ -40,7 +40,7 @@ const persistConfig: PersistConfig = {
   key: "optIn",
   storage: AsyncStorage,
   version: CURRENT_REDUX_FEATURES_STORE_VERSION,
-  whitelist: ["fastLoginEnabled"]
+  whitelist: ["enabled"]
 };
 
 export const fastLoginOptInPersistor = persistReducer<

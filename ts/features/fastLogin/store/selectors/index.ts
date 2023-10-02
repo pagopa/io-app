@@ -14,7 +14,7 @@ export const isFastLoginOptinEnabledSelector = createSelector(
     if (fastLoginBypassOptInt) {
       return true;
     }
-    return optIn.fastLoginEnabled;
+    return optIn.enabled;
   }
 );
 /**

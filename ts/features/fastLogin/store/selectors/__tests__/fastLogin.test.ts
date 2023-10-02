@@ -28,7 +28,7 @@ describe("FastLogin remote flag test", () => {
         loginFeatures: {
           fastLogin: {
             optIn: {
-              fastLoginEnabled: true
+              enabled: true
             }
           }
         }
@@ -98,7 +98,7 @@ describe("FastLogin remote flag test", () => {
         loginFeatures: {
           fastLogin: {
             optIn: {
-              fastLoginEnabled: true
+              enabled: true
             }
           }
         }
