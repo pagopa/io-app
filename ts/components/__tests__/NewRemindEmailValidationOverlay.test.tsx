@@ -10,7 +10,45 @@ import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper"
 
 const email = "prova.prova@prova.com";
 
-describe("NewRemindEmailValidationOverlay ", async () => {
+describe("NewRemindEmailValidationOverlay with isEmailValidated as true", async () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const mockStore = configureMockStore();
+
+  // eslint-disable-next-line functional/no-let
+  let finalState: ReturnType<typeof mockStore>;
+
+  beforeAll(() => {
+    finalState = mockStore({
+      ...globalState,
+      profile: pot.some({
+        is_email_validated: true,
+        email: "prova.prova@prova.com"
+      })
+    });
+  });
+
+  it("the components into the page should be render correctly", async () => {
+    const component = renderComponent(finalState);
+    expect(component).toBeDefined();
+    expect(component.getByTestId("container-test")).not.toBeNull();
+    expect(component.getByTestId("title-test")).toBeDefined();
+    expect(
+      component.getByText(I18n.t("email.newvalidemail.title"))
+    ).toBeTruthy();
+    expect(
+      component.getByText(I18n.t("email.newvalidemail.subtitle", { email }))
+    ).toBeTruthy();
+    const button = component.getByTestId("button-test");
+    expect(button).toBeDefined();
+    expect(component.getByText(I18n.t("global.buttons.continue"))).toBeTruthy();
+    expect(button).not.toBeDisabled();
+    if (button) {
+      fireEvent.press(button);
+    }
+  });
+});
+
+describe("NewRemindEmailValidationOverlay with isEmailValidated as false", async () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore();
 

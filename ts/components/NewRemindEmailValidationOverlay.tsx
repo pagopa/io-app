@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
-import { useCallback, useEffect, useRef, useState, useContext } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import {
   LabelLink,
@@ -31,10 +31,9 @@ import NavigationService from "../navigation/NavigationService";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
-import { LightModalContext, LightModalContextInterface } from "./ui/LightModal";
+import { LightModalContextInterface } from "./ui/LightModal";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import { withLightModalContext } from "./helpers/withLightModalContext";
-import NewSuccessEmailValidation from "./NewSuccessEmailValidation";
 
 const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
@@ -42,12 +41,14 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
 
-type Props = LightModalContextInterface;
+type OwnProp = {
+  isOnboarding?: boolean;
+};
+
+type Props = LightModalContextInterface & OwnProp;
 
 const NewRemindEmailValidationOverlay = (props: Props) => {
-  const { hideModal } = props;
-  const { showModal } = useContext(LightModalContext);
-
+  const { isOnboarding, hideModal } = props;
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
@@ -73,33 +74,56 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   // function to localize the title of the button. If the email is validated and if it is not, whether the confirmation email was sent or not
   const buttonTitle = () => {
-    if (isValidateEmailButtonDisabled) {
-      return I18n.t("email.newvalidate.buttonlabelsent");
+    if (isEmailValidated) {
+      return I18n.t("global.buttons.continue");
     } else {
-      return I18n.t("email.newvalidate.buttonlabelsentagain");
+      if (isValidateEmailButtonDisabled) {
+        return I18n.t("email.newvalidate.buttonlabelsent");
+      } else {
+        return I18n.t("email.newvalidate.buttonlabelsentagain");
+      }
+    }
+  };
+
+  // this function contol if the button is disabled. It is disabled if the email is sent and the timeout is active
+  const isButtonDisabled = () => {
+    if (isEmailValidated) {
+      return false;
+    } else {
+      return isValidateEmailButtonDisabled;
     }
   };
 
   const handleSendEmailValidationButton = () => {
-    // send email validation only if it exists
-    pipe(
-      optionEmail,
-      O.map(_ => {
-        sendEmailValidation();
-        IOToast.show(I18n.t("email.newvalidate.toast"));
-        setIsValidateEmailButtonDisabled(true);
-        // eslint-disable-next-line functional/immutable-data
-        timeout.current = setTimeout(() => {
-          setIsValidateEmailButtonDisabled(false);
-        }, emailSentTimeout);
-      })
-    );
+    if (isEmailValidated) {
+      hideModal();
+    } else {
+      // send email validation only if it exists
+      pipe(
+        optionEmail,
+        O.map(_ => {
+          sendEmailValidation();
+          IOToast.show(I18n.t("email.newvalidate.toast"));
+          setIsValidateEmailButtonDisabled(true);
+          // eslint-disable-next-line functional/immutable-data
+          timeout.current = setTimeout(() => {
+            setIsValidateEmailButtonDisabled(false);
+          }, emailSentTimeout);
+        })
+      );
+    }
   };
 
   const navigateToInsertEmail = () => {
-    NavigationService.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
-    });
+    if (isOnboarding) {
+      NavigationService.navigate(ROUTES.ONBOARDING, {
+        screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+      });
+    } else {
+      NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.INSERT_EMAIL_SCREEN
+      });
+    }
   };
 
   const renderFooter = () => (
@@ -108,8 +132,8 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
       leftButton={{
         testID: "button-test",
         block: true,
-        bordered: false,
-        disabled: isValidateEmailButtonDisabled,
+        bordered: !isEmailValidated,
+        disabled: isButtonDisabled(),
         onPress: handleSendEmailValidationButton,
         title: buttonTitle()
       }}
@@ -121,18 +145,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     // eslint-disable-next-line functional/immutable-data
     polling.current = setInterval(() => reloadProfile(), profilePolling);
     return () => {
+      hideModal();
       clearTimeout(timeout.current);
       clearInterval(polling.current);
     };
-  }, [reloadProfile]);
+  }, [hideModal, reloadProfile]);
 
   useEffect(() => {
     if (isEmailValidated) {
       clearInterval(polling.current);
-      hideModal();
-      showModal(<NewSuccessEmailValidation />);
     }
-  }, [hideModal, isEmailValidated, showModal]);
+  }, [isEmailValidated]);
 
   return (
     <TopScreenComponent
@@ -153,7 +176,11 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
           <VSpacer size={16} />
           <View style={IOStyles.alignCenter}>
             <Label weight="Bold" testID="title-test">
-              {I18n.t("email.newvalidate.title")}
+              {I18n.t(
+                isEmailValidated
+                  ? "email.newvalidemail.title"
+                  : "email.newvalidate.title"
+              )}
             </Label>
           </View>
           <VSpacer size={16} />
@@ -162,15 +189,22 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
             style={{ textAlign: "center" }}
             testID="subtitle-test"
           >
-            {I18n.t("email.newvalidate.subtitle", { email })}
+            {I18n.t(
+              isEmailValidated
+                ? "email.newvalidemail.subtitle"
+                : "email.newvalidate.subtitle",
+              { email }
+            )}
           </Label>
-          <View style={IOStyles.selfCenter}>
-            <VSpacer size={16} />
-            <LabelLink onPress={navigateToInsertEmail} testID="link-test">
-              {I18n.t("email.newvalidate.link")}
-            </LabelLink>
-            <VSpacer size={8} />
-          </View>
+          {!isEmailValidated && (
+            <View style={IOStyles.selfCenter}>
+              <VSpacer size={16} />
+              <LabelLink onPress={navigateToInsertEmail} testID="link-test">
+                {I18n.t("email.newvalidate.link")}
+              </LabelLink>
+              <VSpacer size={8} />
+            </View>
+          )}
         </Content>
         {renderFooter()}
       </SafeAreaView>
