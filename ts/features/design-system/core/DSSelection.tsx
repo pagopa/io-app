@@ -6,6 +6,7 @@ import {
   CheckboxLabel,
   Divider,
   HSpacer,
+  ListItemCheckbox,
   ListItemSwitch,
   NativeSwitch,
   NewRadioItem,
@@ -18,7 +19,6 @@ import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
@@ -41,8 +41,8 @@ export const DSSelection = () => (
     </H2>
     {/* CheckboxLabel */}
     {renderCheckboxLabel()}
-    {/* CheckboxListItem */}
-    {renderCheckboxListItem()}
+    {/* ListItemCheckbox */}
+    {renderListItemCheckbox()}
     {/* AnimatedMessageCheckbox */}
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Checkbox (Messages)
@@ -102,21 +102,21 @@ const renderCheckboxLabel = () => (
   </>
 );
 
-const renderCheckboxListItem = () => (
+const renderListItemCheckbox = () => (
   <>
-    <DSComponentViewerBox name="CheckboxListItem">
-      <CheckboxListItem
+    <DSComponentViewerBox name="ListItemCheckbox">
+      <ListItemCheckbox
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="coggle"
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         value="Usa configurazione rapida"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
@@ -124,7 +124,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         value="Questa è un'altra prova ancora più lunga per andare su due righe"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
@@ -132,7 +132,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="bonus"
         value="Let's try with a loooong loooooong looooooong title + icon"
         description={
@@ -141,7 +141,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="coggle"
         value="Usa configurazione rapida"
         description={
@@ -150,14 +150,14 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="CheckBoxListItem (disabled)">
-      <CheckboxListItem
+    <DSComponentViewerBox name="ListItemCheckbox (disabled)">
+      <ListItemCheckbox
         disabled
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         disabled
         icon="coggle"
         value="Usa configurazione rapida"
@@ -167,7 +167,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         disabled
         selected={true}
         icon="coggle"
