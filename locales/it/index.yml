@@ -249,6 +249,9 @@ permissionRationale:
   calendar:
     title: "Consenti l’accesso al calendario"
     message: "Potrai aggiungere le scadenze al tuo calendario e impostare un promemoria."
+  torch:
+    title: "Consenti l’accesso alla fotocamera"
+    message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
   title: Inizializzazione
   authentication: Utente autenticato
@@ -3396,6 +3399,9 @@ support:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
   code:
+    reset:
+      title: Codice ID Pay
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
