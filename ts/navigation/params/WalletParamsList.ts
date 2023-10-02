@@ -8,7 +8,7 @@ import {
   BpdOptInParamsList
 } from "../../features/bonus/bpd/navigation/params";
 import BPD_ROUTES from "../../features/bonus/bpd/navigation/routes";
-import { AvailableInitiativesListScreenNavigationParams } from "../../features/idpay/wallet/screens/AvailableInitiativesListScreen";
+import { IdPayInstrumentInitiativesScreenRouteParams } from "../../features/idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import { BancomatDetailScreenNavigationParams } from "../../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreenNavigationParams } from "../../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import { CobadgeDetailScreenNavigationParams } from "../../features/wallet/cobadge/screen/CobadgeDetailScreen";
@@ -37,7 +37,7 @@ import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/p
 import ROUTES from "../routes";
 
 export type WalletParamsList = {
-  [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: AvailableInitiativesListScreenNavigationParams;
+  [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;
   [ROUTES.WALLET_CREDIT_CARD_DETAIL]: CreditCardDetailScreenNavigationParams;

@@ -3404,10 +3404,7 @@ idpay:
     initiativePairing:
       navigation: Available initiatives
       header: Which initiatives do you want to enable on this method?
-      statusLabels:
-        PENDING_DEACTIVATION_REQUEST: "Pending"
-        PENDING_ENROLLMENT_REQUEST: "Pending"
-        ENROLLMENT_FAILED: "Attivazione fallita"
+      pendingStatus: "Pending"
       errorToasts:
         enrollment: "Errore nel collegamento dell'iniziativa, riprova."
         removal: "Errore nella rimozione dell'iniziativa, riprova."
@@ -3664,6 +3661,20 @@ idpay:
       buttons:
         continue: "Start configuration"
     instruments:
+      paymentMethods:
+        badge:
+          active: "Attivo"
+          pending: "In attesa"
+        header: "Come vuoi autorizzare i pagamenti?"
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
+        IDPAYCODE:
+          title: "Usa la Carta d'identità elettronica"
+          description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
+          actionItem: "Come funziona?"
+        QRCODE:
+          title: "Usa l'app IO"
+          description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
+          actionItem: "Come funziona?"
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."

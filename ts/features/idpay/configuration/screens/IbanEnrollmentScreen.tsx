@@ -16,7 +16,6 @@ import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationS
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
@@ -26,6 +25,7 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
