@@ -162,7 +162,7 @@ Object {
   "preferredCalendar": undefined,
   "preferredLanguage": undefined,
   "wasServiceAlertDisplayedOnce": false,
-  "isIdPayInitiativeBannerClosed": false,
+  "isIdPayInitiativeBannerClosed": Object {},
 }
 `;
 
