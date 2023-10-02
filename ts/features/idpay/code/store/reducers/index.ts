@@ -1,8 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { PersistConfig, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  idPayCodeCieBannerClose,
   idPayEnrollCode,
   idPayGenerateCode,
   idPayGetCodeStatus,
@@ -13,12 +17,14 @@ export type IdPayCodeState = {
   isOnboarded: pot.Pot<boolean, NetworkError>;
   code: pot.Pot<string, NetworkError>;
   enrollmentRequest: pot.Pot<void, NetworkError>;
+  isIdPayInitiativeBannerClosed: Record<string, boolean>;
 };
 
 const INITIAL_STATE: IdPayCodeState = {
   isOnboarded: pot.none,
   code: pot.none,
-  enrollmentRequest: pot.none
+  enrollmentRequest: pot.none,
+  isIdPayInitiativeBannerClosed: {}
 };
 
 const reducer = (
@@ -92,8 +98,29 @@ const reducer = (
         ...state,
         code: pot.none
       };
+    case getType(idPayCodeCieBannerClose):
+      return {
+        ...state,
+        isIdPayInitiativeBannerClosed: {
+          [action.payload.initiativeId]: true
+        }
+      };
   }
   return state;
 };
 
-export default reducer;
+const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
+
+const persistConfig: PersistConfig = {
+  key: "code",
+  storage: AsyncStorage,
+  version: CURRENT_REDUX_FEATURES_STORE_VERSION,
+  whitelist: ["isIdPayInitiativeBannerClosed"]
+};
+
+export const idPayCodePersistor = persistReducer<IdPayCodeState, Action>(
+  persistConfig,
+  reducer
+);
+
+export default idPayCodePersistor;

@@ -3399,6 +3399,9 @@ support:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
   code:
+    reset:
+      title: Codice ID Pay
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3497,6 +3500,11 @@ idpay:
     discountDetails:
       authorizeButton: Autorizza un pagamento
       IDPayCode:
+        banner:
+          title: Paga con la tua carta d’identità elettronica
+          body: Spendi il denaro a te riservato con la semplicità del contactless.
+          action: Abilita ora
+          close: Chiudi
         failureScreen:
           cta: Chiudi
           header:
