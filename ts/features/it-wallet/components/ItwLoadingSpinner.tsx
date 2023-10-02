@@ -1,36 +1,28 @@
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, View, ColorValue, Animated, Easing } from "react-native";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../types/WithTestID";
-import { H4 } from "../../../components/core/typography/H4";
-import { H2 } from "../../../components/core/typography/H2";
 
 type Props = WithTestID<{
   captionTitle?: string;
   captionSubtitle?: string;
-  color: ColorValue;
+  color?: ColorValue;
   durationMs?: number;
+  size?: IOLodingSpinnerSizeScale;
 }>;
 
-const height = 76;
+/**
+ * Size scale, 76 is kept for backward compatibility with the old design system but 48 is enough for the new one.
+ * It will be removed in the future.
+ */
+export type IOLodingSpinnerSizeScale = 12 | 16 | 20 | 24 | 30 | 32 | 48 | 76;
 
 const styles = StyleSheet.create({
-  container: {
-    width: height,
-    height,
-    justifyContent: "center",
-    alignItems: "center"
-  },
   progress: {
     width: "100%",
     height: "100%",
-    borderRadius: height / 2,
     borderBottomColor: IOColors.white,
-    borderWidth: 4,
     position: "absolute"
-  },
-  textAlignCenter: {
-    textAlign: "center"
   }
 });
 
@@ -49,9 +41,8 @@ const startRotationAnimation = (
 };
 
 const ItwLoadingSpinner = ({
-  captionTitle,
-  captionSubtitle,
-  color,
+  color = IOColors["blueIO-500"],
+  size = 24,
   durationMs = 1000
 }: Props): React.ReactElement => {
   const rotationDegree = useRef(new Animated.Value(0)).current;
@@ -63,7 +54,7 @@ const ItwLoadingSpinner = ({
   return (
     <>
       <View
-        style={styles.container}
+        style={{ width: size, height: size }}
         accessibilityRole="progressbar"
         testID={"LoadingSpinnerTestID"}
       >
@@ -72,6 +63,8 @@ const ItwLoadingSpinner = ({
           style={[
             styles.progress,
             {
+              borderWidth: 3,
+              borderRadius: size / 2,
               borderTopColor: color,
               borderRightColor: color,
               borderLeftColor: color
@@ -89,18 +82,6 @@ const ItwLoadingSpinner = ({
           ]}
         />
       </View>
-      <VSpacer size={48} />
-      <H2 style={styles.textAlignCenter} testID="LoadingSpinnerCaptionTitleID">
-        {captionTitle}
-      </H2>
-      <VSpacer />
-      <H4
-        weight="Regular"
-        style={styles.textAlignCenter}
-        testID="LoadingSpinnerCaptionSubTitleID"
-      >
-        {captionSubtitle}
-      </H4>
     </>
   );
 };
