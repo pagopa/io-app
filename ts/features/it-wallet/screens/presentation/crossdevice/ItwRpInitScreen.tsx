@@ -132,7 +132,7 @@ const ItwRpInitScreen = () => {
    */
   const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => {
     // PUT ME IN MOCK.JS
-    const { organization_name, policy_uri } = FEDERATION_ENTITY;
+    const { organization_name } = FEDERATION_ENTITY;
     return (
       <>
         <ScreenContent
