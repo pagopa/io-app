@@ -31,7 +31,6 @@ import { Link } from "../../../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { itwRpInitializationSelector } from "../../../store/reducers/itwRpInitializationReducer";
-import { openWebUrl } from "../../../../../utils/url";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { itwRpInitialization } from "../../../store/actions/itwRpActions";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
@@ -133,7 +132,7 @@ const ItwRpInitScreen = () => {
    */
   const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => {
     // PUT ME IN MOCK.JS
-    const { organization_name, policy_uri } = FEDERATION_ENTITY;
+    const { organization_name } = FEDERATION_ENTITY;
     return (
       <>
         <ScreenContent
@@ -213,7 +212,11 @@ const ItwRpInitScreen = () => {
               )}
             />
             <VSpacer />
-            <Link onPress={() => openWebUrl(policy_uri)}>
+            <Link
+              onPress={() =>
+                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+              }
+            >
               {I18n.t(
                 "features.itWallet.presentation.pidAttributesScreen.privacy.conditionsLink"
               )}
