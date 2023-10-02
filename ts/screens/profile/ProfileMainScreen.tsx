@@ -4,7 +4,13 @@ import { List, Toast } from "native-base";
 import * as React from "react";
 import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
-import { ButtonSolid, Divider, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  Divider,
+  ListItemInfoCopy,
+  ListItemNav,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -56,8 +62,6 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
-import ListItemNav from "../../components/ui/ListItemNav";
-import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
 import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
