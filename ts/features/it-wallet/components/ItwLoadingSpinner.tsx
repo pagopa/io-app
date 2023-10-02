@@ -15,7 +15,7 @@ type Props = WithTestID<{
  * Size scale, 76 is kept for backward compatibility with the old design system but 48 is enough for the new one.
  * It will be removed in the future.
  */
-export type IOLodingSpinnerSizeScale = 12 | 16 | 20 | 24 | 30 | 32 | 48 | 76;
+export type IOLodingSpinnerSizeScale = 24 | 48 | 76;
 
 const styles = StyleSheet.create({
   progress: {
