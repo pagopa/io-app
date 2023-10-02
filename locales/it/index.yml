@@ -249,6 +249,9 @@ permissionRationale:
   calendar:
     title: "Consenti l’accesso al calendario"
     message: "Potrai aggiungere le scadenze al tuo calendario e impostare un promemoria."
+  torch:
+    title: "Consenti l’accesso alla fotocamera"
+    message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
   title: Inizializzazione
   authentication: Utente autenticato
@@ -3396,6 +3399,9 @@ support:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
   code:
+    reset:
+      title: Codice ID Pay
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
     onboarding:
       header: Ecco il tuo codice!
       body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
@@ -3425,10 +3431,7 @@ idpay:
     initiativePairing:
       navigation: Iniziative disponibili
       header: Scegli quali iniziative abilitare su questo metodo
-      statusLabels:
-        PENDING_DEACTIVATION_REQUEST: "In attesa"
-        PENDING_ENROLLMENT_REQUEST: "In attesa"
-        ENROLLMENT_FAILED: "Attivazione fallita"
+      pendingStatus: "In attesa"
       errorToasts:
         enrollment: "Errore nel collegamento dell'iniziativa, riprova."
         removal: "Errore nella rimozione dell'iniziativa, riprova."
@@ -3685,6 +3688,20 @@ idpay:
       buttons:
         continue: "Inizia la configurazione"
     instruments:
+      paymentMethods:
+        badge:
+          active: "Attivo"
+          pending: "In attesa"
+        header: "Come vuoi autorizzare i pagamenti?"
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
+        IDPAYCODE:
+          title: "Usa la Carta d'identità elettronica"
+          description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
+          actionItem: "Come funziona?"
+        QRCODE:
+          title: "Usa l'app IO"
+          description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
+          actionItem: "Come funziona?"
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."

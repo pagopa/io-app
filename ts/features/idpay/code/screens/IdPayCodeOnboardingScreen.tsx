@@ -26,7 +26,8 @@ type IdPayCodeOnboardingRouteProps = RouteProp<
 
 const IdPayCodeOnboardingScreen = () => {
   const route = useRoute<IdPayCodeOnboardingRouteProps>();
-  const { initiativeId } = route.params;
+  // since the route is optional, we need to use the optional chaining operator
+  const initiativeId = route.params?.initiativeId;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
