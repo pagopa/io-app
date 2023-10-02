@@ -39,7 +39,6 @@ export type PersistedPreferencesState = Readonly<{
   isPnTestEnabled: boolean;
   isIdPayTestEnabled?: boolean;
   isDesignSystemEnabled: boolean;
-  isIdPayInitiativeBannerClosed: Record<string, boolean>;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -53,8 +52,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isMixpanelEnabled: null,
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
-  isDesignSystemEnabled: false,
-  isIdPayInitiativeBannerClosed: {}
+  isDesignSystemEnabled: false
 };
 
 export default function preferencesReducer(
