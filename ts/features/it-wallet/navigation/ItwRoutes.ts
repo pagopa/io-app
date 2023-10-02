@@ -27,5 +27,8 @@ export const ITW_ROUTES = {
   },
   CREDENTIALS: {
     CATALOG: "ITW_CREDENTIALS_CATALOG"
-  } as const
+  } as const,
+  GENERIC: {
+    NOT_AVAILABLE: "ITW_GENERIC_NOT_AVAILABLE"
+  }
 } as const;
