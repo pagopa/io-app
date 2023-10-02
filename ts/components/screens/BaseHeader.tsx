@@ -279,7 +279,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <>
             <IconButton
               icon={customRightIcon.iconName}
-              color="neutral"
+              color={dark ? "contrast" : "neutral"}
               onPress={customRightIcon.onPress}
               accessibilityLabel={customRightIcon.accessibilityLabel}
             />
