@@ -4,11 +4,11 @@ import {
   ButtonSolid,
   IOThemeContext,
   VSpacer,
-  ContentWrapper
+  ContentWrapper,
+  ListItemNav
 } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
-import ListItemNav from "../../../components/ui/ListItemNav";
 import {
   useIOBottomSheetAutoresizableModal,
   useIOBottomSheetModal,

@@ -16,7 +16,7 @@ import {
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../features/bonus/bpd/screens/iban/MainIbanScreen";
-import { IdPayInitiativeListScreen } from "../features/idpay/wallet/screens/AvailableInitiativesListScreen";
+import { IdPayInstrumentInitiativesScreen } from "../features/idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreen } from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
@@ -102,7 +102,7 @@ const WalletNavigator = () => {
     >
       <Stack.Screen
         name={ROUTES.WALLET_IDPAY_INITIATIVE_LIST}
-        component={IdPayInitiativeListScreen}
+        component={IdPayInstrumentInitiativesScreen}
       />
       <Stack.Screen
         name={ROUTES.WALLET_ADD_PAYMENT_METHOD}
