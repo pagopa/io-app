@@ -1746,7 +1746,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -2447,7 +2446,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -3378,7 +3376,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -3543,7 +3540,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -4244,7 +4240,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -4409,7 +4404,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -5110,7 +5104,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={
@@ -5275,7 +5268,6 @@ Object {
                                             onResponderTerminate={[Function]}
                                             onResponderTerminationRequest={[Function]}
                                             onStartShouldSetResponder={[Function]}
-                                            onTouchEnd={[Function]}
                                           >
                                             <View
                                               style={

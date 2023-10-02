@@ -1,11 +1,10 @@
 import { useNavigation } from "@react-navigation/core";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
 import { H3 } from "../../../../components/core/typography/H3";
-import ListItemNav from "../../../../components/ui/ListItemNav";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { Skeleton } from "../../common/components/Skeleton";

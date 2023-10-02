@@ -4,9 +4,8 @@ import { View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
-import ListItemNav from "../../../components/ui/ListItemNav";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import {
