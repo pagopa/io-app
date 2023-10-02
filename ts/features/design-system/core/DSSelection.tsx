@@ -6,6 +6,7 @@ import {
   Divider,
   HSpacer,
   ListItemSwitch,
+  NativeSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
@@ -21,7 +22,6 @@ import {
   RadioGroup
 } from "../../../components/core/selection/RadioGroup";
 import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
-import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
