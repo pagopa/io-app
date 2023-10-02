@@ -48,8 +48,18 @@ export const idPayEnrollCode = createAsyncAction(
 export const idPayResetCode =
   createStandardAction("IDPAY_RESET_CODE")<undefined>();
 
+export type IdPayCodeCieBannerClosePayloadType = {
+  initiativeId: string;
+};
+
+/** This action is used to close a CIE banner into an initiative details */
+export const idPayCodeCieBannerClose = createStandardAction(
+  "IDPAY_CODE_CIE_BANNER_CLOSE"
+)<IdPayCodeCieBannerClosePayloadType>();
+
 export type IdPayCodeActions =
   | ActionType<typeof idPayGetCodeStatus>
   | ActionType<typeof idPayGenerateCode>
   | ActionType<typeof idPayEnrollCode>
-  | ActionType<typeof idPayResetCode>;
+  | ActionType<typeof idPayResetCode>
+  | ActionType<typeof idPayCodeCieBannerClose>;
