@@ -368,7 +368,7 @@ const rootPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   // Entities and features implement a persisted reduce that avoids persisting messages.
   // Other entities section will be persisted
-  blacklist: ["entities", "lollipop"],
+  blacklist: ["entities", "features", "lollipop"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
