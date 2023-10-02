@@ -106,6 +106,9 @@ import {
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { watchItwSaga } from "../features/it-wallet/saga";
+import { itwLifecycleIsValidSelector } from "../features/it-wallet/store/reducers/itwLifecycleReducer";
+import { itwDecodePid } from "../features/it-wallet/store/actions/itwCredentialsActions";
+import { itwPidValueSelector } from "../features/it-wallet/store/reducers/itwPidReducer";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -459,6 +462,16 @@ export function* initializeApplicationSaga(
       // If we are here the user had chosen to reset the unlock code
       yield* put(startApplicationInitialization());
       return;
+    }
+
+    /**
+     * If IT-Wallet is enabled and operational, then dispatch the PID decode request.
+     */
+    const isItWalletEnabled = itWalletEnabled;
+    const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
+    if (isItWalletEnabled && isItWalletValid) {
+      const pid = yield* select(itwPidValueSelector);
+      yield* put(itwDecodePid.request(pid));
     }
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
