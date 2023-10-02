@@ -1,7 +1,9 @@
 import * as React from "react";
-import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
+import {
+  ListItemSwitch,
+  useIOExperimentalDesign
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { SwitchListItem } from "../../../components/ui/SwitchListItem";
 import { useIOSelector, useIODispatch } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
@@ -16,7 +18,7 @@ const DSEnableSwitch = () => {
   };
 
   return (
-    <SwitchListItem
+    <ListItemSwitch
       label={I18n.t("profile.main.designSystemEnvironment")}
       value={isDesignSystemEnabled && isExperimental}
       onSwitchValueChange={onSwitchValueChange}
