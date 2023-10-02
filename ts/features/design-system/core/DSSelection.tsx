@@ -7,6 +7,9 @@ import {
   HSpacer,
   ListItemSwitch,
   NativeSwitch,
+  NewRadioItem,
+  RadioGroup,
+  SwitchLabel,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
@@ -17,11 +20,6 @@ import { CheckboxLabel } from "../../../components/core/selection/checkbox/Check
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { H4 } from "../../../components/core/typography/H4";
-import {
-  NewRadioItem,
-  RadioGroup
-} from "../../../components/core/selection/RadioGroup";
-import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
