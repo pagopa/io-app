@@ -3471,6 +3471,12 @@ features:
           subTitle: "Ora puoi tornare sul sito di {{relayingParty}} per continuare"
           buttons: 
             continue: "Ok, grazie"
+    missingFeatureScreen: 
+      headerTitle: "Schermata non disponibile"
+      title: "Questa schermata sarà presto disponibile"
+      subtitle: "In questo momento non esiste ancora, ma stiamo lavorando alla sua implementazione."
+      button: 
+        label: "Ho capito"
     verifiableCredentials:
       type:
         digitalCredential: "Identità Digitale"
