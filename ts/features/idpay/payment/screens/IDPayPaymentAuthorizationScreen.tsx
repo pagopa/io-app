@@ -9,7 +9,8 @@ import {
   Divider,
   HSpacer,
   VSpacer,
-  ContentWrapper
+  ContentWrapper,
+  ListItemInfo
 } from "@pagopa/io-app-design-system";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -18,7 +19,6 @@ import { NewH6 } from "../../../../components/core/typography/NewH6";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import ListItemInfo from "../../../../components/ui/ListItemInfo";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../common/components/Skeleton";
