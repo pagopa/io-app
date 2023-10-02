@@ -3,6 +3,7 @@ import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import {
+  AnimatedMessageCheckbox,
   CheckboxLabel,
   Divider,
   HSpacer,
@@ -21,7 +22,6 @@ import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
 const styles = StyleSheet.create({
   content: {
