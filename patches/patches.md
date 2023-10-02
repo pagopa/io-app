@@ -1,9 +1,11 @@
 This file describes the reason for the patches applied.
 
 ### react-native-vision-camera+2.15.4
-Created on **24/07/2023** FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
+Created on **24/07/2023** 
+FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
 
-Updated on **01/10/2023** FIXME: remove this patch after upgrade `react-native-vision-camera` to the latest version
+Updated on **01/10/2023** 
+FIXME: Fixed in the v2 branch [here](https://github.com/mrousavy/react-native-vision-camera/issues/1840#issuecomment-1741734963). Remove this patch when `v2.16.2` has been released.
 
 #### Reason:
 - This patch going to remove all codes related to `colorSpace` to fix an issue on iOS 17.0.2 that cause the crash on camera load
