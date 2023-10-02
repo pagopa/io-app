@@ -26,7 +26,10 @@ const mockCameraComponent = <View testID="cameraComponentTestID" />;
     cameraComponent: mockCameraComponent,
     cameraPermissionStatus: "authorized",
     requestCameraPermission: jest.fn(),
-    openCameraSettings: jest.fn()
+    openCameraSettings: jest.fn(),
+    hasTorch: false,
+    isTorchOn: false,
+    toggleTorch: () => null
   })
 );
 
@@ -56,7 +59,10 @@ describe("Test BarcodeScanBaseScreenComponent", () => {
         cameraComponent: <View testID="cameraComponentTestID" />,
         cameraPermissionStatus: "not-determined",
         requestCameraPermission: mockRequestCameraPermission,
-        openCameraSettings: mockOpenCameraSettings
+        openCameraSettings: mockOpenCameraSettings,
+        hasTorch: false,
+        isTorchOn: false,
+        toggleTorch: () => null
       })
     );
 
@@ -93,7 +99,10 @@ describe("Test BarcodeScanBaseScreenComponent", () => {
         cameraComponent: <View testID="cameraComponentTestID" />,
         cameraPermissionStatus: "restricted",
         requestCameraPermission: mockRequestCameraPermission,
-        openCameraSettings: mockOpenCameraSettings
+        openCameraSettings: mockOpenCameraSettings,
+        hasTorch: false,
+        isTorchOn: false,
+        toggleTorch: () => null
       })
     );
 
