@@ -49,15 +49,6 @@ export const preferencesDesignSystemSetEnabled = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
 )<{ isDesignSystemEnabled: boolean }>();
 
-export type IdPayCodeCieBannerClosePayloadType = {
-  initiativeId: string;
-};
-
-/** This action is used to close a CIE banner into an initiative details */
-export const preferencesIdPayCodeCieBannerClose = createStandardAction(
-  "PREFERENCES_IDPAY_CODE_CIE_BANNER_CLOSE"
-)<IdPayCodeCieBannerClosePayloadType>();
-
 export type PersistedPreferencesActions = ActionType<
   // eslint-disable-next-line
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -71,5 +62,4 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesDesignSystemSetEnabled
-  | typeof preferencesIdPayCodeCieBannerClose
 >;

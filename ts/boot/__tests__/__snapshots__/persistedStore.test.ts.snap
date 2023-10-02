@@ -155,7 +155,6 @@ Object {
   },
   "isDesignSystemEnabled": false,
   "isFingerprintEnabled": undefined,
-  "isIdPayInitiativeBannerClosed": Object {},
   "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,

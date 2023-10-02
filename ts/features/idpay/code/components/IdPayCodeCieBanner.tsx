@@ -6,11 +6,11 @@ import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
 import { showIdPayCodeBannerSelector } from "../store/selectors";
-import { preferencesIdPayCodeCieBannerClose } from "../../../../store/actions/persistedPreferences";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configuration/store";
+import { idPayCodeCieBannerClose } from "../store/actions";
 
 export type IdPayCodeCIEBannerParams = {
   initiativeId: string;
@@ -37,7 +37,7 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
   }, [initiativeId, dispatch]);
 
   const handleOnCloseBanner = () => {
-    dispatch(preferencesIdPayCodeCieBannerClose({ initiativeId }));
+    dispatch(idPayCodeCieBannerClose({ initiativeId }));
   };
 
   const handleNavigateToOnboardingStart = () => {

@@ -19,8 +19,7 @@ import {
   serviceAlertDisplayedOnceSuccess,
   preferencesPnTestEnvironmentSetEnabled,
   preferencesIdPayTestSetEnabled,
-  preferencesDesignSystemSetEnabled,
-  preferencesIdPayCodeCieBannerClose
+  preferencesDesignSystemSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -150,15 +149,6 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesIdPayCodeCieBannerClose, action)) {
-    return {
-      ...state,
-      isIdPayInitiativeBannerClosed: {
-        [action.payload.initiativeId]: true
-      }
-    };
-  }
-
   return state;
 }
 
@@ -195,9 +185,6 @@ export const isIdPayTestEnabledSelector = (state: GlobalState) =>
 
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled;
-
-export const isIdPayInitiativeBannerClosedSelector = (state: GlobalState) =>
-  state.persistedPreferences.isIdPayInitiativeBannerClosed;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<
