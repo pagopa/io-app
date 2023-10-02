@@ -155,6 +155,7 @@ Object {
   },
   "isDesignSystemEnabled": false,
   "isFingerprintEnabled": undefined,
+  "isIdPayInitiativeBannerClosed": Object {},
   "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
@@ -162,7 +163,6 @@ Object {
   "preferredCalendar": undefined,
   "preferredLanguage": undefined,
   "wasServiceAlertDisplayedOnce": false,
-  "isIdPayInitiativeBannerClosed": Object {},
 }
 `;
 
