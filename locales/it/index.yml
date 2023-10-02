@@ -3500,6 +3500,11 @@ idpay:
     discountDetails:
       authorizeButton: Autorizza un pagamento
       IDPayCode:
+        banner:
+          title: Paga con la tua carta d’identità elettronica
+          body: Spendi il denaro a te riservato con la semplicità del contactless.
+          action: Abilita ora
+          close: Chiudi
         failureScreen:
           cta: Chiudi
           header:
