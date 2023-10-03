@@ -138,7 +138,7 @@ type Props = {
 export const BarcodeCamera = (props: Props) => {
   const { onBarcodeScanned, disabled } = props;
   const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices();
+  const devices = useCameraDevices("wide-angle-camera");
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
   const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);
