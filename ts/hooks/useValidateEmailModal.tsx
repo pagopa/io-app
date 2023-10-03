@@ -32,16 +32,20 @@ export const useValidatedEmailModal = (isOnboarding?: boolean) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (isNewCduFlow && !isEmailValidated) {
+      // AS-IS FLOW
+      if (!isNewCduFlow && !isEmailValidated) {
+        showModal(<RemindEmailValidationOverlay isOnboarding={isOnboarding} />);
+        return () => hideModal();
+        // CDU FLOW
+      } else if (isNewCduFlow && !isEmailValidated) {
         showModal(
           <NewRemindEmailValidationOverlay isOnboarding={isOnboarding} />
         );
+        return;
+        // OTHER CASES
+      } else {
+        return;
       }
-      if (!isNewCduFlow && !isEmailValidated) {
-        showModal(<RemindEmailValidationOverlay isOnboarding={isOnboarding} />);
-      }
-
-      return () => (!isEmailValidated && !isNewCduFlow ? hideModal() : null);
-    }, [hideModal, isOnboarding, showModal, isEmailValidated])
+    }, [hideModal, isEmailValidated, isOnboarding, showModal])
   );
 };

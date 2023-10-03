@@ -10,7 +10,7 @@ import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper"
 
 const email = "prova.prova@prova.com";
 
-describe("NewRemindEmailValidationOverlay with isEmailValidated as true", async () => {
+describe("NewRemindEmailValidationOverlay with isEmailValidated as true", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore();
 
@@ -48,7 +48,7 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as true", async 
   });
 });
 
-describe("NewRemindEmailValidationOverlay with isEmailValidated as false", async () => {
+describe("NewRemindEmailValidationOverlay with isEmailValidated as false", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore();
 
@@ -84,9 +84,6 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as false", async
     if (button) {
       fireEvent.press(button);
     }
-    expect(
-      component.getByText(I18n.t("email.newvalidate.buttonlabelsent"))
-    ).toBeDisabled();
 
     setTimeout(() => {
       expect(

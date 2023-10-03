@@ -3,6 +3,7 @@
  */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
@@ -26,8 +27,9 @@ import {
   profileEmailSelector
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
-import ROUTES from "../navigation/routes";
+import { emailValidationSelector } from "../store/reducers/emailValidation";
 import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -52,6 +54,8 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const emailValidation = useIOSelector(emailValidationSelector);
+
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
     useState(false);
   const timeout = useRef<number | undefined>();
@@ -103,12 +107,6 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         optionEmail,
         O.map(_ => {
           sendEmailValidation();
-          IOToast.show(I18n.t("email.newvalidate.toast"));
-          setIsValidateEmailButtonDisabled(true);
-          // eslint-disable-next-line functional/immutable-data
-          timeout.current = setTimeout(() => {
-            setIsValidateEmailButtonDisabled(false);
-          }, emailSentTimeout);
         })
       );
     }
@@ -116,10 +114,12 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const navigateToInsertEmail = () => {
     if (isOnboarding) {
+      hideModal();
       NavigationService.navigate(ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
       });
     } else {
+      hideModal();
       NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
         screen: ROUTES.INSERT_EMAIL_SCREEN
       });
@@ -150,6 +150,21 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
       clearInterval(polling.current);
     };
   }, [hideModal, reloadProfile]);
+
+  useEffect(() => {
+    // send validation email KO
+    if (pot.isError(emailValidation.sendEmailValidationRequest)) {
+      IOToast.error(I18n.t("global.actions.retry"));
+      // send validation email OK
+    } else if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
+      IOToast.show(I18n.t("email.newvalidate.toast"));
+      setIsValidateEmailButtonDisabled(true);
+      // eslint-disable-next-line functional/immutable-data
+      timeout.current = setTimeout(() => {
+        setIsValidateEmailButtonDisabled(false);
+      }, emailSentTimeout);
+    }
+  }, [emailValidation.sendEmailValidationRequest]);
 
   useEffect(() => {
     if (isEmailValidated) {
