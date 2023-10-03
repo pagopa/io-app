@@ -5,7 +5,7 @@ import * as React from "react";
 import { useMemo } from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -137,12 +137,7 @@ const CgnMerchantsListByCategory = () => {
             <H1 color={"white"} style={[IOStyles.flex, { paddingRight: 30 }]}>
               {I18n.t(categorySpecs.nameKey)}
             </H1>
-            {categorySpecs.icon({
-              width: 57,
-              height: 57,
-              fill: IOColors.white,
-              style: { justifyContent: "flex-end" }
-            })}
+            <Icon name={categorySpecs.icon} size={48} color="white" />
           </View>
         </LinearGradient>
       )}
