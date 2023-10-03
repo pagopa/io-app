@@ -20,18 +20,18 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReducer";
-import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { H4 } from "../../../../components/core/typography/H4";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
+import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
