@@ -7,12 +7,15 @@ import {
   idPayCodeEnrollmentRequestSelector,
   idPayCodeSelector,
   idPayCodeStateSelector,
-  isIdPayCodeOnboardedSelector
+  isIdPayCodeOnboardedSelector,
+  isIdPayInitiativeBannerClosedSelector
 } from "../selectors";
 import {
+  idPayCodeCieBannerClose,
   idPayEnrollCode,
   idPayGenerateCode,
-  idPayGetCodeStatus
+  idPayGetCodeStatus,
+  idPayResetCode
 } from "../actions";
 import { getGenericError } from "../../../../../utils/errors";
 
@@ -21,7 +24,8 @@ describe("Test IdPay Code reducers and selectors", () => {
     const initialState: IdPayCodeState = {
       code: pot.none,
       enrollmentRequest: pot.none,
-      isOnboarded: pot.none
+      isOnboarded: pot.none,
+      isIdPayInitiativeBannerClosed: {}
     };
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -123,5 +127,37 @@ describe("Test IdPay Code reducers and selectors", () => {
     expect(idPayCodeEnrollmentRequestSelector(store.getState())).toStrictEqual(
       pot.someError(undefined, error)
     );
+  });
+
+  it("should handle idPayResetCode action", () => {
+    const tCode = "12345";
+
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    store.dispatch(idPayGenerateCode.success({ idpayCode: tCode }));
+    expect(store.getState().features.idPay.code.code).toStrictEqual(
+      pot.some(tCode)
+    );
+    expect(idPayCodeSelector(store.getState())).toStrictEqual(pot.some(tCode));
+
+    store.dispatch(idPayResetCode());
+    expect(store.getState().features.idPay.code.code).toStrictEqual(pot.none);
+    expect(idPayCodeSelector(store.getState())).toStrictEqual(pot.none);
+  });
+
+  it("should handle idPayCodeCieBannerClose action", () => {
+    const tInitiativeId = "123abc";
+
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+
+    store.dispatch(idPayCodeCieBannerClose({ initiativeId: tInitiativeId }));
+    expect(
+      store.getState().features.idPay.code.isIdPayInitiativeBannerClosed
+    ).toStrictEqual({ [tInitiativeId]: true });
+    expect(
+      isIdPayInitiativeBannerClosedSelector(store.getState())
+    ).toStrictEqual({ [tInitiativeId]: true });
   });
 });
