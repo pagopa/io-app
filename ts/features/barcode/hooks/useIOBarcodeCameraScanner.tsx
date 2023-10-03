@@ -1,3 +1,4 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -15,7 +16,6 @@ import {
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
@@ -166,7 +166,7 @@ export const useIOBarcodeCameraScanner = ({
   );
 
   const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices();
+  const devices = useCameraDevices("wide-angle-camera");
   const device = devices.back;
 
   // Checks that the device has a torch
