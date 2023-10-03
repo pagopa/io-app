@@ -1,7 +1,10 @@
 import * as React from "react";
-import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  ListItemSwitch,
+  useIOExperimentalDesign
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { SwitchListItem } from "../../../components/ui/SwitchListItem";
 import { useIOSelector, useIODispatch } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
@@ -11,12 +14,17 @@ const DSEnableSwitch = () => {
   const dispatch = useIODispatch();
   const { isExperimental, setExperimental } = useIOExperimentalDesign();
   const onSwitchValueChange = (isDesignSystemEnabled: boolean) => {
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }));
-    setExperimental(isDesignSystemEnabled);
+    AsyncStorage.setItem(
+      "isDesignSystemEnabled",
+      JSON.stringify(isDesignSystemEnabled)
+    ).finally(() => {
+      dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }));
+      setExperimental(isDesignSystemEnabled);
+    });
   };
 
   return (
-    <SwitchListItem
+    <ListItemSwitch
       label={I18n.t("profile.main.designSystemEnvironment")}
       value={isDesignSystemEnabled && isExperimental}
       onSwitchValueChange={onSwitchValueChange}
