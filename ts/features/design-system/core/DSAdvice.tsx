@@ -1,6 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { Icon, VSpacer, FeatureInfo } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  VSpacer,
+  FeatureInfo,
+  Banner,
+  bannerBackgroundColours
+} from "@pagopa/io-app-design-system";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
@@ -17,7 +23,6 @@ import { H2 } from "../../../components/core/typography/H2";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H5 } from "../../../components/core/typography/H5";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { Banner, bannerBackgroundColours } from "../../../components/Banner";
 
 const styles = StyleSheet.create({
   content: {
