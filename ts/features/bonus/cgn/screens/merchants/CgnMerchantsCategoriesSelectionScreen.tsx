@@ -6,9 +6,9 @@ import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
-  IOColors,
   getGradientColorValues,
-  VSpacer
+  VSpacer,
+  Icon
 } from "@pagopa/io-app-design-system";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOBadge } from "../../../../../components/core/IOBadge";
@@ -111,12 +111,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
                   </View>
                 </View>
               )}
-              {s.icon({
-                height: 32,
-                width: 32,
-                fill: IOColors.white,
-                style: { justifyContent: "flex-end" }
-              })}
+              <Icon name={s.icon} size={32} color="white" />
             </View>
           );
 
