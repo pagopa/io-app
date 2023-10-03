@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
-import codeReducer, { IdPayCodeState } from "../../../code/store/reducers";
+import { PersistPartial } from "redux-persist";
+
+import codePersistor, { IdPayCodeState } from "../../../code/store/reducers";
 import initiativeDetailsReducer, {
   IdPayInitiativeState
 } from "../../../details/store/index";
@@ -16,14 +18,14 @@ export type IDPayState = {
   initiative: IdPayInitiativeState;
   timeline: IdPayTimelineState;
   configuration: IdPayInitiativeConfigurationState;
-  code: IdPayCodeState;
+  code: IdPayCodeState & PersistPartial;
 };
 
 const idPayReducer = combineReducers({
   wallet: walletReducer,
   initiative: initiativeDetailsReducer,
   timeline: timelineReducer,
-  code: codeReducer,
+  code: codePersistor,
   configuration: configurationReducer
 });
 
