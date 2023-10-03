@@ -12,11 +12,11 @@ import {
   HSpacer,
   VSpacer,
   useIOExperimentalDesign,
-  useIOTheme
+  useIOTheme,
+  BlockButtons
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import BlockButtons from "../../../components/ui/BlockButtons";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -118,7 +118,7 @@ export const DSButtons = () => {
         weight={"SemiBold"}
         style={{ marginBottom: 16 }}
       >
-        Block Buttons (NativeBase)
+        Block Buttons (not NativeBase)
       </H2>
       {renderBlockButtons()}
 
@@ -898,51 +898,80 @@ const renderBlockButtons = () => (
   <>
     <BlockButtons
       type="SingleButton"
-      leftButton={{
-        block: true,
-        primary: true,
-        title: "Primary button"
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "primary button",
+          onPress: onButtonPress,
+          label: "Primary button"
+        }
       }}
     />
     <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineThird"
-      leftButton={{ bordered: true, primary: true, title: "Left button" }}
-      rightButton={{
-        block: true,
-        primary: true,
-        title: "Right button"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "Left button",
+          onPress: onButtonPress,
+          label: "Left button"
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "Right button",
+          onPress: onButtonPress,
+          label: "Right button"
+        }
       }}
     />
     <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineHalf"
-      leftButton={{ bordered: true, primary: true, title: "Left button" }}
-      rightButton={{
-        block: true,
-        primary: true,
-        title: "Right button"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "Left button",
+          onPress: onButtonPress,
+          label: "Left button"
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "Right button",
+          onPress: onButtonPress,
+          label: "Right button"
+        }
       }}
     />
     <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineThirdInverted"
-      leftButton={{ bordered: true, primary: true, title: "Left button" }}
-      rightButton={{
-        block: true,
-        primary: true,
-        title: "Right button"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "Left button",
+          onPress: onButtonPress,
+          label: "Left button"
+        }
       }}
-    />
-    <VSpacer size={16} />
-    <BlockButtons
-      type="ThreeButtonsInLine"
-      leftButton={{ alert: true, title: "Left button" }}
-      midButton={{ bordered: true, title: "Middle" }}
-      rightButton={{
-        block: true,
-        primary: true,
-        title: "Right button"
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: "Right button",
+          onPress: onButtonPress,
+          label: "Right button"
+        }
       }}
     />
   </>
