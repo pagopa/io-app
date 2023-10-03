@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
 import {
+  ButtonExtendedOutline,
   IOThemeContext,
   ModuleIDP,
   ModulePaymentNotice,
@@ -11,7 +12,6 @@ import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings"
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import ButtonExtendedOutline from "../../../components/ui/ButtonExtendedOutline";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
