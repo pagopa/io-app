@@ -89,6 +89,9 @@ export type BlockButtonsProps = Props;
 
 /**
  * Implements a component that show buttons on a line on 1, 2 or 3 buttons
+ *
+ * @deprecated Use the new temporary `BlockButtons` from the `io-app-design-system` to
+ * refactor the legacy screens and remove `NativeBase` buttons.
  */
 export default class BlockButtons extends React.Component<Props, never> {
   private renderRightButton = () => {
