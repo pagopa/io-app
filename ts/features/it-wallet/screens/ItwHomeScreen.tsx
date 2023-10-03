@@ -18,9 +18,8 @@ import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScr
 import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import PidCredential from "../components/PidCredential";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/ItwParamsList";
@@ -30,7 +29,6 @@ import { cancelButtonProps } from "../utils/itwButtonsUtils";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycleReducer";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
-import { itwDecodePid } from "../store/actions/itwCredentialsActions";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { itWalletExperimentalEnabled } from "../../../config";
 
@@ -55,7 +53,6 @@ const ItwHomeScreen = () => {
   );
   const pid = useIOSelector(ItwCredentialsPidSelector);
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
-  const dispatch = useIODispatch();
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
@@ -64,13 +61,6 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.payments"),
     I18n.t("features.itWallet.homeScreen.categories.bonus")
   ];
-
-  /**
-   * Decodes the PID on first render since we don't know if the PID has been decoded yet.
-   */
-  useOnFirstRender(() => {
-    dispatch(itwDecodePid.request(pid));
-  });
 
   /**
    * Condionally navigate to the credentials catalog screen if the experimental feature flag is true.
