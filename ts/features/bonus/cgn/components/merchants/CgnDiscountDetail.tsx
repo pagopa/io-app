@@ -4,7 +4,12 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  HSpacer,
+  VSpacer,
+  Icon,
+  IOIconSizeScale
+} from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import {
   DiscountCodeType,
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const CATEGORY_ICON_SIZE = 22;
+const CATEGORY_ICON_SIZE: IOIconSizeScale = 20;
 
 export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   discount,
@@ -89,11 +94,11 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                     }
                   ]}
                 >
-                  {c.icon({
-                    height: CATEGORY_ICON_SIZE,
-                    width: CATEGORY_ICON_SIZE,
-                    fill: IOColors.bluegrey
-                  })}
+                  <Icon
+                    name={c.icon}
+                    size={CATEGORY_ICON_SIZE}
+                    color="bluegrey"
+                  />
                   <HSpacer size={8} />
                   <H5
                     weight={"SemiBold"}
