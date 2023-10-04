@@ -100,10 +100,6 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
-// Redesign of the transaction summary screen
-export const newTransactionSummaryEnabled =
-  Config.NEW_TRANSACTION_SUMMARY_ENABLED === "YES";
-
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 

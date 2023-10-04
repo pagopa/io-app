@@ -13,7 +13,7 @@ import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { TransactionSummaryRow } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";

@@ -5,7 +5,7 @@ import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 import { TransactionSummaryRow } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";

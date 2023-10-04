@@ -1385,6 +1385,7 @@ wallet:
     amount: Amount
     total: Total paid
     expireDate: Expire date
+    dueDate: Due date
     tranche: Tranche
     info: 'More info at:'
     tel: 'Tel:'

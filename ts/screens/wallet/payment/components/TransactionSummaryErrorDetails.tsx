@@ -9,7 +9,7 @@ import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDuplicatedPayment } from "../../../../utils/payment";
-import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
+import { TransactionSummaryError } from "../TransactionSummaryScreen";
 import { TransactionSummaryRow } from "./TransactionSummary";
 
 type Props = Readonly<{
