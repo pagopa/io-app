@@ -12,7 +12,7 @@ const emptyState: ItwCredentialsChecksState = pot.none;
 /**
  * This reducer handles the checks state before adding a new credentials.
  * Currently it handles a mocked credential.
- * A saga is attached to the itwCredentialsChecks action which handles the required checks before adding a credential.
+ * A saga is attached to the itwCredentialsChecks action which handles the required checks.
  * @param state the current state
  * @param action the dispatched action
  * @returns the result state
