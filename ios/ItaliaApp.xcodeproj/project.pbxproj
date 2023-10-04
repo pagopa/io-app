@@ -29,7 +29,7 @@
 		8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */; };
 		8D109BF3B47F46FDA6B105CE /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */; };
 		8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */; };
-		97F089B39469411991377615 /* DMMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 875B0C3A5326413494A9311A /* DMMono-Medium.ttf */; };
+		97F089B39469411991377615 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		A51846BA0E2E7A2209D23D33 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EA508B76CCEA554E0F177B /* libPods-ItaliaApp.a */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
@@ -199,7 +199,6 @@
 				76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */,
 				5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */,
 				2C584AD92CB24628B1AA76DE /* ReadexPro-Regular.ttf */,
-				875B0C3A5326413494A9311A /* DMMono-Medium.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -391,7 +390,7 @@
 				16E38CBD19D4437A9C020B21 /* RobotoMono-Regular.ttf in Resources */,
 				28E4866232804051B865FC10 /* RobotoMono-RegularItalic.ttf in Resources */,
 				69A5E1839C924EE5B8CD9470 /* ReadexPro-Regular.ttf in Resources */,
-				97F089B39469411991377615 /* DMMono-Medium.ttf in Resources */,
+				97F089B39469411991377615 /* BuildFile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

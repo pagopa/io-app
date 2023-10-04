@@ -57,7 +57,6 @@ const ItwMissingFeatureScreen = () => {
       accessibilityLabel: I18n.t(
         "features.itWallet.missingFeatureScreen.button.label"
       ),
-      fullWidth: true,
       onPress: () => navigation.goBack()
     }
   };
