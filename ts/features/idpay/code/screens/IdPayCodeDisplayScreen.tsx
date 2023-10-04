@@ -51,7 +51,7 @@ const IdPayCodeDisplayScreen = () => {
 
   React.useEffect(() => {
     if (isFailure) {
-      navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
         screen: IdPayCodeRoutes.IDPAY_CODE_RESULT
       });
     }
