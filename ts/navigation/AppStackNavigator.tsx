@@ -44,12 +44,18 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
+import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import ROUTES from "./routes";
 
 export const AppStackNavigator = (): React.ReactElement => {
+  // This hook is used since we are in a child of the Context Provider
+  // to setup the experimental design system value from AsyncStorage
+  // remove this once the experimental design system is stable
+  useStoredExperimentalDesign();
+
   const dispatch = useIODispatch();
 
   const startupStatus = useIOSelector(isStartupLoaded);
