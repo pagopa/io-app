@@ -8,6 +8,7 @@ import I18n from "../../../i18n";
 import { useIOSelector, useIODispatch } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { preferencesDesignSystemSetEnabled } from "../../../store/actions/persistedPreferences";
+import { DS_PERSISTENCE_KEY } from "../../../common/context/DSExperimentalContext";
 
 const DSEnableSwitch = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -15,7 +16,7 @@ const DSEnableSwitch = () => {
   const { isExperimental, setExperimental } = useIOExperimentalDesign();
   const onSwitchValueChange = (isDesignSystemEnabled: boolean) => {
     AsyncStorage.setItem(
-      "isDesignSystemEnabled",
+      DS_PERSISTENCE_KEY,
       JSON.stringify(isDesignSystemEnabled)
     ).finally(() => {
       dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }));
