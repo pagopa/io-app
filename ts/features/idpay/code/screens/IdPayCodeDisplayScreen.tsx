@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Banner,
   Body,
@@ -13,6 +12,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -24,6 +24,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayCodeSelector } from "../store/selectors";
@@ -42,6 +43,9 @@ const IdPayCodeDisplayScreen = () => {
   const { isOnboarding } = route.params;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const { bottomSheet, present: presentCieBottomSheet } =
+    useIdPayInfoCieBottomSheet();
 
   const idPayCodePot = useIOSelector(idPayCodeSelector);
 
@@ -74,40 +78,45 @@ const IdPayCodeDisplayScreen = () => {
     : I18n.t("global.buttons.close");
 
   return (
-    <LoadingSpinnerOverlay isLoading={isGeneratingCode} loadingOpacity={1}>
-      <TopScreenComponent contextualHelp={emptyContextualHelp}>
-        <ContentWrapper>
-          <H2>{I18n.t("idpay.code.onboarding.header")}</H2>
-          <VSpacer size={16} />
-          <Body color="grey-700" weight="Regular">
-            {I18n.t("idpay.code.onboarding.body1")}
-          </Body>
-          <Body color="grey-700" weight="Bold">
-            {I18n.t("idpay.code.onboarding.bodyBold")}
-          </Body>
-          <LabelLink>{I18n.t("idpay.code.onboarding.bodyCta")}</LabelLink>
-          <VSpacer size={24} />
-          <CodeDisplayComponent code={idPayCode} />
-          <VSpacer size={24} />
-          <Banner
-            color="neutral"
-            pictogramName="help" // security once new DS ver is released
-            size="big"
-            viewRef={bannerRef}
-            title={I18n.t("idpay.code.onboarding.banner.header")}
-            content={I18n.t("idpay.code.onboarding.banner.body")}
+    <>
+      <LoadingSpinnerOverlay isLoading={isGeneratingCode} loadingOpacity={1}>
+        <TopScreenComponent contextualHelp={emptyContextualHelp}>
+          <ContentWrapper>
+            <H2>{I18n.t("idpay.code.onboarding.header")}</H2>
+            <VSpacer size={16} />
+            <Body color="grey-700" weight="Regular">
+              {I18n.t("idpay.code.onboarding.body1")}
+            </Body>
+            <Body color="grey-700" weight="Bold">
+              {I18n.t("idpay.code.onboarding.bodyBold")}
+            </Body>
+            <LabelLink onPress={presentCieBottomSheet}>
+              {I18n.t("idpay.code.onboarding.bodyCta")}
+            </LabelLink>
+            <VSpacer size={24} />
+            <CodeDisplayComponent code={idPayCode} />
+            <VSpacer size={24} />
+            <Banner
+              color="neutral"
+              pictogramName="help" // security once new DS ver is released
+              size="big"
+              viewRef={bannerRef}
+              title={I18n.t("idpay.code.onboarding.banner.header")}
+              content={I18n.t("idpay.code.onboarding.banner.body")}
+            />
+          </ContentWrapper>
+        </TopScreenComponent>
+        <SafeAreaView style={IOStyles.horizontalContentPadding}>
+          <ButtonSolid
+            accessibilityLabel={buttonLabel}
+            label={buttonLabel}
+            fullWidth={true}
+            onPress={handleContinue}
           />
-        </ContentWrapper>
-      </TopScreenComponent>
-      <SafeAreaView style={IOStyles.horizontalContentPadding}>
-        <ButtonSolid
-          accessibilityLabel={buttonLabel}
-          label={buttonLabel}
-          fullWidth={true}
-          onPress={handleContinue}
-        />
-      </SafeAreaView>
-    </LoadingSpinnerOverlay>
+        </SafeAreaView>
+      </LoadingSpinnerOverlay>
+      {bottomSheet}
+    </>
   );
 };
 
