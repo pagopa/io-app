@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Banner,
   Body,
@@ -11,8 +10,8 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -26,7 +25,11 @@ import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
-import { idPayCodeSelector } from "../store/selectors";
+import {
+  idPayCodeSelector,
+  isIdPayCodeFailureSelector,
+  isIdPayCodeLoadingSelector
+} from "../store/selectors";
 
 type IdPayCodeDisplayRouteParams = {
   isOnboarding?: boolean;
@@ -43,11 +46,9 @@ const IdPayCodeDisplayScreen = () => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const idPayCodePot = useIOSelector(idPayCodeSelector);
-
-  const isGeneratingCode = pot.isLoading(idPayCodePot);
-  const isFailure = pot.isError(idPayCodePot);
-  const idPayCode = pot.getOrElse(idPayCodePot, "");
+  const isGeneratingCode = useIOSelector(isIdPayCodeLoadingSelector);
+  const isFailure = useIOSelector(isIdPayCodeFailureSelector);
+  const idPayCode = useIOSelector(idPayCodeSelector);
 
   React.useEffect(() => {
     if (isFailure) {
