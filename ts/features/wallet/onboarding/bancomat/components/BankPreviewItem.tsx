@@ -1,9 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem } from "native-base";
 import * as React from "react";
 import { View, Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  Icon,
+  PressableListItemBase,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -81,18 +85,21 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   );
 
   return props.inList ? (
-    <ListItem style={styles.flexRow} onPress={onItemPress}>
-      <View style={styles.listItem}>
-        <VSpacer size={16} />
-        {bankLogo}
-        <VSpacer size={8} />
-        <LabelSmall color={"bluegrey"} weight={"Bold"}>
-          {bankName}
-        </LabelSmall>
-        <VSpacer size={16} />
-      </View>
-      <Icon name="chevronRightListItem" size={24} color="blue" />
-    </ListItem>
+    <>
+      <PressableListItemBase onPress={onItemPress}>
+        <View style={styles.listItem}>
+          <VSpacer size={16} />
+          {bankLogo}
+          <VSpacer size={8} />
+          <LabelSmall color={"bluegrey"} weight={"Bold"}>
+            {bankName}
+          </LabelSmall>
+          <VSpacer size={8} />
+        </View>
+        <Icon name="chevronRightListItem" size={24} color="blue" />
+      </PressableListItemBase>
+      <Divider />
+    </>
   ) : (
     <ButtonDefaultOpacity
       white={true}
