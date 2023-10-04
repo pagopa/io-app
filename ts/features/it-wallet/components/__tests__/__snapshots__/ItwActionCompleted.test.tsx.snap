@@ -16,6 +16,13 @@ exports[`Test ItwActionCompleted animated indicator should match snapshot 1`] = 
     align="xMidYMid"
     bbHeight={80}
     bbWidth={80}
+    colorValues={
+      Object {
+        "hands": "#0B3EE3",
+        "main": "#AAEEEF",
+        "secondary": "#00C5CA",
+      }
+    }
     fill="none"
     focusable={false}
     height={80}
