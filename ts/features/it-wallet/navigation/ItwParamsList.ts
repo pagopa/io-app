@@ -1,3 +1,4 @@
+import { ItwAddCredentialsCheckNavigationParams } from "../screens/credentials/ItwAddCredentialsCheck";
 import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/ItwPidRequestScreen";
 import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/ItwCieCardReaderScreen";
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
@@ -32,6 +33,7 @@ export type ItwParamsList = {
     .RESULT]: ItwRpResultScreenNavigationParams;
   // CREDENTIALS
   [ITW_ROUTES.CREDENTIALS.CATALOG]: undefined;
+  [ITW_ROUTES.CREDENTIALS.ADD_CHECKS]: ItwAddCredentialsCheckNavigationParams;
   // GENERIC
   [ITW_ROUTES.GENERIC.NOT_AVAILABLE]: undefined;
 };

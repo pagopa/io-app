@@ -34,7 +34,7 @@ import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchan
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
-import { ListItemItw } from "../../it-wallet/components/ListItemItw";
+import { ListItemItw } from "../../it-wallet/components/ListItems/ListItemItw";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
