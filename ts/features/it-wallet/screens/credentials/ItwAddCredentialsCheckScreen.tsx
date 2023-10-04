@@ -21,15 +21,15 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import ItwContinueScreen from "../../components/ItwResultComponent";
 
 /**
- * ItwAddCredentialsCheck screen navigation params.
+ * ItwAddCredentialsCheckScreen screen navigation params.
  * The credential consists of a mock in the form of a CredentialCatalogItem.
  */
-export type ItwAddCredentialsCheckNavigationParams = {
+export type ItwAddCredentialsCheckScreenNavigationParams = {
   credential: CredentialCatalogItem;
 };
 
 /**
- * Type of the route props for the ItwAddCredentialsCheck.
+ * Type of the route props for the ItwAddCredentialsCheckScreen.
  */
 type ItwAddCredentialsRouteProp = RouteProp<
   ItwParamsList,
@@ -40,7 +40,7 @@ type ItwAddCredentialsRouteProp = RouteProp<
  * Renders a credentials check screen which displays a loading screen while checking the prerequisites for adding a credential.
  * Shows a success screen if the check is successful, an error screen otherwise.
  */
-const ItwAddCredentialsCheck = () => {
+const ItwAddCredentialsCheckScreen = () => {
   const route = useRoute<ItwAddCredentialsRouteProp>();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
@@ -122,4 +122,4 @@ const ItwAddCredentialsCheck = () => {
   return <RenderMask />;
 };
 
-export default ItwAddCredentialsCheck;
+export default ItwAddCredentialsCheckScreen;
