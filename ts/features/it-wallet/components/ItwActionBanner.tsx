@@ -1,7 +1,6 @@
 import * as React from "react";
 import { GestureResponderEvent, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Banner } from "../../../components/Banner";
+import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { useIODispatch } from "../../../store/hooks";
 import { itwActivationStart } from "../store/actions/itwActivationActions";
 
