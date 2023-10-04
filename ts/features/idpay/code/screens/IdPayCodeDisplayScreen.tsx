@@ -106,22 +106,23 @@ const IdPayCodeDisplayScreen = () => {
           label={buttonLabel}
           fullWidth={true}
           onPress={handleContinue}
+          testID="actionButtonTestID"
         />
       </SafeAreaView>
     </LoadingSpinnerOverlay>
   );
 };
 
-const CodeDigitDisplayBox = ({ digit }: { digit: string }) => (
-  <View style={styles.codeDigit}>
-    <H3>{digit}</H3>
-  </View>
-);
-
 const CodeDisplayComponent = ({ code }: { code: string }) => (
   <View style={styles.codeDisplay}>
     {[...code].map((digit, index) => (
-      <CodeDigitDisplayBox key={index} digit={digit} />
+      <View
+        key={index}
+        style={styles.codeDigit}
+        testID={`idPayCodeDigit${index}TestID`}
+      >
+        <H3>{digit}</H3>
+      </View>
     ))}
   </View>
 );

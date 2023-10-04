@@ -65,7 +65,8 @@ const IdPayCodeResultScreen = () => {
         accessibilityLabel: I18n.t(
           "idpay.initiative.discountDetails.IDPayCode.successScreen.cta"
         ),
-        onPress: handleClose
+        onPress: handleClose,
+        testID: "actionButtonTestID"
       }}
       subtitle={I18n.t(
         "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
