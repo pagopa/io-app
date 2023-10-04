@@ -15,11 +15,6 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import TopScreenComponent from "./TopScreenComponent";
 
-export type WizardButtonProps = {
-  text: string;
-  onPress: () => void;
-};
-
 export type WizardScreenProps = {
   title: string;
   description?: string;
