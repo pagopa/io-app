@@ -75,6 +75,10 @@ export const TransactionSummaryRow = (
 ): React.ReactElement | null => {
   const { title, value, icon, isLoading, placeholder, action } = props;
 
+  if (!value && !isLoading) {
+    return null;
+  }
+
   return (
     <ListItemInfo
       accessibilityLabel={title}
