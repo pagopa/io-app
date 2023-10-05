@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Divider } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { RawAccordion } from "../../../../components/core/accordion/RawAccordion";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -18,15 +19,6 @@ type Props = Readonly<{
   organizationFiscalCode: string;
   messageId: string | undefined;
 }>;
-
-const Separator = () => (
-  <View
-    style={{
-      backgroundColor: customVariables.itemSeparator,
-      height: StyleSheet.hairlineWidth
-    }}
-  />
-);
 
 export const TransactionSummaryErrorDetails = ({
   error,
@@ -90,16 +82,17 @@ export const TransactionSummaryErrorDetails = ({
         )}
       >
         <View>
-          <Separator />
+          <Divider />
           {detailsData.map((row, index, array) =>
             row.value !== undefined ? (
-              <TransactionSummaryRow
-                axis={"vertical"}
-                title={row.key}
-                subtitle={row.value}
-                hideSeparator={index === array.length - 1}
-                key={index}
-              />
+              <>
+                <TransactionSummaryRow
+                  title={row.key}
+                  value={row.value}
+                  key={index}
+                />
+                {index !== array.length - 1 && <Divider />}
+              </>
             ) : undefined
           )}
           <View>

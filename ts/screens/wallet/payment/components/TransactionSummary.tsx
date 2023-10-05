@@ -63,7 +63,7 @@ const InfoButton = (props: { onPress: () => void }) => (
 type RowProps = Readonly<{
   title: string;
   value?: string;
-  icon: IOIcons;
+  icon?: IOIcons;
   isLoading?: boolean;
   placeholder?: React.ReactElement;
   action?: React.ReactNode;

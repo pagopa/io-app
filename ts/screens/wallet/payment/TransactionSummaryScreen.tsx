@@ -1,4 +1,8 @@
-import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  PaymentNoticeNumberFromString,
+  RptId
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -29,6 +33,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  PaymentStartOrigin,
   abortRunningPayment,
   backToEntrypointPayment,
   paymentAttiva,
@@ -77,6 +82,13 @@ import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 
+export type TransactionSummaryScreenNavigationParams = Readonly<{
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+  paymentStartOrigin: PaymentStartOrigin;
+  messageId?: string;
+}>;
+
 export type TransactionSummaryErrorContent = PayloadForAction<
   | typeof paymentVerifica["failure"]
   | typeof paymentAttiva["failure"]
@@ -123,7 +135,7 @@ const renderFooter = (
     }
   }
   if (isLoading) {
-    // TODO: Add a ButtonOutline with a loading spinner as soon as it's available by DS
+    // TODO: Add a ButtonOutline with a loading spinner as soon as it's available by DS (https://pagopa.atlassian.net/browse/IOBP-302)
     return <></>;
   }
 
