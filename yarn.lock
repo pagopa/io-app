@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.11.3.tgz#24a4f044813eb379bd2c427c42effa43fde8a727"
-  integrity sha512-OywmnNggsvOYpXXmi5A45nfamZQXF74xLrTnXaeN5OieghPm9NoqYhJ4TI4hyAx5rqVibUJxNudZ/L7DHjEF5g==
+"@pagopa/io-app-design-system@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.12.0.tgz#78f34f6d104f1023ea4d363c3269cf1b38c759f9"
+  integrity sha512-pU77CI03t5ywwwJSPvqz5Q4rwNEigCckDw8WvtNAdSu0BDpUehDVPaYIchpRGhlaXPSvPPpumqxzS0GdQZXxRA==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -3136,6 +3136,7 @@
     expo-asset "^8.10.1"
     expo-font "^11.4.0"
     expo-modules-core "^1.5.6"
+    lodash "^4.17.21"
     react-native-gesture-handler "^2.12.0"
     react-native-haptic-feedback "^2.0.2"
     react-native-linear-gradient "^2.5.6"

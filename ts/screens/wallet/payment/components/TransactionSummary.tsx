@@ -158,7 +158,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       <TransactionSummaryRow
         title={I18n.t("wallet.firstTransactionSummary.object")}
         value={description}
-        icon="notice"
+        icon="notes"
         placeholder={
           <>
             <LoadingPlaceholder size={"full"} />
@@ -189,7 +189,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       <Divider />
       <ListItemInfoCopy
         value={formattedPaymentNoticeNumber}
-        icon="notice"
+        icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}
         accessibilityLabel={I18n.t("payment.noticeCode")}
         onPress={() =>
@@ -200,7 +200,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
       <Divider />
       <ListItemInfoCopy
         value={props.organizationFiscalCode}
-        icon="creditCard"
+        icon="entityCode"
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.entityCode")}
         onPress={() =>
