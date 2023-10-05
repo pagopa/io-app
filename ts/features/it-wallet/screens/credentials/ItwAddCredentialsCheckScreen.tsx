@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { IOStyles } from "@pagopa/io-app-design-system";
+import { IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert } from "react-native";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -14,11 +14,15 @@ import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { CredentialCatalogItem } from "../../utils/mocks";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { ItwCredentialsChecksSelector } from "../../store/reducers/itwCredentialsChecksReducer";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import ItwContinueScreen from "../../components/ItwResultComponent";
+import ROUTES from "../../../../navigation/routes";
 
 /**
  * ItwAddCredentialsCheckScreen screen navigation params.
@@ -42,9 +46,11 @@ type ItwAddCredentialsRouteProp = RouteProp<
  */
 const ItwAddCredentialsCheckScreen = () => {
   const route = useRoute<ItwAddCredentialsRouteProp>();
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const navigation =
+    useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
   const dispatch = useIODispatch();
   const credentialsCheckState = useIOSelector(ItwCredentialsChecksSelector);
+  const toast = useIOToast();
 
   useOnFirstRender(() => {
     dispatch(itwCredentialsChecks.request(route.params.credential));
@@ -58,7 +64,14 @@ const ItwAddCredentialsCheckScreen = () => {
       },
       {
         text: I18n.t("features.itWallet.generic.alert.confirm"),
-        onPress: () => navigation.goBack()
+        onPress: () => {
+          toast.info(
+            I18n.t(
+              "features.itWallet.issuing.credentialsChecksScreen.toast.cancel"
+            )
+          );
+          navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
+        }
       }
     ]);
   };

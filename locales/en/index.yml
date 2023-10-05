@@ -3420,6 +3420,8 @@ features:
           title: "We are performing some security checks"
         success:
           title: You are adding {{credentialName}} to your Wallet
+        toast: 
+          cancel: "The credential was not added to the wallet."
     presentation: 
       credentialDetails: 
         buttons: 

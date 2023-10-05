@@ -3444,6 +3444,8 @@ features:
           title: "Stiamo facendo alcune verifiche di sicurezza"
         success:
           title: Stai aggiungendo {{credentialName}} al Portafoglio
+        toast: 
+          cancel: "Tessera non aggiunta al Portafoglio."
     presentation: 
       credentialDetails: 
         buttons: 
