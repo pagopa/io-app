@@ -15,7 +15,7 @@ export function* handleIdPayEnrollCode(
   enrollInstrumentCode: IDPayClient["enrollInstrumentCode"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idPayEnrollCode["request"]>
+  action: ActionType<(typeof idPayEnrollCode)["request"]>
 ) {
   const idPayGenerateCodeRequest = enrollInstrumentCode({
     bearerAuth: bearerToken,

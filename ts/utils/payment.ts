@@ -477,9 +477,9 @@ export const getPickPaymentMethodDescription = (
 export const isDuplicatedPayment = (
   error: O.Option<
     PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
+      | (typeof paymentVerifica)["failure"]
+      | (typeof paymentAttiva)["failure"]
+      | (typeof paymentIdPolling)["failure"]
     >
   >
 ) =>

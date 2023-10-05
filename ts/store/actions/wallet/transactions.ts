@@ -61,8 +61,8 @@ export const fetchTransactionFailure = createStandardAction(
 
 type FetchPspRequestPayload = Readonly<{
   idPsp: number;
-  onSuccess?: (action: ActionType<typeof fetchPsp["success"]>) => void;
-  onFailure?: (action: ActionType<typeof fetchPsp["failure"]>) => void;
+  onSuccess?: (action: ActionType<(typeof fetchPsp)["success"]>) => void;
+  onFailure?: (action: ActionType<(typeof fetchPsp)["failure"]>) => void;
 }>;
 
 type FetchPspSuccessPayload = Readonly<{

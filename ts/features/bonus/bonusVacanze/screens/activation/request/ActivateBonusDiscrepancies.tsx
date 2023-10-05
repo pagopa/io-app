@@ -26,25 +26,26 @@ const iconSize = 24;
  * @param props
  * @constructor
  */
-export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
-  props => (
-    <View
-      style={[
-        styles.verticalPadding,
-        styles.discrepanciesBox,
-        IOStyles.row,
-        IOStyles.horizontalContentPadding
-      ]}
-    >
-      <Icon name="notice" size={iconSize} />
-      <HSpacer size={16} />
-      <View style={IOStyles.flex}>
-        <Body>
-          <Body weight="SemiBold" color="bluegreyDark">
-            {`${props.attention} `}
-          </Body>
-          {props.text}
+export const ActivateBonusDiscrepancies: React.FunctionComponent<
+  Props
+> = props => (
+  <View
+    style={[
+      styles.verticalPadding,
+      styles.discrepanciesBox,
+      IOStyles.row,
+      IOStyles.horizontalContentPadding
+    ]}
+  >
+    <Icon name="notice" size={iconSize} />
+    <HSpacer size={16} />
+    <View style={IOStyles.flex}>
+      <Body>
+        <Body weight="SemiBold" color="bluegreyDark">
+          {`${props.attention} `}
         </Body>
-      </View>
+        {props.text}
+      </Body>
     </View>
-  );
+  </View>
+);

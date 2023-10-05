@@ -13,7 +13,7 @@ import { idPayGetCodeStatus } from "../store/actions";
 export function* handleIdPayGetCodeStatus(
   getIdpayCodeStatus: IDPayClient["getIdpayCodeStatus"],
   bearerToken: string,
-  action: ActionType<typeof idPayGetCodeStatus["request"]>
+  action: ActionType<(typeof idPayGetCodeStatus)["request"]>
 ) {
   const getIdpayCodeStatusRequest = getIdpayCodeStatus({
     bearerAuth: bearerToken
