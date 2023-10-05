@@ -34,7 +34,7 @@ import I18n from "../i18n";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
-import { ScreenWithHeader } from "./components/ScreenWithHeader";
+import { HeaderSecondLevelStackScreen } from "./components/HeaderSecondLevelStackScreen";
 
 const profilePrivacyContextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
@@ -59,7 +59,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_DATA}
       component={ProfileDataScreen}
     />
-    <ScreenWithHeader
+    <HeaderSecondLevelStackScreen
       name={ROUTES.PROFILE_PRIVACY_MAIN}
       component={PrivacyMainScreen}
       title={I18n.t("profile.main.privacy.title")}
