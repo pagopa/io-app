@@ -13,7 +13,7 @@ import {
   resetCustomFields
 } from "../utils/supportAssistance";
 
-interface SupportRequestParams {
+export interface SupportRequestParams {
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
