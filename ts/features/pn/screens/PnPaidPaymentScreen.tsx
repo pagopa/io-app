@@ -49,16 +49,14 @@ export const PnPaidPaymentScreen = (
         <TransactionSummaryStatus error={paidPaymentError} />
         <ScrollView style={styles.container}>
           <TransactionSummaryRow
-            axis={"horizontal"}
             title={I18n.t("payment.noticeCode")}
-            subtitle={formattedPaymentNoticeNumber}
+            value={formattedPaymentNoticeNumber}
             onPress={() => clipboardSetStringWithFeedback(noticeCode)}
           />
           {maybeCreditorTaxId && (
             <TransactionSummaryRow
-              axis={"horizontal"}
               title={I18n.t("wallet.firstTransactionSummary.entityCode")}
-              subtitle={maybeCreditorTaxId}
+              value={maybeCreditorTaxId}
               onPress={() => clipboardSetStringWithFeedback(maybeCreditorTaxId)}
             />
           )}

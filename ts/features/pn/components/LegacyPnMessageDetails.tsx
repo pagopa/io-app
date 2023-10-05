@@ -192,10 +192,8 @@ export const LegacyPnMessageDetails = ({
           title={I18n.t("features.pn.details.infoSection.title")}
         >
           <TransactionSummaryRow
-            axis="horizontal"
             title={I18n.t("features.pn.details.infoSection.iun")}
-            hideSeparator={true}
-            subtitle={message.iun}
+            value={message.iun}
             onPress={() => clipboardSetStringWithFeedback(message.iun)}
           />
           <H5
