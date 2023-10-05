@@ -852,15 +852,15 @@ email:
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
   newvalidate:
-    title: Validate your email
-    subtitle: Follow the instructions we sent to {{email}}.
+    title: Confirm your email
+    subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent
+    buttonlabelsent: Email sent!
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail: 
-    title: Email validated!
-    subtitle: IO will use the email address {{email}} in order to communicate with you.
+    title: Email confirmed!
+    subtitle: You will receive IO's communications at 
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md

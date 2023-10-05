@@ -8,8 +8,6 @@ import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 
-const email = "prova.prova@prova.com";
-
 describe("NewRemindEmailValidationOverlay with isEmailValidated as true", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore();
@@ -36,7 +34,7 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as true", () => 
       component.getByText(I18n.t("email.newvalidemail.title"))
     ).toBeTruthy();
     expect(
-      component.getByText(I18n.t("email.newvalidemail.subtitle", { email }))
+      component.getByText(I18n.t("email.newvalidemail.subtitle"))
     ).toBeTruthy();
     const button = component.getByTestId("button-test");
     expect(button).toBeDefined();
@@ -72,7 +70,7 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as false", () =>
     expect(component.getByTestId("title-test")).toBeDefined();
     expect(component.getByText(I18n.t("email.newvalidate.title"))).toBeTruthy();
     expect(
-      component.getByText(I18n.t("email.newvalidate.subtitle", { email }))
+      component.getByText(I18n.t("email.newvalidate.subtitle"))
     ).toBeTruthy();
     expect(component.getByTestId("link-test")).toBeDefined();
     const button = component.getByTestId("button-test");

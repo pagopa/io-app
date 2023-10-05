@@ -868,15 +868,15 @@ email:
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
   newvalidate:
-    title: Valida la tua email
-    subtitle: Segui le istruzioni che abbiamo inviato a {{email}}.
-    link: L’indirizzo è errato?
-    buttonlabelsent: Email inviata
-    buttonlabelsentagain: Invia email nuovamente
+    title: Conferma la tua email
+    subtitle: Segui le istruzioni che abbiamo inviato a 
+    link: Non è corretta?
+    buttonlabelsent: Email inviata!
+    buttonlabelsentagain: Invia di nuovo l’email
     toast: Fatto! Controlla tua casella di posta.
   newvalidemail: 
-    title: Email validata!
-    subtitle: IO utilizzerà l’indirizzo email {{email}} per comunicare con te.
+    title: Email confermata!
+    subtitle: Riceverai le comunicazioni di IO all’indirizzo 
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md

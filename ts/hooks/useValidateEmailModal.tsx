@@ -41,11 +41,8 @@ export const useValidatedEmailModal = (isOnboarding?: boolean) => {
         showModal(
           <NewRemindEmailValidationOverlay isOnboarding={isOnboarding} />
         );
-        return;
-        // OTHER CASES
-      } else {
-        return;
       }
+      return () => void 0;
     }, [hideModal, isEmailValidated, isOnboarding, showModal])
   );
 };

@@ -34,8 +34,8 @@ import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
 import { LightModalContextInterface } from "./ui/LightModal";
-import TopScreenComponent from "./screens/TopScreenComponent";
 import { withLightModalContext } from "./helpers/withLightModalContext";
+import BaseScreenComponent from "./screens/BaseScreenComponent";
 
 const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
@@ -173,9 +173,14 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   }, [isEmailValidated]);
 
   return (
-    <TopScreenComponent
+    <BaseScreenComponent
       goBack={false}
       accessibilityEvents={{ avoidNavigationEventsUsage: true }}
+      contextualHelpMarkdown={{
+        title: "email.validate.title",
+        body: "email.validate.help"
+      }}
+      headerTitle={I18n.t("email.newinsert.header")}
     >
       <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={40} />
@@ -199,18 +204,26 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
             </Label>
           </View>
           <VSpacer size={16} />
-          <Label
-            weight="Regular"
-            style={{ textAlign: "center" }}
-            testID="subtitle-test"
-          >
-            {I18n.t(
-              isEmailValidated
-                ? "email.newvalidemail.subtitle"
-                : "email.newvalidate.subtitle",
-              { email }
-            )}
-          </Label>
+          <View>
+            <Label
+              weight="Regular"
+              style={{ textAlign: "center" }}
+              testID="subtitle-test"
+            >
+              {I18n.t(
+                isEmailValidated
+                  ? "email.newvalidemail.subtitle"
+                  : "email.newvalidate.subtitle"
+              )}
+            </Label>
+            <Label
+              weight="SemiBold"
+              style={{ textAlign: "center" }}
+              testID="subtitle-test"
+            >
+              {email}.
+            </Label>
+          </View>
           {!isEmailValidated && (
             <View style={IOStyles.selfCenter}>
               <VSpacer size={16} />
@@ -223,7 +236,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         </Content>
         {renderFooter()}
       </SafeAreaView>
-    </TopScreenComponent>
+    </BaseScreenComponent>
   );
 };
 export default withLightModalContext(NewRemindEmailValidationOverlay);
