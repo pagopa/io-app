@@ -641,6 +641,7 @@ Object {
                                                     Metodi di pagamento associati
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="error-850"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -871,6 +872,7 @@ Object {
                                                     IBAN per l'accredito
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="error-850"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -1637,6 +1639,7 @@ Object {
                                                     Metodi di pagamento associati
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="error-850"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -1801,6 +1804,7 @@ Object {
                                                     IBAN per l'accredito
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -2501,6 +2505,7 @@ Object {
                                                     Metodi di pagamento associati
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -2731,6 +2736,7 @@ Object {
                                                     IBAN per l'accredito
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="error-850"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -3431,6 +3437,7 @@ Object {
                                                     Metodi di pagamento associati
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -3595,6 +3602,7 @@ Object {
                                                     IBAN per l'accredito
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -4295,6 +4303,7 @@ Object {
                                                     Metodi di pagamento associati
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -4459,6 +4468,7 @@ Object {
                                                     IBAN per l'accredito
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -5159,6 +5169,7 @@ Object {
                                                     Metodi di pagamento associati
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
@@ -5323,6 +5334,7 @@ Object {
                                                     IBAN per l'accredito
                                                   </Text>
                                                   <Text
+                                                    allowFontScaling={false}
                                                     color="bluegrey"
                                                     defaultColor="bluegrey"
                                                     defaultWeight="Regular"
