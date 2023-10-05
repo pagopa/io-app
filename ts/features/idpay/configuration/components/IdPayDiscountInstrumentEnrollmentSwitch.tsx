@@ -41,10 +41,9 @@ const getInstrumentPaymentMethodIcon = (
   paymentType: InstrumentTypeEnum
 ): IOIcons => {
   switch (paymentType) {
-    case InstrumentTypeEnum.QRCODE:
-      return "device";
     case InstrumentTypeEnum.IDPAYCODE:
       return "fiscalCodeIndividual";
+    case InstrumentTypeEnum.QRCODE:
     default:
       return "device";
   }
@@ -97,7 +96,7 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
         label: I18n.t(
           `idpay.configuration.instruments.paymentMethods.${instrumentType}.actionItem`
         ),
-        onPress: () => onPressAction?.()
+        onPress: onPressAction
       } as SwitchAction;
     }
     return undefined;
