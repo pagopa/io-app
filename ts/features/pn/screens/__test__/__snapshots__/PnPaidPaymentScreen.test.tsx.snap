@@ -779,113 +779,82 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                         >
                           <View>
                             <View
-                              accessible={false}
-                              collapsable={false}
-                              focusable={true}
-                              onClick={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
+                              accessibilityLabel="Notice code"
+                              accessible={true}
                               style={
                                 Object {
-                                  "opacity": 1,
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 }
                               }
                             >
-                              <View>
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  }
+                                }
+                              >
                                 <View
                                   style={
                                     Object {
-                                      "alignItems": "center",
                                       "flex": 1,
-                                      "flexDirection": "row",
                                     }
                                   }
                                 >
-                                  <View
-                                    accessibilityLabel="Notice code: 0180  1198  8086  4794  97"
-                                    accessible={true}
-                                    style={
+                                  <Text
+                                    allowFontScaling={false}
+                                    color="bluegrey"
+                                    defaultColor="bluegrey"
+                                    defaultWeight="Regular"
+                                    font="TitilliumWeb"
+                                    fontStyle={
                                       Object {
-                                        "flex": 1,
-                                        "flexDirection": "row",
-                                        "paddingVertical": 24,
+                                        "fontSize": 16,
+                                        "lineHeight": 24,
                                       }
                                     }
-                                  >
-                                    <Text
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                    style={
+                                      Array [
                                         Object {
                                           "fontSize": 16,
                                           "lineHeight": 24,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "flex": 1,
-                                          },
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      color="blue"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                        },
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 22,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 22,
-                                          },
-                                          Object {
-                                            "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="SemiBold"
-                                      weightColorFactory={[Function]}
-                                    >
-                                      0180  1198  8086  4794  97
-                                    </Text>
-                                  </View>
-                                </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#CCD4DC",
-                                      "height": 0.5,
+                                          "color": "#475A6D",
+                                          "fontFamily": "Titillium Web",
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                        },
+                                      ]
                                     }
-                                  }
-                                />
+                                    weight="Regular"
+                                  >
+                                    Notice code
+                                  </Text>
+                                  <Text
+                                    numberOfLines={2}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "fontFamily": "Titillium Web",
+                                          "fontSize": 18,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                        Object {
+                                          "color": "#17324D",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    0180  1198  8086  4794  97
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1683,223 +1652,161 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                         >
                           <View>
                             <View
-                              accessible={false}
-                              collapsable={false}
-                              focusable={true}
-                              onClick={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
+                              accessibilityLabel="Notice code"
+                              accessible={true}
                               style={
                                 Object {
-                                  "opacity": 1,
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 }
                               }
                             >
-                              <View>
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  }
+                                }
+                              >
                                 <View
                                   style={
                                     Object {
-                                      "alignItems": "center",
                                       "flex": 1,
-                                      "flexDirection": "row",
                                     }
                                   }
                                 >
-                                  <View
-                                    accessibilityLabel="Notice code: 0180  1198  8086  4794  97"
-                                    accessible={true}
-                                    style={
+                                  <Text
+                                    allowFontScaling={false}
+                                    color="bluegrey"
+                                    defaultColor="bluegrey"
+                                    defaultWeight="Regular"
+                                    font="TitilliumWeb"
+                                    fontStyle={
                                       Object {
-                                        "flex": 1,
-                                        "flexDirection": "row",
-                                        "paddingVertical": 24,
+                                        "fontSize": 16,
+                                        "lineHeight": 24,
                                       }
                                     }
-                                  >
-                                    <Text
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                    style={
+                                      Array [
                                         Object {
                                           "fontSize": 16,
                                           "lineHeight": 24,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "flex": 1,
-                                          },
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Notice code
-                                    </Text>
-                                    <Text
-                                      color="blue"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                        },
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 22,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 22,
-                                          },
-                                          Object {
-                                            "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="SemiBold"
-                                      weightColorFactory={[Function]}
-                                    >
-                                      0180  1198  8086  4794  97
-                                    </Text>
-                                  </View>
-                                </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#CCD4DC",
-                                      "height": 0.5,
+                                          "color": "#475A6D",
+                                          "fontFamily": "Titillium Web",
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                        },
+                                      ]
                                     }
-                                  }
-                                />
+                                    weight="Regular"
+                                  >
+                                    Notice code
+                                  </Text>
+                                  <Text
+                                    numberOfLines={2}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "fontFamily": "Titillium Web",
+                                          "fontSize": 18,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                        Object {
+                                          "color": "#17324D",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    0180  1198  8086  4794  97
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                             <View
-                              accessible={false}
-                              collapsable={false}
-                              focusable={true}
-                              onClick={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
+                              accessibilityLabel="Payee Fiscal Code"
+                              accessible={true}
                               style={
                                 Object {
-                                  "opacity": 1,
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 }
                               }
                             >
-                              <View>
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  }
+                                }
+                              >
                                 <View
                                   style={
                                     Object {
-                                      "alignItems": "center",
                                       "flex": 1,
-                                      "flexDirection": "row",
                                     }
                                   }
                                 >
-                                  <View
-                                    accessibilityLabel="Payee Fiscal Code: 00000000009"
-                                    accessible={true}
-                                    style={
+                                  <Text
+                                    allowFontScaling={false}
+                                    color="bluegrey"
+                                    defaultColor="bluegrey"
+                                    defaultWeight="Regular"
+                                    font="TitilliumWeb"
+                                    fontStyle={
                                       Object {
-                                        "flex": 1,
-                                        "flexDirection": "row",
-                                        "paddingVertical": 24,
+                                        "fontSize": 16,
+                                        "lineHeight": 24,
                                       }
                                     }
-                                  >
-                                    <Text
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                    style={
+                                      Array [
                                         Object {
                                           "fontSize": 16,
                                           "lineHeight": 24,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "flex": 1,
-                                          },
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    >
-                                      Payee Fiscal Code
-                                    </Text>
-                                    <Text
-                                      color="blue"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                        },
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 22,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 22,
-                                          },
-                                          Object {
-                                            "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                          },
-                                        ]
-                                      }
-                                      weight="SemiBold"
-                                      weightColorFactory={[Function]}
-                                    >
-                                      00000000009
-                                    </Text>
-                                  </View>
-                                </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#CCD4DC",
-                                      "height": 0.5,
+                                          "color": "#475A6D",
+                                          "fontFamily": "Titillium Web",
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                        },
+                                      ]
                                     }
-                                  }
-                                />
+                                    weight="Regular"
+                                  >
+                                    Payee Fiscal Code
+                                  </Text>
+                                  <Text
+                                    numberOfLines={2}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "fontFamily": "Titillium Web",
+                                          "fontSize": 18,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                        Object {
+                                          "color": "#17324D",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    00000000009
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                           </View>
