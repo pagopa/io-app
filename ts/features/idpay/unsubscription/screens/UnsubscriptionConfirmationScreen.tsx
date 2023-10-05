@@ -1,19 +1,19 @@
+import {
+  ContentWrapper,
+  FooterWithButtons,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import {
-  IconButton,
-  IOColors,
-  VSpacer,
-  ContentWrapper
-} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import LegacyFooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -66,30 +66,34 @@ const UnsubscriptionConfirmationScreen = () => {
       footer: (
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
-          leftButton={{
-            onPress: () => {
-              confirmModal.dismiss();
-              handleConfirmPress();
-            },
-            block: true,
-            bordered: true,
-            title: I18n.t("idpay.unsubscription.button.continue"),
-            danger: true,
-            labelColor: IOColors.red
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("idpay.unsubscription.button.continue"),
+              accessibilityLabel: I18n.t(
+                "idpay.unsubscription.button.continue"
+              ),
+              onPress: () => {
+                confirmModal.dismiss();
+                handleConfirmPress();
+              },
+              color: "danger"
+            }
           }}
-          rightButton={{
-            onPress: () => {
-              confirmModal.dismiss();
-            },
-            block: true,
-            bordered: true,
-            title: I18n.t("global.buttons.cancel"),
-            labelColor: IOColors.blue
+          secondary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.cancel"),
+              accessibilityLabel: I18n.t("global.buttons.cancel"),
+              onPress: () => {
+                confirmModal.dismiss();
+              }
+            }
           }}
         />
       )
     },
-    150
+    175
   );
 
   const body = (
@@ -113,7 +117,7 @@ const UnsubscriptionConfirmationScreen = () => {
           <VSpacer size={48} />
         </ContentWrapper>
       </ScrollView>
-      <FooterWithButtons
+      <LegacyFooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={{
           bordered: true,
