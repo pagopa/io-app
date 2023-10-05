@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.43.0-rc.2](https://github.com/pagopa/io-app/compare/2.43.0-rc.1...2.43.0-rc.2) (2023-10-05)
+
+
+### Features
+
+* [[IOPLT-178](https://pagopa.atlassian.net/browse/IOPLT-178)] Persist experimental context value ([#5064](https://github.com/pagopa/io-app/issues/5064)) ([76003dd](https://github.com/pagopa/io-app/commit/76003ddc4a1ddb4e67a81b7e96e40cda9d57e30c))
+
+
+### Bug Fixes
+
+* [[IOBP-285](https://pagopa.atlassian.net/browse/IOBP-285)] Fix navigation on IdPay CIE code failure ([#5067](https://github.com/pagopa/io-app/issues/5067)) ([aecd427](https://github.com/pagopa/io-app/commit/aecd42713b679344a1f61c0e01a5106f4a7ba82e)), closes [/github.com/pagopa/io-app/pull/5067/files#diff-d707cf1d996ad8193c4fb386857e18e3f1defbfe49e1820b361fd7cd9b357403](https://github.com/pagopa//github.com/pagopa/io-app/pull/5067/files/issues/diff-d707cf1d996ad8193c4fb386857e18e3f1defbfe49e1820b361fd7cd9b357403)
+
+
+### Chores
+
+* [[IOAPPFD0-160](https://pagopa.atlassian.net/browse/IOAPPFD0-160)] Update CGN components to use `Icon` component, instead of local SVG file ([#5044](https://github.com/pagopa/io-app/issues/5044)) ([e21b583](https://github.com/pagopa/io-app/commit/e21b5830e192bb8160956fe5067c9305fd1264f7))
+* [[IOAPPFD0-169](https://pagopa.atlassian.net/browse/IOAPPFD0-169)] Add `[@dmnplb](https://github.com/dmnplb)` as code owner of the DS section ([#5070](https://github.com/pagopa/io-app/issues/5070)) ([9ff0eac](https://github.com/pagopa/io-app/commit/9ff0eac2b6968361f5a3556ec2c032fd0a5ef47e))
+* [[IOCOM-579](https://pagopa.atlassian.net/browse/IOCOM-579)] Replace the new pictograms with the old ones in the `PreconditionBottomSheet` ([#5075](https://github.com/pagopa/io-app/issues/5075)) ([801ce3a](https://github.com/pagopa/io-app/commit/801ce3afdb9adc2dc37b7554079b4a701a18f858))
+
 ## [2.43.0-rc.1](https://github.com/pagopa/io-app/compare/2.43.0-rc.0...2.43.0-rc.1) (2023-10-03)
 
 
