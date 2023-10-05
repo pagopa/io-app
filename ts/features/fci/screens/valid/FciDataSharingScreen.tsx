@@ -31,7 +31,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
-import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { localeDateFormat } from "../../../../utils/locale";
 
 const styles = StyleSheet.create({
   padded: {
@@ -133,7 +133,10 @@ const FciDataSharingScreen = (): React.ReactElement => {
                 <ListItemComponent
                   testID="FciDataSharingScreenBirthDateTestID"
                   title={I18n.t("features.fci.shareDataScreen.birthDate")}
-                  subTitle={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
+                  subTitle={localeDateFormat(
+                    birthDate,
+                    I18n.t("global.dateFormats.shortFormat")
+                  )}
                   hideIcon
                 />
               )}
