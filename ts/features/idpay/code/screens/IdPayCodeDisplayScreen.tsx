@@ -98,7 +98,7 @@ const IdPayCodeDisplayScreen = () => {
             <VSpacer size={24} />
             <Banner
               color="neutral"
-              pictogramName="help" // security once new DS ver is released
+              pictogramName="security"
               size="big"
               viewRef={bannerRef}
               title={I18n.t("idpay.code.onboarding.banner.header")}
