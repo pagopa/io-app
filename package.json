@@ -254,7 +254,7 @@
     "@types/node": "^10.1.0",
     "@types/node-fetch": "^2.1.7",
     "@types/pako": "^2.0.0",
-    "@types/prettier": "^2.8.0",
+    "@types/prettier": "^2.7.3",
     "@types/react": "16.9.43",
     "@types/react-native": "0.69.6",
     "@types/react-native-background-timer": "^2.0.0",
