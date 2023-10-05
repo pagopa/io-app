@@ -6,10 +6,10 @@ import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
-  IOColors,
   getGradientColorValues,
   VSpacer,
-  Badge
+  Badge,
+  Icon
 } from "@pagopa/io-app-design-system";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -107,12 +107,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
                   </View>
                 </View>
               )}
-              {s.icon({
-                height: 32,
-                width: 32,
-                fill: IOColors.white,
-                style: { justifyContent: "flex-end" }
-              })}
+              <Icon name={s.icon} size={32} color="white" />
             </View>
           );
 

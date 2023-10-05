@@ -7,7 +7,8 @@ import {
   IOColors,
   HSpacer,
   VSpacer,
-  Badge
+  Badge,
+  Icon
 } from "@pagopa/io-app-design-system";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -42,7 +43,7 @@ export const renderCategoryElement = (category: ProductCategory) =>
       () => undefined,
       c => (
         <View style={styles.row}>
-          {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
+          <Icon name={c.icon} size={20} color="bluegrey" />
           <HSpacer size={8} />
           <H5 weight={"SemiBold"} color={"bluegrey"}>
             {I18n.t(c.nameKey).toLocaleUpperCase()}

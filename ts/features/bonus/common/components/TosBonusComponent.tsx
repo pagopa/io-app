@@ -133,10 +133,12 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
         )}
       </ScrollView>
       {isLoadEnd && (
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{ type: "Outline", buttonProps: closeButtonProps }}
-        />
+        <View>
+          <FooterWithButtons
+            type="SingleButton"
+            primary={{ type: "Outline", buttonProps: closeButtonProps }}
+          />
+        </View>
       )}
     </SafeAreaView>
   ));

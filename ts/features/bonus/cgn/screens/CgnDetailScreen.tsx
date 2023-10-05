@@ -174,24 +174,27 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                   <VSpacer size={24} />
                   <ItemSeparatorComponent noPadded />
                   <CgnUnsubscribe />
+                  <VSpacer size={40} />
                 </View>
               </ScrollView>
               <SectionStatusComponent sectionKey={"cgn"} />
               {props.isCgnEnabled &&
                 props.cgnDetails?.status === StatusEnum.ACTIVATED && (
-                  <FooterWithButtons
-                    type="SingleButton"
-                    primary={{
-                      type: "Solid",
-                      buttonProps: {
-                        label: I18n.t("bonus.cgn.detail.cta.buyers"),
-                        accessibilityLabel: I18n.t(
-                          "bonus.cgn.detail.cta.buyers"
-                        ),
-                        onPress: onPressShowCgnDiscounts
-                      }
-                    }}
-                  />
+                  <View>
+                    <FooterWithButtons
+                      type="SingleButton"
+                      primary={{
+                        type: "Solid",
+                        buttonProps: {
+                          label: I18n.t("bonus.cgn.detail.cta.buyers"),
+                          accessibilityLabel: I18n.t(
+                            "bonus.cgn.detail.cta.buyers"
+                          ),
+                          onPress: onPressShowCgnDiscounts
+                        }
+                      }}
+                    />
+                  </View>
                 )}
             </>
           )}

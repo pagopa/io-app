@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { FooterWithButtons } from "@pagopa/io-app-design-system";
 
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -26,17 +26,19 @@ const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
       title={I18n.t("bonus.cgn.activation.success.title")}
       body={I18n.t("bonus.cgn.activation.success.body")}
     />
-    <FooterWithButtons
-      type="SingleButton"
-      primary={{
-        type: "Solid",
-        buttonProps: {
-          label: I18n.t("bonus.cgn.cta.goToDetail"),
-          onPress: props.onConfirm,
-          accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail")
-        }
-      }}
-    />
+    <View>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("bonus.cgn.cta.goToDetail"),
+            onPress: props.onConfirm,
+            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail")
+          }
+        }}
+      />
+    </View>
   </SafeAreaView>
 );
 

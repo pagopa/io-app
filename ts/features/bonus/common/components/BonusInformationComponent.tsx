@@ -210,16 +210,20 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     bonusType.sponsorship_description
   );
   const footerComponent = props.onConfirm ? (
-    <FooterWithButtons
-      type="TwoButtonsInlineThird"
-      secondary={{ type: "Solid", buttonProps: requestButtonProps }}
-      primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-    />
+    <View>
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        secondary={{ type: "Solid", buttonProps: requestButtonProps }}
+        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      />
+    </View>
   ) : (
-    <FooterWithButtons
-      type="SingleButton"
-      primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-    />
+    <View>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      />
+    </View>
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
