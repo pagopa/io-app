@@ -18,7 +18,7 @@ type Props<T extends Record<string, object | undefined>> = {
   name: keyof T;
   title: string;
   component: React.ComponentType<any>;
-  options?: StackNavigationOptions;
+  options?: Omit<StackNavigationOptions, "header" | "headerShown">;
   supportRequestParams?: SupportRequestParams;
 };
 
