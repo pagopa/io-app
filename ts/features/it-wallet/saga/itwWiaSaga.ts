@@ -34,11 +34,16 @@ export function* handleWiaRequest(): SagaIterator {
       const wia = yield* call(getWia);
       yield* put(itwWiaRequest.success(wia));
     } catch (e) {
-      const { reason } = e as Errors.WalletInstanceAttestationIssuingError;
+      const message =
+        e instanceof Errors.WalletInstanceAttestationIssuingError
+          ? e.reason
+          : e instanceof Error
+          ? e.message
+          : undefined;
       yield* put(
         itwWiaRequest.failure({
           code: ItWalletErrorTypes.WIA_ISSUING_ERROR,
-          message: reason
+          message
         })
       );
     }
