@@ -9,7 +9,11 @@ import * as O from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { ButtonSolid, ContentWrapper } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  ContentWrapper,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -65,7 +69,6 @@ import {
   isDuplicatedPayment
 } from "../../../utils/payment";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { showToast } from "../../../utils/showToast";
 import {
   addTicketCustomField,
   appendLog,
@@ -240,9 +243,8 @@ const TransactionSummaryScreen = ({
           if (buttonIndex === 0) {
             backToEntrypointPayment();
             resetPayment();
-            showToast(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
-              "success"
+            IOToast.success(
+              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess")
             );
           }
         }
