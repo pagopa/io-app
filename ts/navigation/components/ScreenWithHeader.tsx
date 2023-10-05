@@ -11,9 +11,13 @@ import {
 } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 
-type Stack<T extends Record<string, object | undefined>> = ReturnType<typeof createStackNavigator<T>>;
+type CommonStackParams = Record<string, object | undefined>;
 
-type Props<T extends Record<string, object | undefined>> = {
+type Stack<T extends CommonStackParams> = ReturnType<
+  typeof createStackNavigator<T>
+>;
+
+type Props<T extends CommonStackParams> = {
   Stack: Stack<T>;
   name: keyof T;
   title: string;
@@ -25,7 +29,7 @@ type Props<T extends Record<string, object | undefined>> = {
 /**
  * An implementation of a Stack.Screen from a generic "@react-navigation/stack" instance with a default config of HeaderSecondLevel
  */
-export const ScreenWithHeader = <T extends Record<string, object | undefined>>({
+export const ScreenWithHeader = <T extends CommonStackParams>({
   Stack,
   name,
   title,
