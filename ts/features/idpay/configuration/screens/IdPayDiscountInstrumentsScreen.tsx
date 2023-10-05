@@ -5,7 +5,7 @@ import {
   useRoute
 } from "@react-navigation/native";
 import React from "react";
-import { H1, VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, H1, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { ScrollView, StyleSheet } from "react-native";
@@ -137,6 +137,7 @@ const IdPayDiscountInstrumentsScreen = () => {
               isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
               value={idPayCodeInstrument ? true : false}
             />
+            <Divider />
             <IdPayDiscountInstrumentEnrollmentSwitch
               instrumentType={InstrumentTypeEnum.QRCODE}
             />
