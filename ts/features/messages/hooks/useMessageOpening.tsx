@@ -61,7 +61,7 @@ const renderPreconditionContent = (
     ),
     () => (
       <MessageFeedback
-        pictogram="umbrellaNew"
+        pictogram="umbrella"
         title={I18n.t("global.genericError")}
       />
     )
@@ -127,7 +127,7 @@ export const useMessageOpening = () => {
     if (!pnSupported) {
       return (
         <MessageFeedback
-          pictogram="updateOS"
+          pictogram="umbrella"
           title={I18n.t("features.messages.updateBottomSheet.title")}
           subtitle={I18n.t("features.messages.updateBottomSheet.subtitle", {
             value: pnMinAppVersion
