@@ -28,7 +28,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { BonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
-import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
+import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
 import {
   InitiativeTimelineComponent,
   InitiativeTimelineComponentSkeleton
@@ -243,7 +243,7 @@ const InitiativeDetailsScreen = () => {
                     size={3}
                   />
                   <VSpacer size={24} />
-                  <InitiativeSettingsComponent initiative={initiative} />
+                  <InitiativeRefundSettingsComponent initiative={initiative} />
                   <VSpacer size={32} />
                 </ContentWrapper>
               );
