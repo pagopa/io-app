@@ -37,7 +37,9 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     super(props);
   }
   public componentWillUnmount() {
-    this.hideModal();
+    if (!isNewCduFlow) {
+      this.hideModal();
+    }
   }
 
   private hideModal = () => {
