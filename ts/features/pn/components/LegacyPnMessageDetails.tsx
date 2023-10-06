@@ -4,16 +4,15 @@ import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { ListItemInfoCopy } from "@pagopa/io-app-design-system";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import {
-  TransactionSummary,
-  TransactionSummaryRow
-} from "../../../screens/wallet/payment/components/TransactionSummary";
+import { TransactionSummary } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
@@ -191,10 +190,11 @@ export const LegacyPnMessageDetails = ({
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
-          <TransactionSummaryRow
-            title={I18n.t("features.pn.details.infoSection.iun")}
+          <ListItemInfoCopy
             value={message.iun}
             onPress={() => clipboardSetStringWithFeedback(message.iun)}
+            accessibilityLabel={I18n.t("features.pn.details.infoSection.iun")}
+            label={I18n.t("features.pn.details.infoSection.iun")}
           />
           <H5
             color="bluegrey"

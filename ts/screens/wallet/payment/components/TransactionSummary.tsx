@@ -65,6 +65,7 @@ type RowProps = Readonly<{
   value?: string;
   icon?: IOIcons;
   isLoading?: boolean;
+  hideSeparator?: boolean;
   placeholder?: React.ReactElement;
   action?: React.ReactNode;
   onPress?: () => void;
@@ -73,26 +74,30 @@ type RowProps = Readonly<{
 export const TransactionSummaryRow = (
   props: React.PropsWithChildren<RowProps>
 ): React.ReactElement | null => {
-  const { title, value, icon, isLoading, placeholder, action } = props;
+  const { title, value, icon, isLoading, placeholder, action, hideSeparator } =
+    props;
 
   if (!value && !isLoading) {
     return null;
   }
 
   return (
-    <ListItemInfo
-      accessibilityLabel={title}
-      icon={icon}
-      label={title}
-      value={
-        !isLoading ? (
-          value
-        ) : (
-          <View style={styles.placeholder}>{placeholder}</View>
-        )
-      }
-      action={action}
-    />
+    <React.Fragment>
+      <ListItemInfo
+        accessibilityLabel={title}
+        icon={icon}
+        label={title}
+        value={
+          !isLoading ? (
+            value
+          ) : (
+            <View style={styles.placeholder}>{placeholder}</View>
+          )
+        }
+        action={action}
+      />
+      {!hideSeparator && <Divider />}
+    </React.Fragment>
   );
 };
 
@@ -158,7 +163,6 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         isLoading={isLoading}
         placeholder={<LoadingPlaceholder size={"full"} />}
       />
-      <Divider />
       <TransactionSummaryRow
         title={I18n.t("wallet.firstTransactionSummary.object")}
         value={description}
@@ -172,7 +176,6 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         }
         isLoading={isLoading}
       />
-      <Divider />
       <TransactionSummaryRow
         title={I18n.t("wallet.firstTransactionSummary.amount")}
         value={amount}
@@ -181,7 +184,6 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         isLoading={isLoading}
         action={renderAmountAction()}
       />
-      <Divider />
       <TransactionSummaryRow
         title={I18n.t("wallet.firstTransactionSummary.dueDate")}
         value={dueDate}
@@ -190,7 +192,6 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         isLoading={isLoading}
       />
 
-      <Divider />
       <ListItemInfoCopy
         value={formattedPaymentNoticeNumber}
         icon="docPaymentCode"
@@ -200,7 +201,6 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
           clipboardSetStringWithFeedback(props.paymentNoticeNumber)
         }
       />
-
       <Divider />
       <ListItemInfoCopy
         value={props.organizationFiscalCode}
