@@ -57,6 +57,7 @@ const WizardScreen = ({
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
             <ButtonLink {...actionButton} />
           </View>
+          <VSpacer size={16} />
         </>
       )}
     </ContentWrapper>
