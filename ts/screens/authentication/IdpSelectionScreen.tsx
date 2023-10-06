@@ -30,7 +30,10 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import ROUTES from "../../navigation/routes";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -40,7 +43,15 @@ import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/s
 import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
-type Props = ReturnType<typeof mapStateToProps> &
+export type OwnPropIdp = {
+  isLV: boolean;
+};
+
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "AUTHENTICATION_IDP_SELECTION"
+> &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const TestIdp: SpidIdp = {
@@ -77,6 +88,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const inset = useSafeAreaInsets();
 
+  // eslint-disable-next-line no-console
+  console.log("aaaaaaaaaa funziona", props.route.params.isLV);
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
@@ -85,7 +98,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        "AUTHENTICATION_IPD_SELECTION"
+        "AUTHENTICATION_IDP_SELECTION"
       >
     >();
 
@@ -165,6 +178,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
             : I18n.t("login.expiration_info")}
         </Body>
         <Body>{I18n.t("login.biometric_info")}</Body>
+        {/* FIXME => add discrimination using isLV props to redirect correct subtitle https://pagopa.atlassian.net/browse/IOPID-885 */}
       </View>
       <VSpacer />
       <View style={{ backgroundColor: IOColors.greyUltraLight }}>

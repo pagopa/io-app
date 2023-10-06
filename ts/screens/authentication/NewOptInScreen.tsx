@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import {
   Badge,
@@ -13,10 +13,13 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constVoid } from "fp-ts/lib/function";
+import { useNavigation } from "@react-navigation/native";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
+import { openWebUrl } from "../../utils/url";
+import ROUTES from "../../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
@@ -24,11 +27,77 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const NewOptInScreen = () => {
-  const [, setState] = useState(false);
+  const navigation = useNavigation();
+
+  const navigateToIdpPage = (value: boolean) => {
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_IDP_SELECTION,
+      params: { isLV: value }
+    });
+  };
+
+  const dismiss = () => {
+    dismissVeryLongAutoresizableBottomSheetWithFooter();
+  };
+
+  const ModalContent = () => (
+    <>
+      <FeatureInfo
+        iconName="biomFingerprint"
+        body="Per accedere a IO basta il codice o il biometrico, non condividerli con nessuno."
+      />
+      <VSpacer size={16} />
+      <FeatureInfo
+        iconName="logout"
+        body="Se perdi il dispositivo, esci da IO da"
+        actionLabel="ioapp.it."
+        actionOnPress={() => openWebUrl("https://ioapp.it/it/accedi")}
+      />
+      <VSpacer size={16} />
+      <FeatureInfo
+        iconName="locked"
+        body="Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da"
+        actionLabel="ioapp.it."
+        actionOnPress={() => openWebUrl("https://ioapp.it/it/accedi")}
+      />
+      <VSpacer size={16} />
+      <FeatureInfo
+        iconName="device"
+        body="Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app."
+      />
+    </>
+  );
+
+  const defaultFooter = (
+    <ContentWrapper>
+      <VSpacer size={16} />
+      <ButtonSolid
+        fullWidth
+        accessibilityLabel="Tap to dismiss the bottom sheet"
+        label={"Ho capito"}
+        onPress={dismiss}
+      />
+      <VSpacer size={16} />
+    </ContentWrapper>
+  );
+
+  const {
+    present: presentVeryLongAutoresizableBottomSheetWithFooter,
+    bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
+    dismiss: dismissVeryLongAutoresizableBottomSheetWithFooter
+  } = useIOBottomSheetAutoresizableModal(
+    {
+      title: "Consigli di sicurezza",
+      component: <ModalContent />,
+      footer: defaultFooter,
+      fullScreen: true
+    },
+    180
+  );
 
   return (
     <BaseScreenComponent
-      goBack={() => constVoid}
+      goBack={true}
       contextualHelpMarkdown={contextualHelpMarkdown}
     >
       <GradientScrollView
@@ -37,13 +106,13 @@ const NewOptInScreen = () => {
             fullWidth
             label="Continua con l’accesso rapido"
             accessibilityLabel={"Continua con l’accesso rapido"}
-            onPress={() => setState(true)}
+            onPress={() => navigateToIdpPage(true)}
           />
         }
         secondaryAction={
           <ButtonLink
             label="No, voglio accedere ogni 30 giorni"
-            onPress={constVoid}
+            onPress={() => navigateToIdpPage(false)}
           />
         }
       >
@@ -64,7 +133,7 @@ const NewOptInScreen = () => {
             pictogramName="identityCheck"
             body="Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app."
             actionLabel="Consigli di sicurezza"
-            actionOnPress={() => constVoid}
+            actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
           />
           <VSpacer size={24} />
           <FeatureInfo
@@ -78,6 +147,7 @@ const NewOptInScreen = () => {
             body="Ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email."
           />
         </ContentWrapper>
+        {veryLongAutoResizableBottomSheetWithFooter}
       </GradientScrollView>
     </BaseScreenComponent>
   );

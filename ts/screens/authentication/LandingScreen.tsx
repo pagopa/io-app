@@ -226,7 +226,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private navigateToIdpSelection = () =>
     this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+      screen: ROUTES.AUTHENTICATION_OPT_IN
     });
 
   private navigateToCiePinScreen = () => {
