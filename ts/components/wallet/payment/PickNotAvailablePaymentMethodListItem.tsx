@@ -2,9 +2,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import I18n from "../../../i18n";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
@@ -14,7 +13,6 @@ import { PaymentMethod } from "../../../types/pagopa";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
-import { VSpacer } from "../../core/spacer/Spacer";
 import { H4 } from "../../core/typography/H4";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
@@ -50,22 +48,6 @@ const paymentDisabledBottomSheetBody = () => (
     <H4 weight={"Regular"}>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetDescription"
-      )}
-    </H4>
-    <VSpacer size={24} />
-  </>
-);
-
-const arrivingBottomSheetTitle = () =>
-  I18n.t(
-    "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
-  );
-const arrivingBottomSheetBody = () => (
-  <>
-    <VSpacer size={24} />
-    <H4 weight={"Regular"}>
-      {I18n.t(
-        "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetDescription"
       )}
     </H4>
     <VSpacer size={24} />
@@ -116,14 +98,6 @@ const extractInfoFromPaymentMethod = (
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: paymentDisabledBottomSheetTitle(),
         bottomSheetBody: paymentDisabledBottomSheetBody()
-      };
-    case "Satispay":
-      return {
-        logo: satispayLogo,
-        title: paymentMethod.kind,
-        description: nameSurname,
-        bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: arrivingBottomSheetBody()
       };
     case "PayPal":
       return {

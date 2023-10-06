@@ -2,12 +2,14 @@ import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import { Icon } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  VSpacer,
+  IOLogoPaymentType
+} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
-import { IOLogoPaymentType } from "../../../core/logos";
-import { VSpacer } from "../../../core/spacer/Spacer";
 import { NewH6 } from "../../../core/typography/NewH6";
-import { IOColors } from "../../../core/variables/IOColors";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
 

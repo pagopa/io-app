@@ -3,11 +3,24 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { useIODispatch } from "../../../../store/hooks";
+import { refreshSessionToken } from "../../../fastLogin/store/actions";
 import { IDPayUnsubscriptionRoutes } from "../navigation/navigator";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
+  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+  dispatch: ReturnType<typeof useIODispatch>
 ) => {
+  const handleSessionExpired = () => {
+    dispatch(
+      refreshSessionToken.request({
+        withUserInteraction: true,
+        showIdentificationModalAtStartup: false,
+        showLoader: true
+      })
+    );
+  };
+
   const navigateToConfirmationScreen = () => {
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
       screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
@@ -32,6 +45,7 @@ const createActionsImplementation = (
   };
 
   return {
+    handleSessionExpired,
     navigateToConfirmationScreen,
     navigateToResultScreen,
     exitUnsubscription,

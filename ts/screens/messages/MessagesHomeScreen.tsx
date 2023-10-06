@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
@@ -40,7 +40,6 @@ import {
   setAccessibilityFocus,
   useScreenReaderEnabled
 } from "../../utils/accessibility";
-import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
@@ -142,7 +141,7 @@ const MessagesHomeScreen = ({
         <React.Fragment>
           <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
-            iconFont={{ name: "io-home-messaggi", size: MESSAGE_ICON_HEIGHT }}
+            pictogram={"messages"}
           />
           {needsMigration ? (
             <MigratingMessage

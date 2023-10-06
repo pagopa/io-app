@@ -56,7 +56,8 @@ describe("IDPay Unsubscription machine", () => {
         navigateToConfirmationScreen: jest.fn(),
         navigateToResultScreen: jest.fn(),
         exitToWallet: jest.fn(),
-        exitUnsubscription: jest.fn()
+        exitUnsubscription: jest.fn(),
+        handleSessionExpired: jest.fn()
       },
       services: {
         getInitiativeInfo: mockGetInitiativeInfo,
@@ -94,7 +95,8 @@ describe("IDPay Unsubscription machine", () => {
         navigateToConfirmationScreen: mockNavigateToConfirmationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
         exitToWallet: mockExitToWallet,
-        exitUnsubscription: jest.fn()
+        exitUnsubscription: jest.fn(),
+        handleSessionExpired: jest.fn()
       },
       services: {
         getInitiativeInfo: jest.fn(),
@@ -154,7 +156,8 @@ describe("IDPay Unsubscription machine", () => {
         navigateToConfirmationScreen: mockNavigateToConfirmationScreen,
         navigateToResultScreen: mockNavigateToResultScreen,
         exitToWallet: jest.fn(),
-        exitUnsubscription: mockExitUnsubscription
+        exitUnsubscription: mockExitUnsubscription,
+        handleSessionExpired: jest.fn()
       },
       services: {
         getInitiativeInfo: jest.fn(),

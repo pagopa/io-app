@@ -1,5 +1,5 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 
 export const loadingButtonProps = (): BlockButtonProps => ({
@@ -9,7 +9,7 @@ export const loadingButtonProps = (): BlockButtonProps => ({
   disabled: true,
   style: { backgroundColor: IOColors.greyLight, width: "100%" },
   isLoading: true,
-  iconColor: IOColors.bluegreyDark
+  iconColor: "bluegreyDark"
 });
 
 export const continueButtonProps = (onPress: () => void): BlockButtonProps => ({

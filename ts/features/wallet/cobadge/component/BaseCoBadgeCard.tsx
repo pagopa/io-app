@@ -9,16 +9,16 @@ import {
   StyleProp,
   StyleSheet
 } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import { IOBadge } from "../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H5 } from "../../../../components/core/typography/H5";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 
 type Props = {
   caption?: string;

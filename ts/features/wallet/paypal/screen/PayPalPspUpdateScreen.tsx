@@ -11,8 +11,7 @@ import {
   StyleSheet
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -33,7 +32,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
+import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
   PSP_LOGO_MAX_WIDTH

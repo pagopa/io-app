@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
@@ -44,6 +45,7 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../utils/pot";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/entities/messages/allPaginated";
 import { trackPNPushOpened } from "../../features/pn/analytics";
+import { trackOpenMessage } from "../../features/messages/analytics";
 
 export type MessageRouterScreenNavigationParams = {
   messageId: UIMessageId;
@@ -69,9 +71,24 @@ const navigateToScreenHandler =
   (
     message: UIMessage,
     messageDetails: UIMessageDetails,
-    isPnEnabled: boolean
+    isPnEnabled: boolean,
+    firstTimeOpening: boolean
   ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
+    const containsPayment = pipe(
+      message.category.tag !== TagEnumPN.PN,
+      B.fold(
+        () => undefined,
+        () => pipe(messageDetails.paymentData, O.fromNullable, O.isSome)
+      )
+    );
+
+    trackOpenMessage(
+      message.serviceName,
+      message.organizationName,
+      containsPayment
+    );
+
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
       navigateBack();
       navigateToEuCovidCertificateDetailScreen({
@@ -85,7 +102,7 @@ const navigateToScreenHandler =
         navigateToPnMessageDetailsScreen({
           messageId: message.id,
           serviceId: message.serviceId,
-          isRead: message.isRead
+          firstTimeOpening
         })
       );
     } else {
@@ -180,11 +197,13 @@ const MessageRouterScreen = ({
       } else if (
         isNotOpeningFromBackgroundNotificationWhileSynchronizingInbox
       ) {
+        const isFirstTimeOpening = !maybeMessage.isRead;
         setMessageReadState(maybeMessage);
         navigateToScreenHandler(
           maybeMessage,
           maybeMessageDetails.value,
-          isPnEnabled
+          isPnEnabled,
+          isFirstTimeOpening
         )(navigation.dispatch);
         setDidNavigateToScreenHandler(true);
       }

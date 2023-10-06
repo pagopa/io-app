@@ -2,8 +2,9 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as AR from "fp-ts/lib/Array";
 import { ImageURISource } from "react-native";
+import { IOIcons } from "@pagopa/io-app-design-system";
 
-export type IconSource = (string & ImageURISource) | undefined;
+export type IconSource = ImageURISource | IOIcons | undefined;
 
 export type SupportedBrand = {
   name: string;
@@ -105,7 +106,7 @@ export const CreditCardDetector: CreditCardDetector = {
       re: /.*/,
       cvvLength: 3,
       luhnVal: true,
-      iconForm: "io-carta"
+      iconForm: "creditCard"
     }
   },
 

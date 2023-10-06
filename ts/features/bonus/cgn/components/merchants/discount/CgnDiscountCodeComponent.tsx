@@ -1,7 +1,7 @@
 import * as React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeType } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import CgnStaticCodeComponent from "./CgnStaticCodeComponent";
 import CgnOTPCodeComponent from "./CgnOTPCodeComponent";
 import CgnBucketCodeComponent from "./CgnBucketCodeComponent";

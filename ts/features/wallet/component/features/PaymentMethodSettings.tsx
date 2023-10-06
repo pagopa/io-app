@@ -1,7 +1,7 @@
-import { H6 } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { IOSpacingScale } from "@pagopa/io-app-design-system";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { IOSpacingScale } from "../../../../components/core/variables/IOSpacing";
+import { NewH6 } from "../../../../components/core/typography/NewH6";
 import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteMethodSwitch";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
@@ -9,6 +9,8 @@ import { isEnabledToPay } from "../../../../utils/paymentMethodCapabilities";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type Props = { paymentMethod: PaymentMethod };
+
+const componentVerticalSpacing: IOSpacingScale = 12;
 
 /**
  * This component allows the user to choose and change the common settings for a payment methods
@@ -19,12 +21,12 @@ type Props = { paymentMethod: PaymentMethod };
  */
 const PaymentMethodSettings = (props: Props): React.ReactElement => (
   <>
-    <H6
+    <NewH6
       color={"grey-700"}
-      style={{ paddingVertical: IOSpacingScale[3] /* 12 */ }}
+      style={{ paddingVertical: componentVerticalSpacing }}
     >
       {I18n.t("global.buttons.settings")}
-    </H6>
+    </NewH6>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     <ItemSeparatorComponent noPadded={true} />
     {isEnabledToPay(props.paymentMethod) && (

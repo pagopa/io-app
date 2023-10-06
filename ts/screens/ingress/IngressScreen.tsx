@@ -7,7 +7,7 @@ import { Container, List, ListItem, Spinner } from "native-base";
 import * as React from "react";
 import { StatusBar, StyleSheet, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import { HSpacer } from "../../components/core/spacer/Spacer";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatus";

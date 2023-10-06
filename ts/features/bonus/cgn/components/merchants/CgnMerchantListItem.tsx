@@ -3,12 +3,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
+import { IOColors, HSpacer, VSpacer, Icon } from "@pagopa/io-app-design-system";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { IOBadge } from "../../../../../components/core/IOBadge";
-import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../../i18n";
@@ -39,7 +38,7 @@ export const renderCategoryElement = (category: ProductCategory) =>
       () => undefined,
       c => (
         <View style={styles.row}>
-          {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
+          <Icon name={c.icon} size={20} color="bluegrey" />
           <HSpacer size={8} />
           <H5 weight={"SemiBold"} color={"bluegrey"}>
             {I18n.t(c.nameKey).toLocaleUpperCase()}

@@ -290,6 +290,10 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     pn: {
       enabled: false,
+      min_app_version: {
+        android: "2.35.0.1",
+        ios: "2.35.0.1"
+      },
       frontend_url: "",
       optInServiceId: ""
     },
@@ -374,6 +378,10 @@ export const baseBackendConfig: Config = {
   },
   pn: {
     enabled: false,
+    min_app_version: {
+      android: "2.35.0.1",
+      ios: "2.35.0.1"
+    },
     frontend_url: "",
     optInServiceId: ""
   },

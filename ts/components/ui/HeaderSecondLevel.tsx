@@ -8,17 +8,20 @@ import Animated, {
   useAnimatedStyle
 } from "react-native-reanimated";
 import I18n from "i18n-js";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
+import {
+  IconButton,
+  IOColors,
+  hexToRgba,
+  HSpacer,
+  IOSpacer
+} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import {
   IOStyles,
   IOVisualCostants,
   iconBtnSizeSmall
 } from "../core/variables/IOStyles";
-import { HSpacer } from "../core/spacer/Spacer";
 import { makeFontStyleObject } from "../../components/core/fonts";
-import type { IOSpacer } from "../core/variables/IOSpacing";
-import IconButton from "./IconButton";
 
 export type HeaderSecondLevel = WithTestID<{
   scrollValues: ScrollValues;

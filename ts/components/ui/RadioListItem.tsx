@@ -1,4 +1,15 @@
-import { IOIcons, Icon, ListItemRadio } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  ListItemRadio,
+  hexToRgba,
+  useIOTheme,
+  HSpacer,
+  VSpacer,
+  IOScaleValues,
+  IOSpringValues
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -17,10 +28,7 @@ import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPre
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
 import { AnimatedRadio } from "../core/selection/checkbox/AnimatedRadio";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,

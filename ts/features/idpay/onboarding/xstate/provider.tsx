@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import {
@@ -9,12 +9,11 @@ import {
   idPayApiUatBaseUrl,
   idPayTestToken
 } from "../../../../config";
-import { useXStateMachine } from "../../../../hooks/useXStateMachine";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
   isPagoPATestEnabledSelector,
@@ -24,6 +23,7 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
+import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
 import { createIDPayClient } from "../../common/api/client";
 import {
   IDPayOnboardingParamsList,
@@ -31,8 +31,8 @@ import {
 } from "../navigation/navigator";
 import { createActionsImplementation } from "./actions";
 import {
-  createIDPayOnboardingMachine,
-  IDPayOnboardingMachineType
+  IDPayOnboardingMachineType,
+  createIDPayOnboardingMachine
 } from "./machine";
 import { createServicesImplementation } from "./services";
 
@@ -47,6 +47,7 @@ type Props = {
 };
 
 const IDPayOnboardingMachineProvider = (props: Props) => {
+  const dispatch = useIODispatch();
   const [machine] = useXStateMachine(createIDPayOnboardingMachine);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
   const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
@@ -79,7 +80,8 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const actions = createActionsImplementation(
     rootNavigation,
-    onboardingNavigation
+    onboardingNavigation,
+    dispatch
   );
 
   const machineService = useInterpret(machine, {

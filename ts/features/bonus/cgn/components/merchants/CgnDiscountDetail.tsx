@@ -4,18 +4,22 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
+import {
+  HSpacer,
+  VSpacer,
+  Icon,
+  IOIconSizeScale
+} from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import {
   DiscountCodeType,
   DiscountCodeTypeEnum
 } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { Label } from "../../../../../components/core/typography/Label";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
@@ -45,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const CATEGORY_ICON_SIZE = 22;
+const CATEGORY_ICON_SIZE: IOIconSizeScale = 20;
 
 export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   discount,
@@ -90,11 +94,11 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                     }
                   ]}
                 >
-                  {c.icon({
-                    height: CATEGORY_ICON_SIZE,
-                    width: CATEGORY_ICON_SIZE,
-                    fill: IOColors.bluegrey
-                  })}
+                  <Icon
+                    name={c.icon}
+                    size={CATEGORY_ICON_SIZE}
+                    color="bluegrey"
+                  />
                   <HSpacer size={8} />
                   <H5
                     weight={"SemiBold"}

@@ -398,18 +398,15 @@ function* checkStoreHashedFiscalCode(
 function* checkLoadedProfile(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
-  // This saga will upsert the `last_app_version` value in the
-  // profile only if it actually changed from the one stored in
-  // the backend.
-
-  // If the tos has never been accepted or is not part of the upsert payload, do not run check
+  yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
+  // If the tos has never been accepted or is not part of the upsert payload, do not run check that could upsert profile
   if (!profileLoadSuccessAction.payload.accepted_tos_version) {
     return;
   }
-
+  // This saga will upsert the `last_app_version` value in the
+  // profile only if it actually changed from the one stored in
+  // the backend.
   yield* call(upsertAppVersionSaga);
-
-  yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
 }
 
 // watch for some actions about profile

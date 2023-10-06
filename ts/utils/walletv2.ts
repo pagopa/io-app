@@ -6,14 +6,12 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
-import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
   RawBPayPaymentMethod,
   RawPaymentMethod,
-  RawSatispayPaymentMethod,
   Wallet
 } from "../types/pagopa";
 import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
@@ -43,13 +41,6 @@ const isWalletV2BPay = (
 ): paymentMethodInfo is CardInfo =>
   (paymentMethodInfo && wallet.walletType === WalletTypeEnum.BPay) ||
   wallet.walletType === WalletTypeEnum.BPay;
-
-// check if a PatchedWalletV2 has Satispay as paymentInfo
-const isWalletV2Satispay = (
-  wallet: PatchedWalletV2,
-  paymentMethodInfo: PatchedPaymentMethodInfo
-): paymentMethodInfo is SatispayInfo =>
-  paymentMethodInfo && wallet.walletType === WalletTypeEnum.Satispay;
 
 // check if a PatchedWalletV2 has Paypal as paymentInfo
 const isWalletV2PayPal = (
@@ -84,24 +75,11 @@ export const fromPatchedWalletV2ToRawPaymentMethod = (
   if (isWalletV2Bancomat(wallet, wallet.info)) {
     return { ...wallet, kind: "Bancomat", info: wallet.info };
   }
-  if (isWalletV2Satispay(wallet, wallet.info)) {
-    return { ...wallet, kind: "Satispay", info: wallet.info };
-  }
   if (isWalletV2BPay(wallet, wallet.info)) {
     return { ...wallet, kind: "BPay", info: wallet.info };
   }
   if (isWalletV2PayPal(wallet, wallet.info)) {
     return { ...wallet, kind: "PayPal", info: wallet.info };
-  }
-  return undefined;
-};
-
-// TODO: should be Either instead of return undefined
-export const fromPatchedWalletV2ToRawSatispay = (
-  wallet: PatchedWalletV2
-): RawSatispayPaymentMethod | undefined => {
-  if (isWalletV2Satispay(wallet, wallet.info)) {
-    return { ...wallet, kind: "Satispay", info: wallet.info };
   }
   return undefined;
 };

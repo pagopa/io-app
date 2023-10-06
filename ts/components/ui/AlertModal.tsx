@@ -5,9 +5,9 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import themeVariables from "../../theme/variables";
 import { Body } from "../core/typography/Body";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { Overlay } from "./Overlay";
 
 const opaqueBgColor = hexToRgba(IOColors.black, 0.6);

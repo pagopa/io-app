@@ -2,12 +2,10 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -48,7 +46,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
-        <TouchableDefaultOpacity onPress={present} testID={"noticeIconFont"}>
+        <TouchableDefaultOpacity onPress={present} testID={"noticeIcon"}>
           <Icon name="info" size={24} color="blue" />
         </TouchableDefaultOpacity>
       </View>

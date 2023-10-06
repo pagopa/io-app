@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
   componentWrapper: {
@@ -17,9 +17,6 @@ const styles = StyleSheet.create({
   },
   componentLabel: {
     fontSize: 10
-  },
-  componenentLabelLight: {
-    color: IOColors.bluegrey
   },
   componenentLabelDark: {
     color: IOColors.greyLight
@@ -38,24 +35,28 @@ export const DSComponentViewerBox = ({
   colorMode = "light",
   last = false,
   children
-}: DSComponentViewerBoxProps) => (
-  <View style={last ? styles.lastItem : styles.componentWrapper}>
-    {children}
-    <View style={styles.labelWrapper}>
-      {name && (
-        <Text
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          style={[
-            styles.componentLabel,
-            colorMode === "light"
-              ? styles.componenentLabelLight
-              : styles.componenentLabelDark
-          ]}
-        >
-          {name}
-        </Text>
-      )}
+}: DSComponentViewerBoxProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={last ? styles.lastItem : styles.componentWrapper}>
+      {children}
+      <View style={styles.labelWrapper}>
+        {name && (
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[
+              styles.componentLabel,
+              colorMode === "light"
+                ? { color: IOColors[theme["textBody-tertiary"]] }
+                : styles.componenentLabelDark
+            ]}
+          >
+            {name}
+          </Text>
+        )}
+      </View>
     </View>
-  </View>
-);
+  );
+};

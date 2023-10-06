@@ -23,7 +23,7 @@ date:
     - "Fr."
     - "Sa."
   month_names:
-    - ""
+    - " "
     - "Januar"
     - "Februar"
     - "März"
@@ -37,7 +37,7 @@ date:
     - "November"
     - "Dezember"
   abbr_month_names:
-    - ""
+    - " "
     - "Jan."
     - "Feb."
     - "März"
@@ -726,6 +726,17 @@ email:
     alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
       title: "E-Mail"
+  newinsert:
+    header: "IO konfigurieren"
+    title: "Wie lautet Ihre E-Mail?"
+    subtitle: "Wir verwenden E-Mail für bestimmte Mitteilungen, wie z. B. Zahlungsbelege oder Nachrichten, die mit dem Kundendienst ausgetauscht werden."
+    label: "Persönliche E-Mail Adresse"
+    alert: 
+      title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
+      description: "E-Mail bereits in Gebrauch"
+      modaltitle: "Diese E-Mail ist bereits in Gebrauch"
+      modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
+      modalbutton: "Andere E-Mail verwenden"
   edit:
     title: "E-Mail-Adresse bearbeiten"
     subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
@@ -776,15 +787,6 @@ onboarding:
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
-  fingerprint:
-    headerTitle: "Aktivierung"
-    title: "Biometrische Authentifizierung"
-    body:
-      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
-      enrolledType:
-        fingerprint: "deinen Fingerabdruck"
-        faceId: "Face ID"
-        touchId: "Touch ID"
   shareData:
     title: "IO einrichten"
   thankYouPage:
@@ -912,8 +914,6 @@ wallet:
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
       help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
-    details:
-      header: "Details Zahlungsmethode"
   searchAbi:
     header: "{{methodName}} hinzufügen"
     bancomat:
@@ -998,25 +998,6 @@ wallet:
       koNotFound:
         title: "Wir haben kein aktives BANCOMAT Pay Konto gefunden"
         body: "Wende dich an deine Bank um BANCOMAT Pay zu aktivieren!"
-    satispay:
-      name: "Satispay"
-      headerTitle: "Satispay hinzufügen"
-      start:
-        title: "Möchtest du in IO dein Satispay-Konto hinzufügen?"
-        body: "Wir prüfen, ob ein Satispay-Konto mit deiner Steuernummer verbunden ist."
-        cta: "Datenschutzbestimmungen"
-      loadingSearch:
-        title: "Wir überprüfen dein Satispay-Konto\n\nWarte ein paar Sekunden"
-      loadingAdd:
-        title: "Wir fügen dein Satispay-Konto hinzu\n\nWarte ein paar Sekunden"
-      add:
-        title: "Möchtest du dieses Satispay-Konto hinzufügen?"
-      koTimeout:
-        title: "Wir konnten Satispay nicht erreichen"
-        body: "Bitte versuche es erneut"
-      koNotFound:
-        title: "Es scheint, als ob du kein aktives Satispay-Konto hast"
-        body: "Kontaktiere Satispay für die Aktivierung"
     paypal:
       name: "PayPal"
       headerTitle: "PayPal hinzufügen"
@@ -1345,9 +1326,6 @@ wallet:
     bank:
       name: "BANCOMAT Pay"
       maxFee: "Maximale Gebühr von 0,50€"
-    satispay:
-      name: "Satispay"
-      description: "Die intelligente Zahlungs-App"
     bancomatPay:
       name: "BANCOMAT Pay"
       description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
@@ -1467,12 +1445,6 @@ wallet:
         title: "Deine Karte hat mehr als ein Logo?"
         body: "Wenn deine PagoBANCOMAT Karte andere internationale Zahlungsnetzwerke aufweist, kannst du diese hinzufügen, indem du nach allen Debit- oder Kreditkarten auf deinen Namen suchst."
         addCta: "Zweites Zahlungsnetzwerk hinzufügen"
-  satispay:
-    details:
-      infobox:
-        one: "Satispay"
-        two: " erlaubt es noch nicht auf IO zu zahlen"
-        three: ": diese Funktion wird mit den nächsten Versionen der App aktiviert."
   cobadge:
     details:
       card:

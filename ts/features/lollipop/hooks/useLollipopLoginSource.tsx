@@ -20,6 +20,8 @@ import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { getLollipopLoginHeaders, handleRegenerateKey } from "..";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../cieLogin/utils";
+import { selectedIdentityProviderSelector } from "../../../store/reducers/authentication";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -36,6 +38,7 @@ export const useLollipopLoginSource = (
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
+  const idp = useIOSelector(selectedIdentityProviderSelector);
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -110,7 +113,8 @@ export const useLollipopLoginSource = (
                 headers: getLollipopLoginHeaders(
                   key,
                   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                  isFastLogin
+                  isFastLogin,
+                  cieFlowForDevServerEnabled ? idp?.id : undefined
                 )
               })
           )
@@ -119,6 +123,7 @@ export const useLollipopLoginSource = (
     )();
   }, [
     dispatch,
+    idp,
     isFastLogin,
     loginUri,
     maybeKeyTag,

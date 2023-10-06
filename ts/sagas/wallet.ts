@@ -26,7 +26,6 @@ import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { ContentClient } from "../api/content";
 import { PaymentManagerClient } from "../api/pagopa";
-import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
 import {
   apiUrlPrefix,
   bpdEnabled,
@@ -35,20 +34,14 @@ import {
 } from "../config";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
-  navigateToActivateBpdOnNewCreditCard,
-  navigateToSuggestBpdActivation
-} from "../features/wallet/onboarding/bancomat/navigation/action";
-import {
   handleAddPan,
   handleLoadAbi,
   handleLoadPans
 } from "../features/wallet/onboarding/bancomat/saga/networking";
-import { addBancomatToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   addBancomatToWallet,
   loadAbi,
-  searchUserPans,
-  walletAddBancomatStart
+  searchUserPans
 } from "../features/wallet/onboarding/bancomat/store/actions";
 import {
   handleAddpayToWallet,
@@ -73,16 +66,6 @@ import {
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
-import {
-  handleAddUserSatispayToWallet,
-  handleSearchUserSatispay
-} from "../features/wallet/onboarding/satispay/saga/networking";
-import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
-import {
-  addSatispayToWallet,
-  searchUserSatispay,
-  walletAddSatispayStart
-} from "../features/wallet/onboarding/satispay/store/actions";
 import NavigationService from "../navigation/NavigationService";
 import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
@@ -153,7 +136,6 @@ import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 import { convertUnknownToError } from "../utils/errors";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { getTitleFromCard } from "../utils/paymentMethod";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
@@ -351,23 +333,6 @@ function* startOrResumeAddCreditCardSaga(
                           n: 5
                         })
                       );
-                      yield* call(navigateToActivateBpdOnNewCreditCard, {
-                        creditCards: [
-                          {
-                            ...maybeAddedWallet.paymentMethod,
-                            icon: getCardIconFromBrandLogo(
-                              maybeAddedWallet.paymentMethod.info
-                            ),
-                            caption: getTitleFromCard(
-                              maybeAddedWallet.paymentMethod
-                            )
-                          }
-                        ]
-                      });
-                    } else if (
-                      bpdRemoteConfig?.enroll_bpd_after_add_payment_method
-                    ) {
-                      yield* call(navigateToSuggestBpdActivation);
                     }
                   }
                 }
@@ -828,12 +793,6 @@ export function* watchWalletSaga(
     // watch for load abi request
     yield* takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
-    // watch for add Bancomat to Wallet workflow
-    yield* takeLatest(
-      walletAddBancomatStart,
-      addBancomatToWalletAndActivateBpd
-    );
-
     // watch for load pans request
     yield* takeLatest(
       searchUserPans.request,
@@ -852,28 +811,6 @@ export function* watchWalletSaga(
 
     // watch for add BPay to Wallet workflow
     yield* takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
-
-    // watch for add Satispay to Wallet workflow
-    yield* takeLatest(
-      walletAddSatispayStart,
-      addSatispayToWalletAndActivateBpd
-    );
-
-    // watch for load Satispay request
-    yield* takeLatest(
-      searchUserSatispay.request,
-      handleSearchUserSatispay,
-      paymentManagerClient.searchSatispay,
-      pmSessionManager
-    );
-
-    // watch for add Satispay to the user's wallet
-    yield* takeLatest(
-      addSatispayToWallet.request,
-      handleAddUserSatispayToWallet,
-      paymentManagerClient.addSatispayToWallet,
-      pmSessionManager
-    );
 
     // watch for BancomatPay search request
     yield* takeLatest(

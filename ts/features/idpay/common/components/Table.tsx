@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-import { Divider } from "../../../../components/core/Divider";
+import { Divider } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 

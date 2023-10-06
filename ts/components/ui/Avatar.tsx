@@ -1,8 +1,8 @@
 // A component to provide organization logo
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { IOVisualCostants } from "../core/variables/IOStyles";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { MultiImage } from "./MultiImage";
 
 type Avatar = {

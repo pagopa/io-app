@@ -20,10 +20,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
 
-jest.mock("../../../config", () => ({
-  pnEnabled: true
-}));
-
 const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -44,7 +40,7 @@ jest.mock("@react-navigation/native", () => {
 const mockPresentBottomSheet = jest.fn();
 
 jest.mock("../../../utils/hooks/bottomSheet", () => ({
-  useLegacyIOBottomSheetModal: () => ({ present: mockPresentBottomSheet }),
+  useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet }),
   useIOBottomSheetAutoresizableModal: () => ({
     present: mockPresentBottomSheet
   })
@@ -153,7 +149,14 @@ const renderComponent = (
         ...baseRawBackendStatus,
         config: {
           ...baseBackendConfig,
-          pn: { enabled: isPnEnabled, frontend_url: "" }
+          pn: {
+            enabled: isPnEnabled,
+            frontend_url: "",
+            min_app_version: {
+              ios: "2.35.0.1",
+              android: "2.35.0.1"
+            }
+          }
         }
       })
     }

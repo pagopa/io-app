@@ -1,5 +1,5 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
@@ -13,16 +13,18 @@ import {
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
-import { watchIDPayInitiativeDetailsSaga } from "../../initiative/details/saga";
+import { watchIdPayCodeSaga } from "../../code/saga";
 import { watchIDPayWalletSaga } from "../../wallet/saga";
 import { createIDPayClient } from "../api/client";
-import { watchIDPayTimelineSaga } from "../../initiative/timeline/saga";
+import { watchIDPayInitiativeDetailsSaga } from "../../details/saga";
+import { watchIDPayTimelineSaga } from "../../timeline/saga";
+import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
 
   const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
-  const token = idPayTestToken ?? bpdToken;
+  const bearerToken = idPayTestToken ?? bpdToken;
 
   const language = yield* select(preferredLanguageSelector);
 
@@ -32,14 +34,32 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
-  const client = createIDPayClient(baseUrl);
+  const idPayClient = createIDPayClient(baseUrl);
 
-  yield* fork(watchIDPayWalletSaga, client, token, preferredLanguage);
+  yield* fork(watchIdPayCodeSaga, idPayClient, bearerToken, preferredLanguage);
+
   yield* fork(
-    watchIDPayInitiativeDetailsSaga,
-    client,
-    token,
+    watchIDPayWalletSaga,
+    idPayClient,
+    bearerToken,
     preferredLanguage
   );
-  yield* fork(watchIDPayTimelineSaga, client, token, preferredLanguage);
+  yield* fork(
+    watchIDPayInitiativeDetailsSaga,
+    idPayClient,
+    bearerToken,
+    preferredLanguage
+  );
+  yield* fork(
+    watchIDPayTimelineSaga,
+    idPayClient,
+    bearerToken,
+    preferredLanguage
+  );
+  yield* fork(
+    watchIDPayInitiativeConfigurationSaga,
+    idPayClient,
+    bearerToken,
+    preferredLanguage
+  );
 }

@@ -6,12 +6,12 @@ import {
   Keyboard
 } from "react-native";
 import { debounce } from "lodash";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import { BankPreviewItem } from "../../bancomat/components/BankPreviewItem";
 import { sortAbiByName } from "../../bancomat/utils/abi";
 import { LabelledItem } from "../../../../../components/LabelledItem";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   bankList: ReadonlyArray<Abi>;
@@ -79,7 +79,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
             ? I18n.t("wallet.searchAbi.loading")
             : undefined
         }}
-        icon={isLoading ? undefined : "io-search"}
+        icon={isLoading ? undefined : "search"}
       />
       <VSpacer size={16} />
       {isLoading ? (

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useReducer } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { Label } from "../../../../../../components/core/typography/Label";

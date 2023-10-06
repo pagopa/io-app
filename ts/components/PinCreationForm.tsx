@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, ScrollView, FlatList } from "react-native";
+import { IOColors, VSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
@@ -9,15 +10,12 @@ import { isDevEnv } from "../utils/environment";
 import { defaultPin } from "../config";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
-import { IOColors } from "./core/variables/IOColors";
 import { Label } from "./core/typography/Label";
 import { H1 } from "./core/typography/H1";
 import { Body } from "./core/typography/Body";
 import { LabelledItem } from "./LabelledItem";
 import { IOStyles } from "./core/variables/IOStyles";
 import { LabelSmall } from "./core/typography/LabelSmall";
-import { VSpacer } from "./core/spacer/Spacer";
-import ButtonOutline from "./ui/ButtonOutline";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
@@ -153,8 +151,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               returnKeyType: "done",
               contextMenuHidden: true
             }}
-            icon={isPinValid ? undefined : "io-warning"}
-            iconColor={IOColors.red}
+            icon={isPinValid ? undefined : "notice"}
+            iconColor={"red"}
             iconPosition="right"
             isValid={isPinValid ? undefined : false}
             overrideBorderColor={isPinValid ? undefined : IOColors.red}
@@ -189,8 +187,8 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
               returnKeyType: "done",
               contextMenuHidden: true
             }}
-            icon={isPinConfirmationValid ? undefined : "io-warning"}
-            iconColor={IOColors.red}
+            icon={isPinConfirmationValid ? undefined : "notice"}
+            iconColor={"red"}
             iconPosition="right"
             isValid={isPinConfirmationValid ? undefined : false}
             overrideBorderColor={

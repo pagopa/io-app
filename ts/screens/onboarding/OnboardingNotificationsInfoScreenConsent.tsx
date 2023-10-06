@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Divider, ListItemInfo, VSpacer } from "@pagopa/io-app-design-system";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -29,10 +30,7 @@ import {
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../../utils/analytics";
-import ListItemInfo from "../../components/ui/ListItemInfo";
-import { Divider } from "../../components/core/Divider";
 import { H2 } from "../../components/core/typography/H2";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";
 

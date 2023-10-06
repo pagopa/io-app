@@ -14,6 +14,7 @@ const DESIGN_SYSTEM_ROUTES = {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },
     TEXT_FIELDS: { route: "DESIGN_SYSTEM_TEXT_FIELDS", title: "Text Fields" },
     LIST_ITEMS: { route: "DESIGN_SYSTEM_LIST_ITEMS", title: "List Items" },
+    MODULES: { route: "DESIGN_SYSTEM_MODULES", title: "Modules" },
     BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badges & Tags" },
     TOASTS: { route: "DESIGN_SYSTEM_TOASTS", title: "Toasts" },
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
@@ -46,6 +47,10 @@ const DESIGN_SYSTEM_ROUTES = {
     OPERATION_RESULT: {
       route: "DS_SCREEN_OPERATION_RESULT",
       title: "Operation result"
+    },
+    WIZARD_SCREEN: {
+      route: "WIZARD_SCREEN",
+      title: "Wizard Screen"
     }
   },
   DEBUG: {

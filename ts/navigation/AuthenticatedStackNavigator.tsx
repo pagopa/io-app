@@ -19,14 +19,6 @@ import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
-  IDPayConfigurationNavigator,
-  IDPayConfigurationRoutes
-} from "../features/idpay/initiative/configuration/navigation/navigator";
-import {
-  IDpayDetailsNavigator,
-  IDPayDetailsRoutes
-} from "../features/idpay/initiative/details/navigation";
-import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
@@ -50,6 +42,14 @@ import {
   WalletPaymentNavigator,
   WalletPaymentRoutes
 } from "../features/walletV3/payment/navigation/navigator";
+import {
+  IDpayDetailsNavigator,
+  IDPayDetailsRoutes
+} from "../features/idpay/details/navigation";
+import {
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
+} from "../features/idpay/configuration/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
@@ -61,6 +61,8 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
+import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
+import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -205,6 +207,10 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
             component={IDPayPaymentNavigator}
             options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen
+            name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
+            component={IdPayCodeNavigator}
           />
         </>
       )}

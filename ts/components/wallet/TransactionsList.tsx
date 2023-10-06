@@ -9,6 +9,7 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { IOColors, ListItemTransaction } from "@pagopa/io-app-design-system";
 import { formatNumberCurrencyCents } from "../../features/idpay/common/utils/strings";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -18,11 +19,9 @@ import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
-import { IOColors } from "../core/variables/IOColors";
 import { IOVisualCostants } from "../core/variables/IOStyles";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import { ListItemTransaction } from "../ui/ListItemTransaction";
 
 type Props = Readonly<{
   title: string;

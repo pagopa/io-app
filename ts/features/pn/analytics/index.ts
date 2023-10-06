@@ -3,10 +3,8 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
 import { TransactionSummaryErrorContent } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
-import {
-  NotificationStatusHistoryElement,
-  PNMessage
-} from "../../pn/store/types/types";
+import { PNMessage } from "../../pn/store/types/types";
+import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
 
@@ -208,13 +206,18 @@ export function trackPNShowTimeline() {
 
 export function trackPNUxSuccess(
   containsPayment: boolean,
-  firstTimeOpening: boolean
+  firstTimeOpening: boolean,
+  isCancelled: boolean
 ) {
   void mixpanelTrack(
     "PN_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
       contains_payment: booleanToYesNo(containsPayment),
-      first_time_opening: booleanToYesNo(firstTimeOpening)
+      first_time_opening: booleanToYesNo(firstTimeOpening),
+      notification_status: isCancelled ? "cancelled" : "active",
+      contains_multipayment: "no",
+      count_payment: containsPayment ? 1 : 0,
+      contains_f24: "no"
     })
   );
 }

@@ -54,7 +54,7 @@ exports[`PaymentCardBig component matches snapshot for loading 1`] = `
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -668,7 +668,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -1096,6 +1096,8 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                         }
                                       >
                                         <Image
+                                          accessibilityLabel="PayPal"
+                                          accessible={true}
                                           resizeMode="contain"
                                           source={
                                             Object {
@@ -1117,15 +1119,17 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                           }
                                         />
                                         <Text
+                                          accessibilityLabel="account: someEmail@test.com"
+                                          accessible={true}
                                           color="black"
                                           defaultColor="black"
-                                          defaultWeight="Regular"
+                                          defaultWeight="SemiBold"
                                           ellipsizeMode="tail"
-                                          font="ReadexPro"
+                                          font="TitilliumWeb"
                                           fontStyle={
                                             Object {
                                               "fontSize": 16,
-                                              "lineHeight": 20,
+                                              "lineHeight": 24,
                                             }
                                           }
                                           numberOfLines={1}
@@ -1136,17 +1140,17 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                               },
                                               Object {
                                                 "fontSize": 16,
-                                                "lineHeight": 20,
+                                                "lineHeight": 24,
                                               },
                                               Object {
                                                 "color": "#0E0F13",
-                                                "fontFamily": "Readex Pro",
+                                                "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
-                                                "fontWeight": "400",
+                                                "fontWeight": "600",
                                               },
                                             ]
                                           }
-                                          weight="Regular"
+                                          weight="SemiBold"
                                         >
                                           someEmail@test.com
                                         </Text>
@@ -1226,7 +1230,7 @@ exports[`PaymentCardSmall component matches snapshot for loading 1`] = `
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -1788,7 +1792,7 @@ exports[`PaymentCardSmall component matches snapshot for paypal 1`] = `
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",

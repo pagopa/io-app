@@ -1,9 +1,11 @@
-import { NativeSwitch as DSNativeSwitch } from "@pagopa/io-app-design-system";
+import {
+  NativeSwitch as DSNativeSwitch,
+  IOColors
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { Platform, Switch, SwitchProps } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { IOColors } from "../../variables/IOColors";
 import { IOSwitchVisualParams } from "../../variables/IOStyles";
 
 type OwnProps = Pick<SwitchProps, "onValueChange" | "value">;
