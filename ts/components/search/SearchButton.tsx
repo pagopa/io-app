@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { IconButton, IOColors, HSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import {
   disableSearch,
@@ -13,9 +14,6 @@ import {
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
 import { LabelledItem } from "../LabelledItem";
-import { IOColors } from "../core/variables/IOColors";
-import IconButton from "../ui/IconButton";
-import { HSpacer } from "../core/spacer/Spacer";
 import { ICON_BUTTON_MARGIN } from "../screens/BaseHeader";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;

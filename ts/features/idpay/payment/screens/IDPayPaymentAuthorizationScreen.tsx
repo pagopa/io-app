@@ -4,18 +4,21 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  Divider,
+  HSpacer,
+  VSpacer,
+  ContentWrapper,
+  ListItemInfo
+} from "@pagopa/io-app-design-system";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
-import { Divider } from "../../../../components/core/Divider";
-import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { NewH6 } from "../../../../components/core/typography/NewH6";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import ListItemInfo from "../../../../components/ui/ListItemInfo";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { Skeleton } from "../../common/components/Skeleton";
@@ -32,6 +35,8 @@ import {
   selectIsPreAuthorizing,
   selectTransactionData
 } from "../xstate/selectors";
+import { useIODispatch } from "../../../../store/hooks";
+import { identificationRequest } from "../../../../store/actions/identification";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
   trxCode?: string;
@@ -46,6 +51,8 @@ const IDPayPaymentAuthorizationScreen = () => {
   const route = useRoute<IDPayPaymentAuthorizationRouteProps>();
 
   const machine = usePaymentMachineService();
+  const dispatch = useIODispatch();
+
   const transactionData = useSelector(machine, selectTransactionData);
 
   const { trxCode } = route.params;
@@ -72,7 +79,20 @@ const IDPayPaymentAuthorizationScreen = () => {
   };
 
   const handleConfirm = () => {
-    machine.send("CONFIRM_AUTHORIZATION");
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: () => machine.send("CONFIRM_AUTHORIZATION")
+        }
+      )
+    );
   };
 
   const renderContent = () => {

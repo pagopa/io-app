@@ -1,13 +1,12 @@
 import { none } from "fp-ts/lib/Option";
 import { View } from "react-native";
 import * as React from "react";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import BlockButtons from "../../../../../../components/ui/BlockButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../store/actions/navigation";
 import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability

@@ -12,7 +12,7 @@ import {
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon, IOIcons } from "@pagopa/io-app-design-system";
+import { Icon, IOIcons, HSpacer } from "@pagopa/io-app-design-system";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../../../i18n";
 import {
@@ -41,7 +41,6 @@ import ButtonDefaultOpacity from "../../../ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../helpers/withLightModalContext";
 import SelectCalendarModal from "../../../SelectCalendarModal";
 import { LightModalContextInterface } from "../../../ui/LightModal";
-import { HSpacer } from "../../../core/spacer/Spacer";
 
 type OwnProps = {
   message: CreatedMessageWithContentAndAttachments;

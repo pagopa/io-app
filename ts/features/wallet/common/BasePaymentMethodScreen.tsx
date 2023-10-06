@@ -9,15 +9,17 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import {
+  IOColors,
+  VSpacer,
+  IOSpacingScale,
+  ListItemAction
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import ListItemAction from "../../../components/ui/ListItemAction";
 import I18n from "../../../i18n";
 import { deleteWalletRequest } from "../../../store/actions/wallet/wallets";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -30,6 +32,7 @@ type Props = {
   paymentMethod: PaymentMethod;
   card: React.ReactNode;
   content: React.ReactNode;
+  headerTitle?: string;
 };
 
 // ----------------------------- component -----------------------------------
@@ -105,7 +108,7 @@ const BasePaymentMethodScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.creditCard.details.header")}
+      headerTitle={props.headerTitle ?? ""}
       faqCategories={["wallet_methods"]}
       goBack={true}
       titleColor="white"
@@ -147,9 +150,11 @@ const DeleteButton = ({
 
 // ----------------------------- styles -----------------------------------
 
+const cardContainerHorizontalSpacing: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingHorizontal: IOSpacingScale[4],
+    paddingHorizontal: cardContainerHorizontalSpacing,
     alignItems: "center",
     marginBottom: "-15%",
     aspectRatio: 1.7,

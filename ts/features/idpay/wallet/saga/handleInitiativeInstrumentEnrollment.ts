@@ -1,35 +1,37 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import TypedI18n from "../../../../i18n";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import {
-  IdpayInitiativesInstrumentEnrollPayloadType,
-  IdpayInitiativesInstrumentDeletePayloadType,
-  idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll
-} from "../store/actions";
 import { showToast } from "../../../../utils/showToast";
-import TypedI18n from "../../../../i18n";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
+import { idpayInitiativesInstrumentEnroll } from "../store/actions";
 
 export function* handleInitiativeInstrumentEnrollment(
   enrollInstrument: IDPayClient["enrollInstrument"],
-  token: string,
+  bearerToken: string,
   language: PreferredLanguageEnum,
-  payload: IdpayInitiativesInstrumentEnrollPayloadType
+  action: ActionType<typeof idpayInitiativesInstrumentEnroll["request"]>
 ) {
+  const updateInstrumentStatusRequest = enrollInstrument({
+    bearerAuth: bearerToken,
+    "Accept-Language": language,
+    initiativeId: action.payload.initiativeId,
+    idWallet: action.payload.idWallet
+  });
+
   try {
-    const updateInstrumentStatusResult: SagaCallReturnType<
-      typeof enrollInstrument
-    > = yield* call(enrollInstrument, {
-      bearerAuth: token,
-      "Accept-Language": language,
-      idWallet: payload.idWallet,
-      initiativeId: payload.initiativeId
-    });
+    const updateInstrumentStatusResult = (yield* call(
+      withRefreshApiCall,
+      updateInstrumentStatusRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof enrollInstrument>;
+
     yield* put(
       pipe(
         updateInstrumentStatusResult,
@@ -41,7 +43,7 @@ export function* handleInitiativeInstrumentEnrollment(
               )
             );
             return idpayInitiativesInstrumentEnroll.failure({
-              initiativeId: payload.initiativeId,
+              initiativeId: action.payload.initiativeId,
               error: {
                 ...getGenericError(new Error(readablePrivacyReport(error)))
               }
@@ -51,7 +53,7 @@ export function* handleInitiativeInstrumentEnrollment(
             if (response.status === 200) {
               // handled success
               return idpayInitiativesInstrumentEnroll.success({
-                initiativeId: payload.initiativeId
+                initiativeId: action.payload.initiativeId
               });
             }
             // not handled error codes
@@ -61,7 +63,7 @@ export function* handleInitiativeInstrumentEnrollment(
               )
             );
             return idpayInitiativesInstrumentEnroll.failure({
-              initiativeId: payload.initiativeId,
+              initiativeId: action.payload.initiativeId,
               error: {
                 ...getGenericError(new Error(`res status:${response.value}`))
               }
@@ -76,65 +78,7 @@ export function* handleInitiativeInstrumentEnrollment(
     );
     yield* put(
       idpayInitiativesInstrumentEnroll.failure({
-        initiativeId: payload.initiativeId,
-        error: { ...getNetworkError(e) }
-      })
-    );
-  }
-}
-
-export function* handleInitiativeInstrumentDelete(
-  deleteInstrument: IDPayClient["deleteInstrument"],
-  token: string,
-  language: PreferredLanguageEnum,
-  payload: IdpayInitiativesInstrumentDeletePayloadType
-) {
-  try {
-    const updateInstrumentStatusResult: SagaCallReturnType<
-      typeof deleteInstrument
-    > = yield* call(deleteInstrument, {
-      bearerAuth: token,
-      "Accept-Language": language,
-      instrumentId: payload.instrumentId,
-      initiativeId: payload.initiativeId
-    });
-    yield* put(
-      pipe(
-        updateInstrumentStatusResult,
-        E.fold(
-          error => {
-            TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
-            return idpayInitiativesInstrumentDelete.failure({
-              initiativeId: payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(readablePrivacyReport(error)))
-              }
-            });
-          },
-          response => {
-            if (response.status === 200) {
-              // handled success
-              return idpayInitiativesInstrumentDelete.success({
-                initiativeId: payload.initiativeId
-              });
-            }
-            // not handled error codes
-            TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
-            return idpayInitiativesInstrumentDelete.failure({
-              initiativeId: payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(`res status:${response.value}`))
-              }
-            });
-          }
-        )
-      )
-    );
-  } catch (e) {
-    TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.removal");
-    yield* put(
-      idpayInitiativesInstrumentDelete.failure({
-        initiativeId: payload.initiativeId,
+        initiativeId: action.payload.initiativeId,
         error: { ...getNetworkError(e) }
       })
     );

@@ -3,6 +3,7 @@ import * as React from "react";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
@@ -14,7 +15,7 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import { IOLogoPaymentExtType } from "../../../../components/core/logos";
+import { capitalize } from "../../../../utils/strings";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -69,7 +70,8 @@ const CreditCardDetailScreen = ({ route }: Props) => {
         ...cardData,
         expDate: new Date(
           Number(cardData.expireYear),
-          Number(cardData.expireMonth)
+          // month is 0 based, while BE response isn't
+          Number(cardData.expireMonth) - 1
         )
       }))
     );
@@ -90,7 +92,9 @@ const CreditCardDetailScreen = ({ route }: Props) => {
         )
       )
     );
-
+    const capitalizedCardCircuit = capitalize(
+      storeCreditCard.info.brand?.toLowerCase() ?? ""
+    );
     return (
       <LoadingSpinnerOverlay
         isLoading={areIdpayInitiativesLoading}
@@ -100,6 +104,7 @@ const CreditCardDetailScreen = ({ route }: Props) => {
           paymentMethod={storeCreditCard}
           card={cardComponent}
           content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
+          headerTitle={`${capitalizedCardCircuit} ••${storeCreditCard.info.blurredNumber}`}
         />
       </LoadingSpinnerOverlay>
     );

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
+import { IOColorGradients, VSpacer } from "@pagopa/io-app-design-system";
 import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -52,8 +53,6 @@ import {
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { canEycaCardBeShown } from "../utils/eyca";
-import { IOColorGradients } from "../../../../components/core/variables/IOColors";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -118,7 +117,11 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             />
           ) : (
             <>
-              <ScrollView style={IOStyles.flex} bounces={false}>
+              <ScrollView
+                style={IOStyles.flex}
+                bounces={false}
+                testID={"CGNCardDetailsScrollView"}
+              >
                 {/* cgn gradient */}
                 <LinearGradient
                   colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}

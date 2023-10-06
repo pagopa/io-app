@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
+import FingerprintScreen from "../screens/onboarding/biometric&securityChecks/FingerprintScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
 import OnboardingEmailInsertScreen from "../screens/onboarding/OnboardingEmailInsertScreen";
 import OnboardingEmailReadScreen from "../screens/onboarding/OnboardingEmailReadScreen";
@@ -12,6 +12,8 @@ import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareData
 import OnboardingTosScreen from "../screens/onboarding/OnboardingTosScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import { isGestureEnabled } from "../utils/navigation";
+import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChecks/MissingDevicePinScreen";
+import MissingDeviceBiometricScreen from "../screens/onboarding/biometric&securityChecks/MissingDeviceBiometricScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -48,6 +50,14 @@ const navigator = () => (
     <Stack.Screen
       name={ROUTES.ONBOARDING_FINGERPRINT}
       component={FingerprintScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_MISSING_DEVICE_PIN}
+      component={MissingDevicePinScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC}
+      component={MissingDeviceBiometricScreen}
     />
     <Stack.Screen
       name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}

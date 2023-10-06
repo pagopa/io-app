@@ -1,9 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text, ImageBackground } from "react-native";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
+import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
 
 /* Fake Transparent BG */
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
@@ -49,8 +46,7 @@ const styles = StyleSheet.create({
     aspectRatio: 4 / 3
   },
   iconLabel: {
-    fontSize: 10,
-    color: IOColors.bluegrey
+    fontSize: 10
   }
 });
 
@@ -75,21 +71,32 @@ export const DSLogoPaymentViewerBox = ({
   name,
   image,
   size
-}: DSLogoPaymentViewerBoxProps) => (
-  <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
-    <View style={[styles.logoItem, sizeMap[size].item]}>
-      <ImageBackground
-        style={styles.fakeTransparentBg}
-        source={FakeTransparentBg}
-      />
-      {image}
+}: DSLogoPaymentViewerBoxProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
+      <View style={[styles.logoItem, sizeMap[size].item]}>
+        <ImageBackground
+          style={styles.fakeTransparentBg}
+          source={FakeTransparentBg}
+        />
+        {image}
+      </View>
+      <View style={styles.nameWrapper}>
+        {name && (
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[
+              styles.iconLabel,
+              { color: IOColors[theme["textBody-tertiary"]] }
+            ]}
+          >
+            {name}
+          </Text>
+        )}
+      </View>
     </View>
-    <View style={styles.nameWrapper}>
-      {name && (
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.iconLabel}>
-          {name}
-        </Text>
-      )}
-    </View>
-  </View>
-);
+  );
+};

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
+import { IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -22,7 +23,6 @@ import {
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { IOPictograms, Pictogram } from "../../../components/core/pictograms";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 
 export type Props = WithTestID<{

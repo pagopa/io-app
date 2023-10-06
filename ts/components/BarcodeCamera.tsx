@@ -9,6 +9,7 @@ import {
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { barcodesScannerConfigSelector } from "../store/reducers/backendStatus";
@@ -20,7 +21,6 @@ import { isAndroid } from "../utils/platform";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Body } from "./core/typography/Body";
 import { Label } from "./core/typography/Label";
-import { IOColors } from "./core/variables/IOColors";
 
 /**
  * Type describing the supported barcodes in IO.
@@ -138,7 +138,7 @@ type Props = {
 export const BarcodeCamera = (props: Props) => {
   const { onBarcodeScanned, disabled } = props;
   const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices();
+  const devices = useCameraDevices("wide-angle-camera");
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
   const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);

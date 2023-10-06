@@ -16,13 +16,12 @@ import {
   StyleSheet
 } from "react-native";
 import { connect, useSelector } from "react-redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Link } from "../../../components/core/typography/Link";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -45,9 +44,15 @@ import { pinPukHelpUrl } from "../../../config";
 import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
+import { loginSuccess } from "../../../store/actions/authentication";
+import { IdpData } from "../../../../definitions/content/IdpData";
+import { SessionToken } from "../../../types/SessionToken";
+import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
+  requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request()),
+  doLoginSuccess: (token: SessionToken, idp: keyof IdpData) =>
+    dispatch(loginSuccess({ token, idp }))
 });
 
 type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
@@ -116,12 +121,19 @@ const CiePinScreen: React.FC<Props> = props => {
     hideModal();
   }, [setPin, setAuthUrlGenerated, hideModal]);
 
+  const { doLoginSuccess } = props;
+
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
-        ciePin: pin,
-        authorizationUri: authUrlGenerated
-      });
+      if (cieFlowForDevServerEnabled) {
+        const token = /token=([\d\w]+)/.exec(authUrlGenerated)?.[1];
+        doLoginSuccess(token as SessionToken, "cie");
+      } else {
+        navigation.navigate(ROUTES.CIE_CARD_READER_SCREEN, {
+          ciePin: pin,
+          authorizationUri: authUrlGenerated
+        });
+      }
       handleAuthenticationOverlayOnClose();
     }
   }, [
@@ -129,7 +141,8 @@ const CiePinScreen: React.FC<Props> = props => {
     authUrlGenerated,
     hideModal,
     navigation,
-    pin
+    pin,
+    doLoginSuccess
   ]);
 
   const showModal = () => {

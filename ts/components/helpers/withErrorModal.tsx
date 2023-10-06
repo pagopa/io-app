@@ -4,11 +4,11 @@ import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H1 } from "../core/typography/H1";
-import { IOColors } from "../core/variables/IOColors";
 import { Overlay } from "../ui/Overlay";
 
 const styles = StyleSheet.create({

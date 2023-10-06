@@ -3,11 +3,10 @@ import * as O from "fp-ts/lib/Option";
 import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, IOIcons, Icon, HSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { HSpacer } from "../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   button: {
@@ -90,6 +89,9 @@ export type BlockButtonsProps = Props;
 
 /**
  * Implements a component that show buttons on a line on 1, 2 or 3 buttons
+ *
+ * @deprecated Use the new temporary `BlockButtons` from the `io-app-design-system` to
+ * refactor the legacy screens and remove `NativeBase` buttons.
  */
 export default class BlockButtons extends React.Component<Props, never> {
   private renderRightButton = () => {

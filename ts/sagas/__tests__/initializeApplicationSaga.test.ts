@@ -15,7 +15,10 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
-import { initMixpanel } from "../mixpanel";
+import {
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
+} from "../mixpanel";
 import {
   loadProfile,
   watchProfile,
@@ -39,6 +42,7 @@ import { StartupStatusEnum } from "../../store/reducers/startup";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
+import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -90,6 +94,10 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // checkSession
       .next()
@@ -145,6 +153,10 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
       .next(401) // checksession
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
@@ -183,7 +195,10 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
       .next()
-
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
+      .next()
       .next(401) // checksession
       .next(true) // FastLogin FF
       .put(
@@ -226,6 +241,10 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(getKeyInfo)
       .fork(watchSessionExpiredSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()

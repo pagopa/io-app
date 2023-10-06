@@ -1,4 +1,13 @@
-import { IOIcons, Icon, ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  ListItemSwitch,
+  useIOTheme,
+  HSpacer,
+  VSpacer,
+  LabelLink
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
   GestureResponderEvent,
@@ -11,10 +20,7 @@ import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { makeFontStyleObject } from "../core/fonts";
 import { NativeSwitch } from "../core/selection/checkbox/NativeSwitch";
-import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { NewLink } from "../core/typography/NewLink";
-import { IOColors, useIOTheme } from "../core/variables/IOColors";
 import {
   IOSelectionListItemStyles,
   IOSelectionListItemVisualParams,
@@ -86,15 +92,26 @@ export const SwitchListItem = ({
   const theme = useIOTheme();
 
   return isDesignSystemEnabled ? (
-    <ListItemSwitch
-      label={label}
-      disabled={disabled}
-      onSwitchValueChange={onSwitchValueChange}
-      action={action}
-      description={description}
-      icon={icon}
-      value={value}
-    />
+    icon ? (
+      <ListItemSwitch
+        label={label}
+        disabled={disabled}
+        onSwitchValueChange={onSwitchValueChange}
+        action={action}
+        description={description}
+        icon={icon}
+        value={value}
+      />
+    ) : (
+      <ListItemSwitch
+        label={label}
+        disabled={disabled}
+        onSwitchValueChange={onSwitchValueChange}
+        action={action}
+        description={description}
+        value={value}
+      />
+    )
   ) : (
     <View
       testID="SwitchListItem"
@@ -145,9 +162,9 @@ export const SwitchListItem = ({
           {action && (
             <>
               <VSpacer size={IOSelectionListItemVisualParams.actionMargin} />
-              <NewLink fontSize="small" onPress={action.onPress}>
+              <LabelLink fontSize="small" onPress={action.onPress}>
                 {action.label}
-              </NewLink>
+              </LabelLink>
             </>
           )}
         </View>

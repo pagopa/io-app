@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
 /**
  * Implements a component that show buttons as sticky footer
  * It can include 1, 2 or 3 buttons. If they are 2, they can have the inlineHalf  or the inlineOneThird style
+ *
+ * @deprecated Use the new temporary `FooterWithButtons` from the `io-app-design-system` to
+ * refactor the legacy screens and remove `NativeBase` buttons.
  */
 export default class FooterWithButtons extends React.Component<
   BlockButtonsProps,

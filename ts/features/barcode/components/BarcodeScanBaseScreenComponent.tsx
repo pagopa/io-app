@@ -1,17 +1,15 @@
+import { IOColors, IconButton } from "@pagopa/io-app-design-system";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import IconButton from "../../../components/ui/IconButton";
 import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
@@ -127,7 +125,10 @@ const BarcodeScanBaseScreenComponent = ({
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch,
+    isTorchOn,
+    toggleTorch
   } = useIOBarcodeCameraScanner({
     onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
     onBarcodeError,
@@ -224,11 +225,20 @@ const BarcodeScanBaseScreenComponent = ({
         >
           {/* FIXME: replace with new header */}
           <BaseHeader
+            dark={true}
             backgroundColor={"transparent"}
             goBack={true}
             customGoBack={customGoBack}
-            dark={true}
             onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
+            customRightIcon={
+              hasTorch
+                ? {
+                    iconName: isTorchOn ? "lightFilled" : "light",
+                    accessibilityLabel: "torch",
+                    onPress: toggleTorch
+                  }
+                : undefined
+            }
           />
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar

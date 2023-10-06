@@ -1,17 +1,21 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Badge, Tag } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  IOColors,
+  Tag,
+  VSpacer,
+  HSpacer,
+  IOTagRadius
+} from "@pagopa/io-app-design-system";
 import { IOBadge } from "../../../components/core/IOBadge";
-import { VSpacer, HSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H4 } from "../../../components/core/typography/H4";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CustomBadge from "../../../components/ui/CustomBadge";
 import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { IOTagRadius } from "../../../components/core/variables/IOShapes";
 
 const styles = StyleSheet.create({
   fakeNavItem: {
@@ -183,7 +187,7 @@ const renderIOBadge = () => (
 
 const renderTag = () => (
   <View>
-    <DSComponentViewerBox name={"Tag, different variants"}>
+    <DSComponentViewerBox name={"Tag · Different variants"}>
       <Tag text={"Entro il 30 mag"} variant="warning" />
       <VSpacer size={8} />
       <Tag text={"Completato"} variant="success" />
@@ -196,7 +200,14 @@ const renderTag = () => (
         <Tag text={"Valore legale"} variant="legalMessage" />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name={"Tag, stress test"}>
+    <DSComponentViewerBox name={"Tag · With icon, no text"}>
+      <Tag variant="attachment" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Without icon"}>
+      <VSpacer size={8} />
+      <Tag text={"No icon"} variant="noIcon" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Stress test"}>
       <View
         style={{
           backgroundColor: IOColors["error-100"],
@@ -205,7 +216,7 @@ const renderTag = () => (
           borderRadius: IOTagRadius + 8
         }}
       >
-        <Tag text={"Looooooooong string"} variant="error" />
+        <Tag text={"Loooooooooooong string"} variant="error" />
       </View>
     </DSComponentViewerBox>
   </View>

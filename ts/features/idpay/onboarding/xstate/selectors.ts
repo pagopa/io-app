@@ -7,7 +7,7 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCr
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
-import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../xstate/utils";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;

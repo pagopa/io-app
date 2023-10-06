@@ -4,7 +4,6 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -12,8 +11,9 @@ import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Alert, Keyboard, SafeAreaView, StyleSheet } from "react-native";
+import { StackActions } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
@@ -145,7 +145,9 @@ const OnboardingEmailInsertScreen = (props: Props) => {
 
   const navigateToEmailReadScreen = useCallback(() => {
     props.navigation.dispatch(StackActions.popToTop());
-    props.navigation.navigate(ROUTES.ONBOARDING_READ_EMAIL_SCREEN);
+    props.navigation.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+    });
   }, [props.navigation]);
 
   useEffect(() => {

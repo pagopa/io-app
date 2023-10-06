@@ -7,14 +7,12 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import { IconButton, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { NewH3 } from "../../../components/core/typography/NewH3";
 import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import IconButton from "../../../components/ui/IconButton";
 import { makeFontStyleObject } from "../../../components/core/fonts";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   sectionTitle: {

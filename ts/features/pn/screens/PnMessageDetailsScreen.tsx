@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -22,19 +23,26 @@ import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
 import { PNMessage } from "../store/types/types";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
+import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
+import { isCancelledFromPNMessagePot, paymentFromPNMessagePot } from "../utils";
+import { getRptIdFromPayment } from "../utils/rptId";
+import { trackPNUxSuccess } from "../analytics";
+import { isStrictSome } from "../../../utils/pot";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
   serviceId: ServiceId;
-  isRead: boolean;
+  firstTimeOpening: boolean;
 }>;
 
 const renderMessage = (
-  isRead: boolean,
   messageId: UIMessageId,
   messagePot: pot.Pot<O.Option<PNMessage>, Error>,
   service: ServicePublic | undefined,
+  payment: NotificationPaymentInfo | undefined,
+  rptId: RptId | undefined,
   onRetry: () => void
 ) =>
   pot.fold(
@@ -46,10 +54,11 @@ const renderMessage = (
     messageOption =>
       O.isSome(messageOption) ? (
         <PnMessageDetails
-          isRead={isRead}
           messageId={messageId}
           message={messageOption.value}
           service={service}
+          payment={payment}
+          rptId={rptId}
         />
       ) : (
         // decoding error
@@ -63,18 +72,22 @@ const renderMessage = (
 export const PnMessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
-  const { messageId, serviceId, isRead } = props.route.params;
+  const { messageId, serviceId, firstTimeOpening } = props.route.params;
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
+  const uxEventTracked = React.useRef(false);
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
   );
 
+  const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const message = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
+  const payment = paymentFromPNMessagePot(currentFiscalCode, message);
+  const rptId = getRptIdFromPayment(payment);
 
   const loadContent = React.useCallback(() => {
     dispatch(loadThirdPartyMessage.request(messageId));
@@ -89,6 +102,13 @@ export const PnMessageDetailsScreen = (
     loadContent();
   });
 
+  if (!uxEventTracked.current && isStrictSome(message)) {
+    // eslint-disable-next-line functional/immutable-data
+    uxEventTracked.current = true;
+    const isCancelled = isCancelledFromPNMessagePot(message);
+    trackPNUxSuccess(!!rptId, firstTimeOpening, isCancelled);
+  }
+
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -96,7 +116,14 @@ export const PnMessageDetailsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {renderMessage(isRead, messageId, message, service, loadContent)}
+        {renderMessage(
+          messageId,
+          message,
+          service,
+          payment,
+          rptId,
+          loadContent
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
   );
