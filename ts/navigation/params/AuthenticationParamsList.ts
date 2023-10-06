@@ -1,4 +1,4 @@
-import { OwnPropIdp } from "../../screens/authentication/IdpSelectionScreen";
+import { ChoosedIdentifier } from "../../screens/authentication/NewOptInScreen";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../screens/authentication/cie/CieWrongCiePinScreen";
@@ -6,8 +6,8 @@ import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_LANDING]: undefined;
-  [ROUTES.AUTHENTICATION_OPT_IN]: undefined;
-  [ROUTES.AUTHENTICATION_IDP_SELECTION]: OwnPropIdp;
+  [ROUTES.AUTHENTICATION_OPT_IN]: ChoosedIdentifier;
+  [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
   [ROUTES.AUTHENTICATION_CIE]: undefined;
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: undefined;
   [ROUTES.AUTHENTICATION_AUTH_SESSION]: undefined;

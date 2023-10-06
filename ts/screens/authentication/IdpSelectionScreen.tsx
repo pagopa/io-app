@@ -30,10 +30,7 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import ROUTES from "../../navigation/routes";
-import {
-  IOStackNavigationProp,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -43,15 +40,7 @@ import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/s
 import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
-export type OwnPropIdp = {
-  isLV: boolean;
-};
-
-type Props = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "AUTHENTICATION_IDP_SELECTION"
-> &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const TestIdp: SpidIdp = {
@@ -88,8 +77,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const inset = useSafeAreaInsets();
 
-  // eslint-disable-next-line no-console
-  console.log("aaaaaaaaaa funziona", props.route.params.isLV);
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);

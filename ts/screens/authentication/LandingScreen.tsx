@@ -224,16 +224,27 @@ class LandingScreen extends React.PureComponent<Props, State> {
       screen: ROUTES.MARKDOWN
     });
 
-  private navigateToIdpSelection = () =>
+  private navigateToIdpSelection = () => {
+    // FIXME -> understand if this type of implementation is OK
+    // this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+    //   screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+    // });
     this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_OPT_IN
+      screen: ROUTES.AUTHENTICATION_OPT_IN,
+      params: { identifier: "SPID" }
     });
+  };
 
   private navigateToCiePinScreen = () => {
+    // FIXME -> understand if this type of implementation is OK
     if (this.isCieSupported()) {
       this.props.dispatchIdpCieSelected();
+      // this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+      //   screen: ROUTES.CIE_PIN_SCREEN
+      // });
       this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.CIE_PIN_SCREEN
+        screen: ROUTES.AUTHENTICATION_OPT_IN,
+        params: { identifier: "CIE" }
       });
     } else {
       this.openUnsupportedCIEModal();
