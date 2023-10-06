@@ -4,7 +4,7 @@ import {
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
 import React, { useEffect } from "react";
@@ -138,8 +138,16 @@ const renderFooter = (
     }
   }
   if (isLoading) {
-    // TODO: Add a ButtonOutline with a loading spinner as soon as it's available by DS (https://pagopa.atlassian.net/browse/IOBP-302)
-    return <></>;
+    // FIXME: Add a ButtonSolid with a loading spinner as soon as it's available by DS (https://pagopa.atlassian.net/browse/IOBP-302)
+    return (
+      <ButtonSolid
+        onPress={() => constNull}
+        fullWidth
+        label={I18n.t("wallet.continue")}
+        accessibilityLabel={I18n.t("wallet.continue")}
+        disabled
+      />
+    );
   }
 
   return (
