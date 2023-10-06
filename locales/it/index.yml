@@ -751,6 +751,21 @@ authentication:
     point4-value: "4"
     point4-content: "Completa il \nriconoscimento"
     knowMore: Puoi saperne di più su spid.gov.it
+  opt-in:
+    news: novità
+    title: Da oggi accedi a IO più velocemente
+    identity-check: Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
+    security-suggests: Consigli di sicurezza
+    passcode: Dopo il primo accesso con SPID o CIE, potrai entrare in app solo con il codice di sblocco o con il biometrico.
+    notification: Ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
+    button-accept-lv: Continua con l’accesso rapido
+    button-decline-lv: No, voglio accedere ogni 30 giorni
+    fingerprint: Per accedere a IO basta il codice o il biometrico, non condividerli con nessuno.
+    io-logout: Se perdi il dispositivo, esci da IO da
+    io-lock-access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+    access-new-device: Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app.
+    close-modal-button: Ho capito
+    io-site: ioapp.it
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider

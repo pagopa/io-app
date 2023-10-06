@@ -739,6 +739,21 @@ authentication:
     point4-value: '4'
     point4-content: "Complete the recognition"
     knowMore: Learn more on spid.gov.it
+  opt-in:
+    news: News
+    title: Faster access to IO is now available
+    identity-check: We will ask you to authenticate with SPID or CIE only once a year or if you disconnect from the app.
+    security-suggests: Safety tips
+    passcode: After logging in with SPID or CIE, you can only access the app using the unlock code or biometric.
+    notification: Whenever you log in to the app via SPID or CIE, you will be notified by email.
+    button-accept-lv: Continue with the fast login
+    button-decline-lv: No, I want access every 30 days
+    fingerprint: To access IO, simply use the code or biometric, do not share it with anyone.
+    io-logout: If you lose your device, exit the IO from
+    io-lock-access: If you think your SPID or CIE credentials are compromised, block IO access from
+    access-new-device: Make sure to sign out of the app if you sign in to IO with a device that is not yours.
+    close-modal-button: I understand
+    io-site: ioapp.it
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider

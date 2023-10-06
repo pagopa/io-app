@@ -21,6 +21,7 @@ import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import I18n from "../../i18n";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
@@ -57,26 +58,26 @@ const NewOptInScreen = (props: Props) => {
     <>
       <FeatureInfo
         iconName="biomFingerprint"
-        body="Per accedere a IO basta il codice o il biometrico, non condividerli con nessuno."
+        body={I18n.t("authentication.opt-in.fingerprint")}
       />
       <VSpacer size={16} />
       <FeatureInfo
         iconName="logout"
-        body="Se perdi il dispositivo, esci da IO da"
-        actionLabel="ioapp.it."
+        body={I18n.t("authentication.opt-in.io-logout")}
+        actionLabel={I18n.t("authentication.opt-in.io-site")}
         actionOnPress={() => openWebUrl("https://ioapp.it/it/accedi")}
       />
       <VSpacer size={16} />
       <FeatureInfo
         iconName="locked"
-        body="Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da"
-        actionLabel="ioapp.it."
+        body={I18n.t("authentication.opt-in.io-lock-access")}
+        actionLabel={I18n.t("authentication.opt-in.io-site")}
         actionOnPress={() => openWebUrl("https://ioapp.it/it/accedi")}
       />
       <VSpacer size={16} />
       <FeatureInfo
         iconName="device"
-        body="Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app."
+        body={I18n.t("authentication.opt-in.access-new-device")}
       />
     </>
   );
@@ -87,7 +88,7 @@ const NewOptInScreen = (props: Props) => {
       <ButtonSolid
         fullWidth
         accessibilityLabel="Tap to dismiss the bottom sheet"
-        label={"Ho capito"}
+        label={I18n.t("authentication.opt-in.close-modal-button")}
         onPress={dismiss}
       />
       <VSpacer size={16} />
@@ -100,7 +101,7 @@ const NewOptInScreen = (props: Props) => {
     dismiss: dismissVeryLongAutoresizableBottomSheetWithFooter
   } = useIOBottomSheetAutoresizableModal(
     {
-      title: "Consigli di sicurezza",
+      title: I18n.t("authentication.opt-in.security-suggests"),
       component: <ModalContent />,
       footer: defaultFooter,
       fullScreen: true
@@ -117,14 +118,14 @@ const NewOptInScreen = (props: Props) => {
         primaryAction={
           <ButtonSolid
             fullWidth
-            label="Continua con l’accesso rapido"
+            label={I18n.t("authentication.opt-in.button-accept-lv")}
             accessibilityLabel={"Continua con l’accesso rapido"}
             onPress={navigateToIdpPage}
           />
         }
         secondaryAction={
           <ButtonLink
-            label="No, voglio accedere ogni 30 giorni"
+            label={I18n.t("authentication.opt-in.button-decline-lv")}
             onPress={navigateToIdpPage}
           />
         }
@@ -135,29 +136,29 @@ const NewOptInScreen = (props: Props) => {
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
-            <Badge text="novità" variant="info" />
+            <Badge text={I18n.t("authentication.opt-in.news")} variant="info" />
           </View>
           <VSpacer size={24} />
           <H3 style={{ textAlign: "center", alignItems: "center" }}>
-            Da oggi accedi a IO più velocemente
+            {I18n.t("authentication.opt-in.title")}
           </H3>
           <VSpacer size={24} />
           <FeatureInfo
             pictogramName="identityCheck"
-            body="Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app."
-            actionLabel="Consigli di sicurezza"
+            body={I18n.t("authentication.opt-in.identity-check")}
+            actionLabel={I18n.t("authentication.opt-in.security-suggests")}
             actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
           />
           <VSpacer size={24} />
           <FeatureInfo
             pictogramName="passcode"
-            body="Dopo il primo accesso con SPID o CIE, potrai entrare in app solo con il codice di sblocco o con il biometrico."
+            body={I18n.t("authentication.opt-in.passcode")}
           />
           <VSpacer size={24} />
           {/* FIXME -> add pictogram into design system https://pagopa.atlassian.net/browse/IOPID-953 */}
           <FeatureInfo
             pictogramName="identityCheck"
-            body="Ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email."
+            body={I18n.t("authentication.opt-in.notification")}
           />
         </ContentWrapper>
         {veryLongAutoResizableBottomSheetWithFooter}
