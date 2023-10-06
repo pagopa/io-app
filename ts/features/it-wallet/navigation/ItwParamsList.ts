@@ -32,6 +32,7 @@ export type ItwParamsList = {
     .RESULT]: ItwRpResultScreenNavigationParams;
   // CREDENTIALS
   [ITW_ROUTES.CREDENTIALS.CATALOG]: undefined;
+  [ITW_ROUTES.CREDENTIALS.PREVIEW]: undefined;
   // GENERIC
   [ITW_ROUTES.GENERIC.NOT_AVAILABLE]: undefined;
 };
