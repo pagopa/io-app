@@ -9,7 +9,10 @@ import {
 } from "../../../store/actions/identification";
 import NavigationService from "../../../navigation/NavigationService";
 import I18n from "../../../i18n";
-import { itwCredentialsAddPid } from "../store/actions/itwCredentialsActions";
+import {
+  itwCredentialsAddPid,
+  itwCredentialsChecks
+} from "../store/actions/itwCredentialsActions";
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 
@@ -21,6 +24,10 @@ export function* watchItwCredentialsSaga(): SagaIterator {
    * Handles adding a PID to the wallet.
    */
   yield* takeLatest(itwCredentialsAddPid.request, handleCredentialsAddPid);
+  /**
+   * Handles the required checks before adding a credential.
+   */
+  yield* takeLatest(itwCredentialsChecks.request, handleCredentialsChecks);
 }
 
 /*
@@ -53,4 +60,13 @@ export function* handleCredentialsAddPid(
       })
     );
   }
+}
+
+/**
+ * This saga handles the required checks before adding a credential.
+ * @param action the request dispatched action with a credential as payload.
+ * action: ActionType<typeof itwCredentialsChecks.request>
+ */
+export function* handleCredentialsChecks(): SagaIterator {
+  yield* put(itwCredentialsChecks.success());
 }

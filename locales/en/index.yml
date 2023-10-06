@@ -3320,6 +3320,13 @@ features:
       credentialsCatalogScreen:
         title: "Add more credentials"
         incomingFeature: "Coming soon"
+      credentialsChecksScreen:
+        loading:
+          title: "We are performing some security checks"
+        success:
+          title: You are adding {{credentialName}} to your Wallet
+        toast: 
+          cancel: "The credential was not added to the wallet."
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3393,6 +3400,10 @@ features:
       rp: "Relying Party"
       trusted: "Trusted"
       search: "Cerca"
+      alert:
+          title: "Do you want to interrupt the operation?"
+          confirm: "Yes, interrupt it."
+          cancel: "No, go back"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

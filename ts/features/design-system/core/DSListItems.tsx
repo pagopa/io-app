@@ -32,7 +32,7 @@ import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption
 import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { ListItemItw } from "../../it-wallet/components/ListItemItw";
+import { ListItemItw } from "../../it-wallet/components/ListItems/ListItemItw";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
