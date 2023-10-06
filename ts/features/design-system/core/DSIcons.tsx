@@ -10,16 +10,18 @@ import {
   // IOIconsNew,
   SVGIconProps,
   IOIconSizeScale,
-  IOSystemIcons
+  IOSystemIcons,
+  IOThemeContext,
+  IOColors,
+  IconContained,
+  HSpacer,
+  IOStyles
 } from "@pagopa/io-app-design-system";
 import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
-import {
-  IOColors,
-  IOThemeContext
-} from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 // Filter the main object, removing already displayed icons in the other sets
 type IconSubsetObject = Record<
@@ -209,6 +211,22 @@ export const DSIcons = () => (
             />
           ))}
         </View>
+
+        <H3
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 12 }}
+        >
+          IconContained
+        </H3>
+        <DSComponentViewerBox name="IconContained · Tonal variant, neutral color">
+          <View style={IOStyles.row}>
+            <IconContained icon="device" variant="tonal" color="neutral" />
+            <HSpacer size={8} />
+            <IconContained icon="institution" variant="tonal" color="neutral" />
+          </View>
+        </DSComponentViewerBox>
+
         <H3
           color={theme["textHeading-default"]}
           weight={"SemiBold"}

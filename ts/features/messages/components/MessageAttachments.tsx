@@ -6,9 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { H5 } from "../../../components/core/typography/H5";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
@@ -19,9 +18,16 @@ import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 type Props = {
   attachments: ReadonlyArray<UIAttachment>;
   openPreview: (attachment: UIAttachment) => void;
+  disabled?: boolean;
 };
 
 const styles = StyleSheet.create({
+  opacityDisabled: {
+    opacity: 0.35
+  },
+  opacityEnabled: {
+    opacity: 1.0
+  },
   container: {
     paddingRight: 0,
     paddingLeft: 0,
@@ -70,20 +76,24 @@ const AttachmentIcon = (props: {
 const AttachmentItem = (props: {
   attachment: UIAttachment;
   openPreview: (attachment: UIAttachment) => void;
+  disabled?: boolean;
 }) => {
   const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
     props.attachment,
     props.openPreview
   );
-
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[
+        styles.container,
+        props.disabled ? styles.opacityDisabled : styles.opacityEnabled
+      ]}
       onPress={onAttachmentSelect}
-      disabled={pot.isLoading(downloadPot)}
+      disabled={!!props.disabled || pot.isLoading(downloadPot)}
       accessible={true}
       accessibilityLabel={props.attachment.displayName}
       accessibilityRole="button"
+      testID="MessageAttachmentTouchable"
     >
       <View style={styles.row}>
         <View style={styles.icon}>
@@ -128,9 +138,10 @@ export const MessageAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
       {props.attachments.map((attachment, index) => (
-        <View key={index}>
+        <View key={index} testID="MessageAttachmentContainer">
           <AttachmentItem
             attachment={attachment}
+            disabled={props.disabled}
             openPreview={props.openPreview}
           />
           {index < props.attachments.length - 1 && (

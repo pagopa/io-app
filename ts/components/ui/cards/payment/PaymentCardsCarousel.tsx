@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
-import { HSpacer } from "../../../core/spacer/Spacer";
 import { IOVisualCostants } from "../../../core/variables/IOStyles";
 import { generateFlatListItemLayout } from "../../utils/generateFlatListItemLayout";
 import {

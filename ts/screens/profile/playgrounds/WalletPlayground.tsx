@@ -2,7 +2,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -11,8 +11,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import ListItemNav from "../../../components/ui/ListItemNav";
-import { Divider } from "../../../components/core/Divider";
 import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
 
 const WalletPlayground = () => {

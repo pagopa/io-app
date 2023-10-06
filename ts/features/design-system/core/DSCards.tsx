@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentCardBig } from "../../../components/ui/cards/payment/PaymentCardBig";
 import { PaymentCardSmall } from "../../../components/ui/cards/payment/PaymentCardSmall";
 import {
@@ -141,7 +141,6 @@ export const DSCards = () => (
       <VSpacer size={16} />
       <PaymentCardBig
         cardType={"BANCOMATPAY"}
-        expirationDate={new Date()}
         holderName="Mario Rossi"
         phoneNumber="+39 1234567890"
       />

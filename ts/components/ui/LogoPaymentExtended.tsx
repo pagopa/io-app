@@ -4,35 +4,50 @@ import paypalLogoImage from "../../../img/wallet/payment-methods/paypal-logo.png
 // sadly no svg is available for paypal, since on Figma an image is used
 import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import { BankLogoOrSkeleton } from "./utils/components/BankLogoOrLoadingSkeleton";
-type LogoPaymentHugeProps = {
+export type LogoPaymentExtendedProps = {
   dimensions: { height: number; width: number };
 } & (
   | {
-      icon: "payPal" | "bpay";
+      icon?: never;
+      abiCode: string | undefined;
+      imageA11yLabel?: string;
     }
   | {
-      abiCode: string;
+      icon: "payPal" | "bpay";
     }
 );
 
-export const LogoPaymentExtended = (props: LogoPaymentHugeProps) => {
+export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
   const { height, width } = props.dimensions;
   if ("icon" in props) {
     switch (props.icon) {
       case "payPal":
         return (
           <Image
+            accessible={true}
+            accessibilityLabel="PayPal"
             source={paypalLogoImage}
             resizeMode="contain"
             style={{ height, width }}
           />
         );
       case "bpay":
-        return <BpayLogo height={height} width={width} />;
+        return (
+          <BpayLogo
+            accessible={true}
+            accessibilityLabel="BANCOMAT Pay"
+            height={height}
+            width={width}
+          />
+        );
     }
   }
 
   return (
-    <BankLogoOrSkeleton dimensions={props.dimensions} abiCode={props.abiCode} />
+    <BankLogoOrSkeleton
+      imageA11yLabel={props.imageA11yLabel}
+      dimensions={props.dimensions}
+      abiCode={props.abiCode}
+    />
   );
 };

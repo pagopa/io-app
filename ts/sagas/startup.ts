@@ -29,7 +29,6 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
-  pnEnabled,
   svEnabled,
   zendeskEnabled
 } from "../config";
@@ -51,12 +50,7 @@ import {
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
-import {
-  navigateToMainNavigatorAction,
-  navigateToMessageRouterAction,
-  navigateToPrivacyScreen
-} from "../store/actions/navigation";
-import { clearNotificationPendingMessage } from "../store/actions/notifications";
+import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
 import {
   clearCache,
@@ -74,7 +68,6 @@ import {
   getKeyInfo
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
-import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
   isIdPayTestEnabledSelector,
   isPagoPATestEnabledSelector
@@ -86,7 +79,6 @@ import {
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import {
   differentProfileLoggedIn,
@@ -106,7 +98,10 @@ import {
   tokenRefreshSelector
 } from "../features/fastLogin/store/selectors";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import { backendStatusSelector } from "../store/reducers/backendStatus";
+import {
+  backendStatusSelector,
+  isPnEnabledSelector
+} from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
@@ -120,9 +115,13 @@ import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStat
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
-  initMixpanel
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
-import { updateInstallationSaga } from "./notifications";
+import {
+  handlePendingMessageStateIfAllowedSaga,
+  updateInstallationSaga
+} from "./notifications";
 import {
   loadProfile,
   watchProfile,
@@ -135,7 +134,7 @@ import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
-import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
+import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
@@ -270,6 +269,7 @@ export function* initializeApplicationSaga(
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
+  yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -277,6 +277,11 @@ export function* initializeApplicationSaga(
     sessionToken,
     keyInfo
   );
+
+  // Watch for requests to logout
+  // Since this saga is spawned and not forked
+  // it will handle its own cancelation logic.
+  yield* spawn(watchLogoutSaga, backendClient.logout);
 
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
@@ -371,11 +376,14 @@ export function* initializeApplicationSaga(
 
   const publicKey = yield* select(lollipopPublicKeySelector);
 
-  yield* call(
+  const isAssertionRefValid = yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
     maybeSessionInformation
   );
+  if (!isAssertionRefValid) {
+    return;
+  }
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
@@ -472,17 +480,16 @@ export function* initializeApplicationSaga(
       }
     }
   }
-
-  // Ask to accept ToS if there is a new available version
-  yield* call(checkAcceptedTosSaga, userProfile);
-
-  // After tos acceptance, we dispatch a load success to allow the execution of the check
+  // We dispatch a load success to allow the execution of the check
   // which save the hashed code tax code
   const profile = yield* select(profileSelector);
   if (pot.isSome(profile)) {
     yield* put(profileLoadSuccess(profile.value));
     yield* take(setProfileHashedFiscalCode);
   }
+
+  // Ask to accept ToS if there is a new available version
+  yield* call(checkAcceptedTosSaga, userProfile);
 
   if (!handleSessionExpiration) {
     yield* call(setLanguageFromProfileIfExists);
@@ -556,6 +563,10 @@ export function* initializeApplicationSaga(
     // Start watching for EU Covid Certificate actions
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
+
+  const pnEnabled: ReturnType<typeof isPnEnabledSelector> = yield* select(
+    isPnEnabledSelector
+  );
 
   if (pnEnabled) {
     // Start watching for PN actions
@@ -657,34 +668,11 @@ export function* initializeApplicationSaga(
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
 
-  // Watch for requests to logout
-  // Since this saga is spawned and not forked
-  // it will handle its own cancelation logic.
-  yield* spawn(watchLogoutSaga, backendClient.logout);
-
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
-    yield* select(pendingMessageStateSelector);
-
-  if (pendingMessageState) {
-    // We have a pending notification message to handle
-    const messageId = pendingMessageState.id;
-
-    // Remove the pending message from the notification state
-    yield* put(clearNotificationPendingMessage());
-
-    yield* call(navigateToMainNavigatorAction);
-    // Navigate to message router screen
-    NavigationService.dispatchNavigationAction(
-      navigateToMessageRouterAction({
-        messageId: messageId as UIMessageId,
-        fromNotification: true
-      })
-    );
-  }
+  yield* call(handlePendingMessageStateIfAllowedSaga, true);
 
   yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }

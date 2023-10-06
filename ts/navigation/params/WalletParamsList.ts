@@ -8,24 +8,18 @@ import {
   BpdOptInParamsList
 } from "../../features/bonus/bpd/navigation/params";
 import BPD_ROUTES from "../../features/bonus/bpd/navigation/routes";
-import { AvailableInitiativesListScreenNavigationParams } from "../../features/idpay/wallet/screens/AvailableInitiativesListScreen";
+import { IdPayInstrumentInitiativesScreenRouteParams } from "../../features/idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import { BancomatDetailScreenNavigationParams } from "../../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreenNavigationParams } from "../../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import { CobadgeDetailScreenNavigationParams } from "../../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
-import { PaymentMethodOnboardingBancomatParamsList } from "../../features/wallet/onboarding/bancomat/navigation/params";
-import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../features/wallet/onboarding/bancomat/navigation/routes";
 import { PaymentMethodOnboardingBPayParamsList } from "../../features/wallet/onboarding/bancomatPay/navigation/params";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../../features/wallet/onboarding/bancomatPay/navigation/routes";
 import { PaymentMethodOnboardingCoBadgeParamsList } from "../../features/wallet/onboarding/cobadge/navigation/params";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../features/wallet/onboarding/cobadge/navigation/routes";
-import { ActivateBpdOnNewCreditCardScreenNavigationParams } from "../../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import { PaymentMethodOnboardingPayPalParamsList } from "../../features/wallet/onboarding/paypal/navigation/params";
 import PAYPAL_ROUTES from "../../features/wallet/onboarding/paypal/navigation/routes";
-import { PaymentMethodOnboardingSatispayParamsList } from "../../features/wallet/onboarding/satispay/navigation/params";
-import WALLET_ONBOARDING_SATISPAY_ROUTES from "../../features/wallet/onboarding/satispay/navigation/routes";
 import { PayPalPspUpdateScreenNavigationParams } from "../../features/wallet/paypal/screen/PayPalPspUpdateScreen";
-import { SatispayDetailScreenNavigationParams } from "../../features/wallet/satispay/screen/SatispayDetailScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
 import { AddCreditCardOutcomeCodeMessageNavigationParams } from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import { AddPaymentMethodScreenNavigationParams } from "../../screens/wallet/AddPaymentMethodScreen";
@@ -43,12 +37,11 @@ import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/p
 import ROUTES from "../routes";
 
 export type WalletParamsList = {
-  [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: AvailableInitiativesListScreenNavigationParams;
+  [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;
   [ROUTES.WALLET_CREDIT_CARD_DETAIL]: CreditCardDetailScreenNavigationParams;
   [ROUTES.WALLET_BANCOMAT_DETAIL]: BancomatDetailScreenNavigationParams;
-  [ROUTES.WALLET_SATISPAY_DETAIL]: SatispayDetailScreenNavigationParams;
   [ROUTES.WALLET_PAYPAL_DETAIL]: undefined;
   [ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP]: PayPalPspUpdateScreenNavigationParams;
   [ROUTES.WALLET_BPAY_DETAIL]: BPayDetailScreenNavigationParams;
@@ -80,16 +73,11 @@ export type WalletParamsList = {
   [BPD_ROUTES.OPT_IN_PAYMENT_METHODS
     .MAIN]: NavigatorScreenParams<BpdOptInParamsList>;
 
-  [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingBancomatParamsList>;
-  [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingSatispayParamsList>;
   [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingBPayParamsList>;
   [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingCoBadgeParamsList>;
   [PAYPAL_ROUTES.ONBOARDING
     .MAIN]: NavigatorScreenParams<PaymentMethodOnboardingPayPalParamsList>;
 
-  [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: ActivateBpdOnNewCreditCardScreenNavigationParams;
-  [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: undefined;
-  [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: undefined;
   [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: undefined;
   [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: undefined;
 };

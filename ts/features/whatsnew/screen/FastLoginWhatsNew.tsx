@@ -1,11 +1,10 @@
 import * as React from "react";
 import I18n from "i18n-js";
 
+import { VSpacer, IOSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
-import { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
 const STANDARD_SIZE_VSPACER: IOSpacer = 24;
 const SIZE_FROM_BOTTOM_VSPACER: IOSpacer = 48;
@@ -42,12 +41,6 @@ export const FastLoginWhatsNewBody = (
         {`${I18n.t("fastLogin.whatsNew.changes.third.description")} `}
       </Body>
     </Body>
-    <VSpacer size={STANDARD_SIZE_VSPACER} />
-    <H3>{I18n.t("securityTips.title")}</H3>
-    <VSpacer />
-    <Label color={"bluegrey"}>
-      {`\u2022 ${I18n.t("securityTips.biometric.first")} `}
-    </Label>
     {
       // FIX ME: Update url ticket: IOPID-419
     }

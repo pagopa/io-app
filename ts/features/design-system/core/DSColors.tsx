@@ -1,11 +1,6 @@
 import * as React from "react";
 import { Dimensions, Text, View, ColorValue, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { H2 } from "../../../components/core/typography/H2";
-import { H3 } from "../../../components/core/typography/H3";
-import { H5 } from "../../../components/core/typography/H5";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import {
   IOColorsLegacy,
   IOColors,
@@ -18,8 +13,13 @@ import {
   themeStatusColorsLightMode,
   themeStatusColorsDarkMode,
   IOThemeLight,
-  IOThemeDark
-} from "../../../components/core/variables/IOColors";
+  IOThemeDark,
+  VSpacer,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
+import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -129,11 +129,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderColorThemeGroup = (
-  name: string,
-  colorObjectLightMode: Record<string, string>,
-  colorObjectDarkMode: Record<string, string>
-) => {
+type ColorThemeGroupProps = {
+  name: string;
+  colorObjectLightMode: Record<string, string>;
+  colorObjectDarkMode: Record<string, string>;
+};
+
+const ColorThemeGroup = ({
+  name,
+  colorObjectLightMode,
+  colorObjectDarkMode
+}: ColorThemeGroupProps) => {
+  const theme = useIOTheme();
+
   const colorArrayLightMode = Object.entries(colorObjectLightMode);
   const colorArrayDarkMode = Object.entries(colorObjectDarkMode);
 
@@ -141,7 +149,7 @@ const renderColorThemeGroup = (
     <View style={{ marginBottom: 40 }}>
       {name && (
         <H3
-          color={"bluegrey"}
+          color={theme["textHeading-default"]}
           weight={"SemiBold"}
           style={{ marginBottom: sectionTitleMargin }}
         >
@@ -177,6 +185,7 @@ const renderColorThemeGroup = (
                       }
                     >
                       <ColorBox
+                        isThemeColor
                         mode={"light"}
                         name={name}
                         color={colorValue}
@@ -200,6 +209,7 @@ const renderColorThemeGroup = (
 
                   return (
                     <ColorBox
+                      isThemeColor
                       mode="dark"
                       key={`${name}-darkMode`}
                       name={name}
@@ -218,96 +228,111 @@ const renderColorThemeGroup = (
   );
 };
 
-const renderColorGroup = (
-  name: string,
-  colorObject: Record<string, ColorValue>
-) => (
-  <View style={{ marginBottom: 24 }}>
-    {name && (
-      <H3
-        color={"bluegrey"}
+type ColorGroupProps = {
+  name: string;
+  colorObject: Record<string, ColorValue>;
+};
+
+const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={{ marginBottom: 24 }}>
+      {name && (
+        <H3
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: sectionTitleMargin }}
+        >
+          {name}
+        </H3>
+      )}
+
+      {Object.entries(colorObject).map(([name, colorValue]) => (
+        <ColorBox key={name} name={name} color={colorValue} />
+      ))}
+    </View>
+  );
+};
+
+export const DSColors = () => {
+  const theme = useIOTheme();
+
+  return (
+    <DesignSystemScreen title={"Colors"}>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"Bold"}
+        style={{ marginBottom: sectionTitleMargin }}
+      >
+        Color scales
+      </H2>
+      {/* Neutrals */}
+      <ColorGroup name="Neutrals" colorObject={IOColorsNeutral} />
+      {/* Tints */}
+      <ColorGroup name="Main tints" colorObject={IOColorsTints} />
+      {/* Status */}
+      <ColorGroup name="Status" colorObject={IOColorsStatus} />
+      {/* Extra */}
+      <ColorGroup name="Extra" colorObject={IOColorsExtra} />
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"Bold"}
+        style={{ marginBottom: sectionTitleMargin }}
+      >
+        Theme
+      </H2>
+
+      <ColorThemeGroup
+        name="Main"
+        colorObjectLightMode={IOThemeLight}
+        colorObjectDarkMode={IOThemeDark}
+      />
+
+      <ColorThemeGroup
+        name="Status"
+        colorObjectLightMode={themeStatusColorsLightMode}
+        colorObjectDarkMode={themeStatusColorsDarkMode}
+      />
+
+      {/* Gradients */}
+      <H2
+        color={theme["textHeading-default"]}
         weight={"SemiBold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
-        {name}
-      </H3>
-    )}
-
-    {Object.entries(colorObject).map(([name, colorValue]) => (
-      <ColorBox key={name} name={name} color={colorValue} />
-    ))}
-  </View>
-);
-
-export const DSColors = () => (
-  <DesignSystemScreen title={"Colors"}>
-    <H2
-      color={"bluegrey"}
-      weight={"Bold"}
-      style={{ marginBottom: sectionTitleMargin }}
-    >
-      Color scales
-    </H2>
-    {/* Neutrals */}
-    {renderColorGroup("Neutrals", IOColorsNeutral)}
-    {/* Tints */}
-    {renderColorGroup("Main tints", IOColorsTints)}
-    {/* Status */}
-    {renderColorGroup("Status", IOColorsStatus)}
-    {/* Extra */}
-    {renderColorGroup("Extra", IOColorsExtra)}
-
-    <H2
-      color={"bluegrey"}
-      weight={"Bold"}
-      style={{ marginBottom: sectionTitleMargin }}
-    >
-      Theme
-    </H2>
-
-    {renderColorThemeGroup("Main", IOThemeLight, IOThemeDark)}
-
-    {renderColorThemeGroup(
-      "Status",
-      themeStatusColorsLightMode,
-      themeStatusColorsDarkMode
-    )}
-
-    {/* Gradients */}
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: sectionTitleMargin }}
-    >
-      Gradients
-    </H2>
-    <View style={styles.gradientItemsWrapper}>
-      {Object.entries(IOColorGradients).map(([name, colorValues]) => (
-        <GradientBox key={name} name={name} colors={colorValues} />
-      ))}
-    </View>
-
-    <VSpacer size={40} />
-
-    {/* Legacy */}
-    <View style={{ marginBottom: sectionTitleMargin }}>
-      <H2 color={"bluegrey"} weight={"SemiBold"}>
-        Legacy palette (†2023)
+        Gradients
       </H2>
-      <LabelSmall weight={"Regular"} color="bluegrey">
-        Not moved to the &ldquo;Legacy&rdquo; category yet, because it&apos;s
-        currently used everywhere
-      </LabelSmall>
-    </View>
-    {Object.entries(IOColorsLegacy).map(([name, colorValue]) => (
-      <ColorBox key={name} name={name} color={colorValue} />
-    ))}
-  </DesignSystemScreen>
-);
+      <View style={styles.gradientItemsWrapper}>
+        {Object.entries(IOColorGradients).map(([name, colorValues]) => (
+          <GradientBox key={name} name={name} colors={colorValues} />
+        ))}
+      </View>
+
+      <VSpacer size={40} />
+
+      {/* Legacy */}
+      <View style={{ marginBottom: sectionTitleMargin }}>
+        <H2 color={theme["textHeading-default"]} weight={"SemiBold"}>
+          Legacy palette (†2023)
+        </H2>
+        <LabelSmall weight={"Regular"} color={theme["textBody-tertiary"]}>
+          Not moved to the &ldquo;Legacy&rdquo; category yet, because it&apos;s
+          currently used everywhere
+        </LabelSmall>
+      </View>
+      {Object.entries(IOColorsLegacy).map(([name, colorValue]) => (
+        <ColorBox key={name} name={name} color={colorValue} />
+      ))}
+    </DesignSystemScreen>
+  );
+};
 
 type ColorBoxProps = {
   name: string;
   color: ColorValue;
+  isThemeColor?: boolean;
   mode?: "light" | "dark";
   ghostMode?: boolean;
   themeVariable?: boolean;
@@ -316,35 +341,48 @@ type ColorBoxProps = {
 const ColorBox = ({
   name,
   color,
+  isThemeColor = false,
   mode = "light",
   ghostMode,
   themeVariable
-}: ColorBoxProps) => (
-  <View style={[styles.colorWrapper, ghostMode && { opacity: 0 }]}>
-    <View
-      style={[
-        styles.colorItem,
-        mode === "dark" ? styles.colorItemDarkMode : styles.colorItemLightMode,
-        themeVariable
-          ? { backgroundColor: IOColors[color as IOColors] }
-          : { backgroundColor: color }
-      ]}
-    >
-      {color && <Text style={styles.colorPill}>{color}</Text>}
-    </View>
+}: ColorBoxProps) => {
+  const theme = useIOTheme();
 
-    {name && (
-      <LabelSmall
-        fontSize="small"
-        numberOfLines={1}
-        color={mode === "dark" ? "grey-200" : "bluegrey"}
-        weight={"Regular"}
+  return (
+    <View style={[styles.colorWrapper, ghostMode && { opacity: 0 }]}>
+      <View
+        style={[
+          styles.colorItem,
+          mode === "dark"
+            ? styles.colorItemDarkMode
+            : styles.colorItemLightMode,
+          themeVariable
+            ? { backgroundColor: IOColors[color as IOColors] }
+            : { backgroundColor: color }
+        ]}
       >
-        {name}
-      </LabelSmall>
-    )}
-  </View>
-);
+        {color && <Text style={styles.colorPill}>{color}</Text>}
+      </View>
+
+      {name && (
+        <Text
+          style={{
+            marginTop: 4,
+            fontSize: 10,
+            color: isThemeColor
+              ? mode === "dark"
+                ? IOColors["grey-450"]
+                : IOColors["grey-700"]
+              : IOColors[theme["textBody-tertiary"]]
+          }}
+          numberOfLines={1}
+        >
+          {name}
+        </Text>
+      )}
+    </View>
+  );
+};
 
 type GradientBoxProps = {
   name: string;
@@ -352,7 +390,9 @@ type GradientBoxProps = {
 };
 
 const GradientBox = ({ name, colors }: GradientBoxProps) => {
+  const theme = useIOTheme();
   const [first, last] = colors;
+
   return (
     <View style={styles.gradientWrapper}>
       <LinearGradient
@@ -365,9 +405,15 @@ const GradientBox = ({ name, colors }: GradientBoxProps) => {
         {last && <Text style={styles.colorPill}>{last}</Text>}
       </LinearGradient>
       {name && (
-        <H5 color={"bluegrey"} weight={"Regular"}>
+        <Text
+          style={{
+            marginTop: 4,
+            fontSize: 10,
+            color: IOColors[theme["textBody-tertiary"]]
+          }}
+        >
           {name}
-        </H5>
+        </Text>
       )}
     </View>
   );

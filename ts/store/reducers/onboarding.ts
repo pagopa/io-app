@@ -3,7 +3,10 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
-import { clearOnboarding, fingerprintAcknowledge } from "../actions/onboarding";
+import {
+  clearOnboarding,
+  fingerprintAcknowledged
+} from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -20,7 +23,7 @@ const reducer = (
   action: Action
 ): OnboardingState => {
   switch (action.type) {
-    case getType(fingerprintAcknowledge.success):
+    case getType(fingerprintAcknowledged):
       return {
         ...state,
         isFingerprintAcknowledged: true

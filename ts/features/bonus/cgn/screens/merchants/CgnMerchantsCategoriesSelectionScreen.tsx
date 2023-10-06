@@ -5,14 +5,14 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
+import {
+  getGradientColorValues,
+  VSpacer,
+  Icon
+} from "@pagopa/io-app-design-system";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOBadge } from "../../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
-import {
-  IOColors,
-  getGradientColorValues
-} from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
@@ -111,12 +111,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
                   </View>
                 </View>
               )}
-              {s.icon({
-                height: 32,
-                width: 32,
-                fill: IOColors.white,
-                style: { justifyContent: "flex-end" }
-              })}
+              <Icon name={s.icon} size={32} color="white" />
             </View>
           );
 

@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.1.3.tgz#71794ccda83e802a16b6f3e4c9ade75a9dc26269"
-  integrity sha512-zBTeLXJKYJGQah93sPvU0Yqas+YffY5Vf1+0hgie57fLDuGUGc8EAYjKktmF+OL9oD2doa0NVESBZ1dui8g4Qw==
+"@pagopa/io-app-design-system@1.11.3":
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.11.3.tgz#24a4f044813eb379bd2c427c42effa43fde8a727"
+  integrity sha512-OywmnNggsvOYpXXmi5A45nfamZQXF74xLrTnXaeN5OieghPm9NoqYhJ4TI4hyAx5rqVibUJxNudZ/L7DHjEF5g==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -3542,14 +3542,6 @@
     nanoid "^3.1.15"
     query-string "^6.13.6"
     react-is "^16.13.0"
-
-"@react-navigation/drawer@^5.12.9":
-  version "5.12.9"
-  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.12.9.tgz#b07d7391a6fea4ce07cd7a7421fdbaea37cdbb46"
-  integrity sha512-SYb2BCEAn+BiEwC6WBfCzs1VlWD+ZdQbxmsim6vo1o+ndPW2e+kiq7FXKRs0vUXhQRZVl2oOB3vBn0c3YCllQg==
-  dependencies:
-    color "^3.1.3"
-    react-native-iphone-x-helper "^1.3.0"
 
 "@react-navigation/material-top-tabs@^5.x":
   version "5.3.19"
@@ -4105,14 +4097,6 @@
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#0c9a181d7823cfad215d040bc5596c2d83e1a3cd"
   integrity sha512-ZN4UbU4EM3C7XGt4zI6RqHEZS2+35EwOz9DPAD1lTTY3IpWMHAKYjryykvP35hFkSwrGMpT8nYuMFPEJRwDEJA==
-
-"@types/react-native-vector-icons@^4.6.3":
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.4.tgz#83c2d88f0c2615a44b9059eb75c11f92702c1ee2"
-  integrity sha512-G2JD98lrgjggA979WeTXlj6He1sN4Skpd4UJlcVDsD71u1yHf8raT9D7OP4vb3LZWX6ILYkVa4dzLtVkt4wyWA==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
 
 "@types/react-native@*":
   version "0.63.4"

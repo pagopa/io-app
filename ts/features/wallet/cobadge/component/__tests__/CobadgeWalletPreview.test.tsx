@@ -11,10 +11,10 @@ import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import CobadgeWalletPreview from "../CobadgeWalletPreview";
 
-jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
+jest.mock("../../../onboarding/bancomat/hooks/useImageResize");
 describe("CobadgeWalletPreview component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let

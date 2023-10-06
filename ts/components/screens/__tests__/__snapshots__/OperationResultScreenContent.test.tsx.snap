@@ -54,7 +54,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -503,10 +503,10 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         >
                                           <View>
                                             <Text
-                                              color="black"
-                                              defaultColor="black"
-                                              defaultWeight="Regular"
-                                              font="ReadexPro"
+                                              color="bluegreyDark"
+                                              defaultColor="bluegreyDark"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 22,
@@ -523,14 +523,14 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                     "lineHeight": 33,
                                                   },
                                                   Object {
-                                                    "color": "#0E0F13",
-                                                    "fontFamily": "Readex Pro",
+                                                    "color": "#17324D",
+                                                    "fontFamily": "Titillium Web",
                                                     "fontStyle": "normal",
-                                                    "fontWeight": "400",
+                                                    "fontWeight": "700",
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
+                                              weight="Bold"
                                             >
                                               title
                                             </Text>
@@ -612,19 +612,19 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                     Array [
                                                       Object {
                                                         "alignItems": "center",
-                                                        "borderRadius": 8,
+                                                        "borderRadius": 4,
                                                         "elevation": 0,
                                                         "flexDirection": "row",
                                                         "justifyContent": "center",
-                                                        "paddingHorizontal": 24,
+                                                        "paddingHorizontal": 16,
                                                         "textAlignVertical": "center",
                                                       },
                                                       false,
                                                       Object {
-                                                        "height": 48,
+                                                        "height": 40,
                                                       },
                                                       Object {
-                                                        "backgroundColor": "#0B3EE3",
+                                                        "backgroundColor": "#0073E6",
                                                       },
                                                       Object {
                                                         "backgroundColor": undefined,
@@ -639,29 +639,33 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                 >
                                                   <Text
                                                     color="white"
+                                                    defaultColor="white"
+                                                    defaultWeight="Bold"
                                                     ellipsizeMode="tail"
-                                                    font="ReadexPro"
+                                                    font="TitilliumWeb"
+                                                    fontStyle={
+                                                      Object {
+                                                        "fontSize": 16,
+                                                      }
+                                                    }
                                                     numberOfLines={1}
                                                     style={
                                                       Array [
-                                                        Array [
-                                                          Object {
-                                                            "alignSelf": "center",
-                                                          },
-                                                          Object {
-                                                            "fontSize": 16,
-                                                          },
-                                                        ],
-                                                        undefined,
+                                                        Object {
+                                                          "alignSelf": "center",
+                                                        },
+                                                        Object {
+                                                          "fontSize": 16,
+                                                        },
                                                         Object {
                                                           "color": "#FFFFFF",
-                                                          "fontFamily": "Readex Pro",
+                                                          "fontFamily": "Titillium Web",
                                                           "fontStyle": "normal",
-                                                          "fontWeight": "400",
+                                                          "fontWeight": "700",
                                                         },
                                                       ]
                                                     }
-                                                    weight="Regular"
+                                                    weight="Bold"
                                                   >
                                                     Action
                                                   </Text>
@@ -739,13 +743,13 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                     style={
                                                       Array [
                                                         Object {
-                                                          "fontFamily": "Readex Pro",
+                                                          "fontFamily": "Titillium Web",
                                                           "fontSize": 16,
                                                           "fontStyle": "normal",
-                                                          "fontWeight": "400",
+                                                          "fontWeight": "700",
                                                         },
                                                         Object {
-                                                          "color": "#0B3EE3",
+                                                          "color": "#0073E6",
                                                         },
                                                         Object {
                                                           "color": undefined,

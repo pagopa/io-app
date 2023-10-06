@@ -9,12 +9,17 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { IOIcons, Icon } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOIcons,
+  Icon,
+  hexToRgba,
+  HSpacer,
+  IOScaleValues,
+  IOSpringValues
+} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
-import { HSpacer } from "../core/spacer/Spacer";
 import { LabelHeader } from "../core/typography/LabelHeader";
-import { IOScaleValues, IOSpringValues } from "../core/variables/IOAnimations";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { useSpringPressProgressValue } from "./utils/hooks/useSpringPressProgressValue";
 
 type ColorMode = "light" | "dark";

@@ -8,9 +8,8 @@ import {
   ScrollView
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

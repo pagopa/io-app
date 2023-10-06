@@ -11,11 +11,11 @@ import * as React from "react";
 import { ComponentProps } from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer, IOPictograms } from "@pagopa/io-app-design-system";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -66,7 +66,6 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
-import type { IOPictograms } from "../../../components/core/pictograms/Pictogram";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
 
 export type TransactionErrorScreenNavigationParams = {

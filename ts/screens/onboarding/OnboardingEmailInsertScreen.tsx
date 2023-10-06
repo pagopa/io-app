@@ -4,23 +4,16 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  View,
-  Alert,
-  Keyboard,
-  Platform,
-  SafeAreaView,
-  StyleSheet
-} from "react-native";
+import { View, Alert, Keyboard, SafeAreaView, StyleSheet } from "react-native";
+import { StackActions } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
@@ -53,9 +46,6 @@ type Props = IOStackNavigationRouteProps<
 const styles = StyleSheet.create({
   flex: {
     flex: 1
-  },
-  icon: {
-    marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
   }
 });
 
@@ -155,7 +145,9 @@ const OnboardingEmailInsertScreen = (props: Props) => {
 
   const navigateToEmailReadScreen = useCallback(() => {
     props.navigation.dispatch(StackActions.popToTop());
-    props.navigation.navigate(ROUTES.ONBOARDING_READ_EMAIL_SCREEN);
+    props.navigation.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+    });
   }, [props.navigation]);
 
   useEffect(() => {
@@ -277,7 +269,7 @@ const OnboardingEmailInsertScreen = (props: Props) => {
               <Form>
                 <LabelledItem
                   label={I18n.t("email.insert.label")}
-                  icon="io-envelope"
+                  icon="email"
                   isValid={isValidEmail()}
                   inputProps={{
                     returnKeyType: "done",
@@ -290,7 +282,6 @@ const OnboardingEmailInsertScreen = (props: Props) => {
                     ),
                     onChangeText: handleOnChangeEmailText
                   }}
-                  iconStyle={styles.icon}
                 />
               </Form>
             </View>

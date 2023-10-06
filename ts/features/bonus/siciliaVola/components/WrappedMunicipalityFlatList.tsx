@@ -4,6 +4,7 @@ import { View, ActivityIndicator, FlatList } from "react-native";
 import * as React from "react";
 import { ListItem } from "native-base";
 import { useContext } from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
 import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
@@ -14,7 +15,6 @@ import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
 import { Link } from "../../../../components/core/typography/Link";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   onPress: (municipality: Municipality) => void;

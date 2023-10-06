@@ -5,7 +5,12 @@
  */
 import * as React from "react";
 import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
-import { IconProps } from "react-native-vector-icons/Icon";
+import {
+  IOColors,
+  IOIcons,
+  IOPictograms,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   HEADER_ANIMATION_DURATION,
   HEADER_HEIGHT
@@ -14,14 +19,13 @@ import ScreenHeader from "../ScreenHeader";
 import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
-import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 
 type Props = Readonly<{
   title?: string;
-  icon?: ImageSourcePropType;
-  iconFont?: IconProps;
+  rasterIcon?: ImageSourcePropType;
+  icon?: IOIcons;
+  pictogram?: IOPictograms;
   subtitle?: string;
   subtitleLink?: JSX.Element;
   dark?: boolean;
@@ -88,8 +92,9 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
       subtitle,
       subtitleLink,
       dark,
+      rasterIcon,
       icon,
-      iconFont,
+      pictogram,
       title,
       rightComponent
     } = this.props;
@@ -116,8 +121,9 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
                 {title}
               </H1>
             }
+            rasterIcon={rasterIcon}
             icon={icon}
-            iconFont={iconFont}
+            pictogram={pictogram}
             dark={dark}
             rightComponent={rightComponent}
           />

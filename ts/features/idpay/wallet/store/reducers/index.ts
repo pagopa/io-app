@@ -17,7 +17,7 @@ import {
   idpayInitiativesInstrumentEnroll
 } from "../actions";
 
-export type IDPayWalletState = {
+export type IdPayWalletState = {
   initiatives: pot.Pot<WalletDTO, NetworkError>;
   initiativesWithInstrument: pot.Pot<
     InitiativesWithInstrumentDTO,
@@ -29,16 +29,16 @@ export type IDPayWalletState = {
   // we have a response from BE
 };
 
-const INITIAL_STATE: IDPayWalletState = {
+const INITIAL_STATE: IdPayWalletState = {
   initiatives: pot.none,
   initiativesWithInstrument: pot.none,
   initiativesAwaitingStatusUpdate: {}
 };
 
 const reducer = (
-  state: IDPayWalletState = INITIAL_STATE,
+  state: IdPayWalletState = INITIAL_STATE,
   action: Action
-): IDPayWalletState => {
+): IdPayWalletState => {
   switch (action.type) {
     case getType(idPayWalletGet.request):
       return { ...state, initiatives: pot.toLoading(state.initiatives) };
@@ -69,11 +69,17 @@ const reducer = (
         };
       }
 
+      if (!pot.isError(state.initiativesWithInstrument)) {
+        return {
+          ...state,
+          initiativesWithInstrument: pot.toLoading(
+            state.initiativesWithInstrument
+          )
+        };
+      }
       return {
         ...state,
-        initiativesWithInstrument: pot.toLoading(
-          state.initiativesWithInstrument
-        )
+        initiativesWithInstrument: state.initiativesWithInstrument
       };
     case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(
@@ -188,7 +194,7 @@ export const idPayInitiativeFromInstrumentPotSelector = (
     case true:
       return pot.someLoading(isItemActive);
     case false:
-      return pot.someUpdating(isItemActive, !isItemActive);
+      return pot.someLoading(isItemActive);
     default:
       return pot.none;
   }

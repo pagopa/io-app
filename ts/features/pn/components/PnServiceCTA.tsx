@@ -3,6 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ActivityIndicator } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
@@ -10,7 +11,6 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { AppDispatch } from "../../../App";
 import { pnActivationUpsert } from "../store/actions";
 import { pnActivationSelector } from "../store/reducers/activation";
@@ -22,9 +22,7 @@ import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,
   trackPNServiceStartActivation,
-  trackPNServiceStartDeactivation,
-  trackPNServiceStatusChangeError,
-  trackPNServiceStatusChangeSuccess
+  trackPNServiceStartDeactivation
 } from "../analytics";
 
 type Props = {
@@ -115,10 +113,8 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     const isError = pot.isError(serviceActivation);
     if (wasUpdating && !isStillUpdating) {
       if (isError) {
-        trackPNServiceStatusChangeError(isServiceActive);
         showToast(I18n.t("features.pn.service.toast.error"), "danger");
       } else {
-        trackPNServiceStatusChangeSuccess(isServiceActive);
         dispatch(loadServicePreference.request(serviceId));
         if (pot.toUndefined(serviceActivation)) {
           showToast(I18n.t("features.pn.service.toast.activated"), "success");

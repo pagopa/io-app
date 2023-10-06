@@ -1,46 +1,45 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
-import { Alert, ImageSourcePropType, View } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Alert, View } from "react-native";
+import {
+  ButtonLink,
+  Divider,
+  IOThemeContext,
+  Icon,
+  IconButton,
+  ListItemAction,
+  ListItemInfo,
+  ListItemInfoCopy,
+  ListItemNav,
+  ListItemNavAlert,
+  ListItemTransaction,
+  ListItemTransactionLogo,
+  ListItemTransactionStatusWithBadge,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import ListItemComponent from "../../../components/screens/ListItemComponent";
-import CategoryCheckbox from "../../bonus/cgn/components/merchants/search/CategoryCheckbox";
 import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
-
-/* Icons */
-import BooksIcon from "../../../../img/bonus/cgn/categories/books.svg";
-import CultureIcon from "../../../../img/bonus/cgn/categories/culture.svg";
 
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
-import {
-  OperationTypeEnum,
-  StatusEnum
-} from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import ButtonLink from "../../../components/ui/ButtonLink";
-import IconButton from "../../../components/ui/IconButton";
-import ListItemNav from "../../../components/ui/ListItemNav";
-import ListItemNavAlert from "../../../components/ui/ListItemNavAlert";
-import ListItemInfoCopy from "../../../components/ui/ListItemInfoCopy";
-import ListItemAction from "../../../components/ui/ListItemAction";
-import ListItemInfo from "../../../components/ui/ListItemInfo";
-import { ListItemIDP } from "../../../components/ui/ListItemIDP";
-import { ListItemTransaction } from "../../../components/ui/ListItemTransaction";
+import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
+};
+
+const onCopyButtonPress = () => {
+  Alert.alert("Copied!", "Value copied");
 };
 
 export const DSListItems = () => (
@@ -82,15 +81,6 @@ export const DSListItems = () => (
           ListItemAction
         </H2>
         {renderListItemAction()}
-
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16, marginTop: 16 }}
-        >
-          ListItemIDP
-        </H2>
-        {renderListItemIDP()}
 
         <H2
           color={theme["textHeading-default"]}
@@ -199,22 +189,6 @@ export const DSListItems = () => (
         >
           Derivated from ListItem (NativeBase)
         </H2>
-        <DSComponentViewerBox name="CategoryCheckbox">
-          <CategoryCheckbox
-            text={"Title"}
-            value={"Value"}
-            checked={true}
-            onPress={() => alert("Action triggered")}
-            icon={BooksIcon}
-          />
-          <CategoryCheckbox
-            text={"Title"}
-            value={"Value"}
-            checked={false}
-            onPress={() => alert("Action triggered")}
-            icon={CultureIcon}
-          />
-        </DSComponentViewerBox>
         <DSComponentViewerBox name="OrderOption">
           <OrderOption
             text={"Checked"}
@@ -269,22 +243,7 @@ export const DSListItems = () => (
             accessibilityLabel={"Accessibility Label"}
           />
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="TimelineTransactionCard">
-          <TimelineOperationListItem
-            operation={{
-              brand: "MASTERCARD",
-              operationId: "213123",
-              operationType: "Pagamento Pos" as OperationTypeEnum,
-              operationDate: new Date(),
-              brandLogo: "",
-              maskedPan: "****",
-              amount: 100,
-              accrued: 50,
-              circuitType: "MasterCard",
-              status: StatusEnum.AUTHORIZED
-            }}
-          />
-        </DSComponentViewerBox>
+
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -332,43 +291,36 @@ const renderListItemNav = () => (
       <View>
         <ListItemNav
           value={"Value"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNav
           value={"Value"}
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNav
           value="A looong looooong looooooooong looooooooooong title"
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
-
+        <Divider />
         <ListItemNav
           value={"Value"}
           icon="gallery"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNav
           value={"Value"}
           description="Description"
           icon="gallery"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
       </View>
@@ -377,34 +329,29 @@ const renderListItemNav = () => (
       <View>
         <ListItemNavAlert
           value={"Value"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNavAlert
           value={"Value"}
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNavAlert
           withoutIcon
           value={"Value"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
         <ListItemNavAlert
           withoutIcon
           value={"Value"}
           description="Description"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
       </View>
@@ -418,35 +365,30 @@ const renderListItemInfoCopy = () => (
       <ListItemInfoCopy
         label={"Label"}
         value="Value"
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
       />
+      <Divider />
       <ListItemInfoCopy
         label={"Codice fiscale"}
         value="01199250158"
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
         icon="institution"
       />
+      <Divider />
       <ListItemInfoCopy
         label={"Carta di credito"}
         value="4975 3013 5042 7899"
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
         icon="creditCard"
       />
+      <Divider />
       <ListItemInfoCopy
         label={"Indirizzo"}
         value={`P.za Colonna, 370\n00186 Roma (RM)`}
-        onPress={() => {
-          alert("Value copied");
-        }}
+        onPress={onCopyButtonPress}
         accessibilityLabel="Empty just for testing purposes"
       />
     </View>
@@ -524,11 +466,13 @@ const renderListItemInfo = () => (
         value={"Value"}
         accessibilityLabel="Empty just for testing purposes"
       />
+      <Divider />
       <ListItemInfo
         label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
       />
+      <Divider />
       <ListItemInfo
         icon="creditCard"
         label="Label"
@@ -542,6 +486,7 @@ const renderListItemInfo = () => (
           />
         }
       />
+      <Divider />
       <ListItemInfo
         icon="psp"
         label="Label"
@@ -555,7 +500,7 @@ const renderListItemInfo = () => (
           />
         }
       />
-
+      <Divider />
       <ListItemInfo
         label="Label"
         value={"Value"}
@@ -566,144 +511,141 @@ const renderListItemInfo = () => (
   </DSComponentViewerBox>
 );
 
-const mockIDPProviderItem = {
-  id: "posteid",
-  name: "Poste ID",
-  logo: "",
-  localLogo: require("../../../../img/spid-idp-posteid.png"),
-  profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
+/* LIST ITEM TRANSACTION */
+
+/* Mock assets */
+const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
+const organizationLogoURI = {
+  imageSource: `${cdnPath}82003830161.png`,
+  name: "Comune di Milano"
 };
 
-const renderListItemIDP = () => (
-  <>
-    <DSComponentViewerBox name="ListItemIDP, default variant">
-      <View>
-        <ListItemIDP
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemIDP, saved variant">
-      <View>
-        <ListItemIDP
-          saved
-          name={mockIDPProviderItem.name}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="ListItemIDP, default variant, stress test">
-      <View>
-        <ListItemIDP
-          name={"This is a very loooooong IDP provider name"}
-          logo={mockIDPProviderItem.logo as ImageSourcePropType}
-          localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
-          testID={`idp-${mockIDPProviderItem.id}-button`}
-        />
-      </View>
-    </DSComponentViewerBox>
-  </>
+type mockTransactionStatusData = {
+  status: ListItemTransactionStatusWithBadge;
+  asset: ListItemTransactionLogo;
+};
+
+const transactionStatusArray: Array<mockTransactionStatusData> = [
+  {
+    status: "failure",
+    asset: "amex"
+  },
+  {
+    status: "pending",
+    asset: { uri: organizationLogoURI.imageSource }
+  },
+  {
+    status: "cancelled",
+    asset: "unionPay"
+  },
+  {
+    status: "reversal",
+    asset: "applePay"
+  }
+];
+
+const renderListItemTransaction = () => (
+  <DSComponentViewerBox name="ListItemTransaction">
+    <View>
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        isLoading={true}
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      {transactionStatusArray.map(
+        ({ status, asset }: mockTransactionStatusData) => (
+          <React.Fragment key={`transactionStatus-${status}`}>
+            <ListItemTransaction
+              title="Title"
+              subtitle="subtitle"
+              paymentLogoIcon={asset}
+              transactionStatus={status}
+              badgeText={getBadgeTextByTransactionStatus(status)}
+              onPress={onButtonPress}
+            />
+            <Divider />
+          </React.Fragment>
+        )
+      )}
+
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        paymentLogoIcon={"mastercard"}
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Title"
+        subtitle="subtitle"
+        transactionStatus="success"
+        transactionAmount="€ 1.000,00"
+        hasChevronRight={true}
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="This one is not clickable"
+        subtitle="subtitle"
+        transactionStatus="failure"
+        badgeText={getBadgeTextByTransactionStatus("failure")}
+        paymentLogoIcon={"postepay"}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="This one is clickable but has a very long title"
+        subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
+        transactionAmount="€ 1.000,00"
+        paymentLogoIcon={"postepay"}
+        onPress={onButtonPress}
+        transactionStatus="success"
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Custom icon"
+        subtitle="This one has a custom icon on the left"
+        transactionStatus="success"
+        paymentLogoIcon={<Icon name="notice" color="red" />}
+        transactionAmount=""
+        onPress={onButtonPress}
+      />
+
+      <Divider />
+
+      <ListItemTransaction
+        title="Refunded transaction"
+        subtitle="This one has a custom icon and transaction amount with a green color"
+        transactionStatus="refunded"
+        paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
+        transactionAmount="€ 100"
+        onPress={onButtonPress}
+      />
+    </View>
+  </DSComponentViewerBox>
 );
-
-const renderListItemTransaction = () => {
-  const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
-  const organizationLogoURI = {
-    imageSource: `${cdnPath}82003830161.png`,
-    name: "Comune di Milano"
-  };
-  return (
-    <DSComponentViewerBox name="ListItemTransaction">
-      <View>
-        <ListItemTransaction
-          title="TITLE"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          isLoading={true}
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="TITLE"
-          subtitle="subtitle"
-          paymentLogoIcon={"amex"}
-          transactionStatus="failure"
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="TITLE"
-          subtitle="subtitle"
-          paymentLogoIcon={{ uri: organizationLogoURI.imageSource }}
-          transactionStatus="pending"
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="TITLE"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="TITLE"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          paymentLogoIcon={"mastercard"}
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="TITLE"
-          subtitle="subtitle"
-          transactionStatus="success"
-          transactionAmount="€ 1.000,00"
-          hasChevronRight={true}
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="This one is not clickable"
-          subtitle="subtitle"
-          transactionStatus="failure"
-          paymentLogoIcon={"postepay"}
-        />
-        <ListItemTransaction
-          title="This one is clickable but has a very long title"
-          subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
-          transactionAmount="€ 1.000,00"
-          paymentLogoIcon={"postepay"}
-          onPress={onButtonPress}
-          transactionStatus="success"
-        />
-        <ListItemTransaction
-          title="Custom icon"
-          subtitle="This one has a custom icon on the left"
-          transactionStatus="success"
-          paymentLogoIcon={<Icon name="notice" color="red" />}
-          transactionAmount=""
-          onPress={onButtonPress}
-        />
-        <ListItemTransaction
-          title="Refunded transaction"
-          subtitle="This one has a custom icon and transaction amount with a green color"
-          transactionStatus="refunded"
-          paymentLogoIcon={<Icon name="refund" color="bluegrey" />}
-          transactionAmount="€ 100"
-          onPress={onButtonPress}
-        />
-      </View>
-    </DSComponentViewerBox>
-  );
-};

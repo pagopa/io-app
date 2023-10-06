@@ -18,13 +18,12 @@ import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/acti
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
-import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
-import { IDPayActions } from "../../features/idpay/common/actions";
+import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
@@ -92,7 +91,6 @@ export type Action =
   | AbiActions
   | BPayActions
   | CoBadgeActions
-  | SatispayActions
   | PayPalOnboardingActions
   | CrossSessionsActions
   | CgnActions
@@ -104,7 +102,7 @@ export type Action =
   | PnActions
   | StartupActions
   | FciActions
-  | IDPayActions
+  | IdPayActions
   | LollipopActions
   | FastLoginActions
   | WhatsNewActions

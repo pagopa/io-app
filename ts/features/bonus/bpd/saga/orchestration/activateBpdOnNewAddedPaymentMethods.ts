@@ -6,7 +6,6 @@ import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendSt
 import { PaymentMethod } from "../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
-import { navigateToSuggestBpdActivation } from "../../../../wallet/onboarding/bancomat/navigation/action";
 import { isBpdEnabled } from "./onboarding/startOnboarding";
 
 /**
@@ -37,9 +36,6 @@ export function* activateBpdOnNewPaymentMethods(
     if (isBpdEnabledResponse.right && bpdRemoteConfig?.program_active) {
       // navigate to activate cashback on new payment methods if the user is onboarded to the program and is active
       yield* call(navigateToActivateNewMethods);
-    } else if (bpdRemoteConfig?.enroll_bpd_after_add_payment_method) {
-      // navigate to "ask if you want to start bpd onboarding"
-      yield* call(navigateToSuggestBpdActivation);
     }
   }
 }

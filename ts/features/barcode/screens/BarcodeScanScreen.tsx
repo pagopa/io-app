@@ -4,10 +4,8 @@ import { View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
-import { Divider } from "../../../components/core/Divider";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import ListItemNav from "../../../components/ui/ListItemNav";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import {
@@ -41,7 +39,10 @@ const BarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
-  const handleBarcodeSuccess = (barcode: IOBarcode) => {
+  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+    // TODO: handle multiple barcodes (IOBP-170)
+    const barcode = barcodes[0];
+
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
     switch (barcode.type) {

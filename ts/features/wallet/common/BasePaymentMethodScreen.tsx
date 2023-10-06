@@ -1,29 +1,38 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { GestureResponderEvent, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  GestureResponderEvent,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import {
+  IOColors,
+  VSpacer,
+  IOSpacingScale,
+  ListItemAction
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useIOToast } from "../../../components/Toast";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOSpacingScale } from "../../../components/core/variables/IOSpacing";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import ListItemAction from "../../../components/ui/ListItemAction";
 import I18n from "../../../i18n";
 import { deleteWalletRequest } from "../../../store/actions/wallet/wallets";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getWalletsById } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useRemovePaymentMethodBottomSheet } from "../component/RemovePaymentMethod";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 
 type Props = {
   paymentMethod: PaymentMethod;
   card: React.ReactNode;
   content: React.ReactNode;
+  headerTitle?: string;
 };
 
 // ----------------------------- component -----------------------------------
@@ -36,6 +45,8 @@ const BasePaymentMethodScreen = (props: Props) => {
   const hasErrorDelete = pot.isError(useIOSelector(getWalletsById));
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
   const dispatch = useIODispatch();
+  const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
+  const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
 
   const navigation = useNavigation();
   const toast = useIOToast();
@@ -54,23 +65,36 @@ const BasePaymentMethodScreen = (props: Props) => {
       })
     );
 
-  const { present, removePaymentMethodBottomSheet } =
-    useRemovePaymentMethodBottomSheet(
-      {
-        icon: paymentMethod.icon,
-        caption: paymentMethod.caption
-      },
-      () => {
-        deleteWallet(paymentMethod.idWallet);
-        setIsLoadingDelete(true);
-      }
-    );
-
   React.useEffect(() => {
     if (hasErrorDelete) {
       setIsLoadingDelete(false);
     }
   }, [hasErrorDelete]);
+
+  const onDeleteMethod = () => {
+    // Create a native Alert to confirm or cancel the delete action
+    Alert.alert(
+      I18n.t("wallet.newRemove.title"),
+      I18n.t("wallet.newRemove.body"),
+      [
+        {
+          text:
+            Platform.OS === "ios"
+              ? I18n.t(`wallet.delete.ios.confirm`)
+              : I18n.t(`wallet.delete.android.confirm`),
+          style: "destructive",
+          onPress: () => {
+            deleteWallet(paymentMethod.idWallet);
+          }
+        },
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "default"
+        }
+      ],
+      { cancelable: false }
+    );
+  };
 
   if (isLoadingDelete) {
     return (
@@ -84,27 +108,25 @@ const BasePaymentMethodScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.creditCard.details.header")}
+      headerTitle={props.headerTitle ?? ""}
       faqCategories={["wallet_methods"]}
       goBack={true}
       titleColor="white"
       dark={true}
-      headerBackgroundColor={IOColors["blueIO-600"]}
+      headerBackgroundColor={blueHeaderColor}
     >
       <FocusAwareStatusBar barStyle="light-content" />
       <ScrollView>
-        <View style={styles.blueHeader}>
+        <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
           <View style={styles.cardContainer}>{card}</View>
         </View>
         <VSpacer size={24} />
         <View style={IOStyles.horizontalContentPadding}>
-          <VSpacer size={16} />
           {content}
           <VSpacer size={24} />
-          <DeleteButton onPress={present} />
+          <DeleteButton onPress={onDeleteMethod} />
         </View>
         <VSpacer size={40} />
-        {removePaymentMethodBottomSheet}
       </ScrollView>
     </BaseScreenComponent>
   );
@@ -128,14 +150,17 @@ const DeleteButton = ({
 
 // ----------------------------- styles -----------------------------------
 
+const cardContainerHorizontalSpacing: IOSpacingScale = 16;
+
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingHorizontal: IOSpacingScale[4],
+    paddingHorizontal: cardContainerHorizontalSpacing,
     alignItems: "center",
-    marginBottom: "-15%"
+    marginBottom: "-15%",
+    aspectRatio: 1.7,
+    width: "100%"
   },
   blueHeader: {
-    backgroundColor: IOColors["blueIO-600"],
     paddingTop: "75%",
     marginTop: "-75%",
     marginBottom: "15%"

@@ -3,13 +3,12 @@ import * as O from "fp-ts/lib/Option";
 import { ListItem } from "native-base";
 import * as React from "react";
 import { View, Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import I18n from "../../../../../i18n";
-import { useImageResize } from "../screens/hooks/useImageResize";
+import { useImageResize } from "../hooks/useImageResize";
 
 type Props = {
   // TODO: change bank in info and use a generic type

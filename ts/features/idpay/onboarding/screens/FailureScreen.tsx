@@ -1,17 +1,17 @@
-import { Text as NBButtonText } from "native-base";
 import React from "react";
 import { useSelector } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { View, SafeAreaView, StyleSheet } from "react-native";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import {
+  VSpacer,
   IOPictograms,
-  Pictogram
-} from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+  Pictogram,
+  ButtonSolid,
+  ButtonOutline,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { OnboardingFailureEnum } from "../xstate/failure";
@@ -21,10 +21,12 @@ import { Body } from "../../../../components/core/typography/Body";
 
 const failurePictures: Record<OnboardingFailureEnum, IOPictograms> = {
   [OnboardingFailureEnum.GENERIC]: "umbrella",
+  [OnboardingFailureEnum.UNEXPECTED]: "umbrella",
   [OnboardingFailureEnum.NOT_STARTED]: "hourglass",
   [OnboardingFailureEnum.ENDED]: "timeout",
   [OnboardingFailureEnum.NO_BUDGET]: "timeout",
   [OnboardingFailureEnum.SUSPENDED]: "timeout",
+  [OnboardingFailureEnum.SESSION_EXPIRED]: "timeout",
   [OnboardingFailureEnum.NO_REQUIREMENTS]: "error",
   [OnboardingFailureEnum.ON_EVALUATION]: "hourglass",
   [OnboardingFailureEnum.NOT_ELIGIBLE]: "error",
@@ -54,25 +56,24 @@ const FailureScreen = () => {
   const renderCloseButton = () => {
     if (isAlreadyOnboarded) {
       return (
-        <ButtonDefaultOpacity
-          block={true}
+        <ButtonSolid
+          label={I18n.t("idpay.onboarding.failure.button.goToInitiative")}
+          accessibilityLabel={I18n.t(
+            "idpay.onboarding.failure.button.goToInitiative"
+          )}
           onPress={handleNavigateToInitiativePress}
-        >
-          <NBButtonText>
-            {I18n.t("idpay.onboarding.failure.button.goToInitiative")}
-          </NBButtonText>
-        </ButtonDefaultOpacity>
+          fullWidth={true}
+        />
       );
     }
 
     return (
-      <ButtonDefaultOpacity
-        block={true}
-        bordered={true}
+      <ButtonOutline
+        label={I18n.t("global.buttons.close")}
+        accessibilityLabel={I18n.t("global.buttons.close")}
         onPress={handleClosePress}
-      >
-        <NBButtonText>{I18n.t("global.buttons.close")}</NBButtonText>
-      </ButtonDefaultOpacity>
+        fullWidth={true}
+      />
     );
   };
 
@@ -82,11 +83,19 @@ const FailureScreen = () => {
         <Pictogram name={failurePictures[failure]} size={80} />
         <VSpacer size={16} />
         <H3 style={styles.title}>
-          {I18n.t(`idpay.onboarding.failure.message.${failure}.title`)}
+          {I18n.t(`idpay.onboarding.failure.message.${failure}.title`, {
+            defaultValue: I18n.t(
+              "idpay.onboarding.failure.message.GENERIC.title"
+            )
+          })}
         </H3>
         <VSpacer size={16} />
         <Body style={{ textAlign: "center" }}>
-          {I18n.t(`idpay.onboarding.failure.message.${failure}.subtitle`)}
+          {I18n.t(`idpay.onboarding.failure.message.${failure}.subtitle`, {
+            defaultValue: I18n.t(
+              "idpay.onboarding.failure.message.GENERIC.subtitle"
+            )
+          })}
         </Body>
       </View>
       <View style={styles.buttonContainer}>{renderCloseButton()}</View>
@@ -102,8 +111,6 @@ const styles = StyleSheet.create({
     padding: 56
   },
   buttonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
     padding: themeVariables.contentPadding
   },
   title: {

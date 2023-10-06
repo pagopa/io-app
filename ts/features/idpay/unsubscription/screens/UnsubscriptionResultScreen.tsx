@@ -1,15 +1,15 @@
 import { useSelector } from "@xstate/react";
-import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
+  ButtonOutline,
+  VSpacer,
   IOPictograms,
-  Pictogram
-} from "../../../../components/core/pictograms";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+  Pictogram,
+  Body,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ButtonOutline from "../../../../components/ui/ButtonOutline";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
@@ -51,7 +51,7 @@ const UnsubscriptionResultScreen = () => {
           <VSpacer size={16} />
           <H3>{title}</H3>
           <VSpacer size={16} />
-          <NBText style={styles.body}>{content}</NBText>
+          <Body style={{ textAlign: "center" }}>{content}</Body>
         </View>
         <ButtonOutline
           color="primary"
@@ -74,9 +74,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: themeVariables.contentPadding
-  },
-  body: {
-    textAlign: "center"
   }
 });
 

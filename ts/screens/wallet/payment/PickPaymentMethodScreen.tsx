@@ -9,6 +9,7 @@ import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -49,8 +50,7 @@ import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
-  paypalListSelector,
-  satispayListVisibleInWalletSelector
+  paypalListSelector
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import {
@@ -60,7 +60,6 @@ import {
 } from "../../../utils/paymentMethodCapabilities";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
@@ -219,7 +218,6 @@ const mapStateToProps = (state: GlobalState) => {
   const potVisibleBPay = bancomatPayConfigSelector(state).payment
     ? bPayListVisibleInWalletSelector(state)
     : pot.none;
-  const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const psps = state.wallet.payment.pspsV2.psps;
   const pspV2 = pspV2ListSelector(state);
   const isLoading =
@@ -231,8 +229,7 @@ const mapStateToProps = (state: GlobalState) => {
     potVisibleCreditCard,
     potVisiblePaypal,
     potVisibleBancomat,
-    potVisibleBPay,
-    potVisibleSatispay
+    potVisibleBPay
   ].reduce(
     (
       acc: ReadonlyArray<PaymentMethod>,

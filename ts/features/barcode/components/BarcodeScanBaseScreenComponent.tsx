@@ -1,12 +1,11 @@
+import { IOColors, IconButton } from "@pagopa/io-app-design-system";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import IconButton from "../../../components/ui/IconButton";
 import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
@@ -14,8 +13,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
-import { useIOBarcodeScanner } from "../hooks/useIOBarcodeScanner";
+import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
+import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
@@ -34,7 +33,7 @@ type Props = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
@@ -61,16 +60,19 @@ const BarcodeScanBaseScreenComponent = ({
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
-  } = useIOBarcodeScanner({
-    onBarcodeSuccess,
+    openCameraSettings,
+    hasTorch,
+    isTorchOn,
+    toggleTorch
+  } = useIOBarcodeCameraScanner({
+    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
     disabled: !isFocused
   });
 
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileReader({
+  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess,
@@ -158,9 +160,19 @@ const BarcodeScanBaseScreenComponent = ({
         >
           {/* FIXME: replace with new header */}
           <BaseHeader
+            dark={true}
             backgroundColor={"transparent"}
             goBack={true}
             customGoBack={customGoBack}
+            customRightIcon={
+              hasTorch
+                ? {
+                    iconName: isTorchOn ? "lightFilled" : "light",
+                    accessibilityLabel: "torch",
+                    onPress: toggleTorch
+                  }
+                : undefined
+            }
           />
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar

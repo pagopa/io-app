@@ -1,12 +1,11 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
-import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 
 type Props = {

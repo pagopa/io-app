@@ -3,10 +3,7 @@ import {
   interpolate,
   useAnimatedStyle
 } from "react-native-reanimated";
-import {
-  IOScaleValues,
-  IOSpringValues
-} from "../../../core/variables/IOAnimations";
+import { IOScaleValues, IOSpringValues } from "@pagopa/io-app-design-system";
 import { useSpringPressProgressValue } from "./useSpringPressProgressValue";
 
 export const useSpringPressScaleAnimation = (

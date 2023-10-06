@@ -3,12 +3,9 @@ import { useState } from "react";
 import { View, Platform, StyleSheet } from "react-native";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { Label } from "../../../../components/core/typography/Label";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../../components/core/variables/IOColors";
 import {
   bpdApiSitUrlPrefix,
   bpdApiUatUrlPrefix,

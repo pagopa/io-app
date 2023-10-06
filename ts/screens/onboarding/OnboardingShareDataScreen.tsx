@@ -2,9 +2,9 @@ import * as React from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -18,7 +18,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
-import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

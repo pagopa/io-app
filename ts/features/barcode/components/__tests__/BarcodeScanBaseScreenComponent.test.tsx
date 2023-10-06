@@ -7,26 +7,29 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 
-jest.mock("../../hooks/useIOBarcodeScanner", () => ({
-  useIOBarcodeScanner: jest.fn()
+jest.mock("../../hooks/useIOBarcodeCameraScanner", () => ({
+  useIOBarcodeCameraScanner: jest.fn()
 }));
 
-import {
-  IOBarcodeScanner,
-  useIOBarcodeScanner
-} from "../../hooks/useIOBarcodeScanner";
-import { BarcodeScanBaseScreenComponent } from "../BarcodeScanBaseScreenComponent";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import {
+  IOBarcodeCameraScanner,
+  useIOBarcodeCameraScanner
+} from "../../hooks/useIOBarcodeCameraScanner";
+import { BarcodeScanBaseScreenComponent } from "../BarcodeScanBaseScreenComponent";
 
 const mockCameraComponent = <View testID="cameraComponentTestID" />;
 
-(useIOBarcodeScanner as jest.Mock).mockImplementation(
-  (): IOBarcodeScanner => ({
+(useIOBarcodeCameraScanner as jest.Mock).mockImplementation(
+  (): IOBarcodeCameraScanner => ({
     cameraComponent: mockCameraComponent,
     cameraPermissionStatus: "authorized",
     requestCameraPermission: jest.fn(),
-    openCameraSettings: jest.fn()
+    openCameraSettings: jest.fn(),
+    hasTorch: false,
+    isTorchOn: false,
+    toggleTorch: () => null
   })
 );
 
@@ -51,12 +54,15 @@ describe("Test BarcodeScanBaseScreenComponent", () => {
     const mockRequestCameraPermission = jest.fn();
     const mockOpenCameraSettings = jest.fn();
 
-    (useIOBarcodeScanner as jest.Mock).mockImplementationOnce(
-      (): IOBarcodeScanner => ({
+    (useIOBarcodeCameraScanner as jest.Mock).mockImplementationOnce(
+      (): IOBarcodeCameraScanner => ({
         cameraComponent: <View testID="cameraComponentTestID" />,
         cameraPermissionStatus: "not-determined",
         requestCameraPermission: mockRequestCameraPermission,
-        openCameraSettings: mockOpenCameraSettings
+        openCameraSettings: mockOpenCameraSettings,
+        hasTorch: false,
+        isTorchOn: false,
+        toggleTorch: () => null
       })
     );
 
@@ -88,12 +94,15 @@ describe("Test BarcodeScanBaseScreenComponent", () => {
     const mockRequestCameraPermission = jest.fn();
     const mockOpenCameraSettings = jest.fn();
 
-    (useIOBarcodeScanner as jest.Mock).mockImplementationOnce(
-      (): IOBarcodeScanner => ({
+    (useIOBarcodeCameraScanner as jest.Mock).mockImplementationOnce(
+      (): IOBarcodeCameraScanner => ({
         cameraComponent: <View testID="cameraComponentTestID" />,
         cameraPermissionStatus: "restricted",
         requestCameraPermission: mockRequestCameraPermission,
-        openCameraSettings: mockOpenCameraSettings
+        openCameraSettings: mockOpenCameraSettings,
+        hasTorch: false,
+        isTorchOn: false,
+        toggleTorch: () => null
       })
     );
 
