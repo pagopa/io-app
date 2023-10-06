@@ -3453,7 +3453,6 @@ idpay:
               action: Configura
           yourOperations: Le tue Operazioni
           yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
-          yourOperationsLink: Come si fa?
           settings:
             showMore: Vedi tutte
             header: Impostazioni
