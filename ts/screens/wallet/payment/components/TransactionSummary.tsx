@@ -9,11 +9,10 @@ import {
   Divider,
   IOColors,
   IOIcons,
-  Icon,
+  IconButton,
   ListItemInfo,
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";
 import customVariables from "../../../../theme/variables";
@@ -44,20 +43,6 @@ const LoadingPlaceholder = (props: { size: "full" | "half" }) => (
     animate={"shine"}
     color={IOColors.greyLight}
   />
-);
-
-const InfoButton = (props: { onPress: () => void }) => (
-  <TouchableDefaultOpacity
-    onPress={props.onPress}
-    style={{ padding: 10 }}
-    accessible={true}
-    accessibilityLabel={I18n.t(
-      "wallet.firstTransactionSummary.amountInfo.title"
-    )}
-    accessibilityRole={"button"}
-  >
-    <Icon name="info" size={24} color="blue" />
-  </TouchableDefaultOpacity>
 );
 
 type RowProps = Readonly<{
@@ -149,7 +134,13 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
     if (props.isPaid && !isLoading) {
       return <Badge text={I18n.t("messages.badge.paid")} variant="success" />;
     } else if (!props.isPaid && !isLoading) {
-      return <InfoButton onPress={presentPaymentInfoBottomSheet} />;
+      return (
+        <IconButton
+          icon="info"
+          accessibilityLabel="info"
+          onPress={presentPaymentInfoBottomSheet}
+        />
+      );
     }
     return null;
   };
