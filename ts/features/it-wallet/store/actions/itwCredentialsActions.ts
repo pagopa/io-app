@@ -4,6 +4,7 @@ import { PidData } from "@pagopa/io-react-native-cie-pid";
 import * as O from "fp-ts/lib/Option";
 import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { CredentialCatalogItem } from "./../../utils/mocks";
 
 /**
  * Action which requests a PID issuing.
@@ -33,9 +34,19 @@ export const itwCredentialsAddPid = createAsyncAction(
 )<O.Option<PidResponse>, PidResponse, ItWalletError>();
 
 /**
+ * Action to check if the citizen can add a credential to the wallet.
+ */
+export const itwCredentialsChecks = createAsyncAction(
+  "ITW_CREDENTIALS_CHECKS_REQUEST",
+  "ITW_CREDENTIALS_CHECKS_SUCCESS",
+  "ITW_CREDENTIALS_CHECKS_FAILURE"
+)<CredentialCatalogItem, void, ItWalletError>();
+
+/**
  * Type for credentials related actions.
  */
 export type ItwCredentialsActions =
   | ActionType<typeof itwPid>
   | ActionType<typeof itwCredentialsAddPid>
-  | ActionType<typeof itwDecodePid>;
+  | ActionType<typeof itwDecodePid>
+  | ActionType<typeof itwCredentialsChecks>;

@@ -3439,6 +3439,13 @@ features:
       credentialsCatalogScreen:
         title: "Aggiungi altri documenti"
         incomingFeature: "In arrivo"
+      credentialsChecksScreen:
+        loading:
+          title: "Stiamo facendo alcune verifiche di sicurezza"
+        success:
+          title: Stai aggiungendo {{credentialName}} al Portafoglio
+        toast: 
+          cancel: "Tessera non aggiunta al Portafoglio."
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3512,6 +3519,10 @@ features:
       rp: "Relying Party"
       trusted: "Trusted"
       search: "Cerca"
+      alert:
+        title: "Vuoi interrompere l’operazione?"
+        confirm: "Sì, interrompi"
+        cancel: "No, vai indietro"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
