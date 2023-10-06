@@ -1,8 +1,8 @@
 import {
   WalletInstanceAttestation,
+  WalletProviderEntityConfiguration,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
-import { walletProviderUrl } from "../../../config";
 import { getOrGenerateCyptoKey } from "./keychain";
 
 /**
@@ -15,11 +15,13 @@ export const ITW_WIA_KEY_TAG = "ITW_WIA_CRYTPO";
  * It generates a new key pair and uses it to sign the attestation request.
  * @returns the WIA attestation
  */
-export const getWia = async () => {
+export const getWia = async (
+  entityConfiguration: WalletProviderEntityConfiguration
+) => {
   await getOrGenerateCyptoKey(ITW_WIA_KEY_TAG);
   const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
   const issuingAttestation = WalletInstanceAttestation.getAttestation({
     wiaCryptoContext
   });
-  return await issuingAttestation(walletProviderUrl);
+  return await issuingAttestation(entityConfiguration);
 };

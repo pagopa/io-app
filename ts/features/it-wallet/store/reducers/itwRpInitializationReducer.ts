@@ -1,8 +1,8 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { RpEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/rp/types";
 import { RequestObjectConf } from "@pagopa/io-react-native-wallet/lib/typescript/rp";
+import { RelyingPartyEntityConfiguration } from "@pagopa/io-react-native-wallet";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -10,7 +10,7 @@ import { itwRpInitialization } from "../actions/itwRpActions";
 
 export type ItwRpInitializationType = {
   requestObject: O.Option<RequestObjectConf>;
-  entity: O.Option<RpEntityConfiguration>;
+  entity: O.Option<RelyingPartyEntityConfiguration>;
 };
 
 export type ItwRpInitializationState = pot.Pot<

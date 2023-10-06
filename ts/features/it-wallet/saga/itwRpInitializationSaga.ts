@@ -3,7 +3,8 @@ import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import {
   RelyingPartySolution,
-  createCryptoContextFor
+  createCryptoContextFor,
+  getRelyingPartyEntityConfiguration
 } from "@pagopa/io-react-native-wallet";
 import { itwRpInitialization } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
@@ -28,10 +29,7 @@ export function* handleItwRpInitializationSaga(
     const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
 
     // Get entity configuration for RP
-    const entity = yield* call(
-      RelyingPartySolution.getEntityConfiguration(),
-      clientId
-    );
+    const entity = yield* call(getRelyingPartyEntityConfiguration, clientId);
 
     // Get request object configuration
     const requestObject = yield* call(
