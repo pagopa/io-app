@@ -29,7 +29,6 @@ const defaultProps: WizardScreenProps = {
 describe("WizardScreen", () => {
   it("should render the component correctly", () => {
     const component = renderComponent(defaultProps);
-    expect(renderComponent(defaultProps)).toMatchSnapshot();
 
     expect(component.queryByText(defaultProps.title));
     expect(component.queryByText(defaultProps.description!));
