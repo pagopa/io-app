@@ -8,8 +8,8 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { WizardScreen, WizardScreenProps } from "../WizardScreen";
 
 const defaultProps: WizardScreenProps = {
-  title: "title",
-  description: "description",
+  title: "This is a title",
+  description: "This is a description",
   pictogram: "abacus",
   primaryButton: {
     label: "primaryButton",
@@ -27,8 +27,14 @@ const defaultProps: WizardScreenProps = {
 };
 
 describe("WizardScreen", () => {
-  it("should match the snapshot with default props", () => {
+  it("should render the component correctly", () => {
+    const component = renderComponent(defaultProps);
     expect(renderComponent(defaultProps)).toMatchSnapshot();
+
+    expect(component.queryByText(defaultProps.title));
+    expect(component.queryByText(defaultProps.description!));
+    expect(component.queryByTestId("primaryButtonTestId"));
+    expect(component.queryByTestId("actionButtonTestId"));
   });
 });
 
