@@ -63,6 +63,7 @@ const WizardScreen = ({
               onPress={actionButton.onPress}
             />
           </View>
+          <VSpacer size={16} />
         </>
       )}
     </ContentWrapper>
