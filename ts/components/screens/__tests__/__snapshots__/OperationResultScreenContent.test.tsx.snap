@@ -625,6 +625,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                         "overflow": "hidden",
                                                       },
                                                       false,
+                                                      false,
                                                       Object {
                                                         "height": 40,
                                                       },
