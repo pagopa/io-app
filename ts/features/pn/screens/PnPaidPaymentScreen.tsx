@@ -11,6 +11,7 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { PnParamsList } from "../navigation/params";
 import customVariables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 
 const styles = StyleSheet.create({
   container: {
