@@ -7,19 +7,21 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import {
   ButtonSolid,
   ContentWrapper,
   IOToast
 } from "@pagopa/io-app-design-system";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useIOSelector } from "../../../store/hooks";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
-  isError,
+  isError as isRemoteError,
   isLoading as isRemoteLoading,
   isUndefined
 } from "../../../features/bonus/bpd/model/RemoteValue";
@@ -28,14 +30,12 @@ import {
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentTransactionErrorScreen,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
-import { Dispatch } from "../../../store/actions/types";
 import {
   PaymentStartOrigin,
   abortRunningPayment,
@@ -53,7 +53,6 @@ import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
   withPaymentFeatureSelector
@@ -160,53 +159,120 @@ const renderFooter = (
   );
 };
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_TRANSACTION_SUMMARY"
->;
+// eslint-disable-next-line complexity,sonarjs/cognitive-complexity
+const TransactionSummaryScreen = (): React.ReactElement => {
+  const route =
+    useRoute<RouteProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">>();
+  const navigation = useNavigation();
+  const { rptId, paymentStartOrigin, initialAmount, messageId } = route.params;
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
+  const dispatch = useDispatch();
+  const {
+    verifica: paymentVerification,
+    attiva,
+    paymentId,
+    check,
+    pspsV2
+  } = useIOSelector(state => state.wallet.payment);
 
-const TransactionSummaryScreen = ({
-  isLoading,
-  error,
-  paymentVerification,
-  verifyPayment,
-  onDuplicatedPayment,
-  navigateToPaymentTransactionError,
-  walletById,
-  loadWallets,
-  navigation,
-  route,
-  continueWithPayment,
-  maybeFavoriteWallet,
-  hasPayableMethods,
-  paymentId,
-  backToEntrypointPayment,
-  resetPayment,
-  startAssistanceRequest
-}: Props): React.ReactElement => {
+  const error: TransactionSummaryError = pot.isError(paymentVerification)
+    ? O.some(paymentVerification.error)
+    : pot.isError(attiva)
+    ? O.some(attiva.error)
+    : pot.isError(paymentId)
+    ? O.some(paymentId.error)
+    : pot.isError(check) || isRemoteError(pspsV2.psps)
+    ? O.some(undefined)
+    : O.none;
+
+  const { walletById } = useIOSelector(state => state.wallet.wallets);
+
+  const isPaypalEnabled = useIOSelector(isPaypalEnabledSelector);
+  const { payment: isBPayPaymentEnabled } = useIOSelector(
+    bancomatPayConfigSelector
+  );
+  const favouriteWallet = pot.toUndefined(useIOSelector(getFavoriteWallet));
+  /**
+   * the favourite will be undefined if one of these condition is true
+   * - payment method is PayPal & the relative feature flag is not enabled
+   * - payment method is BPay & the relative feature flag is not enabled
+   */
+  const maybeFavoriteWallet = pipe(
+    favouriteWallet,
+    O.fromNullable,
+    O.filter(fw => {
+      switch (fw.paymentMethod?.kind) {
+        case "PayPal":
+          return isPaypalEnabled;
+        case "BPay":
+          return isBPayPaymentEnabled;
+        default:
+          return true;
+      }
+    })
+  );
+
+  const hasPayableMethods =
+    useIOSelector(withPaymentFeatureSelector).length > 0;
+
+  const isLoading =
+    pot.isLoading(walletById) ||
+    pot.isLoading(paymentVerification) ||
+    pot.isLoading(attiva) ||
+    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    pot.isLoading(paymentId) ||
+    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
+    pot.isLoading(check) ||
+    (O.isSome(maybeFavoriteWallet) &&
+      O.isNone(error) &&
+      pot.isSome(check) &&
+      isUndefined(pspsV2.psps)) ||
+    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(pspsV2.psps));
+
   useOnFirstRender(() => {
     if (pot.isNone(paymentVerification)) {
       verifyPayment();
     }
     if (!pot.isSome(walletById)) {
-      loadWallets();
+      dispatch(fetchWalletsRequestWithExpBackoff());
     }
   });
+
+  const onCancel = useCallback(() => {
+    dispatch(abortRunningPayment());
+  }, [dispatch]);
+
+  const navigateToPaymentTransactionError = useCallback(
+    (error: TransactionSummaryError) =>
+      navigateToPaymentTransactionErrorScreen({
+        error,
+        onCancel,
+        rptId
+      }),
+    [onCancel, rptId]
+  );
+
+  const onDuplicatedPayment = useCallback(
+    () =>
+      dispatch(
+        paymentCompletedSuccess({
+          rptId,
+          kind: "DUPLICATED"
+        })
+      ),
+    [dispatch, rptId]
+  );
 
   // We show inline error status only if the payment starts
   // from a message and the verification fails. In all the other
   // cases we present the fullscreen error message.
-  const paymentStartOrigin = route.params.paymentStartOrigin;
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = O.toUndefined(error);
   const isError = O.isSome(error);
 
   const isPaid = isDuplicatedPayment(error);
+
   useEffect(() => {
     if (!isError) {
       return;
@@ -249,7 +315,7 @@ const TransactionSummaryScreen = ({
         },
         buttonIndex => {
           if (buttonIndex === 0) {
-            backToEntrypointPayment();
+            dispatch(backToEntrypointPayment());
             resetPayment();
             IOToast.success(
               I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess")
@@ -262,170 +328,13 @@ const TransactionSummaryScreen = ({
     }
   };
 
-  const rptId = route.params.rptId;
-  const messageId = route.params.messageId;
-
-  const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
-    rptId.paymentNoticeNumber
-  );
-
-  /**
-   * try to show the fiscal code coming from the 'verification' API
-   * otherwise (it could be an issue with the API) use the rptID coming from
-   * static data (e.g. message, qrcode, manual insertion, etc.)
-   */
-  const organizationFiscalCode = pipe(
-    pot.toOption(paymentVerification),
-    O.chainNullableK(
-      _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
-    ),
-    O.getOrElse(() => rptId.organizationFiscalCode)
-  );
-
-  return (
-    <BaseScreenComponent
-      backButtonTestID={"back-button-transaction-summary"}
-      goBack={goBack}
-      contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        {showsInlineError && <TransactionSummaryStatus error={error} />}
-        <ScrollView style={styles.container}>
-          <TransactionSummary
-            paymentVerification={paymentVerification}
-            paymentNoticeNumber={paymentNoticeNumber}
-            organizationFiscalCode={organizationFiscalCode}
-            isPaid={isPaid}
-          />
-          {showsInlineError && pot.isError(paymentVerification) && (
-            <TransactionSummaryErrorDetails
-              error={error}
-              paymentNoticeNumber={paymentNoticeNumber}
-              organizationFiscalCode={organizationFiscalCode}
-              messageId={messageId}
-            />
-          )}
-        </ScrollView>
-        <ContentWrapper>
-          {renderFooter(
-            isLoading,
-            error,
-            () =>
-              continueWithPayment(
-                paymentVerification,
-                maybeFavoriteWallet,
-                hasPayableMethods
-              ),
-            () => startAssistanceRequest(error, messageId)
-          )}
-        </ContentWrapper>
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
-
-// eslint-disable-next-line complexity,sonarjs/cognitive-complexity
-const mapStateToProps = (state: GlobalState) => {
-  const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
-
-  const error: TransactionSummaryError = pot.isError(verifica)
-    ? O.some(verifica.error)
-    : pot.isError(attiva)
-    ? O.some(attiva.error)
-    : pot.isError(paymentId)
-    ? O.some(paymentId.error)
-    : pot.isError(check) || isError(pspsV2.psps)
-    ? O.some(undefined)
-    : O.none;
-
-  const walletById = state.wallet.wallets.walletById;
-
-  const isPaypalEnabled = isPaypalEnabledSelector(state);
-  const isBPayPaymentEnabled = bancomatPayConfigSelector(state).payment;
-  const favouriteWallet = pot.toUndefined(getFavoriteWallet(state));
-  /**
-   * the favourite will be undefined if one of these condition is true
-   * - payment method is PayPal & the relative feature flag is not enabled
-   * - payment method is BPay & the relative feature flag is not enabled
-   */
-  const maybeFavoriteWallet = pipe(
-    favouriteWallet,
-    O.fromNullable,
-    O.filter(fw => {
-      switch (fw.paymentMethod?.kind) {
-        case "PayPal":
-          return isPaypalEnabled;
-        case "BPay":
-          return isBPayPaymentEnabled;
-        default:
-          return true;
-      }
-    })
-  );
-
-  const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
-
-  const isLoading =
-    pot.isLoading(walletById) ||
-    pot.isLoading(verifica) ||
-    pot.isLoading(attiva) ||
-    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
-    pot.isLoading(paymentId) ||
-    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
-    pot.isLoading(check) ||
-    (O.isSome(maybeFavoriteWallet) &&
-      O.isNone(error) &&
-      pot.isSome(check) &&
-      isUndefined(pspsV2.psps)) ||
-    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(pspsV2.psps));
-
-  return {
-    paymentVerification: verifica,
-    isLoading,
-    error,
-    walletById,
-    maybeFavoriteWallet,
-    hasPayableMethods,
-    paymentId
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.route.params.rptId;
-  const paymentStartOrigin = props.route.params.paymentStartOrigin;
-  const initialAmount = props.route.params.initialAmount;
-
   const verifyPayment = () =>
     dispatch(
       paymentVerifica.request({ rptId, startOrigin: paymentStartOrigin })
     );
 
-  const onDuplicatedPayment = () =>
-    dispatch(
-      paymentCompletedSuccess({
-        rptId,
-        kind: "DUPLICATED"
-      })
-    );
-
-  const onCancel = () => {
-    dispatch(abortRunningPayment());
-  };
-
-  const navigateToPaymentTransactionError = (error: TransactionSummaryError) =>
-    navigateToPaymentTransactionErrorScreen({
-      error,
-      onCancel,
-      rptId
-    });
-
   const startOrResumePayment = (
-    paymentVerification: PaymentRequestsGetResponse,
-    maybeFavoriteWallet: ReturnType<
-      typeof mapStateToProps
-    >["maybeFavoriteWallet"],
-    hasPayableMethods: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
+    paymentVerification: PaymentRequestsGetResponse
   ) =>
     dispatch(
       runStartOrResumePaymentActivationSaga({
@@ -455,24 +364,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       })
     );
 
-  const continueWithPayment = (
-    paymentVerification: ReturnType<
-      typeof mapStateToProps
-    >["paymentVerification"],
-    maybeFavoriteWallet: ReturnType<
-      typeof mapStateToProps
-    >["maybeFavoriteWallet"],
-    hasPayableMethods: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
-  ) => {
+  const continueWithPayment = () => {
     if (!pot.isSome(paymentVerification)) {
       return;
     }
     if (hasPayableMethods) {
-      startOrResumePayment(
-        paymentVerification.value,
-        maybeFavoriteWallet,
-        hasPayableMethods
-      );
+      startOrResumePayment(paymentVerification.value);
       return;
     }
     alertNoPayablePaymentMethods(() =>
@@ -524,19 +421,59 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
   };
 
-  return {
-    loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
-    verifyPayment,
-    onDuplicatedPayment,
-    navigateToPaymentTransactionError,
-    continueWithPayment,
-    resetPayment,
-    backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
-    startAssistanceRequest
-  };
+  const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
+    rptId.paymentNoticeNumber
+  );
+
+  /**
+   * try to show the fiscal code coming from the 'verification' API
+   * otherwise (it could be an issue with the API) use the rptID coming from
+   * static data (e.g. message, qrcode, manual insertion, etc.)
+   */
+  const organizationFiscalCode = pipe(
+    pot.toOption(paymentVerification),
+    O.chainNullableK(
+      _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+    ),
+    O.getOrElse(() => rptId.organizationFiscalCode)
+  );
+
+  return (
+    <BaseScreenComponent
+      backButtonTestID={"back-button-transaction-summary"}
+      goBack={goBack}
+      contextualHelp={emptyContextualHelp}
+      headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        {showsInlineError && <TransactionSummaryStatus error={error} />}
+        <ScrollView style={styles.container}>
+          <TransactionSummary
+            paymentVerification={paymentVerification}
+            paymentNoticeNumber={paymentNoticeNumber}
+            organizationFiscalCode={organizationFiscalCode}
+            isPaid={isPaid}
+          />
+          {showsInlineError && pot.isError(paymentVerification) && (
+            <TransactionSummaryErrorDetails
+              error={error}
+              paymentNoticeNumber={paymentNoticeNumber}
+              organizationFiscalCode={organizationFiscalCode}
+              messageId={messageId}
+            />
+          )}
+        </ScrollView>
+        <ContentWrapper>
+          {renderFooter(
+            isLoading,
+            error,
+            () => continueWithPayment(),
+            () => startAssistanceRequest(error, messageId)
+          )}
+        </ContentWrapper>
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TransactionSummaryScreen);
+export default TransactionSummaryScreen;
