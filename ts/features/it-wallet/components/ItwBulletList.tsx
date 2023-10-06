@@ -15,6 +15,10 @@ export type BulletItem = {
 
 const BULLET_ITEM = "\u2022";
 
+/**
+ * A component to render a list of bullet items
+ * @param data the list of bullet items should be the list of credentials request by the issuer
+ */
 const ItwBulletList = ({ data }: Props) => (
   <View
     style={{

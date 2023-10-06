@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import I18n from "../../../i18n";
 
 /**
  * A hook that returns a function to present the abort wallet activation flow bottom sheet
@@ -10,25 +11,35 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 export const useItwDataProcessing = () => {
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
-      <H6>{"Perché è necessario?"}</H6>
+      <H6>
+        {I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.firstHeaderTitle"
+        )}
+      </H6>
       <VSpacer size={8} />
       <Body>
-        {
-          "Per ottenere il rilascio della tessera L’ente autorizzato ad emettere questa tessera ha bisogno di leggere i tuoi dati per verificarne l’identità."
-        }
+        {I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.firstBodyContent"
+        )}
       </Body>
       <VSpacer size={24} />
-      <H6>{"Sicurezza del trattamento"}</H6>
+      <H6>
+        {I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.secondHeaderTitle"
+        )}
+      </H6>
       <VSpacer size={8} />
       <Body>
-        {
-          "App IO consente la condivisione dei tuoi dati solo con enti verificati e iscritti alle liste che ne garantiscono l’affidabilità."
-        }
+        {I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.secondBodyContent"
+        )}
       </Body>
     </View>
   );
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
-    title: "Trattamento dei dati",
+    title: I18n.t(
+      "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.title"
+    ),
     component: <BottomSheetBody />,
     snapPoint: [350]
   });
