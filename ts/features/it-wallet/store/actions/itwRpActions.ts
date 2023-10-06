@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { RpEntityConfiguration } from "@pagopa/io-react-native-wallet/lib/typescript/rp/types";
 import { RequestObjectConf } from "@pagopa/io-react-native-wallet/lib/typescript/rp";
+import { RelyingPartyEntityConfiguration } from "@pagopa/io-react-native-wallet";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 
 /**
@@ -12,7 +12,7 @@ export const itwRpInitialization = createAsyncAction(
   "ITW_RP_INITIALIZATION_FAILURE"
 )<
   { authReqUrl: string; clientId: string },
-  { requestObject: RequestObjectConf; entity: RpEntityConfiguration },
+  { requestObject: RequestObjectConf; entity: RelyingPartyEntityConfiguration },
   ItWalletError
 >();
 
