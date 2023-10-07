@@ -1,6 +1,6 @@
-import { Body, H6, IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Body, H6, IOColors } from "@pagopa/io-app-design-system";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 
@@ -13,20 +13,21 @@ export type BulletItem = {
   data: ReadonlyArray<string>;
 };
 
+const styles = StyleSheet.create({
+  container: {
+    padding: 24,
+    backgroundColor: IOColors.greyUltraLight,
+    borderRadius: 8
+  }
+});
 const BULLET_ITEM = "\u2022";
 
 /**
  * A component to render a list of bullet items
- * @param data the list of bullet items should be the list of credentials request by the issuer
+ * @param data - the list of bullet items
  */
 const ItwBulletList = ({ data }: Props) => (
-  <View
-    style={{
-      padding: 24,
-      backgroundColor: IOColors.greyUltraLight,
-      borderRadius: 8
-    }}
-  >
+  <View style={styles.container}>
     {pipe(
       data,
       RA.mapWithIndex((index, section) => (

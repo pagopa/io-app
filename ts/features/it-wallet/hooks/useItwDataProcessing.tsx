@@ -6,7 +6,8 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 
 /**
- * A hook that returns a function to present the abort wallet activation flow bottom sheet
+ * A hook that returns a function to present an info bottom sheet
+ * related to the data processing of the credentials issuing
  */
 export const useItwDataProcessing = () => {
   const BottomSheetBody = () => (
