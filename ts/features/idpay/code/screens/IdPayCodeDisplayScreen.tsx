@@ -10,7 +10,6 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
@@ -27,7 +26,11 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
-import { idPayCodeSelector } from "../store/selectors";
+import {
+  idPayCodeSelector,
+  isIdPayCodeFailureSelector,
+  isIdPayCodeLoadingSelector
+} from "../store/selectors";
 
 type IdPayCodeDisplayRouteParams = {
   isOnboarding?: boolean;
@@ -44,14 +47,12 @@ const IdPayCodeDisplayScreen = () => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
+  const isGeneratingCode = useIOSelector(isIdPayCodeLoadingSelector);
+  const isFailure = useIOSelector(isIdPayCodeFailureSelector);
+  const idPayCode = useIOSelector(idPayCodeSelector);
+
   const { bottomSheet, present: presentCieBottomSheet } =
     useIdPayInfoCieBottomSheet();
-
-  const idPayCodePot = useIOSelector(idPayCodeSelector);
-
-  const isGeneratingCode = pot.isLoading(idPayCodePot);
-  const isFailure = pot.isError(idPayCodePot);
-  const idPayCode = pot.getOrElse(idPayCodePot, "");
 
   React.useEffect(() => {
     if (isFailure) {
@@ -112,6 +113,7 @@ const IdPayCodeDisplayScreen = () => {
             label={buttonLabel}
             fullWidth={true}
             onPress={handleContinue}
+            testID="actionButtonTestID"
           />
         </SafeAreaView>
       </LoadingSpinnerOverlay>
@@ -120,16 +122,16 @@ const IdPayCodeDisplayScreen = () => {
   );
 };
 
-const CodeDigitDisplayBox = ({ digit }: { digit: string }) => (
-  <View style={styles.codeDigit}>
-    <H3>{digit}</H3>
-  </View>
-);
-
 const CodeDisplayComponent = ({ code }: { code: string }) => (
   <View style={styles.codeDisplay}>
     {[...code].map((digit, index) => (
-      <CodeDigitDisplayBox key={index} digit={digit} />
+      <View
+        key={index}
+        style={styles.codeDigit}
+        testID={`idPayCodeDigit${index}TestID`}
+      >
+        <H3>{digit}</H3>
+      </View>
     ))}
   </View>
 );
