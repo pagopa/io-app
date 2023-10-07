@@ -2,6 +2,7 @@ import {
   Body,
   ButtonLink,
   ButtonSolid,
+  ButtonSolidProps,
   ContentWrapper,
   H3,
   IOPictograms,
@@ -14,17 +15,18 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import TopScreenComponent from "./TopScreenComponent";
 
-export type WizardButtonProps = {
-  text: string;
-  onPress: () => void;
-};
-
 export type WizardScreenProps = {
   title: string;
   description?: string;
   pictogram: IOPictograms;
-  primaryButton: WizardButtonProps;
-  actionButton?: WizardButtonProps;
+  primaryButton: Pick<
+    ButtonSolidProps,
+    "label" | "accessibilityLabel" | "onPress" | "testID"
+  >;
+  actionButton?: Pick<
+    ButtonLink,
+    "label" | "accessibilityLabel" | "onPress" | "testID"
+  >;
   goBack?: () => void;
 };
 
@@ -48,20 +50,12 @@ const WizardScreen = ({
       />
     </TopScreenComponent>
     <ContentWrapper>
-      <ButtonSolid
-        label={primaryButton.text}
-        accessibilityLabel={primaryButton.text}
-        onPress={primaryButton.onPress}
-        fullWidth
-      />
+      <ButtonSolid {...primaryButton} fullWidth={true} />
       {actionButton && (
         <>
           <VSpacer size={24} />
           <View style={[IOStyles.alignCenter, IOStyles.selfCenter]}>
-            <ButtonLink
-              label={actionButton.text}
-              onPress={actionButton.onPress}
-            />
+            <ButtonLink {...actionButton} />
           </View>
           <VSpacer size={16} />
         </>
