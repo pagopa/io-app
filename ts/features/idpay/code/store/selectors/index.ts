@@ -6,7 +6,7 @@ import { idpayDiscountInitiativeInstrumentsSelector } from "../../../configurati
 import { InstrumentTypeEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { idpayInitiativeIdSelector } from "../../../details/store";
 
-export const idPayCodeStateSelector = (state: GlobalState): IdPayCodeState =>
+const idPayCodeStateSelector = (state: GlobalState): IdPayCodeState =>
   state.features.idPay.code;
 
 export const isIdPayCodeOnboardedSelector = createSelector(
@@ -14,20 +14,34 @@ export const isIdPayCodeOnboardedSelector = createSelector(
   state => pot.getOrElse(state.isOnboarded, false)
 );
 
-export const idPayCodeEnrollmentRequestSelector = createSelector(
+export const isIdPayCodeFailureSelector = createSelector(
   idPayCodeStateSelector,
-  state => state.enrollmentRequest
+  state => pot.isError(state.code)
 );
 
-export const idPayCodeSelector = createSelector(
+export const isIdPayCodeLoadingSelector = createSelector(
   idPayCodeStateSelector,
-  state => state.code
+  state => pot.isLoading(state.code)
 );
 
-export const isIdPayInitiativeBannerClosedSelector = (state: GlobalState) =>
+export const idPayCodeSelector = createSelector(idPayCodeStateSelector, state =>
+  pot.getOrElse(state.code, "")
+);
+
+export const isIdPayCodeEnrollmentRequestLoadingSelector = createSelector(
+  idPayCodeStateSelector,
+  state => pot.isLoading(state.enrollmentRequest)
+);
+
+export const isIdPayCodeEnrollmentRequestFailureSelector = createSelector(
+  idPayCodeStateSelector,
+  state => pot.isError(state.enrollmentRequest)
+);
+
+const isIdPayInitiativeBannerClosedSelector = (state: GlobalState) =>
   state.features.idPay.code.isIdPayInitiativeBannerClosed;
 
-export const hasIdPayCodeInstrument = createSelector(
+const hasIdPayCodeInstrument = createSelector(
   idpayDiscountInitiativeInstrumentsSelector,
   instruments =>
     instruments.some(
