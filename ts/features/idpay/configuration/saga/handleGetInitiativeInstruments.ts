@@ -21,7 +21,7 @@ export function* handleGetInitiativeInstruments(
   getInitiativePaymentMethods: IDPayClient["getInstrumentList"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idpayInitiativeInstrumentsGet["request"]>
+  action: ActionType<(typeof idpayInitiativeInstrumentsGet)["request"]>
 ) {
   const getInitiativeDetailsRequest = getInitiativePaymentMethods({
     bearerAuth: bearerToken,

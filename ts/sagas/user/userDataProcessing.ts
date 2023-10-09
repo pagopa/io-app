@@ -22,7 +22,7 @@ export function* loadUserDataProcessingSaga(
   getUserDataProcessingRequest: ReturnType<
     typeof BackendClient
   >["getUserDataProcessingRequest"],
-  action: ActionType<typeof loadUserDataProcessing["request"]>
+  action: ActionType<(typeof loadUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
   try {
@@ -61,7 +61,7 @@ export function* upsertUserDataProcessingSaga(
   postUserDataProcessingRequest: ReturnType<
     typeof BackendClient
   >["postUserDataProcessingRequest"],
-  action: ActionType<typeof upsertUserDataProcessing["request"]>
+  action: ActionType<(typeof upsertUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
   try {
@@ -93,7 +93,7 @@ export function* deleteUserDataProcessingSaga(
   deleteUserDataProcessingRequest: ReturnType<
     typeof BackendClient
   >["deleteUserDataProcessingRequest"],
-  action: ActionType<typeof deleteUserDataProcessing["request"]>
+  action: ActionType<(typeof deleteUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
 

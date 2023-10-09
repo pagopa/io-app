@@ -10,7 +10,7 @@ import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../types/utils";
 import { handleResponse } from "./utils";
 
-type LocalActionType = ActionType<typeof loadMessageById["request"]>;
+type LocalActionType = ActionType<(typeof loadMessageById)["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];
 
 export function* watchLoadMessageById(getMessage: LocalBeClient): SagaIterator {

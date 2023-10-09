@@ -66,17 +66,18 @@ const delay = 100 as Millisecond;
  * @param props
  * @constructor
  */
-export const LoadingErrorComponent: React.FunctionComponent<LoadingErrorProps> =
-  props => {
-    useEffect(() => {
-      setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
-    }, [props.isLoading]);
+export const LoadingErrorComponent: React.FunctionComponent<
+  LoadingErrorProps
+> = props => {
+  useEffect(() => {
+    setAccessibilityFocus(props.isLoading ? loadingRef : errorRef, delay);
+  }, [props.isLoading]);
 
-    return (
-      <SafeAreaView style={IOStyles.flex} testID={props.testID}>
-        {props.isLoading
-          ? renderLoading(props.loadingCaption, props.loadingSubtitle)
-          : renderError(props)}
-      </SafeAreaView>
-    );
-  };
+  return (
+    <SafeAreaView style={IOStyles.flex} testID={props.testID}>
+      {props.isLoading
+        ? renderLoading(props.loadingCaption, props.loadingSubtitle)
+        : renderError(props)}
+    </SafeAreaView>
+  );
+};

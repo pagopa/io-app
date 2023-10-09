@@ -83,9 +83,9 @@ import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryE
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 
 export type TransactionSummaryErrorContent = PayloadForAction<
-  | typeof paymentVerifica["failure"]
-  | typeof paymentAttiva["failure"]
-  | typeof paymentIdPolling["failure"]
+  | (typeof paymentVerifica)["failure"]
+  | (typeof paymentAttiva)["failure"]
+  | (typeof paymentIdPolling)["failure"]
 >;
 
 export type TransactionSummaryError = O.Option<TransactionSummaryErrorContent>;

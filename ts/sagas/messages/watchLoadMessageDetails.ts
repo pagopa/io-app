@@ -11,7 +11,7 @@ import { isTestEnv } from "../../utils/environment";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
-type LocalActionType = ActionType<typeof loadMessageDetails["request"]>;
+type LocalActionType = ActionType<(typeof loadMessageDetails)["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];
 
 export default function* watcher(

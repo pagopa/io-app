@@ -95,7 +95,7 @@ function* createOrUpdateProfileSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
   >["createOrUpdateProfile"],
-  action: ActionType<typeof profileUpsert["request"]>
+  action: ActionType<(typeof profileUpsert)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield* select(
@@ -238,7 +238,7 @@ const profileChangePredicates: ReadonlyArray<
 
 // execute a list of predicates to detect interesting scenario and execute action when profile changes
 function* handleProfileChangesSaga(
-  action: ActionType<typeof profileUpsert["success"]>
+  action: ActionType<(typeof profileUpsert)["success"]>
 ) {
   const { value, newValue } = action.payload;
 
