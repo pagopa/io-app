@@ -115,31 +115,42 @@ const NewOptInScreen = (props: Props) => {
       contextualHelpMarkdown={contextualHelpMarkdown}
     >
       <GradientScrollView
+        testID="container-test"
         primaryAction={
           <ButtonSolid
             fullWidth
             label={I18n.t("authentication.opt-in.button-accept-lv")}
-            accessibilityLabel={"Continua con l’accesso rapido"}
+            accessibilityLabel={"Click to continue with fast access"}
             onPress={navigateToIdpPage}
+            testID="accept-button-test"
           />
         }
         secondaryAction={
           <ButtonLink
             label={I18n.t("authentication.opt-in.button-decline-lv")}
+            accessibilityLabel={"Click to continue with classic access"}
             onPress={navigateToIdpPage}
+            testID="decline-button-test"
           />
         }
       >
         <ContentWrapper>
-          <View style={IOStyles.selfCenter}>
+          <View style={IOStyles.selfCenter} testID="pictogram-test">
             <Pictogram name="passcode" size={120} />
           </View>
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
-            <Badge text={I18n.t("authentication.opt-in.news")} variant="info" />
+            <Badge
+              text={I18n.t("authentication.opt-in.news")}
+              variant="info"
+              testID="badge-test"
+            />
           </View>
           <VSpacer size={24} />
-          <H3 style={{ textAlign: "center", alignItems: "center" }}>
+          <H3
+            style={{ textAlign: "center", alignItems: "center" }}
+            testID="title-test"
+          >
             {I18n.t("authentication.opt-in.title")}
           </H3>
           <VSpacer size={24} />
