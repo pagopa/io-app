@@ -65,8 +65,10 @@ export function* handleCredentialsAddPid(
 /**
  * This saga handles the required checks before adding a credential.
  * @param action the request dispatched action with a credential as payload.
- * action: ActionType<typeof itwCredentialsChecks.request>
  */
-export function* handleCredentialsChecks(): SagaIterator {
-  yield* put(itwCredentialsChecks.success());
+export function* handleCredentialsChecks(
+  action: ActionType<typeof itwCredentialsChecks.request>
+): SagaIterator {
+  // TODO: Implement the required checks. Currently it just returns the same credential as we are only handling a mocked credential.
+  yield* put(itwCredentialsChecks.success(action.payload));
 }
