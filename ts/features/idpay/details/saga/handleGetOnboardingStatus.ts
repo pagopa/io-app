@@ -20,7 +20,7 @@ export function* handleGetOnboardingStatus(
   onboardingStatus: IDPayClient["onboardingStatus"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idPayOnboardingStatusGet["request"]>
+  action: ActionType<(typeof idPayOnboardingStatusGet)["request"]>
 ) {
   const onboardingStatusRequest = onboardingStatus({
     bearerAuth: bearerToken,

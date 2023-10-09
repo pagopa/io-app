@@ -196,9 +196,9 @@ describe("TransactionErrorScreen", () => {
 const renderComponent = (
   error: Option<
     PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
+      | (typeof paymentVerifica)["failure"]
+      | (typeof paymentAttiva)["failure"]
+      | (typeof paymentIdPolling)["failure"]
     >
   >
 ) => {

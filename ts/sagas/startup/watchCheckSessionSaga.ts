@@ -74,7 +74,7 @@ export function* checkSession(
 }
 
 export function* checkSessionResult(
-  action: ReturnType<typeof checkCurrentSession["success"]>
+  action: ReturnType<(typeof checkCurrentSession)["success"]>
 ) {
   if (!action.payload.isSessionValid) {
     yield* call(handleSessionExpiredSaga);

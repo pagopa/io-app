@@ -17,7 +17,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 export function* handleGetQtspMetadata(
   getQtspClausesMetadata: FciClient["getQtspClausesMetadata"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciLoadQtspClauses["request"]>
+  action: ActionType<(typeof fciLoadQtspClauses)["request"]>
 ): SagaIterator {
   try {
     const issuerEnvironment = yield* select(fciIssuerEnvironmentSelector);
