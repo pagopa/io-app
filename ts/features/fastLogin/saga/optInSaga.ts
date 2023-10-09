@@ -2,7 +2,7 @@ import { select, take } from "typed-redux-saga/macro";
 import { setFastLoginOptIn } from "../store/actions/optInActions";
 import {
   isFastLoginFFEnabled,
-  isFastLoginOptinEnabledSelector
+  isFastLoginOptInEnabledSelector
 } from "../store/selectors";
 
 export function* checkFastLoginOptInSaga() {
@@ -13,7 +13,7 @@ export function* checkFastLoginOptInSaga() {
   }
 
   const fastLoginOptInPreferenceSet = yield* select(
-    isFastLoginOptinEnabledSelector
+    isFastLoginOptInEnabledSelector
   );
 
   if (fastLoginOptInPreferenceSet !== undefined) {
