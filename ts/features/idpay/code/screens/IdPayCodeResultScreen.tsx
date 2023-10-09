@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -11,24 +10,26 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idPayResetCode } from "../store/actions";
 import {
-  idPayCodeEnrollmentRequestSelector,
-  idPayCodeSelector
+  isIdPayCodeEnrollmentRequestFailureSelector,
+  isIdPayCodeEnrollmentRequestLoadingSelector,
+  isIdPayCodeFailureSelector
 } from "../store/selectors";
 
 const IdPayCodeResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
 
-  const enrollmentRequestPot = useIOSelector(
-    idPayCodeEnrollmentRequestSelector
+  const isCodeFailure = useIOSelector(isIdPayCodeFailureSelector);
+
+  const isEnrollmentFailure = useIOSelector(
+    isIdPayCodeEnrollmentRequestFailureSelector
   );
-  const idPayCodePot = useIOSelector(idPayCodeSelector);
 
-  const isCodeFailure = pot.isError(idPayCodePot);
-  const isEnrollmentFailure = pot.isError(enrollmentRequestPot);
+  const isEnrollmentLoading = useIOSelector(
+    isIdPayCodeEnrollmentRequestLoadingSelector
+  );
+
   const isFailure = isCodeFailure || isEnrollmentFailure;
-
-  const isLoading = pot.isLoading(enrollmentRequestPot);
 
   const handleClose = () => {
     dispatch(idPayResetCode());
@@ -64,7 +65,8 @@ const IdPayCodeResultScreen = () => {
         accessibilityLabel: I18n.t(
           "idpay.initiative.discountDetails.IDPayCode.successScreen.cta"
         ),
-        onPress: handleClose
+        onPress: handleClose,
+        testID: "actionButtonTestID"
       }}
       subtitle={I18n.t(
         "idpay.initiative.discountDetails.IDPayCode.successScreen.body"
@@ -73,7 +75,7 @@ const IdPayCodeResultScreen = () => {
   );
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+    <LoadingSpinnerOverlay isLoading={isEnrollmentLoading} loadingOpacity={1}>
       {screenContent}
     </LoadingSpinnerOverlay>
   );
