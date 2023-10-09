@@ -40,34 +40,35 @@ const fromMillisecondsToTimeRepresentation = (ms: Millisecond): string =>
   A countdown is displayed indicating how long it is to unlock the application.
 */
 
-export const IdentificationLockModal: React.FunctionComponent<Props> =
-  props => {
-    const minuteSeconds = pipe(
-      props.countdown,
-      O.fromNullable,
-      O.fold(
-        () => "0:00",
-        x => fromMillisecondsToTimeRepresentation(x)
-      )
-    );
+export const IdentificationLockModal: React.FunctionComponent<
+  Props
+> = props => {
+  const minuteSeconds = pipe(
+    props.countdown,
+    O.fromNullable,
+    O.fold(
+      () => "0:00",
+      x => fromMillisecondsToTimeRepresentation(x)
+    )
+  );
 
-    return (
-      <Modal>
-        <View style={styles.spaced}>
-          <View style={styles.imageContainer}>
-            <Image source={errorIcon} />
-          </View>
-          <VSpacer size={24} />
-          <H1>{wrongCodeText}</H1>
-          <VSpacer size={24} />
-          <View style={IOStyles.alignCenter}>
-            <H3>{tooManyAttemptsText}</H3>
-            <H3 weight="Bold">{waitMessageText}</H3>
-          </View>
-          <VSpacer size={24} />
-          <H1>{minuteSeconds}</H1>
-          <VSpacer size={24} />
+  return (
+    <Modal>
+      <View style={styles.spaced}>
+        <View style={styles.imageContainer}>
+          <Image source={errorIcon} />
         </View>
-      </Modal>
-    );
-  };
+        <VSpacer size={24} />
+        <H1>{wrongCodeText}</H1>
+        <VSpacer size={24} />
+        <View style={IOStyles.alignCenter}>
+          <H3>{tooManyAttemptsText}</H3>
+          <H3 weight="Bold">{waitMessageText}</H3>
+        </View>
+        <VSpacer size={24} />
+        <H1>{minuteSeconds}</H1>
+        <VSpacer size={24} />
+      </View>
+    </Modal>
+  );
+};

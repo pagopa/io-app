@@ -71,9 +71,9 @@ import { InfoAltScreenComponent } from "../../../components/InfoAltScreenCompone
 export type TransactionErrorScreenNavigationParams = {
   error: O.Option<
     PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
+      | (typeof paymentVerifica)["failure"]
+      | (typeof paymentAttiva)["failure"]
+      | (typeof paymentIdPolling)["failure"]
     >
   >;
   rptId: RptId;

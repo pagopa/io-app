@@ -21,7 +21,7 @@ export function* handleGetInitiativeDetails(
   getInitiativeDetails: IDPayClient["getWalletDetail"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idpayInitiativeGet["request"]>
+  action: ActionType<(typeof idpayInitiativeGet)["request"]>
 ) {
   const getInitiativeDetailsRequest = getInitiativeDetails({
     bearerAuth: bearerToken,
