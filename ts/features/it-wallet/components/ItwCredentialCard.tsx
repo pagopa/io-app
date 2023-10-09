@@ -35,7 +35,7 @@ const NAME_MARGIN_TOP = 320 * SCALE_FACTOR;
 
 const FISCAL_CODE_MARGIN_TOP = NAME_MARGIN_TOP + 65 * SCALE_FACTOR;
 
-const TITLE_MARGIN_TOP = 20;
+const TITLE_MARGIN_TOP = 50 * SCALE_FACTOR;
 
 const styles = StyleSheet.create({
   cardBackground: {
