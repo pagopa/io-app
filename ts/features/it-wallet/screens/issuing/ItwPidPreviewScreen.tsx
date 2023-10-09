@@ -11,7 +11,6 @@ import {
   FeatureInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import PidCredential from "../../components/PidCredential";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -32,6 +31,7 @@ import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
+import ItwCredentialCard from "../../components/ItwCredentialCard";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -81,7 +81,11 @@ const ItwPidPreviewScreen = () => {
         >
           <VSpacer />
           <View style={IOStyles.horizontalContentPadding}>
-            <PidCredential name={name} fiscalCode={fiscalCode} />
+            <ItwCredentialCard
+              name={name}
+              fiscalCode={fiscalCode}
+              backgroundImage={require("../../assets/img/pidCredentialCard.png")}
+            />
             <VSpacer />
             <FeatureInfo
               body={I18n.t(
