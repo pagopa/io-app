@@ -107,7 +107,7 @@ export const dispatchUpdatePspForWalletAndConfirm =
         wallet,
         idPayment,
         onSuccess: (
-          action: ActionType<typeof paymentUpdateWalletPsp["success"]>
+          action: ActionType<(typeof paymentUpdateWalletPsp)["success"]>
         ) => {
           if (psp !== undefined) {
             dispatch(pspSelectedForPaymentV2(psp));

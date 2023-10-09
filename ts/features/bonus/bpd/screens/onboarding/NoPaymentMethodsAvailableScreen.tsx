@@ -28,32 +28,33 @@ const loadLocales = () => ({
   body: I18n.t("bonus.bpd.onboarding.noPaymentMethod.body")
 });
 
-const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> =
-  props => {
-    const { headerTitle, skip, addMethod, title, body } = loadLocales();
-    return (
-      <BaseScreenComponent
-        goBack={false}
-        headerTitle={headerTitle}
-        contextualHelp={emptyContextualHelp}
-      >
-        <SafeAreaView style={IOStyles.flex}>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <VSpacer size={24} />
-            <H1>{title}</H1>
-            <VSpacer size={24} />
-            <Body>{body}</Body>
-          </View>
-          <FooterTwoButtons
-            onRight={props.addPaymentMethod}
-            onCancel={props.skip}
-            rightText={addMethod}
-            leftText={skip}
-          />
-        </SafeAreaView>
-      </BaseScreenComponent>
-    );
-  };
+const NoPaymentMethodsAvailableScreen: React.FunctionComponent<
+  Props
+> = props => {
+  const { headerTitle, skip, addMethod, title, body } = loadLocales();
+  return (
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+          <VSpacer size={24} />
+          <H1>{title}</H1>
+          <VSpacer size={24} />
+          <Body>{body}</Body>
+        </View>
+        <FooterTwoButtons
+          onRight={props.addPaymentMethod}
+          onCancel={props.skip}
+          rightText={addMethod}
+          leftText={skip}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (_: Dispatch) => ({
   skip: () => {
