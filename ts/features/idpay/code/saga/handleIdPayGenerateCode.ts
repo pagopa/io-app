@@ -13,7 +13,7 @@ import { idPayGenerateCode } from "../store/actions";
 export function* handleIdPayGenerateCode(
   generateCode: IDPayClient["generateCode"],
   bearerToken: string,
-  action: ActionType<typeof idPayGenerateCode["request"]>
+  action: ActionType<(typeof idPayGenerateCode)["request"]>
 ) {
   const idPayGenerateCodeRequest = generateCode({
     bearerAuth: bearerToken,

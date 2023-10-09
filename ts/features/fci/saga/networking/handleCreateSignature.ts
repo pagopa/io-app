@@ -27,7 +27,7 @@ export function* handleCreateSignature(
   apiUrl: string,
   bearerToken: SessionToken,
   keyInfo: KeyInfo = {},
-  action: ActionType<typeof fciSigningRequest["request"]>
+  action: ActionType<(typeof fciSigningRequest)["request"]>
 ): SagaIterator {
   try {
     const qtspFilledDocumentUrl = yield* select(
@@ -94,7 +94,7 @@ export function* handleCreateSignature(
       createSignatureRequest,
       action
     )) as unknown as SagaCallReturnType<
-      typeof fciLollipopclient["createSignature"]
+      (typeof fciLollipopclient)["createSignature"]
     >;
 
     if (E.isLeft(postSignatureResponse)) {

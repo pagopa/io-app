@@ -54,7 +54,7 @@ const successActions = monitoredActions.map(ma => ma[1]);
 
 export const failureActionTypes = () => failureActions.map(getType);
 export const successActionTypes = () => successActions.map(getType);
-export type FailureActions = typeof failureActions[number];
+export type FailureActions = (typeof failureActions)[number];
 
 export const backoffConfig = () => ({
   maxAttempts: 4,

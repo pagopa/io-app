@@ -105,7 +105,7 @@ describe("checkSessionResult", () => {
   });
   it("if session is invalid call session expired", () => {
     const sessionInvalidAction: ReturnType<
-      typeof checkCurrentSession["success"]
+      (typeof checkCurrentSession)["success"]
     > = {
       type: "CHECK_CURRENT_SESSION_SUCCESS",
       payload: {

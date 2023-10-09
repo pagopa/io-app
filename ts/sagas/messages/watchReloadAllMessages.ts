@@ -10,7 +10,7 @@ import { getError } from "../../utils/errors";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
-type LocalActionType = ActionType<typeof reloadAllMessagesAction["request"]>;
+type LocalActionType = ActionType<(typeof reloadAllMessagesAction)["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];
 
 export default function* watcher(

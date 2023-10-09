@@ -30,19 +30,18 @@ const addPaymentMethodButton = (onPress: () => void) => (
   />
 );
 
-export const OtherChannelInformation: React.FunctionComponent<Props> =
-  props => (
-    <View>
-      <VSpacer size={16} />
-      <Markdown>
-        {I18n.t(
-          "bonus.bpd.details.paymentMethods.activateOnOthersChannel.body"
-        )}
-      </Markdown>
-      <VSpacer size={32} />
-      {addPaymentMethodButton(props.onAddPayment)}
-    </View>
-  );
+export const OtherChannelInformation: React.FunctionComponent<
+  Props
+> = props => (
+  <View>
+    <VSpacer size={16} />
+    <Markdown>
+      {I18n.t("bonus.bpd.details.paymentMethods.activateOnOthersChannel.body")}
+    </Markdown>
+    <VSpacer size={32} />
+    {addPaymentMethodButton(props.onAddPayment)}
+  </View>
+);
 
 export const useOtherChannelInformationBottomSheet = () => {
   const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
