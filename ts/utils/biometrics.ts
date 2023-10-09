@@ -26,7 +26,7 @@ const biometricErrors = [
   "UNAVAILABLE"
 ] as const;
 
-export type BiometricsErrorType = typeof biometricErrors[number];
+export type BiometricsErrorType = (typeof biometricErrors)[number];
 
 export type BiometricsValidType =
   // happy path

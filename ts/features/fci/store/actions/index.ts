@@ -110,8 +110,9 @@ export const fciPollFilledDocument = createAsyncAction(
   "FCI_POLL_FILLED_DOCUMENT_CANCEL"
 )<void, { isReady: boolean }, NetworkError, void>();
 
-export const fciClearAllFiles =
-  createStandardAction("CLEAR_ALL_FILES")<{ path: string }>();
+export const fciClearAllFiles = createStandardAction("CLEAR_ALL_FILES")<{
+  path: string;
+}>();
 
 export const fciMetadataRequest = createAsyncAction(
   "FCI_METADATA_REQUEST",
