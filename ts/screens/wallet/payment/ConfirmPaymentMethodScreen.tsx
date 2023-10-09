@@ -606,7 +606,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
     },
     dispatchPaymentStart: (
-      payload: PayloadForAction<typeof paymentExecuteStart["request"]>
+      payload: PayloadForAction<(typeof paymentExecuteStart)["request"]>
     ) => dispatch(paymentExecuteStart.request(payload)),
     dispatchEndPaymentWebview: (
       reason: PaymentWebViewEndReason,

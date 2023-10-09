@@ -16,7 +16,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 export function* handleGetSignatureRequests(
   getSignatureRequests: FciClient["getSignatureRequests"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciSignaturesListRequest["request"]>
+  action: ActionType<(typeof fciSignaturesListRequest)["request"]>
 ): SagaIterator {
   try {
     const getSignatureRequestsCall = getSignatureRequests({
