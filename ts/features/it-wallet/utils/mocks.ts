@@ -42,10 +42,13 @@ export const FEDERATION_ENTITY = {
  * Credentials Catalog mocks.
  */
 
+export const CREDENTIAL_ISSUER = "eFarma";
+
 export type CredentialCatalogItem = {
   title: string;
   icon: IOIcons;
   incoming: boolean;
+  requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
 };
 
 export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
@@ -54,25 +57,29 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       "features.itWallet.verifiableCredentials.type.disabilityCard"
     ),
     icon: "disabilityCard",
-    incoming: false
+    incoming: false,
+    requestedClaims: (decodedPid: PidWithToken) =>
+      getRequestedClaims(decodedPid)
   },
   {
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
-    incoming: false
+    incoming: false,
+    requestedClaims: (decodedPid: PidWithToken) =>
+      getRequestedClaims(decodedPid)
   },
   {
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.drivingLicense"
     ),
     icon: "driverLicense",
-    incoming: true
+    incoming: true,
+    requestedClaims: (decodedPid: PidWithToken) =>
+      getRequestedClaims(decodedPid)
   }
 ];
 
-export const CREDENTIAL_ISSUER = "eFarma";
-
-export const getRequestedCredentials = (
+const getRequestedClaims = (
   decodedPid: PidWithToken
 ): ReadonlyArray<BulletItem> => [
   {

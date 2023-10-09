@@ -14,6 +14,8 @@ import {
 import { constVoid, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import interno from "../../../../../img/features/it-wallet/interno.png";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -27,8 +29,13 @@ import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import I18n from "../../../../i18n";
 import ItwBulletList from "../../components/ItwBulletList";
 import { useItwDataProcessing } from "../../hooks/useItwDataProcessing";
-import { CREDENTIAL_ISSUER, getRequestedCredentials } from "../../utils/mocks";
-import { ContentViewParams } from "./ItwPidDetails";
+import { CREDENTIAL_ISSUER, CredentialCatalogItem } from "../../utils/mocks";
+import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
+
+type ContentViewParams = {
+  decodedPid: PidWithToken;
+  credential: CredentialCatalogItem;
+};
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -37,8 +44,9 @@ import { ContentViewParams } from "./ItwPidDetails";
 const ItwCredentialIssuingInfoScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
 
-  const ContentView = ({ decodedPid }: ContentViewParams) => {
+  const ContentView = ({ decodedPid, credential }: ContentViewParams) => {
     const { present, bottomSheet } = useItwDataProcessing();
     return (
       <SafeAreaView style={IOStyles.flex}>
@@ -106,7 +114,7 @@ const ItwCredentialIssuingInfoScreen = () => {
           <VSpacer size={24} />
 
           {/* Render a list of claims that will be shared with the credential issuer */}
-          <ItwBulletList data={getRequestedCredentials(decodedPid)} />
+          <ItwBulletList data={credential.requestedClaims(decodedPid)} />
 
           {/* ItwFooterInfoBox should be replaced with a more ligth component */}
           <ItwFooterInfoBox
@@ -142,7 +150,7 @@ const ItwCredentialIssuingInfoScreen = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      decodedPid,
+      sequenceS(O.Applicative)({ decodedPid, credential }),
       O.fold(
         () => (
           <ItwErrorView
@@ -150,7 +158,7 @@ const ItwCredentialIssuingInfoScreen = () => {
             leftButton={cancelButtonProps(navigation.goBack)}
           />
         ),
-        decodedPid => <ContentView decodedPid={decodedPid} />
+        some => <ContentView {...some} />
       )
     );
 
