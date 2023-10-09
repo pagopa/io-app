@@ -10,7 +10,6 @@ import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../store/hooks";
-import PidCredential from "../../components/PidCredential";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
@@ -20,6 +19,7 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
+import ItwCredentialCard from "../../components/ItwCredentialCard";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -48,9 +48,10 @@ const ItwPidDetails = () => {
       <ScrollView>
         <VSpacer />
         <View style={IOStyles.horizontalContentPadding}>
-          <PidCredential
+          <ItwCredentialCard
             name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
             fiscalCode={decodedPid.pid.claims.taxIdCode as string}
+            backgroundImage={require("../../assets/img/pidCredentialCard.png")}
           />
           <VSpacer />
           <ItwPidClaimsList

@@ -20,7 +20,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BadgeButton from "../components/design/BadgeButton";
 import { useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
-import PidCredential from "../components/PidCredential";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/ItwParamsList";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
@@ -31,6 +30,7 @@ import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReduc
 import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { itWalletExperimentalEnabled } from "../../../config";
+import ItwCredentialCard from "../components/ItwCredentialCard";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -92,9 +92,10 @@ const ItwHomeScreen = () => {
             })
           }
         >
-          <PidCredential
+          <ItwCredentialCard
             name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
             fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
+            backgroundImage={require("../assets/img/pidCredentialCard.png")}
           />
         </Pressable>
         <View
