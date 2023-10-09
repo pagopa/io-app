@@ -37,7 +37,7 @@ const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
 export function* handleCreateFilledDocument(
   postQtspFilledBody: FciClient["createFilledDocument"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciLoadQtspFilledDocument["request"]>
+  action: ActionType<(typeof fciLoadQtspFilledDocument)["request"]>
 ): SagaIterator {
   try {
     const postQtspFilledBodyRequest = postQtspFilledBody({

@@ -382,9 +382,9 @@ const mapStateToProps = (state: GlobalState) => {
   const psps = pspsV2.psps;
   const error: O.Option<
     PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
+      | (typeof paymentVerifica)["failure"]
+      | (typeof paymentAttiva)["failure"]
+      | (typeof paymentIdPolling)["failure"]
     >
   > = pot.isError(verifica)
     ? O.some(verifica.error)
@@ -496,9 +496,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const navigateToPaymentTransactionError = (
     error: O.Option<
       PayloadForAction<
-        | typeof paymentVerifica["failure"]
-        | typeof paymentAttiva["failure"]
-        | typeof paymentIdPolling["failure"]
+        | (typeof paymentVerifica)["failure"]
+        | (typeof paymentAttiva)["failure"]
+        | (typeof paymentIdPolling)["failure"]
       >
     >
   ) =>
