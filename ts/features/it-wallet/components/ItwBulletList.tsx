@@ -31,13 +31,16 @@ const ItwBulletList = ({ data }: Props) => (
     {pipe(
       data,
       RA.mapWithIndex((index, section) => (
-        <View key={index}>
+        <View key={`${index}-${section.title}`}>
           <Body style={{ marginBottom: 8 }} weight="Regular" color="grey-700">
             {section.title}
           </Body>
           {section.data.map((claim, index) => (
             <>
-              <View style={{ marginBottom: 10, paddingLeft: 8 }} key={index}>
+              <View
+                style={{ marginBottom: 10, paddingLeft: 8 }}
+                key={`${index}-${claim}`}
+              >
                 <H6>{`${BULLET_ITEM} ${claim}`}</H6>
               </View>
             </>
