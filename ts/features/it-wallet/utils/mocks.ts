@@ -1,6 +1,8 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import I18n from "../../../i18n";
+import { BulletItem } from "../components/ItwBulletList";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
@@ -65,5 +67,41 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     ),
     icon: "driverLicense",
     incoming: true
+  }
+];
+
+export const CREDENTIAL_ISSUER = "eFarma";
+
+export const getRequestedCredentials = (
+  decodedPid: PidWithToken
+): ReadonlyArray<BulletItem> => [
+  {
+    title: I18n.t(
+      "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
+      {
+        authsource:
+          decodedPid.pid.verification.evidence[0].record.source
+            .organization_name
+      }
+    ),
+    data: [
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.givenName")} ${
+        decodedPid.pid.claims.givenName
+      }`,
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.familyName")} ${
+        decodedPid.pid.claims.familyName
+      }`,
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode")} ${
+        decodedPid.pid.claims.taxIdCode
+      }`,
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.birthdate")} ${
+        decodedPid.pid.claims.birthdate
+      }`,
+      `${I18n.t(
+        "features.itWallet.verifiableCredentials.claims.placeOfBirth"
+      )} ${decodedPid.pid.claims.placeOfBirth.locality} (${
+        decodedPid.pid.claims.placeOfBirth.country
+      })`
+    ]
   }
 ];

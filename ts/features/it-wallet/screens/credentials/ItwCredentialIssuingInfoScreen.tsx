@@ -25,11 +25,10 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import I18n from "../../../../i18n";
-import ItwBulletList, { BulletItem } from "../../components/ItwBulletList";
+import ItwBulletList from "../../components/ItwBulletList";
 import { useItwDataProcessing } from "../../hooks/useItwDataProcessing";
+import { CREDENTIAL_ISSUER, getRequestedCredentials } from "../../utils/mocks";
 import { ContentViewParams } from "./ItwPidDetails";
-
-const MOCK_ORGANIZATION = "eFarma";
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -41,37 +40,6 @@ const ItwCredentialIssuingInfoScreen = () => {
 
   const ContentView = ({ decodedPid }: ContentViewParams) => {
     const { present, bottomSheet } = useItwDataProcessing();
-    const MOCK_CREDENTIALS: ReadonlyArray<BulletItem> = [
-      {
-        title: I18n.t(
-          "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
-          {
-            authsource:
-              decodedPid.pid.verification.evidence[0].record.source
-                .organization_name
-          }
-        ),
-        data: [
-          `${I18n.t(
-            "features.itWallet.verifiableCredentials.claims.givenName"
-          )} ${decodedPid.pid.claims.givenName}`,
-          `${I18n.t(
-            "features.itWallet.verifiableCredentials.claims.familyName"
-          )} ${decodedPid.pid.claims.familyName}`,
-          `${I18n.t(
-            "features.itWallet.verifiableCredentials.claims.taxIdCode"
-          )} ${decodedPid.pid.claims.taxIdCode}`,
-          `${I18n.t(
-            "features.itWallet.verifiableCredentials.claims.birthdate"
-          )} ${decodedPid.pid.claims.birthdate}`,
-          `${I18n.t(
-            "features.itWallet.verifiableCredentials.claims.placeOfBirth"
-          )} ${decodedPid.pid.claims.placeOfBirth.locality} (${
-            decodedPid.pid.claims.placeOfBirth.country
-          })`
-        ]
-      }
-    ];
     return (
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
@@ -125,7 +93,7 @@ const ItwCredentialIssuingInfoScreen = () => {
                 authsource:
                   decodedPid.pid.verification.evidence[0].record.source
                     .organization_name,
-                organization: MOCK_ORGANIZATION
+                organization: CREDENTIAL_ISSUER
               }
             )}
           </Body>
@@ -138,7 +106,7 @@ const ItwCredentialIssuingInfoScreen = () => {
           <VSpacer size={24} />
 
           {/* Render a list of claims that will be shared with the credential issuer */}
-          <ItwBulletList data={MOCK_CREDENTIALS} />
+          <ItwBulletList data={getRequestedCredentials(decodedPid)} />
 
           {/* ItwFooterInfoBox should be replaced with a more ligth component */}
           <ItwFooterInfoBox
