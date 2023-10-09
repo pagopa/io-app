@@ -37,7 +37,7 @@ const ItwBulletList = ({ data }: Props) => (
           </Body>
           {section.data.map((claim, index) => (
             <>
-              <View style={{ marginBottom: 10 }} key={index}>
+              <View style={{ marginBottom: 10, paddingLeft: 8 }} key={index}>
                 <H6>{`${BULLET_ITEM} ${claim}`}</H6>
               </View>
             </>
