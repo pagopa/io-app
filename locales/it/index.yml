@@ -3370,7 +3370,7 @@ features:
         label: "Ho capito"
     verifiableCredentials:
       type:
-        digitalCredential: "Identità Digitale"
+        digitalCredential: "Identità digitale"
         disabilityCard: "Tessera Europa della disabilità"
         healthCard: "Tessera Sanitaria"
         drivingLicense: "Licenza di guida"
