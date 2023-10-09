@@ -1,11 +1,16 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwCredentialsChecks } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { CredentialCatalogItem } from "../../utils/mocks";
 
-export type ItwCredentialsChecksState = pot.Pot<true, ItWalletError>;
+export type ItwCredentialsChecksState = pot.Pot<
+  O.Option<CredentialCatalogItem>,
+  ItWalletError
+>;
 
 const emptyState: ItwCredentialsChecksState = pot.none;
 
@@ -25,7 +30,7 @@ const reducer = (
     case getType(itwCredentialsChecks.request):
       return pot.toLoading(state);
     case getType(itwCredentialsChecks.success):
-      return pot.some(true);
+      return pot.some(O.some(action.payload));
     case getType(itwCredentialsChecks.failure):
       return pot.toError(state, action.payload);
   }
@@ -39,5 +44,13 @@ const reducer = (
  */
 export const ItwCredentialsChecksSelector = (state: GlobalState) =>
   state.features.itWallet.credentialsChecks;
+
+/**
+ * Selects the checked credential which is going to be added to the wallet.
+ * @param state - the global state
+ * @returns an Option containing the checked credential.
+ */
+export const ItwCredentialsCheckCredentialSelector = (state: GlobalState) =>
+  pot.getOrElse(state.features.itWallet.credentialsChecks, O.none);
 
 export default reducer;

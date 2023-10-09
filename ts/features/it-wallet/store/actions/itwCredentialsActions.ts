@@ -40,7 +40,7 @@ export const itwCredentialsChecks = createAsyncAction(
   "ITW_CREDENTIALS_CHECKS_REQUEST",
   "ITW_CREDENTIALS_CHECKS_SUCCESS",
   "ITW_CREDENTIALS_CHECKS_FAILURE"
-)<CredentialCatalogItem, void, ItWalletError>();
+)<CredentialCatalogItem, CredentialCatalogItem, ItWalletError>();
 
 /**
  * Type for credentials related actions.
