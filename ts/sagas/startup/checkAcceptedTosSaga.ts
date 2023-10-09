@@ -17,8 +17,8 @@ export function* checkAcceptedTosSaga(
 ): Generator<
   ReduxSagaEffect,
   void,
-  | ActionType<typeof profileUpsert["success"]>
-  | ActionType<typeof profileUpsert["failure"]>
+  | ActionType<(typeof profileUpsert)["success"]>
+  | ActionType<(typeof profileUpsert)["failure"]>
 > {
   // The user has to explicitly accept the new version of ToS if:
   // - this is the first access

@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Divider } from "@pagopa/io-app-design-system";
-import { CheckboxListItem } from "../../../../components/ui/CheckboxListItem";
+import { Divider, ListItemCheckbox } from "@pagopa/io-app-design-system";
 import { CieEntityIds } from "../../../../components/cie/CieRequestAuthenticationOverlay";
 import { cieLoginDisableUat, cieLoginEnableUat } from "../../store/actions";
 import { isCieLoginUatEnabledSelector } from "../../store/selectors";
@@ -12,7 +11,7 @@ const CieLoginConfigScreenContent = () => {
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   return (
     <>
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="warningFilled"
         selected={useCieUat}
         onValueChange={newValue => {

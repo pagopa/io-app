@@ -26,17 +26,18 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const PaymentMethodRepresentationComponent: React.FunctionComponent<PaymentMethodRepresentation> =
-  props => (
-    <View style={styles.row}>
-      <Image source={props.icon} style={styles.cardIcon} />
-      <HSpacer size={16} />
-      <Body
-        testID={"paymentMethodCaptionId"}
-        numberOfLines={1}
-        style={styles.text}
-      >
-        {props.caption}
-      </Body>
-    </View>
-  );
+export const PaymentMethodRepresentationComponent: React.FunctionComponent<
+  PaymentMethodRepresentation
+> = props => (
+  <View style={styles.row}>
+    <Image source={props.icon} style={styles.cardIcon} />
+    <HSpacer size={16} />
+    <Body
+      testID={"paymentMethodCaptionId"}
+      numberOfLines={1}
+      style={styles.text}
+    >
+      {props.caption}
+    </Body>
+  </View>
+);

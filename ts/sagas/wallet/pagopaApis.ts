@@ -193,7 +193,7 @@ export function* fetchTransactionRequestHandler(
 export function* fetchPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof fetchPsp["request"]>
+  action: ActionType<(typeof fetchPsp)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getPsp(action.payload.idPsp)
@@ -318,7 +318,7 @@ export function* setFavouriteWalletRequestHandler(
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentUpdateWalletPsp["request"]>
+  action: ActionType<(typeof paymentUpdateWalletPsp)["request"]>
 ) {
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
@@ -547,7 +547,7 @@ export function* addWalletCreditCardRequestHandler(
 export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentCheck["request"]>
+  action: ActionType<(typeof paymentCheck)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
@@ -606,7 +606,7 @@ export function* paymentStartRequest(
 export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentDeletePayment["request"]>
+  action: ActionType<(typeof paymentDeletePayment)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
@@ -638,7 +638,7 @@ export function* paymentDeletePaymentRequestHandler(
  */
 export function* paymentVerificaRequestHandler(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
-  action: ActionType<typeof paymentVerifica["request"]>
+  action: ActionType<(typeof paymentVerifica)["request"]>
 ) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
@@ -679,7 +679,7 @@ export function* paymentVerificaRequestHandler(
  */
 export function* paymentAttivaRequestHandler(
   postAttivaRpt: ReturnType<typeof BackendClient>["postAttivaRpt"],
-  action: ActionType<typeof paymentAttiva["request"]>
+  action: ActionType<(typeof paymentAttiva)["request"]>
 ) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
@@ -727,7 +727,7 @@ export function* paymentAttivaRequestHandler(
  */
 export function* paymentIdPollingRequestHandler(
   getPaymentIdApi: ReturnType<ReturnType<typeof BackendClient>["getPaymentId"]>,
-  action: ActionType<typeof paymentIdPolling["request"]>
+  action: ActionType<(typeof paymentIdPolling)["request"]>
 ) {
   // successfully request the payment activation
   // now poll until a paymentId is made available
@@ -771,7 +771,7 @@ export function* paymentIdPollingRequestHandler(
 export function* getPspV2(
   getPspV2: ReturnType<typeof PaymentManagerClient>["getPspV2"],
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof pspForPaymentV2["request"]>
+  action: ActionType<(typeof pspForPaymentV2)["request"]>
 ) {
   const getPspV2Request = getPspV2(action.payload);
   const request = pmSessionManager.withRefresh(getPspV2Request);

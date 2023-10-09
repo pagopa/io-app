@@ -208,7 +208,7 @@ const getPatchedWalletsUsingGETDecoder = <O>(
   r.composeResponseDecoders(
     r.composeResponseDecoders(
       r.composeResponseDecoders(
-        r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(
+        r.ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
           200,
           type,
           payload => {
