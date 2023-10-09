@@ -12,6 +12,7 @@ type ObjectWithMinAppVersion =
   | { min_app_version?: VersionPerPlatform }
   | undefined;
 
+// This type extracts all keys that have a structure with min_app_version
 type KeysWithMinAppVersion<T> = Extract<
   keyof T,
   {
@@ -19,6 +20,7 @@ type KeysWithMinAppVersion<T> = Extract<
   }[keyof T]
 >;
 
+// This type extracts all keys that have a structure with min_app_version, nested in another type
 type ExtractSecondLevelKeyWithMinAppVersion<
   T,
   FirstLevel extends keyof T
@@ -28,6 +30,8 @@ type ExtractSecondLevelKeyWithMinAppVersion<
     : never
   : never;
 
+// This type defines the parameters for a function so that the name of the parameter must
+// be specified and that any optional configuration of a FF is present in whole, not in part
 type CheckPropertyWithMinAppVersionParameters<
   T extends KeysWithMinAppVersion<Config>
 > = {
@@ -42,6 +46,10 @@ type CheckPropertyWithMinAppVersionParameters<
     }
 );
 
+// This feature checks that a feature flag is enabled by checking the local option and the minimum
+// version of the feature set remotely.
+// It is possible to specify an optional configuration that corresponds to a feature flag nested into the main one.
+// If the main FF is deactivated, any nested FF will also be considered deactivated.
 export const isPropertyWithMinAppVersionEnabled = <
   T extends KeysWithMinAppVersion<Config>
 >({
