@@ -18,6 +18,10 @@ type OwnProps = Props &
  *
  * @param props
  * @constructor
+ *
+ * @deprecated Use `AnimatedCheckbox` if you just need the Checkbox square, use `CheckboxLabel`
+ * if you need a simple label, use `ListItemCheckbox` if you need the corresponding list item.
+ * All these components are available through the external `io-app-design-system` package.
  */
 export const CheckBox: React.FunctionComponent<OwnProps> = props => {
   const [toggleValue, setToggleValue] = useState(props.checked ?? false);
