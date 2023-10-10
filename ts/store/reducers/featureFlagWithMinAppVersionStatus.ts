@@ -46,10 +46,39 @@ type CheckPropertyWithMinAppVersionParameters<
     }
 );
 
-// This feature checks that a feature flag is enabled by checking the local option and the minimum
-// version of the feature set remotely.
-// It is possible to specify an optional configuration that corresponds to a feature flag nested into the main one.
-// If the main FF is deactivated, any nested FF will also be considered deactivated.
+/** This function checks that a feature flag is enabled by checking the local option and the minimum
+* version of the feature set remotely.
+* It is possible to specify an optional configuration that corresponds to a feature flag nested into the main one.
+* If the main FF is deactivated, any nested FF will also be considered deactivated.
+*
+* Details:
+* The fuction take an object with this property:
+* @property {Option\<BackendStatus\>} backendStatus - Our backendStatus object
+* @property {boolean} mainLocalFlag - The local config that represents the feature
+* @property {KeysWithMinAppVersion\<Config\>} configPropertyName - A property that extends ObjectWithMinAppVersion in the Config object (from backendStatus)
+* 
+* @example 
+* isPropertyWithMinAppVersionEnabled({
+        backendStatus: store,
+        mainLocalFlag: fastLoginConfig,
+        configPropertyName: "fastLogin"
+      });
+* @returns {boolean} Returns the fastLogin feature flag state.
+*
+*  If you want the feature flag state of an inner configuration, you can specify two more properties
+* @property {boolean} optionalLocalFlag - The local config that represents the nested feature
+* @property {ExtractSecondLevelKeyWithMinAppVersion\<Config, KeysWithMinAppVersion\<Config\>\>} optionalLocalFlag - A property nested in Config (from backendStatus) that extends ObjectWithMinAppVersion
+* 
+* @example 
+* isPropertyWithMinAppVersionEnabled({
+        backendStatus: store,
+        mainLocalFlag: fastLoginConfig,
+        configPropertyName: "fastLogin",
+        optionalLocalFlag: optInFastLoginConfig,
+        optionalConfig: "opt_in"
+      });
+* @returns {boolean} Returns the opt_in feature flag state.
+*/
 export const isPropertyWithMinAppVersionEnabled = <
   T extends KeysWithMinAppVersion<Config>
 >({

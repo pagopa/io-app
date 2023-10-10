@@ -3,7 +3,7 @@ import DeviceInfo from "react-native-device-info";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 
-describe("backend service Feature Flag with min app version --- no optional config", () => {
+describe("backend service Feature Flag (nativeLogin example) with min app version --- no optional config", () => {
   jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.0");
   jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.0");
 
@@ -143,7 +143,7 @@ describe("backend service Feature Flag with min app version --- no optional conf
   });
 });
 
-describe("backend service Feature Flag with min app version --- with optional config", () => {
+describe("backend service Feature Flag (fastLogin example) with min app version --- with optional config (opt_in example)", () => {
   jest.spyOn(DeviceInfo, "getVersion").mockReturnValue("2.0.0.0");
   jest.spyOn(DeviceInfo, "getReadableVersion").mockReturnValue("2.0.0.0");
 
