@@ -22,7 +22,7 @@ type Props = {
   title: string;
 } & SupportRequestParams;
 
-export const ScrollableScreenContent = ({
+export const RNavScreenWithLargeHeader = ({
   children,
   title,
   contextualHelp,
