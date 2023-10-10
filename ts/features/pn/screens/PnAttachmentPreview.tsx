@@ -26,7 +26,10 @@ export type PnAttachmentPreviewNavigationParams = Readonly<{
 }>;
 
 export const PnAttachmentPreview = (
-  props: IOStackNavigationRouteProps<PnParamsList, "PN_MESSAGE_ATTACHMENT">
+  props: IOStackNavigationRouteProps<
+    PnParamsList,
+    "PN_ROUTES_MESSAGE_ATTACHMENT"
+  >
 ): React.ReactElement => {
   const navigation = props.navigation;
   const messageId = props.route.params.messageId;

@@ -70,7 +70,7 @@ const renderMessage = (
   );
 
 export const MessageDetailsScreen = (
-  props: IOStackNavigationRouteProps<PnParamsList, "PN_MESSAGE_DETAILS">
+  props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
   const { messageId, serviceId, firstTimeOpening } = props.route.params;
 
