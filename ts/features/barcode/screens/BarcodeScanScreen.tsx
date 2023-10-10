@@ -29,7 +29,7 @@ import {
   IO_BARCODE_ALL_TYPES
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import { trackBarcodeScanFailure } from "../analytics";
+import { trackBarcodeNotFound, trackBarcodeScanFailure } from "../analytics";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -74,11 +74,11 @@ const BarcodeScanScreen = () => {
         trackBarcodeScanFailure("home", "qr code flusso sbagliato");
         break;
       case "UNSUPPORTED_FORMAT":
-      case "BARCODE_NOT_FOUND":
       case "INVALID_FILE":
         trackBarcodeScanFailure("home", "qr code non valido");
         break;
-      default:
+      case "BARCODE_NOT_FOUND":
+        trackBarcodeNotFound();
         break;
     }
   };

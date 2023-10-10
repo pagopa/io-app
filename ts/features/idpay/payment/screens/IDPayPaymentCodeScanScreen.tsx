@@ -17,7 +17,10 @@ import {
   IOBarcode
 } from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
-import { trackBarcodeScanFailure } from "../../../barcode/analytics";
+import {
+  trackBarcodeNotFound,
+  trackBarcodeScanFailure
+} from "../../../barcode/analytics";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -56,9 +59,11 @@ const IDPayPaymentCodeScanScreen = () => {
         trackBarcodeScanFailure("home", "qr code flusso sbagliato");
         break;
       case "UNSUPPORTED_FORMAT":
-      case "BARCODE_NOT_FOUND":
       case "INVALID_FILE":
         trackBarcodeScanFailure("home", "qr code non valido");
+        break;
+      case "BARCODE_NOT_FOUND":
+        trackBarcodeNotFound();
         break;
       default:
         break;
