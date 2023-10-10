@@ -9,11 +9,11 @@ import {
   IOPaymentExtLogos,
   IOPaymentLogos,
   LogoPayment,
-  LogoPaymentExt
+  LogoPaymentExt,
+  Avatar,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
-import Avatar from "../../../components/ui/Avatar";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {

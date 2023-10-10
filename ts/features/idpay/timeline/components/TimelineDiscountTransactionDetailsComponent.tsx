@@ -2,12 +2,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import {
   TransactionDetailDTO,
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionDetailDTO";
-import { Alert } from "../../../../components/Alert";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { Body } from "../../../../components/core/typography/Body";
