@@ -9,9 +9,9 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { guardedNavigationAction } from "../../../../xstate/helpers/guardedNavigationAction";
-import { refreshSessionToken } from "../../../fastLogin/store/actions";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { IDPayDetailsRoutes } from "../../details/navigation";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { Context } from "./context";
 import { Events } from "./events";
 import { InitiativeFailure, InitiativeFailureType } from "./failure";

@@ -40,7 +40,7 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { startupLoadSuccess } from "../../store/actions/startup";
 import { StartupStatusEnum } from "../../store/reducers/startup";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
 import { watchLogoutSaga } from "../startup/watchLogoutSaga";
 
