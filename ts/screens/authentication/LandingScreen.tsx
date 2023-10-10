@@ -57,7 +57,7 @@ import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { openWebUrl } from "../../utils/url";
-import { cieSpidMoreInfoUrl } from "../../config";
+import { cieSpidMoreInfoUrl, fastLoginEnabled } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
@@ -225,27 +225,31 @@ class LandingScreen extends React.PureComponent<Props, State> {
     });
 
   private navigateToIdpSelection = () => {
-    // FIXME -> understand if this type of implementation is OK
-    // this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-    //   screen: ROUTES.AUTHENTICATION_IDP_SELECTION
-    // });
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_OPT_IN,
-      params: { identifier: "SPID" }
-    });
+    if (fastLoginEnabled) {
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_OPT_IN,
+        params: { identifier: "SPID" }
+      });
+    } else {
+      this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_IDP_SELECTION
+      });
+    }
   };
 
   private navigateToCiePinScreen = () => {
-    // FIXME -> understand if this type of implementation is OK
     if (this.isCieSupported()) {
       this.props.dispatchIdpCieSelected();
-      // this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-      //   screen: ROUTES.CIE_PIN_SCREEN
-      // });
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_OPT_IN,
-        params: { identifier: "CIE" }
-      });
+      if (fastLoginEnabled) {
+        this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.AUTHENTICATION_OPT_IN,
+          params: { identifier: "CIE" }
+        });
+      } else {
+        this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+          screen: ROUTES.CIE_PIN_SCREEN
+        });
+      }
     } else {
       this.openUnsupportedCIEModal();
     }
