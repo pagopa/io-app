@@ -3446,6 +3446,21 @@ features:
           title: Stai aggiungendo {{credentialName}} al Portafoglio
         toast: 
           cancel: "Tessera non aggiunta al Portafoglio."
+      credentialPreviewScreen:
+        title: "Ecco un’anteprima della tua tessera"
+        subtitle: "Prima di aggiungerla, verifica che tutte le informazioni siano
+            corrette."
+        somethingWrong:
+          title: "Qualcosa non torna?"
+          subtitle: "Se ci sono errori nei dati o vuoi capire meglio cosa significano,
+            contatta {{issuer}}."
+        bottomSheet: 
+          about: 
+            title: "Chi è?"
+            subtitle: "È la fonte che gestisce e protegge i tuoi dati. App IO ti consente di visualizzarli perché è in grado di verificare e proteggere la tua identità grazie a importanti procedure di sicurezza."
+          data:
+            title: "Protezione dei dati"
+            subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3504,6 +3519,7 @@ features:
         securityLevel: "Livello di sicurezza"
         issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
+        issuedByNew: "Emessa da"
         securityLevels: 
           high: "Alto"
           na: "Non disponibile"

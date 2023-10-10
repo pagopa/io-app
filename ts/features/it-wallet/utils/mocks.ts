@@ -1,5 +1,6 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
+import { ImageSourcePropType } from "react-native";
 import I18n from "../../../i18n";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
@@ -44,6 +45,15 @@ export type CredentialCatalogItem = {
   title: string;
   icon: IOIcons;
   incoming: boolean;
+  claims: {
+    issuedByNew: string;
+    expirationDate: string;
+    givenName: string;
+    familyName: string;
+    taxIdCode: string;
+    birthdate: string;
+  };
+  image: ImageSourcePropType;
 };
 
 export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
@@ -52,18 +62,45 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       "features.itWallet.verifiableCredentials.type.disabilityCard"
     ),
     icon: "disabilityCard",
-    incoming: false
+    incoming: false,
+    claims: {
+      issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
+      expirationDate: "30.12.2028",
+      givenName: "Anna",
+      familyName: "Verdi",
+      taxIdCode: "VRDBNC80A41H501X",
+      birthdate: "30/12/1978"
+    },
+    image: require("../assets/img/pidCredentialCard.png")
   },
   {
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
-    incoming: false
+    incoming: false,
+    claims: {
+      issuedByNew: "Ragioneria Generale dello Stato",
+      expirationDate: "30.12.2028",
+      givenName: "Anna",
+      familyName: "Verdi",
+      taxIdCode: "VRDBNC80A41H501X",
+      birthdate: "30/12/1978"
+    },
+    image: require("../assets/img/pidCredentialCard.png")
   },
   {
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.drivingLicense"
     ),
     icon: "driverLicense",
-    incoming: true
+    incoming: true,
+    claims: {
+      issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
+      expirationDate: "30.12.2028",
+      givenName: "Anna",
+      familyName: "Verdi",
+      taxIdCode: "VRDBNC80A41H501X",
+      birthdate: "30/12/1978"
+    },
+    image: require("../assets/img/pidCredentialCard.png")
   }
 ];
