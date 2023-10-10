@@ -18,7 +18,7 @@ export function* handleGetIDPayWallet(
   getWallet: IDPayClient["getWallet"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idPayWalletGet["request"]>
+  action: ActionType<(typeof idPayWalletGet)["request"]>
 ) {
   const getWalletRequest = getWallet({
     bearerAuth: bearerToken,

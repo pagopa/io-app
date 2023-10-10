@@ -21,7 +21,7 @@ export function* handleGetBeneficiaryDetails(
   getInitiativeBeneficiaryDetail: IDPayClient["getInitiativeBeneficiaryDetail"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idPayBeneficiaryDetailsGet["request"]>
+  action: ActionType<(typeof idPayBeneficiaryDetailsGet)["request"]>
 ) {
   const getInitiativeBeneficiaryRequest = getInitiativeBeneficiaryDetail({
     bearerAuth: bearerToken,

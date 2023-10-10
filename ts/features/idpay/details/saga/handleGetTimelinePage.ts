@@ -21,7 +21,7 @@ export function* handleGetTimelinePage(
   getTimeline: IDPayClient["getTimeline"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idpayTimelinePageGet["request"]>
+  action: ActionType<(typeof idpayTimelinePageGet)["request"]>
 ) {
   const getTimelineRequest = getTimeline({
     bearerAuth: bearerToken,

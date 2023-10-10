@@ -28,7 +28,7 @@ import { trackServiceDetailLoadingStatistics } from "../../utils/analytics";
  */
 export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
-  action: ActionType<typeof loadServiceDetail["request"]>
+  action: ActionType<(typeof loadServiceDetail)["request"]>
 ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getService>> {
   try {
     const response = yield* call(getService, { service_id: action.payload });
