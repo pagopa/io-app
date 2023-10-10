@@ -4,14 +4,14 @@ import { buildEventProperties } from "../../../utils/analytics";
 type BarcodeEventFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
 type BarcodeEventCode = "avviso" | "data_matrix" | "idpay"; // Should be extended for every feature
 
-export const trackBarcodeCameraAuthorization = () => {
+export const trackBarcodeCameraAuthorizationNotDetermined = () => {
   void mixpanelTrack(
     "QRCODE_CAMERA_AUTHORIZATION",
     buildEventProperties("UX", "screen_view")
   );
 };
 
-export const trackBarcodeCameraAuthorizationBis = () => {
+export const trackBarcodeCameraAuthorizationDenied = () => {
   void mixpanelTrack(
     "QRCODE_CAMERA_AUTHORIZATION_2",
     buildEventProperties("UX", "screen_view")
@@ -25,7 +25,7 @@ export const trackBarcodeCameraAuthorized = () => {
   );
 };
 
-export const trackBarcodeCameraAuthorizedBis = () => {
+export const trackBarcodeCameraAuthorizedFromSettings = () => {
   void mixpanelTrack(
     "QRCODE_CAMERA_AUTHORIZED_2",
     buildEventProperties("UX", "action")
