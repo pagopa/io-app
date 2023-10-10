@@ -6,6 +6,9 @@ import { H4 } from "../typography/H4";
 import { IOStyles } from "../variables/IOStyles";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
+/**
+ * @deprecated Use `RadioItem` from `io-app-design-system` instead.
+ */
 export type RadioItem<T> = {
   body: ReactNode;
   id: T;
@@ -98,6 +101,8 @@ const getBody = <T,>(
  * A list of radio button with an optional heading.
  * The management of the selection is demanded and derived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
+ *
+ * @deprecated Use `RadioGroup` from `io-app-design-system` instead
  */
 export const RadioButtonList = <T,>(props: Props<T>) => (
   <View>

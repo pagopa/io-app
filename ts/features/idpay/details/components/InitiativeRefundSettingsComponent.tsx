@@ -1,13 +1,13 @@
-import { useNavigation } from "@react-navigation/core";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { View } from "react-native";
 import {
   ListItemNav,
   ListItemNavAlert,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/core";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { View } from "react-native";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
@@ -18,14 +18,14 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { Skeleton } from "../../common/components/Skeleton";
+import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 
 type Props = {
   initiative?: InitiativeDTO;
 };
 
-const InitiativeSettingsComponent = (props: Props) => {
+const InitiativeRefundSettingsComponent = (props: Props) => {
   const { initiative } = props;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -172,4 +172,4 @@ const InitiativeSettingsComponent = (props: Props) => {
   );
 };
 
-export { InitiativeSettingsComponent };
+export { InitiativeRefundSettingsComponent };

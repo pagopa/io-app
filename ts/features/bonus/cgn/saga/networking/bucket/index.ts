@@ -11,7 +11,7 @@ export function* cgnBucketConsuption(
   getDiscountBucketCode: ReturnType<
     typeof BackendCgnMerchants
   >["getDiscountBucketCode"],
-  cgnCodeFromBucketRequest: ReturnType<typeof cgnCodeFromBucket["request"]>
+  cgnCodeFromBucketRequest: ReturnType<(typeof cgnCodeFromBucket)["request"]>
 ) {
   try {
     const discountBucketCodeResult: SagaCallReturnType<

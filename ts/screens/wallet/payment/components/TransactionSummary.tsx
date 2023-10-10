@@ -132,16 +132,20 @@ export const TransactionSummaryRow = (
             <Body weight="Regular" color={"bluegrey"} style={styles.title}>
               {props.title}
             </Body>
-            {!props.isLoading && props.axis === "horizontal" && props.subtitle && (
-              <H4 color={"blue"} weight={"SemiBold"}>
-                {props.subtitle}
-              </H4>
-            )}
-            {!props.isLoading && props.axis === "vertical" && props.subtitle && (
-              <H4 color={"bluegreyDark"} weight={"SemiBold"}>
-                {props.subtitle}
-              </H4>
-            )}
+            {!props.isLoading &&
+              props.axis === "horizontal" &&
+              props.subtitle && (
+                <H4 color={"blue"} weight={"SemiBold"}>
+                  {props.subtitle}
+                </H4>
+              )}
+            {!props.isLoading &&
+              props.axis === "vertical" &&
+              props.subtitle && (
+                <H4 color={"bluegreyDark"} weight={"SemiBold"}>
+                  {props.subtitle}
+                </H4>
+              )}
             {props.isLoading && (
               <View style={styles.placeholder}>{props.placeholder}</View>
             )}

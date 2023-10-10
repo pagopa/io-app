@@ -41,15 +41,16 @@ const getTitle = (type: NotActivableType) => {
   }
 };
 
-export const BpdNotActivableInformation: React.FunctionComponent<Props> =
-  props => (
-    <View style={styles.body}>
-      <VSpacer size={16} />
-      <PaymentMethodRepresentationComponent {...props.representation} />
-      <VSpacer size={16} />
-      <Markdown>{getBody(props.type)}</Markdown>
-    </View>
-  );
+export const BpdNotActivableInformation: React.FunctionComponent<
+  Props
+> = props => (
+  <View style={styles.body}>
+    <VSpacer size={16} />
+    <PaymentMethodRepresentationComponent {...props.representation} />
+    <VSpacer size={16} />
+    <Markdown>{getBody(props.type)}</Markdown>
+  </View>
+);
 
 export const useNotActivableInformationBottomSheet = (
   representation: PaymentMethodRepresentation,
