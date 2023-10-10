@@ -11,8 +11,13 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
+import {
+  BarcodeFailure,
+  BarcodeScanBaseScreenComponent,
+  IOBarcode
+} from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { trackBarcodeScanFailure } from "../../../barcode/analytics";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -43,8 +48,21 @@ const IDPayPaymentCodeScanScreen = () => {
     }
   };
 
-  const handleBarcodeError = () => {
+  const handleBarcodeError = (failure: BarcodeFailure) => {
     IOToast.error(I18n.t("barcodeScan.error"));
+
+    switch (failure.reason) {
+      case "UNKNOWN_CONTENT":
+        trackBarcodeScanFailure("home", "qr code flusso sbagliato");
+        break;
+      case "UNSUPPORTED_FORMAT":
+      case "BARCODE_NOT_FOUND":
+      case "INVALID_FILE":
+        trackBarcodeScanFailure("home", "qr code non valido");
+        break;
+      default:
+        break;
+    }
   };
 
   const navigateToCodeInputScreen = () =>
