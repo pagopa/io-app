@@ -16,10 +16,10 @@ import {
   IOColors,
   Icon,
   LabelSmall,
-  VSpacer
+  VSpacer,
+  Alert as AlertComponent
 } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
-import { Alert as AlertComponent } from "../../components/Alert";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
