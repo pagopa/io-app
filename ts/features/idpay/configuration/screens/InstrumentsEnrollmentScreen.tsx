@@ -1,4 +1,9 @@
-import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOColors,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
@@ -8,14 +13,13 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import LegacyFooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { Wallet } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { InitiativeFailureType } from "../xstate/failure";
 import { useConfigurationMachineService } from "../xstate/provider";
@@ -28,6 +32,7 @@ import {
   selectIsInstrumentsOnlyMode,
   selectWalletInstruments
 } from "../xstate/selectors";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -132,25 +137,31 @@ const InstrumentsEnrollmentScreen = () => {
       footer: (
         <FooterWithButtons
           type="TwoButtonsInlineThird"
-          rightButton={{
-            onPress: handleEnrollConfirm,
-            block: true,
-            bordered: false,
-            labelColor: IOColors.white,
-            title: I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
-            )
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t(
+                "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
+              ),
+              accessibilityLabel: I18n.t(
+                "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
+              ),
+              onPress: handleEnrollConfirm
+            }
           }}
-          leftButton={{
-            onPress: () => {
-              enrollmentBottomSheetModal.dismiss();
-            },
-            block: true,
-            bordered: true,
-            labelColor: IOColors.blue,
-            title: I18n.t(
-              "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
-            )
+          secondary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t(
+                "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
+              ),
+              accessibilityLabel: I18n.t(
+                "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
+              ),
+              onPress: () => {
+                enrollmentBottomSheetModal.dismiss();
+              }
+            }
           }}
         />
       ),
@@ -158,7 +169,7 @@ const InstrumentsEnrollmentScreen = () => {
         setStagedWalletId(undefined);
       }
     },
-    150
+    175
   );
 
   React.useEffect(() => {
@@ -172,7 +183,7 @@ const InstrumentsEnrollmentScreen = () => {
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
       return (
-        <FooterWithButtons
+        <LegacyFooterWithButtons
           type="SingleButton"
           leftButton={{
             title: I18n.t("idpay.configuration.instruments.buttons.addMethod"),
@@ -184,7 +195,7 @@ const InstrumentsEnrollmentScreen = () => {
     }
 
     return (
-      <FooterWithButtons
+      <LegacyFooterWithButtons
         type="TwoButtonsInlineHalf"
         leftButton={{
           title: I18n.t("idpay.configuration.instruments.buttons.skip"),

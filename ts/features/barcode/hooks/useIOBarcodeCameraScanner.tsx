@@ -1,3 +1,4 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -15,7 +16,6 @@ import {
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
@@ -80,6 +80,18 @@ export type IOBarcodeCameraScanner = {
    * Opens the system settings screen to let user to change camera permission
    */
   openCameraSettings: () => Promise<void>;
+  /**
+   * Returns true if the device has a torch
+   */
+  hasTorch: boolean;
+  /**
+   * Returns true if the torch is on
+   */
+  isTorchOn: boolean;
+  /**
+   * Toggles the torch states between "on" and "off"
+   */
+  toggleTorch: () => void;
 };
 
 /**
@@ -154,8 +166,12 @@ export const useIOBarcodeCameraScanner = ({
   );
 
   const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices();
+  const devices = useCameraDevices("wide-angle-camera");
   const device = devices.back;
+
+  // Checks that the device has a torch
+  const hasTorch = !!device?.hasTorch;
+  const [isTorchOn, setTorchOn] = React.useState<boolean>(false);
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
@@ -295,6 +311,7 @@ export const useIOBarcodeCameraScanner = ({
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
           isActive={!disabled}
+          torch={isTorchOn ? "on" : "off"}
         />
       )}
       <View style={{ alignSelf: "center" }}>
@@ -303,11 +320,16 @@ export const useIOBarcodeCameraScanner = ({
     </View>
   );
 
+  const toggleTorch = () => setTorchOn(prev => !prev);
+
   return {
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch,
+    isTorchOn,
+    toggleTorch
   };
 };
 

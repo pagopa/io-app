@@ -68,6 +68,10 @@ const NoneErrorVersion = <E, _>(props: NoneErrorProps<E>) => (
  * someUpdating -> the switch with the new value, disabled (cannot change value during the upsert)
  * @param props
  * @constructor
+ *
+ * @deprecated Use `NativeSwitch` if you just need the switch alone, use `ListItemSwitch` if you need the
+ * corresponding list item. All these components are available through the
+ * external `io-app-design-system` package
  */
 export const RemoteSwitch = <E, _>(props: Props<E>): React.ReactElement => {
   const loadingComponent = <LoadingVersion testID={props.testID} />;

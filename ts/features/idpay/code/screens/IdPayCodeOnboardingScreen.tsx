@@ -26,7 +26,8 @@ type IdPayCodeOnboardingRouteProps = RouteProp<
 
 const IdPayCodeOnboardingScreen = () => {
   const route = useRoute<IdPayCodeOnboardingRouteProps>();
-  const { initiativeId } = route.params;
+  // since the route is optional, we need to use the optional chaining operator
+  const initiativeId = route.params?.initiativeId;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
@@ -90,12 +91,18 @@ const IdPayCodeOnboardingScreen = () => {
         title={I18n.t("idpay.code.onboarding.title")}
         description={I18n.t("idpay.code.onboarding.description")}
         primaryButton={{
-          text: I18n.t("idpay.code.onboarding.buttons.start"),
-          onPress: handleContinue
+          label: I18n.t("idpay.code.onboarding.buttons.start"),
+          accessibilityLabel: I18n.t("idpay.code.onboarding.buttons.start"),
+          onPress: handleContinue,
+          testID: "wizardPrimaryButtonTestID"
         }}
         actionButton={{
-          text: I18n.t("idpay.code.onboarding.buttons.howItWorks"),
-          onPress: presentCieBottomSheet
+          label: I18n.t("idpay.code.onboarding.buttons.howItWorks"),
+          accessibilityLabel: I18n.t(
+            "idpay.code.onboarding.buttons.howItWorks"
+          ),
+          onPress: presentCieBottomSheet,
+          testID: "wizardActionButtonTestID"
         }}
       />
       {bottomSheet}
