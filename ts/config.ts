@@ -126,10 +126,6 @@ export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 
-// Redesign of the PN message details screen
-export const newPnMessageDetailsEnabled =
-  Config.NEW_PN_MESSAGE_DETAILS_ENABLED === "YES";
-
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
