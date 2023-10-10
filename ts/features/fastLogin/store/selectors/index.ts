@@ -1,37 +1,82 @@
 import { createSelector } from "reselect";
 import { uniqWith, isEqual } from "lodash";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
-import { fastLoginEnabled } from "../../../../config";
+import { fastLoginOptIn, fastLoginEnabled } from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
-import { isPropertyWithMinAppVersionEnabled } from "./../../../../store/reducers/backendStatus";
+import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
+
+const fastLoginOptInSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.optIn;
+
+/**
+ * return the remote config about FastLoginOptIn enabled/disabled
+ * based on a minumum version of the app.
+ * if there is no data, false is the default value -> (FastLoginOptIn disabled)
+ */
+const fastLoginOptInFFEnabled = createSelector(
+  backendStatusSelector,
+  backendStatus =>
+    isPropertyWithMinAppVersionEnabled({
+      backendStatus,
+      mainLocalFlag: fastLoginEnabled,
+      configPropertyName: "fastLogin",
+      optionalLocalFlag: fastLoginOptIn,
+      optionalConfig: "opt_in"
+    })
+);
+
+export const isFastLoginOptInEnabledSelector = createSelector(
+  fastLoginOptInFFEnabled,
+  fastLoginOptInSelector,
+  (featureFlag, optIn) => {
+    if (featureFlag) {
+      return optIn.enabled;
+    }
+    return true;
+  }
+);
 
 /**
  * return the remote config about FastLogin enabled/disabled
  * based on a minumum version of the app.
  * if there is no data, false is the default value -> (FastLogin disabled)
  */
-export const isFastLoginEnabledSelector = createSelector(
+export const isFastLoginFFEnabled = createSelector(
   backendStatusSelector,
   backendStatus =>
-    isPropertyWithMinAppVersionEnabled(
-      fastLoginEnabled,
-      "fastLogin",
-      backendStatus
-    )
+    isPropertyWithMinAppVersionEnabled({
+      backendStatus,
+      mainLocalFlag: fastLoginEnabled,
+      configPropertyName: "fastLogin"
+    })
 );
 
-export const fastLoginSelector = (state: GlobalState) =>
-  state.features.loginFeatures.fastLogin;
+/**
+ * return the remote config about FastLogin enabled/disabled
+ * based on a minumum version of the app, combined with FL opt-in user preference.
+ * If there is no data from backend nor user expressed an opt-in preference,
+ * false is the default value -> (FastLogin disabled)
+ */
+export const isFastLoginEnabledSelector = createSelector(
+  isFastLoginFFEnabled,
+  isFastLoginOptInEnabledSelector,
+  (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && !!optInEnabled
+);
+
+const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.tokenRefreshHandler;
 
 export const fastLoginPendingActionsSelector = createSelector(
-  fastLoginSelector,
-  fastLoginState => uniqWith(fastLoginState.pendingActions, isEqual)
+  fastLoginTokenRefreshHandlerSelector,
+  fastLoginTokenRefreshHandlerSelector =>
+    uniqWith(fastLoginTokenRefreshHandlerSelector.pendingActions, isEqual)
 );
 
 export const isFastLoginUserInteractionNeededForSessionExpiredSelector = (
   state: GlobalState
 ) =>
-  state.features.loginFeatures.fastLogin.userInteractionForSessionExpiredNeeded;
+  state.features.loginFeatures.fastLogin.tokenRefreshHandler
+    .userInteractionForSessionExpiredNeeded;
 
 export const tokenRefreshSelector = (state: GlobalState) =>
-  state.features.loginFeatures.fastLogin.tokenRefresh;
+  state.features.loginFeatures.fastLogin.tokenRefreshHandler.tokenRefresh;
