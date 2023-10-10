@@ -114,6 +114,9 @@ export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 export const fastLoginBypassGetNonce =
   Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
 
+// Fast login bypass opt-in
+export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
+
 // CIE Login Flow with dev server Feature Flag
 export const cieLoginFlowWithDevServerEnabled =
   Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";

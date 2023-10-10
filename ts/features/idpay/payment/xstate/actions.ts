@@ -7,7 +7,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { showToast } from "../../../../utils/showToast";
-import { refreshSessionToken } from "../../../fastLogin/store/actions";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 import { Context } from "./context";
