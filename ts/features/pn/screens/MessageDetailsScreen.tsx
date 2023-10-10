@@ -18,7 +18,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageLoading } from "../../messages/components/MessageLoading";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
-import { PnMessageDetails } from "../components/PnMessageDetails";
+import { MessageDetails } from "../components/MessageDetails";
 import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
@@ -53,7 +53,7 @@ const renderMessage = (
     () => <PnMessageDetailsError onRetry={onRetry} />,
     messageOption =>
       O.isSome(messageOption) ? (
-        <PnMessageDetails
+        <MessageDetails
           messageId={messageId}
           message={messageOption.value}
           service={service}
@@ -69,7 +69,7 @@ const renderMessage = (
     () => <></>
   );
 
-export const PnMessageDetailsScreen = (
+export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_MESSAGE_DETAILS">
 ): React.ReactElement => {
   const { messageId, serviceId, firstTimeOpening } = props.route.params;
