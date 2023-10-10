@@ -13,6 +13,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import * as analytics from "../analytics";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
@@ -93,12 +94,14 @@ const BarcodeScanBaseScreenComponent = ({
     await openCameraSettings();
   }, [openCameraSettings]);
 
-  const renderCameraView = () => {
+  const cameraView = React.useMemo(() => {
     if (cameraPermissionStatus === "authorized") {
       return cameraComponent;
     }
 
     if (cameraPermissionStatus === "not-determined") {
+      analytics.trackBarcodeCameraAuthorizationNotDetermined();
+
       return (
         <CameraPermissionView
           title={I18n.t("barcodeScan.permissions.undefined.title")}
@@ -108,11 +111,16 @@ const BarcodeScanBaseScreenComponent = ({
             accessibilityLabel: I18n.t(
               "barcodeScan.permissions.undefined.action"
             ),
-            onPress: requestCameraPermission
+            onPress: async () => {
+              analytics.trackBarcodeCameraAuthorized();
+              await requestCameraPermission();
+            }
           }}
         />
       );
     }
+
+    analytics.trackBarcodeCameraAuthorizationDenied();
 
     return (
       <CameraPermissionView
@@ -121,15 +129,23 @@ const BarcodeScanBaseScreenComponent = ({
         action={{
           label: I18n.t("barcodeScan.permissions.denied.action"),
           accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
-          onPress: openAppSetting
+          onPress: async () => {
+            analytics.trackBarcodeCameraAuthorizedFromSettings();
+            await openAppSetting();
+          }
         }}
       />
     );
-  };
+  }, [
+    cameraPermissionStatus,
+    openAppSetting,
+    cameraComponent,
+    requestCameraPermission
+  ]);
 
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
-      <View style={styles.cameraContainer}>{renderCameraView()}</View>
+      <View style={styles.cameraContainer}>{cameraView}</View>
       <View style={styles.navigationContainer}>
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
