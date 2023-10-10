@@ -1,7 +1,4 @@
-import {
-  StackNavigationOptions,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
