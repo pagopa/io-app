@@ -56,20 +56,20 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
 export type PaymentState = Readonly<{
   startOrigin?: PaymentStartOrigin;
   verifica: PotFromActions<
-    typeof paymentVerifica["success"],
-    typeof paymentVerifica["failure"]
+    (typeof paymentVerifica)["success"],
+    (typeof paymentVerifica)["failure"]
   >;
   attiva: PotFromActions<
-    typeof paymentAttiva["success"],
-    typeof paymentAttiva["failure"]
+    (typeof paymentAttiva)["success"],
+    (typeof paymentAttiva)["failure"]
   >;
   paymentId: PotFromActions<
-    typeof paymentIdPolling["success"],
-    typeof paymentIdPolling["failure"]
+    (typeof paymentIdPolling)["success"],
+    (typeof paymentIdPolling)["failure"]
   >;
   check: PotFromActions<
-    typeof paymentCheck["success"],
-    typeof paymentCheck["failure"]
+    (typeof paymentCheck)["success"],
+    (typeof paymentCheck)["failure"]
   >;
   entrypointRoute?: EntrypointRoute;
   // id payment, id wallet and locale (used inside paywebview)

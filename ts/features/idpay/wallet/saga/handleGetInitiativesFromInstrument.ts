@@ -15,7 +15,7 @@ export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idPayInitiativesFromInstrumentGet["request"]>
+  action: ActionType<(typeof idPayInitiativesFromInstrumentGet)["request"]>
 ) {
   const getInitiativesWithInstrumentRequest = getInitiativesWithInstrument({
     bearerAuth: bearerToken,

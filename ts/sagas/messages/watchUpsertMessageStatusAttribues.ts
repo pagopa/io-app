@@ -16,7 +16,7 @@ import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
-  typeof upsertMessageStatusAttributes["request"]
+  (typeof upsertMessageStatusAttributes)["request"]
 >;
 type LocalBeClient = ReturnType<
   typeof BackendClient
