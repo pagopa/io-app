@@ -108,7 +108,7 @@ const BarcodeScanBaseScreenComponent = ({
     }
 
     if (cameraPermissionStatus === "not-determined") {
-      analytics.trackBarcodeCameraAuthorizationNotDeterminedView();
+      analytics.trackBarcodeCameraAuthorizationNotDetermined();
 
       return (
         <CameraPermissionView
@@ -128,7 +128,7 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    analytics.trackBarcodeCameraAuthorizationDeniedView();
+    analytics.trackBarcodeCameraAuthorizationDenied();
 
     return (
       <CameraPermissionView
