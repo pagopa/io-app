@@ -16,7 +16,12 @@ import {
 import * as analytics from "../analytics";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import {
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType
+} from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
 
@@ -34,11 +39,14 @@ type Props = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: (failure: BarcodeFailure) => void;
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
   /**
    * Callback called when the manual input button is pressed
    * necessary to navigate to the manual input screen or show the manual input modal
@@ -66,8 +74,8 @@ const BarcodeScanBaseScreenComponent = ({
     isTorchOn,
     toggleTorch
   } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
-    onBarcodeError,
+    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode], "camera"),
+    onBarcodeError: failure => onBarcodeError(failure, "camera"),
     barcodeFormats,
     barcodeTypes,
     disabled: !isFocused
@@ -76,8 +84,8 @@ const BarcodeScanBaseScreenComponent = ({
   const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
     barcodeFormats,
     barcodeTypes,
-    onBarcodeSuccess,
-    onBarcodeError
+    onBarcodeSuccess: barcodes => onBarcodeSuccess(barcodes, "file"),
+    onBarcodeError: failure => onBarcodeError(failure, "file")
   });
 
   const customGoBack = (
@@ -100,7 +108,7 @@ const BarcodeScanBaseScreenComponent = ({
     }
 
     if (cameraPermissionStatus === "not-determined") {
-      analytics.trackBarcodeCameraAuthorizationNotDetermined();
+      analytics.trackBarcodeCameraAuthorizationNotDeterminedView();
 
       return (
         <CameraPermissionView
@@ -120,7 +128,7 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    analytics.trackBarcodeCameraAuthorizationDenied();
+    analytics.trackBarcodeCameraAuthorizationDeniedView();
 
     return (
       <CameraPermissionView
