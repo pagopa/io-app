@@ -293,6 +293,7 @@ function* startEmailValidationProcessSaga(
     }
     if (response.right.status === 202) {
       yield* put(startEmailValidation.success());
+      return;
     }
     throw response
       ? Error(`response status ${response.right.status}`)
