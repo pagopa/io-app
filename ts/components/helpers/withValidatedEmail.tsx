@@ -16,6 +16,8 @@ import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { LightModalContextInterface } from "../ui/LightModal";
+import NewRemindEmailValidationOverlay from "../NewRemindEmailValidationOverlay";
+import { isNewCduFlow } from "../../config";
 import { withConditionalView } from "./withConditionalView";
 import { withLightModalContext } from "./withLightModalContext";
 
@@ -35,7 +37,9 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     super(props);
   }
   public componentWillUnmount() {
-    this.hideModal();
+    if (!isNewCduFlow) {
+      this.hideModal();
+    }
   }
 
   private hideModal = () => {
@@ -56,7 +60,11 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
             this.hideModal();
           }}
           onWillFocus={() => {
-            this.props.showModal(<RemindEmailValidationOverlay />);
+            if (isNewCduFlow) {
+              this.props.showModal(<NewRemindEmailValidationOverlay />);
+            } else {
+              this.props.showModal(<RemindEmailValidationOverlay />);
+            }
           }}
         />
       </View>

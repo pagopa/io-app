@@ -9,7 +9,8 @@ import { NavigationEvents } from "@react-navigation/compat";
 import {
   IOColors,
   VSpacer,
-  ContentWrapper
+  ContentWrapper,
+  Alert
 } from "@pagopa/io-app-design-system";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -24,7 +25,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useIOSelector } from "../../store/hooks";
 import { testLoginSelector } from "../../store/reducers/testLogin";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
-import { Alert } from "../../components/Alert";
 import {
   testLoginCleanUp,
   testLoginRequest
