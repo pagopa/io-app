@@ -4,7 +4,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
-import { refreshSessionToken } from "../../../fastLogin/store/actions";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayUnsubscriptionRoutes } from "../navigation/navigator";
 
 const createActionsImplementation = (
