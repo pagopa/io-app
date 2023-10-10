@@ -93,6 +93,9 @@ const ItwHomeScreen = () => {
           }
         >
           <ItwCredentialCard
+            credential={I18n.t(
+              "features.itWallet.verifiableCredentials.type.digitalCredential"
+            )}
             name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
             fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
             backgroundImage={require("../assets/img/pidCredentialCard.png")}
