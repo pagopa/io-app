@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import {
   Badge,
   ButtonLink,
@@ -22,6 +22,8 @@ import ROUTES from "../../navigation/routes";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import I18n from "../../i18n";
+import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
+import { useIODispatch } from "../../store/hooks";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
@@ -38,16 +40,18 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 const NewOptInScreen = (props: Props) => {
+  const dispatch = useIODispatch();
+
   const navigation = useNavigation();
 
-  const navigateToIdpPage = () => {
-    // FIXME -> add business logic using selector -> https://pagopa.atlassian.net/browse/IOPID-894 (add navigation to cie or idp screen)
+  const navigateToIdpPage = (isLV: boolean) => {
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen:
         props.route.params.identifier === "CIE"
           ? ROUTES.CIE_PIN_SCREEN
           : ROUTES.AUTHENTICATION_IDP_SELECTION
     });
+    dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
 
   const dismiss = () => {
@@ -121,7 +125,7 @@ const NewOptInScreen = (props: Props) => {
             fullWidth
             label={I18n.t("authentication.opt-in.button-accept-lv")}
             accessibilityLabel={"Click to continue with fast access"}
-            onPress={navigateToIdpPage}
+            onPress={() => navigateToIdpPage(true)}
             testID="accept-button-test"
           />
         }
@@ -129,15 +133,17 @@ const NewOptInScreen = (props: Props) => {
           <ButtonLink
             label={I18n.t("authentication.opt-in.button-decline-lv")}
             accessibilityLabel={"Click to continue with classic access"}
-            onPress={navigateToIdpPage}
+            onPress={() => navigateToIdpPage(false)}
             testID="decline-button-test"
           />
         }
       >
         <ContentWrapper>
-          <View style={IOStyles.selfCenter} testID="pictogram-test">
-            <Pictogram name="passcode" size={120} />
-          </View>
+          {Dimensions.get("screen").height > 780 && (
+            <View style={IOStyles.selfCenter} testID="pictogram-test">
+              <Pictogram name="passcode" size={120} />
+            </View>
+          )}
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
             <Badge
