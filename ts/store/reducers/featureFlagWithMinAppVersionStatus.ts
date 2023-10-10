@@ -46,7 +46,8 @@ type CheckPropertyWithMinAppVersionParameters<
     }
 );
 
-/** This function checks that a feature flag is enabled by checking the local option and the minimum
+/** 
+* This function checks that a feature flag is enabled by checking the local option and the minimum
 * version of the feature set remotely.
 * It is possible to specify an optional configuration that corresponds to a feature flag nested into the main one.
 * If the main FF is deactivated, any nested FF will also be considered deactivated.
