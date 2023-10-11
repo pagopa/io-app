@@ -88,7 +88,7 @@ const ItwPidPreviewScreen = () => {
               name={name}
               fiscalCode={fiscalCode}
               textColor="white"
-              backgroundImage={require("../../assets/img/pidCredentialCard.png")}
+              backgroundImage={require("../../assets/img/credentials/cards/pidFront.png")}
             />
             <VSpacer />
             <FeatureInfo
