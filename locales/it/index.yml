@@ -3327,6 +3327,18 @@ features:
           title: Stai aggiungendo {{credentialName}} al Portafoglio
         toast: 
           cancel: "Tessera non aggiunta al Portafoglio."
+      credentialsIssuingInfoScreen:
+        title: "Dati necessari per aggiungere la tessera"
+        subtitle: "{{authsource}} li invierà a {{organization}}."
+        readMore: "Scopri di più"
+        dataSource: "Forniti da {{authsource}}"
+        infoBottomSheet:
+          title: "Trattamento dei dati"
+          body:
+            firstHeaderTitle: "Perché è necessario?"
+            firstBodyContent: "Per ottenere il rilascio della tessera L’ente autorizzato ad emettere questa tessera ha bisogno di leggere i tuoi dati per verificarne l’identità."
+            secondHeaderTitle: "Sicurezza del trattamento"
+            secondBodyContent: "App IO consente la condivisione dei tuoi dati solo con enti verificati e iscritti alle liste che ne garantiscono l’affidabilità."
     presentation: 
       credentialDetails: 
         buttons: 
