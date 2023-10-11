@@ -1,10 +1,9 @@
-import { ContentWrapper, Divider } from "@pagopa/io-app-design-system";
+import { ContentWrapper, Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import React from "react";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { NewH2 } from "../../../../components/core/typography/NewH2";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
