@@ -20,6 +20,7 @@ import {
   barcodesScannerConfigSelector,
   isIdPayEnabledSelector
 } from "../../../store/reducers/backendStatus";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
@@ -107,13 +108,23 @@ const BarcodeScanScreen = () => {
     title: ""
   });
 
-  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(
-    format => !dataMatrixPosteEnabled && format === "DATA_MATRIX"
-  );
+  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
+    switch (format) {
+      case "DATA_MATRIX":
+        return dataMatrixPosteEnabled;
+      default:
+        return true;
+    }
+  });
 
-  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(
-    type => !isIdPayEnabled && type === "IDPAY"
-  );
+  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(type => {
+    switch (type) {
+      case "IDPAY":
+        return isIdPayEnabled;
+      default:
+        return true;
+    }
+  });
 
   return (
     <>
@@ -123,6 +134,7 @@ const BarcodeScanScreen = () => {
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}
+        contextualHelp={emptyContextualHelp}
       />
       {manualInputModal.bottomSheet}
     </>

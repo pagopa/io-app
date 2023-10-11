@@ -39,6 +39,10 @@ import {
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
 import {
+  WalletPaymentNavigator,
+  WalletPaymentRoutes
+} from "../features/walletV3/payment/navigation/navigator";
+import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
 } from "../features/idpay/details/navigation";
@@ -112,7 +116,10 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
-        options={{ gestureEnabled: false }}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: false
+        }}
       />
 
       {cgnEnabled && (
@@ -215,6 +222,15 @@ const AuthenticatedStackNavigator = () => {
         name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
         component={WalletOnboardingNavigator}
         options={{ gestureEnabled: isGestureEnabled }}
+      />
+      <Stack.Screen
+        name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
+        component={WalletPaymentNavigator}
+        options={{
+          /* FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator */
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled
+        }}
       />
     </Stack.Navigator>
   );
