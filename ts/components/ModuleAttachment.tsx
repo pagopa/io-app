@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import {
   ActivityIndicator,
+  GestureResponderEvent,
   Pressable,
   PressableProps,
   StyleSheet,
@@ -8,13 +9,13 @@ import {
 } from "react-native";
 import {
   IOColors,
+  IOIconSizeScale,
   IOIcons,
-  IOListItemLogoMargin,
   IOListItemVisualParams,
   IOScaleValues,
+  IOSpacingScale,
   IOSpringValues,
   IOStyles,
-  IOVisualCostants,
   Icon,
   LabelSmall,
   VSpacer,
@@ -29,6 +30,7 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
+import I18n from "../i18n";
 
 type PartialProps = WithTestID<{
   title: string;
@@ -36,6 +38,7 @@ type PartialProps = WithTestID<{
   subtitle?: string;
   isLoading?: boolean;
   isFetching?: boolean;
+  onPress: (event: GestureResponderEvent) => void;
 }>;
 
 export type ModuleAttachmentProps = PartialProps &
@@ -63,8 +66,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const LOGO_SIZE = 44;
 const DISABLED_OPACITY = 0.5;
+const ICON_SIZE: IOIconSizeScale = 32;
+const MARGIN_SIZE: IOSpacingScale = 16;
 
 const ModuleAttachmentContent = ({
   isFetching,
@@ -78,7 +82,18 @@ const ModuleAttachmentContent = ({
   const IconOrActivityIndicatorComponent = () => {
     if (isFetching) {
       return (
-        <ActivityIndicator color={IOColors.blue} accessibilityHint="fetching" />
+        <ActivityIndicator
+          color={IOColors.blue}
+          accessible={true}
+          accessibilityHint={I18n.t(
+            "global.accessibility.activityIndicator.hint"
+          )}
+          accessibilityLabel={I18n.t(
+            "global.accessibility.activityIndicator.label"
+          )}
+          importantForAccessibility={"no-hide-descendants"}
+          testID={"activityIndicator"}
+        />
       );
     }
 
@@ -94,14 +109,8 @@ const ModuleAttachmentContent = ({
   return (
     <>
       {iconName && (
-        <View
-          style={{
-            marginRight: IOListItemLogoMargin,
-            width: LOGO_SIZE,
-            alignItems: "center"
-          }}
-        >
-          <Icon name={iconName} size={32} color="blue" />
+        <View style={{ marginRight: MARGIN_SIZE }}>
+          <Icon name={iconName} size={ICON_SIZE} color="blue" />
         </View>
       )}
       <View style={IOStyles.flex}>
@@ -176,6 +185,16 @@ export const ModuleAttachment = ({
     isPressed.value = 0;
   }, [isPressed]);
 
+  const handleOnPress = useCallback(
+    (event: GestureResponderEvent) => {
+      if (isFetching) {
+        return;
+      }
+      onPress(event);
+    },
+    [isFetching, onPress]
+  );
+
   if (isLoading) {
     return <SkeletonComponent />;
   }
@@ -183,7 +202,7 @@ export const ModuleAttachment = ({
   return (
     <Pressable
       testID={testID}
-      onPress={onPress}
+      onPress={handleOnPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       accessible={true}
@@ -206,11 +225,11 @@ export const ModuleAttachment = ({
 
 const SkeletonComponent = () => (
   <View style={styles.button} accessible={false}>
-    <View style={{ marginRight: IOListItemLogoMargin }}>
+    <View style={{ marginRight: MARGIN_SIZE }}>
       <Placeholder.Box
         animate="fade"
-        height={IOVisualCostants.avatarSizeSmall}
-        width={IOVisualCostants.avatarSizeSmall}
+        height={ICON_SIZE}
+        width={ICON_SIZE}
         radius={100}
       />
     </View>
