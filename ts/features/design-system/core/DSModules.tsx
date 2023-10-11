@@ -8,6 +8,7 @@ import {
   PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { ModuleAttachment } from "../../../components/ModuleAttachment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -34,6 +35,17 @@ export const DSModules = () => (
   <IOThemeContext.Consumer>
     {theme => (
       <DesignSystemScreen title="Modules">
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16 }}
+        >
+          ModuleAttachment
+        </H2>
+        {renderModuleAttachment()}
+
+        <VSpacer size={40} />
+
         <H2
           color={theme["textHeading-default"]}
           weight={"SemiBold"}
@@ -67,6 +79,56 @@ export const DSModules = () => (
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
+);
+
+const renderModuleAttachment = () => (
+  <DSComponentViewerBox name="ModuleAttachment">
+    <View>
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        iconName="docAttachPDF"
+        isLoading={true}
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        iconName="docAttachPDF"
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        iconName="docAttachPDF"
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title={"This is a very loooooooooooooooooooooong title"}
+        subtitle={"This is a very loooooooooooong subtitle"}
+        iconName="docAttachPDF"
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        iconName="docAttachPDF"
+        isFetching={true}
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        iconName="docAttachPDF"
+        disabled={true}
+        onPress={onButtonPress}
+      />
+    </View>
+  </DSComponentViewerBox>
 );
 
 const renderModulePaymentNotice = () => (
