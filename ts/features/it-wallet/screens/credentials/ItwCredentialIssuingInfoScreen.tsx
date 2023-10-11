@@ -124,7 +124,7 @@ const ItwCredentialIssuingInfoScreen = () => {
         </ScrollView>
         <FooterWithButtons
           primary={{
-            type: "Solid",
+            type: "Outline",
             buttonProps: {
               color: "primary",
               accessibilityLabel: I18n.t("global.buttons.cancel"),
@@ -133,7 +133,7 @@ const ItwCredentialIssuingInfoScreen = () => {
             }
           }}
           secondary={{
-            type: "Outline",
+            type: "Solid",
             buttonProps: {
               color: "primary",
               accessibilityLabel: I18n.t("global.buttons.continue"),
