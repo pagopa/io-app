@@ -18,7 +18,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageLoading } from "../../messages/components/MessageLoading";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
-import { LegacyPnMessageDetails } from "../components/LegacyPnMessageDetails";
+import { MessageDetails } from "../components/MessageDetails";
 import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
@@ -27,8 +27,8 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import { isCancelledFromPNMessagePot, paymentFromPNMessagePot } from "../utils";
-import { trackPNUxSuccess } from "../analytics";
 import { getRptIdFromPayment } from "../utils/rptId";
+import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
@@ -53,7 +53,7 @@ const renderMessage = (
     () => <PnMessageDetailsError onRetry={onRetry} />,
     messageOption =>
       O.isSome(messageOption) ? (
-        <LegacyPnMessageDetails
+        <MessageDetails
           messageId={messageId}
           message={messageOption.value}
           service={service}
@@ -69,7 +69,7 @@ const renderMessage = (
     () => <></>
   );
 
-export const LegacyPnMessageDetailsScreen = (
+export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
   const { messageId, serviceId, firstTimeOpening } = props.route.params;

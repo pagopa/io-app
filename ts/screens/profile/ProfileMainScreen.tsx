@@ -9,6 +9,7 @@ import {
   Divider,
   ListItemInfoCopy,
   ListItemNav,
+  ListItemSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
@@ -62,7 +63,6 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
-import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -135,7 +135,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     description?: string
   ) {
     return (
-      <SwitchListItem
+      <ListItemSwitch
         label={title}
         description={description}
         value={switchValue}

@@ -15,7 +15,7 @@ export function* handleInitiativeInstrumentDelete(
   deleteInstrument: IDPayClient["deleteInstrument"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idpayInitiativesInstrumentDelete["request"]>
+  action: ActionType<(typeof idpayInitiativesInstrumentDelete)["request"]>
 ) {
   const updateInstrumentStatusRequest = deleteInstrument({
     bearerAuth: bearerToken,
