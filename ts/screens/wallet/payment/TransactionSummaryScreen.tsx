@@ -137,9 +137,9 @@ const renderFooter = (
     }
   }
   if (isLoading) {
-    // FIXME: Add a ButtonSolid with a loading spinner as soon as it's available by DS (https://pagopa.atlassian.net/browse/IOBP-302)
     return (
       <ButtonSolid
+        loading
         onPress={() => constNull}
         fullWidth
         label={I18n.t("wallet.continue")}
