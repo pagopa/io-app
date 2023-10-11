@@ -98,6 +98,8 @@ const ItwCredentialPreviewScreen = () => {
         onPress: () => showCancelAlert(alertOnPress)
       }
     };
+
+    const title = credential.title;
     const name =
       credential.claims.givenName + " " + credential.claims.familyName;
     const fiscalCode = credential.claims.taxIdCode;
@@ -115,6 +117,7 @@ const ItwCredentialPreviewScreen = () => {
           </Body>
           <VSpacer />
           <ItwCredentialCard
+            title={title}
             name={name}
             fiscalCode={fiscalCode}
             backgroundImage={credential.image}
