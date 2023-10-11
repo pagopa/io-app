@@ -54,6 +54,7 @@ const ItwPidDetails = () => {
             )}
             name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
             fiscalCode={decodedPid.pid.claims.taxIdCode as string}
+            textColor="white"
             backgroundImage={require("../../assets/img/pidCredentialCard.png")}
           />
           <VSpacer />

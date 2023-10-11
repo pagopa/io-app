@@ -16,6 +16,7 @@ type Props = {
   title: string;
   name: string;
   fiscalCode: string;
+  textColor: React.ComponentProps<typeof H3>["color"];
   backgroundImage: ImageSourcePropType;
 };
 
@@ -73,27 +74,28 @@ const ItwCredentialCard = ({
   title,
   name,
   fiscalCode,
+  textColor,
   backgroundImage
 }: Props) => (
   <View>
     <Image source={backgroundImage} style={styles.cardBackground} />
     <H3
-      color="white"
+      color={textColor}
       accessibilityLabel={name}
       style={[styles.text, styles.titleText]}
     >
       {title}
     </H3>
     <H6
+      color={textColor}
       style={[styles.text, styles.nameText]}
-      color="white"
       accessibilityLabel={name}
     >
       {name}
     </H6>
     <H6
+      color={textColor}
       style={[styles.text, styles.fiscalCodeText]}
-      color="white"
       accessibilityLabel={name}
     >
       {fiscalCode}
