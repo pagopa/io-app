@@ -9,6 +9,8 @@ import {
   GradientScrollView,
   H3,
   IOStyles,
+  LabelLink,
+  LabelSmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -24,10 +26,11 @@ import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsLi
 import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
 import { useIODispatch } from "../../store/hooks";
+import { TranslationKeys } from "../../../locales/locales";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.insert.help.title",
-  body: "email.insert.help.content"
+  title: "authentication.landing.contextualHelpTitle",
+  body: "authentication.landing.contextualHelpContent"
 };
 
 export type ChoosedIdentifier = {
@@ -54,9 +57,17 @@ const NewOptInScreen = (props: Props) => {
     dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
 
-  const dismiss = () => {
-    dismissVeryLongAutoresizableBottomSheetWithFooter();
-  };
+  const renderItem = (value: TranslationKeys) => (
+    <LabelSmall weight="Regular" color="grey-700">
+      {I18n.t(value)}{" "}
+      <LabelLink
+        onPress={() => openWebUrl("https://ioapp.it/it/accedi")}
+        testID="link-test"
+      >
+        {I18n.t("authentication.opt-in.io-site")}
+      </LabelLink>
+    </LabelSmall>
+  );
 
   const ModalContent = () => (
     <>
@@ -67,16 +78,12 @@ const NewOptInScreen = (props: Props) => {
       <VSpacer size={16} />
       <FeatureInfo
         iconName="logout"
-        body={I18n.t("authentication.opt-in.io-logout")}
-        actionLabel={I18n.t("authentication.opt-in.io-site")}
-        actionOnPress={() => openWebUrl("https://ioapp.it/it/accedi")}
+        body={renderItem("authentication.opt-in.io-logout")}
       />
       <VSpacer size={16} />
       <FeatureInfo
         iconName="locked"
-        body={I18n.t("authentication.opt-in.io-lock-access")}
-        actionLabel={I18n.t("authentication.opt-in.io-site")}
-        actionOnPress={() => openWebUrl("https://ioapp.it/it/accedi")}
+        body={renderItem("authentication.opt-in.io-lock-access")}
       />
       <VSpacer size={16} />
       <FeatureInfo
@@ -86,31 +93,16 @@ const NewOptInScreen = (props: Props) => {
     </>
   );
 
-  const defaultFooter = (
-    <ContentWrapper>
-      <VSpacer size={16} />
-      <ButtonSolid
-        fullWidth
-        accessibilityLabel="Tap to dismiss the bottom sheet"
-        label={I18n.t("authentication.opt-in.close-modal-button")}
-        onPress={dismiss}
-      />
-      <VSpacer size={16} />
-    </ContentWrapper>
-  );
-
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
-    bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
-    dismiss: dismissVeryLongAutoresizableBottomSheetWithFooter
+    bottomSheet: veryLongAutoResizableBottomSheetWithFooter
   } = useIOBottomSheetAutoresizableModal(
     {
       title: I18n.t("authentication.opt-in.security-suggests"),
       component: <ModalContent />,
-      footer: defaultFooter,
       fullScreen: true
     },
-    180
+    120
   );
 
   return (

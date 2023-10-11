@@ -764,7 +764,6 @@ authentication:
     io-logout: Se perdi il dispositivo, esci da IO da
     io-lock-access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
     access-new-device: Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app.
-    close-modal-button: Ho capito
     io-site: ioapp.it
   idp_selection:
     headerTitle: Home

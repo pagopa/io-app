@@ -752,7 +752,6 @@ authentication:
     io-logout: If you lose your device, exit the IO from
     io-lock-access: If you think your SPID or CIE credentials are compromised, block IO access from
     access-new-device: Make sure to sign out of the app if you sign in to IO with a device that is not yours.
-    close-modal-button: I understand
     io-site: ioapp.it
   idp_selection:
     headerTitle: Home

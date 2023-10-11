@@ -57,8 +57,11 @@ import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { openWebUrl } from "../../utils/url";
-import { cieSpidMoreInfoUrl, fastLoginEnabled } from "../../config";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { cieSpidMoreInfoUrl } from "../../config";
+import {
+  fastLoginOptInFFEnabled,
+  isFastLoginEnabledSelector
+} from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 
@@ -225,7 +228,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
     });
 
   private navigateToIdpSelection = () => {
-    if (fastLoginEnabled) {
+    if (this.props.isFastLoginOptInFFEnabled) {
       this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_OPT_IN,
         params: { identifier: "SPID" }
@@ -240,7 +243,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   private navigateToCiePinScreen = () => {
     if (this.isCieSupported()) {
       this.props.dispatchIdpCieSelected();
-      if (fastLoginEnabled) {
+      if (this.props.isFastLoginOptInFFEnabled) {
         this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
           screen: ROUTES.AUTHENTICATION_OPT_IN,
           params: { identifier: "CIE" }
@@ -301,7 +304,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           <InfoScreenComponent
             title={I18n.t("authentication.landing.session_expired.title")}
             body={I18n.t("authentication.landing.session_expired.body", {
-              days: this.props.isFastLoginFeatureFlagEnabled ? "365" : "30"
+              days: this.props.isFastLoginEnabled ? "365" : "30"
             })}
             image={renderInfoRasterImage(sessionExpiredImg)}
           />
@@ -441,8 +444,9 @@ const mapStateToProps = (state: GlobalState) => {
   const hasApiLevelSupport = hasApiLevelSupportSelector(state);
   const hasNFCFeature = hasNFCFeatureSelector(state);
   return {
-    isFastLoginFeatureFlagEnabled: isFastLoginEnabledSelector(state),
+    isFastLoginEnabled: isFastLoginEnabledSelector(state),
     isSessionExpired: isSessionExpiredSelector(state),
+    isFastLoginOptInFFEnabled: fastLoginOptInFFEnabled(state),
     continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
     hasCieApiLevelSupport: pot.getOrElse(hasApiLevelSupport, false),
