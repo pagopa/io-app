@@ -1,3 +1,4 @@
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -13,22 +14,21 @@ import DocumentPicker, {
 } from "react-native-document-picker";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
-import { imageDecodingTask } from "../utils/imageDecodingTask";
-import { imageGenerationTask } from "../utils/imageGenerationTask";
-import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
   trackBarcodeImageUpload,
   trackBarcodeUploadPath
 } from "../analytics";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import { BarcodeFailure } from "../types/failure";
+import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
+import { imageDecodingTask } from "../utils/imageDecodingTask";
+import { imageGenerationTask } from "../utils/imageGenerationTask";
 
 type IOBarcodeFileScanner = {
   /**

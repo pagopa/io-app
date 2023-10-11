@@ -27,6 +27,7 @@ import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
 import { FAQsCategoriesType } from "../../../utils/faq";
+import { isAndroid } from "../../../utils/platform";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields
@@ -295,8 +296,8 @@ const BarcodeScanBaseScreenComponent = ({
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar
             barStyle={"light-content"}
-            backgroundColor={"transparent"}
-            translucent={true}
+            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
+            translucent={false}
           />
         </SafeAreaView>
       </LinearGradient>

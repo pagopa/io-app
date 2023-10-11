@@ -16,10 +16,10 @@ import {
   paymentInitializeState
 } from "../../../../store/actions/wallet/payment";
 import { useIODispatch } from "../../../../store/hooks";
+import * as analytics from "../../../barcode/analytics";
 import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
 import { PaymentNoticeListItem } from "../components/PaymentNoticeListItem";
 import { WalletPaymentParamsList } from "../navigation/params";
-import * as analytics from "../../../barcode/analytics";
 
 type WalletPaymentBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
