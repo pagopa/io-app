@@ -116,27 +116,29 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        <Tab.Screen
-          name={ROUTES.BARCODE_SCAN}
-          component={EmptyComponent}
-          listeners={{
-            tabPress: ({ preventDefault }) => {
-              preventDefault();
-              navigateToBarcodeScanScreen();
-            }
-          }}
-          options={{
-            title: I18n.t("global.navigator.scan"),
-            tabBarIcon: ({ color, focused }) => (
-              <TabIconComponent
-                iconName={"navScan"}
-                iconNameFocused={"navScan"}
-                color={color}
-                focused={focused}
-              />
-            )
-          }}
-        />
+        {isDesignSystemEnabled && (
+          <Tab.Screen
+            name={ROUTES.BARCODE_SCAN}
+            component={EmptyComponent}
+            listeners={{
+              tabPress: ({ preventDefault }) => {
+                preventDefault();
+                navigateToBarcodeScanScreen();
+              }
+            }}
+            options={{
+              title: I18n.t("global.navigator.scan"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navScan"}
+                  iconNameFocused={"navScan"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
         <Tab.Screen
           name={ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
