@@ -37,8 +37,10 @@ const WalletPaymentBarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
-  const handleBarcodeSuccess = (barcode: IOBarcode) => {
+  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    const barcode = barcodes[0];
 
     if (barcode.type === "PAGOPA") {
       dispatch(paymentInitializeState());
