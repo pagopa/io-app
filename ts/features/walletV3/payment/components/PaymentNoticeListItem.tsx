@@ -1,6 +1,7 @@
 import {
   HSpacer,
   Icon,
+  Label,
   PressableListItemBase
 } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -42,7 +43,9 @@ const PaymentNoticeListItem = ({
   return (
     <PressableListItemBase onPress={onPress}>
       <View style={{ flexGrow: 1 }}>
-        <LabelSmall>{paymentNoticeNumber}</LabelSmall>
+        <Label weight="Regular" color="black">
+          {paymentNoticeNumber}
+        </Label>
         <LabelSmall weight="Regular" color="grey-700">
           {organizationFiscalCode}
         </LabelSmall>
