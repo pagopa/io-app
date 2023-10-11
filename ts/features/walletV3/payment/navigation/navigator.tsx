@@ -6,17 +6,10 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
+import { WalletPaymentBarcodeChoiceScreen } from "../screens/WalletPaymentBarcodeChoiceScreen";
 import { WalletPaymentBarcodeScanScreen } from "../screens/WalletPaymentBarcodeScanScreen";
-
-export const WalletPaymentRoutes = {
-  WALLET_PAYMENT_MAIN: "_PAYMENT_MAIN",
-  WALLET_PAYMENT_BARCODE_SCAN: "WALLET_PAYMENT_BARCODE_SCAN"
-} as const;
-
-export type WalletPaymentParamsList = {
-  [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN]: undefined;
-};
+import { WalletPaymentParamsList } from "./params";
+import { WalletPaymentRoutes } from "./routes";
 
 const Stack = createStackNavigator<WalletPaymentParamsList>();
 
@@ -31,6 +24,13 @@ export const WalletPaymentNavigator = () => (
       component={WalletPaymentBarcodeScanScreen}
       options={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
+        gestureEnabled: isGestureEnabled
+      }}
+    />
+    <Stack.Screen
+      name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE}
+      component={WalletPaymentBarcodeChoiceScreen}
+      options={{
         gestureEnabled: isGestureEnabled
       }}
     />
