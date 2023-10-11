@@ -4,6 +4,7 @@ import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import {
   ContextualHelpProps,
@@ -31,7 +32,6 @@ import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type HelpProps = {
