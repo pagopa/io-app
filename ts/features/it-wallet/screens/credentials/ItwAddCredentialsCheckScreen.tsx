@@ -3,7 +3,6 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Alert } from "react-native";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";

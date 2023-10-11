@@ -9,12 +9,12 @@ import { CredentialCatalogItem } from "../utils/mocks";
 import I18n from "../../../i18n";
 
 /**
- * This type is used to extract the claims from the PID type and exclude the placeOfBirth claim since we don't use it.
+ * This type is used to extract the claims from the credential mock type.
  */
 type ClaimsType = Partial<keyof CredentialCatalogItem["claims"]>;
 
 /**
- * This type represents the props of the common ClaimsList component without the securityLevel prop.
+ * This type represents the props of the ClaimsList component.
  */
 type ClaimsListProps = {
   credential: CredentialCatalogItem;
@@ -23,16 +23,11 @@ type ClaimsListProps = {
 };
 
 /**
- * This component renders the list of claims for a PID credential.
+ * This component renders the list of claims for a credential.
  * It dinamically renders the list of claims passed as claims prop in the order they are passed.
- * It also renders the expiry date, the issuer info and the security level if the props are passed.
- * When the securityLevel prop is passed, the onLinkPress prop is required.
+ * @param credential - contains the credential.
  * @param claims - contains the claim to be displayed.
- * @param decodedPid - contains the decoded PID.
- * @param expiryDate - if true, renders the expiry date.
- * @param issuerInfo - if true, renders the issuer info.
- * @param securityLevel - if true, renders the security level.
- * @param onLinkPress - function to be called when the security level link is pressed, required only if securityLevel is true.
+ * @param onLinkPress - function to be called for the issuer info action. To be passed only if claims contains the issuedByNew claim.
  */
 const ItwCredentialClaimsList = ({
   credential,

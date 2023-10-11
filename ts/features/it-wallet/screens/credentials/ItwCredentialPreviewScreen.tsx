@@ -30,12 +30,15 @@ import { useItwInfoFlow } from "../../hooks/useItwInfoFlow";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 
+/**
+ * Type for the content view component props.
+ */
 type ContentViewProps = {
   credential: CredentialCatalogItem;
 };
 
 /**
- * Renders a preview screen which displays a visual representation and the claims contained in the PID.
+ * Renders a preview screen which displays a visual representation and the claims contained in the credential.
  */
 const ItwCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -75,10 +78,13 @@ const ItwCredentialPreviewScreen = () => {
   };
 
   /**
-   * Renders the content of the screen if the PID is decoded.
-   * @param decodedPip - the decoded PID
+   * Renders the content of the screen if the credential is some.
+   * @param credential - credential to be displayed
    */
   const ContentView = ({ credential }: ContentViewProps) => {
+    /**
+     * Button props for the FooterWithButtons component which opens the PIN screen.
+     */
     const confirmButtonProps: BlockButtonProps = {
       type: "Solid",
       buttonProps: {
@@ -87,8 +93,9 @@ const ItwCredentialPreviewScreen = () => {
         onPress: () => null // TODO(SIW-449): Add navigation to the PIN screen
       }
     };
+
     /**
-     * Buttons props for the FooterWithButtons component which goes back to the previous screen.
+     * Button props for the FooterWithButtons component which opens an alert screen.
      */
     const cancelButtonProps: BlockButtonProps = {
       type: "Outline",
@@ -160,6 +167,10 @@ const ItwCredentialPreviewScreen = () => {
     );
   };
 
+  /**
+   * Checks if credential is some or none and renders the content of the screen or an error view.
+   * @returns the content of the screen if the credential is some, an error view otherwise.
+   */
   const ContentOrErrorView = () =>
     pipe(
       credential,

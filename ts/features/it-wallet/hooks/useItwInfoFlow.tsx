@@ -4,18 +4,26 @@ import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
+/**
+ * The type of the content of the bottom sheet.
+ */
 type ItwInfoFlowContentType = {
   title: string;
   body: string;
 };
 
+/**
+ * Type of the props of the hook.
+ */
 type ItwInfoFlowProps = {
   title: string;
   content: Array<ItwInfoFlowContentType>;
 };
 
 /**
- * A hook that returns a function to present the reset wallet bottom sheet in the wallet home screen.
+ * A hook that returns a function to present an info bottom sheet.
+ * @param title - the title of the bottom sheet.
+ * @param content - the content of the bottom sheet. Consists of an array of objects with a title and a body.
  */
 export const useItwInfoFlow = ({ title, content }: ItwInfoFlowProps) => {
   const BottomSheetBody = () => (
