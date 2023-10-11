@@ -1,5 +1,5 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
-import { IOIcons } from "@pagopa/io-app-design-system";
+import { H3, IOIcons } from "@pagopa/io-app-design-system";
 import { ImageSourcePropType } from "react-native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import I18n from "../../../i18n";
@@ -57,6 +57,7 @@ export type CredentialCatalogItem = {
     taxIdCode: string;
     birthdate: string;
   };
+  textColor: React.ComponentProps<typeof H3>["color"];
   image: ImageSourcePropType;
   requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
 };
@@ -76,6 +77,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
     },
+    textColor: "black",
     image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
     requestedClaims: (decodedPid: PidWithToken) =>
       getRequestedClaims(decodedPid)
@@ -92,6 +94,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
     },
+    textColor: "black",
     image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
     requestedClaims: (decodedPid: PidWithToken) =>
       getRequestedClaims(decodedPid)
@@ -110,6 +113,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
     },
+    textColor: "black",
     image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
     requestedClaims: (decodedPid: PidWithToken) =>
       getRequestedClaims(decodedPid)

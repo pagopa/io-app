@@ -127,6 +127,7 @@ const ItwCredentialPreviewScreen = () => {
             title={title}
             name={name}
             fiscalCode={fiscalCode}
+            textColor={credential.textColor}
             backgroundImage={credential.image}
           />
           <VSpacer />
