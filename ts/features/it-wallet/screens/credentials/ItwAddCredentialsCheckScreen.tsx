@@ -23,6 +23,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import ItwContinueScreen from "../../components/ItwResultComponent";
 import ROUTES from "../../../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 /**
  * ItwAddCredentialsCheckScreen screen navigation params.
@@ -99,7 +100,8 @@ const ItwAddCredentialsCheckScreen = () => {
           action={{
             label: I18n.t("global.buttons.confirm"),
             accessibilityLabel: I18n.t("global.buttons.confirm"),
-            onPress: () => null
+            onPress: () =>
+              navigation.navigate(ITW_ROUTES.CREDENTIALS.ISSUING_INFO)
           }}
           secondaryAction={{
             label: I18n.t("global.buttons.cancel"),
