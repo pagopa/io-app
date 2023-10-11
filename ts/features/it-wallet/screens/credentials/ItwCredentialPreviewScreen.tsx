@@ -161,8 +161,8 @@ const ItwCredentialPreviewScreen = () => {
         </ScrollView>
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
-          primary={confirmButtonProps}
-          secondary={cancelButtonProps}
+          primary={cancelButtonProps}
+          secondary={confirmButtonProps}
         />
       </SafeAreaView>
     );
