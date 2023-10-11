@@ -2,12 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
@@ -105,15 +105,11 @@ const DownloadProfileDataScreen = () => {
           {isMarkdownLoaded && (
             <FooterWithButtons
               type={"SingleButton"}
-              primary={{
-                type: "Solid",
-                buttonProps: {
-                  label: I18n.t("profile.main.privacy.exportData.cta"),
-                  onPress: handleDownloadPress,
-                  accessibilityLabel: I18n.t(
-                    "profile.main.privacy.exportData.cta"
-                  )
-                }
+              leftButton={{
+                block: true,
+                primary: true,
+                onPress: handleDownloadPress,
+                title: I18n.t("profile.main.privacy.exportData.cta")
               }}
             />
           )}
