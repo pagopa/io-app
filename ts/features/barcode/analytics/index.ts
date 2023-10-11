@@ -134,14 +134,15 @@ export const trackBarcodeScanTorch = () => {
   void mixpanelTrack("QRCODE_SCAN_TORCH", buildEventProperties("UX", "action"));
 };
 
-/*
-
-export const trackBarcodeMultipleCoudesSelection = () => {
+export const trackBarcodeManualEntryPath = (flow: BarcodeEventFlow) => {
   void mixpanelTrack(
-    "QRCODE_MULTIPLE_CODES_SELECTION",
-    buildEventProperties("UX", "action")
+    "QRCODE_MANUAL_ENTRY_PATH",
+    buildEventProperties("UX", "action", { flow })
   );
 };
+
+/*
+
 
 export const trackBarcodeUploadPath = (flow: BarcodeEventFlow) => {
   void mixpanelTrack(
@@ -150,12 +151,7 @@ export const trackBarcodeUploadPath = (flow: BarcodeEventFlow) => {
   );
 };
 
-export const trackBarcodeManualEntryPath = (flow: BarcodeEventFlow) => {
-  void mixpanelTrack(
-    "QRCODE_MANUAL_ENTRY_PATH",
-    buildEventProperties("UX", "action", { flow })
-  );
-};
+
 
 export const trackBarcodePaymentManualEntry = () => {
   void mixpanelTrack(

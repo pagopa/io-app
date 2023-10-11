@@ -100,11 +100,13 @@ const WalletPaymentBarcodeScanScreen = () => {
     analytics.trackBarcodeScanFailure("avviso", failure);
   };
 
-  const handleManualInputPressed = () =>
+  const handleManualInputPressed = () => {
+    analytics.trackBarcodeManualEntryPath("avviso");
     navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
       params: {}
     });
+  };
 
   return (
     <BarcodeScanBaseScreenComponent

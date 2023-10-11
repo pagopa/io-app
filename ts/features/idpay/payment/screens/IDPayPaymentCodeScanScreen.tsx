@@ -64,10 +64,12 @@ const IDPayPaymentCodeScanScreen = () => {
     analytics.trackBarcodeScanFailure("idpay", failure);
   };
 
-  const navigateToCodeInputScreen = () =>
+  const navigateToCodeInputScreen = () => {
+    analytics.trackBarcodeManualEntryPath("idpay");
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN, {
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
     });
+  };
 
   return (
     <BarcodeScanBaseScreenComponent

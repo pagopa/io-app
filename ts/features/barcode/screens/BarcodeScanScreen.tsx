@@ -197,6 +197,11 @@ const BarcodeScanScreen = () => {
     title: ""
   });
 
+  const handleManualInputPressed = () => {
+    analytics.trackBarcodeManualEntryPath("home");
+    manualInputModal.present();
+  };
+
   const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(
     format => !dataMatrixPosteEnabled && format === "DATA_MATRIX"
   );
@@ -212,7 +217,7 @@ const BarcodeScanScreen = () => {
         barcodeTypes={enabledTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
-        onManualInputPressed={manualInputModal.present}
+        onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
       />
       {manualInputModal.bottomSheet}
