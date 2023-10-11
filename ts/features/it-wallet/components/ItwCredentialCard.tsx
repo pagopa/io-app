@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ImageSourcePropType
 } from "react-native";
-import { H3, H6, IOColors } from "@pagopa/io-app-design-system";
+import { Body, H6, IOColors, Label } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 
 /**
@@ -16,7 +16,7 @@ type Props = {
   title: string;
   name: string;
   fiscalCode: string;
-  textColor: React.ComponentProps<typeof H3>["color"];
+  textColor: Extract<IOColors, "black" | "white">;
   backgroundImage: ImageSourcePropType;
 };
 
@@ -39,7 +39,7 @@ const NAME_MARGIN_TOP = 380 * SCALE_FACTOR;
 
 const FISCAL_CODE_MARGIN_TOP = NAME_MARGIN_TOP + 55 * SCALE_FACTOR;
 
-const TITLE_MARGIN_TOP = 40 * SCALE_FACTOR;
+const TITLE_MARGIN_TOP = 50 * SCALE_FACTOR;
 
 const styles = StyleSheet.create({
   cardBackground: {
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
   text: {
     position: "absolute",
     marginLeft: TEXT_LEFT_MARGIN,
-    color: IOColors.white
+    color: IOColors.white,
+    fontWeight: "700"
   },
   fiscalCodeText: {
     marginTop: FISCAL_CODE_MARGIN_TOP,
@@ -82,27 +83,29 @@ const ItwCredentialCard = ({
 }: Props) => (
   <View>
     <Image source={backgroundImage} style={styles.cardBackground} />
-    <H3
+    <H6
       color={textColor}
       accessibilityLabel={name}
       style={[styles.text, styles.titleText]}
     >
       {title}
-    </H3>
-    <H6
+    </H6>
+    <Label
+      weight="Regular"
       color={textColor}
       style={[styles.text, styles.nameText]}
       accessibilityLabel={name}
     >
       {name}
-    </H6>
-    <H6
+    </Label>
+    <Body
+      weight="SemiBold"
       color={textColor}
       style={[styles.text, styles.fiscalCodeText]}
       accessibilityLabel={name}
     >
       {fiscalCode}
-    </H6>
+    </Body>
   </View>
 );
 
