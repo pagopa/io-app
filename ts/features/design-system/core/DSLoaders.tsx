@@ -11,7 +11,6 @@ import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import I18n from "../../../i18n";
 import { H2 } from "../../../components/core/typography/H2";
-import { H3 } from "../../../components/core/typography/H3";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 export const DSLoaders = () => {
