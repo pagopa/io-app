@@ -217,6 +217,11 @@ const BarcodeScanBaseScreenComponent = ({
     requestCameraPermission
   ]);
 
+  const handleTorchToggle = () => {
+    analytics.trackBarcodeScanTorch();
+    toggleTorch();
+  };
+
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{cameraView}</View>
@@ -260,7 +265,7 @@ const BarcodeScanBaseScreenComponent = ({
                 ? {
                     iconName: isTorchOn ? "lightFilled" : "light",
                     accessibilityLabel: "torch",
-                    onPress: toggleTorch
+                    onPress: handleTorchToggle
                   }
                 : undefined
             }

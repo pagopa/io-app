@@ -116,17 +116,28 @@ export const trackBarcodeScanFailure = (
   }
 };
 
-/*
-export const trackBarcodeScanTorch = () => {
-  void mixpanelTrack("QRCODE_SCAN_TORCH", buildEventProperties("UX", "action"));
-};
-
-export const trackBarcodeMultipleCodes = () => {
+export const trackBarcodeMultipleCodesScreenView = () => {
   void mixpanelTrack(
     "QRCODE_MULTIPLE_CODES",
     buildEventProperties("UX", "screen_view")
   );
 };
+
+export const trackBarcodeMultipleCoudesSelection = () => {
+  void mixpanelTrack(
+    "QRCODE_MULTIPLE_CODES_SELECTION",
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackBarcodeScanTorch = () => {
+  void mixpanelTrack("QRCODE_SCAN_TORCH", buildEventProperties("UX", "action"));
+};
+
+/*
+
+
+
 
 export const trackBarcodeMultipleCoudesSelection = () => {
   void mixpanelTrack(

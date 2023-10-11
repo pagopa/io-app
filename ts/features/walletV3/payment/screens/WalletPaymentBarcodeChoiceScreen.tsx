@@ -1,6 +1,6 @@
 import { ContentWrapper, Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import React from "react";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -15,6 +15,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
 import { PaymentNoticeListItem } from "../components/PaymentNoticeListItem";
 import { WalletPaymentParamsList } from "../navigation/params";
+import * as analytics from "../../../barcode/analytics";
 
 type WalletPaymentBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
@@ -24,6 +25,10 @@ type WalletPaymentBarcodeChoiceScreenParams = {
 const WalletPaymentBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
 
+  useFocusEffect(() => {
+    analytics.trackBarcodeMultipleCodesScreenView();
+  });
+
   const route =
     useRoute<
       RouteProp<WalletPaymentParamsList, "WALLET_PAYMENT_BARCODE_CHOICE">
@@ -32,6 +37,8 @@ const WalletPaymentBarcodeChoiceScreen = () => {
   const { barcodes, paymentStartOrigin } = route.params;
 
   const handleBarcodeSelected = (barcode: PagoPaBarcode) => {
+    analytics.trackBarcodeMultipleCoudesSelection();
+
     dispatch(paymentInitializeState());
 
     navigateToPaymentTransactionSummaryScreen({
