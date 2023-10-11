@@ -19,6 +19,7 @@ import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
+import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -193,6 +194,16 @@ export function createRootReducer(
                 ...whatsNewInitialState,
                 // eslint-disable-next-line no-underscore-dangle
                 _persist: state.features.whatsNew._persist
+              },
+              loginFeatures: {
+                fastLogin: {
+                  optIn: {
+                    ...fastLoginOptInInitialState,
+                    _persist:
+                      // eslint-disable-next-line no-underscore-dangle
+                      state.features.loginFeatures.fastLogin.optIn._persist
+                  }
+                }
               },
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist

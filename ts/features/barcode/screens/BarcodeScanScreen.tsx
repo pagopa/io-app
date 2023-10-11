@@ -1,36 +1,44 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
-import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import {
+  PaymentStartOrigin,
+  paymentInitializeState
+} from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
   isIdPayEnabledSelector
 } from "../../../store/reducers/backendStatus";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
+import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import {
   IOBarcode,
   IOBarcodeOrigin,
   IO_BARCODE_ALL_FORMATS,
-  IO_BARCODE_ALL_TYPES
+  IO_BARCODE_ALL_TYPES,
+  PagoPaBarcode
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import * as analytics from "../analytics";
+import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -46,33 +54,102 @@ const BarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
-  const handleBarcodeSuccess = (
+  /**
+   * Handles the case with multiple barcodes.It gives priority to pagoPA barcodes.
+   * If barcode type does not support multiple barcode, it shows an alert.
+   * @param barcodes Array of scanned barcodes
+   */
+  const handleMultipleBarcodes = (
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => {
-    // TODO: handle multiple barcodes (IOBP-170)
-    const barcode = barcodes[0];
+    const barcodesByType = getIOBarcodesByType(barcodes);
 
+    if (barcodesByType.PAGOPA) {
+      const pagoPABarcodes = barcodesByType.PAGOPA as Array<PagoPaBarcode>;
+
+      ReactNativeHapticFeedback.trigger(
+        HapticFeedbackTypes.notificationSuccess
+      );
+
+      analytics.trackBarcodeScanSuccess("home", pagoPABarcodes[0], origin);
+
+      const hasDataMatrix = pagoPABarcodes.some(
+        barcode => barcode.format === "DATA_MATRIX"
+      );
+
+      const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
+        ? "poste_datamatrix_scan"
+        : "qrcode_scan";
+
+      if (hasDataMatrix) {
+        void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+      }
+
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+        params: {
+          barcodes: pagoPABarcodes,
+          paymentStartOrigin
+        }
+      });
+      return;
+    }
+
+    Alert.alert(
+      I18n.t("barcodeScan.multipleResultsAlert.title"),
+      I18n.t("barcodeScan.multipleResultsAlert.body"),
+      [
+        {
+          text: I18n.t(`barcodeScan.multipleResultsAlert.action`),
+          style: "default"
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  /**
+   * Handles a single barcode and navigates to the correct screen.
+   * @param barcode Scanned barcode
+   */
+  const handleSingleBarcode = (barcode: IOBarcode, origin: IOBarcodeOrigin) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
     analytics.trackBarcodeScanSuccess("home", barcode, origin);
 
     switch (barcode.type) {
-      case "IDPAY":
-        openDeepLink(barcode.authUrl);
-        break;
       case "PAGOPA":
         dispatch(paymentInitializeState());
+
+        const isDataMatrix = barcode.format === "DATA_MATRIX";
+
+        if (isDataMatrix) {
+          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+        }
 
         navigateToPaymentTransactionSummaryScreen({
           rptId: barcode.rptId,
           initialAmount: barcode.amount,
-          paymentStartOrigin:
-            barcode.format === "QR_CODE"
-              ? "qrcode_scan"
-              : "poste_datamatrix_scan"
+          paymentStartOrigin: isDataMatrix
+            ? "poste_datamatrix_scan"
+            : "qrcode_scan"
         });
         break;
+      case "IDPAY":
+        openDeepLink(barcode.authUrl);
+        break;
+    }
+  };
+
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
+    if (barcodes.length > 1) {
+      handleMultipleBarcodes(barcodes, origin);
+    } else if (barcodes.length > 0) {
+      handleSingleBarcode(barcodes[0], origin);
     }
   };
 
@@ -136,6 +213,7 @@ const BarcodeScanScreen = () => {
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}
+        contextualHelp={emptyContextualHelp}
       />
       {manualInputModal.bottomSheet}
     </>

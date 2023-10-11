@@ -18,3 +18,5 @@ export const IO_BARCODE_ALL_TYPES = Object.keys(
 export type IOBarcode = {
   format: IOBarcodeFormat;
 } & DecodedIOBarcode;
+
+export type PagoPaBarcode = IOBarcode & { type: "PAGOPA" };

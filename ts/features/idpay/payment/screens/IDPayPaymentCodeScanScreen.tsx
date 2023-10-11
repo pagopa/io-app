@@ -19,6 +19,7 @@ import {
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 import * as analytics from "../../../barcode/analytics";
 import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -51,7 +52,7 @@ const IDPayPaymentCodeScanScreen = () => {
 
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
-    analytics.trackBarcodeScanSuccess("home", barcode, origin);
+    analytics.trackBarcodeScanSuccess("idpay", barcode, origin);
 
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
@@ -75,6 +76,7 @@ const IDPayPaymentCodeScanScreen = () => {
       onBarcodeSuccess={handleBarcodeSuccess}
       onBarcodeError={handleBarcodeError}
       onManualInputPressed={navigateToCodeInputScreen}
+      contextualHelp={emptyContextualHelp}
     />
   );
 };

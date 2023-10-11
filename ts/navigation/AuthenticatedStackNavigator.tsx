@@ -38,6 +38,8 @@ import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
+import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
 import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
@@ -215,6 +217,15 @@ const AuthenticatedStackNavigator = () => {
         name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
         component={WalletOnboardingNavigator}
         options={{ gestureEnabled: isGestureEnabled }}
+      />
+      <Stack.Screen
+        name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
+        component={WalletPaymentNavigator}
+        options={{
+          /* FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator */
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled
+        }}
       />
     </Stack.Navigator>
   );
