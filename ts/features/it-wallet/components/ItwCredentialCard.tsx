@@ -7,13 +7,13 @@ import {
   ImageSourcePropType
 } from "react-native";
 import { H3, H6, IOColors } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 
 /**
- * Props for the component which consists of the name and fiscal code to be render on the card.
+ * Props for the component.
  */
 type Props = {
+  title: string;
   name: string;
   fiscalCode: string;
   backgroundImage: ImageSourcePropType;
@@ -64,9 +64,17 @@ const styles = StyleSheet.create({
 
 /**
  * Renders a card for the PID credential with the name and fiscal code of the owner.
- * @param props - props of the screen containg name and fiscal code.
+ * @param title - the credential title.
+ * @param name - the name of the owner.
+ * @param fiscalCode - the fiscal code of the owner.
+ * @param backgroundImage - the background image of the card.
  */
-const ItwCredentialCard = ({ name, fiscalCode, backgroundImage }: Props) => (
+const ItwCredentialCard = ({
+  title,
+  name,
+  fiscalCode,
+  backgroundImage
+}: Props) => (
   <View>
     <Image source={backgroundImage} style={styles.cardBackground} />
     <H3
@@ -74,7 +82,7 @@ const ItwCredentialCard = ({ name, fiscalCode, backgroundImage }: Props) => (
       accessibilityLabel={name}
       style={[styles.text, styles.titleText]}
     >
-      {I18n.t("features.itWallet.verifiableCredentials.type.digitalCredential")}
+      {title}
     </H3>
     <H6
       style={[styles.text, styles.nameText]}
