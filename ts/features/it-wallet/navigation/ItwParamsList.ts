@@ -35,6 +35,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.CREDENTIALS.CATALOG]: undefined;
   [ITW_ROUTES.CREDENTIALS
     .ADD_CHECKS]: ItwAddCredentialsCheckScreenNavigationParams;
+  [ITW_ROUTES.CREDENTIALS.ISSUING_INFO]: undefined;
   // GENERIC
   [ITW_ROUTES.GENERIC.NOT_AVAILABLE]: undefined;
 };

@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
  * This is a component that is used in the footer of the ItwWalletScreen.
  * It is used to display information about the wallet. It could have an info icon
  * and a content as markdown text.
+ *
+ * NOTE: This component will be refactored in the future.
+ * https://pagopa.atlassian.net/browse/SIW-590
  */
 const ItwFooterInfoBox = (props: Props) => (
   <View style={IOStyles.horizontalContentPadding}>
