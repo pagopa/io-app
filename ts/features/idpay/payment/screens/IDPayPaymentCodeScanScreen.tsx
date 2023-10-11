@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
 import ReactNativeHapticFeedback, {
@@ -17,16 +17,21 @@ import {
   IOBarcode
 } from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
-import {
-  trackBarcodeNotFound,
-  trackBarcodeScanFailure
-} from "../../../barcode/analytics";
+import * as analytics from "../../../barcode/analytics";
+import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
 
-  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+  useFocusEffect(() => {
+    analytics.trackBarcodeScanScreenView("idpay");
+  });
+
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     if (barcodes.length > 1) {
       Alert.alert(
         I18n.t("barcodeScan.multipleResultsAlert.title"),
@@ -46,6 +51,8 @@ const IDPayPaymentCodeScanScreen = () => {
 
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
+    analytics.trackBarcodeScanSuccess("home", barcode, origin);
+
     if (barcode.type === "IDPAY") {
       openDeepLink(barcode.authUrl);
     }
@@ -53,21 +60,7 @@ const IDPayPaymentCodeScanScreen = () => {
 
   const handleBarcodeError = (failure: BarcodeFailure) => {
     IOToast.error(I18n.t("barcodeScan.error"));
-
-    switch (failure.reason) {
-      case "UNKNOWN_CONTENT":
-        trackBarcodeScanFailure("home", "qr code flusso sbagliato");
-        break;
-      case "UNSUPPORTED_FORMAT":
-      case "INVALID_FILE":
-        trackBarcodeScanFailure("home", "qr code non valido");
-        break;
-      case "BARCODE_NOT_FOUND":
-        trackBarcodeNotFound();
-        break;
-      default:
-        break;
-    }
+    analytics.trackBarcodeScanFailure("idpay", failure);
   };
 
   const navigateToCodeInputScreen = () =>

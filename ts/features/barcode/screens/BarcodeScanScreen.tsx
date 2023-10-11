@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
 import ReactNativeHapticFeedback, {
@@ -25,11 +25,12 @@ import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import {
   IOBarcode,
+  IOBarcodeOrigin,
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import { trackBarcodeNotFound, trackBarcodeScanFailure } from "../analytics";
+import * as analytics from "../analytics";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -37,15 +38,24 @@ const BarcodeScanScreen = () => {
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
+  useFocusEffect(() => {
+    analytics.trackBarcodeScanScreenView("home");
+  });
+
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
 
-  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     // TODO: handle multiple barcodes (IOBP-170)
     const barcode = barcodes[0];
 
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    analytics.trackBarcodeScanSuccess("home", barcode, origin);
 
     switch (barcode.type) {
       case "IDPAY":
@@ -68,19 +78,7 @@ const BarcodeScanScreen = () => {
 
   const handleBarcodeError = (failure: BarcodeFailure) => {
     IOToast.error(I18n.t("barcodeScan.error"));
-
-    switch (failure.reason) {
-      case "UNKNOWN_CONTENT":
-        trackBarcodeScanFailure("home", "qr code flusso sbagliato");
-        break;
-      case "UNSUPPORTED_FORMAT":
-      case "INVALID_FILE":
-        trackBarcodeScanFailure("home", "qr code non valido");
-        break;
-      case "BARCODE_NOT_FOUND":
-        trackBarcodeNotFound();
-        break;
-    }
+    analytics.trackBarcodeScanFailure("home", failure);
   };
 
   const handleIdPayPaymentCodeInput = () => {

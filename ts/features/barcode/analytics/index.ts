@@ -1,8 +1,39 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
+import { IOBarcode, IOBarcodeOrigin } from "../types/IOBarcode";
+import { BarcodeFailure } from "../types/failure";
 
 type BarcodeEventFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
 type BarcodeEventCode = "avviso" | "data_matrix" | "idpay"; // Should be extended for every feature
+type BarcodeDataEntry = "qr code" | "file";
+
+const getEventCodeFromBarcode = (
+  barcode: IOBarcode
+): BarcodeEventCode | undefined => {
+  if (barcode.type === "IDPAY") {
+    return "idpay";
+  }
+
+  if (barcode.type === "PAGOPA") {
+    return barcode.format === "DATA_MATRIX" ? "data_matrix" : "avviso";
+  }
+
+  return undefined;
+};
+
+const getDataEntryFromBarcodeOrigin = (
+  origin: IOBarcodeOrigin
+): BarcodeDataEntry | undefined => {
+  if (origin === "camera") {
+    return "qr code";
+  }
+
+  if (origin === "file") {
+    return "file";
+  }
+
+  return undefined;
+};
 
 export const trackBarcodeCameraAuthorizationNotDetermined = () => {
   void mixpanelTrack(
@@ -32,7 +63,7 @@ export const trackBarcodeCameraAuthorizedFromSettings = () => {
   );
 };
 
-export const trackBarcodeScanScreen = (flow: BarcodeEventFlow) => {
+export const trackBarcodeScanScreenView = (flow: BarcodeEventFlow) => {
   void mixpanelTrack(
     "QRCODE_SCAN_SCREEN",
     buildEventProperties("UX", "screen_view", { flow })
@@ -41,27 +72,16 @@ export const trackBarcodeScanScreen = (flow: BarcodeEventFlow) => {
 
 export const trackBarcodeScanSuccess = (
   flow: BarcodeEventFlow,
-  code: BarcodeEventCode,
-  data_entry: "qr code" | "manual" | "file" | "message" | "deep link"
+  barcode: IOBarcode,
+  origin: IOBarcodeOrigin
 ) => {
+  const code = getEventCodeFromBarcode(barcode);
+  const data_entry = getDataEntryFromBarcodeOrigin(origin);
+
   void mixpanelTrack(
     "QRCODE_SCAN_SUCCESS",
     buildEventProperties("UX", "action", { flow, code, data_entry })
   );
-};
-
-export const trackBarcodeScanFailure = (
-  flow: BarcodeEventFlow,
-  reason: "qr code non valido" | "qr code flusso sbagliato"
-) => {
-  void mixpanelTrack(
-    "QRCODE_SCAN_FAILURE",
-    buildEventProperties("KO", undefined, { flow, reason })
-  );
-};
-
-export const trackBarcodeScanTorch = () => {
-  void mixpanelTrack("QRCODE_SCAN_TORCH", buildEventProperties("UX", "action"));
 };
 
 export const trackBarcodeNotFound = () => {
@@ -69,6 +89,36 @@ export const trackBarcodeNotFound = () => {
     "QRCODE_NO_CODE_FOUND",
     buildEventProperties("KO", undefined)
   );
+};
+
+export const trackBarcodeScanFailure = (
+  flow: BarcodeEventFlow,
+  failure: BarcodeFailure
+) => {
+  const trackFn = (flow: BarcodeEventFlow, reason: string) => {
+    void mixpanelTrack(
+      "QRCODE_SCAN_FAILURE",
+      buildEventProperties("KO", undefined, { flow, reason })
+    );
+  };
+
+  switch (failure.reason) {
+    case "UNSUPPORTED_FORMAT":
+    case "INVALID_FILE":
+      trackFn(flow, "qr code non valido");
+      break;
+    case "UNKNOWN_CONTENT":
+      trackFn(flow, "qr code flusso sbagliato");
+      break;
+    case "BARCODE_NOT_FOUND":
+      trackBarcodeNotFound();
+      break;
+  }
+};
+
+/*
+export const trackBarcodeScanTorch = () => {
+  void mixpanelTrack("QRCODE_SCAN_TORCH", buildEventProperties("UX", "action"));
 };
 
 export const trackBarcodeMultipleCodes = () => {
@@ -133,3 +183,4 @@ export const trackBarcodeFileUpload = (flow: BarcodeEventFlow) => {
     buildEventProperties("UX", "action", { flow })
   );
 };
+*/
