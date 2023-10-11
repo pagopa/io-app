@@ -76,7 +76,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
     },
-    image: require("../assets/img/pidCredentialCard.png"),
+    image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
     requestedClaims: (decodedPid: PidWithToken) =>
       getRequestedClaims(decodedPid)
   },
@@ -92,7 +92,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
     },
-    image: require("../assets/img/pidCredentialCard.png"),
+    image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
     requestedClaims: (decodedPid: PidWithToken) =>
       getRequestedClaims(decodedPid)
   },
@@ -110,7 +110,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
     },
-    image: require("../assets/img/pidCredentialCard.png"),
+    image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
     requestedClaims: (decodedPid: PidWithToken) =>
       getRequestedClaims(decodedPid)
   }
