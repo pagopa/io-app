@@ -36,14 +36,12 @@ const ItwBulletList = ({ data }: Props) => (
             {section.title}
           </Body>
           {section.data.map((claim, index) => (
-            <>
-              <View
-                style={{ marginBottom: 10, paddingLeft: 8 }}
-                key={`${index}-${claim}`}
-              >
-                <H6>{`${BULLET_ITEM} ${claim}`}</H6>
-              </View>
-            </>
+            <View
+              style={{ marginBottom: 10, paddingLeft: 8 }}
+              key={`${index}-${claim}`}
+            >
+              <H6>{`${BULLET_ITEM} ${claim}`}</H6>
+            </View>
           ))}
         </View>
       ))
