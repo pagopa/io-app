@@ -11,7 +11,6 @@ import React from "react";
 import { View } from "react-native";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { NewH6 } from "../../../../components/core/typography/NewH6";
-import { NewLabelSmall } from "../../../../components/core/typography/NewLabelSmall";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import {
   centsToAmount,
@@ -43,7 +42,7 @@ const PaymentNoticeListItem = ({
   return (
     <PressableListItemBase onPress={onPress}>
       <View style={{ flexGrow: 1 }}>
-        <NewLabelSmall>{paymentNoticeNumber}</NewLabelSmall>
+        <LabelSmall>{paymentNoticeNumber}</LabelSmall>
         <LabelSmall weight="Regular" color="grey-700">
           {organizationFiscalCode}
         </LabelSmall>

@@ -17,14 +17,6 @@ import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
 import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../features/idpay/initiative/configuration/navigation/navigator";
-import {
-  IDPayDetailsParamsList,
-  IDPayDetailsRoutes
-} from "../../features/idpay/initiative/details/navigation";
-import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
