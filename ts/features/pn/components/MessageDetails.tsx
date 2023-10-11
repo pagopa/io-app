@@ -1,19 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { createRef, useCallback, useEffect, useState } from "react";
+import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { ListItemInfoCopy } from "@pagopa/io-app-design-system";
+import { ListItemInfoCopy, VSpacer } from "@pagopa/io-app-design-system";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { TransactionSummary } from "../../../screens/wallet/payment/components/TransactionSummary";
-import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
@@ -37,18 +34,20 @@ import {
   trackPNPaymentInfoPaid,
   trackPNPaymentInfoPayable
 } from "../analytics";
+import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
+import StatusContent from "../../../components/SectionStatus/StatusContent";
+import {
+  getStatusTextColor,
+  statusColorMap,
+  statusIconMap
+} from "../../../components/SectionStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
-
-const styles = StyleSheet.create({
-  content: {
-    marginTop: customVariables.spacerHeight
-  },
-  spacer: { height: customVariables.spacerLargeHeight }
-});
+import { PnMessagePayment } from "./PnMessagePayment";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -58,7 +57,7 @@ type Props = Readonly<{
   rptId: RptId | undefined;
 }>;
 
-export const LegacyPnMessageDetails = ({
+export const MessageDetails = ({
   message,
   messageId,
   service,
@@ -70,7 +69,15 @@ export const LegacyPnMessageDetails = ({
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
+  const viewRef = createRef<View>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
+
+  const hasAttachment = message.attachments && message.attachments.length > 0;
+  const isCancelled = message.isCancelled ?? false;
+  const completedPaymentNoticeCode =
+    isCancelled && message.completedPayments
+      ? message.completedPayments[0]
+      : undefined;
 
   const paymentVerification = useIOSelector(
     state => state.wallet.payment.verifica
@@ -83,7 +90,7 @@ export const LegacyPnMessageDetails = ({
     : O.none;
 
   const verifyPaymentIfNeeded = useCallback(() => {
-    if (rptId) {
+    if (!isCancelled && rptId) {
       dispatch(
         paymentVerifica.request({
           rptId,
@@ -92,16 +99,16 @@ export const LegacyPnMessageDetails = ({
       );
       setFirstLoadingRequest(true);
     }
-  }, [rptId, dispatch]);
+  }, [isCancelled, rptId, dispatch]);
 
   const startPayment = useCallback(() => {
-    if (rptId) {
+    if (!isCancelled && rptId) {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
         screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
         params: { rptId }
       });
     }
-  }, [rptId, navigation]);
+  }, [isCancelled, rptId, navigation]);
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
@@ -130,12 +137,13 @@ export const LegacyPnMessageDetails = ({
       trackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
       trackPNPaymentInfoError(paymentVerificationError);
-    } else {
+    } else if (!isCancelled) {
       trackPNPaymentInfoPayable();
     }
     setShouldTrackMixpanel(false);
   }, [
     firstLoadingRequest,
+    isCancelled,
     isPaid,
     isVerifyingPayment,
     paymentVerificationError,
@@ -152,41 +160,48 @@ export const LegacyPnMessageDetails = ({
         ref={scrollViewRef}
       >
         {service && <PnMessageDetailsHeader service={service} />}
-        <PnMessageDetailsContent style={styles.content} message={message} />
-        {message.attachments && (
+        <VSpacer />
+        <PnMessageDetailsContent message={message} />
+        {isCancelled && (
+          <>
+            <VSpacer />
+            <DSFullWidthComponent>
+              <StatusContent
+                accessibilityLabel={I18n.t(
+                  "features.pn.details.cancelledMessage.body"
+                )}
+                backgroundColor={statusColorMap.warning}
+                foregroundColor={getStatusTextColor(LevelEnum.warning)}
+                iconName={statusIconMap.warning}
+                testID={"PnCancelledMessageBanner"}
+                viewRef={viewRef}
+              >
+                {I18n.t("features.pn.details.cancelledMessage.body")}
+              </StatusContent>
+            </DSFullWidthComponent>
+          </>
+        )}
+        {hasAttachment && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
             <MessageAttachments
               attachments={message.attachments}
               openPreview={openAttachment}
+              disabled={isCancelled}
             />
           </PnMessageDetailsSection>
         )}
-        {payment && (
-          <PnMessageDetailsSection
-            title={I18n.t("features.pn.details.paymentSection.title")}
-          >
-            {firstLoadingRequest && (
-              <>
-                <TransactionSummary
-                  paymentVerification={paymentVerification}
-                  paymentNoticeNumber={payment.noticeCode}
-                  organizationFiscalCode={payment.creditorTaxId}
-                  isPaid={isPaid}
-                />
-                {O.isSome(paymentVerificationError) && (
-                  <TransactionSummaryErrorDetails
-                    error={paymentVerificationError}
-                    paymentNoticeNumber={payment.noticeCode}
-                    organizationFiscalCode={payment.creditorTaxId}
-                    messageId={messageId}
-                  />
-                )}
-              </>
-            )}
-          </PnMessageDetailsSection>
-        )}
+        <PnMessagePayment
+          messageId={messageId}
+          firstLoadingRequest={firstLoadingRequest}
+          isCancelled={isCancelled}
+          isPaid={isPaid}
+          payment={payment}
+          paymentVerification={paymentVerification}
+          paymentVerificationError={paymentVerificationError}
+          completedPaymentNoticeCode={completedPaymentNoticeCode}
+        />
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
@@ -210,10 +225,10 @@ export const LegacyPnMessageDetails = ({
           />
           {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
         </PnMessageDetailsSection>
-        <View style={styles.spacer} />
       </ScrollView>
 
       {firstLoadingRequest &&
+        !isCancelled &&
         !pot.isLoading(paymentVerification) &&
         pot.isSome(paymentVerification) && (
           <FooterWithButtons

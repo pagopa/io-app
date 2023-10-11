@@ -110,6 +110,9 @@ export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 export const fastLoginBypassGetNonce =
   Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
 
+// Fast login bypass opt-in
+export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
+
 // CIE Login Flow with dev server Feature Flag
 export const cieLoginFlowWithDevServerEnabled =
   Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
@@ -122,9 +125,7 @@ export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 
-// Redesign of the PN message details screen
-export const newPnMessageDetailsEnabled =
-  Config.NEW_PN_MESSAGE_DETAILS_ENABLED === "YES";
+export const pnNoticesF24Enabled = Config.PN_NOTICES_F24_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
