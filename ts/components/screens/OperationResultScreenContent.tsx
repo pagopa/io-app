@@ -1,6 +1,7 @@
 import {
   ButtonLink,
   ButtonSolid,
+  ButtonSolidProps,
   H3,
   IOPictograms,
   IOVisualCostants,
@@ -13,18 +14,18 @@ import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { LabelSmall } from "../core/typography/LabelSmall";
 
-type ActionProps = {
-  label: string;
-  accessibilityLabel: string;
-  onPress: () => void;
-};
-
 type OperationResultScreenContent = {
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string;
-  action?: ActionProps;
-  secondaryAction?: ActionProps;
+  action?: Pick<
+    ButtonSolidProps,
+    "label" | "accessibilityLabel" | "onPress" | "testID"
+  >;
+  secondaryAction?: Pick<
+    ButtonLink,
+    "label" | "accessibilityLabel" | "onPress" | "testID"
+  >;
 };
 
 const OperationResultScreenContent = ({

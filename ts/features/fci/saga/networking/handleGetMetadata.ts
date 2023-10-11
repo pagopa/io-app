@@ -16,7 +16,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 export function* handleGetMetadata(
   getMetadata: FciClient["getMetadata"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciMetadataRequest["request"]>
+  action: ActionType<(typeof fciMetadataRequest)["request"]>
 ): SagaIterator {
   try {
     const getMetadataRequest = getMetadata({

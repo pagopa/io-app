@@ -14,7 +14,9 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { readablePrivacyReport } from "../../utils/reporters";
 
-type LocalActionType = ActionType<typeof migrateToPaginatedMessages["request"]>;
+type LocalActionType = ActionType<
+  (typeof migrateToPaginatedMessages)["request"]
+>;
 type LocalBeClient = ReturnType<
   typeof BackendClient
 >["upsertMessageStatusAttributes"];

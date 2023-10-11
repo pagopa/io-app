@@ -26,7 +26,7 @@ import {
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { refreshSessionToken } from "../../features/fastLogin/store/actions";
+import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
