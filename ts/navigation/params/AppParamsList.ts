@@ -16,6 +16,16 @@ import { FciParamsList } from "../../features/fci/navigation/params";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
+import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
+import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../features/idpay/configuration/navigation/navigator";
+import {
+  IDPayDetailsParamsList,
+  IDPayDetailsRoutes
+} from "../../features/idpay/details/navigation";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
@@ -37,19 +47,9 @@ import {
 } from "../../features/walletV3/onboarding/navigation/navigator";
 import { WalletPaymentParamsList } from "../../features/walletV3/payment/navigation/params";
 import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
-import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../features/idpay/configuration/navigation/navigator";
-import {
-  IDPayDetailsParamsList,
-  IDPayDetailsRoutes
-} from "../../features/idpay/details/navigation";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
-import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";

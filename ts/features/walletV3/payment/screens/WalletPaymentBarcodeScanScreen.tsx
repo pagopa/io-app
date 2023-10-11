@@ -1,6 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
+/**
+ * The screen allows to identify a transaction by the QR code on the analogic notice
+ */
 import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
@@ -78,11 +81,24 @@ const WalletPaymentBarcodeScanScreen = () => {
     if (barcode.type === "PAGOPA") {
       dispatch(paymentInitializeState());
 
-      navigateToPaymentTransactionSummaryScreen({
-        rptId: barcode.rptId,
-        initialAmount: barcode.amount,
-        paymentStartOrigin
-      });
+      switch (barcode.format) {
+        case "QR_CODE":
+          navigateToPaymentTransactionSummaryScreen({
+            rptId: barcode.rptId,
+            initialAmount: barcode.amount,
+            paymentStartOrigin: "qrcode_scan"
+          });
+          break;
+        case "DATA_MATRIX":
+          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+
+          navigateToPaymentTransactionSummaryScreen({
+            rptId: barcode.rptId,
+            initialAmount: barcode.amount,
+            paymentStartOrigin: "poste_datamatrix_scan"
+          });
+          break;
+      }
     }
   };
 

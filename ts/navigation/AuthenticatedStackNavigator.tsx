@@ -38,8 +38,6 @@ import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
-import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
-import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
 import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
@@ -61,6 +59,8 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
+import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -114,7 +114,10 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
-        options={{ gestureEnabled: false }}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: false
+        }}
       />
 
       {cgnEnabled && (
