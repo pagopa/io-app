@@ -46,6 +46,7 @@ export const DSLoaders = () => {
       <DSComponentViewerBox name="LoadingSpinner, different colors">
         <View
           style={{
+            alignSelf: "flex-start",
             borderRadius: 16,
             borderWidth: 1,
             borderColor: hexToRgba(IOColors.black, 0.15),
