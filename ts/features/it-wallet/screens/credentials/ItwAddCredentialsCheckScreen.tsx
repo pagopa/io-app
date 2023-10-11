@@ -57,6 +57,9 @@ const ItwAddCredentialsCheckScreen = () => {
     dispatch(itwCredentialsChecks.request(route.params.credential));
   });
 
+  /**
+   * Callback to be used in case of cancel button press alert to navigate to the home screen and show a toast.
+   */
   const alertOnPress = () => {
     toast.info(
       I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
