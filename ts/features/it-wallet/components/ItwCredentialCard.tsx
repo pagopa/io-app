@@ -10,10 +10,10 @@ import { H3, H6, IOColors } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 
 /**
- * Props for the component which consists of the name and fiscal code to be render on the card.
+ * Props for the component.
  */
 type Props = {
-  credential: string;
+  title: string;
   name: string;
   fiscalCode: string;
   backgroundImage: ImageSourcePropType;
@@ -64,10 +64,13 @@ const styles = StyleSheet.create({
 
 /**
  * Renders a card for the PID credential with the name and fiscal code of the owner.
- * @param props - props of the screen containg name and fiscal code.
+ * @param title - the credential title.
+ * @param name - the name of the owner.
+ * @param fiscalCode - the fiscal code of the owner.
+ * @param backgroundImage - the background image of the card.
  */
 const ItwCredentialCard = ({
-  credential,
+  title,
   name,
   fiscalCode,
   backgroundImage
@@ -79,7 +82,7 @@ const ItwCredentialCard = ({
       accessibilityLabel={name}
       style={[styles.text, styles.titleText]}
     >
-      {credential}
+      {title}
     </H3>
     <H6
       style={[styles.text, styles.nameText]}
