@@ -123,7 +123,7 @@ export const trackBarcodeMultipleCodesScreenView = () => {
   );
 };
 
-export const trackBarcodeMultipleCoudesSelection = () => {
+export const trackBarcodeMultipleCodesSelection = () => {
   void mixpanelTrack(
     "QRCODE_MULTIPLE_CODES_SELECTION",
     buildEventProperties("UX", "action")
@@ -135,9 +135,6 @@ export const trackBarcodeScanTorch = () => {
 };
 
 /*
-
-
-
 
 export const trackBarcodeMultipleCoudesSelection = () => {
   void mixpanelTrack(

@@ -37,7 +37,7 @@ const WalletPaymentBarcodeChoiceScreen = () => {
   const { barcodes, paymentStartOrigin } = route.params;
 
   const handleBarcodeSelected = (barcode: PagoPaBarcode) => {
-    analytics.trackBarcodeMultipleCoudesSelection();
+    analytics.trackBarcodeMultipleCodesSelection();
 
     dispatch(paymentInitializeState());
 
