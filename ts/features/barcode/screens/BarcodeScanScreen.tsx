@@ -162,7 +162,6 @@ const BarcodeScanScreen = () => {
   };
 
   const handlePagoPACodeInput = () => {
-    analytics.trackBarcodePaymentManualEntry();
     manualInputModal.dismiss();
     navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
@@ -196,7 +195,12 @@ const BarcodeScanScreen = () => {
 
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("home");
-    manualInputModal.present();
+
+    if (isIdPayEnabled) {
+      manualInputModal.present();
+    } else {
+      handlePagoPACodeInput();
+    }
   };
 
   const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(
