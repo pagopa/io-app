@@ -112,7 +112,10 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
-        options={{ gestureEnabled: false }}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: false
+        }}
       />
 
       {cgnEnabled && (
