@@ -3422,6 +3422,18 @@ features:
           title: You are adding {{credentialName}} to your Wallet
         toast: 
           cancel: "The credential was not added to the wallet."
+      credentialsIssuingInfoScreen:
+        title: "Data needed to add the card"
+        subtitle: "{{authsource}} will send them to {{organization}}."
+        readMore: "Find out more"
+        dataSource: "Provided by {{authsource}}"
+        infoBottomSheet:
+          title: "Data processing"
+          body:
+            firstHeaderTitle: "Why is it necessary?"
+            firstBodyContent: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
+            secondHeaderTitle: "Safety of treatment"
+            secondBodyContent: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
       credentialPreviewScreen:
         title: "Here's a preview of your credential"
         subtitle: "Before adding it, check if the data is correct."

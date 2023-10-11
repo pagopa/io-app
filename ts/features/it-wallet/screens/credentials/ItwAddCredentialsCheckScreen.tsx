@@ -87,7 +87,8 @@ const ItwAddCredentialsCheckScreen = () => {
           action={{
             label: I18n.t("global.buttons.confirm"),
             accessibilityLabel: I18n.t("global.buttons.confirm"),
-            onPress: () => navigation.navigate(ITW_ROUTES.CREDENTIALS.PREVIEW)
+            onPress: () =>
+              navigation.navigate(ITW_ROUTES.CREDENTIALS.ISSUING_INFO)
           }}
           secondaryAction={{
             label: I18n.t("global.buttons.cancel"),
