@@ -146,6 +146,7 @@ const renderComponent = () => {
           onBarcodeSuccess={() => null}
           onBarcodeError={() => null}
           onManualInputPressed={() => null}
+          barcodeAnalyticsFlow="home"
         />
       ),
       ROUTES.MAIN,
