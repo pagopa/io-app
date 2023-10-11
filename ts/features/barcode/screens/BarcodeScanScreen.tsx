@@ -20,6 +20,7 @@ import {
   barcodesScannerConfigSelector,
   isIdPayEnabledSelector
 } from "../../../store/reducers/backendStatus";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
@@ -133,6 +134,7 @@ const BarcodeScanScreen = () => {
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={manualInputModal.present}
+        contextualHelp={emptyContextualHelp}
       />
       {manualInputModal.bottomSheet}
     </>

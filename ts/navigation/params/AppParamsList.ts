@@ -36,6 +36,10 @@ import {
   WalletOnboardingRoutes
 } from "../../features/walletV3/onboarding/navigation/navigator";
 import {
+  WalletPaymentParamsList,
+  WalletPaymentRoutes
+} from "../../features/walletV3/payment/navigation/navigator";
+import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
 } from "../../features/idpay/configuration/navigation/navigator";
@@ -94,6 +98,7 @@ export type AppParamsList = {
   [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;
 
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
+  [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: NavigatorScreenParams<WalletPaymentParamsList>;
 };
 
 /**
