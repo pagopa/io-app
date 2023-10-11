@@ -6,15 +6,19 @@ import {
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import WalletOnboardingStartScreen from "../screens/WalletOnboardingStartScreen";
+import WalletOnboardingSelectPaymentMethodScreen from "../screens/WalletOnboardingSelectPaymentMethodScreen";
 
 export const WalletOnboardingRoutes = {
   WALLET_ONBOARDING_MAIN: "WALLET_ONBOARDING_MAIN",
+  WALLET_ONBOARDING_SELECT_PAYMENT_METHOD:
+    "WALLET_ONBOARDING_SELECT_PAYMENT_METHOD",
   WALLET_ONBOARDING_START: "WALLET_ONBOARDING_START"
 } as const;
 
 export type WalletOnboardingParamsList = {
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: undefined;
   [WalletOnboardingRoutes.WALLET_ONBOARDING_START]: undefined;
+  [WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD]: undefined;
 };
 
 const Stack = createStackNavigator<WalletOnboardingParamsList>();
@@ -28,6 +32,11 @@ export const WalletOnboardingNavigator = () => (
     <Stack.Screen
       name={WalletOnboardingRoutes.WALLET_ONBOARDING_START}
       component={WalletOnboardingStartScreen}
+      options={{ gestureEnabled: false }}
+    />
+    <Stack.Screen
+      name={WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD}
+      component={WalletOnboardingSelectPaymentMethodScreen}
       options={{ gestureEnabled: false }}
     />
   </Stack.Navigator>
