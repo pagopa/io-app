@@ -1,4 +1,4 @@
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert } from "react-native";
 import ReactNativeHapticFeedback, {
@@ -11,23 +11,19 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
   IOBarcode
 } from "../../../barcode";
-import { IDPayPaymentRoutes } from "../navigation/navigator";
 import * as analytics from "../../../barcode/analytics";
 import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { IDPayPaymentRoutes } from "../navigation/navigator";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
-
-  useFocusEffect(() => {
-    analytics.trackBarcodeScanScreenView("idpay");
-  });
 
   const handleBarcodeSuccess = (
     barcodes: Array<IOBarcode>,
@@ -79,6 +75,7 @@ const IDPayPaymentCodeScanScreen = () => {
       onBarcodeError={handleBarcodeError}
       onManualInputPressed={navigateToCodeInputScreen}
       contextualHelp={emptyContextualHelp}
+      barcodeAnalyticsFlow="idpay"
     />
   );
 };

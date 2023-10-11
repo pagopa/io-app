@@ -1,5 +1,9 @@
 import { IOColors, IconButton } from "@pagopa/io-app-design-system";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation
+} from "@react-navigation/native";
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -28,7 +32,15 @@ import {
   resetCustomFields
 } from "../../../utils/supportAssistance";
 import { zendeskSupportStart } from "../../zendesk/store/actions";
-import * as analytics from "../analytics";
+import {
+  BarcodeAnalyticsFlow,
+  trackBarcodeCameraAuthorizationDenied,
+  trackBarcodeCameraAuthorizationNotDetermined,
+  trackBarcodeCameraAuthorized,
+  trackBarcodeCameraAuthorizedFromSettings,
+  trackBarcodeScanScreenView,
+  trackBarcodeScanTorch
+} from "../analytics";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import {
@@ -74,6 +86,10 @@ type Props = {
    * necessary to navigate to the manual input screen or show the manual input modal
    */
   onManualInputPressed: () => void;
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
 } & HelpProps;
 
 const BarcodeScanBaseScreenComponent = ({
@@ -85,7 +101,8 @@ const BarcodeScanBaseScreenComponent = ({
   faqCategories,
   contextualHelp,
   contextualHelpMarkdown,
-  hideHelpButton
+  hideHelpButton,
+  barcodeAnalyticsFlow
 }: Props) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
@@ -97,6 +114,10 @@ const BarcodeScanBaseScreenComponent = ({
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const canShowHelp = useIOSelector(canShowHelpSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  useFocusEffect(() => {
+    trackBarcodeScanScreenView(barcodeAnalyticsFlow);
+  });
 
   const onShowHelp = (): (() => void) | undefined => {
     switch (choosenTool) {
@@ -151,7 +172,8 @@ const BarcodeScanBaseScreenComponent = ({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess: barcodes => onBarcodeSuccess(barcodes, "file"),
-    onBarcodeError: failure => onBarcodeError(failure, "file")
+    onBarcodeError: failure => onBarcodeError(failure, "file"),
+    barcodeAnalyticsFlow
   });
 
   const customGoBack = (
@@ -174,7 +196,7 @@ const BarcodeScanBaseScreenComponent = ({
     }
 
     if (cameraPermissionStatus === "not-determined") {
-      analytics.trackBarcodeCameraAuthorizationNotDetermined();
+      trackBarcodeCameraAuthorizationNotDetermined();
 
       return (
         <CameraPermissionView
@@ -186,7 +208,7 @@ const BarcodeScanBaseScreenComponent = ({
               "barcodeScan.permissions.undefined.action"
             ),
             onPress: async () => {
-              analytics.trackBarcodeCameraAuthorized();
+              trackBarcodeCameraAuthorized();
               await requestCameraPermission();
             }
           }}
@@ -194,7 +216,7 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    analytics.trackBarcodeCameraAuthorizationDenied();
+    trackBarcodeCameraAuthorizationDenied();
 
     return (
       <CameraPermissionView
@@ -204,7 +226,7 @@ const BarcodeScanBaseScreenComponent = ({
           label: I18n.t("barcodeScan.permissions.denied.action"),
           accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
           onPress: async () => {
-            analytics.trackBarcodeCameraAuthorizedFromSettings();
+            trackBarcodeCameraAuthorizedFromSettings();
             await openAppSetting();
           }
         }}
@@ -218,7 +240,7 @@ const BarcodeScanBaseScreenComponent = ({
   ]);
 
   const handleTorchToggle = () => {
-    analytics.trackBarcodeScanTorch();
+    trackBarcodeScanTorch();
     toggleTorch();
   };
 

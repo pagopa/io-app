@@ -119,6 +119,7 @@ const WalletPaymentBarcodeScanScreen = () => {
       onManualInputPressed={handleManualInputPressed}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["wallet"]}
+      barcodeAnalyticsFlow="avviso"
     />
   );
 };

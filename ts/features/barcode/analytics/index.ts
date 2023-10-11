@@ -3,13 +3,13 @@ import { buildEventProperties } from "../../../utils/analytics";
 import { IOBarcode, IOBarcodeOrigin } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 
-type BarcodeEventFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
-type BarcodeEventCode = "avviso" | "data_matrix" | "idpay"; // Should be extended for every feature
-type BarcodeDataEntry = "qr code" | "file";
+export type BarcodeAnalyticsFlow = "home" | "avviso" | "idpay"; // Should be extended for every feature
+export type BarcodeAnalyticsCode = "avviso" | "data_matrix" | "idpay"; // Should be extended for every feature
+export type BarcodeAnalyticsDataEntry = "qr code" | "file";
 
 const getEventCodeFromBarcode = (
   barcode: IOBarcode
-): BarcodeEventCode | undefined => {
+): BarcodeAnalyticsCode | undefined => {
   if (barcode.type === "IDPAY") {
     return "idpay";
   }
@@ -23,7 +23,7 @@ const getEventCodeFromBarcode = (
 
 const getDataEntryFromBarcodeOrigin = (
   origin: IOBarcodeOrigin
-): BarcodeDataEntry | undefined => {
+): BarcodeAnalyticsDataEntry | undefined => {
   if (origin === "camera") {
     return "qr code";
   }
@@ -63,7 +63,7 @@ export const trackBarcodeCameraAuthorizedFromSettings = () => {
   );
 };
 
-export const trackBarcodeScanScreenView = (flow: BarcodeEventFlow) => {
+export const trackBarcodeScanScreenView = (flow: BarcodeAnalyticsFlow) => {
   void mixpanelTrack(
     "QRCODE_SCAN_SCREEN",
     buildEventProperties("UX", "screen_view", { flow })
@@ -71,7 +71,7 @@ export const trackBarcodeScanScreenView = (flow: BarcodeEventFlow) => {
 };
 
 export const trackBarcodeScanSuccess = (
-  flow: BarcodeEventFlow,
+  flow: BarcodeAnalyticsFlow,
   barcode: IOBarcode,
   origin: IOBarcodeOrigin
 ) => {
@@ -92,10 +92,10 @@ export const trackBarcodeNotFound = () => {
 };
 
 export const trackBarcodeScanFailure = (
-  flow: BarcodeEventFlow,
+  flow: BarcodeAnalyticsFlow,
   failure: BarcodeFailure
 ) => {
-  const trackFn = (flow: BarcodeEventFlow, reason: string) => {
+  const trackFn = (flow: BarcodeAnalyticsFlow, reason: string) => {
     void mixpanelTrack(
       "QRCODE_SCAN_FAILURE",
       buildEventProperties("KO", undefined, { flow, reason })
@@ -134,24 +134,12 @@ export const trackBarcodeScanTorch = () => {
   void mixpanelTrack("QRCODE_SCAN_TORCH", buildEventProperties("UX", "action"));
 };
 
-export const trackBarcodeManualEntryPath = (flow: BarcodeEventFlow) => {
+export const trackBarcodeManualEntryPath = (flow: BarcodeAnalyticsFlow) => {
   void mixpanelTrack(
     "QRCODE_MANUAL_ENTRY_PATH",
     buildEventProperties("UX", "action", { flow })
   );
 };
-
-/*
-
-
-export const trackBarcodeUploadPath = (flow: BarcodeEventFlow) => {
-  void mixpanelTrack(
-    "QRCODE_UPLOAD_PATH",
-    buildEventProperties("UX", "action", { flow })
-  );
-};
-
-
 
 export const trackBarcodePaymentManualEntry = () => {
   void mixpanelTrack(
@@ -159,6 +147,32 @@ export const trackBarcodePaymentManualEntry = () => {
     buildEventProperties("UX", "action")
   );
 };
+
+export const trackBarcodeUploadPath = (flow: BarcodeAnalyticsFlow) => {
+  void mixpanelTrack(
+    "QRCODE_UPLOAD_PATH",
+    buildEventProperties("UX", "action", { flow })
+  );
+};
+
+export const trackBarcodeImageUpload = (flow: BarcodeAnalyticsFlow) => {
+  void mixpanelTrack(
+    "QRCODE_IMAGE_UPLOAD",
+    buildEventProperties("UX", "action", { flow })
+  );
+};
+
+export const trackBarcodeFileUpload = (flow: BarcodeAnalyticsFlow) => {
+  void mixpanelTrack(
+    "QRCODE_FILE_UPLOAD",
+    buildEventProperties("UX", "action", { flow })
+  );
+};
+
+/*
+
+
+
 
 export const trackBarcodeDocumentManualEntry = () => {
   void mixpanelTrack(
@@ -174,12 +188,7 @@ export const trackBarcodeSignatureManualEntry = () => {
   );
 };
 
-export const trackBarcodeImageUpload = (flow: BarcodeEventFlow) => {
-  void mixpanelTrack(
-    "QRCODE_IMAGE_UPLOAD",
-    buildEventProperties("UX", "action", { flow })
-  );
-};
+
 
 export const trackBarcodeFileUpload = (flow: BarcodeEventFlow) => {
   void mixpanelTrack(

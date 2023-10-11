@@ -1,11 +1,12 @@
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
+import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -27,6 +28,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
+import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import {
   IOBarcode,
@@ -36,19 +38,13 @@ import {
   PagoPaBarcode
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import * as analytics from "../analytics";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
-
-  useFocusEffect(() => {
-    analytics.trackBarcodeScanScreenView("home");
-  });
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
@@ -166,6 +162,7 @@ const BarcodeScanScreen = () => {
   };
 
   const handlePagoPACodeInput = () => {
+    analytics.trackBarcodePaymentManualEntry();
     manualInputModal.dismiss();
     navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
@@ -219,6 +216,7 @@ const BarcodeScanScreen = () => {
         onBarcodeError={handleBarcodeError}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
+        barcodeAnalyticsFlow="home"
       />
       {manualInputModal.bottomSheet}
     </>

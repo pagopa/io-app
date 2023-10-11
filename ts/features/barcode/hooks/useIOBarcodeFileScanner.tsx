@@ -23,6 +23,12 @@ import { BarcodeFailure } from "../types/failure";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
+import {
+  BarcodeAnalyticsFlow,
+  trackBarcodeFileUpload,
+  trackBarcodeImageUpload,
+  trackBarcodeUploadPath
+} from "../analytics";
 
 type IOBarcodeFileScanner = {
   /**
@@ -63,6 +69,10 @@ type IOBarcodeFileScannerConfiguration = {
    * Callback called when a barcode is not successfully decoded
    */
   onBarcodeError: (failure: BarcodeFailure) => void;
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
@@ -80,7 +90,8 @@ const useIOBarcodeFileScanner = ({
   onBarcodeError,
   onBarcodeSuccess,
   barcodeFormats,
-  barcodeTypes
+  barcodeTypes,
+  barcodeAnalyticsFlow
 }: IOBarcodeFileScannerConfiguration): IOBarcodeFileScanner => {
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
@@ -194,6 +205,18 @@ const useIOBarcodeFileScanner = ({
     )();
   };
 
+  const handleImageUploadPressed = async () => {
+    trackBarcodeImageUpload(barcodeAnalyticsFlow);
+    filePickerModal.dismiss();
+    await showImagePicker();
+  };
+
+  const handleFileUploadPressed = async () => {
+    trackBarcodeFileUpload(barcodeAnalyticsFlow);
+    filePickerModal.dismiss();
+    await showDocumentPicker();
+  };
+
   /**
    * Components that renders the bottom sheet with the options to select an image or a PDF document
    */
@@ -202,20 +225,14 @@ const useIOBarcodeFileScanner = ({
       <ListItemNav
         value={I18n.t("barcodeScan.upload.image")}
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
-        onPress={async () => {
-          filePickerModal.dismiss();
-          await showImagePicker();
-        }}
+        onPress={handleImageUploadPressed}
         icon="gallery"
       />
       <Divider />
       <ListItemNav
         value={I18n.t("barcodeScan.upload.file")}
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
-        onPress={async () => {
-          filePickerModal.dismiss();
-          await showDocumentPicker();
-        }}
+        onPress={handleFileUploadPressed}
         icon="docAttach"
       />
       <VSpacer size={16} />
@@ -227,11 +244,16 @@ const useIOBarcodeFileScanner = ({
     title: ""
   });
 
+  const handleShowFilePickerPressed = () => {
+    trackBarcodeUploadPath(barcodeAnalyticsFlow);
+    filePickerModal.present();
+  };
+
   return {
     showImagePicker,
     showDocumentPicker,
     filePickerBottomSheet: filePickerModal.bottomSheet,
-    showFilePicker: filePickerModal.present
+    showFilePicker: handleShowFilePickerPressed
   };
 };
 
