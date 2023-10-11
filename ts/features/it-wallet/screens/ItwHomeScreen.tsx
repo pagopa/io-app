@@ -93,7 +93,7 @@ const ItwHomeScreen = () => {
           }
         >
           <ItwCredentialCard
-            credential={I18n.t(
+            title={I18n.t(
               "features.itWallet.verifiableCredentials.type.digitalCredential"
             )}
             name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}

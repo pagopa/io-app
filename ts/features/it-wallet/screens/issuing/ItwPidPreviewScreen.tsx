@@ -82,7 +82,7 @@ const ItwPidPreviewScreen = () => {
           <VSpacer />
           <View style={IOStyles.horizontalContentPadding}>
             <ItwCredentialCard
-              credential={I18n.t(
+              title={I18n.t(
                 "features.itWallet.verifiableCredentials.type.digitalCredential"
               )}
               name={name}
