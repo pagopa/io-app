@@ -13,7 +13,7 @@ export function* handleLoadBonusVacanzeFromId(
   getLatestBonusVacanzeFromId: ReturnType<
     typeof BackendBonusVacanze
   >["getLatestBonusVacanzeFromId"],
-  action: ActionType<typeof loadBonusVacanzeFromId["request"]>
+  action: ActionType<(typeof loadBonusVacanzeFromId)["request"]>
 ): SagaIterator {
   try {
     const bonusVacanzeResponse: SagaCallReturnType<

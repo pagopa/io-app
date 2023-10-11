@@ -39,34 +39,32 @@ const getText = (confirmationType: ConfirmationType) => ({
  * @param props
  * @constructor
  */
-export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Props> =
-  props => {
-    const { body } = getText(props.type);
+export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<
+  Props
+> = props => {
+  const { body } = getText(props.type);
 
-    return (
-      <View>
-        <VSpacer size={16} />
-        <PaymentMethodRepresentationComponent {...props.representation} />
-        <VSpacer size={16} />
-        <Markdown>{body}</Markdown>
-        {props.type === "Activation" && (
-          <>
-            <VSpacer size={24} />
-            <InfoBox>
-              <Body>
-                {I18n.t(
-                  "bonus.bpd.details.paymentMethods.activate.disclaimer",
-                  {
-                    activate: I18n.t("global.buttons.activate")
-                  }
-                )}
-              </Body>
-            </InfoBox>
-          </>
-        )}
-      </View>
-    );
-  };
+  return (
+    <View>
+      <VSpacer size={16} />
+      <PaymentMethodRepresentationComponent {...props.representation} />
+      <VSpacer size={16} />
+      <Markdown>{body}</Markdown>
+      {props.type === "Activation" && (
+        <>
+          <VSpacer size={24} />
+          <InfoBox>
+            <Body>
+              {I18n.t("bonus.bpd.details.paymentMethods.activate.disclaimer", {
+                activate: I18n.t("global.buttons.activate")
+              })}
+            </Body>
+          </InfoBox>
+        </>
+      )}
+    </View>
+  );
+};
 
 export const useChangeActivationConfirmationBottomSheet = (
   representation: PaymentMethodRepresentation,

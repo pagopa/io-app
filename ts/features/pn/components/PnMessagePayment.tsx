@@ -25,8 +25,8 @@ type Props = {
   payment: NotificationPaymentInfo | undefined;
   completedPaymentNoticeCode: string | undefined;
   paymentVerification: PotFromActions<
-    typeof paymentVerifica["success"],
-    typeof paymentVerifica["failure"]
+    (typeof paymentVerifica)["success"],
+    (typeof paymentVerifica)["failure"]
   >;
   paymentVerificationError: TransactionSummaryError;
 };

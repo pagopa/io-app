@@ -16,7 +16,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 export function* handleGetSignatureRequestById(
   getSignatureRequestById: FciClient["getSignatureRequestById"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciSignatureRequestFromId["request"]>
+  action: ActionType<(typeof fciSignatureRequestFromId)["request"]>
 ): SagaIterator {
   try {
     const getSignatureDetailByIdRequest = getSignatureRequestById({
