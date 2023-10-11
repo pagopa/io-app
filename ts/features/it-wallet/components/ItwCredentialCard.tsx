@@ -74,10 +74,7 @@ const ItwCredentialCard = ({
   title,
   name,
   fiscalCode,
-<<<<<<< HEAD
   textColor,
-=======
->>>>>>> 8e7b9a9ac (chore(IT Wallet): [SIW-535] Refactor title card component (#5093))
   backgroundImage
 }: Props) => (
   <View>
