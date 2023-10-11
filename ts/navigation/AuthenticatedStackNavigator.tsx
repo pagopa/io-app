@@ -39,10 +39,6 @@ import {
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
 import {
-  WalletPaymentNavigator,
-  WalletPaymentRoutes
-} from "../features/walletV3/payment/navigation/navigator";
-import {
   IDpayDetailsNavigator,
   IDPayDetailsRoutes
 } from "../features/idpay/details/navigation";
@@ -63,6 +59,8 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
+import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
