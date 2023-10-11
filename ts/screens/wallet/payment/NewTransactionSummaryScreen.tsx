@@ -6,6 +6,7 @@ import { ActionSheet } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -273,6 +274,7 @@ const NewTransactionSummaryScreen = ({
       headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
     >
       <SafeAreaView style={IOStyles.flex}>
+        <VSpacer size={32} />
         {showsInlineError && <TransactionSummaryStatus error={error} />}
         <ScrollView style={styles.container}>
           <TransactionSummary
