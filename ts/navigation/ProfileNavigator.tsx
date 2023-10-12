@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import { remindersOptInEnabled } from "../config";
@@ -49,7 +48,6 @@ const Stack = createStackNavigator<ProfileParamsList>();
  * A navigator for all the screens of the Profile section
  */
 const ProfileStackNavigator = () => {
-  const navigation = useNavigation();
   const startSupportRequest = useStartSupportRequest({
     faqCategories: ["privacy"],
     contextualHelpMarkdown: profilePrivacyContextualHelpMarkdown
@@ -69,7 +67,7 @@ const ProfileStackNavigator = () => {
       />
       <Stack.Screen
         options={{
-          header: () => (
+          header: ({ navigation }) => (
             <HeaderSecondLevel
               type="singleAction"
               goBack={navigation.goBack}
