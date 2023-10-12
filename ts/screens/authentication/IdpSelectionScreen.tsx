@@ -39,6 +39,8 @@ import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackSpidLoginIdpSelection } from "./analytics";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -75,6 +77,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  useOnFirstRender(() => {
+    trackSpidLoginIdpSelection();
+  });
+
   const inset = useSafeAreaInsets();
 
   const [counter, setCounter] = useState(0);

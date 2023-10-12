@@ -22,6 +22,13 @@ export function trackSpidLoginSelected() {
   );
 }
 
+export function trackSpidLoginIdpSelection() {
+  void mixpanelTrack(
+    "LOGIN_SPID_IDP_SELECTION",
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
 export function trackMethodInfo() {
   void mixpanelTrack("LOGIN_METHOD_INFO", buildEventProperties("UX", "exit"));
 }

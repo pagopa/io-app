@@ -14,6 +14,10 @@ import {
 } from "../../features/fastLogin/store/selectors";
 import { GlobalState } from "../../store/reducers/types";
 import FastLoginModals from "../../features/fastLogin/screens/FastLoginModals";
+import {
+  trackLoginSessionTimeoutPostPin,
+  trackLoginSessionTimeoutPrePin
+} from "../../features/fastLogin/analytics";
 import IdentificationModal from "./IdentificationModal";
 import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
@@ -49,6 +53,11 @@ const RootModal: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   if (fastLoginModals) {
+    if (props.tokenRefreshing.kind === "no-pin-error") {
+      trackLoginSessionTimeoutPrePin();
+    } else {
+      trackLoginSessionTimeoutPostPin();
+    }
     return fastLoginModals;
   }
 
