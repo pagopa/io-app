@@ -3446,6 +3446,11 @@ features:
           title: Stai aggiungendo {{credentialName}} al Portafoglio
         toast: 
           cancel: "Tessera non aggiunta al Portafoglio."
+      credentialAddScreen:
+        loading:
+          title: "Stiamo aggiungendo la tua credenziale al portafoglio"
+        toast: 
+          success: "Tessera aggiunta!"
       credentialsIssuingInfoScreen:
         title: "Dati necessari per aggiungere la tessera"
         subtitle: "{{authsource}} li invierà a {{organization}}."

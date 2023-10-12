@@ -3422,6 +3422,11 @@ features:
           title: You are adding {{credentialName}} to your Wallet
         toast: 
           cancel: "The credential was not added to the wallet."
+      credentialAddScreen:
+        loading:
+          title: "We're adding your credential to your walleto"
+        toast: 
+          success: "Card added!"
       credentialsIssuingInfoScreen:
         title: "Data needed to add the card"
         subtitle: "{{authsource}} will send them to {{organization}}."

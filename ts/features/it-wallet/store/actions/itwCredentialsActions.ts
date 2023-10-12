@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import * as O from "fp-ts/lib/Option";
@@ -43,10 +47,20 @@ export const itwCredentialsChecks = createAsyncAction(
 )<CredentialCatalogItem, CredentialCatalogItem, ItWalletError>();
 
 /**
+ * Action to add a credential to the wallet.
+ */
+export const itwAddCredential = createAsyncAction(
+  "ITW_CREDENTIALS_ADD_REQUEST",
+  "ITW_CREDENTIALS_ADD_SUCCESS",
+  "ITW_CREDENTIALS_ADD_FAILURE"
+)<void, boolean, ItWalletError>();
+
+/**
  * Type for credentials related actions.
  */
 export type ItwCredentialsActions =
   | ActionType<typeof itwPid>
   | ActionType<typeof itwCredentialsAddPid>
   | ActionType<typeof itwDecodePid>
-  | ActionType<typeof itwCredentialsChecks>;
+  | ActionType<typeof itwCredentialsChecks>
+  | ActionType<typeof itwAddCredential>;

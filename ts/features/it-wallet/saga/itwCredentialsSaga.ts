@@ -10,6 +10,7 @@ import {
 import NavigationService from "../../../navigation/NavigationService";
 import I18n from "../../../i18n";
 import {
+  itwAddCredential,
   itwCredentialsAddPid,
   itwCredentialsChecks
 } from "../store/actions/itwCredentialsActions";
@@ -28,6 +29,10 @@ export function* watchItwCredentialsSaga(): SagaIterator {
    * Handles the required checks before adding a credential.
    */
   yield* takeLatest(itwCredentialsChecks.request, handleCredentialsChecks);
+  /**
+   * Handles the request to add credential into the wallet.
+   */
+  yield* takeLatest(itwAddCredential.request, handleAddCredential);
 }
 
 /*
@@ -71,4 +76,34 @@ export function* handleCredentialsChecks(
 ): SagaIterator {
   // TODO: Implement the required checks. Currently it just returns the same credential as we are only handling a mocked credential.
   yield* put(itwCredentialsChecks.success(action.payload));
+}
+
+/**
+ * This saga handles the request to add a credential to the wallet.
+ * NOTE: Currently it just returns true as we are only handling a mocked credential.
+ * @param action the request dispatched action with a credential as payload.
+ */
+export function* handleAddCredential(
+  _: ActionType<typeof itwAddCredential.request>
+): SagaIterator {
+  yield* put(
+    identificationRequest(false, true, undefined, {
+      label: I18n.t("global.buttons.cancel"),
+      onCancel: () =>
+        NavigationService.dispatchNavigationAction(CommonActions.goBack())
+    })
+  );
+
+  const res = yield* take(identificationSuccess);
+
+  if (isActionOf(identificationSuccess, res)) {
+    yield* put(itwAddCredential.success(true));
+    yield* put(itwLifecycleValid());
+  } else {
+    yield* put(
+      itwAddCredential.failure({
+        code: ItWalletErrorTypes.CREDENTIALS_ADD_ERROR
+      })
+    );
+  }
 }

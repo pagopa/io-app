@@ -20,6 +20,7 @@ import ItwMissingFeatureScreen from "../screens/generic/ItwMissingFeatureScreen"
 import ItwCredentialPreviewScreen from "../screens/credentials/ItwCredentialPreviewScreen";
 import ItwAddCredentialsCheckScreen from "../screens/credentials/ItwAddCredentialsCheckScreen";
 import ItwCredentialIssuingInfoScreen from "../screens/credentials/ItwCredentialIssuingInfoScreen";
+import ItwCredentialAddScreen from "../screens/credentials/ItwCredentialAddScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -107,6 +108,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.CREDENTIALS.PREVIEW}
       component={ItwCredentialPreviewScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.CREDENTIALS.ADD_TO_WALLET}
+      component={ItwCredentialAddScreen}
     />
     {/* COMMON */}
     <Stack.Screen

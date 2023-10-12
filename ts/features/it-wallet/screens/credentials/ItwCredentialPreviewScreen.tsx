@@ -29,6 +29,7 @@ import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { useItwInfoFlow } from "../../hooks/useItwInfoFlow";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 /**
  * Type for the content view component props.
@@ -90,7 +91,7 @@ const ItwCredentialPreviewScreen = () => {
       buttonProps: {
         label: I18n.t("global.buttons.add"),
         accessibilityLabel: I18n.t("global.buttons.add"),
-        onPress: () => null // TODO(SIW-449): Add navigation to the PIN screen
+        onPress: () => navigation.navigate(ITW_ROUTES.CREDENTIALS.ADD_TO_WALLET)
       }
     };
 
