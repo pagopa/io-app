@@ -3,7 +3,7 @@ import { buildEventProperties } from "../../../utils/analytics";
 
 export function trackLoginCiePinScreen() {
   void mixpanelTrack(
-    "LOGIN_CIE_PIN_SCREEN",
+    "LOGIN_CIE_PIN",
     buildEventProperties("UX", "screen_view")
   );
 }

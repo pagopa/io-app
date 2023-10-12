@@ -4,35 +4,35 @@ import { FlowType, buildEventProperties } from "../../../utils/analytics";
 
 export function trackTosScreen(flow: FlowType) {
   void mixpanelTrack(
-    "TOS_SCREEN",
+    "TOS",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
 
 export function trackMixpanelScreen(flow: FlowType) {
   void mixpanelTrack(
-    "TRACKING_SCREEN",
+    "TRACKING",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
 
 export function trackPinScreen(flow: FlowType) {
   void mixpanelTrack(
-    "PIN_CREATION_SCREEN",
+    "PIN_CREATION",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
 
 export function trackNotificationScreen(flow: FlowType) {
   void mixpanelTrack(
-    "NOTIFICATION_PREFERENCE_SCREEN",
+    "NOTIFICATION_PREFERENCE",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
 
 export function trackServiceConfigurationScreen(flow: FlowType) {
   void mixpanelTrack(
-    "CONFIGURATION_PREFERENCE_SCREEN",
+    "SERVICE_PREFERENCE",
     buildEventProperties("UX", "screen_view", undefined, flow)
   );
 }
@@ -108,7 +108,7 @@ export function trackServiceConfiguration(
   flow: FlowType
 ) {
   void mixpanelTrack(
-    "PREFERENCE_SERVICE_CONFIGURATION",
+    "SERVICE_PREFERENCE_CONFIGURATION",
     buildEventProperties(
       "UX",
       "action",

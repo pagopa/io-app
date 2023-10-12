@@ -40,7 +40,9 @@ const FingerprintScreen = () => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 
   useOnFirstRender(() => {
-    trackBiometricActivationEducationalScreen();
+    trackBiometricActivationEducationalScreen(
+      getFlowType(true, isFirstOnBoarding)
+    );
   });
 
   const handleGoBack = () =>

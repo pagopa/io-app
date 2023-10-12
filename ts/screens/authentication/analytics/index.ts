@@ -1,16 +1,10 @@
 import { mixpanelTrack } from "../../../mixpanel";
-import {
-  FlowType,
-  booleanToYesNo,
-  buildEventProperties
-} from "../../../utils/analytics";
+import { FlowType, buildEventProperties } from "../../../utils/analytics";
 
-export function trackLoginFlowStarting(fastLogin: boolean) {
+export function trackLoginFlowStarting() {
   void mixpanelTrack(
     "LOGIN_START_FLOW",
-    buildEventProperties("UX", "screen_view", {
-      login_veloce: booleanToYesNo(fastLogin)
-    })
+    buildEventProperties("UX", "screen_view")
   );
 }
 

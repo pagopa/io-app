@@ -16,7 +16,6 @@ import {
   trackLoginFlowStarting,
   trackSpidLoginSuccess
 } from "../../screens/authentication/analytics";
-import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { idpSelector } from "../../store/reducers/authentication";
 import { IdpCIE } from "../../screens/authentication/LandingScreen";
 
@@ -32,8 +31,7 @@ export function* authenticationSaga(): Generator<
   yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
   yield* put(analyticsAuthenticationStarted());
 
-  const fastLoginEnabled = yield* select(isFastLoginEnabledSelector);
-  trackLoginFlowStarting(fastLoginEnabled);
+  trackLoginFlowStarting();
 
   // Watch for the test login
   const watchTestLogin = yield* fork(watchTestLoginRequestSaga);
