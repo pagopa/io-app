@@ -111,6 +111,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
   body: "wallet.QRtoPay.contextualHelpContent"
 };
+/**
+ * @deprecated
+ */
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private focusUnsubscribe!: () => void;
@@ -399,4 +402,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
+/**
+ * @deprecated
+ */
 export default connect(mapStateToProps, mapDispatchToProps)(ScanQrCodeScreen);
