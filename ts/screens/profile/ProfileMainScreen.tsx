@@ -4,7 +4,14 @@ import { List, Toast } from "native-base";
 import * as React from "react";
 import { View, Alert, ScrollView } from "react-native";
 import { connect } from "react-redux";
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  Divider,
+  ListItemInfoCopy,
+  ListItemNav,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -36,8 +43,7 @@ import { navigateToLogout } from "../../store/actions/navigation";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled,
-  preferencesDesignSystemSetEnabled
+  preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -49,7 +55,6 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
   isIdPayTestEnabledSelector,
-  isDesignSystemEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -58,13 +63,10 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
-import ListItemNav from "../../components/ui/ListItemNav";
-import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
-import ButtonSolid from "../../components/ui/ButtonSolid";
-import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -133,7 +135,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     description?: string
   ) {
     return (
-      <SwitchListItem
+      <ListItemSwitch
         label={title}
         description={description}
         value={switchValue}
@@ -240,10 +242,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.showModal();
   };
 
-  private onDesignSystemToggle = (enabled: boolean) => {
-    this.props.setDesignSystemEnabled(enabled);
-  };
-
   private onAddTestCard = () => {
     if (!this.props.isPagoPATestEnabled) {
       Alert.alert(
@@ -302,7 +300,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       isDebugModeEnabled,
       isPagoPATestEnabled,
       isPnTestEnabled,
-      isDesignSystemEnabled,
       navigation,
       notificationId,
       notificationToken,
@@ -449,11 +446,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
         <Divider />
-        {this.developerListItem(
-          I18n.t("profile.main.designSystemEnvironment"),
-          isDesignSystemEnabled,
-          this.onDesignSystemToggle
-        )}
+        <DSEnableSwitch />
         <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
@@ -699,7 +692,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
   isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   publicKey: lollipopPublicKeySelector(state)
 });
 
@@ -717,8 +709,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
-  setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
-    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled })),
   startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
 });
 

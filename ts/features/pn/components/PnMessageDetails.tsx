@@ -4,16 +4,15 @@ import * as O from "fp-ts/lib/Option";
 import React, { createRef, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { ListItemInfoCopy, VSpacer } from "@pagopa/io-app-design-system";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { TransactionSummaryRow } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
@@ -27,7 +26,8 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isDuplicatedPayment } from "../../../utils/payment";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import PN_ROUTES from "../navigation/routes";
-import { NotificationPaymentInfo, PNMessage } from "../store/types/types";
+import { PNMessage } from "../store/types/types";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import {
   trackPNAttachmentOpening,
   trackPNPaymentInfoError,
@@ -79,6 +79,7 @@ export const PnMessageDetails = ({
   const viewRef = createRef<View>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
+  const hasAttachment = message.attachments && message.attachments.length > 0;
   const isCancelled = message.isCancelled ?? false;
   const completedPaymentNoticeCode =
     isCancelled && message.completedPayments
@@ -186,7 +187,7 @@ export const PnMessageDetails = ({
             </DSFullWidthComponent>
           </>
         )}
-        {message.attachments && (
+        {hasAttachment && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
@@ -210,12 +211,11 @@ export const PnMessageDetails = ({
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
-          <TransactionSummaryRow
-            axis="horizontal"
-            title={I18n.t("features.pn.details.infoSection.iun")}
-            hideSeparator={true}
-            subtitle={message.iun}
+          <ListItemInfoCopy
+            value={message.iun}
             onPress={() => clipboardSetStringWithFeedback(message.iun)}
+            accessibilityLabel={I18n.t("features.pn.details.infoSection.iun")}
+            label={I18n.t("features.pn.details.infoSection.iun")}
           />
           <H5
             color="bluegrey"

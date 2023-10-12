@@ -35,14 +35,14 @@ import { IOBarcodeType } from "./IOBarcode";
 //    };                                <--
 export type DecodedIOBarcode =
   | {
-      type: "IDPAY";
-      authUrl: string;
-      trxCode: string;
-    }
-  | {
       type: "PAGOPA";
       rptId: RptId;
       amount: AmountInEuroCents;
+    }
+  | {
+      type: "IDPAY";
+      authUrl: string;
+      trxCode: string;
     };
 
 // Barcode decoder function which is used to determine the type and content of a barcode

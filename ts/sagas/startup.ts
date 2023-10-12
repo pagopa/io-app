@@ -102,7 +102,7 @@ import {
   backendStatusSelector,
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
-import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -115,7 +115,8 @@ import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStat
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
-  initMixpanel
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
 import {
   handlePendingMessageStateIfAllowedSaga,
@@ -268,6 +269,7 @@ export function* initializeApplicationSaga(
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
+  yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(

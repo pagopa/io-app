@@ -6,7 +6,10 @@ import { SagaIterator } from "redux-saga";
 import { isFastLoginEnabledSelector } from "../../store/selectors";
 import { sessionExpired } from "../../../../store/actions/authentication";
 import { Action } from "../../../../store/actions/types";
-import { refreshSessionToken, savePendingAction } from "../../store/actions";
+import {
+  refreshSessionToken,
+  savePendingAction
+} from "../../store/actions/tokenRefreshActions";
 
 export function* withRefreshApiCall<R, A extends Action>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,

@@ -13,12 +13,15 @@ import {
 } from "react-native";
 
 import { connect } from "react-redux";
-import { VSpacer, IOSpacingScale } from "@pagopa/io-app-design-system";
+import {
+  VSpacer,
+  IOSpacingScale,
+  ModuleIDP
+} from "@pagopa/io-app-design-system";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
 import { IOVisualCostants } from "./core/variables/IOStyles";
-import { ListItemIDP } from "./ui/ListItemIDP";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
@@ -54,7 +57,7 @@ const renderItem =
     const onPress = () => onIdpSelected(item);
 
     return (
-      <ListItemIDP
+      <ModuleIDP
         key={id}
         name={name}
         logo={logo as ImageSourcePropType}

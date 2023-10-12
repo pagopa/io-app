@@ -17,6 +17,8 @@ import { LollipopMethodEnum } from "../../../../../definitions/fci/LollipopMetho
 import { LollipopOriginalURL } from "../../../../../definitions/fci/LollipopOriginalURL";
 import { LollipopSignatureInput } from "../../../../../definitions/fci/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../../definitions/fci/LollipopSignature";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 /*
  * A saga to post signature data.
@@ -25,7 +27,7 @@ export function* handleCreateSignature(
   apiUrl: string,
   bearerToken: SessionToken,
   keyInfo: KeyInfo = {},
-  action: ActionType<typeof fciSigningRequest["request"]>
+  action: ActionType<(typeof fciSigningRequest)["request"]>
 ): SagaIterator {
   try {
     const qtspFilledDocumentUrl = yield* select(
@@ -72,23 +74,28 @@ export function* handleCreateSignature(
       lollipopConfig
     );
 
+    const createSignatureRequest = fciLollipopclient.createSignature({
+      body: action.payload,
+      Bearer: `Bearer ${bearerToken}`,
+      "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
+      "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+      "signature-input": "" as LollipopSignatureInput,
+      signature: "" as LollipopSignature,
+      "x-pagopa-lollipop-custom-tos-challenge": "",
+      "x-pagopa-lollipop-custom-sign-challenge": ""
+    });
+
     // To avoid a type error on createSignature TypeCallApi
     // we need to initializa the following values to the correct type
     // and the correct values will be setted by the client
     // using custom fetchApi (lollipopFetch)
-    const postSignatureResponse = yield* call(
-      fciLollipopclient.createSignature,
-      {
-        body: action.payload,
-        Bearer: `Bearer ${bearerToken}`,
-        "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
-        "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
-        "signature-input": "" as LollipopSignatureInput,
-        signature: "" as LollipopSignature,
-        "x-pagopa-lollipop-custom-tos-challenge": "",
-        "x-pagopa-lollipop-custom-sign-challenge": ""
-      }
-    );
+    const postSignatureResponse = (yield* call(
+      withRefreshApiCall,
+      createSignatureRequest,
+      action
+    )) as unknown as SagaCallReturnType<
+      (typeof fciLollipopclient)["createSignature"]
+    >;
 
     if (E.isLeft(postSignatureResponse)) {
       throw Error(readablePrivacyReport(postSignatureResponse.left));
@@ -96,6 +103,10 @@ export function* handleCreateSignature(
 
     if (postSignatureResponse.right.status === 200) {
       yield* put(fciSigningRequest.success(postSignatureResponse.right.value));
+      return;
+    }
+
+    if (postSignatureResponse.right.status === 401) {
       return;
     }
 

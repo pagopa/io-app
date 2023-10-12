@@ -23,7 +23,7 @@ date:
     - "ven"
     - "sab"
   month_names:
-    - ""
+    - " "
     - "gennaio"
     - "febbraio"
     - "marzo"
@@ -37,7 +37,7 @@ date:
     - "novembre"
     - "dicembre"
   abbr_month_names:
-    - ""
+    - " "
     - "gen"
     - "feb"
     - "mar"
@@ -65,7 +65,7 @@ global:
   modules:
     paymentNotice:
       badges:
-        payed: "Pagato"
+        paid: "Pagato"
         error: "Errore"
         expired: "Scaduto"
         revoked: "Revocato"
@@ -249,6 +249,9 @@ permissionRationale:
   calendar:
     title: "Consenti l’accesso al calendario"
     message: "Potrai aggiungere le scadenze al tuo calendario e impostare un promemoria."
+  torch:
+    title: "Consenti l’accesso alla fotocamera"
+    message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
   title: Inizializzazione
   authentication: Utente autenticato
@@ -864,6 +867,16 @@ email:
     validation_ok: La mail è stata validata. Ora puoi accedere a tutte le funzionalità di IO.
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
+  newvalidate:
+    title: Conferma la tua email
+    subtitle: Segui le istruzioni che abbiamo inviato a 
+    link: Non è corretta?
+    buttonlabelsent: Email inviata!
+    buttonlabelsentagain: Invia di nuovo l’email
+    toast: Fatto! Controlla tua casella di posta.
+  newvalidemail: 
+    title: Email confermata!
+    subtitle: Riceverai le comunicazioni di IO all’indirizzo 
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
@@ -1403,6 +1416,7 @@ wallet:
     amount: Importo
     total: Totale pagato
     expireDate: Scadenza
+    dueDate: Entro il
     tranche: Rata
     info: "Per informazioni:"
     tel: "Tel:"
@@ -3327,7 +3341,10 @@ features:
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Firmato"
       notAvailable: "Non disponibile"
-      signingInProgress: "Firma in corso"        
+      signingInProgress: "Firma in corso"     
+    signatureFieldInfo:
+      title: "Cosa sono le clausole vessatorie?"
+      subTitle: "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."   
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3392,6 +3409,32 @@ support:
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
+  code:
+    reset:
+      title: Codice ID Pay
+      body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+    onboarding:
+      header: Ecco il tuo codice!
+      body1: "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:"
+      bodyBold: "memorizzalo in un luogo sicuro"
+      bodyCta: "Come funziona?"
+      banner:
+        header: E se lo dimentichi?
+        body: Puoi reimpostare il codice in ogni momento da Profilo > Sicurezza.
+      title: Paga con la tua carta d'identità elettronica
+      description: Spendi il denaro delle iniziative a te previste usando la tua carta d’identità elettronica.
+      buttons:
+        start: Inizia
+        howItWorks: Come funziona?
+    renew:
+      alert:
+        title: Vuoi generare un nuovo codice ID Pay?
+        body: Il codice attualmente in uso verrà sovrascritto.
+      screen:
+        header: Codice ID Pay
+        body: Il codice per autorizzare i pagamenti effettuati con la tua carta d’identità elettronica
+        link: Come funziona?
+        generateCTA: Genera un nuovo codice
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
@@ -3399,10 +3442,7 @@ idpay:
     initiativePairing:
       navigation: Iniziative disponibili
       header: Scegli quali iniziative abilitare su questo metodo
-      statusLabels:
-        PENDING_DEACTIVATION_REQUEST: "In attesa"
-        PENDING_ENROLLMENT_REQUEST: "In attesa"
-        ENROLLMENT_FAILED: "Attivazione fallita"
+      pendingStatus: "In attesa"
       errorToasts:
         enrollment: "Errore nel collegamento dell'iniziativa, riprova."
         removal: "Errore nella rimozione dell'iniziativa, riprova."
@@ -3438,7 +3478,6 @@ idpay:
               action: Configura
           yourOperations: Le tue Operazioni
           yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
-          yourOperationsLink: Come si fa?
           settings:
             showMore: Vedi tutte
             header: Impostazioni
@@ -3470,6 +3509,20 @@ idpay:
               READMITTED: "Riattivazione"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      IDPayCode:
+        banner:
+          title: Paga con la tua carta d’identità elettronica
+          body: Spendi il denaro a te riservato con la semplicità del contactless.
+          action: Abilita ora
+          close: Chiudi
+        failureScreen:
+          cta: Chiudi
+          header:
+            GENERIC: In questo momento non è possibile generare un codice
+        successScreen:
+          header: Ora puoi utilizzare la tua carta d’identità per pagare!
+          body: Se non ricordi il codice, puoi reimpostarlo in ogni momento dalla sezione Profilo > Sicurezza.
+          cta: Ok, chiudi
     beneficiaryDetails:
       infobox:
         title: Cosa ti permette di fare?
@@ -3541,6 +3594,12 @@ idpay:
         date: Data rimborso
         cro: CRO
       errorBody: Impossibile caricare il dettaglio
+    cie:
+      bottomSheet:
+        title: "Come funziona?"
+        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
+        featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
   onboarding:
     success:
       pleaseWait: Un attimo di pazienza...
@@ -3644,6 +3703,20 @@ idpay:
       buttons:
         continue: "Inizia la configurazione"
     instruments:
+      paymentMethods:
+        badge:
+          active: "Attivo"
+          pending: "In attesa"
+        header: "Come vuoi autorizzare i pagamenti?"
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e usa uno dei seguenti metodi."
+        IDPAYCODE:
+          title: "Usa la Carta d'identità elettronica"
+          description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
+          actionItem: "Come funziona?"
+        QRCODE:
+          title: "Usa l'app IO"
+          description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
+          actionItem: "Come funziona?"
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."

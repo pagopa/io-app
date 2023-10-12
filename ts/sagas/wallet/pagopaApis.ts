@@ -193,7 +193,7 @@ export function* fetchTransactionRequestHandler(
 export function* fetchPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof fetchPsp["request"]>
+  action: ActionType<(typeof fetchPsp)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getPsp(action.payload.idPsp)
@@ -318,7 +318,7 @@ export function* setFavouriteWalletRequestHandler(
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentUpdateWalletPsp["request"]>
+  action: ActionType<(typeof paymentUpdateWalletPsp)["request"]>
 ) {
   // First update the selected wallet (walletId) with the
   // new PSP (action.payload); then request a new list
@@ -547,7 +547,7 @@ export function* addWalletCreditCardRequestHandler(
 export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentCheck["request"]>
+  action: ActionType<(typeof paymentCheck)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
@@ -606,7 +606,7 @@ export function* paymentStartRequest(
 export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentDeletePayment["request"]>
+  action: ActionType<(typeof paymentDeletePayment)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
@@ -638,7 +638,7 @@ export function* paymentDeletePaymentRequestHandler(
  */
 export function* paymentVerificaRequestHandler(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
-  action: ActionType<typeof paymentVerifica["request"]>
+  action: ActionType<(typeof paymentVerifica)["request"]>
 ) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
@@ -655,8 +655,11 @@ export function* paymentVerificaRequestHandler(
       if (response.right.status === 200) {
         // Verifica succeeded
         yield* put(paymentVerifica.success(response.right.value));
-      } else if (response.right.status === 500) {
-        // Verifica failed with a 500, that usually means there was an error
+      } else if (
+        response.right.status === 500 ||
+        response.right.status === 504
+      ) {
+        // Verifica failed with a 500 or 504, that usually means there was an error
         // interacting with pagoPA that we can interpret
         yield* put(paymentVerifica.failure(response.right.value.detail_v2));
       } else {
@@ -676,7 +679,7 @@ export function* paymentVerificaRequestHandler(
  */
 export function* paymentAttivaRequestHandler(
   postAttivaRpt: ReturnType<typeof BackendClient>["postAttivaRpt"],
-  action: ActionType<typeof paymentAttiva["request"]>
+  action: ActionType<(typeof paymentAttiva)["request"]>
 ) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
@@ -699,7 +702,10 @@ export function* paymentAttivaRequestHandler(
       if (response.right.status === 200) {
         // Attiva succeeded
         yield* put(paymentAttiva.success(response.right.value));
-      } else if (response.right.status === 500) {
+      } else if (
+        response.right.status === 500 ||
+        response.right.status === 504
+      ) {
         // Attiva failed
         throw Error(response.right.value.detail_v2);
       } else {
@@ -721,7 +727,7 @@ export function* paymentAttivaRequestHandler(
  */
 export function* paymentIdPollingRequestHandler(
   getPaymentIdApi: ReturnType<ReturnType<typeof BackendClient>["getPaymentId"]>,
-  action: ActionType<typeof paymentIdPolling["request"]>
+  action: ActionType<(typeof paymentIdPolling)["request"]>
 ) {
   // successfully request the payment activation
   // now poll until a paymentId is made available
@@ -765,7 +771,7 @@ export function* paymentIdPollingRequestHandler(
 export function* getPspV2(
   getPspV2: ReturnType<typeof PaymentManagerClient>["getPspV2"],
   pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof pspForPaymentV2["request"]>
+  action: ActionType<(typeof pspForPaymentV2)["request"]>
 ) {
   const getPspV2Request = getPspV2(action.payload);
   const request = pmSessionManager.withRefresh(getPspV2Request);

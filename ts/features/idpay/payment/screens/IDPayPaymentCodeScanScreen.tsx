@@ -13,6 +13,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -59,6 +60,7 @@ const IDPayPaymentCodeScanScreen = () => {
       onBarcodeSuccess={handleBarcodeSuccess}
       onBarcodeError={handleBarcodeError}
       onManualInputPressed={navigateToCodeInputScreen}
+      contextualHelp={emptyContextualHelp}
     />
   );
 };

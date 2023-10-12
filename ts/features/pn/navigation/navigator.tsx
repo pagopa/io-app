@@ -1,11 +1,11 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { PnAttachmentPreview } from "../screens/PnAttachmentPreview";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PnMessageDetailsScreen } from "../screens/PnMessageDetailsScreen";
-import { LegacyPnMessageDetailsScreen } from "../screens/LegacyPnMessageDetailsScreen";
-import { newPnMessageDetailsEnabled } from "../../../config";
+import { PnAttachmentPreview } from "../screens/PnAttachmentPreview";
 import { PnPaidPaymentScreen } from "../screens/PnPaidPaymentScreen";
+import { pnNoticesF24Enabled } from "../../../config";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -20,9 +20,7 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
       component={
-        newPnMessageDetailsEnabled
-          ? PnMessageDetailsScreen
-          : LegacyPnMessageDetailsScreen
+        pnNoticesF24Enabled ? MessageDetailsScreen : PnMessageDetailsScreen
       }
     />
     <Stack.Screen

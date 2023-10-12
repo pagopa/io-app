@@ -21,6 +21,8 @@ import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledD
 import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
 import { FciClient } from "../../api/backendFci";
 import { SessionToken } from "../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -35,13 +37,18 @@ const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
 export function* handleCreateFilledDocument(
   postQtspFilledBody: FciClient["createFilledDocument"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciLoadQtspFilledDocument["request"]>
+  action: ActionType<(typeof fciLoadQtspFilledDocument)["request"]>
 ): SagaIterator {
   try {
-    const postQtspFilledBodyResponse = yield* call(postQtspFilledBody, {
+    const postQtspFilledBodyRequest = postQtspFilledBody({
       body: action.payload,
       Bearer: `Bearer ${bearerToken}`
     });
+    const postQtspFilledBodyResponse = (yield* call(
+      withRefreshApiCall,
+      postQtspFilledBodyRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof postQtspFilledBody>;
 
     if (E.isLeft(postQtspFilledBodyResponse)) {
       throw Error(readablePrivacyReport(postQtspFilledBodyResponse.left));
@@ -60,6 +67,10 @@ export function* handleCreateFilledDocument(
       if (qtspFilledDocumentUrl) {
         yield* call(filledDocumentPollWatcher, qtspFilledDocumentUrl);
       }
+      return;
+    }
+
+    if (postQtspFilledBodyResponse.right.status === 401) {
       return;
     }
 

@@ -9,10 +9,10 @@ import { Platform } from "react-native";
 export type IOFontFamily = keyof typeof fonts;
 
 const weights = ["Light", "Regular", "SemiBold", "Bold"] as const;
-export type IOFontWeight = typeof weights[number];
+export type IOFontWeight = (typeof weights)[number];
 
 const weightValues = ["300", "400", "600", "700"] as const;
-export type FontWeightValue = typeof weightValues[number];
+export type FontWeightValue = (typeof weightValues)[number];
 
 const fontKeys: ReadonlyArray<IOFontFamily> = ["TitilliumWeb", "RobotoMono"];
 
@@ -31,6 +31,11 @@ const fonts = {
   RobotoMono: Platform.select({
     android: "RobotoMono",
     ios: "Roboto Mono"
+  }),
+  DMMono: Platform.select({
+    android: "DMMono",
+    web: "DMMono",
+    ios: "DM Mono"
   })
 };
 

@@ -51,8 +51,8 @@ export const booleanToYesNo = (value: boolean): "yes" | "no" =>
   pipe(
     value,
     B.fold(
-      () => "no",
-      () => "yes"
+      () => "no" as const,
+      () => "yes" as const
     )
   );
 

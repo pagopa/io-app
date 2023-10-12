@@ -7,10 +7,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import {
+  ButtonSolid,
   VSpacer,
   Pictogram,
   ContentWrapper
 } from "@pagopa/io-app-design-system";
+import Animated, { Layout } from "react-native-reanimated";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
@@ -18,17 +20,15 @@ import {
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
-import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { BonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
-import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
+import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
 import {
   InitiativeTimelineComponent,
   InitiativeTimelineComponentSkeleton
@@ -41,6 +41,9 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
+import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
+import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -179,11 +182,18 @@ const InitiativeDetailsScreen = () => {
               return (
                 <ContentWrapper>
                   <VSpacer size={8} />
-                  <InitiativeTimelineComponent
-                    initiativeId={initiativeId}
-                    size={5}
-                  />
-                  <VSpacer size={32} />
+                  <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
+                  <Animated.View layout={Layout.duration(200)}>
+                    <InitiativeTimelineComponent
+                      initiativeId={initiativeId}
+                      size={5}
+                    />
+                    <VSpacer size={32} />
+                    <InitiativeDiscountSettingsComponent
+                      initiative={initiative}
+                    />
+                    <VSpacer size={16} />
+                  </Animated.View>
                 </ContentWrapper>
               );
 
@@ -233,7 +243,7 @@ const InitiativeDetailsScreen = () => {
                     size={3}
                   />
                   <VSpacer size={24} />
-                  <InitiativeSettingsComponent initiative={initiative} />
+                  <InitiativeRefundSettingsComponent initiative={initiative} />
                   <VSpacer size={32} />
                 </ContentWrapper>
               );

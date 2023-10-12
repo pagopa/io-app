@@ -19,14 +19,6 @@ import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import {
-  IDPayConfigurationNavigator,
-  IDPayConfigurationRoutes
-} from "../features/idpay/configuration/navigation/navigator";
-import {
-  IDpayDetailsNavigator,
-  IDPayDetailsRoutes
-} from "../features/idpay/details/navigation";
-import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
@@ -42,6 +34,18 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
+import {
+  WalletOnboardingNavigator,
+  WalletOnboardingRoutes
+} from "../features/walletV3/onboarding/navigation/navigator";
+import {
+  IDpayDetailsNavigator,
+  IDPayDetailsRoutes
+} from "../features/idpay/details/navigation";
+import {
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
+} from "../features/idpay/configuration/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
@@ -52,11 +56,11 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import {
-  WalletOnboardingNavigator,
-  WalletOnboardingRoutes
-} from "../features/walletV3/onboarding/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
+import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
+import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
+import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -110,7 +114,10 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
-        options={{ gestureEnabled: false }}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: false
+        }}
       />
 
       {cgnEnabled && (
@@ -202,6 +209,10 @@ const AuthenticatedStackNavigator = () => {
             component={IDPayPaymentNavigator}
             options={{ gestureEnabled: false }}
           />
+          <Stack.Screen
+            name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
+            component={IdPayCodeNavigator}
+          />
         </>
       )}
 
@@ -209,6 +220,15 @@ const AuthenticatedStackNavigator = () => {
         name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
         component={WalletOnboardingNavigator}
         options={{ gestureEnabled: isGestureEnabled }}
+      />
+      <Stack.Screen
+        name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
+        component={WalletPaymentNavigator}
+        options={{
+          /* FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator */
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled
+        }}
       />
     </Stack.Navigator>
   );

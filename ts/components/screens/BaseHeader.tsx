@@ -17,6 +17,7 @@ import {
   IOColors,
   IOIcons,
   Icon,
+  IconButton,
   HSpacer,
   IOSpacer
 } from "@pagopa/io-app-design-system";
@@ -34,7 +35,6 @@ import { Body } from "../core/typography/Body";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
-import IconButton from "../ui/IconButton";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -279,7 +279,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <>
             <IconButton
               icon={customRightIcon.iconName}
-              color="neutral"
+              color={dark ? "contrast" : "neutral"}
               onPress={customRightIcon.onPress}
               accessibilityLabel={customRightIcon.accessibilityLabel}
             />

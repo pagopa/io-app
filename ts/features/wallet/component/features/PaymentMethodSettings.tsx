@@ -10,6 +10,8 @@ import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type Props = { paymentMethod: PaymentMethod };
 
+const componentVerticalSpacing: IOSpacingScale = 12;
+
 /**
  * This component allows the user to choose and change the common settings for a payment methods
  * The {@link FavoritePaymentMethodSwitch} should be rendered only if the payment method has the capability pagoPA and
@@ -21,7 +23,7 @@ const PaymentMethodSettings = (props: Props): React.ReactElement => (
   <>
     <NewH6
       color={"grey-700"}
-      style={{ paddingVertical: IOSpacingScale[3] /* 12 */ }}
+      style={{ paddingVertical: componentVerticalSpacing }}
     >
       {I18n.t("global.buttons.settings")}
     </NewH6>

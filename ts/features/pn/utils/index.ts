@@ -1,10 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "../../../i18n";
 import { UIService } from "../../../store/reducers/entities/services/types";
-import { NotificationStatus, PNMessage } from "../store/types/types";
+import { PNMessage } from "../store/types/types";
+import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../../types/MessageCTA";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
@@ -80,9 +81,18 @@ export const paymentFromPNMessagePot = (
     O.chain(message =>
       pipe(
         message.recipients,
-        A.findFirst(recipient => recipient.taxId === userFiscalCode)
+        RA.findFirst(recipient => recipient.taxId === userFiscalCode)
       )
     ),
     O.chainNullableK(recipient => recipient.payment),
     O.toUndefined
+  );
+
+export const isCancelledFromPNMessagePot = (
+  potMessage: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    pot.getOrElse(potMessage, O.none),
+    O.chainNullableK(message => message.isCancelled),
+    O.getOrElse(() => false)
   );

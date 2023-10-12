@@ -1,10 +1,10 @@
-import { SectionList, View } from "react-native";
+import { SectionList, StatusBar, View, useColorScheme } from "react-native";
 import * as React from "react";
 import {
-  IOColors,
   useIOTheme,
   Divider,
-  VSpacer
+  VSpacer,
+  ListItemNav
 } from "@pagopa/io-app-design-system";
 import {
   IOStyles,
@@ -16,7 +16,6 @@ import {
 } from "../../navigation/params/AppParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import ListItemNav from "../../components/ui/ListItemNav";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";
 
@@ -83,6 +82,7 @@ const DESIGN_SYSTEM_SECTION_DATA = [
 
 export const DesignSystem = (props: Props) => {
   const theme = useIOTheme();
+  const colorScheme = useColorScheme();
 
   const renderDSNavItem = ({
     item: { title, route }
@@ -114,21 +114,25 @@ export const DesignSystem = (props: Props) => {
   const renderDSSectionFooter = () => <VSpacer size={40} />;
 
   return (
-    <SectionList
-      keyExtractor={(item, index) => `${item.route}-${index}`}
-      stickySectionHeadersEnabled={false}
-      contentContainerStyle={[
-        IOStyles.horizontalContentPadding,
-        {
-          paddingTop: IOVisualCostants.appMarginDefault,
-          backgroundColor: IOColors[theme["appBackground-primary"]]
-        }
-      ]}
-      renderSectionHeader={renderDSSection}
-      renderSectionFooter={renderDSSectionFooter}
-      renderItem={renderDSNavItem}
-      ItemSeparatorComponent={() => <Divider />}
-      sections={DESIGN_SYSTEM_SECTION_DATA}
-    />
+    <>
+      <StatusBar
+        barStyle={colorScheme === "dark" ? "light-content" : "default"}
+      />
+      <SectionList
+        keyExtractor={(item, index) => `${item.route}-${index}`}
+        stickySectionHeadersEnabled={false}
+        contentContainerStyle={[
+          IOStyles.horizontalContentPadding,
+          {
+            paddingTop: IOVisualCostants.appMarginDefault
+          }
+        ]}
+        renderSectionHeader={renderDSSection}
+        renderSectionFooter={renderDSSectionFooter}
+        renderItem={renderDSNavItem}
+        ItemSeparatorComponent={() => <Divider />}
+        sections={DESIGN_SYSTEM_SECTION_DATA}
+      />
+    </>
   );
 };

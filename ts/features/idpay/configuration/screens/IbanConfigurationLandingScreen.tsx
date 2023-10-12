@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
+  ButtonSolid,
   VSpacer,
   Pictogram,
   ContentWrapper
@@ -9,7 +10,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import ButtonSolid from "../../../../components/ui/ButtonSolid";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
@@ -75,7 +75,7 @@ const IbanConfigurationLanding = () => {
           IOStyles.horizontalContentPadding
         ]}
       >
-        <Pictogram name="ibanCard" size={240} />
+        <Pictogram name="ibanCard" size={180} />
         <VSpacer size={32} />
         <View style={[IOStyles.horizontalContentPadding, styles.textContainer]}>
           <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>

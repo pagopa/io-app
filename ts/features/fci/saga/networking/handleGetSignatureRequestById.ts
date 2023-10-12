@@ -8,6 +8,7 @@ import { fciSignatureRequestFromId } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 /*
  * A saga to load a FCI signature request.
@@ -15,15 +16,19 @@ import { SagaCallReturnType } from "../../../../types/utils";
 export function* handleGetSignatureRequestById(
   getSignatureRequestById: FciClient["getSignatureRequestById"],
   bearerToken: SessionToken,
-  action: ActionType<typeof fciSignatureRequestFromId["request"]>
+  action: ActionType<(typeof fciSignatureRequestFromId)["request"]>
 ): SagaIterator {
   try {
-    const getSignatureDetailViewByIdResponse: SagaCallReturnType<
-      typeof getSignatureRequestById
-    > = yield* call(getSignatureRequestById, {
+    const getSignatureDetailByIdRequest = getSignatureRequestById({
       id: action.payload,
       Bearer: `Bearer ${bearerToken}`
     });
+
+    const getSignatureDetailViewByIdResponse = (yield* call(
+      withRefreshApiCall,
+      getSignatureDetailByIdRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof getSignatureRequestById>;
 
     if (E.isLeft(getSignatureDetailViewByIdResponse)) {
       throw Error(
@@ -37,6 +42,10 @@ export function* handleGetSignatureRequestById(
           getSignatureDetailViewByIdResponse.right.value
         )
       );
+      return;
+    }
+
+    if (getSignatureDetailViewByIdResponse.right.status === 401) {
       return;
     }
 
