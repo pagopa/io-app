@@ -779,44 +779,62 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                         >
                           <View>
                             <View
-                              accessible={false}
+                              accessibilityLabel="Notice code"
+                              accessibilityRole="button"
+                              accessible={true}
                               collapsable={false}
                               focusable={true}
+                              onBlur={[Function]}
                               onClick={[Function]}
+                              onFocus={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
                               onResponderRelease={[Function]}
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={
-                                Object {
-                                  "opacity": 1,
-                                }
-                              }
                             >
-                              <View>
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    },
+                                  ]
+                                }
+                              >
                                 <View
                                   style={
-                                    Object {
-                                      "alignItems": "center",
-                                      "flex": 1,
-                                      "flexDirection": "row",
-                                    }
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      Object {
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="Notice code: 0180  1198  8086  4794  97"
-                                    accessible={true}
                                     style={
                                       Object {
                                         "flex": 1,
-                                        "flexDirection": "row",
-                                        "paddingVertical": 24,
                                       }
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
                                       color="bluegrey"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
@@ -829,9 +847,6 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                                       }
                                       style={
                                         Array [
-                                          Object {
-                                            "flex": 1,
-                                          },
                                           Object {
                                             "fontSize": 16,
                                             "lineHeight": 24,
@@ -848,44 +863,96 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                                     >
                                       Notice code
                                     </Text>
-                                    <Text
-                                      color="blue"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                    <View
+                                      style={
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 22,
+                                          "height": 4,
                                         }
                                       }
+                                    />
+                                    <Text
+                                      numberOfLines={2}
                                       style={
                                         Array [
                                           Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 22,
+                                            "fontFamily": "Titillium Web",
+                                            "fontSize": 18,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
-                                      weightColorFactory={[Function]}
                                     >
                                       0180  1198  8086  4794  97
                                     </Text>
                                   </View>
-                                </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#CCD4DC",
-                                      "height": 0.5,
+                                  <View
+                                    style={
+                                      Object {
+                                        "marginLeft": 16,
+                                      }
                                     }
-                                  }
-                                />
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      color={4278219750}
+                                      focusable={false}
+                                      height={24}
+                                      importantForAccessibility="no-hide-descendants"
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {
+                                            "color": "#0073E6",
+                                          },
+                                          Object {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      tintColor={4278219750}
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
+                                    >
+                                      <RNSVGGroup>
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                          fill={
+                                            Array [
+                                              2,
+                                            ]
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1683,44 +1750,62 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                         >
                           <View>
                             <View
-                              accessible={false}
+                              accessibilityLabel="Notice code"
+                              accessibilityRole="button"
+                              accessible={true}
                               collapsable={false}
                               focusable={true}
+                              onBlur={[Function]}
                               onClick={[Function]}
+                              onFocus={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
                               onResponderRelease={[Function]}
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={
-                                Object {
-                                  "opacity": 1,
-                                }
-                              }
                             >
-                              <View>
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    },
+                                  ]
+                                }
+                              >
                                 <View
                                   style={
-                                    Object {
-                                      "alignItems": "center",
-                                      "flex": 1,
-                                      "flexDirection": "row",
-                                    }
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      Object {
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="Notice code: 0180  1198  8086  4794  97"
-                                    accessible={true}
                                     style={
                                       Object {
                                         "flex": 1,
-                                        "flexDirection": "row",
-                                        "paddingVertical": 24,
                                       }
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
                                       color="bluegrey"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
@@ -1733,9 +1818,6 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                                       }
                                       style={
                                         Array [
-                                          Object {
-                                            "flex": 1,
-                                          },
                                           Object {
                                             "fontSize": 16,
                                             "lineHeight": 24,
@@ -1752,85 +1834,155 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                                     >
                                       Notice code
                                     </Text>
-                                    <Text
-                                      color="blue"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                    <View
+                                      style={
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 22,
+                                          "height": 4,
                                         }
                                       }
+                                    />
+                                    <Text
+                                      numberOfLines={2}
                                       style={
                                         Array [
                                           Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 22,
+                                            "fontFamily": "Titillium Web",
+                                            "fontSize": 18,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
-                                      weightColorFactory={[Function]}
                                     >
                                       0180  1198  8086  4794  97
                                     </Text>
                                   </View>
-                                </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#CCD4DC",
-                                      "height": 0.5,
+                                  <View
+                                    style={
+                                      Object {
+                                        "marginLeft": 16,
+                                      }
                                     }
-                                  }
-                                />
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      color={4278219750}
+                                      focusable={false}
+                                      height={24}
+                                      importantForAccessibility="no-hide-descendants"
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {
+                                            "color": "#0073E6",
+                                          },
+                                          Object {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      tintColor={4278219750}
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
+                                    >
+                                      <RNSVGGroup>
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                          fill={
+                                            Array [
+                                              2,
+                                            ]
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
                               </View>
                             </View>
                             <View
-                              accessible={false}
+                              accessibilityLabel="Payee Fiscal Code"
+                              accessibilityRole="button"
+                              accessible={true}
                               collapsable={false}
                               focusable={true}
+                              onBlur={[Function]}
                               onClick={[Function]}
+                              onFocus={[Function]}
                               onResponderGrant={[Function]}
                               onResponderMove={[Function]}
                               onResponderRelease={[Function]}
                               onResponderTerminate={[Function]}
                               onResponderTerminationRequest={[Function]}
                               onStartShouldSetResponder={[Function]}
-                              style={
-                                Object {
-                                  "opacity": 1,
-                                }
-                              }
                             >
-                              <View>
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    },
+                                  ]
+                                }
+                              >
                                 <View
                                   style={
-                                    Object {
-                                      "alignItems": "center",
-                                      "flex": 1,
-                                      "flexDirection": "row",
-                                    }
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      Object {
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="Payee Fiscal Code: 00000000009"
-                                    accessible={true}
                                     style={
                                       Object {
                                         "flex": 1,
-                                        "flexDirection": "row",
-                                        "paddingVertical": 24,
                                       }
                                     }
                                   >
                                     <Text
+                                      allowFontScaling={false}
                                       color="bluegrey"
                                       defaultColor="bluegrey"
                                       defaultWeight="Regular"
@@ -1843,9 +1995,6 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                                       }
                                       style={
                                         Array [
-                                          Object {
-                                            "flex": 1,
-                                          },
                                           Object {
                                             "fontSize": 16,
                                             "lineHeight": 24,
@@ -1862,44 +2011,96 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
                                     >
                                       Payee Fiscal Code
                                     </Text>
-                                    <Text
-                                      color="blue"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                    <View
+                                      style={
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 22,
+                                          "height": 4,
                                         }
                                       }
+                                    />
+                                    <Text
+                                      numberOfLines={2}
                                       style={
                                         Array [
                                           Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 22,
+                                            "fontFamily": "Titillium Web",
+                                            "fontSize": 18,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
                                           },
                                           Object {
                                             "color": "#0073E6",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
-                                      weight="SemiBold"
-                                      weightColorFactory={[Function]}
                                     >
                                       00000000009
                                     </Text>
                                   </View>
-                                </View>
-                                <View
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#CCD4DC",
-                                      "height": 0.5,
+                                  <View
+                                    style={
+                                      Object {
+                                        "marginLeft": 16,
+                                      }
                                     }
-                                  }
-                                />
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      color={4278219750}
+                                      focusable={false}
+                                      height={24}
+                                      importantForAccessibility="no-hide-descendants"
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {
+                                            "color": "#0073E6",
+                                          },
+                                          Object {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      tintColor={4278219750}
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
+                                    >
+                                      <RNSVGGroup>
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
+                                          fill={
+                                            Array [
+                                              2,
+                                            ]
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
                               </View>
                             </View>
                           </View>

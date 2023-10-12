@@ -6,7 +6,7 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import I18n from "../../../../i18n";
 import { getV2ErrorMainType } from "../../../../utils/payment";
-import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
+import { TransactionSummaryError } from "../TransactionSummaryScreen";
 
 type StatusContentProps = {
   viewRef: React.RefObject<View>;
