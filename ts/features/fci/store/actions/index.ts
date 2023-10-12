@@ -15,6 +15,7 @@ import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 import { Document } from "../reducers/fciSignatureFieldDrawing";
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
+import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 
 /**
  * get and handle the signatureRequest from id
@@ -132,6 +133,13 @@ export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
 )<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
 
+/**
+ * Action to interact with the environment reducer.
+ */
+export const fciEnvironmentSet = createStandardAction(
+  "FCI_ENVIRONMENT_SET"
+)<EnvironmentEnum>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -148,4 +156,5 @@ export type FciActions =
   | ActionType<typeof fciClearAllFiles>
   | ActionType<typeof fciMetadataRequest>
   | ActionType<typeof fciSignaturesListRequest>
-  | ActionType<typeof fciDocumentSignatureFields>;
+  | ActionType<typeof fciDocumentSignatureFields>
+  | ActionType<typeof fciEnvironmentSet>;

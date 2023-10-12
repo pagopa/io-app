@@ -80,6 +80,9 @@ export const fciDocumentsWithUrlSelector = (
     )
   );
 
+/**
+ * @deprecated Use the new {@link fciEnvironmentSelector} instead.
+ */
 export const fciIssuerEnvironmentSelector = createSelector(
   fciSignatureRequestSelector,
   signatureDetailView =>
