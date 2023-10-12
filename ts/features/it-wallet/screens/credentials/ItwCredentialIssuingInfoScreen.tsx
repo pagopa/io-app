@@ -9,9 +9,10 @@ import {
   Icon,
   IconContained,
   LabelLink,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
-import { constVoid, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -31,6 +32,9 @@ import ItwBulletList from "../../components/ItwBulletList";
 import { useItwDataProcessing } from "../../hooks/useItwDataProcessing";
 import { CREDENTIAL_ISSUER, CredentialCatalogItem } from "../../utils/mocks";
 import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
+import { showCancelAlert } from "../../utils/alert";
+import ROUTES from "../../../../navigation/routes";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -46,6 +50,17 @@ const ItwCredentialIssuingInfoScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
   const { present, bottomSheet } = useItwDataProcessing();
+  const toast = useIOToast();
+
+  /**
+   * Callback to be used in case of cancel button press alert to navigate to the home screen and show a toast.
+   */
+  const alertOnPress = () => {
+    toast.info(
+      I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
+    );
+    navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
+  };
 
   const ContentView = ({ decodedPid, credential }: ContentViewParams) => (
     <SafeAreaView style={IOStyles.flex}>
@@ -127,7 +142,7 @@ const ItwCredentialIssuingInfoScreen = () => {
           buttonProps: {
             color: "primary",
             accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: constVoid,
+            onPress: () => showCancelAlert(alertOnPress),
             label: I18n.t("global.buttons.cancel")
           }
         }}
@@ -136,7 +151,7 @@ const ItwCredentialIssuingInfoScreen = () => {
           buttonProps: {
             color: "primary",
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: constVoid,
+            onPress: () => navigation.navigate(ITW_ROUTES.CREDENTIALS.PREVIEW),
             label: I18n.t("global.buttons.continue")
           }
         }}
