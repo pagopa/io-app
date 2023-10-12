@@ -1,10 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import {
-  bonusVacanzeEnabled,
-  bpdOptInPaymentMethodsEnabled,
-  newTransactionSummaryEnabled
-} from "../config";
+import { bonusVacanzeEnabled, bpdOptInPaymentMethodsEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
@@ -42,13 +38,12 @@ import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCar
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
-import NewTransactionSummaryScreen from "../screens/wallet/payment/NewTransactionSummaryScreen";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentOutcomeCodeMessage from "../screens/wallet/payment/PaymentOutcomeCodeMessage";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
-import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import { useIOSelector } from "../store/hooks";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import ROUTES from "./routes";
@@ -151,11 +146,7 @@ const WalletNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.PAYMENT_TRANSACTION_SUMMARY}
-        component={
-          newTransactionSummaryEnabled
-            ? NewTransactionSummaryScreen
-            : TransactionSummaryScreen
-        }
+        component={TransactionSummaryScreen}
       />
       <Stack.Screen
         name={ROUTES.PAYMENT_TRANSACTION_ERROR}

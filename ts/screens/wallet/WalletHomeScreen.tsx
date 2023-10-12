@@ -1,3 +1,4 @@
+import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Content, Text as NBButtonText } from "native-base";
@@ -10,7 +11,6 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -87,7 +87,10 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -104,6 +107,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -450,14 +454,22 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  private navigateToPaymentScanQrCode = () => {
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
+      });
+    } else {
+      this.props.navigateToPaymentScanQrCode();
+    }
+  };
+
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
       <ButtonDefaultOpacity
         block={true}
         onPress={
-          pot.isSome(potWallets)
-            ? this.props.navigateToPaymentScanQrCode
-            : undefined
+          pot.isSome(potWallets) ? this.navigateToPaymentScanQrCode : undefined
         }
         activeOpacity={1}
       >
@@ -557,7 +569,8 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: isIdPayEnabledSelector(state)
+  isIdPayEnabled: isIdPayEnabledSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
