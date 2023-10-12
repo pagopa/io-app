@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { HeaderFirstLevel, IOColors } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import I18n from "../i18n";
@@ -17,6 +17,13 @@ import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPrefer
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
+import {
+  useNavigation,
+  useNavigationState,
+  useRoute
+} from "@react-navigation/native";
+import { useEffect } from "react";
+import { currentRouteSelector } from "../store/reducers/navigation";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -44,11 +51,16 @@ const styles = StyleSheet.create({
 export const MainTabNavigator = () => {
   const insets = useSafeAreaInsets();
   const startupLoaded = useIOSelector(isStartupLoaded);
+  // TODO: remove this once upgrade to react-navigation 6
+  const currentRouteName = useIOSelector(currentRouteSelector);
   const tabBarHeight = 54;
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
+  // useEffect(() => {
+
+  // },[currentRouteName]);
   return (
     <LoadingSpinnerOverlay
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}

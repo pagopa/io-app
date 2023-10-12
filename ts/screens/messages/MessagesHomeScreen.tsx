@@ -70,7 +70,6 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
-
   const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
 
   useOnFirstRender(() => {
