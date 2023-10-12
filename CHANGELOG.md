@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1-rc.1](https://github.com/pagopa/io-app/compare/0.4.1-rc.0...0.4.1-rc.1) (2023-10-12)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-443](https://pagopa.atlassian.net/browse/SIW-443)] Select credential from catalog ([#5072](https://github.com/pagopa/io-app/issues/5072)) ([43ff918](https://github.com/pagopa/io-app/commit/43ff9189bff1466e5a49faf7ee7add9d36acb335))
+* **IT Wallet:** [[SIW-447](https://pagopa.atlassian.net/browse/SIW-447)] Add credentials issuing info screen ([#5085](https://github.com/pagopa/io-app/issues/5085)) ([9d6ac2a](https://github.com/pagopa/io-app/commit/9d6ac2abf1e90e277004ec85c843f2a441907339))
+* **IT Wallet:** [[SIW-448](https://pagopa.atlassian.net/browse/SIW-448)] Add credential preview ([#5094](https://github.com/pagopa/io-app/issues/5094)) ([95d78e6](https://github.com/pagopa/io-app/commit/95d78e63165fd8501d7f4e6016effe5b8753157d))
+* **IT Wallet:** [[SIW-583](https://pagopa.atlassian.net/browse/SIW-583)] Update design system dependency to 1.12.0 ([#5081](https://github.com/pagopa/io-app/issues/5081)) ([62e9ed3](https://github.com/pagopa/io-app/commit/62e9ed3919d63f54101944b595d73efe8a0f139a))
+* **IT Wallet:** [[SIW-587](https://pagopa.atlassian.net/browse/SIW-587)] Add credential to the check store ([#5083](https://github.com/pagopa/io-app/issues/5083)) ([bba7621](https://github.com/pagopa/io-app/commit/bba7621a512baadb9955b49ceac901b70aa0a27a))
+* **IT Wallet:** [[SIW-595](https://pagopa.atlassian.net/browse/SIW-595)] Update `io-app-design-system` package to `1.13.0` ([#5095](https://github.com/pagopa/io-app/issues/5095)) ([47382b7](https://github.com/pagopa/io-app/commit/47382b70cf703b7539268f77d729cc690f9a3d09))
+* **IT Wallet:** [[SIW-598](https://pagopa.atlassian.net/browse/SIW-598)] Replace cards backgrounds ([#5098](https://github.com/pagopa/io-app/issues/5098)) ([f9fb3ba](https://github.com/pagopa/io-app/commit/f9fb3badbba4f5a1452e8d6f3ce915a83c14b1cb))
+* **IT Wallet:** [[SIW-600](https://pagopa.atlassian.net/browse/SIW-600)] Update card component typography ([#5103](https://github.com/pagopa/io-app/issues/5103)) ([1f0a311](https://github.com/pagopa/io-app/commit/1f0a311b24a278a433a94644e1a983d2748833f6))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-535](https://pagopa.atlassian.net/browse/SIW-535)] Add text color prop to card component ([#5097](https://github.com/pagopa/io-app/issues/5097)) ([7342282](https://github.com/pagopa/io-app/commit/73422826d6c43d2c8ada95683199c9477c532e3a))
+* **IT Wallet:** [[SIW-535](https://pagopa.atlassian.net/browse/SIW-535)] Refactor card component ([#5086](https://github.com/pagopa/io-app/issues/5086)) ([d46adc7](https://github.com/pagopa/io-app/commit/d46adc7a59e13882f2df6bd7b98125e936ad7a31))
+* **IT Wallet:** [[SIW-535](https://pagopa.atlassian.net/browse/SIW-535)] Refactor title card component ([#5093](https://github.com/pagopa/io-app/issues/5093)) ([8e7b9a9](https://github.com/pagopa/io-app/commit/8e7b9a9ac7149b4638c46c54e96b428b31eba02e))
+* **IT Wallet:** [[SIW-591](https://pagopa.atlassian.net/browse/SIW-591)] Update `io-react-native-wallet` package to `0.7.4` ([#5087](https://github.com/pagopa/io-app/issues/5087)) ([bcd2dd1](https://github.com/pagopa/io-app/commit/bcd2dd15b96b8ea0cbdc96b010917704dd4b6404))
+
 ### [0.4.1-rc.0](https://github.com/pagopa/io-app/compare/2.43.0-rc.1...0.4.1-rc.0) (2023-10-06)
 
 
