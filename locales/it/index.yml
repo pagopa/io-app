@@ -1416,6 +1416,7 @@ wallet:
     amount: Importo
     total: Totale pagato
     expireDate: Scadenza
+    dueDate: Entro il
     tranche: Rata
     info: "Per informazioni:"
     tel: "Tel:"
