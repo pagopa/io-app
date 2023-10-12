@@ -1,6 +1,5 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwAddCredential } from "../actions/itwCredentialsActions";

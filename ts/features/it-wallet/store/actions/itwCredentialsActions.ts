@@ -1,8 +1,4 @@
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import * as O from "fp-ts/lib/Option";
