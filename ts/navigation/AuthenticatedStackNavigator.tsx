@@ -141,6 +141,7 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
         options={{
+          headerShown: false,
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: false
         }}

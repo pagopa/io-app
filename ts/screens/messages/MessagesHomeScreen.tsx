@@ -10,7 +10,6 @@ import { useMessageOpening } from "../../features/messages/hooks/useMessageOpeni
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
@@ -126,7 +125,7 @@ const MessagesHomeScreen = ({
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["messages"]}
-      headerTitle={I18n.t("messages.contentTitle")}
+      // headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
@@ -138,10 +137,10 @@ const MessagesHomeScreen = ({
       {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
-          <ScreenContentHeader
+          {/* <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
             pictogram={"messages"}
-          />
+          /> */}
           {needsMigration ? (
             <MigratingMessage
               status={migrationStatus}

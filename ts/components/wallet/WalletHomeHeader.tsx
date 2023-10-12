@@ -9,7 +9,10 @@ import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
+import {
+  IOBottomSheetModal,
+  useIOBottomSheetAutoresizableModal
+} from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
@@ -47,22 +50,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
-
-const WalletHomeHeader = (props: Props) => {
+export const useWalletHomeHeaderBottomSheet = (): IOBottomSheetModal => {
   const navigationListItems: ReadonlyArray<NavigationListItem> = [
     {
       title: I18n.t("wallet.paymentMethod"),
       subtitle: I18n.t("wallet.paymentMethodDesc"),
       onPress: () =>
-        props.navigateToWalletAddPaymentMethod(
-          NavigationService.getCurrentRouteKey()
-        )
+        navigateToWalletAddPaymentMethod({
+          inPayment: O.none,
+          keyFrom: NavigationService.getCurrentRouteKey()
+        })
     },
     {
       title: I18n.t("wallet.methods.bonus.name"),
       subtitle: I18n.t("wallet.methods.bonus.description"),
       testId: "bonusNameTestId",
-      onPress: props.navigateToBonusList
+      onPress: navigateToAvailableBonusScreen
     }
   ];
 
@@ -107,6 +110,11 @@ const WalletHomeHeader = (props: Props) => {
     ),
     title: I18n.t("global.buttons.add")
   });
+  return { present, bottomSheet, dismiss };
+};
+
+const WalletHomeHeader = () => {
+  const { present, bottomSheet } = useWalletHomeHeaderBottomSheet();
 
   return (
     <View
