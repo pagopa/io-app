@@ -587,6 +587,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                 accessibilityRole="button"
                                                 accessibilityState={
                                                   Object {
+                                                    "busy": false,
                                                     "disabled": false,
                                                   }
                                                 }
@@ -620,7 +621,9 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                         "paddingHorizontal": 16,
                                                         "textAlignVertical": "center",
                                                       },
-                                                      false,
+                                                      Object {
+                                                        "overflow": "hidden",
+                                                      },
                                                       false,
                                                       Object {
                                                         "height": 40,
@@ -639,40 +642,55 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                     ]
                                                   }
                                                 >
-                                                  <Text
-                                                    allowFontScaling={false}
-                                                    color="white"
-                                                    defaultColor="white"
-                                                    defaultWeight="Bold"
-                                                    ellipsizeMode="tail"
-                                                    font="TitilliumWeb"
-                                                    fontStyle={
-                                                      Object {
-                                                        "fontSize": 16,
-                                                      }
-                                                    }
-                                                    maxFontSizeMultiplier={1.3}
-                                                    numberOfLines={1}
+                                                  <View
+                                                    entering={[Function]}
+                                                    exiting={[Function]}
                                                     style={
                                                       Array [
                                                         Object {
-                                                          "alignSelf": "center",
+                                                          "alignItems": "center",
+                                                          "flexDirection": "row",
+                                                          "justifyContent": "center",
                                                         },
-                                                        Object {
-                                                          "fontSize": 16,
-                                                        },
-                                                        Object {
-                                                          "color": "#FFFFFF",
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "700",
-                                                        },
+                                                        false,
                                                       ]
                                                     }
-                                                    weight="Bold"
                                                   >
-                                                    Action
-                                                  </Text>
+                                                    <Text
+                                                      allowFontScaling={false}
+                                                      color="white"
+                                                      defaultColor="white"
+                                                      defaultWeight="Bold"
+                                                      ellipsizeMode="tail"
+                                                      font="TitilliumWeb"
+                                                      fontStyle={
+                                                        Object {
+                                                          "fontSize": 16,
+                                                        }
+                                                      }
+                                                      maxFontSizeMultiplier={1.3}
+                                                      numberOfLines={1}
+                                                      style={
+                                                        Array [
+                                                          Object {
+                                                            "alignSelf": "center",
+                                                          },
+                                                          Object {
+                                                            "fontSize": 16,
+                                                          },
+                                                          Object {
+                                                            "color": "#FFFFFF",
+                                                            "fontFamily": "Titillium Web",
+                                                            "fontStyle": "normal",
+                                                            "fontWeight": "700",
+                                                          },
+                                                        ]
+                                                      }
+                                                      weight="Bold"
+                                                    >
+                                                      Action
+                                                    </Text>
+                                                  </View>
                                                 </View>
                                               </View>
                                             </View>
