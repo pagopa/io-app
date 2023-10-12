@@ -11,7 +11,8 @@ const getWideAngleCameraOrDefault = (
 ): CameraDevice | undefined => {
   const defaultBackDevice = devices.find(d => d.position === "back");
   const wideAngleDevice = devices.find(
-    d => !d.devices.includes("ultra-wide-angle-camera")
+    d =>
+      d.position !== "front" && !d.devices.includes("ultra-wide-angle-camera")
   );
   return wideAngleDevice || defaultBackDevice;
 };
