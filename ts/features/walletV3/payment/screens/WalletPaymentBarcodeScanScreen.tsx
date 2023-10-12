@@ -1,7 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
+import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
@@ -16,7 +18,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
-import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
+import {
+  PaymentStartOrigin,
+  paymentInitializeState
+} from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
 import {
@@ -24,6 +29,8 @@ import {
   BarcodeScanBaseScreenComponent,
   IOBarcode
 } from "../../../barcode";
+import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
+import { WalletPaymentRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
@@ -40,7 +47,36 @@ const WalletPaymentBarcodeScanScreen = () => {
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
 
-    const barcode = barcodes[0];
+    const pagoPaBarcodes: Array<PagoPaBarcode> = pipe(
+      barcodes,
+      A.filter(barcode => barcode.type === "PAGOPA"),
+      A.map(barcode => barcode as PagoPaBarcode)
+    );
+
+    const hasDataMatrix = pagoPaBarcodes.some(
+      barcode => barcode.format === "DATA_MATRIX"
+    );
+
+    if (hasDataMatrix) {
+      void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+    }
+
+    const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
+      ? "poste_datamatrix_scan"
+      : "qrcode_scan";
+
+    if (pagoPaBarcodes.length > 1) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+        params: {
+          barcodes: pagoPaBarcodes,
+          paymentStartOrigin
+        }
+      });
+      return;
+    }
+
+    const barcode = pagoPaBarcodes[0];
 
     if (barcode.type === "PAGOPA") {
       dispatch(paymentInitializeState());
