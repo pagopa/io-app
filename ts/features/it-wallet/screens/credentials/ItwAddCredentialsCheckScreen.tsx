@@ -3,7 +3,6 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Alert } from "react-native";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
@@ -24,6 +23,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import ItwContinueScreen from "../../components/ItwResultComponent";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import { showCancelAlert } from "../../utils/alert";
 
 /**
  * ItwAddCredentialsCheckScreen screen navigation params.
@@ -57,24 +57,14 @@ const ItwAddCredentialsCheckScreen = () => {
     dispatch(itwCredentialsChecks.request(route.params.credential));
   });
 
-  const showCancelAlert = () => {
-    Alert.alert(I18n.t("features.itWallet.generic.alert.title"), undefined, [
-      {
-        text: I18n.t("features.itWallet.generic.alert.cancel"),
-        style: "cancel"
-      },
-      {
-        text: I18n.t("features.itWallet.generic.alert.confirm"),
-        onPress: () => {
-          toast.info(
-            I18n.t(
-              "features.itWallet.issuing.credentialsChecksScreen.toast.cancel"
-            )
-          );
-          navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
-        }
-      }
-    ]);
+  /**
+   * Callback to be used in case of cancel button press alert to navigate to the home screen and show a toast.
+   */
+  const alertOnPress = () => {
+    toast.info(
+      I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
+    );
+    navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
   };
 
   const LoadingView = () => (
@@ -106,7 +96,7 @@ const ItwAddCredentialsCheckScreen = () => {
           secondaryAction={{
             label: I18n.t("global.buttons.cancel"),
             accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () => showCancelAlert()
+            onPress: () => showCancelAlert(alertOnPress)
           }}
         />
       </SafeAreaView>
