@@ -24,12 +24,20 @@ import {
 } from "../store/actions/profile";
 import {
   isProfileEmailValidatedSelector,
+  isProfileFirstOnBoardingSelector,
   profileEmailSelector
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import { getFlowType } from "../utils/analytics";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import {
+  trackEmailValidation,
+  trackEmailValidationSuccess,
+  trackEmailValidationSuccessConfirmed
+} from "../screens/analytics/emailAnalytics";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -55,6 +63,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const emailValidation = useIOSelector(emailValidationSelector);
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
+
+  useOnFirstRender(() => {
+    if (isEmailValidated) {
+      trackEmailValidationSuccess(flow);
+    } else {
+      trackEmailValidation(flow);
+    }
+  });
 
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
     useState(false);
@@ -100,6 +119,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
+      trackEmailValidationSuccessConfirmed(flow);
       hideModal();
     } else {
       // send email validation only if it exists
