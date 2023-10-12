@@ -34,7 +34,7 @@ import I18n from "../i18n";
 
 type PartialProps = WithTestID<{
   title: string;
-  iconName: IOIcons;
+  format: "doc" | "pdf";
   subtitle?: string;
   isLoading?: boolean;
   isFetching?: boolean;
@@ -43,6 +43,14 @@ type PartialProps = WithTestID<{
 
 export type ModuleAttachmentProps = PartialProps &
   Pick<PressableProps, "onPress" | "accessibilityLabel" | "disabled">;
+
+const formatMap: Record<
+  NonNullable<ModuleAttachmentProps["format"]>,
+  IOIcons
+> = {
+  doc: "docAttach",
+  pdf: "docAttachPDF"
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -72,12 +80,12 @@ const MARGIN_SIZE: IOSpacingScale = 16;
 
 const ModuleAttachmentContent = ({
   isFetching,
-  iconName,
+  format,
   title,
   subtitle
 }: Pick<
   ModuleAttachmentProps,
-  "isFetching" | "iconName" | "title" | "subtitle"
+  "isFetching" | "format" | "title" | "subtitle"
 >) => {
   const IconOrActivityIndicatorComponent = () => {
     if (isFetching) {
@@ -108,11 +116,9 @@ const ModuleAttachmentContent = ({
 
   return (
     <>
-      {iconName && (
-        <View style={{ marginRight: MARGIN_SIZE }}>
-          <Icon name={iconName} size={ICON_SIZE} color="blue" />
-        </View>
-      )}
+      <View style={{ marginRight: MARGIN_SIZE }}>
+        <Icon name={formatMap[format]} size={ICON_SIZE} color="blue" />
+      </View>
       <View style={IOStyles.flex}>
         <LabelSmall numberOfLines={1} weight="SemiBold" color="bluegrey">
           {title}

@@ -87,7 +87,7 @@ const renderModuleAttachment = () => (
       <ModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
-        iconName="docAttachPDF"
+        format="pdf"
         isLoading={true}
         onPress={onButtonPress}
       />
@@ -95,27 +95,27 @@ const renderModuleAttachment = () => (
       <ModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
-        iconName="docAttachPDF"
+        format="pdf"
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
       <ModuleAttachment
         title="Nome del documento.pdf"
-        iconName="docAttachPDF"
+        format="pdf"
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
       <ModuleAttachment
         title={"This is a very loooooooooooooooooooooong title"}
         subtitle={"This is a very loooooooooooong subtitle"}
-        iconName="docAttachPDF"
+        format="pdf"
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
       <ModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
-        iconName="docAttachPDF"
+        format="pdf"
         isFetching={true}
         onPress={onButtonPress}
       />
@@ -123,7 +123,7 @@ const renderModuleAttachment = () => (
       <ModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
-        iconName="docAttachPDF"
+        format="pdf"
         disabled={true}
         onPress={onButtonPress}
       />
