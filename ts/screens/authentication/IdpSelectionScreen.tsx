@@ -165,7 +165,6 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
             : I18n.t("login.expiration_info")}
         </Body>
         <Body>{I18n.t("login.biometric_info")}</Body>
-        {/* FIXME => add discrimination using isLV props to redirect correct subtitle https://pagopa.atlassian.net/browse/IOPID-885 */}
       </View>
       <VSpacer />
       <View style={{ backgroundColor: IOColors.greyUltraLight }}>

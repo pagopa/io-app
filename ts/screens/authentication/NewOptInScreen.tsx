@@ -61,7 +61,7 @@ const NewOptInScreen = (props: Props) => {
     <LabelSmall weight="Regular" color="grey-700">
       {I18n.t(value)}{" "}
       <LabelLink
-        onPress={() => openWebUrl("https://ioapp.it/it/accedi")}
+        onPress={() => openWebUrl("https://ioapp.it/it/accedi/")}
         testID="link-test"
       >
         {I18n.t("authentication.opt-in.io-site")}
@@ -164,9 +164,8 @@ const NewOptInScreen = (props: Props) => {
             body={I18n.t("authentication.opt-in.passcode")}
           />
           <VSpacer size={24} />
-          {/* FIXME -> add pictogram into design system https://pagopa.atlassian.net/browse/IOPID-953 */}
           <FeatureInfo
-            pictogramName="identityCheck"
+            pictogramName="notification"
             body={I18n.t("authentication.opt-in.notification")}
           />
         </ContentWrapper>
