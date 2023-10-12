@@ -1,9 +1,10 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
-import { H3, IOIcons } from "@pagopa/io-app-design-system";
+import { IOIcons } from "@pagopa/io-app-design-system";
 import { ImageSourcePropType } from "react-native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
+import ItwCredentialCard from "../components/ItwCredentialCard";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
@@ -57,7 +58,7 @@ export type CredentialCatalogItem = {
     taxIdCode: string;
     birthdate: string;
   };
-  textColor: React.ComponentProps<typeof H3>["color"];
+  textColor: React.ComponentProps<typeof ItwCredentialCard>["textColor"];
   image: ImageSourcePropType;
   requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
 };
