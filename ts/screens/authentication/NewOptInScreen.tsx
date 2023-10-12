@@ -28,6 +28,7 @@ import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInA
 import { useIODispatch } from "../../store/hooks";
 import { TranslationKeys } from "../../../locales/locales";
 
+// FIXME -> insert correct contextual help and FAQ https://pagopa.atlassian.net/browse/IOPID-987
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
   body: "authentication.landing.contextualHelpContent"
@@ -61,7 +62,7 @@ const NewOptInScreen = (props: Props) => {
     <LabelSmall weight="Regular" color="grey-700">
       {I18n.t(value)}{" "}
       <LabelLink
-        onPress={() => openWebUrl("https://ioapp.it/it/accedi/")}
+        onPress={() => openWebUrl("https://ioapp.it/")}
         testID="link-test"
       >
         {I18n.t("authentication.opt-in.io-site")}
