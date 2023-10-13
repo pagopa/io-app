@@ -26,7 +26,7 @@ export type SinglePaymentState = {
     | undefined;
 };
 
-const initialState: MultiplePaymentState = {};
+export const initialState: MultiplePaymentState = {};
 
 export const paymentsReducer = (
   state: MultiplePaymentState = initialState,
