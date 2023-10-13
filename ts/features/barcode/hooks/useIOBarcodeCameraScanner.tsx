@@ -6,11 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
-import {
-  Camera,
-  CameraPermissionStatus,
-  useCameraDevices
-} from "react-native-vision-camera";
+import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
 import {
   Barcode,
   BarcodeFormat,
@@ -21,6 +17,7 @@ import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
+import { useWideAngleCameraDevice } from "./useWindeAngleCameraDevice";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -166,8 +163,7 @@ export const useIOBarcodeCameraScanner = ({
   );
 
   const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices("wide-angle-camera");
-  const device = devices.back;
+  const device = useWideAngleCameraDevice();
 
   // Checks that the device has a torch
   const hasTorch = !!device?.hasTorch;
