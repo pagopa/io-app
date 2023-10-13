@@ -2,16 +2,16 @@ import * as React from "react";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { ListItemInfoCopy } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
-import { TransactionSummaryRow } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../navigation/params";
 import customVariables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,17 +48,19 @@ export const PnPaidPaymentScreen = (
       <SafeAreaView style={IOStyles.flex}>
         <TransactionSummaryStatus error={paidPaymentError} />
         <ScrollView style={styles.container}>
-          <TransactionSummaryRow
-            axis={"horizontal"}
-            title={I18n.t("payment.noticeCode")}
-            subtitle={formattedPaymentNoticeNumber}
+          <ListItemInfoCopy
+            label={I18n.t("payment.noticeCode")}
+            accessibilityLabel={I18n.t("payment.noticeCode")}
+            value={formattedPaymentNoticeNumber}
             onPress={() => clipboardSetStringWithFeedback(noticeCode)}
           />
           {maybeCreditorTaxId && (
-            <TransactionSummaryRow
-              axis={"horizontal"}
-              title={I18n.t("wallet.firstTransactionSummary.entityCode")}
-              subtitle={maybeCreditorTaxId}
+            <ListItemInfoCopy
+              label={I18n.t("wallet.firstTransactionSummary.entityCode")}
+              accessibilityLabel={I18n.t(
+                "wallet.firstTransactionSummary.entityCode"
+              )}
+              value={maybeCreditorTaxId}
               onPress={() => clipboardSetStringWithFeedback(maybeCreditorTaxId)}
             />
           )}
