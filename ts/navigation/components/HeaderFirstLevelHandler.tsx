@@ -112,7 +112,7 @@ export const HeaderFirstLevelHandler = ({
           firstAction: helpAction,
           secondAction: {
             icon: "search",
-            accessibilityLabel: "ricerca",
+            accessibilityLabel: I18n.t("global.accessibility.search"),
             onPress: () => {
               dispatch(searchMessagesEnabled(true));
             }
