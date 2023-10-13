@@ -3,7 +3,6 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import * as React from "react";
-import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
@@ -60,7 +59,6 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
-import I18n from "../i18n";
 import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
 import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
@@ -91,18 +89,7 @@ const AuthenticatedStackNavigator = () => {
       headerMode={"screen"}
       screenOptions={{ gestureEnabled: false }}
     >
-      <Stack.Screen
-        name={ROUTES.MAIN}
-        options={{
-          header: () => (
-            <HeaderFirstLevel
-              title={I18n.t("messages.contentTitle")}
-              type="base"
-            />
-          )
-        }}
-        component={MainTabNavigator}
-      />
+      <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
       <Stack.Screen
         name={ROUTES.ONBOARDING}

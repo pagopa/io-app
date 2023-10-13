@@ -67,7 +67,10 @@ export const HeaderFirstLevelHandler = ({
     () => headerHelpByRoute[currentRoute],
     [currentRoute]
   );
-  const { bottomSheet, present } = useWalletHomeHeaderBottomSheet();
+  const {
+    bottomSheet: WalletHomeHeaderBottomSheet,
+    present: presentWalletHomeHeaderBottomsheet
+  } = useWalletHomeHeaderBottomSheet();
 
   const startSupportRequest = useStartSupportRequest(requestParams);
   const helpAction: ActionProp = useMemo(
@@ -125,11 +128,11 @@ export const HeaderFirstLevelHandler = ({
           secondAction: {
             icon: "add",
             accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-            onPress: present
+            onPress: presentWalletHomeHeaderBottomsheet
           }
         };
     }
-  }, [currentRoute, helpAction, present, dispatch]);
+  }, [currentRoute, helpAction, presentWalletHomeHeaderBottomsheet, dispatch]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -137,5 +140,5 @@ export const HeaderFirstLevelHandler = ({
     });
   }, [headerProps, navigation, currentRoute]);
 
-  return <>{bottomSheet}</>;
+  return <>{WalletHomeHeaderBottomSheet}</>;
 };
