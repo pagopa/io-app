@@ -35,6 +35,21 @@ const getDataEntryFromBarcodeOrigin = (
   return undefined;
 };
 
+export const trackZendeskSupport = (
+  screenName: string,
+  flow: BarcodeAnalyticsFlow
+) => {
+  void mixpanelTrack(
+    "ZENDESK_SUPPORT_START",
+    buildEventProperties("UX", "action", {
+      screen_name: screenName,
+      isAssistanceForPayment: flow === "avviso",
+      isAssistanceForCard: false,
+      isAssistanceForFci: false
+    })
+  );
+};
+
 export const trackBarcodeCameraAuthorizationNotDetermined = () => {
   void mixpanelTrack(
     "QRCODE_CAMERA_AUTHORIZATION",

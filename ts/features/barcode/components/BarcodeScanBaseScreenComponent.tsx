@@ -2,7 +2,8 @@ import { IOColors, IconButton } from "@pagopa/io-app-design-system";
 import {
   useFocusEffect,
   useIsFocused,
-  useNavigation
+  useNavigation,
+  useRoute
 } from "@react-navigation/native";
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
@@ -40,7 +41,8 @@ import {
   trackBarcodeCameraAuthorized,
   trackBarcodeCameraAuthorizedFromSettings,
   trackBarcodeScanScreenView,
-  trackBarcodeScanTorch
+  trackBarcodeScanTorch,
+  trackZendeskSupport
 } from "../analytics";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
@@ -108,6 +110,7 @@ const BarcodeScanBaseScreenComponent = ({
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const route = useRoute();
 
   const currentScreenName = useIOSelector(currentRouteSelector);
 
@@ -123,6 +126,7 @@ const BarcodeScanBaseScreenComponent = ({
   const onShowHelp = (): (() => void) | undefined => {
     switch (choosenTool) {
       case ToolEnum.zendesk:
+        trackZendeskSupport(route.name, barcodeAnalyticsFlow);
         // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
         return () => {
           resetCustomFields();
@@ -138,9 +142,7 @@ const BarcodeScanBaseScreenComponent = ({
             })
           );
         };
-      case ToolEnum.instabug:
-      case ToolEnum.web:
-      case ToolEnum.none:
+      default:
         return undefined;
     }
   };
