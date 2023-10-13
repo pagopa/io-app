@@ -126,7 +126,6 @@ const MessagesHomeScreen = ({
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["messages"]}
-      // headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
@@ -138,10 +137,6 @@ const MessagesHomeScreen = ({
       {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
-          {/* <ScreenContentHeader
-            title={I18n.t("messages.contentTitle")}
-            pictogram={"messages"}
-          /> */}
           {needsMigration ? (
             <MigratingMessage
               status={migrationStatus}
