@@ -1,15 +1,16 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import "react-native-reanimated";
-import { Camera, useCameraDevices } from "react-native-vision-camera";
+import { Camera } from "react-native-vision-camera";
 import {
   Barcode,
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { useWideAngleCameraDevice } from "../features/barcode/hooks/useWindeAngleCameraDevice";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
 import { barcodesScannerConfigSelector } from "../store/reducers/backendStatus";
@@ -138,9 +139,8 @@ type Props = {
 export const BarcodeCamera = (props: Props) => {
   const { onBarcodeScanned, disabled } = props;
   const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices("wide-angle-camera");
+  const device = useWideAngleCameraDevice();
   const [permissionsGranted, setPermissionsGranted] = useState(false);
-  const device = devices.back;
   const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
