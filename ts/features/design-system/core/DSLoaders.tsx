@@ -12,6 +12,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import I18n from "../../../i18n";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
 export const DSLoaders = () => {
   const theme = useIOTheme();
@@ -42,7 +43,7 @@ export const DSLoaders = () => {
         Loading Spinner
       </H2>
       <VSpacer size={16} />
-      <DSComponentViewerBox name="LoadingSpinner, different colors">
+      <DSComponentViewerBox name="LoadingSpinner · Size 24, different colors">
         <View
           style={{
             alignSelf: "flex-start",
@@ -62,7 +63,7 @@ export const DSLoaders = () => {
           </View>
         </View>
       </DSComponentViewerBox>
-      <DSComponentViewerBox name="LoadingSpinner · Size 48, stroke 5, default color">
+      <DSComponentViewerBox name="LoadingSpinner · Size 48, default color">
         <View
           style={{
             alignSelf: "flex-start",
@@ -78,7 +79,31 @@ export const DSLoaders = () => {
               padding: 16
             }}
           >
-            <LoadingSpinner size={48} stroke={5} color="blueIO-500" />
+            <LoadingSpinner size={48} />
+          </View>
+        </View>
+      </DSComponentViewerBox>
+      <H2 color={theme["textHeading-default"]} weight={"SemiBold"}>
+        Loading Indicator
+      </H2>
+      <VSpacer size={16} />
+      <DSComponentViewerBox name="LoadingIndicator, with predefined visual attributes">
+        <View
+          style={{
+            alignSelf: "flex-start",
+            borderRadius: 16,
+            borderWidth: 1,
+            borderColor: hexToRgba(IOColors.black, 0.15),
+            overflow: "hidden"
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: IOColors.white,
+              padding: 16
+            }}
+          >
+            <LoadingIndicator />
           </View>
         </View>
       </DSComponentViewerBox>
