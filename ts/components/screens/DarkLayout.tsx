@@ -94,7 +94,7 @@ export default class DarkLayout extends React.Component<Props> {
       <React.Fragment>
         {wrapper(
           <React.Fragment>
-            <VSpacer size={16} />
+            <VSpacer size={24} />
             {this.props.topContent}
           </React.Fragment>
         )}
