@@ -30,7 +30,6 @@ describe("authenticationSaga", () => {
       .next()
       .put(analyticsAuthenticationStarted())
       .next()
-      .next() // fastloginSelector
       .fork(watchTestLoginRequestSaga)
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
