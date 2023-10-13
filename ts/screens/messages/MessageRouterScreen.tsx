@@ -84,8 +84,8 @@ const navigateToScreenHandler =
     );
 
     trackOpenMessage(
-      message.serviceName,
       message.organizationName,
+      message.serviceName,
       containsPayment
     );
 
