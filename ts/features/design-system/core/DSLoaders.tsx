@@ -78,7 +78,7 @@ export const DSLoaders = () => {
               padding: 16
             }}
           >
-            <LoadingSpinner size={48} stroke={5} color="blueIO-500" />
+            <LoadingSpinner size={48} color="blueIO-500" />
           </View>
         </View>
       </DSComponentViewerBox>

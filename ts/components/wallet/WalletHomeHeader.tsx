@@ -1,14 +1,11 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
 import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { navigateToAvailableBonusScreen } from "../../features/bonus/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
-import { Dispatch } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
 import {
   IOBottomSheetModal,
   useIOBottomSheetAutoresizableModal
@@ -21,9 +18,6 @@ import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";
 import { H5 } from "../core/typography/H5";
 import { IOStyles } from "../core/variables/IOStyles";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
 
 type NavigationListItem = {
   title: string;
@@ -154,12 +148,4 @@ const WalletHomeHeader = () => {
   );
 };
 
-const mapStateToProps = (_: GlobalState) => ({});
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
-    navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
-  navigateToBonusList: () => navigateToAvailableBonusScreen()
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(WalletHomeHeader);
+export default WalletHomeHeader;
