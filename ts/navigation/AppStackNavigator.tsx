@@ -1,18 +1,8 @@
 /* eslint-disable functional/immutable-data */
-import {
-  DarkTheme,
-  DefaultTheme,
-  LinkingOptions,
-  NavigationContainer
-} from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
-import {
-  IOColors,
-  IOThemeDark,
-  IOThemeLight
-} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
@@ -45,6 +35,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
+import { IONavigationLightTheme } from "../theme/navigations";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
@@ -73,26 +64,6 @@ export const AppStackNavigator = (): React.ReactElement => {
   }
 
   return <AuthenticatedStackNavigator />;
-};
-
-// React Navigation Themes
-// Dark & Light mode
-export const IONavigationDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    background: IOColors[IOThemeDark["appBackground-primary"]],
-    card: IOColors[IOThemeDark["appBackground-primary"]]
-  }
-};
-
-export const IONavigationLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: IOColors[IOThemeLight["appBackground-primary"]],
-    card: IOColors[IOThemeLight["appBackground-primary"]]
-  }
 };
 
 const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
