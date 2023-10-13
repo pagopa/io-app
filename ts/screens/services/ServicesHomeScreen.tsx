@@ -355,6 +355,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           />
           <TopScreenComponent
             accessibilityLabel={I18n.t("services.title")}
+            hideBaseHeader={true}
             headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
@@ -366,11 +367,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.renderSearch()
             ) : (
               <React.Fragment>
-                <AnimatedScreenContentHeader
+                {/* <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
                   rightComponent={this.renderHeaderLink()}
                   dynamicHeight={this.getHeaderHeight()}
-                />
+                /> */}
                 {this.renderInnerContent()}
               </React.Fragment>
             )}

@@ -51,6 +51,12 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
   }
 };
 
+/**
+ * This Component aims to handle the header of the first level screens. based on the current route
+ * it will set the header title and the contextual help and the actions related to the screen
+ * THIS COMPONENT IS NOT MEANT TO BE USED OUTSIDE THE NAVIGATION.
+ * THIS COMPONENT WILL BE REMOVED ONCE REACT NAVIGATION WILL BE UPGRADED TO V6
+ */
 export const HeaderFirstLevelHandler = ({
   currentRoute = ROUTES.MESSAGES_HOME
 }: Props) => {
@@ -92,6 +98,7 @@ export const HeaderFirstLevelHandler = ({
       case "PROFILE_MAIN":
         return {
           title: I18n.t("profile.main.title"),
+          backgroundColor: "dark",
           type: "singleAction",
           firstAction: helpAction
         };
@@ -114,6 +121,7 @@ export const HeaderFirstLevelHandler = ({
           title: I18n.t("wallet.wallet"),
           type: "twoActions",
           firstAction: helpAction,
+          backgroundColor: "dark",
           secondAction: {
             icon: "add",
             accessibilityLabel: I18n.t("wallet.accessibility.addElement"),

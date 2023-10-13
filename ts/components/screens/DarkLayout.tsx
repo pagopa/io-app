@@ -39,6 +39,7 @@ type Props = Readonly<{
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
   bounces?: boolean;
+  hideBaseHeader?: boolean;
   topContent?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
@@ -110,6 +111,7 @@ export default class DarkLayout extends React.Component<Props> {
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
+        hideBaseHeader={this.props.hideBaseHeader ?? false}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
