@@ -128,13 +128,13 @@ function* watchPaymentUpdateRequests(
   }
 
   while (true) {
-    const paymentUpdateRequest = yield* take([
+    const dequeuedChannelAction = yield* take([
       updatePaymentForMessage.request,
       cancelQueuedPaymentUpdates
     ]);
 
-    if (isActionOf(updatePaymentForMessage.request)) {
-      yield* put(paymentUpdateChannel, paymentUpdateRequest);
+    if (isActionOf(updatePaymentForMessage.request, dequeuedChannelAction)) {
+      yield* put(paymentUpdateChannel, dequeuedChannelAction);
     } else {
       const unproccessedQueuedUpdateRequests = yield* flush(
         paymentUpdateChannel
