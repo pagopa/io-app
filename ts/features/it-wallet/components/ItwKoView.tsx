@@ -18,7 +18,7 @@ type ActionProps = {
   onPress: () => void;
 };
 
-type ItwKoBody = {
+type ItwKoViewProps = {
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string;
@@ -26,14 +26,14 @@ type ItwKoBody = {
   secondaryAction?: ActionProps;
 };
 
-const ItwKoBody = ({
+const ItwKoView = ({
   pictogram,
   title,
   subtitle,
   action,
   secondaryAction,
   testID
-}: WithTestID<ItwKoBody>) => (
+}: WithTestID<ItwKoViewProps>) => (
   <ScrollView
     testID={testID}
     centerContent={true}
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ItwKoBody;
+export default ItwKoView;
