@@ -18,13 +18,13 @@ type ActionProps = {
   onPress: () => void;
 };
 
-type ItwKoViewProps = {
+type ItwKoViewProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string;
   action?: ActionProps;
   secondaryAction?: ActionProps;
-};
+}>;
 
 const ItwKoView = ({
   pictogram,
@@ -33,7 +33,7 @@ const ItwKoView = ({
   action,
   secondaryAction,
   testID
-}: WithTestID<ItwKoViewProps>) => (
+}: ItwKoViewProps) => (
   <ScrollView
     testID={testID}
     centerContent={true}
