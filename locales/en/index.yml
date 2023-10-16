@@ -3327,6 +3327,11 @@ features:
           title: You are adding {{credentialName}} to your Wallet
         toast: 
           cancel: "The credential was not added to the wallet."
+        failure: 
+          alreadyExisting: 
+            title: "You already have this credential."
+            subtitle: "This credential is already in your wallet. If you don't see it, contact us."
+            cta: "Go to the Wallet"
       credentialsIssuingInfoScreen:
         title: "Data needed to add the card"
         subtitle: "{{authsource}} will send them to {{organization}}."
@@ -3352,6 +3357,8 @@ features:
           data:
             title: "Data protection"
             subtitle: "our data is not saved on this device but stored in the Wallet Instance, and you can choose to revoke them at any time."
+        toast:
+          success: "Credential added!"
     presentation: 
       credentialDetails: 
         buttons: 

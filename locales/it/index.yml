@@ -3327,6 +3327,11 @@ features:
           title: Stai aggiungendo {{credentialName}} al Portafoglio
         toast: 
           cancel: "Tessera non aggiunta al Portafoglio."
+        failure: 
+          alreadyExisting: 
+            title: "Hai già questa tessera"
+            subtitle: "La tessera si trova già nel tuo Portafoglio. Se non la vedi, scrivici."
+            cta: "Vai al Portafoglio"
       credentialsIssuingInfoScreen:
         title: "Dati necessari per aggiungere la tessera"
         subtitle: "{{authsource}} li invierà a {{organization}}."
@@ -3354,6 +3359,8 @@ features:
           data:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
+        toast:
+          success: "Credential added!"
     presentation: 
       credentialDetails: 
         buttons: 
