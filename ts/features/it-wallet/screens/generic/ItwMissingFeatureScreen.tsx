@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
-import ItwResultScreen from "./ItwResultScreen";
+import ItwKoView from "../../components/ItwKoView";
 
 const ItwMissingFeatureScreen = () => {
   const { isExperimental } = useIOExperimentalDesign();
@@ -21,7 +21,7 @@ const ItwMissingFeatureScreen = () => {
    * Includes a centered button to go back.
    */
   const ExperimentalContentView = () => (
-    <ItwResultScreen
+    <ItwKoView
       title={I18n.t("features.itWallet.missingFeatureScreen.title")}
       subtitle={I18n.t("features.itWallet.missingFeatureScreen.subtitle")}
       pictogram="empty"
@@ -40,11 +40,13 @@ const ItwMissingFeatureScreen = () => {
    * Doesn't include a button to go back.
    */
   const LegacyContentView = () => (
-    <ItwResultScreen
-      title={I18n.t("features.itWallet.missingFeatureScreen.title")}
-      subtitle={I18n.t("features.itWallet.missingFeatureScreen.subtitle")}
-      pictogram="empty"
-    />
+    <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
+      <ItwKoView
+        title={I18n.t("features.itWallet.missingFeatureScreen.title")}
+        subtitle={I18n.t("features.itWallet.missingFeatureScreen.subtitle")}
+        pictogram="empty"
+      />
+    </View>
   );
 
   /**
@@ -62,7 +64,9 @@ const ItwMissingFeatureScreen = () => {
   };
 
   return isExperimental ? (
-    <ExperimentalContentView />
+    <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
+      <ExperimentalContentView />
+    </View>
   ) : (
     <BaseScreenComponent
       goBack={true}
