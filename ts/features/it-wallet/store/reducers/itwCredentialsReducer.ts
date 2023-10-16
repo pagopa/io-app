@@ -91,7 +91,7 @@ export const ItwCredentialsPidSelector = (state: GlobalState) =>
 /**
  * Selects the credentials stored in the wallet.
  * @param state - the global state
- * @returns the PID from the wallet.
+ * @returns the credentials array from the wallet or an empty array if the pot is empty.
  */
 export const itwCredentialsSelector = (state: GlobalState) =>
   pot.getOrElse(

@@ -38,7 +38,7 @@ export const itwCredentialsAddPid = createAsyncAction(
 )<O.Option<PidResponse>, PidResponse, ItWalletError>();
 
 /**
- * Action which adds the PID to the wallet.
+ * Action which adds a credential to the wallet.
  */
 export const itwCredentialsAddCredential = createStandardAction(
   "ITW_CREDENTIAL_ADD_CREDENTIAL"
