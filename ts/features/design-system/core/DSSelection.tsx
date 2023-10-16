@@ -2,24 +2,26 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useState } from "react";
-import { Divider, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  AnimatedMessageCheckbox,
+  CheckboxLabel,
+  Divider,
+  HSpacer,
+  ListItemCheckbox,
+  ListItemSwitch,
+  NativeSwitch,
+  RadioItem,
+  RadioGroup,
+  SwitchLabel,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
-import { CheckboxLabel } from "../../../components/core/selection/checkbox/CheckboxLabel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { CheckboxListItem } from "../../../components/ui/CheckboxListItem";
 import { H4 } from "../../../components/core/typography/H4";
-import {
-  NewRadioItem,
-  RadioGroup
-} from "../../../components/core/selection/RadioGroup";
-import { SwitchLabel } from "../../../components/core/selection/checkbox/SwitchLabel";
-import { NativeSwitch } from "../../../components/core/selection/checkbox/NativeSwitch";
-import { SwitchListItem } from "../../../components/ui/SwitchListItem";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { AnimatedMessageCheckbox } from "../../../components/core/selection/checkbox/AnimatedMessageCheckbox";
 
 const styles = StyleSheet.create({
   content: {
@@ -39,8 +41,8 @@ export const DSSelection = () => (
     </H2>
     {/* CheckboxLabel */}
     {renderCheckboxLabel()}
-    {/* CheckboxListItem */}
-    {renderCheckboxListItem()}
+    {/* ListItemCheckbox */}
+    {renderListItemCheckbox()}
     {/* AnimatedMessageCheckbox */}
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Checkbox (Messages)
@@ -56,8 +58,8 @@ export const DSSelection = () => (
     </H2>
     {/* Native Switch */}
     <NativeSwitchShowroom />
-    {/* SwitchListItem */}
-    <SwitchListItemShowroom />
+    {/* ListItemSwitch */}
+    <ListItemSwitchShowroom />
     {/* SwitchLabel */}
     {renderAnimatedSwitch()}
     {/* Legacy components */}
@@ -100,21 +102,21 @@ const renderCheckboxLabel = () => (
   </>
 );
 
-const renderCheckboxListItem = () => (
+const renderListItemCheckbox = () => (
   <>
-    <DSComponentViewerBox name="CheckboxListItem">
-      <CheckboxListItem
+    <DSComponentViewerBox name="ListItemCheckbox">
+      <ListItemCheckbox
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="coggle"
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         value="Usa configurazione rapida"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
@@ -122,7 +124,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         value="Questa è un'altra prova ancora più lunga per andare su due righe"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
@@ -130,7 +132,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="bonus"
         value="Let's try with a loooong loooooong looooooong title + icon"
         description={
@@ -139,7 +141,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         icon="coggle"
         value="Usa configurazione rapida"
         description={
@@ -148,14 +150,14 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="CheckBoxListItem (disabled)">
-      <CheckboxListItem
+    <DSComponentViewerBox name="ListItemCheckbox (disabled)">
+      <ListItemCheckbox
         disabled
         value="Usa configurazione rapida"
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         disabled
         icon="coggle"
         value="Usa configurazione rapida"
@@ -165,7 +167,7 @@ const renderCheckboxListItem = () => (
         accessibilityLabel={""}
       />
       <Divider />
-      <CheckboxListItem
+      <ListItemCheckbox
         disabled
         selected={true}
         icon="coggle"
@@ -178,7 +180,7 @@ const renderCheckboxListItem = () => (
 
 // RADIO ITEMS
 
-const mockRadioItems = (): ReadonlyArray<NewRadioItem<string>> => [
+const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   {
     icon: "coggle",
     value: "Let's try with a basic title",
@@ -262,78 +264,146 @@ const NativeSwitchShowroom = () => {
   );
 };
 
-type SwitchListItemSampleProps = Pick<
-  React.ComponentProps<typeof SwitchListItem>,
-  "label" | "description" | "value" | "icon" | "action"
+type ListItemSwitchSampleProps = Pick<
+  React.ComponentProps<typeof ListItemSwitch>,
+  "label" | "description" | "value" | "icon" | "paymentLogo" | "action"
 >;
 
-const SwitchListItemSample = ({
+const ListItemSwitchSample = ({
   value,
   label,
   description,
+  icon,
   action,
-  icon
-}: SwitchListItemSampleProps) => {
+  paymentLogo
+}: ListItemSwitchSampleProps) => {
   const [isEnabled, setIsEnabled] = useState(value);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <SwitchListItem
-      icon={icon}
-      label={label}
-      description={description}
-      action={action}
-      value={isEnabled}
-      onSwitchValueChange={toggleSwitch}
-    />
+    <>
+      {icon ? (
+        <ListItemSwitch
+          action={action}
+          icon={icon}
+          label={label}
+          description={description}
+          value={isEnabled}
+          onSwitchValueChange={toggleSwitch}
+        />
+      ) : paymentLogo ? (
+        <ListItemSwitch
+          action={action}
+          paymentLogo={paymentLogo}
+          label={label}
+          description={description}
+          value={isEnabled}
+          onSwitchValueChange={toggleSwitch}
+        />
+      ) : (
+        <ListItemSwitch
+          action={action}
+          label={label}
+          description={description}
+          value={isEnabled}
+          onSwitchValueChange={toggleSwitch}
+        />
+      )}
+    </>
   );
 };
 
-const SwitchListItemShowroom = () => (
+const ListItemSwitchShowroom = () => (
   <>
-    <DSComponentViewerBox name="SwitchListItem">
-      <SwitchListItemSample label="Testo molto breve" value={true} />
+    <DSComponentViewerBox name="ListItemSwitch">
+      <ListItemSwitchSample label="Testo molto breve" value={true} />
       <Divider />
-      <SwitchListItemSample
+      <ListItemSwitchSample
         label="Testo molto breve"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
       />
       <Divider />
-      <SwitchListItemSample
+      <ListItemSwitchSample
         label="Questa è un'altra prova ancora più lunga per andare su due righe"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
       />
       <Divider />
-      <SwitchListItemSample
-        icon="coggle"
-        label="Let's try with a loooong loooooong looooooong title + icon"
-        description={
-          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
-        }
-      />
-      <Divider />
-      <SwitchListItemSample
-        icon="coggle"
-        label="Title + Icon + Action"
+      <ListItemSwitchSample
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon + action"
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
         action={{
-          label: "Scopri di più",
+          label: "Action",
           onPress: () => {
-            Alert.alert("Link pressed");
+            Alert.alert("Action triggered!");
           }
         }}
       />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name="SwitchListItem, disabled">
-      <SwitchListItem disabled label="Testo molto breve" value={true} />
       <Divider />
-      <SwitchListItem
+      <ListItemSwitchSample
+        icon="bonus"
+        label="Let's try with a loooong loooooong title + icon"
+        description={
+          "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
+        }
+      />
+      <Divider />
+      <ListItemSwitchSample
+        paymentLogo="mastercard"
+        label="5354 **** **** 0000"
+      />
+      <Divider />
+      <ListItemSwitchSample paymentLogo="applePay" label="Apple Pay" />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemSwitch, loading status">
+      <ListItemSwitch
+        icon="device"
+        label="Label"
+        value={false}
+        isLoading
+        description="Loading list item switch"
+      />
+      <Divider />
+      <ListItemSwitch
+        icon="device"
+        label="Loong loooooong looooooooong loooong title"
+        value={false}
+        isLoading
+        description="Loading list item switch"
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemSwitch with badge">
+      <ListItemSwitch
+        icon="device"
+        label="Usa l'app IO"
+        value={false}
+        badge={{
+          text: "Attivo",
+          variant: "info"
+        }}
+        description="Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
+      />
+      <Divider />
+      <ListItemSwitch
+        icon="coggle"
+        label="Loong loooooong loooooooooong loooong title"
+        value={false}
+        badge={{
+          text: "Attivo",
+          variant: "info"
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemSwitch, disabled">
+      <ListItemSwitch disabled label="Testo molto breve" value={true} />
+      <Divider />
+      <ListItemSwitch
         disabled
         label="Testo molto breve"
         description={
@@ -341,7 +411,7 @@ const SwitchListItemShowroom = () => (
         }
       />
       <Divider />
-      <SwitchListItem
+      <ListItemSwitch
         disabled
         icon="bonus"
         label="Let's try with a loooong loooooong title + icon"

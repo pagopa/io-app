@@ -139,10 +139,10 @@ type WalletUpdatePspRequestPayload = Readonly<{
   wallet: Wallet;
   idPayment: string;
   onSuccess?: (
-    action: ActionType<typeof paymentUpdateWalletPsp["success"]>
+    action: ActionType<(typeof paymentUpdateWalletPsp)["success"]>
   ) => void;
   onFailure?: (
-    action: ActionType<typeof paymentUpdateWalletPsp["failure"]>
+    action: ActionType<(typeof paymentUpdateWalletPsp)["failure"]>
   ) => void;
 }>;
 

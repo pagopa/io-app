@@ -97,4 +97,29 @@ describe("imageDecodingTask", () => {
       ])
     );
   });
+
+  it("should return unique barcodes", async () => {
+    (barcodeDetectionTask as jest.Mock).mockImplementation(
+      (): TE.TaskEither<BarcodeFailure, QRCodeScanResult> =>
+        TE.right({
+          type: "QRCode",
+          values: [
+            "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg",
+            "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg",
+            "Hello!"
+          ]
+        })
+    );
+    const result = await imageDecodingTask({ uri: "test" })();
+    expect(result).toEqual(
+      E.right([
+        {
+          type: "IDPAY",
+          format: "QR_CODE",
+          authUrl: "https://continua.io.pagopa.it/idpay/auth/mkdb1yxg",
+          trxCode: "mkdb1yxg"
+        }
+      ])
+    );
+  });
 });

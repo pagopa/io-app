@@ -16,7 +16,7 @@ export function* handleInitiativeInstrumentEnrollment(
   enrollInstrument: IDPayClient["enrollInstrument"],
   bearerToken: string,
   language: PreferredLanguageEnum,
-  action: ActionType<typeof idpayInitiativesInstrumentEnroll["request"]>
+  action: ActionType<(typeof idpayInitiativesInstrumentEnroll)["request"]>
 ) {
   const updateInstrumentStatusRequest = enrollInstrument({
     bearerAuth: bearerToken,

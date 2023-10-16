@@ -13,7 +13,7 @@ import { IDPayDetailsRoutes } from "../../../details/navigation";
 import { InitiativeFailureType } from "../failure";
 import I18n from "../../../../../i18n";
 import { IOToast } from "../../../../../components/Toast";
-import { refreshSessionToken } from "../../../../fastLogin/store/actions";
+import { refreshSessionToken } from "../../../../fastLogin/store/actions/tokenRefreshActions";
 
 jest.mock("../../../../../utils/showToast", () => ({
   showToast: jest.fn()

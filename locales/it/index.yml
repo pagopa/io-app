@@ -1,6 +1,10 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Tocca due volte per attivare"
+  buttons:
+    torch:
+      turnOn: "Accendi la torcia"
+      turnOff: "Spegni la torcia"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -867,6 +871,16 @@ email:
     validation_ok: La mail è stata validata. Ora puoi accedere a tutte le funzionalità di IO.
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
+  newvalidate:
+    title: Conferma la tua email
+    subtitle: Segui le istruzioni che abbiamo inviato a 
+    link: Non è corretta?
+    buttonlabelsent: Email inviata!
+    buttonlabelsentagain: Invia di nuovo l’email
+    toast: Fatto! Controlla tua casella di posta.
+  newvalidemail: 
+    title: Email confermata!
+    subtitle: Riceverai le comunicazioni di IO all’indirizzo 
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
@@ -1406,6 +1420,7 @@ wallet:
     amount: Importo
     total: Totale pagato
     expireDate: Scadenza
+    dueDate: Entro il
     tranche: Rata
     info: "Per informazioni:"
     tel: "Tel:"
@@ -3830,6 +3845,10 @@ barcodeScan:
     scan: Inquadra
     upload: Carica
     input: Digita
+    a11y:
+      scan: Inquadra, 1 di 3
+      upload: Carica, 2 di 3
+      input: Digita, 3 di 3
   upload:
     image: Carica un'immagine
     file: Carica un file

@@ -1,6 +1,10 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Double tap to activate"
+  buttons:
+    torch:
+      turnOn: "Accendi la torcia"
+      turnOff: "Spegni la torcia"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -851,6 +855,16 @@ email:
     validation_ok: Your email has been validated. You can use all the functionalities of IO.
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
+  newvalidate:
+    title: Validate your email
+    subtitle: Follow the instructions we sent to
+    link: Is the email address wrong?
+    buttonlabelsent: Email sent!
+    buttonlabelsentagain: Send email again
+    toast: Done! Check your mailbox.
+  newvalidemail: 
+    title: Email validated!
+    subtitle: You will receive IO's communications at 
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
@@ -1385,6 +1399,7 @@ wallet:
     amount: Amount
     total: Total paid
     expireDate: Expire date
+    dueDate: Due date
     tranche: Tranche
     info: 'More info at:'
     tel: 'Tel:'
@@ -3806,6 +3821,10 @@ barcodeScan:
     scan: Inquadra
     upload: Carica
     input: Digita
+    a11y:
+      scan: Inquadra, 1 di 3
+      upload: Carica, 2 di 3
+      input: Digita, 3 di 3
   upload:
     image: Carica un'immagine
     file: Carica un file
