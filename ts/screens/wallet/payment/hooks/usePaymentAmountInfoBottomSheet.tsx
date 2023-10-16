@@ -1,7 +1,7 @@
 import React from "react";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
@@ -15,20 +15,24 @@ export const usePaymentAmountInfoBottomSheet = () => {
         </Body>
       ),
       footer: (
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            block: true,
-            light: false,
-            labelColor: IOColors.white,
-            bordered: false,
-            onPress: () => dismiss(),
-            title: I18n.t("wallet.firstTransactionSummary.amountInfo.cta")
-          }}
-        />
+        <View>
+          <FooterWithButtons
+            type={"SingleButton"}
+            primary={{
+              type: "Solid",
+              buttonProps: {
+                label: I18n.t("wallet.firstTransactionSummary.amountInfo.cta"),
+                accessibilityLabel: I18n.t(
+                  "wallet.firstTransactionSummary.amountInfo.cta"
+                ),
+                onPress: () => dismiss()
+              }
+            }}
+          />
+        </View>
       )
     },
-    150
+    200
   );
 
   return {

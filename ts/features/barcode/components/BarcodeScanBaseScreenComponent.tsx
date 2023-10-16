@@ -4,7 +4,12 @@ import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
@@ -13,11 +18,29 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { currentRouteSelector } from "../../../store/reducers/navigation";
+import { FAQsCategoriesType } from "../../../utils/faq";
+import { isAndroid } from "../../../utils/platform";
+import {
+  assistanceToolRemoteConfig,
+  resetCustomFields
+} from "../../../utils/supportAssistance";
+import { zendeskSupportStart } from "../../zendesk/store/actions";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
 import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
+
+type HelpProps = {
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  hideHelpButton?: boolean;
+};
 
 type Props = {
   /**
@@ -43,18 +66,62 @@ type Props = {
    * necessary to navigate to the manual input screen or show the manual input modal
    */
   onManualInputPressed: () => void;
-};
+} & HelpProps;
 
 const BarcodeScanBaseScreenComponent = ({
   barcodeFormats,
   barcodeTypes,
   onBarcodeError,
   onBarcodeSuccess,
-  onManualInputPressed
+  onManualInputPressed,
+  faqCategories,
+  contextualHelp,
+  contextualHelpMarkdown,
+  hideHelpButton
 }: Props) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const currentScreenName = useIOSelector(currentRouteSelector);
+
+  const dispatch = useIODispatch();
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const canShowHelp = useIOSelector(canShowHelpSelector);
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  const onShowHelp = (): (() => void) | undefined => {
+    switch (choosenTool) {
+      case ToolEnum.zendesk:
+        // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
+        return () => {
+          resetCustomFields();
+          dispatch(
+            zendeskSupportStart({
+              faqCategories,
+              contextualHelp,
+              contextualHelpMarkdown,
+              startingRoute: currentScreenName,
+              assistanceForPayment: false,
+              assistanceForCard: false,
+              assistanceForFci: false
+            })
+          );
+        };
+      case ToolEnum.instabug:
+      case ToolEnum.web:
+      case ToolEnum.none:
+        return undefined;
+    }
+  };
+
+  const canShowHelpButton = () => {
+    if (hideHelpButton || !canShowHelp) {
+      return false;
+    } else {
+      return contextualHelp || contextualHelpMarkdown;
+    }
+  };
 
   const {
     cameraComponent,
@@ -127,6 +194,19 @@ const BarcodeScanBaseScreenComponent = ({
     );
   };
 
+  const shouldDisplayTorchButton =
+    cameraPermissionStatus === "authorized" && hasTorch;
+
+  const torchIconButton: React.ComponentProps<
+    typeof BaseHeader
+  >["customRightIcon"] = {
+    iconName: isTorchOn ? "lightFilled" : "light",
+    accessibilityLabel: isTorchOn
+      ? I18n.t("accessibility.buttons.torch.turnOff")
+      : I18n.t("accessibility.buttons.torch.turnOn"),
+    onPress: toggleTorch
+  };
+
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
@@ -134,16 +214,16 @@ const BarcodeScanBaseScreenComponent = ({
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
             label={I18n.t("barcodeScan.tabs.scan")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.upload")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.upload")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
             onPress={showFilePicker}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.input")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.input")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.input")}
             onPress={onManualInputPressed}
           />
         </TabNavigation>
@@ -164,21 +244,16 @@ const BarcodeScanBaseScreenComponent = ({
             backgroundColor={"transparent"}
             goBack={true}
             customGoBack={customGoBack}
+            onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
             customRightIcon={
-              hasTorch
-                ? {
-                    iconName: isTorchOn ? "lightFilled" : "light",
-                    accessibilityLabel: "torch",
-                    onPress: toggleTorch
-                  }
-                : undefined
+              shouldDisplayTorchButton ? torchIconButton : undefined
             }
           />
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar
             barStyle={"light-content"}
-            backgroundColor={"transparent"}
-            translucent={true}
+            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
+            translucent={false}
           />
         </SafeAreaView>
       </LinearGradient>
