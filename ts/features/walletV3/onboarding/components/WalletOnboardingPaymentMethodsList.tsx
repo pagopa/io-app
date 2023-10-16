@@ -3,40 +3,49 @@
  * on the app
  */
 import * as React from "react";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  IOIcons,
+  ListItemNav,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { FlatList } from "react-native";
+import WalletPaymentMethodItemSkeleton from "../../common/components/WalletPaymentMethodItemSkeleton";
+import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 
 type OwnProps = Readonly<{
-  paymentMethods: ReadonlyArray<any>;
-  onSelectPaymentMethod: (paymentMethod: any) => void;
+  paymentMethods: ReadonlyArray<PaymentMethodResponse>;
+  onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
+  isLoading?: boolean;
 }>;
 
-type PaymentMethodItemProps = Readonly<{
-  paymentMethod: any;
+type PaymentMethodItemProps = {
+  paymentMethod: PaymentMethodResponse;
   onPress: () => void;
-}>;
+};
 
 const PaymentMethodItem = ({
   paymentMethod,
   onPress
 }: PaymentMethodItemProps) => (
   <ListItemNav
-    icon="creditCard"
-    accessibilityLabel="test"
+    icon={(paymentMethod.asset as IOIcons) || "creditCard"}
+    accessibilityLabel={paymentMethod.name}
     onPress={onPress}
-    value="test"
+    value={paymentMethod.name}
   />
 );
 
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
-  onSelectPaymentMethod
+  onSelectPaymentMethod,
+  isLoading
 }: OwnProps) => (
   <FlatList
     removeClippedSubviews={false}
     data={paymentMethods}
     keyExtractor={item => item.name}
-    ListFooterComponent={<VSpacer size={16} />}
+    ListFooterComponent={renderListFooter(isLoading)}
     ItemSeparatorComponent={() => <Divider />}
     renderItem={({ item }) => (
       <PaymentMethodItem
@@ -46,5 +55,20 @@ const WalletOnboardingPaymentMethodsList = ({
     )}
   />
 );
+
+const renderListFooter = (isLoading?: boolean) => {
+  if (isLoading) {
+    return (
+      <>
+        <WalletPaymentMethodItemSkeleton />
+        <Divider />
+        <WalletPaymentMethodItemSkeleton />
+        <Divider />
+        <WalletPaymentMethodItemSkeleton />
+      </>
+    );
+  }
+  return <VSpacer size={16} />;
+};
 
 export default WalletOnboardingPaymentMethodsList;

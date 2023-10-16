@@ -5,7 +5,9 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import WalletOnboardingStartScreen from "../screens/WalletOnboardingStartScreen";
+import WalletOnboardingStartScreen, {
+  WalletOnboardingStartScreenParams
+} from "../screens/WalletOnboardingStartScreen";
 import WalletOnboardingSelectPaymentMethodScreen from "../screens/WalletOnboardingSelectPaymentMethodScreen";
 
 export const WalletOnboardingRoutes = {
@@ -17,7 +19,7 @@ export const WalletOnboardingRoutes = {
 
 export type WalletOnboardingParamsList = {
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: undefined;
-  [WalletOnboardingRoutes.WALLET_ONBOARDING_START]: undefined;
+  [WalletOnboardingRoutes.WALLET_ONBOARDING_START]: WalletOnboardingStartScreenParams;
   [WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD]: undefined;
 };
 

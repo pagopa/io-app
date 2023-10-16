@@ -1,11 +1,14 @@
 /* eslint-disable functional/immutable-data */
 import * as React from "react";
 
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { View } from "react-native";
 
 import I18n from "../../../../i18n";
-import { WalletOnboardingStackNavigation } from "../navigation/navigator";
+import {
+  WalletOnboardingParamsList,
+  WalletOnboardingStackNavigation
+} from "../navigation/navigator";
 
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -14,8 +17,19 @@ import { OnboardingOutcome, OnboardingResult } from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
 import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
 
+export type WalletOnboardingStartScreenParams = Readonly<{
+  paymentMethodId: string;
+}>;
+
+type WalletOnboardingStartScreenRouteProps = RouteProp<
+  WalletOnboardingParamsList,
+  "WALLET_ONBOARDING_START"
+>;
+
 const WalletOnboardingStartScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
+  const route = useRoute<WalletOnboardingStartScreenRouteProps>();
+  const { paymentMethodId } = route.params;
 
   const [onboardingResult, setOnboardingResult] =
     React.useState<OnboardingResult>();
