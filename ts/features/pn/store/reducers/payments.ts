@@ -81,11 +81,7 @@ export const paymentStatusSelector = (
     state.features.pn.payments[messageId],
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse(
-      () =>
-        remoteUndefined as RemoteValue<
-          PaymentRequestsGetResponse,
-          Detail_v2Enum
-        >
+    O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
+      () => remoteUndefined
     )
   );
