@@ -1,6 +1,10 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Tocca due volte per attivare"
+  buttons:
+    torch:
+      turnOn: "Accendi la torcia"
+      turnOff: "Spegni la torcia"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -3617,6 +3621,10 @@ barcodeScan:
     scan: Inquadra
     upload: Carica
     input: Digita
+    a11y:
+      scan: Inquadra, 1 di 3
+      upload: Carica, 2 di 3
+      input: Digita, 3 di 3
   upload:
     image: Carica un'immagine
     file: Carica un file
