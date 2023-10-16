@@ -194,6 +194,17 @@ const BarcodeScanBaseScreenComponent = ({
     );
   };
 
+  const shouldDisplayTorchButton =
+    cameraPermissionStatus === "authorized" && hasTorch;
+
+  const torchIconButton: React.ComponentProps<
+    typeof BaseHeader
+  >["customRightIcon"] = {
+    iconName: isTorchOn ? "lightFilled" : "light",
+    accessibilityLabel: "torch",
+    onPress: toggleTorch
+  };
+
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
@@ -233,13 +244,7 @@ const BarcodeScanBaseScreenComponent = ({
             customGoBack={customGoBack}
             onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
             customRightIcon={
-              hasTorch
-                ? {
-                    iconName: isTorchOn ? "lightFilled" : "light",
-                    accessibilityLabel: "torch",
-                    onPress: toggleTorch
-                  }
-                : undefined
+              shouldDisplayTorchButton ? torchIconButton : undefined
             }
           />
           {/* This overrides BaseHeader status bar configuration */}
