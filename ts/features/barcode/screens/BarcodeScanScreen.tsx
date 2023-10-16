@@ -179,6 +179,14 @@ const BarcodeScanScreen = () => {
     title: ""
   });
 
+  const handleManualInputPressed = () => {
+    if (isIdPayEnabled) {
+      manualInputModal.present();
+    } else {
+      handlePagoPACodeInput();
+    }
+  };
+
   const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
     switch (format) {
       case "DATA_MATRIX":
@@ -204,7 +212,7 @@ const BarcodeScanScreen = () => {
         barcodeTypes={enabledTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
-        onManualInputPressed={manualInputModal.present}
+        onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
       />
       {manualInputModal.bottomSheet}
