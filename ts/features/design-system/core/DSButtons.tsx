@@ -13,8 +13,10 @@ import {
   VSpacer,
   useIOExperimentalDesign,
   useIOTheme,
-  BlockButtons
+  BlockButtons,
+  ListItemSwitch
 } from "@pagopa/io-app-design-system";
+import { useState } from "react";
 import { H2 } from "../../../components/core/typography/H2";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
@@ -182,6 +184,11 @@ const renderButtonSolid = (isExperimental: boolean) => (
         onPress={onButtonPress}
       />
     </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ButtonSolid · Primary · Full width, loading state">
+      <LoadingSolidButtonExample />
+    </DSComponentViewerBox>
+
     <DSComponentViewerBox name="ButtonSolid · Primary, disabled">
       <View>
         <ButtonSolid
@@ -330,6 +337,22 @@ const renderButtonSolid = (isExperimental: boolean) => (
           onPress={onButtonPress}
           accessibilityLabel="Tap to trigger test alert"
         />
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox
+        name="ButtonSolid · Contrast, full width, loading state"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonSolid
+            fullWidth
+            loading
+            color="contrast"
+            label={"Contrast button"}
+            onPress={onButtonPress}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
       </DSComponentViewerBox>
 
       <DSComponentViewerBox
@@ -1025,3 +1048,25 @@ const renderSpecificButtons = () => (
     </DSComponentViewerBox>
   </>
 );
+
+const LoadingSolidButtonExample = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  return (
+    <View>
+      <ButtonSolid
+        fullWidth
+        loading={isEnabled}
+        accessibilityLabel="Tap to trigger test alert"
+        label={"Primary button"}
+        onPress={() => setIsEnabled(true)}
+      />
+      <ListItemSwitch
+        label="Enable loading state"
+        onSwitchValueChange={toggleSwitch}
+        value={isEnabled}
+      />
+    </View>
+  );
+};
