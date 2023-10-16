@@ -201,7 +201,9 @@ const BarcodeScanBaseScreenComponent = ({
     typeof BaseHeader
   >["customRightIcon"] = {
     iconName: isTorchOn ? "lightFilled" : "light",
-    accessibilityLabel: "torch",
+    accessibilityLabel: isTorchOn
+      ? I18n.t("accessibility.buttons.torch.turnOff")
+      : I18n.t("accessibility.buttons.torch.turnOn"),
     onPress: toggleTorch
   };
 
@@ -212,16 +214,16 @@ const BarcodeScanBaseScreenComponent = ({
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
             label={I18n.t("barcodeScan.tabs.scan")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.upload")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.upload")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
             onPress={showFilePicker}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.input")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.input")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.input")}
             onPress={onManualInputPressed}
           />
         </TabNavigation>
