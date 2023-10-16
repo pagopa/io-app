@@ -483,6 +483,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const { potWallets, potTransactions } = this.props;
 
     const headerContent = <>{this.cardPreview()}</>;
+
     const transactionContent =
       pot.isError(potTransactions) ||
       (pot.isNone(potTransactions) &&
