@@ -1156,11 +1156,6 @@ wallet:
       title: "Siehst du einen anderen Betrag?"
       message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
       cta: "OK, habe verstanden"
-    loadingMessage:
-      activation: "Wir benachrichtigen die Körperschaft, bitte warte ein paar Sekunden..."
-      verification: "Wir überprüfen deine Zahlungsangaben..."
-      generic: "Deine Zahlungsmitteilung wird überprüft, bitte warten ein paar Sekunden..."
-      wallet: "Deine gespeicherten Zahlungsmethoden werden überprüft..."
     contextualHelpTitle: "Zusammenfassung der Transaktion"
     errorDetails:
       title: "Details zum Fehler"

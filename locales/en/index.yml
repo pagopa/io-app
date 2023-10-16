@@ -770,9 +770,9 @@ email:
     buttonlabelsent: Email sent!
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
-  newvalidemail: 
+  newvalidemail:
     title: Email validated!
-    subtitle: You will receive IO's communications at 
+    subtitle: You will receive IO's communications at
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
@@ -1285,11 +1285,6 @@ wallet:
       title: Vedi un importo diverso?
       message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
       cta: Ok, va bene
-    loadingMessage:
-      activation: We are contacting the entity, wait a few seconds
-      verification: We are verifying your payment information
-      generic: I am finishing the verification operations of your notice, wait a few seconds...
-      wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
     errorDetails:

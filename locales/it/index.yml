@@ -765,14 +765,14 @@ email:
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
   newvalidate:
     title: Conferma la tua email
-    subtitle: Segui le istruzioni che abbiamo inviato a 
+    subtitle: Segui le istruzioni che abbiamo inviato a
     link: Non è corretta?
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
     toast: Fatto! Controlla tua casella di posta.
-  newvalidemail: 
+  newvalidemail:
     title: Email confermata!
-    subtitle: Riceverai le comunicazioni di IO all’indirizzo 
+    subtitle: Riceverai le comunicazioni di IO all’indirizzo
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
@@ -1289,11 +1289,6 @@ wallet:
       title: Vedi un importo diverso?
       message: pagoPA aggiorna automaticamente l'importo per assicurarti di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
       cta: Ok, va bene
-    loadingMessage:
-      activation: Stiamo contattando l'ente, attendi qualche secondo
-      verification: Stiamo verificando i dati del tuo pagamento
-      generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo...
-      wallet: Sto verificando se esistono metodi di pagamento salvati...
     contextualHelpTitle: Riepilogo della transazione
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
     errorDetails:
