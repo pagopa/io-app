@@ -55,7 +55,7 @@ import { DSTypography } from "../core/DSTypography";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
-} from "../../../navigation/AppStackNavigator";
+} from "../../../theme/navigations";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
