@@ -6,6 +6,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import * as A from "fp-ts/lib/Array";
+import { contramap } from "fp-ts/lib/Ord";
+import { pipe } from "fp-ts/lib/function";
+import * as N from "fp-ts/number";
 import React from "react";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -24,6 +28,11 @@ type WalletPaymentBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
   paymentStartOrigin: PaymentStartOrigin;
 };
+
+const sortByAmount = pipe(
+  N.Ord,
+  contramap((p: PagoPaBarcode) => parseFloat(p.amount))
+);
 
 const WalletPaymentBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
@@ -60,6 +69,8 @@ const WalletPaymentBarcodeChoiceScreen = () => {
     );
   };
 
+  const sortedBarcodes = pipe(barcodes, A.sortBy([sortByAmount]), A.reverse);
+
   return (
     <BaseScreenComponent goBack={true}>
       <ScrollView>
@@ -68,7 +79,7 @@ const WalletPaymentBarcodeChoiceScreen = () => {
           <VSpacer size={32} />
           <FlatList
             scrollEnabled={false}
-            data={barcodes}
+            data={sortedBarcodes}
             renderItem={({ item }) => renderBarcodeItem(item)}
             ItemSeparatorComponent={() => <Divider />}
           />
