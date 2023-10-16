@@ -20,7 +20,7 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ItwErrorView from "../../components/ItwErrorView";
 import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
@@ -29,6 +29,7 @@ import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { useItwInfoFlow } from "../../hooks/useItwInfoFlow";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
+import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
 
 /**
  * Type for the content view component props.
@@ -44,6 +45,7 @@ const ItwCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
   const toast = useIOToast();
+  const dispatch = useIODispatch();
   const { present, bottomSheet } = useItwInfoFlow({
     title: pipe(
       credential,
@@ -82,6 +84,16 @@ const ItwCredentialPreviewScreen = () => {
    * @param credential - credential to be displayed
    */
   const ContentView = ({ credential }: ContentViewProps) => {
+    const addOnPress = () => {
+      dispatch(itwCredentialsAddCredential(credential));
+      toast.info(
+        I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.toast.success"
+        )
+      );
+      navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
+    };
+
     /**
      * Button props for the FooterWithButtons component which opens the PIN screen.
      */
@@ -90,7 +102,7 @@ const ItwCredentialPreviewScreen = () => {
       buttonProps: {
         label: I18n.t("global.buttons.add"),
         accessibilityLabel: I18n.t("global.buttons.add"),
-        onPress: () => null // TODO(SIW-449): Add navigation to the PIN screen
+        onPress: () => addOnPress() // TODO(SIW-449): Add navigation to the PIN screen
       }
     };
 

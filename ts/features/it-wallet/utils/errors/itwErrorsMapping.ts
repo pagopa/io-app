@@ -1,5 +1,9 @@
 import I18n from "../../../../i18n";
-import { ItWalletError, ItWalletMappedError } from "./itwErrors";
+import {
+  ItWalletError,
+  ItWalletErrorTypes,
+  ItWalletMappedError
+} from "./itwErrors";
 
 /**
  * Getter for a generic error title and body.
@@ -17,10 +21,19 @@ export const getItwGenericError = (): ItWalletMappedError => ({
  */
 export const mapItwError = (error: ItWalletError): ItWalletMappedError => {
   switch (error.code) {
-    case "NFC_NOT_SUPPORTED":
+    case ItWalletErrorTypes.NFC_NOT_SUPPORTED:
       return {
         title: I18n.t("features.itWallet.infoAuthScreen.errors.nfc.title"),
         body: I18n.t("features.itWallet.infoAuthScreen.errors.nfc.body")
+      };
+    case ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR:
+      return {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.title"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.subtitle"
+        )
       };
     default:
       return getItwGenericError();
