@@ -59,7 +59,7 @@ global:
   badges:
     blocked: "Blockiert"
     onGoing: "In Bearbeitung"
-    failed:  "Fehlgeschlagen"
+    failed: "Fehlgeschlagen"
     cancelled: "Abgebrochen"
     reversal: "Stornierung"
   password: "Passwort"
@@ -95,10 +95,6 @@ global:
       open:
         label: "Kontextbezogene Hilfe"
         hint: "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
-    chat:
-      description: "IO Servicemitteilungen"
-      unread_singular: "{{message}} neue Mitteilung"
-      unread_plural: "{{message}} neue Mitteilungen"
   ioWebSite: "https://io.italia.it"
   symbols:
     question: "?"
@@ -218,12 +214,6 @@ clipboard:
   copyFeedback: "In die Zwischenablage kopiert"
   copyText: "kopieren"
   copyFeedbackButton: "kopiert"
-betaBanner:
-  title: "IO-App"
-  description: "Deine Rückmeldungen helfen uns, Tag für Tag besser zu werden."
-connection:
-  status:
-    offline: "Offline! Einige Funktionen werden nicht funktionieren."
 errors:
   loginError: "Es gab einen Fehler beim Anmelden, wiederhole den Vorgang."
   profileUpdateError: "Beim Aktualisieren deines Profils ist ein Fehler aufgetreten."
@@ -250,11 +240,7 @@ startup:
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
-    body: "Wenn du Probleme beim Zugriff auf die App hast, melde dies bitte unserem Team und wir werden das Problem so schnell wie möglich lösen."
 login:
-  welcome:
-    line1: "Willkommen in deiner"
-    line2: "Digitalen Staatsbürgerschaft"
   expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
   expiration_info_FL: "Aus Sicherheitsgründen wirst du einmal im Jahr aufgefordert, dich mittels SPID oder CIE zu authentifizieren."
   biometric_info: "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
@@ -288,21 +274,9 @@ profile:
     alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
     loading: "Abmeldung läuft..."
     exit: "Beenden"
-    cta:
-      header: "Wie möchtest du die App verlassen?"
-      keepData:
-        title: "Beenden und alle Daten behalten"
-        description: "Um die IO-App wieder zu benützen, musst du dich erneut mit deiner digitalen Identität anmelden, wobei alle Einstellungsdaten erhalten bleiben und beim nächsten Start sofort verfügbar sind. Diese Wahl bedeutet nicht, dass deine persönlichen Daten durch die App gelöscht werden."
-      resetData:
-        title: "Beenden und Zurücksetzen der App"
-        description: "Die Einstellungen und Daten, die auf deinem Gerät gespeichert sind, werden zurückgesetzt. Diese Wahl bedeutet nicht, dass deine persönlichen Daten von der App gelöscht werden."
   errors:
     load: "Fehler beim Laden des Profils"
     upsert: "Fehler beim Erstellen oder Aktualisieren des Profils"
-  alerts:
-    emailNotValidated:
-      title: "Nicht bestätigte E-Mail-Adresse"
-      subtitle: "Du musst deine E-Mail-Adresse bestätigen, bevor du mit dem Vorgang fortfahren kannst. Gehe dazu in den Profilbereich und wähle “Dein Profil”."
   main:
     title: "Profil"
     logout: "Abmelden/Beenden"
@@ -330,46 +304,46 @@ profile:
       subtitle: "Hier findest du Informationen zu deinen Rechten und Pflichten sowie über die Verarbeitung deiner persönlichen Daten."
       loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
-          title: "Dein Konto löschen"
-          description: "Dein Konto und deine persönlichen Daten endgültig löschen"
-          error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
-          alert:
-            activeBonusTitle: "Aktive Boni"
-            activeBonusDescription: "Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Löschung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle “Weiter”"
-            oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
-            oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
-            cta:
-              manageBonus: "Boni verwalten"
-              continue: "Weiter"
-              return: "Zurück"
-              cancel: "Löschung abbrechen"
-          info:
-            body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach Anfrage erfolgt.\n\nWenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr wiederherstellen.\nBitte beachte auch, dass die über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
-            cta: "Weiter"
-          details:
-            body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
-            question: "Was ist der Grund für die Löschung?"
-            answer_1: "Ich halte IO nicht mehr für nützlich"
-            answer_2: "Ich fühle mich in IO nicht sicher"
-            answer_3: "Ich habe die App nie benutzt"
-            answer_4: "Keiner der oben genannten Punkte"
-            labelOpenAnswer: "Erzähle uns mehr"
-            cta: "Konto löschen"
-          success:
-            title: "Wir bearbeiten deine Anfrage."
-            body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
-            cta: "Beenden"
+        title: "Dein Konto löschen"
+        description: "Dein Konto und deine persönlichen Daten endgültig löschen"
+        error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
+        alert:
+          activeBonusTitle: "Aktive Boni"
+          activeBonusDescription: "Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Löschung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle “Weiter”"
+          oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
+          oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
+          cta:
+            manageBonus: "Boni verwalten"
+            continue: "Weiter"
+            return: "Zurück"
+            cancel: "Löschung abbrechen"
+        info:
+          body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach Anfrage erfolgt.\n\nWenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr wiederherstellen.\nBitte beachte auch, dass die über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
+          cta: "Weiter"
+        details:
+          body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
+          question: "Was ist der Grund für die Löschung?"
+          answer_1: "Ich halte IO nicht mehr für nützlich"
+          answer_2: "Ich fühle mich in IO nicht sicher"
+          answer_3: "Ich habe die App nie benutzt"
+          answer_4: "Keiner der oben genannten Punkte"
+          labelOpenAnswer: "Erzähle uns mehr"
+          cta: "Konto löschen"
+        success:
+          title: "Wir bearbeiten deine Anfrage."
+          body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
+          cta: "Beenden"
       exportData:
-          cta: "Kopie deiner Daten anfordern"
-          title: "Zugriff auf deine Daten"
-          description: "Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten"
-          info:
-            title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
-          alert:
-            requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
-            oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
-            confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
-          error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
+        cta: "Kopie deiner Daten anfordern"
+        title: "Zugriff auf deine Daten"
+        description: "Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten"
+        info:
+          title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
+        alert:
+          requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
+          oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
+          confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
+        error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
         title: "Datenschutz und Nutzungsbedingungen"
         description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
@@ -423,10 +397,6 @@ profile:
       title: "Über IO"
       description: "Erfahren mehr über die IO-App"
     developersSectionHeader: "Entwickler"
-    experimentalFeatures:
-      confirmTitle: "Experimentelle Funktionen"
-      confirmMessage: "Experimentelle Funktionen könnten die Anwendung instabil machen. Möchtest du sie wirklich aktivieren?"
-      bannerMessage: "Du verwendst experimentelle Funktionen, die unvollständig oder instabil sein können."
     pagoPaEnvironment:
       pagoPaEnv: "pagoPA Testumgebung"
       pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
@@ -446,9 +416,6 @@ profile:
       email: "E-Mail-Adresse"
       need_validate: "Noch zu bestätigen"
       nameSurname: "Vor- und Nachname"
-      spid:
-        headerTitle: "SPID Daten"
-        email: "SPID – E-Mail-Adresse"
     email:
       contextualHelpTitle: "Wie verwalte ich meine E-Mail-Adresse?"
     spid_email:
@@ -483,8 +450,6 @@ profile:
       notifications:
         title: "Push-Benachrichtigungen"
         subtitle: "Vorschau und Erinnerung zulassen"
-    empty:
-      default: "Keine Präferenzen festgelegt"
     unavailable:
       title: "Diese Einstellung wird von deinem SPID-Profil festgelegt"
     language:
@@ -536,10 +501,6 @@ spid:
   selectDemoIdp: "Wenn du noch keine eigene SPID-Identität hast, verwende die App im Demo-Modus"
   loginErrorAlert:
     title: "Fehler bei der Anmeldung"
-    message: "Entschuldigung, es ist einen Fehler bei der Anmeldung aufgetreten. Bitte versuche es erneut."
-  subscription:
-    line1: "SPID ist die digitale Identität für den Zugang zu den Online-Diensten der italienischen öffentlichen Verwaltung."
-    line2: "Gib deine E-Mail-Adresse ein, um sie zu aktivieren."
   pending_login:
     title: "Anmeldung in Arbeit"
     details: "Wenn du die Sitzung im Browser geöffnet hast, fahre von dort aus fort. Andernfalls gehe zurück und starte eine neue Anmeldung!"
@@ -628,7 +589,7 @@ authentication:
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
-        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon." 
+        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon."
         moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
         readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
         readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
@@ -654,29 +615,10 @@ authentication:
   spid_information_request:
     headerTitle: "Du hast keinen SPID?"
     contentTitle: "Was ist SPID?"
-    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
-    paragraph2: "Wenn du möchtest, kannst du uns deine E-Mail-Adresse hinterlassen, um Erinnerungen und Updates dieser App zu erhalten"
-    paragraph3: "Wenn du fortfährst, akzeptierst du die"
-    tosLinkText: "Regeln für die Verarbeitung von personenbezogenen Daten"
-    continue: "Weiter"
   spid_information:
     headerTitle: "Du hast keinen SPID?"
     contentTitle: "Was ist SPID?"
-    moreLinkText: "Mehr erfahren"
     subtitle: "SPID ist sicher"
-    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
-    paragraph2-part1: "Mit SPID kannst du Dinge online erledigen, die bisher nur persönlich erledigt werden konnten: Um dich für SPID zu registrieren, musst du "
-    paragraph2-bold: "deine Identität von einem anerkannten Anbieter bescheinigen "
-    paragraph2-part2: "lassen. Folge dieser Anleitung:"
-    point1-value: "1"
-    point1-content: "Wähle deinen Identitätsanbieter"
-    point2-value: "2"
-    point2-content: "Gib deine persönlichen Daten und deine Mobiltelefon ein"
-    point3-value: "3"
-    point3-content: "Lade eine Kopie deiner Identitätsdokumente hoch"
-    point4-value: "4"
-    point4-content: "Vervollständige deine Anmeldung"
-    knowMore: "Erfahre mehr auf spid.gov.it"
   idp_selection:
     headerTitle: "Home"
     contentTitle: "Wähle deinen Identitätsanbieter"
@@ -710,7 +652,6 @@ authentication:
       error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
     title: "Sicherheitshinweis"
-    message: "Um deine privaten Informationen zu schützen, melden dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
 email:
   read:
     title: "Deine E-Mail-Adresse"
@@ -726,6 +667,18 @@ email:
     alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
       title: "E-Mail"
+  newinsert:
+    header: "IO konfigurieren"
+    title: "Wie lautet Ihre E-Mail?"
+    subtitle: "Wir verwenden E-Mail für bestimmte Mitteilungen, wie z. B. Zahlungsbelege oder Nachrichten, die mit dem Kundendienst ausgetauscht werden."
+    label: "Persönliche E-Mail Adresse"
+    alert:
+      title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
+      description: "E-Mail bereits in Gebrauch"
+      modaltitle: "Diese E-Mail ist bereits in Gebrauch"
+      modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
+      modalbutton: "Andere E-Mail verwenden"
+
   edit:
     title: "E-Mail-Adresse bearbeiten"
     subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
@@ -815,16 +768,6 @@ onboarding:
         step3: "Wähle “IO”"
         step4: "Wähle “Benachrichtigungen”"
         step5: "Aktiviere “Benachrichtigungen zulassen”"
-forms:
-  validators:
-    required: "Erforderlicher Wert"
-    email: "Unbestätigte E-Mail-Adresse"
-  spidInformation:
-    fields:
-      email:
-        placeholder: "E-Mail-Adresse"
-lipsum:
-  medium: "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
 datetimes:
   yesterday: "gestern"
   todayAt: "heute um"
@@ -878,8 +821,8 @@ payment:
       help: "Solltest du ein Problem mit dieser Zahlung haben, schreib uns für weitere Informationen und Details"
     list:
       empty:
-          title: "Keine Zahlungsversuche"
-          description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
+        title: "Keine Zahlungsversuche"
+        description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
 wallet:
@@ -941,11 +884,6 @@ wallet:
     addElement: "Element zum Konto hinzufügen"
     cardsPreview: "Vorschau der Zahlungsmethoden. Aktiviere, um die Liste deiner Zahlungsmethoden aufzurufen"
     cardHolder: "Karteninhaber"
-    transactionListItem:
-      payment:
-        read: "Transaktion"
-        unread: "Ungelesene Tranksaktionen"
-      label: "{{payment}} an {{merchant}} von {{amount}} Euro durchgeführt am {{datetime}} um {{hours}} Uhr mit Grund {{reason}}. Aktiviere für alle Details."
   onboarding:
     bancomat:
       headerTitle: "PagoBANCOMAT-Karte hinzufügen"
@@ -955,16 +893,6 @@ wallet:
       koNotFound:
         title: "Wir konnten keine Karten finden"
         body: "Es gibt keine PagoBANCOMAT-Karten auf deinen Namen: Wende dich bitte für weitere Informationen an deine Bank."
-      koNotFoundSingleBank:
-        title: "Wir konnten keine Karten bei dieser Bank finden"
-        body: "Es gibt keine PagoBANCOMAT-Karten auf deinen Namen.\nWenn du magst, kann IO alle Banken durchsuchen."
-        continue: "Weiter"
-      koServicesError:
-        title: "Wir konnten keine Karten finden: bitte wähle deine Bank aus"
-        body: "Teile uns die Bank mit, die deine Karte ausgestellt hat, um die Liste der auf deinen Namen ausgestellten PagoBANCOMAT-Karten anzusehen."
-        chooseTheBank: "Bank auswählen"
-      loadingSearch:
-        title: "Wir sind dabei, die Liste deiner Karten zu erstellen.\n\nWarte ein paar Sekunden..."
       add:
         title: "PagoBancomat hinzufügen"
         label: "PagoBancomat-Karte {{current}} von {{length}}"
@@ -1105,10 +1033,6 @@ wallet:
   transactionsLoadMore: "Weitere Transaktionen laden"
   transacionsLoadingMore: "Lade weitere Transaktionen..."
   transactionsShow: "Zeige deine Transaktionen"
-  pickPaymentMethod:
-    unavailable:
-      title: "Diese Zahlungsmethode ist noch nicht verfügbar"
-      message: "Diese Zahlungsmethode wird in einer zukünftigen Version verfügbar sein"
   add: "hinzufügen"
   delete:
     successful: "Zahlungsmethode von deinem Konto entfernt"
@@ -1124,15 +1048,9 @@ wallet:
     failed: "Die Karte konnte nicht hinzugefügt werden"
     failedCardAlreadyExists: "Die Karte ist bereits in deinem Konto"
     contextualHelpTitle: "Hinzufügen einer Zahlungsmethode"
-    abort:
-      title: "Möchtest du das Hinzufügen einer neuen Zahlungsmethode abbrechen?"
-      confirm: "Vorgang abbrechen"
-      cancel: "Vorgang fortsetzen"
-      success: "Die Eingabe der Zahlungsmethode wurde erfolgreich abgebrochen"
   textMsg:
     title: "Bestätigungscode"
     header: "SMS-Bestätigungscode"
-    newCode: "Neuen Code anfordern"
     info: "Gib den Code ein, den wir per SMS an deine Telefonnummer gesendet haben"
   transactionDetails: "Transaktionsdetails"
   transactionFullReason: "Vollständiger Grund"
@@ -1239,11 +1157,6 @@ wallet:
       title: "Siehst du einen anderen Betrag?"
       message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
       cta: "OK, habe verstanden"
-    loadingMessage:
-      activation: "Wir benachrichtigen die Körperschaft, bitte warte ein paar Sekunden..."
-      verification: "Wir überprüfen deine Zahlungsangaben..."
-      generic: "Deine Zahlungsmitteilung wird überprüft, bitte warten ein paar Sekunden..."
-      wallet: "Deine gespeicherten Zahlungsmethoden werden überprüft..."
     contextualHelpTitle: "Zusammenfassung der Transaktion"
     errorDetails:
       title: "Details zum Fehler"
@@ -1314,7 +1227,6 @@ wallet:
       description: "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
     bank:
       name: "BANCOMAT Pay"
-      maxFee: "Maximale Gebühr von 0,50€"
     bancomatPay:
       name: "BANCOMAT Pay"
       description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
@@ -1390,8 +1302,8 @@ wallet:
       title: "Offenbar wurde der Zugang zu der Galerie verweigert"
       message: "IO benötigt Zugang zu deiner Galerie, um Boni und Zertifikate zu speichern oder Screenshots und Zahlungsmitteilungen hochzuladen"
       buttonText:
-          settings: "Berechtigungen aktivieren"
-          cancel: "Abbrechen"
+        settings: "Berechtigungen aktivieren"
+        cancel: "Abbrechen"
     contextualHelpTitle: "Wie man eine Zahlungsmitteilung bezahlen kann"
   whyAFee:
     title: "Warum Transaktionsgebühren?"
@@ -1426,10 +1338,6 @@ wallet:
     contextualHelpTitle: "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
   bancomat:
     details:
-      infobox:
-        one: "Mit PagoBANCOMAT-Karten "
-        two: "kann man nicht auf IO zahlen"
-        three: ", sondern nur in physischen Verkaufsstellen (POS)."
       debit:
         title: "Deine Karte hat mehr als ein Logo?"
         body: "Wenn deine PagoBANCOMAT Karte andere internationale Zahlungsnetzwerke aufweist, kannst du diese hinzufügen, indem du nach allen Debit- oder Kreditkarten auf deinen Namen suchst."
@@ -1529,9 +1437,7 @@ messages:
       received_at: "erhalten um"
   contextualHelpTitle: "Mitteilungen verwenden"
   counting:
-    zero: "Keine Mitteilung"
     one: "Du hast eine Mitteilung"
-    other: "Du hast {{count}} Mitteilungen"
   tab:
     inbox: "Erhalten"
     deadlines: "Fällig"
@@ -1542,7 +1448,7 @@ messages:
   yesterday: "gestern"
   errorLoading:
     details: "Fehler beim Laden der Mitteilungsdetails"
-    senderInfo:  "Absender unbekannt"
+    senderInfo: "Absender unbekannt"
     serviceInfo: "Fehlende Informationen zum Dienst"
     departmentInfo: "Fehlende Informationen zur Abteilung"
     noTitle: "Ohne Titel"
@@ -1560,14 +1466,14 @@ messages:
         block2: "um "
       expiringOrValidAlert:
         block1: "Verfällt am "
-        block2: "um " 
+        block2: "um "
       expiredAlert:
         block1: "Abgelaufen am "
-        block2: "um " 
+        block2: "um "
     prescription:
-      expiringOrValidAlert: 
+      expiringOrValidAlert:
         block1: "Verfällt am "
-        block2: "um " 
+        block2: "um "
       expiredAlert:
         block1: "Abgelaufen am "
         block2: "um "
@@ -1647,14 +1553,6 @@ messageDetails:
   errorText: "Wir konnten die Details deiner Mitteilung nicht laden"
   retryText: "Es handelt sich wahrscheinlich um einen temporären Fehler... bitte versuche es erneut!"
   submitBugText: "Wenn das Problem nicht gelöst ist, lasse es uns bitte über dem “?”-Symbol in der oberen rechten Ecke wissen, danke!"
-  rawInfoLink:
-    showLabel: "Mitteilungsdetails"
-    hideLabel: "Details schließen"
-  rawInfoLabels:
-    createdAt: "Datum"
-    organizationName: "Gesendet von"
-    departmentName: "Abteilung"
-    serviceName: "Dienst"
   dateSending: "Datum und Uhrzeit:"
   sender: "Absender:"
   service: "Dienst:"
@@ -1763,12 +1661,6 @@ services:
   contactAddress: "Adresse"
   contactPhone: "Telefon"
   contactSupport: "Support"
-  areasOfInterest:
-    selectMessage: "Wähle den geographischen Bereich (Gemeinden, Regionen usw.), in dem du wohnst oder in denen du dich gewöhnlich aufhälst, um die entsprechenden Dienste hier zu sehen. Du kannst sie jederzeit ändern."
-    selectMessageEmptyOrgs: "Es ist derzeit nicht möglich, einen Standort hinzuzufügen. Bitte ziehe den Bildschirm nach unten, um die Daten zu aktualisieren und versuche erneut, einen Bereich auszuwählen."
-    addButton: "Füge deine gewünschten Interessengebiete hinzu"
-    editButton: "Ändere deine Interessengebiete"
-    searchEmpty: "Wenn du dein Interessengebiet nicht findest, bedeutet dies, dass die Körperschaften dieses Gebiets noch keine Dienste auf IO bereitstellen."
   tab:
     locals: "Lokal"
     national: "National"
@@ -1834,19 +1726,12 @@ identification:
       button_short: "Entsperrcode ändern"
       subtitle: "Einen neuen 6-stelligen Code festlegen"
     confirmValid: "Entsperrcode korrekt"
-  unlock_screen:
-    help:
-      title: "Zugriff mit Entsperrcode"
   forgetCode:
     confirmTitle: "Hast du den Entsperrcode vergessen?"
     confirmMsg: "Um einen neuen Entsperrcode festlegen zu können, musst du dich erneut anmelden."
     confirmMsgWithTask: "Um einen neuen Entsperrcode festlegen zu können, musst du den aktuellen Vorgang abbrechen und dich neu anmelden."
 calendarEvents:
   calendarSelect: "In welchen Kalender möchtest du den Termin eintragen?"
-  removeRequest:
-    title: "Möchtest du wirklich den Termin entfernen?"
-    ok: "Termin entfernen"
-    cancel: "Vorgang abbrechen"
 reminders:
   emptyMonth: "Keine Fälligkeiten für diesen Monat"
   loadMoreData: "Bisherige Fälligkeiten"
