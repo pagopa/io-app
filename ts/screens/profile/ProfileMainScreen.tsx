@@ -677,7 +677,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 backgroundColor: IOColors.bluegrey
               }}
             />
-            {/* End of the hackish solution */}
+            {/* End of the hacky solution */}
             <TouchableDefaultOpacity
               accessibilityRole={"button"}
               onPress={() =>

@@ -97,6 +97,8 @@ export default class WalletLayout extends React.Component<Props> {
             backgroundColor: IOColors.bluegrey
           }}
         />
+        {/* End of the hacky solution */}
+
         {this.props.children}
       </DarkLayout>
     );
