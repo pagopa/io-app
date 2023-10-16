@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.44.0-rc.1](https://github.com/pagopa/io-app/compare/2.44.0-rc.0...2.44.0-rc.1) (2023-10-16)
+
+
+### Features
+
+* [[IOCOM-610](https://pagopa.atlassian.net/browse/IOCOM-610)] Add the new `ModuleAttachment` component ([#5101](https://github.com/pagopa/io-app/issues/5101)) ([3606446](https://github.com/pagopa/io-app/commit/36064464eb4e7de1e22e8349fd1cef6a9d13ef67))
+
+
+### Bug Fixes
+
+* [[IABT-1494](https://pagopa.atlassian.net/browse/IABT-1494)] Fix camera not working on Android devices ([#5105](https://github.com/pagopa/io-app/issues/5105)) ([0b7a683](https://github.com/pagopa/io-app/commit/0b7a68368d1c9c24fd80189a55c83f93239d4e04))
+* [[IOCOM-611](https://pagopa.atlassian.net/browse/IOCOM-611)] Fix properties on `OPEN_MESSAGE` mixpanel event  ([#5104](https://github.com/pagopa/io-app/issues/5104)) ([eb6d343](https://github.com/pagopa/io-app/commit/eb6d3436143f93fdc2df0e8149833d75420a6446))
+* removes the require loop on navigators definition ([#5110](https://github.com/pagopa/io-app/issues/5110)) ([1cee8ce](https://github.com/pagopa/io-app/commit/1cee8cea662817a90799611b9d2a39844b51bafc))
+
+
+### Chores
+
+* [[IOAPPFD0-171](https://pagopa.atlassian.net/browse/IOAPPFD0-171)] Add the new `LoadingSpinner` to the Design System ([#5100](https://github.com/pagopa/io-app/issues/5100)) ([dc54b29](https://github.com/pagopa/io-app/commit/dc54b29087ea8e0850e8fb3dfc749c45343ecd9b))
+* [[IOAPPFD0-172](https://pagopa.atlassian.net/browse/IOAPPFD0-172)] Add `loading` state to the `ButtonSolid` component ([#5102](https://github.com/pagopa/io-app/issues/5102)) ([3b28745](https://github.com/pagopa/io-app/commit/3b28745abdc3c7c7221777e10190457487b4833f))
+* [[IOAPPFD0-174](https://pagopa.atlassian.net/browse/IOAPPFD0-174)] Add the new `LoadingIndicator` component ([#5111](https://github.com/pagopa/io-app/issues/5111)) ([af80467](https://github.com/pagopa/io-app/commit/af804676e364541ebed0c34b054f76dc2a40cb55))
+* [[IOBP-282](https://pagopa.atlassian.net/browse/IOBP-282),[IOBP-287](https://pagopa.atlassian.net/browse/IOBP-287),[IOBP-303](https://pagopa.atlassian.net/browse/IOBP-303)] Restyling transaction summary screen ([#5069](https://github.com/pagopa/io-app/issues/5069)) ([32ccb48](https://github.com/pagopa/io-app/commit/32ccb484951a218cfab908e264fa5222a872c2b3))
+* enable FL in production ([c6fe290](https://github.com/pagopa/io-app/commit/c6fe290b01615395918e16e35ff776e2873bb303))
+
 ## [2.44.0-rc.0](https://github.com/pagopa/io-app/compare/2.43.0-rc.3...2.44.0-rc.0) (2023-10-12)
 
 
