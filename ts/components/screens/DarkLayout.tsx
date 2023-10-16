@@ -14,8 +14,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   IOColors,
   IOIcons,
-  getGradientColorValues,
-  VSpacer
+  getGradientColorValues
 } from "@pagopa/io-app-design-system";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
@@ -92,11 +91,7 @@ export default class DarkLayout extends React.Component<Props> {
       );
     return (
       <React.Fragment>
-        {wrapper(
-          <React.Fragment>
-            {this.props.topContent}
-          </React.Fragment>
-        )}
+        {wrapper(<React.Fragment>{this.props.topContent}</React.Fragment>)}
         {this.props.children}
       </React.Fragment>
     );
