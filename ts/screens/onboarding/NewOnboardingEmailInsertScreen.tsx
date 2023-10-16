@@ -9,7 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
 import {
@@ -33,6 +33,7 @@ import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsLi
 import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
+  isProfileFirstOnBoardingSelector,
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
@@ -42,6 +43,13 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ROUTES from "../../navigation/routes";
 import { emailInsert } from "../../store/actions/onboarding";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
+import {
+  trackEmailDuplicateEditing,
+  trackEmailEditing,
+  trackEmailEditingError
+} from "../analytics/emailAnalytics";
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
@@ -69,6 +77,16 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
 
   // FIXME - < https://pagopa.atlassian.net/browse/IOPID-690> change this state logic and name (this value will be retrive by the backend)
   const [isCduEmail] = useState<boolean>(false);
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    if (isCduEmail) {
+      trackEmailEditing(getFlowType(true, isFirstOnBoarding));
+    } else {
+      trackEmailDuplicateEditing(getFlowType(true, isFirstOnBoarding));
+    }
+  });
 
   const viewRef = React.createRef<View>();
 
@@ -124,12 +142,29 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
       O.toUndefined
     );
 
+  const [isCheckSameEmailErrorTrackingEnabled, setCheckSameEmailErrorTracking] =
+    useState(false);
+
+  useEffect(() => {
+    if (isCheckSameEmailErrorTrackingEnabled) {
+      trackEmailEditingError(getFlowType(true, isFirstOnBoarding));
+    }
+  }, [isCheckSameEmailErrorTrackingEnabled, isFirstOnBoarding]);
+
   /**
    * This function control if the email is the same that the user need to change
    * @returns boolean
    */
-  const isSameEmailToChange = () =>
-    !isCduEmail ? areStringsEqual(email, optionEmail, true) : false;
+  const isSameEmailToChange = () => {
+    const checkSameEmailError = !isCduEmail
+      ? areStringsEqual(email, optionEmail, true)
+      : false;
+    if (checkSameEmailError && !isCheckSameEmailErrorTrackingEnabled) {
+      setCheckSameEmailErrorTracking(true);
+    }
+
+    return checkSameEmailError;
+  };
 
   /**
    * This function control if the email is already used
@@ -138,7 +173,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
    * FIXME - < https://pagopa.atlassian.net/browse/IOPID-690> this function need to be integrated with API that control if the email already exists
    */
   const isExistingEmail = () => {
-    const showAlertExistsEmail: boolean = false;
+    const showAlertExistsEmail: boolean = true;
     if (showAlertExistsEmail) {
       Alert.alert(
         I18n.t("email.newinsert.alert.modaltitle"),
@@ -151,6 +186,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
         ]
       );
     }
+    trackEmailEditingError(getFlowType(true, isFirstOnBoarding));
     return showAlertExistsEmail;
   };
 
@@ -195,6 +231,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
 
   const handleOnChangeEmailText = (value: string) => {
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
+    setCheckSameEmailErrorTracking(false);
   };
 
   return (

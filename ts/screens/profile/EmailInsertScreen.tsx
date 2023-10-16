@@ -36,6 +36,9 @@ import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackEmailEditing } from "../analytics/emailAnalytics";
+import { getFlowType } from "../../utils/analytics";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -69,6 +72,10 @@ const EmailInsertScreen = (props: Props) => {
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
   );
+
+  useOnFirstRender(() => {
+    trackEmailEditing(getFlowType(false));
+  });
 
   const updateEmail = useCallback(
     (email: EmailString) =>
