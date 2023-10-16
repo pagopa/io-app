@@ -1,6 +1,10 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Double tap to activate"
+  buttons:
+    torch:
+      turnOn: "Accendi la torcia"
+      turnOff: "Spegni la torcia"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -103,10 +107,6 @@ global:
       open:
         label: Contextual Help
         hint: Access information about the contents of the current screen
-    chat:
-      description: "IO assistance messages"
-      unread_singular: "{{message}} new message"
-      unread_plural: "{{message}} new messages"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -230,12 +230,6 @@ clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy
   copyFeedbackButton: copied
-betaBanner:
-  title: 'IO app'
-  description: Your reports help us to improve day after day.
-connection:
-  status:
-    offline: Offline! Some features will not work.
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
@@ -265,11 +259,7 @@ startup:
     cta_2: Discard
   contextualHelp:
     title: Startup problems?
-    body: If you are experiencing issues during IO-app startup, we recommend to report them to our support team. We'll take care of your request as soon as possible.
 login:
-  welcome:
-    line1: welcome in your
-    line2: Digital Citizenship
   expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
   expiration_info_FL: For security reasons, you’ll need to sign in again with CIE or SPID yearly.
   biometric_info: To sign in, you'll only need to enter your unlock code or, if enabled, use your fingerprint or face.
@@ -304,21 +294,9 @@ profile:
     alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
     loading: Logout in progress...
     exit: Exit
-    cta:
-      header: How do you want to quit the app?
-      keepData:
-        title: Quit keeping all data
-        description: In order to use IO, you will log in with you digital identity again, but any settings data will be conserved  and will be immediately available at next launch. This choise does not concern in a cancellation of the personal data concerning you by the App.
-      resetData:
-        title: Quit and reset this app
-        description: "IO app will be restored to its initial state, as if it would just be installed. This option does not concern in a cancellation of the personal data concerning you by the App."
   errors:
     load: Error loading the profile
     upsert: Error creating or updating the profile
-  alerts:
-    emailNotValidated:
-      title: Unvalidated email
-      subtitle: You need to validate your email before proceeding with the operation. To do this, go to the profile section and choose preferences.
   main:
     title: Profile
     logout: Logout/Exit
@@ -444,10 +422,6 @@ profile:
       description: Learn more about the IO app
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
-    experimentalFeatures:
-      confirmTitle: Experimental features
-      confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
-      bannerMessage: You are using experimental features that may be incomplete or unstable.
     pagoPaEnvironment:
       pagoPaEnv: pagoPA Test Environment
       pagoPAEnvAlert: This change requires app reboot
@@ -456,7 +430,7 @@ profile:
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
       pnEnv: PN Test Environment
-    idpay: 
+    idpay:
       idpayTest: Test IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
@@ -466,7 +440,7 @@ profile:
     designSystem: Design System
     addCard:
       titleSection: Add test card
-      warning: 
+      warning:
         title: Warning
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
@@ -479,9 +453,6 @@ profile:
       email: Email address
       need_validate: To be validated
       nameSurname: Name and surname
-      spid:
-        headerTitle: SPID data
-        email: SPID email
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_data_email_address.md
@@ -519,8 +490,6 @@ profile:
       notifications:
         title: Push notifications
         subtitle: Allow previews and reminders
-    empty:
-      default: No preference set
     unavailable:
       title: This setting is set up on your SPID profile
     language:
@@ -573,14 +542,9 @@ spid:
   login: LOGIN
   loginButton: LOGIN WITH
   selectIdp: To continue to login, select your SPID identity provider
-  selectDemoIdp: If you do not have your own SPID identity yet, browse the app in
-    demo mode
+  selectDemoIdp: If you do not have your own SPID identity yet, browse the app in demo mode
   loginErrorAlert:
     title: Login error
-    message: There was an error while logging in, could you try again?
-  subscription:
-    line1: SPID is the digital identity to access online services of the Public Administration.
-    line2: Insert your email address to enable it.
   pending_login:
     title: Accesso in corso
     details: Se hai aperto la sessione nel browser, continua da lì. Altrimenti torna indietro e avvia un nuovo login!
@@ -619,16 +583,12 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical
-      notice
+    card3-content: You can pay a notice also by scanning the QR code on the physical notice
     card4-title: You can login only with SPID
     card4-content: The device you are using does not support access with Electronic Identity Card (CIE)
     card5-title: Welcome to the public version of IO!
-    card5-content: In this version you can find in the upper-right corner
-      the icons to report bugs or start a chat with the development team.
-      We're waiting for your feedback!
-    card5-content-accessibility: Seleziona elemento precedente per aprire
-      una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card5-content: In this version you can find in the upper-right corner the icons to report bugs or start a chat with the development team. We're waiting for your feedback!
+    card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -708,37 +668,11 @@ authentication:
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
-    paragraph1: SPID, the Public System of Digital Identity, allows you to access
-      all the services of the Public Administration with a single Digital Identity
-      (username and password).
-    paragraph2: If you like, leave us your email address to receive reminders and
-      updates on this app
-    paragraph3: Continuing you declare to accept the
-    tosLinkText: rules on the processing of personal data
-    continue: Continue
   spid_information:
     spid: !include spid.md
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
-    moreLinkText: Learn more
     subtitle: SPID is safe
-    paragraph1: SPID, the Public System of Digital Identity, allows you to access
-      all the services of the Public Administration with a single Digital Identity
-      (username and password).
-    paragraph2-part1: 'SPID allows you to do online what was possible only in person:
-      so, to register at SPID you will '
-    paragraph2-bold: certify your identity
-    paragraph2-part2: 'completing your recognition through an Identity Provider. Here
-      what you shall do:'
-    point1-value: '1'
-    point1-content: "Choose your Identity Provider"
-    point2-value: '2'
-    point2-content: "Insert your personal data and your mobile phone"
-    point3-value: '3'
-    point3-content: "Upload a copy of your identity papers"
-    point4-value: '4'
-    point4-content: "Complete the recognition"
-    knowMore: Learn more on spid.gov.it
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
@@ -759,9 +693,7 @@ authentication:
     logout: Error on logout
     network:
       title: Access problem
-      body: The selected identity provider is not available at this time, you can try again later.
-        If you have another SPID, choose an alternative provider.
-        You can report the problem with the '?' icon at the top right of the screen.
+      body: The selected identity provider is not available at this time, you can try again later. If you have another SPID, choose an alternative provider. You can report the problem with the '?' icon at the top right of the screen.
     login:
       title: Login error
       body: There was an error with the login, please retry!
@@ -776,7 +708,6 @@ authentication:
       error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
-    message: To keep your private information safe, please login again with your SPID credentials, thanks!
 email:
   cduModal:
     validateMail:
@@ -791,20 +722,10 @@ email:
       editButton: Edit email address
   read:
     title: Your email address
-    info: This is the email address associated to your SPID account. You can
-      use in IO app a different email address, if you wish. To make operative the
-      new email address, you will need to validate it by clicking on the link you
-      will receive by email.
-    details: You can change this address, then you should validate it by clicking on
-      the link we will sent to your email address. In the meanwhile, those
-      functionalities of IO depending on the email (payments, messages forwarding,
-      etc.) will be disabled.
-    alert: "Warning: your pagoPa account is associated to your email.
-      So, if you change it, IO will no more list your registered payment methods
-      and transactions."
-    help: Your SPID profile communicates your email to IO app. If you find the address
-      wrong or you no longer use it, you can edit it directly from your SPID services
-      provider account.
+    info: This is the email address associated to your SPID account. You can use in IO app a different email address, if you wish. To make operative the new email address, you will need to validate it by clicking on the link you will receive by email.
+    details: You can change this address, then you should validate it by clicking on the link we will sent to your email address. In the meanwhile, those functionalities of IO depending on the email (payments, messages forwarding, etc.) will be disabled.
+    alert: "Warning: your pagoPa account is associated to your email. So, if you change it, IO will no more list your registered payment methods and transactions."
+    help: Your SPID profile communicates your email to IO app. If you find the address wrong or you no longer use it, you can edit it directly from your SPID services provider account.
   insert:
     header: Activation
     title: Insert email
@@ -819,7 +740,7 @@ email:
     title: "What is your email address?"
     subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
     label: "Personal email address"
-    alert: 
+    alert:
       title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
       description: "email address already in use"
       modaltitle: "This email address is already in use"
@@ -836,18 +757,13 @@ email:
   validate:
     title: Remember to validate your email address
     header: Email Validation
-    content1: "We sent an email to <b>{{email}}</b> with a link to validate your email: click simply on that link.<br/>
-      Until you will not validate your email address, some app functionalities (payments, messages forwarding by email, etc.)
-      will not be available, but you will be able to use some other functions anyway (i.e. services, messages, etc.)"
-    content2: "Some functionalities of IO require you validate your email address. <br/> We sent an email to <b>{{email}}</b>:
-    open your email client and click on the link."
+    content1: "We sent an email to <b>{{email}}</b> with a link to validate your email: click simply on that link.<br/> Until you will not validate your email address, some app functionalities (payments, messages forwarding by email, etc.) will not be available, but you will be able to use some other functions anyway (i.e. services, messages, etc.)"
+    content2: "Some functionalities of IO require you validate your email address. <br/> We sent an email to <b>{{email}}</b>: open your email client and click on the link."
     cta: Send a new validation email
     sent: Email sent
     send_validation_ok: Email Validation sent
     send_validation_ko: Some errors occured while sending email validation. Try again.
-    help: Your SPID profile communicates your email to IO app. If you find the address
-      wrong or that you do not use it anymore, you can edit it directly from your SPID
-      services provider account.
+    help: Your SPID profile communicates your email to IO app. If you find the address wrong or that you do not use it anymore, you can edit it directly from your SPID services provider account.
     validation_ok: Your email has been validated. You can use all the functionalities of IO.
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
@@ -858,9 +774,9 @@ email:
     buttonlabelsent: Email sent!
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
-  newvalidemail: 
+  newvalidemail:
     title: Email validated!
-    subtitle: You will receive IO's communications at 
+    subtitle: You will receive IO's communications at
 onboarding:
   contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
@@ -952,21 +868,6 @@ onboarding:
         step3: Select "IO"
         step4: Select "Notifications"
         step5: Enable notifications
-forms:
-  validators:
-    required: Required value
-    email: Invalid email address
-  spidInformation:
-    fields:
-      email:
-        placeholder: email address
-lipsum:
-  medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
-    id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
-    Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
-    totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
-    Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis,
-    obscuris et malesuada fames.
 datetimes:
   yesterday: yesterday
   todayAt: today, at
@@ -1107,11 +1008,6 @@ wallet:
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     cardHolder: Card holder
-    transactionListItem:
-      payment:
-        read: Transaction
-        unread: Unread transaction
-      label: "{{payment}} to {{merchant}} of euro {{amount}}, pay date {{datetime}} at {{hours}} with reason {{reason}}. Activate for the full detail"
   onboarding:
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"
@@ -1121,16 +1017,6 @@ wallet:
       koNotFound:
         title: "We couldn't find any card"
         body: "There are no PagoBANCOMAT cards registered to you: please contact your bank for further information."
-      koNotFoundSingleBank:
-        title: "We couldn't find any card on this bank"
-        body: "There are no PagoBANCOMAT cards registered to you.\nIf you wish, IO can search between all banks."
-        continue: "Continue"
-      koServicesError:
-        title: "Unable to retrieve your PagoBANCOMAT cards: please select your bank"
-        body: "Choose the bank which issued your card to retrieve all the PagoBANCOMAT cards registered to you."
-        chooseTheBank: "Select bank"
-      loadingSearch:
-        title: "We're retrieving your cards\n\nPlease hold on..."
       add:
         title: "Add PagoBANCOMAT"
         label: "PagoBancomat card {{current}} of {{length}}"
@@ -1272,10 +1158,6 @@ wallet:
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
   transactionsShow: Show transactions
-  pickPaymentMethod:
-    unavailable:
-      title: This payment method is not available at this time
-      message: This payment method will be available in a future release
   add: add
   delete:
     ios:
@@ -1296,15 +1178,9 @@ wallet:
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
-    abort:
-      title: Do you want to cancel adding a new payment method?
-      confirm: Cancel the operation
-      cancel: Continue with the operation
-      success: The payment method entry was successfully canceled
   textMsg:
     title: Text confirmation code
     header: Confirmation code
-    newCode: Request a new code
     info: Insert the code that was sent by text to your mobile phone
   saveCard:
     contextualHelpTitle: Save a card to IO
@@ -1413,11 +1289,6 @@ wallet:
       title: Vedi un importo diverso?
       message: pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests
       cta: Ok, va bene
-    loadingMessage:
-      activation: We are contacting the entity, wait a few seconds
-      verification: We are verifying your payment information
-      generic: I am finishing the verification operations of your notice, wait a few seconds...
-      wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
     errorDetails:
@@ -1496,7 +1367,6 @@ wallet:
       description: The card used to pay in stores
     bank:
       name: Bancomat Pay
-      maxFee: Maximum fee of 0.50€
     bancomatPay:
       name: BANCOMAT Pay
       description: Pay with your linked card or bank account
@@ -1562,8 +1432,7 @@ wallet:
     chooser: Pick image from gallery
     wrongQrCode: QR Code not valid. Enter data manually.
     byCameraTitle: Scan the QR Code
-    cameraUsageInfo: Scan the QR Code on the payment notice, or
-      manually enter the data (Notice Code and Payee Fiscal Code).
+    cameraUsageInfo: Scan the QR Code on the payment notice, or manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
     readStorageDisclosure:
@@ -1612,10 +1481,6 @@ wallet:
     contextualHelpContent: !include wallet/wallet_card_transaction.md
   bancomat:
     details:
-      infobox:
-        one: "PagoBANCOMAT cards "
-        two: "can't be used to make in-app payments"
-        three: ", but they can only be used at physical stores (POS)."
       debit:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you."
@@ -1716,9 +1581,7 @@ messages:
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
   counting:
-    zero: No message
     one: You have 1 message
-    other: You have {{count}} messages
   tab:
     inbox: Inbox
     deadlines: Expiring
@@ -1746,7 +1609,7 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: Expiring on 
+        block1: Expiring on
         block2: at
       expiredAlert:
         block1: Expired on
@@ -1835,14 +1698,6 @@ messageDetails:
   errorText: We were unable to load the details of your message
   retryText: It's probably a temporary error... please try again!
   submitBugText: If the problem is not resolved, report it with the '?' icon at the top right, thank you!
-  rawInfoLink:
-    showLabel: Details of the message
-    hideLabel: Close details
-  rawInfoLabels:
-    createdAt: Date
-    organizationName: Sent by
-    departmentName: Department
-    serviceName: Service
   addMemo: !include messages/addMemo.md
   dateSending: "Date and time sending:"
   sender: "Sender:"
@@ -1954,12 +1809,6 @@ services:
   contactAddress: Address
   contactPhone: Phone
   contactSupport: Support
-  areasOfInterest:
-    selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
-    selectMessageEmptyOrgs: At the moment it is not possible to add a location. Please pull down to refresh the data and try again.
-    addButton: Add your areas of interest
-    editButton: Change the areas of interest
-    searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
   tab:
     locals: Local
     national: National
@@ -2026,20 +1875,12 @@ identification:
       button_short: Change the unlock code
       subtitle: Set a new 6-digit code
     confirmValid: Correct unlock code
-  unlock_screen:
-    help:
-      title: Access with unlock code
-      content: !include onboarding/onboarding_pin.md
   forgetCode:
     confirmTitle: Did you forget the unlock code?
     confirmMsg: To be able to choose a new unlock code you will need to log in again.
     confirmMsgWithTask: To be able to choose a new unlock code you will need to cancel the current procedure and log in again.
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
-  removeRequest:
-    title: Are you sure you want to remove this event?
-    ok: Remove event
-    cancel: Cancel the operation
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: previous deadlines
@@ -2050,8 +1891,7 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
-  to update it to the latest version."
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
 titleUpdateAppAlert: To continue, update IO
 messageUpdateAppAlert: A new release of IO is now available on {{storeName}}. To start using this new feature, please download the update.
 openStore: Open {{storeName}}
@@ -2061,14 +1901,8 @@ systemsOff:
   closeApp: close the application and try again
 contextualHelp:
   title: IO helps you
-  sendScreenshot:
-    cta: Share your screenshot, in order to make it easier to solve your problem.
   sendPersonalInfo:
     title: New report
-    description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
-    cta: Share your fiscal code, in order to make it easier to solve your problem.
-    informativeTitle: How do you know my fiscal code?
-    informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 bottomSheets:
   ciePin:
     title: "Where can I find my PIN?"
@@ -2365,8 +2199,7 @@ bonus:
       iseeNotAvailable:
         title: "We're sorry.\n You don't have a valid ISEE \"ordinario or corrente\"."
         text:
-          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n
-                  You can do an "
+          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n You can do an "
           secondo: "online simulation"
           third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."
         goToDSU: Request ISEE
@@ -2444,7 +2277,6 @@ bonus:
       body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
     requestAlert:
       title: Attention
-      content: "You have already obtained a bonus, continue the request only if your situation has changed and you have submitted a new DSU to update ISEE.\n Please note that the use of bonuses generated on the basis of incorrect DSU, determines actions to recover the benefit to the user.\n Are you sure you want to continue?"
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request
@@ -2469,7 +2301,7 @@ bonus:
       cta: "Quit cashback"
       title: "Cashback opt-out"
       body1: "Are you sure you want to quit Cashback?"
-      body2: "By continuing you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect any refund**, if you had the right to claim one. This opt-out will affect **also the other channels** you used to activate it (e.g.: Home Banking, app, etc.) \ nIf you activate Cashback again later **you will restart from zero transactions**."
+      body2: "By continuing you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect any refund**, if you had the right to claim one. This opt-out will affect **also the other channels** you used to activate it (e.g.: Home Banking, app, etc.)  nIf you activate Cashback again later **you will restart from zero transactions**."
       confirmCta: "Quit"
       loading: "We are processing your request"
       success: "Cashback has been removed"
@@ -2504,8 +2336,7 @@ bonus:
         body: "Please wait."
       noPaymentMethod:
         title: "Add at least one payment method"
-        body: "To start collecting valid transactions, add your favorite payment methods in your Wallet: we currently support the main payment cards and several mobile payment apps.\n\n
-        In the future, we'll support other methods: you can add new payment methods into your wallet anytime and start collecting cashback!"
+        body: "To start collecting valid transactions, add your favorite payment methods in your Wallet: we currently support the main payment cards and several mobile payment apps.\n\n In the future, we'll support other methods: you can add new payment methods into your wallet anytime and start collecting cashback!"
       enrollPaymentMethod:
         title: "Choose which payment methods to activate"
         body1: "Enable Cashback on your saved methods and start collecting valid transactions."
@@ -2516,8 +2347,7 @@ bonus:
         cta: "Activate payment methods"
     suggestActivation:
       title: "Do you want to activate Cashback?"
-      body: "You have added payment methods compatible with Cashback, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n
-             You can get a money refund when you shop using your cards and apps."
+      body: "You have added payment methods compatible with Cashback, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n You can get a money refund when you shop using your cards and apps."
       skip: "No, thanks"
       confirm: "Info and activation"
     activateOnNewMethods:
@@ -2552,17 +2382,12 @@ bonus:
         title: "Check the IBAN entered"
         text1: "IBAN"
         text2: "is not registered to"
-      loading:
-        "We are verifying your IBAN\n\nPlease wait."
+      loading: "We are verifying your IBAN\n\nPlease wait."
       success: "IBAN successfully entered"
     details:
       howItWorks:
         title: "Christmas Extra Cashback"
-        body: "1. The Cashback program is divided into several phases. The current one begins on **{{startDate}} and ends on {{endDate}}**. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n
-
-               2. During this phase, if you reach **{{minTransactionNumber}} transactions**, you will receive a {{cashbackPercentage}}% cashback, up to a maximum of **€{{maxTransactionCashback}}** per transaction and a maximum refund of **€{{maxPeriodCashback}}** in the whole phase.\n
-
-               3. At the end of the phase, you'll get your refund on the IBAN chosen by you.\n\n‎"
+        body: "1. The Cashback program is divided into several phases. The current one begins on **{{startDate}} and ends on {{endDate}}**. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n\n2. During this phase, if you reach **{{minTransactionNumber}} transactions**, you will receive a {{cashbackPercentage}}% cashback, up to a maximum of **€{{maxTransactionCashback}}** per transaction and a maximum refund of **€{{maxPeriodCashback}}** in the whole phase.\n\n3. At the end of the phase, you'll get your refund on the IBAN chosen by you.\n\n‎"
       components:
         iban:
           title: "IBAN for transfer"
@@ -2592,9 +2417,7 @@ bonus:
           title: "Your position"
           notReady:
             title: "When will you see the Super Cashback ranking?"
-            body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n
-                   We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n
-                   Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
+            body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
       transaction:
         label:
           one: "1 transaction"
@@ -2657,8 +2480,7 @@ bonus:
           text1: "Enrolled on "
           text2: "other channels"
           title: "Methods added by other channels"
-          body: "You have added these payment methods to the cashback directly from the channels made available by your bank or payments app. You can activate or deactivate the collection of transactions of these methods also from IO. \n
-                 If you want to use some of these methods to pay via IO as well, add them to your wallet! "
+          body: "You have added these payment methods to the cashback directly from the channels made available by your bank or payments app. You can activate or deactivate the collection of transactions of these methods also from IO. \n If you want to use some of these methods to pay via IO as well, add them to your wallet! "
           addWallet: "Add to wallet"
           whyOtherCards:
             title: "Why am I seeing cards that I don't recognize?"
@@ -2677,8 +2499,7 @@ bonus:
           disclaimer: "Choosing {{activate}}, you declare that you are the owner of this payment method."
         deactivate:
           title: "Disable cashback on this method?"
-          body: "By continuing, transactions made using this payment method will be no longer collected.
-                 This will be effective **from tomorrow**, so any transaction occurred today with this method may still be considered. "
+          body: "By continuing, transactions made using this payment method will be no longer collected. This will be effective **from tomorrow**, so any transaction occurred today with this method may still be considered. "
       card:
         status:
           active: Active
@@ -2711,7 +2532,7 @@ bonus:
             body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
             title: Elimina tutti i metodi dal Portafoglio
-            body:  Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+            body: Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
         deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
@@ -2808,8 +2629,6 @@ bonus:
           pending: Check EYCA discounts
           bottomSheet: Check the EYCA website
           showEycaDiscounts: Check EYCA discounts
-      tos:
-        link: Information on the processing of personal data
       information:
         active: "Your card is active and can be used until {{date}}"
         warning: "Attention! "
@@ -2872,19 +2691,6 @@ bonus:
           message: "Are you sure to deactivate your Carta Giovani Nazionale? If you confirm, you will lose the possibility to access the benefits provided by the initiative and the card will disappear from your Wallet."
     otp:
       error: "Due to a technical problem we were unable to generate a discount code. Please try again."
-      screen:
-        title: Use discount code
-        cta: Copy code
-        text1: "Paste this code into the corresponding field on the merchant website within"
-        text2: "Once the code expires, it is no longer valid"
-        link: Code is not working?
-        bottomSheet:
-          body:
-            text1: "Some merchants require you to enter a "
-            text2: "static discount code."
-            text3: "Search for the merchant you are interested in in the list of online merchants, and check for current offers."
-            text4: "Inside the tab for the offer you will find the code to get the benefit that you can copy and paste on the merchant's website."
-          cta: Navigate to merchants list
       code:
         title: Your discount code
         validUntil: Still valid for
@@ -2911,8 +2717,7 @@ bonus:
         items:
           inSicily: "I reside in Sicily"
           notInSicily: "I reside in a different region"
-        info:
-          "Please remember that the discount is available only to residents of Sicily"
+        info: "Please remember that the discount is available only to residents of Sicily"
       selectBeneficiaryCategory:
         title: "I declare to be"
         categories:
@@ -3215,8 +3020,8 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
-        cta: Accedi alla versione web  
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
+        cta: Accedi alla versione web
   fci:
     errors:
       buttons:
@@ -3248,7 +3053,7 @@ features:
           subTitle: Make sure you have installed the latest version of IO and log in again with SPID or CIE.
         rejected:
           title: The signature failed
-          subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
+          subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail
         cancelled:
           title: The signature request has been cancelled
           subTitle: For further support, write to
@@ -3320,7 +3125,7 @@ features:
       signingInProgress: "Signature in progress"
     signatureFieldInfo:
       title: "What are restrictive clauses?"
-      subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."   
+      subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3444,8 +3249,8 @@ idpay:
           lastUpdated: "Saldo aggiornato al "
           errorAlerts:
             NOT_REFUNDABLE_ONLY_IBAN:
-              content: Inserisci un metodo di pagamento valido per effettuare transazioni 
-              action: Asssocia metodo 
+              content: Inserisci un metodo di pagamento valido per effettuare transazioni
+              action: Asssocia metodo
             NOT_REFUNDABLE_ONLY_INSTRUMENT:
               content: Inserisci un IBAN valido per ricevere i rimborsi.
               action: Modifica IBAN
@@ -3462,7 +3267,7 @@ idpay:
               one: "1 metodo"
               other: "{{count}} metodi"
             selectedIBAN: IBAN per l'accredito
-            actionsRequired: Azioni richieste 
+            actionsRequired: Azioni richieste
           startConfigurationCTA: Inizia
           operationsList:
             header: Tutte le operazioni
@@ -3470,18 +3275,18 @@ idpay:
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
               QRCODE_TRANSACTION: "Pagamento"
-              ONBOARDING:  "Adesione all'iniziativa"
-              ADD_IBAN:  "Aggiunto IBAN"
+              ONBOARDING: "Adesione all'iniziativa"
+              ADD_IBAN: "Aggiunto IBAN"
               ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
               ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
-              TRANSACTION:  "Pagamento POS"
-              REVERSAL:  "Pagamento POS"
-              DELETE_INSTRUMENT:  "Disattivazione metodo ···· {{maskedPan}}"
-              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN:  "Disattivazione metodo"
-              REJECTED_ADD_INSTRUMENT:  "Attivazione metodo"
-              PAID_REFUND:  "Rimborso sul tuo conto"
-              REJECTED_REFUND:  "Rimborso sul tuo conto"
-              SUSPENDED:  "Sospensione"
+              TRANSACTION: "Pagamento POS"
+              REVERSAL: "Pagamento POS"
+              DELETE_INSTRUMENT: "Disattivazione metodo ···· {{maskedPan}}"
+              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN: "Disattivazione metodo"
+              REJECTED_ADD_INSTRUMENT: "Attivazione metodo"
+              PAID_REFUND: "Rimborso sul tuo conto"
+              REJECTED_REFUND: "Rimborso sul tuo conto"
+              SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
     discountDetails:
       authorizeButton: Autorizza un pagamento
@@ -3540,7 +3345,7 @@ idpay:
             totalAmount: Importo totale
             idpayAmount: Importo transazione ID Pay
             transactionID: ID transazione
-      title: 
+      title:
         TRANSACTION: Dettaglio dell'operazione
         REVERSAL: Dettaglio dell'operazione
         PAID_REFUND: Dettaglio del rimborso
@@ -3560,12 +3365,12 @@ idpay:
         iban: IBAN
         amount: Importo rimborso
         resultLabel: Esito
-        result: 
+        result:
           PAID_REFUND: Eseguito
           REJECTED_REFUND: Fallito
-        rejectedAdvice: 
+        rejectedAdvice:
           text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
-          editIban: Modifica IBAN 
+          editIban: Modifica IBAN
         period: Periodo di riferimento
         date: Data rimborso
         cro: CRO
@@ -3581,7 +3386,7 @@ idpay:
       pleaseWait: Un attimo di pazienza...
       requestSent:
         title: La tua richiesta è stata inviata!
-        body:  Riceverai un messaggio con l’esito dell’operazione.
+        body: Riceverai un messaggio con l’esito dell’operazione.
       button:
         continue: Ho capito!
     failure:
@@ -3631,11 +3436,10 @@ idpay:
       prerequisites:
         info:
           header: Come avviene la verifica?
-          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
-            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
-      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}.
       code:
         ISEE: ISEE
         BIRTHDATE: Data di nascita
@@ -3656,7 +3460,7 @@ idpay:
     boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
-      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
   configuration:
     failureStates:
       GENERIC: "C'è stato un problema, riprova"
@@ -3734,7 +3538,7 @@ idpay:
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
-        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       enrollment:
@@ -3811,12 +3615,16 @@ idpay:
       subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
       input: Codice Transazione
       button: Continua
-barcodeScan: 
+barcodeScan:
   error: IO non riconosce questo codice
   tabs:
     scan: Inquadra
     upload: Carica
     input: Digita
+    a11y:
+      scan: Inquadra, 1 di 3
+      upload: Carica, 2 di 3
+      input: Digita, 3 di 3
   upload:
     image: Carica un'immagine
     file: Carica un file
@@ -3824,7 +3632,7 @@ barcodeScan:
     authorize: Autorizza una transazione
     notice: Paga un avviso pagoPA
   permissions:
-    undefined: 
+    undefined:
       title: Ci serve il tuo permesso
       label: Consenti l’accesso per inquadrare codici QR con la fotocamera del tuo dispositivo.
       action: Consenti l’accesso
@@ -3836,20 +3644,20 @@ barcodeScan:
     title: Hai inquadrato più codici
     body: Inquadra un solo codice alla volta
     action: Riprova
-unsupportedDevice:  
+unsupportedDevice:
   warning: "Your device may soon no longer be compatible with the IO app."
   title: "This device is no longer compatible with IO"
-  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
+  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device."
   cta:
     faq: "Learn more"
 fastLogin:
   userInteraction:
-    sessionExpired: 
+    sessionExpired:
       noPin:
         title: Too much time has passed!
         subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
         submitButtonTitle: Continue
-      continueNavigation: 
+      continueNavigation:
         title: "La tua sessione è scaduta"
         subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
         submitButtonTitle: "Continua la navigazione"
@@ -3860,7 +3668,7 @@ fastLogin:
         submitButtonTitle: "Go to FAQs"
   whatsNew:
     title: Logging into IO just got easier!
-    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face. 
+    subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face.
     changes:
       first:
         title: Easier
@@ -3871,16 +3679,5 @@ fastLogin:
       third:
         title: Safer
         description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
-securityTips:
-  title: Safety tips
-  biometric:
-    first: Use fingerprint or face recognition only to identify yourself.
-  ioEsco:
-    urlString: ioesco.io.italia.it
-    lostDevice:
-      if: If
-      lose: you lose
-      sentence: your device, log out from IO through
-    compromisedCredentials: If you think your SPID or CIE credentials might be compromised, block access to your IO account through
 whatsNew:
   title: What's changed?

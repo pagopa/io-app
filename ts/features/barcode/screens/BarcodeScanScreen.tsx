@@ -190,6 +190,14 @@ const BarcodeScanScreen = () => {
     title: ""
   });
 
+  const handleManualInputPressed = () => {
+    if (isIdPayEnabled) {
+      manualInputModal.present();
+    } else {
+      handlePagoPACodeInput();
+    }
+  };
+
   const { filePickerModal } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
@@ -205,7 +213,7 @@ const BarcodeScanScreen = () => {
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
         onFileInputPressed={filePickerModal.present}
-        onManualInputPressed={manualInputModal.present}
+        onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
       />
       {filePickerModal.bottomSheet}
