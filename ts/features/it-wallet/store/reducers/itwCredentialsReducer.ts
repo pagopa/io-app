@@ -4,14 +4,19 @@ import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/i
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwCredentialsAddPid } from "../actions/itwCredentialsActions";
+import {
+  itwCredentialsAddCredential,
+  itwCredentialsAddPid
+} from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { CredentialCatalogItem } from "../../utils/mocks";
 
 /**
  * The type of credentials stored in the wallet.
  */
 type ItwCredentialsType = {
   pid: O.Option<PidResponse>;
+  credentials: Array<O.Option<CredentialCatalogItem>>;
 };
 
 export type ItwCredentialsState = pot.Pot<ItwCredentialsType, ItWalletError>;
@@ -31,12 +36,32 @@ const reducer = (
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
+    /**
+     * PID related actions, will be merged with generic credentials in the future.
+     */
     case getType(itwCredentialsAddPid.request):
       return pot.toLoading(state);
     case getType(itwCredentialsAddPid.success):
-      return pot.some({ ...state, pid: O.some(action.payload) });
+      return pot.some({ credentials: [], pid: O.some(action.payload) }); // credentials is always empty when adding a PID
     case getType(itwCredentialsAddPid.failure):
       return pot.toError(state, action.payload);
+    /**
+     * Credentials related actions, will be merged with PID in the future.
+     */
+    case getType(itwCredentialsAddCredential):
+      return pot.some({
+        pid: pot.getOrElse(
+          pot.map(state, credentials => credentials.pid),
+          O.none // TODO: this should never happen, but we should handle it
+        ),
+        credentials: [
+          ...pot.getOrElse(
+            pot.map(state, credentials => credentials.credentials),
+            []
+          ),
+          O.some(action.payload)
+        ]
+      });
   }
   return state;
 };
@@ -61,6 +86,20 @@ export const ItwCredentialsPidSelector = (state: GlobalState) =>
       credentials => credentials.pid
     ),
     O.none
+  );
+
+/**
+ * Selects the credentials stored in the wallet.
+ * @param state - the global state
+ * @returns the credentials array from the wallet or an empty array if the pot is empty.
+ */
+export const itwCredentialsSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(
+      state.features.itWallet.credentials,
+      credentials => credentials.credentials
+    ),
+    []
   );
 
 export default reducer;
