@@ -741,17 +741,17 @@ authentication:
     knowMore: Learn more on spid.gov.it
   opt-in:
     news: News
-    title: Faster access to IO is now available
-    identity-check: We will ask you to authenticate with SPID or CIE only once a year or if you disconnect from the app.
+    title: It's now faster to log into IO
+    identity-check: You'll need to log in with SPID or CIE only once a year, or in case you log out.
     security-suggests: Safety tips
-    passcode: After logging in with SPID or CIE, you can only access the app using the unlock code or biometric.
-    notification: Whenever you log in to the app via SPID or CIE, you will be notified by email.
-    button-accept-lv: Continue with the fast login
-    button-decline-lv: No, I want access every 30 days
-    fingerprint: To access IO, simply use the code or biometric, do not share it with anyone.
-    io-logout: If you lose your device, exit the IO from
-    io-lock-access: If you think your SPID or CIE credentials are compromised, block IO access from
-    access-new-device: Make sure to sign out of the app if you sign in to IO with a device that is not yours.
+    passcode: After logging in with SPID or CIE once, you'll just need your unlock code, face or fingerprint to use the app.
+    notification: Whenever there is a new login with SPID or CIE, we'll send you an e-mail to let you know.
+    button-accept-lv: Yes, log in faster
+    button-decline-lv: No, I want to log in with SPID or CIE every 30 days
+    fingerprint: To log in, simply use your unlock code, face or fingerprint. Do not share these with anyone.
+    io-logout: If you lose your device, to remotely log out of IO visit
+    io-lock-access: If you think your SPID or CIE credentials have been stolen, to block access to IO visit
+    access-new-device: If you log in to IO with a device that belongs to someone else, make sure to log out once you're done.
     io-site: ioapp.it
   idp_selection:
     headerTitle: Home
