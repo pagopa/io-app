@@ -4,7 +4,11 @@ import * as O from "fp-ts/lib/Option";
 import React, { createRef, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { ListItemInfoCopy, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOVisualCostants,
+  ListItemInfoCopy,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
@@ -163,7 +167,10 @@ export const PnMessageDetails = ({
         <TransactionSummaryStatus error={paymentVerificationError} />
       )}
       <ScrollView
-        style={{ padding: customVariables.contentPadding }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
         ref={scrollViewRef}
       >
         {service && <PnMessageDetailsHeader service={service} />}
@@ -217,12 +224,10 @@ export const PnMessageDetails = ({
             accessibilityLabel={I18n.t("features.pn.details.infoSection.iun")}
             label={I18n.t("features.pn.details.infoSection.iun")}
           />
-          <H5
-            color="bluegrey"
-            style={{ marginBottom: customVariables.spacerLargeHeight }}
-          >
+          <H5 color="bluegrey">
             {I18n.t("features.pn.details.timeline.title")}
           </H5>
+          <VSpacer size={24} />
           <PnMessageTimeline
             message={message}
             onExpand={() => {
