@@ -5,7 +5,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as R from "fp-ts/lib/ReadonlyArray";
 import * as B from "fp-ts/lib/boolean";
 import { openWebUrl } from "../../../utils/url";
-import { showToast } from "../../../utils/showToast";
 import I18n from "../../../i18n";
 
 interface MarkdownParserProps {
