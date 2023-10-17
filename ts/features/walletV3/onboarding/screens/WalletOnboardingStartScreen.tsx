@@ -74,6 +74,7 @@ const WalletOnboardingStartScreen = () => {
       }}
     >
       <WalletOnboardingWebView
+        paymentMethodId={paymentMethodId}
         onSuccess={handleOnboardingSuccess}
         onError={handleOnboardingError}
         onFailure={handleOnboardingFailure}
