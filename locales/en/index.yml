@@ -3489,6 +3489,9 @@ features:
           subTitle: "You can now return to the {{relayingParty}} website to continue."
           buttons: 
             continue: "Ok, thanks"
+      checksScreen: 
+        loading: "We are checking to verify that this organization is verified"
+        success: "{{organizationName}} is a verified organization"
     missingFeatureScreen: 
       headerTitle: "Screen not available"
       title: "This screen will be available soon."

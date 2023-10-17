@@ -20,6 +20,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { rpMock } from "../../../../utils/mocks";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -46,7 +47,9 @@ const ItwPresentationChecksScreen = () => {
 
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
-      captionTitle={"Stiamo controllando che questo ente sia verificato"}
+      captionTitle={I18n.t(
+        "features.itWallet.presentation.checksScreen.loading"
+      )}
       isLoading
     >
       <></>
@@ -64,7 +67,9 @@ const ItwPresentationChecksScreen = () => {
   const SuccessView = () => (
     <SafeAreaView style={IOStyles.flex}>
       <ItwContinueScreen
-        title={"{eFarma} è un ente verificato"}
+        title={I18n.t("features.itWallet.presentation.checksScreen.success", {
+          organizationName: rpMock.organizationName
+        })}
         pictogram="security"
         action={{
           label: I18n.t("global.buttons.confirm"),
