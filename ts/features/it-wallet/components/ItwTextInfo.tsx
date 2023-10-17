@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { Body, LabelLink } from "@pagopa/io-app-design-system";
+import { Body, LabelLink, useIOToast} from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as R from "fp-ts/lib/ReadonlyArray";
 import * as B from "fp-ts/lib/boolean";
@@ -22,17 +22,20 @@ const renderBoldText = (text: string, index: number) => (
   </Text>
 );
 
-const renderLink = (text: string, url: string, index: number) => (
-  <LabelLink
-    key={`link-${index}`}
-    onPress={() =>
-      openWebUrl(url, () => showToast(I18n.t("global.jserror.title")))
-    }
-    numberOfLines={1}
-  >
-    {text}
-  </LabelLink>
-);
+const renderLink = (text: string, url: string, index: number) => {
+  const toast = useIOToast();
+  return (
+    <LabelLink
+      key={`link-${index}`}
+      onPress={() =>
+        openWebUrl(url, () => toast.error(I18n.t("global.jserror.title")))
+      }
+      numberOfLines={1}
+    >
+      {text}
+    </LabelLink>
+  );
+};
 
 /**
  * This component renders a markdown text.
