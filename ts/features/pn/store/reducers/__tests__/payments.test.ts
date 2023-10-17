@@ -1,6 +1,5 @@
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../../definitions/backend/RptId";
 import { Action } from "../../../../../store/actions/types";
 import { UIMessageId } from "../../../../../store/reducers/entities/messages/types";
 import {
@@ -19,7 +18,7 @@ describe("PN Payments reducer's tests", () => {
   it("Should have undefined value for an undefined Message Id", () => {
     const requestAction = updatePaymentForMessage.request({
       messageId: "m1" as UIMessageId,
-      paymentId: "p1" as RptId
+      paymentId: "p1"
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const unknownMessageId = "m2" as UIMessageId;
@@ -30,18 +29,18 @@ describe("PN Payments reducer's tests", () => {
     const messageId = "m1" as UIMessageId;
     const requestAction = updatePaymentForMessage.request({
       messageId,
-      paymentId: "p1" as RptId
+      paymentId: "p1"
     });
     const paymentsState = paymentsReducer(undefined, requestAction);
     const messageState = paymentsState[messageId];
     expect(messageState).toBeTruthy();
-    const unknownPaymentId = "p2" as RptId;
+    const unknownPaymentId = "p2";
     const paymentState = messageState?.[unknownPaymentId];
     expect(paymentState).toBeUndefined();
   });
   it("Should have remoteLoading value for a updatePaymentForMessage.request", () => {
     const messageId = "m1" as UIMessageId;
-    const paymentId = "p1" as RptId;
+    const paymentId = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
       paymentId
@@ -54,7 +53,7 @@ describe("PN Payments reducer's tests", () => {
   });
   it("Should have remoteReady value for a updatePaymentForMessage.success", () => {
     const messageId = "m1" as UIMessageId;
-    const paymentId = "p1" as RptId;
+    const paymentId = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
       paymentId
@@ -78,7 +77,7 @@ describe("PN Payments reducer's tests", () => {
   });
   it("Should have remoteError value for a updatePaymentForMessage.failure", () => {
     const messageId = "m1" as UIMessageId;
-    const paymentId = "p1" as RptId;
+    const paymentId = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
       paymentId
@@ -99,13 +98,13 @@ describe("PN Payments reducer's tests", () => {
   });
   it("Should handle multiple payments for a single message", () => {
     const messageId = "m1" as UIMessageId;
-    const paymentId1 = "p1" as RptId;
+    const paymentId1 = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId,
       paymentId: paymentId1
     });
     const firstStateGeneration = paymentsReducer(undefined, requestAction);
-    const paymentId2 = "p2" as RptId;
+    const paymentId2 = "p2";
     const secondPaymentData = {
       importoSingoloVersamento: 100,
       codiceContestoPagamento: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
@@ -119,7 +118,7 @@ describe("PN Payments reducer's tests", () => {
       firstStateGeneration,
       successAction
     );
-    const paymentId3 = "p3" as RptId;
+    const paymentId3 = "p3";
     const thirdPaymentDetails = Detail_v2Enum.CANALE_BUSTA_ERRATA;
     const failureAction = updatePaymentForMessage.failure({
       messageId,
@@ -141,7 +140,7 @@ describe("PN Payments reducer's tests", () => {
   });
   it("Should handle multiple payments for multiple messages", () => {
     const messageId1 = "m1" as UIMessageId;
-    const paymentId1 = "p1" as RptId;
+    const paymentId1 = "p1";
     const requestAction = updatePaymentForMessage.request({
       messageId: messageId1,
       paymentId: paymentId1
@@ -189,7 +188,7 @@ describe("PN Payments reducer's tests", () => {
   });
   it("Should remove payment statuses on updatePaymentForMessage.cancel", () => {
     const messageId1 = "m1" as UIMessageId;
-    const paymentId1 = "p1" as RptId;
+    const paymentId1 = "p1";
     const requestAction1 = updatePaymentForMessage.request({
       messageId: messageId1,
       paymentId: paymentId1
@@ -204,7 +203,7 @@ describe("PN Payments reducer's tests", () => {
       firstStateGeneration,
       requestAction2
     );
-    const paymentId2 = "p2" as RptId;
+    const paymentId2 = "p2";
     const requestAction3 = updatePaymentForMessage.request({
       messageId: messageId2,
       paymentId: paymentId2
@@ -230,7 +229,7 @@ describe("PN Payments reducer's tests", () => {
       fourthStateGeneration,
       requestAction5
     );
-    const paymentId3 = "p3" as RptId;
+    const paymentId3 = "p3";
     const requestAction6 = updatePaymentForMessage.request({
       messageId: messageId3,
       paymentId: paymentId3
