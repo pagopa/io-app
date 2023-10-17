@@ -3518,6 +3518,21 @@ features:
       checksScreen: 
         loading: "Stiamo controllando che questo ente sia verificato"
         success: "{{organizationName}} è un ente verificato"
+      dataScreen: 
+        title: "Consenti la lettura dei tuoi dati"
+        subtitle: "Autorizza {{organizationName}} al trattamento dei tuoi dati per fornirti i servizi che richiedi."
+        why: "Come mai?"
+        requiredClaims: "Dati obbligatori"
+        optionalClaims: "Dati facoltativi"
+        privacy: 
+          usage: "I dati vengono utilizzati solo per le finalità mostrate"
+          deletion: "Potrai richiederne la rimozione in qualsiasi momento"
+        infoBottomSheet:
+          body:
+            firstHeader: "Who is it?"
+            firstBody: "It is the organization that wants to access some information to provide you with the services you request. IO allows you to authorize the processing of your data only with verified entities that are properly registered on lists ensuring their reliability."
+            secondHeader: "Are my data safe?"
+            secondBody: "Your data is not shared with other parties and is not used for purposes other than those indicated. You can request its removal at any time."
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"

@@ -155,10 +155,70 @@ const getRequestedClaims = (
   }
 ];
 
+const getMultipleRequestedClaims = (
+  decodedPid: PidWithToken
+): ReadonlyArray<BulletItem> => [
+  {
+    title: I18n.t(
+      "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
+      {
+        authsource:
+          decodedPid.pid.verification.evidence[0].record.source
+            .organization_name
+      }
+    ),
+    data: [
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.givenName")} ${
+        decodedPid.pid.claims.givenName
+      }`,
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.familyName")} ${
+        decodedPid.pid.claims.familyName
+      }`,
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode")} ${
+        decodedPid.pid.claims.taxIdCode
+      }`,
+      `${I18n.t("features.itWallet.verifiableCredentials.claims.birthdate")} ${
+        decodedPid.pid.claims.birthdate
+      }`,
+      `${I18n.t(
+        "features.itWallet.verifiableCredentials.claims.placeOfBirth"
+      )} ${decodedPid.pid.claims.placeOfBirth.locality} (${
+        decodedPid.pid.claims.placeOfBirth.country
+      })`
+    ]
+  },
+  {
+    title: I18n.t(
+      "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
+      {
+        authsource: "Credenziale 1"
+      }
+    ),
+    data: ["Attributo 1"]
+  }
+];
+
 export type RpMock = {
   organizationName: string;
+  requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
+  optionalClaims: ReadonlyArray<{
+    title: string;
+    data: string;
+  }>;
 };
 
 export const rpMock: RpMock = {
-  organizationName: "eFarma"
+  organizationName: "eFarma",
+  requestedClaims: (decodedPid: PidWithToken) =>
+    getMultipleRequestedClaims(decodedPid),
+  optionalClaims: [
+    {
+      title: "Fornito da Credenziale 1",
+      data: "Numero di telefono"
+    },
+    {
+      title: "Fornito da Credenziale 1",
+      data: "Email"
+    }
+  ]
 };

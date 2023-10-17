@@ -3492,6 +3492,21 @@ features:
       checksScreen: 
         loading: "We are checking to verify that this organization is verified"
         success: "{{organizationName}} is a verified organization"
+      dataScreen: 
+        title: "Allow the reading of your data"
+        subtitle: "Authorizes {{organizationName}} to process your data to provide you with the services you request."
+        why: "Why?"
+        requiredClaims: "Required data"
+        optionalClaims: "Optional data"
+        privacy: 
+          usage: "The data is only used for the purposes shown"
+          deletion: "You can request its removal at any time"
+        infoBottomSheet:
+          body:
+            firstHeader: "Why is it necessary?"
+            firstBody: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
+            secondHeader: "Safety of treatment"
+            secondBody: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
     missingFeatureScreen: 
       headerTitle: "Screen not available"
       title: "This screen will be available soon."
