@@ -11,17 +11,17 @@ interface MarkdownParserProps {
   markdownText: string;
 }
 
-const renderRegularText = (text: string, index: number) => (
+const RenderRegularText = (text: string, index: number) => (
   <Text key={`text-${index}`}>{text}</Text>
 );
 
-const renderBoldText = (text: string, index: number) => (
+const RenderBoldText = (text: string, index: number) => (
   <Text key={`bold-${index}`} style={{ fontWeight: "bold" }}>
     {text}
   </Text>
 );
 
-const renderLink = (text: string, url: string, index: number) => {
+const RenderLink = (text: string, url: string, index: number) => {
   const toast = useIOToast();
   return (
     <LabelLink
@@ -66,7 +66,7 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
         // Add any regular text before the match
         elements,
         R.append(
-          renderRegularText(
+          RenderRegularText(
             markdownText.slice(lastIndex, match.index),
             lastIndex
           )
@@ -81,7 +81,7 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
                 pipe(
                   elements,
                   R.append(
-                    renderBoldText(boldText, match !== null ? match.index : 0)
+                    RenderBoldText(boldText, match !== null ? match.index : 0)
                   )
                 )
             )
@@ -96,7 +96,7 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
                 pipe(
                   elements,
                   R.append(
-                    renderLink(linkText, url, match !== null ? match.index : 0)
+                    RenderLink(linkText, url, match !== null ? match.index : 0)
                   )
                 )
             )
@@ -110,7 +110,7 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
     if (lastIndex < markdownText.length) {
       elements = pipe(
         elements,
-        R.append(renderRegularText(markdownText.slice(lastIndex), lastIndex))
+        R.append(RenderRegularText(markdownText.slice(lastIndex), lastIndex))
       );
     }
 
