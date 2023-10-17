@@ -33,6 +33,8 @@ import {
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
 import { WalletPaymentParamsList } from "../navigation/params";
+import { useIODispatch } from "../../../../store/hooks";
+import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 
 export type WalletPaymentInputFiscalCodeScreenRouteParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -50,6 +52,7 @@ type InputState = {
 
 const WalletPaymentInputFiscalCodeScreen = () => {
   const { params } = useRoute<WalletPaymentInputFiscalCodeRouteProps>();
+  const dispatch = useIODispatch();
   const [inputState, setInputState] = React.useState<InputState>({
     fiscalCodeText: "",
     fiscalCode: O.none
@@ -63,6 +66,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       }),
       O.chain(args => O.fromEither(RptId.decode(args))),
       O.map(rptId => {
+        dispatch(paymentInitializeState());
         // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
         const initialAmount = "1" as AmountInEuroCents;
         navigateToPaymentTransactionSummaryScreen({
