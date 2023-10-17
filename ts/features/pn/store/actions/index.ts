@@ -2,22 +2,21 @@ import { ActionType, createAction, createAsyncAction } from "typesafe-actions";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { RptId } from "../../../../../definitions/backend/RptId";
 
 export type UpdatePaymentForMessageRequest = {
   messageId: UIMessageId;
-  paymentId: RptId;
+  paymentId: string;
 };
 
 export type UpdatePaymentForMessageSuccess = {
   messageId: UIMessageId;
-  paymentId: RptId;
+  paymentId: string;
   paymentData: PaymentRequestsGetResponse;
 };
 
 export type UpdatePaymentForMessageFailure = {
   messageId: UIMessageId;
-  paymentId: RptId;
+  paymentId: string;
   details: Detail_v2Enum;
 };
 

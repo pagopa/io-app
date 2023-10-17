@@ -14,14 +14,13 @@ import {
 import { updatePaymentForMessage } from "../actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { RptId } from "../../../../../definitions/backend/RptId";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
 };
 
 export type SinglePaymentState = {
-  [key: RptId]:
+  [key: string]:
     | RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
     | undefined;
 };
@@ -75,7 +74,7 @@ export const paymentsReducer = (
 export const paymentStatusSelector = (
   state: GlobalState,
   messageId: UIMessageId,
-  paymentId: RptId
+  paymentId: string
 ) =>
   pipe(
     state.features.pn.payments[messageId],
