@@ -9,7 +9,6 @@ import {
   H3,
   IOColors,
   IOStyles,
-  Label,
   LabelSmall,
   Pictogram,
   VSpacer
