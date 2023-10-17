@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { Body, LabelLink, useIOToast} from "@pagopa/io-app-design-system";
+import { Body, LabelLink, useIOToast } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as R from "fp-ts/lib/ReadonlyArray";
 import * as B from "fp-ts/lib/boolean";
