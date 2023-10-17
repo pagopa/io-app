@@ -17,9 +17,9 @@ import { OnboardingOutcome, OnboardingResult } from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
 import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
 
-export type WalletOnboardingStartScreenParams = Readonly<{
+export type WalletOnboardingStartScreenParams = {
   paymentMethodId: string;
-}>;
+};
 
 type WalletOnboardingStartScreenRouteProps = RouteProp<
   WalletOnboardingParamsList,

@@ -19,11 +19,8 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
   const handleSelectedPaymentMethod = (
     selectedPaymentMethod: PaymentMethodResponse
   ) => {
-    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
-      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_START,
-      params: {
-        paymentMethodId: selectedPaymentMethod.id
-      }
+    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_START, {
+      paymentMethodId: selectedPaymentMethod.id
     });
   };
 
