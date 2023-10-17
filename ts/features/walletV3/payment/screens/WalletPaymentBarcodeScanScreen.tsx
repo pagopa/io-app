@@ -13,7 +13,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
 import {
   PaymentStartOrigin,
@@ -110,9 +109,8 @@ const WalletPaymentBarcodeScanScreen = () => {
   };
 
   const handleManualInputPressed = () =>
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-      params: {}
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
 
   return (

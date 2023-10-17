@@ -1,18 +1,18 @@
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
+import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import {
   PaymentStartOrigin,
@@ -35,7 +35,6 @@ import {
   PagoPaBarcode
 } from "../types/IOBarcode";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -149,9 +148,8 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-      params: {}
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
   };
 

@@ -1,0 +1,107 @@
+import {
+  Body,
+  ButtonSolid,
+  ContentWrapper,
+  H2,
+  IOStyles,
+  TextInputValidation,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import React from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  View
+} from "react-native";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import themeVariables from "../../../../theme/variables";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import {
+  decodePaymentNoticeNumber,
+  validatePaymentNoticeNumber
+} from "../../common/utils/validation";
+import { WalletPaymentRoutes } from "../navigation/routes";
+
+type InputState = {
+  noticeNumberText: string;
+  noticeNumber: O.Option<PaymentNoticeNumberFromString>;
+};
+
+const WalletPaymentInputNoticeNumberScreen = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const [inputState, setInputState] = React.useState<InputState>({
+    noticeNumberText: "",
+    noticeNumber: O.none
+  });
+
+  const navigateToFiscalCodeInput = () => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE,
+      params: {
+        paymentNoticeNumber: inputState.noticeNumber
+      }
+    });
+  };
+
+  return (
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <SafeAreaView style={IOStyles.flex}>
+        <View style={{ flex: 1, flexGrow: 1 }}>
+          <ContentWrapper>
+            <H2>Inserisci il codice avviso</H2>
+            <VSpacer size={16} />
+            <Body>Ha 18 cifre, lo trovi vicino al codice QR.</Body>
+            <VSpacer size={16} />
+            <TextInputValidation
+              placeholder="Codice avviso"
+              accessibilityLabel="Codice avviso"
+              value={inputState.noticeNumberText}
+              icon="docPaymentCode"
+              onChangeText={value =>
+                setInputState({
+                  noticeNumberText: value,
+                  noticeNumber: decodePaymentNoticeNumber(value)
+                })
+              }
+              onValidate={validatePaymentNoticeNumber}
+              counterLimit={18}
+              textInputProps={{
+                keyboardType: "number-pad",
+                inputMode: "number-pad"
+                // returnKeyType: "done"
+              }}
+            />
+          </ContentWrapper>
+        </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "android" ? undefined : "padding"}
+          keyboardVerticalOffset={Platform.select({
+            ios: 110 + 16,
+            android: themeVariables.contentPadding
+          })}
+        >
+          <ContentWrapper>
+            <ButtonSolid
+              label="Continua"
+              accessibilityLabel="Continua"
+              onPress={navigateToFiscalCodeInput}
+              fullWidth={true}
+              disabled={O.isNone(inputState.noticeNumber)}
+            />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
+
+export { WalletPaymentInputNoticeNumberScreen };
