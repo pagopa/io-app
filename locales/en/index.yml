@@ -777,6 +777,26 @@ authentication:
   expiredSessionBanner:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
+  unlock: 
+    title: Unlock access
+    subtitle: In order to use the app, you must first unlock access to IO. 
+    learnmore: Learn more
+    loginIO: Close
+  unlockmodal: 
+    title: What does it mean?
+    description1_1: If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.
+    description1_2: Otherwise, you can access it in the app by logging in with the
+    description1_3: maximum level of safety. 
+    description1_4: This type of authentication requires a username, password, and physical device, such as CIE.
+    title2: How to unlock IO access
+    listitem1:  Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.
+    listitem2_1: Access the IO web portal with SPID or CIE.
+    listitem2_2: Go to the portal
+    listitem3_1: Go to the section
+    listitem3_2: Unlock access to IO 
+    listitem3_3: and follow the given steps. When prompted enter the
+    listitem3_4: recovery code
+    listitem3_5: to confirm.
 email:
   cduModal:
     validateMail:
