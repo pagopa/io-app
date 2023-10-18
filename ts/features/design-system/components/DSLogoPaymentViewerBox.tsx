@@ -19,10 +19,20 @@ const styles = StyleSheet.create({
   logoWrapperLarge: {
     width: "25%"
   },
+  logoWrapperFull: {
+    width: "100%"
+  },
   fakeTransparentBg: {
     position: "absolute",
     width: "275%",
     height: "275%",
+    opacity: 0.4
+  },
+  fakeTransparentBgFull: {
+    position: "absolute",
+    top: "-25%",
+    width: "150%",
+    height: "150%",
     opacity: 0.4
   },
   nameWrapper: {
@@ -45,6 +55,9 @@ const styles = StyleSheet.create({
   logoItemLarge: {
     aspectRatio: 4 / 3
   },
+  logoItemFull: {
+    aspectRatio: undefined
+  },
   iconLabel: {
     fontSize: 10
   }
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
 type DSLogoPaymentViewerBoxProps = {
   name: string;
   image: React.ReactNode;
-  size: "medium" | "large";
+  size: "medium" | "large" | "full";
 };
 
 const sizeMap = {
@@ -64,6 +77,10 @@ const sizeMap = {
   large: {
     wrapper: styles.logoWrapperLarge,
     item: styles.logoItemLarge
+  },
+  full: {
+    wrapper: styles.logoWrapperFull,
+    item: styles.logoItemFull
   }
 };
 
@@ -78,7 +95,11 @@ export const DSLogoPaymentViewerBox = ({
     <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
       <View style={[styles.logoItem, sizeMap[size].item]}>
         <ImageBackground
-          style={styles.fakeTransparentBg}
+          style={
+            size === "full"
+              ? styles.fakeTransparentBgFull
+              : styles.fakeTransparentBg
+          }
           source={FakeTransparentBg}
         />
         {image}
