@@ -1,5 +1,8 @@
 import * as React from "react";
-import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 
 import { Body, H2, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -12,9 +15,35 @@ import {
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import WalletOnboardingPaymentMethodsList from "../components/WalletOnboardingPaymentMethodsList";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { walletGetPaymentMethods } from "../store/actions";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  isLoadingPaymentMethodsSelector,
+  walletOnboardingPaymentMethodsSelector
+} from "../store";
 
 const WalletOnboardingSelectPaymentMethodScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
+  const dispatch = useIODispatch();
+  const isLoadingPaymentMethods = useIOSelector(
+    isLoadingPaymentMethodsSelector
+  );
+  const paymentMethodsPot = useIOSelector(
+    walletOnboardingPaymentMethodsSelector
+  );
+  const paymentMethods = pipe(
+    pot.getOrElse(
+      pot.map(paymentMethodsPot, el => el.paymentMethods),
+      null
+    ),
+    O.fromNullable,
+    O.getOrElseW(() => [])
+  );
+
+  useOnFirstRender(() => {
+    dispatch(walletGetPaymentMethods.request());
+  });
 
   const handleSelectedPaymentMethod = (
     selectedPaymentMethod: PaymentMethodResponse
@@ -26,32 +55,26 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
 
   return (
     <TopScreenComponent goBack>
-      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-        <PaymentMethodsHeading />
-        <VSpacer size={32} />
+      <SafeAreaView style={IOStyles.flex}>
         <WalletOnboardingPaymentMethodsList
+          header={<PaymentMethodsHeading />}
+          isLoading={isLoadingPaymentMethods}
           onSelectPaymentMethod={handleSelectedPaymentMethod}
-          paymentMethods={[
-            {
-              id: "1",
-              name: "Carta di credito",
-              asset: "creditCard"
-            } as PaymentMethodResponse
-          ]}
+          paymentMethods={paymentMethods}
         />
-      </ScrollView>
+      </SafeAreaView>
     </TopScreenComponent>
   );
 };
 
 const PaymentMethodsHeading = () => (
   <>
-    <H2>Aggiungi un metodo</H2>
+    <H2>{I18n.t("wallet.onboarding.paymentMethodsList.header.title")}</H2>
     <VSpacer />
     <Body>
-      Il metodo verrà memorizzato nel Portafoglio di IO e potrà essere
-      utilizzato per effettuare pagamenti o aderire a iniziative compatibili.
+      {I18n.t("wallet.onboarding.paymentMethodsList.header.subtitle")}
     </Body>
+    <VSpacer size={32} />
   </>
 );
 

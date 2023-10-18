@@ -1009,6 +1009,10 @@ wallet:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     cardHolder: Card holder
   onboarding:
+    paymentMethodsList:
+      header:
+        title: Aggiungi un metodo
+        subtitle: Il metodo verrà memorizzato nel Portafoglio di IO e potrà essere utilizzato per effettuare pagamenti o aderire a iniziative compatibili.
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"
       koTimeout:

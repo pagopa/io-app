@@ -6,6 +6,7 @@ import * as React from "react";
 import {
   Divider,
   IOIcons,
+  IOStyles,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -17,6 +18,7 @@ type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<PaymentMethodResponse>;
   onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
   isLoading?: boolean;
+  header?: React.ReactElement;
 }>;
 
 type PaymentMethodItemProps = {
@@ -39,12 +41,15 @@ const PaymentMethodItem = ({
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
   onSelectPaymentMethod,
-  isLoading
+  isLoading,
+  header
 }: OwnProps) => (
   <FlatList
     removeClippedSubviews={false}
+    contentContainerStyle={IOStyles.horizontalContentPadding}
     data={paymentMethods}
     keyExtractor={item => item.name}
+    ListHeaderComponent={header}
     ListFooterComponent={renderListFooter(isLoading)}
     ItemSeparatorComponent={() => <Divider />}
     renderItem={({ item }) => (
