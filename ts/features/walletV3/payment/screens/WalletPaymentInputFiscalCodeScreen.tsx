@@ -13,10 +13,10 @@ import {
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
   KeyboardAvoidingView,
@@ -25,7 +25,13 @@ import {
   View
 } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
+import { useIODispatch } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -33,8 +39,6 @@ import {
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
 import { WalletPaymentParamsList } from "../navigation/params";
-import { useIODispatch } from "../../../../store/hooks";
-import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 
 export type WalletPaymentInputFiscalCodeScreenRouteParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -53,6 +57,7 @@ type InputState = {
 const WalletPaymentInputFiscalCodeScreen = () => {
   const { params } = useRoute<WalletPaymentInputFiscalCodeRouteProps>();
   const dispatch = useIODispatch();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [inputState, setInputState] = React.useState<InputState>({
     fiscalCodeText: "",
     fiscalCode: O.none
@@ -64,15 +69,17 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         paymentNoticeNumber: params.paymentNoticeNumber,
         organizationFiscalCode: inputState.fiscalCode
       }),
-      O.chain(args => O.fromEither(RptId.decode(args))),
+      O.chain(flow(RptId.decode, O.fromEither)),
       O.map(rptId => {
         dispatch(paymentInitializeState());
-        // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
-        const initialAmount = "1" as AmountInEuroCents;
-        navigateToPaymentTransactionSummaryScreen({
-          rptId,
-          initialAmount,
-          paymentStartOrigin: "manual_insertion"
+        navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+          screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+          params: {
+            // FIXME: Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+            initialAmount: "1" as AmountInEuroCents,
+            rptId,
+            paymentStartOrigin: "manual_insertion"
+          }
         });
       })
     );
