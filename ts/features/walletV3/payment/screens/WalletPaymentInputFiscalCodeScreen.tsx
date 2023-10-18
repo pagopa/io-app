@@ -25,6 +25,7 @@ import {
   View
 } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -90,13 +91,17 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         <View style={{ flex: 1, flexGrow: 1 }}>
           <ContentWrapper>
-            <H2>Inserisci il codice fiscale dell’Ente Creditore</H2>
+            <H2>{I18n.t("wallet.payment.manual.fiscalCode.title")}</H2>
             <VSpacer size={16} />
-            <Body>Ha 11 cifre, lo trovi vicino al codice QR.</Body>
+            <Body>{I18n.t("wallet.payment.manual.fiscalCode.subtitle")}</Body>
             <VSpacer size={16} />
             <TextInputValidation
-              placeholder="Codice fiscale Ente Creditore"
-              accessibilityLabel="Codice fiscale Ente Creditore"
+              placeholder={I18n.t(
+                "wallet.payment.manual.fiscalCode.placeholder"
+              )}
+              accessibilityLabel={I18n.t(
+                "wallet.payment.manual.fiscalCode.placeholder"
+              )}
               value={inputState.fiscalCodeText}
               icon="fiscalCodeIndividual"
               onChangeText={value =>

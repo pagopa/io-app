@@ -14,6 +14,7 @@ import React from "react";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -86,7 +87,7 @@ const WalletPaymentBarcodeChoiceScreen = () => {
     <BaseScreenComponent goBack={true}>
       <ScrollView>
         <ContentWrapper>
-          <H2>Sono stati rilevati più codici. Quale vuoi usare?</H2>
+          <H2>{I18n.t("wallet.payment.barcodes.choice.title")}</H2>
           <VSpacer size={32} />
           <FlatList
             scrollEnabled={false}

@@ -29,6 +29,7 @@ import {
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
 import { WalletPaymentRoutes } from "../navigation/routes";
+import I18n from "../../../../i18n";
 
 type InputState = {
   noticeNumberText: string;
@@ -56,13 +57,17 @@ const WalletPaymentInputNoticeNumberScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         <View style={{ flex: 1, flexGrow: 1 }}>
           <ContentWrapper>
-            <H2>Inserisci il codice avviso</H2>
+            <H2>{I18n.t("wallet.payment.manual.noticeNumber.title")}</H2>
             <VSpacer size={16} />
-            <Body>Ha 18 cifre, lo trovi vicino al codice QR.</Body>
+            <Body>{I18n.t("wallet.payment.manual.noticeNumber.subtitle")}</Body>
             <VSpacer size={16} />
             <TextInputValidation
-              placeholder="Codice avviso"
-              accessibilityLabel="Codice avviso"
+              placeholder={I18n.t(
+                "wallet.payment.manual.noticeNumber.placeholder"
+              )}
+              accessibilityLabel={I18n.t(
+                "wallet.payment.manual.noticeNumber.placeholder"
+              )}
               value={inputState.noticeNumberText}
               icon="docPaymentCode"
               onChangeText={value =>
