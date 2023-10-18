@@ -34,7 +34,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.landing.contextualHelpContent"
 };
 
-export type ChoosedIdentifier = {
+export type ChosenIdentifier = {
   identifier: "SPID" | "CIE";
 };
 
