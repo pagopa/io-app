@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { contramap } from "fp-ts/lib/Ord";
 import { pipe } from "fp-ts/lib/function";
@@ -14,7 +14,11 @@ import React from "react";
 import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import {
   PaymentStartOrigin,
   paymentInitializeState
@@ -26,7 +30,6 @@ import { WalletPaymentParamsList } from "../navigation/params";
 
 type WalletPaymentBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
-  paymentStartOrigin: PaymentStartOrigin;
 };
 
 const sortByAmount = pipe(
@@ -36,21 +39,29 @@ const sortByAmount = pipe(
 
 const WalletPaymentBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const route =
     useRoute<
       RouteProp<WalletPaymentParamsList, "WALLET_PAYMENT_BARCODE_CHOICE">
     >();
 
-  const { barcodes, paymentStartOrigin } = route.params;
+  const { barcodes } = route.params;
 
   const handleBarcodeSelected = (barcode: PagoPaBarcode) => {
-    dispatch(paymentInitializeState());
+    const paymentStartOrigin: PaymentStartOrigin =
+      barcode.format === "DATA_MATRIX"
+        ? "poste_datamatrix_scan"
+        : "qrcode_scan";
 
-    navigateToPaymentTransactionSummaryScreen({
-      rptId: barcode.rptId,
-      initialAmount: barcode.amount,
-      paymentStartOrigin
+    dispatch(paymentInitializeState());
+    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+      params: {
+        initialAmount: barcode.amount,
+        rptId: barcode.rptId,
+        paymentStartOrigin
+      }
     });
   };
 
