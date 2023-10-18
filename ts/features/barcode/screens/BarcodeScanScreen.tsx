@@ -14,10 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import {
-  PaymentStartOrigin,
-  paymentInitializeState
-} from "../../../store/actions/wallet/payment";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
@@ -65,10 +62,6 @@ const BarcodeScanScreen = () => {
         barcode => barcode.format === "DATA_MATRIX"
       );
 
-      const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
-        ? "poste_datamatrix_scan"
-        : "qrcode_scan";
-
       if (hasDataMatrix) {
         void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
       }
@@ -76,8 +69,7 @@ const BarcodeScanScreen = () => {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
         params: {
-          barcodes: pagoPABarcodes,
-          paymentStartOrigin
+          barcodes: pagoPABarcodes
         }
       });
       return;
