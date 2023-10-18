@@ -25,6 +25,7 @@ import {
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 import { getRecepientName } from "../../../../utils/strings";
 import { format } from "../../../../utils/dates";
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 
 const styles = StyleSheet.create({
   spacer: {
@@ -66,10 +67,14 @@ export const TransactionSummaryRow = (
     return null;
   }
 
+  const accessibilityLabel = value
+    ? `${title}, ${getAccessibleAmountText(value)}`
+    : title;
+
   return (
     <React.Fragment>
       <ListItemInfo
-        accessibilityLabel={title}
+        accessibilityLabel={accessibilityLabel}
         icon={icon}
         label={title}
         value={
