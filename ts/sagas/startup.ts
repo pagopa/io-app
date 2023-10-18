@@ -570,7 +570,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
 
   // Start watching for message attachments actions (general
