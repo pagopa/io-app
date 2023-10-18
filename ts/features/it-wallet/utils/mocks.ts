@@ -5,6 +5,7 @@ import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
 import ItwCredentialCard from "../components/ItwCredentialCard";
+import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
@@ -201,10 +202,7 @@ const getMultipleRequestedClaims = (
 export type RpMock = {
   organizationName: string;
   requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
-  optionalClaims: ReadonlyArray<{
-    title: string;
-    data: string;
-  }>;
+  optionalClaims: ReadonlyArray<ItwOptionalClaimItem>;
 };
 
 export const rpMock: RpMock = {
@@ -213,12 +211,12 @@ export const rpMock: RpMock = {
     getMultipleRequestedClaims(decodedPid),
   optionalClaims: [
     {
-      title: "Fornito da Credenziale 1",
-      data: "Numero di telefono"
+      issuer: "Fornito da Credenziale 1",
+      claim: "Numero di telefono"
     },
     {
-      title: "Fornito da Credenziale 1",
-      data: "Email"
+      issuer: "Fornito da Credenziale 1",
+      claim: "Email"
     }
   ]
 };
