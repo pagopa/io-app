@@ -14,6 +14,10 @@ import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
+import {
+  BiometriActivationUserType,
+  mayUserActivateBiometric
+} from "../../../utils/biometrics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -106,11 +110,23 @@ const FingerprintScreen = () => {
           rightButton={{
             title: I18n.t("global.buttons.activate2"),
             onPress: () =>
-              dispatch(
-                preferenceFingerprintIsEnabledSaveSuccess({
-                  isFingerprintEnabled: true
+              mayUserActivateBiometric()
+                .then(_ =>
+                  dispatch(
+                    preferenceFingerprintIsEnabledSaveSuccess({
+                      isFingerprintEnabled: true
+                    })
+                  )
+                )
+                .catch((err: BiometriActivationUserType) => {
+                  if (err === "PERMISSION_DENIED") {
+                    dispatch(
+                      preferenceFingerprintIsEnabledSaveSuccess({
+                        isFingerprintEnabled: false
+                      })
+                    );
+                  }
                 })
-              )
           }}
         />
       </View>
