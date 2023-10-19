@@ -35,7 +35,9 @@ export function* loadServiceDetailRequestHandler(
     const serviceIdEither = PathTraversalSafePathParam.decode(action.payload);
 
     if (E.isLeft(serviceIdEither)) {
-      throw new Error("Invalid PathTraversalSafePathParam service id");
+      throw Error(
+        `Unable to decode ${ServiceId.name} type to ${PathTraversalSafePathParam.name} type`
+      );
     }
 
     const response = yield* call(getService, {

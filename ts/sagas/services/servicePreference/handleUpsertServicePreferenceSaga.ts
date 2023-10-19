@@ -4,6 +4,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ServicePreference } from "../../../../definitions/backend/ServicePreference";
 import { PathTraversalSafePathParam } from "../../../../definitions/backend/PathTraversalSafePathParam";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { BackendClient } from "../../../api/backend";
 import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
 import {
@@ -84,7 +85,9 @@ export function* handleUpsertServicePreference(
     );
 
     if (E.isLeft(serviceIdEither)) {
-      throw new Error("Invalid PathTraversalSafePathParam service id");
+      throw Error(
+        `Unable to decode ${ServiceId.name} type to ${PathTraversalSafePathParam.name} type`
+      );
     }
 
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
