@@ -125,14 +125,10 @@ const getRequestedClaims = (
   decodedPid: PidWithToken
 ): ReadonlyArray<BulletItem> => [
   {
-    title: I18n.t(
-      "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
-      {
-        authsource:
-          decodedPid.pid.verification.evidence[0].record.source
-            .organization_name
-      }
-    ),
+    title: I18n.t("features.itWallet.generic.dataSource.multi", {
+      authsource:
+        decodedPid.pid.verification.evidence[0].record.source.organization_name
+    }),
     data: [
       `${I18n.t("features.itWallet.verifiableCredentials.claims.givenName")} ${
         decodedPid.pid.claims.givenName
@@ -159,14 +155,10 @@ const getMultipleRequestedClaims = (
   decodedPid: PidWithToken
 ): ReadonlyArray<BulletItem> => [
   {
-    title: I18n.t(
-      "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
-      {
-        authsource:
-          decodedPid.pid.verification.evidence[0].record.source
-            .organization_name
-      }
-    ),
+    title: I18n.t("features.itWallet.generic.dataSource.multi", {
+      authsource:
+        decodedPid.pid.verification.evidence[0].record.source.organization_name
+    }),
     data: [
       `${I18n.t("features.itWallet.verifiableCredentials.claims.givenName")} ${
         decodedPid.pid.claims.givenName
@@ -188,13 +180,10 @@ const getMultipleRequestedClaims = (
     ]
   },
   {
-    title: I18n.t(
-      "features.itWallet.issuing.credentialsIssuingInfoScreen.dataSource",
-      {
-        authsource: "Credenziale 1"
-      }
-    ),
-    data: ["Attributo 1"]
+    title: I18n.t("features.itWallet.generic.dataSource.multi", {
+      authsource: `${I18n.t("features.itWallet.generic.credential")} 1`
+    }),
+    data: [`${I18n.t("features.itWallet.generic.attribute")} 1`]
   }
 ];
 
@@ -213,12 +202,16 @@ export const rpMock: RpMock = {
     getMultipleRequestedClaims(decodedPid),
   optionalClaims: [
     {
-      title: "Fornito da Credenziale 1",
-      data: "Numero di telefono"
+      title: I18n.t("features.itWallet.generic.dataSource.single", {
+        authsource: "Credenziale 1"
+      }),
+      data: I18n.t("global.media.phone")
     },
     {
-      title: "Fornito da Credenziale 1",
-      data: "Email"
+      title: I18n.t("features.itWallet.generic.dataSource.single", {
+        authsource: "Credenziale 1"
+      }),
+      data: I18n.t("global.media.email")
     }
   ]
 };

@@ -3455,7 +3455,6 @@ features:
         title: "Dati necessari per aggiungere la tessera"
         subtitle: "{{authsource}} li invierà a {{organization}}."
         readMore: "Scopri di più"
-        dataSource: "Forniti da {{authsource}}"
         infoBottomSheet:
           title: "Trattamento dei dati"
           body:
@@ -3576,6 +3575,11 @@ features:
         title: "Vuoi interrompere l’operazione?"
         confirm: "Sì, interrompi"
         cancel: "No, vai indietro"
+      dataSource:
+        multi: "Forniti da {{authsource}}"
+        single: "Fornito da {{authsource}}"
+      credential: "Credenziale"
+      attribute: "Attributo"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
