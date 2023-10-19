@@ -3303,6 +3303,9 @@ idpay:
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
     discountDetails:
+      bottomSheetOptions:
+        scanQr: Inquadra un codice QR
+        generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
       IDPayCode:
         banner:
