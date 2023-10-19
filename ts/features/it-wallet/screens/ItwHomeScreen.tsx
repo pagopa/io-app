@@ -72,6 +72,16 @@ const ItwHomeScreen = () => {
     }
   };
 
+  /**
+   * Temporary function to navigate to the checks screen on long press of a credential.
+   * TODO: remove this function the qr code scanning is implemented.
+   */
+  const onLongPressCredential = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CROSS_DEVICE.CHECKS
+    });
+  };
+
   const ContentView = ({ decodedPid }: ContentViewProps) => (
     <View
       style={{
@@ -102,7 +112,10 @@ const ItwHomeScreen = () => {
         {credentials.map(
           (credential, idx) =>
             O.isSome(credential) && (
-              <View key={`${credential.value.title}-${idx}`}>
+              <Pressable
+                onLongPress={onLongPressCredential}
+                key={`${credential.value.title}-${idx}`}
+              >
                 <ItwCredentialCard
                   title={credential.value.title}
                   name={`${credential.value.claims.givenName} ${credential.value.claims.familyName}`}
@@ -111,7 +124,7 @@ const ItwHomeScreen = () => {
                   backgroundImage={credential.value.image}
                 />
                 <VSpacer />
-              </View>
+              </Pressable>
             )
         )}
         <View

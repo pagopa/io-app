@@ -4,6 +4,7 @@ import { ItwActivationActions } from "./itwActivationActions";
 import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
 import { ItwRpActions } from "./itwRpActions";
+import { ItwPresentationChecks } from "./new/itwPresentationActions";
 
 /**
  * Action types for the IT Wallet feature
@@ -14,4 +15,5 @@ export type ItWalletActions =
   | ItwLifecycleActions
   | ItwCredentialsActions
   | ItwCieAuthenticationActions
-  | ItwRpActions;
+  | ItwRpActions
+  | ItwPresentationChecks;
