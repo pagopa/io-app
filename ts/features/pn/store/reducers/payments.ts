@@ -79,15 +79,15 @@ export const shouldUpdatePaymentSelector = (
   messageId: UIMessageId,
   paymentId: string
 ) =>
-pipe(
-  state.features.pn.payments[messageId],
-  O.fromNullable,
-  O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-  O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
-    () => remoteUndefined
-  ),
-  isUndefined
-);
+  pipe(
+    state.features.pn.payments[messageId],
+    O.fromNullable,
+    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
+    O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
+      () => remoteUndefined
+    ),
+    isUndefined
+  );
 
 export const paymentStatusForUISelector = (
   state: GlobalState,
@@ -99,7 +99,7 @@ export const paymentStatusForUISelector = (
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
     O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
-      () => remoteUndefined,
+      () => remoteUndefined
     ),
-    remoteValue => isLoading(remoteValue) ? remoteUndefined : remoteValue
+    remoteValue => (isLoading(remoteValue) ? remoteUndefined : remoteValue)
   );

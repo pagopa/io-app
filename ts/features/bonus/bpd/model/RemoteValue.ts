@@ -98,16 +98,22 @@ export const fold = <T, E, B>(
   onError: (error: E) => B
 ): B => foldW(rm, onUndefined, onLoading, onReady, onError);
 
-export const foldK = <T, E, B>(
-  onUndefined: () => B,
-  onLoading: () => B,
-  onReady: (value: T) => B,
-  onError: (error: E) => B
-) => (rm: RemoteValue<T, E>): B => foldW(rm, onUndefined, onLoading, onReady, onError);
+export const foldK =
+  <T, E, B>(
+    onUndefined: () => B,
+    onLoading: () => B,
+    onReady: (value: T) => B,
+    onError: (error: E) => B
+  ) =>
+  (rm: RemoteValue<T, E>): B =>
+    foldW(rm, onUndefined, onLoading, onReady, onError);
 
-export const foldKW = <T, E, B, C>(
-  onUndefined: () => B,
-  onLoading: () => B,
-  onReady: (value: T) => B,
-  onError: (error: E) => C
-) => (rm: RemoteValue<T, E>): B | C => foldW(rm, onUndefined, onLoading, onReady, onError);
+export const foldKW =
+  <T, E, B, C>(
+    onUndefined: () => B,
+    onLoading: () => B,
+    onReady: (value: T) => B,
+    onError: (error: E) => C
+  ) =>
+  (rm: RemoteValue<T, E>): B | C =>
+    foldW(rm, onUndefined, onLoading, onReady, onError);
