@@ -4,8 +4,6 @@ import ItwLoadingSpinner from "../ItwLoadingSpinner";
 
 type Props = {
   color: string;
-  captionTitle?: string;
-  captionSubtitle?: string;
 };
 
 describe("Test ItwLoadingSpinner animated indicator", () => {
@@ -31,11 +29,5 @@ describe("Test ItwLoadingSpinner animated indicator", () => {
   });
 });
 
-const renderComponent = ({ color, captionTitle, captionSubtitle }: Props) =>
-  render(
-    <ItwLoadingSpinner
-      color={color}
-      captionTitle={captionTitle}
-      captionSubtitle={captionSubtitle}
-    />
-  );
+const renderComponent = ({ color }: Props) =>
+  render(<ItwLoadingSpinner color={color} />);
