@@ -11,7 +11,6 @@ import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOv
 import ItwErrorView from "../../../../components/ItwErrorView";
 import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
 import { ItWalletError } from "../../../../utils/errors/itwErrors";
-import ItwContinueScreen from "../../../../components/ItwResultComponent";
 import I18n from "../../../../../../i18n";
 import ROUTES from "../../../../../../navigation/routes";
 import {
