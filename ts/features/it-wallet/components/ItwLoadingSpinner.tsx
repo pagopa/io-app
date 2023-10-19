@@ -4,8 +4,6 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../types/WithTestID";
 
 type Props = WithTestID<{
-  captionTitle?: string;
-  captionSubtitle?: string;
   color?: ColorValue;
   durationMs?: number;
   size?: IOLodingSpinnerSizeScale;

@@ -7,7 +7,7 @@ import { ItWalletError } from "../../../utils/errors/itwErrors";
 export const itwPresentationChecks = createAsyncAction(
   "ITW_PRESENTATION_CHECKS_REQUEST",
   "ITW_PRESENTATION_CHECKS_SUCCESS",
-  "ITW_PRESETATION_CHECKS_FAILURE"
+  "ITW_PRESENTATION_CHECKS_FAILURE"
 )<void, void, ItWalletError>();
 
 export type ItwPresentationChecks = ActionType<typeof itwPresentationChecks>;
