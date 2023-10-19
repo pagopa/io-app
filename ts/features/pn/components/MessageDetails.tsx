@@ -36,7 +36,7 @@ import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
-import { MessagePayment } from "./MessagePayment";
+import { MessagePayments } from "./MessagePayments";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -117,7 +117,8 @@ export const MessageDetails = ({
             />
           </PnMessageDetailsSection>
         )}
-        <MessagePayment
+        <MessagePayments
+          messageId={messageId}
           isCancelled={isCancelled}
           payments={payments}
           completedPaymentNoticeCodes={completedPaymentNoticeCodes}

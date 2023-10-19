@@ -1,10 +1,13 @@
+import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
+  foldKW,
+  isLoading,
+  isUndefined,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -71,16 +74,32 @@ export const paymentsReducer = (
   return state;
 };
 
-export const paymentStatusSelector = (
+export const shouldUpdatePaymentSelector = (
   state: GlobalState,
   messageId: UIMessageId,
   paymentId: string
 ) =>
+pipe(
+  state.features.pn.payments[messageId],
+  O.fromNullable,
+  O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
+  O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
+    () => remoteUndefined
+  ),
+  isUndefined
+);
+
+export const paymentStatusForUISelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentId: string
+): RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum> =>
   pipe(
     state.features.pn.payments[messageId],
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
     O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
-      () => remoteUndefined
-    )
+      () => remoteUndefined,
+    ),
+    remoteValue => isLoading(remoteValue) ? remoteUndefined : remoteValue
   );
