@@ -1,9 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-/**
- * The screen allows to identify a transaction by the QR code on the analogic notice
- */
 import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes

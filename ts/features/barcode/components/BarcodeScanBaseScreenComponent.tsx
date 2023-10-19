@@ -194,6 +194,19 @@ const BarcodeScanBaseScreenComponent = ({
     );
   };
 
+  const shouldDisplayTorchButton =
+    cameraPermissionStatus === "authorized" && hasTorch;
+
+  const torchIconButton: React.ComponentProps<
+    typeof BaseHeader
+  >["customRightIcon"] = {
+    iconName: isTorchOn ? "lightFilled" : "light",
+    accessibilityLabel: isTorchOn
+      ? I18n.t("accessibility.buttons.torch.turnOff")
+      : I18n.t("accessibility.buttons.torch.turnOn"),
+    onPress: toggleTorch
+  };
+
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{renderCameraView()}</View>
@@ -201,16 +214,16 @@ const BarcodeScanBaseScreenComponent = ({
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
             label={I18n.t("barcodeScan.tabs.scan")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.upload")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.upload")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
             onPress={showFilePicker}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.input")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.input")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.input")}
             onPress={onManualInputPressed}
           />
         </TabNavigation>
@@ -233,13 +246,7 @@ const BarcodeScanBaseScreenComponent = ({
             customGoBack={customGoBack}
             onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
             customRightIcon={
-              hasTorch
-                ? {
-                    iconName: isTorchOn ? "lightFilled" : "light",
-                    accessibilityLabel: "torch",
-                    onPress: toggleTorch
-                  }
-                : undefined
+              shouldDisplayTorchButton ? torchIconButton : undefined
             }
           />
           {/* This overrides BaseHeader status bar configuration */}

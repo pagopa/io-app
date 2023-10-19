@@ -91,7 +91,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        "AUTHENTICATION_IPD_SELECTION"
+        "AUTHENTICATION_IDP_SELECTION"
       >
     >();
 
