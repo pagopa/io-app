@@ -3,11 +3,13 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
-import { itwPresentationChecks } from "../../actions/new/itwPresentationActions";
+import {
+  itwPresentation,
+  itwPresentationChecks
+} from "../../actions/new/itwPresentationActions";
 
 /**
  * Type of the state managed by the reducer for the presentation flow.
@@ -15,13 +17,15 @@ import { itwPresentationChecks } from "../../actions/new/itwPresentationActions"
  */
 export type ItwPresentationState = {
   checks: pot.Pot<boolean, ItWalletError>;
+  presentation: pot.Pot<boolean, ItWalletError>;
 };
 
 /**
  * Empty state constant which sets the initial state of the reducer.
  */
 const EMPTY_STATE: ItwPresentationState = {
-  checks: pot.none
+  checks: pot.none,
+  presentation: pot.none
 };
 
 const reducer = (
@@ -46,6 +50,24 @@ const reducer = (
       return {
         ...state,
         checks: pot.toError(state.checks, action.payload)
+      };
+    /**
+     * Presentation request section.
+     */
+    case getType(itwPresentation.request):
+      return {
+        ...state,
+        presentation: pot.toLoading(state.presentation)
+      };
+    case getType(itwPresentation.success):
+      return {
+        ...state,
+        presentation: pot.some(true)
+      };
+    case getType(itwPresentation.failure):
+      return {
+        ...state,
+        presentation: pot.toError(state.presentation, action.payload)
       };
     default:
       return state;

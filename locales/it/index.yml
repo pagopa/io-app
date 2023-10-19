@@ -3533,6 +3533,10 @@ features:
             firstBody: "It is the organization that wants to access some information to provide you with the services you request. IO allows you to authorize the processing of your data only with verified entities that are properly registered on lists ensuring their reliability."
             secondHeader: "Are my data safe?"
             secondBody: "Your data is not shared with other parties and is not used for purposes other than those indicated. You can request its removal at any time."
+      resultScreenNew: 
+        success: 
+          title: "Fatto!"
+          subtitle: "Torna sul sito di {{organizationName}} per continuare."
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"

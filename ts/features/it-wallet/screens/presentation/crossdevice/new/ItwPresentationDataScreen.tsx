@@ -34,6 +34,7 @@ import { useItwInfoFlow } from "../../../../hooks/useItwInfoFlow";
 import { rpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
 import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -195,7 +196,10 @@ const ItwPresentationDataScreen = () => {
             icon: "security",
             iconPosition: "end",
             accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => null,
+            onPress: () =>
+              navigation.navigate(
+                ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT_NEW
+              ),
             label: I18n.t("global.buttons.continue")
           }
         }}

@@ -10,4 +10,15 @@ export const itwPresentationChecks = createAsyncAction(
   "ITW_PRESETATION_CHECKS_FAILURE"
 )<void, void, ItWalletError>();
 
-export type ItwPresentationChecks = ActionType<typeof itwPresentationChecks>;
+/**
+ * Async action which starts the presentation request.
+ */
+export const itwPresentation = createAsyncAction(
+  "ITW_PRESENTATION_REQUEST",
+  "ITW_PRESENTATION_SUCCESS",
+  "ITW_PRESENTATION_FAILURE"
+)<void, void, ItWalletError>();
+
+export type ItwPresentationChecks =
+  | ActionType<typeof itwPresentationChecks>
+  | ActionType<typeof itwPresentation>;
