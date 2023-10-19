@@ -678,7 +678,6 @@ email:
       modaltitle: "Diese E-Mail ist bereits in Gebrauch"
       modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
       modalbutton: "Andere E-Mail verwenden"
-
   edit:
     title: "E-Mail-Adresse bearbeiten"
     subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
