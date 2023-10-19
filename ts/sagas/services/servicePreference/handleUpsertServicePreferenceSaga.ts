@@ -85,9 +85,7 @@ export function* handleUpsertServicePreference(
     );
 
     if (E.isLeft(serviceIdEither)) {
-      throw Error(
-        `Unable to decode ${ServiceId.name} type to ${PathTraversalSafePathParam.name} type`
-      );
+      throw Error("Unable to decode ServiceId to PathTraversalSafePathParam");
     }
 
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
