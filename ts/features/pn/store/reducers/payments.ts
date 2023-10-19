@@ -1,11 +1,10 @@
-import { identity, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  foldKW,
   isLoading,
   isUndefined,
   remoteError,
