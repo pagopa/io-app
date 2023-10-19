@@ -3018,6 +3018,7 @@ features:
         legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
         notice: "Alcuni avvisi possono includere i costi di notifica."
+        morePayments: "Vedi tutti gli avvisi"
       attachmentsSection:
         title: Allegati
       infoSection:

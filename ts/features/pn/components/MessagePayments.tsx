@@ -6,6 +6,7 @@ import { View } from "react-native";
 import I18n from "i18n-js";
 import {
   Body,
+  LabelLink,
   ModulePaymentNotice,
   PaymentNoticeStatus,
   VSpacer
@@ -159,6 +160,16 @@ export const MessagePayments = ({
                 payment={payment}
               />
             ))}
+        {payments && payments.length > 5 && (
+          <>
+            <VSpacer size={24} />
+            <LabelLink onPress={() => undefined}>
+              {`${I18n.t("features.pn.details.paymentSection.morePayments")} (${
+                payments.length
+              })`}
+            </LabelLink>
+          </>
+        )}
       </MessageDetailsSection>
     );
   }
