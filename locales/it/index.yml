@@ -673,6 +673,20 @@ authentication:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
     subtitle: SPID è sicuro
+  opt-in:
+    news: novità
+    title: Da oggi accedi a IO più velocemente
+    identity-check: Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
+    security-suggests: Consigli di sicurezza
+    passcode: Dopo il primo accesso con SPID o CIE, potrai entrare in app solo con il codice di sblocco o con il biometrico.
+    notification: Ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
+    button-accept-lv: Continua con l’accesso rapido
+    button-decline-lv: No, voglio accedere ogni 30 giorni
+    fingerprint: Per accedere a IO basta il codice o il biometrico, non condividerli con nessuno.
+    io-logout: Se perdi il dispositivo, esci da IO da
+    io-lock-access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
+    access-new-device: Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app.
+    io-site: ioapp.it
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
@@ -3378,7 +3392,7 @@ idpay:
     cie:
       bottomSheet:
         title: "Come funziona?"
-        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare la carta d'identità elettronica sul POS."
+        featureOne: "Puoi pagare presso tutti gli esercenti convenzionati: ti basterà appoggiare sul POS la tua carta d’identità elettronica."
         featureTwo: "Per autorizzare il pagamento, inserisci sul POS il tuo codice di sicurezza. Lo crei in app una volta sola e vale per qualsiasi iniziativa welfare compatibile."
         featureThree: "Se dimentichi il codice, puoi generarne un altro in ogni momento in Profilo > Sicurezza."
   onboarding:
