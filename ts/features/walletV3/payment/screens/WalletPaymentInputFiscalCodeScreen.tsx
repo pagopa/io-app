@@ -114,8 +114,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               counterLimit={11}
               textInputProps={{
                 keyboardType: "number-pad",
-                inputMode: "number-pad"
-                // returnKeyType: "done"
+                inputMode: "number-pad",
+                returnKeyType: "done"
               }}
             />
           </ContentWrapper>
