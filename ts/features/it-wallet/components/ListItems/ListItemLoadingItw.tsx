@@ -1,5 +1,5 @@
 import * as React from "react";
-import ItwLoadingSpinner from "../ItwLoadingSpinner";
+import { LoadingSpinner } from "@pagopa/io-app-design-system";
 import { ListItemItw } from "./ListItemItw";
 
 type ListItemLoadingView = React.ComponentProps<typeof ListItemItw> & {
@@ -12,7 +12,7 @@ type ListItemLoadingView = React.ComponentProps<typeof ListItemItw> & {
  */
 const ListItemLoadingItw = (props: ListItemLoadingView) =>
   props.loading ? (
-    <ListItemItw {...props} rightNode={<ItwLoadingSpinner />} />
+    <ListItemItw {...props} rightNode={<LoadingSpinner />} />
   ) : (
     <ListItemItw {...props} />
   );
