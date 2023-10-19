@@ -3515,6 +3515,9 @@ features:
           subTitle: "Ora puoi tornare sul sito di {{relayingParty}} per continuare"
           buttons: 
             continue: "Ok, grazie"
+      checksScreen: 
+        loading: "Stiamo controllando che questo ente sia verificato"
+        success: "{{organizationName}} è un ente verificato"
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"

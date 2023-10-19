@@ -154,3 +154,11 @@ const getRequestedClaims = (
     ]
   }
 ];
+
+export type RpMock = {
+  organizationName: string;
+};
+
+export const rpMock: RpMock = {
+  organizationName: "eFarma"
+};
