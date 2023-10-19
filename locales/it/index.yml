@@ -3336,7 +3336,6 @@ features:
         title: "Dati necessari per aggiungere la tessera"
         subtitle: "{{authsource}} li invierà a {{organization}}."
         readMore: "Scopri di più"
-        dataSource: "Forniti da {{authsource}}"
         infoBottomSheet:
           title: "Trattamento dei dati"
           body:
@@ -3399,6 +3398,21 @@ features:
       checksScreen: 
         loading: "Stiamo controllando che questo ente sia verificato"
         success: "{{organizationName}} è un ente verificato"
+      dataScreen: 
+        title: "Consenti la lettura dei tuoi dati"
+        subtitle: "Autorizza {{organizationName}} al trattamento dei tuoi dati per fornirti i servizi che richiedi."
+        why: "Come mai?"
+        requiredClaims: "Dati obbligatori"
+        optionalClaims: "Dati facoltativi"
+        privacy: 
+          usage: "I dati vengono utilizzati solo per le finalità mostrate"
+          deletion: "Potrai richiederne la rimozione in qualsiasi momento"
+        infoBottomSheet:
+          body:
+            firstHeader: "Chi è?"
+            firstBody: "È l’ente che vuole accedere ad alcune informazioni per fornirti i servizi che richiedi. IO ti consente di autorizzare il trattamento dei tuoi dati solo con enti verificati e correttamente iscritti alle liste che ne garantiscono l’affidabilità."
+            secondHeader: "I miei dati sono al sicuro?"
+            secondBody: "I tuoi dati non sono condivisi con altri soggetti e non vengono utilizzati per finalità diverse da quelle indicati. Potrai richiederne la rimozione in qualsiasi momento."
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"
@@ -3442,6 +3456,11 @@ features:
         title: "Vuoi interrompere l’operazione?"
         confirm: "Sì, interrompi"
         cancel: "No, vai indietro"
+      dataSource:
+        multi: "Forniti da {{authsource}}"
+        single: "Fornito da {{authsource}}"
+      credential: "Credenziale"
+      attribute: "Attributo"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
