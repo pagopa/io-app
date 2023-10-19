@@ -1,9 +1,10 @@
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
+import { Action } from "redux";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
@@ -63,6 +64,8 @@ import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { IOToast } from "../../components/Toast";
 import I18n from "../../i18n";
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
 
 //
 // Payment Manager APIs
@@ -640,6 +643,21 @@ export function* paymentVerificaRequestHandler(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
   action: ActionType<(typeof paymentVerifica)["request"]>
 ) {
+  yield* call(
+    commonPaymentVerificationProcedure,
+    getVerificaRpt,
+    action.payload.rptId,
+    paymentData => paymentVerifica.success(paymentData),
+    details => paymentVerifica.failure(details)
+  );
+}
+
+export function* commonPaymentVerificationProcedure<A extends Action>(
+  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
+  rptId: RptId,
+  successActionProvider: (paymentData: PaymentRequestsGetResponse) => A,
+  failureActionProvider: (details: Detail_v2Enum) => A
+) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
       yield* select(isPagoPATestEnabledSelector);
@@ -647,21 +665,25 @@ export function* paymentVerificaRequestHandler(
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield* call(
       getVerificaRpt,
       {
-        rptId: RptIdFromString.encode(action.payload.rptId),
+        rptId: RptIdFromString.encode(rptId),
         test: isPagoPATestEnabled
       }
     );
     if (E.isRight(response)) {
       if (response.right.status === 200) {
         // Verifica succeeded
-        yield* put(paymentVerifica.success(response.right.value));
+        const paymentData = response.right.value;
+        const successAction = successActionProvider(paymentData);
+        yield* put(successAction);
       } else if (
         response.right.status === 500 ||
         response.right.status === 504
       ) {
         // Verifica failed with a 500 or 504, that usually means there was an error
         // interacting with pagoPA that we can interpret
-        yield* put(paymentVerifica.failure(response.right.value.detail_v2));
+        const details = response.right.value.detail_v2;
+        const failureAction = failureActionProvider(details);
+        yield* put(failureAction);
       } else {
         throw Error(`response status ${response.right.status}`);
       }
@@ -670,7 +692,9 @@ export function* paymentVerificaRequestHandler(
     }
   } catch (e) {
     // Probably a timeout
-    yield* put(paymentVerifica.failure(getWalletError(e)));
+    const details = getWalletError(e);
+    const failureAction = failureActionProvider(details);
+    yield* put(failureAction);
   }
 }
 
