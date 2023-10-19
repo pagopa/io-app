@@ -3,9 +3,12 @@
  * on the app
  */
 import * as React from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   Divider,
-  IOIcons,
+  IOLogoPaymentType,
+  IOPaymentLogos,
   IOStyles,
   ListItemNav,
   VSpacer
@@ -13,6 +16,7 @@ import {
 import { FlatList } from "react-native";
 import WalletPaymentMethodItemSkeleton from "../../common/components/WalletPaymentMethodItemSkeleton";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<PaymentMethodResponse>;
@@ -29,15 +33,33 @@ type PaymentMethodItemProps = {
 const PaymentMethodItem = ({
   paymentMethod,
   onPress
-}: PaymentMethodItemProps) => (
-  <ListItemNav
-    icon={(paymentMethod.asset as IOIcons) || "creditCard"}
-    accessibilityLabel={paymentMethod.name}
-    onPress={onPress}
-    value={paymentMethod.name}
-  />
-);
+}: PaymentMethodItemProps) => {
+  const listItemNavCommonProps: ListItemNav = {
+    accessibilityLabel: paymentMethod.name,
+    onPress,
+    value: paymentMethod.name
+  };
 
+  return pipe(
+    paymentMethod.asset,
+    O.fromNullable,
+    O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+    O.map(([brand]) => brand),
+    O.fold(
+      () => <ListItemNav {...listItemNavCommonProps} icon="creditCard" />,
+      brand => (
+        <ListItemNav
+          {...listItemNavCommonProps}
+          paymentLogo={brand as IOLogoPaymentType}
+        />
+      )
+    )
+  );
+};
+
+/**
+ * This component shows a list of available payment methods that can be onboarded
+ */
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
   onSelectPaymentMethod,

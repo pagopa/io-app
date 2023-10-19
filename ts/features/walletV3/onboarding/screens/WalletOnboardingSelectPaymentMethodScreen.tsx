@@ -22,6 +22,8 @@ import {
   isLoadingPaymentMethodsSelector,
   walletOnboardingPaymentMethodsSelector
 } from "../store";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
 
 const WalletOnboardingSelectPaymentMethodScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
@@ -32,12 +34,13 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(
     walletOnboardingPaymentMethodsSelector
   );
-  const paymentMethods = pipe(
+  const availablePaymentMethods = pipe(
     pot.getOrElse(
       pot.map(paymentMethodsPot, el => el.paymentMethods),
       null
     ),
     O.fromNullable,
+    O.map(el => el.filter(el => el.status === PaymentMethodStatusEnum.ENABLED)),
     O.getOrElseW(() => [])
   );
 
@@ -55,14 +58,28 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
 
   return (
     <TopScreenComponent goBack>
-      <SafeAreaView style={IOStyles.flex}>
-        <WalletOnboardingPaymentMethodsList
-          header={<PaymentMethodsHeading />}
-          isLoading={isLoadingPaymentMethods}
-          onSelectPaymentMethod={handleSelectedPaymentMethod}
-          paymentMethods={paymentMethods}
+      {pot.isError(paymentMethodsPot) && (
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("genericError")}
+          subtitle={I18n.t("global.genericError")}
+          action={{
+            label: I18n.t("global.genericRetry"),
+            accessibilityLabel: I18n.t("global.genericRetry"),
+            onPress: () => dispatch(walletGetPaymentMethods.request())
+          }}
         />
-      </SafeAreaView>
+      )}
+      {!pot.isError(paymentMethodsPot) && (
+        <SafeAreaView style={IOStyles.flex}>
+          <WalletOnboardingPaymentMethodsList
+            header={<PaymentMethodsHeading />}
+            isLoading={isLoadingPaymentMethods}
+            onSelectPaymentMethod={handleSelectedPaymentMethod}
+            paymentMethods={availablePaymentMethods}
+          />
+        </SafeAreaView>
+      )}
     </TopScreenComponent>
   );
 };
