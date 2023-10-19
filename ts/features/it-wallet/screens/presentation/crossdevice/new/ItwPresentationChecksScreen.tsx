@@ -21,6 +21,7 @@ import {
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { rpMock } from "../../../../utils/mocks";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -74,7 +75,8 @@ const ItwPresentationChecksScreen = () => {
         action={{
           label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
-          onPress: () => null
+          onPress: () =>
+            navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA)
         }}
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
