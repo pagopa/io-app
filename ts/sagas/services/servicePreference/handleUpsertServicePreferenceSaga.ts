@@ -4,7 +4,6 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ServicePreference } from "../../../../definitions/backend/ServicePreference";
 import { PathTraversalSafePathParam } from "../../../../definitions/backend/PathTraversalSafePathParam";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { BackendClient } from "../../../api/backend";
 import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
 import {
