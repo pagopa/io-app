@@ -16,7 +16,10 @@ import { ImageLibraryOptions } from "react-native-image-picker";
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import {
+  IOBottomSheetModal,
+  useIOBottomSheetAutoresizableModal
+} from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
@@ -24,7 +27,7 @@ import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 
-type IOBarcodeFileScanner = {
+type IOBarcodeFileReader = {
   /**
    * Shows the image picker that lets the user select an image from the library
    */
@@ -34,17 +37,12 @@ type IOBarcodeFileScanner = {
    */
   showDocumentPicker: () => void;
   /**
-   * Component that renders the bottom sheet with the options to select an image or a PDF document
-   * from the library
+   * Bottom sheet with the options to select an image or a PDF document from the library
    */
-  filePickerBottomSheet: React.ReactElement;
-  /**
-   * Shows the {@link filePickerBottomSheet} bottom sheet component
-   */
-  showFilePicker: () => void;
+  filePickerModal: IOBottomSheetModal;
 };
 
-type IOBarcodeFileScannerConfiguration = {
+type IOBarcodeFileReaderConfiguration = {
   /**
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
@@ -76,12 +74,12 @@ const documentPickerOptions: DocumentPickerOptions<"ios" | "android"> = {
   type: [types.pdf]
 };
 
-const useIOBarcodeFileScanner = ({
+const useIOBarcodeFileReader = ({
   onBarcodeError,
   onBarcodeSuccess,
   barcodeFormats,
   barcodeTypes
-}: IOBarcodeFileScannerConfiguration): IOBarcodeFileScanner => {
+}: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
@@ -230,9 +228,8 @@ const useIOBarcodeFileScanner = ({
   return {
     showImagePicker,
     showDocumentPicker,
-    filePickerBottomSheet: filePickerModal.bottomSheet,
-    showFilePicker: filePickerModal.present
+    filePickerModal
   };
 };
 
-export { useIOBarcodeFileScanner };
+export { useIOBarcodeFileReader };

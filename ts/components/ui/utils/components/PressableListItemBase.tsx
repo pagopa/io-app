@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Pressable } from "react-native";
 import Animated from "react-native-reanimated";
+import { IOListItemStyles } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
-import { IOListItemStyles } from "../../../core/variables/IOStyles";
 import { useListItemBaseSpringAnimation } from "../hooks/useListItemBaseSpringAnimation";
 
 export type PressableBaseProps = WithTestID<{
