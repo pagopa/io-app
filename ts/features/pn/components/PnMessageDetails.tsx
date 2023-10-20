@@ -199,9 +199,10 @@ export const PnMessageDetails = ({
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
             <MessageAttachments
-              attachments={message.attachments}
-              openPreview={openAttachment}
               disabled={isCancelled}
+              attachments={message.attachments}
+              downloadAttachmentBeforePreview={true}
+              openPreview={openAttachment}
             />
           </PnMessageDetailsSection>
         )}
