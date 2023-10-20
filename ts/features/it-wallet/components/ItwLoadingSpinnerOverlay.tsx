@@ -1,8 +1,8 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import {
-  H2,
-  H4,
+  Body,
+  H3,
   IOColors,
   LoadingSpinner,
   VSpacer,
@@ -64,20 +64,19 @@ const ItwLoadingSpinnerOverlay: React.FunctionComponent<Props> = (
             )}
 
             <VSpacer size={48} />
-            <H2
+            <H3
               style={styles.textAlignCenter}
               testID="LoadingSpinnerCaptionTitleID"
             >
               {captionTitle}
-            </H2>
+            </H3>
             <VSpacer />
-            <H4
-              weight="Regular"
+            <Body
               style={styles.textAlignCenter}
               testID="LoadingSpinnerCaptionSubTitleID"
             >
               {captionSubtitle}
-            </H4>
+            </Body>
           </View>
         )
       }
