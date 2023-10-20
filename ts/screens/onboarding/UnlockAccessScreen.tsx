@@ -7,6 +7,7 @@ import {
   FeatureInfo,
   GradientScrollView,
   H3,
+  IOColors,
   IOStyles,
   Label,
   LabelSmall,
@@ -21,8 +22,11 @@ import I18n from "../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
-
-const UnlockAccessScreen = () => {
+type Props = {
+  identifier: "SPID" | "CIE";
+};
+const UnlockAccessScreen = (props: Props) => {
+  const { identifier } = props;
   const navigation = useNavigation();
   const ModalContent = () => (
     <View testID="modal-view-test">
@@ -30,9 +34,9 @@ const UnlockAccessScreen = () => {
         {I18n.t("authentication.unlockmodal.description1_1")}
         {"\n"}
         {I18n.t("authentication.unlockmodal.description1_2")}{" "}
-        <Label weight="Bold">
+        <Text style={{ color: IOColors["grey-700"], fontWeight: "bold" }}>
           {I18n.t("authentication.unlockmodal.description1_3")}{" "}
-        </Label>
+        </Text>
         {I18n.t("authentication.unlockmodal.description1_4")}{" "}
       </Body>
       <VSpacer size={24} />
@@ -72,11 +76,14 @@ const UnlockAccessScreen = () => {
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("authentication.unlockmodal.title"),
-    component: <ModalContent />,
-    fullScreen: true
-  });
+  } = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t("authentication.unlockmodal.title"),
+      component: <ModalContent />,
+      fullScreen: true
+    },
+    100
+  );
 
   return (
     <BaseScreenComponent
@@ -122,7 +129,9 @@ const UnlockAccessScreen = () => {
                 testID="subtitle-test"
                 color="grey-650"
               >
-                {I18n.t("authentication.unlock.subtitle")}
+                {identifier === "SPID"
+                  ? I18n.t("authentication.unlock.subtitlel2")
+                  : I18n.t("authentication.unlock.subtitlel3")}
               </Body>
             </View>
             <VSpacer size={16} />

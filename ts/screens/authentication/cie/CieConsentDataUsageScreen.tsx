@@ -152,7 +152,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     }
     if (this.state.hasError) {
       if (this.state.errorCode === "1002") {
-        return <UnlockAccessScreen />;
+        return <UnlockAccessScreen identifier="CIE" />;
       } else {
         const errorTranslationKey = this.state.errorCode
           ? `authentication.errors.spid.error_${this.state.errorCode}`

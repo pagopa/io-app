@@ -219,7 +219,7 @@ const IdpLoginScreen = (props: Props) => {
       );
     } else if (pot.isError(requestState)) {
       if (errorCode === "1002") {
-        return <UnlockAccessScreen />;
+        return <UnlockAccessScreen identifier="SPID" />;
       } else {
         return (
           <IdpAuthErrorScreen
