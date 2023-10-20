@@ -200,11 +200,11 @@ export const rpMock: RpMock = {
     getMultipleRequestedClaims(decodedPid),
   optionalClaims: [
     {
-      issuer: `${I18n.t("features.itWallet.generic.credential")} 1`,
+      credential: "Credenziale 1",
       claim: I18n.t("global.media.phone")
     },
     {
-      issuer: `${I18n.t("features.itWallet.generic.credential")} 1`,
+      credential: "Credenziale 1",
       claim: I18n.t("global.media.email")
     }
   ]

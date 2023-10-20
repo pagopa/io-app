@@ -25,7 +25,7 @@ type Props = {
  */
 export type ItwOptionalClaimItem = {
   claim: string;
-  issuer: string;
+  credential: string;
 };
 
 const VERTICAL_SPACING = 16;
@@ -72,7 +72,7 @@ const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
                 </View>
                 <Body>
                   {I18n.t("features.itWallet.generic.dataSource.single", {
-                    authSource: claim.issuer
+                    authSource: claim.credential
                   })}
                 </Body>
               </View>
