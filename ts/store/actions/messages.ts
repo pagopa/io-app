@@ -14,7 +14,8 @@ import {
   UIMessageDetails,
   UIMessageId,
   UIAttachment,
-  WithUIMessageId
+  WithUIMessageId,
+  WithSkipMixpanelTrackingOnFailure
 } from "../reducers/entities/messages/types";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
@@ -170,7 +171,12 @@ export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_SUCCESS",
   "DOWNLOAD_ATTACHMENT_FAILURE",
   "DOWNLOAD_ATTACHMENT_CANCEL"
-)<UIAttachment, Download, DownloadError<Error>, UIAttachment>();
+)<
+  WithSkipMixpanelTrackingOnFailure<UIAttachment>,
+  Download,
+  DownloadError<Error>,
+  UIAttachment
+>();
 
 export const cancelPreviousAttachmentDownload = createAction(
   "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
