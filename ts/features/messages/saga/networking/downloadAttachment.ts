@@ -12,7 +12,6 @@ import {
   downloadAttachment
 } from "../../../../store/actions/messages";
 import {
-  AttachmentType,
   UIAttachment,
   UIMessageId
 } from "../../../../store/reducers/entities/messages/types";
@@ -49,12 +48,12 @@ const savePath = (attachment: UIAttachment) =>
   attachment.displayName;
 
 function trackFailureEvent(
-  category: AttachmentType,
+  skipMixpanelTrackingOnFailure: boolean,
   httpStatusCode: number,
   messageId: UIMessageId,
   serviceId: ServiceId | undefined
 ): void {
-  if (category !== "GENERIC") {
+  if (skipMixpanelTrackingOnFailure) {
     return;
   }
   if (httpStatusCode === 500) {
@@ -89,8 +88,7 @@ export function* downloadAttachmentSaga(
     return;
   }
 
-  const attachment = action.payload;
-  const attachmentCategory = attachment.category;
+  const { skipMixpanelTrackingOnFailure, ...attachment } = action.payload;
   const messageId = attachment.messageId;
   const serviceId = yield* select(getServiceByMessageId, messageId);
 
@@ -118,7 +116,7 @@ export function* downloadAttachmentSaga(
       yield* put(downloadAttachment.success({ attachment, path }));
     } else {
       trackFailureEvent(
-        attachmentCategory,
+        skipMixpanelTrackingOnFailure,
         status,
         attachment.messageId,
         serviceId
@@ -134,7 +132,12 @@ export function* downloadAttachmentSaga(
       return;
     }
   } catch (error) {
-    trackFailureEvent(attachmentCategory, 0, attachment.messageId, serviceId);
+    trackFailureEvent(
+      skipMixpanelTrackingOnFailure,
+      0,
+      attachment.messageId,
+      serviceId
+    );
     yield* put(
       downloadAttachment.failure({
         attachment,
