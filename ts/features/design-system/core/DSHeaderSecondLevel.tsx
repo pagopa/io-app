@@ -7,9 +7,12 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
-import { IconButton, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOVisualCostants,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { NewH3 } from "../../../components/core/typography/NewH3";
 import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
 

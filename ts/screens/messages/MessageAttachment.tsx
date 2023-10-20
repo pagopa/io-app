@@ -40,7 +40,7 @@ export const MessageDetailAttachment = (
     getServiceByMessageId(state, messageId)
   );
 
-  const thirdPartyMessageUIAttachmentOption = useIOSelector(state =>
+  const maybeThirdPartyMessageUIAttachment = useIOSelector(state =>
     thirdPartyMessageUIAttachment(state)(messageId)(attachmentId)
   );
 
@@ -49,19 +49,19 @@ export const MessageDetailAttachment = (
     // first retrieved the third party message (so it should never happen)
     if (
       !autoBackOnErrorHandled.current &&
-      O.isNone(thirdPartyMessageUIAttachmentOption)
+      O.isNone(maybeThirdPartyMessageUIAttachment)
     ) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       showToast(I18n.t("messageDetails.attachments.downloadFailed"));
       navigation.goBack();
     }
-  }, [navigation, thirdPartyMessageUIAttachmentOption]);
+  }, [navigation, maybeThirdPartyMessageUIAttachment]);
 
-  return O.isSome(thirdPartyMessageUIAttachmentOption) ? (
+  return O.isSome(maybeThirdPartyMessageUIAttachment) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={thirdPartyMessageUIAttachmentOption.value}
+      attachment={maybeThirdPartyMessageUIAttachment.value}
       onPDFError={() => {
         trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
         showToast(I18n.t("messageDetails.attachments.corruptedFile"));

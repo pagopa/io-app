@@ -91,6 +91,7 @@ export const testableFunctions = isTestEnv
 // then the download is delegated to another part of the application
 export const useAttachmentDownload = (
   attachment: UIAttachment,
+  downloadAttachmentBeforePreview: boolean = false,
   openPreview: (attachment: UIAttachment) => void
 ) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -127,14 +128,13 @@ export const useAttachmentDownload = (
     setIsLoading(isStillLoading);
   }, [downloadPot, isLoading, setIsLoading, openAttachment]);
 
-  const isGenericAttachment = attachment.category === "GENERIC";
   const downloadAttachmentIfNeeded = async () => {
     if (pot.isLoading(downloadPot)) {
       return;
     }
 
     // Do not download the attachment for generic third party message
-    if (isGenericAttachment) {
+    if (!downloadAttachmentBeforePreview) {
       trackThirdPartyMessageAttachmentShowPreview();
       openPreview(attachment);
       return;
@@ -152,7 +152,12 @@ export const useAttachmentDownload = (
       ),
       TE.filterOrElse(identity, () => undefined),
       TE.mapLeft(() => {
-        dispatch(downloadAttachment.request(attachment));
+        dispatch(
+          downloadAttachment.request({
+            ...attachment,
+            skipMixpanelTrackingOnFailure: false
+          })
+        );
       }),
       TE.chainW(() =>
         TE.tryCatch(
