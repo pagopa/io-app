@@ -27,6 +27,13 @@ import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
 import { useIODispatch } from "../../store/hooks";
 import { TranslationKeys } from "../../../locales/locales";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import {
+  trackLoginSessionOptIn,
+  trackLoginSessionOptIn30,
+  trackLoginSessionOptIn365,
+  trackLoginSessionOptInInfo
+} from "../../features/fastLogin/analytics/optinAnalytics";
 
 // FIXME -> insert correct contextual help and FAQ https://pagopa.atlassian.net/browse/IOPID-987
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -48,7 +55,16 @@ const NewOptInScreen = (props: Props) => {
 
   const navigation = useNavigation();
 
+  useOnFirstRender(() => {
+    trackLoginSessionOptIn();
+  });
+
   const navigateToIdpPage = (isLV: boolean) => {
+    if (isLV) {
+      trackLoginSessionOptIn365();
+    } else {
+      trackLoginSessionOptIn30();
+    }
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen:
         props.route.params.identifier === "CIE"
@@ -157,7 +173,10 @@ const NewOptInScreen = (props: Props) => {
             pictogramName="identityCheck"
             body={I18n.t("authentication.opt-in.identity-check")}
             actionLabel={I18n.t("authentication.opt-in.security-suggests")}
-            actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
+            actionOnPress={() => {
+              trackLoginSessionOptInInfo();
+              return presentVeryLongAutoresizableBottomSheetWithFooter();
+            }}
           />
           <VSpacer size={24} />
           <FeatureInfo
