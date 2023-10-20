@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 /**
@@ -25,7 +25,7 @@ type ItwInfoFlowProps = {
  * @param title - the title of the bottom sheet.
  * @param content - the content of the bottom sheet. Consists of an array of objects with a title and a body.
  */
-export const useItwInfoFlow = ({ title, content }: ItwInfoFlowProps) => {
+export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
       {content.map((item, index) => (
@@ -36,13 +36,13 @@ export const useItwInfoFlow = ({ title, content }: ItwInfoFlowProps) => {
           <VSpacer size={16} />
         </View>
       ))}
+      <VSpacer size={24} />
     </View>
   );
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+  const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal({
     title,
-    component: <BottomSheetBody />,
-    snapPoint: [300]
+    component: <BottomSheetBody />
   });
 
   return {
