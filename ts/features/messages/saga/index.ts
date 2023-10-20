@@ -8,7 +8,7 @@ import {
   downloadAttachment,
   removeCachedAttachment
 } from "../../../store/actions/messages";
-import { handleDownloadAttachmentSaga } from "./handleDownloadAttachment";
+import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
   handleClearAttachment
@@ -24,7 +24,7 @@ export function* watchMessageAttachmentsSaga(
   // handle the request for a new downloadAttachment
   yield* takeLatest(
     downloadAttachment.request,
-    handleDownloadAttachmentSaga,
+    handleDownloadAttachment,
     bearerToken
   );
 
