@@ -67,25 +67,27 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
       ),
       ({ initiativeId, nInstr, status }) => {
         // between ListItemNav and ListItemNavAlert, ListItemNavAlert is the least inclusive one
+        const methodCountString = I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
+          {
+            defaultValue: I18n.t(
+              `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
+              { count: nInstr }
+            ),
+            count: nInstr
+          }
+        );
         const listItemOptions: ListItemNavAlert = {
           value: I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           ),
-          description: I18n.t(
-            `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
-            {
-              defaultValue: I18n.t(
-                `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
-                { count: nInstr }
-              ),
-              count: nInstr
-            }
-          ),
+          description: methodCountString,
 
           onPress: () => navigateToInstrumentsConfiguration(initiativeId),
-          accessibilityLabel: I18n.t(
+          accessibilityLabel: `${I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )
+          )}
+          ${methodCountString}`
         };
         const areActionsRequired =
           status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN ||
@@ -119,9 +121,9 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
           description={<Skeleton width={270} height={21} />}
-          accessibilityLabel={I18n.t(
+          accessibilityLabel={`${I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          )}
+          )}, ${I18n.t("global.remoteStates.loading")}`}
           onPress={() => null}
         />
       ),
@@ -152,7 +154,10 @@ const InitiativeRefundSettingsComponent = (props: Props) => {
             )}`}
           />
         ) : (
-          <ListItemNav {...listItemOptions} />
+          <ListItemNav
+            {...listItemOptions}
+            accessibilityLabel={`${listItemOptions.accessibilityLabel} , ${listItemOptions.description}`}
+          />
         );
       }
     )
