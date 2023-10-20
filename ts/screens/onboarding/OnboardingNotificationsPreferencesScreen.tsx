@@ -40,6 +40,7 @@ import { showToast } from "../../utils/showToast";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
 import {
+  trackNotificationPreferenceConfiguration,
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
@@ -177,6 +178,11 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   }, [isError, isUpdating]);
 
   const upsertPreferences = () => {
+    trackNotificationPreferenceConfiguration(
+      remindersEnabled,
+      previewEnabled,
+      getFlowType(true, isFirstOnboarding)
+    );
     dispatch(
       profileUpsert.request({
         reminder_status: remindersEnabled

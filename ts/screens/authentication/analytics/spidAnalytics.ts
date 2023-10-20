@@ -1,3 +1,4 @@
+import { IdpData } from "../../../../definitions/content/IdpData";
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
@@ -81,4 +82,13 @@ export function trackLoginSpidError(errorCode?: string) {
       return;
     }
   }
+}
+
+export function trackLoginSpidIdpSelected(idp: string) {
+  void mixpanelTrack(
+    "LOGIN_SPID_IDP_SELECTED",
+    buildEventProperties("UX", "action", {
+      idp
+    })
+  );
 }

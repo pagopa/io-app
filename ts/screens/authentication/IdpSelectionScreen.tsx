@@ -41,6 +41,7 @@ import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackSpidLoginIdpSelection } from "./analytics";
+import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -110,6 +111,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+    trackLoginSpidIdpSelected(idp.id);
     if (isNativeLoginEnabled()) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_AUTH_SESSION

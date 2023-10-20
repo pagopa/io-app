@@ -35,3 +35,10 @@ export function trackLoginCieDataSharingError() {
     buildEventProperties("KO", undefined)
   );
 }
+
+export function trackLoginCiePinInfo() {
+  void mixpanelTrack(
+    "LOGIN_CIE_PIN_INFO",
+    buildEventProperties("UX", "action")
+  );
+}

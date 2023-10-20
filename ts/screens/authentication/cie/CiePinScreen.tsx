@@ -48,7 +48,10 @@ import { loginSuccess } from "../../../store/actions/authentication";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import { SessionToken } from "../../../types/SessionToken";
 import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
-import { trackLoginCiePinScreen } from "../analytics/cieAnalytics";
+import {
+  trackLoginCiePinInfo,
+  trackLoginCiePinScreen
+} from "../analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -186,7 +189,12 @@ const CiePinScreen: React.FC<Props> = props => {
           rasterIcon={require("../../../../img/icons/icon_insert_cie_pin.png")}
           subtitle={I18n.t("authentication.cie.pin.subtitleHelp")}
           subtitleLink={
-            <Link onPress={present}>
+            <Link
+              onPress={() => {
+                trackLoginCiePinInfo();
+                present();
+              }}
+            >
               {I18n.t("authentication.cie.pin.subtitleCTA")}
             </Link>
           }

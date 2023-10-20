@@ -119,3 +119,45 @@ export function trackServiceConfiguration(
     )
   );
 }
+
+type NotificationPreferenceConfiguration =
+  | "preview"
+  | "reminder"
+  | "none"
+  | "complete";
+
+function getNotificationPreferenceConfiguration(
+  isReminderEnabled: boolean,
+  isPreviewEnabled: boolean
+): NotificationPreferenceConfiguration {
+  if (isReminderEnabled && isPreviewEnabled) {
+    return "complete";
+  }
+  if (isReminderEnabled) {
+    return "reminder";
+  }
+  if (isPreviewEnabled) {
+    return "preview";
+  }
+  return "none";
+}
+
+export function trackNotificationPreferenceConfiguration(
+  isReminderEnabled: boolean,
+  isPreviewEnabled: boolean,
+  flow: FlowType
+) {
+  const configuration: NotificationPreferenceConfiguration =
+    getNotificationPreferenceConfiguration(isReminderEnabled, isPreviewEnabled);
+  void mixpanelTrack(
+    "NOTIFICATION_PREFERENCE_CONFIGURATION",
+    buildEventProperties(
+      "UX",
+      "action",
+      {
+        configuration
+      },
+      flow
+    )
+  );
+}
