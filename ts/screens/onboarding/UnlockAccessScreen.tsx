@@ -25,7 +25,7 @@ import ROUTES from "../../navigation/routes";
 const UnlockAccessScreen = () => {
   const navigation = useNavigation();
   const ModalContent = () => (
-    <View>
+    <View testID="modal-view-test">
       <Body weight="Regular" color="grey-700">
         {I18n.t("authentication.unlockmodal.description1_1")}
         {"\n"}
@@ -72,14 +72,11 @@ const UnlockAccessScreen = () => {
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t("authentication.unlockmodal.title"),
-      component: <ModalContent />,
-      fullScreen: true
-    },
-    120
-  );
+  } = useIOBottomSheetAutoresizableModal({
+    title: I18n.t("authentication.unlockmodal.title"),
+    component: <ModalContent />,
+    fullScreen: true
+  });
 
   return (
     <BaseScreenComponent
@@ -91,6 +88,7 @@ const UnlockAccessScreen = () => {
         primaryAction={
           <ButtonSolid
             fullWidth
+            testID="button-solid-test"
             label={I18n.t("authentication.unlock.title")}
             accessibilityLabel="Click here to unlock your profile"
             onPress={() => openWebUrl("https://ioapp.it/")}
@@ -98,22 +96,23 @@ const UnlockAccessScreen = () => {
         }
         secondaryAction={
           <ButtonLink
+            testID="button-link-test"
             label={I18n.t("authentication.unlock.loginIO")}
             accessibilityLabel="Click here to redirect to the landing screen"
             onPress={() => navigation.navigate(ROUTES.AUTHENTICATION_LANDING)}
           />
         }
       >
-        <SafeAreaView style={IOStyles.flex}>
-          <VSpacer size={40} />
-          <VSpacer size={40} />
+        <SafeAreaView>
           <ContentWrapper>
             <View style={IOStyles.selfCenter}>
               <Pictogram name="accessDenied" size={120} color="aqua" />
             </View>
             <VSpacer size={16} />
             <View style={IOStyles.alignCenter}>
-              <H3 weight="SemiBold">{I18n.t("authentication.unlock.title")}</H3>
+              <H3 testID="title-test" weight="SemiBold">
+                {I18n.t("authentication.unlock.title")}
+              </H3>
             </View>
             <VSpacer size={16} />
             <View>
@@ -131,7 +130,7 @@ const UnlockAccessScreen = () => {
               <ButtonLink
                 label={I18n.t("authentication.unlock.learnmore")}
                 onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
-                testID="link-test"
+                testID="learn-more-link-test"
               />
             </View>
           </ContentWrapper>
