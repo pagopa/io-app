@@ -11,13 +11,22 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { BarcodeScanBaseScreenComponent, IOBarcode } from "../../../barcode";
+import {
+  BarcodeScanBaseScreenComponent,
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeType,
+  useIOBarcodeFileReader
+} from "../../../barcode";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 const IDPayPaymentCodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
+
+  const barcodeFormats: Array<IOBarcodeFormat> = ["QR_CODE"];
+  const barcodeTypes: Array<IOBarcodeType> = ["IDPAY"];
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     if (barcodes.length > 1) {
@@ -53,15 +62,26 @@ const IDPayPaymentCodeScanScreen = () => {
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
     });
 
+  const { filePickerModal } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
+  });
+
   return (
-    <BarcodeScanBaseScreenComponent
-      barcodeFormats={["QR_CODE"]}
-      barcodeTypes={["IDPAY"]}
-      onBarcodeSuccess={handleBarcodeSuccess}
-      onBarcodeError={handleBarcodeError}
-      onManualInputPressed={navigateToCodeInputScreen}
-      contextualHelp={emptyContextualHelp}
-    />
+    <>
+      <BarcodeScanBaseScreenComponent
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
+        onBarcodeSuccess={handleBarcodeSuccess}
+        onBarcodeError={handleBarcodeError}
+        onFileInputPressed={filePickerModal.present}
+        onManualInputPressed={navigateToCodeInputScreen}
+        contextualHelp={emptyContextualHelp}
+      />
+      {filePickerModal.bottomSheet}
+    </>
   );
 };
 
