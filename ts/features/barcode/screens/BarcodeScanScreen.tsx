@@ -25,8 +25,11 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
+import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
   IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeType,
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
@@ -41,6 +44,14 @@ const BarcodeScanScreen = () => {
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
+  );
+
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
+    type === "IDPAY" ? isIdPayEnabled : true
   );
 
   /**
@@ -177,34 +188,25 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
-    switch (format) {
-      case "DATA_MATRIX":
-        return dataMatrixPosteEnabled;
-      default:
-        return true;
-    }
-  });
-
-  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(type => {
-    switch (type) {
-      case "IDPAY":
-        return isIdPayEnabled;
-      default:
-        return true;
-    }
+  const { filePickerModal } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
   });
 
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        barcodeFormats={enabledFormats}
-        barcodeTypes={enabledTypes}
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
+        onFileInputPressed={filePickerModal.present}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
       />
+      {filePickerModal.bottomSheet}
       {manualInputModal.bottomSheet}
     </>
   );

@@ -20,9 +20,15 @@ import { barcodesScannerConfigSelector } from "../../../../store/reducers/backen
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
-  IOBarcode
+  IOBarcode,
+  useIOBarcodeFileReader
 } from "../../../barcode";
-import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
+import {
+  IOBarcodeFormat,
+  IOBarcodeType,
+  IO_BARCODE_ALL_FORMATS,
+  PagoPaBarcode
+} from "../../../barcode/types/IOBarcode";
 import { WalletPaymentRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -36,6 +42,12 @@ const WalletPaymentBarcodeScanScreen = () => {
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
+
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = ["PAGOPA"];
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
@@ -111,18 +123,27 @@ const WalletPaymentBarcodeScanScreen = () => {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
 
+  const { filePickerModal } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
+  });
+
   return (
-    <BarcodeScanBaseScreenComponent
-      barcodeFormats={
-        dataMatrixPosteEnabled ? ["QR_CODE", "DATA_MATRIX"] : ["QR_CODE"]
-      }
-      barcodeTypes={["PAGOPA"]}
-      onBarcodeSuccess={handleBarcodeSuccess}
-      onBarcodeError={handleBarcodeError}
-      onManualInputPressed={handleManualInputPressed}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["wallet"]}
-    />
+    <>
+      <BarcodeScanBaseScreenComponent
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
+        onBarcodeSuccess={handleBarcodeSuccess}
+        onBarcodeError={handleBarcodeError}
+        onFileInputPressed={filePickerModal.present}
+        onManualInputPressed={handleManualInputPressed}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet"]}
+      />
+      {filePickerModal.bottomSheet}
+    </>
   );
 };
 
