@@ -112,7 +112,7 @@ export const paymentStatusForUISelector = (
 export const paymentsButtonStateSelector = (
   state: GlobalState,
   messageId: UIMessageId,
-  payments: ReadonlyArray<NotificationPaymentInfo>,
+  payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
   maxVisiblePaymentCount: number
 ) =>
   pipe(
@@ -124,7 +124,7 @@ export const paymentsButtonStateSelector = (
 
 const computeUpdatedPaymentCount =
   (
-    payments: ReadonlyArray<NotificationPaymentInfo>,
+    payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
     maxVisiblePaymentCount: number
   ) =>
   (maybePaymentStatuses: O.Option<SinglePaymentState>) =>
@@ -132,7 +132,7 @@ const computeUpdatedPaymentCount =
       maybePaymentStatuses,
       O.map(paymentStatuses =>
         pipe(
-          payments,
+          payments ?? [],
           RA.takeLeft(1 + maxVisiblePaymentCount),
           RA.reduce(0, (accumulator, payment) =>
             pipe(
@@ -165,11 +165,11 @@ const isPaymentReadyOrError = (
 
 const buttonStateFromUpdatedPaymentCount =
   (
-    payments: ReadonlyArray<NotificationPaymentInfo>,
+    payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
     maxVisiblePaymentCount: number
   ) =>
   (updatedPaymentCount: number) =>
-    pipe(payments.length, paymentCount =>
+    pipe(payments?.length ?? 0, paymentCount =>
       pipe(
         paymentCount <= maxVisiblePaymentCount &&
           paymentCount === updatedPaymentCount,

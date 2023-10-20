@@ -1,43 +1,31 @@
 import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
 import I18n from "i18n-js";
 import {
   Body,
   LabelLink,
   ModulePaymentNotice,
-  PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useStore } from "react-redux";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { navigateToPnCancelledMessagePaidPaymentScreen } from "../navigation/actions";
 import { H5 } from "../../../components/core/typography/H5";
-import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { getRptIdStringFromPayment } from "../utils/rptId";
-import { updatePaymentForMessage } from "../store/actions";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
-import {
-  paymentStatusForUISelector,
-  shouldUpdatePaymentSelector
-} from "../store/reducers/payments";
-import { GlobalState } from "../../../store/reducers/types";
-import { getV2ErrorMainType } from "../../../utils/payment";
 import { MessageDetailsSection } from "./MessageDetailsSection";
+import { MessagePaymentItem } from "./MessagePaymentItem";
 
 type MessagePaymentsProps = {
   messageId: UIMessageId;
   isCancelled: boolean;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;
+  maxVisiblePaymentCount: number;
 };
 
 const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
@@ -86,7 +74,8 @@ export const MessagePayments = ({
   messageId,
   isCancelled,
   payments,
-  completedPaymentNoticeCodes
+  completedPaymentNoticeCodes,
+  maxVisiblePaymentCount
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
   if (
@@ -98,7 +87,7 @@ export const MessagePayments = ({
   ) {
     return null;
   }
-  console.log(`=== Payments: re-rendering`);
+  // console.log(`=== Payments: re-rendering`);
   if (isCancelled) {
     return (
       <MessageDetailsSection
@@ -151,16 +140,16 @@ export const MessagePayments = ({
         <Body>{I18n.t("features.pn.details.paymentSection.notice")}</Body>
         {payments &&
           payments
-            .slice(0, 5)
+            .slice(0, maxVisiblePaymentCount)
             .map((payment, index) => (
-              <MessagePayment
+              <MessagePaymentItem
                 index={index}
                 key={`PM_${index}`}
                 messageId={messageId}
                 payment={payment}
               />
             ))}
-        {payments && payments.length > 5 && (
+        {payments && payments.length > maxVisiblePaymentCount && (
           <>
             <VSpacer size={24} />
             <LabelLink onPress={() => undefined}>
@@ -173,122 +162,4 @@ export const MessagePayments = ({
       </MessageDetailsSection>
     );
   }
-};
-
-type MessagePaymentProps = {
-  index: number;
-  messageId: UIMessageId;
-  payment: NotificationPaymentInfo;
-};
-
-type ProcessedPaymentUIData = {
-  paymentNoticeStatus: Exclude<PaymentNoticeStatus, "default">;
-  badgeText: string;
-};
-
-const paymentNoticeStatusFromDetailV2Enum = (
-  detail: Detail_v2Enum
-): Exclude<PaymentNoticeStatus, "default"> => {
-  const errorType = getV2ErrorMainType(detail);
-  switch (errorType) {
-    case "EC":
-      // TODO
-      break;
-    case "REVOKED":
-      return "revoked";
-    case "EXPIRED":
-      return "expired";
-    case "ONGOING":
-      // TODO
-      break;
-    case "DUPLICATED":
-      return "paid";
-  }
-  return "error";
-};
-
-const processedUIPaymentFromDetailV2Enum = (
-  detail: Detail_v2Enum
-): ProcessedPaymentUIData =>
-  pipe(detail, paymentNoticeStatusFromDetailV2Enum, paymentNoticeStatus => ({
-    paymentNoticeStatus,
-    badgeText: getBadgeTextByPaymentNoticeStatus(paymentNoticeStatus)
-  }));
-
-const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
-  <ModulePaymentNotice
-    isLoading={true}
-    title={""}
-    subtitle={""}
-    onPress={_ => undefined}
-    paymentNoticeStatus={"error"}
-    badgeText={""}
-  />
-);
-
-const modulePaymentNoticeFromPaymentStatus = (
-  paymentId: string,
-  paymentStatus: RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
-) =>
-  fold(
-    paymentStatus,
-    modulePaymentNoticeForUndefinedOrLoadingPayment,
-    modulePaymentNoticeForUndefinedOrLoadingPayment,
-    payablePayment => (
-      <ModulePaymentNotice
-        title={payablePayment.dueDate}
-        subtitle={payablePayment.causaleVersamento}
-        paymentNoticeStatus="default"
-        paymentNoticeAmount={`${payablePayment.importoSingoloVersamento}`}
-        onPress={_ => undefined}
-      />
-    ),
-    processedPaymentDetails => {
-      const { paymentNoticeStatus, badgeText } =
-        processedUIPaymentFromDetailV2Enum(processedPaymentDetails);
-      return (
-        <ModulePaymentNotice
-          title={I18n.t("features.pn.details.noticeCode")}
-          subtitle={paymentId}
-          onPress={_ => undefined}
-          paymentNoticeStatus={paymentNoticeStatus}
-          badgeText={badgeText}
-        />
-      );
-    }
-  );
-
-const MessagePayment = ({ index, messageId, payment }: MessagePaymentProps) => {
-  const dispatch = useDispatch();
-
-  const paymentId = getRptIdStringFromPayment(payment);
-
-  const store = useStore();
-  const globalState = store.getState() as GlobalState;
-  const shouldUpdatePayment = shouldUpdatePaymentSelector(
-    globalState,
-    messageId,
-    paymentId
-  );
-  const paymentStatusForUI = useIOSelector(state =>
-    paymentStatusForUISelector(state, messageId, paymentId)
-  );
-  useEffect(() => {
-    if (shouldUpdatePayment) {
-      const updateAction = updatePaymentForMessage.request({
-        messageId,
-        paymentId
-      });
-      console.log(`=== PaymentItem: dispatch (${messageId}) (${paymentId})`);
-      dispatch(updateAction);
-    }
-    // Request payment
-  }, [dispatch, messageId, paymentId, shouldUpdatePayment]);
-  console.log(`=== PaymentItem: re-rendering`);
-  return (
-    <View>
-      <VSpacer size={index > 0 ? 8 : 24} />
-      {modulePaymentNoticeFromPaymentStatus(paymentId, paymentStatusForUI)}
-    </View>
-  );
 };

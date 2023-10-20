@@ -9,7 +9,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
@@ -37,6 +36,7 @@ import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
 import { MessagePayments } from "./MessagePayments";
+import { MessageFooter } from "./MessageFooter";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -45,13 +45,14 @@ type Props = Readonly<{
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
 }>;
 
+export const maxVisiblePaymentCountGenerator = () => 5;
+
 export const MessageDetails = ({
   message,
   messageId,
   service,
   payments
 }: Props) => {
-  // const dispatch = useIODispatch();
   const navigation = useNavigation();
   const viewRef = createRef<View>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
@@ -73,8 +74,9 @@ export const MessageDetails = ({
     [messageId, navigation]
   );
 
+  const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
-
+  // console.log(`=== MessageDetails: re-rendering`);
   return (
     <>
       <ScrollView
@@ -122,6 +124,7 @@ export const MessageDetails = ({
           isCancelled={isCancelled}
           payments={payments}
           completedPaymentNoticeCodes={completedPaymentNoticeCodes}
+          maxVisiblePaymentCount={maxVisiblePaymentCount}
         />
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
@@ -146,19 +149,11 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
-      {
-        // TODO
-        !isCancelled && (
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              block: true,
-              onPress: undefined, // TODO
-              title: I18n.t("wallet.continue")
-            }}
-          />
-        )
-      }
+      <MessageFooter
+        messageId={messageId}
+        payments={payments}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+      />
     </>
   );
 };
