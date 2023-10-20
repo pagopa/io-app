@@ -26,7 +26,7 @@ import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
 import { CredentialCatalogItem } from "../../utils/mocks";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
-import { useItwInfoFlow } from "../../hooks/useItwInfoFlow";
+import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
@@ -46,7 +46,7 @@ const ItwCredentialPreviewScreen = () => {
   const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
   const toast = useIOToast();
   const dispatch = useIODispatch();
-  const { present, bottomSheet } = useItwInfoFlow({
+  const { present, bottomSheet } = useItwInfoBottomSheet({
     title: pipe(
       credential,
       O.map(some => some.claims.issuedByNew),
