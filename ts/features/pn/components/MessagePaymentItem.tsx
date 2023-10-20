@@ -1,16 +1,16 @@
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import React, { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import { useDispatch, useStore } from "react-redux";
 import {
-  IOToast,
   ModulePaymentNotice,
   PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
-import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -29,6 +29,12 @@ import { getV2ErrorMainType } from "../../../utils/payment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import ROUTES from "../../../navigation/routes";
+import { format } from "../../../utils/dates";
+import {
+  centsToAmount,
+  formatNumberAmount
+} from "../../../utils/stringBuilder";
+import { useIOToast } from "../../../components/Toast";
 
 type MessagePaymentItemProps = {
   index: number;
@@ -82,7 +88,7 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 );
 
 const modulePaymentNoticeFromPaymentStatus = (
-  paymentId: string,
+  noticeCode: string,
   paymentStatus: RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>,
   paymentCallback: () => void
 ) =>
@@ -90,23 +96,46 @@ const modulePaymentNoticeFromPaymentStatus = (
     paymentStatus,
     modulePaymentNoticeForUndefinedOrLoadingPayment,
     modulePaymentNoticeForUndefinedOrLoadingPayment,
-    payablePayment => (
-      <ModulePaymentNotice
-        title={payablePayment.dueDate}
-        subtitle={payablePayment.causaleVersamento}
-        paymentNoticeStatus="default"
-        paymentNoticeAmount={`${payablePayment.importoSingoloVersamento}`}
-        onPress={() => paymentCallback()}
-      />
-    ),
+    payablePayment => {
+      const dueDateOrUndefined = pipe(
+        payablePayment.dueDate,
+        O.fromNullable,
+        O.map(
+          dueDate =>
+            `${I18n.t("wallet.firstTransactionSummary.dueDate")} ${format(
+              dueDate,
+              "DD/MM/YYYY"
+            )}`
+        ),
+        O.toUndefined
+      );
+      const formattedAmount = pipe(
+        payablePayment.importoSingoloVersamento,
+        centsToAmount,
+        formatNumberAmount,
+        formattedAmount => `${formattedAmount} €`
+      );
+      return (
+        <ModulePaymentNotice
+          title={dueDateOrUndefined}
+          subtitle={payablePayment.causaleVersamento}
+          paymentNoticeStatus="default"
+          paymentNoticeAmount={formattedAmount}
+          onPress={paymentCallback}
+        />
+      );
+    },
     processedPaymentDetails => {
+      const formattedPaymentNoticeCode = noticeCode
+        .replace(/(\d{4})/g, "$1  ")
+        .trim();
       const { paymentNoticeStatus, badgeText } =
         processedUIPaymentFromDetailV2Enum(processedPaymentDetails);
       return (
         <ModulePaymentNotice
           title={I18n.t("features.pn.details.noticeCode")}
-          subtitle={paymentId}
-          onPress={() => paymentCallback()}
+          subtitle={formattedPaymentNoticeCode}
+          onPress={paymentCallback}
           paymentNoticeStatus={paymentNoticeStatus}
           badgeText={badgeText}
         />
@@ -122,6 +151,7 @@ export const MessagePaymentItem = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const store = useStore();
+  const toast = useIOToast();
 
   const paymentId = getRptIdStringFromPayment(payment);
 
@@ -136,17 +166,18 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
-    const eitherRptId = RptId.decode(paymentId);
+    const eitherRptId = RptIdFromString.decode(paymentId);
     if (E.isLeft(eitherRptId)) {
-      IOToast.error(I18n.t("genericError"));
+      toast.error(I18n.t("genericError"));
       return;
     }
     dispatch(paymentInitializeState());
+
     navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
       params: { rptId: eitherRptId.right }
     });
-  }, [dispatch, navigation, paymentId]);
+  }, [dispatch, navigation, paymentId, toast]);
   useEffect(() => {
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
@@ -162,7 +193,7 @@ export const MessagePaymentItem = ({
     <View>
       <VSpacer size={index > 0 ? 8 : 24} />
       {modulePaymentNoticeFromPaymentStatus(
-        paymentId,
+        payment.noticeCode,
         paymentStatusForUI,
         startPaymentCallback
       )}

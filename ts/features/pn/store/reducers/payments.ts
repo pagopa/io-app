@@ -134,49 +134,81 @@ const computeUpdatedPaymentCount =
         pipe(
           payments ?? [],
           RA.takeLeft(1 + maxVisiblePaymentCount),
-          RA.reduce(0, (accumulator, payment) =>
+          RA.reduce(initialPaymentStatistics(), (accumulator, payment) =>
             pipe(
               payment,
               getRptIdStringFromPayment,
               paymentId => paymentStatuses[paymentId],
               O.fromNullable,
-              isPaymentReadyOrError,
-              B.fold(
-                () => accumulator,
-                () => 1 + accumulator
-              )
+              computePaymentStatistics(accumulator)
             )
           )
         )
       ),
-      O.getOrElse(() => 0)
+      O.getOrElse(() => initialPaymentStatistics())
     );
 
-const isPaymentReadyOrError = (
-  maybePaymentStatus: O.Option<
-    RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
-  >
-) =>
-  pipe(
-    maybePaymentStatus,
-    O.map(paymentStatus => isReady(paymentStatus) || isError(paymentStatus)),
-    O.getOrElse(() => false)
-  );
+type PaymentStatistics = {
+  updatedPaymentCount: number;
+  errorPaymentCount: number;
+};
+
+const initialPaymentStatistics: () => PaymentStatistics = () => ({
+  updatedPaymentCount: 0,
+  errorPaymentCount: 0
+});
+
+const updatedPaymentStatistics = (previousStatistics: PaymentStatistics) => ({
+  updatedPaymentCount: previousStatistics.updatedPaymentCount + 1,
+  errorPaymentCount: previousStatistics.errorPaymentCount
+});
+const errorPaymentStatistics = (previousStatistics: PaymentStatistics) => ({
+  updatedPaymentCount: previousStatistics.updatedPaymentCount + 1,
+  errorPaymentCount: previousStatistics.errorPaymentCount + 1
+});
+
+const computePaymentStatistics =
+  (previousStatistics: PaymentStatistics) =>
+  (
+    maybePaymentStatus: O.Option<
+      RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
+    >
+  ) =>
+    pipe(
+      maybePaymentStatus,
+      O.map(paymentStatus =>
+        pipe(
+          isError(paymentStatus),
+          B.fold(
+            () =>
+              pipe(
+                isReady(paymentStatus),
+                B.fold(
+                  () => ({ ...previousStatistics }),
+                  () => updatedPaymentStatistics(previousStatistics)
+                )
+              ),
+            () => errorPaymentStatistics(previousStatistics)
+          )
+        )
+      ),
+      O.getOrElse(() => ({ ...previousStatistics }))
+    );
 
 const buttonStateFromUpdatedPaymentCount =
   (
     payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
     maxVisiblePaymentCount: number
   ) =>
-  (updatedPaymentCount: number) =>
+  (updatedPaymentStatistics: PaymentStatistics) =>
     pipe(payments?.length ?? 0, paymentCount =>
       pipe(
         paymentCount <= maxVisiblePaymentCount &&
-          paymentCount === updatedPaymentCount,
+          paymentCount === updatedPaymentStatistics.errorPaymentCount,
         B.fold(
           () =>
             pipe(
-              updatedPaymentCount > 0,
+              updatedPaymentStatistics.updatedPaymentCount > 0,
               B.fold(
                 () => "visibleLoading" as const,
                 () => "visibleEnabled" as const

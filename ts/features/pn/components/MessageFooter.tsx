@@ -1,21 +1,33 @@
 import React from "react";
+import { StyleSheet, View } from "react-native";
+import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import variables from "../../../theme/variables";
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: "hidden",
+    marginTop: -variables.footerShadowOffsetHeight,
+    paddingTop: variables.footerShadowOffsetHeight
+  }
+});
 
 type MessageFooterProps = {
   messageId: UIMessageId;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   maxVisiblePaymentCount: number;
+  isCancelled: boolean;
 };
 
 export const MessageFooter = ({
   messageId,
   payments,
-  maxVisiblePaymentCount
+  maxVisiblePaymentCount,
+  isCancelled
 }: MessageFooterProps) => {
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
@@ -25,20 +37,24 @@ export const MessageFooter = ({
       maxVisiblePaymentCount
     )
   );
-  if (buttonState === "hidden") {
+  if (isCancelled || buttonState === "hidden") {
     return null;
   }
   // console.log(`=== MessageFooter: re-rendering`);
   const isLoading = buttonState === "visibleLoading";
   return (
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={{
-        block: true,
-        onPress: () => undefined,
-        title: I18n.t("wallet.continue"),
-        isLoading
-      }}
-    />
+    <View style={styles.container}>
+      <View style={IOStyles.footer}>
+        <ButtonSolid
+          disabled={isLoading}
+          fullWidth={true}
+          loading={isLoading}
+          color="primary"
+          label={I18n.t("wallet.continue")}
+          onPress={() => undefined}
+          accessibilityLabel={I18n.t("wallet.continue")}
+        />
+      </View>
+    </View>
   );
 };

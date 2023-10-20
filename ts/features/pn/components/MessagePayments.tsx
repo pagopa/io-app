@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
   Body,
@@ -19,6 +19,13 @@ import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessagePaymentItem } from "./MessagePaymentItem";
+
+const styles = StyleSheet.create({
+  morePaymentsLink: {
+    flex: 1,
+    textAlign: "center"
+  }
+});
 
 type MessagePaymentsProps = {
   messageId: UIMessageId;
@@ -152,7 +159,10 @@ export const MessagePayments = ({
         {payments && payments.length > maxVisiblePaymentCount && (
           <>
             <VSpacer size={24} />
-            <LabelLink onPress={() => undefined}>
+            <LabelLink
+              style={styles.morePaymentsLink}
+              onPress={() => undefined}
+            >
               {`${I18n.t("features.pn.details.paymentSection.morePayments")} (${
                 payments.length
               })`}

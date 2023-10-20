@@ -154,6 +154,7 @@ export const MessageDetails = ({
         messageId={messageId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
       />
     </>
   );
