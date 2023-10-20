@@ -11,10 +11,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   IOThemeContext,
   IOThemes,
+  IOVisualCostants,
   IconButton
 } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../../../components/core/fonts";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
