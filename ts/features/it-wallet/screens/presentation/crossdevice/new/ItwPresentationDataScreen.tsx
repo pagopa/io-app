@@ -36,9 +36,9 @@ import ItwErrorView from "../../../../components/ItwErrorView";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
-import { useItwInfoFlow } from "../../../../hooks/useItwInfoFlow";
 import { rpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
+import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -51,7 +51,7 @@ type ContentViewParams = {
 const ItwPresentationDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const { present, bottomSheet } = useItwInfoFlow({
+  const { present, bottomSheet } = useItwInfoBottomSheet({
     title: rpMock.organizationName,
     content: [
       {
