@@ -13,15 +13,17 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constVoid } from "fp-ts/lib/function";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../utils/url";
+import ROUTES from "../../navigation/routes";
 
 const UnlockAccessScreen = () => {
+  const navigation = useNavigation();
   const ModalContent = () => (
     <View>
       <Body weight="Regular" color="grey-700">
@@ -90,15 +92,15 @@ const UnlockAccessScreen = () => {
           <ButtonSolid
             fullWidth
             label={I18n.t("authentication.unlock.title")}
-            accessibilityLabel=""
-            onPress={constVoid}
+            accessibilityLabel="Click here to unlock your profile"
+            onPress={() => openWebUrl("https://ioapp.it/")}
           />
         }
         secondaryAction={
           <ButtonLink
             label={I18n.t("authentication.unlock.loginIO")}
-            accessibilityLabel=""
-            onPress={constVoid}
+            accessibilityLabel="Click here to redirect to the landing screen"
+            onPress={() => navigation.navigate(ROUTES.AUTHENTICATION_LANDING)}
           />
         }
       >
