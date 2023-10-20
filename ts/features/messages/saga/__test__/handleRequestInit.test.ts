@@ -1,18 +1,18 @@
 import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
 import { testSaga } from "redux-saga-test-plan";
-import { testableData } from "../downloadAttachment";
-import { UIAttachment } from "../../../../../store/reducers/entities/messages/types";
+import { testableData } from "../handleDownloadAttachment";
+import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
-} from "../../../../lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../../../../lollipop/saga";
-import { lollipopRequestInit } from "../../../../lollipop/utils/fetch";
+} from "../../../lollipop/store/reducers/lollipop";
+import { generateKeyInfo } from "../../../lollipop/saga";
+import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 
 const testableDataSafe = testableData!;
 
-describe("downloadAttachment tests", () => {
+describe("handleDownloadAttachment", () => {
   it("reactNativeBlobUtilsFetchParametersFactory should output the proper object", () => {
     const method = "GET" as const;
     const attachmentFullUrl = "https://my.attachment/full/url";
@@ -23,6 +23,7 @@ describe("downloadAttachment tests", () => {
     expect(factoryOutput.attachmentFullUrl).toBe(attachmentFullUrl);
     expect(factoryOutput.headers).toBe(headers);
   });
+
   it("generateReactNativeBlobUtilsFetchParameters should follow the proper flow and return the enhanced lollipop headers", () => {
     const data = fetchParametersCommonInputData();
     testSaga(

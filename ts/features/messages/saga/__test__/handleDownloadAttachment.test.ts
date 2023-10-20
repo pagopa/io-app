@@ -3,7 +3,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
-import { downloadAttachmentSaga } from "../networking/downloadAttachment";
+import { downloadAttachmentWorker } from "../handleDownloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
 import { downloadAttachment } from "../../../../store/actions/messages";
 import { mockPdfAttachment } from "../../../../__mocks__/attachment";
@@ -43,7 +43,7 @@ describe("downloadAttachment given an attachment", () => {
 
     it("then it puts a success action with the path of the saved attachment", () =>
       expectSaga(
-        downloadAttachmentSaga,
+        downloadAttachmentWorker,
         "token" as SessionToken,
         downloadAttachment.request({
           ...attachment,
@@ -77,7 +77,7 @@ describe("downloadAttachment given an attachment", () => {
 
     it("then it puts a failure action with the generic error message", () =>
       expectSaga(
-        downloadAttachmentSaga,
+        downloadAttachmentWorker,
         "token" as SessionToken,
         downloadAttachment.request({
           ...attachment,
@@ -114,7 +114,7 @@ describe("downloadAttachment given an attachment", () => {
 
     it("then it puts a failure action with the file format error", () =>
       expectSaga(
-        downloadAttachmentSaga,
+        downloadAttachmentWorker,
         "token" as SessionToken,
         downloadAttachment.request({
           ...attachment,
