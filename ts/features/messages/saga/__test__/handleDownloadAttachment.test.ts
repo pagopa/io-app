@@ -27,20 +27,16 @@ jest.mock("../../../../store/reducers/entities/messages/paginatedById", () => ({
   getServiceByMessageId: jest.fn().mockReturnValue(serviceId)
 }));
 
+jest.mock("react-native-blob-util", () => ({
+  config: jest.fn().mockImplementation(() => ({
+    fetch: jest.fn()
+  }))
+}));
+
 describe("downloadAttachment given an attachment", () => {
   const attachment = mockPdfAttachment;
 
   describe("when a download request succeeds", () => {
-    beforeAll(() => {
-      // eslint-disable-next-line functional/immutable-data
-      (ReactNativeBlobUtil as any).config = jest.fn(() => ({
-        fetch: jest.fn().mockReturnValue({
-          info: jest.fn().mockReturnValue({ status: 200 }),
-          path: jest.fn().mockReturnValue(savePath)
-        })
-      }));
-    });
-
     it("then it puts a success action with the path of the saved attachment", () =>
       expectSaga(
         downloadAttachmentWorker,
@@ -51,6 +47,15 @@ describe("downloadAttachment given an attachment", () => {
         })
       )
         .provide([
+          [
+            matchers.call.fn(ReactNativeBlobUtil.config),
+            {
+              fetch: jest.fn().mockReturnValue({
+                info: jest.fn().mockReturnValue({ status: 200 }),
+                path: jest.fn().mockReturnValue(savePath)
+              })
+            }
+          ],
           [matchers.select(lollipopKeyTagSelector), someKeyTag],
           [matchers.select(lollipopPublicKeySelector), somePublicKey]
         ])
@@ -64,17 +69,6 @@ describe("downloadAttachment given an attachment", () => {
   });
 
   describe("when a download request generically fails", () => {
-    const status = 404;
-
-    beforeAll(() => {
-      // eslint-disable-next-line functional/immutable-data
-      (ReactNativeBlobUtil as any).config = jest.fn(() => ({
-        fetch: jest.fn().mockReturnValue({
-          info: jest.fn().mockReturnValue({ status })
-        })
-      }));
-    });
-
     it("then it puts a failure action with the generic error message", () =>
       expectSaga(
         downloadAttachmentWorker,
@@ -85,6 +79,14 @@ describe("downloadAttachment given an attachment", () => {
         })
       )
         .provide([
+          [
+            matchers.call.fn(ReactNativeBlobUtil.config),
+            {
+              fetch: jest.fn().mockReturnValue({
+                info: jest.fn().mockReturnValue({ status: 404 })
+              })
+            }
+          ],
           [matchers.select(lollipopKeyTagSelector), someKeyTag],
           [matchers.select(lollipopPublicKeySelector), somePublicKey]
         ])
@@ -100,18 +102,6 @@ describe("downloadAttachment given an attachment", () => {
   });
 
   describe("when a download request fails for a bad file format", () => {
-    const status = 415;
-
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    beforeAll(() => {
-      // eslint-disable-next-line functional/immutable-data, sonarjs/no-identical-functions
-      (ReactNativeBlobUtil as any).config = jest.fn(() => ({
-        fetch: jest.fn().mockReturnValue({
-          info: jest.fn().mockReturnValue({ status })
-        })
-      }));
-    });
-
     it("then it puts a failure action with the file format error", () =>
       expectSaga(
         downloadAttachmentWorker,
@@ -122,6 +112,14 @@ describe("downloadAttachment given an attachment", () => {
         })
       )
         .provide([
+          [
+            matchers.call.fn(ReactNativeBlobUtil.config),
+            {
+              fetch: jest.fn().mockReturnValue({
+                info: jest.fn().mockReturnValue({ status: 415 })
+              })
+            }
+          ],
           [matchers.select(lollipopKeyTagSelector), someKeyTag],
           [matchers.select(lollipopPublicKeySelector), somePublicKey]
         ])
