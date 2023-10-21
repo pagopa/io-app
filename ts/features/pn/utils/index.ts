@@ -134,7 +134,12 @@ export const isCancelledFromPNMessagePot = (
     O.getOrElse(() => false)
   );
 
-export const initializeAndNavigateToWalleForPayment = (paymentId: string, dispatch: Dispatch<any>, decodeErrorCallback: (() => void) | undefined, preNavigationCallback: (() => void) | undefined = undefined) => {
+export const initializeAndNavigateToWalleForPayment = (
+  paymentId: string,
+  dispatch: Dispatch<any>,
+  decodeErrorCallback: (() => void) | undefined,
+  preNavigationCallback: (() => void) | undefined = undefined
+) => {
   const eitherRptId = RptIdFromString.decode(paymentId);
   if (E.isLeft(eitherRptId)) {
     decodeErrorCallback?.();
@@ -142,7 +147,7 @@ export const initializeAndNavigateToWalleForPayment = (paymentId: string, dispat
   }
 
   preNavigationCallback?.();
-    
+
   dispatch(paymentInitializeState());
 
   navigationRef.current?.navigate(ROUTES.WALLET_NAVIGATOR, {
