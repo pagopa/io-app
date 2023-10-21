@@ -2,6 +2,7 @@ import React, { MutableRefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
+import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -10,7 +11,6 @@ import variables from "../../../theme/variables";
 import { initializeAndNavigateToWalleForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { useIOToast } from "../../../components/Toast";
-import { useDispatch } from "react-redux";
 
 const styles = StyleSheet.create({
   container: {
