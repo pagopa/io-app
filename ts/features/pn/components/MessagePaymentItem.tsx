@@ -25,7 +25,10 @@ import { updatePaymentForMessage } from "../store/actions";
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { getV2ErrorMainType } from "../../../utils/payment";
+import {
+  cleanTransactionDescription,
+  getV2ErrorMainType
+} from "../../../utils/payment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import ROUTES from "../../../navigation/routes";
@@ -111,6 +114,9 @@ const modulePaymentNoticeFromPaymentStatus = (
         ),
         O.toUndefined
       );
+      const description = cleanTransactionDescription(
+        payablePayment.causaleVersamento
+      );
       const formattedAmount = pipe(
         payablePayment.importoSingoloVersamento,
         centsToAmount,
@@ -120,7 +126,7 @@ const modulePaymentNoticeFromPaymentStatus = (
       return (
         <ModulePaymentNotice
           title={dueDateOrUndefined}
-          subtitle={payablePayment.causaleVersamento}
+          subtitle={description}
           paymentNoticeStatus="default"
           paymentNoticeAmount={formattedAmount}
           onPress={paymentCallback}
