@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { navigationRef } from "../../../navigation/NavigationService";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -38,6 +38,8 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { useIOToast } from "../../../components/Toast";
+import { Dispatch } from "redux";
+import { initializeAndNavigateToWalleForPayment } from "../utils";
 
 type MessagePaymentItemProps = {
   index: number;
@@ -175,18 +177,12 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
-    const eitherRptId = RptIdFromString.decode(paymentId);
-    if (E.isLeft(eitherRptId)) {
-      toast.error(I18n.t("genericError"));
-      return;
-    }
-    willNavigateToPayment?.();
-    dispatch(paymentInitializeState());
-
-    navigationRef.current?.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-      params: { rptId: eitherRptId.right }
-    });
+    initializeAndNavigateToWalleForPayment(
+      paymentId,
+      dispatch,
+      () => toast.error(I18n.t("genericError")),
+      () => willNavigateToPayment?.()
+    );
   }, [dispatch, paymentId, toast, willNavigateToPayment]);
   useEffect(() => {
     if (shouldUpdatePayment) {
