@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import React, { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import { useDispatch, useStore } from "react-redux";
@@ -10,8 +9,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
-import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { navigationRef } from "../../../navigation/NavigationService";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
@@ -30,15 +27,12 @@ import {
   getV2ErrorMainType
 } from "../../../utils/payment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import ROUTES from "../../../navigation/routes";
 import { format } from "../../../utils/dates";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { useIOToast } from "../../../components/Toast";
-import { Dispatch } from "redux";
 import { initializeAndNavigateToWalleForPayment } from "../utils";
 
 type MessagePaymentItemProps = {
