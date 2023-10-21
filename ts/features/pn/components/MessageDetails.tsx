@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { createRef, useCallback } from "react";
+import React, { useCallback, createRef, useRef } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -37,6 +37,7 @@ import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
 import { MessagePayments } from "./MessagePayments";
 import { MessageFooter } from "./MessageFooter";
+import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -55,6 +56,8 @@ export const MessageDetails = ({
 }: Props) => {
   const navigation = useNavigation();
   const viewRef = createRef<View>();
+  const presentPaymentsBottomSheetRef = useRef<() => void>();
+  const dismissPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const hasAttachment = message.attachments && message.attachments.length > 0;
@@ -126,6 +129,7 @@ export const MessageDetails = ({
           payments={payments}
           completedPaymentNoticeCodes={completedPaymentNoticeCodes}
           maxVisiblePaymentCount={maxVisiblePaymentCount}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
@@ -150,11 +154,21 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
+      {payments && (
+        <MessagePaymentBottomSheet
+          messageId={messageId}
+          payments={payments}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+          dismissPaymentsBottomSheetRef={dismissPaymentsBottomSheetRef}
+        />
+      )}
+
       <MessageFooter
         messageId={messageId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
+        presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
       />
     </>
   );

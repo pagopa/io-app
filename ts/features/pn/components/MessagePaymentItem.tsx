@@ -11,7 +11,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { useNavigation } from "@react-navigation/native";
+import { navigationRef } from "../../../navigation/NavigationService";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
@@ -40,6 +40,8 @@ type MessagePaymentItemProps = {
   index: number;
   messageId: UIMessageId;
   payment: NotificationPaymentInfo;
+  noSpaceOnTop?: boolean;
+  willNavigateToPayment?: () => void;
 };
 
 type ProcessedPaymentUIData = {
@@ -146,10 +148,11 @@ const modulePaymentNoticeFromPaymentStatus = (
 export const MessagePaymentItem = ({
   index,
   messageId,
-  payment
+  payment,
+  noSpaceOnTop = false,
+  willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const store = useStore();
   const toast = useIOToast();
 
@@ -171,13 +174,14 @@ export const MessagePaymentItem = ({
       toast.error(I18n.t("genericError"));
       return;
     }
+    willNavigateToPayment?.();
     dispatch(paymentInitializeState());
 
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+    navigationRef.current?.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
       params: { rptId: eitherRptId.right }
     });
-  }, [dispatch, navigation, paymentId, toast]);
+  }, [dispatch, paymentId, toast, willNavigateToPayment]);
   useEffect(() => {
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
@@ -191,7 +195,7 @@ export const MessagePaymentItem = ({
   // console.log(`=== PaymentItem: re-rendering`);
   return (
     <View>
-      <VSpacer size={index > 0 ? 8 : 24} />
+      {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
       {modulePaymentNoticeFromPaymentStatus(
         payment.noticeCode,
         paymentStatusForUI,

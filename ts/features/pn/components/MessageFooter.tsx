@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
@@ -21,13 +21,15 @@ type MessageFooterProps = {
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   maxVisiblePaymentCount: number;
   isCancelled: boolean;
+  presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
 };
 
 export const MessageFooter = ({
   messageId,
   payments,
   maxVisiblePaymentCount,
-  isCancelled
+  isCancelled,
+  presentPaymentsBottomSheetRef
 }: MessageFooterProps) => {
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
@@ -51,7 +53,7 @@ export const MessageFooter = ({
           loading={isLoading}
           color="primary"
           label={I18n.t("wallet.continue")}
-          onPress={() => undefined}
+          onPress={() => presentPaymentsBottomSheetRef.current?.()}
           accessibilityLabel={I18n.t("wallet.continue")}
         />
       </View>

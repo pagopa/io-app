@@ -3019,6 +3019,7 @@ features:
         title: "Avvisi pagoPA"
         notice: "Alcuni avvisi possono includere i costi di notifica."
         morePayments: "Vedi tutti gli avvisi"
+        bottomSheetTitle: "Quale avviso vuoi pagare?"    
       attachmentsSection:
         title: Allegati
       infoSection:

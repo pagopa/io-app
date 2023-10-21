@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
@@ -33,6 +33,7 @@ type MessagePaymentsProps = {
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;
   maxVisiblePaymentCount: number;
+  presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
 };
 
 const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
@@ -82,7 +83,8 @@ export const MessagePayments = ({
   isCancelled,
   payments,
   completedPaymentNoticeCodes,
-  maxVisiblePaymentCount
+  maxVisiblePaymentCount,
+  presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
   if (
@@ -161,7 +163,7 @@ export const MessagePayments = ({
             <VSpacer size={24} />
             <LabelLink
               style={styles.morePaymentsLink}
-              onPress={() => undefined}
+              onPress={() => presentPaymentsBottomSheetRef.current?.()}
             >
               {`${I18n.t("features.pn.details.paymentSection.morePayments")} (${
                 payments.length
