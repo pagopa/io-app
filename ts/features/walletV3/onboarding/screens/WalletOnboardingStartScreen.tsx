@@ -16,6 +16,7 @@ import WalletOnboardingSuccess from "../components/WalletOnboardingSuccess";
 import { OnboardingOutcome, OnboardingResult } from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
 import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
+import ROUTES from "../../../../navigation/routes";
 
 export type WalletOnboardingStartScreenParams = {
   paymentMethodId: string;
@@ -40,6 +41,12 @@ const WalletOnboardingStartScreen = () => {
     });
   };
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false
+    });
+  }, [navigation]);
+
   const handleOnboardingFailure = (outcome: OnboardingOutcome) => {
     setOnboardingResult({
       status: "FAILURE",
@@ -47,11 +54,28 @@ const WalletOnboardingStartScreen = () => {
     });
   };
 
-  const handleOnboardingSuccess = (outcome: OnboardingOutcome) => {
+  const handleOnboardingSuccess = (
+    outcome: OnboardingOutcome,
+    walletId: string
+  ) => {
     setOnboardingResult({
       status: "SUCCESS",
-      outcome
+      outcome,
+      walletId
     });
+  };
+
+  const handleContinueButton = () => {
+    if (onboardingResult && onboardingResult.status === "SUCCESS") {
+      navigation.replace(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.WALLET_CREDIT_CARD_DETAIL,
+        params: {
+          creditCard: {
+            idWallet: onboardingResult.walletId
+          }
+        }
+      });
+    }
   };
 
   // If the onboarding process is completed (with a success or not), we display the result content feedback
@@ -60,7 +84,7 @@ const WalletOnboardingStartScreen = () => {
       <OnboardingResultContent
         onboardingResult={onboardingResult}
         onClose={() => navigation.pop()}
-        onContinue={() => navigation.pop()}
+        onContinue={handleContinueButton}
       />
     );
   }
