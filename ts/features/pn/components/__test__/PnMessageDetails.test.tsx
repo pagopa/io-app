@@ -18,6 +18,7 @@ import { InitializedProfile } from "../../../../../definitions/backend/Initializ
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { Download } from "../../../../store/reducers/entities/messages/downloads";
 import { NotificationRecipient } from "../../../../../definitions/pn/NotificationRecipient";
+import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
 
 const mockedOnAttachmentSelect = jest.fn();
 
@@ -118,43 +119,42 @@ describe("PnMessageDetails component", () => {
 
 const generateTestMessageId = () => "00000000000000000000000004" as UIMessageId;
 const generateTestFiscalCode = () => "AAABBB00A00A000A";
-const generatePnMessage = () =>
-  ({
-    iun: "731143-7-0317-8200-0",
-    subject: "This is the message subject",
-    senderDenomination: "Sender denomination",
-    abstract: "Message abstract",
-    notificationStatusHistory: [],
-    recipients: [
-      {
-        recipientType: "-",
-        taxId: generateTestFiscalCode(),
-        denomination: "AaAaAa BbBbBb",
-        payment: {
-          noticeCode: "026773337463073118",
-          creditorTaxId: "00000000009"
-        }
+const generatePnMessage = (): PNMessage => ({
+  iun: "731143-7-0317-8200-0",
+  subject: "This is the message subject",
+  senderDenomination: "Sender denomination",
+  abstract: "Message abstract",
+  notificationStatusHistory: [],
+  recipients: [
+    {
+      recipientType: "-",
+      taxId: generateTestFiscalCode(),
+      denomination: "AaAaAa BbBbBb",
+      payment: {
+        noticeCode: "026773337463073118",
+        creditorTaxId: "00000000009"
       }
-    ] as Array<NotificationRecipient>,
-    attachments: [
-      {
-        messageId: generateTestMessageId(),
-        id: "1",
-        displayName: "A First Attachment",
-        contentType: "application/pdf",
-        category: "PN",
-        resourceUrl: { href: "/resource/attachment1.pdf" }
-      } as UIAttachment,
-      {
-        messageId: generateTestMessageId(),
-        id: "2",
-        displayName: "A Second Attachment",
-        contentType: "application/pdf",
-        category: "PN",
-        resourceUrl: { href: "/resource/attachment2.pdf" }
-      } as UIAttachment
-    ]
-  } as PNMessage);
+    }
+  ] as Array<NotificationRecipient>,
+  attachments: [
+    {
+      messageId: generateTestMessageId(),
+      id: "1",
+      displayName: "A First Attachment",
+      contentType: "application/pdf",
+      category: ATTACHMENT_CATEGORY.DOCUMENT,
+      resourceUrl: { href: "/resource/attachment1.pdf" }
+    },
+    {
+      messageId: generateTestMessageId(),
+      id: "2",
+      displayName: "A Second Attachment",
+      contentType: "application/pdf",
+      category: ATTACHMENT_CATEGORY.DOCUMENT,
+      resourceUrl: { href: "/resource/attachment2.pdf" }
+    }
+  ] as Array<UIAttachment>
+});
 const generateComponentProperties = (pnMessage: PNMessage) => ({
   payment: undefined,
   rptId: undefined,
