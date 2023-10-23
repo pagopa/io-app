@@ -48,7 +48,7 @@ const reducer = (
     /**
      * Credentials related actions, will be merged with PID in the future.
      */
-    case getType(itwCredentialsAddCredential):
+    case getType(itwCredentialsAddCredential.success):
       return pot.some({
         pid: pot.getOrElse(
           pot.map(state, credentials => credentials.pid),
