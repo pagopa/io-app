@@ -9,6 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "../../../i18n";
 
 /**
  * Props for {@link ItwOptionalClaimsList} component which consists of a list of claims
@@ -24,7 +25,7 @@ type Props = {
  */
 export type ItwOptionalClaimItem = {
   claim: string;
-  issuer: string;
+  credential: string;
 };
 
 const VERTICAL_SPACING = 16;
@@ -69,7 +70,11 @@ const ItwOptionalClaimsList = ({ claims, onClaimSelected }: Props) => {
                     <AnimatedCheckbox checked={selectedClaims[index]} />
                   </View>
                 </View>
-                <Body>{claim.issuer}</Body>
+                <Body>
+                  {I18n.t("features.itWallet.generic.dataSource.single", {
+                    authSource: claim.credential
+                  })}
+                </Body>
               </View>
             </Pressable>
             {/* Add a separator view between claims */}
