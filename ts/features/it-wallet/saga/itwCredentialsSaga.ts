@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { put, take, takeLatest, select } from "typed-redux-saga/macro";
+import { put, take, takeLatest, select, call } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { CommonActions } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -10,12 +10,14 @@ import {
 import NavigationService from "../../../navigation/NavigationService";
 import I18n from "../../../i18n";
 import {
+  itwCredentialsAddCredential,
   itwCredentialsAddPid,
   itwCredentialsChecks
 } from "../store/actions/itwCredentialsActions";
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
+import ROUTES from "../../../navigation/routes";
 /**
  * Handles the IT wallet credentials related sagas.
  */
@@ -28,6 +30,13 @@ export function* watchItwCredentialsSaga(): SagaIterator {
    * Handles the required checks before adding a credential.
    */
   yield* takeLatest(itwCredentialsChecks.request, handleCredentialsChecks);
+  /**
+   * Handles the request to add credential into the wallet.
+   */
+  yield* takeLatest(
+    itwCredentialsAddCredential.request,
+    handleCredentialsAddCredential
+  );
 }
 
 /*
@@ -82,6 +91,41 @@ export function* handleCredentialsChecks(
     yield* put(
       itwCredentialsChecks.failure({
         code: ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR
+      })
+    );
+  }
+}
+
+/**
+ * This saga handles the request to add a credential to the wallet.
+ * NOTE: Currently it just returns true as we are only handling a mocked credential.
+ * @param action the request dispatched action with a credential as payload.
+ */
+export function* handleCredentialsAddCredential(
+  action: ActionType<typeof itwCredentialsAddCredential.request>
+): SagaIterator {
+  yield* put(
+    identificationRequest(false, true, undefined, {
+      label: I18n.t("global.buttons.cancel"),
+      onCancel: () =>
+        NavigationService.dispatchNavigationAction(CommonActions.goBack())
+    })
+  );
+
+  const res = yield* take(identificationSuccess);
+
+  if (isActionOf(identificationSuccess, res)) {
+    yield* put(itwCredentialsAddCredential.success(action.payload));
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.MAIN, {
+        screen: ROUTES.MESSAGES_HOME
+      })
+    );
+  } else {
+    yield* put(
+      itwCredentialsAddCredential.failure({
+        code: ItWalletErrorTypes.CREDENTIALS_ADD_ERROR
       })
     );
   }
