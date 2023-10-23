@@ -3581,8 +3581,8 @@ features:
         confirm: "Sì, interrompi"
         cancel: "No, vai indietro"
       dataSource:
-        multi: "Forniti da {{authsource}}"
-        single: "Fornito da {{authsource}}"
+        multi: "Forniti da {{authSource}}"
+        single: "Fornito da {{authSource}}"
       credential: "Credenziale"
       attribute: "Attributo"
 webView:
