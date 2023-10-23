@@ -1,23 +1,19 @@
+import { ButtonSolid, ContentWrapper } from "@pagopa/io-app-design-system";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import { ActionSheet } from "native-base";
 import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import {
-  ButtonSolid,
-  ContentWrapper,
-  IOToast
-} from "@pagopa/io-app-design-system";
 import { useDispatch } from "react-redux";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useIOSelector } from "../../../store/hooks";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { IOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
@@ -49,6 +45,7 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
+import { useIOSelector } from "../../../store/hooks";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
