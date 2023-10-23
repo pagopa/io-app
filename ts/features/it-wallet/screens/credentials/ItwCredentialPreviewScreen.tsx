@@ -30,6 +30,7 @@ import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
+import { itwCredentialsSelector } from "../../store/reducers/itwCredentialsReducer";
 
 /**
  * Type for the content view component props.
@@ -44,8 +45,23 @@ type ContentViewProps = {
 const ItwCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
+  const credentialsSelector = useIOSelector(itwCredentialsSelector);
+  const isCredentialAdded = credentialsSelector.find(
+    c => O.isSome(c) && O.isSome(credential) && c.value === credential.value
+  );
   const toast = useIOToast();
   const dispatch = useIODispatch();
+
+  React.useEffect(() => {
+    if (isCredentialAdded) {
+      toast.info(
+        I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.toast.success"
+        )
+      );
+    }
+  }, [isCredentialAdded, toast]);
+
   const { present, bottomSheet } = useItwInfoBottomSheet({
     title: pipe(
       credential,
@@ -85,13 +101,7 @@ const ItwCredentialPreviewScreen = () => {
    */
   const ContentView = ({ credential }: ContentViewProps) => {
     const addOnPress = () => {
-      dispatch(itwCredentialsAddCredential(credential));
-      toast.info(
-        I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.toast.success"
-        )
-      );
-      navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
+      dispatch(itwCredentialsAddCredential.request(credential));
     };
 
     /**

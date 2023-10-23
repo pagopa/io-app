@@ -3451,6 +3451,11 @@ features:
             title: "Hai già questa tessera"
             subtitle: "La tessera si trova già nel tuo Portafoglio. Se non la vedi, scrivici."
             cta: "Vai al Portafoglio"
+      credentialAddScreen:
+        loading:
+          title: "Stiamo aggiungendo la tua credenziale al portafoglio"
+        toast: 
+          success: "Tessera aggiunta!"
       credentialsIssuingInfoScreen:
         title: "Dati necessari per aggiungere la tessera"
         subtitle: "{{authsource}} li invierà a {{organization}}."
@@ -3580,8 +3585,8 @@ features:
         confirm: "Sì, interrompi"
         cancel: "No, vai indietro"
       dataSource:
-        multi: "Forniti da {{authsource}}"
-        single: "Fornito da {{authsource}}"
+        multi: "Forniti da {{authSource}}"
+        single: "Fornito da {{authSource}}"
       credential: "Credenziale"
       attribute: "Attributo"
 webView:

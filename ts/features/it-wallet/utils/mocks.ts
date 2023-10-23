@@ -127,7 +127,7 @@ const getRequestedClaims = (
 ): ReadonlyArray<BulletItem> => [
   {
     title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      authsource:
+      authSource:
         decodedPid.pid.verification.evidence[0].record.source.organization_name
     }),
     data: [
@@ -157,7 +157,7 @@ const getMultipleRequestedClaims = (
 ): ReadonlyArray<BulletItem> => [
   {
     title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      authsource:
+      authSource:
         decodedPid.pid.verification.evidence[0].record.source.organization_name
     }),
     data: [
@@ -182,7 +182,7 @@ const getMultipleRequestedClaims = (
   },
   {
     title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      authsource: `${I18n.t("features.itWallet.generic.credential")} 1`
+      authSource: `${I18n.t("features.itWallet.generic.credential")} 1`
     }),
     data: [`${I18n.t("features.itWallet.generic.attribute")} 1`]
   }
@@ -201,13 +201,13 @@ export const rpMock: RpMock = {
   optionalClaims: [
     {
       issuer: I18n.t("features.itWallet.generic.dataSource.single", {
-        authsource: "Credenziale 1"
+        authsource: `${I18n.t("features.itWallet.generic.credential")} 1`
       }),
       claim: I18n.t("global.media.phone")
     },
     {
       issuer: I18n.t("features.itWallet.generic.dataSource.single", {
-        authsource: "Credenziale 1"
+        authsource: `${I18n.t("features.itWallet.generic.credential")} 1`
       }),
       claim: I18n.t("global.media.email")
     }
