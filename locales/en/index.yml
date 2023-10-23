@@ -3431,7 +3431,6 @@ features:
         title: "Data needed to add the card"
         subtitle: "{{authsource}} will send them to {{organization}}."
         readMore: "Find out more"
-        dataSource: "Provided by {{authsource}}"
         infoBottomSheet:
           title: "Data processing"
           body:
@@ -3554,6 +3553,11 @@ features:
           title: "Do you want to interrupt the operation?"
           confirm: "Yes, interrupt it."
           cancel: "No, go back"
+      dataSource: 
+        multi: "Provided by {{authsource}}"
+        single: "Provided by {{authsource}}"
+      credential: "Credential"
+      attribute: "Attribute"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

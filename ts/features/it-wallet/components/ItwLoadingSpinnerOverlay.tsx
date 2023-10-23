@@ -1,11 +1,13 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import {
-  H2,
-  H4,
+  Body,
+  H3,
   IOColors,
+  LoadingSpinner,
   VSpacer,
-  hexToRgba
+  hexToRgba,
+  useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 import { Overlay } from "../../../components/ui/Overlay";
@@ -47,33 +49,34 @@ const ItwLoadingSpinnerOverlay: React.FunctionComponent<Props> = (
     captionSubtitle
   } = props;
 
+  const { isExperimental } = useIOExperimentalDesign();
+
   return (
     <Overlay
       backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
       foreground={
         isLoading && (
           <View style={styles.main}>
-            <ItwLoadingSpinner
-              color={IOColors.blue}
-              captionTitle={captionTitle}
-              captionSubtitle={captionSubtitle}
-              size={76}
-            />
+            {isExperimental ? (
+              <LoadingSpinner size={76} />
+            ) : (
+              <ItwLoadingSpinner color={IOColors.blue} size={76} />
+            )}
+
             <VSpacer size={48} />
-            <H2
+            <H3
               style={styles.textAlignCenter}
               testID="LoadingSpinnerCaptionTitleID"
             >
               {captionTitle}
-            </H2>
+            </H3>
             <VSpacer />
-            <H4
-              weight="Regular"
+            <Body
               style={styles.textAlignCenter}
               testID="LoadingSpinnerCaptionSubTitleID"
             >
               {captionSubtitle}
-            </H4>
+            </Body>
           </View>
         )
       }

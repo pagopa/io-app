@@ -1,5 +1,11 @@
 import * as React from "react";
-import { View, SafeAreaView, Image, ScrollView } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import {
   Body,
   FeatureInfo,
@@ -30,11 +36,11 @@ import ItwErrorView from "../../../../components/ItwErrorView";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
-import { useItwInfoFlow } from "../../../../hooks/useItwInfoFlow";
-import { rpMock } from "../../../../utils/mocks";
-import { showCancelAlert } from "../../../../utils/alert";
 import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
+import { rpMock } from "../../../../utils/mocks";
+import { showCancelAlert } from "../../../../utils/alert";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -47,7 +53,7 @@ type ContentViewParams = {
 const ItwPresentationDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const { present, bottomSheet } = useItwInfoFlow({
+  const { present, bottomSheet } = useItwInfoBottomSheet({
     title: rpMock.organizationName,
     content: [
       {
@@ -83,20 +89,9 @@ const ItwPresentationDataScreen = () => {
       <ScrollView style={IOStyles.horizontalContentPadding}>
         <VSpacer size={32} />
         {/* SECOND HEADER */}
-        <View
-          style={{
-            flexDirection: "row",
-            alignContent: "center",
-            alignItems: "center"
-          }}
-        >
+        <View style={styles.secondHeader}>
           {/* LEFT */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center"
-            }}
-          >
+          <View style={styles.secondHeaderLeft}>
             <IconContained
               icon={"device"}
               color={"neutral"}
@@ -135,7 +130,7 @@ const ItwPresentationDataScreen = () => {
         </LabelLink>
         <VSpacer size={24} />
         {/* REQUIRED DATA SECTION */}
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={styles.requireDataSection}>
           <Icon name="security" color="grey-300" />
           <HSpacer size={8} />
           <H6 color="grey-700">
@@ -229,4 +224,21 @@ const ItwPresentationDataScreen = () => {
     </BaseScreenComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  secondHeader: {
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: "center"
+  },
+  secondHeaderLeft: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  requireDataSection: {
+    flexDirection: "row",
+    alignItems: "center"
+  }
+});
+
 export default ItwPresentationDataScreen;

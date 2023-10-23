@@ -3455,7 +3455,6 @@ features:
         title: "Dati necessari per aggiungere la tessera"
         subtitle: "{{authsource}} li invierà a {{organization}}."
         readMore: "Scopri di più"
-        dataSource: "Forniti da {{authsource}}"
         infoBottomSheet:
           title: "Trattamento dei dati"
           body:
@@ -3529,10 +3528,10 @@ features:
           deletion: "Potrai richiederne la rimozione in qualsiasi momento"
         infoBottomSheet:
           body:
-            firstHeader: "Who is it?"
-            firstBody: "It is the organization that wants to access some information to provide you with the services you request. IO allows you to authorize the processing of your data only with verified entities that are properly registered on lists ensuring their reliability."
-            secondHeader: "Are my data safe?"
-            secondBody: "Your data is not shared with other parties and is not used for purposes other than those indicated. You can request its removal at any time."
+            firstHeader: "Chi è?"
+            firstBody: "È l’ente che vuole accedere ad alcune informazioni per fornirti i servizi che richiedi. IO ti consente di autorizzare il trattamento dei tuoi dati solo con enti verificati e correttamente iscritti alle liste che ne garantiscono l’affidabilità."
+            secondHeader: "I miei dati sono al sicuro?"
+            secondBody: "I tuoi dati non sono condivisi con altri soggetti e non vengono utilizzati per finalità diverse da quelle indicati. Potrai richiederne la rimozione in qualsiasi momento."
       resultScreenNew: 
         success: 
           title: "Fatto!"
@@ -3580,6 +3579,11 @@ features:
         title: "Vuoi interrompere l’operazione?"
         confirm: "Sì, interrompi"
         cancel: "No, vai indietro"
+      dataSource:
+        multi: "Forniti da {{authsource}}"
+        single: "Fornito da {{authsource}}"
+      credential: "Credenziale"
+      attribute: "Attributo"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
