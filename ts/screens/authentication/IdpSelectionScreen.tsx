@@ -4,7 +4,6 @@ import { Platform, Pressable, View } from "react-native";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
@@ -57,8 +56,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
-  const inset = useSafeAreaInsets();
-
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
