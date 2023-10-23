@@ -1025,8 +1025,8 @@ wallet:
   onboarding:
     paymentMethodsList:
       header:
-        title: Aggiungi un metodo
-        subtitle: Il metodo verrà memorizzato nel Portafoglio di IO e potrà essere utilizzato per effettuare pagamenti o aderire a iniziative compatibili.
+        title: Add a method
+        subtitle: The method will be stored and can be used to make in-app payments or enroll in compatible initiatives.
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"
       koTimeout:
