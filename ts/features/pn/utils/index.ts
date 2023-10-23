@@ -9,6 +9,8 @@ import { NotificationStatus } from "../../../../definitions/pn/NotificationStatu
 import { CTAS } from "../../../types/MessageCTA";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
+import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
   return I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -70,7 +72,10 @@ export const isPNOptInMessage = (
     )
   );
 
-export const paymentFromPNMessagePot = (
+/**
+ * @deprecated Use paymentsFromPNMessagePot instead
+ */
+export const legacyPaymentFromPNMessagePot = (
   userFiscalCode: string | undefined,
   message: pot.Pot<O.Option<PNMessage>, Error>
 ) =>
@@ -87,6 +92,32 @@ export const paymentFromPNMessagePot = (
     O.chainNullableK(recipient => recipient.payment),
     O.toUndefined
   );
+
+export const paymentsFromPNMessagePot = (
+  userFiscalCode: string | undefined,
+  message: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    message,
+    pot.toOption,
+    O.flatten,
+    O.map(message =>
+      pipe(
+        message.recipients,
+        RA.filterMap(paymentFromUserFiscalCodeAndRecipient(userFiscalCode))
+      )
+    ),
+    O.toUndefined
+  );
+
+const paymentFromUserFiscalCodeAndRecipient =
+  (userFiscalCode: string | undefined) =>
+  (recipient: NotificationRecipient): O.Option<NotificationPaymentInfo> =>
+    pipe(
+      recipient.payment,
+      O.fromNullable,
+      O.filter(() => recipient.taxId === userFiscalCode)
+    );
 
 export const isCancelledFromPNMessagePot = (
   potMessage: pot.Pot<O.Option<PNMessage>, Error>
