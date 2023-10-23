@@ -102,7 +102,7 @@ import {
   backendStatusSelector,
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
-import { refreshSessionToken } from "../features/fastLogin/store/actions";
+import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -570,7 +570,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
 
   // Start watching for message attachments actions (general

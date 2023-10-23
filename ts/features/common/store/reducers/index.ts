@@ -15,10 +15,6 @@ import {
   TestLoginState
 } from "../../../../store/reducers/testLogin";
 import {
-  fastLoginReducer,
-  FastLoginState
-} from "../../../fastLogin/store/reducers";
-import {
   nativeLoginReducer,
   NativeLoginState
 } from "../../../nativeLogin/store/reducers";
@@ -35,6 +31,10 @@ import {
 import walletV3Reducer, {
   WalletV3State
 } from "../../../walletV3/common/store/reducers";
+import {
+  fastLoginReducer,
+  FastLoginState
+} from "../../../fastLogin/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;

@@ -184,12 +184,12 @@ const MessageDetailsComponent = ({
       // model for attachments when the user generates the request. This
       // is not a speed intensive operation nor a memory consuming task,
       // since the attachment count should be negligible
-      const thirdPartyMessageAttachmentsOption =
-        attachmentsFromThirdPartyMessage(thirdPartyMessage, "GENERIC");
-      return O.isSome(thirdPartyMessageAttachmentsOption) ? (
+      const maybeThirdPartyMessageAttachments =
+        attachmentsFromThirdPartyMessage(thirdPartyMessage);
+      return O.isSome(maybeThirdPartyMessageAttachments) ? (
         <View style={styles.padded}>
           <MessageAttachments
-            attachments={thirdPartyMessageAttachmentsOption.value}
+            attachments={maybeThirdPartyMessageAttachments.value}
             openPreview={openAttachment}
           />
         </View>

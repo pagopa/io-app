@@ -1,10 +1,10 @@
 import I18n from "i18n-js";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { TokenRefreshState } from "../store/reducers";
+import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../../store/actions/authentication";
 import { openWebUrl } from "../../../utils/url";
-import { askUserToRefreshSessionToken } from "../store/actions";
+import { askUserToRefreshSessionToken } from "../store/actions/tokenRefreshActions";
 import AskUserInteractionScreen from "./AskUserInterarctionScreen";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
 

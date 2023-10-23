@@ -1,15 +1,19 @@
+import {
+  Icon,
+  ListItemTransaction,
+  ListItemTransactionLogo,
+  ListItemTransactionStatus,
+  ListItemTransactionStatusWithBadge
+} from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import {
-  Icon,
-  ListItemTransaction,
-  ListItemTransactionStatus,
-  ListItemTransactionStatusWithBadge
-} from "@pagopa/io-app-design-system";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../definitions/idpay/IbanOperationDTO";
-import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../definitions/idpay/InstrumentOperationDTO";
+import {
+  OperationTypeEnum as InstrumentOperationTypeEnum,
+  InstrumentTypeEnum
+} from "../../../../../definitions/idpay/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../definitions/idpay/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
@@ -21,8 +25,8 @@ import {
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionOperationDTO";
 import I18n from "../../../../i18n";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { localeDateFormat } from "../../../../utils/locale";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { getBadgeTextByTransactionStatus } from "../../../walletV3/common/utils";
 
 const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
@@ -41,7 +45,9 @@ type TimelineOperationListItemProps = {
   onPress?: () => void;
 };
 
-const getPaymentLogoIcon = (operation: OperationListDTO) => {
+const getOperationLogo = (
+  operation: OperationListDTO
+): ListItemTransactionLogo | undefined => {
   switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
       return <Icon name={"checkTick"} color="grey-300" />;
@@ -56,14 +62,17 @@ const getPaymentLogoIcon = (operation: OperationListDTO) => {
       if (operation.channel === ChannelEnum.QRCODE) {
         return <Icon name={"merchant"} color="grey-300" />;
       }
-      return operation.brand;
+      return operation.brand || <Icon name={"creditCard"} color="grey-300" />;
     case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
-      return operation.brand;
+      if (operation.instrumentType === InstrumentTypeEnum.IDPAYCODE) {
+        return <Icon name={"creditCard"} color="grey-300" />;
+      }
+      return operation.brand || <Icon name={"creditCard"} color="grey-300" />;
     default:
-      return null;
+      return undefined;
   }
 };
 
@@ -175,6 +184,8 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
     }
   };
 
+  const operationStatus = getOperationStatus();
+
   return (
     <ListItemTransaction
       title={getOperationTitle()}
@@ -184,10 +195,10 @@ const TimelineOperationListItem = (props: TimelineOperationListItemProps) => {
       )}, ${getHourAndMinuteFromDate(
         operation.operationDate
       )}${getOperationAmount()}`}
-      paymentLogoIcon={getPaymentLogoIcon(operation)}
-      transactionStatus={getOperationStatus()}
+      paymentLogoIcon={getOperationLogo(operation)}
+      transactionStatus={operationStatus}
       badgeText={getBadgeTextByTransactionStatus(
-        getOperationStatus() as ListItemTransactionStatusWithBadge
+        operationStatus as ListItemTransactionStatusWithBadge
       )}
       transactionAmount={getTransactionAmountLabel(operation)}
       onPress={onPress}

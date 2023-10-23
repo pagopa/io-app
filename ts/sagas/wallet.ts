@@ -716,7 +716,7 @@ export function* watchWalletSaga(
 
   yield* takeLatest(
     getType(paymentIdPolling.request),
-    function* (action: ActionType<typeof paymentIdPolling["request"]>) {
+    function* (action: ActionType<(typeof paymentIdPolling)["request"]>) {
       // getPaymentId is a tuple2
       // e1: deferredPromise, used to abort the constantPollingFetch
       // e2: the fetch to execute

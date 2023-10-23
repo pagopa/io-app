@@ -13,6 +13,9 @@ const maybeDisabled = O.fromPredicate(
 );
 /**
  * NativeBase Switch component styled with the app's brand primary color
+ *
+ * @deprecated This `Switch` component uses the NativeBase switch at its core. Use `NativeSwitch`
+ * from `io-app-design-system` instead.
  */
 export default class Switch extends React.Component<NativeBase.Switch> {
   public render() {
