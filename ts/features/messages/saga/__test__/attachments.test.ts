@@ -45,7 +45,10 @@ describe("downloadAttachment given an attachment", () => {
       expectSaga(
         downloadAttachmentSaga,
         "token" as SessionToken,
-        downloadAttachment.request(attachment)
+        downloadAttachment.request({
+          ...attachment,
+          skipMixpanelTrackingOnFailure: false
+        })
       )
         .provide([
           [matchers.select(lollipopKeyTagSelector), someKeyTag],
@@ -76,7 +79,10 @@ describe("downloadAttachment given an attachment", () => {
       expectSaga(
         downloadAttachmentSaga,
         "token" as SessionToken,
-        downloadAttachment.request(attachment)
+        downloadAttachment.request({
+          ...attachment,
+          skipMixpanelTrackingOnFailure: false
+        })
       )
         .provide([
           [matchers.select(lollipopKeyTagSelector), someKeyTag],
@@ -110,7 +116,10 @@ describe("downloadAttachment given an attachment", () => {
       expectSaga(
         downloadAttachmentSaga,
         "token" as SessionToken,
-        downloadAttachment.request(attachment)
+        downloadAttachment.request({
+          ...attachment,
+          skipMixpanelTrackingOnFailure: false
+        })
       )
         .provide([
           [matchers.select(lollipopKeyTagSelector), someKeyTag],

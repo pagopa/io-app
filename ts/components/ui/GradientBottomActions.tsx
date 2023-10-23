@@ -6,10 +6,10 @@ import {
   IOColors,
   hexToRgba,
   VSpacer,
-  IOSpacer
+  IOSpacer,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
-import { IOVisualCostants } from "../core/variables/IOStyles";
 
 export type GradientBottomActions = WithTestID<{
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
