@@ -116,7 +116,6 @@ export function* handleCredentialsAddCredential(
 
   if (isActionOf(identificationSuccess, res)) {
     yield* put(itwCredentialsAddCredential.success(action.payload));
-    yield* put(itwLifecycleValid());
     yield* call(
       NavigationService.dispatchNavigationAction,
       CommonActions.navigate(ROUTES.MAIN, {
