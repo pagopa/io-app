@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { put, take, takeLatest } from "typed-redux-saga/macro";
+import { put, take, takeLatest, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { CommonActions } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -16,7 +16,7 @@ import {
 } from "../store/actions/itwCredentialsActions";
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
-
+import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
 /**
  * Handles the IT wallet credentials related sagas.
  */
@@ -74,8 +74,22 @@ export function* handleCredentialsAddPid(
 export function* handleCredentialsChecks(
   action: ActionType<typeof itwCredentialsChecks.request>
 ): SagaIterator {
-  // TODO: Implement the required checks. Currently it just returns the same credential as we are only handling a mocked credential.
-  yield* put(itwCredentialsChecks.success(action.payload));
+  // TODO: Implement the required checks. Currently it just checks if the credential is already existing with a loose comparison on the title.
+  const credential = action.payload;
+  const credentialsOptions = yield* select(itwCredentialsSelector);
+  const isFound = credentialsOptions
+    .filter(O.isSome)
+    .some(e => e.value.title === credential.title);
+
+  if (!isFound) {
+    yield* put(itwCredentialsChecks.success(action.payload));
+  } else {
+    yield* put(
+      itwCredentialsChecks.failure({
+        code: ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR
+      })
+    );
+  }
 }
 
 /**

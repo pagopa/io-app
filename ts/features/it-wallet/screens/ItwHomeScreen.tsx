@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
@@ -22,12 +21,11 @@ import { useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/ItwParamsList";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import ItwErrorView from "../components/ItwErrorView";
 import { cancelButtonProps } from "../utils/itwButtonsUtils";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycleReducer";
-import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
-import { ItwDecodedPidPotSelector } from "../store/reducers/itwPidDecodeReducer";
+import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
+import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { itWalletExperimentalEnabled } from "../../../config";
 import ItwCredentialCard from "../components/ItwCredentialCard";
@@ -51,8 +49,8 @@ const ItwHomeScreen = () => {
   const isItWalletOperational = useIOSelector(
     itwLifecycleIsOperationalSelector
   );
-  const pid = useIOSelector(ItwCredentialsPidSelector);
-  const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
+  const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const credentials = useIOSelector(itwCredentialsSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
@@ -74,7 +72,15 @@ const ItwHomeScreen = () => {
     }
   };
 
-  const LoadingView = () => <LoadingSpinnerOverlay isLoading />;
+  /**
+   * Temporary function to navigate to the checks screen on long press of a credential.
+   * TODO: remove this function the qr code scanning is implemented.
+   */
+  const onLongPressCredential = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CROSS_DEVICE.CHECKS
+    });
+  };
 
   const ContentView = ({ decodedPid }: ContentViewProps) => (
     <View
@@ -101,7 +107,26 @@ const ItwHomeScreen = () => {
             textColor="white"
             backgroundImage={require("../assets/img/credentials/cards/pidFront.png")}
           />
+          <VSpacer />
         </Pressable>
+        {credentials.map(
+          (credential, idx) =>
+            O.isSome(credential) && (
+              <Pressable
+                onLongPress={onLongPressCredential}
+                key={`${credential.value.title}-${idx}`}
+              >
+                <ItwCredentialCard
+                  title={credential.value.title}
+                  name={`${credential.value.claims.givenName} ${credential.value.claims.familyName}`}
+                  fiscalCode={credential.value.claims.taxIdCode}
+                  textColor={credential.value.textColor}
+                  backgroundImage={credential.value.image}
+                />
+                <VSpacer />
+              </Pressable>
+            )
+        )}
         <View
           style={{
             ...IOStyles.flex,
@@ -141,39 +166,16 @@ const ItwHomeScreen = () => {
   );
 
   const RenderMask = () =>
-    pot.fold(
-      decodedPidPot,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      () => <LoadingView />,
-      err => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={err}
-        />
-      ),
-      some =>
-        pipe(
-          some.decodedPid,
-          O.fold(
-            () => (
-              <ItwErrorView
-                type="SingleButton"
-                leftButton={cancelButtonProps(navigation.goBack)}
-              />
-            ),
-            decodedPid => <ContentView decodedPid={decodedPid} />
-          )
+    pipe(
+      decodedPid,
+      O.fold(
+        () => (
+          <ItwErrorView
+            type="SingleButton"
+            leftButton={cancelButtonProps(navigation.goBack)}
+          />
         ),
-      () => <LoadingView />,
-      () => <LoadingView />,
-      (_, someErr) => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={someErr}
-        />
+        some => <ContentView decodedPid={some} />
       )
     );
 
@@ -219,7 +221,7 @@ const ItwHomeScreen = () => {
               action={I18n.t("features.itWallet.innerActionBanner.action")}
             />
           </View>
-        ) : (selectedBadgeIdx === 0 || selectedBadgeIdx === 1) && pid ? (
+        ) : selectedBadgeIdx === 0 || selectedBadgeIdx === 1 ? (
           <RenderMask />
         ) : (
           <></>

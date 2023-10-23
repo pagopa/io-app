@@ -8,6 +8,7 @@ import I18n from "../../../i18n";
 /**
  * A hook that returns a function to present an info bottom sheet
  * related to the data processing of the credentials issuing
+ * @deprecated
  */
 export const useItwDataProcessing = () => {
   const BottomSheetBody = () => (
