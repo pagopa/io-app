@@ -3550,8 +3550,8 @@ features:
           confirm: "Yes, interrupt it."
           cancel: "No, go back"
       dataSource: 
-        multi: "Provided by {{authsource}}"
-        single: "Provided by {{authsource}}"
+        multi: "Provided by {{authSource}}"
+        single: "Provided by {{authSource}}"
       credential: "Credential"
       attribute: "Attribute"
 webView:
