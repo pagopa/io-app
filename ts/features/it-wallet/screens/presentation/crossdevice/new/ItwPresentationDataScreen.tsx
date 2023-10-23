@@ -38,6 +38,7 @@ import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp
 import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
 import { rpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
+import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 
 type ContentViewParams = {
@@ -137,6 +138,17 @@ const ItwPresentationDataScreen = () => {
         </View>
         <VSpacer size={24} />
         <ItwBulletList data={rpMock.requestedClaims(decodedPid)} />
+        <VSpacer size={24} />
+        {/* OPTIONAL DATA SECTION */}
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon name="option" color="grey-300" />
+          <HSpacer size={8} />
+          <H6 color="grey-700">
+            {I18n.t("features.itWallet.presentation.dataScreen.optionalClaims")}
+          </H6>
+        </View>
+        <VSpacer size={24} />
+        <ItwOptionalClaimsList claims={rpMock.optionalClaims} />
         <VSpacer size={32} />
         <VSpacer size={8} />
         <VSpacer size={32} />
