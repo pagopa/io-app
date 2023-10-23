@@ -10,6 +10,11 @@ import {
   IOPaymentLogos,
   LogoPayment,
   LogoPaymentExt,
+  LogoPaymentCard,
+  IOPaymentCardLogos,
+  IOLogoPaymentCardType,
+  IOColors,
+  hexToRgba,
   Avatar,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
@@ -84,6 +89,17 @@ export const DSLogos = () => {
         Banks (Extended)
       </H2>
       {renderLogoPaymentExtended()}
+
+      <VSpacer size={16} />
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        Payment Networks (Card)
+      </H2>
+      {renderPaymentLogosCard()}
     </DesignSystemScreen>
   );
 };
@@ -244,17 +260,45 @@ const renderLogoPaymentExtended = () => (
         dimensions={{ height: 33, width: 150 }}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name={`LogoPaymentExtended · icon = payPal`}>
-      <LogoPaymentExtended
-        icon="payPal"
-        dimensions={{ height: 33, width: 150 }}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name={`LogoPaymentExtended · icon = bpay`}>
-      <LogoPaymentExtended
-        icon="bpay"
-        dimensions={{ height: 33, width: 220 }}
-      />
-    </DSComponentViewerBox>
   </>
+);
+
+const renderPaymentLogosCard = () => (
+  <View style={styles.itemsWrapper}>
+    {Object.entries(IOPaymentCardLogos).map(([logoItemName]) => (
+      <DSLogoPaymentViewerBox
+        key={logoItemName}
+        name={logoItemName}
+        size="full"
+        image={
+          <LogoPaymentCard
+            align="start"
+            height={32}
+            name={logoItemName as IOLogoPaymentCardType}
+          />
+        }
+      />
+    ))}
+    <VSpacer size={24} />
+    <DSComponentViewerBox
+      fullWidth
+      name="Debug mode enabled, possible align values"
+    >
+      <View
+        style={{
+          borderRadius: 16,
+          padding: 16,
+          backgroundColor: IOColors.white,
+          borderColor: hexToRgba(IOColors.black, 0.15),
+          borderWidth: 1
+        }}
+      >
+        <LogoPaymentCard debugMode height={32} name="payPal" align="start" />
+        <VSpacer size={8} />
+        <LogoPaymentCard debugMode height={32} name="payPal" align="center" />
+        <VSpacer size={8} />
+        <LogoPaymentCard debugMode height={32} name="payPal" align="end" />
+      </View>
+    </DSComponentViewerBox>
+  </View>
 );

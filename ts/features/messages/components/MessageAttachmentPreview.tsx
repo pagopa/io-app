@@ -32,6 +32,7 @@ import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/
 type Props = {
   messageId: UIMessageId;
   attachment: UIAttachment;
+  skipDownloadAttachment?: boolean;
   onLoadComplete?: () => void;
   onPDFError?: () => void;
   onShare?: () => void;
@@ -78,7 +79,7 @@ const renderError = (title: string, body: string) => (
 const renderPDF = (
   downloadPath: string,
   isPDFError: boolean,
-  props: Props,
+  props: Omit<Props, "skipDownloadAttachment">,
   onPDFLoadingError: () => void
 ) => (
   <>
@@ -181,7 +182,10 @@ const renderFooter = (
     />
   );
 
-export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
+export const MessageAttachmentPreview = ({
+  skipDownloadAttachment = true,
+  ...props
+}: Props): React.ReactElement => {
   const dispatch = useIODispatch();
   const [isPDFError, setIsPDFError] = useState(false);
   const isFirstRendering = useRef(true);
@@ -204,9 +208,8 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   // this screen), upon first rendering and only if no attachment
   // blob data is present or if there was a previous error in
   // downloading the data
-  const isGenericAttachment = attachment.category === "GENERIC";
   const shouldDownloadAttachment =
-    isGenericAttachment &&
+    skipDownloadAttachment &&
     isFirstRendering.current &&
     (isStrictNone(downloadPot) || pot.isError(downloadPot));
 
@@ -223,7 +226,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   // since PN attachments are downloaded before entering this component)
   const customGoBack = useCallback(() => {
     if (
-      isGenericAttachment &&
+      skipDownloadAttachment &&
       (pot.isLoading(downloadPot) || pot.isUpdating(downloadPot))
     ) {
       dispatch(cancelPreviousAttachmentDownload());
@@ -231,16 +234,21 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     // eslint-disable-next-line functional/immutable-data
     autoBackOnErrorHandled.current = true;
     navigation.goBack();
-  }, [downloadPot, dispatch, isGenericAttachment, navigation]);
+  }, [downloadPot, dispatch, skipDownloadAttachment, navigation]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     isFirstRendering.current = false;
     if (shouldDownloadAttachment) {
-      dispatch(downloadAttachment.request(attachment));
+      dispatch(
+        downloadAttachment.request({
+          ...attachment,
+          skipMixpanelTrackingOnFailure: true
+        })
+      );
     } else if (
       !autoBackOnErrorHandled.current &&
-      isGenericAttachment &&
+      skipDownloadAttachment &&
       pot.isError(downloadPot)
     ) {
       // eslint-disable-next-line functional/immutable-data
@@ -253,7 +261,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     attachment,
     downloadPot,
     dispatch,
-    isGenericAttachment,
+    skipDownloadAttachment,
     navigation,
     shouldDownloadAttachment
   ]);
@@ -261,6 +269,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const shouldDisplayDownloadProgress = pot.isLoading(downloadPot);
   const shouldDisplayPDFPreview =
     pot.isSome(downloadPot) && !pot.isError(downloadPot);
+
   return (
     <BaseScreenComponent
       goBack={customGoBack}
