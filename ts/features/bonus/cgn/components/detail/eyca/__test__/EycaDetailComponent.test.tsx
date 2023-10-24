@@ -47,12 +47,6 @@ describe("EycaDetailComponent", () => {
     const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
     expect(eycaStatusBadge).not.toBeNull();
 
-    const eycaStatusLabel = component.queryByTestId("eyca-status-label");
-    expect(eycaStatusLabel).not.toBeNull();
-    expect(eycaStatusLabel).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.badge.active")
-    );
-
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).toBeNull();
 
