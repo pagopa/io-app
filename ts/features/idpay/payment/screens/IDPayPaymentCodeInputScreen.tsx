@@ -56,7 +56,8 @@ const IDPayPaymentCodeInputScreen = () => {
           <TextInput
             textInputProps={{
               inputMode: "",
-              autoCapitalize: "characters"
+              autoCapitalize: "characters",
+              autoCorrect: false
             }}
             onChangeText={value => {
               setInputState({
