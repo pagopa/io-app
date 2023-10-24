@@ -3511,6 +3511,10 @@ features:
             firstBody: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
             secondHeader: "Safety of treatment"
             secondBody: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
+      resultScreenNew: 
+        success: 
+          title: "Done!"
+          subtitle: "Go back to the {{organizationName}} website to continue."
     missingFeatureScreen: 
       headerTitle: "Screen not available"
       title: "This screen will be available soon."

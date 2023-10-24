@@ -3537,6 +3537,10 @@ features:
             firstBody: "È l’ente che vuole accedere ad alcune informazioni per fornirti i servizi che richiedi. IO ti consente di autorizzare il trattamento dei tuoi dati solo con enti verificati e correttamente iscritti alle liste che ne garantiscono l’affidabilità."
             secondHeader: "I miei dati sono al sicuro?"
             secondBody: "I tuoi dati non sono condivisi con altri soggetti e non vengono utilizzati per finalità diverse da quelle indicati. Potrai richiederne la rimozione in qualsiasi momento."
+      resultScreenNew: 
+        success: 
+          title: "Fatto!"
+          subtitle: "Torna sul sito di {{organizationName}} per continuare."
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"
