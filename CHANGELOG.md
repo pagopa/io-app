@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.44.0-rc.4](https://github.com/pagopa/io-app/compare/2.44.0-rc.3...2.44.0-rc.4) (2023-10-24)
+
+
+### Bug Fixes
+
+* [[IABT-1498](https://pagopa.atlassian.net/browse/IABT-1498)] Fix crash on Android ([c8f9ab2](https://github.com/pagopa/io-app/commit/c8f9ab27a1aaffaa6e4da01b26f8b42057d057fa))
+
 ## [2.44.0-rc.3](https://github.com/pagopa/io-app/compare/2.44.0-rc.2...2.44.0-rc.3) (2023-10-19)
 
 
