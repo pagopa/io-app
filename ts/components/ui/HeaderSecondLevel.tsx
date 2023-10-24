@@ -13,14 +13,12 @@ import {
   IOColors,
   hexToRgba,
   HSpacer,
-  IOSpacer
-} from "@pagopa/io-app-design-system";
-import { WithTestID } from "../../types/WithTestID";
-import {
-  IOStyles,
+  IOSpacer,
   IOVisualCostants,
   iconBtnSizeSmall
-} from "../core/variables/IOStyles";
+} from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../types/WithTestID";
+import { IOStyles } from "../core/variables/IOStyles";
 import { makeFontStyleObject } from "../../components/core/fonts";
 
 export type HeaderSecondLevel = WithTestID<{

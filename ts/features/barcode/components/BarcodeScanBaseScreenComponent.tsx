@@ -30,7 +30,6 @@ import {
 } from "../../../utils/supportAssistance";
 import { zendeskSupportStart } from "../../zendesk/store/actions";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
-import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
@@ -62,6 +61,10 @@ type Props = {
    */
   onBarcodeError: (failure: BarcodeFailure) => void;
   /**
+   * Callback called when the upload file input is pressed, necessary to show the file input modal
+   */
+  onFileInputPressed: () => void;
+  /**
    * Callback called when the manual input button is pressed
    * necessary to navigate to the manual input screen or show the manual input modal
    */
@@ -73,6 +76,7 @@ const BarcodeScanBaseScreenComponent = ({
   barcodeTypes,
   onBarcodeError,
   onBarcodeSuccess,
+  onFileInputPressed,
   onManualInputPressed,
   faqCategories,
   contextualHelp,
@@ -137,13 +141,6 @@ const BarcodeScanBaseScreenComponent = ({
     barcodeFormats,
     barcodeTypes,
     disabled: !isFocused
-  });
-
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
-    barcodeFormats,
-    barcodeTypes,
-    onBarcodeSuccess,
-    onBarcodeError
   });
 
   const customGoBack = (
@@ -219,7 +216,7 @@ const BarcodeScanBaseScreenComponent = ({
           <TabItem
             label={I18n.t("barcodeScan.tabs.upload")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
-            onPress={showFilePicker}
+            onPress={onFileInputPressed}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.input")}
@@ -257,7 +254,6 @@ const BarcodeScanBaseScreenComponent = ({
           />
         </SafeAreaView>
       </LinearGradient>
-      {filePickerBottomSheet}
     </View>
   );
 };
