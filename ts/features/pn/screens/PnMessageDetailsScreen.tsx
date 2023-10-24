@@ -26,9 +26,12 @@ import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
-import { isCancelledFromPNMessagePot, paymentFromPNMessagePot } from "../utils";
+import {
+  isCancelledFromPNMessagePot,
+  legacyPaymentFromPNMessagePot
+} from "../utils";
 import { getRptIdFromPayment } from "../utils/rptId";
-import { trackPNUxSuccess } from "../analytics";
+import { legacyTrackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
@@ -86,7 +89,7 @@ export const PnMessageDetailsScreen = (
   const message = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
-  const payment = paymentFromPNMessagePot(currentFiscalCode, message);
+  const payment = legacyPaymentFromPNMessagePot(currentFiscalCode, message);
   const rptId = getRptIdFromPayment(payment);
 
   const loadContent = React.useCallback(() => {
@@ -106,7 +109,7 @@ export const PnMessageDetailsScreen = (
     // eslint-disable-next-line functional/immutable-data
     uxEventTracked.current = true;
     const isCancelled = isCancelledFromPNMessagePot(message);
-    trackPNUxSuccess(!!rptId, firstTimeOpening, isCancelled);
+    legacyTrackPNUxSuccess(!!rptId, firstTimeOpening, isCancelled);
   }
 
   return (

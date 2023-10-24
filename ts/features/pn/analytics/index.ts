@@ -6,7 +6,11 @@ import { TransactionSummaryErrorContent } from "../../../screens/wallet/payment/
 import { PNMessage } from "../../pn/store/types/types";
 import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+import {
+  booleanToYesNo,
+  buildEventProperties,
+  numberToYesNoOnThreshold
+} from "../../../utils/analytics";
 
 const pnServiceActivationStatusBoolToString = (activated?: boolean) =>
   activated ? "activated" : "deactivated";
@@ -164,7 +168,10 @@ export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
   );
 }
 
-export function trackPNPaymentInfoError(
+/**
+ * @deprecated Do not use, will be removed on v2.46 release
+ */
+export function legacyTrackPNPaymentInfoError(
   paymentVerificationError: O.Some<TransactionSummaryErrorContent>
 ) {
   void mixpanelTrack(
@@ -175,14 +182,20 @@ export function trackPNPaymentInfoError(
   );
 }
 
-export function trackPNPaymentInfoPaid() {
+/**
+ * @deprecated Do not use, will be removed on v2.46 release
+ */
+export function legacyTrackPNPaymentInfoPaid() {
   void mixpanelTrack(
     "PN_PAYMENT_INFO_PAID",
     buildEventProperties("TECH", undefined)
   );
 }
 
-export function trackPNPaymentInfoPayable() {
+/**
+ * @deprecated Do not use, will be removed on v2.46 release
+ */
+export function legacyTrackPNPaymentInfoPayable() {
   void mixpanelTrack(
     "PN_PAYMENT_INFO_PAYABLE",
     buildEventProperties("TECH", undefined)
@@ -204,7 +217,11 @@ export function trackPNShowTimeline() {
   void mixpanelTrack("PN_SHOW_TIMELINE", buildEventProperties("UX", "action"));
 }
 
-export function trackPNUxSuccess(
+/**
+ *
+ * * @deprecated use trackPNUxSuccess instead
+ */
+export function legacyTrackPNUxSuccess(
   containsPayment: boolean,
   firstTimeOpening: boolean,
   isCancelled: boolean
@@ -217,6 +234,24 @@ export function trackPNUxSuccess(
       notification_status: isCancelled ? "cancelled" : "active",
       contains_multipayment: "no",
       count_payment: containsPayment ? 1 : 0,
+      contains_f24: "no"
+    })
+  );
+}
+
+export function trackPNUxSuccess(
+  paymentCount: number,
+  firstTimeOpening: boolean,
+  isCancelled: boolean
+) {
+  void mixpanelTrack(
+    "PN_UX_SUCCESS",
+    buildEventProperties("UX", "screen_view", {
+      contains_payment: numberToYesNoOnThreshold(paymentCount),
+      first_time_opening: booleanToYesNo(firstTimeOpening),
+      notification_status: isCancelled ? "cancelled" : "active",
+      contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
+      count_payment: paymentCount,
       contains_f24: "no"
     })
   );
