@@ -5,14 +5,11 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
-import {
-  IOVisualCostants,
-  IOStyles
-} from "../../../../components/core/variables/IOStyles";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

@@ -33,6 +33,18 @@ export const booleanToYesNo = (value: boolean) =>
     )
   );
 
+export const numberToYesNoOnThreshold = (
+  value: number,
+  threshold: number = 0
+) =>
+  pipe(
+    value > threshold,
+    B.fold(
+      () => "no" as const,
+      () => "yes" as const
+    )
+  );
+
 export const buildEventProperties = (
   eventCategory: "KO" | "TECH" | "UX",
   eventType:
