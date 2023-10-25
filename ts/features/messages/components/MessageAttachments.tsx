@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import {
   View,
@@ -6,20 +5,28 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { Divider, IOColors, Icon } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { H5 } from "../../../components/core/typography/H5";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../types/contentType";
 import { formatByte } from "../../../types/digitalInformationUnit";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 
-type Props = {
-  attachments: ReadonlyArray<UIAttachment>;
-  openPreview: (attachment: UIAttachment) => void;
+type PartialProps = {
   disabled?: boolean;
+  downloadAttachmentBeforePreview?: boolean;
+  openPreview: (attachment: UIAttachment) => void;
 };
+
+type MessageAttachmentProps = {
+  attachment: UIAttachment;
+} & PartialProps;
+
+type MessageAttachmentsProps = {
+  attachments: ReadonlyArray<UIAttachment>;
+} & PartialProps;
 
 const styles = StyleSheet.create({
   opacityDisabled: {
@@ -68,18 +75,15 @@ const AttachmentIcon = (props: {
 };
 
 /**
- * Represent a single attachment of the legal message.
+ * Represent a single attachment.
  * An item that displays the file name and size.
  * @param props
  * @constructor
  */
-const AttachmentItem = (props: {
-  attachment: UIAttachment;
-  openPreview: (attachment: UIAttachment) => void;
-  disabled?: boolean;
-}) => {
+const AttachmentItem = (props: MessageAttachmentProps) => {
   const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
     props.attachment,
+    props.downloadAttachmentBeforePreview,
     props.openPreview
   );
   return (
@@ -130,24 +134,20 @@ const AttachmentItem = (props: {
 };
 
 /**
- * Render all the attachments of a legal message as listItem that can have different representation based on the contentType
+ * Render all the attachments as listItem that can have different representation based on the contentType
  * @constructor
  * @param props
  */
-export const MessageAttachments = (props: Props): React.ReactElement | null =>
-  props.attachments.length > 0 ? (
-    <>
-      {props.attachments.map((attachment, index) => (
-        <View key={index} testID="MessageAttachmentContainer">
-          <AttachmentItem
-            attachment={attachment}
-            disabled={props.disabled}
-            openPreview={props.openPreview}
-          />
-          {index < props.attachments.length - 1 && (
-            <ItemSeparatorComponent noPadded={true} />
-          )}
-        </View>
-      ))}
-    </>
-  ) : null;
+export const MessageAttachments = ({
+  attachments = [],
+  ...rest
+}: MessageAttachmentsProps) => (
+  <>
+    {attachments.map((attachment, index) => (
+      <View key={index} testID="MessageAttachmentContainer">
+        <AttachmentItem {...rest} attachment={attachment} />
+        {index < attachments.length - 1 && <Divider />}
+      </View>
+    ))}
+  </>
+);

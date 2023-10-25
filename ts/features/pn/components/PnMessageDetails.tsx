@@ -34,9 +34,9 @@ import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import {
   trackPNAttachmentOpening,
-  trackPNPaymentInfoError,
-  trackPNPaymentInfoPaid,
-  trackPNPaymentInfoPayable
+  legacyTrackPNPaymentInfoError,
+  legacyTrackPNPaymentInfoPaid,
+  legacyTrackPNPaymentInfoPayable
 } from "../analytics";
 import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
@@ -145,11 +145,11 @@ export const PnMessageDetails = ({
     }
 
     if (isPaid) {
-      trackPNPaymentInfoPaid();
+      legacyTrackPNPaymentInfoPaid();
     } else if (O.isSome(paymentVerificationError)) {
-      trackPNPaymentInfoError(paymentVerificationError);
+      legacyTrackPNPaymentInfoError(paymentVerificationError);
     } else if (!isCancelled) {
-      trackPNPaymentInfoPayable();
+      legacyTrackPNPaymentInfoPayable();
     }
     setShouldTrackMixpanel(false);
   }, [
@@ -199,9 +199,10 @@ export const PnMessageDetails = ({
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
             <MessageAttachments
-              attachments={message.attachments}
-              openPreview={openAttachment}
               disabled={isCancelled}
+              attachments={message.attachments}
+              downloadAttachmentBeforePreview={true}
+              openPreview={openAttachment}
             />
           </PnMessageDetailsSection>
         )}

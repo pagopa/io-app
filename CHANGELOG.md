@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.44.0-rc.4](https://github.com/pagopa/io-app/compare/2.44.0-rc.3...2.44.0-rc.4) (2023-10-24)
+
+
+### Bug Fixes
+
+* [[IABT-1498](https://pagopa.atlassian.net/browse/IABT-1498)] Fix crash on Android ([c8f9ab2](https://github.com/pagopa/io-app/commit/c8f9ab27a1aaffaa6e4da01b26f8b42057d057fa))
+
+## [2.44.0-rc.3](https://github.com/pagopa/io-app/compare/2.44.0-rc.2...2.44.0-rc.3) (2023-10-19)
+
+
+### Features
+
+* [[IOCOM-429](https://pagopa.atlassian.net/browse/IOCOM-429),[IOCOM-433](https://pagopa.atlassian.net/browse/IOCOM-433)] PN Multiple Payments: actions, reducer and sagas ([#5112](https://github.com/pagopa/io-app/issues/5112)) ([d925b5f](https://github.com/pagopa/io-app/commit/d925b5f3d3b3d7570fe4e655552058614ef5099f))
+
+
+### Chores
+
+* [[IOPID-938](https://pagopa.atlassian.net/browse/IOPID-938)] Opt-in screen ([#5096](https://github.com/pagopa/io-app/issues/5096)) ([dd37aef](https://github.com/pagopa/io-app/commit/dd37aef688c57ae97c6f32cb942f3a3042c56c84))
+* [[PE-479](https://pagopa.atlassian.net/browse/PE-479)] New CGN logo ([#5089](https://github.com/pagopa/io-app/issues/5089)) ([a9ffc6a](https://github.com/pagopa/io-app/commit/a9ffc6a8894c6bb05e6e2af1d4cfc315709ab558))
+
 ## [2.44.0-rc.2](https://github.com/pagopa/io-app/compare/2.44.0-rc.0...2.44.0-rc.2) (2023-10-17)
 
 

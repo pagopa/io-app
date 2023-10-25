@@ -2,14 +2,13 @@ import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
 

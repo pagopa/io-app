@@ -10,10 +10,10 @@ import { useNavigation } from "@react-navigation/native";
 import {
   HeaderSecondLevel,
   IOColors,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { NewH3 } from "../../../components/core/typography/NewH3";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 
