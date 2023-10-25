@@ -119,6 +119,7 @@ export function* downloadAttachmentWorker(
           yield* delay(waitingMs);
           continue;
         }
+        throw Error(`response status ${status} without retry-after header`);
       } else {
         trackFailureEvent(
           skipMixpanelTrackingOnFailure,
