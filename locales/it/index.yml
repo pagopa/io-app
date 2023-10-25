@@ -1023,6 +1023,10 @@ wallet:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     cardHolder: Intestatario carta
   onboarding:
+    paymentMethodsList:
+      header:
+        title: Aggiungi un metodo
+        subtitle: Il metodo verrà memorizzato e potrà essere utilizzato per effettuare pagamenti in app o aderire a iniziative compatibili.
     bancomat:
       headerTitle: "Aggiungi carta PagoBANCOMAT"
       koTimeout:
