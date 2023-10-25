@@ -14,7 +14,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { FlatList } from "react-native";
-import WalletPaymentMethodItemSkeleton from "../../common/components/WalletPaymentMethodItemSkeleton";
+import { WalletPaymentMethodItemSkeleton } from "../../common/components/WalletPaymentMethodItemSkeleton";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 
