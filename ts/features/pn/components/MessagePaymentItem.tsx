@@ -184,11 +184,11 @@ export const MessagePaymentItem = ({
         messageId,
         paymentId
       });
-      // console.log(`=== PaymentItem: dispatch (${messageId}) (${paymentId})`);
+      // console.log(`=== PaymentItem ${index}: dispatch`);
       dispatch(updateAction);
     }
   }, [dispatch, messageId, paymentId, shouldUpdatePayment]);
-  // console.log(`=== PaymentItem: re-rendering`);
+  // console.log(`=== PaymentItem ${index}: re-rendering`);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
