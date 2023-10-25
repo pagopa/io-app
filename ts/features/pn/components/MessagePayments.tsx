@@ -11,16 +11,23 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import Placeholder from "rn-placeholder";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { navigateToPnCancelledMessagePaidPaymentScreen } from "../navigation/actions";
 import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { useIOSelector } from "../../../store/hooks";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 const styles = StyleSheet.create({
+  morePaymentsSkeletonContainer: {
+    flex: 1,
+    alignItems: "center"
+  },
   morePaymentsLink: {
     flex: 1,
     textAlign: "center"
@@ -87,6 +94,14 @@ export const MessagePayments = ({
   presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
+  const morePaymentsLinkState = useIOSelector(state =>
+    paymentsButtonStateSelector(
+      state,
+      messageId,
+      payments,
+      maxVisiblePaymentCount
+    )
+  );
   if (
     paymentSectionShouldRenderNothing(
       isCancelled,
@@ -140,6 +155,8 @@ export const MessagePayments = ({
       </MessageDetailsSection>
     );
   } else {
+    const showMorePaymentsLink =
+      payments && payments.length > maxVisiblePaymentCount;
     return (
       <MessageDetailsSection
         title={I18n.t("features.pn.details.paymentSection.title")}
@@ -158,17 +175,29 @@ export const MessagePayments = ({
                 payment={payment}
               />
             ))}
-        {payments && payments.length > maxVisiblePaymentCount && (
+        {showMorePaymentsLink && (
           <>
             <VSpacer size={24} />
-            <LabelLink
-              style={styles.morePaymentsLink}
-              onPress={() => presentPaymentsBottomSheetRef.current?.()}
-            >
-              {`${I18n.t("features.pn.details.paymentSection.morePayments")} (${
-                payments.length
-              })`}
-            </LabelLink>
+            {morePaymentsLinkState === "visibleLoading" && (
+              <View style={styles.morePaymentsSkeletonContainer}>
+                <Placeholder.Box
+                  animate="fade"
+                  radius={8}
+                  width={172}
+                  height={16}
+                />
+              </View>
+            )}
+            {morePaymentsLinkState === "visibleEnabled" && (
+              <LabelLink
+                style={styles.morePaymentsLink}
+                onPress={() => presentPaymentsBottomSheetRef.current?.()}
+              >
+                {`${I18n.t(
+                  "features.pn.details.paymentSection.morePayments"
+                )} (${payments.length})`}
+              </LabelLink>
+            )}
           </>
         )}
       </MessageDetailsSection>
