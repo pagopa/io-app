@@ -1,6 +1,14 @@
 import { SagaIterator } from "redux-saga";
 import { ActionType } from "typesafe-actions";
-import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
+import {
+  call,
+  cancelled,
+  delay,
+  put,
+  race,
+  select,
+  take
+} from "typed-redux-saga/macro";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { v4 as uuid } from "uuid";
@@ -127,7 +135,6 @@ export function* downloadAttachmentWorker(
         const error = new Error(I18n.t(errorKey));
         yield* put(downloadAttachment.failure({ attachment, error }));
       }
-      break;
     } catch (error) {
       trackFailureEvent(
         skipMixpanelTrackingOnFailure,
@@ -141,7 +148,14 @@ export function* downloadAttachmentWorker(
           error: getError(error)
         })
       );
+    } finally {
+      // In this way, the download pot's status
+      // in the reducer will be properly updated.
+      if (yield* cancelled()) {
+        yield* put(downloadAttachment.cancel(attachment));
+      }
     }
+    break;
   }
 }
 
@@ -160,14 +174,8 @@ export function* handleDownloadAttachment(
   // download - where we do not know if there was a previous download
   // and/or which one it is, on PN attachments - or manually by the
   // user on generic attachments).
-  const { cancelAction } = yield* race({
+  yield* race({
     polling: call(downloadAttachmentWorker, bearerToken, action),
     cancelAction: take(cancelPreviousAttachmentDownload)
   });
-
-  // In this way, the download pot's status
-  // in the reducer will be properly updated.
-  if (cancelAction) {
-    yield* put(downloadAttachment.cancel(action.payload));
-  }
 }
