@@ -5,10 +5,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { View } from "react-native";
 
 import I18n from "../../../../i18n";
-import {
-  WalletOnboardingParamsList,
-  WalletOnboardingStackNavigation
-} from "../navigation/navigator";
+import { WalletOnboardingParamsList } from "../navigation/navigator";
 
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -17,6 +14,8 @@ import { OnboardingOutcome, OnboardingResult } from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
 import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
 import ROUTES from "../../../../navigation/routes";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
 export type WalletOnboardingStartScreenParams = {
   paymentMethodId: string;
@@ -28,7 +27,7 @@ type WalletOnboardingStartScreenRouteProps = RouteProp<
 >;
 
 const WalletOnboardingStartScreen = () => {
-  const navigation = useNavigation<WalletOnboardingStackNavigation>();
+  const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const route = useRoute<WalletOnboardingStartScreenRouteProps>();
   const { paymentMethodId } = route.params;
 
@@ -71,8 +70,9 @@ const WalletOnboardingStartScreen = () => {
         screen: ROUTES.WALLET_CREDIT_CARD_DETAIL,
         params: {
           creditCard: {
+            // TODO: Replace the behavior of this navigation sending only the idWallet to the detail page (https://pagopa.atlassian.net/browse/IOBP-373)
             idWallet: onboardingResult.walletId
-          }
+          } as any
         }
       });
     }
