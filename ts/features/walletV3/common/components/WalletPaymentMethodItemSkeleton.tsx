@@ -7,7 +7,7 @@ import {
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 
-const WalletPaymentMethodItemSkeleton = () => (
+export const WalletPaymentMethodItemSkeleton = () => (
   <>
     <VSpacer />
     <View style={IOStyles.row}>
@@ -31,5 +31,3 @@ const WalletPaymentMethodItemSkeleton = () => (
     <VSpacer />
   </>
 );
-
-export default WalletPaymentMethodItemSkeleton;

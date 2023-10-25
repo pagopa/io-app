@@ -58,7 +58,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
 
   return (
     <TopScreenComponent goBack>
-      {pot.isError(paymentMethodsPot) && (
+      {pot.isError(paymentMethodsPot) ? (
         <OperationResultScreenContent
           pictogram="umbrellaNew"
           title={I18n.t("genericError")}
@@ -69,8 +69,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
             onPress: () => dispatch(walletGetPaymentMethods.request())
           }}
         />
-      )}
-      {!pot.isError(paymentMethodsPot) && (
+      ) : (
         <SafeAreaView style={IOStyles.flex}>
           <WalletOnboardingPaymentMethodsList
             header={<PaymentMethodsHeading />}

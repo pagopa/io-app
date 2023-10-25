@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.44.0-rc.3",
+  "version": "2.44.0-rc.4",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.18.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.18.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.28/definitions.yml",
@@ -27,7 +27,7 @@
   "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v4.5.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.18.0-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.18.0-RELEASE/openapi/generated/api_fast_login.yaml",
-  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/fde8d344d1eae9d16ca338d4f71095c805b99f75/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
+  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/7907dba7e1e6a9de8ab746319bcd92a92326a66f/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
   "private": true,
   "scripts": {
     "start": "react-native start",
