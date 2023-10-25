@@ -1,6 +1,4 @@
 import { getType } from "typesafe-actions";
-import { createStore } from "redux";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { mixpanel, mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import {
@@ -15,9 +13,10 @@ import {
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { appReducer } from "../../../store/reducers";
-import { IssuerEnvironmentEnum } from "../../../../definitions/fci/IssuerEnvironment";
-import { applicationChangeState } from "../../../store/actions/application";
+import { store } from "../../../boot/configureStoreAndPersistor";
+
+// Get the environment from the store
+const getEnvironment = () => store.getState().features.fci.environment;
 
 // This is the list of events that we want to track in mixpanel
 // The list is not exhaustive, it's just a starting point
@@ -111,17 +110,6 @@ export const trackFciStartSignature = () =>
     event_type: FciUxEventType.ACTION,
     event_category: FciUxEventCategory.UX
   });
-
-const globalState = appReducer(undefined, applicationChangeState("active"));
-
-const store = createStore(appReducer, globalState as any);
-
-const getEnvironment = () => {
-  const signatureDetailView = store.getState().features.fci.signatureRequest;
-  return pot.isSome(signatureDetailView)
-    ? signatureDetailView.value.issuer.environment
-    : IssuerEnvironmentEnum.TEST;
-};
 
 const trackFciAction =
   (mp: NonNullable<typeof mixpanel>) =>
