@@ -40,12 +40,6 @@ const WalletOnboardingStartScreen = () => {
     });
   };
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false
-    });
-  }, [navigation]);
-
   const handleOnboardingFailure = (outcome: OnboardingOutcome) => {
     setOnboardingResult({
       status: "FAILURE",
