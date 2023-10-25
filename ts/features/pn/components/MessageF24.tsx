@@ -4,6 +4,7 @@ import { Body, ButtonLink, VSpacer } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 
@@ -12,6 +13,8 @@ type Props = {
 };
 
 export const MessageF24 = ({ attachments }: Props) => {
+  const { present, bottomSheet } = useF24BottomSheet(attachments);
+
   const renderContent = () => {
     if (attachments.length === 1) {
       return (
@@ -31,9 +34,7 @@ export const MessageF24 = ({ attachments }: Props) => {
         <ButtonLink
           accessibilityLabel={I18n.t("features.pn.details.f24Section.showAll")}
           label={I18n.t("features.pn.details.f24Section.showAll")}
-          // TODO: open bottom-sheet
-          // https://pagopa.atlassian.net/browse/IOCOM-455
-          onPress={constNull}
+          onPress={present}
         />
       </View>
     );
@@ -50,6 +51,7 @@ export const MessageF24 = ({ attachments }: Props) => {
       </Body>
       <VSpacer />
       {renderContent()}
+      {bottomSheet}
     </PnMessageDetailsSection>
   );
 };

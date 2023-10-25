@@ -1,5 +1,6 @@
 import React from "react";
 import { createStore } from "redux";
+import { within } from "@testing-library/react-native";
 import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import { MessageF24 } from "../MessageF24";
 import I18n from "../../../../i18n";
@@ -20,9 +21,11 @@ describe("MessageF24 component", () => {
   });
 
   it("should render only one attachment if there is only one", () => {
-    const component = renderComponent([mockPdfAttachment]);
-    const attachmentList = component.queryAllByTestId("message-attachment");
-    expect(attachmentList.length).toBe(1);
+    const { getByTestId } = renderComponent([mockPdfAttachment]);
+    const f24Container = getByTestId("f24-list-container");
+    const attachments =
+      within(f24Container).queryAllByTestId("message-attachment");
+    expect(attachments.length).toBe(1);
   });
 });
 

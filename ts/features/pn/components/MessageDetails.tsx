@@ -140,7 +140,12 @@ export const MessageDetails = ({
           completedPaymentNoticeCodes={completedPaymentNoticeCodes}
         />
 
-        {RA.isNonEmpty(f24List) && <MessageF24 attachments={f24List} />}
+        {RA.isNonEmpty(f24List) && (
+          <>
+            <MessageF24 attachments={f24List} />
+            <VSpacer size={24} />
+          </>
+        )}
 
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
